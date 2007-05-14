@@ -1,0 +1,138 @@
+import unittest
+
+from numpy import allclose, array, ravel
+
+from enthought.chaco2.api import ArrayDataSource, ColorMapper, DataRange1D
+
+
+class LinearSegmentedColormapTestCase(unittest.TestCase):
+    
+    def setUp(self):
+        """ Set up called before each test case. """
+
+        _gray_data =  {'red':   ((0., 0, 0), (1., 1, 1)),
+                       'green': ((0., 0, 0), (1., 1, 1)),
+                       'blue':  ((0., 0, 0), (1., 1, 1))}      
+                
+        self.colormap = ColorMapper.from_segment_map(_gray_data)
+        self.colormap.range = DataRange1D()
+
+    def test_simple_map(self):
+
+        a = ArrayDataSource(array([0.0, 0.5, 1.0]))
+        self.colormap.range.add(a)
+        b = self.colormap.map_screen(a.get_data())
+        self.colormap.range.remove(a)
+
+        expected = array([0.0, 0.5, 1.0])
+
+        close = allclose(ravel(b[:,:1]), expected, atol=0.02)
+        self.assert_(close,
+            "Simple map failed.  Expected %s.  Got %s" % (expected, b[:,:1]))
+
+        return
+
+    def test_change_min_max(self):
+        """ Test that changing min_value and max_value does not break map. """
+
+        datarange = self.colormap.range
+
+        # Perform a dummy mapping.
+        a = ArrayDataSource(array([0.0, 0.5, 1.0]))
+        datarange.add(a)
+        b = self.colormap.map_screen(a.get_data())
+        datarange.remove(a)
+
+        # Update the min_value.
+        datarange.low = -1.0
+
+        # Test that the map still works.
+        a = ArrayDataSource(array([-1.0, 0.0, 1.0]))
+        datarange.add(a)
+        b = self.colormap.map_screen(a.get_data())
+        datarange.remove(a)
+        expected = array([0.0, 0.5, 1.0])
+
+        close = allclose(ravel(b[:,:1]), expected, atol=0.02)
+        self.assert_(close,
+            "Changing min value broke map.  Expected %s.  Got %s" % (expected, b[:,:1]))
+
+        # Update the max_value.
+        datarange.high = 0.0
+        # Test that the map still works.
+        a = ArrayDataSource(array([-1.0, -0.5, 0.0]))
+        datarange.add(a)
+        b = self.colormap.map_screen(a.get_data())
+        datarange.remove(a)
+        expected = array([0.0, 0.5, 1.0])
+
+        close = allclose(ravel(b[:,:1]), expected, atol=0.02)
+        self.assert_(close,
+            "Changing min value broke map.  Expected %s.  Got %s" % (expected, b[:,:1]))
+        
+        
+        return
+
+    def test_array_factory(self):
+        """ Test that the array factory creates valid colormap. """
+
+        colors = array([[0.0,0.0,0.0], [1.0,1.0,1.0]])
+        cm = ColorMapper.from_palette_array(colors)
+        cm.range = DataRange1D()
+
+        a = ArrayDataSource(array([0.0, 0.5, 1.0]))
+        cm.range.add(a)
+        b = self.colormap.map_screen(a.get_data())
+        cm.range.remove(a)
+
+        expected = array([0.0, 0.5, 1.0])
+
+        self.assertTrue(allclose(ravel(b[:,:1]), expected, atol=0.02),
+            "Array factory failed.  Expected %s.  Got %s" % (expected, b[:,:1]))
+
+        return
+        
+
+##     def test_no_interpolation(self):
+##         grayscale_colors = array([[0.0,0.0,0.0,1.0], [1.0, 1.0, 1.0, 1.0]])
+##         grayscale_bins = array([0.0, 1.0])
+##         grayscale_steps = array([1])
+        
+##         colormap = LinearSegmentedColormap(
+##             grayscale_colors, grayscale_bins, grayscale_steps
+##         )
+
+##         a = array([0.0, 0.25, 0.75, 1.0])
+##         b = colormap.map_array(a)
+##         result = ravel(b[:,:1])
+##         expected = array([0.0, 0.0, 1.0, 1.0])
+
+##         close = allclose(result, expected, atol=0.02)
+##         self.assert_(close,
+##             "Map with no interpolation broken.  Expected %s.  Got %s" % (expected, result))
+
+##     def test_value_bands(self):
+        
+##         grayscale_colors = array([[0.0,0.0,0.0,1.0], [1.0, 1.0, 1.0, 1.0]])
+##         grayscale_bins = array([0.0, 1.0])
+##         grayscale_steps = array([1])
+        
+##         colormap = LinearSegmentedColormap(
+##             grayscale_colors, grayscale_bins, grayscale_steps
+##         )
+
+##         colormap._recalculate()
+
+##         print '**************', colormap._color_bands, colormap._value_bands
+
+
+def test():
+    runner = unittest.TextTestRunner()
+    runner.run(unittest.makeSuite(LinearSegmentedColormapTestCase, 'test_'))
+    return runner
+
+if __name__ == "__main__":
+    test()
+
+
+#### EOF ######################################################################

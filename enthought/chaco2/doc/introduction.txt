@@ -1,0 +1,77 @@
+
+
+Introduction
+------------
+
+Chaco is a toolkit for composing many visualization components into
+interactive, visually appealing data graphics.  It is both a software
+architecture and a collection of visual components.  It also comes bundled
+with a number of example visualizations that can be quickly adapted for
+specific application domains.
+
+Since interactivity and the model-view-controller model is central to Chaco's
+design, we say that it is a plotting application toolkit.  (Of course, Chaco
+can render static plots as well.)  
+
+Chaco is architected to support interactive data visualization and integration
+into other applications.  Its components are meant to be connected and hooked
+up to data that might be updating in realtime, and its rendering and event
+models are designed to be as responsive as possible.
+
+Chaco primarily depends on three other Enthought packages: Traits, Enable, and
+Kiva.  Enable is a pure-python visual component canvas.  It has a "backend"
+that translates GUI toolkit-specific events and methods into a generic system.
+Currently only the WX toolkit is supported, but there is an outdated Tk
+backend, and someday there will hopefully be a Qt backend as well.  Enable is
+part of the Enthought Tool Suite.
+
+Chaco and Enable both use Kiva for rendering.  Kiva is a vector drawing API
+for Python that is similar to Quartz, PDF, and Cairo.  Like Enable, it
+presents a common API across different backends.
+
+
+Architecture
+------------
+
+At the highest level, Chaco classes fall into two broad groups: those that
+mainly deal with data transformation, and those that deal with rendering.
+The first group of data-oriented components is fairly small, but it is
+crucial to the Chaco model.  The latter group of visual components includes
+basically everything that the user sees and interacts with.
+
+All visual components in Chaco have position, bounds, a place in the
+containment and layout hierarchy, a place in the rendering order, and can
+respond to keyboard and mouse events.  Examples of visual components include
+axes, grids, plot renderers, legends, and tooltip overlays.
+
+  * Renderers 
+  * Tools
+  * Overlays
+
+The data components in Chaco consist of data sources, ranges, and mappers.
+
+  * DataSource
+  * DataRange
+  * Mapper
+
+
+Structure of a Basic Plot
+-------------------------
+
+Conceptually, the simplest plot (like a scatter or line plot) consists of some
+dataspace bounds in X and Y, and some corresponding screen space bounds.  In
+Chaco, all components represent their screen space coordinates using the 'bounds'
+and 'position' attributes:
+
+    position -> [x,y] of the lower left-most point that is part of the component
+    bounds -> [w,h]; the width and height of the component; can be thought of as
+              the number of pixels in the component in a pixel-/raster-based system
+
+Additional convenience attributes are available:
+    x, y -> equivalent to position[0] and position[1]
+    x2, y2  -> the coordinates of the upper right-most point in the component
+
+
+
+
+

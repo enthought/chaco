@@ -1,0 +1,652 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Data Exploration with Chaco</title>
+<!-- metadata -->
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+
+<!-- Syntax Highlighting -->
+<link type="text/css" rel="stylesheet" href="SyntaxHighlighter.css"></link> 
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>Scipy Tutorial Session, 16 August 2006</h1>
+<h2>(Use the arrow keys or the controls in the lower-right-hand corner to navigate this slideshow.)</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+<div class="slide">
+<h1><i>Data Exploration with Chaco</i></h1>
+<p>
+<p><img src="images/chaco_splash.png"></p>
+</p>
+</div>
+
+
+<div class="slide">
+<h1>Structure of today's tutorial</h1>
+<ul>
+<li>Overview of Chaco</li>
+<li>Basic plots and interactors</li>
+<li>Creating simple interactors</li>
+<li>Core concepts: data model, layout, interaction model</li>
+<li>More complex plots</li>
+<!-- <li>Creating more complex interactors</li> -->
+<li>Walkthrough of some examples</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Overview</h1>
+<p>
+Chaco is a <em>plot application toolkit</em> for Python.  You use it to build
+stand-alone plotting applications, or embed it inside any application that needs
+to visualize numerical data.
+</p>
+<p>Sample plotting applications:
+<ul>
+<li>batch plotting of data (csv -> png)</li>
+<li>display for realtime data acquisition</li>
+<li>visual plot construction kit</li>
+<li>visual editor for tweaking input parameters to simulations</li>
+<li>mapping and GIS applications</li>
+</ul>
+</p>
+</div>
+
+<div class="slide">
+<h1>Chaco Features</h1>
+<ul>
+<li>Different rendering layers, backbuffering</li>
+<li>Container model for layout and event dispatch</li>
+<li>Modular and extensible architecture</li>
+<li>Data model/filtering pipeline</li>
+<li>Vector drawing engine</li>
+</ul>
+</div>
+
+
+
+<!-------------------------------------------------------------------------------
+
+ Part 1.  Basic plots and interactors
+
+------------------------------------------------------------------------------->
+
+
+
+<div class="slide">
+<h1>A first look</h1>
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial1.py
+
+# Create some data
+from scipy import arange, pi, sin
+numpoints = 100
+step = 4*pi / numpoints
+x = arange(-2*pi, 2*pi+step/2, step)
+y = sin(x)
+
+# Create the plot and set its size
+from enthought import chaco2
+myplot = chaco2.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
+myplot.padding = 50
+myplot.bounds = [400,400]
+
+# Create a graphics context for offline rendering
+plot_gc = chaco2.PlotGraphicsContext(myplot.outer_bounds)
+plot_gc.render_component(myplot)
+plot_gc.save("tutorial1.png")
+</textarea>
+</div>
+
+<div class="slide">
+<h1>tutorial1.py</h1>
+<img src="images/tutorial1.png">
+</div>
+
+
+<div class="slide">
+<h1>Creating a window</h1>
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial2.py
+import wx
+from enthought import chaco2
+
+# Import the plot from Tutorial 1
+from tutorial1 import myplot
+
+from enthought.enable2.wx_backend.api import Window
+class PlotFrame(wx.Frame):
+    def __init__(self, *args, **kw):
+        kw["size"] = (600,600)
+        wx.Frame.__init__( *(self,) + args, **kw )
+        
+        # Use Enable.Window to bridge between the vector-drawing world of Chaco and WX
+        self.plot_window = Window(parent=self, component=myplot)
+        
+        sizer = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(self.plot_window.control, 1, wx.EXPAND)
+        self.SetSizer(sizer)
+        self.SetAutoLayout(True)
+        self.Show(True)
+        return
+
+</textarea>
+</div>
+
+<div class="slide">
+<h1>Opening the window</h1>
+<p><h2>Normal python (standalone app)</h2>
+<textarea name="highlightcode" class="py:nocontrols">
+from tutorial2 import PlotFrame
+import wx
+app = wx.PySimpleApp()
+frame = PlotFrame(None)
+app.MainLoop()
+</textarea>
+</p><p>
+<h2>From within IPython</h2>
+<textarea name="highlightcode" class="py:nocontrols">
+# This requires invoking IPython as "ipython -pylab" or "ipython -wthread"
+
+from tutorial2 import PlotFrame
+frame = PlotFrame(None)
+</textarea>
+</p>
+</div>
+
+<div class="slide">
+<h1>Fun from within IPython</h1>
+We can tweak plot attributes on the fly:
+<textarea name="highlightcode" class="py:nocontrols">
+plot.vgrid.visible = False
+plot.x_axis.visible = False
+plot.request_redraw()
+</textarea>
+</div>
+
+<div class="slide">
+<h1>Fun from within IPython</h1>
+We can even write functions to do the tweaking for us!
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial2_ipython.py
+
+def ytitle(text):
+    plot.y_axis.title = text
+    plot.request_redraw()
+
+def xrange(low, high):
+    plot.x_mapper.range.low = low
+    plot.x_mapper.range.high = high
+    plot.request_redraw()
+
+def yrange(low, high):
+    plot.y_mapper.range.low = low
+    plot.y_mapper.range.high = high
+    plot.request_redraw()
+</textarea>
+</div>
+
+
+<div class="slide">
+<h1>The Joy of Traits</h1>
+<p>
+Since all Chaco primitives use traits, we can easily bring up property sheets.
+</p>
+</div>
+
+
+<div class="slide">
+<h1>Adding a basic interactor</h1>
+<p>All Chaco components can have tools on them, and any events they receive get forwarded on to
+their tools.
+
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial3.py
+
+from tutorial2 import myplot, PlotFrame, main
+
+from enthought.chaco2.tools import PanTool
+
+myplot.tools.append(PanTool(myplot))
+</textarea>
+</p>
+</div>
+
+
+<div class="slide">
+<h1>Adding zoom</h1>
+<p>Because the zoom tool draws a visible "zoom box", we need to add it to the list
+of overlays instead of the list of tools.  (It will still get events.)
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial4.py
+
+from tutorial2 import myplot, PlotFrame, main
+
+from enthought.chaco2.tools import SimpleZoom
+
+# Create an instance of the tool and add it as an overlay..
+myplot.overlays.append(SimpleZoom(myplot, tool_mode="box", always_on=True))
+</textarea>
+</p>
+</div>
+
+
+<div class="slide">
+<h1>Coordinating different tools</h1>
+PanTool and SimpleZoom both key off the left mouse click/drag.  Fortunately,
+PanTool is not a "stateful" interaction, and there is a way to tell SimpleZoom
+to play nicely with others:
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial5.py
+
+from tutorial2 import myplot, PlotFrame, main
+from enthought.chaco2.tools import PanTool, SimpleZoom
+
+myplot.tools.append(PanTool(myplot))
+
+zoom = SimpleZoom(myplot, tool_mode="box", always_on=False)
+
+myplot.overlays.append(zoom)
+</textarea>
+</div>
+
+
+<div class="slide">
+<h1>Writing our first interactor</h1>
+Diagnostic tool to dump out the events we are getting:
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial6.py
+
+# AbstractController is the base class for non-rendering tools
+from enthought.chaco2.api import AbstractController
+
+class EventPrinter(AbstractController):
+    
+    def dispatch(self, event, suffix):
+        # event' is a MouseEvent or KeyEvent object from the enable2
+        # package, and suffix is a text string
+        print suffix, "event received at (%d,%d)" % (event.x, event.y)
+
+
+from tutorial2 import myplot, PlotFrame, main
+
+myplot.tools.append(EventPrinter(myplot))
+</textarea>
+</div>
+
+
+<div class="slide">
+<h1>Looking at data</h1>
+We don't really want to know the mouse position; we want to know about
+coordinates in data space:
+
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial7.py
+
+from enthought.chaco2.api import AbstractController
+
+class DataPrinter(AbstractController):
+    def dispatch(self, event, suffix):
+        # We are assuming that self.component is an X-Y plot
+        x = self.component.x_mapper.map_data(event.x)
+        y = self.component.y_mapper.map_data(event.y)
+        print suffix, "event received at (%d,%d)" % (x, y)
+
+
+from tutorial2 import myplot, PlotFrame, main
+
+myplot.tools.append(DataPrinter(myplot))
+</textarea>
+</div>
+
+
+<!-------------------------------------------------------------------------------
+
+ Part 2.  Digging deeper - the data model and understanding factories
+
+------------------------------------------------------------------------------->
+
+
+<div class="slide">
+<h1>Digging deeper</h1>
+<textarea name="highlightcode" class="py:nocontrols">
+# from tutorial1.py
+
+myplot = chaco2.create_line_plot((x,y))
+</textarea>
+
+What does the create_line_plot() actually do?
+<ul>
+    <li>creates datasources</li>
+    <li>creates range objects and mappers</li>
+    <li>creates the plot object</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Datasources</h1>
+<textarea name="highlightcode" class="py:nocontrols">
+# plot_factory.py:create_line_plot()
+
+index_data, value_data = transpose(data)
+index = ArrayDataSource(index_data)
+value = ArrayDataSource(value_data, sort_order="none")
+</textarea>
+
+ArrayDataSource is just a subclass of AbstractDataSource which works with
+Numeric/numpy arrays.
+<textarea name="highlightcode" class="py:nocontrols">
+class AbstractDataSource(HasTraits):
+    value_dimension = DimensionTrait
+    index_dimension = DimensionTrait
+    metadata = Dict
+
+    get_data() -> array
+    get_data_mask() -> array, mask
+    is_masked() -> bool
+    get_size() -> int
+    get_bounds() -> array
+</textarea>
+</div>
+
+<div class="slide">
+<h1>Ranges, Mappers, and the Plot</h1>
+<textarea name="highlightcode" class="py:nocontrols">
+    index_range = DataRange()
+    index_range.add(index)
+    index_mapper = LinearMapper(range=index_range)
+
+    value_range = DataRange()
+    value_range.add(value)
+    value_mapper = value_mapper_class(range=value_range)
+
+    plot = LinePlot(index=index, value=value,
+                index_mapper = index_mapper,
+                value_mapper = value_mapper,
+                orientation = orientation,
+                color = color,
+                line_width = width,
+                line_style = dash,
+                border_visible = True)
+
+</textarea>
+</div>
+
+<!--
+<div class="slide">
+<h1>Decorating with Axes and Grids</h1>
+<textarea name="highlightcode" class="py:nocontrols">
+def add_default_axes(plot, orientation="normal", vtitle="",htitle=""):
+    if orientation == "normal":
+        v_mapper = plot.value_mapper
+        h_mapper = plot.index_mapper
+    else:
+        v_mapper = plot.index_mapper
+        h_mapper = plot.value_mapper
+
+    left = PlotAxis(orientation='left',
+                    title= vtitle,
+                    mapper=v_mapper,
+                    component=plot)
+    
+    bottom = PlotAxis(orientation='bottom',
+                    title= htitle,
+                    mapper=h_mapper,
+                    component=plot)
+
+    plot.underlays.append(left)
+    plot.underlays.append(bottom)
+</textarea>
+Adding grids is basically the same code.
+</div>
+-->
+
+<div class="slide">
+<h1>Two plots</h1>
+We can use a container to put two plots on the screen.
+<textarea name="highlightcode" class="py:nocontrols" rows="24">
+    def _create_plot(self):
+        x = arange(-5.0, 15.0, 20.0/100)
+        
+        y = jn(0, x)
+        left_plot = create_line_plot((x,y), bgcolor="white",add_grid=True, add_axis=True)
+        left_plot.tools.append(PanTool(left_plot))
+        self.left_plot = left_plot
+        
+        y = jn(1, x)
+        right_plot = create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
+        right_plot.tools.append(PanTool(right_plot))
+        right_plot.y_axis.orientation = "right"
+        self.right_plot = right_plot
+        
+        container = HPlotContainer(spacing=20, padding=50, bgcolor="lightgray")
+        container.add(left_plot)
+        container.add(right_plot)        
+        return container
+    
+</textarea>
+</div>
+
+
+<div class="slide">
+<h1>Connecting the two plots</h1>
+We're going to link the X dimension of the two plots.  Really, all we have to do to
+achieve this is to set the horizontal range on the two plots to be the same.
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial9.py 
+
+class PlotFrame2(PlotFrame):
+    
+    def _create_plot(self):
+        
+        container = super(PlotFrame2, self)._create_plot()
+        
+        self.right_plot.index_mapper.range = self.left_plot.index_mapper.range
+        
+        return container
+   
+</textarea>
+</div>
+
+<div class="slide">
+<h1>Connecting the two plots (cont.)</h1>
+We can connect the Y dimension, too.  And let's throw in a zoom tool.
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial9b.py
+
+self.right_plot.value_mapper.range = self.left_plot.value_mapper.range
+
+self.left_plot.overlays.append(
+    SimpleZoom(self.left_plot, tool_mode="box", always_on=False))
+
+self.right_plot.overlays.append(
+    SimpleZoom(self.right_plot, tool_mode="box", always_on=False))
+    
+</textarea>
+</div>
+
+
+<div class="slide">
+<h1>Linked views, but not connected data</h1>
+Adding a line inspector will show the problem.
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial10.py
+
+from tutorial9b import PlotFrame2
+
+class PlotFrame3(PlotFrame2):
+    def _create_plot(self):
+        container = super(PlotFrame2, self)._create_plot()
+        
+        self.left_plot.overlays.append(
+            LineInspector(component=self.left_plot,
+                          write_metadata=True,
+                          is_listener=True))
+        
+        self.right_plot.overlays.append(
+            LineInspector(component=self.right_plot,
+                          write_metadata=True,
+                          is_listener=True))
+        return container
+    
+</textarea>
+</div>
+
+<div class="slide">
+<h1>Connecting the data</h1>
+
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial10b.py
+
+class PlotFrame3(PlotFrame2):
+    def _create_plot(self):
+        container = super(PlotFrame2, self)._create_plot()
+        
+        self.left_plot.overlays.append(
+            LineInspector(component=self.left_plot,
+                          write_metadata=True,
+                          is_listener=True))
+        
+        self.right_plot.overlays.append(
+            LineInspector(component=self.right_plot,
+                          write_metadata=True,
+                          is_listener=True))
+        
+        self.right_plot.index = self.left_plot.index 
+        
+        return container
+    
+</textarea>
+</div>
+
+
+<div class="slide">
+<h1>Why Index-Value instead of X-Y?</h1>
+Because you are then immune to a plot's physical layout.
+<textarea name="highlightcode" class="py:nocontrols">
+# tutorial11.py
+
+class PlotFrame4(PlotFrame3):
+    def _create_plot(self):
+        container = super(PlotFrame4, self)._create_plot()
+        
+        plot = self.right_plot
+        plot.orientation = "v"
+        plot.hgrid.mapper = plot.index_mapper
+        plot.vgrid.mapper = plot.value_mapper
+        plot.y_axis.mapper = plot.index_mapper
+        plot.x_axis.mapper = plot.value_mapper
+        
+        self.left_plot.overlays.append(
+                LineInspector(component=self.left_plot,
+                              write_metadata=True,
+                              is_listener=True, color="blue",
+                              axis="value"))
+        
+        self.right_plot.overlays.append(
+                LineInspector(component=self.right_plot,
+                              write_metadata=True,
+                              is_listener=True, color="blue",
+                              axis="value"))
+        return container
+</textarea>
+</div>
+
+
+<!-------------------------------------------------------------------------------
+
+ Part 3.  Real-world examples 
+
+------------------------------------------------------------------------------->
+
+<div class="slide">
+<h1>Examples</h1>
+</div>
+
+<div class="slide">
+<h1>Visual Components</h1>
+<ul>
+<li>Renderers</li>
+<li>Containers</li>
+<li>Tools and tool overlays</li>
+<li>Legends, annotations, etc.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Visual Components (cont.)</h1>
+<ul>
+<li>have bounds, position, padding, border, bgcolor</li>
+<li>can be placed inside containers</li>
+<li>can be horizontally and vertically resized (or not)</li>
+<li>implement draw (and request draw on their underlays and overlays)</li>
+<li>implement dispatch (and dispatch to underlays and overlays)</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>More about Containers</h1>
+<ul>
+<li>Layout</li>
+<li>Dispatch</li>
+<li>Draw order & backbuffering</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Walkthrough of interesting examples</h1>
+</div>
+
+
+<div class="slide">
+<h1>How to get it</h1>
+<p><font size=+5><a href="http://code.enthought.com/chaco">http://code.enthought.com/chaco</a></font></p>
+<p>Mailing lists: scipy-chaco@scipy.org, enthought-dev@enthought.com</p>
+<p>Get Enthon!  http://code.enthought.com/enthon</p>
+</div>
+
+
+</div>
+
+<script language="javascript" src="Scripts/shCore.js"></script>  
+<script language="javascript" src="Scripts/shBrushPython.js"></script>  
+<script language="javascript" src="Scripts/shBrushXml.js"></script>  
+<script language="javascript">  
+    dp.SyntaxHighlighter.HighlightAll('highlightcode');  
+</script>  
+
+
+</body>
+</html>

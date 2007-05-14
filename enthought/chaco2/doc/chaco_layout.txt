@@ -1,0 +1,76 @@
+Notes on layout
+--------------------------------------------------------------------------
+
+The process of layout involves setting the size and position of components.
+All plot components must define two methods: layout() and get_preferred_size().
+Frames and Containers are used to actually specify and construct the layout.
+
+Frames are the top-most Enable component that contain all other Chaco components.
+They cannot (or at least *should* not) be nested within on another.  They define
+specific layout formats with hard-coded names (called "slots"), and different
+subclasses of Frames have different fixed layouts.  For instance, the SimplePlotFrame
+consists of a single slot, named "center", that takes up the entire size of the
+frame.  The CrossPlotFrame has a "center" slot as well as "top", "bottom", "left",
+and "right", which define a plus-shaped arrangement.
+
+Containers can be placed within these slots, and other containers can be nested
+within those, so that within each slot, a very flexible layout can be achieved.
+For example, geophysical "log plots" generally consist of a SimplePlotFrame with
+a horizontal plot container (HPlotContainer) in the "center" slot.  Tracks in
+the horizontal container are VPlotContainers, with GeoAxis components stacked
+above a single plot area, which is an OverlayPlotContainer.  (The GeoTrack class
+is actually a subclass of VPlotContainer that automatically create GeoAxis objects
+as GeoPlots are added to the plot area.)
+
+
+Layout implementation
+--------------------------------------------------------------------------
+
+In general, the hard work is in determining the size to assign to contained
+components.  Once this is done, setting the correct positions is usually trivial.
+There are two constraints on layout and size: one from the topmost container downwards,
+and the other from the innermost components up.  The topmost container typically has
+an area of finite size in which to draw all of its components.  The innermost
+components usually have some notion of what size they need to be.  To reconcile
+these two demands in a flexible way, layout consists of two stages:
+
+First pass: the topmost component requests the size of all of its child components,
+            and they in turn query their contained components.  The "preferred size"
+            of all the components is used to determine the minimum size that the
+            outermost/topmost component can be.
+
+Second pass: The topmost component sets its own size, and then inspects its
+             contained components and sets their sizes.  It then tells them to
+             perform layout given the sizes they have been assigned, and they all
+             do the same basic process.
+
+The details get more complicated when resizable components and auto-fitting options
+are taken into account.  All components (including containers) can be resizable in
+one or both dimensions, that is, they allow their container to set their size.
+Furthermore, all resizable containers can be auto-fitting (the actual option is named
+"fit_components") in one or both dimensions, which means that they set their size
+based on the aggregate size of their contained components.
+
+(In layout, each dimension is treated independently, so the methods below do
+the same thing in x/width and y/height.)
+
+get_preferred_size():
+    If a container is not resizable, then this method returns its bounds.
+    If a container is resizable, then this method returns looks at the preferred
+    sizes of the visible contained components and returns an appropriate value.
+    If the container is empty, or none of its components are visible, it will
+    return its default_size.
+
+layout():
+    Each non-resizable component gets its fixed size.  The remaining space is shared
+    among the resizable components in proportion to their preferred sizes.  If
+    the components use up more than the available space, then they are clipped.
+    If the components use up less than the available space, then depending on the
+    value of container.fit_components, either the container shrinks down to
+    tightly wrap the area described by the preferred sizes of all the components,
+    or the resizable components are stretched to fill the size of the container.
+
+
+
+
+

@@ -1,0 +1,274 @@
+
+# Standard library imports
+from math import ceil, floor
+from numpy import isnan, swapaxes
+
+# Enthought library imports.
+from enthought.traits.api import Any, Either, Enum, Event, false, HasTraits, \
+                                 Instance, List, Property, Range, Trait, Tuple
+from enthought.kiva.agg import GraphicsContextArray, pix_format_string_map
+
+# Local relative imports
+from abstract_plot_renderer import AbstractPlotRenderer
+from base import reverse_map_1d
+from grid_data_source import GridDataSource
+from grid_mapper import GridMapper
+from image_data import ImageData
+
+
+class Base2DPlot(AbstractPlotRenderer):
+
+    #------------------------------------------------------------------------
+    # Data-related traits
+    #------------------------------------------------------------------------
+    
+    # The data source to use for the index coordinate
+    index = Instance("GridDataSource") 
+    
+    # The data source to use as value points
+    value = Instance("ImageData")
+
+    # screen mapper for 2D structured (gridded) index data
+    index_mapper = Instance("GridMapper")
+
+    # Convenience property for accessing the datarange of the mapper
+    index_range = Property
+
+    # Convenience property for accessing the plots labels
+    labels = Property
+
+    # This determines whether the first array returned by self.index.get_data()
+    # should map to the x direction (default) or the y direction.
+    orientation = Enum("h", "v")
+
+    # Override inherited trait; image plots should draw on the "image" layer,
+    # underneath all decorations and annotations, and above only the background
+    # fill color.
+    draw_layer = "image"
+
+    # Convenience properties for accessing the x/y-direction mappers regardless
+    # of orientation.  This provides compatibility with a number of tools.
+    x_mapper = Property
+    y_mapper = Property
+
+    # overall alpha value of the image.  0=transparent, 1=full intensity.
+    alpha = Trait(1.0, Range(0.0, 1.0))
+
+    # Subclasses may listen for these events and take appropriate steps,
+    # apart from requesting a redraw, which is done here
+    index_data_changed = Event
+    index_mapper_changed = Event
+    value_data_changed = Event
+
+    #------------------------------------------------------------------------
+    # Public methods
+    #------------------------------------------------------------------------
+
+    def __init__(self, **kwargs):
+        # Handling the setting/initialization of these traits manually because
+        # they should be initialized in a certain order.
+        kwargs_tmp = {"trait_change_notify": False}
+        for trait_name in ("index", "value"):
+            if trait_name in kwargs:
+                kwargs_tmp[trait_name] = kwargs.pop(trait_name)
+        self.set(**kwargs_tmp)
+        super(Base2DPlot, self).__init__(**kwargs)
+        if self.index is not None:
+            self.index.on_trait_change(self._update_index_data, 
+                                       "data_changed")
+        if self.index_mapper:
+            self.index_mapper.on_trait_change(self._update_index_mapper, 
+                                              "updated")
+        if self.value is not None:
+            self.value.on_trait_change(self._update_value_data, 
+                                       "data_changed")
+        return
+
+    #------------------------------------------------------------------------
+    # AbstractPlotRenderer interface
+    #------------------------------------------------------------------------
+
+    def map_screen(self, data_pts):
+        # data_pts is Nx2 array
+        if len(data_pts) == 0:
+            return []
+        return self.index_mapper.map_screen(data_pts)
+
+    def map_data(self, screen_pts):
+        return self.index_mapper.map_data(screen_pts)
+
+    def map_index(self, screen_pt, threshold=2.0, 
+                  outside_returns_none=True, index_only=False):
+        """index_only is ignored since index is intrinsically 2D"""
+        x_pt,y_pt = self.map_data([screen_pt])[0]
+       
+        if ((x_pt < self.index_mapper.range.low[0]) or 
+            (x_pt > self.index_mapper.range.high[0]) or
+            (y_pt < self.index_mapper.range.low[1]) or
+            (y_pt > self.index_mapper.range.high[1])) and outside_returns_none:
+            return None, None
+
+        x_index_data, y_index_data = self.index.get_data()
+
+        if x_index_data.get_size() == 0 or y_index_data.get_size() == 0:
+            return None, None 
+
+        # attempt to map to the x index
+        x_data = x_index_data.get_data()
+        y_data = y_index_data.get_data()
+        try:
+            x_ndx = reverse_map_1d(x_data, x_pt, self.index.sort_order[0])
+            y_ndx = reverse_map_1d(y_data, y_pt, self.index.sort_order[1])
+        except IndexError, e:
+            if outside_returns_none:
+                return None, None
+            else:
+                # x index
+                if x_pt < x_index_data[0]:
+                    x_ndx =  0
+                else:
+                    x_ndx = len(x_index_data) - 1
+
+                # y index
+                if y_pt < y_index_data[0]:
+                    y_ndx =  0
+                else:
+                    y_ndx = len(y_index_data) - 1
+
+        if threshold == 0:
+            return x_ndx, y_ndx
+
+        x = x_data[x_ndx]
+        y = y_data[y_ndx]
+        if isnan(x) or isnan(y):
+            return None, None
+        
+        sx, sy =  self.map_screen([(x,y)])[0]
+        if ((screen_pt[0]-sx)**2 + (screen_pt[1]-sy)**2 < threshold**2):
+            return x_ndx, y_ndx
+        else:
+            return None, None
+
+    #------------------------------------------------------------------------
+    # PlotComponent interface
+    #------------------------------------------------------------------------
+    
+    def _draw_image(self, gc, view_bounds=None, mode="normal"):
+        self._render(gc)
+        return
+
+    def _draw_image_pre(self, gc, view_bounds, mode):
+        self._render_pre(gc)
+        return
+
+    def _draw_image_post(self, gc, view_bounds, mode):
+        self._render_post(gc)
+        return
+
+    #------------------------------------------------------------------------
+    # Abstract methods that subclasses must implement
+    #------------------------------------------------------------------------
+
+    def _render(self, gc, points):
+        raise NotImplementedError
+
+
+    def _render_pre(self, gc):
+        """ Called before _render() is called.  Gives subclasses an opportunity
+        to modify their state or draw configuration before _render(). """
+        pass
+
+    def _render_post(self, gc):
+        """ Called after _render() is called.  Gives subclasses an opportunity
+        to modify/restore their state or draw configuration after _render(). """
+        pass
+
+
+    #------------------------------------------------------------------------
+    # Properties
+    #------------------------------------------------------------------------
+
+    def _get_index_range(self):
+        return self.index_mapper.range
+    
+    def _set_index_range(self, val):
+        self.index_mapper.range = val
+    
+    def _get_labels(self):
+        labels = []
+        for obj in self.underlays+self.overlays:
+            if isinstance(obj, PlotLabel):
+                labels.append(obj)
+        return labels
+
+    def _get_x_mapper(self):
+        if self.orientation == "h":
+            return self.index_mapper._xmapper
+        else:
+            return self.index_mapper._ymapper
+
+    def _get_y_mapper(self):
+        if self.orientation == "h":
+            return self.index_mapper._ymapper
+        else:
+            return self.index_mapper._xmapper
+
+
+    #------------------------------------------------------------------------
+    # Private methods
+    #------------------------------------------------------------------------
+
+    def _update_index_mapper(self):
+        self.index_mapper_changed = True
+        self.index_mapper.x_low_pos = self.x 
+        self.index_mapper.x_high_pos = self.x2 
+        self.index_mapper.y_low_pos = self.y 
+        self.index_mapper.y_high_pos = self.y2 
+        self.invalidate_draw() 
+
+    def _update_index_data(self):
+        self.index_data_changed = True
+        self.invalidate_draw() 
+
+    def _update_value_data(self):
+        self.value_data_changed = True
+        self.invalidate_draw() 
+
+
+    #------------------------------------------------------------------------
+    # Event handlers
+    #------------------------------------------------------------------------
+
+    def _bounds_changed(self):
+        self._update_index_mapper()
+
+    def _bounds_items_changed(self):
+        self._update_index_mapper()
+
+    def _orientation_changed(self):
+        self._update_index_mapper()
+
+    def _index_changed(self, old, new):
+        if old is not None:
+            old.on_trait_change(self._update_index_data, 
+                                "data_changed", remove=True)
+        if new is not None:
+            new.on_trait_change(self._update_index_data, "data_changed")
+        self._update_index_data()
+
+    def _value_changed(self, old, new):
+        if old is not None:
+            old.on_trait_change(self._update_value_data, 
+                                "data_changed", remove=True)
+        if new is not None:
+            new.on_trait_change(self._update_value_data, "data_changed")
+        self._update_value_data()
+
+    def _index_mapper_changed(self, old, new):
+        if old is not None:
+            old.on_trait_change(self._update_index_mapper, 
+                                "updated", remove=True)
+        if new is not None:
+            new.on_trait_change(self._update_index_mapper, "updated")
+        self._update_index_mapper()
+
