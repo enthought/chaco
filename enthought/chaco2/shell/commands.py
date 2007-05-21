@@ -1,6 +1,6 @@
 
 import wx
-from enthought.chaco2.default_colormaps import color_map_name_dict
+from enthought.chaco2.api import Plot, color_map_name_dict
 from enthought.chaco2.tools.api import PanTool, RectZoomTool
 
 import plot_maker
@@ -41,23 +41,8 @@ def chaco_commands():
     semilogx -- plots an x-y line or scatter plot with a log x-scale
     semilogy -- plots an x-y line or scatter plot with a log y-scale
     hold -- turns "hold" on or off
-    save -- saves the current plot to a file
-    load -- loads a saved plot from file into the active plot area
-    show -- shows plot on screen
+    show -- shows plot on screen; used when running from script
     
-    
-    Layout
-    ------
-    names -- temporarily overlays plot areas with their names
-    hidenames -- force remove the name overlays from show_names
-    happend -- create a new plot area horizontally after the active plot
-    vappend -- create a new plot area vertically after the active plot
-    hsplit -- splits the current plot into two horizontal subplots
-    vsplit -- splits the current plot into two vertical subplots
-    save_layout -- saves the current layout of plots and plots areas
-    load_layout -- loads a saved layout of plot areas and applies it to the
-                   current set of plots
-
 
     Axes, Annotations, Legends
     --------------------------
@@ -73,9 +58,27 @@ def chaco_commands():
 
     Tools
     -----
-    tool -- toggles certain tools on or off
-    colormap -- sets the current colormap
+    colormap -- sets the current colormap    
+    """
+    print chaco_commands.__doc__
 
+    # The following are not implemented yet
+    """
+    tool -- toggles certain tools on or off
+    save -- saves the current plot to a file
+    load -- loads a saved plot from file into the active plot area
+
+    Layout
+    ------
+    names -- temporarily overlays plot areas with their names
+    hidenames -- force remove the name overlays from show_names
+    happend -- create a new plot area horizontally after the active plot
+    vappend -- create a new plot area vertically after the active plot
+    hsplit -- splits the current plot into two horizontal subplots
+    vsplit -- splits the current plot into two vertical subplots
+    save_layout -- saves the current layout of plots and plots areas
+    load_layout -- loads a saved layout of plot areas and applies it to the
+                   current set of plots
 
     Sessions
     --------
@@ -85,10 +88,7 @@ def chaco_commands():
     save_prefs -- saves the current session's preferences, either in a
                   separate file or as the chaco2.shell defaults
     load_prefs -- loads a previously-saved set of preferences
-    
     """
-    print chaco_commands.__doc__
-
 
 #------------------------------------------------------------------------
 # Window management commands
