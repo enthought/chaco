@@ -87,6 +87,7 @@ def chaco_commands():
     load_prefs -- loads a previously-saved set of preferences
     
     """
+    print chaco_commands.__doc__
 
 
 #------------------------------------------------------------------------
