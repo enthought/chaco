@@ -21,7 +21,8 @@ from enthought.traits.api import HasTraits, Any
 
 class AbstractTickGenerator(HasTraits):
     
-    def get_ticks(self, data_low, data_high, bounds_low, bounds_high, interval):
+    def get_ticks(self, data_low, data_high, bounds_low, bounds_high, interval,
+                  use_endpoints=False, scale='linear'):
         """ Returns a list of ticks points in data space
         
         Parameters
