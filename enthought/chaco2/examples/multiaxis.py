@@ -53,23 +53,14 @@ class PlotFrame(DemoFrame):
                 plot0 = plot
                 add_default_grids(plot)
                 add_default_axes(plot)
-            else:
-                plot.index_mapper = plot0.index_mapper
-                plot0.index_mapper.range.add(plot.index)
 
             # Create a pan tool and give it a reference to the plot it should
             # manipulate, but don't attach it to the plot.  Instead, attach it to
-            # the broadcaster.  Since all of the plots reference the same X-axis
-            # range, if we just attached a standard PanTool() to each plot and
-            # allowed the BroadcasterTool to send events to each one, the x range
-            # would update multiple time for each mouse motion.  To avoid this,
-            # we just leave the first PanTool as a full XY pan, and constrain
-            # the additional ones to be y-axis only.
-            if i == 0:
-                pan = PanTool(plot)
-            else:
-                pan = PanTool(plot, constrain_direction="y", constrain=True)
+            # the broadcaster.
+            pan = PanTool(plot)
+            #zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
             broadcaster.tools.append(pan)
+            #broadcaster.tools.append(zoom)
             
             container.add(plot)
             plots["Bessel j_%d"%i] = plot
