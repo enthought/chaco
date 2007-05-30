@@ -475,6 +475,7 @@ def xtitle(text):
     p = curplot()
     if p:
         p.x_axis.title = text
+        plot.request_redraw()
 
 
 def ytitle(text):
@@ -482,12 +483,14 @@ def ytitle(text):
     p = curplot()
     if p:
         p.y_axis.title = text
+        plot.request_redraw()
 
 def title(text):
     """ Sets the plot title given text """
     p = curplot()
     if p:
         p.title = text
+        plot.request_redraw()
 
 def xaxis(interval=None):
     """ Configures the xaxis.
