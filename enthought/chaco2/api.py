@@ -48,6 +48,7 @@ from label import Label
 from plot_label import PlotLabel
 from legend import Legend
 from tooltip import ToolTip
+from data_label import DataLabel
 from lasso_overlay import LassoOverlay
 from color_bar import ColorBar
 
