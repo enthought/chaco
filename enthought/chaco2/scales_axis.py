@@ -6,7 +6,6 @@ from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
 # Enthought Library imports
 from enthought.enable2.api import black_color_trait, transparent_color_trait, \
                                   LineStyle
-from enthought.kiva import font_metrics_provider
 from enthought.traits.api import Any, Float, Int, KivaFont, Str, Trait, Unicode, \
                                  Bool, Event, List, Array, Instance, Enum, false, \
                                  true, TraitError

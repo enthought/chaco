@@ -1,5 +1,8 @@
 
+from numpy import array
+
 from enthought.traits.api import Instance
+from enthought.kiva import font_metrics_provider
 from ticks import AbstractTickGenerator
 
 # Use the new scales/ticks library

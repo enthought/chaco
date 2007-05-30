@@ -26,15 +26,76 @@ from enthought.traits.api import false, RGBAColor
 
 # Chaco imports
 from enthought.chaco2.examples import DemoFrame, demo_main, COLOR_PALETTE
-from enthought.chaco2.api import create_line_plot, add_default_axes, add_default_grids, \
+from enthought.chaco2.api import create_line_plot, add_default_axes, \
                                  OverlayPlotContainer, PlotLabel, VPlotContainer, \
-                                 create_scatter_plot, Legend, PlotComponent
-from enthought.chaco2.axis import ScalesTickGenerator
+                                 create_scatter_plot, Legend, PlotComponent, PlotGrid
+from enthought.chaco2.scales_tick_generator import ScalesTickGenerator
+from enthought.chaco2.scales_axis import PlotAxis
+
 from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
                                        LegendTool, TraitsTool
 
 from scales.api import CalendarScaleSystem
 import pdb
+
+
+def add_default_axes(plot, orientation="normal", vtitle="",htitle=""):
+    """
+    Creates left and bottom axes for a plot.  Assumes that the index is
+    horizontal and value is vertical by default; set orientation to
+    something other than "normal" if they are flipped.
+    """
+    if orientation in ("normal", "h"):
+        v_mapper = plot.value_mapper
+        h_mapper = plot.index_mapper
+    else:
+        v_mapper = plot.index_mapper
+        h_mapper = plot.value_mapper
+    
+    left = PlotAxis(orientation='left',
+                    title= vtitle,
+                    mapper=v_mapper,
+                    component=plot)
+    
+    bottom = PlotAxis(orientation='bottom',
+                      title= htitle,
+                      mapper=h_mapper,
+                      component=plot)
+
+    plot.underlays.append(left)
+    plot.underlays.append(bottom)
+    return left, bottom
+
+
+def add_default_grids(plot, orientation="normal", tick_gen=None):
+    """
+    Creates horizontal and vertical gridlines for a plot.  Assumes that the
+    index is horizontal and value is vertical by default; set orientation to
+    something other than "normal" if they are flipped.
+    """
+    if orientation in ("normal", "h"):
+        v_mapper = plot.index_mapper
+        h_mapper = plot.value_mapper
+    else:
+        v_mapper = plot.value_mapper
+        h_mapper = plot.index_mapper
+    
+    vgrid = PlotGrid(mapper=v_mapper, orientation='vertical',
+                     component=plot,
+                     line_color="lightgray", line_style="dot",
+                     tick_generator = tick_gen)
+
+    hgrid = PlotGrid(mapper=h_mapper, orientation='horizontal',
+                     component=plot,
+                     line_color="lightgray", line_style="dot",
+                     tick_generator = ScalesTickGenerator())
+    
+    plot.underlays.append(vgrid)
+#    plot.underlays.append(hgrid)
+    return hgrid, vgrid
+
+
+
 
 
 class PlotFrame(DemoFrame):
@@ -68,10 +129,10 @@ class PlotFrame(DemoFrame):
             if i == 0:
                 value_mapper = plot.value_mapper
                 index_mapper = plot.index_mapper
-                add_default_grids(plot)
                 left, bottom = add_default_axes(plot)
                 left.tick_generator = ScalesTickGenerator()
                 bottom.tick_generator = ScalesTickGenerator(scale=CalendarScaleSystem())
+                add_default_grids(plot, tick_gen=bottom.tick_generator)
             else:
                 plot.value_mapper = value_mapper
                 value_mapper.range.add(plot.value)
