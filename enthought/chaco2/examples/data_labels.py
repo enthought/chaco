@@ -54,10 +54,29 @@ class PlotFrame(DemoFrame):
         # Add a static label at a particular point.  Note the use of padding
         # to offset the label from its data point.
         label = DataLabel(component=plot, data_point=(x[40], y[40]),
-                          label_position="top left", padding=5)
+                          label_position="top left", padding=40,
+                          bgcolor = "lightgray",
+                          border_visible=False)
         plot.overlays.append(label)
-                
-            
+
+        label2 = DataLabel(component=plot, data_point=(x[20], y[20]),
+                           label_position="bottom right",
+                           border_visible=False,
+                           bgcolor="transparent",
+                           marker_color="blue",
+                           marker_line_color="transparent",
+                           marker = "diamond",
+                           arrow_visible=False)
+        plot.overlays.append(label2)
+
+        label3 = DataLabel(component=plot, data_point=(x[80], y[80]),
+                           label_position="top", padding_bottom=20,
+                           marker_color="transparent",
+                           marker_size=8,
+                           marker="circle",
+                           arrow_visible=False)
+        plot.overlays.append(label3)
+    
         container.add(plot)
 
         return Window(self, -1, component=container)
