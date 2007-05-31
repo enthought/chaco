@@ -224,8 +224,8 @@ def _do_plot_boilerplate(kwargs):
     existing_tools = [type(t) for t in (cont.tools + cont.overlays)]
     if not PanTool in existing_tools:
         cont.tools.append(PanTool(cont))
-#    if not RectZoomTool in existing_tools:
-#        cont.overlays.append(RectZoomTool(cont, drag_button="right"))
+    if not RectZoomTool in existing_tools:
+        cont.overlays.append(RectZoomTool(cont, drag_button="right"))
 
     if not session.hold:
         cont.delplot(*cont.plots.keys())
