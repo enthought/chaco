@@ -23,7 +23,7 @@ from enthought.enable2.wx_backend.api import Window
 from enthought.chaco2.examples import DemoFrame, demo_main, COLOR_PALETTE
 from enthought.chaco2.api import create_line_plot, add_default_axes, add_default_grids, \
                                  OverlayPlotContainer, VPlotContainer, DataLabel
-from enthought.chaco2.tools.api import PanTool, SimpleZoom
+from enthought.chaco2.tools.api import PanTool, SimpleZoom, DataLabelTool
 
 
 
@@ -51,14 +51,18 @@ class PlotFrame(DemoFrame):
         zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
-        # Add a static label at a particular point.  Note the use of padding
-        # to offset the label from its data point.
+        # Add a dynamic label.  This can be dragged and moved around using the
+        # right mouse button.  Note the use of padding to offset the label
+        # from its data point.
         label = DataLabel(component=plot, data_point=(x[40], y[40]),
                           label_position="top left", padding=40,
                           bgcolor = "lightgray",
                           border_visible=False)
         plot.overlays.append(label)
+        tool = DataLabelTool(label, drag_button="right", auto_arrow_root=True)
+        label.tools.append(tool)
 
+        # Add some static labels. 
         label2 = DataLabel(component=plot, data_point=(x[20], y[20]),
                            label_position="bottom right",
                            border_visible=False,
@@ -76,6 +80,7 @@ class PlotFrame(DemoFrame):
                            marker="circle",
                            arrow_visible=False)
         plot.overlays.append(label3)
+        
     
         container.add(plot)
 

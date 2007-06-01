@@ -13,9 +13,13 @@ from scatter_markers import marker_trait
 from tooltip import ToolTip
 
 
-# Used to specify the position of the label relative to its target
-LabelPositionTrait = Enum("top right", "bottom", "left", "right", "top", "top left",
-                         "bottom left", "bottom right", "center")
+# Used to specify the position of the label relative to its target.  This can
+# be one of the text strings indicated, or a tuple/list of floats representing
+# the (x_offset, y_offset) in screen space of the label's lower left corner.
+LabelPositionTrait = Trait("top right",
+                           Enum("center", "bottom", "left", "right", "top",
+                                "top right", "top left", "bottom left", "bottom right"),
+                           Tuple, List)
 
 
 def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
@@ -150,11 +154,18 @@ class DataLabel(ToolTip):
     # When arrow_root is 'auto', this determines the location on the data label
     # from which the arrow is drawn based on the position of the label relative
     # to its data point.
-    position_root_map = {
-        "top left": ("x2", "y"),
-        "top right": ("x", "y"),
-        "bottom left": ("x2", "y2"),
-        "bottom right": ("x", "y2"),
+    _position_root_map = {
+        "top left": "bottom right",
+        "top right": "bottom left",
+        "bottom left": "top right",
+        "bottom right": "top left",
+        }
+
+    _root_positions = {
+        "bottom right": ("x2", "y"),
+        "bottom left": ("x", "y"),
+        "top right": ("x2", "y2"),
+        "top left": ("x", "y2"),
         }
 
 
@@ -169,11 +180,13 @@ class DataLabel(ToolTip):
         # draw the arrow if necessary
         if self.arrow_visible:
             if self._cached_arrow is None:
-                if self.arrow_root == "auto" or self.arrow_root not in self.position_root_map:
-                    ox, oy = self.position_root_map.get(self.label_position,
-                                       (self.x+self.width/2, self.y+self.height/2))
+                if self.arrow_root == "auto" or self.arrow_root not in self._position_root_map:
+                    ox, oy = self._root_positions.get(
+                                 self._position_root_map.get(self.label_position, "DUMMY"),
+                                 (self.x+self.width/2, self.y+self.height/2)
+                                 )
                 else:
-                    ox, oy = self.position_root_map.get(self.arrow_root)
+                    ox, oy = self._root_positions[self.arrow_root]
                     
                 if type(ox) == str:
                     ox = getattr(self, ox)
@@ -203,24 +216,29 @@ class DataLabel(ToolTip):
 
         self._screen_coords = self.component.map_screen(self.data_point)
         sx, sy = self._screen_coords
-        orientation = self.label_position
-        if ("left" in orientation) or ("right" in orientation):
-            if " " not in orientation:
-                self.y = sy - self.height / 2
-            if "left" in orientation:
-                self.outer_x = sx - self.outer_width - 1
-            elif "right" in orientation:
-                self.outer_x = sx
-        if ("top" in orientation) or ("bottom" in orientation):
-            if " " not in orientation:
-                self.x = sx - self.width / 2
-            if "bottom" in orientation:
-                self.outer_y = sy - self.outer_height - 1
-            elif "top" in orientation:
-                self.outer_y = sy
-        if orientation == "center":
-            self.x = sx - (self.width/2)
-            self.y = sy - (self.height/2)
+
+        if isinstance(self.label_position, str):
+            orientation = self.label_position
+            if ("left" in orientation) or ("right" in orientation):
+                if " " not in orientation:
+                    self.y = sy - self.height / 2
+                if "left" in orientation:
+                    self.outer_x = sx - self.outer_width - 1
+                elif "right" in orientation:
+                    self.outer_x = sx
+            if ("top" in orientation) or ("bottom" in orientation):
+                if " " not in orientation:
+                    self.x = sx - self.width / 2
+                if "bottom" in orientation:
+                    self.outer_y = sy - self.outer_height - 1
+                elif "top" in orientation:
+                    self.outer_y = sy
+            if orientation == "center":
+                self.x = sx - (self.width/2)
+                self.y = sy - (self.height/2)
+        else:
+            self.x = sx + self.label_position[0]
+            self.y = sy + self.label_position[1]
 
         self._cached_arrow = None
         return
