@@ -19,6 +19,8 @@ from enthought.enable2.wx_backend.api import Window
 from enthought.chaco2.api import ArrayPlotData, Plot
 from enthought.chaco2.examples import DemoFrame, demo_main
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
+from enthought.chaco2.tools.image_inspector_tool import ImageInspectorTool, \
+     ImageInspectorOverlay
 
 
 class PlotFrame(DemoFrame):
@@ -37,7 +39,7 @@ class PlotFrame(DemoFrame):
 
         # Create the plot
         plot = Plot(pd)
-        plot.img_plot("imagedata")
+        img_plot = plot.img_plot("imagedata")[0]
 
         # Tweak some of the plot properties
         plot.bgcolor = "white"
@@ -47,6 +49,9 @@ class PlotFrame(DemoFrame):
         plot.overlays.append(SimpleZoom(component=plot, 
                                         tool_mode="box", always_on=False))
 
+        imgtool = ImageInspectorTool(img_plot)
+        plot.tools.append(imgtool)
+        plot.overlays.append(ImageInspectorOverlay(image_inspector=imgtool))
         # Return a window containing our plot
         return Window(self, -1, component=plot, bg_color="lightgray")
 

@@ -51,6 +51,7 @@ from tooltip import ToolTip
 from data_label import DataLabel
 from lasso_overlay import LassoOverlay
 from color_bar import ColorBar
+from text_box_overlay import TextBoxOverlay
 
 # Renderers
 from barplot import BarPlot
@@ -77,6 +78,7 @@ from plot import Plot
 
 # Axis
 from axis import PlotAxis
+#from scales_axis import PlotAxis
 from label_axis import LabelAxis
 from ticks import AbstractTickGenerator, DefaultTickGenerator, auto_ticks, auto_interval, \
                   tick_intervals, log_auto_ticks, auto_bounds, calc_bound

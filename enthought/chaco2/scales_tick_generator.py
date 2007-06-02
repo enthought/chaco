@@ -1,7 +1,7 @@
 
 from numpy import array
 
-from enthought.traits.api import Instance
+from enthought.traits.api import Any
 from enthought.kiva import font_metrics_provider
 from ticks import AbstractTickGenerator
 
@@ -11,7 +11,10 @@ from scales.api import ScaleSystem
 
 class ScalesTickGenerator(AbstractTickGenerator):
 
-    scale = Instance(ScaleSystem, args=())
+    scale = Any #Instance(ScaleSystem, args=())
+
+    def _scale_default(self):
+        return ScaleSystem()
 
     def get_ticks(self, data_low, data_high, bounds_low, bounds_high, interval,
                   use_endpoints=False, scale=None):
