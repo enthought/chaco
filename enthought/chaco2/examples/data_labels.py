@@ -65,6 +65,7 @@ class PlotFrame(DemoFrame):
         # Add some static labels. 
         label2 = DataLabel(component=plot, data_point=(x[20], y[20]),
                            label_position="bottom right",
+                           label_format = "Y=%(y)0.3f",
                            border_visible=False,
                            bgcolor="transparent",
                            marker_color="blue",

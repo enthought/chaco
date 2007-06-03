@@ -4,7 +4,8 @@ from numpy import array, asarray
 from numpy.linalg import norm
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Bool, Enum, Float, Int, List, Tuple, Trait
+from enthought.traits.api import Any, Array, Bool, Enum, Float, Int, List, \
+     Str, Tuple, Trait
 from enthought.enable2.api import ColorTrait
 
 # Local, relative imports
@@ -92,6 +93,11 @@ class DataLabel(ToolTip):
 
     # The location of the data label relative to the data point
     label_position = LabelPositionTrait
+
+    # The format string that determines the label's text.  This string will be
+    # formatted with a dict containing the keys 'x' and 'y', corresponding to
+    # data space values.
+    label_format = Str("(%(x)f, %(y)f)")
 
     # Should the label clip itself against the main plot area?  If not, then
     # the label will draw  into the padding area (where axes typically reside).
@@ -245,4 +251,4 @@ class DataLabel(ToolTip):
 
     def _data_point_changed(self, old, new):
         if new is not None:
-            self.lines = [str(new)]
+            self.lines = [self.label_format % {"x":new[0], "y":new[1]}]
