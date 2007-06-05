@@ -11,7 +11,7 @@ from enthought.traits.api import false, RGBAColor
 
 # Chaco imports
 from enthought.chaco2.api import create_polar_plot
-from enthought.chaco2.examples import DemoFrame, demo_main
+from enthought.chaco2.example_support import DemoFrame, demo_main
 
 class MyFrame(DemoFrame):
     def _create_window(self):

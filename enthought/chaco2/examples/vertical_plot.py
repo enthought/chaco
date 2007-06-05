@@ -17,7 +17,7 @@ from enthought.chaco2.api import PlotComponent, OverlayPlotContainer, PlotLabel,
 from enthought.traits.api import false, RGBAColor
 
 # Relative imports
-from enthought.chaco2.examples import DemoFrame, demo_main, COLOR_PALETTE
+from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 
 
 class PlotFrame(DemoFrame):

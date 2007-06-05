@@ -14,7 +14,7 @@ from numpy import cos, linspace, log, meshgrid, pi, sin
 from enthought.enable2.wx_backend.api import Window
 
 # Chaco imports
-from enthought.chaco2.examples import DemoFrame, demo_main
+from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import ArrayPlotData, ColorBar, gmt_drywet, \
                                  HPlotContainer, jet,  LinearMapper, Plot
 from enthought.chaco2.tools.api import PanTool, SimpleZoom

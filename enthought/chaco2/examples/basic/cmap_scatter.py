@@ -17,7 +17,7 @@ from numpy.random import random
 from enthought.enable2.wx_backend.api import Window
 
 # Chaco imports
-from enthought.chaco2.examples.demo_base import DemoFrame, demo_main
+from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import ArrayPlotData, ColorBar, \
                                  ColormappedSelectionOverlay, HPlotContainer, \
                                  hsv, LinearMapper, Plot

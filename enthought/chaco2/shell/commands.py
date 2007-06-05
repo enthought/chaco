@@ -54,6 +54,7 @@ def chaco_commands():
     xtitle -- sets the title of a horizontal axis
     ytitle -- sets the title of a vertical axis
     title -- sets the title of the plot
+    label -- adds a label at a data point
 
 
     Tools

@@ -10,7 +10,7 @@ from enthought.traits.ui.api import View, Group, Item
 from enthought.enable2.wx_backend.api import Window
 
 # Chaco imports
-from enthought.chaco2.examples import DemoFrame, demo_main, COLOR_PALETTE
+from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 from enthought.chaco2.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
                                  LinearMapper, OverlayPlotContainer, PlotAxis, PlotGrid
 

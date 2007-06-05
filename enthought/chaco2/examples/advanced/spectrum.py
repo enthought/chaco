@@ -7,8 +7,8 @@ Based on updating_plot.py
 
 # Major library imports
 from pyaudio import PyAudio, paInt16
-from enthought.chaco2.default_colormaps import gray
-from enthought.chaco2.default_colormaps import jet
+from enthought.chaco2.default_colormaps import gray, jet
+
 import wx
 from numpy import fabs, zeros, linspace, short, fromstring, hstack, transpose, array
 from scipy import fft
@@ -17,7 +17,7 @@ from scipy import fft
 from enthought.enable2.wx_backend.api import Window
 
 # Chaco imports
-from enthought.chaco2.examples.demo_base import DemoFrame, demo_main
+from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import Plot, ArrayPlotData, HPlotContainer
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 

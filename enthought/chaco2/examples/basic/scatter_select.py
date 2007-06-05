@@ -18,7 +18,7 @@ from enthought.enable2.wx_backend.api import Window
 from enthought.traits.api import Instance
 
 # Chaco imports
-from enthought.chaco2.examples import DemoFrame, demo_main
+from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import AbstractDataSource, ArrayPlotData, Plot, \
                                  HPlotContainer, LassoOverlay 
 from enthought.chaco2.tools.api import LassoSelection, ScatterInspector
