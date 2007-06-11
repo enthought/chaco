@@ -54,6 +54,8 @@ def get_nested_components(container):
                 worklist.append((c, new_offset))
         elif isinstance(item, PlotAxis) or isinstance(item, BaseXYPlot):
             components.append((item, offset))
+            for overlay in item.overlays + item.underlays:
+                components.append((overlay, offset))
         if worklist.isempty():
             break
     return components
@@ -79,14 +81,14 @@ class TraitsTool(BaseTool):
         # any nested containers are lower priority than primary plot components.
         candidates = []
         component = self.component
-        if isinstance(component, BasePlotContainer):
+        if isinstance(component, BasePlotContainer) or isinstance(component, BaseXYPlot):
             candidates = get_nested_components(self.component)
-        elif isinstance(component, PlotAxis) or isinstance(component, BaseXYPlot):
+        elif isinstance(component, PlotAxis):
             candidates = [(component, (0,0))]
         else:
             # We don't support clicking on unrecognized components
             return
-        
+
         # Hittest against all the candidate and take the first one
         item = None
         for candidate, offset in candidates:
