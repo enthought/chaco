@@ -34,6 +34,9 @@ class TextBoxOverlay(AbstractOverlay):
         """ Draw ourself.
         """
 
+        if not self.visible:
+            return
+
         label = Label(text=self.text, font=self.font, bgcolor=self.bgcolor,
                       margin=5)
         width, height = label.get_width_height(gc)

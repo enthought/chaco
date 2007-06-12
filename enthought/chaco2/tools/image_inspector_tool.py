@@ -51,6 +51,9 @@ class ImageInspectorOverlay(TextBoxOverlay):
     # which corner.
     tooltip_mode = Bool(False)
 
+    # Make the default state of the overlay invisible
+    visible = False
+
     def _image_inspector_changed(self, old, new):
         if old:
             old.on_trait_event(self._new_value_updated, 'new_value', remove=True)

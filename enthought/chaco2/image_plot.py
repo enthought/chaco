@@ -45,8 +45,20 @@ class ImagePlot(Base2DPlot):
             
         gc.save_state()
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
+        if hasattr(gc, "set_interpolation_quality"):
+            from enthought.kiva.mac.ABCGI import InterpolationQuality
+            gc.set_interpolation_quality(InterpolationQuality.none)
+        elif hasattr(gc, "set_image_interpolation"):
+            gc.set_image_interpolation("nearest")
         gc.draw_image(self._cached_image, self._cached_dest_rect)
         gc.restore_state()
+
+    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
+                  index_only=False):
+        # For image plots, treat hittesting threshold as 0.0, because it's
+        # the only thing that really makes sense.
+        return Base2DPlot.map_index(self, screen_pt, 0.0, outside_returns_none,
+                                    index_only)
 
     #------------------------------------------------------------------------
     # Private methods

@@ -29,6 +29,11 @@ class AbstractOverlay(PlotComponent):
     # Typically, an overlay will not want to render a background.
     bgcolor = "transparent"
 
+    def __init__(self, component=None, *args, **kw):
+        if component is not None:
+            self.component = component
+        super(AbstractOverlay, self).__init__(*args, **kw)
+
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         pass
 
