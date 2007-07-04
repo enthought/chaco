@@ -1,9 +1,10 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.kiva import STROKE, font_metrics_provider
-from enthought.traits.api import KivaFont, List, Int, Float
 from enthought.enable2.api import white_color_trait
+from enthought.kiva import STROKE, font_metrics_provider
+from enthought.kiva.traits.kiva_font_trait import KivaFont
+from enthought.traits.api import List, Int, Float
 
 
 # Local imports
@@ -21,7 +22,7 @@ class ToolTip(AbstractOverlay):
 
     # The ammount of space between the border and the text
     border_padding = Int(4)
-    
+
     # Set a default white background color
     bgcolor = white_color_trait
 
@@ -44,7 +45,7 @@ class ToolTip(AbstractOverlay):
 
     # The position of the corner of the tooltip.  Which corner this represents
     # depends on the space available on each side, set by left_space, etc.
-    
+
     corner_point = List
 
     #----------------------------------------------------------------------
@@ -55,12 +56,12 @@ class ToolTip(AbstractOverlay):
     def draw(self, gc, view_bounds=None, mode='normal'):
         self.overlay(self, gc, view_bounds=view_bounds, mode='normal')
         return
-        
+
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
         self.do_layout()
         PlotComponent._draw(self, gc, view_bounds, mode)
         return
-    
+
     def _draw_overlay(self, gc, view_bounds=None, mode='normal'):
         gc.save_state()
         try:
@@ -77,7 +78,7 @@ class ToolTip(AbstractOverlay):
         finally:
             gc.restore_state()
         return
-    
+
 
     def _do_layout(self):
         """Computes the size of the tooltip, and creates the label objects
@@ -105,7 +106,7 @@ class ToolTip(AbstractOverlay):
                 self.y = self.corner_point[1] - self.outer_bounds[1]
             else:
                 self.y = self.corner_point[1]
-            
+
         self._cached_labels = labels
         self._cached_line_sizes = line_sizes
 
@@ -113,4 +114,4 @@ class ToolTip(AbstractOverlay):
         self._layout_needed = True
         self.request_redraw()
 
-        
+

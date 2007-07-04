@@ -6,7 +6,8 @@ from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
 # Enthought Library imports
 from enthought.enable2.api import black_color_trait, transparent_color_trait, \
                                   LineStyle
-from enthought.traits.api import Any, Float, Int, KivaFont, Str, Trait, Unicode, \
+from enthought.kiva.traits.kiva_font_trait import KivaFont
+from enthought.traits.api import Any, Float, Int, Str, Trait, Unicode, \
                                  Bool, Event, List, Array, Instance, Enum, false, \
                                  true, TraitError
 from enthought.traits.ui.api import View, HGroup, Group, VGroup, Item, TextEditor
@@ -21,7 +22,7 @@ from log_mapper import LogMapper
 
 def float_or_auto(val):
     """
-    Validator function that returns val if val is either a number or 
+    Validator function that returns val if val is either a number or
     the word 'auto'.  This is used as a validator for the text editor
     in the traits UI for the tick_interval trait.
     """
@@ -72,101 +73,101 @@ class PlotAxis(AbstractOverlay):
     The PlotAxis is a visual component that can be rendered on its own as
     a standalone component or attached as an overlay to another component.
     (To attach it as an overlay, set its .component attribute.)
-    
+
     When it is attached as an overlay, it draws into the padding around
     the component.
     """
-    
+
     # The mapper that drives this axis
     mapper = Instance(AbstractMapper)
-    
+
     # The text of the title
     title = Trait('', Str, Unicode) #May want to add PlotLabel option
-    
+
     # The font in which to render the title
     title_font = KivaFont('modern 12')
-    
+
     # The color in which to render the title
     title_color = black_color_trait
-    
+
     # Not used right now.
     # TODO: Implement this
-    markers = Any 
-    
+    markers = Any
+
     # The thickness (in pixels) of each tick
     tick_weight = Float(1.0)
-    
+
     # The color of the ticks
     tick_color = black_color_trait
-    
+
     # The font in which to render the tick labels
     tick_label_font = KivaFont('modern 10')
-    
+
     # The color of the tick labels
     tick_label_color = black_color_trait
-    
+
     # A callable that is passed the numerical value of each tick label and
     # which should return a string.
     tick_label_formatter = Any
-    
+
     # The number of pixels by which the ticks go "into" the plot area
     tick_in = Int(5)
-    
+
     # The number of pixels by which the ticks extend into the label area
     tick_out = Int(5)
-    
+
     # Are ticks visible at all?
     tick_visible = true
-    
+
     # What is the dataspace interval between ticks?
     tick_interval = Trait('auto', 'auto', Float)
-    
+
     # A callable that implements the AbstractTickGenerator Interface
     tick_generator = Trait(DefaultTickGenerator(), Instance(AbstractTickGenerator))
-    
+
     # The location of the axis relative to the plot.  This determines where
     # the axis title is located relative to the axis line.
     orientation = Enum("top", "bottom", "left", "right")
-    
+
     # Is the axis line visible?
     axis_line_visible = true
-    
+
     # The color of the axis line
     axis_line_color = black_color_trait
-    
+
     # The line thickness (in pixels) of the axis line
     axis_line_weight = Float(1.0)
-    
+
     # The dash style of the axis line
     axis_line_style = LineStyle('solid')
-    
+
     # A special version of the axis line that is more useful for geophysical
     # plots.
     # TODO: MOVE THIS OUT OF HERE!
     small_haxis_style = false
-    
+
     # Should we do extra work to ensure that the end labels of the axis fall
     # within the axis's bounding area?
     ensure_labels_bounded = false
-    
+
     # Should we prevent the ticks from being rendered outside our bounds?
     # This is off by default because the standard axis *will* render ticks
     # that encroach on the plot area.
     ensure_ticks_bounded = false
-    
+
     # Fired when our range's bounds change
     updated = Event
-    
+
     # default traits UI view
     traits_view = AxisView
 
     #------------------------------------------------------------------------
     # Override default values of inherited traits
     #------------------------------------------------------------------------
-    
+
     # Axes will generally want the color of the container to show through
     bgcolor = transparent_color_trait
-    
+
     # Typically, axes are resizable in both dimensions.
     resizable = "hv"
 
@@ -190,11 +191,11 @@ class PlotAxis(AbstractOverlay):
     _axis_vector = Array
     _axis_pixel_vector = Array
     _end_axis_point = Array
-    
-    
+
+
     _ticklabel_cache = List
     _cache_valid = Bool(False)
-    
+
 
     #------------------------------------------------------------------------
     # Public methods
@@ -232,7 +233,7 @@ class PlotAxis(AbstractOverlay):
     def _draw_component(self, gc, view_bounds=None, mode='normal', component=None):
         if not self.visible:
             return
-        
+
         if not self._cache_valid:
             if component is not None:
                 self._calculate_geometry(component)
@@ -240,15 +241,15 @@ class PlotAxis(AbstractOverlay):
                 self._old_calculate_geometry()
             self._compute_tick_positions(gc, component)
             self._compute_labels(gc)
-        
+
         try:
             gc.save_state()
-            
+
             # slight optimization: if we set the font correctly on the
             # base gc before handing it in to our title and tick labels,
             # their set_font() won't have to do any work.
             gc.set_font(self.tick_label_font)
-            
+
             if self.axis_line_visible:
                 self._draw_axis_line(gc, self._origin_point, self._end_axis_point)
             if self.title:
@@ -262,11 +263,11 @@ class PlotAxis(AbstractOverlay):
         self._cache_valid = True
         return
 
-    
+
     #------------------------------------------------------------------------
     # Private draw routines
     #------------------------------------------------------------------------
-    
+
     def _layout_as_overlay(self, size=None, force=False):
         if self.component is not None:
             if self.orientation in ("left", "right"):
@@ -288,7 +289,7 @@ class PlotAxis(AbstractOverlay):
                     self.height = self.component.padding_top
                     self.y = self.component.y2 + 1
         return
-    
+
     def _draw_axis_line(self, gc, startpoint, endpoint):
         gc.save_state()
         try:
@@ -302,10 +303,10 @@ class PlotAxis(AbstractOverlay):
         finally:
             gc.restore_state()
         return
-    
+
     def _draw_title(self, gc, label=None, v_offset=20):
         #put in rotation code for right side
-        
+
         if label is None:
             title_label = Label(text=self.title,
                                 font=self.title_font,
@@ -314,7 +315,7 @@ class PlotAxis(AbstractOverlay):
         else:
             title_label = label
         tl_bounds = array(title_label.get_width_height(gc), float64)
-        
+
         if self.title_angle == 0:
             text_center_to_corner = -tl_bounds/2.0
         else:
@@ -322,22 +323,22 @@ class PlotAxis(AbstractOverlay):
             corner_vec = transpose(-tl_bounds/2.0)
             rotmatrix = self._rotmatrix(-self.title_angle*pi/180.0)
             text_center_to_corner = transpose(dot(rotmatrix, corner_vec))[0]
-        
+
         # would be good to count tick height, but more complicated.
         offset = (self._origin_point+self._end_axis_point)/2
         center_dist = self._center_dist(-self._inside_vector, tl_bounds[0], tl_bounds[1], rotation=self.title_angle)
         offset -= self._inside_vector * (center_dist + v_offset)
         offset += text_center_to_corner
-        
+
         if self.title_angle == 90.0:
             # Horrible hack to adjust for the fact that the generic math above isn't
             # actually putting the label in the right place...
             offset[1] = offset[1] - tl_bounds[0]/2.0
-        
+
         gc.translate_ctm(*offset)
         title_label.draw(gc)
         gc.translate_ctm(*(-offset))
-            
+
         return
 
     def _draw_ticks(self, gc):
@@ -366,11 +367,11 @@ class PlotAxis(AbstractOverlay):
             #just touches the rectangular bounding box of the tick label.
             #Note: This is not necessarily optimal for non
             #horizontal/vertical axes.  More work could be done on this.
-            
+
             base_position = (self._center_dist(-self._inside_vector, *tl_bounds)+8) \
                                 * -self._inside_vector \
                                 - tl_bounds/2.0 + self._tick_label_positions[i]
-            
+
             if self.ensure_labels_bounded:
                 pushdir = 0
                 if i == 0:
@@ -380,10 +381,10 @@ class PlotAxis(AbstractOverlay):
                 push_pixel_vector = self._axis_pixel_vector * pushdir
                 tlpos = around((self._center_dist(push_pixel_vector,*tl_bounds)+4) \
                                           * push_pixel_vector + base_position)
-                
+
             else:
                 tlpos = around(base_position)
-            
+
             gc.translate_ctm(*tlpos)
             ticklabel.draw(gc)
             gc.translate_ctm(*(-tlpos))
@@ -393,7 +394,7 @@ class PlotAxis(AbstractOverlay):
     #------------------------------------------------------------------------
     # Private methods for computing positions and layout
     #------------------------------------------------------------------------
-    
+
     def _reset_cache(self):
         self._tick_positions = []
         self._tick_label_list = []
@@ -405,7 +406,7 @@ class PlotAxis(AbstractOverlay):
             self._reset_cache()
             self._cache_valid = True
             return
-        
+
         datalow = self.mapper.range.low
         datahigh = self.mapper.range.high
         screenhigh = self.mapper.high_pos
@@ -416,11 +417,11 @@ class PlotAxis(AbstractOverlay):
                 direction = overlay_component.x_direction
             elif self.orientation in ("left", "right"):
                 direction = overlay_component.y_direction
-            
+
             if direction == "flipped":
                 screenlow, screenhigh = screenhigh, screenlow
-                
-            
+
+
         if (datalow == datahigh) or (screenlow == screenhigh) or \
            (datalow in [inf, -inf]) or (datahigh in [inf, -inf]):
             self._reset_cache()
@@ -429,21 +430,21 @@ class PlotAxis(AbstractOverlay):
 
         if datalow > datahigh:
             raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
-        
+
         if not self.tick_generator:
             return
-        
+
         if isinstance(self.mapper, LogMapper):
             scale = 'log'
         else:
             scale = 'linear'
-            
+
         tick_list = array(self.tick_generator.get_ticks(datalow, datahigh,
                                                         datalow, datahigh,
                                                         self.tick_interval,
                                                         use_endpoints=False,
                                                         scale=scale), float64)
-        
+
         mapped_tick_positions = (array(self.mapper.map_screen(tick_list))-screenlow) / \
                                             (screenhigh-screenlow)
         self._tick_positions = around(array([self._axis_vector*tickpos + self._origin_point \
@@ -463,7 +464,7 @@ class PlotAxis(AbstractOverlay):
             self._tick_label_positions = self._tick_positions
         return
 
-        
+
     def _compute_labels(self, gc):
         """Computes the positions and generates the label objects.  Waits
         for the cache to become invalid."""
@@ -503,7 +504,7 @@ class PlotAxis(AbstractOverlay):
         else:
             overlay_component = self
             new_origin = array(self.position)
-        
+
         direction = None
         if self.orientation in ('top', 'bottom'):
             self._major_axis_size = overlay_component.bounds[0]
@@ -525,12 +526,12 @@ class PlotAxis(AbstractOverlay):
 
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
-        
+
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
         if direction == "flipped":
             screenlow, screenhigh = screenhigh, screenlow
-        
+
         self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.
@@ -575,15 +576,15 @@ class PlotAxis(AbstractOverlay):
 
 #        if self.mapper.high_pos<self.mapper.low_pos:
 #            self._origin_point = self._origin_point + self._axis_
-        
+
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
-                
+
         self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.
         self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
-        return    
+        return
 
 
     #------------------------------------------------------------------------
@@ -609,19 +610,19 @@ class PlotAxis(AbstractOverlay):
             widthdist = (float(width)/2)/float(absvec[0])
         else:
             widthdist = 99999999
-            
+
         return min(heightdist, widthdist)
 
 
     #------------------------------------------------------------------------
     # Event handlers
     #------------------------------------------------------------------------
-    
+
     def _bounds_changed(self):
         self._invalidate()
 #        self._request_redraw()
         return
-    
+
     def _bounds_items_changed(self):
         return self._bounds_changed()
 
@@ -633,14 +634,14 @@ class PlotAxis(AbstractOverlay):
         self._invalidate()
 #        self.request_redraw()
         return
-        
+
     def mapper_updated(self):
         """
         Event handler that gets bound to our mapper's .updated event
         """
         self._invalidate()
         return
-    
+
     def _position_changed(self):
         self._cache_valid = False
 #        self.request_redraw()
@@ -654,7 +655,7 @@ class PlotAxis(AbstractOverlay):
         self._cache_valid = False
 #        self._request_redraw()
         return
-    
+
     def _invalidate(self):
         self._cache_valid = False
         self.invalidate_draw()
@@ -664,13 +665,13 @@ class PlotAxis(AbstractOverlay):
 #        else:
 #            self.request_redraw()
         return
-    
+
     #------------------------------------------------------------------------
     # The following event handlers just invalidate our previously computed
     # Label instances and backbuffer if any of our visual attributes change.
     # TODO: refactor this stuff and the caching of contained objects (e.g. Label)
     #------------------------------------------------------------------------
-    
+
     def _title_changed(self):
         self.invalidate_draw()
         if self.component:
@@ -678,46 +679,46 @@ class PlotAxis(AbstractOverlay):
 #            self.component.request_redraw()
 #        else:
 #            self.request_redraw()
-    
+
     def _title_color_changed(self):
         return self._invalidate()
-    
+
     def _title_font_changed(self):
         return self._invalidate()
-    
+
     def _tick_weight_changed(self):
         return self._invalidate()
-        
+
     def _tick_color_changed(self):
         return self._invalidate()
-    
+
     def _tick_font_changed(self):
         return self._invalidate()
-        
+
     def _tick_label_font_changed(self):
         return self._invalidate()
-    
+
     def _tick_label_color_changed(self):
         return self._invalidate()
-    
+
     def _tick_in_changed(self):
         return self._invalidate()
 
     def _tick_out_changed(self):
         return self._invalidate()
-    
+
     def _tick_visible_changed(self):
         return self._invalidate()
-    
+
     def _tick_interval_changed(self):
         return self._invalidate()
-    
+
     def _axis_line_color_changed(self):
         return self._invalidate()
-    
+
     def _axis_line_weight_changed(self):
         return self._invalidate()
-    
+
     def _axis_line_style_changed(self):
         return self._invalidate()
 
@@ -748,7 +749,7 @@ class PlotAxis(AbstractOverlay):
             '_ticklabel_cache',
             '_cache_valid'
            ]
-       
+
         state = super(PlotAxis,self).__getstate__()
         for key in dont_pickle:
             if state.has_key(key):
@@ -762,6 +763,6 @@ class PlotAxis(AbstractOverlay):
         self._reset_cache()
         self._cache_valid = False
         return
-        
+
 
 # EOF ########################################################################

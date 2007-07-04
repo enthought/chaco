@@ -3,8 +3,9 @@ from numpy import array
 
 from enthought.enable2.api import white_color_trait
 from enthought.kiva import STROKE, font_metrics_provider
+from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Dict, Enum, false, HasTraits, Int, \
-                                 Instance, KivaFont, List, true, Trait
+                                 Instance, List, true, Trait
 
 # Local relative imports
 from abstract_overlay import AbstractOverlay
@@ -58,16 +59,16 @@ class CompositeIconRenderer(AbstractCompositeIconRenderer):
 
 
 class Legend(AbstractOverlay):
-    
+
     # The font to use for the legend text
     font = KivaFont("modern 12")
-    
+
     # The amount of space between the content of the legend and the border
     border_padding = Int(10)
-    
+
     # Override the default border_visible setting (inherited from enable2.Component)
     border_visible = True
-    
+
     # The background color of the legend
     bgcolor = white_color_trait
 
@@ -78,23 +79,23 @@ class Legend(AbstractOverlay):
     #   ll = Lower Left
     #   lr = Lower Right
     align = Enum("ur", "ul", "ll", "lr")
-    
+
     # The amount of space between each legend item
     line_spacing = Int(3)
-    
+
     # The size of the icon/marker area drawn next to the label
     icon_bounds = List([24, 24])
-    
+
     # Amount of spacing between each label and its icon
     icon_spacing = Int(5)
 
     # Maps labels (strings) to plot instances or lists of plot instances.  The
     # Legend determines the appropriate rendering of each plot's marker/line.
     plots = Dict
-    
+
     # The list of labels to show and the order to show them in.  If this
     # list is blank, then the keys of self.plots is used and displayed in
-    # alphabetical order.  Otherwise, only the items in the "labels" 
+    # alphabetical order.  Otherwise, only the items in the "labels"
     # list are down in the legend.  Labels are ordered from top to bottom.
     labels = List
 
@@ -108,7 +109,7 @@ class Legend(AbstractOverlay):
     #   - render the name but leave the icon blank (color=self.bgcolor)
     #   - render a "question mark" icon
     error_icon = Enum("skip", "blank", "questionmark")
-    
+
     # Override the default value of this trait.
     # TODO: Make this work when the legend is standalone, by setting this
     # to "hv", then having the Legend manually reset its bounds and position
@@ -121,14 +122,14 @@ class Legend(AbstractOverlay):
     #------------------------------------------------------------------------
     # Private Traits
     #------------------------------------------------------------------------
-    
-    # A list of Label instances 
+
+    # A list of Label instances
     _cached_labels = List
-    
+
     _cached_label_sizes = Any
-    
+
     _cached_label_names = List
-    
+
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         self.do_layout()
@@ -144,7 +145,7 @@ class Legend(AbstractOverlay):
         self.outer_position = [x, y]
         PlotComponent._draw(self, gc, view_bounds, mode)
         return
-    
+
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
         # Determine the position we are going to draw at from our alignment
@@ -155,17 +156,17 @@ class Legend(AbstractOverlay):
         # the code in PlotComponent._draw_overlay, which is unfortunate;
         # on the other hand, overlays of overlays seem like a rather obscure
         # feature.
-        
+
         gc.save_state()
         try:
 
             edge_space = self.border_width + self.border_padding
             icon_width, icon_height = self.icon_bounds
-            
+
             icon_x = self.x + edge_space
             text_x = icon_x + icon_width + self.icon_spacing
             y = self.y2 - edge_space
-            
+
             for i, label_name in enumerate(self._cached_label_names):
                 # Compute the current label's position
                 label_height = self._cached_label_sizes[i][1]
@@ -200,10 +201,10 @@ class Legend(AbstractOverlay):
 
                     # Advance y to the next label's baseline
                     y -= self.line_spacing
-                
+
         finally:
             gc.restore_state()
-        
+
         return
 
     def _render_error(self, gc, icon_x, icon_y, icon_width, icon_height):
@@ -230,7 +231,7 @@ class Legend(AbstractOverlay):
         Computes the size and position of the legend based on the maximum size of
         the labels, the alignment, and position of the component to overlay.
         """
-        
+
         # Gather the names of all the labels we will create
         label_names = self.labels
         if len(label_names) == 0:
@@ -243,29 +244,29 @@ class Legend(AbstractOverlay):
                 self._cached_label_names = []
                 self.outer_bounds = [0, 0]
                 return
-            
+
         # Create the labels
         labels = [Label(text=text, font=self.font, margin=0, bgcolor="transparent",
                         border_width=0) for text in label_names]
-        
+
         # We need a dummy GC in order to get font metrics
         dummy_gc = font_metrics_provider()
         label_sizes = array([label.get_width_height(dummy_gc) for label in labels])
-        
+
         max_label_width = max(label_sizes[:, 0])
         total_label_height = sum(label_sizes[:, 1]) + (len(label_sizes)-1)*self.line_spacing
-        
+
         legend_width = max_label_width + self.icon_spacing + self.icon_bounds[0] \
                         + self.hpadding + 2*self.border_padding
         legend_height = total_label_height + self.vpadding + 2*self.border_padding
-        
+
         self.outer_bounds = [legend_width, legend_height]
-        
+
         self._cached_labels = labels
         self._cached_label_sizes = label_sizes
         self._cached_label_names = label_names
         return
-    
+
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
 
@@ -275,7 +276,7 @@ class Legend(AbstractOverlay):
                     "border_width", "align"):
             self._layout_needed = True
         return
-    
+
 
 
 
