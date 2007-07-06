@@ -12,7 +12,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false, HasTraits, RGBAColor
+from enthought.traits.api import false, HasTraits
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main
@@ -38,20 +38,20 @@ class AnimatedPlot(HasTraits):
             plot = create_line_plot((self.x_values,self.y_values), color=color,
                                     bgcolor=bgcolor, add_grid=True, add_axis=True,
                                     orientation=orientation)
-        
+
         plot.resizable = ""
         plot.bounds = [PLOT_SIZE, PLOT_SIZE]
         plot.unified_draw = True
-        
+
         plot.tools.append(PanTool(plot, drag_button="right"))
         plot.tools.append(MoveTool(plot))
         plot.overlays.append(SimpleZoom(plot, tool_mode="box", always_on=False))
-        
+
         self.plot = plot
         self.numpoints = len(self.x_values)
         self.current_index = self.numpoints/2
         self.increment = 2
-    
+
     def timer_tick(self):
         if self.current_index <= self.numpoints/3:
             self.increment = 2
@@ -66,7 +66,7 @@ class AnimatedPlot(HasTraits):
 
 
 class PlotFrame(DemoFrame):
-    
+
     def _create_data(self):
         values = [jn(i, x) for i in range(10)]
 
@@ -76,7 +76,7 @@ class PlotFrame(DemoFrame):
         high = 15.0
         x = arange(low, high, (high-low)/numpoints)
         container = OverlayPlotContainer(bgcolor="lightgray")
-        
+
         common_index = None
         index_range = None
         value_range = None
@@ -96,11 +96,11 @@ class PlotFrame(DemoFrame):
             else:
                 animated_plot = AnimatedPlot(x, jn(i,x), color, orientation="v")
                 plot = animated_plot.plot
-            
+
             container.add(plot)
             self.animated_plots.append(animated_plot)
-                
-        
+
+
         for i, a_plot in enumerate(self.animated_plots):
             a_plot.plot.position = [50 + (i%3)*(PLOT_SIZE+50), 50 + (i//3)*(PLOT_SIZE+50)]
 
@@ -110,7 +110,7 @@ class PlotFrame(DemoFrame):
         self.timer = wx.Timer(self, timerId)
         self.Bind(wx.EVT_TIMER, self.onTimer, id=timerId)
         self.timer.Start(100.0, wx.TIMER_CONTINUOUS)
-        
+
         self.container = container
         return Window(self, -1, component=container)
 

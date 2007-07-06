@@ -8,7 +8,7 @@ from enthought.enable2.api import black_color_trait, white_color_trait
 from enthought.kiva import STROKE
 from enthought.logger import logger
 from enthought.traits.api import Any, Array, Enum, false, Float, Instance, \
-                                 Int,  List, RGBAColor
+                                 Int,  List
 from enthought.traits.ui.api import View, VGroup, Item
 
 # Local relative imports
@@ -33,29 +33,29 @@ class ScatterPlot(BaseXYPlot):
     """
     Renders a scatter plot given an index and value arrays
     """
-    
+
     # The symbol to use if self.marker is set to "custom". This should be
     # a compiled path for the given kiva context.
     custom_symbol = Any
-    
+
     #------------------------------------------------------------------------
     # Styles on a ScatterPlot
     #------------------------------------------------------------------------
-    
+
     # The type of marker to use.  This is a mapped trait using strings as the
     # keys.
     marker = marker_trait
-    
+
     # The pixel size of the marker (doesn't include the thickness of the outline)
     marker_size = Int(4)
-    
+
     # The thickness, in pixels, of the outline to draw around the marker.  If
     # this is 0, no outline will be drawn.
     line_width = Float(1.0)
-    
+
     # The fill color of the marker
     color = black_color_trait
-    
+
     # The color of the outline to draw around the marker
     outline_color = black_color_trait
 
@@ -110,29 +110,29 @@ class ScatterPlot(BaseXYPlot):
         """
         if self._cache_valid:
             return
-        
+
         index, index_mask = self.index.get_data_mask()
         value, value_mask = self.value.get_data_mask()
-        
+
         if not self.index or not self.value:
             return
-        
+
         if len(index) == 0 or len(value) == 0 or len(index) != len(value):
             logger.warn("Chaco2: using empty dataset; index_len=%d, value_len=%d." \
                                 % (len(index), len(value)))
             self._cached_data_pts = []
             self._cache_valid = True
             return
-        
+
         index_range_mask = self.index_mapper.range.mask_data(index)
         value_range_mask = self.value_mapper.range.mask_data(value)
         nan_mask = invert(isnan(index_mask)) & invert(isnan(value_mask))
         point_mask = index_mask & value_mask & nan_mask & \
                      index_range_mask & value_range_mask
-        
+
         points = transpose(array((index,value)))
         self._cached_data_pts = compress(point_mask, points, axis=0)
-        
+
         self._cache_valid = True
         return
 
@@ -145,12 +145,12 @@ class ScatterPlot(BaseXYPlot):
 
         if not icon_mode:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
-        render_markers(gc, points, self.marker, self.marker_size, 
+        render_markers(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_)
         if not icon_mode:
             # Draw the default axes, if necessary
             self._draw_default_axes(gc)
-    
+
 
     def _render_icon(self, gc, x, y, width, height):
         point = array([x+width/2, y+height/2])
@@ -164,19 +164,19 @@ class ScatterPlot(BaseXYPlot):
     def _marker_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-    
+
     def _marker_size_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        
+
     def _line_width_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-    
+
     def _color_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-    
+
     def _outline_color_changed(self):
         self.invalidate_draw()
         self.request_redraw()
@@ -199,7 +199,7 @@ def render_markers(gc, points, marker, marker_size,
     if type(marker) == str:
         marker = MarkerNameDict[marker]()
     elif issubclass(marker, AbstractMarker):
-        marker = marker() 
+        marker = marker()
 
     gc.save_state()
 
@@ -216,10 +216,10 @@ def render_markers(gc, points, marker, marker_size,
 
     # This is the fastest method - use one of the kiva built-in markers
     if hasattr(gc, "draw_marker_at_points") \
-        and (marker.__class__ not in (CustomMarker, CircleMarker, 
+        and (marker.__class__ not in (CustomMarker, CircleMarker,
                                       DiamondMarker, PixelMarker)) \
-        and (gc.draw_marker_at_points(points, 
-                                      marker_size, 
+        and (gc.draw_marker_at_points(points,
+                                      marker_size,
                                       marker.kiva_marker) != 0):
             pass
 

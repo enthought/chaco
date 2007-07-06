@@ -17,7 +17,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
@@ -28,22 +28,22 @@ from enthought.chaco2.tools.api import RangeSelection, RangeSelectionOverlay, Pa
 
 
 class PlotFrame(DemoFrame):
-    
+
     def _create_window(self):
         container = OverlayPlotContainer(padding=40, bgcolor="lightgray",
                                          use_backbuffer = True,
                                          border_visible = True,
                                          fill_padding = True)
-        
+
         #container.use_backbuffer = False
-        
+
         self.container = container
 
         numpoints = 100000
         low = -5
         high = 15.0
         x = arange(low, high+0.001, (high-low)/numpoints)
-        
+
         # Plot some bessel functions
         value_mapper = None
         index_mapper = None
@@ -64,20 +64,20 @@ class PlotFrame(DemoFrame):
                 plot.line_style = "dash"
             plot.bgcolor = "white"
             container.add(plot)
-        
+
         selection_overlay = RangeSelectionOverlay(component = plot)
         plot.tools.append(RangeSelection(plot))
         zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
         plot.overlays.append(selection_overlay)
         plot.overlays.append(zoom)
-        
-        
+
+
         return Window(self, -1, component=container)
 
 if __name__ == "__main__":
     if (len(sys.argv) > 1) and (sys.argv[1] == "fast"):
         use_downsampling = True
-    
+
     demo_main(PlotFrame, size=(600,500), title="Million point plot")
 
 # EOF

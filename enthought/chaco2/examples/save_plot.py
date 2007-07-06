@@ -8,7 +8,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main
@@ -22,7 +22,7 @@ WILDCARD = "Saved plots (*.plt)|*.plt|"\
            "All files (*.*)|*.*"
 
 class SavePlotDemoFrame(DemoFrame):
-    
+
     def _create_menu_bar(self):
         menu = wx.Menu()
         menu.Append(101, "Load plot...")
@@ -31,7 +31,7 @@ class SavePlotDemoFrame(DemoFrame):
         self._menu_bar.Append(menu, "File")
         self.Bind(wx.EVT_MENU, self.load_plot, id=101)
         self.Bind(wx.EVT_MENU, self.save_plot, id=102)
-        return 
+        return
 
     def load_plot(self, event):
         import os
@@ -40,7 +40,7 @@ class SavePlotDemoFrame(DemoFrame):
                             style=wx.OPEN | wx.CHANGE_DIR | wx.FILE_MUST_EXIST)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
-        
+
             print "Loading plot", path, "..."
             try:
                 f = file(path, "rb")
@@ -53,7 +53,7 @@ class SavePlotDemoFrame(DemoFrame):
                 raise
             print "Plot loaded."
             dlg.Destroy()
-            
+
             self.enable_win.component = self.plot_container
             self.plot_container.do_layout(force=True)
             self.plot_container.request_redraw()
@@ -61,7 +61,7 @@ class SavePlotDemoFrame(DemoFrame):
             self.enable_win.control.Update()
         else:
             dlg.Destroy()
-            
+
         return
 
     def save_plot(self, event):
@@ -71,7 +71,7 @@ class SavePlotDemoFrame(DemoFrame):
                             style=wx.SAVE | wx.CHANGE_DIR)  # | wx.OVERWRITE_PROMPT)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
-        
+
             print "Saving plot to", path, "..."
             try:
                 f = file(path, "wb")
@@ -99,7 +99,7 @@ class SavePlotDemoFrame(DemoFrame):
         low = -5
         high = 15.0
         x = arange(low, high, (high-low)/numpoints)
-        
+
         # Plot some bessel functions
         value_range = None
         index_range = None
@@ -118,11 +118,11 @@ class SavePlotDemoFrame(DemoFrame):
                 value_range.add(plot.value)
                 plot.index_mapper.range = index_range
                 index_range.add(plot.index)
-            
+
             if i%2 == 1:
                 plot.line_style = "dash"
             container.add(plot)
-                
+
         self.plot_container = container
         return container
 

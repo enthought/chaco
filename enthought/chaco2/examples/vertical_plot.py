@@ -14,7 +14,7 @@ from scipy.special import jn
 from enthought.enable2.wx_backend.api import Window
 from enthought.chaco2.api import PlotComponent, OverlayPlotContainer, PlotLabel, \
                                  HPlotContainer, VPlotContainer, create_line_plot
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Relative imports
 from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
@@ -26,15 +26,15 @@ class PlotFrame(DemoFrame):
         low = -5
         high = 15.0
         x = arange(low, high, (high-low)/numpoints)
-        
+
         container = HPlotContainer(resizable = "hv", bgcolor="lightgray",
                                    fill_padding=True, padding = 10)
         # container = VPlotContainer(resizable = "hv", bgcolor="lightgray",
         #                            fill_padding=True, padding = 10)
-        
-        
+
+
         self.container = container
-        
+
         # Plot some bessel functions
         value_range = None
         for i in range(10):

@@ -21,7 +21,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main
@@ -29,26 +29,26 @@ from enthought.chaco2.api import create_line_plot, add_default_axes, add_default
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 class PlotFrame(DemoFrame):
-    
+
     def _create_data(self):
         numpoints = 100
         low = -5
         high = 15.0
         x = arange(low, high, (high-low)/numpoints)
         y = jn(0, x)   # use the j0 bessel function
-        
+
         self.numpoints = numpoints
         self.x_values = x
         self.y_values = y
         self.current_index = numpoints/2
         self.increment = 2
         return
-    
+
     def _create_window(self):
         self._create_data()
         x = self.x_values[:self.current_index]
         y = self.y_values[:self.current_index]
-        
+
         value_range = None
         index_range = None
         plot = create_line_plot((x,y), color="red", width=2.0)
@@ -63,13 +63,13 @@ class PlotFrame(DemoFrame):
         hgrid, vgrid = add_default_grids(plot)
         bottom.tick_interval = 2.0
         vgrid.grid_interval = 2.0
-        
-        
+
+
         self.plot = plot
         plot.tools.append(PanTool(component=plot))
         plot.overlays.append(SimpleZoom(component=plot, tool_mode="box",
                                         always_on=False))
-        
+
         # Set the timer to generate events to us
         timerId = wx.NewId()
         self.timer = wx.Timer(self, timerId)
@@ -83,11 +83,11 @@ class PlotFrame(DemoFrame):
             self.increment = 2
         elif self.current_index == self.numpoints:
             self.increment = -2
-        
+
         self.current_index += self.increment
         if self.current_index > self.numpoints:
             self.current_index = self.numpoints
-        
+
         self.plot.index.set_data(self.x_values[:self.current_index])
         self.plot.value.set_data(self.y_values[:self.current_index])
         self.plot.request_redraw()

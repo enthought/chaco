@@ -17,7 +17,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import Dict, false, List, RGBAColor
+from enthought.traits.api import Dict, false, List
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
@@ -33,13 +33,13 @@ class PlotFrame(DemoFrame):
         container = OverlayPlotContainer(padding = 50, fill_padding = True,
                                          bgcolor = "lightgray", use_backbuffer=True)
         self.container = container
-        
+
         # Create the initial X-series of data
         numpoints = 100
         low = -5
         high = 15.0
         x = arange(low, high+0.001, (high-low)/numpoints)
-        
+
         # Plot some bessel functions
         plots = {}
         broadcaster = BroadcasterTool()
@@ -61,7 +61,7 @@ class PlotFrame(DemoFrame):
             #zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
             broadcaster.tools.append(pan)
             #broadcaster.tools.append(zoom)
-            
+
             container.add(plot)
             plots["Bessel j_%d"%i] = plot
 
@@ -75,23 +75,23 @@ class PlotFrame(DemoFrame):
         # Add the broadcast tool to the container, instead of to an
         # individual plot
         container.tools.append(broadcaster)
-        
+
         legend = Legend(component=container, padding=10, align="ur")
         legend.tools.append(LegendTool(legend, drag_button="right"))
         container.overlays.append(legend)
 
         # Set the list of plots on the legend
         legend.plots = plots
-        
+
         # Add the title at the top
         container.overlays.append(PlotLabel("Bessel functions",
                                   component=container,
                                   font = "swiss 16",
                                   overlay_position="top"))
-        
+
         # Add the traits inspector tool to the container
         container.tools.append(TraitsTool(container))
-        
+
         return Window(self, -1, component=container)
 
 if __name__ == "__main__":

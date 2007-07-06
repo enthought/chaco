@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Draws several overlapping line plots.  
+Draws several overlapping line plots.
 
 Left-drag pans the plot.
 
@@ -21,7 +21,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
@@ -39,13 +39,13 @@ class PlotFrame(DemoFrame):
                                   bgcolor = "lightgray", use_backbuffer=True,
                                   shape = (2,3), spacing=(12,12))
         self.container = container
-        
+
         # Create the initial X-series of data
         numpoints = 10
         low = -5
         high = 15.0
         x = arange(low, high+0.001, (high-low)/numpoints)
-        
+
         # Plot some bessel functions
         value_mapper = None
         index_mapper = None

@@ -11,7 +11,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main
@@ -22,12 +22,12 @@ from enthought.chaco2.tools.api import LineInspector, RangeSelection, RangeSelec
 
 class MyFrame(DemoFrame):
     def _create_window(self):
-        
+
         numpoints = 100
         low = -5
         high = 15.001
         x = arange(low, high, (high-low)/numpoints)
-        
+
         # Plot a bessel function
         y = jn(0, x)
         plot = create_line_plot((x,y), color=(0,0,1,1), width=2.0, index_sort="ascending")
@@ -38,7 +38,7 @@ class MyFrame(DemoFrame):
         plot.padding = 50
         add_default_grids(plot)
         add_default_axes(plot)
-        
+
         return Window(self, -1, component=plot)
 
 if __name__ == "__main__":

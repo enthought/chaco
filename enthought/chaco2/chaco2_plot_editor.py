@@ -13,7 +13,7 @@ from enthought.enable2.api import black_color_trait, LineStyle, ColorTrait, whit
 from enthought.enable2.wx_backend.api import Window
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Enum, false, List, Str, true, Range, Tuple, \
-                                 RGBAColor, Bool, Trait, Int, Any, \
+                                 Bool, Trait, Int, Any, \
                                  Property
 from enthought.traits.ui.api import View, Item
 from enthought.traits.ui.wx.editor import Editor

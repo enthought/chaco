@@ -7,7 +7,7 @@ from numpy import arange, pi, sin, cos
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.api import create_polar_plot
@@ -20,13 +20,13 @@ class MyFrame(DemoFrame):
         low = 0
         high = 2*pi
         theta = arange(low, high, (high-low) / numpoints)
-        
+
         # Create the radius data
         radius = cos(3*theta)
-            
+
         # Create a new polar plot with radius and theta data
         plot = create_polar_plot((radius,theta),color=(0.0,0.0,1.0,1), width=4.0)
-        
+
         return Window(self, -1, component=plot)
 
 if __name__ == "__main__":

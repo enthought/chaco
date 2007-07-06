@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Draws several overlapping line plots.  
+Draws several overlapping line plots.
 
 Left-drag pans the plot.
 
@@ -22,7 +22,7 @@ from time import time
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
@@ -51,12 +51,12 @@ def add_default_axes(plot, orientation="normal", vtitle="",htitle=""):
     else:
         v_mapper = plot.index_mapper
         h_mapper = plot.value_mapper
-    
+
     left = PlotAxis(orientation='left',
                     title= vtitle,
                     mapper=v_mapper,
                     component=plot)
-    
+
     bottom = PlotAxis(orientation='bottom',
                       title= htitle,
                       mapper=h_mapper,
@@ -79,7 +79,7 @@ def add_default_grids(plot, orientation="normal", tick_gen=None):
     else:
         v_mapper = plot.value_mapper
         h_mapper = plot.index_mapper
-    
+
     vgrid = PlotGrid(mapper=v_mapper, orientation='vertical',
                      component=plot,
                      line_color="lightgray", line_style="dot",
@@ -89,7 +89,7 @@ def add_default_grids(plot, orientation="normal", tick_gen=None):
                      component=plot,
                      line_color="lightgray", line_style="dot",
                      tick_generator = ScalesTickGenerator())
-    
+
     plot.underlays.append(vgrid)
 #    plot.underlays.append(hgrid)
     return hgrid, vgrid
@@ -103,7 +103,7 @@ class PlotFrame(DemoFrame):
         container = OverlayPlotContainer(padding = 50, fill_padding = True,
                                          bgcolor = "lightgray", use_backbuffer=True)
         self.container = container
-        
+
         # Create the initial X-series of data
         numpoints = 100
         low = -5
@@ -112,7 +112,7 @@ class PlotFrame(DemoFrame):
 
         now = time()
         timex = linspace(now, now+7*24*3600, numpoints)
-        
+
         # Plot some bessel functions
         value_mapper = None
         index_mapper = None
@@ -138,7 +138,7 @@ class PlotFrame(DemoFrame):
                 value_mapper.range.add(plot.value)
                 plot.index_mapper = index_mapper
                 index_mapper.range.add(plot.index)
-            
+
             if i==0:
                 plot.tools.append(PanTool(plot))
                 zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
@@ -147,22 +147,22 @@ class PlotFrame(DemoFrame):
                 legend = Legend(component=plot, padding=10, align="ur")
                 legend.tools.append(LegendTool(legend, drag_button="right"))
                 plot.overlays.append(legend)
-            
+
             container.add(plot)
             plots["Bessel j_%d"%i] = plot
 
         # Set the list of plots on the legend
         legend.plots = plots
-        
+
         # Add the title at the top
         container.overlays.append(PlotLabel("Bessel functions",
                                   component=container,
                                   font = "swiss 16",
                                   overlay_position="top"))
-        
+
         # Add the traits inspector tool to the container
         container.tools.append(TraitsTool(container))
-        
+
         return Window(self, -1, component=container)
 
 if __name__ == "__main__":

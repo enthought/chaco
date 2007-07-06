@@ -10,7 +10,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.kiva.backend_image import GraphicsContext
-from enthought.traits.api import false, RGBAColor
+from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.api import OverlayPlotContainer, create_line_plot, \
@@ -24,7 +24,7 @@ def create_plot():
     low = -5
     high = 15.0
     x = arange(low, high+0.001, (high-low)/numpoints)
-    
+
     # Plot some bessel functions
     value_mapper = None
     index_mapper = None
@@ -42,7 +42,7 @@ def create_plot():
             value_mapper.range.add(plot.value)
             plot.index_mapper = index_mapper
             index_mapper.range.add(plot.index)
-        
+
         if i%2 == 1:
             plot.line_style = "dash"
         container.add(plot)
