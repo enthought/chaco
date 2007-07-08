@@ -11,7 +11,7 @@ contour = Extension(
 
 setup(
     name = 'enthought.chaco2',
-    version='2.1.0',
+    version='3.0a1',
     description  = 'Chaco plotting toolkit',
     author       = 'Enthought, Inc',
     author_email = 'info@enthought.com',
