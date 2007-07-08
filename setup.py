@@ -22,11 +22,17 @@ setup(
     ext_modules = [contour],
     include_package_data = True,
     install_requires = [
-        "numpy", 
-        "enthought.traits", 
-        "enthought.kiva", 
+        "enthought.traits",
+        "enthought.kiva",
         "enthought.enable2",
     ],
+    extras_require = {
+        # All non-ets dependencies should be in this extra to ensure users can
+        # decide whether to require them or not.
+        'nonets': [
+            'numpy >=1.0.2',
+            ],
+        },
     namespace_packages = [
         "enthought",
     ],
