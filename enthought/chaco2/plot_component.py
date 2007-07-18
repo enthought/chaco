@@ -124,29 +124,12 @@ class PlotComponent(Component):
     # A backwards compatibility flag to indicate whether or not to use the
     # old _do_draw() interface or the new draw_order/draw_loop stuff.
     use_draw_order = true
-    
-    # Should this component do a backbuffered draw, i.e. render itself to an
-    # offscreen buffer that is cached for later use?  If False, then
-    # the component will *never* render itself backbuffered, even if asked
-    # to do so.
-    use_backbuffer = false
-    
-    # Should the backbuffer extend to the pad area?
-    backbuffer_padding = true
-    
+       
     # Should the border be drawn as part of the overlay or the background (default)?
     overlay_border = true
     
     # Should the border be drawn inset (on the plot) or outside the plot area?
     inset_border = true
-    
-    # If a draw were to occur, whether the component would actually change.
-    # This is useful for determining whether a backbuffer is valid, and is
-    # usually set by the component itself or set on the component by calling
-    # _invalidate_draw().  It is exposed as a public trait for the rare cases
-    # when another components wants to know the validity of this component's
-    # backbuffer.
-    draw_valid = false
     
     #------------------------------------------------------------------------
     # Private traits
@@ -158,11 +141,6 @@ class PlotComponent(Component):
     # Shadow trait for the active_tool property.  Should be an instance of
     # BaseTool or one of its subclasses.
     _active_tool = Any
-    
-    # The backbuffer of this component.  In most cases, this should be an
-    # instance of GraphicsContext, but this is not enforced.
-    _backbuffer = Any
-
     
     _cached_handlers = Instance(dict, args=())
 
@@ -264,15 +242,6 @@ class PlotComponent(Component):
             gc.draw_path()
         
         gc.restore_state()
-        return
-
-    def invalidate_draw(self):
-        """This method should be called whenever a component's internal state
-        changes such that it should be redrawn on the next draw call, as opposed
-        to using any backbuffer that may exist."""
-        self.draw_valid = False
-        if hasattr(self.container, "invalidate_draw"):
-            self.container.invalidate_draw()
         return
 
 
