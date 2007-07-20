@@ -1,4 +1,5 @@
-
+""" Defines the ColorBar class.
+"""
 # Major library imports
 from numpy import compress, array, arange, ones, transpose, uint8
 
@@ -18,16 +19,19 @@ from axis import PlotAxis
 
 
 class ColorBar(AbstractPlotRenderer):
-
+    """ A color bar for a color-mapped plot.
+    """
+    # Screen mapper for index data.
     index_mapper = Instance(AbstractMapper)
 
+    # Screen mapper for color data
     color_mapper = Property #Instance(ColorMapper)
 
-    # Optional index datasource for generic tools to attach metadata to
+    # Optional index data source for generic tools to attach metadata to.
     index = Property
     
-    # Optional colormapped plot that this color bar references.  Should have
-    # a "color_mapper" attribute.
+    # Optional color-mapped plot that this color bar references.  If specified,
+    # the plot must have a **color_mapper** attribute.
     plot = Any
 
     # Is there a visible grid on the colorbar?
@@ -39,21 +43,26 @@ class ColorBar(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     # Override default values of inherited traits
     #------------------------------------------------------------------------
-    
+
+    # The border is visible (overrides enable2.Component).    
     border_visible = True
+    # The orientation of the index axis.
     orientation = Enum('v', 'h')
+    # Overrides the default background color trait in PlotComponent.
     bgcolor = 'transparent'
+    # Draw layers in "draw order"
     use_draw_order = True
+    # Default width is 40 pixels (overrides enable2.CoordinateBox)
     width = 40
 
     #------------------------------------------------------------------------
     # Private attributes
     #------------------------------------------------------------------------
     
-    # the grid
+    # The grid
     _grid = Instance(PlotGrid)
     
-    # the axis
+    # The axis
     _axis = Instance(PlotAxis)
     
     # Shadow attribute for color_mapper
@@ -64,6 +73,9 @@ class ColorBar(AbstractPlotRenderer):
     
     
     def __init__(self, *args, **kw):
+        """ In creating an instance, this method ensures that the grid and the
+        axis are created before setting their visibility.
+        """
         grid_visible = kw.pop("grid_visible", True)
         axis_visible = kw.pop("axis_visible", True)
         
@@ -84,6 +96,8 @@ class ColorBar(AbstractPlotRenderer):
         return
 
     def _draw_plot(self, gc, view_bounds=None, mode='normal'):
+        """ Draws the 'plot' layer.
+        """
         self._update_mappers()
         gc.save_state()
         if self.orientation == 'h':
@@ -110,9 +124,9 @@ class ColorBar(AbstractPlotRenderer):
     
     def _make_color_image(self, color_values, width, orientation):
         """
-        Returns an image GC representing the array of color values (Nx3 or Nx4).
-        Width is how wide the colorbar should be, and orientation is the
-        orientation of the plot.
+        Returns an image graphics context representing the array of color 
+        values (Nx3 or Nx4). The *width* parameter is the width of the 
+        colorbar, and *orientation* is the orientation of the plot.
         """
         bmparray = ones((width, color_values.shape[0], color_values.shape[1]))* color_values * 255
         

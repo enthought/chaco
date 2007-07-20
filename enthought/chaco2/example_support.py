@@ -15,13 +15,10 @@ import wx
 # We don't want users to go digging around for the default Enthought logfile
 # in ~/envisage.log, so we add a handler to the global logger for a file
 # "chaco.log" in the current directory.
-
-from enthought.logger import logger as en_logger
 import logging, logging.handlers
 try:
-    chaco_handler = logging.handlers.RotatingFileHandler("chaco.log", 
+    chaco_handler = logging.handlers.RotatingFileHandler("chaco.log",
                         maxBytes=1000000, backupCount=0)
-    #chaco_handler.setFormatter(en_logger.formatter)
     logging.getLogger().addHandler(chaco_handler)
 except:
     # If we can't override the default handler, it's OK.
@@ -42,13 +39,15 @@ COLOR_PALETTE = (array([166,206,227,
 
 
 class DemoFrame(wx.Frame):
+    """ Wraps boilerplate WX calls that almost all the demo programs have to use.
+    """
     def __init__ ( self, *args, **kw ):
         wx.Frame.__init__( *(self,) + args, **kw )
         self.SetAutoLayout( True )
-    
+
         # Create the subclass's window
         self.plot_window = self._create_window()
-        
+
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(self.plot_window.control, 1, wx.EXPAND)
         self.SetSizer(sizer)

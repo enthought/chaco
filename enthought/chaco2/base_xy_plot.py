@@ -1,4 +1,5 @@
-
+""" Defines the base class for XY plots.
+"""
 from math import sqrt
 from numpy import around, array, column_stack, isnan, transpose
 
@@ -20,67 +21,87 @@ from plot_label import PlotLabel
 
 
 class BaseXYPlot(AbstractPlotRenderer):
-    """
-    Base class for the simple X-vs-Y plots that consist of a single index
-    data array and a single value data array.  Subclasses handle the actual
-    rendering, but this base class takes care of most of the paperwork of
-    making sure events are wired up between mappers and data/screen space
-    changes, etc.
+    """ Base class for simple X-vs-Y plots that consist of a single index
+    data array and a single value data array.  
+    
+    Subclasses handle the actual rendering, but this base class takes care of
+    most of making sure events are wired up between mappers and data or screen
+    space changes, etc.
     """
 
     #------------------------------------------------------------------------
     # Data-related traits
     #------------------------------------------------------------------------
     
-    # The data source to use for the index coordinate
+    # The data source to use for the index coordinate.
     index = Instance(ArrayDataSource)
     
-    # The data source to use as value points
+    # The data source to use as value points.
     value = Instance(AbstractDataSource)
 
+    # Screen mapper for index data.
     index_mapper = Instance(AbstractMapper)
+    # Screen mapper for value data
     value_mapper = Instance(AbstractMapper)
     
 
     # Convenience properties that correspond to either index_mapper or
     # value_mapper, depending on the orientation of the plot.
+
+    # Corresponds to either **index_mapper** or **value_mapper**, depending on
+    # the orientation of the plot.
     x_mapper = Property
+    # Corresponds to either **value_mapper** or **index_mapper**, depending on
+    # the orientation of the plot.
     y_mapper = Property
 
+    # Corresponds to either **index_direction** or **value_direction**, 
+    # depending on the orientation of the plot.
     x_direction = Property
+    # Corresponds to either **value_direction** or **index_direction**, 
+    # depending on the orientation of the plot
     y_direction = Property
 
-    # Convenience properties for accessing the dataranges of the mappers
+    # Convenience property for accessing the index data range.    
     index_range = Property
+    # Convenience property for accessing the value data range.
     value_range = Property
 
-    # The type of hittesting that is appropriate for this renderer.  The
-    # Line-type test computes Euclidean distance to the line between the
-    # nearest adjacent points, whereas the "point" test only checks for
-    # adjacency to a marker/point.
+    # The type of hit-testing that is appropriate for this renderer.  
+    # 
+    # * 'line': Computes Euclidean distance to the line between the
+    #   nearest adjacent points.
+    # * 'point': Checks for adjacency to a marker or point.
     hittest_type = Enum("point", "line")
 
     #------------------------------------------------------------------------
     # Appearance-related traits
     #------------------------------------------------------------------------
     
-    # What orientation is the index axis?
+    # The orientation of the index axis.
     orientation = Enum("h", "v")
     
-    # The direction of the index axis with respect to the GC's direction
+    # The direction of the index axis with respect to the graphics context's
+    # direction.
     index_direction = Enum("normal", "flipped")
     
-    # The direction of the value axis with respect to the GC's direction
+    # The direction of the value axis with respect to the graphics context's 
+    # direction.
     value_direction = Enum("normal", "flipped")
 
     #------------------------------------------------------------------------
     # Convenience readonly properties for common annotations
     #------------------------------------------------------------------------
 
+    # Read-only property for horizontal grid.
     hgrid = Property
+    # Read-only property for vertical grid.
     vgrid = Property
+    # Read-only property for x-axis.
     x_axis = Property
+    # Read-only property for y-axis.
     y_axis = Property    
+    # Read-only property for labels.
     labels = Property
 
 
@@ -88,43 +109,47 @@ class BaseXYPlot(AbstractPlotRenderer):
     # Other public traits
     #------------------------------------------------------------------------
     
-    # Should be plot use downsampling?
-    # This is not used right now.  We need to implement robust, fast downsampling
-    # before flipping the switch on this.
+    # Does the plot use downsampling?
+    # This is not used right now.  It needs an implementation of robust, fast
+    # downsampling, which does not exist yet.
     use_downsampling = false
     
-    # Should the plot use a spatial subdivision structure for fast hittesting?
-    # This makes data updates slower, but makes hittests extremely fast.
+    # Does the plot use a spatial subdivision structure for fast hit-testing?
+    # This makes data updates slower, but makes hit-tests extremely fast.
     use_subdivision = false
     
-    # Override the default background color trait in PlotComponent.
+    # Overrides the default background color trait in PlotComponent.
     bgcolor = "transparent"
 
     # This just turns on a simple drawing of the X and Y axes... not a long
     # term solution, but good for testing.
+    
+    # Defines the origin axis color, for testing.
     origin_axis_color = black_color_trait
+    # Defines a the origin axis width, for testing.
     origin_axis_width = Float(1.0)
+    # Defines the origin axis visibility, for testing.
     origin_axis_visible = false
     
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
     
-    # Are the cache traits below valid, or do new ones need to be computed?
+    # Are the cache traits valid? If False, new ones need to be compute.
     _cache_valid = false
 
-    # Array of (x,y) data-space points; regardless of self.orientation, this
-    # is always stored (index_pt, value_pt).
+    # Cached array of (x,y) data-space points; regardless of self.orientation,
+    # these points are always stored as (index_pt, value_pt).
     _cached_data_pts = Array
     
-    # Array of (x,y) screen space points
+    # Cached array of (x,y) screen-space points.
     _cached_screen_pts = Array
     
-    # Whether or not _cached_screen_pts contains the screen-space coords
-    # of the points currently in _cached_data_pts
+    # Does **_cached_screen_pts** contain the screen-space coordinates
+    # of the points currently in **_cached_data_pts**?
     _screen_cache_valid = false
 
-    # reference to a spatial subdivion acceleration structure
+    # Reference to a spatial subdivision acceleration structure.
     _subdivision = Any
 
     #------------------------------------------------------------------------
@@ -132,25 +157,41 @@ class BaseXYPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
 
     def _render(self, gc, points):
-        " Renders a *list* of Nx2 arrays of screen space points on the GC "
+        """ Abstract method for rendering points.
+        
+        Parameters
+        ----------
+        gc : graphics context
+            Target for drawing the points
+        points : List of Nx2 arrays 
+            Screen-space points to render
+        """
         raise NotImplementedError
 
     def _render_pre(self, gc):
-        """ Called before _render() is called.  Gives subclasses an opportunity
-        to modify their state or draw configuration before _render(). """
+        """ Called before _render() is called.  
+        
+        Gives subclasses an opportunity to modify their state or draw 
+        configuration before _render(). """
         pass
 
     def _render_post(self, gc):
-        """ Called after _render() is called.  Gives subclasses an opportunity
-        to modify/restore their state or draw configuration after _render(). """
+        """ Called after _render() is called.  
+        
+        Gives subclasses an opportunity to modify or restore their state or
+        draw configuration after _render(). """
         pass
     
     def _gather_points(self):
-        " Grabs the relevant data points within our range and caches them "
+        """ Abstract method to collect data points that are within the range of
+        the plot, and cache them.
+        """
         raise NotImplementedError
     
     def _downsample(self):
-        " Gives the renderer a chance to downsample in screen space "
+        """ Abstract method that gives the renderer a chance to downsample in
+        screen space. 
+        """
         # By default, this just does a mapscreen and returns the result
         raise NotImplementedError
     
@@ -183,21 +224,25 @@ class BaseXYPlot(AbstractPlotRenderer):
         
         Parameters
         ==========
-        screen_pt : (x,y) of a point to test
-        threshold : optional maximum screen space distance (pixels) between
-                    screen_pt and the plot
-        return_distance : if True, returns the distance 
+        screen_pt : (x,y) 
+            A point to test.
+        threshold : integer
+            Optional maximum screen space distance (pixels) between
+            *screen_pt* and the plot.
+        return_distance : Boolean
+            If True, returns the distance.
 
         Returns
         =======
-        If self.hittest_type is "point", then returns the screen coordinates
-        of the closest point on the plot as a tuple (x,y)
+        If self.hittest_type is 'point', then this method returns the screen
+        coordinates of the closest point on the plot as a tuple (x,y)
 
-        If self.hittest_type is "line", then returns the screen endpoints of the
-        line segment closest to the screen_pt, as ((x1,y1), (x2,y2))
+        If self.hittest_type is 'line', then this method returns the screen 
+        endpoints of the line segment closest to *screen_pt*, as 
+        ((x1,y1), (x2,y2))
 
-        If screen_pt does not fall within threshold of the plot, then returns
-        None.
+        If *screen_pt* does not fall within *threshold* of the plot, then this
+        method returns None.
         """
         if self.hittest_type == "point":
             tmp = self.get_closest_point(screen_pt, threshold)
@@ -215,21 +260,24 @@ class BaseXYPlot(AbstractPlotRenderer):
             return None
 
     def get_closest_point(self, screen_pt, threshold=7.0):
-        """ Does a screen-space proximity test.  This only checks data points
-        and not the line segments connecting them (use get_closest_line()
-        instead).
+        """ Tests for proximity in screen-space.  
+        
+        This method checks only data points, not the line segments connecting
+        them; to do the latter use get_closest_line() instead.
         
         Parameters
         ==========
-        screen_pt : (x,y) of a point to test
-        threshold : optional maximum screen space distance (pixels) between
-                    screen_pt and the plot.  If 0.0, then no threshold tests
-                    are performed, and the nearest point is returned.
+        screen_pt : (x,y) 
+            A point to test.
+        threshold : integer
+            Optional maximum screen space distance (pixels) between
+            *screen_pt* and the plot.  If 0.0, then no threshold tests
+            are performed, and the nearest point is returned.
 
         Returns
         =======
-        (x, y, distance) of a datapoint nearest the screen_pt
-        If no data points are within threshold of screen_pt, returns None.
+        (x, y, distance) of a datapoint nearest to *screen_pt*.
+        If no data points are within *threshold* of *screen_pt*, returns None.
         """
         ndx = self.map_index(screen_pt, threshold)
         if ndx is not None:
@@ -240,23 +288,26 @@ class BaseXYPlot(AbstractPlotRenderer):
             return None
         
     def get_closest_line(self, screen_pt, threshold=7.0):
-        """ Does a screen-space proximity test against lines connecting the
+        """ Tests for proximity in screen-space against lines connecting the
         points in this plot's dataset.
         
         Parameters
         ==========
-        screen_pt : (x,y) of a point to test
-        threshold : optional maximum screen space distance (pixels) between
-                    the line and the plot.  If 0.0, then returns the closest
-                    line regardless of distance from the plot.
+        screen_pt : (x,y) 
+            A point to test.
+        threshold : integer
+            Optional maximum screen space distance (pixels) between
+            the line and the plot.  If 0.0, then the method returns the closest
+            line regardless of distance from the plot.
 
         Returns
         =======
         (x1, y1, x2, y2, dist) of the endpoints of the line segment
-           closest to screen_pt.  dist is perpendicular distance from
-           screen_pt to the line.  If there is only a single point in
-           the renderer's data, then returns the same point twice.
-        If no data points are within threshold of screen_pt, returns None.
+        closest to *screen_pt*.  The *dist* element is the perpendicular 
+        distance from *screen_pt* to the line.  If there is only a single point
+        in the renderer's data, then the method returns the same point twice.
+           
+        If no data points are within *threshold* of *screen_pt*, returns None.
         """
         ndx = self.map_index(screen_pt, threshold=0.0)
         if ndx is None:
@@ -295,6 +346,11 @@ class BaseXYPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
 
     def map_screen(self, data_array):
+        """ Maps an array of data points into screen space and returns it as
+        an array. 
+        
+        Implements the AbstractPlotRenderer interface.
+        """
         # data_array is Nx2 array
         if len(data_array) == 0:
             return []
@@ -307,6 +363,13 @@ class BaseXYPlot(AbstractPlotRenderer):
             return transpose(array((sy,sx)))
     
     def map_data(self, screen_pt, all_values=False):
+        """ Maps a screen space point into the "index" space of the plot.
+        
+        Implements the AbstractPlotRenderer interface.
+        
+        If *all_values* is True, returns an array of (index, value) tuples; 
+        otherwise, it returns only the index values.
+        """
         x, y = screen_pt
         if self.orientation == 'v':
                 x, y = y, x
@@ -318,6 +381,10 @@ class BaseXYPlot(AbstractPlotRenderer):
     
     def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True, \
                   index_only=False):
+        """ Maps a screen space point to an index into the plot's index array(s).
+        
+        Implements the AbstractPlotRenderer interface.
+        """
 
         data_pt = self.map_data(screen_pt)
         if ((data_pt < self.index_mapper.range.low) or \
@@ -359,8 +426,10 @@ class BaseXYPlot(AbstractPlotRenderer):
             return None
 
     def get_screen_points(self):
-        """Return the currently visible screenspace points.  Intended
-        for use with overlays"""
+        """Returns the currently visible screen-space points.  
+        
+        Intended for use with overlays.
+        """
         self._gather_points()
         if self.use_downsampling:
             # The BaseXYPlot implementation of _downsample doesn't actually
@@ -375,14 +444,20 @@ class BaseXYPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the 'plot' layer.
+        """
         self._draw_component(gc, view_bounds, mode)
         return
 
     def _draw_plot_pre(self, gc, view_bounds, mode):
+        """ Called before drawing the 'plot' layer.
+        """
         self._render_pre(gc)
         return
 
     def _draw_plot_post(self, gc, view_bounds, mode):
+        """ Called after drawing the 'plot' layer.
+        """
         self._render_post(gc)
         return
 

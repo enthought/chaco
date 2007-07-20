@@ -1,4 +1,5 @@
-
+""" Defines the ScalesTickGenerator class.
+"""
 from numpy import array
 
 from enthought.traits.api import Any

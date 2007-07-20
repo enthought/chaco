@@ -1,12 +1,16 @@
+""" Defines the ScatterPlot class, and associated Traits UI view and helper
+function.
+"""
+# Standard library imports.
+import logging
 
 # Major library imports
-from numpy import argmin, around, array, compress, invert, isnan, sqrt, \
-                  sum, transpose
+from numpy import argmin, around, array, column_stack, compress, invert, isnan, \
+                sqrt, sum, transpose
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, white_color_trait
 from enthought.kiva import STROKE
-from enthought.logger import logger
 from enthought.traits.api import Any, Array, Enum, false, Float, Instance, \
                                  Int,  List
 from enthought.traits.ui.api import View, VGroup, Item
@@ -18,7 +22,13 @@ from scatter_markers import CircleMarker, CustomMarker, DiamondMarker, \
 from subdivision_mapper import SubdivisionDataMapper
 
 
+# Set up a logger for this module.
+logger = logging.getLogger(__name__)
+
+
 class ScatterPlotView(View):
+    """ Traits UI View for customizing a scatter plot.
+    """
     def __init__(self):
         vgroup = VGroup(
                 Item("marker", label="Marker type"),
@@ -31,11 +41,11 @@ class ScatterPlotView(View):
 
 class ScatterPlot(BaseXYPlot):
     """
-    Renders a scatter plot given an index and value arrays
+    Renders a scatter plot, given an index and value arrays.
     """
 
-    # The symbol to use if self.marker is set to "custom". This should be
-    # a compiled path for the given kiva context.
+    # The symbol to use if **marker** is set to "custom". This attribute must
+    # be a compiled path for the given Kiva context.
     custom_symbol = Any
 
     #------------------------------------------------------------------------
@@ -46,20 +56,20 @@ class ScatterPlot(BaseXYPlot):
     # keys.
     marker = marker_trait
 
-    # The pixel size of the marker (doesn't include the thickness of the outline)
+    # The pixel size of the marker, not including the thickness of the outline.
     marker_size = Int(4)
 
     # The thickness, in pixels, of the outline to draw around the marker.  If
-    # this is 0, no outline will be drawn.
+    # this is 0, no outline is drawn.
     line_width = Float(1.0)
 
-    # The fill color of the marker
+    # The fill color of the marker.
     color = black_color_trait
 
-    # The color of the outline to draw around the marker
+    # The color of the outline to draw around the marker.
     outline_color = black_color_trait
 
-    # Traits UI View
+    # Traits UI View for customizing the plot.
     traits_view = ScatterPlotView()
 
     #------------------------------------------------------------------------
@@ -67,6 +77,11 @@ class ScatterPlot(BaseXYPlot):
     #------------------------------------------------------------------------
 
     def map_screen(self, data_array):
+        """ Maps an array of data points into screen space and returns it as
+        an array. 
+        
+        Implements the AbstractPlotRenderer interface.
+        """
         # data_array is Nx2 array
         if len(data_array) == 0:
             return []
@@ -80,6 +95,11 @@ class ScatterPlot(BaseXYPlot):
             return transpose(array((sy,sx)))
 
     def map_data(self, screen_pt, all_values=True):
+        """ Maps a screen space point into the "index" space of the plot.
+        
+        Overrides the BaseXYPlot implementation, and always returns an
+        array of (index, value) tuples.
+        """
         x, y = screen_pt
         if self.orientation == 'v':
             x, y = y, x
@@ -88,6 +108,10 @@ class ScatterPlot(BaseXYPlot):
 
     def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True, \
                   index_only = False):
+        """ Maps a screen space point to an index into the plot's index array(s).
+        
+        Overrides the BaseXYPlot implementation..
+        """
         # Brute force implementation
         all_data = transpose(array([self.index.get_data(), self.value.get_data()]))
         screen_points = around(self.map_screen(all_data))
@@ -106,7 +130,8 @@ class ScatterPlot(BaseXYPlot):
 
     def _gather_points(self):
         """
-        Gathers up the data points that are within our bounds and stores them
+        Collects the data points that are within the bounds of the plot and 
+        caches them
         """
         if self._cache_valid:
             return
@@ -138,8 +163,8 @@ class ScatterPlot(BaseXYPlot):
 
     def _render(self, gc, points, icon_mode=False):
         """
-        This same method is used to both render the scatterplot as well as
-        drawing just the iconified version of this plot, with the latter
+        This same method is used both to render the scatterplot and to
+        draw just the iconified version of this plot, with the latter
         simply requiring that a few steps be skipped.
         """
 
@@ -187,9 +212,27 @@ class ScatterPlot(BaseXYPlot):
 
 def render_markers(gc, points, marker, marker_size,
                    color, line_width, outline_color):
-    """ Helper function for 'plot' (PlotComponent instance) to render a
-    set of (x,y) points onto gc.  Currently it makes some assumptions about
-    the attributes on the plot object; this should be factored out eventually.
+    """ Helper function for a PlotComponent instance to render a
+    set of (x,y) points onto a graphics context.  Currently, it makes some 
+    assumptions about the attributes on the plot object; these may be factored 
+    out eventually.
+    
+    Parameters
+    ----------
+    gc : GraphicsContext
+        The target for rendering the points
+    points : array of (x,y) points
+        The points to render
+    marker : string, class, or instance
+        The type of marker to use for the points
+    marker_size : number
+        The size of the markers
+    color : RGB(A) color
+        The color of the markers
+    line_width : number
+        The width, in pixels, of the marker outline
+    outline_color : RGB(A) color 
+        The color of the marker outline
     """
 
     if len(points) == 0:

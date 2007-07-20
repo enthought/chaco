@@ -1,4 +1,5 @@
-
+""" Defines the LegendTool class.
+"""
 # Major library imports
 from numpy import array
 
@@ -10,20 +11,26 @@ from drag_tool import DragTool
 
 
 class LegendTool(DragTool):
-    """
-    Tool for interacting with legends.
-    The legend should be this tool's .component.
+    """ A tool for interacting with legends.
+    
+    Attach this tool to a legend by setting the tool's **component**
+    to the legend.
     """
     
-    # Which mouse button initiates the drag
+    # The mouse button that initiates the drag.
     drag_button = Enum("left", "right")
     
-    # Whether or not to change the legend's .align property in accord with
-    # the quadrant into which it was dropped.
+    # Whether to change the legend's **align** property in accord with
+    # the quadrant into which it is dropped.
     auto_align = true
     
     
     def is_draggable(self, x, y):
+        """ Returns whether the (x,y) position is in a region that is OK to 
+        drag.  
+        
+        Overrides DragTool.
+        """
         if self.component:
             legend = self.component
             return (x >= legend.x and x <= legend.x2 and \
@@ -33,6 +40,10 @@ class LegendTool(DragTool):
     
     
     def drag_start(self, event):
+        """ Called when the drag operation starts.  
+        
+        Implements DragTool.
+        """
         if self.component:
             self.original_padding = self.component.padding
             event.window.set_mouse_owner(self, event.net_transform())
@@ -41,6 +52,12 @@ class LegendTool(DragTool):
     
     
     def dragging(self, event):
+        """ This method is called for every mouse_move event that the tool 
+        receives while the user is dragging the mouse. 
+        
+        Implements DragTool. Moves the legend by aligning it to a corner of its
+        overlay component.
+        """
         # To properly move a legend (which aligns itself to a corner of its overlay
         # component), we need to modify the padding amounts as opposed to modifying
         # the position directly.
@@ -69,6 +86,10 @@ class LegendTool(DragTool):
 
 
     def drag_end(self, event):
+        """ Called when a mouse event causes the drag operation to end.
+        
+        Implements DragTool.
+        """
         if self.auto_align and self.component:
             # Determine which boundaries of the legend's overlaid component are
             # closest to the center of the legend

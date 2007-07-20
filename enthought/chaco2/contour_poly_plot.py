@@ -1,4 +1,5 @@
-
+""" Defines the ContourPolyPlot class.
+"""
 # Major library imports
 from numpy import array, linspace, meshgrid, transpose
 
@@ -25,10 +26,10 @@ class ContourPolyPlot(Base2DPlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # List of levels to contour
+    # List of levels to contour.
     levels = Trait("auto", Int, List)
 
-    # The color of the line
+    # Mapping of values to colors
     color_mapper = Instance("ColorMapper")
 
 
@@ -36,23 +37,25 @@ class ContourPolyPlot(Base2DPlot):
     # Private traits
     #------------------------------------------------------------------------
     
-    # Are the cached contours below valid, or do new ones need to be computed?
+    # Are the cached contours valid? If False, new ones need to be computed.
     _poly_cache_valid = false
 
-    # Cache the collection of traces
+    # Cached collection of traces.
     _cached_polys = Dict
 
-    # Is the cached level data below valid
+    # Is the cached level data valid?
     _level_cache_valid = false
+    # Is the cached color data valid?
     _colors_cache_valid = false
     
-    # list of levels and their associated line properties
+    # List of levels and their associated line properties.
     _levels = List
+    # List of colors
     _colors = List
 
-    # This mapped traits are only used to convert user supplied values to 
-    # agg-acceptables ones (mapped traits in lists are not supported, must
-    # convert one at a time)
+    # Mapped trait used to convert user-suppied color values to AGG-acceptable
+    # ones. (Mapped traits in lists are not supported, must be converted one at 
+    # a time.)
     _color_map_trait = ColorTrait
 
 
@@ -61,6 +64,10 @@ class ContourPolyPlot(Base2DPlot):
     #------------------------------------------------------------------------
 
     def _render(self, gc):
+        """ Actually draws the plot. 
+        
+        Implements the Base2DPlot interface.
+        """
         
         if not self._level_cache_valid:
             self._update_levels()
@@ -86,6 +93,8 @@ class ContourPolyPlot(Base2DPlot):
         gc.restore_state()
 
     def _update_polys(self):
+        """ Updates the contour cache.
+        """
         xg, yg = meshgrid(self.index._xdata.get_data(),
                           self.index._ydata.get_data()[::-1])
         c = Cntr(xg, yg, self.value.raw_value)
@@ -99,6 +108,8 @@ class ContourPolyPlot(Base2DPlot):
         self._poly_cache_valid = True
 
     def _update_levels(self):
+        """ Updates the levels cache.
+        """
         low, high = self.value.get_bounds()
         if self.levels == "auto":
             self._levels = list(linspace(low, high, 10))
@@ -112,6 +123,8 @@ class ContourPolyPlot(Base2DPlot):
         self._colors_cache_valid = False
 
     def _update_colors(self):
+        """ Updates the colors cache.
+        """
         cmap = self.color_mapper
         cmap.range.low, cmap.range.high = self._levels[0], self._levels[-1]
         self._colors =  []

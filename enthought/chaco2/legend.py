@@ -1,4 +1,6 @@
-
+""" Defines the Legend, AbstractCompositeIconRenderer, and
+CompositeIconRenderer classes.
+"""
 from numpy import array
 
 from enthought.enable2.api import white_color_trait
@@ -16,19 +18,22 @@ from scatterplot import ScatterPlot
 
 
 class AbstractCompositeIconRenderer(HasTraits):
-
+    """ Abstract class for an icon renderer.
+    """
     def render_icon(self, plots, gc, x, y, width, height):
-        """ Render an icon representing the given list of plots onto the
-        GC, using the given dimensions and at the specified position.
+        """ Renders an icon representing the given list of plots onto the
+        graphics context, using the given dimensions and at the specified
+        position.
         """
         raise NotImplementedError
 
 
 
 class CompositeIconRenderer(AbstractCompositeIconRenderer):
-
+    """ Renderer for composite icons.
+    """
     def render_icon(self, plots, *render_args):
-        """ Takes a list of plots and renders an icon for them """
+        """ Renders an icon for a list of plots. """
         types = set(map(type, plots))
         if types == set([ScatterPlot]):
             self._render_scatterplots(plots, *render_args)
@@ -59,79 +64,89 @@ class CompositeIconRenderer(AbstractCompositeIconRenderer):
 
 
 class Legend(AbstractOverlay):
-
-    # The font to use for the legend text
+    """ A legend for a plot.
+    """
+    # The font to use for the legend text.
     font = KivaFont("modern 12")
 
-    # The amount of space between the content of the legend and the border
+    # The amount of space between the content of the legend and the border.
     border_padding = Int(10)
 
-    # Override the default border_visible setting (inherited from enable2.Component)
+    # The border is visible (overrides Enable2 Component).
     border_visible = True
 
-    # The background color of the legend
+    # The background color of the legend (overrides AbstractOverlay).
     bgcolor = white_color_trait
 
-    # The position of the legend with respect to its overlaid component.  (Only
-    # applies if the legend is used as an overlay.)
-    #   ur = Upper Right
-    #   ul = Upper Left
-    #   ll = Lower Left
-    #   lr = Lower Right
+    # The position of the legend with respect to its overlaid component.  (This
+    # attribute applies only if the legend is used as an overlay.)
+    #
+    # * ur = Upper Right
+    # * ul = Upper Left
+    # * ll = Lower Left
+    # * lr = Lower Right
     align = Enum("ur", "ul", "ll", "lr")
 
-    # The amount of space between each legend item
+    # The amount of space between legend items.
     line_spacing = Int(3)
 
-    # The size of the icon/marker area drawn next to the label
+    # The size of the icon or marker area drawn next to the label.
     icon_bounds = List([24, 24])
 
-    # Amount of spacing between each label and its icon
+    # Amount of spacing between each label and its icon.
     icon_spacing = Int(5)
 
-    # Maps labels (strings) to plot instances or lists of plot instances.  The
+    # Map of labels (strings) to plot instances or lists of plot instances.  The
     # Legend determines the appropriate rendering of each plot's marker/line.
     plots = Dict
 
     # The list of labels to show and the order to show them in.  If this
     # list is blank, then the keys of self.plots is used and displayed in
-    # alphabetical order.  Otherwise, only the items in the "labels"
-    # list are down in the legend.  Labels are ordered from top to bottom.
+    # alphabetical order.  Otherwise, only the items in the **labels**
+    # list are drawn in the legend.  Labels are ordered from top to bottom.
     labels = List
 
-    # This function takes a list of plot instances and returns a _render_icon()
-    # function/icon.  This function should have the same signature as
-    # AbstractPlotRenderer._render_icon().
+    # The renderer that draws the icons for the legend.
     composite_icon_renderer = Instance(AbstractCompositeIconRenderer)
 
-    # When the legend encounters a plot whose icon it cannot render, should it:
-    #   - skip it altogether and not render its name
-    #   - render the name but leave the icon blank (color=self.bgcolor)
-    #   - render a "question mark" icon
+    # Action that the legend takes when it encounters a plot whose icon it
+    # cannot render:
+    #
+    # * 'skip': skip it altogether and don't render its name
+    # * 'blank': render the name but leave the icon blank (color=self.bgcolor)
+    # * 'questionmark': render a "question mark" icon
     error_icon = Enum("skip", "blank", "questionmark")
 
-    # Override the default value of this trait.
-    # TODO: Make this work when the legend is standalone, by setting this
-    # to "hv", then having the Legend manually reset its bounds and position
-    # from the container-given bounds, using the 'align' setting.
-    resizable = ""
+    # The legend is not resizable (overrides PlotComponent).
+    resizable = ""     # TODO: Make this work when the legend is standalone,
+                       # by setting this to "hv", then having the Legend
+                       # manually reset its bounds and position from the
+                       # container-given bounds, using the 'align' setting.
 
+    # The legend draws itself as in one pass when its parent is drawing
+    # the **draw_layer** (overrides PlotComponent).
     unified_draw = True
+    # The legend is drawn on the overlay layer of its parent (overrides
+    # PlotComponent).
     draw_layer = "overlay"
 
     #------------------------------------------------------------------------
     # Private Traits
     #------------------------------------------------------------------------
 
-    # A list of Label instances
+    # A cached list of Label instances
     _cached_labels = List
-
+    # A cached array of label sizes.
     _cached_label_sizes = Any
-
+    # A cached list of label names.
     _cached_label_names = List
 
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
+        """ Draws this component overlaid on another component.
+        
+        Implements AbstractOverlay.
+        """
         self.do_layout()
         valign, halign = self.align
         if valign == "u":
@@ -148,6 +163,10 @@ class Legend(AbstractOverlay):
 
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the overlay layer of a component.
+        
+        Overrides PlotComponent.
+        """
         # Determine the position we are going to draw at from our alignment
         # corner and the corresponding outer_padding parameters.  (Position
         # refers to the lower-left corner of our border.)
@@ -209,9 +228,10 @@ class Legend(AbstractOverlay):
 
     def _render_error(self, gc, icon_x, icon_y, icon_width, icon_height):
         """ Renders an error icon or performs some other action when a
-        plot was unable to render its icon.  Returns True if something
-        was actually drawn (and hence the legends needs to advance the line)
-        or False if nothing was drawn.
+        plot is unable to render its icon.  
+        
+        Returns True if something was actually drawn (and hence the legend 
+        needs to advance the line) or False if nothing was drawn.
         """
         if self.error_icon == "skip":
             return False

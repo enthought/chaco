@@ -1,4 +1,5 @@
-
+""" Defines the PlotLabel class.
+"""
 from enthought.kiva import font_metrics_provider
 from enthought.traits.api import Delegate, Enum, Instance
 
@@ -7,25 +8,33 @@ from label import Label
 
 
 class PlotLabel(AbstractOverlay):
+    """ A label used by plots. 
     
+    This class wraps a simple Label instance, and delegates some traits to it.
+    """
+    
+    # The text of the label.
     text = Delegate("_label")
+    # The color of the label text.
     color = Delegate("_label", modify=True)
+    # The font for the label text.
     font = Delegate("_label")
+    # The angle of rotation of the label.
     angle = Delegate("_label", "rotate_angle")
     
     #------------------------------------------------------------------------
     # Layout-related traits
     #------------------------------------------------------------------------
     
-    # Horizontal justification for when we are given more horizontal space
-    # than we need
+    # Horizontal justification used if the label has more horizontal space
+    # than it needs.
     hjustify = Enum("center", "left", "right")
     
-    # Vertical justification for when we are given more vertical space than
-    # we need
+    # Vertical justification used if the label has more vertical space than it
+    # needs.
     vjustify = Enum("center", "bottom", "top")
     
-    # The position of this label relative to the object it is overlaying
+    # The position of this label relative to the object it is overlaying.
     overlay_position = Enum("top", "bottom", "left", "right")
     
     # Should this PlotLabel modify the padding on its underlying component
@@ -37,11 +46,11 @@ class PlotLabel(AbstractOverlay):
     # Private traits
     #------------------------------------------------------------------------
     
-    # Override the value inherited from PlotComponent.  Text labels have a 
-    # fixed height
+    # The label has a fixed height and can be resized horizontally. (Overrides
+    # PlotComponent.)
     resizable = "h"
 
-    # The Label instance we are wrapping
+    # The Label instance this plot label is wrapping.
     _label = Instance(Label, args=())
 
     
@@ -51,15 +60,27 @@ class PlotLabel(AbstractOverlay):
         return
     
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
+        """ Draws this label overlaid on another component.
+        
+        Overrides AbstractOverlay.
+        """
         self._draw_overlay(gc, view_bounds, mode)
         return
     
     def get_preferred_size(self):
+        """ Returns the label's preferred size.
+        
+        Overrides PlotComponent.
+        """
         dummy_gc = font_metrics_provider()
         size = self._label.get_bounding_box(dummy_gc)
         return size
     
     def do_layout(self):
+        """ Tells this component to do layout.
+        
+        Overrides PlotComponent.
+        """
         if self.component is not None:
             self._layout_as_overlay()
         else:
@@ -67,6 +88,10 @@ class PlotLabel(AbstractOverlay):
         return
     
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the overlay layer of a component.
+        
+        Overrides PlotComponent.
+        """
         try:
             # Perform justification and compute the correct offsets for
             # the label position
@@ -96,6 +121,8 @@ class PlotLabel(AbstractOverlay):
         return
     
     def _layout_as_overlay(self, size=None, force=False):
+        """ Lays out the label as an overlay on another component.
+        """
         if self.component is not None:
             orientation = self.overlay_position
             if orientation in ("left", "right"):

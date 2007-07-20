@@ -1,3 +1,6 @@
+""" Defines the SelectableOverlayPlotContainer class.
+"""
+
 from numpy import array, float64
 
 # Enthought library imports
@@ -9,23 +12,39 @@ from plot_containers import OverlayPlotContainer
 
 class SelectableOverlayPlotContainer(OverlayPlotContainer):
     """
-    SelectableOverlayPlotContainer is an OverlayPlotContainer that can
-    show a selection region on top of it.
+    An OverlayPlotContainer that can show a selection region on top of it.
     """
 
+    # Screen position of the start of the selection, which can be in the x- or
+    # y-dimension, depending on **selection_direction**.
     selection_screen_start = Float(0.0)
+    # Screen position of the end of the selection, which can be in the x- or
+    # y-dimension, depending on **selection_direction**.
     selection_screen_end = Float(0.0)
+    # Is there an active selection?
     selection_active = false
+    # The direction of the selection.
     selection_direction = Enum('v', 'h')
+    # The color to use to fill the selected region.
     selection_fill_color = ColorTrait('lightskyblue')
+    # The color to use to draw the border of the selected region.
     selection_border_color = ColorTrait('dodgerblue')
+    # The transparency of the **selection_fill_color**.
     selection_alpha = Float(0.3)
 
     def _draw_overlays(self, gc, view_bounds=None, mode='normal'):
+        """ Method for backward compatability with old drawing scheme.
+        
+        Overrides BasePlotContainer.
+        """
         self._draw_selection(gc, view_bounds=view_bounds, mode=mode)
         return
     
     def _draw_selection(self, gc, view_bounds=None, mode='normal'):
+        """ Renders a selected subset of a component's data.
+        
+        Overrides PlotComponent.
+        """
         if self.selection_active:
             if self.selection_direction == 'h':
                 x1 = self.selection_screen_start

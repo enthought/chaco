@@ -1,8 +1,9 @@
-
+""" Defines the PlotComponent class.
+"""
 # Enthought library imports
 from enthought.enable2.api import Component
-from enthought.traits.api import Any, Enum, false, Instance, List, \
-                             Property, Str, true
+from enthought.traits.api import Any, Bool, Enum, Instance, List, \
+                             Property, Str
 from enthought.kiva import GraphicsContext, FILL
 
 
@@ -12,12 +13,12 @@ DEFAULT_DRAWING_ORDER = ["background", "image", "underlay", "plot",
 
 class PlotComponent(Component):
     """
-    PlotComponent serves as the base class for all plot-related visual components.
-    It defines the various methods related to layout and to tool handling
+    PlotComponent is the base class for all plot-related visual components.
+    It defines the various methods related to layout and tool handling,
     which virtually every subclass uses or needs to be aware of.
     
     Several of these top-level layout and draw methods have implementations
-    that should not be overridden; instead, subclasses should implement various
+    that must not be overridden; instead, subclasses implement various
     protected stub methods.
     """
 
@@ -25,120 +26,133 @@ class PlotComponent(Component):
     # Basic appearance traits
     #------------------------------------------------------------------------
 
-    # Is the plot visible?
-    visible = true
+    # Is the component visible?
+    visible = Bool(True)
 
-    # Should the padding area be filled with the background color?
-    fill_padding = false
+    # Does the component use space in the layout even if it is not visible?
+    invisible_layout = Bool(False)
+
+    # Fill the padding area with the background color?
+    fill_padding = Bool(False)
 
     #------------------------------------------------------------------------
     # Layout-related traits
     #------------------------------------------------------------------------
 
-    # Whether to use chaco-level layout (the 'old' system) or enable-level
-    # layout, based on the db/resolver containment model.
+    # The layout system to use:
+    #
+    # * 'chaco': Chaco-level layout (the "old" system)
+    # * 'enable': Enable-level layout, based on the db/resolver containment
+    #   model.
     layout_switch = Enum("chaco", "enable")
 
-    # Can this component be resized to consume free space?  Resizable
-    # components will get called with get_min_size() before their actual
-    # bounds get set.
-    #    v = resizable vertically
-    #    h = resizable horizontally
-    #    hv = resizable horizontall and vertically
-    #    "" = not resizable
-    # Note that this only means that the parent *can* and *should* resize
-    # this component; it does NOT mean that the component will automatically
-    # resize itself!
-    resizable = Enum("hv", "h", "v", "")
+    # Dimensions that this component is resizable in.  For resizable
+    # components,  get_preferred_size() is called before their actual
+    # bounds are set.
+    #
+    # * 'v': resizable vertically
+    # * 'h': resizable horizontally
+    # * 'hv': resizable horizontally and vertically
+    # * 'a': fixed aspect ratio; resizable, but only if maintaining the
+    #        current aspect ratio of the component
+    # * '': not resizable
+    #
+    # Note that this setting means only that the *parent* can and should resize
+    # this component; it does *not* mean that the component automatically
+    # resizes itself.
+    resizable = Enum("hv", "h", "v", "a", "")
 
     #------------------------------------------------------------------------
     # Overlays and underlays
     #------------------------------------------------------------------------
 
-    # A list of underlays for this plot.  By default, these get a chance to
+    # A list of underlays for this plot.  By default, underlays get a chance to
     # draw onto the plot area underneath plot itself but above any images and
     # backgrounds of the plot.
     underlays = List  #[AbstractOverlay]
     
-    # A list of overlays for the plot.  By default, these are drawn above the
+    # A list of overlays for the plot.  By default, overlays are drawn above the
     # plot and its annotations.
     overlays = List   #[AbstractOverlay]
 
-    # Should this plot listen for changes to various selection metadata on
-    # the underlying datasources, and render them specially?
-    use_selection = false
+    # Listen for changes to selection metadata on
+    # the underlying data sources, and render them specially?
+    use_selection = Bool(False)
 
     #------------------------------------------------------------------------
     # Tool and interaction handling traits
     #------------------------------------------------------------------------
 
-    # An enable Interactor that we defer all events to.
+    # An Enable Interactor that all events are deferred to.
     controller = Any
 
-    # The tools that are registered as listeners
+    # The tools that are registered as listeners.
     tools = List
 
-    # The tool that is currently active 
+    # The tool that is currently active.
     active_tool = Property
     
-    # Override an inherited trait from Enable
+    # Events are *not* automatically considered "handled" if there is a handler 
+    # defined. Overrides an inherited trait from Enable's Interactor class.
     auto_handle_event = False
     
     #------------------------------------------------------------------------
     # Rendering control traits
     #------------------------------------------------------------------------
     
-    # The order in which various rendering classes on this component will
-    # be drawn.
+    # The order in which various rendering classes on this component are drawn.
     # Note that if this component is placed in a container, in most cases
-    # the container's draw order will be used, since the container will call
+    # the container's draw order is used, since the container calls
     # each of its contained components for each rendering pass.
     # Typically, the definitions of the layers are:
-    #   background: background image, shading, and borders
-    #   underlay: axes and grids
-    #   image: a special layer for plots that render as images.  This gets
-    #          a separate layer since these must all render before non-image
-    #          plots
-    #   plot: the main plot area itself
-    #   annotation: lines and text that are concetually part of the "plot" but
-    #               should be rendered on top of everything else in the plot
-    #   overlay: legends, selection regions, and other tool-drawn visuals
+    #
+    # 1. 'background': Background image, shading, and borders
+    # 2. 'underlay': Axes and grids
+    # 3. 'image': A special layer for plots that render as images.  This is in
+    #    a separate layer since these plots must all render before non-image
+    #    plots.
+    # 4. 'plot': The main plot area itself
+    # 5. 'annotation': Lines and text that are conceptually part of the "plot" but
+    #    need to be rendered on top of everything else in the plot.
+    # 6. 'overlay': Legends, selection regions, and other tool-drawn visual
+    #    elements
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     
-    # Does this container prefer to draw all of its components in one pass, or
-    # does it prefer to cooperate in its container's layer-by-layer drawing?
-    # If unified_draw is on, then this component will draw as a unified whole,
-    # and its parent container will call our _draw() method when drawing the
-    # layer indicated in self.draw_layer.
-    # If unified_draw is off, then our parent container will call
-    # self._dispatch_draw() with the name of each layer as it goes through its
-    # list of layers.
-    unified_draw = false
+    # Does this container try to draw all of its components in one pass? 
+    # If True, then this component draws as a unified whole,
+    # and its parent container calls this component's _draw() method when 
+    # drawing the layer indicated  by **draw_layer**.
+    # If False, it tries to cooperate in its container's layer-by-layer drawing.
+    # Its parent container calls self._dispatch_draw() with the name of each
+    # layer as it goes through its list of layers.
+    unified_draw = Bool(False)
 
-    # If unified_draw is True for this component, then this attribute
+    # If **unified_draw** is True for this component, then this attribute
     # determines what layer it will be drawn on.  This is used by containers
-    # and external classes whose drawing loops will call this component.
-    # If unified_draw is False, then this attribute is ignored.
+    # and external classes, whose drawing loops call this component.
+    # If **unified_draw** is False, then this attribute is ignored.
     draw_layer = Str("plot")
     
-    # A backwards compatibility flag to indicate whether or not to use the
-    # old _do_draw() interface or the new draw_order/draw_loop stuff.
-    use_draw_order = true
+    # Draw layers in **draw_order**? If False, use _do_draw() (for backwards
+    # compatibility).
+    use_draw_order = Bool(True)
        
-    # Should the border be drawn as part of the overlay or the background (default)?
-    overlay_border = true
+    # Draw the border as part of the overlay layer? If False, draw the 
+    # border as part of the background layer.
+    overlay_border = Bool(True)
     
-    # Should the border be drawn inset (on the plot) or outside the plot area?
-    inset_border = true
+    # Draw the border inset (on the plot)? If False, draw the border 
+    # outside the plot area.
+    inset_border = Bool(True)
     
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
     
-    # indicate whether or not we need to do a layout call
-    _layout_needed = true
+    # Does the component need to do a layout call?
+    _layout_needed = Bool(True)
 
-    # Shadow trait for the active_tool property.  Should be an instance of
+    # Shadow trait for the **active_tool** property.  Must be an instance of
     # BaseTool or one of its subclasses.
     _active_tool = Any
     
@@ -150,26 +164,25 @@ class PlotComponent(Component):
     #------------------------------------------------------------------------
     
     def _do_layout(self):
-        """
-        This method is called by do_layout() to do an actual layout call,
-        and bypasses some additional logic to handle null bounds and settings
-        _layout_needed.
+        """ Called by do_layout() to do an actual layout call; it bypasses some
+        additional logic to handle null bounds and setting **_layout_needed**.
         """
         pass
     
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        """
-        Subclasses should implement this method to actually render themselves.
-        Note: This is only used by the *old* drawing calls.
+        """ Renders the component. 
+        
+        Subclasses must implement this method to actually render themselves.
+        Note: This method is used only by the "old" drawing calls.
         """
         pass
 
     def _draw_selection(self, gc, view_bounds=None, mode="normal"):
-        """
-        This method is used by subclasses to render selected data subsets
-        of their data.  The notion of selection doesn't necessarily apply
-        to all subclasses of PlotComponent, but it applies to enough of them
-        that we define it as one of the default draw layers.
+        """ Renders a selected subset of a component's data. 
+        
+        This method is used by some subclasses. The notion of selection doesn't 
+        necessarily apply to all subclasses of PlotComponent, but it applies to
+        enough of them that it is defined as one of the default draw methods.
         """
         pass
     
@@ -178,16 +191,28 @@ class PlotComponent(Component):
     #------------------------------------------------------------------------
 
     def draw(self, gc, view_bounds=None, mode="normal"):
-        """
-        Drawing mode can be one of the following:
-            "normal": normal, antialiased, high-quality rendering
-            "overlay": the plotcomponent is being rendered over something else,
-                so it should render more quickly, and possibly omit rendering
+        """ Draws the plot component.
+        
+        Parameters
+        ----------
+        gc : Kiva GraphicsContext
+            The graphics context to draw the component on
+        view_bounds : 4-tuple of integers
+            (x, y, width, height) of the area to draw
+        mode : string
+            The drawing mode to use; can be one of:
+                
+            'normal' 
+                Normal, antialiased, high-quality rendering
+            'overlay'
+                The plot component is being rendered over something else,
+                so it renders more quickly, and possibly omits rendering
                 its background and certain tools
-            "interactive": the plotcomponent is being asked to render in
+            'interactive'
+                The plot component is being asked to render in
                 direct response to realtime user interaction, and needs to make
                 its best effort to render as fast as possible, even if there is
-                an aesthetic cost
+                an aesthetic cost.
         """
         if self._layout_needed:
             self.do_layout()
@@ -199,10 +224,35 @@ class PlotComponent(Component):
         return
 
     def draw_select_box(self, gc, position, bounds, width, dash, inset, color, bgcolor, marker_size):
-        """
-        Utility method that subclasses can use to render a selection box around themselves.
-        To avoid burdening subclasses with various selection-box related traits that they
-        might never use, this method takes all of its required data as input arguments.
+        """ Renders a selection box around the component.
+        
+        Subclasses can implement this utility method to render a selection box
+        around themselves. To avoid burdening subclasses with various 
+        selection-box related traits that they might never use, this method 
+        takes all of its required data as input parameters.
+        
+        Parameters
+        ----------
+        gc : Kiva GraphicsContext
+            The graphics context to draw on.
+        position : (x, y)
+            The position of the selection region.
+        bounds : (width, height)
+            The size of the selection region.
+        width : integer
+            The width of the selection box border
+        dash : float array
+            An array of floating point values specifying the lengths of on and
+            off painting pattern for dashed lines.
+        inset : integer
+            Amount by which the selection box is inset on each side within the
+            selection region.
+        color : 3-tuple of floats between 0.0 and 1.0
+            The R, G, and B values of the selection border color.
+        bgcolor : 3-tuple of floats between 0.0 and 1.0
+            The R, G, and B values of the selection background.
+        marker_size : integer
+            Size, in pixels, of "handle" markers on the selection box
         """
         gc.save_state()
     
@@ -250,10 +300,20 @@ class PlotComponent(Component):
     #------------------------------------------------------------------------
     
     def do_layout(self, size=None, force=False):
-        """
-        Tells this component to do layout with a given size.  Size is a
-        tuple (width, height), and either or both can be 0.  If size is
-        None, then the component should layout using self.bounds.
+        """ Tells this component to do layout at a given size.  
+        
+        Parameters
+        ----------
+        size : (width, height)
+            Size at which to lay out the component; either or both values can 
+            be 0. If it is None, then the component lays itself out using 
+            **bounds**.
+        force : Boolean
+            Whether to force a layout operation. If False, the component does
+            a layout on itself only if **_layout_needed** is True.
+            The method always does layout on any underlays or overlays it has,
+            even if *force* is False.
+            
         """
         if self._layout_needed or force:
             if size is not None:
@@ -267,13 +327,13 @@ class PlotComponent(Component):
         return
     
     def get_preferred_size(self):
-        """
-        Returns the size (width,height) that this component would like to be.
+        """ Returns the size (width,height) that is preferred for this component.
+        
         When called on a component that does not contain other components,
-        this should just return the component bounds.  If the component is
-        resizable and can draw into any size, it should return a size that
-        is visually appropriate.  (The component's actually bounds will be
-        determined by its container's do_layout method.)
+        this method just returns the component bounds.  If the component is
+        resizable and can draw into any size, the method returns a size that
+        is visually appropriate.  (The component's actual bounds are 
+        determined by its container's do_layout() method.)
         """
         size = [0,0]
         outer_bounds = self.outer_bounds
@@ -284,6 +344,16 @@ class PlotComponent(Component):
         return size
 
     def dispatch(self, event, suffix):
+        """ Dispatches a mouse event based on the current event state.
+        
+        Parameters
+        ----------
+        event : an Enable MouseEvent
+            A mouse event.
+        suffix : string
+            The name of the mouse event as a suffix to the event state name,
+            e.g. "_left_down" or "_window_enter".
+        """
         if self.use_draw_order:
             self._new_dispatch(event, suffix)
         else:
@@ -291,6 +361,23 @@ class PlotComponent(Component):
         return
 
     def _new_dispatch(self, event, suffix):
+        """ Dispatches a mouse event
+        
+        If the component has a **controller**, the method dispatches the event 
+        to it, and returns. Otherwise, the following objects get a chance to 
+        handle the event:
+        
+        1. The component's active tool, if any.
+        2. Any overlays, in reverse order that they were added and are drawn.
+        3. The component itself.
+        4. Any underlays, in reverse order that they were added and are drawn.
+        5. Any listener tools.
+        
+        If any object in this sequence handles the event, the method returns
+        without proceeding any further through the sequence. If nothing
+        handles the event, the method simply returns.
+        """
+        
         # Maintain compatibility with .controller for now
         if self.controller is not None:
             self.controller.dispatch(event, suffix)
@@ -327,6 +414,21 @@ class PlotComponent(Component):
         return
 
     def _old_dispatch(self, event, suffix):
+        """ Dispatches a mouse event.
+        
+        If the component has a **controller**, the method dispatches the event 
+        to it and returns. Otherwise, the following objects get a chance to 
+        handle the event:
+        
+        1. The component's active tool, if any.
+        2. Any listener tools.
+        3. The component itself.
+        
+        If any object in this sequence handles the event, the method returns
+        without proceeding any further through the sequence. If nothing
+        handles the event, the method simply returns.
+        
+        """
         if self.controller is not None:
             self.controller.dispatch(event, suffix)
             return
@@ -351,14 +453,14 @@ class PlotComponent(Component):
     #------------------------------------------------------------------------
 
     def _old_draw(self, gc, view_bounds=None, mode="normal"):
-        """
-        This method is the main draw handling logic in plot components.  The
-        reason we implement _draw() instead of overriding the top-level draw()
-        method is that our Enable base classes may do things in draw() that
-        shouldn't be interfered with (e.g. the Viewable mix-in).
+        """ Draws the component, ignoring **draw_order**.
         
-        Most PlotComponent subclasses should implement the various _draw_*
-        methods above, and will not need to override this method.
+        The reason for implementing _old_draw() instead of overriding the 
+        top-level draw() method is that the Enable base classes may do things 
+        in draw() that mustn't be interfered with (e.g., the Viewable mix-in).
+        
+        Most PlotComponent subclasses implement the various _draw_*()
+        methods above, and do not need to override this method.
         """
         if self.visible:
             # Determine if we have an active tool and if we need to transfer
@@ -394,15 +496,16 @@ class PlotComponent(Component):
         return
 
     def _do_draw(self, gc, view_bounds=None, mode="normal"):
-        """
-        This just does the draw using the mode specified.  Although this is
-        a protected method, classes that need this component to render
-        itself into a GC should call this method instead of draw(), because
-        that is potentially intercepted at the Enable level.
+        """ Draws the plot component using the mode specified.  
         
-        Active tools using this to render themselves on top of a component
-        should make sure that their draw_mode is "overlay", otherwise
-        a loop may result.  (This method will attempt to render visible,
+        Although this is a protected method, classes that need this component
+        to render itself into a graphics context must call this method instead
+        of draw(), because draw() is potentially intercepted at the Enable 
+        level.
+        
+        Active tools using this method to render themselves on top of a 
+        component must set their **draw_mode** to 'overlay'; otherwise,
+        a loop may result.  (This method attempts to render visible,
         non-overlay tools.)
         """
         active_tool = self._active_tool
@@ -433,9 +536,14 @@ class PlotComponent(Component):
     #------------------------------------------------------------------------
     
     def _draw(self, gc, view_bounds=None, mode="normal"):
-        """
-        This implements a drawing loop that follows self.draw_order and pays
-        attention to overlays, underlays, and the like.
+        """ Draws the component, paying attention to **draw_order**, including
+        overlays, underlays, and the like.
+        
+        This method is the main draw handling logic in plot components. 
+        The reason for implementing _draw() instead of overriding the top-level
+        draw() method is that the Enable base classes may do things in draw()
+        that mustn't be interfered with (e.g., the Viewable mix-in).
+
         """
         if not self.visible:
             return
@@ -477,11 +585,11 @@ class PlotComponent(Component):
         return
 
     def _dispatch_draw(self, layer, gc, view_bounds, mode):
-        """
-        Renders the named layer of this component.  This method can be used
-        by container classes that group many components together and want them
-        to draw cooperatively - the container iterates through its components
-        and asks them to only draw certain layers.
+        """ Renders the named *layer* of this component. 
+        
+        This method can be used by container classes that group many components
+        together and want them to draw cooperatively. The container iterates
+        through its components and asks them to draw only certain layers.
         """
         # Don't render the selection layer if use_selection is false.  This
         # is mostly for backwards compatibility.
@@ -505,6 +613,8 @@ class PlotComponent(Component):
         return
 
     def _draw_underlay(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the underlay layer of a component.
+        """
         for underlay in self.underlays:
             # This method call looks funny but it's correct - underlays are
             # just overlays drawn at a different time in the rendering loop.
@@ -512,6 +622,8 @@ class PlotComponent(Component):
         return
     
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the overlay layer of a component.
+        """
         for overlay in self.overlays:
             overlay.overlay(self, gc, view_bounds, mode)
         return
@@ -521,6 +633,8 @@ class PlotComponent(Component):
     #------------------------------------------------------------------------
     
     def _draw_background(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the background layer of a component.
+        """
         if self.bgcolor not in ("clear", "transparent", "none"):
             if self.fill_padding:
                 r = tuple(self.outer_position) + (self.outer_width-1, self.outer_height-1)
@@ -544,6 +658,11 @@ class PlotComponent(Component):
         return
     
     def _draw_border(self, gc, view_bounds=None, mode="default", force_draw=False):
+        """ Draws a border around a component.
+        
+        The *force_draw* parameter forces the method to draw the border; if it 
+        is false, the border is drawn only when **overlay_border** is True.
+        """
         if self.overlay_border or force_draw:
             if self.inset_border:
                 self._draw_inset_border(gc, view_bounds, mode)
@@ -552,10 +671,10 @@ class PlotComponent(Component):
         return
     
     def _draw_inset_border(self, gc, view_bounds=None, mode="default"):
-        """
-        Utility method to draw the borders around this plot.  Unlike the default 
-        Enable border, this one is drawn on the inside of the plot instead of
-        around it.
+        """ Draws the border of a component. 
+        
+        Unlike the default Enable border, this one is drawn on the inside of 
+        the plot instead of around it.
         """
         if not self.border_visible:
             return
@@ -575,9 +694,8 @@ class PlotComponent(Component):
         return
     
     def _get_visible_border(self):
-        """
-        Returns the amount of border that should be taken into account in the
-        padding.  Overrides the implementation in enable.Component.
+        """ Returns the amount of border to take into account in the padding.  
+        Overrides the implementation in Enable's Component.
         """
         if self.border_visible:
             if self.inset_border:
@@ -617,10 +735,9 @@ class PlotComponent(Component):
         return
     
     def _dispatch_to_enable(self, event, suffix):
-        """
-        This method is called by dispatch() to allow subclasses to customize
-        how they call down to Enable-level handlers for dispatching of events
-        on self.
+        """ Called by dispatch() to allow subclasses to customize
+        how they call Enable-level handlers for dispatching of events
+        on the object.
         
         This method only gets called after all the tools have been called;
         if execution reaches this point, the PlotComponent needs to handle the
@@ -628,7 +745,6 @@ class PlotComponent(Component):
         """
         Component.dispatch(self, event, suffix)
         return
-
 
     #------------------------------------------------------------------------
     # Persistence

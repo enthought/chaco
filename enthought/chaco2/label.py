@@ -1,4 +1,5 @@
-
+""" Defines the Label class.
+"""
 # Major library imports
 from math import pi
 
@@ -10,30 +11,35 @@ from enthought.traits.api import Any, false, Float, HasTraits, Int, \
 
 
 class Label(HasTraits):
+    """ A label used by overlays.
+    """
 
     # The label text.  Carriage returns (\n) are always connverted into
     # line breaks.
     text = Str
 
-    # The angle of rotation of the label.  Right now, only multiples of 90
-    # are supported.
+    # The angle of rotation of the label.  Only multiples of 90 are supported.
     rotate_angle = Float(0)
 
+    # The color of the label text.
     color = black_color_trait
 
+    # The background color of the label.
     bgcolor = transparent_color_trait
 
-    # If the border width is not 0, then it will be shown
+    # The width of the label border. If it is 0, then it is not shown.
     border_width = Int(0)
 
+    # The color of the border.
     border_color = black_color_trait
 
+    # The font of the label text.
     font = KivaFont("modern 10")
 
-    # Number of pixels of margin around the label, in both X and Y dimensions
+    # Number of pixels of margin around the label, for both X and Y dimensions.
     margin = Int(2)
 
-    # Number of pixels of spacing between each line
+    # Number of pixels of spacing between lines of text.
     line_spacing = Int(5)
 
 
@@ -92,13 +98,16 @@ class Label(HasTraits):
         return
 
     def get_width_height(self, gc):
-        """Returns the width and height of the label, in the rotated frame of reference"""
+        """ Returns the width and height of the label, in the rotated frame of 
+        reference.
+        """
         self._calc_line_positions(gc)
         width, height = self._bounding_box
         return width, height
 
     def get_bounding_box(self, gc):
-        """Returns a rectangular bounding box for the Label as (x,y)"""
+        """ Returns a rectangular bounding box for the Label as (width,height).
+        """
         # FIXME: Need to deal with non 90 deg rotations
         width, height = self.get_width_height(gc)
         if self.rotate_angle in (90.0, 270.0):
@@ -110,15 +119,17 @@ class Label(HasTraits):
 
     def get_bounding_poly(self, gc):
         """
-        Returns a list [(x0,y0), (x1,y1),...] of tuples represenging a polygon
+        Returns a list [(x0,y0), (x1,y1),...] of tuples representing a polygon
         that bounds the label.
         """
         raise NotImplementedError
 
     def draw(self, gc):
-        """
-        Assumes the GC has been translated to the correct position such that the
-        origin is at the lower left-hand corner of this text label's box.
+        """ Draws the label.
+
+        This method assumes the graphics context has been translated to the
+        correct position such that the origin is at the lower left-hand corner
+        of this text label's box.
         """
         # For this version we're not supporting rotated text.
         # temp modified for only one line

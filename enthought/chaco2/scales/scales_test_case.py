@@ -26,7 +26,19 @@ class ScalesTestCase(TicksTestCase):
         self.check_ticks(ticks, frange(5, 15, 1.0))
         ticks = scale.ticks(5,105,8)
         self.check_ticks(ticks, frange(10, 100, 10.0))
-    
+
+    def test_log_scale(self):
+        scale = LogScale()
+        ticks = scale.ticks(0.1, 10.0)
+        self.check_ticks(ticks, array((0.2, 0.4, 0.6, 0.8, 1.0, 2.0, 4.0, 6.0, 8.0, 10.0)))
+
+        ticks = scale.ticks(10.0, 1000.0)
+        self.check_ticks(ticks, array((20.0, 40.0, 60.0, 80.0, 100.0,
+                                       200.0, 400.0, 600.0, 800.0, 1000.0)))
+
+        ticks = scale.ticks(5.0, 4300)
+        self.check_ticks(ticks, array((5, 10, 50, 100, 500, 1000)))
+        
 
 class ScaleSystemTestCase(TicksTestCase):
 
@@ -80,6 +92,25 @@ class BasicFormatterTestCase(TicksTestCase):
         labels = fmt.format(ticks, numlabels, None)
         desired = [str(i)+"e-4" for i in range(1, 9)]
         self.check_labels(labels, desired)
+
+    def test2_nice_sci(self):
+      
+        # The table of numerical values and their proper representation
+        # given a certain number of mantissa digits
+        vals = [ (3.14159e10, (2, "3e10"), (3, '3.1e10'), (5, '3.141e10')),
+                 (123456789, (3, '1.2e8'), (5, '1.234e8')),
+                 (-123456, (2, "-1e5"), (3, "-1e5"), (4, "-1.2e5")),
+                 (123, (2, "1e2"), (3, "1.2e2"), (4, "1.23e2")),
+                 (1.234, (2, "1"), (3, "1.2"), (4, "1.23")),
+                 ]
+        fmt = BasicFormatter()
+        for lst in vals:
+            val = lst[0]
+            for mdigits, desired in lst[1:]:
+                s = fmt._nice_sci(val, mdigits)
+                if s != desired:
+                    print "Mismatch for", val, "; desired:", desired, "actual:", s
+
 
     def test_estimate_default_scale(self):
         fmt = BasicFormatter()
@@ -136,12 +167,38 @@ class BasicFormatterTestCase(TicksTestCase):
             print zip(*labels)[1]
         return
 
+class OffsetFormatterTestCase(TicksTestCase):
+
+
+    def test_format(self):
+
+        test_ranges = [(12003, 12015, 1.0),
+                       (1.2003, 1.2015, 1e-4),
+                       (-1.2015, -1.2003, 1e-4)]
+
+        for start, end, resol in test_ranges:
+            fmt = OffsetFormatter()
+            fmt.use_offset=True
+            fmt.offset_format = "decimal"
+            fmt.end_label_format = "sci"
+
+            scale = FixedScale(resolution = resol)
+            numlabels = 12
+            ticks = scale.ticks(start, end, numlabels)
+            print "range:", start, end
+            labels = fmt.format(ticks, numlabels, None)
+            print "Labels:", labels, "\n"
+            print "estimated width:", fmt.estimate_width(start, end, numlabels)
+            print "actual width:", sum(map(len, labels))
+
+
 
 def test_suite(level=1):
     suites = []
-    suites.append(unittest.makeSuite(ScalesTestCase, "test_"))
-    suites.append(unittest.makeSuite(ScaleSystemTestCase, "test_"))
-    suites.append(unittest.makeSuite(BasicFormatterTestCase, "test_"))
+##     suites.append(unittest.makeSuite(ScalesTestCase, "test_"))
+##     suites.append(unittest.makeSuite(ScaleSystemTestCase, "test_"))
+    suites.append(unittest.makeSuite(BasicFormatterTestCase, "test2_"))
+    #suites.append(unittest.makeSuite(OffsetFormatterTestCase, "test_"))
     return unittest.TestSuite(suites)
 
 def test(level=10):

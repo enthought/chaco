@@ -1,5 +1,5 @@
 """
-This module contains convenience methods to create ready-made PlotRenderer
+Contains convenience functions to create ready-made PlotRenderer
 and PlotFrame instances of various types.
 """
 
@@ -49,10 +49,10 @@ def create_scatter_plot(data=[], index_bounds=None, value_bounds=None,
                         index_sort="none"):
     """
     Creates a ScatterPlot from a single Nx2 data array or a tuple of
-    two length-N 1D arrays.  The data should be sorted on index if any
+    two length-N 1-D arrays.  The data must be sorted on the index if any
     reverse-mapping tools are to be used.
     
-    pre-existing "index" and "value" datasources can also be passed in.
+    Pre-existing "index" and "value" datasources can be passed in.
     """
     
     index, value = _create_data_sources(data)
@@ -209,7 +209,7 @@ def create_polar_plot(data, orientation='h', color='black', width=1.0,
 def add_default_axes(plot, orientation="normal", vtitle="",htitle=""):
     """
     Creates left and bottom axes for a plot.  Assumes that the index is
-    horizontal and value is vertical by default; set orientation to
+    horizontal and value is vertical by default; set *orientation* to
     something other than "normal" if they are flipped.
     """
     if orientation in ("normal", "h"):

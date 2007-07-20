@@ -1,4 +1,5 @@
-
+""" Defines the DataPrinter tool class.
+"""
 # Enthought library imports
 from enthought.traits.api import Any, Float, Str, Trait
 
@@ -6,20 +7,24 @@ from enthought.traits.api import Any, Float, Str, Trait
 from enthought.chaco2.api import BaseTool, BaseXYPlot
 
 class DataPrinter(BaseTool):
-    """
-    Simple listener tool to dump out the (x,y) position of the point under the
-    cursor.
+    """ Simple listener tool that prints the (x,y) data space position of the
+    point under the cursor.
     """
     
-    # Since we are a listener and print output to stdout, we don't ever need
-    # to draw.
+    # This tool is a listener, and does not display anything (overrides BaseTool).
     visible = False
+    
+    # Turn off drawing, because the tool prints to stdout.
     draw_mode = "none"
     
-    # The string to use to format the x,y value that we find in data space
+    # The string to format the (x,y) value in data space.
     format = Str("(%.3f, %.3f)")
 
     def normal_mouse_move(self, event):
+        """ Handles the mouse being moved in the 'normal' state.
+        
+        Prints the data space position of the current mouse position.
+        """
         plot = self.component
         if plot is not None:
             if isinstance(plot, BaseXYPlot):

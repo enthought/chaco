@@ -1,9 +1,10 @@
-
+""" Defines the BasePlotFrame class (deprecated).
+"""
 
 #################################################################################
 #
 # NOTE: PlotFrames are deprecated.  There is no need to use them any more.
-# This class will be removed sometime in the near future.
+# This class will be removed some time in the near future.
 #
 #################################################################################
 
@@ -23,23 +24,25 @@ class BasePlotFrame(Container, PlotComponent):
     """
     Base class for plot frames.  Primarily defines the basic functionality
     of managing slots (sub-containers) within the plot frame.
+    
+    NOTE: PlotFrames are deprecated. There is no need to use them any more.
+    This class will be removed some time in the near future.
     """
     
     # A named list of places/positions/"slots" on the frame where PlotComponents
-    # can place themselves.  Subclasses should redefine this trait with the
-    # appropriate values.  Note that by default, __getattr__ will treat these
+    # can place themselves.  Subclasses must redefine this trait with the
+    # appropriate values.  Note that by default, __getattr__ treats these
     # slot names as attributes on the class so they can be directly accessed.
     # This is a class attribute.
     slot_names = ()
     
-    # fit_components in the Chaco context means something slightly different from
-    # Enable.  If fit_components is True, then each slot in the Frame sets its size
-    # to the size of its contained component's preferred size.  If fit_components
-    # if False, then the Frame determines the size of each slot, which in turn
-    # dictates the size of the contained component.
+    # Dimensions in which this frame can resize to fit its components.
+    # This is similar to the **resizable** trait on PlotComponent. Chaco
+    # plot frames use this attribute in preference to the Enable 
+    # **auto_size** attribute (which is overridden to be False by default).
     fit_components = Enum("", "h", "v", "hv")
     
-    # Override the Enable auto_size trait (which will be deprecated in the future)
+    # Overrides the Enable auto_size trait (which will be deprecated in the future)
     auto_size = False    
 
 
@@ -51,14 +54,14 @@ class BasePlotFrame(Container, PlotComponent):
     def add_to_slot(self, slot, component, stack="overlay"):
         """
         Adds a component to the named slot using the given stacking mode.
-        The valid modes are: overlay, left, right, top, bottom.
+        The valid modes are: 'overlay', 'left', 'right', 'top', 'bottom'.
         """
         self.frame_slots[slot].add_plot_component(component, stack)
         return
 
     def set_slot(self, slotname, container):
         """
-        Sets the named slot to use the given container.  'container' can be None.
+        Sets the named slot to use the given container. *container* can be None.
         """
         if self._frame_slots.has_key(slotname):
             old_container = self._frame_slots[slotname]
@@ -69,7 +72,7 @@ class BasePlotFrame(Container, PlotComponent):
         return
 
     def get_slot(self, slotname):
-        """ Returns the container in the named slot """
+        """ Returns the container in the named slot. """
         return self._frame_slots.get(slotname, None)
 
     #------------------------------------------------------------------------
@@ -77,11 +80,12 @@ class BasePlotFrame(Container, PlotComponent):
     #------------------------------------------------------------------------
 
     def draw(self, gc, view_bounds=None, mode="normal"):
-        """
+        """ Draws the plot frame. 
+        
         Frames are the topmost Chaco component that knows about layout, and they
         are the start of the layout pipeline.  When they are asked to draw,
         they can assume that their own size has been set properly and this in
-        turn drives the layout of the contained components within.
+        turn drives the layout of the contained components within the trame.
         """
         self.do_layout()
 
@@ -99,10 +103,12 @@ class BasePlotFrame(Container, PlotComponent):
         return
     
     def do_layout(self, size=None, force=False):
-        # We need to do things slightly differently from the plotcomponent's
-        # default do_layout() implementation.  If we are supposed to fit our
-        # components, then we need to see if any of them need to do layout
-        # as well.  If so, then we need to do layout, too.
+        """ Tells this frame to do layout at a given size.
+        
+        Overrides PlotComponent. If this frame needs to fit components in at
+        least one dimension, then it checks whether any of them need to do
+        layout; if so, the frame needs to do layout also.
+        """
         if not self._layout_needed and not force and self.fit_components != "":
             for slot in self._frame_slots.values():
                 if slot._layout_needed:
@@ -111,12 +117,19 @@ class BasePlotFrame(Container, PlotComponent):
         return PlotComponent.do_layout(self, size, force)
     
     def _draw(self, *args, **kw):
-        # Explicitly use the PlotComponent _draw instead of the Container
-        # implementation
+        """ Draws the plot frame.
+        
+        Overrides PlotComponent and Container, explicitly calling the
+        PlotComponent version of _draw().
+        """
         PlotComponent._draw(self, *args, **kw)
         return
     
     def _dispatch_to_enable(self, event, suffix):
+        """ Calls Enable-level event handlers.
+        
+        Overrides PlotComponent.
+        """
         Container.dispatch(self, event, suffix)
         return
 

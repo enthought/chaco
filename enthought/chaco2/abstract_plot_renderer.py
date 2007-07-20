@@ -1,64 +1,79 @@
-
+""" Defines a base class for plot renderers.
+"""
 # Local relative imports
 from plot_component import PlotComponent
 
 class AbstractPlotRenderer(PlotComponent):
-    """
-    Defines AbstractPlotRenderer, the minimal interface that all plot renderers
-    should support.  Higher-dimensionality plot renderers may have implement a
-    richer subclass of AbstractPlotRenderer.
+    """ This is the minimal interface that all plot renderers must support.  
     
-    This interface is mostly to support the development of generic interactors
-    and plot tools.
+    Higher-dimensionality plot renderers can implement a richer subclass of 
+    this abstract class.
+    
+    This interface exists mostly to support the development of generic 
+    interactors and plot tools.
     """
 
     #------------------------------------------------------------------------
     # Override default values of inherited traits PlotComponent
     #------------------------------------------------------------------------
     
+    # Overrides the default value inherited from PlotComponent.
     resizable = "hv"
+    # Overrides the default value inherited from PlotComponent.
     bgcolor = "transparent"
 
 
     def map_screen(self, data_array):
-        """
-        Maps an array of data points into screen space and returns it as an
-        array.
+        """ Maps an array of data points to screen space and returns an array 
+        of screen space points.
         """
         raise NotImplementedError
     
     def map_data(self, screen_pt):
-        """
-        Maps a screen space point (sx,sy) into the *index* space of the plot.
-        Note that this returns a floating point number, *not* an integer index.
+        """ Maps a screen space point (sx, sy) to the "index" space of the plot.
+        
+        Returns a floating point number, *not* an integer index.
         """
         raise NotImplementedError
     
     def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True, \
                   index_only = False):
-        """
-        Returns an index into the plot's index array(s).  Typically this is
-        just an integer but if the plot has 2D index dimension, then returns a
-        tuple of ints.  If threshold is non-zero, then searches within the given
-        screen-space threshold.  (This is useful for sparse 2D data.)
+        """ Maps a screen space point to an index into the plot's index array(s).  
         
-        If screen_pt is outside the range of the data, then returns either the
-        appropriate end index or None, depending on "outside_returns_none".
+        Parameters
+        ----------
+        screen_pt : (x,y)
+            The screen space point to map.
+        threshold : float
+            Optional screen-space distance allowed between *screen_pt* and the
+            plot; if non-zero, then a *screen_pt* within this distance is
+            mapped to the neared plot index. (This feature is useful for sparse
+            2-D data.)
+        outside_returns_none : Boolean
+            If True, then if *screen_pt* is outside the range of the data, the
+            method returns None. If False, it returns the nearest end index in
+            such a case.
+        index_only : Boolean
+            If True, then this method maps based only on the index coordinate 
+            of *screen_pt*, and ignores the value coordinate.
         
-        If index_only is True, then just maps based on the index coordinate of
-        screen_pt, and ignores the value coordinate.
+        Returns
+        -------
+        An index into the plot's index array(s). Typically this index is just 
+        an integer, but if the plot has a 2-D index dimension, then this method
+        returns a tuple of integers. If the input point cannot be mapped to an
+        index, then None is returned.
         
-        If the input point cannot be mapped to an index, then None is returned.
-        
-        If screen_pt corresponds to multiple indices, then only the first index
-        is returned.
+        If *screen_pt* corresponds to multiple indices, then only the first 
+        index is returned.
         """
         raise NotImplementedError
 
     def _render_icon(self, gc, x, y, width, height):
-        """
-        Renders a representation of this plot as an icon into the box defined
-        by the given coordinates.  Used by the legend.
+        """ Renders an icon for this plot.
+        
+        This method is used by the legend to draw representation of this plot
+        as an icon into the box defined by the given coordinates. 
         """
         pass
 

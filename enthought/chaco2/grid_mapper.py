@@ -1,6 +1,6 @@
 """
-Defines the GridMapper class, which maps from a 2D region in data space
-into a *structured* (gridded) 1D output space.
+Defines the GridMapper class, which maps from a 2-D region in data space
+into a structured (gridded) 1-D output space.
 """
 
 # Major library imports
@@ -20,31 +20,31 @@ from log_mapper import LogMapper
 
 class GridMapper(AbstractMapper):
     """
-    Maps a 2D data space to and from screen space by specifying a 2-tuple in
+    Maps a 2-D data space to and from screen space by specifying a 2-tuple in
     data space or by specifying a pair of screen coordinates.
     
-    The mapper only concerns itself with metric and not with orientation, so to
-    "flip" a screen space orientation, simply swap the appropriate screen space
-    values for x_low_pos, x_high_pos, y_low_pos, and y_high_pos.
+    The mapper concerns itself only with metric and not with orientation. So, to
+    "flip" a screen space orientation, swap the appropriate screen space
+    values for **x_low_pos**, **x_high_pos**, **y_low_pos**, and **y_high_pos**.
     """
 
-    # These define the data-space bounds of the mapper
+    # The data-space bounds of the mapper. 
     range = Instance(DataRange2D)
    
-    # The screen space position of the lower bound of the horizontal axis
+    # The screen space position of the lower bound of the horizontal axis.
     x_low_pos = Float(0.0)
     
-    # The screen space position of the upper bound of the horizontal axis
+    # The screen space position of the upper bound of the horizontal axis. 
     x_high_pos  = Float(1.0)
    
-    # The screen space position of the lower bound of the vertical axis
+    # The screen space position of the lower bound of the vertical axis. 
     y_low_pos = Float(0.0)
     
-    # The screen space position of the upper bound of the vertical axis
+    # The screen space position of the upper bound of the vertical axis. 
     y_high_pos  = Float(1.0)
     
-    # Convenience property to get low and high positions in one structure.
-    # Should be a tuple (x_low_pos, x_high_pos, y_low_pos, y_high_pos).
+    # Convenience property for low and high positions in one structure.
+    # Must be a tuple (x_low_pos, x_high_pos, y_low_pos, y_high_pos).
     screen_bounds = Property
 
 
@@ -81,7 +81,7 @@ class GridMapper(AbstractMapper):
     def map_screen(self, data_pts):
         """ map_screen(data_pts) -> screen_array
 
-        Maps values from data space into screen space
+        Maps values from data space into screen space.
         """
         xs, ys = transpose(data_pts)
         screen_xs = self._xmapper.map_screen(xs)
@@ -91,7 +91,7 @@ class GridMapper(AbstractMapper):
     def map_data(self, screen_pts):
         """ map_data(screen_pts) -> data_vals
 
-        Maps values from screen space into data space
+        Maps values from screen space into data space. 
         """
         screen_xs, screen_ys = transpose(screen_pts)
         xs = self._xmapper.map_data(screen_xs)

@@ -1,5 +1,5 @@
 """
-Defines AbstractRange, DataRange, and DataRange2D.
+Defines the DataRange2D class.
 """
 
 from math import ceil, floor, log
@@ -17,29 +17,40 @@ from data_range_1d import DataRange1D
 
     
 class DataRange2D(BaseDataRange):
-    """
-    Range on ImageData.  In a mathematically general sense, a 2D range is an
-    arbitrary region in the plane.  Since this is much more difficult to
-    implement well, we just support rectangular regions for now.
+    """ A range on (2-D) image data.  
+    
+    In a mathematically general sense, a 2-D range is an arbitrary region in 
+    the plane.  Arbitrary regions are difficult to implement well, so this 
+    class supports only rectangular regions for now.
     """
     
-    # These are the actual values of the lower and upper bound of this range.
-    # To set them, use low_setting and high_setting.  (Setting these directly
-    # just calls the setter for low_setting and high_setting.)
+    # The actual value of the lower bound of this range. To set it, use
+    # **low_setting**. 
     low = Property  # (2,) array of lower-left x,y
+    # The actual value of the upper bound of this range. To set it, use
+    # **high_setting**. 
     high = Property  # (2,) array of upper-right x,y
-    
+
+    # Property for the lower bound of this range (overrides AbstractDataRange).    
     low_setting = Property
+    # Property for the upper bound of this range (overrides AbstractDataRange).
     high_setting = Property
 
-    # The 2D grid range is actually implemented as two 1D ranges, which can
+    # The 2-D grid range is actually implemented as two 1-D ranges, which can
     # be accessed individually.  They can also be set to new DataRange1D
     # instances; in that case, the DataRange2D's sources are removed from
-    # its old 1D dataranges and added to the new one.
+    # its old 1-D dataranges and added to the new one.
+    
+    # Property for the range in the x-dimension.
     x_range = Property
+    # Property for the range in the y-dimension.
     y_range = Property
     
+    # Do "auto" bounds imply an exact fit to the data? (One Boolean per 
+    # dimension) If False, the bounds pad a little bit of margin on either side. 
     tight_bounds = Tuple(true, true)
+    # The minimum percentage difference between low and high for each dimension.
+    # That is, (high-low) >= epsilon * low.
     epsilon = Tuple(CFloat(1.0e-4), CFloat(1.0e-4))
 
     #------------------------------------------------------------------------
@@ -49,12 +60,19 @@ class DataRange2D(BaseDataRange):
     # The "_setting" attributes correspond to what the user has "set"; the
     # "_value" attributes are the actual numerical values for the given
     # setting.
+    
+    # The user-specified low settings.   
     _low_setting = Trait(('auto','auto'), Any)
+    # The actual numerical values for the low setting.
     _low_value = Trait((-inf,-inf), Tuple(CFloat, CFloat))
+    # The user-specified high settings.
     _high_setting = Trait(('auto', 'auto'), Any)
+    # The actual numerical value for the high setting.
     _high_value = Trait((inf,inf), Tuple(CFloat, CFloat))
 
+    # DataRange1D for the x-dimension.
     _xrange = Instance(DataRange1D, args=())
+    # DataRange1D for the y-dimension.
     _yrange = Instance(DataRange1D, args=())
 
     #------------------------------------------------------------------------
@@ -62,24 +80,40 @@ class DataRange2D(BaseDataRange):
     #------------------------------------------------------------------------
     
     def clip_data(self, data):
+        """ Returns a list of data values that are within the range.
+        
+        Implements AbstractDataRange.
+        """
         return compress(self.mask_data(data), data, axis=0)
     
     def mask_data(self, data):
+        """ Returns a mask array, indicating whether values in the given array
+        are inside the range.
+        
+        Implements AbstractDataRange.
+        """
         x_points, y_points = transpose(data)
         x_mask = (x_points >= self.low[0]) & (x_points <= self.high[0])
         y_mask = (y_points >= self.low[1]) & (y_points <= self.high[1])
         return x_mask & y_mask
     
     def bound_data(self, data):
+        """ Not implemented for this class.
+        """
         raise NotImplementedError, "bound_data() has not been implemented for 2d pointsets."
 
     def set_bounds(self, low, high):
-        """ Low is (x,y) of lower-left corner, and high is (x,y) of upper right 
+        """ Sets all the bounds of the range simultaneously.
+        
+        Implements AbstractDataRange.
+        
+        Parameters
+        ----------
+        low : (x,y)
+            Lower-left corner of the range.
+        high : (x,y)
+            Upper right corner of the range.
         """
-        self._do_set_low_setting(low, fire_event=False)
-        self._do_set_high_setting(high)
-
-    def set_bounds(self, low, high):
         self._do_set_low_setting(low, fire_event=False)
         self._do_set_high_setting(high)
 
@@ -93,17 +127,15 @@ class DataRange2D(BaseDataRange):
         
 
     def reset(self):
-        """
-        Resets the bounds of this range.
+        """ Resets the bounds of this range.
         """
         self._high_setting = ('auto', 'auto')
         self._low_setting = ('auto', 'auto')
         self._refresh_bounds()
 
     def refresh(self):
-        """
-        If any of the bounds are 'auto', this refreshes the actual low and high
-        values from the set of viewfilters' datasources.
+        """ If any of the bounds is 'auto', this method refreshes the actual low 
+        and high values from the set of the view filters' data sources.
         """
         if 'auto' not in self._low_setting and \
            'auto' not in self._high_setting:

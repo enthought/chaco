@@ -1,3 +1,8 @@
+""" Defines the ColormappedScatterPlot and ColormappedScatterPlotView classes.
+"""
+
+# Standard library imports.
+import logging
 
 # Major library imports
 from numpy import argsort, array, compress, concatenate, nonzero, invert, take, \
@@ -5,7 +10,6 @@ from numpy import argsort, array, compress, concatenate, nonzero, invert, take, 
 
 # Enthought library imports
 from enthought.kiva import STROKE
-from enthought.logger import logger
 from enthought.traits.api import Dict, Enum, Float, Instance
 from enthought.traits.ui.api import Item, RangeEditor
 
@@ -16,7 +20,13 @@ from color_mapper import ColorMapper
 from scatterplot import ScatterPlot, ScatterPlotView
 
 
+# Setup a logger for this module.
+logger = logging.getLogger(__name__)
+
+
 class ColormappedScatterPlotView(ScatterPlotView):
+    """ Traits UI View for customizing a color-mapped scatter plot.
+    """
     def __init__(self):
         super(ColormappedScatterPlotView, self).__init__()
         vgroup = self.content
@@ -28,37 +38,42 @@ class ColormappedScatterPlotView(ScatterPlotView):
 class ColormappedScatterPlot(ScatterPlot):
     """
     A scatter plot that allows each point to take on a different color,
-    corresponding to a colormap.
+    corresponding to a color map.
 
-    If color_data or color_mapper are None, then behaves like a normal
-    ScatterPlot.
+    If the **color_data** or **color_mapper** attributes are None, then it
+    behaves like a normal ScatterPlot.
     """
 
+    # Source for color data.
     color_data = Instance(ArrayDataSource)
 
+    # Mapping for colors.
     color_mapper = Instance(ColorMapper)
 
-    # The alpha value to apply to the result of the colormapping process.
-    # (This makes it easier to create colormaps without having to worry
+    # The alpha value to apply to the result of the color-mapping process.
+    # (This makes it easier to create color maps without having to worry
     # about alpha.)
     fill_alpha = Float(1.0)
 
-    # _render_method determines what drawing approach to use:
+    # Determines what drawing approach to use:
     #
-    #   bruteforce: set the stroke color before drawing each marker
-    #   bands:      draw the points colorband by colorband, thus reducing
-    #               the number of set_stroke_color() calls
+    # bruteforce:
+    #     Set the stroke color before drawing each marker.
+    # bands:
+    #     Draw the points color-band by color-band, thus reducing the number of
+    #     set_stroke_color() calls
     #
-    # TODO: Based on preliminary results, "branded" isn't significantly
-    #       more expensive than "bruteforce" for small datasets (<1000),
-    #       so perhaps bruteforce should be removed.
+    # TODO: Based on preliminary results, "banded" isn't significantly
+    # more expensive than "bruteforce" for small datasets (<1000),
+    # so perhaps bruteforce should be removed.
     _render_method = Enum("banded", "bruteforce")
 
-    # A dict mapping colormap indices to arrays of indices into self.data.
+    # A dict mapping color-map indices to arrays of indices into self.data.
     # This is used for the "banded" render method.
-    # This is only valid if _cache_valid is True.
+    # This mapping is only valid if **_cache_valid** is True.
     _index_bands = Dict
 
+    # Traits UI View for customizing the plot. Overrides the ScatterPlot value.
     traits_view = ColormappedScatterPlotView()
 
     #------------------------------------------------------------------------
@@ -70,8 +85,9 @@ class ColormappedScatterPlot(ScatterPlot):
         Maps an array of data points into screen space, and returns them as
         an array.
 
-        data_array should be an Nx2 (index, value) or Nx3 (index, value, color_value).
-        The returned array will be an Nx2 of (x, y).
+        The *data_array* parameter must be an Nx2 (index, value) or Nx3
+        (index, value, color_value) array. The returned array is an Nx2
+        array of (x, y) tuples.
         """
         if len(data_array)>0:
             if data_array.shape[1] == 3:
@@ -79,9 +95,11 @@ class ColormappedScatterPlot(ScatterPlot):
         return super(ColormappedScatterPlot, self).map_screen(data_array)
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
-        # Because BaseXYPlot isn't really fully generic (it assumes the output
-        # of map_screen() is sufficient to render the data), we override
-        # _draw_component to render correctly.
+        """ Draws the 'plot' layer.
+        
+        Overrides BaseXYPlot, which isn't really fully generic (it assumes that
+        the output of map_screen() is sufficient to render the data).
+        """
         self._gather_points()
         if len(self._cached_data_pts) == 0:
             pass
@@ -100,7 +118,7 @@ class ColormappedScatterPlot(ScatterPlot):
 
     def _gather_points(self):
         """
-        Gathers up the data points that are within our bounds and stores them
+        Collects the data points that are within the plot bounds and caches them
         """
         if self._cache_valid:
             return
@@ -132,10 +150,10 @@ class ColormappedScatterPlot(ScatterPlot):
                 point_mask = point_mask & color_mask
             else:
                 color_data = self.color_data.get_data()
-            
+
             #color_nan_mask = isreal(color_data)
             color_nan_mask = invert(isnan(color_data))
-            
+
             point_mask = point_mask & color_nan_mask
             points = transpose(array((index, value, color_data)))
         else:
@@ -148,6 +166,10 @@ class ColormappedScatterPlot(ScatterPlot):
         return
 
     def _render(self, gc, points):
+        """ Actually draws the plot. 
+        
+        Overrides the ScatterPlot implementation.
+        """
         # If we don't have a color data set, then use the base class to render
         if (self.color_mapper is None) or (self.color_data is None):
             return super(ColormappedScatterPlot, self)._render(gc, points)
@@ -179,11 +201,11 @@ class ColormappedScatterPlot(ScatterPlot):
     def _compute_bands(self, points, smartmode=False):
         """
         Sorts self.data into a list of arrays of data points by color,
-        filling in self._index_bands.  If 'smartmode' is True, then first
+        filling in self._index_bands.  If *smartmode* is True, then it first
         calls _calc_render_method() to see which rendering method is
         optimal for the number of points and the distribution of
         color indices; if the rendering method is 'bruteforce', then
-        _compute_bands() will short-circuit and return without doing
+        this method short-circuits and returns without doing
         anything.
         """
         if len(points) == 0:
@@ -230,13 +252,17 @@ class ColormappedScatterPlot(ScatterPlot):
         return
 
     def _calc_render_method(self, numpoints):
+        """ Returns a string indicating the render method.
+        """
         if numpoints > 1000:
             return 'banded'
         else:
             return "bruteforce"
 
     def _set_draw_info(self, gc, mode, color, outline_color=None, outline_weight=None):
-        
+        """ Sets the stroke color, fill color, and line width on the graphics
+        context.
+        """
         color = tuple(color[:3]) + (self.fill_alpha,)
         if mode == STROKE:
             if outline_color is not None:
@@ -250,6 +276,8 @@ class ColormappedScatterPlot(ScatterPlot):
         return
 
     def _render_banded(self, gc, points):
+        """ Draws the points color-band by color-band.
+        """
         self._compute_bands(points)
 
         # Grab the XY values corresponding to each color band of points
@@ -279,7 +307,7 @@ class ColormappedScatterPlot(ScatterPlot):
             for color_index in index_bands.keys():
                 self._set_draw_info(gc, mode, color_bands[color_index])
                 gc.draw_marker_at_points(xy_points[index_bands[color_index]], size, marker.kiva_marker)
-                
+
 
         elif hasattr( gc, 'draw_path_at_points' ):
             point_bands = {}
@@ -306,6 +334,8 @@ class ColormappedScatterPlot(ScatterPlot):
         return
 
     def _render_bruteforce(self, gc, points):
+        """ Draws the points, setting the stroke color for each one.
+        """
         x, y, colors = transpose(points)
 
         # Map the colors

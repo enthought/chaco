@@ -1,3 +1,5 @@
+""" Defines the publicly accessible items of the Chaco2 API.
+"""
 # This just imports the key datamodel classes into the top-level package
 # namespace for convenience.
 
@@ -67,6 +69,7 @@ from colormapped_scatterplot import ColormappedScatterPlot
 from colormapped_selection_overlay import ColormappedSelectionOverlay
 from scatter_markers import marker_trait
 from polygon_plot import PolygonPlot
+from errorbar_plot import ErrorBarPlot
 
 # Plot factories
 from plot_factory import create_bar_plot, create_line_plot, create_scatter_plot, \

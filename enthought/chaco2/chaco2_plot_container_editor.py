@@ -1,3 +1,6 @@
+""" Defines a Traits editor for "editing" (really displaying) a Chaco 
+plot container.
+"""
 #-------------------------------------------------------------------------------
 #  Traits editor for editing (displaying, really) a ChacoPlotContainer
 #  Written by: David C. Morrill
@@ -16,7 +19,7 @@ class _PlotContainerEditor( Editor ):
     #  Trait definitions:     
     #---------------------------------------------------------------------------
 
-    # Indicate that the plot editor is scrollable (default override):
+    # The plot editor is scrollable (overrides Traits UI Editor).
     scrollable = True
 
     #---------------------------------------------------------------------------
@@ -31,21 +34,22 @@ class _PlotContainerEditor( Editor ):
         self.control       = self._window.control
 
     #---------------------------------------------------------------------------
-    #  Updates the editor when the object trait changes external to the editor:
+    #  Updates the editor when the object trait changes externally to the editor:
     #---------------------------------------------------------------------------
     def update_editor( self ):
-        """ Updates the editor when the object trait changes external to the
+        """ Updates the editor when the object trait changes externally to the
         editor.
         """
         pass
 
 
 class PlotContainerEditor( BasicEditorFactory ):
-
+    """ wxPython editor factory for Chaco2 plot containers. 
+    """
     #---------------------------------------------------------------------------
     #  Trait definitions:     
     #---------------------------------------------------------------------------
 
-    # Class used to create all editor styles (override):
+    # The class used to create all editor styles (overrides BasicEditorFactory).
     klass = _PlotContainerEditor
 

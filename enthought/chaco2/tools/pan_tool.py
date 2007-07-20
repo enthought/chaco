@@ -1,4 +1,5 @@
-
+""" Defines the PanTool class.
+"""
 # Enthought library imports
 from enthought.enable2.api import Pointer
 from enthought.traits.api import Enum, false, Float, Tuple
@@ -7,45 +8,44 @@ from enthought.traits.api import Enum, false, Float, Tuple
 from enthought.chaco2.api import BaseTool
 
 class PanTool(BaseTool):
-    """
-    Allows the user to pan around a plot my clicking a mouse button and
-    dragging.
+    """ A tool that enables the user to pan a plot by clicking a mouse
+    button and dragging.
     """
     
-    # Which mouse button initiates the drag
+    # The mouse button that initiates the drag operation.
     drag_button = Enum("left", "right")
     
-    # The cursor to use when panning
+    # The cursor to use when panning.
     drag_pointer = Pointer("hand")
 
-    # Scaling factor on the panning "speed"
+    # Scaling factor on the panning "speed".
     speed = Float(1.0)
 
-    # The modifier key which, if depressed when the drag is initiated, constrains
-    # the panning to only happen in the direction of largest initial motion.
+    # The modifier key that, if depressed when the drag is initiated, constrains
+    # the panning to happen in the only direction of largest initial motion.
     # It is possible to permanently restrict this tool to always drag along one
     # direction.  To do so, set constrain=True, constrain_key=None, and
     # constrain_direction to the desired direction.
     constrain_key = Enum(None, "shift", "control", "alt")
     
-    # Should the panning be constrained to one direction?
+    # Constrain the panning to one direction?
     constrain = false
     
-    # The direction of constrained draw.  None means that the user has initiated
-    # the drag and depressed the constrain_key, but hasn't moved the mouse yet
-    # (and thus the magnitude of the components of the next mouse_move event
-    # will determine the constrain_direction).
+    # The direction of constrained draw. A value of None means that the user 
+    # has initiated the drag and pressed the constrain_key, but hasn't moved 
+    # the mouse yet; the magnitude of the components of the next mouse_move 
+    # event will determine the constrain_direction.
     constrain_direction = Enum(None, "x", "y")
     
-    # (x,y) of the point where the mouse button was depressed
+    # (x,y) of the point where the mouse button was pressed.
     _original_xy = Tuple
     
-    # data coordinates of self._original_xy.  This may be either (index,value)
+    # Data coordinates of **_original_xy**.  This may be either (index,value)
     # or (value,index) depending on the component's orientation.
     _original_data = Tuple
 
-    # keeps track of whether or not constrain=True was triggered by the contrain_key,
-    # or set programmatically
+    # Was constrain=True triggered by the **contrain_key**? If False, it was
+    # set programmatically.
     _auto_constrain = false
     
     
@@ -53,32 +53,60 @@ class PanTool(BaseTool):
     # Inherited BaseTool traits
     #------------------------------------------------------------------------
 
+    # The tool does not have a visual representation (overrides
+    # BaseTool).
     draw_mode = "none"
+    # The tool is not visible (overrides BaseTool).
     visible = False
+    
+    # The possible event states of this tool (overrides enable2.Interactor).
     event_state = Enum("normal", "panning")
 
 
     def normal_left_down(self, event):
+        """ Handles the left mouse button being pressed when the tool is in
+        the 'normal' state.
+        
+        Starts panning if the left mouse button is the drag button.
+        """
         if self.drag_button == "left":
             self._start_pan(event)
         return
     
     def normal_right_down(self, event):
+        """ Handles the right mouse button being pressed when the tool is in
+        the 'normal' state.
+        
+        Starts panning if the right mouse button is the drag button.
+        """
         if self.drag_button == "right":
             self._start_pan(event)
         return
 
     def panning_left_up(self, event):
+        """ Handles the left mouse button coming up when the tool is in the 
+        'panning' state.
+        
+        Stops panning if the left mouse button is the drag button.
+        """
         if self.drag_button == "left":
             self._end_pan(event)
         return
     
     def panning_right_up(self, event):
+        """ Handles the right mouse button coming up when the tool is in the
+        'panning' state.
+        
+        Stops panning if the right mouse button is the drag button.
+        """
         if self.drag_button == "right":
             self._end_pan(event)
         return
 
     def panning_mouse_move(self, event):
+        """ Handles the mouse being moved when the tool is in the 'panning' 
+        state.
+        """
         plot = self.component
         
         if self._auto_constrain and self.constrain_direction is None:
@@ -122,6 +150,11 @@ class PanTool(BaseTool):
         return
 
     def panning_mouse_leave(self, event):
+        """ Handles the mouse leaving the plot when the tool is in the 'panning'
+        state.
+        
+        Ends panning.
+        """
         return self._end_pan(event)
     
     def _start_pan(self, event):

@@ -1,4 +1,5 @@
-
+""" Defines the RangeSelectionOverlay class.
+"""
 # Major library imports
 from numpy import array
 
@@ -10,34 +11,41 @@ from enthought.chaco2.api import AbstractOverlay, PlotComponent
 
 
 class RangeSelectionOverlay(AbstractOverlay):
-    """
-    Highlights the selection region on a component.
+    """ Highlights the selection region on a component.
     
     Looks at the "selections" metadata field of self.component for
     a tuple (dataspace_start, dataspace_end).
     """
 
-    # The axis to which this tool is perpendicular
+    # The axis to which this tool is perpendicular.
     axis = Enum("index", "value")
     
-    # By default plot is just self.component.
+    # Mapping from screen space to data space. By default, it is just 
+    # self.component.
     plot = Property
     
-    # By default, we use the mapper on self.plot that corresponds to self.axis
+    # The mapper (and associated range) that drive this RangeSelectionOverlay.
+    # By default, this is the mapper on self.plot that corresponds to self.axis.
     mapper = Property
     
-    # By default, we use self.plot.orientation, but this can be overriden and
-    # set to 0 or 1.
+    # The element of an (x,y) tuple that corresponds to the axis index.
+    # By default, this is set based on self.asix and self.plot.orientation,
+    # but it can be overriden and set to 0 or 1.
     axis_index = Property
 
     #------------------------------------------------------------------------
     # Appearance traits
     #------------------------------------------------------------------------
 
+    # The color of the selection border line.
     border_color = ColorTrait("dodgerblue")
+    # The width, in pixels, of the selection border line.
     border_width = Float(1.0)
+    # The line style of the selection border line.
     border_style = LineStyle("solid")
+    # The color to fill the selection region.
     fill_color = ColorTrait("lightskyblue")
+    # The transparency of the fill color.
     alpha = Float(0.3)
 
     #------------------------------------------------------------------------
@@ -52,7 +60,7 @@ class RangeSelectionOverlay(AbstractOverlay):
     # mapper on self.component.
     _mapper = Trait(None, Any)
     
-    # Shadow trait for the 'axis_index' property
+    # Shadow trait for the **axis_index** property
     _axis_index = Trait(None, None, Int)
 
 
@@ -61,6 +69,10 @@ class RangeSelectionOverlay(AbstractOverlay):
     #------------------------------------------------------------------------
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
+        """ Draws this component overlaid on another component.
+        
+        Overrides AbstractOverlay.
+        """
         axis_ndx = self.axis_index
         lower_left = [0,0]
         upper_right = [0,0]
@@ -96,10 +108,10 @@ class RangeSelectionOverlay(AbstractOverlay):
     #------------------------------------------------------------------------
     
     def _get_selection_screencoords(self):
-        """
-        Returns a tuple of (x1, x2) screen space coordinates of the start
-        and end selection points.  If there is no current selection, then
-        returns None.
+        """ Returns a tuple of (x1, x2) screen space coordinates of the start
+        and end selection points.  
+        
+        If there is no current selection, then returns None.
         """
         selection = getattr(self.plot, self.axis).metadata["selections"]
         if selection is not None and len(selection) == 2:
@@ -108,10 +120,11 @@ class RangeSelectionOverlay(AbstractOverlay):
             return None
 
     def _determine_axis(self):
-        """
-        Determines whether the index of the coordinate along our axis of
-        interest is the first or second element of an (x,y) coordinate tuple.
-        This method is only called if self._axis_index hasn't been set (or is None).
+        """ Determines which element of an (x,y) coordinate tuple corresponds
+        to the tool's axis of interest.
+        
+        This method is only called if self._axis_index hasn't been set (or is
+        None).
         """
         if self.axis == "index":
             if self.plot.orientation == "h":

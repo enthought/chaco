@@ -1,4 +1,5 @@
-
+""" Defines the DataLabelTool class.
+"""
 # Major library imports
 from numpy import array, asarray, argmin, sqrt
 
@@ -10,25 +11,31 @@ from drag_tool import DragTool
 
 
 class DataLabelTool(DragTool):
-    """
-    Tool for interacting with data labels
-    The DataLabel should be this tool's .component.
+    """ A tool for dragging a data label. 
+    
+    Attach this tool to a DataLabel object by setting the tool's **component**
+    to the DataLabel.
     """
     
-    # Which mouse button initiates the drag
+    # The mouse button that initiates the drag.
     drag_button = Enum("left", "right")
 
-    # If the data label has an arrow, should we set its root to be the closest
-    # corner?
+    # Use the root of the label's arrow (if any) as the closest corner of the
+    # label?
     auto_arrow_root = Bool(True)
 
-    # The original position of the label with respect to the data point
+    # The original position of the label with respect to the data point.
     _original_offset = Any
 
     # This is used in the auto_arrow_root = 'corners' case.
     _corner_names = ("bottom left", "bottom right", "top right", "top left")
         
     def is_draggable(self, x, y):
+        """ Returns whether the (x,y) position is in a region that is OK to 
+        drag.  
+        
+        Overrides DragTool.
+        """
         if self.component:
             label = self.component
             return (x >= label.x and x <= label.x2 and \
@@ -38,6 +45,10 @@ class DataLabelTool(DragTool):
     
     
     def drag_start(self, event):
+        """ Called when the drag operation starts.  
+        
+        Implements DragTool.
+        """
         if self.component:
             label = self.component
             pointx, pointy = label.component.map_screen(label.data_point)
@@ -48,6 +59,11 @@ class DataLabelTool(DragTool):
     
     
     def dragging(self, event):
+        """ This method is called for every mouse_move event that the tool 
+        receives while the user is dragging the mouse. 
+        
+        Implements DragTool. Moves and redraws the label.
+        """
         if self.component:
             label = self.component
             dx = int(event.x - self.mouse_down_position[0])
@@ -73,6 +89,10 @@ class DataLabelTool(DragTool):
 
 
     def drag_end(self, event):
+        """ Called when a mouse event causes the drag operation to end.
+        
+        Implements DragTool.
+        """
         if self.component:
             if event.window.mouse_owner == self:
                 event.window.set_mouse_owner(None)

@@ -1,4 +1,5 @@
-
+""" Defines the ScatterInspector tool class.
+"""
 # Major library imports
 from numpy import array, take, transpose
 
@@ -11,26 +12,33 @@ from enthought.chaco2.api import BaseTool, ScatterPlot
 
 
 class ScatterInspector(BaseTool):
-    """
-    Tool for inspecting scatter plots.  Writes the index of the point under the
-    cursor to the metadata of the index and value datasources, and allows clicking
-    to select the point.  Other components can listen for metadata updates on the
-    datasources.
+    """ A tool for inspecting scatter plots. 
     
-    By default, writes the index of the point under the cursor to the "hover"
-    key in metadata, and the indices of the clicked point to "selection".
+    It writes the index of the point under the cursor to the metadata of the 
+    index and value data sources, and allows clicking to select the point. 
+    Other components can listen for metadata updates on the data sources.
+    
+    By default, it writes the index of the point under the cursor to the "hover"
+    key in metadata, and the index of a clicked point to "selection".
     """
     
+    # This tool is not visible (overrides BaseTool).
     visible = False
+    # This tool does not have a visual reprentation (overrides BaseTool).
     draw_mode = "none"
 
-    # The threshold, in pixels, around the cursor location to search for points
+    # The threshold, in pixels, around the cursor location to search for points.
     threshold = Float(5.0)
 
-    # Should the user be able to left-click to select a point?
+    # Can the user left-click to select a point?
     enable_select = true
 
     def normal_mouse_move(self, event):
+        """ Handles the mouse moving when the tool is in the 'normal' state.
+        
+        If the cursor is within **threshold** of a data point, the method 
+        writes the index to the plot's data sources' "hover" metadata.
+        """
         plot = self.component
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
         if index:
@@ -39,6 +47,13 @@ class ScatterInspector(BaseTool):
         return
     
     def normal_left_down(self, event):
+        """ Handles the left mouse button being pressed when the tool is in the
+        'normal' state.
+        
+        If selecting is enabled and the cursor is within **threshold** of a
+        data point, the method writes the index to the plot's data sources'
+        "selection" metadata.
+        """
         if self.enable_select:
             plot = self.component
             index = plot.map_index((event.x, event.y), threshold=self.threshold)

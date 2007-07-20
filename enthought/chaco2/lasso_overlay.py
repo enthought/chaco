@@ -1,4 +1,5 @@
-
+""" Defines the LassoOverlay class.
+"""
 from numpy import concatenate, newaxis
 
 # Enthought library imports
@@ -9,20 +10,32 @@ from enthought.traits.api import Float, Instance
 from abstract_overlay import AbstractOverlay
 
 class LassoOverlay(AbstractOverlay):
+    """ Draws a lasso selection region on top of a plot.  
+    
+    LassoOverlay gets its data from a LassoSelection.
     """
-    LassoOverlay is an AbstractOverlay that draws a lasso selection region
-    on top of a plot.  LassoOverlay gets its data from a LassoSelection.
-    """
+    
+    # The LassoSelection that provides the data for this overlay.
     lasso_selection = Instance('enthought.chaco2.tools.lasso_selection.LassoSelection')
+    # The fill color for the selection region.
     selection_fill_color = ColorTrait('lightskyblue')
+    # The border color for the selection region.
     selection_border_color = ColorTrait('dodgerblue')
+    # The transparency level for the selection fill color.
     selection_alpha = Float(0.8)
+    # The width of the selection border.
     selection_border_width = Float(2.0)
+    # The line style of the selection border.
     selection_border_dash = LineStyle
     
+    # The background color (overrides AbstractOverlay).
     bgcolor = 'clear'
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
+        """ Draws this component overlaid on another component.
+        
+        Implements AbstractOverlay.
+        """
         gc.save_state()
         c = other_component
         gc.clip_to_rect(c.x, c.y, c.width, c.height)
@@ -35,6 +48,11 @@ class LassoOverlay(AbstractOverlay):
         self.component.request_redraw()
 
     def _draw_component(self, gc, view_bounds=None, mode='normal'):
+        """ Draws the component.
+
+        This method is preserved for backwards compatibility with _old_draw().
+        Overrides PlotComponent.
+        """
         gc.save_state()
         try:
             # We may need to make map_screen more flexible in the number of dimensions

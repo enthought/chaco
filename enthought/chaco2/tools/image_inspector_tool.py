@@ -1,4 +1,6 @@
-
+""" Defines the ImageInspectorTool, ImageInspectorOverlay, and 
+ImageInspectorColorbarOverlay classes.
+"""
 # Enthought library imports
 from enthought.traits.api import Any, Bool, Event, Tuple
 
@@ -7,11 +9,12 @@ from enthought.chaco2.api import AbstractOverlay, BaseTool, ImagePlot, TextBoxOv
 
 
 class ImageInspectorTool(BaseTool):
-    """ Tool that reads out the color and underlying values of an image plot """
+    """ A tool that captures the color and underlying values of an image plot.
+    """
 
     # This event fires whenever the mouse moves over a new image point.
     # Its value is a dict with a key "color_value", and possibly a key
-    # "data_value" if the plot is a colormapped image plot.
+    # "data_value" if the plot is a color-mapped image plot.
     new_value = Event
 
     # Stores the last mouse position.  This can be used by overlays to
@@ -19,6 +22,11 @@ class ImageInspectorTool(BaseTool):
     last_mouse_position = Tuple
 
     def normal_mouse_move(self, event):
+        """ Handles the mouse being moved.
+        
+        Fires the **new_value** event with the data (if any) from the event's 
+        position.
+        """
         plot = self.component
         if plot is not None:
             if isinstance(plot, ImagePlot):
@@ -41,17 +49,18 @@ class ImageInspectorTool(BaseTool):
     
 
 class ImageInspectorOverlay(TextBoxOverlay):
-
-    # An instance of the ImageInspectorTool; this overlay listens to the tool
+    """ An overlay that displays a box containing values from an 
+    ImageInspectorTool instance.
+    """
+    # An instance of ImageInspectorTool; this overlay listens to the tool
     # for changes, and updates its displayed text accordingly.
     image_inspector = Any
 
-    # Should the text be anchored to the mouse?  (If false, then the
-    # text is in one of the corners.)  Use the 'align' trait to determine
-    # which corner.
+    # Anchor the text to the mouse?  (If False, then the text is in one of the
+    # corners.)  Use the **align** trait to determine which corner.
     tooltip_mode = Bool(False)
 
-    # Make the default state of the overlay invisible
+    # The default state of the overlay is invisible (overrides PlotComponent).
     visible = False
 
     def _image_inspector_changed(self, old, new):

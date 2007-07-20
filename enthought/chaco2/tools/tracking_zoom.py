@@ -1,4 +1,5 @@
-
+""" Defines the TrackingZoom class.
+"""
 from numpy import allclose, array, inf
 
 # Enthought library imports
@@ -10,16 +11,22 @@ from enthought.chaco2.api import KeySpec
 from enthought.chaco2.tools.api import SimpleZoom
 
 class TrackingZoom(SimpleZoom):
-    """
-    Allows user to zoom in or out on a plot that is using tracking.
-    If the data range is using "low_track" ("high_track") this means 
-    that the high (low) value will snap to the right (left) edge and 
-    the "tracking" low (high) value will follow by the data range's 
-    tracking_amount value.
+    """ Allows the user to zoom in or out on a plot that is using tracking.
+    
+    The **default_state** of the data range determines the tracking behavior.
+    For example, if the data range's **default_state** is "low_track",
+    the range's high value snaps to the right edge and the tracking, low, value 
+    follows it by the data range's **tracking_amount** value (and vice versa
+    for "high_track").
     """
     
  
     def normal_mouse_wheel(self, event):
+        """ Handles the mouse wheel being used when the tool is in the 'normal'
+        state.
+        
+        Overrides SimpleZoom.
+        """
         if self.enable_wheel and event.mouse_wheel != 0:
             if event.mouse_wheel > 0:
                 # zoom in

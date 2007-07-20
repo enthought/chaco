@@ -1,3 +1,5 @@
+""" Defines the ColormappedSelectionOverlay class.
+"""
 from numpy import logical_and
 
 # Enthought library imports
@@ -14,20 +16,22 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     """
 
     # The ColormappedScatterPlot that this overlay is listening to.
-    # By default, looks at self.component
+    # By default, it looks at self.component
     plot = Property
 
-    # The amount to fade the unselected points
+    # The amount to fade the unselected points.
     fade_alpha = Float(0.15)
 
-    # The minimum difference, in percent, between the starting and ending
+    # The minimum difference, in float percent, between the starting and ending
     # selection values, if range selection mode is enabled
     minimum_delta = Float(0.01)
     
+    # Outline width for selected points.
     selected_outline_width = Float(1.0)
+    # Outline width for unselected points.
     unselected_outline_width = Float(0.0)
 
-    # Whether to look for a mask or range based selection on the datasource
+    # The type of selection used by the data source.
     selection_type = Enum('range', 'mask')
     
     _plot = Instance(ColormappedScatterPlot)
@@ -44,6 +48,10 @@ class ColormappedSelectionOverlay(AbstractOverlay):
         return
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
+        """ Draws this component overlaid on another component.
+        
+        Implements AbstractOverlay.
+        """
         if not self._visible:
             return
         

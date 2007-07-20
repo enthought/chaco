@@ -1,4 +1,5 @@
-
+""" Defines the Plot class.
+"""
 # Major library imports
 import itertools
 import warnings
@@ -48,43 +49,42 @@ class Plot(DataView):
     """ Represents a correlated set of data, renderers, and axes in a single
     screen region.
 
-    A Plot can be reference an arbitrary amount of data and can have an
-    unlimited number of renderers on it, but it has a single X and Y axis for
-    all of its associated data.  This means that there is a single range in X
-    and Y, although there can be many different data series.  It also has a
-    single set of grids and a single background layer for all of its
+    A Plot can reference an arbitrary amount of data and can have an
+    unlimited number of renderers on it, but it has a single X-axis and a 
+    single Y-axis for all of its associated data. Therefore, there is a single
+    range in X and Y, although there can be many different data series. A Plot
+    also has a single set of grids and a single background layer for all of its
     renderers.  It cannot be split horizontally or vertically; to do so,
     create a VPlotContainer or HPlotContainer and put the Plots inside those.
-    Plots can be overlaid as well; be sure to set the bgcolor of the
-    overlaying plots to"none" or "transparent".
+    Plots can be overlaid as well; be sure to set the **bgcolor** of the
+    overlaying plots to "none" or "transparent".
 
     A Plot consists of composable sub-plots.  Each of these is created
     or destroyed using the plot() or delplot() methods.  Every time that
     new data is used to drive these sub-plots, it is added to the Plot's
-    list of data and datasources.  Datasources are reused whenever
-    possible; this means that in order to have the same actual array
-    drive two de-coupled datasources, those datasources should be created
-    and handed in to the Plot.
+    list of data and data sources.  Data sources are reused whenever
+    possible; in order to have the same actual array drive two de-coupled
+    data sources, create those data sources before handing them to the Plot.
     """
 
     #------------------------------------------------------------------------
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # The PlotData that drives this plot.
+    # The PlotData instance that drives this plot.
     data = Instance(AbstractPlotData)
 
-    # This maps data names from self.data to their respective datasources
+    # Mapping of data names from self.data to their respective datasources.
     datasources = Dict(Str, Instance(AbstractDataSource))
 
     #------------------------------------------------------------------------
     # General plotting traits
     #------------------------------------------------------------------------
     
-    # Maps plot names to *lists* of plot renderers
+    # Mapping of plot names to *lists* of plot renderers.
     plots = Dict(Str, List)
     
-    # The default index to use when adding new subplots
+    # The default index to use when adding new subplots.
     default_index = Instance(AbstractDataSource)
 
     # Optional mapper for the color axis.  Not instantiated until first use;
@@ -95,23 +95,23 @@ class Plot(DataView):
     # Annotations and decorations
     #------------------------------------------------------------------------
 
-    # The title of the plot
+    # The title of the plot.
     title = Property
 
-    # The font to use for the title
+    # The font to use for the title.
     title_font = Str("swiss 16")
 
     # Convenience attribute for title.overlay_position; can be "top",
     # "bottom", "left", or "right".
     title_position = Property
 
-    # The PlotLabel object that comprises the title
+    # The PlotLabel object that contains the title.
     _title = Instance(PlotLabel)
 
-    # The legend on the plot
+    # The legend on the plot.
     legend = Instance(Legend)
 
-    # Convenience attribute for legend.align; can be "ur", "ul", "ll", "lr"
+    # Convenience attribute for legend.align; can be "ur", "ul", "ll", "lr".
     legend_alignment = Property
 
     #------------------------------------------------------------------------
@@ -140,38 +140,45 @@ class Plot(DataView):
 
     def plot(self, data, type="line", name=None, index_scale="linear", 
              value_scale="linear", **styles):
-        """ Adds a new sub-plot using the given data and plot style
-
+        """ Adds a new sub-plot using the given data and plot style.
+        
         Parameters
         ==========
-        type: comma-delimited string of "line", "scatter", "cmap_scatter"
-        name: the name to give to the plot.  If None, then a default one is
-            created (usually "plotNNN").
-        styles: a series of keyword arguments that apply to one or more of the
-            plot_types requested, e.g. line_color or line_width.
+        data : string, tuple(string), list(string)
+            The data to be plotted. The type of plot and the number of 
+            arguments determines how the arguments are interpreted:
 
-        data: string, tuple(string), list(string)
-            The type of plot and the number of arguments determines how the
-            arguments are interpreted:
-            
             one item: (line/scatter)
                 The data is treated as the value and self.default_index is
-                used as the index.  If default_index does not exist, one is
-                created from arange(len(data))
-
+                used as the index.  If **default_index** does not exist, one is
+                created from arange(len(*data*))
             two or more items: (line/scatter)
-                Interpreted as (index, value1, value2, ...).  Each index+value
+                Interpreted as (index, value1, value2, ...).  Each index,value
                 pair forms a new plot of the type specified.
-
             two items: (cmap_scatter)
-                Interpreted as (value, color_values).  Uses default_index.
-
+                Interpreted as (value, color_values).  Uses **default_index**.
             three or more items: (cmap_scatter)
                 Interpreted as (index, val1, color_val1, val2, color_val2, ...)
+
+        type : comma-delimited string of "line", "scatter", "cmap_scatter"
+            The types of plots to add.
+        name : string
+            The name of the plot.  If None, then a default one is created 
+            (usually "plotNNN").
+        index_scale : string
+            The type of scale to use for the index axis. If not "linear", then
+            a log scale is used.
+        value_scale : string
+            The type of scale to use for the value axis. If not "linear", then
+            a log scale is used.
+        styles : series of keyword arguments 
+            attributes and values that apply to one or more of the
+            plot types requested, e.g.,'line_color' or 'line_width'.
             
         Examples
         ========
-
+        ::
+            
             plot("my_data", type="line", name="myplot", color=lightblue)
             
             plot(("x-data", "y-data"), type="scatter")
@@ -295,18 +302,23 @@ class Plot(DataView):
                  xbounds=None, ybounds=None, **styles):
         """ Adds image plots to this Plot object.
 
-        If data has shape (N, M, 3) or (N, M, 4), then it is treated as RGB/RGBA
-        and the colormap is ignored.
+        If *data* has shape (N, M, 3) or (N, M, 4), then it is treated as RGB or
+        RGBA (respectively) and *colormap* is ignored.
         
-        If data is an array of floating-point data, and no colormap is provided,
+        If *data* is an array of floating-point data, and no colormap is provided,
         then a ValueError is thrown.
 
         Parameters
         ==========
-        data: the name of the data array in self.plot_data
-        name: the name of the plot; if omitted, then a name is generated.
-        xbounds, ybounds: tuples of (low, high) in dataspace where this image
-                  resides.
+        data : string
+            The name of the data array in self.plot_data
+        name : string
+            The name of the plot; if omitted, then a name is generated.
+        xbounds, ybounds : tuples of (low, high)
+            Bounds in data space where this image resides.
+        styles : series of keyword arguments 
+            Attributes and values that apply to one or more of the
+            plot types requested, e.g.,'line_color' or 'line_width'.
         """
         if name is None:
             name = self._make_new_plot_name()
@@ -320,9 +332,13 @@ class Plot(DataView):
             kwargs = dict(**styles)
         else:
             if colormap is None:
-                raise ValueError("Scalar 2D data requires a colormap.")
+                if self.color_mapper is None:
+                    raise ValueError("Scalar 2D data requires a colormap.")
+                else:
+                    colormap = self.color_mapper
             elif isinstance(colormap, AbstractColormap):
-                pass
+                if colormap.range is None:
+                    colormap.range = DataRange1D(value)
             else:
                 colormap = colormap(DataRange1D(value))
             cls = CMapImagePlot
@@ -382,19 +398,25 @@ class Plot(DataView):
                      xbounds=None, ybounds=None, **styles):
         """ Adds contour plots to this Plot object.
 
-        data is an array of floating-point data. If "poly" type is chosen and 
-        no colormap is provided, then a ValueError is thrown.
-
         Parameters
         ==========
-        data: the name of the data array in self.plot_data
-        type: comma-delimited string of "line", "poly"
-        poly_cmap: the name of the colormap function to (in 
-                  chaco2.default_colormaps) or an AbstractColormap instance
-                  to use for contour poly plots (ignored for contour line plots)
-        name: the name of the plot; if omitted, then a name is generated.
-        xbounds, ybounds: tuples of (low, high) in dataspace where this image
-                  resides.
+        data : string
+            The name of the data array in self.plot_data, which must be 
+            floating point data.
+        type : comma-delimited string of "line", "poly"
+            The type of contour plot to add. If the value is "poly"
+            and no colormap is provided, then a ValueError is thrown.
+        name : string
+            The name of the plot; if omitted, then a name is generated.
+        poly_cmap : string
+            The name of the color-map function to call (in 
+            chaco2.default_colormaps) or an AbstractColormap instance
+            to use for contour poly plots (ignored for contour line plots)
+        xbounds, ybounds : tuples of (low, high) in data space 
+            Bounds where this image resides.
+        styles : series of keyword arguments 
+            Attributes and values that apply to one or more of the
+            plot types requested, e.g.,'line_color' or 'line_width'.
         """
         if name is None:
             name = self._make_new_plot_name()
@@ -509,6 +531,9 @@ class Plot(DataView):
 
 
     def map_screen(self, data_array):
+        """ Maps an array of data points to screen space and returns an array 
+        of screen space points.
+        """
         # data_array is Nx2 array
         if len(data_array) == 0:
             return []
@@ -528,6 +553,8 @@ class Plot(DataView):
 
 
     def _make_new_plot_name(self):
+        """ Returns a string that is not already used as a plot title.
+        """
         n = len(self.plots)
         plot_template = "plot%d"
         while 1:
@@ -539,7 +566,7 @@ class Plot(DataView):
         return name
 
     def _get_or_create_datasource(self, name):
-        """ Returns the datasource associated with the given name, or creates
+        """ Returns the data source associated with the given name, or creates
         it if it doesn't exist.
         """
         
@@ -663,8 +690,9 @@ class Plot(DataView):
             new.plots = self.plots
 
     def _handle_range_changed(self, name, old, new):
-        """ Override the DataView default behavior.  Primarily, we need to
-        change how the list of renderers is looked up.
+        """ Overrides the DataView default behavior.  
+        
+        Primarily changes how the list of renderers is looked up.
         """
         mapper = getattr(self, name+"_mapper")
         if mapper.range == old:

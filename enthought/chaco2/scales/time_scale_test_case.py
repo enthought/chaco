@@ -1,9 +1,8 @@
 
 import pdb, unittest
-from datetime import datetime as DT
-from datetime import *
 from itertools import starmap
-from time import mktime
+from datetime import datetime as DT
+from safetime import *
 
 from scales import frange, ScaleSystem
 from time_scale import *
@@ -46,6 +45,14 @@ class TRangeTestCase(TicksTestCase):
         for start, end, kw in ranges:
             self.assert_empty(trange(DTS(*start), DTS(*end), **kw))
         return
+
+    def test_microseconds(self):
+        base = DTS(2005, 3, 15, 10, 45, 10)
+        start = base + 0.0000027
+        end = base + 0.0000088
+        ticks = trange(start, end, microseconds=1)
+        desired = [base+i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6)]
+        self.check_ticks(ticks, desired)
 
     def test_milliseconds(self):
         base = DTS(2005, 3, 15, 10, 45, 10)
@@ -125,6 +132,15 @@ class TimeScaleTestCase(TicksTestCase):
         end = DTS(2006,5,1)
         desired = starmap(DTS, ((2005,1,1), (2005,4,1), (2005,8,1), (2006,1,1), (2006,4,1)))
         self.check_ticks(ts.ticks(start,end), desired)
+
+    def test_microsecond(self):
+        ts = TimeScale(microseconds=1)
+        base = DTS(1975, 3, 15, 10, 45, 10)
+        start = base + 2.8e-6
+        end = start + 9.2e-6
+        desired = [base+i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6, 9e-6)]
+        self.check_ticks(ts.ticks(start, end), desired)
+        
 
 
 class CalendarScaleSystemTestCase(TicksTestCase):

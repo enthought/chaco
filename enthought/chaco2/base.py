@@ -1,5 +1,5 @@
 """
-Defines basic traits for the data model.
+Defines basic traits and functions for the data model.
 """
 
 # Standard library imports
@@ -16,20 +16,20 @@ from enthought.traits.api import CArray, Enum, Trait
 
 # Dimensions
 
-# a single array of numbers
+# A single array of numbers.
 NumericalSequenceTrait = Trait(None, None, CArray(value=empty(0)))
 
-# a sequence of pairs of numbers, i.e. an Nx2 array
+# A sequence of pairs of numbers, i.e., an Nx2 array.
 PointTrait = Trait(None, None, CArray(value=empty(0)))
 
-# an NxM array of numbers
+# An NxM array of numbers.
 ImageTrait = Trait(None, None, CArray(value=empty(0)))
 
 # This enumeration lists the fundamental mathematical coordinate types that
 # Chaco supports.
 DimensionTrait = Enum("scalar", "point", "image")
 
-# Linear sort order
+# Linear sort order.
 SortOrderTrait = Enum("ascending", "descending", "none")
 
 
@@ -43,9 +43,11 @@ def poly_point(center, r, degrees):
     return x,y
 
 def n_gon(center, r, nsides, rot_degrees=0):
-    """ Generates the points of a regular n_gon with specified center and 
-    radius. By default the rightmost point of the polygon is (r,0) but a 
-    rotation about the center may be specified with rot_degrees.
+    """ Generates the points of a regular polygon with specified center,  
+    radius, and number of sides. 
+    
+    By default the rightmost point of the polygon is (*r*,0) but a 
+    rotation about the center may be specified with *rot_degrees*.
     """
     if nsides < 3: 
         raise ValueError, 'Must have at least 3 sides in a polygon'
@@ -57,10 +59,11 @@ def n_gon(center, r, nsides, rot_degrees=0):
 # Ripped from Chaco 1.0's plot_base.py
 def bin_search(values, value, ascending):
     """
-    Perform a binary search of a sorted array looking for a specified value.
-    Returns the lowest position where the value can be found or where the the
+    Performs a binary search of a sorted array looking for a specified value.
+    
+    Returns the lowest position where the value can be found or where the 
     array value is the last value less (greater) than the desired value.
-    -1 is returned if value is beyond the minimum or maximum of values.
+    Returns -1 if *value* is beyond the minimum or maximum of *values*.
     """
     if ascending > 0:
         if (value < values[0]) or (value > values[-1]):
@@ -83,13 +86,18 @@ def bin_search(values, value, ascending):
             return lo
 
 def reverse_map_1d(data, pt, sort_order):
-    """Returns the index of where "pt" should be in the array "data".
+    """Returns the index of *pt* in the array *data*.
     
-        data: 1D array of data
-        pt: scalar value within data's value range
-        sort_order: "ascending" or "descending"
+    Parameters
+    ----------
+    data : 1-D array 
+        data to search
+    pt : scalar value 
+        value to find, which must be within the value range of *data*
+    sort_order : string
+        "ascending" or "descending"
         
-        Raises IndexError when pt is outside the range of values in data.
+    Raises IndexError if *pt* is outside the range of values in *data*.
     """
     if sort_order == "ascending":
         ndx = bin_search(data, pt, 1)
@@ -122,11 +130,11 @@ def reverse_map_1d(data, pt, sort_order):
 # These are taken from Chaco 1.0's datamapper and subdivision_cells modules.
 # TODO: Write unit tests for these!
 def right_shift(ary, newval):
-    "Returns a right-shifted version of ary with newval inserted on the left."
+    "Returns a right-shifted version of *ary* with *newval* inserted on the left."
     return concatenate([[newval], ary[:-1]])
 
 def left_shift(ary, newval):
-    "Returns a left-shifted version of ary with newval inserted on the right."
+    "Returns a left-shifted version of *ary* with *newval* inserted on the right."
     return concatenate([ary[1:], [newval]])
 
 def sort_points(points, index=0):
@@ -134,7 +142,8 @@ def sort_points(points, index=0):
     sort_points(array_of_points, index=<0|1>) -> sorted_array
     
     Takes a list of points as an Nx2 array and sorts them according
-    to their x or y coordinate.  (index=0 => x)
+    to their x- or y-coordinate.  If *index* is zero, the points are sorted
+    on their x-coordinate. 
     """
     if len(points.shape) != 2 or (2 not in points.shape):
         raise RuntimeError, "sort_points(): Array of wrong shape."
@@ -145,13 +154,15 @@ def find_runs(int_array, order='ascending'):
     find_runs(int_array, order=<'ascending'|'flat'|'descending'>) -> list_of_int_arrays
     
     Given an integer array sorted in ascending/descending order or flat order,
-    returns a list of continuous runs of integers inside the list.  for example,
+    returns a list of continuous runs of integers inside the list.  for example::
         
         find_runs([1,2,3,6,7,8,9,10,11,15])
           
     returns [ [1,2,3], [6,7,8,9,10,11], [15] ]
-    and 
+    and::
+        
         find_runs([0,0,0,1,1,1,1,0,0,0,0], "flat")
+        
     return [ [0,0,0], [1,1,1,1], [0,0,0,0] ]
     """
     ranges = arg_find_runs(int_array, order)
@@ -163,7 +174,7 @@ def find_runs(int_array, order='ascending'):
 def arg_find_runs(int_array, order='ascending'):
     """
     Like find_runs(), but returns a list of tuples indicating the start and
-    end indices of runs in the input int_array.
+    end indices of runs in the input *int_array*.
     """
     if len(int_array) == 0:
         return []
@@ -181,8 +192,8 @@ def arg_find_runs(int_array, order='ascending'):
 
 
 def point_line_distance(pt, p1, p2):
-    """ Returns the perpendicular distance between pt and the line segment
-    formed by p1 and p2.
+    """ Returns the perpendicular distance between *pt* and the line segment
+    between the points *p1* and *p2*.
     """
     v1 = array((pt[0] - p1[0], pt[1] - p1[1]))
     v2 = array((p2[0] - p1[0], p2[1] - p1[1]))

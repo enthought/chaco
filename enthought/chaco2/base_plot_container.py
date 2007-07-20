@@ -1,4 +1,5 @@
-
+""" Defines the BasePlotContainer class.
+"""
 from sets import Set
 from numpy import array
 
@@ -7,7 +8,7 @@ from numpy import array
 from enthought.enable2.api import Container, Interactor, black_color_trait, \
                             white_color_trait, color_table, empty_rectangle, \
                             intersect_bounds
-from enthought.traits.api import Enum, false, List, Tuple
+from enthought.traits.api import Bool, Enum, List, Tuple
 
 # Local, relative imports
 from plot_component import PlotComponent
@@ -16,46 +17,48 @@ from plot_template import Templatizable
 
 class BasePlotContainer(PlotComponent, Container, Templatizable):
     """
-    A container for PlotComponents which conforms to being laid out by
+    A container for PlotComponents that conforms to being laid out by
     PlotFrames.  Serves as the base class for other PlotContainers.
     
-    PlotContainers define a layout, i.e. a spatial relationship between
-    their contained components.  (BasePlotContainer doesn't define one
+    PlotContainers define a layout, i.e., a spatial relationship between
+    their contained components.  (BasePlotContainer doesn't define one,
     but its various subclasses do.)
     
-    BasePlotContainer is a subclass of an Enable Container, so
-    Enable-level components can be inserted into it.  However, since Enable
+    BasePlotContainer is a subclass of Enable Container, so it is possible to
+    insert Enable-level components into it.  However, because Enable
     components don't have the correct interfaces to participate in layout,
     the visual results will probably be incorrect.
     """
 
     # A list of the plot container's components.  In general, the order of
-    # items defines the Z-order or draw order, depending on the subclass
-    # of plotcontainer.  Subclasses can redefine this as appropriate.
+    # items defines the Z-order or draw order, depending on the subclass.  
+    # Subclasses can redefine this as appropriate.
     plot_components = List
 
-    # Because plot containers can auto-size to fit their components in both
-    # H and V, we redefine the enable auto_size attribute to resemble the
-    # "resizable" trait.
-    # TODO: remove the auto_size trait from enable's Container
-    fit_components = Enum("", "h", "v", "hv")
+    # Dimensions in which this container can resize to fit its components.
+    # This is similar to the **resizable** trait on PlotComponent. Chaco
+    # plot containers use this attribute in preference to the Enable 
+    # **auto_size** attribute (which is overridden to be False by default).
+    fit_components = Enum("", "h", "v", "hv") # TODO: remove the auto_size trait from enable's Container
 
     #use_draw_order = True
 
     # The default size of this container if it is empty.
     default_size = Tuple(0, 0)
 
-    # Override the Enable auto_size trait (which will be deprecated in the future)
+    # Overrides the Enable **auto_size** trait (which will be deprecated in the
+    # future).
     auto_size = False
     
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
     
-    # We may render ourselves in a different mode than what we ask of our
-    # contained components.  This stores the rendering mode we should
-    # request on our children when we do a _draw().  If it is set to
-    # "default", then whatever mode is handed in to _draw() is used.
+    # This container can render itself in a different mode than what it asks of 
+    # its contained components.  This attribute stores the rendering mode that 
+    # this container requests of its children when it does a _draw(). If the
+    # attribute is set to "default", then whatever mode is handed in to _draw()
+    # is used.
     _children_draw_mode = Enum("default", "normal", "overlay", "interactive")
     
 
@@ -64,6 +67,9 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
     #------------------------------------------------------------------------
     
     def __init__(self, **kwtraits):
+        """ In creating an instance, this method sets the instance's
+        **auto_size** trait to False, unless it is explicitly set.
+        """
         # Unless the user explicitly sets it, PlotContainers shouldn't
         # automatically resize themselves to fit their contained components.
         if not kwtraits.has_key("auto_size"):
@@ -77,7 +83,8 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
     #------------------------------------------------------------------------
     
     def add(self, *components):
-        "Convenience method to add new components to the container"
+        """ Convenience method to add new components to the container.
+        """
         if self in components:
             raise ValueError, 'BasePlotContiner.add attempt to add self as component.'
         self.plot_components.extend(components)
@@ -86,7 +93,8 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
         return
     
     def remove(self, *components):
-        "Convenience method to remove an existing component"
+        """ Convenience method to remove an existing component.
+        """
         for component in components:
             self.plot_components.remove(component)
         Container.remove(self, *components)
@@ -95,7 +103,7 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
 
     def insert(self, index, *components):
         """
-        Inserts the components starting at a particular index
+        Inserts the components starting at a particular index.
         """
         for component in components:
             self.plot_components.insert(index, component)
@@ -110,17 +118,22 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
     #------------------------------------------------------------------------
 
     def get_preferred_size(self, components=None):
+        """ Returns the container's preferred size.
+        
+        Overrides PlotComponent. Different container subclasses have different
+        layout mechanisms, which determine how the preferred size is computed
+        from component sizes. 
+        
+        If *component* is None, the method can use self.plot_components.
         """
-        Returns the container's preferred size (using self.components if
-        components==None)
-        """
-        # Different containers will have different layout mechanisms, which
-        # will determine how the preferred size is computed from component
-        # sizes.
         raise NotImplementedError
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        # This method is preserved for backwards compatibility with _old_draw()
+        """ Draws the component.
+
+        This method is preserved for backwards compatibility. Overrides 
+        PlotComponent.
+        """
         gc.save_state()
         gc.set_antialias(False)
 
@@ -131,6 +144,8 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
         return
     
     def _dispatch_draw(self, layer, gc, view_bounds, mode):
+        """ Renders the named *layer* of this component. 
+        """
         new_bounds = self._transform_view_bounds(view_bounds)
         if new_bounds == empty_rectangle:
             return
@@ -184,12 +199,14 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
         return
 
     def _get_visible_components(self, bounds):
-        """ Returns a list of our children that are in the bounds """
+        """ Returns a list of this plot's children that are in the bounds. """
         if bounds is None:
             return self.plot_components
         
         visible_components = []
         for component in self.plot_components:
+            if not component.visible:
+                continue
             tmp = intersect_bounds(component.outer_position + component.outer_bounds, bounds)
             if tmp != empty_rectangle:
                 visible_components.append(component)
@@ -200,6 +217,8 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
     #------------------------------------------------------------------------
 
     def get_templatizable_children(self):
+        # JMS 2007/07/06: This method is not in the Templatizable interface
+        # and this implementation doesn't appear to do anything.
         template_children = []
         for component in self.plot_components:
             if isinstance(component, Templatizable):
@@ -236,16 +255,30 @@ class BasePlotContainer(PlotComponent, Container, Templatizable):
         return
 
     def _draw_overlays(self, gc, view_bounds=None, mode="normal"):
-        # Method for backward compatability with old drawing scheme...
+        """ Method for backward compatability with old drawing scheme.
+        """
         for component in self.overlays:
             component.overlay(component, gc, view_bounds, mode)
         return
+
+    def _should_layout(self, component):
+        """ Returns True if it is appropriate for the container to lay out
+        the component; False if not.
+        """
+        if not component or (not component.visible and not component.invisible_layout):
+            return False
+        else:
+            return True
     
     #------------------------------------------------------------------------
     # Event handlers
     #------------------------------------------------------------------------
 
     def _dispatch_to_enable(self, event, suffix):
+        """ Calls Enable-level handlers for dispatching events on the object.
+        
+        Overrides PlotComponent.
+        """
         Container.dispatch(self, event, suffix)
         return
     

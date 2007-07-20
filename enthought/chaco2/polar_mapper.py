@@ -1,6 +1,6 @@
 """
-Defines the PolarMapper class, which maps from a 1D region in data space
-into a 1D output space.
+Defines the PolarMapper class, which maps from a 1-D region in data space
+into a 1-D output space.
 """
 
 # Major library imports
@@ -18,12 +18,12 @@ from abstract_mapper import AbstractMapper
 ###############################################################
 class PolarMapper(AbstractMapper):
     """
-    Maps a 1D data space to and from screen space by specifying a range in
+    Maps a 1-D data space to and from screen space by specifying a range in
     data space and a corresponding fixed line in screen space.
     
-    This only concerns itself with metric and not with orientation, so to
-    "flip" the screen space orientation, simply swap the values for low_pos
-    and high_pos.
+    This class concerns itself only with metric and not with orientation. So, to
+    "flip" the screen space orientation, swap the values for **low_pos**
+    and **high_pos**.
     """
     #------------------------------------------------------------------------
     # Private traits
@@ -41,9 +41,9 @@ class PolarMapper(AbstractMapper):
     def map_screen(self, data_array):
         """ map_screen(data_array) -> screen_array
         
-        Converts radius and theta values from data_array 
+        Converts radius and theta values from *data_array*
         to x and y values and then maps 
-        values from data space into screen space
+        values from data space into screen space.
         """
         self._compute_scale()
         if self._null_data_range:
@@ -54,7 +54,7 @@ class PolarMapper(AbstractMapper):
     def map_data(self, screen_val):
         """ map_data(screen_val) -> data_val
 
-        Maps values from screen space into data space
+        Maps values from screen space into data space.
         """
         self._compute_scale()
         if self._null_screen_range:

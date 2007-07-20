@@ -1,4 +1,5 @@
-
+""" Defines the HighlightTool class.
+"""
 # Major library imports
 from numpy import ones
 
@@ -10,15 +11,14 @@ from enthought.chaco2.api import AbstractPlotRenderer, BasePlotContainer, BaseTo
 
 
 class HighlightTool(BaseTool):
-    """
-    Allows the user to select a plot to be highlighted on the graph
-    by clicking on it.
+    """ A tool that enables the user to select a plot to be highlighted on the
+    graph by clicking on it.
     """
 
-    # Which mouse button initiates the selection
+    # The mouse button that initiates the selection.
     drag_button = Enum("left", "right")
 
-    # Threshold for hittest
+    # Threshold distance for hit-testing.
     threshold = Float(20.0)
 
 
@@ -26,16 +26,26 @@ class HighlightTool(BaseTool):
     # Inherited BaseTool traits
     #---------------------------------------------------------------------
 
+    # This tool is not drawn. Overrides BaseTool.
     draw_mode = "none"
+    # This tool is not visible. Overrides BaseTool.
     visible = False
 
 
     def normal_left_down(self, event):
+        """ Handles the left mouse button being pressed.
+        
+        If the left mouse button initiates the selection, this method does so.
+        """
         if self.drag_button == "left":
             self._highlight(event)
         return
 
     def normal_right_down(self, event):
+        """ Handles the right mouse button being pressed.
+        
+        If the right mouse button initiates the selection, this method does so.
+        """
         if self.drag_button == "right":
             self._highlight(event)
         return

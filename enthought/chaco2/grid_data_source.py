@@ -1,5 +1,4 @@
-"""Implements a structured gridded 2D data source (suitable as an index
-for an image, for exmaple)
+""" Defines the GridDataSource class.
 """
 
 # Major library imports
@@ -15,33 +14,39 @@ from base import SortOrderTrait
 
 
 class GridDataSource(AbstractDataSource):
-
+    """ Implements a structured gridded 2-D data source (suitable as an index
+    for an image, for example).
+    """
     
     #------------------------------------------------------------------------
     # AbstractDataSource traits
     #------------------------------------------------------------------------
     
-    # Redefine the index dimension from the parent class.
+    # The dimensionality of the indices into this data source (overrides
+    # AbstractDataSource).
     index_dimension = Constant('image')
     
-    # Redefine the value dimension from the parent class
+    # The dimensionality of the value at each index point (overrides 
+    # AbstractDataSource).
     value_dimension = Constant('scalar')
     
-    # No overall sort order on 2D data, although for gridded 2D data, each
-    # axis may have a sort order
+    # The sort order of the data (overrides AbstractDataSource). There is no
+    # overall sort order on 2-D data, but for gridded 2-D data, each axis can
+    # have a sort order.
     sort_order =Tuple(SortOrderTrait, SortOrderTrait)
  
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
    
-    # data grid tics along the x (horizontal) axis 
+    # Data grid ticks along the x (horizontal) axis. 
     _xdata = Instance(ArrayDataSource, args=())
 
-    # data grid tics along the y (vertical) axis 
+    # Data grid ticks along the y (vertical) axis 
     _ydata = Instance(ArrayDataSource, args=())
 
-    # caches the value of min and max as long as data doesn't change
+    # Cached values of min and max as long as **_data** doesn't change
+    # (overrides ArrayDataSource). ((min_x, max_x), (min_y, max_y))
     _cached_bounds = Tuple
     
     
@@ -55,6 +60,15 @@ class GridDataSource(AbstractDataSource):
         self.set_data(xdata, ydata, sort_order)
 
     def set_data(self, xdata, ydata, sort_order=None):
+        """ Sets the data, and optionally the sort order, for this data source.
+        
+        Parameters
+        ----------
+        xdata, ydata : array
+            The data to use.
+        sort_order : SortOrderTrait
+            The sort order of the data
+        """
         if sort_order is not None:
             self._xdata.set_data(xdata, sort_order[0])
             self._ydata.set_data(ydata, sort_order[1])
@@ -72,8 +86,9 @@ class GridDataSource(AbstractDataSource):
     def get_data(self):
         """get_data() -> (xdata, ydata)
 
-        Since we have structured (gridded) data, we return the pair of data
-        axes, instead of, say, a full meshgrid. This behavious differs from 
+        Implements AbstractDataSource. Because this class uses structured
+        (gridded) data, this method returns the pair of data axes, instead of,
+        for example, a full mesh-grid. This behavious differs from 
         other data sources.
         """
         if self._xdata is not None:
@@ -91,12 +106,12 @@ class GridDataSource(AbstractDataSource):
     def get_bounds(self):
         """get_bounds() -> ((LLx, LLy), (URx, URy))
         
-        Returns two 2D points, min and max, that represent the bounding
-        corners of a rectangle enclosing the data set.  Note that these values
-        are not view-dependent, but represent intrinsic properties of the
-        DataSource.
+        Implements AbstractDataSource. Returns two 2-D points, min and max, that 
+        represent the bounding corners of a rectangle enclosing the data set. 
+        Note that these values are not view-dependent, but represent intrinsic
+        properties of the DataSource.
         
-        If data axis is the empty set, then the min and max vals are 0.0.
+        If data axis is the empty set, then the min and max valuess are 0.0.
         """
         if self._cached_bounds == ():
             self._compute_bounds()
@@ -108,9 +123,8 @@ class GridDataSource(AbstractDataSource):
     #------------------------------------------------------------------------
 
     def _compute_bounds(self, data=None):
-        """
-        Computes the minimum and maximum points (LLx, LLy) and (URx, URy) of 
-        data.  
+        """ Computes the minimum and maximum points (LLx, LLy) and (URx, URy) of 
+        the data.  
         """
         
         if data is None:

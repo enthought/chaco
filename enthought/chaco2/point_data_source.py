@@ -1,5 +1,5 @@
 """
-Defines PointDataSeries
+Defines the PointDataSource class.
 """
 
 # Major library imports
@@ -13,32 +13,37 @@ from base import PointTrait, reverse_map_1d, SortOrderTrait
 from array_data_source import ArrayDataSource
 
 class PointDataSource(ArrayDataSource):
-    """
-    DataSource representing a (possibly unordered) set of (X,Y) points.
+    """ A data source representing a (possibly unordered) set of (X,Y) points.
+    
     This is internally always represented by an Nx2 array, so that data[i]
     refers to a single point (represented as a length-2 array).
+
+    Most of the traits and methods of ArrayDataSeries work for the
+    PointDataSeries as well, since its data is linear.  This class
+    overrides only the methods and traits that are different.
+
     """
     
-    # Most of the traits and methods of ArrayDataSeries work for the
-    # PointDataSeries as well, since its _data is linear.  This class
-    # just overrides the methods and traits that are different.
     
-    # Redefine the index dimension from the parent class
+    # The dimensionality of the indices into this data source (overrides
+    # ArrayDataSource).
     index_dimension = ReadOnly('scalar')
     
-    # Redefine the value dimension from the parent class
+    # The dimensionality of the value at each index point (overrides 
+    # ArrayDataSource).
     value_dimension = ReadOnly('point')
     
-    # Although sort order is less common with point data, it can be useful
-    # in instances when the value data is sorted along some axis.  Note
-    # that sort_index is only used if sort_order is not "none".
+    # The sort order of the data. Although sort order is less common with point
+    # data, it can be useful in case where the value data is sorted along some
+    # axis.  Note that **sort_index** is used only if **sort_order** is not 
+    # 'none'.
     sort_order = SortOrderTrait
     
-    # Indicates which of the value axes the sort_order refers to.
-    # If sort_order is "none", this is ignored.
+    # Which of the value axes the **sort_order** refers to.
+    # If **sort_order** is 'none', this attribute is ignored.
     # In the unlikely event that the value data is sorted along both
-    # X and Y (i.e. monotonic in both axes), then set sort_index to whichever
-    # one will have the best binary-search performance for hit testing.
+    # X and Y (i.e., monotonic in both axes), then set **sort_index** to 
+    # whichever one has the best binary-search performance for hit-testing.
     sort_index = Enum(0, 1)
     
     
@@ -46,15 +51,18 @@ class PointDataSource(ArrayDataSource):
     # Private traits
     #------------------------------------------------------------------------
     
-    # The actual data
+    # The actual data (overrides ArrayDataSource).
     _data = PointTrait
     
-    # caches the value of min and max as long as data doesn't change
-    # ((min_x, max_x), (min_y, max_y))
+    # Cached values of min and max as long as **_data** doesn't change
+    # (overrides ArrayDataSource). ((min_x, max_x), (min_y, max_y))
     _cached_bounds = Tuple
     
     # These return lists of all the x and y positions, respectively
+    
+    # List of X positions.
     _xdata = Property
+    # List of Y positions.
     _ydata = Property
     
     #------------------------------------------------------------------------
@@ -69,12 +77,33 @@ class PointDataSource(ArrayDataSource):
         return
     
     def get_data(self):
+        """ Returns the data for this data source, or (0.0, 0.0) if it has no
+        data.
+        
+        Overrides ArryDataSource.
+        """
         if self._data is not None:
             return self._data
         else:
             return (0.0, 0.0)
     
     def reverse_map(self, pt, index=0, outside_returns_none=True):
+        """Returns the index of *pt* in the data source.
+        
+        Overrides ArrayDataSource. 
+        
+        Parameters
+        ----------
+        pt : (x, y)
+            value to find
+        index : 0 or 1
+            Which of the axes of *pt* the *sort_order* refers to.
+        outside_returns_none : Boolean
+            Whether the method returns None if *pt* is outside the range of
+            the data source; if False, the method returns the value of the 
+            bound that *pt* is outside of, in the *index* dimension.
+        
+        """
         # reverse_map is of limited utility for a PointDataSeries and thus
         # we only perform reverse-mapping if the data is sorted along an axis.
         
@@ -109,8 +138,9 @@ class PointDataSource(ArrayDataSource):
     #------------------------------------------------------------------------
     
     def _compute_bounds(self):
-        """
-        Computes the minimum and maximum values of self._data.
+        """ Computes the minimum and maximum values of self._data.
+        
+        Overrides ArrayDataSource.
         """
         if len(self._data) == 0:
             self._cached_bounds = ((0.0,0.0), (0.0,0.0))

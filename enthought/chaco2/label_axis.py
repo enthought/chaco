@@ -1,4 +1,5 @@
-
+""" Defines the LabelAxis class.
+"""
 # Major library imports
 from traceback import print_exc
 from numpy import array, compress, float64, inf, searchsorted, take
@@ -14,14 +15,20 @@ from ticks import auto_ticks
 
 
 class LabelAxis(PlotAxis):
-    """ Much like a plot axis, but instead of numbers, we have a series of labels.
+    """ An axis whose ticks are labeled with text instead of numbers. 
     """
-    
+    # List of labels to use on tick marks.
     labels = List(Str)
+    # The angle of rotation of the label. Only multiples of 90 are supported.
     label_rotation = Float(0)
+    # List of indices of ticks
     positions = Any  # List(Float), Array
     
     def _compute_tick_positions(self, gc, component=None):
+        """ Calculates the positions for the tick marks.
+        
+        Overrides PlotAxis.
+        """
         if (self.mapper is None):
             self._reset_cache()
             self._cache_valid = True
@@ -70,6 +77,10 @@ class LabelAxis(PlotAxis):
         
         
     def _compute_labels(self, gc):
+        """Generates the labels for tick marks. 
+        
+        Overrides PlotAxis.
+        """
         try:
             self.ticklabel_cache = []
             for text in self._tick_label_list:

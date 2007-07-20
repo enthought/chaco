@@ -1,4 +1,5 @@
-
+""" This module is not currently used.
+"""
 # Major library import
 from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
                   sqrt, sin, transpose
@@ -70,7 +71,8 @@ AxisView = View(VGroup(
 
 
 class PlotAxis(AbstractOverlay):
-    """
+    """ This class is not currently used. See axis.PlotAxis.
+    
     The PlotAxis is a visual component that can be rendered on its own as
     a standalone component or attached as an overlay to another component.
     (To attach it as an overlay, set its .component attribute.)
@@ -235,14 +237,6 @@ class PlotAxis(AbstractOverlay):
         if not self.visible:
             return
 
-        if not self._cache_valid:
-            if component is not None:
-                self._calculate_geometry(component)
-            else:
-                self._old_calculate_geometry()
-            self._compute_tick_positions(gc, component)
-#            self._compute_labels(gc)
-
         try:
             gc.save_state()
 
@@ -250,6 +244,14 @@ class PlotAxis(AbstractOverlay):
             # base gc before handing it in to our title and tick labels,
             # their set_font() won't have to do any work.
             gc.set_font(self.tick_label_font)
+
+            if not self._cache_valid:
+                if component is not None:
+                    self._calculate_geometry(component)
+                else:
+                    self._old_calculate_geometry()
+                self._compute_tick_positions(gc, component)
+#                self._compute_labels(gc)
 
             if self.axis_line_visible:
                 self._draw_axis_line(gc, self._origin_point, self._end_axis_point)

@@ -1,4 +1,5 @@
-
+""" Defines the TextBoxOverlay class.
+"""
 # Enthought library imports
 from enthought.enable2.api import ColorTrait
 from enthought.kiva.traits.kiva_font_trait import KivaFont
@@ -10,29 +11,37 @@ from label import Label
 
 
 class TextBoxOverlay(AbstractOverlay):
-    """ Draw a box with text in it.
+    """ Draws a box with text in it.
     """
 
     #### Configuration traits ##################################################
 
+    # The text to display in the box.
     text = Str
-
+    # The font to use for the text.
     font = KivaFont("modern 12")
-
+    # The background color for the box (overrides AbstractOverlay).
     bgcolor = ColorTrait("transparent")
-
+    # Number of pixels of padding around the text within the box.
     padding = Int(5)
-
+    # Alignment of the text in the box:
+    #
+    # * "ur": upper right
+    # * "ul": upper left
+    # * "ll": lower left
+    # * "lr": lower right
     align = Enum("ur", "ul", "ll", "lr")
 
     # This allows subclasses to specify an alternate position for the root
-    # of the text box.  Should be a sequence of length 2.
+    # of the text box.  Must be a sequence of length 2.
     alternate_position = Any
 
     #### Public 'AbstractOverlay' interface ####################################
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draw ourself.
+        """ Draws the box overlaid on another component.
+        
+        Overrides AbstractOverlay.
         """
 
         if not self.visible:

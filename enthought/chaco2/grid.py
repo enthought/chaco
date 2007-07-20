@@ -1,3 +1,7 @@
+""" Defines the PlotGrid class, and associated Traits UI View and validator
+function.
+"""
+
 import pdb
 from numpy import around, array, column_stack, float64, inf, zeros_like
 
@@ -16,7 +20,7 @@ from ticks import AbstractTickGenerator, DefaultTickGenerator
 
 def float_or_auto(val):
     """
-    Validator function that returns val if val is either a number or 
+    Validator function that returns *val* if *val* is either a number or 
     the word 'auto'.  This is used as a validator for the text editor
     in the traits UI for the tick_interval trait.
     """
@@ -27,7 +31,7 @@ def float_or_auto(val):
             return val
     raise TraitError, "Tick interval must be a number or 'auto'."
 
-
+# View for setting grid properties.
 GridView = View(VGroup(
                 HGroup(Item("grid_interval", label="Interval", editor=TextEditor(evaluate=float_or_auto)),
                        Item("visible", label="Visible")),
@@ -41,39 +45,46 @@ GridView = View(VGroup(
     
 
 class PlotGrid(AbstractOverlay):
-
-    # The mapper (and associated range) that drive this Plotgrid
+    """ An overlay that represents a grid. 
+    
+    A grid is a set of parallel lines, horizontal or vertical. You can use 
+    multiple grids with different settings for the horizontal and vertical
+    lines in a plot.
+    """
+    # The mapper (and associated range) that drive this PlotGrid.
     mapper = Instance(AbstractMapper)
 
-    # Whether the grid is a set of horizontal lines or a set of vertical lines
+    # The orientation of the grid lines.
     orientation = Enum('horizontal', 'vertical')
     
-    # Whether to draw the ticks starting at the 0 or the end of the mapper
-    # range.  This can be useful to keep the grid from from "flashing" as the
-    # user resizes the plot area.
+    # Draw the ticks starting at the end of the mapper range? If False, the
+    # ticks are drawn starting at 0. This setting can be useful to keep the 
+    # grid from from "flashing" as the user resizes the plot area.
     flip_axis = false
     
-    # The color of the grid lines
+    # The color of the grid lines.
     line_color = black_color_trait
     
-    # The style (i.e. dash pattern) of the grid lines
+    # The style (i.e., dash pattern) of the grid lines.
     line_style = LineStyle('solid')
     
-    # The thickness, in pixels, of the grid lines
+    # The thickness, in pixels, of the grid lines.
     line_weight = Int(1)
     
-    # What is the dataspace interval between grid lines?
+    # The dataspace interval between grid lines.
     grid_interval = Trait('auto', 'auto', Float)
 
-    # A callable that implements the AbstractTickGenerator Interface
+    # A callable that implements the AbstractTickGenerator Interface.
     tick_generator = Trait(DefaultTickGenerator(), Instance(AbstractTickGenerator))
 
-    # Override default values of inherited traits
+    # Dimensions that the grid is resizable in (overrides PlotComponent).
     resizable = "hv"
     
+    # Default Traits UI View for modifying grid attributes.
     traits_view = GridView
     
     # Private traits; cached info
+    
     _cache_valid = false
     _tick_list = Any
     _tick_positions = Any
@@ -90,6 +101,8 @@ class PlotGrid(AbstractOverlay):
         return
 
     def invalidate(self):
+        """ Invalidate cached information about the grid.
+        """
         self._reset_cache()
         return
 
@@ -99,6 +112,10 @@ class PlotGrid(AbstractOverlay):
     #------------------------------------------------------------------------
     
     def do_layout(self, *args, **kw):
+        """ Tells this component to do layout at a given size.
+        
+        Overrides PlotComponent.
+        """
         if self.use_draw_order and self.component is not None:
             self._layout_as_overlay(*args, **kw)
         else:
@@ -110,21 +127,31 @@ class PlotGrid(AbstractOverlay):
     #------------------------------------------------------------------------
 
     def _do_layout(self):
+        """ Performs a layout.
+        
+        Overrides PlotComponent.
+        """
         return
     
     def _layout_as_overlay(self, size=None, force=False):
+        """ Lays out the axis as an overlay on another component.
+        """
         if self.component is not None:
             self.position = self.component.position
             self.bounds = self.component.bounds
         return
     
     def _reset_cache(self):
+        """ Clears the cached tick positions.
+        """
         self._tick_positions = array([], dtype=float)
         self._length = 0.0
         self._cache_valid = False
         return
     
     def _compute_ticks(self, component=None):
+        """ Calculates the positions for the grid lines.
+        """
         if (self.mapper is None):
             self._reset_cache()
             self._cache_valid = True
@@ -177,10 +204,18 @@ class PlotGrid(AbstractOverlay):
         
     
     def _draw_overlay(self, gc, view_bounds=None, mode='normal'):
+        """ Draws the overlay layer of a component.
+        
+        Overrides PlotComponent.
+        """
         self._draw_component(gc, view_bounds, mode)
         return
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
+        """ Draws this component overlaid on another component.
+        
+        Overrides AbstractOverlay.
+        """
         if not self.visible:
             return
         self._compute_ticks(other_component)
@@ -189,6 +224,11 @@ class PlotGrid(AbstractOverlay):
         return
     
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the component.
+
+        This method is preserved for backwards compatibility. Overrides 
+        PlotComponent.
+        """
         # What we're really trying to do with a grid is plot contour lines in
         # the space of the plot.  In a rectangular plot, these will always be
         # straight lines.
@@ -233,7 +273,7 @@ class PlotGrid(AbstractOverlay):
         
     def mapper_updated(self):
         """
-        Event handler that gets bound to our mapper's .updated event
+        Event handler that is bound to this mapper's **updated** event.
         """
         self.invalidate()
         return
@@ -251,6 +291,9 @@ class PlotGrid(AbstractOverlay):
     #------------------------------------------------------------------------
     
     def visual_attr_changed(self):
+        """ Called when an attribute that affects the appearance of the grid
+        is changed.
+        """
         if self.component:
             self.component.invalidate_draw()
             self.component.request_redraw()

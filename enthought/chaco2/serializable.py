@@ -1,11 +1,12 @@
-
+""" Defines the Serializable mix-in class.
+"""
 import inspect, pdb
 from sets import Set
 
 class Serializable(object):
     """
-    Mix-in class to help serialization.  Serialized just the attributes in
-    _pickles.
+    Mix-in class to help serialization.  Serializes just the attributes in
+    **_pickles**.
     
     This mix-in works best when all the classes in a hierarchy subclass
     from it.  It solves the problem of allowing each class to specify
@@ -45,14 +46,14 @@ class Serializable(object):
     def _pre_save(self):
         """
         Called before __getstate__ to give the object a chance to tidy up
-        and get ready to be saved.  This should usually also call the superclass.
+        and get ready to be saved.  This usually also calls the superclass.
         """
         return
     
     def _post_load(self):
         """
         Called after __setstate__ finishes restoring the state on the object.
-        This method should usually include a call to super(cls, self)._post_load().
+        This method usually needs to include a call to super(cls, self)._post_load().
         Avoid explicitly calling a parent class by name, because in general
         you want post_load() to happen in the same order as MRO, which super()
         does automatically.

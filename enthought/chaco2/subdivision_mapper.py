@@ -1,4 +1,5 @@
-
+""" Defines the SubdivisionDataMapper and SubdivisionLineDataMapper classes.
+"""
 # Major library imports
 import math
 from sets import Set
@@ -19,13 +20,13 @@ from subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
 
 class SubdivisionDataMapper(AbstractDataMapper):
     """
-    Datamapper that uses a uniform grid of rectangular cells.  Doesn't make
+    A data mapper that uses a uniform grid of rectangular cells. It dooesn't make
     any assumptions about the continuity of the input data set, and explicitly
     stores each point in the data set in its cell.
     
     If the incoming data is ordered in some fashion such that most cells end
     up with large ranges of data, then it's better to use the
-    SubdivionsLineDataMapper subclass.
+    SubdivisionLineDataMapper subclass.
     """
     celltype = Cell
     _last_region = List(Tuple)
@@ -243,6 +244,8 @@ class SubdivisionDataMapper(AbstractDataMapper):
         #~ return
 
 class SubdivisionLineDataMapper(SubdivisionDataMapper):
+    """ A subdivision data mapper that uses ranged cells.
+    """
     celltype = RangedCell
 
 

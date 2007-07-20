@@ -1,13 +1,14 @@
-
+""" Defines the PlotWindow class.
+"""
 import wx
 from enthought.enable2.wx_backend.api import Window
 from enthought.chaco2.api import ArrayPlotData, Plot
 
 class PlotWindow(wx.Frame):
-    """
-    Defines a window for holding top-level plot containers.
+    """ A window for holding top-level plot containers.
+    
     Contains many utility methods for controlling the appearance of the
-    window that mostly pass-through to underlying wx calls.
+    window, which mostly pass through to underlying WX calls.
     """
     
     def __init__(self, *args, **kw):
@@ -49,11 +50,13 @@ class PlotWindow(wx.Frame):
         self.plot_window.component = container
     
     def iconize(self, iconize):
-        """Iconizes the window if 'iconize' is true"""
+        """Iconizes the window if *iconize* is True.
+        """
         self.Iconize(iconize)
     
     def maximize(self, maximize):
-        """Maximizes or restores the window size (maximizes if 'maximize' is true"""
+        """ If *maximize* is True, maximizes the window size; restores if False.
+        """
         self.Maximize(maximize)
 
     def set_size(self, width, height):
@@ -63,13 +66,14 @@ class PlotWindow(wx.Frame):
         self.SetTitle(title)
 
     def raise_window(self):
-        """Raises this window to the top of the window hierarchy"""
+        """Raises this window to the top of the window hierarchy.
+        """
         self.Raise()
 
     def close(self):
         self.Close()
 
-    # Python property since we're not a HasTraits objects
+    # This is a Python property because this is not a HasTraits subclass.
     container = property(get_container, set_container)
 
     #------------------------------------------------------------------------

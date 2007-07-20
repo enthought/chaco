@@ -1,4 +1,5 @@
-
+""" Defines the base DragTool class.
+"""
 # Enthought library imports
 from enthought.traits.api import Any, Dict, Enum, false, Float, Instance, Trait, true, Tuple
 
@@ -7,41 +8,41 @@ from enthought.chaco2.api import BaseTool
 
 
 class DragTool(BaseTool):
-    """
-    Base class for tools that are activated by a drag operation.  This tool
-    insulates the drag operation from double clicks and the like, and gracefully
-    manages the transition into and out of drag.
+    """ Base class for tools that are activated by a drag operation.  
+    
+    This tool insulates the drag operation from double clicks and the like, and
+    gracefully manages the transition into and out of drag mode.
     """
 
-    # Is this a left-click-drag or right-click-drag operation?
+    # The mouse button used for this drag operation.
     drag_button = Enum("left", "right")
 
-    # Should the drag operation end if the mouse leaves our component?
+    # End the drag operation if the mouse leaves the associated component?
     end_drag_on_leave = true
     
-    # These keys, if pressed during drag, will cause the drag operation
-    # to reset.
+    # These keys, if pressed during drag, cause the drag operation to reset.
     cancel_keys = Tuple("Esc")
     
     # The position of the initial mouse click that started the drag.
-    # Typically, tools that move things around will want to use this
-    # position to do hittesting to determine what object to "pick up".
+    # Typically, tools that move things around use this
+    # position to do hit-testing to determine what object to "pick up".
     mouse_down_position = Tuple(0.0, 0.0)
 
-    # The modifier key which must be used to active the tool
+    # The modifier key that must be used to activate the tool.
     modifier_key = Enum("none", "shift", "alt", "control")
 
     #------------------------------------------------------------------------
     # Private traits used by DragTool
     #------------------------------------------------------------------------
 
+    # The possible states of this tool.
     _drag_state = Enum("nondrag", "dragging")
     
-    # Records whether or not a mouse_down event has been received while in
-    # "nondrag" mode.  This is a safety check to prevent us from suddenly
+    # Records whether a mouse_down event has been received while in
+    # "nondrag" state.  This is a safety check to prevent the tool from suddenly
     # getting mouse focus while the mouse button is down (either from
-    # window_enter or programmatically) and thinking that we should
-    # initiate a drag.
+    # window_enter or programmatically) and erroneously
+    # initiating a drag.
     _mouse_down_received = false
 
 
@@ -50,42 +51,42 @@ class DragTool(BaseTool):
     #------------------------------------------------------------------------
 
     def is_draggable(self, x, y):
-        """
-        Returns a boolean indicating whether or not the (x,y) position is in
-        a region that is OK to drag.  Used by the DragTool to determine when
-        to start a drag.
+        """ Returns whether the (x,y) position is in a region that is OK to 
+        drag.  
+        
+        Used by the tool to determine when to start a drag.
         """
         return True
 
     def drag_start(self, event):
-        """
-        Called when the drag operation starts.  'event' is the mouse event
-        that established the drag operation; its .x and .y attributes
-        correspond to the current location of the mouse, and not the
-        position of the mouse when the initial left_down or right_down
-        happened.
+        """ Called when the drag operation starts.  
+        
+        The *event* parameter is the mouse event that established the drag 
+        operation; its **x** and **y** attributes correspond to the current
+        location of the mouse, and not to the position of the mouse when the 
+        initial left_down or right_down event happened.
         """
         pass
 
     def dragging(self, event):
-        """
-        This method is called for every mouse_move event that we receive
-        while the user is dragging the mouse.  Subclasses should do most
-        of their work in this method.
+        """ This method is called for every mouse_move event that the tool 
+        receives while the user is dragging the mouse.  
+        
+        It is recommended that subclasses do most of their work in this method.
         """
         pass
 
     def drag_cancel(self, event):
-        """
-        Called when the drag is cancelled, usually by receiving a mouse_leave
-        event when end_drag_on_leave is True, or by the user pressing any
-        of the cancel_keys.
+        """ Called when the drag is cancelled.
+        
+        A drag is usually cancelled by receiving a mouse_leave event when 
+        end_drag_on_leave is True, or by the user pressing any of the 
+        **cancel_keys**.
         """
         pass
 
     def drag_end(self, event):
-        """
-        Called when a mouse event causes the drag operation to 
+        """ Called when a mouse event causes the drag operation to end.
         """
         pass
 

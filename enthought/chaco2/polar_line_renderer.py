@@ -1,4 +1,5 @@
-
+""" Defines the PolarLineRenderer class.
+"""
 # Major library imports
 from numpy import add, arange, array, compress, concatenate, cos, pi, sin, transpose, zeros
 
@@ -16,21 +17,36 @@ from label import Label
 import ticks
 
 class PolarLineRenderer(AbstractPlotRenderer):
-
+    """ A renderer for polar line plots.
+    """
     #------------------------------------------------------------------------
     # Appearance-related traits
     #------------------------------------------------------------------------
+
+    # The color of the origin axis.
     origin_axis_color_ = (0,0,0,1)
+    # The width of the origin axis.
     origin_axis_width = 2.0
+    # The origin axis is visible.
     origin_axis_visible=True
+    # The grid is visible.
     grid_visible= True
+    # The orientation of the plot is horizontal; for any other value, it is 
+    # transposed 
     orientation = 'h'
+    # The color of the line.
     color = black_color_trait
+    # The width of the line.
     line_width = Float(1.0)
+    # The style of the line.
     line_style = LineStyle("solid")
+    # The style of the grid lines.
     grid_style= LineStyle("dot")
 
     def _gather_points(self):
+        """
+        Collects the data points that are within the plot bounds and caches them
+        """
         # This is just a stub for now.  We should really find the lines only
         # inside the screen range here.
 
@@ -54,6 +70,8 @@ class PolarLineRenderer(AbstractPlotRenderer):
         self._cache_valid = False
 
     def _render(self, gc, points):
+        """ Actually draw the plot.
+        """
         gc.save_state()
 
         gc.set_antialias(True)
@@ -74,6 +92,11 @@ class PolarLineRenderer(AbstractPlotRenderer):
         return
 
     def map_screen(self, data_array):
+        """ Maps an array of data points into screen space and returns it as
+        an array. 
+        
+        Implements the AbstractPlotRenderer interface.
+        """
 
         if len(data_array) == 0:
             return []
@@ -93,6 +116,10 @@ class PolarLineRenderer(AbstractPlotRenderer):
             return transpose(array((sy, sx)))
 
     def map_data(self, screen_pt):
+        """ Maps a screen space point into the "index" space of the plot.
+        
+        Implements the AbstractPlotRenderer interface.
+        """
         if self.orientation == 'h':
             x, y = screen_pt
         else:
@@ -105,11 +132,15 @@ class PolarLineRenderer(AbstractPlotRenderer):
         return self.map_screen(self._cached_data_pts)
 
     def _draw_plot(self, *args, **kw):
-        "Simple compatibility with new-style rendering loop"
+        """ Draws the 'plot' layer.
+        """
+        # Simple compatibility with new-style rendering loop
         return self._draw_component(*args, **kw)
 
 
     def _draw_component(self, gc, view_bounds=None, mode='normal'):
+        """ Renders the component. 
+        """
         self._gather_points()
         self._render(gc, self._cached_data_pts)
 

@@ -1,4 +1,5 @@
-
+""" Defines the ColorMapper and ColorMapTemplate classes.
+"""
 
 # Major library imports
 from types import IntType, FloatType
@@ -20,21 +21,27 @@ class ColorMapTemplate(HasTraits):
     A class representing the state of a ColorMapper, for use when persisting
     plots.
     """
-    
+    # The segment data of the color map.
     segment_map = Any
+    # The number of steps in the color map.
     steps = Int(256)
+    # Low end of the color map range.
     range_low_setting = Trait('auto', 'auto', Float)
+    # High end of the color map range.
     range_high_setting = Trait('auto', 'auto', Float)
 
     def __init__(self, colormap=None, **kwtraits):
         """
-        Creates this template from a colormap instance or creates an empty template.
+        Creates this template from a color map instance or creates an empty 
+        template.
         """
         if colormap:
             self.from_colormap(colormap)
         return
 
     def from_colormap(self, colormap):
+        """ Populates this template from a color map.
+        """
         self.segment_map = colormap._segmentdata.copy()
         self.steps = colormap.steps
         self.range_low_setting = colormap.range.low_setting
@@ -42,7 +49,8 @@ class ColorMapTemplate(HasTraits):
         return
 
     def to_colormap(self, range=None):
-        """ Returns a ColorMapper instance from this template """
+        """ Returns a ColorMapper instance from this template.
+        """
         colormap = ColorMapper(self.segment_map, steps = self.steps)
         if range:
             colormap.range = range
@@ -54,17 +62,16 @@ class ColorMapTemplate(HasTraits):
 
 
 class ColorMapper(AbstractColormap):
-    """
-    Represents a simple band-of-colors style of colormap.
+    """ Represents a simple band-of-colors style of color map.
     
-    The lookup transfer function is a simple linear function between defined
-    intensities.  There is no limit to the number of steps that may be
-    defined. As the segment intervals start containing fewer and fewer array
-    locations, there will be inevitable quantization errors.
+    The look-up transfer function is a simple linear function between defined
+    intensities.  There is no limit to the number of steps that can be
+    defined. If the segment intervals contain very few array
+    locations, quantization errors will occur.
 
-    Construction of a ColorMapper be done through the factory methods 
-    'from_palette_array' and 'from_segment_map'.  Direct calls to the
-    ColorMapper constructor are discouraged.
+    Construction of a ColorMapper can be done through the factory methods 
+    from_palette_array() and from_segment_map(). Do not make direct calls to the
+    ColorMapper constructor.
     """
 
     # The color table.
@@ -73,15 +80,16 @@ class ColorMapper(AbstractColormap):
     # The total number of color steps in the map.
     steps = Int(256)
 
-    # The name of this colormap
+    # The name of this color map.
     name = Str
     
-    # Redefine inherited traits
+    # Not used.
     low_pos = None
+    # Not used.
     high_pos = None
     
 
-    # Flag to indicate the mapping arrays are out of date.
+    # Are the mapping arrays out of date?
     _dirty = true
     
     # The raw segment data for creating the mapping array.
@@ -93,13 +101,14 @@ class ColorMapper(AbstractColormap):
     #------------------------------------------------------------------------
 
     def from_palette_array(palette, **traits):
-        """ Create a ColorMapper from a palette array.
+        """ Creates a ColorMapper from a palette array.
 
-        The palette colors will be linearly interpolated across the range of
+        The palette colors are linearly interpolated across the range of
         mapped values.
+        
+        The *palette* parameter is a 3xN array of intensity values, where N > 1::
 
-        palette - A 3 by n array of intensity values, where n > 1:
-          [[R0, G0, B0], ... [R(n-1), G(n-1), B(n-1)]]
+            [[R0, G0, B0], ... [R(N-1), G(N-1), B(N-1)]]
         """
 
         n_colors = shape(palette)[0]
@@ -125,11 +134,14 @@ class ColorMapper(AbstractColormap):
     from_palette_array = staticmethod(from_palette_array)
 
     def from_segment_map(segment_map, **traits):
-        """ Create a LinearSegmentedColormap from a segment map.
+        """ Creates a Colormapper from a segment map.
 
-        segment_map: a dictionary with red, green, and blue entries.  Each
-        entry is a list of x, y0, y1 tuples.  See makeMappingArray for details
-        on how segment maps are converted to color maps.
+        The *segment_map* parameter is a dictionary with 'red', 'green', and 
+        'blue' entries.  Each entry is a list of (x, y0, y1) tuples:
+        
+        * x: an offset (offsets within the list must be in ascending order)
+        * y0: value for the color channel for values less than or equal to x
+        * y1: value for the color channel for values greater than x
         """
 
         return ColorMapper(segment_map, **traits)
@@ -137,6 +149,13 @@ class ColorMapper(AbstractColormap):
     from_segment_map = staticmethod(from_segment_map)
 
     def from_file(filename, **traits):
+        """ Creates a ColorMapper from a file.
+        
+        The *filename* parameter is the name of a file whose lines each contain
+        4 float values between 0.0 and 1.0. The first value is an offset, and
+        the remaining 3 values are red, green, and blue values for the color
+        corresponding to that offset.
+        """
         colormap_file = open(filename, 'r')
         lines = colormap_file.readlines()
         rgbarr = [[],[],[]]
@@ -164,10 +183,15 @@ class ColorMapper(AbstractColormap):
     #------------------------------------------------------------------------
 
     def __init__(self, segmentdata, **kwtraits):
-        """
-        segmentdata is a dictionary with red, green and blue entries. Each entry
-        should be a list of x, y0, y1 tuples.  See makeMappingArray for details
-        on how segmentdata is converted to a color map.
+        """ Creates a ColorMapper instance.
+        
+        The *segmentdata* parameter is a dictionary with red, green, and blue 
+        entries. Each entry must be a list of (x, y0, y1) tuples:
+            
+        * x: an offset (offsets within the list must be in ascending order)
+        * y0: value for the color channel for values less than or equal to x
+        * y1: value for the color channel for values greater than x
+
         """
         self._segmentdata = segmentdata
         super(ColorMapper, self).__init__(**kwtraits)
@@ -175,7 +199,8 @@ class ColorMapper(AbstractColormap):
         
     
     def map_screen(self, data_array):
-
+        """ Maps an array of data values to an array of colors.
+        """
         if self._dirty:
             self._recalculate()
 
@@ -192,7 +217,8 @@ class ColorMapper(AbstractColormap):
 
 
     def map_index(self, ary):
-        """ Maps an array of values to their corresponding color band index. """
+        """ Maps an array of values to their corresponding color band index. 
+        """
 
         if self._dirty:
             self._recalculate()
@@ -201,13 +227,25 @@ class ColorMapper(AbstractColormap):
 
         return clip(indices.astype(IntType), 0, self.steps - 1)
 
+    def reverse_colormap(self):
+        """ Reverses the color bands of this colormap.
+        """
+        for name in ("red", "green", "blue"):
+            data = asarray(self._segmentdata[name])
+            data[:, (1,2)] = data[:, (2,1)]
+            data[:,0] = (1.0 - data[:,0])
+            self._segmentdata[name] = data[::-1]
+        self._recalculate()
+
+
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
 
 
     def _get_color_bands(self):
-        """ Gets the color bands array. """
+        """ Gets the color bands array. 
+        """
         if self._dirty:
             self._recalculate()
 
@@ -221,7 +259,8 @@ class ColorMapper(AbstractColormap):
         return result
     
     def _recalculate(self):
-        """ Recalculate the mapping arrays. """
+        """ Recalculates the mapping arrays. 
+        """
 
         self._red_lut = self._make_mapping_array(
             self.steps, self._segmentdata['red']
@@ -239,16 +278,20 @@ class ColorMapper(AbstractColormap):
 
     #### matplotlib ####
     def _make_mapping_array(self, n, data):
-        """Create an N-element 1-d lookup table
+        """Creates an N-element 1-D lookup table
         
-        data represented by a list of x,y0,y1 mapping correspondences.
-        Each element in this list represents how a value between 0 and 1
-        (inclusive) represented by x is mapped to a corresponding value
-        between 0 and 1 (inclusive). The two values of y are to allow 
-        for discontinuous mapping functions (say as might be found in a
-        sawtooth) where y0 represents the value of y for values of x
-        <= to that given, and y1 is the value to be used for x > than
-        that given). The list must start with x=0, end with x=1, and 
+        The *data* parameter is a list of x,y0,y1 mapping correspondences (which
+        can be lists or tuples), where all the items are values between 0 and 1,
+        inclusive. The items in the mapping are:
+            
+        * x: a value being mapped
+        * y0: the value of y for values of x less than or equal to the given x value.
+        * y1: the value of y for values of x greater than the given x value.
+        
+        The two values of y allow for discontinuous mapping functions (for
+        example, as might be found in a sawtooth function)
+        
+        The list must start with x=0, end with x=1, and 
         all values of x must be in increasing order. Values between
         the given mapping points are determined by simple linear interpolation.
         
@@ -293,13 +336,13 @@ class ColorMapper(AbstractColormap):
 
     #### matplotlib ####
     def _map(self, X, alpha=1.0):
-        """
-        X is either a scalar or an array (of any dimension).
-        If scalar, a tuple of rgba values is returned, otherwise
-        an array with the new shape = oldshape+(4,).  Any values
-        that are outside the 0,1 interval are clipped to that
-        interval before generating rgb values.  
-        Alpha must be a scalar
+        """ Maps from a scalar or an array to an RGBA value or array.
+        
+        The *X* parameter is either a scalar or an array (of any dimension).
+        If it is scalar, the function returns a tuple of RGBA values; otherwise
+        it returns an array with the new shape = oldshape+(4,).  Any values
+        that are outside the 0,1 interval are clipped to that interval before
+        generating RGB values.  The *alpha* parameter must be a scalar
         """
         
         alpha = min(alpha, 1.0) # alpha must be between 0 and 1

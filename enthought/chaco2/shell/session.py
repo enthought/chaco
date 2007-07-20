@@ -1,4 +1,5 @@
-
+""" Defines the PlotSession class.
+"""
 
 # Enthoght library imports
 from enthought.chaco2.array_plot_data import ArrayPlotData
@@ -18,16 +19,16 @@ class PlotSession(HasTraits):
     windows, etc.
     """
     
-    # The preferences object in effect for this session
+    # The preferences object in effect for this session.
     prefs = Instance(Preferences, args=())
 
-    # The list of currently active windows
+    # The list of currently active windows.
     windows = List(PlotWindow)
     
-    # A dict mapping names to windows
+    # A dict mapping names to windows.
     window_map = Dict(Str, PlotWindow)
 
-    # The current 'hold' state
+    # The current hold state.
     hold = false
 
     # The session holds a single ArrayPlotData instance to which it adds unnamed
@@ -39,17 +40,20 @@ class PlotSession(HasTraits):
     # "active" pointers
     #------------------------------------------------------------------------
     
-    # The index of the active window
+    # The index of the active window.
     active_window_index = Trait(None, None, Int)
     
+    # The active window.
     active_window = Property
     
-    # The active colormap
+    # The active colormap.
     colormap = Trait(jet, Any)
 
 
     def new_window(self, name=None, title=None):
-        """Creates a new window and returns its index in self.windows"""
+        """Creates a new window and returns the index into the **windows** list
+        for the new window.
+        """
         new_win = PlotWindow(size=(self.prefs.window_width, self.prefs.window_height))
         new_win.data = self.data
         new_win.get_container().data = self.data
@@ -77,6 +81,14 @@ class PlotSession(HasTraits):
             return None
 
     def del_window(self, ident):
+        """ Deletes the specified window.
+        
+        Parameters
+        ----------
+        ident : string or number
+            The name of the window in **window_map**, or the index of the 
+            window in **windows**.
+        """
         if isinstance(ident, basestring):
             if ident in self.window_map:
                 win = self.window_map[ident]

@@ -1,11 +1,12 @@
 """
-WARNING!!!
-
-This is an older file from chaco classic to support the spatial subdivision 
+CAUTION: This is an old file from Chaco 1.x to support the spatial subdivision 
 structures.  It will be refactored soon.
 
 If you are looking for Chaco2's mappers (subclasses of AbstractMapper),
 look in abstract_mapper.py, linear_mapper.py, and log_mapper.py.
+
+Defines AbstractDataMapper and BruteForceDataMapper classes, and related trait
+and functions.
 """
 
 
@@ -31,11 +32,11 @@ ArraySortTrait = Enum('ascending', 'descending')
 #-------------------------------------------------------------------
 
 def right_shift(ary, newval):
-    "Returns a right-shifted version of ary with newval inserted on the left."
+    "Returns a right-shifted version of *ary* with *newval* inserted on the left."
     return concatenate([[newval], ary[:-1]])
 
 def left_shift(ary, newval):
-    "Returns a left-shifted version of ary with newval inserted on the right."
+    "Returns a left-shifted version of *ary* with *newval* inserted on the right."
     return concatenate([ary[1:], [newval]])
 
 def sort_points(points, index=0):
@@ -43,7 +44,7 @@ def sort_points(points, index=0):
     sort_points(array_of_points, index=<0|1>) -> sorted_array
     
     Takes a list of points as an Nx2 array and sorts them according
-    to their x or y coordinate.  (index=0 => x)
+    to their x-coordinate (index=0) or y-coordinate (index=1).
     """
     if len(points.shape) != 2 or (2 not in points.shape):
         raise RuntimeError, "sort_points(): Array of wrong shape."
@@ -52,14 +53,15 @@ def sort_points(points, index=0):
 def concat_point_arrays(list_of_arrays):
     """
     concat_point_arrays(list_of_point_arrays) -> point_array (Nx2)
-    list_of_point_arrays should be a standard python list-like object
+    
+    The *list_of_point_arrays* parameter is a standard Python list-like object
     with Nx2 arrays inside it.
     
     Example::
         
         concat_point_arrays( [array([[0,0], [1,1]]), array([[2,2], [3,3]])] )
         
-    Returns::
+    returns the following result::
         
         array([ [0,0], [1,1], [2,2], [3,3] ])
     """
@@ -72,9 +74,9 @@ def concat_point_arrays(list_of_arrays):
 
 def array_zip(*arys):
     """
-    Returns a Numeric array that is the concatenation of the input 1D
-    arys along a newaxis.  Basically equivalent to ``array(zip(*arys))``,
-    but should be more resource-efficient.
+    Returns a Numeric array that is the concatenation of the input 1-D
+    *arys* along a new axis.  This function is basically equivalent to 
+    ``array(zip(*arys))``, but is more resource-efficient.
     """
     return transpose(array(arys))
 
@@ -89,7 +91,7 @@ class AbstractDataMapper(HasStrictTraits):
     """
     
     # How to sort the output list of intersected points that the
-    # get_points_near_*() function return.  The points are always sorted
+    # get_points_near_*() function returns.  The points are always sorted
     # by their domain (first/X-value) coordinate.
     sort_order = ArraySortTrait
 
@@ -130,14 +132,14 @@ class AbstractDataMapper(HasStrictTraits):
         
         Returns a list of points near the input points (Nx2 array).
         
-        For each point in the input set, the radius is used to create a
-        conceptual circle; if any points in the DataMapper's values lie insie
-        this circle, they will be returned.
+        For each point in the input set, *radius* is used to create a
+        conceptual circle; if any points in the DataMapper's values lie inside
+        this circle, they are returned.
 
         The returned list is not guaranteed to be a minimum or exact set,
-        but it is guaranteed to contain all points that intersect the input
-        pointlist.  The caller still needs to do fine-grained testing to see
-        if the points in the pointlist are a match.
+        but it is guaranteed to contain all points that intersect the 
+        *pointlist*.  The caller still must do fine-grained testing to see
+        if the points in the returned point list are a match.
         """
         raise NotImplementedError
 
@@ -145,9 +147,9 @@ class AbstractDataMapper(HasStrictTraits):
         """
         get_points_near_polyline([v1, ... vN]) -> [ [points], [points], ... ]
         
-        Like get_points_near(), except takes a polyline as input.  A polyline
-        is a list of vertices, each connected to the next by a straight line.
-        The polyline has infinitely thin width.  
+        This method is like get_points_near(), except that it takes a polyline 
+        as input.  A polyline is a list of vertices, each connected to the next
+        by a straight line. The polyline has infinitely thin width.  
         
         The input array can have shape 2xN or Nx2.
         """
@@ -157,8 +159,8 @@ class AbstractDataMapper(HasStrictTraits):
         """
         get_points_in_rect( (x,y,w,h) ) -> [ [points], [points], ... ]
         
-        Like get_points_near(), except takes a rectangle as input.  The
-        rectangle has infinitely thin width.
+        This method is like get_points_near(), except that it takes a rectangle
+        as input.  The rectangle has infinitely thin width.
         """
         raise NotImplementedError
     
@@ -166,9 +168,9 @@ class AbstractDataMapper(HasStrictTraits):
         """
         get_points_in_poly([v1, ... vN]) -> [ [points], [points], ... ]
         
-        Like get_points_near(), except takes a polygon as input.  The 
-        polygon has infinitely thin width and can be self-intersecting
-        and concave.
+        This method is like get_points_near(), except that it takes a polygon 
+        as input.  The polygon has infinitely thin width and can be 
+        self-intersecting and concave.
         
         The input array can have shape 2xN or Nx2.
         """
@@ -177,9 +179,9 @@ class AbstractDataMapper(HasStrictTraits):
     def get_last_region(self):
         """
         Returns a region of screen space that contains all of the
-        points/lines/rect/polys in the last get_points_in_* call.  The
-        returned region is guaranteed to only contain the points that
-        were returned.
+        points/lines/rect/polys in the last get_points_in_*() call.  The
+        region returned by this method is guaranteed to only contain the points
+        that were returned by the previous call.
         
         The region is returned as a list of (possibly disjoint) rectangles,
         where each rectangle is a 4-tuple (x,y,w,h).
@@ -190,9 +192,9 @@ class AbstractDataMapper(HasStrictTraits):
         """
         set_data(new_data, new_data_sorting='none')
         
-        Sets the data used by this DataMapper.  new_data_sorting indicates
-        how the new data is sorted: 'none', 'ascending', or 'descending'.
-        The default is 'none', which will cause the data mapper to perform
+        Sets the data used by this DataMapper.  The *new_data_sorting* parameter
+        indicates how the new data is sorted: 'none', 'ascending', or 'descending'.
+        The default is 'none', which causes the data mapper to perform
         a full sort of the input data.
         
         The input data can be shaped 2xN or Nx2.
@@ -290,7 +292,7 @@ class AbstractDataMapper(HasStrictTraits):
 
 class BruteForceDataMapper(AbstractDataMapper):
     """
-    The BruteForceDataMapper just returns all the points, all the time.
+    The BruteForceDataMapper returns all the points, all the time.
     This is basically the same behavior as not having a data mapper in
     the pipeline at all.
     """

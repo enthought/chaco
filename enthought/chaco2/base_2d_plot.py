@@ -1,4 +1,5 @@
-
+""" Defines the base class for 2-D plots.
+"""
 # Standard library imports
 from math import ceil, floor
 from numpy import isnan, swapaxes
@@ -17,47 +18,61 @@ from image_data import ImageData
 
 
 class Base2DPlot(AbstractPlotRenderer):
-
+    """ Base class for 2-D plots.
+    """
     #------------------------------------------------------------------------
     # Data-related traits
     #------------------------------------------------------------------------
     
-    # The data source to use for the index coordinate
+    # The data source to use for the index coordinate.
     index = Instance("GridDataSource") 
     
-    # The data source to use as value points
+    # The data source to use as value points.
     value = Instance("ImageData")
 
-    # screen mapper for 2D structured (gridded) index data
+    # Screen mapper for 2-D structured (gridded) index data.
     index_mapper = Instance("GridMapper")
 
-    # Convenience property for accessing the datarange of the mapper
+    # Convenience property for accessing the datarange of the mapper.
     index_range = Property
 
-    # Convenience property for accessing the plots labels
+    # Convenience property for accessing the plots labels.
     labels = Property
 
-    # This determines whether the first array returned by self.index.get_data()
-    # should map to the x direction (default) or the y direction.
+    # The direction that the first array returned by self.index.get_data()
+    # maps to. 
+    #
+    # * 'h': index maps to x-direction
+    # * 'v': index maps to y-direction
     orientation = Enum("h", "v")
 
-    # Override inherited trait; image plots should draw on the "image" layer,
+    # Overrides PlotComponent; 2-D plots draw on the 'image' layer,
     # underneath all decorations and annotations, and above only the background
     # fill color.
     draw_layer = "image"
 
-    # Convenience properties for accessing the x/y-direction mappers regardless
+    # Convenience property for accessing the x-direction mappers regardless
     # of orientation.  This provides compatibility with a number of tools.
     x_mapper = Property
+    # Convenience property for accessing the y-direction mappers regardless
+    # of orientation.  This provides compatibility with a number of tools.
     y_mapper = Property
 
-    # overall alpha value of the image.  0=transparent, 1=full intensity.
+    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    # for full intensity.
     alpha = Trait(1.0, Range(0.0, 1.0))
 
-    # Subclasses may listen for these events and take appropriate steps,
-    # apart from requesting a redraw, which is done here
+    # Event fired when the index data changes. Subclasses can listen for this
+    # event and take appropriate steps (except for requesting a redraw, which
+    # is done in this class).
     index_data_changed = Event
+    # Event fired when the index mapper changes. Subclasses can listen for this
+    # event and take appropriate steps (except for requesting a redraw, which
+    # is done in this class).
     index_mapper_changed = Event
+    # Event fired when the value data changes. Subclasses can listen for this
+    # event and take appropriate steps (except for requesting a redraw, which
+    # is done in this class).
     value_data_changed = Event
 
     #------------------------------------------------------------------------
@@ -89,17 +104,31 @@ class Base2DPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
 
     def map_screen(self, data_pts):
+        """ Maps an array of data points into screen space and returns it as
+        an array. 
+        
+        Implements the AbstractPlotRenderer interface.
+        """
         # data_pts is Nx2 array
         if len(data_pts) == 0:
             return []
         return self.index_mapper.map_screen(data_pts)
 
     def map_data(self, screen_pts):
+        """ Maps a screen space point into the "index" space of the plot.
+        
+        Implements the AbstractPlotRenderer interface.
+        """
         return self.index_mapper.map_data(screen_pts)
 
     def map_index(self, screen_pt, threshold=2.0, 
                   outside_returns_none=True, index_only=False):
-        """index_only is ignored since index is intrinsically 2D"""
+        """ Maps a screen space point to an index into the plot's index arrays.
+        
+        Implements the AbstractPlotRenderer interface.
+        The *index_only* parameter is ignored because the index is 
+        intrinsically 2-D.
+        """
         x_pt,y_pt = self.map_data([screen_pt])[0]
        
         if ((x_pt < self.index_mapper.range.low[0]) or 
@@ -154,14 +183,24 @@ class Base2DPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     
     def _draw_image(self, gc, view_bounds=None, mode="normal"):
+        """ Handler for drawing the 'image' layer. 
+        
+        Used by the PlotComponent interface.
+        """
         self._render(gc)
         return
 
     def _draw_image_pre(self, gc, view_bounds, mode):
+        """ Handler called before drawing the 'image' layer, by the 
+        PlotComponent interface.
+        """
         self._render_pre(gc)
         return
 
     def _draw_image_post(self, gc, view_bounds, mode):
+        """ Handler called after drawing the 'image' layer, by the 
+        PlotComponent interface.
+        """
         self._render_post(gc)
         return
 
@@ -170,17 +209,25 @@ class Base2DPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
 
     def _render(self, gc, points):
+        """ Abstract method for drawing the plot.
+        """
         raise NotImplementedError
 
 
     def _render_pre(self, gc):
-        """ Called before _render() is called.  Gives subclasses an opportunity
-        to modify their state or draw configuration before _render(). """
+        """ Called before _render() is called.  
+        
+        Gives subclasses an opportunity to modify their state or draw 
+        configuration before _render(). 
+        """
         pass
 
     def _render_post(self, gc):
-        """ Called after _render() is called.  Gives subclasses an opportunity
-        to modify/restore their state or draw configuration after _render(). """
+        """ Called after _render() is called.  
+        
+        Gives subclasses an opportunity to modify or restore their state or 
+        draw configuration after _render(). 
+        """
         pass
 
 
@@ -219,6 +266,10 @@ class Base2DPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
 
     def _update_index_mapper(self):
+        """ Updates the index mapper. 
+        
+        Called by various trait change handlers.
+        """
         self.index_mapper_changed = True
         self.index_mapper.x_low_pos = self.x 
         self.index_mapper.x_high_pos = self.x2 
@@ -227,10 +278,18 @@ class Base2DPlot(AbstractPlotRenderer):
         self.invalidate_draw() 
 
     def _update_index_data(self):
+        """ Updates the index data. 
+        
+        Called by various trait change handlers.
+        """
         self.index_data_changed = True
         self.invalidate_draw() 
 
     def _update_value_data(self):
+        """ Updates the value data. 
+        
+        Called by various trait change handlers.
+        """
         self.value_data_changed = True
         self.invalidate_draw() 
 

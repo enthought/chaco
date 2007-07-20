@@ -1,3 +1,6 @@
+""" Defines the ToolTip class.
+"""
+
 from numpy import array
 
 # Enthought library imports
@@ -13,39 +16,44 @@ from plot_component import PlotComponent
 from label import Label
 
 class ToolTip(AbstractOverlay):
-
-    # The font to render the tooltip in
+    """ An overlay that is a toolip.
+    """
+    # The font to render the tooltip.
     font = KivaFont('modern 10')
 
-    # Override the Component border setting
+    # Use a visible border. (Overrides Enable Component.)
     border_visible = True
 
-    # The ammount of space between the border and the text
+    # The ammount of space between the border and the text.
     border_padding = Int(4)
 
-    # Set a default white background color
+    # Use a white background color (overrides AbstractOverlay).
     bgcolor = white_color_trait
 
-    # The spacing between lines
+    # The number of pixels between lines.
     line_spacing = Int(4)
 
-    # The text to put in the tooltip
+    # List of text strings to put in the tooltip.
     lines = List
 
-    # Make the tooltip a fixed size
+    # The tooltip is a fixed size. (Overrides PlotComponent.)
     resizable = ""
 
     # The available space in the four directions, used to determine layout
     # If -1, assume there is enough space in that direction.
 
+    # Available space to the left of the tooltip; if -1 there is "enough" space.
     left_space = Float(-1)
+    # Available space to the right of the tooltip; if -1 there is "enough" space.
     right_space = Float(-1)
+    # Available space below the tooltip; if -1 there is "enough" space.
     below_space = Float(-1)
+    # Available space above the tooltip; if -1 there is "enough" space.
     above_space = Float(-1)
 
     # The position of the corner of the tooltip.  Which corner this represents
-    # depends on the space available on each side, set by left_space, etc.
-
+    # depends on the space available on each side, set by **left_space**, etc.
+    # If any of those values is -1, there is enough space in that direction.
     corner_point = List
 
     #----------------------------------------------------------------------
@@ -54,15 +62,27 @@ class ToolTip(AbstractOverlay):
 
 
     def draw(self, gc, view_bounds=None, mode='normal'):
+        """ Draws the plot component.
+        
+        Overrides PlotComponent.
+        """
         self.overlay(self, gc, view_bounds=view_bounds, mode='normal')
         return
 
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
+        """ Draws the tooltip overlaid on another component.
+        
+        Overrides AbstractOverlay.
+        """
         self.do_layout()
         PlotComponent._draw(self, gc, view_bounds, mode)
         return
 
     def _draw_overlay(self, gc, view_bounds=None, mode='normal'):
+        """ Draws the overlay layer of a component.
+        
+        Overrides PlotComponent.
+        """
         gc.save_state()
         try:
             edge_space = self.border_width + self.border_padding
@@ -83,6 +103,8 @@ class ToolTip(AbstractOverlay):
     def _do_layout(self):
         """Computes the size of the tooltip, and creates the label objects
         for each line.
+        
+        Overrides PlotComponent.
         """
         labels = [Label(text=line, font=self.font, margin=0,
                         bgcolor='transparent', border_width=0)

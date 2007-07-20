@@ -1,4 +1,6 @@
-
+""" Defines the DataView class, and associated property traits and property
+functions.
+"""
 from enthought.traits.api import Enum, Instance, Property
 
 from axis import PlotAxis
@@ -11,101 +13,119 @@ from plot_containers import OverlayPlotContainer
 
 
 #-----------------------------------------------------------------------------
-# Define two new traits to condense the definition of some convenience
+# Define new traits to condense the definition of some convenience
 # properties in the Plot class
 #-----------------------------------------------------------------------------
 
 def get_mapper(self, attr_name):
+    """ Getter function used by OrientedMapperProperty.
+    """
     if (attr_name,self.orientation) in [("x_mapper","h"), ("y_mapper","v")]:
         return self.index_mapper
     else:
         return self.value_mapper
 
 def set_mapper(self, attr_name, new):
+    """ Setter function used by OrientedMapperProperty.
+    """
     if (attr_name,self.orientation) in [("x_mapper","h"), ("y_mapper","v")]:
         self.index_mapper = new
     else:
         self.value_mapper = new
 
+# Property that represents a mapper for an orientation.
 OrientedMapperProperty = Property(get_mapper, set_mapper)
 
 
 def get_axis(self, attr_name):
+    """ Getter function used by AxisProperty.
+    """
     if (attr_name,self.orientation) in [("index_axis","h"), ("value_axis","v")]:
         return self.x_axis
     else:
         return self.y_axis
 
 def set_axis(self, attr_name, new):
+    """ Setter function used by AxisProperty.
+    """
     if (attr_name,self.orientation) in [("index_axis","h"), ("value_axis","v")]:
         self.x_axis = new
     else:
         self.y_axis = new
 
+# Property that represents an axis.
 AxisProperty = Property(get_axis, set_axis)
 
 
 def get_grid(self, attr_name):
+    """ Getter function used by GridProperty.
+    """
     if (attr_name,self.orientation) in [("index_grid","v"), ("value_grid","h")]:
         return self.y_grid
     else:
         return self.x_grid
 
 def set_grid(self, attr_name, new):
+    """ Setter function used by GridProperty.
+    """
     if (attr_name,self.orientation) in [("index_grid","v"), ("value_grid","h")]:
         self.y_grid = new
     else:
         self.y_grid = new
 
+# Property that represents a grid for a particular orientation.
 GridProperty = Property(get_grid, set_grid)
 
 
 
 class DataView(OverlayPlotContainer):
-    """
-    A DataView represents a mapping from 2D data space into 2D screen space.
+    """ Represents a mapping from 2-D data space into 2-D screen space.
+    
     It can house renderers and other plot components, and otherwise behaves
     just like a normal PlotContainer.
     """
 
     
-    # What orientation is the index axis?
+    # The orientation of the index axis.
     orientation = Enum("h", "v")
     
-    # The direction of the index axis with respect to the GC's direction
+    # The direction of the index axis with respect to the graphics context's
+    # direction.
     index_direction = Enum("normal", "flipped")
     
-    # The direction of the value axis with respect to the GC's direction
+    # The direction of the value axis with respect to the graphics context's 
+    # direction.
     value_direction = Enum("normal", "flipped")
 
-    # The mapper to use for the index data
+    # The mapper to use for the index data.
     index_mapper = Instance(Base1DMapper)
 
-    # The mapper to use for value data
+    # The mapper to use for value data.
     value_mapper = Instance(Base1DMapper)
 
-    # For x-y plots, the scale of the index axis
+    # For x-y plots, the scale of the index axis.
     index_scale = Enum("linear", "log")
 
-    # For x-y plots, the scale of the index axis
+    # For x-y plots, the scale of the index axis.
     value_scale = Enum("linear", "log")
 
-    # The range used for the index data
+    # The range used for the index data.
     index_range = Property
 
-    # The range used for the value data
+    # The range used for the value data.
     value_range = Property
 
-    # Because we want to host both XY plots and 2D (image) plots, we use a
-    # DataRange2D and expose it as two 1D ranges using properties.
+    # The 2-D data range whose x- and y-ranges are exposed as the **index_range**
+    # and **value_range** property traits. This allows supporting both XY plots
+    # and 2-D (image) plots.
     range2d = Instance(DataRange2D)
     
     # Convenience property that offers access to whatever mapper corresponds
-    # to the X axis.
+    # to the X-axis.
     x_mapper = OrientedMapperProperty
     
     # Convenience property that offers access to whatever mapper corresponds
-    # to the Y axis
+    # to the Y-axis
     y_mapper = OrientedMapperProperty
 
 
@@ -114,38 +134,43 @@ class DataView(OverlayPlotContainer):
     # Axis and Grids
     #------------------------------------------------------------------------
 
-    # The horizontal axis.  Its orientation/position relative to the plot
-    # area can be "top", "bottom", or "float".  If a new axis is set on the
-    # plot and its orientation is not one of these, it will be set to "bottom".
+    # The horizontal axis.  Its position relative to the plot
+    # area can be "top", "bottom", or "float".  The default position for a new
+    # x-axis is "bottom".
     x_axis = Instance(PlotAxis)
     
-    # The vertical axis.  Its orientation/position relative to the plot
-    # area can be "left", "right", or "float".  If a new axis is set on the
-    # plot and its orientation is not one of these, it will be set to "left".
+    # The vertical axis.  Its position relative to the plot
+    # area can be "left", "right", or "float".  The default position for a new
+    # y-axis is "left".
     y_axis = Instance(PlotAxis)
 
-    # The grid that lines up with the x-axis, i.e. a set of vertical lines
+    # The grid that intersects the x-axis, i.e., a set of vertical lines.
     x_grid = Instance(PlotGrid)
     
-    # The grid that lines up with the y-axis, i.e. a set of horizontal lines
+    # The grid that intersects the y-axis, i.e., a set of horizontal lines.
     y_grid = Instance(PlotGrid)
 
-    # Convenience properties for accessing the X or Y axes and grids depending
-    # on self.orientation.
+    # Convenience property for accessing the index axis, which can be X or Y,
+    # depending on **orientation**.
     index_axis = AxisProperty
+    # Convenience property for accessing the value axis, which can be Y or X,
+    # depending on **orientation**.
     value_axis = AxisProperty
+    # Convenience property for accessing the index grid, which can be horizontal
+    # or vertical, depending on **orientation**.
     index_grid = GridProperty
+    # Convenience property for accessing the value grid, which can be vertical
+    # or horizontal, depending on **orientation**.
     value_grid = GridProperty
 
     #------------------------------------------------------------------------
     # Appearance
     #------------------------------------------------------------------------
 
-    # Override inherited value
+    # Background color (overrides Enable2 Component)
     bgcolor = "white"
 
-    # Override inherited value - we'll have borders draw as part of the
-    # background layer by default
+    # Draw borders as part of the background layer (overrides PlotComponent).
     overlay_border = False
 
 

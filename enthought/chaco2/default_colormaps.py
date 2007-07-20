@@ -3,11 +3,12 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
+# license included in LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 #
+# Portions of this software are:
 # Copyright (c) 2002-2004 John D. Hunter
 # All Rights Reserved.
 #------------------------------------------------------------------------------
@@ -15,9 +16,9 @@
 """
 A collection of pre-defined colormap generator functions.
 
-Each of the following functions can be called with a min_value and max_value
-and will produce a Colormap which linearly maps over the specified range and
-has the color palette indicated by the function name.
+Each of the functions can be called with *min_value* and *max_value* parameters.
+In that case, they produce a Colormap which linearly maps over the specified 
+range and has the color palette indicated by the function name.
 """
 
 from numpy import array

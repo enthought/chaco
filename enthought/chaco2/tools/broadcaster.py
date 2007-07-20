@@ -1,17 +1,25 @@
-
+""" Defines the BroadcasterTool class.
+"""
 from enthought.chaco2.api import BaseTool
 from enthought.traits.api import Dict, List
 
 class BroadcasterTool(BaseTool):
-    """ Simple tool that keeps a list of other tools, and broadcasts events it
+    """ A simple tool that keeps a list of other tools, and broadcasts events it
     receives to all of the tools.
     """
 
+    # The tools to which this tool broadcasts events.
     tools = List
 
+    # Mapping from tools to transforms, for tools that can be mouse owners.
+    # (See enable2.AbstractWindow.)
     mouse_owners = Dict
 
     def dispatch(self, event, suffix):
+        """ Dispatches a mouse event based on the current event state.
+        
+        Overrides BaseTool.
+        """
         handled = False   # keeps track of whether any tool handled this event
 
         if event.window.mouse_owner == self:

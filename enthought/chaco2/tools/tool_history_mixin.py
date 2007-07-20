@@ -1,32 +1,32 @@
-
+""" Defines the ToolHistoryMixin class.
+""" 
 from enthought.traits.api import Any, HasTraits, Instance, Int, List
 
 from enthought.chaco2.api import KeySpec
 
 
 class ToolHistoryMixin(HasTraits):
-    """
-    Mixin for tools that wish to go to maintain a tool state history and move
-    forwards and backwards through that history stack.
+    """ A mix-in class for tools to maintain a tool state history and to move
+    backwards and forwards through that history stack.
     
-    This mixin listens for keypressed events; if the subclass also needs to
-    handle keypresses, it should call self._history_handle_key(event) to
-    have this mixin properly process the event.
+    This mix-in listens for keypressed events; to handle keypresses in a 
+    subclass, call self._history_handle_key(event) to have this mix-in properly
+    process the event.
     """
 
-    # Goes to the original/start state in the history
+    # Key to go to the original or start state in the history.
     reset_state_key = Instance(KeySpec, args=("Esc",))
     
-    # Goes to the previous state in the history
+    # Key to go to the previous state in the history.
     prev_state_key = Instance(KeySpec, args=("Left", "control"))
     
-    # Goes to the next state in the history
+    # Key to go to the next state in the history.
     next_state_key = Instance(KeySpec, args=("Right", "control"))
 
-    # The state stack
+    # The state stack.
     _history = List
     
-    # The index into _history that we are currently looking at
+    # The current index into _history 
     _history_index = Int
     
     #------------------------------------------------------------------------
@@ -34,25 +34,27 @@ class ToolHistoryMixin(HasTraits):
     #------------------------------------------------------------------------
     
     def _next_state_pressed(self):
-        """
-        Called when the tool needs to advance to the next state in the stack.
-        self._history_index will have already been set to the index corresponding
-        to the next state.
+        """ Called when the tool needs to advance to the next state in the 
+        stack.
+        
+        The **_history_index** will have already been set to the index 
+        corresponding to the next state.
         """
         pass
         
     def _prev_state_pressed(self):
-        """
-        Called when the tool needs to advance to the prev state in the stack.
-        self._history_index will have already been set to the index corresponding
-        to the prev state.
+        """ Called when the tool needs to advance to the previous state in the
+        stack.
+        
+        The **_history_index** will have already been set to the index
+        corresponding to the previous state.
         """
         pass
     
     def _reset_state_pressed(self):
-        """
-        Called when the tool needs to reset its history.  The history index will
-        have already been set to 0.
+        """ Called when the tool needs to reset its history.  
+        
+        The history index will have already been set to 0.
         """
         pass
 
@@ -62,20 +64,25 @@ class ToolHistoryMixin(HasTraits):
     #------------------------------------------------------------------------
 
     def _current_state(self):
+        """ Returns the current history state.
+        """
         return self._history[self._history_index]
 
     def _reset_state(self, state):
-        """
-        Clears the history stack and sets the first/original state in the history
+        """ Clears the history stack and sets the first or original state in 
+        the history to *state*.
         """
         self._history = [state]
         self._history_index = 0
         return
 
     def _append_state(self, state, set_index=True):
-        """
-        Clears the history after the current history_index, and appends the given
-        state to the history.
+        """ Clears the history after the current **_history_index**, and 
+        appends the given state to the history.
+        
+        If *set_index* is True, the method sets the **_history_index** to
+        match the new, truncated history. If it is False, the history index
+        is unchanged.
         """
         new_history = self._history[:self._history_index+1] + [state]
         self._history = new_history
@@ -84,11 +91,11 @@ class ToolHistoryMixin(HasTraits):
         return
 
     def _pop_state(self):
-        """
-        Pops the most last state off the history stack.  If the current
-        history index points to the end of the stack, then it is adjusted;
-        otherwise, it is unaffected.  If the stack is empty, raises an
-        IndexError.
+        """ Pops the most last state off the history stack.  
+        
+        If the history index points to the end of the stack, then it is 
+        adjusted; otherwise, the index is unaffected. If the stack is empty,
+        the method raises an IndexError.
 
         Returns the popped state.
         """
@@ -105,6 +112,9 @@ class ToolHistoryMixin(HasTraits):
     #------------------------------------------------------------------------
 
     def normal_key_pressed(self, event):
+        """ Handles a key being pressed, and takes appropriate action if it is
+        one of the history keys defined for this class.
+        """
         self._history_handle_key(event)
         return
     

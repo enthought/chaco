@@ -1,8 +1,9 @@
-
+""" Defines the MultiArrayDataSource class.
+"""
 # Major package imports
 from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
 import types
-    
+
 # Enthought library imports
 from enthought.traits.api import Any, Int, Tuple
 
@@ -12,48 +13,48 @@ from abstract_data_source import AbstractDataSource
 
 
 class MultiArrayDataSource(AbstractDataSource):
-    """
-    DataSource representing a single, continuous array of numerical data
+    """ A data source representing a single, continuous array of numerical data
     of potentially more than one dimension.
-    Does not listen to the array for value changes;  If such behavior is
-    desired, it is pretty straightforward to create a subclass that hooks
-    up the appropriate listeners.
+
+    This class does not listen to the array for value changes;  To implement
+    such behavior, define a subclass that hooks up the appropriate listeners.
     """
-    
+
     #------------------------------------------------------------------------
     # AbstractDataSource traits
     #------------------------------------------------------------------------
-    
-    # Redefine the index dimension from the parent class.
+
+    # The dimensionality of the indices into this data source (overrides
+    # AbstractDataSource).
     index_dimension = Int(0)
-    
-    # Redefine the value dimension from the parent class
+
+    # The dimensionality of the value at each index point (overrides
+    # AbstractDataSource).
     value_dimension = Int(1)
-    
+
     # The sort order of the data.
-    # This is a specialized optimization for 1D arrays, but it's an important
+    # This is a specialized optimization for 1-D arrays, but it's an important
     # one that's used everywhere.
     sort_order = SortOrderTrait
 
-    
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
-    
-    # The data array itself
+
+    # The data array itself.
     _data = NumericalSequenceTrait
-    
-    # caches the value of min and max as long as data doesn't change
+
+    # Cached values of min and max as long as **_data** doesn't change.
     _cached_bounds = Tuple
-    
-    # Non-filters should never actually have a mask, but if we keep
-    # getting asked to return one, then we might as well cache it.
+
+    # Not necessary, since this is not a filter, but provided for convenience.
     _cached_mask = Any
-    
-    # The index of the (first) minimum value in self._data
+
+    # The index of the (first) minimum value in self._data.
     _min_index = Int
-    
-    # The index of hte (first) maximum value in self._data
+
+    # The index of the (first) maximum value in self._data.
     _max_index = Int
 
     def __init__(self, data=array([]), sort_order="ascending", **traits):
@@ -67,13 +68,12 @@ class MultiArrayDataSource(AbstractDataSource):
     def get_data(self, axes = None, remove_nans=False):
         """get_data() -> data_array
 
-        With no additional arguments, returns a data array of dimensions
-        self.dimension.  This data array should not be altered in-place,
-        and the caller should assume it is
-        read-only.  This data is contiguous and not masked.
+        If called with no arguments, this method returns a data array.
+        Treat this data array as read-only, and do not alter it in-place.
+        This data is contiguous and not masked.
 
-        If axes is an integer or tuple, returns the array sliced along
-        the index_dimension.
+        If *axes* is an integer or tuple, this method returns the data array,
+        sliced along the **index_dimension**.
         """
 
         if type(axes) == types.IntType:
@@ -90,26 +90,32 @@ class MultiArrayDataSource(AbstractDataSource):
             return nan_to_num(data)
         else:
             return data
-    
+
     def get_data_mask(self):
+        """get_data_mask() -> (data_array, mask_array)
+
+        Implements AbstractDataSource.
+        """
         if self._cached_mask is None:
             self._cached_mask = ones(shape(self._data), bool)
         return self._data, self._cached_mask
-    
+
     def is_masked(self):
         """is_masked() -> bool
-        
-        Returns True if this DataSource's data should be retrieved using
-        get_data_mask() instead of get_data().  (get_data() should still return
-        data, but it may not be the expected data.)
+
+        Returns True if this data source's data uses a mask. In this case,
+        retrieve the data using get_data_mask() instead of get_data().
+        If you call get_data() for this data source, it returns data, but that
+        data may not be the expected data.)
         """
         return False
-    
+
     def get_size(self):
         """get_size() -> int
-        
-        Returns an integer estimate or the exact size of the dataset that
-        get_data will return.  This is useful for downsampling.
+
+        Implements AbstractDataSource. Returns an integer estimate, or the
+        exact size, of the dataset that get_data() returns. This method is
+        useful for downsampling.
         """
         # return the size along the index dimension
         size = 0
@@ -119,31 +125,34 @@ class MultiArrayDataSource(AbstractDataSource):
         return size
 
     def get_value_size(self):
-        # return the size along the value dimension
+        """ get_value_size() -> size
+
+        Returns the size along the value dimension.
+        """
         size = 0
         if self._data is not None:
             size = shape(self._data)[self.value_dimension]
 
         return size
-        
+
 
     def get_bounds(self, value = None, index = None):
-        """get_bounds() -> tuple(min_val, max_val)
-        
-        Returns a tuple (min, max) of the bounding values for the data source.
-        In the case of 2D data, min and max are 2D points represent the
-        bounding corners of a rectangle enclosing the data set.  Note that
-        these values are not view-dependent, but represent intrinsic
-        properties of the DataSource.
-        
-        If data is the empty set, then the min and max vals are 0.0. 
+        """get_bounds() -> tuple(min, max)
 
-        If value and index are both None, then returns the global min and
-        max for the entire data set.
-        If value is an integer, returns the minimum and maximum along the
-        value slice in the value_dimension.
-        If index is an integer, returns the minimum and maximum along the
-        index slice in the index_direction.
+        Returns a tuple (min, max) of the bounding values for the data source.
+        In the case of 2-D data, min and max are 2-D points that represent the
+        bounding corners of a rectangle enclosing the data set.  Note that
+        these values are not view-dependent, but represent intrinsic properties
+        of the data source.
+
+        If data is the empty set, then the min and max vals are 0.0.
+
+        If *value* and *index* are both None, then the method returns the
+        global minimum and maximum for the entire data set.
+        If *value* is an integer, then the method returns the minimum and
+        maximum along the *value* slice in the **value_dimension**.
+        If *index* is an integer, then the method returns the minimum and
+        maximum along the *index* slice in the **index_direction**.
         """
 
         if self._data is None or 0 in self._data.shape:
@@ -169,33 +178,40 @@ class MultiArrayDataSource(AbstractDataSource):
             # value is None and index is None:
             maxi = nanmax(self._data)
             mini = nanmin(self._data)
-            
+
         return (mini, maxi)
 
     def get_shape(self):
-
-        # returns the shape of the multi-dimensional data source
+        """ Returns the shape of the multi-dimensional data source.
+        """
         return shape(self._data)
-    
+
     def set_data(self, value):
+        """ Sets the data for this data source.
+
+        Parameters
+        ----------
+        value : array
+            The data to use.
+        """
         self._set_data(value)
         self.data_changed = True
         return
-    
+
     def _set_data(self, value):
-        """ If we get 1D data in, force it to 2D
+        """ Forces 1-D data to 2-D.
         """
         if len(value.shape) == 1:
             if self.index_dimension == 0:
                 value = value[:,newaxis]
             else:
                 value = value[newaxis,:]
-        
+
         if len(value.shape) != 2:
             msg = 'Input is %d dimensional, but it must be 1 or 2' \
                   'dimensional.' % len(value.shape)
             raise ValueError, msg
-        
+
         self._data = value
 
 # EOF

@@ -1,4 +1,5 @@
-
+""" Defines the ContourLinePlot class.
+"""
 # Major library imports
 from numpy import array, linspace, meshgrid, transpose
 
@@ -14,8 +15,8 @@ from contour.contour import Cntr
 
 
 class ContourLinePlot(Base2DPlot):
-    """ Contour image plot.  Takes a value data object whose elements are
-    scalars, and renders them as a contour plot.
+    """ Takes a value data object whose elements are scalars, and renders them
+    as a contour plot.
     """
 
     # TODO: Modify ImageData to explicitly support scalar value arrays
@@ -24,48 +25,58 @@ class ContourLinePlot(Base2DPlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # List of levels to contour
+    # List of levels to contour.
     levels = Trait("auto", "auto", Int, List)
 
-    # The thickness of the contour lines
+    # The thickness(es) of the contour lines.
     widths = Trait(1.0, Float, List)
     
-    # The line dash style
+    # The line dash style(s).
     styles = Trait("signed", Str, List)   
 
-    # whether to dash negative levels
+    # Line style for positive levels.
     positive_style = LineStyle("solid")
+    # Line style for negative levels.
     negative_style = LineStyle("dash")
 
-    # The color of the line
+    # The color(s) of the lines.
     colors = Trait(None, Str, Instance("ColorMapper"), List)
 
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
     
-    # Are the cached contours below valid, or do new ones need to be computed?
+    # Are the cached contours valid? If False, new ones need to be computed.
     _contour_cache_valid = false
 
-    # Cache the collection of traces
+    # Cached collection of traces.
     _cached_contours = Dict
 
-    # Is the cached level data below valid
+    # Is the cached level data valid?
     _level_cache_valid = false
+    # Is the cached width data valid?
     _widths_cache_valid = false
+    # Is the cached style data valid?
     _styles_cache_valid = false
+    # Is the cached color data valid
     _colors_cache_valid = false
     
-    # list of levels and their associated line properties
+    # Cached list of levels and their associated line properties
     _levels = List
+    # Cached list of line widths
     _widths = List
+    # Cached list of line styles
     _styles = List
+    # Cached list of line colors
     _colors = List
 
-    # These mapped traits are only used to convert user supplied values to 
-    # agg-acceptables ones (mapped traits in lists are not supported, must
-    # convert one at a time)
+    # Mapped trait used to convert user-suppied color values to AGG-acceptable
+    # ones. (Mapped traits in lists are not supported, must be converted one at 
+    # a time.)
     _color_map_trait = ColorTrait
+    # Mapped trait used to convert user-suppied line style values to 
+    # AGG-acceptable ones. (Mapped traits in lists are not supported, must be
+    # converted one at a time.)
     _style_map_trait = LineStyle
 
     #------------------------------------------------------------------------
@@ -73,7 +84,10 @@ class ContourLinePlot(Base2DPlot):
     #------------------------------------------------------------------------
 
     def _render(self, gc):
-
+        """ Actually draws the plot. 
+        
+        Implements the Base2DPlot interface.
+        """
         if not self._level_cache_valid:
             self._update_levels()
         if not self._contour_cache_valid:
@@ -102,6 +116,8 @@ class ContourLinePlot(Base2DPlot):
         gc.restore_state()
 
     def _update_contours(self):
+        """ Updates the contour cache.
+        """
         xg, yg = meshgrid(self.index._xdata.get_data(),
                           self.index._ydata.get_data()[::-1])
         c = Cntr(xg, yg, self.value.raw_value)
@@ -114,6 +130,8 @@ class ContourLinePlot(Base2DPlot):
         self._contour_cache_valid = True
 
     def _update_levels(self):
+        """ Updates the levels cache.
+        """
         low, high = self.value.get_bounds()
         if self.levels == "auto":
             self._levels = list(linspace(low, high, 10))
@@ -128,7 +146,8 @@ class ContourLinePlot(Base2DPlot):
         self._colors_cache_valid = False
 
     def _update_widths(self):
-
+        """ Updates the widths cache.
+        """
         # If we are given a single width, apply it to all levels
         if isinstance(self.widths, float):
             self._widths = [self.widths] * len(self._levels)
@@ -143,7 +162,8 @@ class ContourLinePlot(Base2DPlot):
         self._widths_cache_valid = True
 
     def _update_styles(self):
-
+        """ Updates the styles cache.
+        """
         # If the style type is "signed" then assign styles to levels based
         # on their sign 
         if self.styles == "signed":
@@ -170,7 +190,8 @@ class ContourLinePlot(Base2DPlot):
         self._styles_cache_valid = True
 
     def _update_colors(self):
-
+        """ Updates the colors cache.
+        """
         # If we are given no colors, set a default for all levels
         if self.colors is None: 
             self._color_map_trait = "black"

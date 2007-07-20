@@ -1,4 +1,5 @@
-
+""" Defines the LogMapper and InvalidDataRangeException classes.
+"""
 # Major library imports
 from numpy import array, isnan, log, exp, putmask, zeros, sometrue, floor, ceil
 
@@ -15,12 +16,11 @@ class InvalidDataRangeException(Exception):
     pass
 
 class LogMapper(Base1DMapper):
-    """
-    Defines a 1-d logarithmic scale mapping from a 1-D region in input
+    """ Defines a 1-D logarithmic scale mapping from a 1-D region in input
     space to a 1-D region in output space.
     """
     
-    # The value to map when asked to map values <= LOG_MINIMUM to screen space
+    # The value to map when asked to map values <= LOG_MINIMUM to screen space.
     fill_value = Float(1.0)
     
     #------------------------------------------------------------------------
@@ -41,7 +41,7 @@ class LogMapper(Base1DMapper):
     def map_screen(self, data_array):
         """ map_screen(data_array) -> screen_array
 
-        Maps values from data space to screen space
+        Overrides AbstractMapper. Maps values from data space to screen space.
         """
         #First convert to a [0,1] space, then to the screen space
         
@@ -66,7 +66,7 @@ class LogMapper(Base1DMapper):
     def map_data(self, screen_val):
         """ map_data(screen_val) -> data_val
 
-        Maps values from screen space into data space
+        Overrides Abstract Mapper. Maps values from screen space into data space.
         """
         if not self._cache_valid:
             self._compute_scale()

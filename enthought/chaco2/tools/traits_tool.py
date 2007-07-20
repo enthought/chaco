@@ -1,4 +1,6 @@
-
+""" Defines the TraitsTool and Fifo classes, and get_nested_components90
+function.
+"""
 # Enthought library imports
 from enthought.traits.api import Any, Dict, Enum, Float, Instance
 from enthought.traits.ui.api import View
@@ -11,7 +13,7 @@ from enthought.chaco2.api import BasePlotContainer, BaseTool, BaseXYPlot, \
 
 
 class Fifo:
-    """ Slightly-modified version of Fifo class from the python cookbook:
+    """ Slightly-modified version of the Fifo class from the Python cookbook:
         http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/68436
     """
     def __init__(self):
@@ -36,12 +38,12 @@ class Fifo:
 
 
 def get_nested_components(container):
-    """
-    Returns a list of fundamental plotting components from a container
-    with nested containers.  Performs a breadth-first search of the containment
-    hierarchy.  Each element in the list is a tuple (component, (x,y)) where
-    (x,y) is the coordinate frame offset of the component from the top-level
-    container we are handed.
+    """ Returns a list of fundamental plotting components from a container
+    with nested containers.  
+    
+    Performs a breadth-first search of the containment hierarchy. Each element
+    in the returned list is a tuple (component, (x,y)) where (x,y) is the 
+    coordinate frame offset of the component from the top-level container.
     """
     components = []
     worklist = Fifo()
@@ -62,15 +64,24 @@ def get_nested_components(container):
 
 
 class TraitsTool(BaseTool):
-    """
-    Tool to edit the traits of plots, grids, and axes.
+    """ Tool to edit the traits of plots, grids, and axes.
     """
     
+    # This tool does not have a visual representation (overrides BaseTool).
     draw_mode = "none"
+    # This tool is not visible (overrides BaseTool).
     visible = False
     
     
     def normal_left_dclick(self, event):
+        """ Handles the left mouse button being double-clicked when the tool
+        is in the 'normal' state.
+        
+        If the event occurred on this tool's component (or any contained 
+        component of that component), the method opens a Traits UI view on the
+        component that was double-clicked, setting the tool as the active tool
+        for the duration of the view.
+        """
         x = event.x
         y = event.y
 

@@ -1,4 +1,5 @@
-
+""" Defines the (deprecated) CrossPlotFrame class.
+"""
 #################################################################################
 #
 # NOTE: PlotFrames are deprecated.  There is no need to use them any more.
@@ -19,24 +20,34 @@ from plot_containers import HPlotContainer, OverlayPlotContainer, VPlotContainer
 class CrossPlotFrame(BasePlotFrame):
     """ A simple, box-layout based plotframe.
     
-    Supports a central plot area with optional axes on the top, bottom,
+    This class supports a central plot area with optional axes on the top, bottom,
     and sides.  The legend can be placed to the bottom, left, right, or
     inside the plot area.  The title can be placed along any of the four
     edges.
+    
+    NOTE: PlotFrames are deprecated.  There is no need to use them any more.
+    This class will be removed sometime in the future.
     """
     
+    # Slots or positions on the frame where plot components can place themselves.
+    # Overrides PlotFrame.
     slot_names = ("center", "left", "right", "top", "bottom")
 
-    # Class attribute
+    # Default width and height. Class attribute.
     default_bounds = (500,500)
     
     # The sizes of the various areas
+    
+    # Width of the left slot.
     left_width = Float(50.0)
+    # Width of the right slot.
     right_width = Float(50.0)
+    # Height of the top slot.
     top_height = Float(50.0)
+    # Height of the bottom slot.
     bottom_height = Float(50.0)
     
-    # indicate whether or not we need to do a layout call
+    # Does the component need to do a layout call?
     _layout_needed = true
 
 
@@ -75,6 +86,11 @@ class CrossPlotFrame(BasePlotFrame):
     #------------------------------------------------------------------------
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the component.
+
+        This method is preserved for backwards compatibility with _old_draw().
+        Overrides PlotComponent.
+        """
         try:
             gc.save_state()
             gc.translate_ctm(*self.position)
@@ -89,8 +105,8 @@ class CrossPlotFrame(BasePlotFrame):
     
     def _do_layout(self):
         """
-        Performs a layout and sets the size and positions on our
-        containers given our width and height.
+        Performs a layout and sets the size and positions on this frame's
+        containers, given its width and height.
         """
         left = self.left
         right = self.right

@@ -1,4 +1,5 @@
-
+""" Defines the DataLabel class and related trait and function.
+"""
 # Major library imports
 from numpy import array, asarray
 from numpy.linalg import norm
@@ -14,8 +15,8 @@ from scatter_markers import marker_trait
 from tooltip import ToolTip
 
 
-# Used to specify the position of the label relative to its target.  This can
-# be one of the text strings indicated, or a tuple/list of floats representing
+# Specifies the position of a label relative to its target.  This can
+# be one of the text strings indicated, or a tuple or list of floats representing
 # the (x_offset, y_offset) in screen space of the label's lower left corner.
 LabelPositionTrait = Trait("top right",
                            Enum("center", "bottom", "left", "right", "top",
@@ -25,25 +26,32 @@ LabelPositionTrait = Trait("top right",
 
 def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
                offset2=0, arrow=None):
-    """ Renders an arrow from pt1 to pt2
+    """ Renders an arrow from *pt1* to *pt2*
 
     Parameters
     ==========
-    gc: the graphics context on which to render the arrow
-    pt1: the origin point of the arrow
-    pt2: the point to which the arrow is pointing
-    color: a 3- or 4-tuple of color value to use for the arrow stem and head
-    arrowhead_size: the number of screen units corresponding to the length
-                    of the arrowhead
-    offset1: the amount of space from the start of the arrow to pt1
-    offset2: the amount of space from the tip of the arrow to pt2
-    arrow: an opaque object returned by previous calls to draw_arrow.  If this
-           is provided, all other arguments (except gc) are ignored
+    gc : graphics context 
+        where to render the arrow
+    pt1 : point
+        the origin of the arrow
+    pt2 : point 
+        where the arrow is pointing
+    color : a 3- or 4-tuple of color value 
+        the color to use for the arrow stem and head
+    arrowhead_size : number 
+        screen units corresponding to the length of the arrowhead
+    offset1 : number
+        the amount of space from the start of the arrow to pt1
+    offset2 : number 
+        the amount of space from the tip of the arrow to pt2
+    arrow : object
+        an opaque object returned by previous calls to draw_arrow.  If this
+        argument is provided, all other arguments (except gc) are ignored
 
     Returns
     =======
-    an 'arrow' (opaque object) which can be passed in to subsequent
-    calls to this method which short-circuit some of the computation.
+    An 'arrow' (opaque object) which can be passed in to subsequent
+    calls to this method to short-circuit some of the computation.
     """
 
     if arrow is None:
@@ -86,65 +94,65 @@ def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
 
 
 class DataLabel(ToolTip):
-    """ Labels a point in data space """
+    """ A label on a point in data space, optionally with an arrow to the point. 
+    """
 
-    # The point in data space where this label should anchor itself
+    # The point in data space where this label should anchor itself.
     data_point = Trait(None, None, Tuple, List, Array)
 
-    # The location of the data label relative to the data point
+    # The location of the data label relative to the data point.
     label_position = LabelPositionTrait
 
-    # The format string that determines the label's text.  This string will be
-    # formatted with a dict containing the keys 'x' and 'y', corresponding to
+    # The format string that determines the label's text.  This string is
+    # formatted using a dict containing the keys 'x' and 'y', corresponding to
     # data space values.
     label_format = Str("(%(x)f, %(y)f)")
 
-    # Should the label clip itself against the main plot area?  If not, then
-    # the label will draw  into the padding area (where axes typically reside).
+    # Does the label clip itself against the main plot area?  If not, then
+    # the label draws into the padding area (where axes typically reside).
     clip_to_plot = Bool(True)
 
     #----------------------------------------------------------------------
     # Marker traits
     #----------------------------------------------------------------------
 
-    # Whether or not to mark the point on the data that this label refers to
+    # Mark the point on the data that this label refers to?
     marker_visible = Bool(True)
 
     # The type of marker to use.  This is a mapped trait using strings as the
     # keys.
     marker = marker_trait
     
-    # The pixel size of the marker (doesn't include the thickness of the outline)
+    # The pixel size of the marker (doesn't include the thickness of the outline).
     marker_size = Int(4)
     
     # The thickness, in pixels, of the outline to draw around the marker.  If
     # this is 0, no outline will be drawn.
     marker_line_width = Float(1.0)
 
-    # The color of the inside of the marker
+    # The color of the inside of the marker.
     marker_color = ColorTrait("red")
 
-    # The color out of the border drawn around the marker
+    # The color out of the border drawn around the marker.
     marker_line_color = ColorTrait("black")
 
     #----------------------------------------------------------------------
     # Arrow traits
     #----------------------------------------------------------------------
     
-    # Whether or not to draw an arrow from the label to the data point.  Only
-    # used if data_point is not None.
-    # FIXME: replace with some sort of ArrowStyle
-    arrow_visible = Bool(True)
+    # Draw an arrow from the label to the data point?  Only
+    # used if **data_point** is not None.
+    arrow_visible = Bool(True)   # FIXME: replace with some sort of ArrowStyle
 
-    # The length of the arrowhead, in screen points (e.g. pixels)
+    # The length of the arrowhead, in screen points (e.g., pixels).
     arrow_size = Float(5)
 
-    # The color of the arrow
+    # The color of the arrow.
     arrow_color = ColorTrait("black")
 
-    # Determines the position of the base of the arrow on the label.  If
-    # 'auto', then uses label_position.  Otherwise, treats the label as if
-    # it were at the label position indicated in arrow_root.
+    # The position of the base of the arrow on the label.  If this
+    # is 'auto', then the label uses **label_position**.  Otherwise, it treats
+    # the label as if it were at the label position indicated by this attribute.
     arrow_root = Trait("auto", "auto", "top left", "top right", "bottom left",
                        "bottom right")
 
@@ -152,13 +160,13 @@ class DataLabel(ToolTip):
     # Private traits
     #-------------------------------------------------------------------------
 
-    # Tuple (sx, sy) of the mapped screen coords of self.data_point
+    # Tuple (sx, sy) of the mapped screen coordinates of **data_point**.
     _screen_coords = Any
 
     _cached_arrow = Any
 
-    # When arrow_root is 'auto', this determines the location on the data label
-    # from which the arrow is drawn based on the position of the label relative
+    # When **arrow_root** is 'auto', this determines the location on the data label
+    # from which the arrow is drawn, based on the position of the label relative
     # to its data point.
     _position_root_map = {
         "top left": "bottom right",
@@ -176,6 +184,10 @@ class DataLabel(ToolTip):
 
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
+        """ Draws the tooltip overlaid on another component.
+        
+        Overrides ToolTip.
+        """
         if self.clip_to_plot:
             gc.save_state()
             c = component
@@ -216,6 +228,10 @@ class DataLabel(ToolTip):
             gc.restore_state()
 
     def _do_layout(self, size=None):
+        """Computes the size and position of the label and arrow.
+        
+        Overrides ToolTip.
+        """
         if not self.component or not hasattr(self.component, "map_screen"):
             return
         ToolTip._do_layout(self)

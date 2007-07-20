@@ -1,4 +1,5 @@
-
+""" Defines the DrawPointsTool class.
+"""
 # Major library imports
 from numpy import array, float64, hstack, resize
 
@@ -10,13 +11,14 @@ from enthought.chaco2.api import BaseTool, ArrayDataSource
 
 
 class DrawPointsTool(BaseTool):
-    """
-    DrawPointsTool draws points as they are clicked onto a rectangular
-    plot.
+    """ A tool that draws points onto a rectangular plot as they are clicked.
     """
     
+    # A data source for the x-dimension of the drawn points.
     xdata = Instance(ArrayDataSource)
+    # A data source for the y-dimension of the drawn points.
     ydata = Instance(ArrayDataSource)
+    # Is this the active tool?
     activated = true
     
     #It would be nice to set the pointer to a cross
@@ -28,6 +30,12 @@ class DrawPointsTool(BaseTool):
         return
         
     def normal_left_down(self, event):
+        """ Handles the left mouse button being clicked when the tool is in the
+        'normal' state.
+        
+        Maps the event position into data space, adds the point to the points
+        for this tool, and redraws.
+        """
         x,y = event.x, event.y
         data_x, data_y = self.component.map_data((x,y))
         self._append_data(self.xdata, data_x)

@@ -1,4 +1,5 @@
-
+""" Defines cell-related classes and functions.
+"""
 from numpy import take, array, concatenate, nonzero
 
 from enthought.traits.api import HasStrictTraits, Instance, Delegate, Array, List, \
@@ -11,15 +12,18 @@ def find_runs(int_array, order='ascending'):
     """
     find_runs(int_array, order=<'ascending'|'flat'|'descending'>) -> list_of_int_arrays
     
-    Given an integer array sorted in ascending/descending order or flat order,
-    returns a list of continuous runs of integers inside the list.  for example,
+    Given an integer array sorted in ascending, descending, or flat order, this
+    function returns a list of continuous runs of integers inside the list.  
+    For example::
         
         find_runs([1,2,3,6,7,8,9,10,11,15])
           
     returns [ [1,2,3], [6,7,8,9,10,11], [15] ]
-    and 
+    and::
+        
         find_runs([0,0,0,1,1,1,1,0,0,0,0])
-    return [ [0,0,0], [1,1,1,1], [0,0,0,0] ]
+        
+    returns [ [0,0,0], [1,1,1,1], [0,0,0,0] ]
     """
     ranges = arg_find_runs(int_array, order)
     if ranges:
@@ -29,8 +33,8 @@ def find_runs(int_array, order='ascending'):
 
 def arg_find_runs(int_array, order='ascending'):
     """
-    Like find_runs(), but returns a list of tuples indicating the start and
-    end indices of runs in the input int_array.
+    This function is like find_runs(), but it returns a list of tuples 
+    indicating the start and end indices of runs in the input *int_array*.
     """
     if len(int_array) == 0:
         return []
@@ -48,48 +52,52 @@ def arg_find_runs(int_array, order='ascending'):
 
 
 class AbstractCell(HasStrictTraits):
+    """ Abstract class for grid cells in a uniform subdivision. 
+    
+    Individual subclasses store points in different, possibly optimized 
+    fashion, and performance may be drastically different between different
+    cell subclasses for a given set of data.
     """
-    A grid cell in a uniform subdivision.  Individual subclasses store points
-    in different, possibly optimized fashion, and performance may be drastically
-    different between different Cell subclasses for a given set of data.
-    """
-    # The parent of this cell
+    # The parent of this cell.
     parent = Instance(AbstractDataMapper)
     
     # The sort traits characterizes the internal points list.
     _sort_order = Delegate('parent')
     
-    # _data references the actual point array.  in general, _data should be the
-    # parent's _data object.  for the sake of simplicity, Cells assume
-    # that _data is sorted in fashion indicated by self.sort_order.  (if this
-    # doesn't hold, then each Cell would need to have its own duplicate
-    # copy of sorted data.)
+    # The point array for this cell. This attribute delegates to parent._data,
+    # which references the actual point array. For the sake of simplicity, 
+    # cells assume that _data is sorted in fashion indicated by **_sort_order**.
+    # If this doesn't hold, then each cell needs to have its own duplicate
+    # copy of the sorted data.
     data = Delegate('parent', '_data')
     
+    # A list of indices into **data** that reflect the points inside this cell.
     indices = Property
     
-    # shadow trait for 'indices'
+    # Shadow trait for **indices**.
     _indices = Any
     
     def add_indices(self, indices):
-        "Adds a list of integer indices to the existing list of indices."
+        """ Adds a list of integer indices to the existing list of indices.
+        """
         raise NotImplementedError
     
     def get_points(self):
-        """
-        Returns a list of points that was previously set by set_points.
-        This might be large and expensive; in general, get_indices() should
-        be used instead.
+        """ Returns a list of points that was previously set.
+        
+        This operation might be large and expensive; in general, use 
+        _get_indices() instead.
         """
         raise NotImplementedError
     
     def reverse_indices(self):
-        """
-        Tells the Cell to manipulate its indices so that they index to the same
-        values in a reversed _data array.  Generally this handles when the
-        parent's _data array has been flipped due to a sort_order change.
+        """ Tells the cell to manipulate its indices so that they index to the
+        same values in a reversed data array.  
         
-        The length of _data must not have changed, or else there is no way to
+        Generally this method handles the situation when the parent's _data
+        array has been flipped due to a sort order change.
+        
+        The length of _data must not have changed; otherwise there is no way to
         know the proper way to manipulate indices.
         """
         raise NotImplementedError
@@ -98,8 +106,7 @@ class AbstractCell(HasStrictTraits):
         raise NotImplementedError
     
     def _get_indices(self):
-        """
-        Returns the list of indices into _data that reflect the points 
+        """  Returns the list of indices into _data that reflect the points 
         inside this cell.
         """
         raise NotImplementedError
@@ -107,12 +114,13 @@ class AbstractCell(HasStrictTraits):
 
 class Cell(AbstractCell):
     """
-    A basic Cell that just stores its point indices as an array of integers.
+    A basic cell that stores its point indices as an array of integers.
     """
-    # Redefine the property from the base class
+    # A list of indices into **data** that reflect the points inside this cell
+    # (overrides AbstractCell).
     indices = Property(Array)
     
-    # a 1-D array of indices into _data.
+    # A 1-D array of indices into _data.
     _indices = Array
     
     def __init__(self, **kw):
@@ -120,13 +128,26 @@ class Cell(AbstractCell):
         super(AbstractCell, self).__init__(**kw)
     
     def add_indices(self, indices):
+        """ Adds a list of integer indices to the existing list of indices.
+        
+        Implements AbstractCell.
+        """
         self._indices = concatenate([self._indices, indices])
         return
     
     def get_points(self):
+        """ Returns a list of points that was previously set.
+        
+        Implements AbstractCell.
+        """
         return take(self.data, self._indices)
 
     def reverse_indices(self):
+        """ Tells the cell to manipulate its indices so that they index to the
+        same values in a reversed data array.  
+        
+        Implements AbstractCell.
+        """
         length = len(self.data)
         self._indices = [length-i-1 for i in self._indices]
         return
@@ -141,23 +162,24 @@ class Cell(AbstractCell):
 
 
 class RangedCell(AbstractCell):
-    """
-    A cell optimized for storing lists of continuous points.  Rather than storing
-    each individual point index as an element in an array, RangedCell stores
-    a list of index ranges (each a (start,end) tuple).
+    """ A cell optimized for storing lists of continuous points. 
+    
+    Rather than storing each individual point index as an element in an array,
+    RangedCell stores a list of index ranges; each range is a (start,end) tuple).
     """
     
-    # Redefine the property from the base class
+    # A list of indices into **data** that reflect the points inside this cell
+    # (overrides AbstractCell).
     indices = Property
 
     # Don't use the _indices shadow trait; rather, the getters and setters
-    # for 'index' procedurally generate indices from the 'ranges'.
+    # for 'index' procedurally generate indices from **ranges**.
     _indices = Disallow
     
     # Ranges are an additional interface on RangedCells.
     ranges = Property(List(Tuple))
     
-    # shadow trait
+    # Shadow trait for ranges.
     _ranges = List(Tuple)
     
     #---------------------------------------------------------------------
@@ -165,13 +187,26 @@ class RangedCell(AbstractCell):
     #---------------------------------------------------------------------
 
     def add_indices(self, indices):
+        """ Adds a list of integer indices to the existing list of indices.
+        
+        Implements AbstractCell.
+        """
         self.add_ranges(find_runs(indices))
         return
     
     def get_points(self):
+        """ Returns a list of points that was previously set.
+        
+        Implements AbstractCell.
+        """
         return take(self.data, self.indices)
     
     def reverse_indices(self):
+        """ Tells the cell to manipulate its indices so that they index to the
+        same values in a reversed data array.  
+        
+        Implements AbstractCell.
+        """
         length = len(self.data)
         self._ranges = [(length-end-1, length-start-1) for (start,end) in self._ranges]
         return
@@ -190,17 +225,15 @@ class RangedCell(AbstractCell):
     #---------------------------------------------------------------------
     
     def get_ranges(self):
-        """
-        Returns a list of tuples representing the (start,end) indices of
+        """ Returns a list of tuples representing the (start,end) indices of
         continuous ranges of points in self._data.
         """
         return self._ranges()
     
     def add_ranges(self, ranges):
-        """
-        Adds a list of ranges ((start,end) tuples) to the current list
+        """ Adds a list of ranges ((start,end) tuples) to the current list.
         
-        This doesn't check for duplicate or overlapping ranges.
+        This method doesn't check for duplicate or overlapping ranges.
         """
         if self._ranges:
             self._ranges.extend(ranges)

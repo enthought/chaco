@@ -1,5 +1,5 @@
 """
-This module contains the logic behind creating and configuring new plots
+Contains the logic behind creating and configuring new plots
 from a set of user-supplied arguments.
 """
 
@@ -60,8 +60,8 @@ def col ( a ):
 #-----------------------------------------------------------------------------
 
 def do_plotv(session, *args, **kw):
-    """ Creates a list of plots from the data in *args and options in **kw,
-    according to the docstring on commands.plot().
+    """ Creates a list of plots from the data in ``*args`` and options in 
+    ``**kw``, according to the docstring on commands.plot().
     """
     
     sort = kw.get("sort", "none")
@@ -148,7 +148,8 @@ color_trans = {
     'k': 'black'
 }
                
-# This one isn't quite right:               
+# This one isn't quite right: 
+
 marker_re = re.compile('[ox+s^v]|(?:[^-])[.]')
 marker_trans = { 
     '.': 'dot',
@@ -170,7 +171,7 @@ line_trans = {
     
 def _process_format(format):
     """
-    Convert a format string into a (color, line, marker, marker_color) tuple
+    Converts a format string into a (color, line, marker, marker_color) tuple.
     """
     if format == '':
         return ('black', 'solid', None, None)
@@ -197,7 +198,7 @@ def _process_group(group, plot_data=None):
     when exactly two strings are passed in.  The two strings could be the
     names of the x and y datasources, or they could be the name of the y
     datasource and a format string.  By checking the second string against
-    the plot_data's list of datasources, we can determine what it is meant
+    the plot_data's list of datasources, the method can determine what it is meant
     to be.
     """
     # Interpret and split the 'group' tuple into x, y, and plotinfo
@@ -306,7 +307,7 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
     return plots
 
 def do_imread(*data, **kwargs):
-    """ Return image file as array """
+    """ Returns image file as array. """
 
     if isinstance(data[0], basestring):
         return ImageData.fromfile(data[0])
@@ -316,8 +317,8 @@ def do_imread(*data, **kwargs):
 
 
 def do_imshow(plotdata, active_plot, *data, **kwargs):
-    """ Create an image plot on the active plot, given either
-    a filename or data
+    """ Creates an image plot on the active plot, given either
+    a filename or data.
     """
 
     if len(data) != 1:
@@ -345,8 +346,8 @@ def do_imshow(plotdata, active_plot, *data, **kwargs):
         
 
 def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
-    """ Create a pseudocolor image plot on the active plot, given a 2D 
-    scalar data and a colormap
+    """ Creates a pseudocolor image plot on the active plot, given a 2-D 
+    scalar data and a colormap.
     """
 
     valid_names = plotdata.list_data()
@@ -386,8 +387,8 @@ def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
 
 
 def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
-    """ Create contour plot on the active plot, given a 2D 
-    scalar data and a colormap
+    """ Creates a contour plot on the active plot, given a 2-D 
+    scalar data and a colormap.
     """
 
     valid_names = plotdata.list_data()

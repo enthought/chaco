@@ -15,6 +15,7 @@ from point_marker import PointMarker
 from range_selection import RangeSelection
 from range_selection_overlay import RangeSelectionOverlay
 from rect_zoom import RectZoomTool
+from regression_lasso import RegressionLasso, RegressionOverlay
 from save_tool import SaveTool
 from scatter_inspector import ScatterInspector
 from simple_zoom import SimpleZoom

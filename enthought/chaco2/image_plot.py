@@ -1,9 +1,10 @@
-
+""" Defines the ImagePlot class.
+"""
 # Standard library imports
 from math import ceil, floor
 
 # Enthought library imports.
-from enthought.traits.api import Either, false, Instance, \
+from enthought.traits.api import Either, Enum, false, Instance, \
                                  List, Range, Trait, Tuple
 from enthought.kiva.agg import GraphicsContextArray, pix_format_string_map
 
@@ -13,26 +14,31 @@ from base_2d_plot import Base2DPlot
 
 
 class ImagePlot(Base2DPlot):
-
+    """ A plot based on an image.
+    """
     #------------------------------------------------------------------------
     # Data-related traits
     #------------------------------------------------------------------------
     
-    # overall alpha value of the image.  0=transparent, 1=full intensity.
+    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    # for full intensity.
     alpha = Trait(1.0, Range(0.0, 1.0))
+
+    # The interpolation method to use when rendering an image onto the GC.
+    interpolation = Enum("nearest", "bilinear", "bicubic")
 
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
     
-    # Are the cache traits below valid, or do new ones need to be computed?
+    # Are the cache traits valid? If False, new ones need to be computed.
     _image_cache_valid = false
 
-    # Cache the image of the bmp data (not the bmp data in self.data.value)
+    # Cached image of the bmp data (not the bmp data in self.data.value).
     _cached_image = Instance(GraphicsContextArray)
     
-    # This is a tuple (x, y, dx, dy) in screen space in which the _cached_image
-    # should be drawn.
+    # Tuple-defined rectangle (x, y, dx, dy) in screen space in which the 
+    # **_cached_image** is to be drawn.
     _cached_dest_rect = Either(Tuple, List)
 
     #------------------------------------------------------------------------
@@ -40,21 +46,34 @@ class ImagePlot(Base2DPlot):
     #------------------------------------------------------------------------
 
     def _render(self, gc):
+        """ Actually draws the plot. 
+        
+        Implements the Base2DPlot interface.
+        """
         if not self._image_cache_valid:
             self._compute_cached_image()
             
         gc.save_state()
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
+        gc.set_alpha(self.alpha)
         if hasattr(gc, "set_interpolation_quality"):
             from enthought.kiva.mac.ABCGI import InterpolationQuality
-            gc.set_interpolation_quality(InterpolationQuality.none)
+            interp_quality_dict = {"nearest": InterpolationQuality.none,
+                    "bilinear": InterpolationQuality.low,
+                    "bicubic": InterpolationQuality.high}
+            gc.set_interpolation_quality(interp_quality_dict[self.interpolation])
         elif hasattr(gc, "set_image_interpolation"):
-            gc.set_image_interpolation("nearest")
+            gc.set_image_interpolation(self.interpolation)
         gc.draw_image(self._cached_image, self._cached_dest_rect)
         gc.restore_state()
 
     def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
                   index_only=False):
+        """ Maps a screen space point to an index into the plot's index array(s).
+        
+        Implements the AbstractPlotRenderer interface. Uses 0.0 for *threshold*,
+        regardless of the passed value.
+        """
         # For image plots, treat hittesting threshold as 0.0, because it's
         # the only thing that really makes sense.
         return Base2DPlot.map_index(self, screen_pt, 0.0, outside_returns_none,
@@ -66,9 +85,10 @@ class ImagePlot(Base2DPlot):
 
     def _compute_cached_image(self, data=None):
         """ Computes the correct sub-image coordinates and renders an image 
-        into self._cached_image. Parameter 'data' is for subclasses that may 
-        not store an RGB(A) image as the value, but need to compute one to 
-        display (colormaps, etc)
+        into self._cached_image. 
+        
+        The parameter *data* is for subclasses that might not store an RGB(A)
+        image as the value, but need to compute one to display (colormaps, etc.).
         """
         
         if data == None:
@@ -122,18 +142,37 @@ class ImagePlot(Base2DPlot):
 
     def _calc_zoom_coords(self, px, py, plot_width, plot_height,
                                 ix, iy, image_width, image_height):
-        """
-        _calc_zoom_coords() -> ((sub-image i1, j1, i2, j2),
-                                (dest_gc x, y, dx, dy))
-        Given the plot pixel bounds (x,y,dx,dy) and the image virtual pixel
-        bounds, returns the pixels of the sub-image that needs to be extracted
-        (as lower left indices and upper right indices), and the origin and
-        extents that sub-image should be drawn into.
-
-        Returns (None, None) if no zoom image extraction is necessary.
-
+        """ Calculates the coordinates of a zoomed sub-image.
+        
         Because of floating point limitations, it is not advisable to request a
-        ludicrous level of zoom, i.e. idx or idy > 10^10.
+        extreme level of zoom, e.g., idx or idy > 10^10.
+        
+        Parameters
+        ----------
+        px : number
+            X-coordinate of plot pixel bounds
+        py : number
+            Y-coordinate of plot pixel bounds
+        plot_width : number
+            Width of plot pixel bounds
+        plot_height : number
+            Height of plot pixel bounds
+        ix : number
+            X-coordinate of image pixel bounds
+        iy : number
+            Y-coordinate of image pixel bounds
+        image_width : number
+            Width of image pixel bounds
+        image_height : number
+            Height of image pixel bounds
+            
+        Returns
+        -------
+        ((i1, j1, i2, j2), (x, y, dx, dy))
+            Lower left and upper right indices of the sub-image to be extracted,
+            and graphics context origin and extents to draw the sub-image into.
+        (None, None)
+            No image extraction is necessary.
         """
         if (image_width < 1.5*plot_width) and (image_height < 1.5*plot_height):
             return (None, None)

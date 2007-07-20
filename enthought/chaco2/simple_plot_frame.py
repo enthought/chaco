@@ -1,4 +1,5 @@
-
+""" Defines the (deprecated) SimplePlotFrame class.
+"""
 
 #################################################################################
 #
@@ -20,20 +21,30 @@ class SimplePlotFrame(BasePlotFrame):
     """
     A plot frame with just a single, center container that takes up the entire
     frame.
+    
+    NOTE: PlotFrames are deprecated.  There is no need to use them any more.
+    This class will be removed sometime in the future.
     """
 
+    # This frame has only one position for plot components. Overrides
+    # PlotFrame.
     slot_names = ("center")
     
+    # Default width and height. Class attribute.
     default_bounds = (500, 500)
     
+    # This frame does not resize to fit components. Overrides PlotFrame.
     fit_components = ""
     
+    # This frame maximizes itself within the window, if it is a top-level
+    # component. Overrides Enable2 Container.
     fit_window = True
 
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
-    
+
+    # Does the component need to do a layout call?
     _layout_needed = true
 
 
@@ -53,6 +64,11 @@ class SimplePlotFrame(BasePlotFrame):
     #------------------------------------------------------------------------
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
+        """ Draws the component.
+
+        This method is preserved for backwards compatibility with _old_draw().
+        Overrides PlotComponent.
+        """
         try:
             gc.save_state()
             # Translate to our .position, because even though we are supposed
@@ -67,6 +83,10 @@ class SimplePlotFrame(BasePlotFrame):
         return
 
     def get_preferred_size(self):
+        """ Returns the size (width,height) that is preferred for this component.
+        
+        Overrides PlotComponent.
+        """
         size = [0,0]
         component_pref_size = None
         if "h" not in self.resizable:
@@ -86,8 +106,8 @@ class SimplePlotFrame(BasePlotFrame):
 
     def _do_layout(self):
         """
-        Performs a layout and sets the size and positions on our
-        containers given our width and height.
+        Performs a layout and sets the size and positions on this frame's
+        containers, given its width and height.
         """
         component = self.center
         

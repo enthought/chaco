@@ -1,3 +1,8 @@
+""" Defines the LinePlot class.
+"""
+
+# Standard library imports
+import logging
 
 # Major library imports
 from numpy import any, argsort, array, compress, concatenate, invert, isnan, \
@@ -7,56 +12,65 @@ from numpy import any, argsort, array, compress, concatenate, invert, isnan, \
 from enthought.enable2.api import black_color_trait, ColorTrait, LineStyle
 from enthought.traits.api import Float, List
 from enthought.traits.ui.api import Item, View
-from enthought.logger import logger
 
 # Local relative imports
 from base import arg_find_runs, bin_search
 from base_xy_plot import BaseXYPlot
 
 
+# Setup a logger for this module.
+logger = logging.getLogger(__name__)
+
+
 class LinePlot(BaseXYPlot):
+    """ A plot consisting of a line.
     
-    # The color of the line
+    This is the most fundamental object to use to create line plots. However,
+    it is somewhat low-level and therefore creating one properly to do what
+    you want can require some verbose code. The create_line_plot() function
+    in plot_factory.py can hide some of this verbosity for common cases.
+    """
+    # The color of the line.
     color = black_color_trait
 
-    # The color to use to highlight line when selected
+    # The color to use to highlight the line when selected.
     selected_color = ColorTrait("lightyellow")
 
-    # The style of the selected line
+    # The style of the selected line.
     selected_line_style = LineStyle("solid")
-    
-    # The thickness of the line
+
+    # The thickness of the line.
     line_width = Float(1.0)
-    
-    # The line dash style
+
+    # The line dash style.
     line_style = LineStyle
 
-    # Traits UI View
-    traits_view = View(Item("color", style="custom"), "line_width", "line_style", 
+    # Traits UI View for customizing the plot.
+    traits_view = View(Item("color", style="custom"), "line_width", "line_style",
                        buttons=["OK", "Cancel"])
 
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
-    
-    # List of non-NaN arrays of (x,y) data-space points; regardless of
-    # self.orientation, this is always stored (index_pt, value_pt).  This is
+
+    # Cached list of non-NaN arrays of (x,y) data-space points; regardless of
+    # self.orientation, this is always stored as (index_pt, value_pt).  This is
     # different from the default BaseXYPlot definition.
     _cached_data_pts = List
-    
-    # List of non-NaN arrays of (x,y) screen space points
+
+    # Cached list of non-NaN arrays of (x,y) screen-space points.
     _cached_screen_pts = List
 
 
-    
+
     def hittest(self, screen_pt, threshold=7.0):
         """
-        Returns if the given screen point is within threshold of any data points
-        on the line.  If so, then returns the (x,y) value of a datapoint near
-        the screen point.  If not, then returns None.
-        
+        Tests whether the given screen point is within *threshold* pixels of 
+        any data points on the line.  If so, then it returns the (x,y) value of
+        a data point near the screen point.  If not, then it returns None.
+
         Note: This only checks data points and *not* the actual line segments
-              connecting them.
+        connecting them.
         """
         # TODO: implement point-line distance computation so this method isn't
         #       quite so limited!
@@ -68,20 +82,20 @@ class LinePlot(BaseXYPlot):
 
     def interpolate(self, index_value):
         """
-        Returns the value of the plot at the given index value in screen
-        space.
-        Raises IndexError when index_value exeeds the bounds of indexes on value.
+        Returns the value of the plot at the given index value in screen space.
+        Raises an IndexError when *index_value* exceeds the bounds of indexes on
+        the value.
         """
 
         if self.index is None or self.value is None:
             raise IndexError, "cannot index when data source index or value is None"
-        
+
         index_data = self.index.get_data()
         value_data = self.value.get_data()
-        
+
         from base import reverse_map_1d
         ndx = reverse_map_1d(index_data, index_value, self.index.sort_order)
-            
+
         # quick test to see if this value is already in the index array
         if index_value == index_data[ndx]:
             return value_data[ndx]
@@ -116,22 +130,23 @@ class LinePlot(BaseXYPlot):
 
     def _gather_points(self):
         """
-        Gathers up the data points that are within our bounds and stores them
+        Collects the data points that are within the bounds of the plot and 
+        caches them.
         """
         if not self._cache_valid:
 
             if not self.index or not self.value:
                 return
-        
+
             index = self.index.get_data()
             value = self.value.get_data()
-            
+
             # Check to see if the data is completely outside the view region
             for ds, rng in ((self.index, self.index_range), (self.value, self.value_range)):
                 low, high = ds.get_bounds()
                 if low > rng.high or high < rng.low:
                     return
-            
+
             if len(index) == 0 or len(value) == 0 or len(index) != len(value):
                 logger.warn("Chaco2: using empty dataset; index_len=%d, value_len=%d." \
                                     % (len(index), len(value)))
@@ -159,17 +174,17 @@ class LinePlot(BaseXYPlot):
                 block_value = value[start:end]
                 index_mask = self.index_mapper.range.mask_data(block_index)
                 value_mask = self.value_mapper.range.mask_data(block_value)
-                
+
                 # Optimization: see if we can clip out extraneous values; if
                 # this leads to an empty mask, then just use the index mask
                 # to be safe.
                 point_mask = index_mask & value_mask
                 if not any(point_mask):
                     point_mask = index_mask
-                
+
                 runs = [r for r in arg_find_runs(point_mask, "flat") \
                         if point_mask[r[0]] != 0]
-                
+
                 # Check to see if our data view region is between two points in the
                 # index data.  If so, then we have to reverse map our current view
                 # into the appropriate index and draw the bracketing points.
@@ -192,10 +207,10 @@ class LinePlot(BaseXYPlot):
                         # bin_search can return -1 if data_pt is outside the bounds
                         # of the source data
                         continue
-                    
+
                     points.append(transpose(array((sorted_index[ndx:ndx+2],
                                                    sorted_value[ndx:ndx+2]))))
-                
+
                 else:
                     # Expand the width of every group of points so we draw the lines
                     # up to their next point, outside the plot area
@@ -206,28 +221,28 @@ class LinePlot(BaseXYPlot):
                             start -= 1
                         if end != data_end:
                             end += 1
-                        
+
                         run_data = transpose(array((block_index[start:end],
                                                     block_value[start:end])))
                         points.append(run_data)
-            
+
             self._cached_data_pts = points
             self._cache_valid = True
         return
-    
+
     def _downsample(self):
         if not self._screen_cache_valid:
             self._cached_screen_pts = [self.map_screen(p) for p in self._cached_data_pts]
             self._screen_cache_valid = True
-            
+
             pt_arrays = self._cached_screen_pts
-            
+
             # some boneheaded short-circuits
             m = self.index_mapper
             total_numpoints = sum([p.shape for p in pt_arrays])
             if (total_numpoints < 400) or (total_numpoints < m.high_pos - m.low_pos):
                 return self._cached_screen_pts
-            
+
             # the new point array and a counter of how many actual points we've added
             # to it
             new_arrays = []
@@ -264,7 +279,7 @@ class LinePlot(BaseXYPlot):
                 gc.set_stroke_color(self.selected_color_)
                 gc.set_line_width(self.line_width+10.0)
                 gc.set_line_dash(self.selected_line_style_)
-            
+
                 for ary in points:
                     if len(ary) > 0:
                         gc.begin_path()
@@ -280,10 +295,10 @@ class LinePlot(BaseXYPlot):
                 gc.begin_path()
                 gc.lines(ary)
                 gc.stroke_path()
-        
+
         # Draw the default axes, if necessary
         self._draw_default_axes(gc)
-        
+
         gc.restore_state()
         return
 
@@ -301,11 +316,11 @@ class LinePlot(BaseXYPlot):
 
     def _downsample_vectorized(self):
         """
-        Does an analysis on the screen-space points stored in self._cached_data_pts
-        and replaces it with a downsampled version.
+        Analyzes the screen-space points stored in self._cached_data_pts
+        and replaces them with a downsampled set.
         """
         pts = self._cached_screen_pts  #.astype(int)
-        
+
         # some boneheaded short-circuits
         m = self.index_mapper
         if (pts.shape[0] < 400) or (pts.shape[0] < m.high_pos - m.low_pos):
@@ -316,17 +331,17 @@ class LinePlot(BaseXYPlot):
         d = z[:,0] + z[:,1]
         #... TODO ...
         return
-    
+
     def _color_changed(self):
         self.invalidate_draw()
         self.request_redraw()
         return
-    
+
     def _line_style_changed(self):
         self.invalidate_draw()
         self.request_redraw()
         return
-    
+
     def _line_width_changed(self):
         self.invalidate_draw()
         self.request_redraw()

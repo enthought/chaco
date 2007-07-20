@@ -1,4 +1,5 @@
-
+""" Defines the Base1DMapper class.
+"""
 # Major library imports
 from numpy import array
 
@@ -11,25 +12,24 @@ from data_range_1d import DataRange1D
 
 
 class Base1DMapper(AbstractMapper):
-    """
-    Defines an abstract mapping from a 1-D region in input space to a 1-D
+    """ Defines an abstract mapping from a 1-D region in input space to a 1-D
     region in output space.
     """
 
-    # These define the data-space bounds of the mapper
+    # The data-space bounds of the mapper.
     range = Instance(DataRange1D)
 
-    # The screen space position of the lower bound of the dataspace
+    # The screen space position of the lower bound of the data space.
     low_pos = Float(0.0)
     
-    # The screen space position of the upper bound of the dataspace
+    # The screen space position of the upper bound of the data space.
     high_pos  = Float(1.0)
     
     # Convenience property to get low and high positions in one structure.
-    # Should be a tuple (low_pos, high_pos).
+    # Must be a tuple (low_pos, high_pos).
     screen_bounds = Property
 
-    # If the subclass wants to use a cache, _cache_valid is maintained to 
+    # If the subclass uses a cache, _cache_valid is maintained to 
     # monitor its status
     _cache_valid = false
 

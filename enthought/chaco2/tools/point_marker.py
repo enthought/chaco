@@ -1,4 +1,5 @@
-
+""" Defines the PointMarker tool class.
+"""
 # Major library imports
 from numpy import array, take, transpose
 
@@ -10,26 +11,30 @@ from enthought.traits.api import Any, Enum, false, Float, Str, Trait
 from enthought.chaco2.api import BaseTool, BaseXYPlot
 
 class PointMarker(BaseTool):
-    """
-    This tool looks at an X-Y plot's index datasource and draws a
+    """ This tool looks at an XY plot's index data source and draws a
     line corresponding to the index indicated by the "selections" metadata.
     """
 
-    # The axis to which this tool is parallel
+    # The axis that this tool is parallel to.
     axis = Enum("index", "value")
     
-    # Should the line inspector write the current point to the appropriate
-    # datasource's metadata?
-    
-    # Configure our BaseTool traits
+    # This tool is visible (overrides BaseTool).
     visible = True
+    # This tool is drawn as an overlay (overrides BaseTool).
     draw_mode = "overlay"
     
     # TODO:STYLE
+    
+    # The color of the line.
     color = ColorTrait("red")
+    # The width of the line, in pixels.
     line_width = Float(1.0)
 
     def draw(self, gc, view_bounds=None):
+        """ Draws this tool on a graphics context.  
+        
+        Implements BaseTool.
+        """
         # Draw the component in interactive mode
         plot = self.component
         if plot is not None:

@@ -1,4 +1,5 @@
-
+""" Defines the LassoSelection controller class.
+"""
 # Major library imports
 from numpy import array, asarray, empty, sometrue, transpose, vstack, zeros
 
@@ -11,46 +12,57 @@ from enthought.kiva.agg import points_in_polygon
 from enthought.chaco2.api import AbstractController, AbstractDataSource
 
 class LassoSelection(AbstractController):
+    """ A controller that represents the interaction of "lassoing" a set of 
+    points.
+    
+    "Lassoing" means drawing an arbitrary selection region around the points
+    by dragging the mouse along the outline of the region.
     """
-    LassoSelection is a controller that represents the interaction of lassoing
-    a set of points.
-    """
-    # Dataspace points is an Nx2 array of points in data space representing the
-    # polygon.
+    # An Nx2 array of points in data space representing the polygon.
     dataspace_points = Array
     
-    # Fires whenever dataspace_points changes, necessitating a redraw of the
+    # Fires whenever **dataspace_points** changes, necessitating a redraw of the
     # selection region.
     updated = Event
     
     # Fires when the selection mask changes.
     selection_changed = Event
     
-    # Fires when the user lifts the mouse and finalizes the selection
+    # Fires when the user release the mouse button and finalizes the selection.
     selection_completed = Event
     
-    # If True, the selection mask will be updated as the mouse moves, rather
-    # than only at the beginning and end of the selection operation
+    # If True, the selection mask is updated as the mouse moves, rather
+    # than only at the beginning and end of the selection operation.
     incremental_select = false
     
-    # Does the lasso select points of the dataset to include in the selection,
-    # or exclude from selection?  This essentially inverts the selection mask.
+    # The selection mode of the lasso pointer: "include" or "exclude" points
+    # from the selection. The two settings essentially invert the selection mask.
     selection_mode = Enum("include", "exclude")
     
-    # The datasource that the mask of selected points should attach to.  Note
-    # that the indices in this must match the indices of the data in the plot.
+    # The data source that the mask of selected points is attached to.  Note
+    # that the indices in this data source must match the indices of the data 
+    # in the plot.
     selection_datasource = Instance(AbstractDataSource)
     
-    # By default plot is just self.component.  We use this to do the mapping
-    # from screen space to data space
+    # Mapping from screen space to data space. By default, it is just 
+    # self.component.
     plot = Property
 
+    # The possible event states of this selection tool (overrides 
+    # enable2.Interactor).
+    #
+    # normal: 
+    #     Nothing has been selected, and the user is not dragging the mouse.
+    # selecting: 
+    #     The user is dragging the mouse and is actively changing the 
+    #     selection region.
     event_state = Enum('normal', 'selecting')
 
     #----------------------------------------------------------------------
     # Private Traits
     #----------------------------------------------------------------------
     
+    # The PlotComponent associated with this tool.
     _plot = Trait(None, Any)
 
     
@@ -59,6 +71,11 @@ class LassoSelection(AbstractController):
     #----------------------------------------------------------------------
     
     def normal_left_down(self, event):
+        """ Handles the left mouse button being pressed while the tool is
+        in the 'normal' state.
+        
+        Puts the tool into 'selecting' mode, and starts defining the selection.
+        """
         # We may want to generalize this for the n-dimensional case...
         self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()))
         self.dataspace_points = empty((0,2))
@@ -67,12 +84,20 @@ class LassoSelection(AbstractController):
         return
         
     def selecting_left_up(self, event):
+        """ Handles the left mouse coming up in the 'selecting' state. 
+        
+        Completes the selection and switches to the 'normal' state.
+        """
         self.event_state = 'normal'
         self.selection_completed = True
         self._update_selection()
         return
 
     def selecting_mouse_move(self, event):
+        """ Handles the mouse moving when the tool is in the 'selecting' state.
+        
+        The selection is extended to the current mouse position.
+        """
         new_point = self._map_data(array((event.x, event.y)))
         self.dataspace_points = vstack((self.dataspace_points, array((new_point,))))
         self.updated = True
@@ -81,6 +106,11 @@ class LassoSelection(AbstractController):
         return
 
     def selecting_mouse_leave(self, event):
+        """ Handles the mouse leaving the plot when the tool is in the 
+        'selecting' state.
+        
+        Ends the selection operation.
+        """
         self.selecting_left_up(event)
         return
         
@@ -100,24 +130,25 @@ class LassoSelection(AbstractController):
                 self.selection_datasource.metadata['selection'] = selected_mask
                 self.selection_changed = True
         return
+        
     def _map_screen(self, points):
-        """
-        Maps a point in data space to a point in screen space on the plot. 
-        Normally a pass-through, but may do more in specialized plots.
+        """ Maps a point in data space to a point in screen space on the plot.
+        
+        Normally this method is a pass-through, but it may do more in 
+        specialized plots.
         """
         return self.plot.map_screen(points)[:,:2]
     
     def _map_data(self, point):
-        """
-        Maps a point in screen space to data space.  Normally a pass-through, but
-        for plots that have more data than just x,y, proper transormations need to
-        happen here.
+        """ Maps a point in screen space to data space.  
+        
+        Normally this method is a pass-through, but for plots that have more 
+        data than just (x,y), proper transformations need to happen here.
         """
         return self.plot.map_data(point, all_values=True)[:2]
     
     def _get_data(self):
-        """
-        Returns the datapoints in the plot, as an Nx2 array of (x,y).
+        """ Returns the datapoints in the plot, as an Nx2 array of (x,y).
         """
         return transpose(array((self.plot.index.get_data(), self.plot.value.get_data())))
 

@@ -1,11 +1,13 @@
-
+""" Defines the TrackingPanTool class.
+"""
 # Chaco imports
 from enthought.chaco2.tools.api import PanTool
 
 class TrackingPanTool(PanTool):
-    """
-    Allows the user to pan around a plot my clicking a mouse button and
-    dragging... and then return to a tracking state. 
+    """ Allows the user to pan around a plot.
+    
+    The user clicks a mouse button and drags to pan; the tool then returns to
+    a tracking state. 
     """
     
     def _end_pan(self, event):

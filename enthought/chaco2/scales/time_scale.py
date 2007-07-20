@@ -2,14 +2,13 @@
 A scale for time and calendar intervals.
 """
 
-from datetime import datetime, timedelta
 from math import floor
-from time import mktime
 
 from scales import AbstractScale, DefaultScale, ScaleSystem, frange, heckbert_interval
 from formatters import TimeFormatter
+from safetime import mktime, safe_fromtimestamp, datetime, timedelta, MINYEAR, MAXYEAR
 
-
+# Labels for date and time units.
 datetime_scale = ["microsecond", "second", "minute", "hour", "day", "month", "year"]
 datetime_zeros = zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1])
 
@@ -19,14 +18,17 @@ __all__ = ["TimeScale", "CalendarScaleSystem", "HMSScales", "MDYScales",
 
 
 def td_to_sec(td):
-    "Returns the floating point number of seconds in a timedelta object"
+    """ Returns the floating point number of seconds in a timedelta object. 
+    """
     return td.days*24*3600 + td.seconds + td.microseconds*1e-6
      
 
 def dt_to_sec(t):
-    """ Returns the floating point number of seconds since UNIX epoch
-    corresponding to the given datetime instance.  This is more accurate than
-    mktime(t.timetuple()) because it preserves milliseconds.
+    """ Returns the floating point number of seconds since the UNIX epoch
+    corresponding to the given datetime instance.  
+    
+    This value is more accurate than mktime(t.timetuple()) because it 
+    preserves milliseconds.
     """
     tup = t.timetuple()
     try:
@@ -41,7 +43,7 @@ def tfrac(t, **time_unit):
     """ Performs a calendar-aware split of a time into (aligned_time, frac)
     over an interval that is a multiple of one of the following time units:
 
-        "milliseconds", "seconds", "minutes", "hours", "days", "years"
+        "microseconds" "milliseconds", "seconds", "minutes", "hours", "days", "years"
 
     Settings of milliseconds..hours are truncated towards 0, days are counted
     from January 1st of their respective year, and years are counted from 1 AD.
@@ -49,20 +51,24 @@ def tfrac(t, **time_unit):
     are used.
 
     For example:
-    If it is currently 4:15pm on January 3rd, 2007, calling
-        tfrac(time.time(), hours=3)
-    returns the UNIX number of seconds corresponding to "January 3rd, 2007 15:00:00"
-    as the aligned time and the number of seconds in 1 hour and 15 minutes as the
-    fractional part.
+        
+    If it is currently 4:15pm on January 3rd, 2007, calling: 
+    ``tfrac(time.time(), hours=3)`` 
+    returns the UNIX number of seconds corresponding to 
+    "January 3rd, 2007 15:00:00"
+    as the aligned time, and the number of seconds in 1 hour and 15 minutes as
+    the fractional part.
     
     Parameters
     ==========
-    t: float; time in seconds
-    **time_unit: a dict with a single (interval=value) item
+    t : float
+        time in seconds
+    ``**time_unit`` : dict 
+        a single (interval=value) item
 
     Returns
     =======
-    (aligned time as UNIX time, remainder in seconds)
+    A tuple: (aligned time as UNIX time, remainder in seconds)
     """
     unit, period = time_unit.items()[0]
     if unit == "milliseconds":
@@ -72,7 +78,7 @@ def tfrac(t, **time_unit):
         unit = unit[:-1]  # strip off the 's'
 
     # Find the nearest round date
-    dt = datetime.fromtimestamp(t)
+    dt = safe_fromtimestamp(t)
     amt = getattr(dt, unit)
     ndx = datetime_scale.index(unit)
     closest_multiple = int(floor(amt / period) * period)
@@ -87,23 +93,26 @@ def tfrac(t, **time_unit):
 
 
 def trange(start, end, **time_unit):
-    """ Like range(), but for times, and with "natural" alignment dependeing on
-    the interval.  Example:
+    """ Like range(), but for times, and with "natural" alignment depending on
+    the interval.  
+    
+    For example::
 
         t_range(time.time(), time.time()+76*3600, days=2)
         t_range(start, end, months=3)
 
     Parameters
     ==========
-    start, end: float; time in seconds.  end should be later than start.
-    time_unit: a single (key, int_value) pair where key is in the list:
-    
-                  milliseconds, seconds, minutes, hours, days
+    start, end : float
+        Time in seconds.  *end* must be later than *start*.
+    time_unit : a single (key, int_value) pair 
+        The units to use. *key* must be in the list: "milliseconds", "seconds",
+        "minutes", "hours", "days"
 
     Returns
     =======
-    A list of times that nicely span the interval, or an empty list if start
-    and end fall within the same interval
+    A list of times that nicely span the interval, or an empty list if *start*
+    and *end* fall within the same interval.
     """
 
     # Express start and end ticks as (date, frac) where date is calendar-aligned
@@ -134,28 +143,29 @@ class TimeScale(AbstractScale):
     intervals are:
 
     Natural time:
-        milliseconds, seconds, minutes, hours, days, years
+        microseconds, milliseconds, seconds, minutes, hours, days, years
     Calendar time:
         day_of_month, month_of_year
 
-    for calendar times, a list of hours/days/months is set.
+    For calendar times, a list of hours/days/months is set.
     By default, intervals are aligned to January 1st.
     """
 
-    # This is used to compute an approximate resolution for each type of scale
-    SECS_PER_UNIT = {"milliseconds": 1e-3,
+    # This is used to compute an approximate resolution for each type of scale.
+    SECS_PER_UNIT = {"microseconds": 1e-6,
+                     "milliseconds": 1e-3,
                      "seconds": 1,
                      "minutes": 60,
                      "hours": 3600,
                      "days": 24*3600,
                      "day_of_month": 30*24*3600,
-                     "month_of_year": 365*24*3600 }
+                     "month_of_year": 365*24*3600,
+                     }
 
     CALENDAR_UNITS = ("day_of_month", "month_of_year")
 
     def __init__(self, **kw_interval):
-        """ Defines the time period that this scale uses.  See the class docstring
-        for valid intervals.
+        """ Defines the time period that this scale uses. 
         """
         unit, val = kw_interval.items()[0]
         self.unit = unit
@@ -173,35 +183,57 @@ class TimeScale(AbstractScale):
         return
     
     def num_ticks(self, start, end, desired_ticks=None):
+        """ Returns an approximate number of ticks that this scale 
+        produces for the given interval.  
+
+        Implements AbstractScale.
+        """
         # This is only approximate, but puts us in the ballpark
-        if self.unit == "milliseconds":
+        if self.unit in ("milliseconds", "microseconds"):
             ticks = self.ticks(start, end, desired_ticks=8)
-            coarsest_scale_count = (end - start) / 0.500
+            coarsest_scale_count = (end - start) / (500 * self.SECS_PER_UNIT[self.unit])
             return max(len(ticks), coarsest_scale_count)
         else:
             return (end - start) / self.resolution
 
     def ticks(self, start, end, desired_ticks=None):
-        """ Start and end are floating-point seconds since the epoch. """
+        """ Returns the set of "nice" positions on this scale that enclose and
+        fall inside the interval (*start*,*end*). 
+        
+        Implements AbstractScale. The *start* and *end* parameters are 
+        floating-point seconds since the epoch.
+        """
         
         if self.unit in self.CALENDAR_UNITS:
             return self.cal_ticks(start, end)
-        elif self.unit == "milliseconds":
-            if start == end:
+        elif self.unit in ("milliseconds", "microseconds"):
+            if start == end or (end - start) < self.SECS_PER_UNIT[self.unit]:
                 return [start]
-            start *= 1000
-            end *= 1000
-            min, max, delta = heckbert_interval(start, end, desired_ticks, enclose=True)
-            min /= 1000
-            max /= 1000
-            delta /= 1000
+            secs_per_unit = self.SECS_PER_UNIT[self.unit]
+            start /= secs_per_unit
+            end /= secs_per_unit
+            if desired_ticks is None:
+                min, max, delta = heckbert_interval(start, end, enclose=True)
+            else:
+                min, max, delta = heckbert_interval(start, end, desired_ticks, enclose=True)
+            min *= secs_per_unit
+            max *= secs_per_unit
+            delta *= secs_per_unit
             return frange(min, max, delta)
         else:
             return trange(start, end, **{self.unit: self.val})
 
     def cal_ticks(self, start, end):
-        start = datetime.fromtimestamp(start)
-        end = datetime.fromtimestamp(end)
+        """ ticks() method for calendar-based intervals """
+        
+        try:
+            start = datetime.fromtimestamp(start)
+        except ValueError:
+            start = datetime(MINYEAR, 1, 1, 0, 0, 0)
+        try:
+            end = datetime.fromtimestamp(end)
+        except ValueError:
+            end = datetime(MAXYEAR, 1, 1, 0, 0, 0)
 
         if self.unit == "day_of_month":
             s = start.year + 1/12.0 * start.month
@@ -233,6 +265,11 @@ class TimeScale(AbstractScale):
         return map(dt_to_sec, ticks)
 
     def labels(self, start, end, numlabels=None, char_width=None):
+        """ Returns a series of ticks and corresponding strings for labels
+        that fall inside the interval (*start*,*end*).
+        
+        Overrides AbstractScale.
+        """
         ticks = self.ticks(start, end, numlabels)
         labels = self.formatter.format(ticks, numlabels, char_width, ticker=self)
         return zip(ticks, labels)
@@ -242,7 +279,7 @@ class TimeScale(AbstractScale):
         the labels that this scale will produce for the given set of
         inputs, as well as the number of labels.
 
-        Returns: (numlabels, total label width)
+        Overrides AbstractScale.
         """
         return self.formatter.estimate_width(start, end, numlabels, char_width,
                                              ticker=self)
@@ -250,11 +287,13 @@ class TimeScale(AbstractScale):
 
 # Declare some default scale systems
 
-HMSScales = [TimeScale(milliseconds=1)] + \
+# Default time scale for hours, minutes, seconds, and milliseconds.
+HMSScales = [TimeScale(microseconds=1), TimeScale(milliseconds=1)] + \
             [TimeScale(seconds=dt) for dt in (1, 5, 15, 30)] + \
             [TimeScale(minutes=dt) for dt in (1, 5, 15, 30)] + \
             [TimeScale(hours=dt) for dt in (1, 2, 3, 4, 6, 12, 24)]
 
+# Default time scale for months, days, and years.
 MDYScales = [TimeScale(day_of_month=range(1,31,3)),
              TimeScale(day_of_month=(1,8,15,22)),
              TimeScale(day_of_month=(1,15)),
@@ -264,19 +303,20 @@ MDYScales = [TimeScale(day_of_month=range(1,31,3)),
              TimeScale(month_of_year=(1,))]
 
 class CalendarScaleSystem(ScaleSystem):
-    """ Scale system for calendars.  Has a pre-defined set of nice "time points"
-    to use for ticking and labelling.
+    """ Scale system for calendars.  
+    
+    This class has a pre-defined set of nice "time points" to use for ticking
+    and labelling.
     """
 
     def __init__(self, *scales, **kw):
         """ Creates a new CalendarScaleSystem.
 
-        If scales are not provided, then defaults to HMSScales and MDYScales.
+        If scales are not provided, then it defaults to HMSScales and MDYScales.
         """
         if len(scales) == 0:
             scales = HMSScales + MDYScales
         super(CalendarScaleSystem, self).__init__(*scales, **kw)
-        self.default_scale = None
 
     def _get_scale(self, start, end, numticks):
         if len(self.scales) == 0:
@@ -284,16 +324,10 @@ class CalendarScaleSystem(ScaleSystem):
                 closest_scale = self.default_scale
             else:
                 raise ValueError("CalendarScaleSystem has not be configured with any scales.")
+        elif end - start < 1e-6 or end - start > 1e5 * 365 * 24 * 3600:
+            closest_scale = self.default_scale
         else:
             closest_scale = self._get_scale_np(start, end, numticks)
-            if list(self.scales).index(closest_scale) in (0, len(self.scales)-1) and \
-                   self.default_scale is not None:
-                # Handle the edge cases and see if there is a major discrepancy between
-                # what the scales offer and the desired number of ticks; if so, revert
-                # to using the default scale
-                approx_ticks = closest_scale.num_ticks(start, end, numticks)
-                if (approx_ticks == 0) or (numticks == 0) or \
-                       (abs(approx_ticks - numticks) / numticks > 1.5) or \
-                       (abs(numticks - approx_ticks) / approx_ticks > 1.5):
-                    closest_scale = self.default_scale
+
+        
         return closest_scale

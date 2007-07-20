@@ -1,7 +1,5 @@
 #-------------------------------------------------------------------------------
 #
-#  Helper functions for calculating axis tick related values (i.e. bounds and
-#  intervals)
 #
 #  Written by: David C. Morrill (based on similar routines written by Eric Jones)
 #
@@ -10,7 +8,10 @@
 #  (c) Copyright 2002-7 by Enthought, Inc.
 #
 #-------------------------------------------------------------------------------
+""" Tick generator classes and helper functions for calculating axis 
+tick-related values (i.e., bounds and intervals).
 
+"""
 # Major library imports
 from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
     float64, floor, linspace, log10, minimum, ndarray, newaxis, \
@@ -20,39 +21,49 @@ from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
 from enthought.traits.api import HasTraits, Any
 
 class AbstractTickGenerator(HasTraits):
-    
+    """ Abstract class for tick generators.
+    """
     def get_ticks(self, data_low, data_high, bounds_low, bounds_high, interval,
                   use_endpoints=False, scale='linear'):
-        """ Returns a list of ticks points in data space
+        """ Returns a list of ticks points in data space.
         
         Parameters
         ----------
-        data_low, data_high: float
-                the actual min and max of index values of the entire dataset
-        
-        bounds_low, bounds_high: "auto", "fit", float
-                the range for which ticks should be generated
-        
-        interval: "auto", float
-                the desired spacing between ticks; if "auto", then the tick
-                generator should produce a nice density of ticks that fall
-                on values that sensibly align with the total data range.
-        
-        
+        data_low, data_high : float
+            The actual minimum and maximum of index values of the entire 
+            dataset.
+        bounds_low, bounds_high : "auto", "fit", float
+            The range for which ticks should be generated.
+        interval : "auto", float
+            If the value is a positive number, it specifies the length
+            of the tick interval; a negative integer specifies the
+            number of tick intervals; 'auto' specifies that the number and 
+            length of the tick intervals are automatically calculated, based
+            on the range of the axis.
+        use_endpoints : Boolean
+            If True, the lower and upper bounds of the data are used as the
+            lower and upper end points of the axis. If False, the end points
+            might not fall exactly on the bounds.
+        scale : 'linear' or 'log'
+            The type of scale the ticks are for.
+            
         Returns
         -------
-        tick_list: array of floats indicating where ticks should be placed
+        tick_list : array of floats 
+            Where ticks are to be placed.
         
         
         Example
         -------
         If the range of x-values in a line plot span from -15.0 to +15.0, but
-        the plot is currently only displaying the region from 3.1 to 6.83, and
+        the plot is currently displaying only the region from 3.1 to 6.83, and
         the user wants the interval to be automatically computed to be some
-        nice value, then get_ticks would be called thusly:
+        nice value, then call get_ticks() thusly::
+            
             get_ticks(-15.0, 15.0, 3.1, 6.83, "auto")
         
-        A reasonable return value in this case would be:
+        A reasonable return value in this case would be::
+            
             [3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5]
         """
         
@@ -60,7 +71,9 @@ class AbstractTickGenerator(HasTraits):
 
 
 class DefaultTickGenerator(AbstractTickGenerator):
-    
+    """ An implementation of AbstractTickGenerator that simply uses the 
+    auto_ticks() and log_auto_ticks() functions.
+    """
     def get_ticks(self, data_low, data_high, bounds_low,
                   bounds_high, interval, use_endpoints=False,
                   scale='linear'):
@@ -72,15 +85,18 @@ class DefaultTickGenerator(AbstractTickGenerator):
                                               interval, use_endpoints=False), float64)
     
 class ShowAllTickGenerator(AbstractTickGenerator):
-    """ Uses abstract interface, but returns all 'positions' instead
+    """ Uses the abstract interface, but returns all "positions" instead
         of decimating the ticks.
         
-        Provide a sequence of values as a 'positions' keyword arg
+        You must provide a sequence of values as a *positions* keyword argument
+        to the constructor.
     """
-    
+    # A sequence of positions for ticks.
     positions = Any
     
     def get_ticks(self, data_low, data_high, bounds_low, bounds_high, interval):
+        """ Returns an array based on **positions**.
+        """
         # ignore all the high, low, etc. data and just return every position
         return array(self.positions, float64)
 
@@ -92,31 +108,38 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
                  use_endpoints = True):
     """ Finds locations for axis tick marks.
 
-        Calculates the location for tick marks on an axis. data_low and data_high
-        specify the maximum and minimum values of the data along this axis.
-        bound_low, bound_high, and tick_interval specify how the axis end points
-        and tick interval are calculated. An array of tick mark locations is
-        returned from the function.  The first and last tick entries are the
-        axis end points.
+        Calculates the locations for tick marks on an axis. The *bound_low*, 
+        *bound_high*, and *tick_interval* parameters specify how the axis end
+        points and tick interval are calculated.  
 
         Parameters
         ----------
 
-        data_low, data_high
-            The maximum and minimum values of the data along this axis.
+        data_low, data_high : number
+            The minimum and maximum values of the data along this axis.
             If any of the bound settings are 'auto' or 'fit', the axis
             traits are calculated automatically from these values.
-        bound_low
-            Can be 'auto', 'fit' or a number.
-        bound_high
-            If a number,the axis trait is set to that value.  If the
-            value is 'auto', the trait is calculated automatically.
-            The value can also be 'fit' in which case the axis end
-            point is set equal to the corresponding data_low/data_high value.
-        tick_interval
-            Can be 'auto' or a positve number specifying the length
-            of the tick interval, or a negative integer specifying the
-            number of tick intervals.
+        bound_low, bound_high : 'auto', 'fit', or a number.
+            The lower and upper bounds of the axis. If the value is a number,
+            that value is used for the corresponding end point. If the value is
+            'auto', then the end point is calculated automatically. If the 
+            value is 'fit', then the axis bound is set to the corresponding
+            *data_low* or *data_high* value.
+        tick_interval : can be 'auto' or a number
+            If the value is a positive number, it specifies the length
+            of the tick interval; a negative integer specifies the
+            number of tick intervals; 'auto' specifies that the number and 
+            length of the tick intervals are automatically calculated, based
+            on the range of the axis.
+        use_endpoints : Boolean
+            If True, the lower and upper bounds of the data are used as the
+            lower and upper end points of the axis. If False, the end points
+            might not fall exactly on the bounds.
+            
+        Returns
+        -------
+        An array of tick mark locations. The first and last tick entries are the
+        axis end points.
     """
 
     is_auto_low  = (bound_low  == 'auto')
@@ -197,7 +220,8 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
 #--------------------------------------------------------------------------------
 
 def is_base2 ( range ):
-    " True if value is base 2 (2, 4, 8, 16, ...)"
+    """ Returns True if *range* is a positive base-2 number (2, 4, 8, 16, ...).
+    """
     if range <= 0.0:
         return False
     else:
@@ -209,10 +233,10 @@ def is_base2 ( range ):
 #--------------------------------------------------------------------------------
 
 def log2 ( num ):
-    """ Log base 2 of a number (or array)
+    """ Returns the base 2 logarithm of a number (or array).
 
-        !! 1e-16 is here to prevent errors when log is 0
     """
+    #    !! 1e-16 is here to prevent errors when log is 0
     if num == 0.0:
         num += 1.0e-16
     elif type( num ) is ndarray:
@@ -262,13 +286,11 @@ def _nice(x, round=False):
 
 
 def auto_interval ( data_low, data_high ):
-    """ Calculates the tick intervals for a graph axis.
+    """ Calculates the tick interval for a range.
 
-        Description
-        -----------
         The boundaries for the data to be plotted on the axis are::
 
-            data_bounds = (lower,upper)
+            data_bounds = (data_low,data_high)
 
         The function chooses the number of tick marks, which can be between
         3 and 9 marks (including end points), and chooses tick intervals at
@@ -335,6 +357,22 @@ def auto_interval ( data_low, data_high ):
 #--------------------------------------------------------------------------------
 
 def tick_intervals ( data_low, data_high, intervals ):
+    """ Computes the best tick interval length to achieve a specified number of
+    tick intervals.
+    
+    Parameters
+    ----------
+    data_low, data_high : number
+        The minimum and maximum values of the data along this axis.
+        If any of the bound settings are 'auto' or 'fit', the axis
+        traits are calculated automatically from these values.
+    intervals : number
+        The desired number of intervals
+        
+    Returns
+    -------
+    Returns a float indicating the tick interval length.
+    """
     range     = float( data_high - data_low )
     if range == 0.0:
         range = 1.0
@@ -368,7 +406,7 @@ def tick_intervals ( data_low, data_high, intervals ):
 def log_auto_ticks(data_low, data_high,
                    bound_low, bound_high,
                    tick_interval, use_endpoints = True):
-    """Like auto_ticks, but for log scales."""
+    """Like auto_ticks(), but for log scales."""
     tick_goal = 15
     magic_numbers = [1, 2, 5]
     explicit_ticks = False
@@ -431,9 +469,10 @@ def log_auto_ticks(data_low, data_high,
 #-------------------------------------------------------------------------------
 
 def auto_bounds ( data_low, data_high, tick_interval ):
-    """ Calculates an appropriate upper and lower bounds for the axis from
-        the the data_bounds (lower, upper) and the given axis interval.  The
-        boundaries will either hit exactly on the lower and upper values
+    """ Calculates appropriate upper and lower bounds for the axis from
+        the data bounds and the given axis interval.  
+        
+        The boundaries  hit either exactly on the lower and upper values
         or on the tick mark just beyond the lower and upper values.
     """
     return ( calc_bound( data_low,  tick_interval, False ),
@@ -444,11 +483,13 @@ def auto_bounds ( data_low, data_high, tick_interval ):
 #-------------------------------------------------------------------------------
 
 def calc_bound ( end_point, tick_interval, is_upper ):
-    """ Finds an axis end point that includes the value 'end_point'.  If the
-        tick mark interval results in a tick mark hitting directly on the
-        end_point, end_point is returned.  Otherwise, the location of the tick
-        mark just past the end_point is returned. end is 'lower' or 'upper' to
-        specify whether end_point is at the lower or upper end of the axis.
+    """ Finds an axis end point that includes the value *end_point*.  
+    
+    If the tick mark interval results in a tick mark hitting directly on the
+    end point, *end_point* is returned.  Otherwise, the location of the tick
+    mark just past *end_point* is returned. The *is_upper* parameter 
+    specifies whether *end_point* is at the upper (True) or lower (False)
+    end of the axis.
     """
     quotient, remainder = divmod( end_point, tick_interval )
     if ((remainder == 0.0) or

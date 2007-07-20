@@ -1,5 +1,5 @@
 """
-Defines AbstractRange, DataRange, and DataRange2D.
+Defines the DataRange1D class.
 """
 
 
@@ -17,30 +17,52 @@ from ticks import heckbert_interval
 
 
 class DataRange1D(BaseDataRange):
+    """ Represents a 1-D data range.
+    """
     
+    # The actual value of the lower bound of this range (overrides 
+    # AbstractDataRange). To set it, use **low_setting**.
     low = Property
+    # The actual value of the upper bound of this range (overrides
+    # AbstractDataRange). To set it, use **high_setting**.
     high = Property
     
+    # Property for the lower bound of this range (overrides AbstractDataRange).
+    # 
+    # * 'auto': The lower bound is automatically set at or below the minimum
+    #   of the data.
+    # * 'track': The lower bound tracks the upper bound by **tracking_amount**.
+    # * CFloat: An explicit value for the lower bound
     low_setting = Property(Trait('auto', 'auto', 'track', CFloat))
+    # Property for the upper bound of this range (overrides AbstractDataRange).
+    # 
+    # * 'auto': The upper bound is automatically set at or above the maximum
+    #   of the data.
+    # * 'track': The upper bound tracks the lower bound by **tracking_amount**.
+    # * CFloat: An explicit value for the upper bound
     high_setting = Property(Trait('auto', 'auto', 'track', CFloat))
 
-    # Should "auto" bounds imply a tight/exact fit to the data, or
-    # should they pad a little bit of margin on either side?
+    # Do "auto" bounds imply an exact fit to the data? If False, 
+    # they pad a little bit of margin on either side.
     tight_bounds = true
 
     # The minimum percentage difference between low and high.  That is,
     # (high-low) >= epsilon * low.
     epsilon = CFloat(1.0e-20)
     
-    # When either high or low tracks the other, track by this amount
+    # When either **high** or **low** tracks the other, track by this amount.
     default_tracking_amount = CFloat(20.0)
     
-    # The current tracking amount - changes with zooming
+    # The current tracking amount. This value changes with zooming.
     tracking_amount = default_tracking_amount
     
-    # Set the default state - used when self.reset is called
-    # high_track sets self._high_setting = 'track'
-    # low_track sets self._low_setting = 'track'
+    # Default tracking state. This value is used when self.reset() is called.
+    #
+    # * 'auto': Both bounds reset to 'auto'.
+    # * 'high_track': The high bound resets to 'track', and the low bound
+    #   resets to 'auto'.
+    # * 'low_track': The low bound resets to 'track', and the high bound
+    #   resets to 'auto'.
     default_state = Enum('auto','high_track', 'low_track')
     
     # Is this range dependent upon another range?
@@ -53,9 +75,14 @@ class DataRange1D(BaseDataRange):
     # The "_setting" attributes correspond to what the user has "set"; the
     # "_value" attributes are the actual numerical values for the given
     # setting.
+    
+    # The user-specified low setting.
     _low_setting = Trait('auto', 'auto', 'track', CFloat)
+    # The actual numerical value for the low setting.
     _low_value = CFloat(-inf)
+    # The user-specified high setting.
     _high_setting = Trait('auto', 'auto', 'track', CFloat)
+    # The actual numerical value for the high setting.
     _high_value = CFloat(inf)
 
     # A list of attributes to persist
@@ -67,12 +94,26 @@ class DataRange1D(BaseDataRange):
     #------------------------------------------------------------------------
     
     def clip_data(self, data):
+        """ Returns a list of data values that are within the range.
+        
+        Implements AbstractDataRange.
+        """
         return compress(self.mask_data(data), data)
     
     def mask_data(self, data):
+        """ Returns a mask array, indicating whether values in the given array
+        are inside the range.
+        
+        Implements AbstractDataRange.
+        """
         return (data>=self._low_value) & (data<=self._high_value)
     
     def bound_data(self, data):
+        """ Returns a tuple of indices for the start and end of the first run
+        of *data* that falls within the range.
+        
+        Implements AbstractDataRange.
+        """
         mask = self.mask_data(data)
         runs = arg_find_runs(mask, "flat")
         # Since runs of "0" are also considered runs, we have to cycle through
@@ -83,6 +124,10 @@ class DataRange1D(BaseDataRange):
         return (0,0)
 
     def set_bounds(self, low, high):
+        """ Sets all the bounds of the range simultaneously.
+        
+        Implements AbstractDataRange.
+        """
         if low == 'track':
             # Set the high setting first
             self._do_set_high_setting(high, fire_event=False)
@@ -93,12 +138,18 @@ class DataRange1D(BaseDataRange):
             self._do_set_high_setting(high)
             
     def scale_tracking_amount(self, multiplier):
+        """ Sets the **tracking_amount** to a new value, scaled by *multiplier*.
+        """
         self.tracking_amount = self.tracking_amount * multiplier
         
     def set_tracking_amount(self, amount):
+        """ Sets the **tracking_amount** to a new value, *amount*.
+        """
         self.tracking_amount = amount
         
     def set_default_tracking_amount(self, amount):
+        """ Sets the **default_tracking_amount** to a new value, *amount*.
+        """
         self.default_tracking_amount = amount
  
     #------------------------------------------------------------------------
@@ -106,8 +157,7 @@ class DataRange1D(BaseDataRange):
     #------------------------------------------------------------------------
 
     def reset(self):
-        """
-        Resets the bounds of this range.
+        """ Resets the bounds of this range, based on **default_state**.
         """
         #need to maintain 'track' setting
         if self.default_state == 'auto':
@@ -123,9 +173,8 @@ class DataRange1D(BaseDataRange):
         self.tracking_amount = self.default_tracking_amount
         
     def refresh(self):
-        """
-        If any of the bounds are 'auto', this refreshes the actual low and high
-        values from the set of viewfilters' datasources.
+        """ If any of the bounds is 'auto', this method refreshes the actual
+        low and high values from the set of the view filters' data sources.
         """
         if ('auto' in (self._low_setting, self._high_setting)) or \
             ('track' in (self._low_setting, self._high_setting)):
@@ -266,10 +315,36 @@ class DataRange1D(BaseDataRange):
 
 ###### method to calculate bounds for a given 1-dimensional set of data
 def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds, track_amount):
+    """ Calculates bounds for a given 1-D set of data.
     
-    # Special case:  if both low_set and high_set are set to 'track'
-    # then this produces an invalid state.
-    # By default, this will result in setting the high_set to "auto".
+    Parameters
+    ----------
+    low_set : 'auto', 'track', or number
+        Current low setting
+    high_set : 'auto', 'track', or number
+        Current high setting
+    mins : list of numbers
+        Potential minima.
+    maxes : list
+        Potential maxima.
+    epsilon : number
+        Minimum percentage difference between bounds
+    tight_bounds : Boolean
+        Do 'auto' bounds imply an exact fit to the data? If False, they pad a
+        little bit of margin on either side.
+    track_amount : number
+        The amount by which a 'track' bound tracks another bound.
+    
+    Returns
+    -------
+    (min, max) for the new bounds. If either of the calculated bounds is NaN,
+    returns (0,0).
+    
+    Description
+    -----------
+    Setting both *low_set* and *high_set* to 'track' is an invalid state; 
+    the method copes by setting *high_set* to 'auto', and proceeding.
+    """
     
     if (low_set == 'track') and (high_set == 'track'):
         high_set = 'auto'
