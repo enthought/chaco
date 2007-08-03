@@ -5,13 +5,14 @@ Draws a static polar plot.
 # Major library imports
 from numpy import arange, pi, sin, cos
 
+from enthought.chaco2.example_support import DemoFrame, demo_main
+
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.api import create_polar_plot
-from enthought.chaco2.example_support import DemoFrame, demo_main
 
 class MyFrame(DemoFrame):
     def _create_window(self):

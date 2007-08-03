@@ -1,16 +1,16 @@
 
 # Major library imports
-import wx
 from numpy import arange, cos, linspace, pi, sin
+
+from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 
 # Enthought library imports
 from enthought.traits.api import HasTraits, Float, Int, Instance, Range,\
                              true, false, RGBAColor
 from enthought.traits.ui.api import View, Group, Item
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 
 # Chaco imports
-from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 from enthought.chaco2.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
                                  LinearMapper, OverlayPlotContainer, PlotAxis, PlotGrid
 

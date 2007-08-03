@@ -15,7 +15,7 @@ from numpy import arange, fabs, pi, sin
 from scipy.special import jn
 
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 from enthought.traits.api import false, HasTraits
 
 # Chaco imports

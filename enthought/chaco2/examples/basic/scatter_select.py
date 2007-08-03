@@ -13,12 +13,13 @@ compute indices in realtime.
 from numpy import arange, sort, compress, arange
 from numpy.random import random
 
+from enthought.chaco2.example_support import DemoFrame, demo_main
+
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 from enthought.traits.api import Instance
 
 # Chaco imports
-from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import AbstractDataSource, ArrayPlotData, Plot, \
                                  HPlotContainer, LassoOverlay 
 from enthought.chaco2.tools.api import LassoSelection, ScatterInspector

@@ -16,11 +16,12 @@ Draws several overlapping line plots.
 from numpy import linspace
 from scipy.special import jn
 
+from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
+
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 
 # Chaco imports
-from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 from enthought.chaco2.api import ArrayPlotData, GridContainer, Plot, PlotLabel
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 

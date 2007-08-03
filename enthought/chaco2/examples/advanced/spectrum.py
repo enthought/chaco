@@ -14,7 +14,7 @@ from numpy import fabs, zeros, linspace, short, fromstring, hstack, transpose, a
 from scipy import fft
 
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 
 # Chaco imports
 from enthought.chaco2.example_support import DemoFrame, demo_main

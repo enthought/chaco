@@ -4,12 +4,13 @@
 from numpy import arange, fabs, pi, sin
 from scipy.special import jn
 
+from enthought.chaco2.example_support import DemoFrame, demo_main
+
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 from enthought.traits.api import false
 
 # Chaco imports
-from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import HPlotContainer, create_line_plot
 from enthought.chaco2.tools.api import DataPrinter, LineInspector, PointMarker, \
                                        RangeSelection, SaveTool, SimpleZoom, PanTool

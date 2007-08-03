@@ -22,6 +22,7 @@ setup(
     ext_modules = [contour],
     include_package_data = True,
     install_requires = [
+        "enthought.etsconfig",
         "enthought.traits",
         "enthought.kiva",
         "enthought.enable2",

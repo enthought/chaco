@@ -12,12 +12,13 @@ Draws a simple scatterplot of a set of random points.
 from numpy import arange, sort
 from numpy.random import random
 
+from enthought.chaco2.example_support import DemoFrame, demo_main
+
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 
 # Chaco imports
 from enthought.chaco2.api import ArrayPlotData, Plot
-from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 

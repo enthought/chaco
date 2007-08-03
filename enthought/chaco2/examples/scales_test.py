@@ -20,12 +20,13 @@ from numpy import arange, fabs, linspace, pi, sin
 from scipy.special import jn
 from time import time
 
+from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
+
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 from enthought.traits.api import false
 
 # Chaco imports
-from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 from enthought.chaco2.api import create_line_plot, add_default_axes, \
                                  OverlayPlotContainer, PlotLabel, VPlotContainer, \
                                  create_scatter_plot, Legend, PlotComponent, PlotGrid

@@ -21,7 +21,7 @@ from enthought.chaco2.default_colormaps import *
 from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
 from enthought.chaco2.tools.api import LineInspector, PanTool, RangeSelection, \
                                    RangeSelectionOverlay, SimpleZoom
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 from enthought.traits.api import Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
                              Int, Instance, Str, Trait
 from enthought.traits.ui.api import Group, Handler, HGroup, Item, View

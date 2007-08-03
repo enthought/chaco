@@ -13,17 +13,15 @@ Draws some x-y line and scatter plots. On the left hand plot:
 from numpy import linspace
 from scipy.special import jn
 
+from enthought.chaco2.example_support import COLOR_PALETTE
+
 # Enthought library imports
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable2.api import Window
 
 # Chaco imports
 from enthought.chaco2.api import ArrayPlotData, HPlotContainer, Plot
 from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.tools.api import BroadcasterTool, PanTool, SimpleZoom 
-
-
-# Chaco imports
-from enthought.chaco2.example_support import COLOR_PALETTE
 from enthought.chaco2.api import create_line_plot, add_default_axes, add_default_grids
 
 
