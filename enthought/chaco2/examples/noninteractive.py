@@ -59,7 +59,20 @@ def draw_plot(filename, size=(800,600)):
     gc.save(filename)
     return
 
+def draw_pdf(filename, size=(800,600)):
+    container = create_plot()
+    container.bounds = list(size)
+    container.do_layout(force=True)
+    
+    from enthought.chaco2.pdf_graphics_context import PdfPlotGraphicsContext
+    gc = PdfPlotGraphicsContext(filename=filename, dest_box = (0.5, 0.5, 5.0, 5.0))
+    gc.render_component(container)
+    gc.save()
+
 if __name__ == "__main__":
-    draw_plot("foo.png")
+    draw_plot("noninteractive.png")
+    
+    # If you have ReportLab installed, you can uncomment the following:
+    #draw_pdf("noninteractive.pdf")
 
 # EOF

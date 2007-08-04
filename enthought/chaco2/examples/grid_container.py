@@ -30,7 +30,7 @@ from enthought.chaco2.api import create_line_plot, add_default_axes, add_default
                                  OverlayPlotContainer, PlotLabel, VPlotContainer, \
                                  create_scatter_plot, Legend, GridContainer
 from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
-                                       LegendTool, TraitsTool
+                                       LegendTool, TraitsTool, SaveTool
 
 
 
@@ -75,6 +75,8 @@ class PlotFrame(DemoFrame):
         cplot = container.plot_components[4]
         cplot.set(resizable="", padding_top = 30, bounds=[400,400])
         cplot.overlays.append(PlotLabel("Not resizable", component=cplot))
+
+        container.tools.append(SaveTool(container, filename="grid_container.pdf"))
 
         return Window(self, -1, component=container)
 

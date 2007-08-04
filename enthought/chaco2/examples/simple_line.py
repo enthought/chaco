@@ -31,7 +31,7 @@ from enthought.chaco2.api import create_line_plot, add_default_axes, \
                                  PlotLabel, VPlotContainer, \
                                  create_scatter_plot, Legend, PlotComponent
 from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
-                                       LegendTool, TraitsTool
+                                       LegendTool, TraitsTool, SaveTool
 
 
 
@@ -94,6 +94,7 @@ class PlotFrame(DemoFrame):
 
         # Add the traits inspector tool to the container
         container.tools.append(TraitsTool(container))
+        container.tools.append(SaveTool(container, filename="simple_line.pdf"))
 
         return Window(self, -1, component=container)
 
