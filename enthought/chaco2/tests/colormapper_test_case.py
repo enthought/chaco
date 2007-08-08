@@ -80,10 +80,10 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
         cm = ColorMapper.from_palette_array(colors)
         cm.range = DataRange1D()
 
-        a = ArrayDataSource(array([0.0, 0.5, 1.0]))
-        cm.range.add(a)
-        b = self.colormap.map_screen(a.get_data())
-        cm.range.remove(a)
+        ar = ArrayDataSource(array([0.0, 0.5, 1.0]))
+        cm.range.add(ar)
+        b = cm.map_screen(ar.get_data())
+        cm.range.remove(ar)
 
         expected = array([0.0, 0.5, 1.0])
 

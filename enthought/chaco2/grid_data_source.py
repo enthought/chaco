@@ -70,6 +70,7 @@ class GridDataSource(AbstractDataSource):
             The sort order of the data
         """
         if sort_order is not None:
+            self.sort_order = sort_order
             self._xdata.set_data(xdata, sort_order[0])
             self._ydata.set_data(ydata, sort_order[1])
         else:

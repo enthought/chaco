@@ -4,7 +4,7 @@
 # Major library imports
 from types import IntType, FloatType
 from numpy import add, arange, array, asarray, choose, clip, concatenate, \
-                  divide, ones, put, ravel, resize, searchsorted, shape, \
+                  divide, isnan, ones, put, ravel, resize, searchsorted, shape, \
                   sometrue, sort, take, where, zeros
 
 # Enthought library imports
@@ -358,12 +358,14 @@ class ColorMapper(AbstractColormap):
         #xa = where(xa>1.,1.,xa)
         #xa = where(xa<0.,0.,xa)
 
-        xa = (xa *(self.steps-1)).astype(int)
+        
+        nanmask = isnan(xa)
+        xa = where(nanmask, 0, (xa *(self.steps-1)).astype(int))
         rgba = zeros(xa.shape+(4,), float)
-        rgba[...,0] = take(self._red_lut, xa)
-        rgba[...,1] = take(self._green_lut, xa)
-        rgba[...,2] = take(self._blue_lut, xa)
-        rgba[...,3] = alpha
+        rgba[...,0] = where(nanmask, 0, take(self._red_lut, xa))
+        rgba[...,1] = where(nanmask, 0, take(self._green_lut, xa))
+        rgba[...,2] = where(nanmask, 0, take(self._blue_lut, xa))
+        rgba[...,3] = where(nanmask, 0, alpha)        
         if vtype == 'scalar':
             rgba = tuple(rgba[0,:])
             

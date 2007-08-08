@@ -282,7 +282,7 @@ def render_markers(gc, points, marker, marker_size,
 
     # Neither of the fast functions worked, so use the brute-force, manual way
     else:
-        if not marker.antialias:
+        if not marker.set_antialias:
             gc.set_antialias(False)
         if marker.__class__ != CustomMarker:
             for sx,sy in points:

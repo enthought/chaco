@@ -1,6 +1,6 @@
 doc = \
 """
-This file contains a support class that wraps up the boilerplate toolkit calls
+This file contains a support class that wraps up the boilerplate wx calls
 that virtually all the demo programs have to use, and doesn't actually do
 anything when run on its own.
 
@@ -9,9 +9,7 @@ the programs in in tutorials/.
 """
 
 from numpy import array
-
-from enthought.etsconfig.api import ETSConfig
-
+import wx
 
 # Set up the debug logger for all chaco examples.
 # We don't want users to go digging around for the default Enthought logfile
@@ -40,94 +38,36 @@ COLOR_PALETTE = (array([166,206,227,
                         106,61,154], dtype=float)/255).reshape(10,3)
 
 
-# FIXME - it should be enough to do the following import, but because of the
-# PyQt/traits problem (see below) we can't because it would drag in traits too
-# early.  Until it is fixed we just assume wx if we can import it.
-# Force the selection of a valid toolkit.
-#import enthought.enable2.toolkit
-if not ETSConfig.toolkit:
-    try:
-        import wx
-        ETSConfig.toolkit = 'wx'
-    except ImportError:
-        ETSConfig.toolkit = 'qt4'
+class DemoFrame(wx.Frame):
+    """ Wraps boilerplate WX calls that almost all the demo programs have to use.
+    """
+    def __init__ ( self, *args, **kw ):
+        wx.Frame.__init__( *(self,) + args, **kw )
+        self.SetAutoLayout( True )
 
-if ETSConfig.toolkit == 'wx':
-    import wx
+        # Create the subclass's window
+        self.plot_window = self._create_window()
 
-    class DemoFrame(wx.Frame):
-        """ Wraps boilerplate WX calls that almost all the demo programs have
-        to use.
-        """
-        def __init__ ( self, *args, **kw ):
-            wx.Frame.__init__( *(self,) + args, **kw )
-            self.SetAutoLayout( True )
+        sizer = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(self.plot_window.control, 1, wx.EXPAND)
+        self.SetSizer(sizer)
+        self.Show( True )
+        return
 
-            # Create the subclass's window
-            self.plot_window = self._create_window()
-
-            sizer = wx.BoxSizer(wx.HORIZONTAL)
-            sizer.Add(self.plot_window.control, 1, wx.EXPAND)
-            self.SetSizer(sizer)
-            self.Show( True )
-            return
-
-        def _create_window(self):
-            "Subclasses should override this method and return an enable.wx.Window"
-            raise NotImplementedError
+    def _create_window(self):
+        "Subclasses should override this method and return an enable.wx.Window"
+        raise NotImplementedError
 
 
-    def demo_main(demo_class, size=(400,400), title="Chaco plot"):
-        "Takes the class of the demo to run as an argument."
-        app = wx.PySimpleApp()
-        frame = demo_class(None, size=size, title=title)
-        app.SetTopWindow(frame)
-        app.MainLoop()
-
-elif ETSConfig.toolkit == 'qt4':
-    import sys
-    from PyQt4 import QtGui
-
-    # FIXME
-    # There is a strange interaction between traits and PyQt (at least on
-    # Linux) that means we need to create the QApplication instance before
-    # traits is imported.  For this to work this module should be imported
-    # first.
-    _app = QtGui.QApplication(sys.argv)
-
-    class DemoFrame(QtGui.QWidget):
-        def __init__ (self, parent, **kw):
-            QtGui.QWidget.__init__(self)
-
-            # Create the subclass's window
-            self.plot_window = self._create_window()
-
-            layout = QtGui.QVBoxLayout()
-            layout.setMargin(0)
-            layout.addWidget(self.plot_window.control)
-
-            self.setLayout(layout)
-
-            if 'size' in kw:
-                self.resize(*kw['size'])
-
-            if 'title' in kw:
-                self.setWindowTitle(kw['title'])
-
-            self.show()
-
-        def _create_window(self):
-            "Subclasses should override this method and return an enable2.Window"
-            raise NotImplementedError
-
-
-    def demo_main(demo_class, size=(400,400), title="Chaco plot"):
-        "Takes the class of the demo to run as an argument."
-        frame = demo_class(None, size=size, title=title)
-        _app.exec_()
-
+def demo_main(demo_class, size=(400,400), title="Chaco plot"):
+    "Takes the class of the demo to run as an argument."
+    app = wx.PySimpleApp()
+    frame = demo_class(None, size=size, title=title)
+    app.SetTopWindow(frame)
+    app.MainLoop()
 
 if __name__ == "__main__":
     print "\n" + doc + "\n"
+
 
 # EOF

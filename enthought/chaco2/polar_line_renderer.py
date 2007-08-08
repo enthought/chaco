@@ -6,7 +6,7 @@ from numpy import add, arange, array, compress, concatenate, cos, pi, sin, trans
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, LineStyle
 from enthought.traits.api import Any, Float, Int, Str, Trait, Unicode, \
-                                 Bool, Event, List, Array, Instance, Enum, false, true
+    Bool, Event, List, Array, Instance, Enum, false, true
 
 # Local, relative imports
 from abstract_plot_renderer import AbstractPlotRenderer

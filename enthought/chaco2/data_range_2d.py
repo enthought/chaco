@@ -210,7 +210,7 @@ class DataRange2D(BaseDataRange):
         # dataname is the name of the underlying 1d data source of the
         # ImageData instances in self.sources, e.g. "_xdata" or "_ydata"
         for source in self.sources:
-            source1d = getattr(source, datanamem, None)
+            source1d = getattr(source, dataname, None)
             if source1d:
                 if oldrange:
                     oldrange.remove(source1d)
@@ -223,26 +223,28 @@ class DataRange2D(BaseDataRange):
     #------------------------------------------------------------------------
     
     def _sources_items_changed(self, event):
-        self.refresh()
         for source in event.removed:
             source.on_trait_change(self.refresh, "data_changed", remove=True)
-            self._xrange.remove(source._xdata)
-            self._yrange.remove(source._ydata)
         for source in event.added:
             source.on_trait_change(self.refresh, "data_changed")
-            self._xrange.add(source._xdata)
-            self._yrange.add(source._ydata)
+        # the _xdata and _ydata of the sources may be created anew on every 
+        # access, so we can't just add/delete from _xrange and _yrange sources
+        # based on object identity. So recreate lists each time:
+        self._xrange.sources = [s._xdata for s in self.sources]
+        self._yrange.sources = [s._ydata for s in self.sources]
+        self.refresh()
     
     def _sources_changed(self, old, new):
-        self.refresh()
         for source in old:
             source.on_trait_change(self.refresh, "data_changed", remove=True)
-            self._xrange.remove(source._xdata)
-            self._yrange.remove(source._ydata)
         for source in new:
             source.on_trait_change(self.refresh, "data_changed")
-            self._xrange.add(source._xdata)
-            self._yrange.add(source._ydata)
+        # the _xdata and _ydata of the sources may be created anew on every 
+        # access, so we can't just add/delete from _xrange and _yrange sources
+        # based on object identity. So recreate lists each time:
+        self._xrange.sources = [s._xdata for s in self.sources]
+        self._yrange.sources = [s._ydata for s in self.sources]
+        self.refresh()
 
     
 

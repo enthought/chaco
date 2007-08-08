@@ -52,7 +52,7 @@ def get_nested_components(container):
         item, offset = worklist.pop()
         if isinstance(item, BasePlotContainer):
             new_offset = (offset[0]+item.x, offset[1]+item.y)
-            for c in item.plot_components:
+            for c in item.components:
                 worklist.append((c, new_offset))
         elif isinstance(item, PlotAxis) or isinstance(item, BaseXYPlot):
             components.append((item, offset))

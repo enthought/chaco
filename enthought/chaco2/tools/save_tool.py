@@ -1,39 +1,20 @@
 """ Defines the SaveTool class.
 """
+from enthought.kiva.backend_image import GraphicsContext
+from enthought.traits.api import Str
 
-# Major library imports
-import os.path
-
-# Enthought library imports
-from enthought.traits.api import Enum, Str, Trait, Tuple
 from enthought.chaco2.api import BaseTool
-
 
 class SaveTool(BaseTool):
     """ This tool allows the user to press Ctrl+S to save a snapshot image of
     the plot component.
     """
     
-    # The file that the image is saved in.  The format will be deduced from
-    # the extension.
+    # The file that the image is saved in.
     filename = Str("saved_plot.png")
-
-    #-------------------------------------------------------------------------
-    # PDF format options
-    # This mirror the traits in PdfPlotGraphicsContext.
-    #-------------------------------------------------------------------------
-
-    pagesize = Enum("letter", "A4")
-    dest_box = Tuple((0.5, 0.5, -0.5, -0.5))
-    dest_box_units = Enum("inch", "cm", "mm", "pica")
-
-    #-------------------------------------------------------------------------
-    # Override default trait values inherited from BaseTool
-    #-------------------------------------------------------------------------
-
+    
     # This tool does not have a visual representation (overrides BaseTool).
     draw_mode = "none"
-
     # This tool is not visible (overrides BaseTool).
     visible = False
     
@@ -42,33 +23,19 @@ class SaveTool(BaseTool):
         
         Saves an image of the plot if the keys pressed are Control and S.
         """
-        if self.component is None:
-            return
-
         if event.character == "s" and event.control_down:
-            if os.path.splitext(self.filename)[-1] == ".pdf":
-                self._save_pdf()
-            else:
-                self._save_raster()
+            self._save_component()
             event.handled = True
         return
     
-    def _save_raster(self):
+    def _save_component(self):
         """ Saves an image of the component.
         """
-        from enthought.chaco2.api import PlotGraphicsContext
-        gc = PlotGraphicsContext((int(self.component.width), int(self.component.height)))
-        self.component.draw(gc, mode="normal")
-        gc.save(self.filename)
+        if self.component is not None:
+            gc = GraphicsContext((int(self.component.width), int(self.component.height)))
+            self.component.draw(gc, mode="normal")
+            gc.save(self.filename)
         return
 
-    def _save_pdf(self):
-        from enthought.chaco2.pdf_graphics_context import PdfPlotGraphicsContext
-        gc = PdfPlotGraphicsContext(filename=self.filename,
-                pagesize = self.pagesize,
-                dest_box = self.dest_box,
-                dest_box_units = self.dest_box_units)
-        gc.render_component(self.component)
-        gc.save()
 
 # EOF

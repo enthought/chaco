@@ -46,6 +46,14 @@ class Base2DPlot(AbstractPlotRenderer):
     # * 'v': index maps to y-direction
     orientation = Enum("h", "v")
 
+    # The direction of the x axis with respect to the graphics context's
+    # direction.
+    x_direction = Enum("normal", "flipped")
+    
+    # The direction of the y axis with respect to the graphics context's 
+    # direction.
+    y_direction = Enum("normal", "flipped")
+
     # Overrides PlotComponent; 2-D plots draw on the 'image' layer,
     # underneath all decorations and annotations, and above only the background
     # fill color.
@@ -146,8 +154,10 @@ class Base2DPlot(AbstractPlotRenderer):
         x_data = x_index_data.get_data()
         y_data = y_index_data.get_data()
         try:
-            x_ndx = reverse_map_1d(x_data, x_pt, self.index.sort_order[0])
-            y_ndx = reverse_map_1d(y_data, y_pt, self.index.sort_order[1])
+            x_ndx = reverse_map_1d(x_data, x_pt, self.index.sort_order[0], 
+                                   floor_only=True)
+            y_ndx = reverse_map_1d(y_data, y_pt, self.index.sort_order[1], 
+                                   floor_only=True)
         except IndexError, e:
             if outside_returns_none:
                 return None, None
@@ -270,11 +280,29 @@ class Base2DPlot(AbstractPlotRenderer):
         
         Called by various trait change handlers.
         """
+
+        x = self.x
+        x2 = self.x2
+        y = self.y
+        y2 = self.y2
+      
+        if self.x_direction =="normal":
+            x_low = x
+            x_high = x2
+        else:
+            x_low = x2
+            x_high = x
+        
+        if self.y_direction == "normal":
+            y_low = y
+            y_high = y2
+        else:
+            y_low = y2
+            y_high = y
+
+
+        self.index_mapper.screen_bounds = (x_low, x_high, y_low, y_high)
         self.index_mapper_changed = True
-        self.index_mapper.x_low_pos = self.x 
-        self.index_mapper.x_high_pos = self.x2 
-        self.index_mapper.y_low_pos = self.y 
-        self.index_mapper.y_high_pos = self.y2 
         self.invalidate_draw() 
 
     def _update_index_data(self):

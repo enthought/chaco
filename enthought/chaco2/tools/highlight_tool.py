@@ -21,16 +21,15 @@ class HighlightTool(BaseTool):
     # Threshold distance for hit-testing.
     threshold = Float(20.0)
 
-
     #---------------------------------------------------------------------
     # Inherited BaseTool traits
     #---------------------------------------------------------------------
 
     # This tool is not drawn. Overrides BaseTool.
     draw_mode = "none"
+    
     # This tool is not visible. Overrides BaseTool.
     visible = False
-
 
     def normal_left_down(self, event):
         """ Handles the left mouse button being pressed.
@@ -51,10 +50,9 @@ class HighlightTool(BaseTool):
         return
 
     def _highlight(self, event):
-
         if isinstance(self.component, BasePlotContainer):
             event.offset_xy(self.component.x, self.component.y)
-            closest_plot = self._find_curve(self.component.plot_components, event)
+            closest_plot = self._find_curve(self.component.components, event)
             if closest_plot:
                 index = closest_plot.index
                 index.metadata['selections'] = ones(len(index.get_data()))
@@ -62,7 +60,7 @@ class HighlightTool(BaseTool):
             else:
                 # If we are attached to a plot container, then we can deselect
                 # all of the plots in the container
-                for p in self.component.plot_components:
+                for p in self.component.components:
                     if "selections" in p.index.metadata:
                         del p.index.metadata['selections']
                         p.request_redraw()
