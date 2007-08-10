@@ -442,11 +442,12 @@ class PlotAxis(AbstractOverlay):
         datahigh = self.mapper.range.high
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
-        if overlay_component is not None:
+        if overlay_component is not None and hasattr(overlay_component, "x_direction") and\
+                                             hasattr(overlay_component, "y_direction"):
             if self.orientation in ("top", "bottom"):
-                direction = getattr(overlay_component, 'x_direction', None)
+                direction = overlay_component.x_direction
             elif self.orientation in ("left", "right"):
-                direction = getattr(overlay_component, 'y_direction', None)
+                direction = overlay_component.y_direction
 
             if direction == "flipped":
                 screenlow, screenhigh = screenhigh, screenlow
@@ -561,9 +562,9 @@ class PlotAxis(AbstractOverlay):
 
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
-        # TODO: should this be here, or not?
         if direction == "flipped":
             screenlow, screenhigh = screenhigh, screenlow
+
         self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.

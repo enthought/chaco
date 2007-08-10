@@ -77,28 +77,6 @@ def set_grid(self, attr_name, new):
 GridProperty = Property(get_grid, set_grid)
 
 
-def get_direction(self, attr_name):
-    """ Getter function used by DirectionProperty.
-    """
-    if (attr_name,self.orientation) in [("x_direction","h"), 
-                                        ("y_direction","v")]:
-        return self.index_direction
-    else:
-        return self.value_direction
-
-def set_direction(self, attr_name, new):
-    """ Setter function used by DirectionProperty.
-    """
-    if (attr_name,self.orientation) in [("x_direction","h"), 
-                                        ("y_direction","v")]:
-        self.index_direction = new
-    else:
-        self.value_direction = new
-
-# Property that represents a axis direction for a particular orientation.
-DirectionProperty = Property(get_direction, set_direction)
-
-
 
 class DataView(OverlayPlotContainer):
     """ Represents a mapping from 2-D data space into 2-D screen space.
@@ -137,9 +115,9 @@ class DataView(OverlayPlotContainer):
     # The range used for the value data.
     value_range = Property
 
-    # The 2-D data range whose x- and y-ranges are exposed as the 
-    # **index_range** and **value_range** property traits. This allows 
-    # supporting both XY plots and 2-D (image) plots.
+    # The 2-D data range whose x- and y-ranges are exposed as the **index_range**
+    # and **value_range** property traits. This allows supporting both XY plots
+    # and 2-D (image) plots.
     range2d = Instance(DataRange2D)
     
     # Convenience property that offers access to whatever mapper corresponds
@@ -150,13 +128,7 @@ class DataView(OverlayPlotContainer):
     # to the Y-axis
     y_mapper = OrientedMapperProperty
 
-    # Convenience property that offers access to index_ or value_direction, 
-    # whichever corresponds to the x-direction in a 2D plot
-    x_direction = DirectionProperty
 
-    # Convenience property that offers access to index_ or value_direction, 
-    # whichever corresponds to the x-direction in a 2D plot
-    y_direction = DirectionProperty
 
     #------------------------------------------------------------------------
     # Axis and Grids
@@ -308,7 +280,7 @@ class DataView(OverlayPlotContainer):
 
     def _orientation_changed(self):
         self._update_mappers()
-        for renderer in self.components:
+        for renderer in self.plot_components:
             if hasattr(renderer, "orientation"):
                 renderer.orientation = self.orientation
         return
@@ -364,29 +336,6 @@ class DataView(OverlayPlotContainer):
         if new is not None:
             self.overlays.append(new)
 
-    def _range2d_changed(self, old, new):
-        if new is not None:
-            if self.index_mapper is not None:
-                self.index_mapper.range = new.x_range
-            if self.value_mapper is not None:
-                self.value_mapper.range = new.y_range
-        else:
-            self.index_mapper.range = None
-            self.value_mapper.range = None
-        if old is not None:
-            for datasource in old.sources[:]:
-                old.remove(datasource)
-                if new is not None:
-                    new.add(datasource)
-        for renderer in self.components:
-            if hasattr(renderer, 'range2d'):
-                setattr(renderer, 'range2d', new)
-            else:
-                if hasattr(renderer, 'index_range'):
-                    setattr(renderer, 'index_range', self.index_range)
-                if hasattr(renderer, 'value_range'):
-                    setattr(renderer, 'value_range', self.value_range)
-
 
 
     #------------------------------------------------------------------------
@@ -417,8 +366,6 @@ class DataView(OverlayPlotContainer):
                 if new is not None:
                     new.add(datasource)
         range_name = name + "_range"
-        for renderer in self.components:
+        for renderer in self.plot_components:
             if hasattr(renderer, range_name):
                 setattr(renderer, range_name, new)
-
-

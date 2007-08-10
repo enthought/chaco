@@ -85,7 +85,7 @@ def bin_search(values, value, ascending):
         if lo >= (hi - 1):
             return lo
 
-def reverse_map_1d(data, pt, sort_order, floor_only=False):
+def reverse_map_1d(data, pt, sort_order):
     """Returns the index of *pt* in the array *data*.
     
     Parameters
@@ -96,9 +96,6 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
         value to find, which must be within the value range of *data*
     sort_order : string
         "ascending" or "descending"
-    floor_only : bool
-        if true, don't find "nearest" point, instead find last point
-        less (greater) than pt
         
     Raises IndexError if *pt* is outside the range of values in *data*.
     """
@@ -111,8 +108,7 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
     
     if ndx == -1:
         raise IndexError, "value outside array data range"
-
-
+    
     # Now round the index to the closest matching index.  Do this
     # by determining the width (in value space) of each cell and
     # figuring out which side of the midpoint pt falls into.  Since
@@ -121,20 +117,12 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
     # at ndx+1 and not ndx-1 as well.
     last = len(data) - 1
     if ndx < last:
-        if floor_only:
-            return ndx
         delta = 0.5 * (data[ndx+1] - data[ndx])
         if pt > data[ndx] + delta:
             return ndx + 1
         else:
             return ndx
     else:
-        # NB: OK floor_only is typically used with image plots, which
-        # will have one extra "fencepost" so the assumption here is that
-        # if we hit the last point exactly we still really want the index
-        # of the previous point
-        if floor_only:
-            return last-1
         # If pt happened to match the value of data[last] exactly,
         # we just return it here.
         return last

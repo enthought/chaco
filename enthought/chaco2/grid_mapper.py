@@ -51,8 +51,6 @@ class GridMapper(AbstractMapper):
     #------------------------------------------------------------------------
     # Private Traits
     #------------------------------------------------------------------------
-
-    _updating_submappers = false
     
     _xmapper = Instance("Base1DMapper")
     _ymapper = Instance("Base1DMapper")
@@ -109,10 +107,10 @@ class GridMapper(AbstractMapper):
     #------------------------------------------------------------------------
 
     def _update_bounds(self):
-        self._updating_submappers = True
-        self._xmapper.screen_bounds = (self.x_low_pos, self.x_high_pos)
-        self._ymapper.screen_bounds = (self.y_low_pos, self.y_high_pos)
-        self._updating_submappers = False
+        self._xmapper.low_pos = self.x_low_pos
+        self._xmapper.high_pos = self.x_high_pos
+        self._ymapper.low_pos = self.y_low_pos
+        self._ymapper.high_pos = self.y_high_pos
         self.updated = True
 
     def _update_range(self):
@@ -131,21 +129,18 @@ class GridMapper(AbstractMapper):
             self._update_range()
 
     def _x_low_pos_changed(self):
-        self._xmapper.low_pos = self.x_low_pos
+        self._update_bounds()
 
     def _x_high_pos_changed(self):
-        self._xmapper.high_pos = self.x_high_pos
+        self._update_bounds()
 
     def _y_low_pos_changed(self):
-        self._ymapper.low_pos = self.y_low_pos
+        self._update_bounds()
 
     def _y_high_pos_changed(self):
-        self._ymapper.high_pos = self.y_high_pos
+        self._update_bounds()
 
     def _set_screen_bounds(self, new_bounds):
-        # TODO: figure out a way to not need to do this check:
-        if self.screen_bounds == new_bounds:
-            return
         self.set(x_low_pos = new_bounds[0], trait_change_notify=False)
         self.set(x_high_pos = new_bounds[1], trait_change_notify=False)
         self.set(y_low_pos = new_bounds[2], trait_change_notify=False)
@@ -157,11 +152,9 @@ class GridMapper(AbstractMapper):
                 self.y_low_pos, self.y_high_pos)
 
     def _updated_fired_for__xmapper(self):
-        if not self._updating_submappers:
-            self.updated = True
+        self.updated = True
     
     def _updated_fired_for__ymapper(self):
-        if not self._updating_submappers:
-            self.updated = True
+        self.updated = True
 
 

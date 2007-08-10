@@ -5,7 +5,7 @@ ImageInspectorColorbarOverlay classes.
 from enthought.traits.api import Any, Bool, Event, Tuple
 
 # Chaco imports
-from enthought.chaco2.api import AbstractOverlay, BaseTool, ImagePlot, TextBoxOverlay, KeySpec
+from enthought.chaco2.api import AbstractOverlay, BaseTool, ImagePlot, TextBoxOverlay
 
 
 class ImageInspectorTool(BaseTool):
@@ -20,24 +20,6 @@ class ImageInspectorTool(BaseTool):
     # Stores the last mouse position.  This can be used by overlays to
     # position themselves around the mouse.
     last_mouse_position = Tuple
-
-    inspector_key = KeySpec('p')
-   
-    def _inspect_image(self):
-        print self.component
-        for c in self.component.overlays:
-            c.visible = not c.visible
-        self.component.overlays = []
-   
-    def normal_key_pressed(self, event):
-        if self.inspector_key.match(event):
-            self._inspect_image()
-
-    def normal_mouse_leave(self, event):
-        for c in self.component.overlays:
-            c.visible = not c.visible
-
-        
 
     def normal_mouse_move(self, event):
         """ Handles the mouse being moved.
@@ -57,16 +39,11 @@ class ImageInspectorTool(BaseTool):
                 image_data = plot.value
                 if hasattr(plot, "_cached_mapped_image") and \
                        plot._cached_mapped_image is not None:
-                    self.new_value = \
-                            dict(indices=ndx,
-                                 data_value=image_data.data[y_index, x_index],
-                                 color_value=plot._cached_mapped_image[y_index, 
-                                                                       x_index])
+                    self.new_value = dict(data_value = image_data.data[y_index, x_index],
+                                          color_value = plot._cached_mapped_image[y_index, x_index])
                     
                 else:
-                    self.new_value = \
-                        dict(indices=ndx,
-                             color_value=image_data.data[y_index, x_index])
+                    self.new_value = dict(color_value = image_data.data[y_index, x_index])
                 self.last_mouse_position = (event.x, event.y)
         return
     
@@ -93,10 +70,10 @@ class ImageInspectorOverlay(TextBoxOverlay):
             new.on_trait_event(self._new_value_updated, 'new_value')
         
     def _new_value_updated(self, event):
-        print event
         if event is None:
             self.text = ""
             self.visible = False
+            self.component.request_redraw()
             return
         else:
             self.visible = True
@@ -108,17 +85,12 @@ class ImageInspectorOverlay(TextBoxOverlay):
         
         d = event
         newstring = ""
-        if 'indices' in d:
-            newstring += '(%d, %d)' % d['indices'] + '\n'
         if 'color_value' in d:
             newstring += "(%d, %d, %d)" % tuple(map(int,d['color_value'][:3])) + "\n"
         if 'data_value' in d:
             newstring += str(d['data_value'])
 
         self.text = newstring
-        self.component.request_redraw()
-
-    def _visible_changed(self):
         self.component.request_redraw()
     
 

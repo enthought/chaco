@@ -4,10 +4,10 @@
 from numpy import array
 
 # Enthought library imports
+from enthought.enable2.api import white_color_trait
 from enthought.kiva import STROKE, font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import List, Int, Float
-from enthought.enable2.api import white_color_trait
 
 
 # Local imports

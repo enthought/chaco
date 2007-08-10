@@ -8,17 +8,18 @@ import wx
 from numpy import arange
 
 # Enthought library imports
-from enthought.enable2.api import black_color_trait, LineStyle, ColorTrait, \
-    white_color_trait
 from enthought.enable2.traits.ui.wx.enable_rgba_color_editor import \
     EnableRGBAColorEditor
+from enthought.enable2.api import black_color_trait, LineStyle, ColorTrait, white_color_trait
 from enthought.enable2.wx_backend.api import Window
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Enum, false, List, Str, true, Range, Tuple, \
-    Bool, Trait, Int, Any, Property
+                                 Bool, Trait, Int, Any, \
+                                 Property
 from enthought.traits.ui.api import View, Item
 from enthought.traits.ui.wx.editor import Editor
 from enthought.traits.ui.wx.editor_factory import EditorFactory
+
 
 # Local relative imports
 from plot_containers import OverlayPlotContainer

@@ -118,9 +118,8 @@ class ContourLinePlot(Base2DPlot):
     def _update_contours(self):
         """ Updates the contour cache.
         """
-        # x and ydata are "fenceposts" so ignore the last value        
-        xg, yg = meshgrid(self.index._xdata.get_data()[:-1],
-                          self.index._ydata.get_data()[:-1])
+        xg, yg = meshgrid(self.index._xdata.get_data(),
+                          self.index._ydata.get_data()[::-1])
         c = Cntr(xg, yg, self.value.raw_value)
         self._cached_contours = {}
         for level in self._levels:

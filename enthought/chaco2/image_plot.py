@@ -94,13 +94,11 @@ class ImagePlot(Base2DPlot):
         if data == None:
                 data = self.value.data
 
-        (lpt, upt) = self.index.get_bounds()
+        x_index, y_index = self.index.get_data()
+        lpt = (x_index.get_data()[0], y_index.get_data()[0])
         ll_x, ll_y = self.map_screen([lpt])[0]
+        upt = (x_index.get_data()[-1], y_index.get_data()[-1])
         ur_x, ur_y = self.map_screen([upt])[0]
-        if self.x_direction == 'flipped':
-            ll_x, ur_x = ur_x, ll_x
-        if self.y_direction == 'flipped':
-            ll_y, ur_y = ur_y, ll_y
         virtual_width = ur_x - ll_x
         virtual_height = ur_y - ll_y
         

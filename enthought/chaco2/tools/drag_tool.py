@@ -1,7 +1,7 @@
 """ Defines the base DragTool class.
 """
 # Enthought library imports
-from enthought.traits.api import Enum, false, true, Tuple
+from enthought.traits.api import Any, Dict, Enum, false, Float, Instance, Trait, true, Tuple
 
 # Chaco imports
 from enthought.chaco2.api import BaseTool
