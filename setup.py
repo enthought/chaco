@@ -27,7 +27,7 @@ def etsdep(p, min, max=None, literal=False):
 
 # Declare our ETS project dependencies.
 ENABLE2 = etsdep('enthought.enable2', '2.0.0b1')
-ETSCONIFG = etsdep('enthought.etsconfig', '2.0.0b1')
+ETSCONFIG = etsdep('enthought.etsconfig', '2.0.0b1')
 KIVA = etsdep('enthought.kiva', '2.0.0b1')
 TRAITS = etsdep('enthought.traits', '2.0.0b1')
 
