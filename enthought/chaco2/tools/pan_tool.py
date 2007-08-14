@@ -56,6 +56,7 @@ class PanTool(BaseTool):
     # The tool does not have a visual representation (overrides
     # BaseTool).
     draw_mode = "none"
+
     # The tool is not visible (overrides BaseTool).
     visible = False
     
@@ -119,29 +120,24 @@ class PanTool(BaseTool):
         xrange = plot.x_mapper.range
         yrange = plot.y_mapper.range
 
-        if not self.constrain or self.constrain_direction == "x":
-            clicked_x = plot.x_mapper.map_data(event.x)
-            high = xrange.high
-            low = xrange.low
-            if high == low:
-                high = low + 1.0
-            xscale = plot.width / (high - low)
-            delta_x = self.speed * (event.x - self._original_xy[0]) / xscale
-            if getattr(plot, "x_direction", None) == "flipped":
-                delta_x = -delta_x
-            xrange.set_bounds(xrange.low - delta_x, xrange.high - delta_x)
+        for direction, bound_name, ndx in [("x","width",0), ("y","height",1)]:
+            mapper = getattr(plot, direction + "_mapper")
+            range = mapper.range
+            eventpos = getattr(event, direction)
+            origpos = self._original_xy[ndx]
 
-        if not self.constrain or self.constrain_direction == "y":
-            clicked_y = plot.y_mapper.map_data(event.y)
-            high = yrange.high
-            low = yrange.low
-            if high == low:
-                high = low + 1.0
-            yscale = plot.height / (high - low)
-            delta_y = self.speed * (event.y - self._original_xy[1]) / yscale
-            if getattr(plot, "y_direction", None) == "flipped":
-                delta_y = -delta_y
-            yrange.set_bounds(yrange.low - delta_y, yrange.high - delta_y)
+            if not self.constrain or self.constrain_direction == direction:
+                clicked = mapper.map_data(eventpos)
+                high = range.high
+                low = range.low
+                if high == low:
+                    high = low + 1.0
+
+                scale = getattr(plot, bound_name) / (high - low)
+                delta = self.speed * (eventpos - origpos) / scale
+                if getattr(plot, direction + "_direction", None) == "flipped":
+                    delta = -delta
+                range.set_bounds(range.low - delta, range.high - delta)
         
         event.handled = True
         
@@ -157,7 +153,7 @@ class PanTool(BaseTool):
         """
         return self._end_pan(event)
     
-    def _start_pan(self, event):
+    def _start_pan(self, event, capture_mouse=True):
         self._original_xy = (event.x, event.y)
         if self.constrain_key is not None:
             if getattr(event, self.constrain_key + "_down"):
@@ -165,8 +161,9 @@ class PanTool(BaseTool):
                 self._auto_constrain = True
                 self.constrain_direction = None
         self.event_state = "panning"
-        event.window.set_pointer(self.drag_pointer)
-        event.window.set_mouse_owner(self, event.net_transform())
+        if capture_mouse:
+            event.window.set_pointer(self.drag_pointer)
+            event.window.set_mouse_owner(self, event.net_transform())
         event.handled = True
         return
 

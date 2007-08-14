@@ -10,7 +10,7 @@ cancel the range selection.
 """
 
 # Major library imports
-from numpy import arange, sort
+from numpy import arange, exp, sort
 from numpy.random import random
 
 from enthought.chaco2.example_support import DemoFrame, demo_main
@@ -21,7 +21,7 @@ from enthought.enable2.api import Window
 # Chaco imports
 from enthought.chaco2.api import ArrayPlotData, ColorBar, \
                                  ColormappedSelectionOverlay, HPlotContainer, \
-                                 hsv, LinearMapper, Plot
+                                 jet, LinearMapper, Plot
 from enthought.chaco2.tools.api import PanTool, SimpleZoom, RangeSelection, \
                                        RangeSelectionOverlay
 
@@ -35,7 +35,7 @@ class PlotFrame(DemoFrame):
         numpts = 5000
         x = sort(random(numpts))
         y = random(numpts)
-        color = random(numpts)
+        color = exp(-(x**2 + y**2))
 
         # Create a plot data obect and give it this data
         pd = ArrayPlotData()
@@ -48,7 +48,7 @@ class PlotFrame(DemoFrame):
         plot.plot(("index", "value", "color"),
                   type="cmap_scatter",
                   name="my_plot",
-                  color_mapper=hsv,
+                  color_mapper=jet,
                   marker = "square",
                   fill_alpha = 0.5,
                   marker_size = 6,

@@ -17,7 +17,7 @@ class Tut3Frame(Tut2Frame):
 
         # Grab the two plots out of the container and set their
         # ranges to be the same.
-        plot1, plot2 = container.plot_components
+        plot1, plot2 = container.components
         plot2.value_range = plot1.value_range
         plot2.index_range = plot1.index_range
         return container

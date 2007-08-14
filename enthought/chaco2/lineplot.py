@@ -5,8 +5,8 @@
 import logging
 
 # Major library imports
-from numpy import any, argsort, array, compress, concatenate, invert, isnan, \
-                  take, transpose, zeros
+from numpy import any, argsort, array, compress, concatenate, inf, invert, isnan, \
+                  ndarray, take, transpose, zeros
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, ColorTrait, LineStyle
@@ -14,7 +14,7 @@ from enthought.traits.api import Float, List
 from enthought.traits.ui.api import Item, View
 
 # Local relative imports
-from base import arg_find_runs, bin_search
+from base import arg_find_runs, bin_search, reverse_map_1d
 from base_xy_plot import BaseXYPlot
 
 
@@ -62,7 +62,6 @@ class LinePlot(BaseXYPlot):
     _cached_screen_pts = List
 
 
-
     def hittest(self, screen_pt, threshold=7.0):
         """
         Tests whether the given screen point is within *threshold* pixels of 
@@ -72,12 +71,24 @@ class LinePlot(BaseXYPlot):
         Note: This only checks data points and *not* the actual line segments
         connecting them.
         """
-        # TODO: implement point-line distance computation so this method isn't
-        #       quite so limited!
         ndx = self.map_index(screen_pt, threshold)
         if ndx is not None:
             return (self.index.get_data()[ndx], self.value.get_data()[ndx])
         else:
+            data_x = self.map_data(screen_pt)
+            xmin, xmax = self.index.get_bounds()
+            if xmin <= data_x <= xmax:
+                if self.orientation == "h":
+                    sy = screen_pt[1]
+                else:
+                    sy = screen_pt[0]
+            
+                interp_val = self.interpolate(data_x)
+                interp_y = self.value_mapper.map_screen(interp_val)
+                
+                if abs(sy - interp_y) <= threshold:
+                    return reverse_map_1d(self.index.get_data(), data_x,
+                                          self.index.sort_order)
             return None
 
     def interpolate(self, index_value):
@@ -93,7 +104,6 @@ class LinePlot(BaseXYPlot):
         index_data = self.index.get_data()
         value_data = self.value.get_data()
 
-        from base import reverse_map_1d
         ndx = reverse_map_1d(index_data, index_value, self.index.sort_order)
 
         # quick test to see if this value is already in the index array
@@ -114,9 +124,10 @@ class LinePlot(BaseXYPlot):
 
         if x1 != x0:
             slope = float(y1 - y0)/float(x1 - x0)
-
-        dx = index_value - x0
-        yp = y0 + slope * dx
+            dx = index_value - x0
+            yp = y0 + slope * dx
+        else:
+            yp = inf
 
         return yp
 
@@ -169,21 +180,13 @@ class LinePlot(BaseXYPlot):
 
             points = []
             for block in blocks:
-                start, end = block  # obviated by fancy indexing in numpy
+                start, end = block
                 block_index = index[start:end]
                 block_value = value[start:end]
                 index_mask = self.index_mapper.range.mask_data(block_index)
-                value_mask = self.value_mapper.range.mask_data(block_value)
 
-                # Optimization: see if we can clip out extraneous values; if
-                # this leads to an empty mask, then just use the index mask
-                # to be safe.
-                point_mask = index_mask & value_mask
-                if not any(point_mask):
-                    point_mask = index_mask
-
-                runs = [r for r in arg_find_runs(point_mask, "flat") \
-                        if point_mask[r[0]] != 0]
+                runs = [r for r in arg_find_runs(index_mask, "flat") \
+                        if index_mask[r[0]] != 0]
 
                 # Check to see if our data view region is between two points in the
                 # index data.  If so, then we have to reverse map our current view
@@ -214,7 +217,7 @@ class LinePlot(BaseXYPlot):
                 else:
                     # Expand the width of every group of points so we draw the lines
                     # up to their next point, outside the plot area
-                    data_end = len(point_mask)
+                    data_end = len(index_mask)
                     for run in runs:
                         start, end = run
                         if start != 0:
@@ -271,8 +274,8 @@ class LinePlot(BaseXYPlot):
 
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
-        if self.index.metadata.get('selections') is not None:
-            if type(self.index.metadata['selections']) in (array, list) and \
+        if self.index.metadata.get('selections', None) is not None:
+            if type(self.index.metadata['selections']) in (ndarray, list) and \
                                 len(self.index.metadata['selections']) > 0:
                 # TODO: use mask in metadata to select certain regions
                 # for now, assume whole line is selected

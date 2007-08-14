@@ -51,8 +51,9 @@ class PlotFrame(DemoFrame):
                                         tool_mode="box", always_on=False))
 
         imgtool = ImageInspectorTool(img_plot)
-        plot.tools.append(imgtool)
-        plot.overlays.append(ImageInspectorOverlay(image_inspector=imgtool))
+        img_plot.tools.append(imgtool)
+        plot.overlays.append(ImageInspectorOverlay(component=img_plot, 
+                                                   image_inspector=imgtool))
         # Return a window containing our plot
         return Window(self, -1, component=plot, bg_color="lightgray")
 

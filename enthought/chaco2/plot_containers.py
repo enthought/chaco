@@ -4,8 +4,9 @@
 from numpy import arange, array, cumsum, hstack, isnan, ones, sum, zeros
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Either, Enum, false, Float, List, Property, \
-                                 true, Trait, Tuple
+from enthought.traits.api \
+    import Any, Array, Either, Enum, false, Float, Instance, List, Property, \
+           true, Trait, Tuple
 from enthought.enable2.api import Container
 
 # Local relative imports
@@ -15,12 +16,16 @@ from base_plot_container import BasePlotContainer
 __all__ = ["OverlayPlotContainer", "HPlotContainer", "VPlotContainer", \
            "GridPlotContainer"]
 
+DEFAULT_DRAWING_ORDER = ["background", "image", "underlay",      "plot",
+                         "selection", "border", "annotation", "overlay"]
 
 class OverlayPlotContainer(BasePlotContainer):
     """
     A plot container that stretches all its components to fit within its
     space.  All of its components must therefore be resizable.
     """
+
+    draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     
     # Do not use an off-screen backbuffer.
     use_backbuffer = False
@@ -37,7 +42,7 @@ class OverlayPlotContainer(BasePlotContainer):
             return self.bounds
         
         if components is None:
-            components = self.plot_components
+            components = self.components
         
         # this is used to determine if we should use our default bounds
         no_visible_components = True
@@ -61,15 +66,15 @@ class OverlayPlotContainer(BasePlotContainer):
                 if pref_size[1] > max_height:
                     max_height = pref_size[1]
 
-        if no_visible_components or (max_width == 0):
-            max_width = self.default_size[0]
-        elif "h" not in self.resizable:
+        if "h" not in self.resizable:
             max_width = self.width
+        elif no_visible_components or (max_width == 0):
+            max_width = self.default_size[0]
             
-        if no_visible_components or (max_height == 0):
-            max_height = self.default_size[1]
-        elif "v" not in self.resizable:
+        if "v" not in self.resizable:
             max_height = self.height
+        elif no_visible_components or (max_height == 0):
+            max_height = self.default_size[1]
         
         # Add in our padding and border
         self._cached_preferred_size = (max_width, max_height)
@@ -89,7 +94,7 @@ class OverlayPlotContainer(BasePlotContainer):
         width = self.width
         height = self.height
         
-        for component in self.plot_components:
+        for component in self.components:
             if not self._should_layout(component):
                 continue
             
@@ -101,7 +106,7 @@ class OverlayPlotContainer(BasePlotContainer):
                 component.outer_height = height
         
         # Tell all of our components to do a layout
-        for component in self.plot_components:
+        for component in self.components:
             component.do_layout()
         return
 
@@ -110,6 +115,8 @@ class StackedPlotContainer(BasePlotContainer):
     """
     Base class for 1-D stacked plot containers, both horizontal and vertical.
     """
+
+    draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     
     # The dimension along which to stack components that are added to
     # this container.
@@ -132,7 +139,7 @@ class StackedPlotContainer(BasePlotContainer):
             return self.bounds
         
         if components is None:
-            components = self.plot_components
+            components = self.components
 
         ndx = self.stack_index
         other_ndx = 1 - ndx
@@ -280,8 +287,10 @@ class HPlotContainer(StackedPlotContainer):
     A plot container that stacks all of its components horizontally. Resizable
     components share the free space evenly. All components are stacked from 
     according to **stack_order* in the same order that they appear in the
-    **plot_components** list. 
+    **components** list. 
     """
+
+    draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     
     # The order in which components in the plot container are laid out.
     stack_order = Enum("left_to_right", "right_to_left")
@@ -298,9 +307,9 @@ class HPlotContainer(StackedPlotContainer):
         """ Actually performs a layout (called by do_layout()).
         """
         if self.stack_order == "left_to_right":
-            components = self.plot_components
+            components = self.components
         else:
-            components = self.plot_components[::-1]
+            components = self.components[::-1]
         
         if self.valign == "bottom":
             align = "min"
@@ -328,6 +337,8 @@ class VPlotContainer(StackedPlotContainer):
     A plot container that stacks plot components vertically.  
     """
     
+    draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
+
     # Overrides StackedPlotContainer.
     stack_dimension = "v"
     # Overrides StackedPlotContainer.
@@ -350,9 +361,9 @@ class VPlotContainer(StackedPlotContainer):
         """ Actually performs a layout (called by do_layout()).
         """
         if self.stack_order == "bottom_to_top":
-            components = self.plot_components
+            components = self.components
         else:
-            components = self.plot_components[::-1]
+            components = self.components[::-1]
         if self.halign == "left":
             align = "min"
         elif self.halign == "center":
@@ -374,6 +385,8 @@ class GridPlotContainer(BasePlotContainer):
     **shape** trait.
     """
     
+    draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
+
     # The amount of space to put on either side of each component, expressed
     # as a tuple (h_spacing, v_spacing).
     spacing = Either(Tuple, List, Array)
@@ -478,7 +491,6 @@ class GridPlotContainer(BasePlotContainer):
         """
         if self._cached_total_size is None:
             self.get_preferred_size()
-        
         size = self.bounds[:]
         if self.fit_components != "":
             self.get_preferred_size()
@@ -503,10 +515,15 @@ class GridPlotContainer(BasePlotContainer):
             spacing = array(self.spacing)
         total_spacing = spacing * 2 * shape
         avail_space = array(size) - array(self._cached_total_size)
-        resiz_width, resiz_height = avail_space / array([sum(resiz_cols), sum(resiz_rows)])
-        if isnan(resiz_width):
+        num_resiz_cols = sum(resiz_cols)
+        if num_resiz_cols > 0:
+            resiz_width = avail_space[0] / num_resiz_cols
+        else:
             resiz_width = 0.0
-        if isnan(resiz_height):
+        num_resiz_rows = sum(resiz_rows)
+        if num_resiz_rows > 0:
+            resiz_height = avail_space[1] / num_resiz_rows
+        else:
             resiz_height = 0.0
 
         # Set up the arrays of widths and heights
@@ -555,11 +572,13 @@ class GridPlotContainer(BasePlotContainer):
                         x += (w - component.width) / 2
 
                 component.outer_position = [x,y]
-                component.outer_height = h
-                component.outer_width = w
+                if "v" in r:
+                    component.outer_height = h
+                if "h" in r:
+                    component.outer_width = w
 
                 # TODO: figure out why the following causes a layout inconsistency:
-                # component.outer_bounds = [w,h]
+                #component.outer_bounds = [w,h]
 
                 component.do_layout()
         return
@@ -569,10 +588,10 @@ class GridPlotContainer(BasePlotContainer):
         Adjusts self.shape accordingly.
         """
         numcells = self.shape[0] * self.shape[1]
-        if numcells < len(self.plot_components):
-            numrows, numcols = divmod(len(self.plot_components), self.shape[0])
+        if numcells < len(self.components):
+            numrows, numcols = divmod(len(self.components), self.shape[0])
             self.shape = (numrows, numcols)
-        grid = array(self.plot_components, dtype=object)
+        grid = array(self.components, dtype=object)
         grid.resize(self.shape)
         grid[grid==0] = None
         self._grid = grid
@@ -582,10 +601,10 @@ class GridPlotContainer(BasePlotContainer):
     def _shape_changed(self, old, new):
         self._reflow_layout()
 
-    def _plot_components_changed(self, old, new):
+    def __components_changed(self, old, new):
         self._reflow_layout()
 
-    def _plot_components_items_changed(self, event):
+    def __components_items_changed(self, event):
         self._reflow_layout()
 
     def _get_component_grid(self):
@@ -596,8 +615,6 @@ class GridPlotContainer(BasePlotContainer):
         self.set(shape=grid.shape, trait_change_notify=False)
         self._components = list(grid.flatten())
         
-        # This causes _plot_components_changed() to be called
-        self.plot_components = list(grid.flatten())
         return
 
 

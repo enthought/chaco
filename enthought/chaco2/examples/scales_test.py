@@ -30,15 +30,12 @@ from enthought.traits.api import false
 from enthought.chaco2.api import create_line_plot, add_default_axes, \
                                  OverlayPlotContainer, PlotLabel, VPlotContainer, \
                                  create_scatter_plot, Legend, PlotComponent, PlotGrid
-from enthought.chaco2.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco2.scales_axis import PlotAxis
-
 from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
                                        LegendTool, TraitsTool
 
-from scales.api import CalendarScaleSystem
-import pdb
-
+from enthought.chaco2.scales.api import CalendarScaleSystem
+from enthought.chaco2.scales_tick_generator import ScalesTickGenerator
+from enthought.chaco2.scales_axis import PlotAxis
 
 def add_default_axes(plot, orientation="normal", vtitle="",htitle=""):
     """
@@ -94,9 +91,6 @@ def add_default_grids(plot, orientation="normal", tick_gen=None):
     plot.underlays.append(vgrid)
 #    plot.underlays.append(hgrid)
     return hgrid, vgrid
-
-
-
 
 
 class PlotFrame(DemoFrame):

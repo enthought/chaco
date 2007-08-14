@@ -1,6 +1,7 @@
 from broadcaster import BroadcasterTool
 from dataprinter import DataPrinter
 from data_label_tool import DataLabelTool
+from drag_zoom import DragZoom
 from drag_tool import DragTool
 from draw_points_tool import DrawPointsTool
 from highlight_tool import HighlightTool

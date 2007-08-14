@@ -155,12 +155,14 @@ class PlotUI(HasTraits):
                                         color_mapper=\
                                             self._cmap(image_value_range),
                                         levels=self.num_levels)
+        self.polyplot.y_direction = "flipped"
 
         self.lineplot = ContourLinePlot(index=self._image_index, 
                                         value=self._image_value, 
                                         index_mapper=GridMapper(range=
                                             self.polyplot.index_mapper.range),
                                         levels=self.num_levels)
+        self.lineplot.y_direction = "flipped"
 
 
         # Add a left axis to the plot
@@ -171,7 +173,7 @@ class PlotUI(HasTraits):
         self.polyplot.overlays.append(left)
     
         # Add a bottom axis to the plot
-        bottom = PlotAxis(orientation='bottom',
+        bottom = PlotAxis(orientation='top',
                           title= "x",
                           mapper=self.polyplot.index_mapper._xmapper,
                           component=self.polyplot)
@@ -298,22 +300,21 @@ class PlotUI(HasTraits):
             if y_ndx and x_ndx:
                 y_ndx = -y_ndx
                 self.pd.set_data("line_value", 
-                                       self._image_value.data[y_ndx,:])
+                                 self._image_value.data[-y_ndx,:])
                 self.pd.set_data("line_value2", 
-                                       self._image_value.data[::-1,x_ndx])
+                                 self._image_value.data[::-1,x_ndx])
                 xdata, ydata = self._image_index.get_data()
-                self.pd.set_data("scatter_index",
-                    array([xdata.get_data()[x_ndx]]))
-                self.pd.set_data("scatter_index2",
-                    array([ydata.get_data()[-y_ndx]]))
+                xdata, ydata = xdata.get_data(), ydata.get_data()[::-1]
+                self.pd.set_data("scatter_index", array([xdata[x_ndx]]))
+                self.pd.set_data("scatter_index2", array([ydata[-y_ndx]]))
                 self.pd.set_data("scatter_value",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
+                    array([self._image_value.data[-y_ndx, x_ndx]]))
                 self.pd.set_data("scatter_value2",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
+                    array([self._image_value.data[-y_ndx, x_ndx]]))
                 self.pd.set_data("scatter_color",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
+                    array([self._image_value.data[-y_ndx, x_ndx]]))
                 self.pd.set_data("scatter_color2",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
+                    array([self._image_value.data[-y_ndx, x_ndx]]))
         else:
             self.pd.set_data("scatter_value", array([]))
             self.pd.set_data("scatter_value2", array([]))

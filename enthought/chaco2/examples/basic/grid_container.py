@@ -34,18 +34,18 @@ class PlotFrame(DemoFrame):
         # Create a GridContainer to hold all of our plots
         container = GridContainer(padding=20, fill_padding=True,
                                   bgcolor="lightgray", use_backbuffer=True,
-                                  shape=(2,4), spacing=(12,12))
+                                  shape=(2,3), spacing=(12,12))
         
         # Create the initial series of data
         x = linspace(-5, 15.0, 100)
         pd = ArrayPlotData(index = x)
         
         # Plot some bessel functions and add the plots to our container
-        for i in range(8):
+        for i in range(6):
             pd.set_data("y" + str(i), jn(i,x))
             plot = Plot(pd)
             plot.plot(("index", "y" + str(i)), 
-                      color=tuple(COLOR_PALETTE[i]), width=2.0,
+                      color=tuple(COLOR_PALETTE[i]), line_width=2.0,
                       bgcolor = "white", border_visible=True)
 
             # Tweak some of the plot properties
@@ -62,13 +62,13 @@ class PlotFrame(DemoFrame):
 
         # Set the upper-left plot to only be resizable vertically, and to have
         # a fixed horizontal width
-        ul_plot = container.plot_components[0]
+        ul_plot = container.components[0]
         ul_plot.set(resizable="v", padding_top=30, width=200)
         ul_plot.overlays.append(PlotLabel("Vertically resizable", 
                                           component=ul_plot))
 
         # Set the bottom center plot to have a fixed width and height
-        cplot = container.plot_components[4]
+        cplot = container.components[4]
         cplot.set(resizable="", padding_top = 30, bounds=[400,400])
         cplot.overlays.append(PlotLabel("Not resizable", component=cplot))
 

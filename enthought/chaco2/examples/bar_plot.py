@@ -6,7 +6,8 @@ from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 
 # Enthought library imports
 from enthought.traits.api import HasTraits, Float, Int, Instance, Range,\
-                             true, false, RGBAColor
+                             true, false
+from enthought.enable2.traits.rgba_color_trait import RGBAColor
 from enthought.traits.ui.api import View, Group, Item
 from enthought.enable2.api import Window
 
@@ -76,8 +77,8 @@ class PlotFrame(DemoFrame, HasTraits):
         data = sin(index) + 2
         return (range(1, 10), data)
 
-    def _create_window(self):        
-        container = OverlayPlotContainer(use_draw_order=False, bgcolor = "white")
+    def _create_window(self):
+        container = OverlayPlotContainer(bgcolor = "white")  # use_draw_order=False,
         
         self.container = container
         

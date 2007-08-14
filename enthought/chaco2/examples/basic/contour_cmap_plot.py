@@ -17,7 +17,7 @@ from enthought.enable2.api import Window
 
 # Chaco imports
 from enthought.chaco2.api import ArrayPlotData, ColorBar, gmt_drywet, \
-                                 HPlotContainer, jet,  LinearMapper, Plot
+                                 HPlotContainer, LinearMapper, Plot
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 
@@ -28,9 +28,9 @@ class PlotFrame(DemoFrame):
         # Create a scalar field to colormap
         xs = linspace(-2*pi, 2*pi, 200)
         ys = linspace(-1.5*pi, 1.5*pi, 100)
-        xg, yg = meshgrid(xs,ys)
-        zs = sin(log(abs((xg+1)**4)+0.05))*cos(yg)*1.1*yg + \
-                sin(((xg+1)**2 + yg**2)/4)
+        x, y = meshgrid(xs,ys)
+        zs = sin(log(abs((x+1)**4)+0.05))*cos(y)*1.1*y + \
+                sin(((x+1)**2 + y**2)/4)
         
         # Create a plot data obect and give it this data
         pd = ArrayPlotData()
@@ -42,7 +42,7 @@ class PlotFrame(DemoFrame):
                        name="cm_plot",
                        xbounds=xs,
                        ybounds=ys,
-                       colormap=jet)
+                       colormap=gmt_drywet)
         lplot.contour_plot("imagedata", 
                            type="line",
                            xbounds=xs,

@@ -18,7 +18,7 @@ class Tut4Frame(Tut3Frame):
 
         # Before we return the container, though, we'll modify some of its
         # contents.
-        plot1, plot2 = container.plot_components
+        plot1, plot2 = container.components
         self.plot1 = plot1
         self.plot2 = plot2
 

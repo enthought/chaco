@@ -19,7 +19,7 @@ from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.enable2.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, hsv, Plot
+from enthought.chaco2.api import ArrayPlotData, jet, Plot
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 from enthought.chaco2.tools.image_inspector_tool import ImageInspectorTool, \
      ImageInspectorOverlay
@@ -44,7 +44,7 @@ class PlotFrame(DemoFrame):
         img_plot = plot.img_plot("imagedata", 
                                  xbounds=xs,
                                  ybounds=ys,
-                                 colormap=hsv)[0]
+                                 colormap=jet)[0]
 
         # Tweak some of the plot properties
         plot.title = "My First Image Plot"

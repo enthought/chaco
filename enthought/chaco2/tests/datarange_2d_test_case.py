@@ -4,7 +4,7 @@ import unittest
 from numpy import alltrue, arange, array, ravel, transpose, ones, zeros, inf, isinf
 from enthought.util.testingx import *
 
-from enthought.chaco2.api import DataRange2D, PointDataSource
+from enthought.chaco2.api import DataRange2D, GridDataSource, PointDataSource
 
 
 class DataRange2DTestCase(unittest.TestCase):
@@ -91,6 +91,61 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.low, [0.0,0.0])
         assert_ary_(r.high, [90.,90.])
         return
+
+    def test_grid_source(self):
+        test_xd1 = array([1,2,3])
+        test_yd1 = array([1.5, 0.5, -0.5, -1.5])
+        test_sort_order1 = ('ascending', 'descending')
+        test_xd2 = array([0,50,100])
+        test_yd2 = array([0.5, 0.75, 1])
+        ds1 = GridDataSource(xdata=test_xd1, ydata=test_yd1,
+                            sort_order=test_sort_order1)
+        ds2 = GridDataSource(xdata=test_xd2, ydata=test_yd2)
+    
+        r = DataRange2D()
+
+        r.add(ds1)
+        assert_ary_(r.low, array([1,-1.5]))
+        assert_ary_(r.high, array([3,1.5]))
+
+        r.add(ds2)
+        assert_ary_(r.low, array([0.0,-1.5]))
+        assert_ary_(r.high, array([100,1.5]))
+
+        r.remove(ds1)
+        assert_ary_(r.low, array([0,0.5]))
+        assert_ary_(r.high, array([100,1]))
+
+        r.remove(ds2)
+        assert_ary_(r.low, array([-inf,-inf]))
+        assert_ary_(r.high, array([inf,inf]))
+
+
+    def test_set_bounds(self):
+        test_xd = array([-10,10])
+        test_yd = array([-10,10])
+        ds = GridDataSource(xdata=test_xd, ydata=test_yd)
+
+        r = DataRange2D()
+
+        r.set_bounds((-1,-2), (3,4))
+        assert_ary_(r.low, array([-1,-2]))
+        assert_ary_(r.high, array([3,4]))
+
+        r.add(ds)
+        assert_ary_(r.low, array([-1,-2]))
+
+        r.low_setting = ('auto','auto')
+        assert_ary_(r.low, array([-10,-10]))
+        assert_ary_(r.high, array([3,4]))
+
+        r.high_setting = ('auto','auto')
+        assert_ary_(r.low, array([-10,-10]))
+        assert_ary_(r.high, array([10,10]))
+
+        r.set_bounds((-100,-100), (100,100))
+        assert_ary_(r.low, array([-100,-100]))
+        assert_ary_(r.high, array([100,100]))
 
 
     def test_clip_data(self):

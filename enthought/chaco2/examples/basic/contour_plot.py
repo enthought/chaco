@@ -18,7 +18,7 @@ from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.enable2.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, hsv, Plot
+from enthought.chaco2.api import ArrayPlotData, jet, Plot
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 
@@ -40,10 +40,10 @@ class PlotFrame(DemoFrame):
         plot = Plot(pd)
         plot.contour_plot("imagedata", 
                           type="poly",
-                          poly_cmap=hsv,
+                          poly_cmap=jet,
                           xbounds=(xs[0], xs[-1]), 
                           ybounds=(ys[0], ys[-1]),
-                          colormap=hsv)
+                          colormap=jet)
 
         # Create a contour line plot for the data, too
         plot.contour_plot("imagedata", 

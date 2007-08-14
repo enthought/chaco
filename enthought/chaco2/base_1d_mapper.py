@@ -70,7 +70,9 @@ class Base1DMapper(AbstractMapper):
 
     def _set_screen_bounds(self, new_bounds):
         self.set(low_pos = new_bounds[0], trait_change_notify=False)
-        self.high_pos = new_bounds[1]
+        self.set(high_pos = new_bounds[1], trait_change_notify=False)
+        self._cache_valid = False
+        self.updated = True
         return
 
 # EOF

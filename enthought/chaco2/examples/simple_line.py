@@ -4,6 +4,8 @@ Draws several overlapping line plots.
 
 Left-drag pans the plot.
 
+Right-drag (in the Y direction) zooms the plot in and out.
+
 Mousewheel up and down zooms the plot in and out.
 
 Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular region to
@@ -31,7 +33,7 @@ from enthought.chaco2.api import create_line_plot, add_default_axes, \
                                  PlotLabel, VPlotContainer, \
                                  create_scatter_plot, Legend, PlotComponent
 from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
-                                       LegendTool, TraitsTool, SaveTool
+                                       LegendTool, TraitsTool, DragZoom
 
 
 
@@ -73,8 +75,17 @@ class PlotFrame(DemoFrame):
 
             if i==0:
                 plot.tools.append(PanTool(plot))
+                
+                # The SimpleZoom tool is stateful and allows drawing a zoom
+                # box to select a zoom region.
                 zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
                 plot.overlays.append(zoom)
+
+                # The DragZoom tool just zooms in and out as the user drags
+                # the mouse vertically.
+                dragzoom = DragZoom(plot, drag_button="right")
+                plot.tools.append(dragzoom)
+
                 # Add a legend in the upper right corner, and make it relocatable
                 legend = Legend(component=plot, padding=10, align="ur")
                 legend.tools.append(LegendTool(legend, drag_button="right"))
@@ -94,7 +105,6 @@ class PlotFrame(DemoFrame):
 
         # Add the traits inspector tool to the container
         container.tools.append(TraitsTool(container))
-        container.tools.append(SaveTool(container, filename="simple_line.pdf"))
 
         return Window(self, -1, component=container)
 
