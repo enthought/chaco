@@ -13,7 +13,7 @@ class PanTool(BaseTool):
     """
     
     # The mouse button that initiates the drag operation.
-    drag_button = Enum("left", "right")
+    drag_button = Enum("left", "middle", "right")
     
     # The cursor to use when panning.
     drag_pointer = Pointer("hand")
@@ -84,6 +84,16 @@ class PanTool(BaseTool):
             self._start_pan(event)
         return
 
+    def normal_middle_down(self, event):
+        """ Handles the middle mouse button being pressed when the tool is in
+        the 'normal' state.
+        
+        Starts panning if the middle mouse button is the drag button.
+        """
+        if self.drag_button == "middle":
+            self._start_pan(event)
+        return
+
     def panning_left_up(self, event):
         """ Handles the left mouse button coming up when the tool is in the 
         'panning' state.
@@ -101,6 +111,16 @@ class PanTool(BaseTool):
         Stops panning if the right mouse button is the drag button.
         """
         if self.drag_button == "right":
+            self._end_pan(event)
+        return
+
+    def panning_middle_up(self, event):
+        """ Handles the middle mouse button coming up when the tool is in the 
+        'panning' state.
+        
+        Stops panning if the middle mouse button is the drag button.
+        """
+        if self.drag_button == "middle":
             self._end_pan(event)
         return
 
