@@ -70,6 +70,7 @@ from colormapped_selection_overlay import ColormappedSelectionOverlay
 from scatter_markers import marker_trait
 from polygon_plot import PolygonPlot
 from errorbar_plot import ErrorBarPlot
+from filled_line_plot import FilledLinePlot
 
 # Plot factories
 from plot_factory import create_bar_plot, create_line_plot, create_scatter_plot, \
