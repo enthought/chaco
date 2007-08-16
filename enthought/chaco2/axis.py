@@ -341,13 +341,13 @@ class PlotAxis(AbstractOverlay):
 
         if self.title_angle == 0:
             text_center_to_corner = -tl_bounds/2.0
+            v_offset = max([l._bounding_box[1] for l in self.ticklabel_cache]) * 1.3
         else:
-            v_offset *= 2.3 # Hack until we have some better geometry code
+            v_offset = max([l._bounding_box[0] for l in self.ticklabel_cache]) * 1.3
             corner_vec = transpose(-tl_bounds/2.0)
             rotmatrix = self._rotmatrix(-self.title_angle*pi/180.0)
             text_center_to_corner = transpose(dot(rotmatrix, corner_vec))[0]
 
-        # would be good to count tick height, but more complicated.
         offset = (self._origin_point+self._end_axis_point)/2
         center_dist = self._center_dist(-self._inside_vector, tl_bounds[0], tl_bounds[1], rotation=self.title_angle)
         offset -= self._inside_vector * (center_dist + v_offset)

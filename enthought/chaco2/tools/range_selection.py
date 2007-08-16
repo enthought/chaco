@@ -5,7 +5,7 @@ from numpy import array
 
 # Enthought library imports
 from enthought.enable2.api import ColorTrait
-from enthought.traits.api import Any, Array, Enum, Event, false, Float, Int, List, \
+from enthought.traits.api import Any, Array, Bool, Enum, Event, false, Float, Int, List, \
                              Property, Str, Trait, true, Tuple
 
 # Chaco imports
@@ -77,14 +77,14 @@ class RangeSelection(AbstractController):
     #------------------------------------------------------------------------
     
     # Can the user resize the selection once it has been drawn?
-    enable_resize = true
+    enable_resize = Bool(True)
     
     # The pixel distance between the mouse event and a selection endpoint at
     # which the user action will be construed as a resize operation.
     resize_margin = Int(7)
     
     # Allow the left button begin a selection?
-    left_button_selects = false
+    left_button_selects = Bool(False)
     
     #------------------------------------------------------------------------
     # Private traits
