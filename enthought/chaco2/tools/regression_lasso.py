@@ -3,6 +3,7 @@
 # Major library imports
 from numpy import compress
 from scipy import polyfit
+from math import fabs
 
 # Enthought library imports
 from enthought.enable2.api import ColorTrait, LineStyle
@@ -54,10 +55,17 @@ class RegressionOverlay(LassoOverlay):
         if selection.fit_params is not None:
             # draw the label overlay 
             self._label.component = self.component
-            self._label.text = "%.2fx + %.2f" % selection.fit_params
+            c = self.component
+
+            if selection.fit_params[1] < 0:
+                operator = "-"
+            else:
+                operator = "+"
+            self._label.text = "%.2fx "%selection.fit_params[0] + operator + \
+                               " %.2f" % fabs(selection.fit_params[1])
             w, h = self._label.get_width_height(gc)
-            x = (self.component.x+self.component.x2)/2 - w/2
-            y = self.component.y + 5  # add some padding on the bottom
+            x = (c.x+c.x2)/2 - w/2
+            y = c.y + 5  # add some padding on the bottom
             gc.save_state()
             gc.translate_ctm(x, y)
             self._label.draw(gc)
@@ -66,16 +74,24 @@ class RegressionOverlay(LassoOverlay):
             # draw the line
             slope, y0 = selection.fit_params
             f = lambda x: slope*x + y0
-            cx, cy = self.component.map_screen([selection.centroid])[0]
-            left = self.component.x
-            right = self.component.x2
+            cx, cy = c.map_screen([selection.centroid])[0]
+            left = c.x
+            right = c.x2
+
+            left_x = c.map_data([left, c.y])[0]
+            right_x = c.map_data([right, c.y])[0]
+            left_y = f(left_x)
+            right_y = f(right_x)
+
+            left_pt, right_pt = c.map_screen([[left_x, left_y], [right_x, right_y]])
+
             gc.save_state()
             try:
                 gc.set_line_dash(self.line_style_)
                 gc.set_stroke_color(self.line_color_)
                 gc.set_line_width(self.line_width)
-                gc.move_to(left, cy - f(cx-left))
-                gc.line_to(right, cy + f(right - cx))
+                gc.move_to(*left_pt)
+                gc.line_to(*right_pt)
                 gc.stroke_path()
             finally:
                 gc.restore_state()
