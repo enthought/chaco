@@ -196,7 +196,7 @@ class PlotAxis(AbstractOverlay):
     _end_axis_point = Array
 
 
-    _ticklabel_cache = List
+    ticklabel_cache = List
     _cache_valid = Bool(False)
 
 
@@ -307,7 +307,7 @@ class PlotAxis(AbstractOverlay):
             gc.restore_state()
         return
 
-    def _draw_title(self, gc, label=None, v_offset=20):
+    def _draw_title_old(self, gc, label=None, v_offset=20):
         #put in rotation code for right side
 
         if label is None:
@@ -337,6 +337,58 @@ class PlotAxis(AbstractOverlay):
             # Horrible hack to adjust for the fact that the generic math above isn't
             # actually putting the label in the right place...
             offset[1] = offset[1] - tl_bounds[0]/2.0
+
+        gc.translate_ctm(*offset)
+        title_label.draw(gc)
+        gc.translate_ctm(*(-offset))
+        return
+
+    def _draw_title(self, gc, label=None, v_offset=20):
+        """ Draws the title for the axis.
+        """
+        #put in rotation code for right side
+
+        if label is None:
+            title_label = Label(text=self.title,
+                                font=self.title_font,
+                                color=self.title_color,
+                                rotate_angle=self.title_angle)
+        else:
+            title_label = label
+        tl_bounds = array(title_label.get_width_height(gc), float64)
+
+        if self.title_angle == 0:
+            text_center_to_corner = -tl_bounds/2.0
+            if not self.ticklabel_cache:
+                v_offset = 25
+            else:
+                v_offset = max([l._bounding_box[1] for l in self.ticklabel_cache]) * 1.3
+            offset = (self._origin_point+self._end_axis_point)/2
+            center_dist = self._center_dist(-self._inside_vector, tl_bounds[0], tl_bounds[1], rotation=self.title_angle)
+            offset -= self._inside_vector * (center_dist + v_offset)
+            offset += text_center_to_corner
+        
+        elif self.title_angle == 90:
+            # Center the text vertically
+            if not self.ticklabel_cache:
+                v_offset = 25
+            else:
+                v_offset = (self._end_axis_point[1] - self._origin_point[1] - tl_bounds[0])/2.0
+            h_offset = max([l._bounding_box[0] for l in self.ticklabel_cache]) + self.tick_out + tl_bounds[1] + 8
+            offset = array([self._origin_point[0] - h_offset, self._origin_point[1] + v_offset])
+
+        else:
+            if not self.ticklabel_cache:
+                v_offset = 25
+            else:
+                v_offset = max([l._bounding_box[0] for l in self.ticklabel_cache])
+            corner_vec = transpose(-tl_bounds/2.0)
+            rotmatrix = self._rotmatrix(-self.title_angle*pi/180.0)
+            text_center_to_corner = transpose(dot(rotmatrix, corner_vec))[0]
+            offset = (self._origin_point+self._end_axis_point)/2
+            center_dist = self._center_dist(-self._inside_vector, tl_bounds[0], tl_bounds[1], rotation=self.title_angle)
+            offset -= self._inside_vector * (center_dist + v_offset)
+            offset += text_center_to_corner
 
         gc.translate_ctm(*offset)
         title_label.draw(gc)
