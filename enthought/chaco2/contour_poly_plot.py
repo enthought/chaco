@@ -96,8 +96,10 @@ class ContourPolyPlot(Base2DPlot):
         """ Updates the contour cache.
         """
         # x and ydata are "fenceposts" so ignore the last value
-        xg, yg = meshgrid(self.index._xdata.get_data()[:-1],
-                          self.index._ydata.get_data()[:-1])
+        # XXX: this truncation is causing errors in Cntr() as of r13735
+        xg, yg = meshgrid(self.index._xdata.get_data(),  #[:-1],
+                          self.index._ydata.get_data())  #[:-1])
+        print "dims:", xg.shape, yg.shape, self.value.raw_value.shape
         c = Cntr(xg, yg, self.value.raw_value)
         self._cached_contours = {}
         for i in range(len(self._levels)-1):
