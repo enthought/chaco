@@ -89,7 +89,7 @@ def add_default_grids(plot, orientation="normal", tick_gen=None):
                      tick_generator = ScalesTickGenerator())
 
     plot.underlays.append(vgrid)
-#    plot.underlays.append(hgrid)
+    plot.underlays.append(hgrid)
     return hgrid, vgrid
 
 
