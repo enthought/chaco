@@ -22,7 +22,7 @@ from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
 from enthought.chaco2.tools.api import LineInspector, PanTool, RangeSelection, \
                                    RangeSelectionOverlay, SimpleZoom
 from enthought.enable2.api import Window
-from enthought.traits.api import Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
+from enthought.traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
                              Int, Instance, Str, Trait
 from enthought.traits.ui.api import Group, Handler, HGroup, Item, View
 from enthought.traits.ui.menu import Action, CloseAction, Menu, \
@@ -113,7 +113,7 @@ class PlotUI(HasTraits):
 
 
     num_levels = Int(15)
-    colormap = Enum(color_map_name_dict.keys())
+    colormap = Any  #Enum(color_map_name_dict.keys())
 
     #---------------------------------------------------------------------------
     # Private Traits
@@ -155,14 +155,14 @@ class PlotUI(HasTraits):
                                         color_mapper=\
                                             self._cmap(image_value_range),
                                         levels=self.num_levels)
-        self.polyplot.y_direction = "flipped"
+        #self.polyplot.y_direction = "flipped"
 
         self.lineplot = ContourLinePlot(index=self._image_index, 
                                         value=self._image_value, 
                                         index_mapper=GridMapper(range=
                                             self.polyplot.index_mapper.range),
                                         levels=self.num_levels)
-        self.lineplot.y_direction = "flipped"
+        #self.lineplot.y_direction = "flipped"
 
 
         # Add a left axis to the plot
@@ -298,23 +298,35 @@ class PlotUI(HasTraits):
         if self._image_index.metadata.has_key("selections"):
             x_ndx, y_ndx = self._image_index.metadata["selections"]
             if y_ndx and x_ndx:
-                y_ndx = -y_ndx
+                #y_ndx = -y_ndx
                 self.pd.set_data("line_value", 
-                                 self._image_value.data[-y_ndx,:])
+                                 #self._image_value.data[-y_ndx,:])
+                                 self._image_value.data[y_ndx,:])
                 self.pd.set_data("line_value2", 
-                                 self._image_value.data[::-1,x_ndx])
+                                 #self._image_value.data[::-1,x_ndx])
+                                 self._image_value.data[:,x_ndx])
                 xdata, ydata = self._image_index.get_data()
-                xdata, ydata = xdata.get_data(), ydata.get_data()[::-1]
+                #xdata, ydata = xdata.get_data(), ydata.get_data()[::-1]
+                xdata, ydata = xdata.get_data(), ydata.get_data()
                 self.pd.set_data("scatter_index", array([xdata[x_ndx]]))
-                self.pd.set_data("scatter_index2", array([ydata[-y_ndx]]))
+                self.pd.set_data("scatter_index2", array([ydata[y_ndx]]))
                 self.pd.set_data("scatter_value",
-                    array([self._image_value.data[-y_ndx, x_ndx]]))
+                    array([self._image_value.data[y_ndx, x_ndx]]))
                 self.pd.set_data("scatter_value2",
-                    array([self._image_value.data[-y_ndx, x_ndx]]))
+                    array([self._image_value.data[y_ndx, x_ndx]]))
                 self.pd.set_data("scatter_color",
-                    array([self._image_value.data[-y_ndx, x_ndx]]))
+                    array([self._image_value.data[y_ndx, x_ndx]]))
                 self.pd.set_data("scatter_color2",
-                    array([self._image_value.data[-y_ndx, x_ndx]]))
+                    array([self._image_value.data[y_ndx, x_ndx]]))
+                #self.pd.set_data("scatter_index2", array([ydata[-y_ndx]]))
+                #self.pd.set_data("scatter_value",
+                #    array([self._image_value.data[-y_ndx, x_ndx]]))
+                #self.pd.set_data("scatter_value2",
+                #    array([self._image_value.data[-y_ndx, x_ndx]]))
+                #self.pd.set_data("scatter_color",
+                #    array([self._image_value.data[-y_ndx, x_ndx]]))
+                #self.pd.set_data("scatter_color2",
+                #    array([self._image_value.data[-y_ndx, x_ndx]]))
         else:
             self.pd.set_data("scatter_value", array([]))
             self.pd.set_data("scatter_value2", array([]))
