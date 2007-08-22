@@ -74,10 +74,12 @@ class Base2DPlot(AbstractPlotRenderer):
     # event and take appropriate steps (except for requesting a redraw, which
     # is done in this class).
     index_data_changed = Event
+
     # Event fired when the index mapper changes. Subclasses can listen for this
     # event and take appropriate steps (except for requesting a redraw, which
     # is done in this class).
     index_mapper_changed = Event
+    
     # Event fired when the value data changes. Subclasses can listen for this
     # event and take appropriate steps (except for requesting a redraw, which
     # is done in this class).
@@ -200,20 +202,6 @@ class Base2DPlot(AbstractPlotRenderer):
         self._render(gc)
         return
 
-    def _draw_image_pre(self, gc, view_bounds, mode):
-        """ Handler called before drawing the 'image' layer, by the 
-        PlotComponent interface.
-        """
-        self._render_pre(gc)
-        return
-
-    def _draw_image_post(self, gc, view_bounds, mode):
-        """ Handler called after drawing the 'image' layer, by the 
-        PlotComponent interface.
-        """
-        self._render_post(gc)
-        return
-
     #------------------------------------------------------------------------
     # Abstract methods that subclasses must implement
     #------------------------------------------------------------------------
@@ -222,24 +210,6 @@ class Base2DPlot(AbstractPlotRenderer):
         """ Abstract method for drawing the plot.
         """
         raise NotImplementedError
-
-
-    def _render_pre(self, gc):
-        """ Called before _render() is called.  
-        
-        Gives subclasses an opportunity to modify their state or draw 
-        configuration before _render(). 
-        """
-        pass
-
-    def _render_post(self, gc):
-        """ Called after _render() is called.  
-        
-        Gives subclasses an opportunity to modify or restore their state or 
-        draw configuration after _render(). 
-        """
-        pass
-
 
     #------------------------------------------------------------------------
     # Properties

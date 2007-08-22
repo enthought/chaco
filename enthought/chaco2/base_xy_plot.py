@@ -168,20 +168,6 @@ class BaseXYPlot(AbstractPlotRenderer):
         """
         raise NotImplementedError
 
-    def _render_pre(self, gc):
-        """ Called before _render() is called.  
-        
-        Gives subclasses an opportunity to modify their state or draw 
-        configuration before _render(). """
-        pass
-
-    def _render_post(self, gc):
-        """ Called after _render() is called.  
-        
-        Gives subclasses an opportunity to modify or restore their state or
-        draw configuration after _render(). """
-        pass
-    
     def _gather_points(self):
         """ Abstract method to collect data points that are within the range of
         the plot, and cache them.
@@ -447,18 +433,6 @@ class BaseXYPlot(AbstractPlotRenderer):
         """ Draws the 'plot' layer.
         """
         self._draw_component(gc, view_bounds, mode)
-        return
-
-    def _draw_plot_pre(self, gc, view_bounds, mode):
-        """ Called before drawing the 'plot' layer.
-        """
-        self._render_pre(gc)
-        return
-
-    def _draw_plot_post(self, gc, view_bounds, mode):
-        """ Called after drawing the 'plot' layer.
-        """
-        self._render_post(gc)
         return
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):

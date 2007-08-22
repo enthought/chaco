@@ -83,7 +83,7 @@ class CMapImagePlot(ImagePlot):
     # Base2DPlot interface
     #------------------------------------------------------------------------
 
-    def _render_pre(self, gc):
+    def _render(self, gc):
         """ Ensures that the cached image is valid.
         
         Called before _render() is called. Implements the Base2DPlot interface.
@@ -93,6 +93,7 @@ class CMapImagePlot(ImagePlot):
                 self._compute_cached_image(self.value.metadata['selection_masks'])
             else:
                 self._compute_cached_image()
+        ImagePlot._render(self, gc)
 
 
     #------------------------------------------------------------------------
