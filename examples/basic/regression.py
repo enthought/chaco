@@ -2,9 +2,10 @@
 """
 Demonstrates the Regression Selection tool.
 
-Use the mouse to draw a selection region around some points, and a line fit
-is drawn through the center of the points.  The parameters of the line are
-displayed at the bottom of the plot region.
+Hold down the left mouse button to use the mouse to draw a selection region
+around some points, and a line fit is drawn through the center of the points.
+The parameters of the line are displayed at the bottom of the plot region.  You
+can do this repeatedly to draw different regions.1
 
 Hold the right mouse button down and drag to pan.
 
@@ -40,7 +41,6 @@ class PlotFrame(DemoFrame):
         scatterplot = plot.plot(("x", "y"), color="blue", type="scatter")[0]
 
         # Tweak some of the plot properties
-        plot.title = "Regression Demo"
         plot.padding = 50
 
         # Attach some tools to the plot
@@ -58,5 +58,5 @@ class PlotFrame(DemoFrame):
         return Window(self, -1, component=plot)
         
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(900,500), title="Basic x-y plots")
+    demo_main(PlotFrame, size=(600,600), title="Regression Selection")
 
