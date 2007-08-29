@@ -2,11 +2,12 @@
 function.
 """
 # Enthought library imports
+from enthought.enable2.api import BaseTool
 from enthought.traits.api import Any, Dict, Enum, Float, Instance
 from enthought.traits.ui.api import View
 
 # Chaco imports
-from enthought.chaco2.api import BasePlotContainer, BaseTool, BaseXYPlot, \
+from enthought.chaco2.api import BasePlotContainer, BaseXYPlot, \
                                 OverlayPlotContainer, PlotAxis, PlotGrid, \
                                 reverse_map_1d
 

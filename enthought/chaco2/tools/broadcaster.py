@@ -1,6 +1,6 @@
 """ Defines the BroadcasterTool class.
 """
-from enthought.chaco2.api import BaseTool
+from enthought.enable2.api import BaseTool
 from enthought.traits.api import Dict, List
 
 class BroadcasterTool(BaseTool):

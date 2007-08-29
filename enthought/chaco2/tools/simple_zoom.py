@@ -3,12 +3,12 @@
 from numpy import array 
 
 # Enthought library imports
-from enthought.enable2.api import ColorTrait
+from enthought.enable2.api import ColorTrait, KeySpec
 from enthought.traits.api \
     import Enum, false, Float, Instance, Int, Str, Trait, true, Tuple
 
 # Chaco imports
-from enthought.chaco2.api import AbstractOverlay, KeySpec
+from enthought.chaco2.api import AbstractOverlay
 from base_zoom_tool import BaseZoomTool
 from tool_history_mixin import ToolHistoryMixin
 

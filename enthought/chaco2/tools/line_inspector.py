@@ -4,11 +4,11 @@
 from numpy import array, take, transpose
 
 # Enthought library imports
-from enthought.enable2.api import ColorTrait, LineStyle
+from enthought.enable2.api import BaseTool, ColorTrait, LineStyle
 from enthought.traits.api import Any, Enum, false, Float, Str, Trait, true
 
 # Chaco imports
-from enthought.chaco2.api import BaseTool, BaseXYPlot, Base2DPlot
+from enthought.chaco2.api import BaseXYPlot, Base2DPlot
 
 
 class LineInspector(BaseTool):

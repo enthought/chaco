@@ -1,8 +1,7 @@
 """ Defines the ToolHistoryMixin class.
 """ 
 from enthought.traits.api import Any, HasTraits, Instance, Int, List
-
-from enthought.chaco2.api import KeySpec
+from enthought.enable2.api import KeySpec
 
 
 class ToolHistoryMixin(HasTraits):

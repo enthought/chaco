@@ -4,11 +4,11 @@
 from numpy import array, take, transpose
 
 # Enthought library imports
-from enthought.enable2.api import ColorTrait
+from enthought.enable2.api import BaseTool, ColorTrait
 from enthought.traits.api import Any, Enum, false, Float, Str, true
 
 # Chaco imports
-from enthought.chaco2.api import BaseTool, ScatterPlot
+from enthought.chaco2.api import ScatterPlot
 
 
 class ScatterInspector(BaseTool):

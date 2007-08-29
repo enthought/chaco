@@ -96,7 +96,10 @@ from grid import PlotGrid
 
 # Tools
 from abstract_controller import AbstractController
-from base_tool import BaseTool, KeySpec
+
+# Even though it's no longer in the Chaco2 package, leave this import in here
+# for backwards compatibility
+from enthought.enable2.base_tool import BaseTool, KeySpec
 
 
 #EOF

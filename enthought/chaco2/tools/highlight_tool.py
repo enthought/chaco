@@ -5,9 +5,10 @@ from numpy import ones
 
 # Enthought library imports
 from enthought.traits.api import Enum, Float, Tuple
+from enthought.enable2.api import BaseTool
 
 # Chaco imports
-from enthought.chaco2.api import AbstractPlotRenderer, BasePlotContainer, BaseTool
+from enthought.chaco2.api import AbstractPlotRenderer, BasePlotContainer
 
 
 class HighlightTool(BaseTool):

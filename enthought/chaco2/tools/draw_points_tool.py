@@ -5,9 +5,10 @@ from numpy import array, float64, hstack, resize
 
 # Enthought library imports
 from enthought.traits.api import Instance, Bool, true
+from enthought.enable2.api import BaseTool
 
 # Chaco import
-from enthought.chaco2.api import BaseTool, ArrayDataSource
+from enthought.chaco2.api import ArrayDataSource
 
 
 class DrawPointsTool(BaseTool):

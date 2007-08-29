@@ -2,9 +2,7 @@
 """
 # Enthought library imports
 from enthought.traits.api import Enum, false, true, Tuple
-
-# Chaco imports
-from enthought.chaco2.api import BaseTool
+from enthought.enable2.api import BaseTool
 
 
 class DragTool(BaseTool):

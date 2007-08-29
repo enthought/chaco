@@ -2,10 +2,11 @@
 ImageInspectorColorbarOverlay classes.
 """
 # Enthought library imports
+from enthought.enable2.api import BaseTool, KeySpec
 from enthought.traits.api import Any, Bool, Event, Tuple
 
 # Chaco imports
-from enthought.chaco2.api import AbstractOverlay, BaseTool, ImagePlot, TextBoxOverlay, KeySpec
+from enthought.chaco2.api import AbstractOverlay, ImagePlot, TextBoxOverlay
 
 
 class ImageInspectorTool(BaseTool):

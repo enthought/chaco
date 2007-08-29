@@ -6,7 +6,7 @@ import os.path
 
 # Enthought library imports
 from enthought.traits.api import Enum, Str, Trait, Tuple
-from enthought.chaco2.api import BaseTool
+from enthought.enable2.api import BaseTool
 
 
 class SaveTool(BaseTool):

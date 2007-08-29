@@ -1,11 +1,9 @@
 """ Defines the PanTool class.
 """
 # Enthought library imports
-from enthought.enable2.api import Pointer
+from enthought.enable2.api import BaseTool, Pointer
 from enthought.traits.api import Enum, false, Float, Tuple
 
-# Chaco imports
-from enthought.chaco2.api import BaseTool
 
 class PanTool(BaseTool):
     """ A tool that enables the user to pan a plot by clicking a mouse
