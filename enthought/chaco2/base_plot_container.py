@@ -47,17 +47,6 @@ class BasePlotContainer(PlotComponent, Container):
         warnings.warn("Use of plot_components attribute deprecated. Use components attribute instead.")
         self._components = new
 
-    #------------------------------------------------------------------------
-    # Event handlers
-    #------------------------------------------------------------------------
-
-    def _dispatch_to_enable(self, event, suffix):
-        """ Calls Enable-level handlers for dispatching events on the object.
-        
-        Overrides PlotComponent.
-        """
-        Container.dispatch(self, event, suffix)
-        return
       
 
 # EOF

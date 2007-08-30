@@ -58,10 +58,6 @@ class PlotComponent(Component):
     # Private traits
     #------------------------------------------------------------------------
 
-    # Shadow trait for the **active_tool** property.  Must be an instance of
-    # BaseTool or one of its subclasses.
-    _active_tool = Any
-    
     _cached_handlers = Instance(dict, args=())
 
 
@@ -129,114 +125,6 @@ class PlotComponent(Component):
             self._old_draw(gc, view_bounds, mode)
         return
     
-    #------------------------------------------------------------------------
-    # Layout-related concrete methods
-    #------------------------------------------------------------------------
-    
-    def dispatch(self, event, suffix):
-        """ Dispatches a mouse event based on the current event state.
-        
-        Parameters
-        ----------
-        event : an Enable MouseEvent
-            A mouse event.
-        suffix : string
-            The name of the mouse event as a suffix to the event state name,
-            e.g. "_left_down" or "_window_enter".
-        """
-        if self.use_draw_order:
-            self._new_dispatch(event, suffix)
-        else:
-            self._old_dispatch(event, suffix)
-        return
-
-    def _new_dispatch(self, event, suffix):
-        """ Dispatches a mouse event
-        
-        If the component has a **controller**, the method dispatches the event 
-        to it, and returns. Otherwise, the following objects get a chance to 
-        handle the event:
-        
-        1. The component's active tool, if any.
-        2. Any overlays, in reverse order that they were added and are drawn.
-        3. The component itself.
-        4. Any underlays, in reverse order that they were added and are drawn.
-        5. Any listener tools.
-        
-        If any object in this sequence handles the event, the method returns
-        without proceeding any further through the sequence. If nothing
-        handles the event, the method simply returns.
-        """
-        
-        # Maintain compatibility with .controller for now
-        if self.controller is not None:
-            self.controller.dispatch(event, suffix)
-            return
-        
-        if self._active_tool is not None:
-            self._active_tool.dispatch(event, suffix)
-
-        if event.handled:
-            return
-        
-        # Dispatch to overlays in reverse of draw/added order
-        for overlay in self.overlays[::-1]:
-            overlay.dispatch(event, suffix)
-            if event.handled:
-                break
-            
-        if not event.handled:
-            self._dispatch_to_enable(event, suffix)
-        
-        if not event.handled:
-            # Dispatch to underlays in reverse of draw/added order
-            for underlay in self.underlays[::-1]:
-                underlay.dispatch(event, suffix)
-                if event.handled:
-                    break
-        
-        # Now that everyone who might veto/handle the event has had a chance
-        # to receive it, dispatch it to our list of listener tools.
-        if not event.handled:
-            for tool in self.tools:
-                tool.dispatch(event, suffix)
-        
-        return
-
-    def _old_dispatch(self, event, suffix):
-        """ Dispatches a mouse event.
-        
-        If the component has a **controller**, the method dispatches the event 
-        to it and returns. Otherwise, the following objects get a chance to 
-        handle the event:
-        
-        1. The component's active tool, if any.
-        2. Any listener tools.
-        3. The component itself.
-        
-        If any object in this sequence handles the event, the method returns
-        without proceeding any further through the sequence. If nothing
-        handles the event, the method simply returns.
-        
-        """
-        if self.controller is not None:
-            self.controller.dispatch(event, suffix)
-            return
-        
-        if self._active_tool is not None:
-            self._active_tool.dispatch(event, suffix)
-
-        if event.handled:
-            return
-        
-        for tool in self.tools:
-            tool.dispatch(event, suffix)
-            if event.handled:
-                return
-        
-        if not event.handled:
-            self._dispatch_to_enable(event, suffix)
-        return
 
     #------------------------------------------------------------------------
     # Old drawing methods
@@ -321,21 +209,3 @@ class PlotComponent(Component):
             gc.restore_state()
         return
 
-    #------------------------------------------------------------------------
-    # Tool-related methods and event handlers
-    #------------------------------------------------------------------------
-    
-
-    def _dispatch_to_enable(self, event, suffix):
-        """ Called by dispatch() to allow subclasses to customize
-        how they call Enable-level handlers for dispatching of events
-        on the object.
-
-        This method only gets called after all the tools have been called;
-        if execution reaches this point, the PlotComponent needs to handle the
-        event, as it is actually being dispatched on itself.
-        """
-        Component.dispatch(self, event, suffix)
-        return
-
-# EOF
