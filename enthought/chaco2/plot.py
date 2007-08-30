@@ -359,12 +359,12 @@ class Plot(DataView):
         if isinstance(xbounds, basestring):
             xbounds = self._get_or_create_datasource(xbounds).get_data()
         if xbounds is None:
-            xs = arange(array_data.shape[1]+1)
+            xs = arange(array_data.shape[1])
         elif isinstance(xbounds, tuple):
-            xs = linspace(xbounds[0], xbounds[1], array_data.shape[1]+1)
+            xs = linspace(xbounds[0], xbounds[1], array_data.shape[1])
         elif isinstance(xbounds, ndarray):
             if len(xbounds.shape) == 1 and len(xbounds) == array_data.shape[1]:
-                xs = linspace(xbounds[0], xbounds[-1], array_data.shape[1]+1)
+                xs = linspace(xbounds[0], xbounds[-1], array_data.shape[1])
             elif xbounds.shape == array_data.shape:
                 xs = xbounds[0,:]
             else:
@@ -376,12 +376,12 @@ class Plot(DataView):
         if isinstance(ybounds, basestring):
             ybounds = self._get_or_create_datasource(ybounds).get_data()
         if ybounds is None:
-            ys = arange(array_data.shape[0]+1)
+            ys = arange(array_data.shape[0])
         elif isinstance(ybounds, tuple):
-            ys = linspace(ybounds[0], ybounds[1], array_data.shape[0]+1)
+            ys = linspace(ybounds[0], ybounds[1], array_data.shape[0])
         elif isinstance(ybounds, ndarray):
             if len(ybounds.shape) == 1 and len(ybounds) == array_data.shape[0]:
-                ys = linspace(ybounds[0], ybounds[-1], array_data.shape[0]+1)
+                ys = linspace(ybounds[0], ybounds[-1], array_data.shape[0])
             elif ybounds.shape == array_data.shape:
                 ys = ybounds[:,0]
             else:
@@ -466,14 +466,14 @@ class Plot(DataView):
         if isinstance(xbounds, basestring):
             xbounds = self._get_or_create_datasource(xbounds).get_data()
         if xbounds is None:
-            xs = arange(array_data.shape[1]+1)
+            xs = arange(array_data.shape[1])
         elif isinstance(xbounds, tuple):
-            xs = linspace(xbounds[0], xbounds[1], array_data.shape[1]+1)
+            xs = linspace(xbounds[0], xbounds[1], array_data.shape[1])
         elif isinstance(xbounds, ndarray):
             if len(xbounds.shape) == 1 and len(xbounds) == array_data.shape[1]:
-                xs = linspace(xbounds[0], xbounds[-1], array_data.shape[1]+1)
+                xs = linspace(xbounds[0], xbounds[-1], array_data.shape[1])
             elif xbounds.shape == array_data.shape:
-                xs = linspace(xbounds[0,0],xbounds[0,-1],array_data.shape[1]+1)
+                xs = linspace(xbounds[0,0],xbounds[0,-1],array_data.shape[1])
             else:
                 raise ValueError("xbounds shape not commensurate with data")
         else:
@@ -483,14 +483,14 @@ class Plot(DataView):
         if isinstance(ybounds, basestring):
             ybounds = self._get_or_create_datasource(ybounds).get_data()
         if ybounds is None:
-            ys = arange(array_data.shape[0]+1)
+            ys = arange(array_data.shape[0])
         elif isinstance(ybounds, tuple):
-            ys = linspace(ybounds[0], ybounds[1], array_data.shape[0]+1)
+            ys = linspace(ybounds[0], ybounds[1], array_data.shape[0])
         elif isinstance(ybounds, ndarray):
             if len(ybounds.shape) == 1 and len(ybounds) == array_data.shape[0]:
-                ys = linspace(ybounds[0], ybounds[-1], array_data.shape[0]+1)
+                ys = linspace(ybounds[0], ybounds[-1], array_data.shape[0])
             elif ybounds.shape == array_data.shape:
-                ys = linspace(ybounds[0,0],ybounds[-1,0],array_data.shape[0]+1)
+                ys = linspace(ybounds[0,0],ybounds[-1,0],array_data.shape[0])
             else:
                 raise ValueError("ybounds shape not commensurate with data")
         else:
