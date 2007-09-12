@@ -197,11 +197,11 @@ class BaseXYPlot(AbstractPlotRenderer):
         if self.index is not None:
             self.index.on_trait_change(self._either_data_changed, "data_changed")
         if self.index_mapper:
-            self.index_mapper.on_trait_change(self._update_mappers, "updated")
+            self.index_mapper.on_trait_change(self._mapper_updated_handler, "updated")
         if self.value is not None:
             self.value.on_trait_change(self._either_data_changed, "data_changed")
         if self.value_mapper:
-            self.value_mapper.on_trait_change(self._update_mappers, "updated")
+            self.value_mapper.on_trait_change(self._mapper_updated_handler, "updated")
         return
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
@@ -575,18 +575,14 @@ class BaseXYPlot(AbstractPlotRenderer):
         y2 = self.y2
         
         if x_dir =="normal":
-            x_mapper.low_pos = x
-            x_mapper.high_pos = x2
+            x_mapper.screen_bounds = (x, x2)
         else:
-            x_mapper.low_pos = x2
-            x_mapper.high_pos = x
+            x_mapper.screen_bounds = (x2, x)
         
         if y_dir == "normal":
-            y_mapper.low_pos = y
-            y_mapper.high_pos = y2
+            y_mapper.screen_bounds = (y, y2)
         else:
-            y_mapper.low_pos = y2
-            y_mapper.high_pos = y
+            y_mapper.screen_bounds = (y2, y)
         
         self.invalidate_draw()
         self._cache_valid = False

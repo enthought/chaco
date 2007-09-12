@@ -49,8 +49,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     # Enable the mousewheel for zooming?
     enable_wheel = true
 
-    # The mouse button that initiates the drag.
-    drag_button = Enum("left", "right")
+    # The mouse button that initiates the drag.  If "None", then the tool 
+    # will not respond to drag.  (It can still respond to mousewheel events.)
+    drag_button = Enum("left", "right", None)
     
     # Conversion ratio from wheel steps to zoom factors.
     wheel_zoom_step = Float(1.0)
