@@ -27,6 +27,10 @@ from numpy import array
 from color_mapper import ColorMapper
 
 
+# The colormaps will be added to this at the end of the file.
+__all__ = ['reverse', 'center']
+
+
 # Utility functions.
 
 def reverse(func):
@@ -536,11 +540,10 @@ color_map_functions = [jet, autumn, bone, cool, copper, flag, gray, yarg, hot,
                        cw1_004, cw1_005, cw1_006, cw1_028, gmt_drywet]
 
 color_map_dict = {}
-for func in color_map_functions:
-    color_map_dict[func] = func.__name__
-
 color_map_name_dict = {}
 for func in color_map_functions:
+    color_map_dict[func] = func.__name__
     color_map_name_dict[func.__name__] = func
+    __all__.append(func.__name__)
 
 #### EOF ######################################################################
