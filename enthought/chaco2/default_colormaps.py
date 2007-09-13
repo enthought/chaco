@@ -16,15 +16,18 @@
 """
 A collection of pre-defined colormap generator functions.
 
-Each of the functions can be called with *min_value* and *max_value* parameters.
-In that case, they produce a Colormap which linearly maps over the specified 
-range and has the color palette indicated by the function name.
+Each of the functions can be called with a DataRange1D instance.  In that case,
+they produce a Colormap which linearly maps over the specified range and has the
+color palette indicated by the function name.
 """
 
 from numpy import array
 
 # Local imports.
 from color_mapper import ColorMapper
+
+
+# Utility functions.
 
 
 def autumn(range, **traits):
@@ -160,11 +163,20 @@ def flag(range, **traits):
     return ColorMapper.from_segment_map(_data, range=range)
     
 def gray(range, **traits):
-    """ Generator function for the 'hot' colormap. """
+    """ Generator function for the 'gray' colormap. """
 
     _data =  {'red':   ((0., 0, 0), (1., 1, 1)),
               'green': ((0., 0, 0), (1., 1, 1)),
               'blue':  ((0., 0, 0), (1., 1, 1))}      
+
+    return ColorMapper.from_segment_map(_data, range=range)
+
+def yarg(range, **traits):
+    """ Generator function for the 'yarg' colormap. """
+
+    _data =  {'red':   ((0., 1, 1), (1., 0, 0)),
+              'green': ((0., 1, 1), (1., 0, 0)),
+              'blue':  ((0., 1, 1), (1., 0, 0))}      
 
     return ColorMapper.from_segment_map(_data, range=range)
 
@@ -397,7 +409,7 @@ def spring(range, **traits):
     return ColorMapper.from_segment_map(_data, range=range)
 
 def summer(range, **traits):
-    """ Generator function for the 'spring' colormap. """
+    """ Generator function for the 'summer' colormap. """
 
     _data = {'red':   ((0., 0., 0.),(1.0, 1.0, 1.0)),
              'green': ((0., 0.5, 0.5),(1.0, 1.0, 1.0)),
@@ -406,7 +418,7 @@ def summer(range, **traits):
     return ColorMapper.from_segment_map(_data, range=range)
 
 def winter(range, **traits):
-    """ Generator function for the 'spring' colormap. """
+    """ Generator function for the 'winter' colormap. """
 
     _data = {'red':   ((0., 0., 0.),(1.0, 0.0, 0.0)),
              'green': ((0., 0., 0.),(1.0, 1.0, 1.0)),
@@ -451,6 +463,7 @@ def cw1_028(range, **traits):
     return ColorMapper.from_palette_array(colors, range=range)
 
 def gmt_drywet(range, **traits):
+    """ Generator function for the 'GMT Dry-Wet' gradient """
 
     _data = {'red': ((0.00000,0.5255,0.5255),
                     (0.16670,0.9333,0.9333),
@@ -482,8 +495,8 @@ def gmt_drywet(range, **traits):
 # Make the convenient list of all the function names as well as a dictionary
 # of name->function mappings.  These are useful for UI editors.
 
-color_map_functions = [jet, autumn, bone, cool, copper, flag, gray, hot, \
-                       hsv, pink, prism, spring, summer, winter, \
+color_map_functions = [jet, autumn, bone, cool, copper, flag, gray, yarg, hot,
+                       hsv, pink, prism, spring, summer, winter,
                        cw1_004, cw1_005, cw1_006, cw1_028, gmt_drywet]
 
 color_map_dict = {}
