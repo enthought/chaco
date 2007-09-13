@@ -29,6 +29,42 @@ from color_mapper import ColorMapper
 
 # Utility functions.
 
+def reverse(func):
+    """ Modify a colormap factory to reverse the color sequence
+    """
+    def cmap(range, **traits):
+        cm = func(range, **traits)
+        cm.reverse_colormap()
+        return cm
+
+    # Look a little like the wrapped function.
+    cmap.__name__ = 'reversed_' + func.__name__
+    cmap.__doc__ = 'Reversed: ' + func.__doc__
+    return cmap
+
+def center(func, center=0.0):
+    """ Modify the range of a colormap to be centered around the given value.
+
+    For example, when passed a DataRange1D(low=-0.5, high=1.0), a colormap would
+    usually have its lowest color at -0.5 and its highest at 1.0. Some colormaps
+    are designed such that the middle color is special. Using this modifier, the
+    example range would be modified to -1.0 and 1.0 to make 0.0 correspond with
+    the middle color.
+    """
+    def cmap(range, **traits):
+        maxdev = max(abs(range.low - center), abs(range.high - center))
+        range = range.clone_traits()
+        range.low = center - maxdev
+        range.high = center + maxdev
+        return func(range, **traits)
+
+    # Look a little like the wrapped function.
+    cmap.__name__ = 'centered_' + func.__name__
+    cmap.__doc__ = 'Centered: ' + func.__doc__
+    return cmap
+
+
+# Colormaps.
 
 def autumn(range, **traits):
     """ Generator function for the 'autumn' colormap. """
