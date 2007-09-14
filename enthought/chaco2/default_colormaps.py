@@ -28,7 +28,8 @@ from color_mapper import ColorMapper
 
 
 # The colormaps will be added to this at the end of the file.
-__all__ = ['reverse', 'center']
+__all__ = ['reverse', 'center', 'color_map_functions', 'color_map_dict',
+    'color_map_name_dict']
 
 
 # Utility functions.
