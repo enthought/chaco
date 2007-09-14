@@ -8,8 +8,8 @@ import wx
 from numpy import arange
 
 # Enthought library imports
-from enthought.enable2.traits.ui.wx.enable_rgba_color_editor import \
-    EnableRGBAColorEditor
+from enthought.enable2.traits.ui.wx.rgba_color_editor import \
+    RGBAColorEditor
 from enthought.enable2.api import black_color_trait, LineStyle, ColorTrait, white_color_trait
 from enthought.enable2.wx_backend.api import Window
 from enthought.kiva.traits.kiva_font_trait import KivaFont
@@ -59,7 +59,7 @@ PlotSize = Range( 50, 1000, 180 )
 LineWeight = Range( 1, 9, 3 )
 
 # The color editor to use for various color traits.
-color_editor = EnableRGBAColorEditor( auto_set = False )
+color_editor = RGBAColorEditor( auto_set = False )
 
 
 USE_DATA_UPDATE = 1
