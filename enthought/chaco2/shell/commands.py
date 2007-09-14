@@ -88,13 +88,17 @@ def chaco_commands():
     -----
     colormap 
         sets the current colormap    
+
+    IO
+    --
+    save
+        saves the current plot to a file (png, bmp, jpg, pdf)
     """
     print chaco_commands.__doc__
 
     # The following are not implemented yet
     """
     tool -- toggles certain tools on or off
-    save -- saves the current plot to a file
     load -- loads a saved plot from file into the active plot area
 
     Layout
@@ -603,5 +607,47 @@ def tool():
     if p:
         pass
     
+
+
+#-----------------------------------------------------------------------------
+# Saving and IO
+#-----------------------------------------------------------------------------
+
+def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch"):
+    """ Saves the active plot to an file.  Currently supported file types 
+    are: bmp, png, jpg.
+    """
+    p = curplot()
+    if not p:
+        print "Doing nothing because there is no active plot."
+        return
+
+    import os.path
+    ext = os.path.splitext(filename)[-1]
+    if ext == ".pdf":
+        print "Warning: the PDF backend is still a little buggy."
+        from enthought.chaco2.pdf_graphics_context import PdfPlotGraphicsContext
+        # Set some default PDF options if none are provided
+        if dest_box is None:
+            dest_box = (0.5, 0.5, -0.5, -0.5)
+        gc = PdfPlotGraphicsContext(filename = filename,
+                                    pagesize = pagesize,
+                                    dest_box = dest_box,
+                                    dest_box_units = units)
+        gc.render_component(p)
+        gc.save()
+        del gc
+        print "Saved to", filename
+
+    elif ext in [".bmp", ".png", ".jpg"]:
+        from enthought.chaco2.api import PlotGraphicsContext
+        gc = PlotGraphicsContext((int(p.outer_width), int(p.outer_height)))
+        p.draw(gc, mode="normal")
+        gc.save(filename)
+        del gc
+        print "Saved to", filename
+    return
+
+
 
 # EOF

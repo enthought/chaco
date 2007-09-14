@@ -57,7 +57,7 @@ class SaveTool(BaseTool):
         """ Saves an image of the component.
         """
         from enthought.chaco2.api import PlotGraphicsContext
-        gc = PlotGraphicsContext((int(self.component.width), int(self.component.height)))
+        gc = PlotGraphicsContext((int(self.component.outer_width), int(self.component.outer_height)))
         self.component.draw(gc, mode="normal")
         gc.save(self.filename)
         return
