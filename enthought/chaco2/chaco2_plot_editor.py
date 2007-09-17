@@ -59,7 +59,7 @@ PlotSize = Range( 50, 1000, 180 )
 LineWeight = Range( 1, 9, 3 )
 
 # The color editor to use for various color traits.
-color_editor = RGBAColorEditor( auto_set = False )
+color_editor = RGBAColorEditor()
 
 
 USE_DATA_UPDATE = 1
