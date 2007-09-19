@@ -17,14 +17,16 @@ from enthought.etsconfig.api import ETSConfig
 # We don't want users to go digging around for the default Enthought logfile
 # in ~/envisage.log, so we add a handler to the global logger for a file
 # "chaco.log" in the current directory.
-import logging, logging.handlers
-try:
-    chaco_handler = logging.handlers.RotatingFileHandler("chaco.log",
-                        maxBytes=1000000, backupCount=0)
-    logging.getLogger().addHandler(chaco_handler)
-except:
-    # If we can't override the default handler, it's OK.
-    pass
+
+#import logging, logging.handlers
+#try:
+#    chaco_handler = logging.handlers.RotatingFileHandler("chaco.log",
+#                        maxBytes=1000000, backupCount=0)
+#    logging.getLogger().addHandler(chaco_handler)
+#except:
+#    # If we can't override the default handler, it's OK.
+#    pass
+
 
 # This is a palette of 10 nice colors to use for mapping/discrete
 # color differentiation.  From ColorBrewer.
