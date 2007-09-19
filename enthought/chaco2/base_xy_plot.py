@@ -196,10 +196,12 @@ class BaseXYPlot(AbstractPlotRenderer):
         AbstractPlotRenderer.__init__(self, **kwtraits)
         if self.index is not None:
             self.index.on_trait_change(self._either_data_changed, "data_changed")
+            self.index.on_trait_change(self._either_metadata_changed, "metadata_changed")
         if self.index_mapper:
             self.index_mapper.on_trait_change(self._mapper_updated_handler, "updated")
         if self.value is not None:
             self.value.on_trait_change(self._either_data_changed, "data_changed")
+            self.value.on_trait_change(self._either_metadata_changed, "metadata_changed")
         if self.value_mapper:
             self.value_mapper.on_trait_change(self._mapper_updated_handler, "updated")
         return
@@ -610,8 +612,11 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _index_changed(self, old, new):
         if old is not None:
             old.on_trait_change(self._either_data_changed, "data_changed", remove=True)
+            old.on_trait_change(self._either_metadata_changed, "metadata_changed",
+                                remove=True)
         if new is not None:
             new.on_trait_change(self._either_data_changed, "data_changed")
+            new.on_trait_change(self._either_metadata_changed, "metadata_changed")
         self._either_data_changed()
         return
     
@@ -621,12 +626,19 @@ class BaseXYPlot(AbstractPlotRenderer):
         self._screen_cache_valid = False
         self.request_redraw()
         return
+
+    def _either_metadata_changed(self):
+        # By default, don't respond to metadata change events.
+        pass
     
     def _value_changed(self, old, new):
         if old is not None:
             old.on_trait_change(self._either_data_changed, "data_changed", remove=True)
+            old.on_trait_change(self._either_metadata_changed, "metadata_changed",
+                                remove=True)
         if new is not None:
             new.on_trait_change(self._either_data_changed, "data_changed")
+            new.on_trait_change(self._either_metadata_changed, "metadata_changed")
         self._either_data_changed()
         return
     

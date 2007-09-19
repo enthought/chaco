@@ -9,10 +9,10 @@ from numpy import argmin, around, array, column_stack, compress, invert, isnan, 
                 sqrt, sum, transpose
 
 # Enthought library imports
-from enthought.enable2.api import black_color_trait, white_color_trait
+from enthought.enable2.api import black_color_trait, white_color_trait, ColorTrait
 from enthought.kiva import STROKE
-from enthought.traits.api import Any, Array, Enum, false, Float, Instance, \
-                                 Int,  List
+from enthought.traits.api import Any, Array, Bool, Enum, Float, Instance, \
+                                 Int,  List, Trait
 from enthought.traits.ui.api import View, VGroup, Item
 
 # Local relative imports
@@ -71,6 +71,28 @@ class ScatterPlot(BaseXYPlot):
 
     # Traits UI View for customizing the plot.
     traits_view = ScatterPlotView()
+
+    #------------------------------------------------------------------------
+    # Selection and selection rendering
+    # A selection on the lot is indicated by setting the index or value
+    # datasource's 'selections' metadata item to a list of indices, or the
+    # 'selection_mask' metadata to a boolean array of the same length as the
+    # datasource.
+    #------------------------------------------------------------------------
+
+    selection_marker = marker_trait
+
+    selection_marker_size = Int(4)
+
+    selection_line_width = Float(1.0)
+
+    selection_color = ColorTrait("yellow")
+
+    selection_outline_color = black_color_trait
+
+    _cached_selected_pts = Trait(None, None, Array)
+    _cached_selected_screen_pts = Array
+    _selection_cache_valid = Bool(False)
 
     #------------------------------------------------------------------------
     # Overridden PlotRenderer methods
@@ -133,7 +155,7 @@ class ScatterPlot(BaseXYPlot):
         Collects the data points that are within the bounds of the plot and 
         caches them
         """
-        if self._cache_valid:
+        if self._cache_valid and self._selection_cache_valid:
             return
 
         index, index_mask = self.index.get_data_mask()
@@ -151,14 +173,36 @@ class ScatterPlot(BaseXYPlot):
 
         index_range_mask = self.index_mapper.range.mask_data(index)
         value_range_mask = self.value_mapper.range.mask_data(value)
-        nan_mask = invert(isnan(index_mask)) & invert(isnan(value_mask))
-        point_mask = index_mask & value_mask & nan_mask & \
-                     index_range_mask & value_range_mask
+        nan_mask = invert(isnan(index_mask)) & index_mask & \
+                   invert(isnan(value_mask)) & value_mask
+        point_mask = nan_mask & index_range_mask & value_range_mask
 
-        points = transpose(array((index,value)))
-        self._cached_data_pts = compress(point_mask, points, axis=0)
+        if not self._cache_valid:
+            points = transpose(array((index,value)))
+            self._cached_data_pts = compress(point_mask, points, axis=0)
+            self._cache_valid = True
 
-        self._cache_valid = True
+        if not self._selection_cache_valid:
+            indices = None
+            # Check both datasources for metadata
+            for ds in (self.index, self.value):
+                if ds.metadata.get('selections', None) is not None:
+                    indices = ds.metadata['selections']
+                    point_mask = point_mask[indices]
+                    points = transpose(array((index[indices], value[indices])))
+                elif ds.metadata.get('selection_mask', None) is not None:
+                    point_mask &= ds.metadata['selection_mask']
+                else:
+                    continue
+
+                self._cached_selected_pts = compress(point_mask, points, axis=0)
+                self._selection_cache_valid = True
+                break
+
+            else:
+                self._cached_selected_pts = None
+                self._selection_cache_valid = True
+
         return
 
     def _render(self, gc, points, icon_mode=False):
@@ -172,6 +216,13 @@ class ScatterPlot(BaseXYPlot):
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
         render_markers(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_)
+
+        if self._cached_selected_pts is not None:
+            sel_pts = self.map_screen(self._cached_selected_pts)
+            render_markers(gc, sel_pts, self.selection_marker,
+                    self.selection_marker_size, self.selection_color_,
+                    self.selection_line_width, self.selection_outline_color_)
+
         if not icon_mode:
             # Draw the default axes, if necessary
             self._draw_default_axes(gc)
@@ -203,6 +254,11 @@ class ScatterPlot(BaseXYPlot):
         self.request_redraw()
 
     def _outline_color_changed(self):
+        self.invalidate_draw()
+        self.request_redraw()
+
+    def _either_metadata_changed(self):
+        self._selection_cache_valid = False
         self.invalidate_draw()
         self.request_redraw()
 
