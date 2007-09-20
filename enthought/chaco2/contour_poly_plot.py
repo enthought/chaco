@@ -128,7 +128,6 @@ class ContourPolyPlot(Base2DPlot):
         """ Updates the colors cache.
         """
         cmap = self.color_mapper
-        cmap.range.low, cmap.range.high = self._levels[0], self._levels[-1]
         self._colors =  []
         mapped_colors = cmap.map_screen(array(self._levels))
         for i in range(len(self._levels)-1):
