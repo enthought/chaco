@@ -207,7 +207,6 @@ class ContourLinePlot(Base2DPlot):
         # If we are given a colormap, use it to map all the levels to colors 
         elif not isinstance(self.colors, list):
             cmap = self.colors
-            cmap.range.low, cmap.range.high = self.value.get_bounds()
             self._colors =  []
             mapped_colors = cmap.map_screen(array(self._levels))
             for i in range(len(self._levels)):
