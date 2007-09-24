@@ -17,7 +17,7 @@ from enthought.enable2.api import Container
 from enthought.traits.api import Enum, false
 
 # Local, relative imports
-from plot_component import PlotComponent
+from plot_component import PlotComponent, DEFAULT_DRAWING_ORDER
 
 
 class BasePlotFrame(Container, PlotComponent):
@@ -45,6 +45,7 @@ class BasePlotFrame(Container, PlotComponent):
     # Overrides the Enable auto_size trait (which will be deprecated in the future)
     auto_size = False    
 
+    draw_order = DEFAULT_DRAWING_ORDER
 
     def __init__(self, **kw):
         self._frame_slots = {}
