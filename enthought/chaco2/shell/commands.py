@@ -243,7 +243,7 @@ def curplot():
 # Plotting functions
 #------------------------------------------------------------------------
 
-def _do_plot_boilerplate(kwargs):
+def _do_plot_boilerplate(kwargs, image=False):
     """ Used by various plotting functions.  Checks/handles hold state,
     returns a Plot object for the plotting function to use.
     """
@@ -254,7 +254,11 @@ def _do_plot_boilerplate(kwargs):
 
     # Check for an active window; if none, open one.
     if len(session.windows) == 0:
-        figure()
+        if image:
+            win = session.new_window(is_image=True)
+            activate(win)
+        else:
+            figure()
         
     cont = session.active_window.get_container()
 
@@ -377,11 +381,11 @@ def imshow(*data, **kwargs):
 
     """
     
-    cont = _do_plot_boilerplate(kwargs)
+    cont = _do_plot_boilerplate(kwargs, image=True)
 
     plots = plot_maker.do_imshow(session.data, cont,
                                  *data, **kwargs)
-
+    
     cont.request_redraw()
     return
 

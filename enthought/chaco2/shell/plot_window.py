@@ -3,6 +3,7 @@
 import wx
 from enthought.enable2.wx_backend.api import Window
 from enthought.chaco2.api import ArrayPlotData, Plot
+from enthought.traits.api import Bool
 
 class PlotWindow(wx.Frame):
     """ A window for holding top-level plot containers.
@@ -10,13 +11,17 @@ class PlotWindow(wx.Frame):
     Contains many utility methods for controlling the appearance of the
     window, which mostly pass through to underlying WX calls.
     """
-    
-    def __init__(self, *args, **kw):
+
+    def __init__(self, is_image=False, *args, **kw):
         kw["size"] = (600,600)
         wx.Frame.__init__(self, None, *args, **kw )
         
+        #self.image = image
         # Create an empty top-level container
-        top_container = self._create_top_container()
+        if is_image:
+            top_container = self._create_top_img_container()
+        else:
+            top_container = self._create_top_container()
 
         # The PlotSession of which we are a part.  We need to know this in order
         # to notify it of our being closed, etc.
@@ -83,6 +88,11 @@ class PlotWindow(wx.Frame):
     def _create_top_container(self):
         return Plot(padding = 50, fill_padding = True, bgcolor = "lightgray",
                     use_backbuffer = True)
+
+    def _create_top_img_container(self):
+        return Plot(padding = 50, fill_padding = True, bgcolor = "lightgray",
+                    use_backbuffer = True, value_direction="flipped")
+
 
     def _on_window_close(self, event):
         if self.session:

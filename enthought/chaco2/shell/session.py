@@ -50,11 +50,11 @@ class PlotSession(HasTraits):
     colormap = Trait(jet, Any)
 
 
-    def new_window(self, name=None, title=None):
+    def new_window(self, name=None, title=None, is_image=False):
         """Creates a new window and returns the index into the **windows** list
         for the new window.
         """
-        new_win = PlotWindow(size=(self.prefs.window_width, self.prefs.window_height))
+        new_win = PlotWindow(is_image=is_image, size=(self.prefs.window_width, self.prefs.window_height))
         new_win.data = self.data
         new_win.get_container().data = self.data
         new_win.session = self
