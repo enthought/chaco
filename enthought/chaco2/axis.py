@@ -213,7 +213,7 @@ class PlotAxis(AbstractOverlay):
     # PlotComponent and AbstractOverlay interface
     #------------------------------------------------------------------------
 
-    def do_layout(self, *args, **kw):
+    def _do_layout(self, *args, **kw):
         """ Tells this component to do layout at a given size.
         
         Overrides PlotComponent.
@@ -221,7 +221,7 @@ class PlotAxis(AbstractOverlay):
         if self.use_draw_order and self.component is not None:
             self._layout_as_overlay(*args, **kw)
         else:
-            super(PlotAxis, self).do_layout(*args, **kw)
+            super(PlotAxis, self)._do_layout(*args, **kw)
         return
 
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
