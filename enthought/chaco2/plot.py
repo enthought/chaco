@@ -531,7 +531,10 @@ class Plot(DataView):
             deleted_sources.add(renderer.value)
 
         # Cull the candidate list of sources to remove by checking the other plots
-        sources_in_use = set((p.index, p.value) for p in itertools.chain(*self.plots.values()))
+        sources_in_use = set()
+        for p in itertools.chain(*self.plots.values()):
+                sources_in_use.add(p.index)
+                sources_in_use.add(p.value)
 
         unused_sources = deleted_sources - sources_in_use - set([None])
 
