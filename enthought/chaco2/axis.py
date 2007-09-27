@@ -202,6 +202,13 @@ class PlotAxis(AbstractOverlay):
     # Public methods
     #------------------------------------------------------------------------
 
+    def __init__(self, component=None, **kwargs):
+        # Override init so that our component gets set last.  We want the
+        # _component_changed() event handler to get run last.
+        super(PlotAxis, self).__init__(**kwargs)
+        if component is not None:
+            self.component = component
+
     def invalidate(self):
         """ Invalidates the pre-computed layout and scaling data.
         """
@@ -711,7 +718,6 @@ class PlotAxis(AbstractOverlay):
 
     def _bounds_changed(self):
         self._invalidate()
-#        self._request_redraw()
         return
 
     def _bounds_items_changed(self):
@@ -723,7 +729,6 @@ class PlotAxis(AbstractOverlay):
         if new is not None:
             new.on_trait_change(self.mapper_updated, "updated")
         self._invalidate()
-#        self.request_redraw()
         return
 
     def mapper_updated(self):
@@ -735,7 +740,6 @@ class PlotAxis(AbstractOverlay):
 
     def _position_changed(self):
         self._cache_valid = False
-#        self.request_redraw()
         return
 
     def _position_items_changed(self):
@@ -744,7 +748,6 @@ class PlotAxis(AbstractOverlay):
     def _updated_fired(self):
         """If the axis bounds changed, redraw."""
         self._cache_valid = False
-#        self._request_redraw()
         return
 
     def _invalidate(self):
@@ -756,6 +759,27 @@ class PlotAxis(AbstractOverlay):
 #        else:
 #            self.request_redraw()
         return
+
+    def _component_changed(self):
+        if self.mapper is not None:
+            # If there is a mapper set, just leave it be.
+            return
+
+        # Try to pick the most appropriate mapper for our orientation 
+        # and what information we can glean from our component.
+        attrmap = { "left": ("ymapper", "y_mapper", "value_mapper"),
+                    "bottom": ("xmapper", "x_mapper", "index_mapper"), }
+        attrmap["right"] = attrmap["left"]
+        attrmap["top"] = attrmap["bottom"]
+
+        component = self.component
+        attr1, attr2, attr3 = attrmap[self.orientation]
+        for attr in attrmap[self.orientation]:
+            if hasattr(component, attr):
+                self.mapper = getattr(component, attr)
+                break
+        return
+
 
     #------------------------------------------------------------------------
     # The following event handlers just invalidate our previously computed

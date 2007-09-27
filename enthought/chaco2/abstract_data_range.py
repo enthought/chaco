@@ -42,6 +42,20 @@ class AbstractDataRange(HasTraits):
     updated = Event
 
     #------------------------------------------------------------------------
+    # Concrete methods
+    #------------------------------------------------------------------------
+
+    def __init__(self, *sources, **kwargs):
+        if len(sources) > 0:
+            if 'sources' in kwargs:
+                raise RuntimeError("Datasources for data range provided as "
+                                   "both positional and keyword arguments.")
+            else:
+                kwargs['sources'] = list(sources)
+        super(AbstractDataRange, self).__init__(**kwargs)
+
+
+    #------------------------------------------------------------------------
     # Abstract methods that subclasses must implement
     #------------------------------------------------------------------------
     
