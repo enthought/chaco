@@ -3,6 +3,7 @@
 import wx
 from enthought.chaco2.api import Plot, color_map_name_dict
 from enthought.chaco2.tools.api import PanTool, RectZoomTool
+from enthought.chaco2.default_colormaps import *
 
 import plot_maker
 from session import PlotSession
@@ -383,9 +384,10 @@ def imshow(*data, **kwargs):
     
     cont = _do_plot_boilerplate(kwargs, image=True)
 
+    if "colormap" not in kwargs:
+        kwargs["colormap"] = session.colormap
     plots = plot_maker.do_imshow(session.data, cont,
                                  *data, **kwargs)
-    
     cont.request_redraw()
     return
 
