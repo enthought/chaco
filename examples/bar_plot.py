@@ -31,13 +31,11 @@ def make_curves(spec):
     vals3 = ArrayDataSource(2 * cos(value_points) + 2, sort_order="none")
 
     # Create the index range
-    index_range = DataRange1D(low=0.5, high=9.5)
-    index_range.add(idx)
+    index_range = DataRange1D(idx, low=0.5, high=9.5)
     index_mapper = LinearMapper(range=index_range)
 
     # Create the value range
     value_range = DataRange1D(low=0, high=4.25)
-    #value_range.add(vals)
     value_mapper = LinearMapper(range=value_range)
 
     # Create the plot
@@ -78,7 +76,7 @@ class PlotFrame(DemoFrame, HasTraits):
         return (range(1, 10), data)
 
     def _create_window(self):
-        container = OverlayPlotContainer(bgcolor = "white")  # use_draw_order=False,
+        container = OverlayPlotContainer(bgcolor = "white")
         
         self.container = container
         
@@ -87,16 +85,14 @@ class PlotFrame(DemoFrame, HasTraits):
             plot.padding = 50
             container.add(plot)
 
-        left_axis = PlotAxis(component=plot, orientation='left',
-                             mapper=plot.value_mapper)
+        left_axis = PlotAxis(plot, orientation='left')
 
-        bottom_axis = LabelAxis(component=plot, orientation='bottom',
+        bottom_axis = LabelAxis(plot, orientation='bottom',
                                title='Categories',
                                positions = range(1, 10),
                                labels = ['a', 'b', 'c', 'd', 'e',
                                          'f', 'g', 'h', 'i'],
-                               small_haxis_style=True,
-                               mapper=plot.index_mapper)
+                               small_haxis_style=True)
 
         plot.underlays.append(left_axis)
         plot.underlays.append(bottom_axis)

@@ -69,8 +69,7 @@ class PlotFrame(DemoFrame):
         # Add an axis on the right-hand side that corresponds to the second plot.
         # Note that it uses plot.value_mapper instead of plot0.value_mapper.
         plot1 = plots["Bessel j_1"]
-        axis = PlotAxis(orientation="right", mapper=plot.value_mapper,
-                        component=plot1)
+        axis = PlotAxis(plot1, orientation="right")
         plot1.underlays.append(axis)
 
         # Add the broadcast tool to the container, instead of to an

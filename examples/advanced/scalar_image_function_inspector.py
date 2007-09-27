@@ -216,13 +216,11 @@ class PlotUI(HasTraits):
                                  resizable='v',
                                  width=30)
 
-
-        self.pd = ArrayPlotData()
-        self.pd.set_data("line_index", array([])) 
-        self.pd.set_data("line_value", array([])) 
-        self.pd.set_data("scatter_index", array([])) 
-        self.pd.set_data("scatter_value", array([])) 
-        self.pd.set_data("scatter_color", array([])) 
+        self.pd = ArrayPlotData(line_index = array([]),
+                                line_value = array([]),
+                                scatter_index = array([]),
+                                scatter_value = array([]),
+                                scatter_color = array([]))
 
         self.cross_plot = Plot(self.pd, resizable="h")
         self.cross_plot.height = 100
@@ -298,15 +296,11 @@ class PlotUI(HasTraits):
         if self._image_index.metadata.has_key("selections"):
             x_ndx, y_ndx = self._image_index.metadata["selections"]
             if y_ndx and x_ndx:
-                #y_ndx = -y_ndx
                 self.pd.set_data("line_value", 
-                                 #self._image_value.data[-y_ndx,:])
                                  self._image_value.data[y_ndx,:])
                 self.pd.set_data("line_value2", 
-                                 #self._image_value.data[::-1,x_ndx])
                                  self._image_value.data[:,x_ndx])
                 xdata, ydata = self._image_index.get_data()
-                #xdata, ydata = xdata.get_data(), ydata.get_data()[::-1]
                 xdata, ydata = xdata.get_data(), ydata.get_data()
                 self.pd.set_data("scatter_index", array([xdata[x_ndx]]))
                 self.pd.set_data("scatter_index2", array([ydata[y_ndx]]))
@@ -318,15 +312,6 @@ class PlotUI(HasTraits):
                     array([self._image_value.data[y_ndx, x_ndx]]))
                 self.pd.set_data("scatter_color2",
                     array([self._image_value.data[y_ndx, x_ndx]]))
-                #self.pd.set_data("scatter_index2", array([ydata[-y_ndx]]))
-                #self.pd.set_data("scatter_value",
-                #    array([self._image_value.data[-y_ndx, x_ndx]]))
-                #self.pd.set_data("scatter_value2",
-                #    array([self._image_value.data[-y_ndx, x_ndx]]))
-                #self.pd.set_data("scatter_color",
-                #    array([self._image_value.data[-y_ndx, x_ndx]]))
-                #self.pd.set_data("scatter_color2",
-                #    array([self._image_value.data[-y_ndx, x_ndx]]))
         else:
             self.pd.set_data("scatter_value", array([]))
             self.pd.set_data("scatter_value2", array([]))
