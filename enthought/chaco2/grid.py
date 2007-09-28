@@ -285,6 +285,24 @@ class PlotGrid(AbstractOverlay):
     def _bounds_items_changed(self):
         self.invalidate()
         return
+
+    def _position_changed(self):
+        self.invalidate()
+
+    def _position_items_changed(self):
+        self.invalidate()
+
+    def _position_changed_for_component(self):
+        self.invalidate()
+
+    def _position_items_changed_for_component(self):
+        self.invalidate()
+
+    def _bounds_changed_for_component(self):
+        self.invalidate()
+
+    def _bounds_items_changed_for_component(self):
+        self.invalidate()
     
     #------------------------------------------------------------------------
     # Event handlers for visual attributes.  These mostly just call request_redraw()

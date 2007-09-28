@@ -744,7 +744,19 @@ class PlotAxis(AbstractOverlay):
 
     def _position_items_changed(self):
         return self._position_changed()
+    
+    def _position_changed_for_component(self):
+        self._cache_valid = False
 
+    def _position_items_changed_for_component(self):
+        self._cache_valid = False
+
+    def _bounds_changed_for_component(self):
+        self._cache_valid = False
+
+    def _bounds_items_changed_for_component(self):
+        self._cache_valid = False
+    
     def _updated_fired(self):
         """If the axis bounds changed, redraw."""
         self._cache_valid = False
