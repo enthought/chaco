@@ -267,4 +267,11 @@ class DataLabel(ToolTip):
 
     def _data_point_changed(self, old, new):
         if new is not None:
-            self.lines = [self.label_format % {"x":new[0], "y":new[1]}]
+            self._create_new_labels()
+
+    def _label_format_changed(self, old, new):
+        self._create_new_labels()
+
+    def _create_new_labels(self):
+        pt = self.data_point
+        self.lines = [self.label_format % {"x": pt[0], "y": pt[1]}]
