@@ -4,7 +4,7 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.enable2.api import white_color_trait
+from enthought.enable2.api import black_color_trait, white_color_trait
 from enthought.kiva import STROKE, font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import List, Int, Float
@@ -21,14 +21,11 @@ class ToolTip(AbstractOverlay):
     # The font to render the tooltip.
     font = KivaFont('modern 10')
 
-    # Use a visible border. (Overrides Enable Component.)
-    border_visible = True
+    # The color of the text in the tooltip
+    text_color = black_color_trait
 
     # The ammount of space between the border and the text.
     border_padding = Int(4)
-
-    # Use a white background color (overrides AbstractOverlay).
-    bgcolor = white_color_trait
 
     # The number of pixels between lines.
     line_spacing = Int(4)
@@ -36,18 +33,18 @@ class ToolTip(AbstractOverlay):
     # List of text strings to put in the tooltip.
     lines = List
 
-    # The tooltip is a fixed size. (Overrides PlotComponent.)
-    resizable = ""
-
     # The available space in the four directions, used to determine layout
     # If -1, assume there is enough space in that direction.
 
     # Available space to the left of the tooltip; if -1 there is "enough" space.
     left_space = Float(-1)
+
     # Available space to the right of the tooltip; if -1 there is "enough" space.
     right_space = Float(-1)
+
     # Available space below the tooltip; if -1 there is "enough" space.
     below_space = Float(-1)
+
     # Available space above the tooltip; if -1 there is "enough" space.
     above_space = Float(-1)
 
@@ -55,6 +52,15 @@ class ToolTip(AbstractOverlay):
     # depends on the space available on each side, set by **left_space**, etc.
     # If any of those values is -1, there is enough space in that direction.
     corner_point = List
+
+    # The tooltip is a fixed size. (Overrides PlotComponent.)
+    resizable = ""
+
+    # Use a visible border. (Overrides Enable Component.)
+    border_visible = True
+
+    # Use a white background color (overrides AbstractOverlay).
+    bgcolor = white_color_trait
 
     #----------------------------------------------------------------------
     # Private Traits
@@ -107,8 +113,8 @@ class ToolTip(AbstractOverlay):
         Overrides PlotComponent.
         """
         labels = [Label(text=line, font=self.font, margin=0,
-                        bgcolor='transparent', border_width=0)
-                  for line in self.lines]
+                        bgcolor='transparent', border_width=0,
+                        color=self.text_color) for line in self.lines]
 
         dummy_gc = font_metrics_provider()
         line_sizes = array([label.get_width_height(dummy_gc)

@@ -154,7 +154,7 @@ class DataLabel(ToolTip):
     # is 'auto', then the label uses **label_position**.  Otherwise, it treats
     # the label as if it were at the label position indicated by this attribute.
     arrow_root = Trait("auto", "auto", "top left", "top right", "bottom left",
-                       "bottom right")
+                       "bottom right", "center")
 
     #-------------------------------------------------------------------------
     # Private traits

@@ -2,7 +2,7 @@
 """
 
 # Standard library imports
-import logging
+import warnings
 
 # Major library imports
 from numpy import any, argsort, array, compress, concatenate, inf, invert, isnan, \
@@ -17,9 +17,6 @@ from enthought.traits.ui.api import Item, View
 from base import arg_find_runs, bin_search, reverse_map_1d
 from base_xy_plot import BaseXYPlot
 
-
-# Setup a logger for this module.
-logger = logging.getLogger(__name__)
 
 
 class LinePlot(BaseXYPlot):
@@ -159,15 +156,15 @@ class LinePlot(BaseXYPlot):
                     return
 
             if len(index) == 0 or len(value) == 0 or len(index) != len(value):
-                logger.warn("Chaco2: using empty dataset; index_len=%d, value_len=%d." \
-                                    % (len(index), len(value)))
+                warnings.warn("Chaco2.LinePLot: using empty dataset; index_len=%d, value_len=%d." \
+                            % (len(index), len(value)))
                 self._cached_data_pts = []
                 self._cache_valid = True
 
             size_diff = len(value) - len(index)
             if size_diff > 0:
-                print 'WARNING lineplot._gather_points: len(value)', len(value), \
-                      '- len(index)', len(index), '=', size_diff, '\n'
+                warnings.warn('Chaco2.LinePlot: len(value) %d - len(index) %d = %d\n' \
+                              % (len(value), len(index), size_diff))
                 index_max = len(index)
                 value = value[:index_max]
             else:
