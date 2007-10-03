@@ -124,7 +124,8 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
         if floor_only:
             return ndx
         delta = 0.5 * (data[ndx+1] - data[ndx])
-        if pt > data[ndx] + delta:
+        if ((sort_order == "ascending") and (pt > data[ndx] + delta)) or \
+           ((sort_order == "descending") and (pt < data[ndx] + delta)):
             return ndx + 1
         else:
             return ndx

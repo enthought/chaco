@@ -40,8 +40,64 @@ class BinSearchTestCase(unittest.TestCase):
         return
 
 class ReverseMap1DTestCase(unittest.TestCase):
-    # TODO: Implement these
-    pass
+    
+    def test_ascending(self):
+        ary = arange(10.0)
+        rmap = lambda x: reverse_map_1d(ary, x, 'ascending')
+
+        # inside bounds
+        self.assert_(rmap(0.0) == 0)
+        self.assert_(rmap(5.0) == 5)
+        self.assert_(rmap(9.0) == 9)
+
+        # out of bounds
+        self.assertRaises(IndexError, rmap, 10.0)
+        self.assertRaises(IndexError, rmap, -1.0)
+
+        # rounding
+        self.assert_(rmap(3.4) == 3)
+        self.assert_(rmap(3.5) == 3)
+        self.assert_(rmap(3.6) == 4)
+        return
+
+    def test_ascending_floor(self):
+        ary = arange(10.0)
+        rmap = lambda x: reverse_map_1d(ary, x, 'ascending', floor_only=True)
+
+        # test rounding
+        self.assert_(rmap(3.4) == 3)
+        self.assert_(rmap(3.5) == 3)
+        self.assert_(rmap(3.6) == 3)
+        return
+
+    def test_descending(self):
+        ary = arange(10.0, 0.0, -1.0)
+        rmap = lambda x: reverse_map_1d(ary, x, 'descending')
+
+        # inside bounds
+        self.assert_(rmap(10.0) == 0)
+        self.assert_(rmap(5.0) == 5)
+        self.assert_(rmap(1.0) == 9)
+
+        # out of bounds
+        self.assertRaises(IndexError, rmap, 0.0)
+        self.assertRaises(IndexError, rmap, 11.0)
+
+        # rounding
+        self.assert_(rmap(8.6) == 1)
+        self.assert_(rmap(8.5) == 1)
+        self.assert_(rmap(8.4) == 2)
+        return
+
+    def test_descending_floor(self):
+        ary = arange(10.0, 0.0, -1.0)
+        rmap = lambda x: reverse_map_1d(ary, x, 'descending', floor_only=True)
+
+        # test rounding
+        self.assert_(rmap(8.6) == 1)
+        self.assert_(rmap(8.5) == 1)
+        self.assert_(rmap(8.4) == 1)
+        return
 
 
 class FindRunsTestCase(unittest.TestCase):
@@ -112,6 +168,7 @@ class PointLineDistanceTestCase(unittest.TestCase):
 def test_suite(level=1):
     suites = []
     suites.append(unittest.makeSuite(BinSearchTestCase, "test_"))
+    suites.append(unittest.makeSuite(ReverseMap1DTestCase, "test_"))
     suites.append(unittest.makeSuite(FindRunsTestCase, "test_"))
     suites.append(unittest.makeSuite(PointLineDistanceTestCase, "test_"))
     return unittest.TestSuite(suites)

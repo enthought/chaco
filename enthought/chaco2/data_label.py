@@ -1,7 +1,7 @@
 """ Defines the DataLabel class and related trait and function.
 """
 # Major library imports
-from numpy import array, asarray
+from numpy import array, asarray, inf
 from numpy.linalg import norm
 
 # Enthought library imports
@@ -25,8 +25,9 @@ LabelPositionTrait = Trait("top right",
 
 
 def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
-               offset2=0, arrow=None):
-    """ Renders an arrow from *pt1* to *pt2*
+               offset2=0, arrow=None, minlen=0, maxlen=inf):
+    """ Renders an arrow from *pt1* to *pt2*.  If gc is None, then just returns
+    the arrow object.
 
     Parameters
     ==========
@@ -47,11 +48,19 @@ def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
     arrow : object
         an opaque object returned by previous calls to draw_arrow.  If this
         argument is provided, all other arguments (except gc) are ignored
+    minlen: number or None
+        the minimum length of the arrow; if the arrow is shorter than this,
+        it will not be drawn
+    maxlen: number or None
+        the maximum length of the arrow; if the arrow is longer than this, it
+        will not be drawn
 
     Returns
     =======
     An 'arrow' (opaque object) which can be passed in to subsequent
     calls to this method to short-circuit some of the computation.
+    Even if an arrow is not drawn (due to minlen/maxlen restrictions),
+    an arrow will be returned.
     """
 
     if arrow is None:
@@ -73,23 +82,29 @@ def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
 
         pt1 = pt1 + offset1 * unit_vec
         pt2 = pt2 - offset2 * unit_vec
-        
+
         arrowhead_l = pt2 - (arrowhead_size*unit_vec + perp_vec)
         arrowhead_r = pt2 - (arrowhead_size*unit_vec - perp_vec)
         arrow = (pt1, pt2, arrowhead_l, arrowhead_r)
     else:
         pt1, pt2, arrowhead_l, arrowhead_r = arrow
+    
+    arrowlen = norm(pt2 - pt1)
+    if arrowlen < minlen or arrowlen > maxlen:
+        # This is the easiest way to circumvent the actual drawing
+        gc = None
         
-    gc.set_stroke_color(color)
-    gc.set_fill_color(color)
-    gc.begin_path()
-    gc.move_to(*pt1)
-    gc.line_to(*pt2)
-    gc.stroke_path()
-    gc.move_to(*pt2)
-    gc.line_to(*arrowhead_l)
-    gc.line_to(*arrowhead_r)
-    gc.fill_path()
+    if gc is not None:
+        gc.set_stroke_color(color)
+        gc.set_fill_color(color)
+        gc.begin_path()
+        gc.move_to(*pt1)
+        gc.line_to(*pt2)
+        gc.stroke_path()
+        gc.move_to(*pt2)
+        gc.line_to(*arrowhead_l)
+        gc.line_to(*arrowhead_r)
+        gc.fill_path()
     return arrow
 
 
@@ -156,6 +171,14 @@ class DataLabel(ToolTip):
     arrow_root = Trait("auto", "auto", "top left", "top right", "bottom left",
                        "bottom right", "center")
 
+    # The minimum length of the arrow before it will be drawn.  By default,
+    # the arrow will be drawn regardless of how short it is.
+    arrow_min_length = Float(0)
+
+    # The maximum length of the arrow before it will be drawn.  By default,
+    # the arrow will be drawn regardless of how long it is.
+    arrow_max_length = Float(inf)
+
     #-------------------------------------------------------------------------
     # Private traits
     #-------------------------------------------------------------------------
@@ -212,9 +235,13 @@ class DataLabel(ToolTip):
                 self._cached_arrow = draw_arrow(gc, (ox, oy), self._screen_coords,
                                                 self.arrow_color_,
                                                 offset1=3,
-                                                offset2=self.marker_size+3)
+                                                offset2=self.marker_size+3,
+                                                minlen=self.arrow_min_length,
+                                                maxlen=self.arrow_max_length)
             else:
-                draw_arrow(gc, None, None, None, arrow=self._cached_arrow)
+                draw_arrow(gc, None, None, None, arrow=self._cached_arrow,
+                           minlen=self.arrow_min_length, 
+                           maxlen=self.arrow_max_length)
 
         # layout and render the label itself
         ToolTip.overlay(self, component, gc, view_bounds, mode)
