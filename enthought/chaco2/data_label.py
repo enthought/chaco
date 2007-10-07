@@ -302,3 +302,22 @@ class DataLabel(ToolTip):
     def _create_new_labels(self):
         pt = self.data_point
         self.lines = [self.label_format % {"x": pt[0], "y": pt[1]}]
+
+    def _component_changed(self, old, new):
+        for comp, attach in ((old, False), (new, True)):
+            if comp is not None:
+                if hasattr(comp, 'index_mapper'):
+                    self._modify_mapper_listeners(comp.index_mapper, attach=attach)
+                if hasattr(comp, 'value_mapper'):
+                    self._modify_mapper_listeners(comp.value_mapper, attach=attach)
+        return
+
+    def _modify_mapper_listeners(self, mapper, attach=True):
+        if mapper is not None:
+            mapper.on_trait_change(self._handle_mapper, 'updated', remove=not attach)
+        return
+
+    def _handle_mapper(self):
+        # This gets fired whenever a mapper on our plot fires its 'updated' event.
+        self._layout_needed = True
+
