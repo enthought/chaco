@@ -308,12 +308,10 @@ class DataView(OverlayPlotContainer):
 
     def _position_changed(self):
         self._update_mappers()
-        super(DataView, self)._position_changed()
         return
 
     def _position_items_changed(self):
         self._update_mappers()
-        super(DataView, self)._position_items_changed()
         return
 
     def _orientation_changed(self):
