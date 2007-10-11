@@ -8,6 +8,8 @@ plot.  The underlying plot is similar to the one in cmap_image_plot.py.
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
    and alt-right-arrow moves you forwards and backwards through the "zoom 
    history".
+
+ - Pressing "p" will toggle the display of the image inspector overlay.
 """
 
 # Major library imports

@@ -3,7 +3,7 @@ ImageInspectorColorbarOverlay classes.
 """
 # Enthought library imports
 from enthought.enable2.api import BaseTool, KeySpec
-from enthought.traits.api import Any, Bool, Event, Tuple
+from enthought.traits.api import Any, Bool, Enum, Event, Tuple
 
 # Chaco imports
 from enthought.chaco2.api import AbstractOverlay, ImagePlot, TextBoxOverlay
@@ -18,26 +18,31 @@ class ImageInspectorTool(BaseTool):
     # "data_value" if the plot is a color-mapped image plot.
     new_value = Event
 
+    # Indicates whether overlays listening to this tool should be visible.
+    visible = Bool(True)
+
     # Stores the last mouse position.  This can be used by overlays to
     # position themselves around the mouse.
     last_mouse_position = Tuple
 
+    # This key will show and hide any ImageInspectorOverlays associated
+    # with this tool.
     inspector_key = KeySpec('p')
    
-    def _inspect_image(self):
-        for c in self.component.overlays:
-            c.visible = not c.visible
-        self.component.overlays = []
-   
+    # Stores the value of self.visible when the mouse leaves the tool,
+    # so that it can be restored when the mouse enters again.
+    _old_visible = Bool(True)
+
     def normal_key_pressed(self, event):
         if self.inspector_key.match(event):
-            self._inspect_image()
+            self.visible = not self.visible
 
     def normal_mouse_leave(self, event):
-        for c in self.component.overlays:
-            c.visible = not c.visible
+        self._old_visible = self.visible
+        self.visible = False
 
-        
+    def normal_mouse_enter(self, event):
+        self.visible = self._old_visible
 
     def normal_mouse_move(self, event):
         """ Handles the mouse being moved.
@@ -86,18 +91,25 @@ class ImageInspectorOverlay(TextBoxOverlay):
     # The default state of the overlay is invisible (overrides PlotComponent).
     visible = False
 
+    # Whether the overlay should auto-hide and auto-show based on the
+    # tool's location, or whether it should be forced to be hidden or visible.
+    visibility = Enum("auto", True, False)
+
     def _image_inspector_changed(self, old, new):
         if old:
             old.on_trait_event(self._new_value_updated, 'new_value', remove=True)
+            old.on_trait_change(self._tool_visible_changed, "visible", remove=True)
         if new:
             new.on_trait_event(self._new_value_updated, 'new_value')
+            new.on_trait_change(self._tool_visible_changed, "visible") 
         
     def _new_value_updated(self, event):
         if event is None:
             self.text = ""
-            self.visible = False
+            if self.visibility == "auto":
+                self.visible = False
             return
-        else:
+        elif self.visibility == "auto":
             self.visible = True
 
         if self.tooltip_mode:
@@ -119,6 +131,11 @@ class ImageInspectorOverlay(TextBoxOverlay):
 
     def _visible_changed(self):
         self.component.request_redraw()
+
+    def _tool_visible_changed(self):
+        self.visibility = self.image_inspector.visible
+        if self.visibility != "auto":
+            self.visible = self.visibility
     
 
 class ImageInspectorColorbarOverlay(AbstractOverlay):
