@@ -53,30 +53,33 @@ class DemoView(HasTraits):
 
     ### Traits Views ###########################################################
 
+    # This view is for a file dialog to select the 'load' filename
     load_file_view = View(
         Item('_load_file'), 
         buttons=OKCancelButtons, 
-        kind='livemodal',
+        kind='livemodal',  # NB must use livemodal, plot objects don't copy well
         width=400,
         resizable=True,
     )
 
+    # This view is for a file dialog to select the 'save' filename
     save_file_view = View(
         Item('_save_file'), 
         buttons=OKCancelButtons, 
-        kind='livemodal',
+        kind='livemodal',  # NB must use livemodal, plot objects don't copy well
         width=400,
         resizable=True,
     )
 
+    # This is the default Traits UI view
     traits_view = View(
         Item('plot',
              editor=PlotContainerEditor(),
              show_label=False,
         ), 
         menubar=MenuBar(
-            Menu(Action(name="Save Plot", action="save"),
-                 Action(name="Load Plot", action="load"),
+            Menu(Action(name="Save Plot", action="save"), # see Controller for
+                 Action(name="Load Plot", action="load"), # these callbacks
                  Separator(),
                  CloseAction,
                  name="File",
@@ -88,22 +91,6 @@ class DemoView(HasTraits):
     )
 
 
-    def _save(self):
-        win_size = self.plot.outer_bounds
-        plot_gc = PlotGraphicsContext(win_size)
-        plot_gc.render_component(self.plot)
-        plot_gc.save(self._save_file)
-
-    def _load(self):
-        try:
-            image = ImageData.fromfile(self._load_file)
-            self.pd.set_data("imagedata", image._data)
-            self.plot.title = os.path.basename(self._load_file)
-            self.plot.request_redraw()
-        except:
-            pass
-
-
     #---------------------------------------------------------------------------
     # Public 'DemoView' interface
     #---------------------------------------------------------------------------
@@ -111,6 +98,7 @@ class DemoView(HasTraits):
     def __init__(self, *args, **kwargs):
         super(DemoView, self).__init__(*args, **kwargs)
 
+        # Create the plot object, set some options, and add some tools
         plot = self.plot = Plot(self.pd)
         plot.padding = 50
         plot.padding_top = 75
@@ -118,8 +106,43 @@ class DemoView(HasTraits):
         zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
+        # Load the default image
         self._load()
+
+        # Plot the image plot with this image
         self.plot.img_plot("imagedata")
+
+
+    #---------------------------------------------------------------------------
+    # Private 'DemoView' interface
+    #---------------------------------------------------------------------------
+
+    def _save(self):
+        # Create a graphics context of the right size
+        win_size = self.plot.outer_bounds
+        plot_gc = PlotGraphicsContext(win_size)
+
+        # Have the plot component into it
+        plot_gc.render_component(self.plot)
+
+        # Save out to the user supplied filename
+        plot_gc.save(self._save_file)
+
+    def _load(self):
+        try:
+            # Load the image with the user supplied filename
+            image = ImageData.fromfile(self._load_file)
+
+            # Update the plot data. NB we must extract _date from the image
+            # for the time being, until ImageData is made more friendly
+            self.pd.set_data("imagedata", image._data)
+
+            # Set the title and redraw
+            self.plot.title = os.path.basename(self._load_file)
+            self.plot.request_redraw()
+        except:
+            # If loading fails, simply do nothing
+            pass
 
 
 #-------------------------------------------------------------------------------
@@ -128,6 +151,7 @@ class DemoView(HasTraits):
 
 class DemoController(Handler):
 
+    # The HasTraits object we are a controller for
     view = Instance(DemoView)
 
     #---------------------------------------------------------------------------
@@ -135,11 +159,17 @@ class DemoController(Handler):
     #---------------------------------------------------------------------------
 
     def save(self, ui_info):
+        """ 
+        Callback for the 'Save Image' menu option.
+        """
         ui = self.view.edit_traits(view='save_file_view')
         if ui.result == True:
             self.view._save()
 
     def load(self, ui_info):
+        """ 
+        Callback for the 'Load Image' menu option.
+        """
         ui = self.view.edit_traits(view='load_file_view')
         if ui.result == True:
             self.view._load()
