@@ -3,7 +3,7 @@ ImageInspectorColorbarOverlay classes.
 """
 # Enthought library imports
 from enthought.enable2.api import BaseTool, KeySpec
-from enthought.traits.api import Any, Bool, Enum, Event, Tuple
+from enthought.traits.api import Any, Bool, Enum, Event, Trait, Tuple
 
 # Chaco imports
 from enthought.chaco2.api import AbstractOverlay, ImagePlot, TextBoxOverlay
@@ -31,7 +31,7 @@ class ImageInspectorTool(BaseTool):
    
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
-    _old_visible = Bool(True)
+    _old_visible = Trait(None, Bool(True))
 
     def normal_key_pressed(self, event):
         if self.inspector_key.match(event):
@@ -42,7 +42,8 @@ class ImageInspectorTool(BaseTool):
         self.visible = False
 
     def normal_mouse_enter(self, event):
-        self.visible = self._old_visible
+        if self._old_visible is not None:
+            self.visible = self._old_visible
 
     def normal_mouse_move(self, event):
         """ Handles the mouse being moved.
@@ -102,6 +103,7 @@ class ImageInspectorOverlay(TextBoxOverlay):
         if new:
             new.on_trait_event(self._new_value_updated, 'new_value')
             new.on_trait_change(self._tool_visible_changed, "visible") 
+            self._tool_visible_changed()
         
     def _new_value_updated(self, event):
         if event is None:
