@@ -44,7 +44,6 @@ class LogMapper(Base1DMapper):
         Overrides AbstractMapper. Maps values from data space to screen space.
         """
         #First convert to a [0,1] space, then to the screen space
-        
         if not self._cache_valid:
             self._compute_scale()
         if self._inter_scale == 0.0:
@@ -54,6 +53,10 @@ class LogMapper(Base1DMapper):
                 mask = (data_array <= LOG_MINIMUM) | (isnan(data_array))
                 if sometrue(mask):
                     old_array = data_array
+                    if type(old_array) == int or type(old_array) == float or \
+                           isnan(old_array):
+                        old_array = array([old_array])
+                        
                     data_array = old_array[:]
                     fill_array = zeros(len(data_array)) + self.fill_value
                     putmask(data_array, mask, fill_array)
