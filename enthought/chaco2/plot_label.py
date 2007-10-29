@@ -42,6 +42,10 @@ class PlotLabel(AbstractOverlay):
     # FIXME: This could cause cycles in layout, so not implemented for now
     #modify_component = true
 
+    # By default, this acts like a component and will render on the main
+    # "plot" layer unless its **component** attribute gets set.
+    draw_layer = "plot"
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -66,7 +70,7 @@ class PlotLabel(AbstractOverlay):
         """
         self._draw_overlay(gc, view_bounds, mode)
         return
-    
+
     def get_preferred_size(self):
         """ Returns the label's preferred size.
         
@@ -84,7 +88,7 @@ class PlotLabel(AbstractOverlay):
         if self.component is not None:
             self._layout_as_overlay()
         else:
-            super(AbstractOverlay, self).do_layout()
+            self._layout_as_component()
         return
     
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
@@ -119,6 +123,15 @@ class PlotLabel(AbstractOverlay):
         finally:
             gc.restore_state()
         return
+    
+    def _draw_plot(self, gc, view_bounds=None, mode="normal"):
+        if self.component is None:
+            # We are not overlaying anything else, so we should render
+            # on this layer
+            self._draw_overlay(gc, view_bounds, mode)
+
+    def _layout_as_component(self, size=None, force=False):
+        pass
     
     def _layout_as_overlay(self, size=None, force=False):
         """ Lays out the label as an overlay on another component.
