@@ -173,7 +173,8 @@ class PlotScrollBar(NativeScrollBar):
         self._widget_moved = True
     
     def _update_mapper_listeners(self):
-        if self._mapper
+        #if self._mapper
+        pass
     
     def _handle_mapper_updated(self):
         self._handle_dataspace_update()
