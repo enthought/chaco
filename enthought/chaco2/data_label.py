@@ -239,7 +239,8 @@ class DataLabel(ToolTip):
                                                 minlen=self.arrow_min_length,
                                                 maxlen=self.arrow_max_length)
             else:
-                draw_arrow(gc, None, None, None, arrow=self._cached_arrow,
+                draw_arrow(gc, None, None, self.arrow_color_, 
+                           arrow=self._cached_arrow,
                            minlen=self.arrow_min_length, 
                            maxlen=self.arrow_max_length)
 
