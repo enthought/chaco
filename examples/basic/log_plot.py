@@ -48,6 +48,11 @@ class PlotFrame(DemoFrame):
         plot.padding = 50
         plot.legend.visible = True
 
+        # Attach some tools to the plot
+        plot.tools.append(PanTool(plot))
+        zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+        plot.overlays.append(zoom)
+
         # Return a window containing our plots
         return Window(self, -1, component=plot)
         

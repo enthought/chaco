@@ -29,9 +29,9 @@ class PanTool(BaseTool):
     # Constrain the panning to one direction?
     constrain = false
     
-    # The direction of constrained draw. A value of None means that the user 
-    # has initiated the drag and pressed the constrain_key, but hasn't moved 
-    # the mouse yet; the magnitude of the components of the next mouse_move 
+    # The direction of constrained draw. A value of None means that the user
+    # has initiated the drag and pressed the constrain_key, but hasn't moved
+    # the mouse yet; the magnitude of the components of the next mouse_move
     # event will determine the constrain_direction.
     constrain_direction = Enum(None, "x", "y")
     
@@ -54,7 +54,7 @@ class PanTool(BaseTool):
     # The tool does not have a visual representation (overrides
     # BaseTool).
     draw_mode = "none"
-
+  
     # The tool is not visible (overrides BaseTool).
     visible = False
     
@@ -93,7 +93,7 @@ class PanTool(BaseTool):
         return
 
     def panning_left_up(self, event):
-        """ Handles the left mouse button coming up when the tool is in the 
+        """ Handles the left mouse button coming up when the tool is in the
         'panning' state.
         
         Stops panning if the left mouse button is the drag button.
@@ -101,11 +101,11 @@ class PanTool(BaseTool):
         if self.drag_button == "left":
             self._end_pan(event)
         return
-    
+
     def panning_right_up(self, event):
         """ Handles the right mouse button coming up when the tool is in the
         'panning' state.
-        
+            
         Stops panning if the right mouse button is the drag button.
         """
         if self.drag_button == "right":
@@ -113,7 +113,7 @@ class PanTool(BaseTool):
         return
 
     def panning_middle_up(self, event):
-        """ Handles the middle mouse button coming up when the tool is in the 
+        """ Handles the middle mouse button coming up when the tool is in the
         'panning' state.
         
         Stops panning if the middle mouse button is the drag button.
@@ -123,46 +123,43 @@ class PanTool(BaseTool):
         return
 
     def panning_mouse_move(self, event):
-        """ Handles the mouse being moved when the tool is in the 'panning' 
+        """ Handles the mouse being moved when the tool is in the 'panning'
         state.
         """
         plot = self.component
-        
+       
         if self._auto_constrain and self.constrain_direction is None:
             # Determine the constraint direction
             if abs(event.x - self._original_xy[0]) > abs(event.y - self._original_xy[1]):
                 self.constrain_direction = "x"
             else:
                 self.constrain_direction = "y"
-
+    
         xrange = plot.x_mapper.range
         yrange = plot.y_mapper.range
-
+    
         for direction, bound_name, ndx in [("x","width",0), ("y","height",1)]:
             mapper = getattr(plot, direction + "_mapper")
             range = mapper.range
             eventpos = getattr(event, direction)
             origpos = self._original_xy[ndx]
-
+    
             if not self.constrain or self.constrain_direction == direction:
-                clicked = mapper.map_data(eventpos)
-                high = range.high
-                low = range.low
-                if high == low:
-                    high = low + 1.0
-
-                scale = getattr(plot, bound_name) / (high - low)
-                delta = self.speed * (eventpos - origpos) / scale
-                if getattr(plot, direction + "_direction", None) == "flipped":
-                    delta = -delta
-                range.set_bounds(range.low - delta, range.high - delta)
-        
+                screenlow, screenhigh = mapper.screen_bounds               
+                screendelta = self.speed * (eventpos - origpos)
+                #if getattr(plot, direction + "_direction", None) == "flipped":
+                #    screendelta = -screendelta
+    
+                newlow = mapper.map_data(screenlow - screendelta)
+                newhigh = mapper.map_data(screenhigh - screendelta)
+                range.set_bounds(newlow, newhigh)
+               
         event.handled = True
-        
+
         self._original_xy = (event.x, event.y)
         plot.request_redraw()
         return
-
+    
     def panning_mouse_leave(self, event):
         """ Handles the mouse leaving the plot when the tool is in the 'panning'
         state.
@@ -170,7 +167,7 @@ class PanTool(BaseTool):
         Ends panning.
         """
         return self._end_pan(event)
-    
+
     def _start_pan(self, event, capture_mouse=True):
         self._original_xy = (event.x, event.y)
         if self.constrain_key is not None:
