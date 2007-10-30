@@ -322,3 +322,34 @@ class DataLabel(ToolTip):
         # This gets fired whenever a mapper on our plot fires its 'updated' event.
         self._layout_needed = True
 
+    def _arrow_size_changed(self):
+        self._cached_arrow = None
+        self._layout_needed = True
+
+    def _arrow_root_changed(self):
+        self._cached_arrow = None
+        self._layout_needed = True
+
+    def _arrow_min_length_changed(self):
+        self._cached_arrow = None
+        self._layout_needed = True
+
+    def _arrow_max_length_changed(self):
+        self._cached_arrow = None
+        self._layout_needed = True
+
+    def _label_position_changed(self):
+        self._layout_needed = True
+
+    def _position_changed(self):
+        self._layout_needed = True
+
+    def _position_items_changed(self):
+        self._layout_needed = True
+
+    def _bounds_changed(self):
+        self._layout_needed = True
+
+    def _bounds_items_changed(self):
+        self._layout_needed = True
+
