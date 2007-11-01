@@ -302,7 +302,8 @@ class DataLabel(ToolTip):
 
     def _create_new_labels(self):
         pt = self.data_point
-        self.lines = [self.label_format % {"x": pt[0], "y": pt[1]}]
+        if pt is not None:
+            self.lines = [self.label_format % {"x": pt[0], "y": pt[1]}]
 
     def _component_changed(self, old, new):
         for comp, attach in ((old, False), (new, True)):
