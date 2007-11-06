@@ -1,20 +1,21 @@
 """ Defines the RangeSelectionOverlay class.
 """
 # Major library imports
-from numpy import array
+from numpy import arange, array
 
 # Enthought library imports
 from enthought.enable2.api import ColorTrait, LineStyle
-from enthought.traits.api import Any, Enum, Float, Instance, Int, Property, Trait
-from enthought.chaco2.api import AbstractOverlay, PlotComponent
+from enthought.traits.api \
+    import Any, Enum, Float, Instance, Int, Property, Str, Trait
+from enthought.chaco2.api import AbstractOverlay, arg_find_runs, PlotComponent
 
 
 
 class RangeSelectionOverlay(AbstractOverlay):
     """ Highlights the selection region on a component.
     
-    Looks at the "selections" metadata field of self.component for
-    a tuple (dataspace_start, dataspace_end).
+    Looks at a given metadata field of self.component for regions to draw as 
+    selected.
     """
 
     # The axis to which this tool is perpendicular.
@@ -32,6 +33,11 @@ class RangeSelectionOverlay(AbstractOverlay):
     # By default, this is set based on self.asix and self.plot.orientation,
     # but it can be overriden and set to 0 or 1.
     axis_index = Property
+
+    # The name of the metadata to look at for dataspace bounds. The metadata
+    # can be either a tuple (dataspace_start, dataspace_end) in "selections" or
+    # a boolean array mask of seleted dataspace points with any other name
+    metadata_name = Str("selections")
 
     #------------------------------------------------------------------------
     # Appearance traits
@@ -79,28 +85,25 @@ class RangeSelectionOverlay(AbstractOverlay):
         
         # Draw the selection
         coords = self._get_selection_screencoords()
-        if coords is not None:
-            start, end = coords
+        for coord in coords:
+            start, end = coord
             lower_left[axis_ndx] = start
             lower_left[1-axis_ndx] = component.position[1-axis_ndx]
             upper_right[axis_ndx] = end - start
             upper_right[1-axis_ndx] = component.bounds[1-axis_ndx]
-        else:
-            # No selection, so nothing to do!
-            return
         
-        gc.save_state()
-        try:
-            gc.set_alpha(self.alpha)
-            gc.set_fill_color(self.fill_color_)
-            gc.set_stroke_color(self.border_color_)
-            gc.set_line_width(self.border_width)
-            gc.set_line_dash(self.border_style_)
-            gc.rect(lower_left[0], lower_left[1], upper_right[0], upper_right[1])
-            gc.draw_path()
-        finally:
-            gc.restore_state()
-        return
+            gc.save_state()
+            try:
+                gc.set_alpha(self.alpha)
+                gc.set_fill_color(self.fill_color_)
+                gc.set_stroke_color(self.border_color_)
+                gc.set_line_width(self.border_width)
+                gc.set_line_dash(self.border_style_)
+                gc.rect(lower_left[0], lower_left[1], 
+                        upper_right[0], upper_right[1])
+                gc.draw_path()
+            finally:
+                gc.restore_state()
 
 
     #------------------------------------------------------------------------
@@ -113,11 +116,24 @@ class RangeSelectionOverlay(AbstractOverlay):
         
         If there is no current selection, then returns None.
         """
-        selection = getattr(self.plot, self.axis).metadata["selections"]
-        if selection is not None and len(selection) == 2:
-            return self.mapper.map_screen(array(selection))
+        ds = getattr(self.plot, self.axis)
+        selection = ds.metadata[self.metadata_name]
+        # "selections" metadata must be a tuple
+        if self.metadata_name == "selections":
+            if selection is not None and len(selection) == 2:
+                return [self.mapper.map_screen(array(selection))]
+            else:
+                return []
+        # All other metadata is interpreted as a mask on dataspace
         else:
-            return None
+            ar = arange(0,len(selection), 1)
+            runs = arg_find_runs(ar[selection])
+            coords = []
+            for inds in runs:
+                start = ds._data[ar[selection][inds[0]]]
+                end = ds._data[ar[selection][inds[1]-1]]
+                coords.append(self.mapper.map_screen(array((start, end))))
+            return coords
 
     def _determine_axis(self):
         """ Determines which element of an (x,y) coordinate tuple corresponds
