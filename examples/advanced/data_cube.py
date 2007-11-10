@@ -2,52 +2,30 @@
 Allows isometric viewing of a 3D data cube.
 """
 
-# Standard library imports
-from optparse import OptionParser
-import sys
+# Outstanding TODOs:
+#  - need to add line inspectors to side and bottom plots, and synchronize
+#    with center plot
+#  - need to set the various image plots to use the same colormap instance,
+#    and that colormap's range needs to be set to min/max of the entire cube
+#  - refactor create_window() so there is less code duplication
+#  - try to eliminate the use of model.xs, ys, zs in favor of bounds tuples
+
 
 # Major library imports
-from numpy import array, linspace, nanmin, nanmax, newaxis, pi, vectorize, zeros, sin, cos, tan
+from numpy import linspace, nanmin, nanmax, newaxis, pi, sin, cos
 
 # Enthought library imports
-from enthought.chaco2.api import ArrayDataSource, ArrayPlotData, ColorBar, ContourLinePlot, \
-                                 ColormappedScatterPlot, CMapImagePlot, \
-                                 ContourPolyPlot, DataRange1D, VPlotContainer, \
-                                 DataRange2D, GridMapper, GridDataSource, \
-                                 HPlotContainer, ImageData, LinearMapper, \
-                                 LinePlot, OverlayPlotContainer, Plot, PlotAxis, GridPlotContainer, \
+from enthought.chaco2.api import ArrayPlotData, Plot, GridPlotContainer, \
                                  BaseTool
 from enthought.chaco2.default_colormaps import *
-from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
-from enthought.chaco2.tools.api import LineInspector, PanTool, RangeSelection, \
-                                   RangeSelectionOverlay, SimpleZoom
-from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
+from enthought.chaco2.tools.api import LineInspector
+from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.enable2.api import Window
-from enthought.traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
-                             Int, Instance, Str, Trait, on_trait_change
-from enthought.traits.ui.api import Group, Handler, HGroup, Item, View
-from enthought.traits.ui.menu import Action, CloseAction, Menu, \
-                                     MenuBar, NoButtons, Separator
+from enthought.traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
+        Event, Float, HasTraits, Int, Trait, on_trait_change
 
 
 class Model(HasTraits):
-
-    #Traits view definitions:
-    #traits_view = View(
-    #    Group(Item('function'), 
-    #          HGroup(Item('npts_x', label="Number X Points"),
-    #                 Item('npts_y', label="Number Y Points"),
-    #                 Item('npts_z', label="Number Z Points")),
-    #          HGroup(Item('min_x', label="Min X value"),
-    #                 Item('max_x', label="Max X value")),
-    #          HGroup(Item('min_y', label="Min Y value"),
-    #                 Item('max_y', label="Max Y value")),
-    #          HGroup(Item('min_z', label="Min Z value"),
-    #                 Item('max_z', label="Max Z value"))),
-    #                 buttons=["OK", "Cancel"])
-
-    function = Str("sin(x) * cos(y) + sin(0.5*z)")
-    #function = Str("tanh(x**2+y)*cos(y)*jn(0,x+y*2)")
 
     npts_x = CInt(256)
     npts_y = CInt(256)
@@ -73,19 +51,18 @@ class Model(HasTraits):
         super(Model, self).__init__(*args, **kwargs)
         self.compute_model()
 
-    @on_trait_change("function", "npts_+", "min_+", "max_+")
+    @on_trait_change("npts_+", "min_+", "max_+")
     def compute_model(self):
 
         def vfunc(x, y, z):
-            return sin(x) * cos(y) + sin(0.5*z)
+            return sin(x*z) * cos(y)*sin(z) + sin(0.5*z)
 
-        # Create the values
+        # Create the axes
         self.xs = linspace(self.min_x, self.max_x, self.npts_x)
         self.ys = linspace(self.min_y, self.max_y, self.npts_y)
         self.zs = linspace(self.min_z, self.max_z, self.npts_z)
 
-        #func = compile(self.function, "<string>", "eval")
-        #vfunc = vectorize(lambda x,y,z: eval(func))
+        # Generate a cube of values by using newaxis to span new dimensions
         self.vals = vfunc(self.xs[:, newaxis, newaxis], 
                           self.ys[newaxis, :, newaxis],
                           self.zs[newaxis, newaxis, :])
@@ -93,7 +70,6 @@ class Model(HasTraits):
         self.minval = nanmin(self.vals)
         self.maxval = nanmax(self.vals)
         self.model_changed = True
-        self._function = self.function
 
 
 class ImageIndexTool(BaseTool):
@@ -104,6 +80,12 @@ class ImageIndexTool(BaseTool):
     # index and value:
     #     callback(x_index, y_index)
     callback = Any()
+
+    # Whether or not to update the slice info; we enter select mode when
+    # the left mouse button is pressed and exit it when the mouse button
+    # is released
+    # FIXME: This is not used right now.
+    select_mode = Bool(False)
 
     def normal_mouse_move(self, event):
         plot = self.component
@@ -116,10 +98,11 @@ class ImageIndexTool(BaseTool):
 class PlotFrame(DemoFrame):
 
     # These are the indices into the cube that each of the image plot views
-    # will show
+    # will show; the default values are non-zero just to make it a little
+    # interesting.
     slice_x = 10
     slice_y = 10
-    slice_z = 0
+    slice_z = 10
 
     num_levels = Int(15)
     colormap = Any  #Enum(color_map_name_dict.keys())
@@ -135,30 +118,21 @@ class PlotFrame(DemoFrame):
             self.slice_x = x_index
             self.slice_y = y_index
         elif plane == "yz":
-            self.slice_y = x_index
-            self.slice_z = y_index
+            # transposed because the plot is oriented vertically
+            self.slice_z = x_index
+            self.slice_y = y_index
         elif plane == "xz":
             self.slice_x = x_index
             self.slice_z = y_index
         else:
             warnings.warn("Unrecognized plane for _index_callback: %s" % plane)
         self._update_images()
-        self.center.invalidate_draw()
-        #self.center.request_redraw()
-        self.right.invalidate_draw()
-        #self.right.request_redraw()
-        self.bottom.invalidate_draw()
-        #self.bottom.request_redraw()
-
-        #self.centerplot.invalidate_and_redraw()
-        #self.bottomplot.invalidate_and_redraw()
-        #self.rightplot.invalidate_and_redraw()
+        self.center.invalidate_and_redraw()
+        self.right.invalidate_and_redraw()
+        self.bottom.invalidate_and_redraw()
         return
     
     def _create_window(self):
-        # This approach creates a PlotData object with three ImageData arrays
-        # that get plotted
-
         # Create the model
         self.model = model = Model()
         datacube = self.model.vals
@@ -167,24 +141,23 @@ class PlotFrame(DemoFrame):
         self.plotdata = ArrayPlotData()
         self._update_images()
 
-        centerplot = Plot(self.plotdata, padding=0, use_backbuffer=False)
+        centerplot = Plot(self.plotdata, padding=0)
         imgplot = centerplot.img_plot("xy", xbounds=model.xs, ybounds=model.ys, 
                             colormap=jet)[0]
-        imgplot.overlays.append(LineInspector(imgplot, axis="index_y",
-            inspect_mode="space", write_metadata=True, is_listener=True))
-        imgplot.overlays.append(LineInspector(imgplot, axis="index_x",
-            inspect_mode="space", write_metadata=True, is_listener=True))
+        imgplot.overlays.append(LineInspector(imgplot, axis="index_y", color="white",
+            inspect_mode="indexed", write_metadata=True, is_listener=True))
+        imgplot.overlays.append(LineInspector(imgplot, axis="index_x", color="white",
+            inspect_mode="indexed", write_metadata=True, is_listener=True))
         imgplot.tools.append(ImageIndexTool(imgplot, callback=lambda i,j: self._index_callback("xy", i, j)))
         self.center = imgplot
 
-        rightplot = Plot(self.plotdata, width=150, resizable="v",
-                         padding=0, use_backbuffer=False)
+        rightplot = Plot(self.plotdata, width=150, resizable="v", padding=0)
         imgplot = rightplot.img_plot("yz", xbounds=model.zs, ybounds=model.ys,
                                      colormap=jet)[0]
         imgplot.tools.append(ImageIndexTool(imgplot, callback=lambda i,j: self._index_callback("yz", i, j)))
         self.right = imgplot
 
-        bottomplot = Plot(self.plotdata, height=150, resizable="h", padding=0, use_backbuffer=False)
+        bottomplot = Plot(self.plotdata, height=150, resizable="h", padding=0)
         imgplot = bottomplot.img_plot("xz", xbounds=model.xs, ybounds=model.zs,
                                       colormap=jet)[0]
         imgplot.tools.append(ImageIndexTool(imgplot, callback=lambda i,j: self._index_callback("xz", i, j)))
@@ -198,9 +171,6 @@ class PlotFrame(DemoFrame):
         container.add(rightplot)
         container.add(bottomplot)
 
-        self.centerplot = centerplot
-        self.rightplot = rightplot
-        self.bottomplot = bottomplot
         self.container = container
         return Window(self, -1, component=container)
 
@@ -211,6 +181,8 @@ class PlotFrame(DemoFrame):
         """
         cube = self.model.vals
         pd = self.plotdata
+        # These are transposed because img_plot() expects its data to be in 
+        # row-major order
         pd.set_data("xy", cube[:, :, self.slice_z].T)
         pd.set_data("xz", cube[:, self.slice_y, :].T)
         pd.set_data("yz", cube[self.slice_x, :, :])
