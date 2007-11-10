@@ -92,7 +92,7 @@ class ImagePlot(Base2DPlot):
         """
         
         if data == None:
-                data = self.value.data
+            data = self.value.data
 
         (lpt, upt) = self.index.get_bounds()
         ll_x, ll_y = self.map_screen([lpt])[0]

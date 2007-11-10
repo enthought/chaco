@@ -319,6 +319,9 @@ class Plot(DataView):
         If *data* is an array of floating-point data, and no colormap is provided,
         then a ValueError is thrown.
 
+        *Data* should be in row-major order, so that xbounds corresponds to
+        *data*'s second axis, and ybounds corresponds to the first axis.
+
         Parameters
         ==========
         data : string

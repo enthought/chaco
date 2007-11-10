@@ -25,9 +25,13 @@ PointTrait = Trait(None, None, CArray(value=empty(0)))
 # An NxM array of numbers.
 ImageTrait = Trait(None, None, CArray(value=empty(0)))
 
+# An 3D array of numbers of shape (Nx, Ny, Nz)
+CubeTrait = Trait(None, None, CArray(value=empty(0)))
+
+
 # This enumeration lists the fundamental mathematical coordinate types that
 # Chaco supports.
-DimensionTrait = Enum("scalar", "point", "image")
+DimensionTrait = Enum("scalar", "point", "image", "cube")
 
 # Linear sort order.
 SortOrderTrait = Enum("ascending", "descending", "none")
