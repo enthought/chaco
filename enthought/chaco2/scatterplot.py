@@ -215,13 +215,15 @@ class ScatterPlot(BaseXYPlot):
         if not icon_mode:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
         render_markers(gc, points, self.marker, self.marker_size,
-                       self.color_, self.line_width, self.outline_color_)
+                       self.color_, self.line_width, self.outline_color_,
+                       self.custom_symbol)
 
         if self._cached_selected_pts is not None:
             sel_pts = self.map_screen(self._cached_selected_pts)
             render_markers(gc, sel_pts, self.selection_marker,
                     self.selection_marker_size, self.selection_color_,
-                    self.selection_line_width, self.selection_outline_color_)
+                    self.selection_line_width, self.selection_outline_color_,
+                    self.custom_symbol)
 
         if not icon_mode:
             # Draw the default axes, if necessary
@@ -267,7 +269,8 @@ class ScatterPlot(BaseXYPlot):
 #------------------------------------------------------------------------------
 
 def render_markers(gc, points, marker, marker_size,
-                   color, line_width, outline_color):
+                   color, line_width, outline_color,
+                   custom_symbol=None):
     """ Helper function for a PlotComponent instance to render a
     set of (x,y) points onto a graphics context.  Currently, it makes some 
     assumptions about the attributes on the plot object; these may be factored 
@@ -289,6 +292,8 @@ def render_markers(gc, points, marker, marker_size,
         The width, in pixels, of the marker outline
     outline_color : RGB(A) color 
         The color of the marker outline
+    custom_symbol : CompiledPath
+        If the marker style is 'custom', this is the symbol
     """
 
     if len(points) == 0:
@@ -330,7 +335,7 @@ def render_markers(gc, points, marker, marker_size,
             marker.add_to_path(path, marker_size)
             mode = marker.draw_mode
         else:
-            path = marker.custom_symbol
+            path = custom_symbol
             mode = STROKE
         if not marker.antialias:
             gc.set_antialias(False)
@@ -349,7 +354,7 @@ def render_markers(gc, points, marker, marker_size,
                 gc.draw_path(marker.draw_mode)
                 gc.restore_state()
         else:
-            path = marker.custom_symbol
+            path = custom_symbol
             for sx,sy in points:
                 gc.save_state()
                 gc.translate_ctm(sx, sy)
