@@ -200,7 +200,7 @@ def download_data():
     
     data_good = True
     try:
-        data_good = os.listdir('voldata') == 109
+        data_good = len(os.listdir('voldata')) == 109
     except:
         data_good = False
     
