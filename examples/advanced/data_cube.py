@@ -9,6 +9,7 @@ Allows isometric viewing of a 3D data cube.
 #    and that colormap's range needs to be set to min/max of the entire cube
 #  - refactor create_window() so there is less code duplication
 #  - try to eliminate the use of model.xs, ys, zs in favor of bounds tuples
+from numpy import zeros, fromfile
 
 
 # Major library imports
@@ -29,7 +30,7 @@ class Model(HasTraits):
 
     npts_x = CInt(256)
     npts_y = CInt(256)
-    npts_z = CInt(113)
+    npts_z = CInt(109)
 
     min_x = CFloat(-2*pi)
     max_x = CFloat(2*pi)
@@ -49,13 +50,19 @@ class Model(HasTraits):
 
     def __init__(self, *args, **kwargs):
         super(Model, self).__init__(*args, **kwargs)
+        download_data()
         self.compute_model()
 
     @on_trait_change("npts_+", "min_+", "max_+")
     def compute_model(self):
 
-        def vfunc(x, y, z):
-            return sin(x*z) * cos(y)*sin(z) + sin(0.5*z)
+        full_arr = zeros((256,256,109), dtype='f')
+        for i in range(1, 110):
+            arr = fromfile(r'./voldata/MRbrain.' + str(i), dtype='>u2')
+            arr.shape = (256,256)
+            full_arr[:,:,i-1] = arr
+
+        self.vals = full_arr
 
         # Create the axes
         self.xs = linspace(self.min_x, self.max_x, self.npts_x)
@@ -63,9 +70,6 @@ class Model(HasTraits):
         self.zs = linspace(self.min_z, self.max_z, self.npts_z)
 
         # Generate a cube of values by using newaxis to span new dimensions
-        self.vals = vfunc(self.xs[:, newaxis, newaxis], 
-                          self.ys[newaxis, :, newaxis],
-                          self.zs[newaxis, newaxis, :])
 
         self.minval = nanmin(self.vals)
         self.maxval = nanmax(self.vals)
@@ -188,7 +192,33 @@ class PlotFrame(DemoFrame):
         pd.set_data("yz", cube[self.slice_x, :, :])
 
 
-
+def download_data():
+    import os
+    import urllib
+    import gzip
+    import tarfile
+    
+    data_good = True
+    try:
+        data_good = os.listdir('voldata') == 109
+    except:
+        data_good = False
+    
+    if not data_good:
+        # download and extract the file
+        print "Downloading data, Please Wait (7.8MB)"
+        opener = urllib.urlopen('http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz')
+        open('MRbrain.tar.gz', 'wb').write(opener.read())
+        tar_file = tarfile.open('MRbrain.tar.gz')
+        try:
+            os.mkdir('voldata')
+        except:
+            pass
+        tar_file.extractall('voldata')
+        tar_file.close()
+        os.unlink('MRbrain.tar.gz')
+        
 if __name__ == "__main__":
+    import os
     demo_main(PlotFrame, size=(800,700), title="Cube analyzer")
 
