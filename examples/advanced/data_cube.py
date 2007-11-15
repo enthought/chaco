@@ -13,7 +13,7 @@ from numpy import zeros, fromfile
 
 
 # Major library imports
-from numpy import linspace, nanmin, nanmax, newaxis, pi, sin, cos
+from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
 
 # Enthought library imports
 from enthought.chaco2.api import ArrayPlotData, Plot, GridPlotContainer, \
@@ -27,7 +27,6 @@ from enthought.traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
 
 
 class Model(HasTraits):
-
     npts_x = CInt(256)
     npts_y = CInt(256)
     npts_z = CInt(109)
@@ -50,19 +49,12 @@ class Model(HasTraits):
 
     def __init__(self, *args, **kwargs):
         super(Model, self).__init__(*args, **kwargs)
-        download_data()
         self.compute_model()
 
     @on_trait_change("npts_+", "min_+", "max_+")
     def compute_model(self):
-
-        full_arr = zeros((256,256,109), dtype='f')
-        for i in range(1, 110):
-            arr = fromfile(r'./voldata/MRbrain.' + str(i), dtype='>u2')
-            arr.shape = (256,256)
-            full_arr[:,:,i-1] = arr
-
-        self.vals = full_arr
+        def vfunc(x, y, z):
+            return sin(x*z) * cos(y)*sin(z) + sin(0.5*z)
 
         # Create the axes
         self.xs = linspace(self.min_x, self.max_x, self.npts_x)
@@ -70,20 +62,61 @@ class Model(HasTraits):
         self.zs = linspace(self.min_z, self.max_z, self.npts_z)
 
         # Generate a cube of values by using newaxis to span new dimensions
+        self.vals = vfunc(self.xs[:, newaxis, newaxis],
+                          self.ys[newaxis, :, newaxis],
+                          self.zs[newaxis, newaxis, :])
 
         self.minval = nanmin(self.vals)
         self.maxval = nanmax(self.vals)
         self.model_changed = True
 
 
+class BrainModel(Model):
+    def __init__(self, *args, **kwargs):
+        download_data()
+        super(BrainModel, self).__init__(*args, **kwargs)
+
+    def compute_model(self):
+        nx = 256
+        ny = 256
+        nz = 109
+        full_arr = zeros((nx, ny, nz), dtype='f')
+        for i in range(1, 110):
+            arr = fromfile(r'./voldata/MRbrain.' + str(i), dtype='>u2')
+            arr.shape = (256,256)
+            full_arr[:,:,i-1] = arr
+        self.vals = full_arr
+
+        # Create the axes
+        self.xs = arange(nx)
+        self.ys = arange(ny)
+        self.zs = arange(nz)
+
+        # Generate a cube of values by using newaxis to span new dimensions
+        self.minval = nanmin(self.vals)
+        self.maxval = nanmax(self.vals)
+        self.model_changed = True
+
+
 class ImageIndexTool(BaseTool):
-    """ A tool to set the slice of a cube based on the user's clicks
+    """ A tool to set the slice of a cube based on the user's mouse movements
+    or clicks.
     """
 
     # This callback will be called with the index into self.component's
     # index and value:
-    #     callback(x_index, y_index)
+    #     callback(tool, x_index, y_index)
+    # where *tool* is a reference to this tool instance.  The callback
+    # can then use tool.token.
     callback = Any()
+
+    # This callback (if it exists) will be called with the integer number
+    # of mousewheel clicks
+    wheel_cb = Any()
+
+    # This token can be used by the callback to decide how to process
+    # the event.
+    token  = Any()
 
     # Whether or not to update the slice info; we enter select mode when
     # the left mouse button is pressed and exit it when the mouse button
@@ -96,7 +129,11 @@ class ImageIndexTool(BaseTool):
         ndx = plot.map_index((event.x, event.y), 
                              threshold=5.0, index_only=True)
         if ndx:
-            self.callback(*ndx)
+            self.callback(self, *ndx)
+
+    def normal_mouse_wheel(self, event):
+        if self.wheel_cb is not None:
+            self.wheel_cb(self, event.mouse_wheel)
 
 
 class PlotFrame(DemoFrame):
@@ -109,7 +146,7 @@ class PlotFrame(DemoFrame):
     slice_z = 10
 
     num_levels = Int(15)
-    colormap = Any  #Enum(color_map_name_dict.keys())
+    colormap = Any
 
     #---------------------------------------------------------------------------
     # Private Traits
@@ -117,7 +154,8 @@ class PlotFrame(DemoFrame):
         
     _cmap = Trait(jet, Callable)
 
-    def _index_callback(self, plane, x_index, y_index):
+    def _index_callback(self, tool, x_index, y_index):
+        plane = tool.token
         if plane == "xy":
             self.slice_x = x_index
             self.slice_y = y_index
@@ -135,10 +173,36 @@ class PlotFrame(DemoFrame):
         self.right.invalidate_and_redraw()
         self.bottom.invalidate_and_redraw()
         return
+
+    def _wheel_callback(self, tool, wheelamt):
+        plane_slice_dict = {"xy": ("slice_z", 2), 
+                            "yz": ("slice_x", 0),
+                            "xz": ("slice_y", 1)}
+        attr, shape_ndx = plane_slice_dict[tool.token]
+        val = getattr(self, attr)
+        max = self.model.vals.shape[shape_ndx]
+        if val + wheelamt > max:
+            setattr(self, attr, max-1)
+        elif val + wheelamt < 0:
+            setattr(self, attr, 0)
+        else:
+            setattr(self, attr, val + wheelamt)
+
+        self._update_images()
+        self.center.invalidate_and_redraw()
+        self.right.invalidate_and_redraw()
+        self.bottom.invalidate_and_redraw()
+        return
     
     def _create_window(self):
         # Create the model
-        self.model = model = Model()
+        try:
+            self.model = model = BrainModel()
+            cmap = jet
+        except:
+            self.model = model = Model()
+            cmap = jet
+
         datacube = self.model.vals
 
         # Create the plot
@@ -147,24 +211,27 @@ class PlotFrame(DemoFrame):
 
         centerplot = Plot(self.plotdata, padding=0)
         imgplot = centerplot.img_plot("xy", xbounds=model.xs, ybounds=model.ys, 
-                            colormap=jet)[0]
+                            colormap=cmap)[0]
         imgplot.overlays.append(LineInspector(imgplot, axis="index_y", color="white",
             inspect_mode="indexed", write_metadata=True, is_listener=True))
         imgplot.overlays.append(LineInspector(imgplot, axis="index_x", color="white",
             inspect_mode="indexed", write_metadata=True, is_listener=True))
-        imgplot.tools.append(ImageIndexTool(imgplot, callback=lambda i,j: self._index_callback("xy", i, j)))
+        imgplot.tools.append(ImageIndexTool(imgplot, token="xy", 
+            callback=self._index_callback, wheel_cb=self._wheel_callback))
         self.center = imgplot
 
         rightplot = Plot(self.plotdata, width=150, resizable="v", padding=0)
         imgplot = rightplot.img_plot("yz", xbounds=model.zs, ybounds=model.ys,
-                                     colormap=jet)[0]
-        imgplot.tools.append(ImageIndexTool(imgplot, callback=lambda i,j: self._index_callback("yz", i, j)))
+                                     colormap=cmap)[0]
+        imgplot.tools.append(ImageIndexTool(imgplot, token="yz", 
+            callback=self._index_callback, wheel_cb=self._wheel_callback))
         self.right = imgplot
 
         bottomplot = Plot(self.plotdata, height=150, resizable="h", padding=0)
         imgplot = bottomplot.img_plot("xz", xbounds=model.xs, ybounds=model.zs,
-                                      colormap=jet)[0]
-        imgplot.tools.append(ImageIndexTool(imgplot, callback=lambda i,j: self._index_callback("xz", i, j)))
+                                      colormap=cmap)[0]
+        imgplot.tools.append(ImageIndexTool(imgplot, token="xz", 
+            callback=self._index_callback, wheel_cb=self._wheel_callback))
         self.bottom = imgplot
 
         container = GridPlotContainer(padding=20, fill_padding=True,
@@ -194,9 +261,6 @@ class PlotFrame(DemoFrame):
 
 def download_data():
     import os
-    import urllib
-    import gzip
-    import tarfile
     
     data_good = True
     try:
@@ -205,6 +269,8 @@ def download_data():
         data_good = False
     
     if not data_good:
+        import urllib
+        import tarfile
         # download and extract the file
         print "Downloading data, Please Wait (7.8MB)"
         opener = urllib.urlopen('http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz')
