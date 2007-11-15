@@ -198,7 +198,7 @@ class PlotFrame(DemoFrame):
         # Create the model
         try:
             self.model = model = BrainModel()
-            cmap = jet
+            cmap = bone
         except:
             self.model = model = Model()
             cmap = jet
