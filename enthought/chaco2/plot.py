@@ -355,6 +355,7 @@ class Plot(DataView):
                     colormap.range = DataRange1D(value)
             else:
                 colormap = colormap(DataRange1D(value))
+            self.color_mapper = colormap
             cls = CMapImagePlot
             kwargs = dict(value_mapper=colormap, **styles)
 
