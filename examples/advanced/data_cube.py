@@ -9,7 +9,7 @@ Allows isometric viewing of a 3D data cube.
 #    and that colormap's range needs to be set to min/max of the entire cube
 #  - refactor create_window() so there is less code duplication
 #  - try to eliminate the use of model.xs, ys, zs in favor of bounds tuples
-from numpy import zeros, fromfile
+from numpy import amin, amax, zeros, fromfile, transpose, uint8
 
 
 # Major library imports
@@ -17,7 +17,7 @@ from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
 
 # Enthought library imports
 from enthought.chaco2.api import ArrayPlotData, Plot, GridPlotContainer, \
-                                 BaseTool
+                                 BaseTool, DataRange1D
 from enthought.chaco2.default_colormaps import *
 from enthought.chaco2.tools.api import LineInspector
 from enthought.chaco2.example_support import DemoFrame, demo_main
@@ -147,6 +147,7 @@ class PlotFrame(DemoFrame):
 
     num_levels = Int(15)
     colormap = Any
+    colorcube = Any
 
     #---------------------------------------------------------------------------
     # Private Traits
@@ -202,8 +203,9 @@ class PlotFrame(DemoFrame):
         except:
             self.model = model = Model()
             cmap = jet
+        self._update_model(cmap)
 
-        datacube = self.model.vals
+        datacube = self.colorcube
 
         # Create the plot
         self.plotdata = ArrayPlotData()
@@ -212,10 +214,12 @@ class PlotFrame(DemoFrame):
         centerplot = Plot(self.plotdata, padding=0)
         imgplot = centerplot.img_plot("xy", xbounds=model.xs, ybounds=model.ys, 
                             colormap=cmap)[0]
+        
         imgplot.overlays.append(LineInspector(imgplot, axis="index_y", color="white",
             inspect_mode="indexed", write_metadata=True, is_listener=True))
         imgplot.overlays.append(LineInspector(imgplot, axis="index_x", color="white",
             inspect_mode="indexed", write_metadata=True, is_listener=True))
+
         imgplot.tools.append(ImageIndexTool(imgplot, token="xy", 
             callback=self._index_callback, wheel_cb=self._wheel_callback))
         self.center = imgplot
@@ -235,7 +239,7 @@ class PlotFrame(DemoFrame):
         self.bottom = imgplot
 
         container = GridPlotContainer(padding=20, fill_padding=True,
-                                      bgcolor="white", use_backbuffer=False,
+                                      bgcolor="white", use_backbuffer=True,
                                       shape=(2,2), spacing=(12,12))
 
         container.add(centerplot)
@@ -245,17 +249,22 @@ class PlotFrame(DemoFrame):
         self.container = container
         return Window(self, -1, component=container)
 
+    def _update_model(self, cmap):
+        range = DataRange1D(low=amin(self.model.vals), 
+                            high=amax(self.model.vals))
+        self.colormap = cmap(range)
+        self.colorcube = (self.colormap.map_screen(self.model.vals) * 255).astype(uint8)
         
     def _update_images(self):
         """ Updates the image data in self.plotdata to correspond to the 
         slices given.
         """
-        cube = self.model.vals
+        cube = self.colorcube
         pd = self.plotdata
         # These are transposed because img_plot() expects its data to be in 
         # row-major order
-        pd.set_data("xy", cube[:, :, self.slice_z].T)
-        pd.set_data("xz", cube[:, self.slice_y, :].T)
+        pd.set_data("xy", transpose(cube[:, :, self.slice_z], (1,0,2)))
+        pd.set_data("xz", transpose(cube[:, self.slice_y, :], (1,0,2)))
         pd.set_data("yz", cube[self.slice_x, :, :])
 
 
