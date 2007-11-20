@@ -944,7 +944,7 @@ def PuBuGn(range, **traits):
 # Make the convenient list of all the function names as well as a dictionary
 # of name->function mappings.  These are useful for UI editors.
 
-color_map_functions = [ jet,  autumn,  bone,  cool,  copper,  flag,  gray,  hot,  hsv,  pink,  prism,  spring,  summer,  winter,  cw1_004,  cw1_005,  cw1_006,  cw1_028,  gmt_drywet,  Spectral,  RdBu,  Set1,  Set2,  Set3,  Dark2,  RdPu,  YlGnBu,  RdYlBu,  gist_stern,  GnBu,  gist_ncar,  gist_rainbow,  RdYlGn,  Accent,  PuBu,  gist_yarg,  BuGn,  Greens,  PRGn,  gist_heat,  Paired,  Pastel2,  Pastel1,  BuPu,  OrRd,  gist_earth,  Oranges,  PiYG,  YlGn,  gist_gray,  BrBG,  Reds,  RdGy,  PuRd,  Blues,  Greys,  YlOrRd,  YlOrBr,  Purples,  PuOr,  PuOr ]
+color_map_functions = [ jet,  autumn,  bone,  cool,  copper,  flag,  gray,  hot,  hsv,  pink,  prism,  spring,  summer,  winter,  cw1_004,  cw1_005,  cw1_006,  cw1_028,  gmt_drywet,  Spectral,  RdBu,  Set1,  Set2,  Set3,  Dark2,  RdPu,  YlGnBu,  RdYlBu,  gist_stern,  GnBu,  gist_ncar,  gist_rainbow,  RdYlGn,  Accent,  PuBu,  gist_yarg,  BuGn,  Greens,  PRGn,  gist_heat,  Paired,  Pastel2,  Pastel1,  BuPu,  OrRd,  gist_earth,  Oranges,  PiYG,  YlGn,  gist_gray,  BrBG,  Reds,  RdGy,  PuRd,  Blues,  Greys,  YlOrRd,  YlOrBr,  Purples,  PuOr,  PuBuGn ]
 
 color_map_dict = {}
 for func in color_map_functions:
