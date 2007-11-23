@@ -6,7 +6,7 @@ from numpy import array, linspace, meshgrid, transpose
 # Enthought library imports
 from enthought.enable2.api import ColorTrait, LineStyle
 from enthought.traits.api import Dict, false, Float, Instance, \
-                                 Int, List, Property, Str, Trait
+        Int, List, Property, Range, Str, Trait
 
 # Local relative imports
 from base_2d_plot import Base2DPlot
@@ -41,6 +41,10 @@ class ContourLinePlot(Base2DPlot):
 
     # The color(s) of the lines.
     colors = Trait(None, Str, Instance("ColorMapper"), List)
+
+    # Overall alpha value of the plot. Ranges from 0.0 for transparent to 1.0
+    # for full intensity.
+    alpha = Trait(1.0, Range(0.0, 1.0))
 
     #------------------------------------------------------------------------
     # Private traits
@@ -102,6 +106,7 @@ class ContourLinePlot(Base2DPlot):
         gc.save_state()
         gc.set_antialias(True)
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
+        gc.set_alpha(self.alpha)
         
         for i in range(len(self._levels)):
             gc.set_stroke_color(self._colors[i])
