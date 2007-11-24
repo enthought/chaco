@@ -7,7 +7,7 @@ from numpy import arange, array, ndarray, linspace, transpose
 from types import FunctionType
 
 # Enthought library imports
-from enthought.traits.api import Dict, Instance, Int, List, Property, Str
+from enthought.traits.api import Delegate, Dict, Instance, Int, List, Property, Str
 
 # Local, relative imports
 from abstract_colormap import AbstractColormap
@@ -111,9 +111,14 @@ class Plot(DataView):
     # "bottom", "left", or "right".
     title_position = Property
 
+    # Use delegates to expose the other PlotLabel attributes of the plot title
+    title_text = Delegate("_title", prefix="text", modify=True)
+    title_color = Delegate("_title", prefix="color", modify=True)
+    title_angle = Delegate("_title", prefix="angle", modify=True)
+
     # The PlotLabel object that contains the title.
     _title = Instance(PlotLabel)
-
+    
     # The legend on the plot.
     legend = Instance(Legend)
 
@@ -761,11 +766,11 @@ class Plot(DataView):
         return self._title.text
 
     def _set_title_position(self, pos):
-        if self.title:
+        if self._title is not None:
             self.title.overlay_position = pos
 
     def _get_title_position(self):
-        if self.title:
+        if self._title is not None:
             return self.title.overlay_position
         else:
             return None
