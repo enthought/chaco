@@ -480,7 +480,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             mouse_pos = (event.x, event.y)
     
             if self.tool_mode == "range":
-                mapper_list = [(self._determine_axis(), self._get_mapper)]
+                mapper_list = [(self._determine_axis(), self._get_mapper())]
             else:
                 mapper_list = [(0, c.x_mapper), (1, c.y_mapper)]
            
