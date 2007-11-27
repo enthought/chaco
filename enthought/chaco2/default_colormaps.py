@@ -26,6 +26,108 @@ from numpy import array
 # Local imports.
 from color_mapper import ColorMapper
 
+# The colormaps will be added to this at the end of the file.
+__all__ = ['reverse', 'center', 'color_map_functions', 'color_map_dict',
+    'color_map_name_dict']
+
+
+# Utility functions.
+
+def reverse(func):
+    """ Modify a colormap factory to reverse the color sequence
+
+    Parameters
+    ----------
+    func : callable
+        A colormap factory function like those provided in this module.
+
+    Returns
+    -------
+    cmap : callable
+        A wrapper factory function that can be used in place of the original
+        factory function.
+    """
+    def cmap(range, **traits):
+        cm = func(range, **traits)
+        cm.reverse_colormap()
+        return cm
+
+    # Look a little like the wrapped function.
+    cmap.__name__ = 'reversed_' + func.__name__
+    cmap.__doc__ = 'Reversed: ' + func.__doc__
+    return cmap
+
+def center(func, center=0.0):
+    """ Modify the range of a colormap to be centered around the given value.
+
+    For example, when passed a DataRange1D(low=-0.5, high=1.0), a colormap would
+    usually have its lowest color at -0.5 and its highest at 1.0. Some colormaps
+    are designed such that the middle color is special. Using this modifier, the
+    example range would be modified to -1.0 and 1.0 to make 0.0 correspond with
+    the middle color.
+
+    Parameters
+    ----------
+    func : callable
+        A colormap factory function like those provided in this module.
+    center : float, optional
+        The center value in dataspace.
+
+    Returns
+    -------
+    cmap : callable
+        A wrapper factory function that can be used in place of the original
+        factory function.
+    """
+    def cmap(range, **traits):
+        maxdev = max(abs(range.low - center), abs(range.high - center))
+        range = range.clone_traits()
+        range.low = center - maxdev
+        range.high = center + maxdev
+        return func(range, **traits)
+
+    # Look a little like the wrapped function.
+    cmap.__name__ = 'centered_' + func.__name__
+    cmap.__doc__ = 'Centered: ' + func.__doc__
+    return cmap
+
+def fix(func, range):
+    """ Apply the given range to a colormap rather than accept the one coming
+    from the data.
+ 
+    This is useful for colormaps intrinsically tied to a given scale, like
+    bathymetry/elevation colormaps for GIS or for working around Chaco to
+    implement custom behavior.
+
+    Paramaters
+    ----------
+    func : callable
+        A colormap factory function like those provided in this module.
+    range : DataRange1D or (low, high) tuple.
+
+    Returns
+    -------
+    cmap : callable
+        A wrapper factory function that can be used in place of the original
+        factory function.
+    """
+    if isinstance(range, tuple):
+        # Adapt tuples to DataRange1D for convenience.
+        from enthought.chaco2.data_range_1d import DataRange1D
+        range = DataRange1D(low=range[0], high=range[1])
+ 
+    def cmap(dummy_range, **traits):
+        # Use the range given to the fix() function, not the cmap() function.
+        return func(range, **traits)
+     
+    # Look a little like the wrapped function.
+    cmap.__name__ = 'fixed_' + func.__name__
+    cmap.__doc__ = 'Fixed: ' + func.__doc__
+    return cmap
+     
+
+# Colormaps.
+
 
 def autumn(range, **traits):
     """ Generator function for the 'autumn' colormap. """
@@ -165,6 +267,15 @@ def gray(range, **traits):
     _data =  {'red':   ((0., 0, 0), (1., 1, 1)),
               'green': ((0., 0, 0), (1., 1, 1)),
               'blue':  ((0., 0, 0), (1., 1, 1))}      
+
+    return ColorMapper.from_segment_map(_data, range=range)
+
+def yarg(range, **traits):
+    """ Generator function for the 'yarg' colormap. """
+
+    _data =  {'red':   ((0., 1, 1), (1., 0, 0)),
+              'green': ((0., 1, 1), (1., 0, 0)),
+              'blue':  ((0., 1, 1), (1., 0, 0))}      
 
     return ColorMapper.from_segment_map(_data, range=range)
 
@@ -944,7 +1055,7 @@ def PuBuGn(range, **traits):
 # Make the convenient list of all the function names as well as a dictionary
 # of name->function mappings.  These are useful for UI editors.
 
-color_map_functions = [ jet,  autumn,  bone,  cool,  copper,  flag,  gray,  hot,  hsv,  pink,  prism,  spring,  summer,  winter,  cw1_004,  cw1_005,  cw1_006,  cw1_028,  gmt_drywet,  Spectral,  RdBu,  Set1,  Set2,  Set3,  Dark2,  RdPu,  YlGnBu,  RdYlBu,  gist_stern,  GnBu,  gist_ncar,  gist_rainbow,  RdYlGn,  Accent,  PuBu,  gist_yarg,  BuGn,  Greens,  PRGn,  gist_heat,  Paired,  Pastel2,  Pastel1,  BuPu,  OrRd,  gist_earth,  Oranges,  PiYG,  YlGn,  gist_gray,  BrBG,  Reds,  RdGy,  PuRd,  Blues,  Greys,  YlOrRd,  YlOrBr,  Purples,  PuOr,  PuBuGn ]
+color_map_functions = [ jet,  autumn,  bone,  cool,  copper,  flag,  gray,  hot,  hsv,  pink,  prism,  spring,  summer,  winter,  cw1_004,  cw1_005,  cw1_006,  cw1_028,  gmt_drywet,  Spectral,  RdBu,  Set1,  Set2,  Set3,  Dark2,  RdPu,  YlGnBu,  RdYlBu,  gist_stern,  GnBu,  gist_ncar,  gist_rainbow,  RdYlGn,  Accent,  PuBu,  gist_yarg,  BuGn,  Greens,  PRGn,  gist_heat,  Paired,  Pastel2,  Pastel1,  BuPu,  OrRd,  gist_earth,  Oranges,  PiYG,  YlGn,  gist_gray,  BrBG,  Reds,  RdGy,  PuRd,  Blues,  Greys,  YlOrRd,  YlOrBr,  Purples,  PuOr,  PuBuGn, yarg ]
 
 color_map_dict = {}
 for func in color_map_functions:
@@ -953,5 +1064,7 @@ for func in color_map_functions:
 color_map_name_dict = {}
 for func in color_map_functions:
     color_map_name_dict[func.__name__] = func
+    __all__.append(func.__name__)    
+
 
 #### EOF ######################################################################
