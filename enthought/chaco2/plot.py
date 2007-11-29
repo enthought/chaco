@@ -97,6 +97,9 @@ class Plot(DataView):
     # index into auto_colors list
     _auto_color_idx = Int
 
+    # The computed origin location
+    origin = Property
+
     #------------------------------------------------------------------------
     # Annotations and decorations
     #------------------------------------------------------------------------
@@ -150,7 +153,7 @@ class Plot(DataView):
         return
 
     def plot(self, data, type="line", name=None, index_scale="linear",
-             value_scale="linear", **styles):
+             value_scale="linear", origin=None, **styles):
         """ Adds a new sub-plot using the given data and plot style.
 
         Parameters
@@ -182,6 +185,9 @@ class Plot(DataView):
         value_scale : string
             The type of scale to use for the value axis. If not "linear", then
             a log scale is used.
+        origin : string
+            Which corner the origin of this plot should occupy: 
+                "bottom left", "top left", "bottom right", "top right"
         styles : series of keyword arguments
             attributes and values that apply to one or more of the
             plot types requested, e.g.,'line_color' or 'line_width'.
@@ -214,6 +220,8 @@ class Plot(DataView):
         plot_type = type
         if name is None:
             name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
         plot_name = name
         if plot_type in ("line", "scatter", "polygon"):
             if len(data) == 1:
@@ -264,6 +272,7 @@ class Plot(DataView):
                            index_mapper=imap,
                            value_mapper=vmap,
                            orientation=self.orientation,
+                           origin = origin,
                            **styles)
                 self.add(plot)
                 new_plots.append(plot)
@@ -304,6 +313,7 @@ class Plot(DataView):
                            color_data=color,
                            color_mapper=self.color_mapper,
                            orientation=self.orientation,
+                           origin=origin,
                            **styles)
                 self.add(plot)
 
@@ -315,7 +325,7 @@ class Plot(DataView):
 
 
     def img_plot(self, data, name=None, colormap=None,
-                 xbounds=None, ybounds=None, **styles):
+                 xbounds=None, ybounds=None, origin=None, **styles):
         """ Adds image plots to this Plot object.
 
         If *data* has shape (N, M, 3) or (N, M, 4), then it is treated as RGB or
@@ -335,12 +345,17 @@ class Plot(DataView):
             The name of the plot; if omitted, then a name is generated.
         xbounds, ybounds : tuples of (low, high)
             Bounds in data space where this image resides.
+        origin : string
+            Which corner the origin of this plot should occupy: 
+                "bottom left", "top left", "bottom right", "top right"
         styles : series of keyword arguments
             Attributes and values that apply to one or more of the
             plot types requested, e.g.,'line_color' or 'line_width'.
         """
         if name is None:
             name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
 
         value = self._get_or_create_datasource(data)
         array_data = value.get_data()
@@ -403,12 +418,12 @@ class Plot(DataView):
         self.range2d.add(index)
         mapper = GridMapper(range=self.range2d)
 
-        plot = cls(index=index, value=value, index_mapper=mapper, **kwargs)
-
-        # image plots have an origin at the top
-        plot.y_direction = "flipped"
-        self.y_direction = "flipped"
-        self.x_axis.orientation = "top"
+        plot = cls(index=index, 
+                   value=value, 
+                   index_mapper=mapper, 
+                   orientation=self.orientation,
+                   origin=origin,
+                   **kwargs)
 
         # turn grids off by default on image plots
         self.x_grid.visible = False
@@ -420,7 +435,7 @@ class Plot(DataView):
 
 
     def contour_plot(self, data, type="line", name=None, poly_cmap=None,
-                     xbounds=None, ybounds=None, **styles):
+                     xbounds=None, ybounds=None, origin=None, **styles):
         """ Adds contour plots to this Plot object.
 
         Parameters
@@ -439,12 +454,17 @@ class Plot(DataView):
             to use for contour poly plots (ignored for contour line plots)
         xbounds, ybounds : tuples of (low, high) in data space
             Bounds where this image resides.
+        origin : string
+            Which corner the origin of this plot should occupy: 
+                "bottom left", "top left", "bottom right", "top right"
         styles : series of keyword arguments
             Attributes and values that apply to one or more of the
             plot types requested, e.g.,'line_color' or 'line_width'.
         """
         if name is None:
             name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
 
         value = self._get_or_create_datasource(data)
         array_data = value.get_data()
@@ -510,10 +530,12 @@ class Plot(DataView):
         self.range2d.add(index)
         mapper = GridMapper(range=self.range2d)
 
-        plot = cls(index=index, value=value, index_mapper=mapper, **kwargs)
-        plot.y_direction = "flipped"
-        self.y_direction = "flipped"
-        self.x_axis.orientation = "top"
+        plot = cls(index=index, 
+                   value=value, 
+                   index_mapper=mapper, 
+                   orientation=self.orientation,
+                   origin=origin,
+                   **kwargs)
 
         # turn grids off by default on contour plots
         self.x_grid.visible = False
@@ -774,3 +796,7 @@ class Plot(DataView):
             return self.title.overlay_position
         else:
             return None
+
+    def _get_origin(self):
+        # FIXME: 
+        return self.default_origin

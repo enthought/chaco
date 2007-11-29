@@ -46,14 +46,6 @@ class Base2DPlot(AbstractPlotRenderer):
     # * 'v': index maps to y-direction
     orientation = Enum("h", "v")
 
-    # The direction of the x axis with respect to the graphics context's
-    # direction.
-    x_direction = Enum("normal", "flipped")
-    
-    # The direction of the y axis with respect to the graphics context's 
-    # direction.
-    y_direction = Enum("normal", "flipped")
-
     # Overrides PlotComponent; 2-D plots draw on the 'image' layer,
     # underneath all decorations and annotations, and above only the background
     # fill color.
@@ -229,16 +221,10 @@ class Base2DPlot(AbstractPlotRenderer):
         return labels
 
     def _get_x_mapper(self):
-        if self.orientation == "h":
-            return self.index_mapper._xmapper
-        else:
-            return self.index_mapper._ymapper
+        return self.index_mapper._xmapper
 
     def _get_y_mapper(self):
-        if self.orientation == "h":
-            return self.index_mapper._ymapper
-        else:
-            return self.index_mapper._xmapper
+        return self.index_mapper._ymapper
 
 
     #------------------------------------------------------------------------
@@ -256,24 +242,27 @@ class Base2DPlot(AbstractPlotRenderer):
         y = self.y
         y2 = self.y2
       
-        if self.x_direction =="normal":
+        if "left" in self.origin:
             x_low = x
             x_high = x2
         else:
             x_low = x2
             x_high = x
         
-        if self.y_direction == "normal":
+        if "bottom" in self.origin:
             y_low = y
             y_high = y2
         else:
             y_low = y2
             y_high = y
 
-
-        self.index_mapper.screen_bounds = (x_low, x_high, y_low, y_high)
-        self.index_mapper_changed = True
-        self.invalidate_draw() 
+        if self.index_mapper is not None:
+            if self.orientation == "h":
+                self.index_mapper.screen_bounds = (x_low, x_high, y_low, y_high)
+            else:
+                self.index_mapper.screen_bounds = (y_low, y_high, x_low, x_high)
+            self.index_mapper_changed = True
+            self.invalidate_draw() 
 
     def _update_index_data(self):
         """ Updates the index data. 
@@ -303,6 +292,9 @@ class Base2DPlot(AbstractPlotRenderer):
         self._update_index_mapper()
 
     def _orientation_changed(self):
+        self._update_index_mapper()
+
+    def _origin_changed(self):
         self._update_index_mapper()
 
     def _index_changed(self, old, new):

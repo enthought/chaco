@@ -8,7 +8,7 @@ from enthought.chaco2.api import ArrayPlotData, ImageData
 image = imread("../basic/capitol.jpg")
 
 #Create plot
-imshow(image)
+imshow(image, origin="top left")
 
 #Alternatively, call 
 #imshow("../basic/capitol.jpg")

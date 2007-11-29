@@ -55,13 +55,6 @@ class BaseXYPlot(AbstractPlotRenderer):
     # the orientation of the plot.
     y_mapper = Property
 
-    # Corresponds to either **index_direction** or **value_direction**, 
-    # depending on the orientation of the plot.
-    x_direction = Property
-    # Corresponds to either **value_direction** or **index_direction**, 
-    # depending on the orientation of the plot
-    y_direction = Property
-
     # Convenience property for accessing the index data range.    
     index_range = Property
     # Convenience property for accessing the value data range.
@@ -81,14 +74,6 @@ class BaseXYPlot(AbstractPlotRenderer):
     # The orientation of the index axis.
     orientation = Enum("h", "v")
     
-    # The direction of the index axis with respect to the graphics context's
-    # direction.
-    index_direction = Enum("normal", "flipped")
-    
-    # The direction of the value axis with respect to the graphics context's 
-    # direction.
-    value_direction = Enum("normal", "flipped")
-
     #------------------------------------------------------------------------
     # Convenience readonly properties for common annotations
     #------------------------------------------------------------------------
@@ -510,18 +495,6 @@ class BaseXYPlot(AbstractPlotRenderer):
         else:
             return self.index_mapper
 
-    def _get_x_direction(self):
-        if self.orientation == "h":
-            return self.index_direction
-        else:
-            return self.value_direction
-    
-    def _get_y_direction(self):
-        if self.orientation == "h":
-            return self.value_direction
-        else:
-            return self.index_direction
-
     def _get_hgrid(self):
         for obj in self.underlays+self.overlays:
             if isinstance(obj, PlotGrid) and obj.orientation=="horizontal":
@@ -564,24 +537,21 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _update_mappers(self):
         x_mapper = self.index_mapper
         y_mapper = self.value_mapper
-        x_dir = self.index_direction
-        y_dir = self.value_direction
         
         if self.orientation == "v":
             x_mapper, y_mapper = y_mapper, x_mapper
-            x_dir, y_dir = y_dir, x_dir
         
         x = self.x
         x2 = self.x2
         y = self.y
         y2 = self.y2
         
-        if x_dir =="normal":
+        if "left" in self.origin:
             x_mapper.screen_bounds = (x, x2)
         else:
             x_mapper.screen_bounds = (x2, x)
         
-        if y_dir == "normal":
+        if "bottom" in self.origin:
             y_mapper.screen_bounds = (y, y2)
         else:
             y_mapper.screen_bounds = (y2, y)
@@ -642,16 +612,16 @@ class BaseXYPlot(AbstractPlotRenderer):
         self._either_data_changed()
         return
     
-    def _index_direction_changed(self):
-        m = self.index_mapper
-        m.low_pos, m.high_pos = m.high_pos, m.low_pos
-        self.invalidate_draw()
-        self._screen_cache_valid = False
-        return
-    
-    def _value_direction_changed(self):
-        m = self.value_mapper
-        m.low_pos, m.high_pos = m.high_pos, m.low_pos
+    def _origin_changed(self, old, new):
+        # origin switch from left to right or vice versa?
+        if old.split()[1] != new.split()[1]:
+            xm = self.x_mapper
+            xm.low_pos, xm.high_pos = xm.high_pos, xm.low_pos
+        # origin switch from top to bottom or vice versa?
+        if old.split()[0] != new.split()[0]:
+            ym = self.y_mapper
+            ym.low_pos, ym.high_pos = ym.high_pos, ym.low_pos
+
         self.invalidate_draw()
         self._screen_cache_valid = False
         return

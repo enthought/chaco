@@ -513,12 +513,19 @@ class PlotAxis(AbstractOverlay):
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
         if overlay_component is not None:
+            origin = getattr(overlay_component, 'origin', None)
             if self.orientation in ("top", "bottom"):
-                direction = getattr(overlay_component, 'x_direction', None)
+                if "right" in origin: 
+                    flip_from_gc = True
+                else: 
+                    flip_from_gc = False
             elif self.orientation in ("left", "right"):
-                direction = getattr(overlay_component, 'y_direction', None)
+                if "top" in origin: 
+                    flip_from_gc = True
+                else: 
+                    flip_from_gc = False
 
-            if direction == "flipped":
+            if flip_from_gc:
                 screenlow, screenhigh = screenhigh, screenlow
 
 
@@ -607,14 +614,16 @@ class PlotAxis(AbstractOverlay):
             overlay_component = self
             new_origin = array(self.position)
 
-        direction = None
+        origin = getattr(overlay_component, "origin", None)
         if self.orientation in ('top', 'bottom'):
             self._major_axis_size = overlay_component.bounds[0]
             self._minor_axis_size = overlay_component.bounds[1]
             self._major_axis = array([1., 0.])
             self._title_orientation = array([0.,1.])
-            if hasattr(overlay_component, "x_direction"):
-                direction = overlay_component.x_direction
+            if "right" in origin: 
+                flip_from_gc = True
+            else: 
+                flip_from_gc = False
             #this could be calculated...
             self.title_angle = 0.0
         elif self.orientation in ('left', 'right'):
@@ -622,8 +631,11 @@ class PlotAxis(AbstractOverlay):
             self._minor_axis_size = overlay_component.bounds[0]
             self._major_axis = array([0., 1.])
             self._title_orientation = array([-1., 0])
-            if hasattr(overlay_component, "y_direction"):
-                direction = overlay_component.y_direction
+            origin = getattr(overlay_component, "origin", None)
+            if "top" in origin: 
+                flip_from_gc = True
+            else: 
+                flip_from_gc = False
             self.title_angle = 90.0
 
         if self.ensure_ticks_bounded:
@@ -632,8 +644,9 @@ class PlotAxis(AbstractOverlay):
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
         # TODO: should this be here, or not?
-        if direction == "flipped":
+        if flip_from_gc:
             screenlow, screenhigh = screenhigh, screenlow
+        
         self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.

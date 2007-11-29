@@ -1,7 +1,7 @@
 """ Defines the ImagePlot class.
 """
 # Standard library imports
-from math import ceil, floor
+from math import ceil, floor, pi
 
 # Enthought library imports.
 from enthought.traits.api import Either, Enum, false, Instance, \
@@ -52,6 +52,15 @@ class ImagePlot(Base2DPlot):
         """
         if not self._image_cache_valid:
             self._compute_cached_image()
+        
+        if "bottom" in self.origin:
+            sy = -1
+        else:
+            sy = 1
+        if "left" in self.origin:
+            sx = 1
+        else:
+            sx = -1
             
         gc.save_state()
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
@@ -64,6 +73,16 @@ class ImagePlot(Base2DPlot):
             gc.set_interpolation_quality(interp_quality_dict[self.interpolation])
         elif hasattr(gc, "set_image_interpolation"):
             gc.set_image_interpolation(self.interpolation)
+        x, y, w, h = self._cached_dest_rect
+        if self.orientation == "h":        # for horizontal orientation:
+            gc.translate_ctm(x+w/2, y+h/2)   # translate back normally
+        else:                              # for vertical orientation:
+            gc.translate_ctm(y+h/2, x+w/2)   # translate back with dx,dy swap
+        gc.scale_ctm(sx, sy)               # flip axes as appropriate
+        if self.orientation == "v":        # for vertical orientation:
+            gc.scale_ctm(1,-1)               # restore origin to lower left
+            gc.rotate_ctm(pi/2)              # rotate 1/4 turn clockwise
+        gc.translate_ctm(-x-w/2, -y-h/2)   # translate image center to origin
         gc.draw_image(self._cached_image, self._cached_dest_rect)
         gc.restore_state()
 
@@ -97,9 +116,9 @@ class ImagePlot(Base2DPlot):
         (lpt, upt) = self.index.get_bounds()
         ll_x, ll_y = self.map_screen([lpt])[0]
         ur_x, ur_y = self.map_screen([upt])[0]
-        if self.x_direction == 'flipped':
+        if "right" in self.origin:
             ll_x, ur_x = ur_x, ll_x
-        if self.y_direction == 'flipped':
+        if "top" in self.origin:
             ll_y, ur_y = ur_y, ll_y
         virtual_width = ur_x - ll_x
         virtual_height = ur_y - ll_y
@@ -112,13 +131,19 @@ class ImagePlot(Base2DPlot):
         # Grab the appropriate sub-image, if necessary
         if img_pixels is not None:
             i1, j1, i2, j2 = img_pixels
-            y_length = self.value.get_array_bounds()[1][1]
-            j1 = y_length + 1 - j1
-            j2 = y_length + 1 - j2
-            
-            # swap so that j1 < j2
-            j1, j2 = j2, j1
-            
+            if "top" in self.origin:
+                y_length = self.value.get_array_bounds()[1][1]
+                j1 = y_length + 1 - j1
+                j2 = y_length + 1 - j2
+                # swap so that j1 < j2
+                j1, j2 = j2, j1
+            if "right" in self.origin:
+                x_length = self.value.get_array_bounds()[0][1]
+                i1 = x_length + 1 - i1
+                i2 = x_length + 1 - i2
+                # swap so that i1 < i2
+                i1, i2 = i2, i1
+
             # Since data is row-major, j1 and j2 go first
             data = data[j1:j2, i1:i2]
         
@@ -134,7 +159,7 @@ class ImagePlot(Base2DPlot):
         else:
             raise RuntimeError, "Unknown colormap depth value: %i" \
                                 % data.value_depth
-        
+
         self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)
         if gc_rect is not None:
             self._cached_dest_rect = gc_rect
@@ -190,10 +215,17 @@ class ImagePlot(Base2DPlot):
         # x2,y2 refers to the upper-right corner.
         
         # 1. screen space -> pixel offsets
-        x1 = px - ix
-        x2 = (px + plot_width) - ix
-        y1 = py - iy
-        y2 = (py + plot_height) - iy
+        if self.orientation == "h":
+            x1 = px - ix
+            x2 = (px + plot_width) - ix
+            y1 = py - iy
+            y2 = (py + plot_height) - iy
+        else:
+            x1 = px - ix
+            x2 = (px + plot_height) - ix
+            y1 = py - iy
+            y2 = (py + plot_width) - iy
+
 
         # 2. pixel offsets -> data array indices
         # X and Y are transposed because for image plot data

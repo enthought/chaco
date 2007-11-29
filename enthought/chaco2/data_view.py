@@ -77,47 +77,19 @@ def set_grid(self, attr_name, new):
 GridProperty = Property(get_grid, set_grid)
 
 
-def get_direction(self, attr_name):
-    """ Getter function used by DirectionProperty.
-    """
-    if (attr_name,self.orientation) in [("x_direction","h"), 
-                                        ("y_direction","v")]:
-        return self.index_direction
-    else:
-        return self.value_direction
-
-def set_direction(self, attr_name, new):
-    """ Setter function used by DirectionProperty.
-    """
-    if (attr_name,self.orientation) in [("x_direction","h"), 
-                                        ("y_direction","v")]:
-        self.index_direction = new
-    else:
-        self.value_direction = new
-
-# Property that represents a axis direction for a particular orientation.
-DirectionProperty = Property(get_direction, set_direction)
-
-
-
 class DataView(OverlayPlotContainer):
     """ Represents a mapping from 2-D data space into 2-D screen space.
     
     It can house renderers and other plot components, and otherwise behaves
     just like a normal PlotContainer.
     """
-
     
     # The orientation of the index axis.
     orientation = Enum("h", "v")
-    
-    # The direction of the index axis with respect to the graphics context's
-    # direction.
-    index_direction = Enum("normal", "flipped")
-    
-    # The direction of the value axis with respect to the graphics context's 
-    # direction.
-    value_direction = Enum("normal", "flipped")
+
+    # The default location of the origin 
+    default_origin = Enum("bottom left", "top left", 
+                          "bottom right", "top right")
 
     # The mapper to use for the index data.
     index_mapper = Instance(Base1DMapper)
@@ -149,14 +121,6 @@ class DataView(OverlayPlotContainer):
     # Convenience property that offers access to whatever mapper corresponds
     # to the Y-axis
     y_mapper = OrientedMapperProperty
-
-    # Convenience property that offers access to index_ or value_direction, 
-    # whichever corresponds to the x-direction in a 2D plot
-    x_direction = DirectionProperty
-
-    # Convenience property that offers access to index_ or value_direction, 
-    # whichever corresponds to the x-direction in a 2D plot
-    y_direction = DirectionProperty
 
     #------------------------------------------------------------------------
     # Axis and Grids
@@ -263,35 +227,27 @@ class DataView(OverlayPlotContainer):
     #-------------------------------------------------------------------------
 
     def _update_mappers(self):
-        x_mapper = self.index_mapper
-        y_mapper = self.value_mapper
-        x_dir = self.index_direction
-        y_dir = self.value_direction
-        
-        if self.orientation == "v":
-            x_mapper, y_mapper = y_mapper, x_mapper
-            x_dir, y_dir = y_dir, x_dir
-        
+
         x = self.x
         x2 = self.x2
         y = self.y
         y2 = self.y2
         
-        if x_mapper is not None:
-            if x_dir =="normal":
-                x_mapper.low_pos = x
-                x_mapper.high_pos = x2
+        if self.x_mapper is not None:
+            if "left" in self.origin:
+                self.x_mapper.low_pos = x
+                self.x_mapper.high_pos = x2
             else:
-                x_mapper.low_pos = x2
-                x_mapper.high_pos = x
+                self.x_mapper.low_pos = x2
+                self.x_mapper.high_pos = x
         
-        if y_mapper is not None:
-            if y_dir == "normal":
-                y_mapper.low_pos = y
-                y_mapper.high_pos = y2
+        if self.y_mapper is not None:
+            if "bottom" in self.origin:
+                self.y_mapper.low_pos = y
+                self.y_mapper.high_pos = y2
             else:
-                y_mapper.low_pos = y2
-                y_mapper.high_pos = y
+                self.y_mapper.low_pos = y2
+                self.y_mapper.high_pos = y
         
         self.invalidate_draw()
         return

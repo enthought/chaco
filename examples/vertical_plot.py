@@ -42,7 +42,7 @@ class PlotFrame(DemoFrame):
                                     orientation="v")
                                    # orientation="h")
             plot.origin_axis_visible = True
-            plot.index_direction = "flipped"
+            plot.origin = "top left"
             plot.padding_left = 10
             plot.padding_right = 10
             plot.border_visible = True

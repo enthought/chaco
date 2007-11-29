@@ -99,7 +99,8 @@ class DemoView(HasTraits):
         super(DemoView, self).__init__(*args, **kwargs)
 
         # Create the plot object, set some options, and add some tools
-        plot = self.plot = Plot(self.pd)
+        plot = self.plot = Plot(self.pd, default_origin="top left")
+        plot.x_axis.orientation = "top"
         plot.padding = 50
         plot.padding_top = 75
         plot.tools.append(PanTool(plot))

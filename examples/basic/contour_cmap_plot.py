@@ -29,7 +29,7 @@ class PlotFrame(DemoFrame):
         xs = linspace(-2*pi, 2*pi, 200)
         ys = linspace(-1.5*pi, 1.5*pi, 100)
         x, y = meshgrid(xs,ys)
-        zs = sin(log(abs((x+1)**4)+0.05))*cos(y)*1.1*y + \
+        zs = sin(log(abs((x+1)**4)+0.05))*cos(y)*1.1*(-y) + \
                 sin(((x+1)**2 + y**2)/4)
         
         # Create a plot data obect and give it this data

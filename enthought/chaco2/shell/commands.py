@@ -408,7 +408,7 @@ def pcolor(*data, **kwargs):
     To use previous data, specify names instead of actual data arrays.
     """
 
-    cont = _do_plot_boilerplate(kwargs, image=True)
+    cont = _do_plot_boilerplate(kwargs)
 
     plots = plot_maker.do_pcolor(session.data, session.colormap, cont, 
                                  *data, **kwargs)
@@ -433,7 +433,7 @@ def contour(*data, **kwargs):
     To use previous data, specify names instead of actual data arrays.
     """
 
-    cont = _do_plot_boilerplate(kwargs, image=True)
+    cont = _do_plot_boilerplate(kwargs)
 
     plots = plot_maker.do_contour(session.data, session.colormap, cont, 
                                   "line", *data, **kwargs)

@@ -47,7 +47,7 @@ class MyFrame(DemoFrame):
         right_plot.index_mapper.range = left_plot.index_mapper.range
         right_plot.origin_axis_visible = True
         right_plot.orientation = "v"
-        right_plot.index_direction = "flipped"
+        right_plot.origin = "top left"
         right_plot.overlays.append(LineInspector(right_plot, write_metadata=True, is_listener=True))
         right_plot.overlays.append(LineInspector(right_plot, axis="value", is_listener=True))
         right_plot.tools.append(PanTool(right_plot, drag_button="right"))

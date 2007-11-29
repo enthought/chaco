@@ -91,7 +91,7 @@ class PlotWindow(wx.Frame):
 
     def _create_top_img_container(self):
         return Plot(padding = 50, fill_padding = True, bgcolor = "lightgray",
-                    use_backbuffer = True, value_direction="flipped")
+                    use_backbuffer = True, default_origin="top left")
 
 
     def _on_window_close(self, event):

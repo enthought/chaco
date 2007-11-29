@@ -1,5 +1,8 @@
 """ Defines a base class for plot renderers.
 """
+# Enthought library imports.
+from enthought.traits.api import Enum
+
 # Local relative imports
 from plot_component import PlotComponent
 
@@ -13,14 +16,17 @@ class AbstractPlotRenderer(PlotComponent):
     interactors and plot tools.
     """
 
+    origin = Enum("bottom left", "top left", "bottom right", "top right")
+
     #------------------------------------------------------------------------
     # Override default values of inherited traits PlotComponent
     #------------------------------------------------------------------------
     
     # Overrides the default value inherited from PlotComponent.
-    resizable = "hv"
-    # Overrides the default value inherited from PlotComponent.
     bgcolor = "transparent"
+
+    # Overrides the default value inherited from PlotComponent.
+    resizable = "hv"
 
 
     def map_screen(self, data_array):

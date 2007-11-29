@@ -31,7 +31,7 @@ class PlotFrame(DemoFrame):
         # Create some RGB image data
         image = zeros((200,400,3), dtype=uint8)
         image[:,0:40,0] += 255     # Vertical red stripe
-        image[0:20,:,1] += 255     # Horizontal green stripe; also yellow square
+        image[0:25,:,1] += 255     # Horizontal green stripe; also yellow square
         image[-80:,-160:,2] += 255 # Blue square
         
         # Create a plot data obect and give it this data
@@ -39,7 +39,8 @@ class PlotFrame(DemoFrame):
         pd.set_data("imagedata", image)
 
         # Create the plot
-        plot = Plot(pd)
+        plot = Plot(pd, default_origin="top left")
+        plot.x_axis.orientation = "top"
         img_plot = plot.img_plot("imagedata")[0]
 
         # Tweak some of the plot properties

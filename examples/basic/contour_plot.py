@@ -31,13 +31,14 @@ class PlotFrame(DemoFrame):
         ys = linspace(-1.5*pi, 1.5*pi, 300)
         x, y = meshgrid(xs,ys)
         z = tanh(x*y/6)*cosh(exp(-y**2)*x/3)
+        z = x*y
 
         # Create a plot data obect and give it this data
         pd = ArrayPlotData()
         pd.set_data("imagedata", z)
 
         # Create a contour polygon plot of the data
-        plot = Plot(pd)
+        plot = Plot(pd, default_origin="top left")
         plot.contour_plot("imagedata", 
                           type="poly",
                           poly_cmap=jet,
