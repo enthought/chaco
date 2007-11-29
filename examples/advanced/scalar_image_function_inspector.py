@@ -155,14 +155,12 @@ class PlotUI(HasTraits):
                                         color_mapper=\
                                             self._cmap(image_value_range),
                                         levels=self.num_levels)
-        #self.polyplot.y_direction = "flipped"
 
         self.lineplot = ContourLinePlot(index=self._image_index, 
                                         value=self._image_value, 
                                         index_mapper=GridMapper(range=
                                             self.polyplot.index_mapper.range),
                                         levels=self.num_levels)
-        #self.lineplot.y_direction = "flipped"
 
 
         # Add a left axis to the plot
@@ -173,7 +171,7 @@ class PlotUI(HasTraits):
         self.polyplot.overlays.append(left)
     
         # Add a bottom axis to the plot
-        bottom = PlotAxis(orientation='top',
+        bottom = PlotAxis(orientation='bottom',
                           title= "x",
                           mapper=self.polyplot.index_mapper._xmapper,
                           component=self.polyplot)
