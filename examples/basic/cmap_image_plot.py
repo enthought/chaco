@@ -10,7 +10,7 @@ Draws an colormapped image plot
 """
 
 # Major library imports
-from numpy import linspace, meshgrid, pi, sin
+from numpy import exp, linspace, meshgrid, pi, sin
 
 from enthought.chaco2.example_support import DemoFrame, demo_main
 
@@ -27,10 +27,10 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
 
         # Create a scalar field to colormap
-        xs = linspace(-2*pi, 2*pi, 600)
-        ys = linspace(-1.5*pi, 1.5*pi, 300)
+        xs = linspace(0, 10, 30)
+        ys = linspace(0, 5, 600)
         x, y = meshgrid(xs,ys)
-        z = sin(x)*y
+        z = exp(-(x**2+y**2)/100)
 
         # Create a plot data obect and give it this data
         pd = ArrayPlotData()
