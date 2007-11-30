@@ -61,6 +61,10 @@ class ImagePlot(Base2DPlot):
             sx = 1
         else:
             sx = -1
+
+        # If the orientation is flipped, the BR and TL cases are swapped
+        if self.orientation == "v" and sx == sy:
+            sx, sy = -sx, -sy
             
         gc.save_state()
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
