@@ -75,7 +75,7 @@ class PlotGrid(AbstractOverlay):
     grid_interval = Trait('auto', 'auto', Float)
 
     # A callable that implements the AbstractTickGenerator Interface.
-    tick_generator = Trait(DefaultTickGenerator(), Instance(AbstractTickGenerator))
+    tick_generator = Instance(AbstractTickGenerator, factory = DefaultTickGenerator)
 
     # Dimensions that the grid is resizable in (overrides PlotComponent).
     resizable = "hv"

@@ -126,7 +126,7 @@ class PlotAxis(AbstractOverlay):
     tick_interval = Trait('auto', 'auto', Float)
 
     # A callable that implements the AbstractTickGenerator Interface
-    tick_generator = Trait(DefaultTickGenerator(), Instance(AbstractTickGenerator))
+    tick_generator = Instance(AbstractTickGenerator, factory = DefaultTickGenerator)
 
     # The location of the axis relative to the plot.  This determines where
     # the axis title is located relative to the axis line.
