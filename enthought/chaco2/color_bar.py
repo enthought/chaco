@@ -48,12 +48,17 @@ class ColorBar(AbstractPlotRenderer):
     border_visible = True
     # The orientation of the index axis.
     orientation = Enum('v', 'h')
+    # Should the bar go left-to-right or bottom-to-top (normal) or the reverse?
+    direction = Enum('normal', 'flipped')
     # Overrides the default background color trait in PlotComponent.
     bgcolor = 'transparent'
     # Draw layers in "draw order"
     use_draw_order = True
     # Default width is 40 pixels (overrides enable2.CoordinateBox)
     width = 40
+    
+    # Faux origin for the axis to look at
+    origin = Enum('bottom left', 'top left', 'bottom right', 'top right')
 
     #------------------------------------------------------------------------
     # Private attributes
@@ -71,7 +76,6 @@ class ColorBar(AbstractPlotRenderer):
     # Shadow attribute for index
     _index = Instance(ArrayDataSource, args=())
     
-    
     def __init__(self, *args, **kw):
         """ In creating an instance, this method ensures that the grid and the
         axis are created before setting their visibility.
@@ -80,6 +84,17 @@ class ColorBar(AbstractPlotRenderer):
         axis_visible = kw.pop("axis_visible", True)
         
         super(ColorBar, self).__init__(*args, **kw)
+
+        if self.orientation == 'h':
+            if self.direction == 'normal':
+                self.origin = 'bottom left'
+            else:
+                self.origin = 'bottom right'
+        else:
+            if self.direction == 'normal':
+                self.origin = 'bottom left'
+            else:
+                self.origin = 'top left'
         
         self._grid = PlotGrid(orientation='horizontal',
                               mapper=self.index_mapper,
@@ -114,15 +129,17 @@ class ColorBar(AbstractPlotRenderer):
             data_points = array([high])
         else:
             data_points = arange(low, high, (high-low)/self.bounds[axis_dim])
+        if self.direction == 'flipped':
+            data_points = data_points[::-1]
         colors = self.color_mapper.map_screen(data_points)
         
-        img = self._make_color_image(colors, self.bounds[perpendicular_dim], self.orientation)
+        img = self._make_color_image(colors, self.bounds[perpendicular_dim], self.orientation, self.direction)
         try:
             gc.draw_image(img, (self.x, self.y, self.width, self.height))
         finally:
             gc.restore_state()
     
-    def _make_color_image(self, color_values, width, orientation):
+    def _make_color_image(self, color_values, width, orientation, direction):
         """
         Returns an image graphics context representing the array of color 
         values (Nx3 or Nx4). The *width* parameter is the width of the 
@@ -144,12 +161,18 @@ class ColorBar(AbstractPlotRenderer):
     def _update_mappers(self):
         if not self.index_mapper or not self.color_mapper:
             return
-        if self.orientation == 'h':
+        if self.orientation == 'h' and 'left' in self.origin:
             self.index_mapper.low_pos = self.x
             self.index_mapper.high_pos = self.x2
-        else:
+        elif self.orientation == 'h' and 'right' in self.origin:
+            self.index_mapper.low_pos = self.x2
+            self.index_mapper.high_pos = self.x
+        elif self.orientation == 'v' and 'bottom' in self.origin:
             self.index_mapper.low_pos = self.y
             self.index_mapper.high_pos = self.y2
+        elif self.orientation == 'v' and 'top' in self.origin:
+            self.index_mapper.low_pos = self.y2
+            self.index_mapper.high_pos = self.y
         self.index_mapper.range = self.color_mapper.range
 
 
