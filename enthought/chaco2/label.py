@@ -115,7 +115,9 @@ class Label(HasTraits):
         elif self.rotate_angle in (0.0, 180.0):
             return (width, height)
         else:
-            raise NotImplementedError
+            angle = self.rotate_angle
+            return (abs(width*cos(angle))+abs(height*sin(angle)), 
+                    abs(height*sin(angle))+abs(width*cos(angle)))
 
     def get_bounding_poly(self, gc):
         """

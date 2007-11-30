@@ -1,7 +1,7 @@
 """ Defines the ToolTip class.
 """
 
-from numpy import array
+from numpy import array, pi
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, white_color_trait
@@ -33,6 +33,11 @@ class ToolTip(AbstractOverlay):
 
     # List of text strings to put in the tooltip.
     lines = List
+
+    # Angle to rotate (counterclockwise) in degrees. NB this will *only* 
+    # currently affect text, so probably only useful if borders and background
+    # are disabled
+    rotate_angle = Float(0.0)
 
     # The available space in the four directions, used to determine layout
     # If -1, assume there is enough space in that direction.
@@ -164,7 +169,8 @@ class ToolTip(AbstractOverlay):
     def _recompute_text(self):
         labels = [Label(text=line, font=self.font, margin=0,
                         bgcolor='transparent', border_width=0,
-                        color=self.text_color) for line in self.lines]
+                        color=self.text_color, rotate_angle=self.rotate_angle) 
+                    for line in self.lines]
         dummy_gc = self._font_metrics_provider
         line_sizes = array([label.get_width_height(dummy_gc)
                             for label in labels])
