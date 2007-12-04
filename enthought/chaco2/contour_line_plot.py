@@ -113,7 +113,10 @@ class ContourLinePlot(Base2DPlot):
             gc.set_line_width(self._widths[i])
             gc.set_line_dash(self._styles[i])
             for trace in self._cached_contours[self._levels[i]]:
-                strace = self.index_mapper.map_screen(trace)
+                if self.orientation == "h":
+                    strace = self.index_mapper.map_screen(trace)
+                else:
+                    strace = array(self.index_mapper.map_screen(trace))[:,::-1]
                 gc.begin_path()
                 gc.lines(strace)
                 gc.stroke_path()
@@ -124,10 +127,15 @@ class ContourLinePlot(Base2DPlot):
         """ Updates the contour cache.
         """
         # x and ydata are "fenceposts" so ignore the last value        
-        # XXX: this truncation is causing errors in Cntr() as of r13735
-        xg, yg = meshgrid(self.index._xdata.get_data(), #[:-1],
-                          self.index._ydata.get_data()) #[:-1])
-        c = Cntr(xg, yg, self.value.raw_value)
+        # XXX: this truncaton is causing errors in Cntr() as of r13735
+        if self.orientation == "h":
+            xg, yg = meshgrid(self.index._xdata.get_data(), #[:-1],
+                              self.index._ydata.get_data()) #[:-1])
+            c = Cntr(xg, yg, self.value.raw_value)
+        else:
+            yg, xg = meshgrid(self.index._ydata.get_data(), #[:-1],
+                              self.index._xdata.get_data()) #[:-1])
+            c = Cntr(xg, yg, self.value.raw_value.T)
         self._cached_contours = {}
         for level in self._levels:
             self._cached_contours[level] = []

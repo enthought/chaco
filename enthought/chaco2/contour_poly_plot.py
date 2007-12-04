@@ -80,12 +80,15 @@ class ContourPolyPlot(Base2DPlot):
         gc.set_antialias(True)
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
         gc.set_line_width(0)
-        
+
         for i in range(len(self._levels)-1):
             gc.set_fill_color(self._colors[i])
             key = (self._levels[i], self._levels[i+1])
             for poly in self._cached_polys[key]:
-                spoly = self.index_mapper.map_screen(poly)
+                if self.orientation == "h":
+                    spoly = self.index_mapper.map_screen(poly)
+                else:
+                    spoly = array(self.index_mapper.map_screen(poly))[:,::-1]
                 gc.lines(spoly)
                 gc.close_path()
                 gc.draw_path()
@@ -97,9 +100,14 @@ class ContourPolyPlot(Base2DPlot):
         """
         # x and ydata are "fenceposts" so ignore the last value
         # XXX: this truncation is causing errors in Cntr() as of r13735
-        xg, yg = meshgrid(self.index._xdata.get_data(),  #[:-1],
-                          self.index._ydata.get_data())  #[:-1])
-        c = Cntr(xg, yg, self.value.raw_value)
+        if self.orientation == "h":
+            xg, yg = meshgrid(self.index._xdata.get_data(), #[:-1],
+                              self.index._ydata.get_data()) #[:-1])
+            c = Cntr(xg, yg, self.value.raw_value)
+        else:
+            yg, xg = meshgrid(self.index._ydata.get_data(), #[:-1],
+                              self.index._xdata.get_data()) #[:-1])
+            c = Cntr(xg, yg, self.value.raw_value.T)
         self._cached_contours = {}
         for i in range(len(self._levels)-1):
             key = (self._levels[i], self._levels[i+1])
