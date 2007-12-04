@@ -97,9 +97,6 @@ class Plot(DataView):
     # index into auto_colors list
     _auto_color_idx = Int
 
-    # The computed origin location
-    origin = Property
-
     #------------------------------------------------------------------------
     # Annotations and decorations
     #------------------------------------------------------------------------
@@ -797,6 +794,3 @@ class Plot(DataView):
         else:
             return None
 
-    def _get_origin(self):
-        # FIXME: 
-        return self.default_origin

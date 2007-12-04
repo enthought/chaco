@@ -775,6 +775,9 @@ class PlotAxis(AbstractOverlay):
 
     def _bounds_items_changed_for_component(self):
         self._cache_valid = False
+
+    def _origin_changed_for_component(self):
+        self._invalidate()
     
     def _updated_fired(self):
         """If the axis bounds changed, redraw."""

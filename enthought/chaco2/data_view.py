@@ -87,9 +87,12 @@ class DataView(OverlayPlotContainer):
     # The orientation of the index axis.
     orientation = Enum("h", "v")
 
-    # The default location of the origin 
+    # The default location of the origin  for new plots
     default_origin = Enum("bottom left", "top left", 
                           "bottom right", "top right")
+
+    # The origin reported to axes, etc
+    origin = Property(depends_on='default_origin')
 
     # The mapper to use for the index data.
     index_mapper = Instance(Base1DMapper)
@@ -270,6 +273,9 @@ class DataView(OverlayPlotContainer):
         self._update_mappers()
         return
 
+    def _origin_changed(self):
+        self._update_mappers()
+
     def _orientation_changed(self):
         self._update_mappers()
         for renderer in self.components:
@@ -384,5 +390,9 @@ class DataView(OverlayPlotContainer):
         for renderer in self.components:
             if hasattr(renderer, range_name):
                 setattr(renderer, range_name, new)
+
+    def _get_origin(self):
+        # FIXME: 
+        return self.default_origin
 
 
