@@ -565,8 +565,9 @@ class BaseXYPlot(AbstractPlotRenderer):
         self._update_mappers()
         return
 
-    def _bounds_items_changed(self):
-        self._update_mappers()
+    def _bounds_items_changed(self,event):
+        if event.added != event.removed:
+            self._update_mappers()
         return
 
 ##     def _position_changed(self):
