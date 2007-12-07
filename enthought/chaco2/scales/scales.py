@@ -307,10 +307,16 @@ class LogScale(AbstractScale):
             # Put lines at every power of ten
             startlog = ceil(log_start)
             endlog = floor(log_end)
-            interval = ceil((endlog - startlog)/9.0)
-            expticks = linspace(startlog, endlog, 9)
+            expticks = linspace(startlog, endlog, endlog - startlog + 1)
             return 10**expticks
 
+    def num_ticks(self, start, end, desired_ticks=8):
+        """ Returns an approximate number of ticks that this scale 
+        produces for the given interval.  
+        
+        Implements AbstractScale.
+        """
+        return len(self.ticks(start, end, desired_ticks))
 
 ##############################################################################
 #

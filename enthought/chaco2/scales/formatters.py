@@ -2,7 +2,7 @@
 Classes for formatting labels for values or times.
 """
 
-from math import ceil, floor, fmod, log10, modf
+from math import ceil, floor, fmod, log10
 from numpy import abs, all, array, asarray, amax, amin
 from safetime import localtime, strftime, time
 
@@ -89,8 +89,8 @@ class BasicFormatter(object):
         if len(ticks) == 0:
             return []
         
-        if self.use_scientific and (abs(min(ticks)) >= 10 ** self.scientific_limits[1] or \
-                abs(amax(ticks)) <= 10 ** self.scientific_limits[0]):
+        if self.use_scientific and (abs(amax(ticks)) >= 10 ** self.scientific_limits[1] or \
+                abs(amin(ticks)) <= 10 ** self.scientific_limits[0]):
             scientific = True
         else:
             scientific = False
@@ -162,7 +162,7 @@ class BasicFormatter(object):
             # Clean up the exponent
             e_str = str(e)
             
-            if e_str.startswith("+") and not sign:
+            if e_str.startswith("+") and not force_sign:
                 e_str = e_str[1:]
             m_str += "e" + e_str
 
