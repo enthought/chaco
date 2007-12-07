@@ -56,7 +56,7 @@ class HighlightTool(BaseTool):
             closest_plot = self._find_curve(self.component.components, event)
             if closest_plot:
                 index = closest_plot.index
-                index.metadata['selections'] = ones(len(index.get_data()))
+                index.metadata['selections'] = ones(len(index.get_data()), dtype=bool)
                 closest_plot.request_redraw()
             else:
                 # If we are attached to a plot container, then we can deselect
@@ -71,7 +71,7 @@ class HighlightTool(BaseTool):
             hit_point = self.component.hittest((event.x, event.y), self.threshold)
             index = self.component.index
             if hit_point is not None:
-                index.metadata['selections'] = ones(len(index.get_data()))
+                index.metadata['selections'] = ones(len(index.get_data()), dtype=bool)
                 self.component.request_redraw()
             elif "selections" in index.metadata:
                 del index.metadata["selections"]
