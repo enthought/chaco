@@ -1,9 +1,10 @@
 """ Defines the PlotWindow class.
 """
 import wx
+
 from enthought.enable2.wx_backend.api import Window
-from enthought.chaco2.api import ArrayPlotData, Plot
-from enthought.traits.api import Bool
+from enthought.chaco2.shell.scaly_plot import ScalyPlot
+
 
 class PlotWindow(wx.Frame):
     """ A window for holding top-level plot containers.
@@ -12,11 +13,16 @@ class PlotWindow(wx.Frame):
     window, which mostly pass through to underlying WX calls.
     """
 
-    def __init__(self, is_image=False, *args, **kw):
-        kw["size"] = (600,600)
+    def __init__(self, is_image=False, bgcolor="white", 
+        image_default_origin="top left", *args, **kw):
+
+        kw.setdefault("size", (600,600))
         wx.Frame.__init__(self, None, *args, **kw )
         
-        #self.image = image
+        # Some defaults which should be overridden by preferences.
+        self.bgcolor = bgcolor
+        self.image_default_origin = image_default_origin
+
         # Create an empty top-level container
         if is_image:
             top_container = self._create_top_img_container()
@@ -26,6 +32,7 @@ class PlotWindow(wx.Frame):
         # The PlotSession of which we are a part.  We need to know this in order
         # to notify it of our being closed, etc.
         self.session = None
+
 
         # Create the Enable Window object, and store a reference to it.
         # (This will be handy later.)  The Window requires a WX parent object
@@ -86,12 +93,23 @@ class PlotWindow(wx.Frame):
     #------------------------------------------------------------------------
 
     def _create_top_container(self):
-        return Plot(padding = 50, fill_padding = True, bgcolor = "lightgray",
-                    use_backbuffer = True)
+        plot = ScalyPlot(
+            padding=50, 
+            fill_padding=True,
+            bgcolor=self.bgcolor,
+            use_backbuffer=True,
+        )
+        return plot
 
     def _create_top_img_container(self):
-        return Plot(padding = 50, fill_padding = True, bgcolor = "lightgray",
-                    use_backbuffer = True, default_origin="top left")
+        plot = ScalyPlot(
+            padding=50,
+            fill_padding=True,
+            bgcolor=self.bgcolor,
+            use_backbuffer=True,
+            default_origin=self.image_default_origin,
+        )
+        return plot
 
 
     def _on_window_close(self, event):

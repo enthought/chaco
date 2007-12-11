@@ -7,14 +7,13 @@ from a set of user-supplied arguments.
 import re
 
 # Major library imports
-from numpy import all, array, arange, asarray, newaxis, reshape, shape, transpose
+from numpy import all, array, arange, asarray, reshape, shape, transpose
 
 # Chaco imports
-from enthought.chaco2.api import create_bar_plot, create_line_plot, \
-    create_polar_plot, create_scatter_plot, add_default_axes, \
-    add_default_grids, ArrayDataSource, ArrayPlotData, ImageData 
+from enthought.chaco2.api import (create_line_plot, create_scatter_plot,
+    ArrayDataSource, ImageData)
 
-from enthought.chaco2.tools.api import PanTool, SimpleZoom, RectZoomTool, HighlightTool
+from enthought.chaco2.tools.api import HighlightTool
 
 
 

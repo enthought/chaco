@@ -1,8 +1,14 @@
 """ Defines commands for the Chaco shell.
 """
 import wx
+
 from enthought.chaco2.api import Plot, color_map_name_dict
+from enthought.chaco2.scales.api import ScaleSystem
 from enthought.chaco2.tools.api import PanTool, RectZoomTool
+
+# Note: these are imported to be exposed in the namespace.
+from enthought.chaco2.scales.api import (FixedScale, Pow10Scale, LogScale,
+    CalendarScaleSystem)
 from enthought.chaco2.default_colormaps import *
 
 import plot_maker
@@ -37,10 +43,6 @@ def chaco_commands():
     --------
     plot 
         plots some data
-    scatter
-        plots some data as a scatterplot (unordered X/Y data)
-    line
-        plots some data as an ordered set of of X,Y points
     imread 
         creates an array from an image file on disk
     imshow 
@@ -65,8 +67,6 @@ def chaco_commands():
 
     Axes, Annotations, Legends
     --------------------------
-    legend 
-        creates a legend and adds it to the plot
     xaxis 
         toggles the horizontal axis, sets the interval
     yaxis 
@@ -79,10 +79,12 @@ def chaco_commands():
         sets the title of a horizontal axis
     ytitle 
         sets the title of a vertical axis
+    xscale
+        sets the tick scale system of the X axis
+    yscale
+        sets the tick scale system of the Y axis
     title 
         sets the title of the plot
-    label
-        adds a label at a data point
 
 
     Tools
@@ -101,6 +103,10 @@ def chaco_commands():
     """
     tool -- toggles certain tools on or off
     load -- loads a saved plot from file into the active plot area
+    scatter -- plots some data as a scatterplot (unordered X/Y data)
+    line -- plots some data as an ordered set of of X,Y points
+    label -- adds a label at a data point
+    legend -- creates a legend and adds it to the plot
 
     Layout
     ------
@@ -207,7 +213,6 @@ def colormap(map):
     
     Parameters
     ----------
-
     map : a string, or a callable 
          The color map to use; if it is a string, it is the name of a default 
          colormap; if it is a callable, it must return an AbstractColorMap.
@@ -216,7 +221,7 @@ def colormap(map):
         session.colormap = color_map_name_dict[map]
     else:
         session.colormap = map
-    
+
 
 def hold(state=None):
     """ Turns "hold" on or off, or toggles the current state if none
@@ -226,7 +231,6 @@ def hold(state=None):
     ----------
     state : Boolean
         The desired hold state.
-
     """
     if state is None:
         session.hold = not session.hold
@@ -525,9 +529,10 @@ def plotv(*args, **kwargs):
         the dash style to use (solid, dot dash, dash, dot, long dash)
     """
     
-    cont = session.active_window.get_container()
+    cont = _do_plot_boilerplate(kwargs)
     plots = plot_maker.do_plotv(session, *args, **kwargs)
     cont.add(*plots)
+    cont.request_redraw()
     return
 
 
@@ -557,34 +562,77 @@ def title(text):
         p.title = text
         p.request_redraw()
 
-def xaxis(interval=None):
+_axis_params = """Parameters
+    ----------
+    title : str
+        The text of the title
+    title_font : KivaFont('modern 12')
+        The font in which to render the title
+    title_color : color ('color_name' or (red, green, blue, [alpha]) tuple)
+        The color in which to render the title
+    tick_weight : float
+        The thickness (in pixels) of each tick
+    tick_color : color ('color_name' or (red, green, blue, [alpha]) tuple)
+        The color of the ticks
+    tick_label_font : KivaFont('modern 10')
+        The font in which to render the tick labels
+    tick_label_color : color ('color_name' or (red, green, blue, [alpha]) tuple)
+        The color of the tick labels
+    tick_label_formatter : callable
+        A callable that is passed the numerical value of each tick label and
+        which should return a string.
+    tick_in : int
+        The number of pixels by which the ticks go "into" the plot area
+    tick_out : int
+        The number of pixels by which the ticks extend into the label area
+    tick_visible : bool
+        Are ticks visible at all?
+    tick_interval : 'auto' or float
+        What is the dataspace interval between ticks?
+    orientation : Enum("top", "bottom", "left", "right")
+        The location of the axis relative to the plot.  This determines where
+        the axis title is located relative to the axis line.
+    axis_line_visible : bool
+        Is the axis line visible?
+    axis_line_color : color ('color_name' or (red, green, blue, [alpha]) tuple)
+        The color of the axis line
+    axis_line_weight : float
+        The line thickness (in pixels) of the axis line
+    axis_line_style : LineStyle('solid')
+        The dash style of the axis line"""
+
+def xaxis(**kwds):
     """ Configures the x-axis.
     
-    Usage:
-        
+    Usage
+    -----
     * ``xaxis()``: toggles the horizontal axis on or off.
-    * ``xaxis(val)``: changes the x-axis interval between ticks to *val*.
-    """
+    * ``xaxis(**kwds)``: set parameters of the horizontal axis.
+ 
+    %s
+    """ % _axis_params
     p = curplot()
     if p:
-        if interval is not None:
-            p.x_axis.tick_interval = interval
+        if kwds:
+            p.x_axis.set(**kwds)
         else:
             p.x_axis.visible ^= True
         p.request_redraw()
         
-def yaxis(interval=None):
+def yaxis(**kwds):
     """ Configures the y-axis.
-    
-    Usage:
-        
+
+    Usage
+    -----
     * ``yaxis()``: toggles the vertical axis on or off.
-    * ``yaxis(val)``: changes the y-axis interval between ticks to *val*.
-    """
+    * ``yaxis(**kwds)``: set parameters of the vertical axis.
+ 
+    %s
+    """ % _axis_params
     p = curplot()
     if p:
-        if interval is not None:
-            p.y_axis.tick_interval = interval
+        if kwds:
+            p.y_axis.set(**kwds)
         else:
             p.y_axis.visible ^= True
         p.request_redraw()
@@ -602,7 +650,52 @@ def ygrid():
     if p:
         p.y_grid.visible ^= True
         p.request_redraw()
-    
+
+def _set_scale(axis, system):
+    p = curplot()
+    if p:
+        if axis == 'x':
+            log_linear_trait = 'index_scale'
+            ticks = p.x_ticks
+        else:
+            log_linear_trait = 'value_scale'
+            ticks = p.y_ticks
+        if isinstance(system, basestring):
+            setattr(p, log_linear_trait, system)
+        else:
+            if system is None:
+                system = dict(linear=p.linear_scale, log=p.log_scale).get(
+                    p.get(log_linear_trait), p.linear_scale)
+            ticks.scale = system
+        p.request_redraw()
+
+def xscale(system=None):
+    """ Change the scale system for the X-axis ticks.
+
+    Usage
+    -----
+    * ``xscale()``: revert the scale system to the default.
+    * ``xscale(CalendarScaleSystem())``: use the calendar scale system for time
+      series.
+    * ``xscale('log')``: use a generic log-scale.
+    * ``xscale('linear')``: use a generic linear-scale.
+    """
+    _set_scale('x', system)
+
+def yscale(system=None):
+    """ Change the scale system for the Y-axis ticks.
+
+    Usage
+    -----
+    * ``yscale()``: revert the scale system to the default.
+    * ``yscale(CalendarScaleSystem())``: use the calendar scale system for time
+      series.
+    * ``yscale('log')``: use a generic log-scale.
+    * ``yscale('linear')``: use a generic linear-scale.
+    """
+    _set_scale('y', system)
+
+
 #-----------------------------------------------------------------------------
 # Tools
 #-----------------------------------------------------------------------------

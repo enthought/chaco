@@ -54,7 +54,12 @@ class PlotSession(HasTraits):
         """Creates a new window and returns the index into the **windows** list
         for the new window.
         """
-        new_win = PlotWindow(is_image=is_image, size=(self.prefs.window_width, self.prefs.window_height))
+        new_win = PlotWindow(
+            is_image=is_image,
+            size=(self.prefs.window_width, self.prefs.window_height),
+            bgcolor=self.prefs.bgcolor,
+            image_default_origin=self.prefs.image_default_origin,
+        )
         new_win.data = self.data
         new_win.get_container().data = self.data
         new_win.session = self
@@ -139,7 +144,7 @@ class PlotSession(HasTraits):
                 p.invalidate_draw()
                 p.request_redraw()
             elif hasattr(p, "colors"):
-                if isinstance(p.colors, basestr) or \
+                if isinstance(p.colors, basestring) or \
                    isinstance(p.colors, AbstractColorMapper):
                     p.colors = color_map_dict[self.colormap]
 
