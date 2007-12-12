@@ -123,7 +123,7 @@ class PlotAxis(AbstractOverlay):
     tick_interval = Trait('auto', 'auto', Float)
 
     # A callable that implements the AbstractTickGenerator interface.
-    tick_generator = Instance(AbstractTickGenerator, factory = DefaultTickGenerator)
+    tick_generator = Instance(AbstractTickGenerator)
 
     # The location of the axis relative to the plot.  This determines where
     # the axis title is located relative to the axis line.
@@ -203,6 +203,8 @@ class PlotAxis(AbstractOverlay):
     #------------------------------------------------------------------------
 
     def __init__(self, component=None, **kwargs):
+        # TODO: change this back to a factory in the instance trait some day
+        self.tick_generator = DefaultTickGenerator()
         # Override init so that our component gets set last.  We want the
         # _component_changed() event handler to get run last.
         super(PlotAxis, self).__init__(**kwargs)
