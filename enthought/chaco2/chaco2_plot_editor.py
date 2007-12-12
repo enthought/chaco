@@ -4,8 +4,7 @@ traits.ui.wx.plot_editor.
 """
 
 # Major library imports
-import wx
-from numpy import arange
+#import wx
 
 # Enthought library imports
 from enthought.enable2.traits.ui.wx.rgba_color_editor import \
@@ -13,15 +12,15 @@ from enthought.enable2.traits.ui.wx.rgba_color_editor import \
 from enthought.enable2.api import black_color_trait, LineStyle, ColorTrait, white_color_trait
 from enthought.enable2.wx_backend.api import Window
 from enthought.kiva.traits.kiva_font_trait import KivaFont
-from enthought.traits.api import Enum, false, List, Str, true, Range, Tuple, \
-                                 Bool, Trait, Int, Any, \
-                                 Property
-from enthought.traits.ui.api import View, Item
+from enthought.traits.api import Enum, false, Str, Range, Tuple, \
+                                 Bool, Trait, Int, Any, Property
+from enthought.traits.ui.api import Item
 from enthought.traits.ui.wx.editor import Editor
 from enthought.traits.ui.wx.editor_factory import EditorFactory
 
 
 # Local relative imports
+from axis import PlotAxis
 from plot_containers import OverlayPlotContainer
 from plot_factory import create_line_plot, create_scatter_plot, \
                          add_default_grids, add_default_axes
@@ -94,12 +93,18 @@ class Chaco2PlotItem(Item):
 
     # Label of the x-axis; if None, the **index** name is used.
     x_label = Trait(None, None, Str)
+    # Name of the trait on the object containing the label of the x-axis.
+    # This takes precedence over **x_label**.
+    x_label_trait = Trait(None, None, Str)
     # Font for the label of the x-axis.
     x_label_font = KivaFont("modern 10")
     # Color of the label of the x-axis.
     x_label_color = black_color_trait
     # Label of the y-axis; if None, the **value** name is used.
     y_label = Trait(None, None, Str)
+    # Name of the trait on the object containing the label of the y-axis.
+    # This takes precedence over **y_label**.
+    y_label_trait = Trait(None, None, Str)
     # Font for the label of the y-axis.
     y_label_font = KivaFont("modern 10")
     # Color of the label of the y-axis.
@@ -235,11 +240,17 @@ class Chaco2PlotEditor ( Editor ):
         control.SetSize((factory.width, factory.height))
         object = self.object
 
+        # Attach listeners to the object's traits appropriately so we can
+        # update the plot when they change.  For the _update_axis_grids()
+        # callback, we have to wrap it in a lambda to keep traits from
+        # inferring the calling convention based on introspecting the argument
+        # list.
         if USE_DATA_UPDATE == 1:
             for name in (plotitem.index, plotitem.value):
                 object.on_trait_change( self._update_data, name)
-        for name in (plotitem.type_trait,):
-            object.on_trait_change( self._update_editor, name)
+        for name in (plotitem.x_label_trait, plotitem.y_label_trait):
+            object.on_trait_change(lambda s: self._update_axis_grids(), name)
+        object.on_trait_change(self.update_editor, plotitem.type_trait)
         return
 
     #---------------------------------------------------------------------------
@@ -363,30 +374,56 @@ class Chaco2PlotEditor ( Editor ):
         return plot
 
     def _add_axis_grids(self, new_plot, plotitem):
-        if plotitem.x_label is not None:
+        value_axis, index_axis = add_default_axes(new_plot, 
+                                    orientation=plotitem.orientation)
+        add_default_grids(new_plot)
+        new_plot.tools.append(PanTool(new_plot))
+        zoom = SimpleZoom(component=new_plot, tool_mode="box", always_on=False)
+        new_plot.overlays.append(zoom)
+
+        # Update the titles and labels
+        self._update_axis_grids(new_plot, plotitem)
+
+    def _update_axis_grids(self, plot=None, plotitem=None):
+        if plot is None:
+            plot = self._plot
+        if plotitem is None:
+            plotitem = self.factory.plotitem
+
+        if plotitem.x_label_trait is not None:
+            htitle = getattr(self.object, plotitem.x_label_trait)
+        elif plotitem.x_label is not None:
             htitle = plotitem.x_label
         else:
             htitle = plotitem.index
 
-        if plotitem.y_label is not None:
+        if plotitem.y_label_trait is not None:
+            htitle = getattr(self.object, plotitem.y_label_trait)
+        elif plotitem.y_label is not None:
             vtitle = plotitem.y_label
         else:
             vtitle = plotitem.value
 
         if plotitem.orientation == "v":
             htitle, vtitle = vtitle, htitle
+        plot.x_axis.title = htitle
+        plot.y_axis.title = vtitle
+        
+        # This is sort of crappy.. since we are using BaseXYPlots and not
+        # Plot/DataViews, we actually can't easily get references to the plot's
+        # index and value axes.  So we have to search through the underlays for
+        # PlotAxis instances whose ranges match the index and value ranges.
+        for axis in plot.underlays + plot.overlays:
+            if isinstance(axis, PlotAxis) and axis.mapper.range is plot.index_range:
+                axis.title_font = plotitem.x_label_font
+                axis.title_color = plotitem.x_label_color
 
-        value_axis, index_axis = add_default_axes(new_plot, htitle=htitle, vtitle=vtitle,
-                                        orientation=plotitem.orientation)
-        index_axis.title_font = plotitem.x_label_font
-        index_axis.title_color = plotitem.x_label_color
-        value_axis.title_font = plotitem.y_label_font
-        value_axis.title_color = plotitem.y_label_color
-
-        add_default_grids(new_plot)
-        new_plot.tools.append(PanTool(new_plot))
-        zoom = SimpleZoom(component=new_plot, tool_mode="box", always_on=False)
-        new_plot.overlays.append(zoom)
+        for axis in plot.underlays + plot.overlays:
+            if isinstance(axis, PlotAxis) and axis.mapper.range is plot.value_range:
+                axis.title_font = plotitem.y_label_font
+                axis.title_color = plotitem.y_label_color
+        
+        plot.request_redraw()
         return
 
 
