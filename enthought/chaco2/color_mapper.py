@@ -8,8 +8,8 @@ from numpy import add, arange, array, asarray, choose, clip, concatenate, \
                   sometrue, sort, take, where, zeros
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Dict, Float, HasTraits, Int, \
-                                 Property, Str, Trait, true, Tuple
+from enthought.traits.api import Any, Array, Dict, Event, Float, HasTraits, \
+                                 Int, Property, Str, Trait, true, Tuple
 
 # Relative imports
 from abstract_colormap import AbstractColormap
@@ -88,6 +88,9 @@ class ColorMapper(AbstractColormap):
     # Not used.
     high_pos = None
     
+    # A generic "update" event that generally means that anything that relies
+    # on this mapper for visual output should do a redraw or repaint.
+    updated = Event
 
     # Are the mapping arrays out of date?
     _dirty = true
@@ -271,7 +274,7 @@ class ColorMapper(AbstractColormap):
         self._blue_lut = self._make_mapping_array(
             self.steps, self._segmentdata['blue']
         )
-
+        self.updated = True
         self._dirty = False
         
         return
@@ -370,5 +373,20 @@ class ColorMapper(AbstractColormap):
             rgba = tuple(rgba[0,:])
             
         return rgba
+
+    def _range_changed(self, old, new):
+        if old is not None:
+            old.on_trait_change(self._range_change_handler, "updated",
+                                remove = True)
+        if new is not None:
+            new.on_trait_change(self._range_change_handler, "updated")
+        
+        self.updated = new
+
+    def _range_change_handler(self, obj, name, new):
+        "Handles the range changing; dynamically attached to our ranges"
+        self.updated = obj
+
+
 
 # EOF
