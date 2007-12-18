@@ -738,6 +738,7 @@ class PlotAxis(AbstractOverlay):
     #------------------------------------------------------------------------
 
     def _bounds_changed(self):
+        self._layout_needed = True
         self._invalidate()
         return
 
@@ -774,9 +775,11 @@ class PlotAxis(AbstractOverlay):
 
     def _bounds_changed_for_component(self):
         self._cache_valid = False
+        self._layout_needed = True
 
     def _bounds_items_changed_for_component(self):
         self._cache_valid = False
+        self._layout_needed = True
 
     def _origin_changed_for_component(self):
         self._invalidate()

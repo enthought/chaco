@@ -5,6 +5,7 @@ from enthought.traits.api import Enum, Instance, Property
 
 from axis import PlotAxis
 from base_1d_mapper import Base1DMapper
+from base_2d_plot import Base2DPlot
 from data_range_2d import DataRange2D
 from grid import PlotGrid
 from linear_mapper import LinearMapper
@@ -235,7 +236,7 @@ class DataView(OverlayPlotContainer):
         x2 = self.x2
         y = self.y
         y2 = self.y2
-        
+
         if self.x_mapper is not None:
             if "left" in self.origin:
                 self.x_mapper.low_pos = x
@@ -349,7 +350,7 @@ class DataView(OverlayPlotContainer):
                 if new is not None:
                     new.add(datasource)
         for renderer in self.components:
-            if hasattr(renderer, 'range2d'):
+            if hasattr(renderer, 'range2d') or isinstance(renderer, Base2DPlot):
                 setattr(renderer, 'range2d', new)
             else:
                 if hasattr(renderer, 'index_range'):

@@ -98,12 +98,20 @@ class OverlayPlotContainer(BasePlotContainer):
             if not self._should_layout(component):
                 continue
             
+            position = list(component.outer_position)
+            bounds = list(component.outer_bounds)
             if "h" in component.resizable:
-                component.outer_x = 0
-                component.outer_width = width
+                position[0] = 0
+                bounds[0] = width
             if "v" in component.resizable:
-                component.outer_y = 0
-                component.outer_height = height
+                position[1] = 0
+                bounds[1] = height
+
+            # Set both bounds at once.  This is a slight perforance fix because
+            # it only fires two trait events instead of four.  It is also needed
+            # in order for the event-based aspect ratio enforcement code to work.
+            component.outer_position = position
+            component.outer_bounds = bounds
         
         # Tell all of our components to do a layout
         for component in self.components:
@@ -197,14 +205,6 @@ class StackedPlotContainer(BasePlotContainer):
         other_ndx = 1 - ndx
         other_dim = self.other_dimension
 
-        # Compute the amount of padding used in the stack dimension and the other
-        # dimension, and create new variables for the size and origin of the
-        # area inside the padding.
-        #~ pad_array = self.padding
-        #~ total_padding = [pad_array[0]+pad_array[1], pad_array[2]+pad_array[3]]
-        #~ offset_size = [size[0] - total_padding[0], size[1] - total_padding[1]]
-        #~ offset_origin = [pad_array[0], pad_array[3]]  # pad_bottom is last in pad_array
-        
         # Assign sizes of non-resizable components, and compute the total size
         # used by them (along the stack dimension).
         total_fixed_size = 0
@@ -223,6 +223,8 @@ class StackedPlotContainer(BasePlotContainer):
                 total_resizable_size += preferred_size[ndx]
                 resizable_components.append(component)
         
+        new_bounds_dict = {}
+
         # Assign sizes of all the resizable components along the stack dimension
         if resizable_components:
             space = self.spacing * (len(self.components) - 1)
@@ -232,13 +234,13 @@ class StackedPlotContainer(BasePlotContainer):
                 for component in resizable_components:
                     tmp = list(component.outer_bounds)
                     tmp[ndx] = int(size_prefs[component][ndx] * scale)
-                    component.outer_bounds = tmp
+                    new_bounds_dict[component] = tmp
             else:
                 each_size = int(avail_size / len(resizable_components))
                 for component in resizable_components:
                     tmp = list(component.outer_bounds)
                     tmp[ndx] = each_size
-                    component.outer_bounds = tmp
+                    new_bounds_dict[component] = tmp
         
         # Loop over all the components, assigning position and computing the
         # size in the other dimension and its position.
@@ -246,28 +248,35 @@ class StackedPlotContainer(BasePlotContainer):
         for component in components:
             if not self._should_layout(component):
                 continue
-            component.set_outer_position(ndx, cur_pos)
-            old_outer_bounds = component.outer_bounds
-            cur_pos += old_outer_bounds[ndx] + self.spacing
+
+            position = list(component.outer_position)
+            position[ndx] = cur_pos
+
+            bounds = new_bounds_dict.get(component, list(component.outer_bounds))
+            cur_pos += bounds[ndx] + self.spacing
             
-            if (old_outer_bounds[other_ndx] > size[other_ndx]) or \
+            if (bounds[other_ndx] > size[other_ndx]) or \
                     (other_dim in component.resizable):
                 # If the component is resizable in the other dimension or it exceeds the
                 # container bounds, set it to the maximum size of the container
-                component.set_outer_position(other_ndx, 0)
-                component.set_outer_bounds(other_ndx, size[other_ndx])
+                
+                #component.set_outer_position(other_ndx, 0)
+                #component.set_outer_bounds(other_ndx, size[other_ndx])
+                position[other_ndx] = 0
+                bounds[other_ndx] = size[other_ndx]
             else:
-                component.set_outer_position(other_ndx, 0)
-                old_coord = component.outer_position[other_ndx]
+                #component.set_outer_position(other_ndx, 0)
+                #old_coord = component.outer_position[other_ndx]
+                position[other_ndx] = 0
                 if align == "min":
                     pass
                 elif align == "max":
-                    component.set_outer_position(other_ndx, old_coord + size[other_ndx] - \
-                                                 old_outer_bounds[other_ndx])
+                    position[other_ndx] = size[other_ndx] - bounds[other_ndx]
                 elif align == "center":
-                    component.set_outer_position(other_ndx, old_coord + (size[other_ndx] - \
-                                                 old_outer_bounds[other_ndx]) / 2.0)
-            
+                    position[other_ndx] = (size[other_ndx] - bounds[other_ndx]) / 2.0
+
+            component.outer_position = position
+            component.outer_bounds = bounds
             component.do_layout()
         return        
 
@@ -560,25 +569,26 @@ class GridPlotContainer(BasePlotContainer):
                 if "v" not in r:
                     # Component is not vertically resizable
                     if valign == "top":
-                        y += h - component.height
+                        y += h - component.outer_height
                     elif valign == "center":
-                        y += (h - component.height) / 2
+                        y += (h - component.outer_height) / 2
                 
                 if "h" not in r:
                     # Component is not horizontally resizable
                     if halign == "right":
-                        x += w - component.width
+                        x += w - component.outer_width
                     elif halign == "center":
-                        x += (w - component.width) / 2
+                        x += (w - component.outer_width) / 2
 
                 component.outer_position = [x,y]
-                if "v" in r:
-                    component.outer_height = h
+                bounds = list(component.outer_bounds)
                 if "h" in r:
-                    component.outer_width = w
+                    bounds[0] = w
+                if "v" in r:
+                    bounds[1] = h
 
                 # TODO: figure out why the following causes a layout inconsistency:
-                #component.outer_bounds = [w,h]
+                component.outer_bounds = [w,h]
 
                 component.do_layout()
         return
