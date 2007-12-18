@@ -112,6 +112,10 @@ class DataLabel(ToolTip):
     """ A label on a point in data space, optionally with an arrow to the point. 
     """
 
+    # The symbol to use if **marker** is set to "custom". This attribute must
+    # be a compiled path for the given Kiva context.
+    custom_symbol = Any
+    
     # The point in data space where this label should anchor itself.
     data_point = Trait(None, None, Tuple, List, Array)
 
@@ -250,7 +254,8 @@ class DataLabel(ToolTip):
         # draw the marker
         if self.marker_visible:
             render_markers(gc, [self._screen_coords], self.marker, self.marker_size,
-                           self.marker_color_, self.marker_line_width, self.marker_line_color_)
+                           self.marker_color_, self.marker_line_width,
+                           self.marker_line_color_, self.custom_symbol)
 
         if self.clip_to_plot:
             gc.restore_state()
