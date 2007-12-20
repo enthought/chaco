@@ -9,9 +9,6 @@ from numpy import abs, arange, cumprod, random
 from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 
 # Enthought library imports
-from enthought.traits.api import HasTraits, Float, Int, Instance, Range
-from enthought.enable2.traits.rgba_color_trait import RGBAColor
-from enthought.traits.ui.api import View, Group, Item
 from enthought.enable2.api import Window
 
 # Chaco imports
@@ -21,7 +18,7 @@ from enthought.chaco2.api import ArrayDataSource, BarPlot, DataRange1D, \
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 
-class PlotFrame(DemoFrame, HasTraits):
+class PlotFrame(DemoFrame):
 
     def _create_window(self):
        
@@ -83,7 +80,8 @@ class PlotFrame(DemoFrame, HasTraits):
         container.add(price_plot)
         container.overlays.append(PlotLabel("Financial Plot",
                                             component=container,
-                                            font="Times New Roman 24"))
+                                            #font="Times New Roman 24"))
+                                            font="Arial 24"))
         
         return Window(self, -1, component=container)
 
