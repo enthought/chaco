@@ -5,10 +5,6 @@ from numpy import arange, cos, linspace, pi, sin
 from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
 
 # Enthought library imports
-from enthought.traits.api import HasTraits, Float, Int, Instance, Range,\
-                             true, false
-from enthought.enable2.traits.rgba_color_trait import RGBAColor
-from enthought.traits.ui.api import View, Group, Item
 from enthought.enable2.api import Window
 
 # Chaco imports
@@ -63,12 +59,7 @@ def make_curves(spec):
 
     return [plot1, plot2, plot3]
 
-class PlotFrame(DemoFrame, HasTraits):
-    index_source = Instance(ArrayDataSource)
-    value_source = Instance(ArrayDataSource)
-
-    line_color = RGBAColor('black')
-    bg_color = RGBAColor('white')
+class PlotFrame(DemoFrame):
 
     def get_points(self):
         index = linspace(pi/4, 3*pi/2, 9)
