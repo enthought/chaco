@@ -26,9 +26,11 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-ENABLE = etsdep('Enable', '3.0.0b1')
+ENABLE_TRAITS = etsdep('Enable[traits]', '3.0.0b1')
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
 TRAITS = etsdep('Traits', '3.0.0b1')
+#TRAITSBACKENDQT -- not needed due to the way it is used in chaco2_plot_container_editor.py
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')  # -- directly imported by chaco2_plot_editor.py
 
 
 setup(
@@ -39,6 +41,10 @@ setup(
         ],
     description = 'Chaco plotting toolkit',
     extras_require = {
+        'wx': [
+            TRAITSBACKENDWX,
+            ],
+
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
         'nonets': [
@@ -48,7 +54,7 @@ setup(
     ext_modules = [contour],
     include_package_data = True,
     install_requires = [
-        ENABLE,
+        ENABLE_TRAITS,
         ENTHOUGHTBASE,
         TRAITS,
         ],
@@ -57,9 +63,11 @@ setup(
     namespace_packages = [
         "enthought",
         ],
-    packages = find_packages(
-        exclude=['docs', 'examples', 'examples.zoomed_plot'],
-        ),
+    packages = find_packages(exclude=[
+        'docs',
+        'examples',
+        'examples.zoomed_plot'
+        ]),
     tests_require = [
         'nose >= 0.9',
         ],

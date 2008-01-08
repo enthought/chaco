@@ -1,3 +1,2 @@
 [wx]
-enthought.chaco2.chaco2_plot_container_editor=*
-enthought.chaco2.chaco2_plot_editor=*
+enthought.chaco2.chaco2_plot_editor = *
