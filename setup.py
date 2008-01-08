@@ -26,10 +26,9 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-ENABLE2 = etsdep('enthought.enable2', '2.0.0b1')
-ETSCONFIG = etsdep('enthought.etsconfig', '2.0.0b1')
-KIVA = etsdep('enthought.kiva', '2.0.0b1')
-TRAITS = etsdep('enthought.traits', '2.0.0b1')
+ENABLE = etsdep('Enable', '3.0.0b1')
+ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
+TRAITS = etsdep('Traits', '3.0.0b1')
 
 
 setup(
@@ -37,7 +36,6 @@ setup(
     author_email = 'info@enthought.com',
     dependency_links = [
         'http://code.enthought.com/enstaller/eggs/source',
-        'http://code.enthought.com/enstaller/eggs/source/unstable',
         ],
     description = 'Chaco plotting toolkit',
     extras_require = {
@@ -50,13 +48,12 @@ setup(
     ext_modules = [contour],
     include_package_data = True,
     install_requires = [
-        ENABLE2,
-        ETSCONFIG,
-        KIVA,
+        ENABLE,
+        ENTHOUGHTBASE,
         TRAITS,
         ],
     license = 'BSD',
-    name = 'enthought.chaco2',
+    name = 'Chaco',
     namespace_packages = [
         "enthought",
         ],
@@ -68,6 +65,7 @@ setup(
         ],
     test_suite = 'nose.collector',
     url = 'http://code.enthought.com/chaco',
-    version='3.0.0a1',
+    version='3.0.0b1',
     zip_safe = False,
     )
+
