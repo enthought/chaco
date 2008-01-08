@@ -11,7 +11,7 @@ from numpy import compress, inf, isnan
 from enthought.traits.api import CFloat, Enum, false, Property, Trait, true
 
 # Local relative imports
-from base import arg_find_runs, bin_search
+from base import arg_find_runs
 from base_data_range import BaseDataRange
 from ticks import heckbert_interval
 

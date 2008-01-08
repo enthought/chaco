@@ -5,21 +5,20 @@ function.
 import logging
 
 # Major library imports
-from numpy import argmin, around, array, column_stack, compress, invert, isnan, \
+from numpy import argmin, around, array, compress, invert, isnan, \
                 sqrt, sum, transpose
 
 # Enthought library imports
-from enthought.enable2.api import black_color_trait, white_color_trait, ColorTrait
+from enthought.enable2.api import black_color_trait, ColorTrait
 from enthought.kiva import STROKE
-from enthought.traits.api import Any, Array, Bool, Enum, Float, Instance, \
-                                 Int,  List, Trait
+from enthought.traits.api import Any, Array, Bool, Float, Int, Trait
 from enthought.traits.ui.api import View, VGroup, Item
 
 # Local relative imports
 from base_xy_plot import BaseXYPlot
-from scatter_markers import CircleMarker, CustomMarker, DiamondMarker, \
-                            MarkerNameDict, marker_trait, PixelMarker
-from subdivision_mapper import SubdivisionDataMapper
+from scatter_markers import AbstractMarker, CircleMarker, CustomMarker, \
+                            DiamondMarker, MarkerNameDict, marker_trait, \
+                            PixelMarker
 
 
 # Set up a logger for this module.

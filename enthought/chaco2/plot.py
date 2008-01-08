@@ -15,16 +15,13 @@ from abstract_data_source import AbstractDataSource
 from abstract_plot_data import AbstractPlotData
 from array_data_source import ArrayDataSource
 from array_plot_data import ArrayPlotData
-from axis import PlotAxis
 from base_xy_plot import BaseXYPlot
 from colormapped_scatterplot import ColormappedScatterPlot
 from contour_line_plot import ContourLinePlot
 from contour_poly_plot import ContourPolyPlot
 from cmap_image_plot import CMapImagePlot
 from data_range_1d import DataRange1D
-from data_range_2d import DataRange2D
 from data_view import DataView
-from grid import PlotGrid
 from grid_data_source import GridDataSource
 from grid_mapper import GridMapper
 from image_data import ImageData
@@ -33,7 +30,6 @@ from legend import Legend
 from lineplot import LinePlot
 from linear_mapper import LinearMapper
 from log_mapper import LogMapper
-from plot_containers import OverlayPlotContainer
 from plot_label import PlotLabel
 from polygon_plot import PolygonPlot
 from scatterplot import ScatterPlot

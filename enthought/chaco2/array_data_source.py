@@ -1,10 +1,10 @@
 """ Defines the ArrayDataSource xlass."""
 
 # Major library imports
-from numpy import argmin, argmax, array, ones, nanargmin, nanargmax
+from numpy import array, ones, nanargmin, nanargmax
 
 # Enthought library imports
-from enthought.traits.api import Any, Constant, Enum, Int, String, Tuple
+from enthought.traits.api import Any, Constant, Int, Tuple
 
 # Chaco imports
 from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait

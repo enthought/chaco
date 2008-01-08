@@ -9,9 +9,19 @@ plot container.
 #----------------------------------------------------------------------------
 
 
-from enthought.traits.ui.wx.editor import Editor
-from enthought.traits.ui.wx.basic_editor_factory import BasicEditorFactory
-from enthought.enable2.wx_backend.api import Window
+from enthought.etsconfig.api import ETSConfig
+
+from enthought.traits.ui.api import BasicEditorFactory
+
+if ETSConfig.toolkit == 'wx':
+    from enthought.traits.ui.wx.editor import Editor
+    from enthought.enable2.wx_backend.api import Window
+elif ETSConfig.toolkit == 'qt4':
+    from enthought.traits.ui.qt4.editor import Editor
+    from enthought.enable2.qt4_backend.api import Window
+else:
+    Editor = object
+    Window = None
 
 class _PlotContainerEditor( Editor ):
 

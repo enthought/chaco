@@ -4,15 +4,14 @@ into a structured (gridded) 1-D output space.
 """
 
 # Major library imports
-from numpy import array, transpose
+from numpy import transpose
 
 # Enthought library imports
-from enthought.traits.api import Any, Instance, false, Float, Property
+from enthought.traits.api import Instance, false, Float, Property
 
 # Local relative imports
 from abstract_mapper import AbstractMapper
 from base_1d_mapper import Base1DMapper
-from data_range_1d import DataRange1D
 from data_range_2d import DataRange2D
 from linear_mapper import LinearMapper
 from log_mapper import LogMapper

@@ -6,7 +6,7 @@ Defines basic traits and functions for the data model.
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, asarray, concatenate, cos, dot, empty, nonzero,
+from numpy import (array, argsort, concatenate, cos, dot, empty, nonzero,
     pi, sin, take)
 
 # Enthought library imports

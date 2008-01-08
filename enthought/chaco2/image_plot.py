@@ -6,10 +6,9 @@ from math import ceil, floor, pi
 # Enthought library imports.
 from enthought.traits.api import Either, Enum, false, Instance, \
                                  List, Range, Trait, Tuple
-from enthought.kiva.agg import GraphicsContextArray, pix_format_string_map
+from enthought.kiva.agg import GraphicsContextArray
 
 # Local relative imports
-from base import reverse_map_1d
 from base_2d_plot import Base2DPlot
 
 
