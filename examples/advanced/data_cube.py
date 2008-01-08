@@ -1,5 +1,7 @@
 """
 Allows isometric viewing of a 3D data cube.
+
+Click or click-drag in any data window to set the slice to view.
 """
 
 # Outstanding TODOs:
@@ -19,7 +21,7 @@ from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
 from enthought.chaco2.api import ArrayPlotData, Plot, GridPlotContainer, \
                                  BaseTool, DataRange1D
 from enthought.chaco2.default_colormaps import *
-from enthought.chaco2.tools.api import LineInspector
+from enthought.chaco2.tools.api import LineInspector, SimpleZoom
 from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.enable2.api import Window
 from enthought.traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
@@ -124,12 +126,22 @@ class ImageIndexTool(BaseTool):
     # FIXME: This is not used right now.
     select_mode = Bool(False)
 
+    def normal_left_down(self, event):
+        self._update_slices(event)
+
+    def normal_right_down(self, event):
+        self._update_slices(event)
+
     def normal_mouse_move(self, event):
-        plot = self.component
-        ndx = plot.map_index((event.x, event.y), 
-                             threshold=5.0, index_only=True)
-        if ndx:
-            self.callback(self, *ndx)
+        if event.left_down or event.right_down:
+            self._update_slices(event)
+
+    def _update_slices(self, event):
+            plot = self.component
+            ndx = plot.map_index((event.x, event.y), 
+                                 threshold=5.0, index_only=True)
+            if ndx:
+                self.callback(self, *ndx)
 
     def normal_mouse_wheel(self, event):
         if self.wheel_cb is not None:
@@ -211,43 +223,51 @@ class PlotFrame(DemoFrame):
         self.plotdata = ArrayPlotData()
         self._update_images()
 
+        # Center Plot
         centerplot = Plot(self.plotdata, padding=0)
         imgplot = centerplot.img_plot("xy", xbounds=model.xs, ybounds=model.ys, 
                             colormap=cmap)[0]
-        
-        imgplot.overlays.append(LineInspector(imgplot, axis="index_y", color="white",
-            inspect_mode="indexed", write_metadata=True, is_listener=True))
-        imgplot.overlays.append(LineInspector(imgplot, axis="index_x", color="white",
-            inspect_mode="indexed", write_metadata=True, is_listener=True))
-
-        imgplot.tools.append(ImageIndexTool(imgplot, token="xy", 
-            callback=self._index_callback, wheel_cb=self._wheel_callback))
+        self._add_plot_tools(imgplot, "xy")
         self.center = imgplot
 
+        # Right Plot
         rightplot = Plot(self.plotdata, width=150, resizable="v", padding=0)
+        rightplot.value_range = centerplot.value_range
         imgplot = rightplot.img_plot("yz", xbounds=model.zs, ybounds=model.ys,
                                      colormap=cmap)[0]
-        imgplot.tools.append(ImageIndexTool(imgplot, token="yz", 
-            callback=self._index_callback, wheel_cb=self._wheel_callback))
+        self._add_plot_tools(imgplot, "yz")
         self.right = imgplot
 
+        # Bottom Plot
         bottomplot = Plot(self.plotdata, height=150, resizable="h", padding=0)
+        bottomplot.index_range = centerplot.index_range
         imgplot = bottomplot.img_plot("xz", xbounds=model.xs, ybounds=model.zs,
                                       colormap=cmap)[0]
-        imgplot.tools.append(ImageIndexTool(imgplot, token="xz", 
-            callback=self._index_callback, wheel_cb=self._wheel_callback))
+        self._add_plot_tools(imgplot, "xz")
         self.bottom = imgplot
 
+        # Create Container and add all Plots
         container = GridPlotContainer(padding=20, fill_padding=True,
                                       bgcolor="white", use_backbuffer=True,
                                       shape=(2,2), spacing=(12,12))
-
         container.add(centerplot)
         container.add(rightplot)
         container.add(bottomplot)
 
         self.container = container
         return Window(self, -1, component=container)
+    
+    def _add_plot_tools(self, imgplot, token):
+        """ Add LineInspectors, ImageIndexTool, and SimpleZoom to the image plots. """
+        
+        imgplot.overlays.append(LineInspector(imgplot, axis="index_y", color="white",
+            inspect_mode="indexed", write_metadata=True, is_listener=True))
+        imgplot.overlays.append(LineInspector(imgplot, axis="index_x", color="white",
+            inspect_mode="indexed", write_metadata=True, is_listener=True))
+        imgplot.tools.append(ImageIndexTool(imgplot, token=token, 
+            callback=self._index_callback, wheel_cb=self._wheel_callback))
+        imgplot.tools.append(SimpleZoom(component=imgplot, tool_mode="box", 
+                                        enable_wheel=False, always_on=False))
 
     def _update_model(self, cmap):
         range = DataRange1D(low=amin(self.model.vals), 
@@ -266,7 +286,6 @@ class PlotFrame(DemoFrame):
         pd.set_data("xy", transpose(cube[:, :, self.slice_z], (1,0,2)))
         pd.set_data("xz", transpose(cube[:, self.slice_y, :], (1,0,2)))
         pd.set_data("yz", cube[self.slice_x, :, :])
-
 
 def download_data():
     import os
