@@ -242,7 +242,8 @@ class DataRange1D(BaseDataRange):
                     val = inf
             if self._high_value != val:
                 self._high_value = val
-                self.updated = (self._low_value, self._high_value)
+                if fire_event:
+                    self.updated = (self._low_value, self._high_value)
 
     def _set_high_setting(self, val):
         self._do_set_high_setting(val, True)
