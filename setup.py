@@ -28,9 +28,9 @@ def etsdep(p, min, max=None, literal=False):
 # Declare our ETS project dependencies.
 ENABLE_TRAITS = etsdep('Enable[traits]', '3.0.0b1')
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
-TRAITS = etsdep('Traits', '3.0.0b1')
 #TRAITSBACKENDQT -- not needed due to the way it is used in chaco2_plot_container_editor.py
 TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')  # -- directly imported by chaco2_plot_editor.py
+TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
 
 
 setup(
@@ -49,6 +49,10 @@ setup(
         # decide whether to require them or not.
         'nonets': [
             'numpy >=1.0.2',
+            #'PyQt4', -- not really required by everyone.
+            'reportlab',
+            'scipy',
+            #'wxPython', -- not really required by everyone.
             ],
         },
     ext_modules = [contour],
@@ -56,7 +60,7 @@ setup(
     install_requires = [
         ENABLE_TRAITS,
         ENTHOUGHTBASE,
-        TRAITS,
+        TRAITS_UI,
         ],
     license = 'BSD',
     name = 'Chaco',
