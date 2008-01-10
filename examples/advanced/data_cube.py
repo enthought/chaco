@@ -260,14 +260,14 @@ class PlotFrame(DemoFrame):
     def _add_plot_tools(self, imgplot, token):
         """ Add LineInspectors, ImageIndexTool, and SimpleZoom to the image plots. """
         
+        imgplot.overlays.append(SimpleZoom(component=imgplot, tool_mode="box",
+                                           enable_wheel=False, always_on=False))
         imgplot.overlays.append(LineInspector(imgplot, axis="index_y", color="white",
             inspect_mode="indexed", write_metadata=True, is_listener=True))
         imgplot.overlays.append(LineInspector(imgplot, axis="index_x", color="white",
             inspect_mode="indexed", write_metadata=True, is_listener=True))
         imgplot.tools.append(ImageIndexTool(imgplot, token=token, 
             callback=self._index_callback, wheel_cb=self._wheel_callback))
-        imgplot.tools.append(SimpleZoom(component=imgplot, tool_mode="box", 
-                                        enable_wheel=False, always_on=False))
 
     def _update_model(self, cmap):
         range = DataRange1D(low=amin(self.model.vals), 

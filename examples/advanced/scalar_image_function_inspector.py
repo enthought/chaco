@@ -256,8 +256,8 @@ class PlotUI(HasTraits):
         
         # Create a container and add components
         self.container = HPlotContainer(padding=40, fill_padding=True,
-                                        bgcolor = "white", use_backbuffer=True)
-        inner_cont = VPlotContainer(padding=0, use_backbuffer = True)
+                                        bgcolor = "white", use_backbuffer=False)
+        inner_cont = VPlotContainer(padding=0, use_backbuffer=True)
         inner_cont.add(self.cross_plot)
         inner_cont.add(contour_container)
         self.container.add(self.colorbar)
