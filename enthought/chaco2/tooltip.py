@@ -187,17 +187,20 @@ class ToolTip(AbstractOverlay):
 
     def _font_changed(self):
         self._text_props_valid = False
+        self._layout_needed = True
 
     def _lines_changed(self):
         self._text_props_valid = False
-
+        self._layout_needed = True
+        
     def _lines_items_changed(self):
         self._text_props_valid = False
-
+        self._layout_needed = True
+        
     def foo_anytrait_changed(self, name, old, new):
         layout_traits = ("font", "border_padding", "line_spacing", "lines",
-                            "padding", "left_space", "right_space", "below_space",
-                            "above_space")
+                         "padding", "left_space", "right_space", "below_space",
+                         "above_space")
         #if name in layout_traits:
         if name != "_layout_needed":
             self._layout_needed = True
