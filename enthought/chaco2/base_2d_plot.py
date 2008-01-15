@@ -131,8 +131,11 @@ class Base2DPlot(AbstractPlotRenderer):
         The *index_only* parameter is ignored because the index is 
         intrinsically 2-D.
         """
-        x_pt,y_pt = self.map_data([screen_pt])[0]
-       
+        if self.orientation == 'h':
+            x_pt,y_pt = self.map_data([screen_pt])[0]
+        else:
+            x_pt,y_pt = self.map_data([(screen_pt[1],screen_pt[0])])[0]
+        
         if ((x_pt < self.index_mapper.range.low[0]) or 
             (x_pt > self.index_mapper.range.high[0]) or
             (y_pt < self.index_mapper.range.low[1]) or
@@ -140,7 +143,7 @@ class Base2DPlot(AbstractPlotRenderer):
             return None, None
 
         x_index_data, y_index_data = self.index.get_data()
-
+            
         if x_index_data.get_size() == 0 or y_index_data.get_size() == 0:
             return None, None 
 
@@ -221,10 +224,16 @@ class Base2DPlot(AbstractPlotRenderer):
         return labels
 
     def _get_x_mapper(self):
-        return self.index_mapper._xmapper
+        if self.orientation == 'h':
+            return self.index_mapper._xmapper
+        else:
+            return self.index_mapper._ymapper
 
     def _get_y_mapper(self):
-        return self.index_mapper._ymapper
+        if self.orientation == 'h':
+            return self.index_mapper._ymapper
+        else:
+            return self.index_mapper._xmapper
 
 
     #------------------------------------------------------------------------
@@ -257,7 +266,7 @@ class Base2DPlot(AbstractPlotRenderer):
             y_high = y
 
         if self.index_mapper is not None:
-            if self.orientation == "h":
+            if self.orientation == 'h':
                 self.index_mapper.screen_bounds = (x_low, x_high, y_low, y_high)
             else:
                 self.index_mapper.screen_bounds = (y_low, y_high, x_low, x_high)
