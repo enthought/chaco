@@ -179,10 +179,19 @@ class BarPlot(AbstractPlotRenderer):
         if len(value_data) == 0 or len(index_data) == 0:
             return None
 
-        ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
+        try:
+            ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
+        except IndexError:
+            return None
+
         x = index_data[ndx]
         y = value_data[ndx]
-        sx, sy = self.map_screen([x,y])
+        
+        result = self.map_screen(array([[x,y]]))
+        if result is None:
+            return None
+
+        sx, sy = result[0]
         if index_only and ((screen_pt[0]-sx) < threshold):
             return ndx
         elif ((screen_pt[0]-sx)**2 + (screen_pt[1]-sy)**2 < threshold*threshold):
