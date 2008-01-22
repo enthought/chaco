@@ -515,7 +515,7 @@ class PlotAxis(AbstractOverlay):
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
         if overlay_component is not None:
-            origin = getattr(overlay_component, 'origin', [])
+            origin = getattr(overlay_component, 'origin', 'bottom left')
             if self.orientation in ("top", "bottom"):
                 if "right" in origin: 
                     flip_from_gc = True
@@ -616,7 +616,7 @@ class PlotAxis(AbstractOverlay):
             overlay_component = self
             new_origin = array(self.position)
 
-        origin = getattr(overlay_component, "origin", [])
+        origin = getattr(overlay_component, "origin", 'bottom left')
         if self.orientation in ('top', 'bottom'):
             self._major_axis_size = overlay_component.bounds[0]
             self._minor_axis_size = overlay_component.bounds[1]
@@ -633,7 +633,7 @@ class PlotAxis(AbstractOverlay):
             self._minor_axis_size = overlay_component.bounds[0]
             self._major_axis = array([0., 1.])
             self._title_orientation = array([-1., 0])
-            origin = getattr(overlay_component, "origin", [])
+            origin = getattr(overlay_component, "origin", 'bottom left')
             if "top" in origin: 
                 flip_from_gc = True
             else: 
