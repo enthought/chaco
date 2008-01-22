@@ -105,6 +105,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             new.on_trait_change(self.datasource_change_handler, "color_data")
             self._old_alpha = new.fill_alpha
             self._old_outline_color = new.outline_color
+            self._old_line_width = new.line_width
             self.datasource_change_handler(new, "color_data", None, new.color_data)
         return
     
