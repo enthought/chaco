@@ -6,11 +6,11 @@ import warnings
 
 # Major library imports
 from numpy import any, argsort, array, compress, concatenate, inf, invert, isnan, \
-                  ndarray, take, transpose, zeros
+                  ndarray, roll, take, transpose, zeros
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, ColorTrait, LineStyle
-from enthought.traits.api import Float, List
+from enthought.traits.api import Enum, Float, List
 from enthought.traits.ui.api import Item, View
 
 # Local relative imports
@@ -41,6 +41,17 @@ class LinePlot(BaseXYPlot):
 
     # The line dash style.
     line_style = LineStyle
+
+    # The rendering style of the line plot.
+    #   connectedpoints - "normal" style (default); each point is connected to
+    #       subsequent and prior points by line segments
+    #   hold - each point is represented by a line segment parallel to the
+    #       abscissa (index axis) and spanning the length between the point
+    #       and its subsequent point.
+    #   connectedhold - like "hold" style, but line segments are drawn at
+    #       each point of the plot to connect the hold lines of the prior
+    #       point and the current point.  Also called a "right angle plot".
+    render_style = Enum("connectedpoints", "hold", "connectedhold")
 
     # Traits UI View for customizing the plot.
     traits_view = View(Item("color", style="custom"), "line_width", "line_style",
@@ -268,9 +279,16 @@ class LinePlot(BaseXYPlot):
 
         gc.save_state()
         gc.set_antialias(True)
-
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
+        render_method_dict = {
+                "hold": self._render_hold,
+                "connectedhold": self._render_connected_hold,
+                "connectedpoints": self._render_normal
+                }
+        render = render_method_dict.get(self.render_style, self._render_normal)
+
+        # If we are selected, render once in the highlight style
         if self.index.metadata.get('selections', None) is not None:
             if type(self.index.metadata['selections']) in (ndarray, list) and \
                                 len(self.index.metadata['selections']) > 0:
@@ -279,27 +297,44 @@ class LinePlot(BaseXYPlot):
                 gc.set_stroke_color(self.selected_color_)
                 gc.set_line_width(self.line_width+10.0)
                 gc.set_line_dash(self.selected_line_style_)
+                render(gc, points)
 
-                for ary in points:
-                    if len(ary) > 0:
-                        gc.begin_path()
-                        gc.lines(ary)
-                        gc.stroke_path()
-
+        # Render using the normal style
         gc.set_stroke_color(self.color_)
         gc.set_line_width(self.line_width)
         gc.set_line_dash(self.line_style_)
-
-        for ary in points:
-            if len(ary) > 0:
-                gc.begin_path()
-                gc.lines(ary)
-                gc.stroke_path()
+        render(gc, points)
 
         # Draw the default axes, if necessary
         self._draw_default_axes(gc)
 
         gc.restore_state()
+
+    def _render_normal(self, gc, points):
+        for ary in points:
+            if len(ary) > 0:
+                gc.begin_path()
+                gc.lines(ary)
+                gc.stroke_path()
+        return
+
+    def _render_hold(self, gc, points):
+        for starts in points:
+            x,y = starts.T
+            ends = transpose(array( (x[1:], y[:-1]) ))
+            gc.begin_path()
+            gc.line_set(starts[:-1], ends)
+            gc.stroke_path()
+        return
+
+    def _render_connected_hold(self, gc, points):
+        for starts in points:
+            x,y = starts.T
+            ends = transpose(array( (x[1:], y[:-1]) ))
+            gc.begin_path()
+            gc.line_set(starts[:-1], ends)
+            gc.line_set(ends, starts[1:])
+            gc.stroke_path()
         return
 
     def _render_icon(self, gc, x, y, width, height):
