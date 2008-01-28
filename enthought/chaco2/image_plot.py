@@ -68,6 +68,13 @@ class ImagePlot(Base2DPlot):
         gc.save_state()
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
         gc.set_alpha(self.alpha)
+
+        # Kiva image interpolation note:
+        # Kiva's Agg backend uses the interpolation setting of the *source*
+        # image to determine the type of interpolation to use when drawing the
+        # image.  The mac backend uses the interpolation setting on the
+        # destination GC.
+        old_interp = self._cached_image.get_image_interpolation()
         if hasattr(gc, "set_interpolation_quality"):
             from enthought.kiva.mac.ABCGI import InterpolationQuality
             interp_quality_dict = {"nearest": InterpolationQuality.none,
@@ -75,7 +82,7 @@ class ImagePlot(Base2DPlot):
                     "bicubic": InterpolationQuality.high}
             gc.set_interpolation_quality(interp_quality_dict[self.interpolation])
         elif hasattr(gc, "set_image_interpolation"):
-            gc.set_image_interpolation(self.interpolation)
+            self._cached_image.set_image_interpolation(self.interpolation)
         x, y, w, h = self._cached_dest_rect
         if self.orientation == "h":        # for horizontal orientation:
             gc.translate_ctm(x+w/2, y+h/2)   # translate back normally
@@ -87,6 +94,7 @@ class ImagePlot(Base2DPlot):
             gc.rotate_ctm(pi/2)              # rotate 1/4 turn clockwise
         gc.translate_ctm(-x-w/2, -y-h/2)   # translate image center to origin
         gc.draw_image(self._cached_image, self._cached_dest_rect)
+        self._cached_image.set_image_interpolation(old_interp)
         gc.restore_state()
 
     def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
