@@ -8,6 +8,7 @@ plot container.
 #  (c) Copyright 2007 by Enthought, Inc.
 #----------------------------------------------------------------------------
 
+from enthought.enable2.api import ColorTrait
 
 from enthought.etsconfig.api import ETSConfig
 
@@ -40,8 +41,9 @@ class _PlotContainerEditor( Editor ):
         """ Finishes initializing the editor by creating the underlying toolkit
         widget.
         """
-        self._window       = Window( parent, component=self.value )
-        self.control       = self._window.control
+        self._window          = Window( parent, component=self.value )
+        self.control          = self._window.control
+        self._window.bg_color = self.factory.bgcolor
 
     #---------------------------------------------------------------------------
     #  Updates the editor when the object trait changes externally to the editor:
@@ -62,4 +64,7 @@ class PlotContainerEditor( BasicEditorFactory ):
 
     # The class used to create all editor styles (overrides BasicEditorFactory).
     klass = _PlotContainerEditor
+
+    # The background color for the window
+    bgcolor = ColorTrait('lightgray')
 
