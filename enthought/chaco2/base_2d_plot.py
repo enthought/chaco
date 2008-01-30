@@ -294,10 +294,12 @@ class Base2DPlot(AbstractPlotRenderer):
     # Event handlers
     #------------------------------------------------------------------------
 
-    def _bounds_changed(self):
+    def _bounds_changed(self, old, new):
+        super(Base2DPlot, self)._bounds_changed(old, new)
         self._update_index_mapper()
 
-    def _bounds_items_changed(self):
+    def _bounds_items_changed(self, event):
+        super(Base2DPlot, self)._bounds_items_changed(event)
         self._update_index_mapper()
 
     def _orientation_changed(self):

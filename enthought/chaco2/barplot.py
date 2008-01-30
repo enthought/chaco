@@ -393,19 +393,17 @@ class BarPlot(AbstractPlotRenderer):
 
         self.invalidate_draw()
         self._cache_valid = False
-        return
 
-    def _bounds_changed(self):
+    def _bounds_changed(self, old, new):
+        super(BarPlot, self)._bounds_changed(old, new)
         self._update_mappers()
-        return
 
-    def _bounds_items_changed(self):
+    def _bounds_items_changed(self, event):
+        super(BarPlot, self)._bounds_items_changed(event)
         self._update_mappers()
-        return
 
     def _orientation_changed(self):
         self._update_mappers()
-        return
 
     def _index_changed(self, old, new):
         if old is not None:
@@ -413,25 +411,21 @@ class BarPlot(AbstractPlotRenderer):
         if new is not None:
             new.on_trait_change(self._either_data_changed, "data_changed")
         self._either_data_changed()
-        return
 
     def _index_direction_changed(self):
         m = self.index_mapper
         m.low_pos, m.high_pos = m.high_pos, m.low_pos
         self.invalidate_draw()
-        return
 
     def _value_direction_changed(self):
         m = self.value_mapper
         m.low_pos, m.high_pos = m.high_pos, m.low_pos
         self.invalidate_draw()
-        return
 
     def _either_data_changed(self):
         self.invalidate_draw()
         self._cache_valid = False
         self.request_redraw()
-        return
 
     def _value_changed(self, old, new):
         if old is not None:
@@ -439,7 +433,6 @@ class BarPlot(AbstractPlotRenderer):
         if new is not None:
             new.on_trait_change(self._either_data_changed, "data_changed")
         self._either_data_changed()
-        return
 
     def _index_mapper_changed(self, old, new):
         return self._either_mapper_changed(old, new)
@@ -453,13 +446,11 @@ class BarPlot(AbstractPlotRenderer):
         if new is not None:
             new.on_trait_change(self._mapper_updated_handler, "updated")
         self.invalidate_draw()
-        return
 
     def _mapper_updated_handler(self):
         self._cache_valid = False
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _bar_width_changed(self):
         self._cache_valid = False

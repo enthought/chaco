@@ -698,13 +698,14 @@ class PlotAxis(AbstractOverlay):
     # Event handlers
     #------------------------------------------------------------------------
 
-    def _bounds_changed(self):
+    def _bounds_changed(self, old, new):
+        super(PlotAxis, self)._bounds_changed(old, new)
         self._invalidate()
 #        self._request_redraw()
-        return
 
-    def _bounds_items_changed(self):
-        return self._bounds_changed()
+    def _bounds_items_changed(self, event):
+        super(PlotAxis, self)._bounds_items_changed(event)
+        self._invalidate()
 
     def _mapper_changed(self, old, new):
         if old is not None:
@@ -713,22 +714,21 @@ class PlotAxis(AbstractOverlay):
             new.on_trait_change(self.mapper_updated, "updated")
         self._invalidate()
 #        self.request_redraw()
-        return
 
     def mapper_updated(self):
         """
         Event handler that gets bound to our mapper's .updated event
         """
         self._invalidate()
-        return
 
-    def _position_changed(self):
+    def _position_changed(self, old, new):
+        super(PlotAxis, self)._position_changed(old, new)
         self._cache_valid = False
 #        self.request_redraw()
-        return
 
-    def _position_items_changed(self):
-        return self._position_changed()
+    def _position_items_changed(self, event):
+        super(PlotAxis, self)._position_items_changed(event)
+        self._cache_valid = False
 
     def _updated_fired(self):
         """If our bounds changed, redraw."""

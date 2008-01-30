@@ -257,22 +257,20 @@ class DataView(OverlayPlotContainer):
         return
 
     def _bounds_changed(self, old, new):
-        self._update_mappers()
         super(DataView, self)._bounds_changed(old, new)
-        return
+        self._update_mappers()
 
     def _bounds_items_changed(self, event):
-        self._update_mappers()
         super(DataView, self)._bounds_items_changed(event)
-        return
-
-    def _position_changed(self):
         self._update_mappers()
-        return
 
-    def _position_items_changed(self):
+    def _position_changed(self, old, new):
+        super(DataView, self)._position_changed(old, new)
         self._update_mappers()
-        return
+
+    def _position_items_changed(self, event):
+        super(DataView, self)._position_items_changed(event)
+        self._update_mappers()
 
     def _origin_changed(self):
         self._update_mappers()

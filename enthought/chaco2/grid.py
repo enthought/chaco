@@ -280,18 +280,20 @@ class PlotGrid(AbstractOverlay):
         self.invalidate()
         return
     
-    def _bounds_changed(self):
+    def _bounds_changed(self, old, new):
+        super(PlotGrid, self)._bounds_changed(old, new)
         self.invalidate()
-        return
     
-    def _bounds_items_changed(self):
-        self.invalidate()
-        return
-
-    def _position_changed(self):
+    def _bounds_items_changed(self, event):
+        super(PlotGrid, self)._bounds_items_changed(event)
         self.invalidate()
 
-    def _position_items_changed(self):
+    def _position_changed(self, old, new):
+        super(PlotGrid, self)._position_changed(old, new)
+        self.invalidate()
+
+    def _position_items_changed(self, event):
+        super(PlotGrid, self)._position_items_changed(event)
         self.invalidate()
 
     def _position_changed_for_component(self):

@@ -175,11 +175,20 @@ class ColorBar(AbstractPlotRenderer):
             self.index_mapper.high_pos = self.y
         self.index_mapper.range = self.color_mapper.range
 
-
-    def _bounds_items_changed(self):
+    def _bounds_changed(self, old, new):
+        super(ColorBar, self)._bounds_changed(old, new)
         self._update_mappers()
 
-    def _position_items_changed(self):
+    def _bounds_items_changed(self, event):
+        super(ColorBar, self)._bounds_items_changed(event)
+        self._update_mappers()
+
+    def _position_changed(self, old, new):
+        super(ColorBar, self)._position_changed(old, new)
+        self._update_mappers()
+
+    def _position_items_changed(self, event):
+        super(ColorBar, self)._position_items_changed(event)
         self._update_mappers()
         
     def _updated_changed_for_index_mapper(self):

@@ -559,15 +559,14 @@ class BaseXYPlot(AbstractPlotRenderer):
         self.invalidate_draw()
         self._cache_valid = False
         self._screen_cache_valid = False
-        return
 
-    def _bounds_changed(self):
+    def _bounds_changed(self, old, new):
+        super(BaseXYPlot, self)._bounds_changed(old, new)
         self._update_mappers()
-        return
 
-    def _bounds_items_changed(self,event):
+    def _bounds_items_changed(self, event):
+        super(BaseXYPlot, self)._bounds_items_changed(event)
         self._update_mappers()
-        return
 
 ##     def _position_changed(self):
 ##         self._update_mappers()
@@ -577,7 +576,6 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def _orientation_changed(self):
         self._update_mappers()
-        return
 
     def _index_changed(self, old, new):
         if old is not None:

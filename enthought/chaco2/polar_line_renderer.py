@@ -144,13 +144,13 @@ class PolarLineRenderer(AbstractPlotRenderer):
         self._gather_points()
         self._render(gc, self._cached_data_pts)
 
-    def _bounds_changed(self):
+    def _bounds_changed(self, old, new):
+        super(PolarLineRenderer, self)._bounds_changed(old, new)
         self._update_mappers()
-        return
 
-    def _bounds_items_changed(self):
+    def _bounds_items_changed(self, event):
+        super(PolarLineRenderer, self)._bounds_items_changed(event)
         self._update_mappers()
-        return
 
     def _draw_default_axes(self, gc):
         if not self.origin_axis_visible:

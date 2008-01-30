@@ -347,15 +347,19 @@ class DataLabel(ToolTip):
     def _label_position_changed(self):
         self._layout_needed = True
 
-    def _position_changed(self):
+    def _position_changed(self, old, new):
+        super(DataLabel, self)._position_changed(old, new)
         self._layout_needed = True
 
-    def _position_items_changed(self):
+    def _position_items_changed(self, event):
+        super(DataLabel, self)._position_items_changed(event)
         self._layout_needed = True
 
-    def _bounds_changed(self):
+    def _bounds_changed(self, old, new):
+        super(DataLabel, self)._bounds_changed(old, new)
         self._layout_needed = True
 
-    def _bounds_items_changed(self):
+    def _bounds_items_changed(self, event):
+        super(DataLabel, self)._bounds_items_changed(event)
         self._layout_needed = True
 
