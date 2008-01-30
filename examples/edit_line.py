@@ -72,7 +72,6 @@ class PointDraggingTool(DragTool):
         plot = self.component
         ndx = plot.map_index((event.x, event.y), self.threshold)
         if ndx is None:
-            self.drag_cancel(event)
             return
         self._drag_index = ndx
         self._orig_value = (plot.index.get_data()[ndx], plot.value.get_data()[ndx])
@@ -86,6 +85,7 @@ class PointDraggingTool(DragTool):
         plot.value._data[self._drag_index] = data_y
         plot.index.data_changed = True
         plot.value.data_changed = True
+        plot.request_redraw()
 
     def drag_cancel(self, event):
         plot = self.component
@@ -93,9 +93,14 @@ class PointDraggingTool(DragTool):
         plot.value._data[self._drag_index] = self._orig_value[1]
         plot.index.data_changed = True
         plot.value.data_changed = True
+        plot.request_redraw()
 
     def drag_end(self, event):
-        pass
+        plot = self.component
+        if plot.index.metadata.has_key('selections'):
+            del plot.index.metadata['selections']
+        plot.invalidate_draw()
+        plot.request_redraw()
 
     def _lookup_point(self, x, y):
         """ Finds the point closest to a screen point if it is within self.threshold
@@ -116,9 +121,6 @@ class PointDraggingTool(DragTool):
         if hasattr(self.component, 'get_closest_point'):
             # This is on BaseXYPlots
             return self.component.get_closest_point((x,y), threshold=self.threshold)
-
-        elif 0:
-            pass
 
         return None
 
