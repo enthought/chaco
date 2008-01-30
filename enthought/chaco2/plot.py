@@ -284,10 +284,17 @@ class Plot(DataView):
                 color = self._get_or_create_datasource(data[2])
                 if not styles.has_key("color_mapper"):
                     raise ValueError("Scalar 2D data requires a color_mapper.")
-                elif isinstance(styles["color_mapper"], AbstractColormap):
-                    self.color_mapper = styles["color_mapper"]
+
+                colormap = styles.pop("color_mapper", None)
+                if isinstance(colormap, AbstractColormap):
+                    self.color_mapper = colormap
+                    if colormap.range is None:
+                        colormap.range = DataRange1D(value)
+                elif callable(colormap):
+                    self.color_mapper = colormap(DataRange1D(color))
                 else:
-                    self.color_mapper = styles["color_mapper"](DataRange1D(color))
+                    raise ValueError("Unexpected colormap %r in plot()." % colormap)
+                
                 if self.index_scale == "linear":
                     imap = LinearMapper(range=self.index_range)
                 else:
@@ -297,9 +304,7 @@ class Plot(DataView):
                 else:
                     vmap = LogMapper(range=self.value_range)
 
-                styles.pop("color_mapper")
-                cls = ColormappedScatterPlot
-                plot = cls(index=index,
+                plot = ColormappedScatterPlot(index=index,
                            index_mapper=imap,
                            value=value,
                            value_mapper=vmap,
