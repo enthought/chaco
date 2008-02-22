@@ -13,7 +13,7 @@ compute indices in realtime.
 from numpy import arange, sort, compress, arange
 from numpy.random import random
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

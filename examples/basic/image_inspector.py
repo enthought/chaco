@@ -15,7 +15,7 @@ plot.  The underlying plot is similar to the one in cmap_image_plot.py.
 # Major library imports
 from numpy import linspace, meshgrid, pi, sin
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

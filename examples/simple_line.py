@@ -21,7 +21,8 @@ Double-clicking on line or scatter plots brings up a traits editor for the plot.
 from numpy import arange, fabs, pi, sin
 from scipy.special import jn
 
-from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
+from enthought.chaco2.example_support import COLOR_PALETTE
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

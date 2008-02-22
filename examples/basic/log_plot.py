@@ -7,7 +7,7 @@ Draws some x-y log plots. (No Tools)
 from numpy import exp, linspace, sqrt
 from scipy.special import gamma
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

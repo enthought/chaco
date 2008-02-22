@@ -2,7 +2,8 @@
 # Major library imports
 from numpy import arange, cos, linspace, pi, sin
 
-from enthought.chaco2.example_support import DemoFrame, demo_main, COLOR_PALETTE
+from enthought.chaco2.example_support import COLOR_PALETTE
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

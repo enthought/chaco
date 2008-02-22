@@ -13,7 +13,7 @@ Draws an colormapped image plot
 from numpy import linspace, meshgrid, pi
 from scipy.special import jn
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

@@ -15,10 +15,10 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.api import Window
+from enthought.enable2.example_support import DemoFrame, demo_main
 from enthought.traits.api import false, HasTraits
 
 # Chaco imports
-from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import *
 from enthought.chaco2.tools.api import MoveTool, PanTool, SimpleZoom
 

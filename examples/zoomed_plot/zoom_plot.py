@@ -9,7 +9,7 @@ or resized by clicking on one of its edges and dragging.
 # Major library imports
 from numpy import amin, amax, arange, searchsorted, sin, pi, linspace
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought imports
 from enthought.enable2.api import Window

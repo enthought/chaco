@@ -15,9 +15,9 @@ from scipy import fft
 
 # Enthought library imports
 from enthought.enable2.api import Window
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Chaco imports
-from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import Plot, ArrayPlotData, HPlotContainer
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 

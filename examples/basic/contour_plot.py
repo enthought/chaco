@@ -12,7 +12,7 @@ Draws an contour polygon plot with a contour line plot on top
 # Major library imports
 from numpy import cosh, exp, linspace, meshgrid, pi, tanh
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

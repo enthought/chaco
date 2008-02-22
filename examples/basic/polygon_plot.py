@@ -13,7 +13,7 @@ Draws some different polygons
 import math
 from numpy import array, transpose
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

@@ -11,7 +11,7 @@ from enthought.enable2.wx_backend.api import Window
 from enthought.traits.api import false
 
 # Chaco imports
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 from enthought.chaco2.api import CrossPlotFrame, PlotComponent, OverlayPlotContainer, \
                                  HPlotContainer, create_line_plot, add_default_axes, \
                                  add_default_grids

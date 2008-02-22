@@ -14,13 +14,13 @@ from numpy import linspace
 from scipy.special import jn
 
 from enthought.chaco2.example_support import COLOR_PALETTE
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window
 
 # Chaco imports
 from enthought.chaco2.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco2.example_support import DemoFrame, demo_main
 from enthought.chaco2.tools.api import BroadcasterTool, PanTool, SimpleZoom 
 from enthought.chaco2.api import create_line_plot, add_default_axes, add_default_grids
 

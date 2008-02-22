@@ -13,7 +13,7 @@ This plot displays chaco's ability to handle data interlaced with NaNs.
 from numpy import linspace, nan
 from scipy.special import jn
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window

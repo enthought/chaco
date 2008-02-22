@@ -19,7 +19,7 @@ import wx
 from numpy import arange, fabs, pi, sin
 from scipy.special import jn
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window
