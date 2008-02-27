@@ -1,12 +1,12 @@
 """ Defines the ContourLinePlot class.
 """
 # Major library imports
-from numpy import array, linspace, meshgrid, transpose
+from numpy import array, isscalar, issubsctype, linspace, meshgrid, number, transpose
 
 # Enthought library imports
 from enthought.enable2.api import ColorTrait, LineStyle
 from enthought.traits.api import Dict, false, Float, Instance, \
-        Int, List, Property, Range, Str, Trait
+        Int, List, Property, Range, Str, Trait, Tuple
 
 # Local relative imports
 from base_2d_plot import Base2DPlot
@@ -40,7 +40,7 @@ class ContourLinePlot(Base2DPlot):
     negative_style = LineStyle("dash")
 
     # The color(s) of the lines.
-    colors = Trait(None, Str, Instance("ColorMapper"), List)
+    colors = Trait(None, Str, Instance("ColorMapper"), List, Tuple)
 
     # Overall alpha value of the plot. Ranges from 0.0 for transparent to 1.0
     # for full intensity.
@@ -207,32 +207,42 @@ class ContourLinePlot(Base2DPlot):
     def _update_colors(self):
         """ Updates the colors cache.
         """
+        colors = self.colors
         # If we are given no colors, set a default for all levels
-        if self.colors is None: 
+        if colors is None: 
             self._color_map_trait = "black"
             self._colors = [self._color_map_trait_] * len(self._levels)
 
         # If we are given a single color, apply it to all levels 
-        elif isinstance(self.colors, basestring):
-            self._color_map_trait = self.colors
+        elif isinstance(colors, basestring):
+            self._color_map_trait = colors
             self._colors = [self._color_map_trait_] * len(self._levels)
 
         # If we are given a colormap, use it to map all the levels to colors 
-        elif not isinstance(self.colors, list):
-            cmap = self.colors
+        elif isinstance(colors, ColorMapper):
+            cmap = colors
             self._colors =  []
             mapped_colors = cmap.map_screen(array(self._levels))
             for i in range(len(self._levels)):
                 self._color_map_trait = tuple(mapped_colors[i])
                 self._colors.append(self._color_map_trait_)
 
-        # if the list of colors is shorter than the list of levels, 
-        # simply repeat colors from the beginning of the list as needed
+        # A list or tuple
+        # This could be a length 3 or 4 sequence of scalars, which indicates
+        # a color; otherwise, this is interpreted as a list of items to
+        # be converted via self._color_map_trait.
         else:
-            self._colors = []
-            for i in range(len(self._levels)):
-                self._color_map_trait = self.colors[i%len(self.colors)]    
-                self._colors.append(self._color_map_trait_)
+            if len(colors) in (3,4) and \
+                    (isscalar(colors[0]) and issubsctype(type(colors[0]), number)):
+                self._color_map_trait = colors
+                self._colors = [self._color_map_trait_] * len(self._levels)
+            else:
+                # if the list of colors is shorter than the list of levels, simply
+                # repeat colors from the beginning of the list as needed
+                self._colors = []
+                for i in range(len(self._levels)):
+                    self._color_map_trait = colors[i%len(colors)]    
+                    self._colors.append(self._color_map_trait_)
 
         self._colors_cache_valid = True
 
