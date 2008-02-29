@@ -10,7 +10,7 @@ from numpy import any, argsort, array, compress, concatenate, inf, invert, isnan
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, ColorTrait, LineStyle
-from enthought.traits.api import Enum, Float, List
+from enthought.traits.api import Enum, Float, List, Str
 from enthought.traits.ui.api import Item, View
 
 # Local relative imports
@@ -35,6 +35,9 @@ class LinePlot(BaseXYPlot):
 
     # The style of the selected line.
     selected_line_style = LineStyle("solid")
+
+    # The name of the key in self.metadata that holds the selection mask
+    metadata_name = Str("selections")
 
     # The thickness of the line.
     line_width = Float(1.0)
@@ -182,6 +185,11 @@ class LinePlot(BaseXYPlot):
                 index_max = len(value)
                 index = index[:index_max]
 
+            # Check for selections
+            #selection = self.index.metadata.get(self.metadata_name, None) 
+            #if selection is not None and type(selection) in (ndarray, list) and \
+            #        len(selection) > 0:
+
             # Split the index and value raw data into non-NaN chunks
             nan_mask = invert(isnan(value)) & invert(isnan(index))
             blocks = [b for b in arg_find_runs(nan_mask, "flat") if nan_mask[b[0]] != 0]
@@ -273,7 +281,7 @@ class LinePlot(BaseXYPlot):
                 new_arrays.append(new_pts[:numpoints])
         return self._cached_screen_pts
 
-    def _render(self, gc, points):
+    def _render(self, gc, points, selected_points=None):
         if len(points) == 0:
             return
 
@@ -288,16 +296,11 @@ class LinePlot(BaseXYPlot):
                 }
         render = render_method_dict.get(self.render_style, self._render_normal)
 
-        # If we are selected, render once in the highlight style
-        if self.index.metadata.get('selections', None) is not None:
-            if type(self.index.metadata['selections']) in (ndarray, list) and \
-                                len(self.index.metadata['selections']) > 0:
-                # TODO: use mask in metadata to select certain regions
-                # for now, assume whole line is selected
-                gc.set_stroke_color(self.selected_color_)
-                gc.set_line_width(self.line_width+10.0)
-                gc.set_line_dash(self.selected_line_style_)
-                render(gc, points)
+        if selected_points:
+            gc.set_stroke_color(self.selected_color_)
+            gc.set_line_width(self.line_width+10.0)
+            gc.set_line_dash(self.selected_line_style_)
+            render(gc, selected_points)
 
         # Render using the normal style
         gc.set_stroke_color(self.color_)

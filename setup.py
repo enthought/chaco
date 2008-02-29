@@ -9,6 +9,13 @@ contour = Extension(
     define_macros=[('NUMPY', None)]
 )
 
+speedups = Extension(
+    'enthought.chaco2._speedups',
+    sources = ['enthought/chaco2/_speedups.cpp'],
+    include_dirs = [get_include()],
+    define_macros=[('NUMPY', None)]
+    )
+
 
 # Function to convert simple ETS project names and versions to a requirements
 # spec that works for both development builds and stable builds.  Allows
@@ -55,7 +62,7 @@ setup(
             #'wxPython', -- not really required by everyone.
             ],
         },
-    ext_modules = [contour],
+    ext_modules = [contour, speedups],
     include_package_data = True,
     install_requires = [
         ENABLE_TRAITS,
