@@ -24,7 +24,6 @@ from scipy.special import jn
 from enthought.chaco2.example_support import COLOR_PALETTE
 from enthought.enable2.example_support import DemoFrame, demo_main
 
-
 # Enthought library imports
 from enthought.enable2.api import Window
 from enthought.traits.api import false
@@ -38,17 +37,15 @@ from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
                                        LegendTool, TraitsTool, DragZoom
 
 
-from enthought.kiva import Font
-
 
 class PlotFrame(DemoFrame):
     def _create_window(self):
         container = OverlayPlotContainer(padding = 50, fill_padding = True,
-                                         bgcolor = "lightgray", use_backbuffer=False)
+                                         bgcolor = "lightgray", use_backbuffer=True)
         self.container = container
 
         # Create the initial X-series of data
-        numpoints = 1000
+        numpoints = 100
         low = -5
         high = 15.0
         x = arange(low, high+0.001, (high-low)/numpoints)
@@ -59,13 +56,11 @@ class PlotFrame(DemoFrame):
         plots = {}
         for i in range(10):
             y = jn(i, x)
-            if i%2 == 0:
+            if i%2 == 1:
                 plot = create_line_plot((x,y), color=tuple(COLOR_PALETTE[i]), width=2.0)
                 plot.index.sort_order = "ascending"
             else:
-                plot = create_scatter_plot((x,y), color=tuple(COLOR_PALETTE[i]),
-                                           outline_color=tuple(COLOR_PALETTE[i]),
-                                           marker = "diamond", marker_size=8)
+                plot = create_scatter_plot((x,y), color=tuple(COLOR_PALETTE[i]))
             plot.bgcolor = "white"
             plot.border_visible = True
             if i == 0:
@@ -94,7 +89,6 @@ class PlotFrame(DemoFrame):
 
                 # Add a legend in the upper right corner, and make it relocatable
                 legend = Legend(component=plot, padding=10, align="ur")
-                legend.font = Font("Times New Roman", 14)
                 legend.tools.append(LegendTool(legend, drag_button="right"))
                 plot.overlays.append(legend)
 
