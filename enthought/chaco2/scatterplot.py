@@ -5,8 +5,9 @@ function.
 import logging
 
 # Major library imports
-from numpy import argmin, around, array, compress, invert, isnan, \
+from numpy import argmin, around, array, compress, empty, invert, isnan, \
                 sqrt, sum, transpose
+import numpy as np
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, ColorTrait
@@ -19,7 +20,7 @@ from base_xy_plot import BaseXYPlot
 from scatter_markers import AbstractMarker, CircleMarker, CustomMarker, \
                             DiamondMarker, MarkerNameDict, marker_trait, \
                             PixelMarker
-
+from speedups import scatterplot_gather_points
 
 # Set up a logger for this module.
 logger = logging.getLogger(__name__)
@@ -106,7 +107,17 @@ class ScatterPlot(BaseXYPlot):
         # data_array is Nx2 array
         if len(data_array) == 0:
             return []
-        x_ary, y_ary = transpose(data_array)
+        
+        # XXX: For some reason, doing the tuple unpacking doesn't work:
+        #        x_ary, y_ary = transpose(data_array)
+        # There is a mysterious error "object of too small depth for 
+        # desired array".  However, if you catch this exception and
+        # try to execute the very same line of code again, it works
+        # without any complaints.
+        #
+        # For now, we just use slicing to assign the X and Y arrays.
+        x_ary = data_array[:, 0]
+        y_ary = data_array[:, 1]
 
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
@@ -149,7 +160,7 @@ class ScatterPlot(BaseXYPlot):
     # Private methods; implements the BaseXYPlot stub methods
     #------------------------------------------------------------------------
 
-    def _gather_points(self):
+    def _gather_points_old(self):
         """
         Collects the data points that are within the bounds of the plot and 
         caches them
@@ -157,11 +168,11 @@ class ScatterPlot(BaseXYPlot):
         if self._cache_valid and self._selection_cache_valid:
             return
 
-        index, index_mask = self.index.get_data_mask()
-        value, value_mask = self.value.get_data_mask()
-
         if not self.index or not self.value:
             return
+
+        index, index_mask = self.index.get_data_mask()
+        value, value_mask = self.value.get_data_mask()
 
         if len(index) == 0 or len(value) == 0 or len(index) != len(value):
             logger.warn("Chaco2: using empty dataset; index_len=%d, value_len=%d." \
@@ -172,8 +183,9 @@ class ScatterPlot(BaseXYPlot):
 
         index_range_mask = self.index_mapper.range.mask_data(index)
         value_range_mask = self.value_mapper.range.mask_data(value)
-        nan_mask = invert(isnan(index_mask)) & index_mask & \
-                   invert(isnan(value_mask)) & value_mask
+
+        nan_mask = invert(isnan(index)) & index_mask & \
+                   invert(isnan(value)) & value_mask
         point_mask = nan_mask & index_range_mask & value_range_mask
 
         if not self._cache_valid:
@@ -184,6 +196,11 @@ class ScatterPlot(BaseXYPlot):
         if not self._selection_cache_valid:
             indices = None
             # Check both datasources for metadata
+            # XXX: Only one is used, and if both are defined, then self.index
+            # happens to take precendence.  Perhaps this should be more
+            # structured?  Hopefully, when we create the Selection objects,
+            # we'll have to define a small algebra about how they are combined,
+            # and this will fall out...
             for ds in (self.index, self.value):
                 if ds.metadata.get('selections', None) is not None:
                     indices = ds.metadata['selections']
@@ -197,12 +214,55 @@ class ScatterPlot(BaseXYPlot):
                 self._cached_selected_pts = compress(point_mask, points, axis=0)
                 self._selection_cache_valid = True
                 break
-
             else:
                 self._cached_selected_pts = None
                 self._selection_cache_valid = True
 
         return
+
+    def _gather_points_fast(self):
+        if self._cache_valid and self._selection_cache_valid:
+            return
+
+        if not self.index or not self.value:
+            return
+
+        index, index_mask = self.index.get_data_mask()
+        value, value_mask = self.value.get_data_mask()
+
+        index_range = self.index_mapper.range
+        value_range = self.value_mapper.range
+
+        kw = {}
+        for axis in ("index", "value"):
+            ds = getattr(self, axis)
+            if ds.metadata.get('selections', None) is not None:
+                kw[axis + "_sel"] = ds.metadata['selections']
+            if ds.metadata.get('selection_mask', None) is not None:
+                kw[axis + "_sel_mask"] = ds.metadata['selection_mask']
+
+        points, selections = scatterplot_gather_points(index, index_range.low, index_range.high,
+                                    value, value_range.low, value_range.high,
+                                    index_mask = index_mask, 
+                                    value_mask = value_mask,
+                                    **kw)
+
+        if not self._cache_valid:
+            self._cached_data_pts = points
+            self._cache_valid = True
+
+        if not self._selection_cache_valid:
+            if selections is not None and len(selections) > 0:
+                self._cached_selected_pts = points[selections]
+                self._selection_cache_valid = True
+            else:
+                self._cached_selected_pts = None
+                self._selection_cache_valid = True
+
+        
+    def _gather_points(self):
+        #self._gather_points_fast()
+        self._gather_points_old()
 
     def _render(self, gc, points, icon_mode=False):
         """
@@ -217,7 +277,7 @@ class ScatterPlot(BaseXYPlot):
                        self.color_, self.line_width, self.outline_color_,
                        self.custom_symbol)
 
-        if self._cached_selected_pts is not None:
+        if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
             sel_pts = self.map_screen(self._cached_selected_pts)
             render_markers(gc, sel_pts, self.selection_marker,
                     self.selection_marker_size, self.selection_color_,
@@ -319,8 +379,7 @@ def render_markers(gc, points, marker, marker_size,
 
     # This is the fastest method - use one of the kiva built-in markers
     if hasattr(gc, "draw_marker_at_points") \
-        and (marker.__class__ not in (CustomMarker, CircleMarker,
-                                      DiamondMarker, PixelMarker)) \
+        and (marker.__class__ != CustomMarker) \
         and (gc.draw_marker_at_points(points,
                                       marker_size,
                                       marker.kiva_marker) != 0):
