@@ -21,8 +21,9 @@ extern "C" {
 // If selections is NULL or arrayLen is 0, then a null pointer is returned.
 char *create_mirror_mask_array(PyObject *selections, int arrayLen)
 {
-    if ((selections != NULL) && (arrayLen > 0))
+    if ((selections != NULL) && (arrayLen > 0) && (PySequence_Length(selections) > 0))
     {
+
         char *mirror = new char[arrayLen];
         memset(mirror, 0, arrayLen);
         int numIndices = PySequence_Length(selections);
@@ -85,6 +86,8 @@ static char scatterplot_gather_points_doc[] = \
     "sel_mask : bool array (1D) \n " \
     "   Mask indicating which indices in **points** are selected \n" \
     "";
+
+#define DEBUG_SPEEDUP 0
 
 static PyObject *scatterplot_gather_points(PyObject *self, PyObject* args, PyObject* kwargs)
 {
@@ -151,7 +154,10 @@ static PyObject *scatterplot_gather_points(PyObject *self, PyObject* args, PyObj
     value_sel_mirror = create_mirror_mask_array(value_sel, numValue);
 
 #if DEBUG_SPEEDUP
-    printf("Created mirrors\n");
+    if ((index_sel_mirror != NULL) || (value_sel_mirror != NULL))
+        printf("Created mirrors\n");
+    else
+        printf("Created empty mirrors\n");
 #endif
 
     // Determine the total number of points to iterate over in the input arrays
@@ -198,10 +204,8 @@ static PyObject *scatterplot_gather_points(PyObject *self, PyObject* args, PyObj
         points[numValidPts * 2] = x;
         points[numValidPts * 2 + 1] = y;
 
-        if (((index_sel_mirror != NULL) && 
-                    (*(npy_bool*)PyArray_GETPTR1(index_sel_mirror,i) == 1)) ||
-            ((value_sel_mirror != NULL) && 
-                    (*(npy_bool*)PyArray_GETPTR1(value_sel_mirror,i) == 1)) ||
+        if (((index_sel_mirror != NULL) && (index_sel_mirror[i] == 1)) ||
+            ((value_sel_mirror != NULL) && (value_sel_mirror[i] == 1)) ||
             ((index_sel_mask != NULL) && 
                     (*(npy_bool*)PyArray_GETPTR1(index_sel_mask, i) == 1))  ||
             ((value_sel_mask != NULL) && 
@@ -225,11 +229,11 @@ static PyObject *scatterplot_gather_points(PyObject *self, PyObject* args, PyObj
     npy_intp dims[2];
     dims[0] = numValidPts;
     dims[1] = 2;
-    np_points = PyArray_SimpleNew(2, dims, NPY_FLOAT);
+    np_points = PyArray_SimpleNew(2, dims, NPY_DOUBLE);
     for (int i=0; i < numValidPts; i++)
     {
-        *((npy_float*) PyArray_GETPTR2(np_points, i, 0)) = points[i*2];
-        *((npy_float*) PyArray_GETPTR2(np_points, i, 1)) = points[i*2 + 1];
+        *((npy_double*) PyArray_GETPTR2(np_points, i, 0)) = points[i*2];
+        *((npy_double*) PyArray_GETPTR2(np_points, i, 1)) = points[i*2 + 1];
     }
 
     if (points_mask != NULL)
