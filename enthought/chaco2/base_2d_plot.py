@@ -99,6 +99,10 @@ class Base2DPlot(AbstractPlotRenderer):
         if self.value is not None:
             self.value.on_trait_change(self._update_value_data, 
                                        "data_changed")
+        # If we are not resizable, we will not get a bounds update upon layout,
+        # so we have to manually update our mappers
+        if self.resizable == "":
+            self._update_mappers()
         return
 
     #------------------------------------------------------------------------

@@ -183,6 +183,12 @@ class DataView(OverlayPlotContainer):
         super(DataView, self).__init__(**kwtraits)
         self._init_components()
 
+        # If we are not resizable, we will not get a bounds update upon layout,
+        # so we have to manually update our mappers
+        if self.resizable == "":
+            self._update_mappers()
+        return
+
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
@@ -355,7 +361,7 @@ class DataView(OverlayPlotContainer):
                     setattr(renderer, 'index_range', self.index_range)
                 if hasattr(renderer, 'value_range'):
                     setattr(renderer, 'value_range', self.value_range)
-
+        return
 
 
     #------------------------------------------------------------------------

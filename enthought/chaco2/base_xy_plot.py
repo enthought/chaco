@@ -189,6 +189,11 @@ class BaseXYPlot(AbstractPlotRenderer):
             self.value.on_trait_change(self._either_metadata_changed, "metadata_changed")
         if self.value_mapper:
             self.value_mapper.on_trait_change(self._mapper_updated_handler, "updated")
+
+        # If we are not resizable, we will not get a bounds update upon layout,
+        # so we have to manually update our mappers
+        if self.resizable == "":
+            self._update_mappers()
         return
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
