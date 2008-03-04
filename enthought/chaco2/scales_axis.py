@@ -497,6 +497,8 @@ class PlotAxis(AbstractOverlay):
         if not self.tick_generator:
             return
 
+        self.tick_generator.font = self.tick_label_font
+
         if hasattr(self.tick_generator, "get_ticks_and_labels"):
             ticks, labels = self.tick_generator.get_ticks_and_labels(datalow, datahigh,
                                    screenlow, screenhigh)
