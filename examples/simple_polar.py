@@ -5,7 +5,7 @@ Draws a static polar plot.
 # Major library imports
 from numpy import arange, pi, sin, cos
 
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window
