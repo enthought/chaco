@@ -22,7 +22,7 @@ from enthought.chaco2.api import ArrayPlotData, Plot, GridPlotContainer, \
                                  BaseTool, DataRange1D
 from enthought.chaco2.default_colormaps import *
 from enthought.chaco2.tools.api import LineInspector, SimpleZoom
-from enthought.chaco2.example_support import DemoFrame, demo_main
+from enthought.enable2.example_support import DemoFrame, demo_main
 from enthought.enable2.api import Window
 from enthought.traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
         Event, Float, HasTraits, Int, Trait, on_trait_change
