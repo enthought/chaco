@@ -5,7 +5,7 @@ function.
 import logging
 
 # Major library imports
-from numpy import argmin, around, array, compress, empty, invert, isnan, \
+from numpy import argmin, around, array, asarray, compress, empty, invert, isnan, \
                 sqrt, sum, transpose
 import numpy as np
 
@@ -116,6 +116,7 @@ class ScatterPlot(BaseXYPlot):
         # without any complaints.
         #
         # For now, we just use slicing to assign the X and Y arrays.
+        data_array = asarray(data_array)
         x_ary = data_array[:, 0]
         y_ary = data_array[:, 1]
 
@@ -171,6 +172,7 @@ class ScatterPlot(BaseXYPlot):
         if not self.index or not self.value:
             return
 
+        print "using gather_points_old"
         index, index_mask = self.index.get_data_mask()
         value, value_mask = self.value.get_data_mask()
 
@@ -191,6 +193,8 @@ class ScatterPlot(BaseXYPlot):
         if not self._cache_valid:
             points = transpose(array((index,value)))
             self._cached_data_pts = compress(point_mask, points, axis=0)
+            #if getattr(self, "_debug", False):
+            #    print "cached data pts:", self._cached_data_pts
             self._cache_valid = True
 
         if not self._selection_cache_valid:
@@ -271,11 +275,18 @@ class ScatterPlot(BaseXYPlot):
         simply requiring that a few steps be skipped.
         """
 
+        if getattr(self, "_debug", False):
+            debug = True
+        else:
+            debug = False
+
         if not icon_mode:
+            if debug:
+                print "clipping to:", self.x, self.y, self.width, self.height
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
         render_markers(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_,
-                       self.custom_symbol)
+                       self.custom_symbol, debug)
 
         if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
             sel_pts = self.map_screen(self._cached_selected_pts)
@@ -329,7 +340,7 @@ class ScatterPlot(BaseXYPlot):
 
 def render_markers(gc, points, marker, marker_size,
                    color, line_width, outline_color,
-                   custom_symbol=None):
+                   custom_symbol=None, debug=False):
     """ Helper function for a PlotComponent instance to render a
     set of (x,y) points onto a graphics context.  Currently, it makes some 
     assumptions about the attributes on the plot object; these may be factored 
@@ -378,7 +389,7 @@ def render_markers(gc, points, marker, marker_size,
     gc.begin_path()
 
     # This is the fastest method - use one of the kiva built-in markers
-    if hasattr(gc, "draw_marker_at_points") \
+    if (not debug) and hasattr(gc, "draw_marker_at_points") \
         and (marker.__class__ != CustomMarker) \
         and (gc.draw_marker_at_points(points,
                                       marker_size,
@@ -388,6 +399,8 @@ def render_markers(gc, points, marker, marker_size,
     # The second fastest method - draw the path into a compiled path, then
     # draw the compiled path at each point
     elif hasattr(gc, 'draw_path_at_points'):
+        #if debug:
+        #    import pdb; pdb.set_trace()
         if marker.__class__ != CustomMarker:
             path = gc.get_empty_path()
             marker.add_to_path(path, marker_size)
