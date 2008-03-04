@@ -172,7 +172,6 @@ class ScatterPlot(BaseXYPlot):
         if not self.index or not self.value:
             return
 
-        print "using gather_points_old"
         index, index_mask = self.index.get_data_mask()
         value, value_mask = self.value.get_data_mask()
 
@@ -193,8 +192,6 @@ class ScatterPlot(BaseXYPlot):
         if not self._cache_valid:
             points = transpose(array((index,value)))
             self._cached_data_pts = compress(point_mask, points, axis=0)
-            #if getattr(self, "_debug", False):
-            #    print "cached data pts:", self._cached_data_pts
             self._cache_valid = True
 
         if not self._selection_cache_valid:
@@ -281,8 +278,6 @@ class ScatterPlot(BaseXYPlot):
             debug = False
 
         if not icon_mode:
-            if debug:
-                print "clipping to:", self.x, self.y, self.width, self.height
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
         render_markers(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_,
