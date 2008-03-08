@@ -47,7 +47,6 @@ class PlotCanvas(Canvas):
         self._draw(gc, view_bounds, mode)
 
     def _dispatch_draw(self, layer, gc, view_bounds, mode):
-        #import pdb; pdb.set_trace()
         Canvas._dispatch_draw(self, layer, gc, view_bounds, mode)
 
     def get_preferred_size(self, components=None):
@@ -61,19 +60,24 @@ class PlotCanvas(Canvas):
         return (x2 - x + 1, y2 - y + 1)
 
     def _do_layout(self):
-        #import pdb; pdb.set_trace()
         for component in self.components:
             if not self._should_layout(component):
                 continue
             bounds = list(component.outer_bounds)
+            pref_size = list(component.get_preferred_size())
             if "h" in component.resizable:
-                bounds[0] = self.default_component_size[0]
-            if "v" in component.resizable:
-                bounds[1] = self.default_component_size[1]
+                if pref_size[0] > 0:
+                    bounds[0] = pref_size[0]
+                else:
+                    bounds[0] = self.default_component_size[0]
+            if "v" in component.resizable and bounds[1] == 0:
+                if pref_size[1] > 0:
+                    bounds[1] = pref_size[1]
+                else:
+                    bounds[1] = self.default_component_size[1]
             component.outer_bounds = bounds
 
         for component in self.components:
-            #import pdb; pdb.set_trace()
             component.do_layout()
         return
 

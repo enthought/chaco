@@ -580,6 +580,20 @@ class Plot(DataView):
 
         return
 
+    def hideplot(self, *names):
+        """ Convenience function to sets the named plots to be invisible.  Their
+        renderers are not removed, and they are still in the list of plots.
+        """
+        for renderer in itertools.chain(*[self.plots[name] for name in names]):
+            renderer.visible = False
+        return
+
+    def showplot(self, *names):
+        """ Convenience function to sets the named plots to be visible.
+        """
+        for renderer in itertools.chain(*[self.plots[name] for name in names]):
+            renderer.visible = True
+        return
 
     def map_screen(self, data_array):
         """ Maps an array of data points to screen space and returns an array
