@@ -133,6 +133,39 @@ elif ETSConfig.toolkit == 'qt4':
         frame = demo_class(None, size=size, title=title)
         _app.exec_()
 
+elif ETSConfig.toolkit == 'pyglet':
+    from enthought.enable2.pyglet_backend.pyglet_app import get_app, PygletApp
+
+    class DemoFrame(object):
+        def __init__(self):
+            app = get_app()
+            if app:
+                window = self._create_window()
+                self.enable_win = window
+                app.add_window(window.control)
+            return
+
+        def _create_window(self):
+            raise NotImplementedError
+
+    def demo_main(demo_class, size=(640,480), title="Chaco Example"):
+        """ Runs a simple application in Pyglet using an instance of
+        **demo_class** as the main window or frame.
+
+        **demo_class** should be a subclass of DemoFrame or the pyglet
+        backend's Window class.
+        """
+        app = PygletApp()
+        if issubclass(demo_class, DemoFrame):
+            frame = demo_class()
+            window = frame.enable_win.control
+        else:
+            window = demo_class().control
+        window.set_size(*size)
+        window.set_caption(title)
+        app.set_main_window(window)
+        app.run()
+
 
 if __name__ == "__main__":
     print "\n" + doc + "\n"
