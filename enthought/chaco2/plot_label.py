@@ -115,7 +115,10 @@ class PlotLabel(AbstractOverlay):
                 y_offset = int((self.height - height) / 2)
             
             gc.save_state()
-            gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            
+            # XXX: Uncomment this after we fix kiva GL backend's clip stack
+            #gc.clip_to_rect(self.x, self.y, self.width, self.height)
+
             # We have to translate to our position because the label
             # tries to draw at (0,0)
             gc.translate_ctm(self.x + x_offset, self.y + y_offset)
