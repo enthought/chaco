@@ -47,7 +47,8 @@ class DragZoom(DragTool, BaseZoomTool):
     def __init__(self, component=None, *args, **kw):
         super(DragZoom, self).__init__(component, *args, **kw)
         c = component
-        self._orig_screen_bounds = ((c.x, c.y), (c.x2, c.y2))
+        if c is not None:
+            self._orig_screen_bounds = ((c.x, c.y), (c.x2, c.y2))
 
     def dragging(self, event):
 
