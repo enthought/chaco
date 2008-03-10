@@ -13,12 +13,13 @@ from scipy.special import jn
 from enthought.enable2.api import Viewport, Window
 from enthought.enable2.tools.api import MoveTool, ViewportPanTool
 from enthought.enable2.example_support import DemoFrame, demo_main
-from enthought.traits.api import Enum, List, Instance, Bool, Any, Str, HasTraits
+from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
+                                 List, Str
 
 
 # Chaco imports
-from enthought.chaco2.api import (AbstractOverlay, ArrayPlotData, HPlotContainer,
-        Plot, PlotComponent, OverlayPlotContainer)
+from enthought.chaco2.api import AbstractOverlay, ArrayPlotData, \
+        Plot, PlotComponent 
 from enthought.chaco2.example_support import COLOR_PALETTE
 from enthought.chaco2.tools.api import PanTool, SimpleZoom , LegendTool
 
@@ -38,28 +39,6 @@ DATA = {
     "DELL": random.uniform(-2.0, 10.0, 100),
     }
 
-
-def add_basic_tools(plot):
-        plot.tools.append(PanTool(plot))
-        plot.tools.append(MoveTool(plot, drag_button="right"))
-        zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
-        plot.overlays.append(zoom)
-
-def do_plot(name, pd=None, plot=None):
-    if pd is None:
-        pd = ArrayPlotData()
-    xname = name + "_x"
-    yname = name + "_y"
-    pd.set_data(xname, range(len(DATA[name])))
-    pd.set_data(yname, DATA[name])
-    
-    if plot is None:
-        plot = Plot(pd, 
-                    padding = 10,
-                    border_visible = True,)
-        plot.x_axis.visible = False
-    plot.plot((xname, yname), name=name, type="line", color="blue",)
-    return plot
 
 class ButtonController(HasTraits):
     """ Tells buttons what to do 
@@ -82,10 +61,12 @@ class ButtonController(HasTraits):
         """
         if getattr(event, self.modifier + "_down", True):
             if type == "down":
+                print "mouse down, control down"
                 if button in self.active_buttons:
                     self.active_buttons.remove(button)
                 else:
                     self.active_buttons.append(button)
+                print "New buttons:", self.active_buttons
         else:
             self.active_buttons = [button]
 
@@ -111,13 +92,15 @@ class DataSourceButton(PlotToolbarButton):
     
     plotname = Str
     
-    overlay_bounds = List()
+    #overlay_bounds = List()
     
     # Can't call this "controller" because it conflicts with old tool dispatch
     button_controller = Instance(ButtonController)
     
     # Override inherited trait
     label_color = (0,0,0,1)
+
+    resizable = ""
     
     # The overlay to display when the user holds the mouse down over us.
     _overlay = Instance(AbstractOverlay)
@@ -154,37 +137,19 @@ class DataSourceButton(PlotToolbarButton):
             self._overlay.visible = False
         return
 
-    def _overlay_bounds_default(self):
-        return [300, 150]
-    
+    def _do_layout(self):
+        self._overlay.do_layout()
+
     def _plot_changed(self, old, new):
         if new is not None:
             if self._overlay is None:
-                # This centers horizontally and places the component below
-                self._overlay = TransientPlotOverlay(component=self,
-                                                     bounds = self.overlay_bounds,
+                self._overlay = TransientPlotOverlay(component = self,
                                                      bgcolor = "red",
                                                      border_visible=True)
             
             self._overlay.overlay_component = new
-            self._layout_overlay()
         return
 
-    def _layout_overlay(self):
-        if self._overlay is not None:
-            bounds = self.overlay_bounds
-            dx = -(bounds[0] - self.outer_width) / 2
-            dy = -bounds[1] - 1
-            self._overlay.offset = [dx, dy]
-        return
-    
-    def _bounds_changed(self, old, new):
-        super(DataSourceButton, self)._bounds_changed(old, new)
-        self._layout_overlay()
-
-    def _bounds_items_changed(self, event):
-        super(DataSourceButton, self)._bounds_items_changed(event)
-        self._layout_overlay()
 
 class TransientPlotOverlay(AbstractOverlay):
     """ Allows an arbitrary plot component to be overlaid on top of another one.
@@ -192,38 +157,78 @@ class TransientPlotOverlay(AbstractOverlay):
     
     # The PlotComponent to draw as an overlay
     overlay_component = Instance(PlotComponent)
-    
-    # The relative position of overlay_component's origin in self.component's
-    # coordinate system.
-    offset = List()
 
-    # If this is True, then the component's .position attribute is ignored
-    # when it is rendered.
-    ignore_pos = Bool(True)
+    # Where this overlay should draw relative to our .component
+    align = Enum("right", "left", "top", "bottom")
+
+    # The amount of space between the overlaying component and the underlying
+    # one.  This is either horizontal or vertical (depending on the value of
+    # self.align), but is not both.
+    margin = Float(10)
 
     # Override default values of some inherited traits
     unified_draw = True
 
-    def _offset_default(self):
-        return [0,0]
+    def _bounds_default(self):
+        return [350, 150]
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
+        self._do_layout()
+        gc.save_state()
+        gc.clear_clip_path()
+        self.overlay_component._draw(gc, view_bounds, mode)
+        gc.restore_state()
+
+    def _do_layout(self):
+        component = self.component
+        bounds = self.outer_bounds
+
+        if self.align in ("right", "left"):
+            y = component.outer_y -(bounds[1] - component.outer_height) / 2
+            if self.align == "right":
+                x = component.outer_x2 + self.margin
+            else:
+                x = component.outer_x - bounds[0] - self.margin
+
+        else:   # "top", "bottom"
+            x = component.outer_x -(bounds[0] - component.outer_width) / 2
+            if self.align == "top":
+                y = component.outer_y2 + self.margin
+            else:
+                y = component.outer_y - bounds[1] - self.margin
+        
         overlay_component = self.overlay_component
         overlay_component.outer_bounds = self.outer_bounds
-        overlay_component.outer_position = [component.x + self.offset[0],
-                                            component.y + self.offset[1]]
+        overlay_component.outer_position = [x, y]
         overlay_component._layout_needed = True
         overlay_component.do_layout()
 
-        # Translate the GC
-        gc.save_state()
-        gc.clear_clip_path()
-        overlay_component._draw(gc, view_bounds, mode)
-        gc.restore_state()
+
+def add_basic_tools(plot):
+        plot.tools.append(PanTool(plot))
+        plot.tools.append(MoveTool(plot, drag_button="right"))
+        zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+        plot.overlays.append(zoom)
+
+def do_plot(name, pd=None, plot=None):
+    if pd is None:
+        pd = ArrayPlotData()
+    xname = name + "_x"
+    yname = name + "_y"
+    pd.set_data(xname, range(len(DATA[name])))
+    pd.set_data(yname, DATA[name])
+    
+    if plot is None:
+        plot = Plot(pd, 
+                    padding = 15,
+                    border_visible = True,)
+        plot.x_axis.visible = False
+    plot.plot((xname, yname), name=name, type="line", color="blue",)
+    return plot
     
 def make_toolbar():
-    toolbar = PlotCanvasToolbar(bounds=[580,24], 
-                                position=[50,650],
+    toolbar = PlotCanvasToolbar(bounds=[60, 200], 
+                                position=[50,350],
                                 bgcolor="lightgrey")
     toolbar.padding = 5
     
@@ -236,14 +241,52 @@ def make_toolbar():
             plot = do_plot(name)
         else:
             do_plot(name, plot.data, plot)
-        buttons.append(DataSourceButton(label=name, bounds=[60,24],
+        buttons.append(DataSourceButton(label=name, 
+                                bounds=[60,24],
+                                padding = 5,
                                 button_controller = controller,
                                 plot = plot,
                                 plotname = name))
     controller.plot = plot
-    toolbar.add_button(*buttons)
+    toolbar.add(*buttons)
     toolbar.tools.append(MoveTool(toolbar, drag_button="right"))
     return toolbar
+
+def make_default_plots():
+    # Create some x-y data series to plot
+    x = linspace(-2.0, 10.0, 100)
+    pd = ArrayPlotData(index = x)
+    for i in range(5):
+        pd.set_data("y" + str(i), jn(i,x))
+
+    # Create some line plots of some of the data
+    plot1 = Plot(pd, resizable="", bounds=[300,300],
+                 position=[100, 100],
+                 border_visible=True,
+                 unified_draw = True)
+    plot1.plot(("index", "y0", "y1", "y2"), name="j_n, n<3", color="red")
+    plot1.plot(("index", "y3"), name="j_3", color="blue")
+
+    # Tweak some of the plot properties
+    #plot1.title = "Line Plot"
+    plot1.padding = 50
+    #plot1.legend.visible = True
+    #plot1.legend.tools.append(LegendTool(plot1.legend, drag_button="right"))
+
+    # Create a second scatter plot of one of the datasets, linking its 
+    # range to the first plot
+    plot2 = Plot(pd, range2d=plot1.range2d, padding=50,
+                 resizable="", bounds=[300,300], position=[500,100],
+                 border_visible=True,
+                 unified_draw = True,
+                 bgcolor = (1,1,1,0.8))
+    plot2.plot(('index', 'y3'), type="scatter", color="blue", 
+               marker_size=10, marker="circle")
+    
+    add_basic_tools(plot1)
+    add_basic_tools(plot2)
+    return plot1, plot2
+
 
 class PlotFrame(DemoFrame):
 
@@ -251,40 +294,8 @@ class PlotFrame(DemoFrame):
         # Create a container and add our plots
         canvas = PlotCanvas()
 
-        # Create some x-y data series to plot
-        x = linspace(-2.0, 10.0, 100)
-        pd = ArrayPlotData(index = x)
-        for i in range(5):
-            pd.set_data("y" + str(i), jn(i,x))
-
-        # Create some line plots of some of the data
-        plot1 = Plot(pd, resizable="", bounds=[300,300],
-                     position=[100, 100],
-                     border_visible=True,
-                     unified_draw = True)
-        plot1.plot(("index", "y0", "y1", "y2"), name="j_n, n<3", color="red")
-        plot1.plot(("index", "y3"), name="j_3", color="blue")
-
-        # Tweak some of the plot properties
-        #plot1.title = "Line Plot"
-        plot1.padding = 50
-        #plot1.legend.visible = True
-        #plot1.legend.tools.append(LegendTool(plot1.legend, drag_button="right"))
-
-        # Create a second scatter plot of one of the datasets, linking its 
-        # range to the first plot
-        plot2 = Plot(pd, range2d=plot1.range2d, padding=50,
-                     resizable="", bounds=[300,300], position=[500,100],
-                     border_visible=True,
-                     unified_draw = True,
-                     bgcolor = (1,1,1,0.8))
-        plot2.plot(('index', 'y3'), type="scatter", color="blue", marker_size=10, marker="circle")
-        
-        add_basic_tools(plot1)
-        canvas.add(plot1)
-        add_basic_tools(plot2)       
-        canvas.add(plot2)
-
+        plots = make_default_plots()
+        canvas.add(*plots)
         canvas.add(make_toolbar())
 
         viewport = Viewport(component=canvas)
