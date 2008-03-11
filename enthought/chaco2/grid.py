@@ -7,8 +7,8 @@ from numpy import around, array, column_stack, float64, inf, zeros_like
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, LineStyle
-from enthought.traits.api import Any, Enum, false, Float, Instance, Int, Trait, Array, \
-                             TraitError
+from enthought.traits.api import Any, Enum, false, Float, Instance, Int, CInt, Trait, \
+                            Array, Property, TraitError
 from enthought.traits.ui.api import HGroup, Item, VGroup, View, TextEditor
 
 # Local, relative imports
@@ -37,12 +37,16 @@ GridView = View(VGroup(
                        Item("visible", label="Visible")),
                 Item("line_color", label="Color", style="custom"),
                 Item("line_style", label="Dash style"),
-                Item("line_weight", label="Thickness")
+                Item("line_width", label="Thickness")
                 ),
                 buttons = ["OK", "Cancel"]
             )
 
     
+def Alias(name):
+    return Property(lambda obj: getattr(obj, name),
+                    lambda obj, val: setattr(obj, name, val))
+
 
 class PlotGrid(AbstractOverlay):
     """ An overlay that represents a grid. 
@@ -69,8 +73,10 @@ class PlotGrid(AbstractOverlay):
     line_style = LineStyle('solid')
     
     # The thickness, in pixels, of the grid lines.
-    line_weight = Int(1)
+    line_width = CInt(1)
     
+    line_weight = Alias("line_width")
+
     # The dataspace interval between grid lines.
     grid_interval = Trait('auto', 'auto', Float)
 
