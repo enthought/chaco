@@ -13,6 +13,7 @@ from enthought.traits.api import Any, Float, Int, Str, Trait, Unicode, \
                                  true, TraitError
 from enthought.traits.ui.api import View, HGroup, Group, VGroup, Item, TextEditor
 
+
 # Local relative imports
 from ticks import AbstractTickGenerator, DefaultTickGenerator
 from abstract_mapper import AbstractMapper
@@ -592,7 +593,19 @@ class PlotAxis(AbstractOverlay):
                               color=self.tick_label_color)
             self.ticklabel_cache.append(ticklabel)
 
-        self._tick_label_bounding_boxes = [array(ticklabel.get_bounding_box(gc), float64) for ticklabel in self.ticklabel_cache]
+        # TODO: Right now we are hardcoding this handling of a scaled CTM,
+        # eventually it would be nice if we didn't have to do this.
+        ctm = gc.get_ctm()
+        if len(ctm) == 6:
+            # AffineMatrix class
+            scale = array((ctm[0], ctm[4]))
+        elif len(ctm) == 3:
+            # Mac GC
+            scale = array((ctm[0][0], ctm[1][1]))
+        else:
+            scale = array((1.0, 1.0))
+        self._tick_label_bounding_boxes = [array(ticklabel.get_bounding_box(gc), float) / scale
+                                               for ticklabel in self.ticklabel_cache]
         return
 
 
