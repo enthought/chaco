@@ -1,5 +1,5 @@
 
-from enthought.traits.api import Enum, Int
+from enthought.traits.api import Any, Enum, Int
 from enthought.enable2.drawing.api import ToolbarButton
 
 # Local, relative imports
