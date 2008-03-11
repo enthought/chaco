@@ -35,7 +35,7 @@ class PlotLabel(AbstractOverlay):
     vjustify = Enum("center", "bottom", "top")
     
     # The position of this label relative to the object it is overlaying.
-    overlay_position = Enum("top", "bottom", "left", "right")
+    overlay_position = Enum("top", "bottom", "left", "right", None)
     
     # Should this PlotLabel modify the padding on its underlying component
     # if there is not enough room to lay out the text?
@@ -150,7 +150,7 @@ class PlotLabel(AbstractOverlay):
                 elif orientation == "right":
                     self.width = self.component.padding_right
                     self.x = self.component.x2 + 1
-            else:
+            elif orientation in ("bottom", "top"):
                 self.x = self.component.x
                 self.width = self.component.width
                 if orientation == "bottom":
@@ -159,6 +159,9 @@ class PlotLabel(AbstractOverlay):
                 elif orientation == "top":
                     self.height = self.component.padding_top
                     self.y = self.component.y2 + 1
+            else:
+                # Leave the position alone
+                pass
         return
 
     def _text_changed(self, old, new):
