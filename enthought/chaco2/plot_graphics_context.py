@@ -15,12 +15,14 @@ class PlotGraphicsContext(GraphicsContext):
     # FIXME: Right now this does not resize correctly.  (But you shouldn't
     # resize your GC, anyway!)
     
-    def __init__(self, size_or_ary, *args, **kw):
+    def __init__(self, size_or_ary, dpi=72.0, *args, **kw):
+        scale = dpi / 72.0
         if type(size_or_ary) in (list, tuple) and len(size_or_ary) == 2:
-            size_or_ary = (size_or_ary[0]+1, size_or_ary[1]+1)
+            size_or_ary = (size_or_ary[0]*scale + 1, size_or_ary[1]*scale + 1)
         
         super(PlotGraphicsContext, self).__init__(size_or_ary, *args, **kw)
         self.translate_ctm(0.5, 0.5)
+        self.scale_ctm(scale, scale)
         return
 
     def render_component(self, component, container_coords=False):
