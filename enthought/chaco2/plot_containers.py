@@ -380,6 +380,7 @@ class VPlotContainer(StackedPlotContainer):
         else:
             align = "max"
         
+        #import pdb; pdb.set_trace()
         return self._do_stack_layout(components, align)
 
 
@@ -516,7 +517,8 @@ class GridPlotContainer(BasePlotContainer):
         resiz_cols = self._cached_col_resizable
 
         # Compute the amount of available space, and split it amongst the
-        # resizable components.
+        # resizable components.  If there are no resizable components, then
+        # split it evenly amongst all the components.
         shape = array(self._grid.shape).transpose()
         if self.spacing is None:
             spacing = array([0,0])
@@ -524,22 +526,22 @@ class GridPlotContainer(BasePlotContainer):
             spacing = array(self.spacing)
         total_spacing = spacing * 2 * shape
         avail_space = array(size) - array(self._cached_total_size)
+
         num_resiz_cols = sum(resiz_cols)
+        widths = self._cached_min_widths[:]
         if num_resiz_cols > 0:
             resiz_width = avail_space[0] / num_resiz_cols
+            widths[resiz_cols==1] = resiz_width
         else:
-            resiz_width = 0.0
+            widths += avail_space[0] / shape[0]
+        
         num_resiz_rows = sum(resiz_rows)
+        heights = self._cached_min_heights[:]
         if num_resiz_rows > 0:
             resiz_height = avail_space[1] / num_resiz_rows
+            heights[resiz_rows==1] = resiz_height
         else:
-            resiz_height = 0.0
-
-        # Set up the arrays of widths and heights
-        widths = self._cached_min_widths[:]
-        heights = self._cached_min_heights[:]
-        widths[resiz_cols==1] = resiz_width
-        heights[resiz_rows==1] = resiz_height
+            heights += avail_space[1] / shape[1]
 
         # Set the baseline h and v positions for each cell.  Resizable components
         # will get these as their position, but non-resizable components will have
@@ -588,7 +590,7 @@ class GridPlotContainer(BasePlotContainer):
                     bounds[1] = h
 
                 # TODO: figure out why the following causes a layout inconsistency:
-                component.outer_bounds = [w,h]
+                component.outer_bounds = bounds  #[w,h]
 
                 component.do_layout()
         return
