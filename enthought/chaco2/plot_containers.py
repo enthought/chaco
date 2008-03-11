@@ -39,7 +39,7 @@ class OverlayPlotContainer(BasePlotContainer):
         Overrides PlotComponent.
         """
         if self.resizable == "":
-            return self.bounds
+            return self.outer_bounds
         
         if components is None:
             components = self.components
@@ -77,7 +77,7 @@ class OverlayPlotContainer(BasePlotContainer):
             max_height = self.default_size[1]
         
         # Add in our padding and border
-        self._cached_preferred_size = (max_width, max_height)
+        self._cached_preferred_size = (max_width + self.hpadding, max_height + self.vpadding)
         return self._cached_preferred_size
 
     def _do_layout(self):
@@ -85,9 +85,9 @@ class OverlayPlotContainer(BasePlotContainer):
         """
         width, height = self.bounds
         if "h" in self.fit_components:
-            width = self._cached_preferred_size[0]
+            width = self._cached_preferred_size[0] - self.hpadding
         if "v" in self.fit_components:
-            height = self._cached_preferred_size[1]
+            height = self._cached_preferred_size[1] - self.vpadding
         
         x = self.x
         y = self.y
@@ -144,7 +144,7 @@ class StackedPlotContainer(BasePlotContainer):
         Overrides PlotComponent.
         """
         if self.resizable == "":
-            return self.bounds
+            return self.outer_bounds
         
         if components is None:
             components = self.components
@@ -182,9 +182,11 @@ class StackedPlotContainer(BasePlotContainer):
             max_other_size = self.default_size[other_ndx]
         
         if ndx == 0:
-            self._cached_preferred_size = (total_size, max_other_size)
+            self._cached_preferred_size = (total_size + self.hpadding,
+                                           max_other_size + self.vpadding)
         else:
-            self._cached_preferred_size = (max_other_size, total_size)
+            self._cached_preferred_size = (max_other_size + self.hpadding,
+                                           total_size + self.vpadding)
             
         return self._cached_preferred_size
 
@@ -193,13 +195,13 @@ class StackedPlotContainer(BasePlotContainer):
         """ Helper method that does the actual work of layout.
         """
 
-        size = self.bounds[:]
+        size = list(self.bounds)
         if self.fit_components != "":
             self.get_preferred_size()
             if "h" in self.fit_components:
-                size[0] = self._cached_preferred_size[0]
+                size[0] = self._cached_preferred_size[0] - self.hpadding
             if "v" in self.fit_components:
-                size[1] = self._cached_preferred_size[1]
+                size[1] = self._cached_preferred_size[1] - self.vpadding
         
         ndx = self.stack_index
         other_ndx = 1 - ndx
@@ -439,7 +441,7 @@ class GridPlotContainer(BasePlotContainer):
         Overrides PlotComponent.
         """
         if self.resizable == "":
-            return self.bounds
+            return self.outer_bounds
         
         if components is None:
             components = self.component_grid
@@ -470,7 +472,7 @@ class GridPlotContainer(BasePlotContainer):
                     min_heights[i] = max(min_heights[i], pref_size[1])
                     v_resizable[i] = v_resizable[i] & ("v" in component.resizable)
 
-        total_size = array([sum(min_widths), sum(min_heights)])
+        total_size = array([sum(min_widths) + self.hpadding, sum(min_heights) + self.vpadding])
 
         # Account for spacing.  There are N+1 of spaces, where N is the size in
         # each dimension.
@@ -483,7 +485,7 @@ class GridPlotContainer(BasePlotContainer):
         for orientation, ndx in (("h", 0), ("v", 1)):
             if (orientation not in self.resizable) and \
                (orientation not in self.fit_components):
-                total_size[ndx] = self.bounds[ndx]
+                total_size[ndx] = self.outer_bounds[ndx]
             elif no_visible_components or (total_size[ndx] == 0):
                 total_size[ndx] = self.default_size[ndx]
         
@@ -505,9 +507,9 @@ class GridPlotContainer(BasePlotContainer):
         if self.fit_components != "":
             self.get_preferred_size()
             if "h" in self.fit_components:
-                size[0] = self._cached_total_size[0]
+                size[0] = self._cached_total_size[0] - self.hpadding
             if "v" in self.fit_components:
-                size[1] = self._cached_total_size[1]
+                size[1] = self._cached_total_size[1] - self.vpadding
 
         # Pick out all the resizable rows and columns by checking if the
         # corresponding max height/width is 0.  This will obviously need to be

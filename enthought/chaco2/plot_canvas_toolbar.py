@@ -9,14 +9,14 @@ from plot_component import PlotComponent
 
 class PlotCanvasToolbar(VPlotContainer, DrawingCanvasToolbar):
 
-    spacing = Int(5)
-
     align = Enum("ur", "ul", "ll", "lr")
 
-    fit_components = "v"
-    
     # Override some inherited traits
-    resizable = "v"
+    spacing = 5
+    fit_components = "hv"
+    resizable = "hv"
+    halign = "center"
+    valign = "center"
     fill_padding = False
     unified_draw = True
 

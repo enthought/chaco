@@ -184,6 +184,26 @@ class VPlotContainerTestCase(ContainerTestCase):
         self.failUnlessEqual(comp1.position, [100,0])
         return
 
+    def test_fit_components(self):
+        container = VPlotContainer(bounds=[200,300], resizable="v", fit_components="v")
+        comp1 = StaticPlotComponent([50,100], padding=5)
+        comp2 = StaticPlotComponent([50,120], padding=5)
+        container.add(comp1)
+        container.add(comp2)
+        self.assert_tuple(container.get_preferred_size(), (200,240))
+        # The container should not change its size as a result of its fit_components
+        # being set.
+        self.assert_tuple(container.bounds, (200,300))
+        container.bounds = container.get_preferred_size()
+        container.do_layout()
+
+        container.padding = 8
+        self.assert_tuple(container.get_preferred_size(), (216,256))
+        container.do_layout()
+        self.assert_tuple(comp1.outer_position, (0,0))
+        self.assert_tuple(comp2.outer_position, (0,110))
+
+
 class GridContainerTestCase(ContainerTestCase):
 
     def test_single_cell(self):

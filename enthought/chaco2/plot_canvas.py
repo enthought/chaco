@@ -70,7 +70,7 @@ class PlotCanvas(Canvas):
                     bounds[0] = pref_size[0]
                 else:
                     bounds[0] = self.default_component_size[0]
-            if "v" in component.resizable and bounds[1] == 0:
+            if "v" in component.resizable:
                 if pref_size[1] > 0:
                     bounds[1] = pref_size[1]
                 else:
