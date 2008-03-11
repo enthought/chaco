@@ -60,7 +60,7 @@ class PlotCanvas(Canvas):
         return (x2 - x + 1, y2 - y + 1)
 
     def _do_layout(self):
-        for component in self.components:
+        for component in self.components + self.underlays + self.overlays:
             if not self._should_layout(component):
                 continue
             bounds = list(component.outer_bounds)
@@ -77,7 +77,7 @@ class PlotCanvas(Canvas):
                     bounds[1] = self.default_component_size[1]
             component.outer_bounds = bounds
 
-        for component in self.components:
+        for component in self.components + self.underlays + self.overlays:
             component.do_layout()
         return
 
