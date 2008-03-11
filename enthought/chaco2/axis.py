@@ -598,7 +598,7 @@ class PlotAxis(AbstractOverlay):
         ctm = gc.get_ctm()
         if len(ctm) == 6:
             # AffineMatrix class
-            scale = array((ctm[0], ctm[4]))
+            scale = array((ctm[0], ctm[3]))
         elif len(ctm) == 3:
             # Mac GC
             scale = array((ctm[0][0], ctm[1][1]))
