@@ -31,19 +31,31 @@ class PlotCanvasToolbar(VPlotContainer):
         """ Allows the toolbar to behave like an overlay """
         self._do_layout()
         pref_size = self.get_preferred_size()
-        if self.align in ("ur", "ul", "top"):
-            y = component.y2 - self.outer_height
-        elif self.align in ("lr", "ll", "bottom"):
-            y = component.y
+
+        
+        # Special check for when we are overlaying an instance of enable2.Canvas
+        if hasattr(component, 'view_bounds'):
+            cx, cy, cx2, cy2 = component.view_bounds
+            cwidth = cx2 - cx + 1
+            cheight = cy2 - cy + 1
         else:
-            y = component.y + (component.height - pref_size[1])/2
+            cx, cy = component.position
+            cheight, cwidth = component.bounds
+
+        if self.align in ("ur", "ul", "top"):
+            y = cy + cheight - self.outer_height
+        elif self.align in ("lr", "ll", "bottom"):
+            y = cy
+        else:
+            y = cy + (cheight - pref_size[1])/2
 
         if self.align in ("ur", "lr", "right"):
-            x = component.x2 - self.outer_width
+            x = cx + cwidth - self.outer_width
         elif self.align in ("ul", "ll", "left"):
-            x = component.x
+            x = cx
         else:
-            x = component.x + (component.width - pref_size[0])/2
+            x = cx + (cwidth - pref_size[0])/2
+
         self.outer_position = [x, y]
         VPlotContainer._draw(self, gc, view_bounds, mode)
 
