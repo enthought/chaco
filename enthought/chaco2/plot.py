@@ -477,13 +477,15 @@ class Plot(DataView):
                 cmap = kwargs["colors"]
                 if isinstance(cmap, FunctionType):
                     kwargs["colors"] = cmap(DataRange1D(value))
+                elif getattr(cmap, 'range', 'dummy') is None:
+                    cmap.range = DataRange1D(value)
         elif type == "poly":
             if poly_cmap is None:
                 raise ValueError("Scalar 2D data requires a colormap.")
-            elif isinstance(poly_cmap, AbstractColormap):
-                pass
-            else:
+            elif isinstance(cmap, FunctionType):
                 poly_cmap = poly_cmap(DataRange1D(value))
+            elif getattr(cmap, 'range', 'dummy') is None:
+                poly_cmap.range = DataRange1D(value)
             cls = ContourPolyPlot
             kwargs = dict(color_mapper=poly_cmap, **styles)
         else:
