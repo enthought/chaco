@@ -7,7 +7,7 @@ from numpy import array, linspace, meshgrid, transpose
 from enthought.enable2.api import black_color_trait, ColorTrait, LineStyle
 from enthought.kiva.agg import GraphicsContextArray
 from enthought.traits.api import Any, Dict, false, Float, HasTraits, Instance, \
-                                 Int, List, Property, Str, Trait
+                                 Int, List, Property, Range, Str, Trait
 
 # Local relative imports
 from base_2d_plot import Base2DPlot
@@ -32,6 +32,7 @@ class ContourPolyPlot(Base2DPlot):
     # Mapping of values to colors
     color_mapper = Instance("ColorMapper")
 
+    alpha = Trait(1.0, Range(0.0, 1.0))
 
     #------------------------------------------------------------------------
     # Private traits
@@ -80,6 +81,7 @@ class ContourPolyPlot(Base2DPlot):
         gc.set_antialias(True)
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
         gc.set_line_width(0)
+        gc.set_alpha(self.alpha)
 
         for i in range(len(self._levels)-1):
             gc.set_fill_color(self._colors[i])
