@@ -272,16 +272,11 @@ class ScatterPlot(BaseXYPlot):
         simply requiring that a few steps be skipped.
         """
 
-        if getattr(self, "_debug", False):
-            debug = True
-        else:
-            debug = False
-
         if not icon_mode:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
         render_markers(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_,
-                       self.custom_symbol, debug)
+                       self.custom_symbol)
 
         if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
             sel_pts = self.map_screen(self._cached_selected_pts)
