@@ -1,10 +1,10 @@
 
 
-from enthought.traits.api import Enum, Float, Instance
+from enthought.traits.api import Enum, Float, Instance, Trait, Tuple
 
-from enthought.chaco2.api import AbstractOverlay, PlotComponent
+from enthought.chaco2.api import AbstractOverlay, PlotComponent, BasePlotContainer
 
-class TransientPlotOverlay(AbstractOverlay):
+class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
     """ Allows an arbitrary plot component to be overlaid on top of another one.
     """
     
@@ -18,6 +18,9 @@ class TransientPlotOverlay(AbstractOverlay):
     # one.  This is either horizontal or vertical (depending on the value of
     # self.align), but is not both.
     margin = Float(10)
+
+    # An offset to apply in X and Y
+    offset = Trait(None, None, Tuple)
 
     # Override default values of some inherited traits
     unified_draw = True
@@ -50,9 +53,18 @@ class TransientPlotOverlay(AbstractOverlay):
             else:
                 y = component.outer_y - bounds[1] - self.margin
         
+        if self.offset is not None:
+            x += self.offset[0]
+            y += self.offset[1]
+
         overlay_component = self.overlay_component
         overlay_component.outer_bounds = self.outer_bounds
         overlay_component.outer_position = [x, y]
         overlay_component._layout_needed = True
         overlay_component.do_layout()
+
+    def dispatch(self, event, suffix):
+        if self.visible and self.overlay_component.is_in(event.x, event.y):
+            return self.overlay_component.dispatch(event, suffix)
+
 

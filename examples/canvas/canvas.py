@@ -4,6 +4,8 @@ The main app for the PlotCanvas application
 """
 
 # Major library imports
+from copy import copy
+from random import choice
 from numpy import arange, fabs, linspace, pi, sin
 from numpy import random
 from scipy.special import jn
@@ -19,28 +21,33 @@ from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
 
 # Chaco imports
 from enthought.chaco2.api import AbstractOverlay, ArrayPlotData, \
-        Plot, jet
-#from enthought.chaco2.example_support import COLOR_PALETTE
+        Plot, jet, ScatterPlot, LinePlot, LinearMapper
+from enthought.chaco2.example_support import COLOR_PALETTE
 from enthought.chaco2.tools.api import PanTool, SimpleZoom , LegendTool
 
 # Canvas imports
 from enthought.chaco2.plot_canvas import PlotCanvas
 from enthought.chaco2.plot_canvas_toolbar import PlotCanvasToolbar, PlotToolbarButton
 from transient_plot_overlay import TransientPlotOverlay
+from plot_clone_tool import PlotCloneTool
+#from canvas_grid import CanvasGrid
 
+
+
+DEBUG = False
+
+NUMPOINTS = 250
 DATA = {
-    "GOOG": random.uniform(-2.0, 10.0, 100),
-    "MSFT": random.uniform(-2.0, 10.0, 100),
-    "AAPL": random.uniform(-2.0, 10.0, 100),
-    "YHOO": random.uniform(-2.0, 10.0, 100),
-    "CSCO": random.uniform(-2.0, 10.0, 100),
-    "INTC": random.uniform(-2.0, 10.0, 100),
-    "ORCL": random.uniform(-2.0, 10.0, 100),
-    "HPQ": random.uniform(-2.0, 10.0, 100),
-    "DELL": random.uniform(-2.0, 10.0, 100),
+    "GOOG": random.uniform(-2.0, 10.0, NUMPOINTS),
+    "MSFT": random.uniform(-2.0, 10.0, NUMPOINTS),
+    "AAPL": random.uniform(-2.0, 10.0, NUMPOINTS),
+    "YHOO": random.uniform(-2.0, 10.0, NUMPOINTS),
+    "CSCO": random.uniform(-2.0, 10.0, NUMPOINTS),
+    "INTC": random.uniform(-2.0, 10.0, NUMPOINTS),
+    "ORCL": random.uniform(-2.0, 10.0, NUMPOINTS),
+    "HPQ": random.uniform(-2.0, 10.0, NUMPOINTS),
+    "DELL": random.uniform(-2.0, 10.0, NUMPOINTS),
     }
-
-
 
 class ButtonController(HasTraits):
     """ Tells buttons what to do 
@@ -60,103 +67,113 @@ class ButtonController(HasTraits):
     # The transient plot overlay housing self.plot
     plot_overlay = Any
 
+    # The name of the scatter plot in the Plot
+    _scatterplot_name = "ButtonControllerPlot"
+
     def notify(self, button, type, event):
         """ Informs the controller that the particular **button** just
         got an event.  **Type** is either "up" or "down".  Event is the
         actual mouse event.
         """
-        if getattr(event, self.modifier + "_down", True):
-            if type == "down":
-                self.button_selected(button)
-            elif type == "up":
-                # This is to allow the mouse to simulate multitouch;
-                # If ctrl is down when the button is released, pretend
-                # it didn't actually come up
-                pass
-        else:
-            #self.active_buttons = [button]
-            if type == "down":
-                if button not in self.active_buttons:
+        control_down = getattr(event, self.modifier + "_down", False)
+        if DEBUG:
+            print "[notify]", button.plotname, type, "control:", control_down
+        if type == "down":
+            if control_down and button in self.active_buttons:
+                self.button_deselected(button)
+            else:
+                if not control_down:
                     # Deselect all current buttons and select the new one
-                    [self.button_deselected(b) for b in self.active_buttons]
-                    self.button_selected(button)
-            elif type == "up":
-                if button in self.active_buttons:
-                    self.button_deselected(button)
-
-        ## Reconcile the list of active buttons and their plots
-        #active_names = [b.plotname for b in self.active_buttons]
-        #for p in self.plot.plots.keys():
-        #    if p in active_names:
-        #        self.plot.showplot(p)
-        #    else:
-        #        self.plot.hideplot(p)
+                    [self.button_deselected(b) for b in self.active_buttons \
+                            if b is not button]
+                self.button_selected(button)
+        else:  # type == "up"
+            if not control_down:
+                self.button_deselected(button)
         return
 
     def button_selected(self, button):
-        if button not in self.active_buttons:
-            self.active_buttons.append(button)
-        numbuttons = len(self.active_buttons)
-        if numbuttons == 1:
-            self.active_buttons[0].show_overlay()
-        elif numbuttons in (2,3):
-            self.active_buttons[0].hide_overlay()
-            self.show_scatterplot(*self.active_buttons)
-        else:
-            # Show the first two vs. the last one
-            self.show_scatterplot(self.active_buttons[0], self.active_buttons[1],
-                                  self.active_buttons[-1])
-        return
-
-
-    def button_deselected(self, button):
+        if DEBUG:
+            print "active:", [b.plotname for b in self.active_buttons]
+            print "new button selected:", button.plotname
         if button in self.active_buttons:
-            self.active_buttons.remove(button)
+            return
         numbuttons = len(self.active_buttons)
         if numbuttons == 0:
-            button.hide_overlay()
+            self.active_buttons.append(button)
+            button.show_overlay()
         elif numbuttons == 1:
+            self.active_buttons[0].hide_overlay()
+            self.active_buttons.append(button)
+            self.show_scatterplot(*self.active_buttons)
+        elif numbuttons == 2:
+            # Replace the last active button with the new one
+            self.active_buttons[1].button_state = "up"
+            self.active_buttons[1] = button
             self.hide_scatterplot()
-            self.active_buttons[0].show_overlay()
-        elif numbuttons in (2,3):
             self.show_scatterplot(*self.active_buttons)
         else:
-            self.show_scatterplot(self.active_buttons[0], self.active_buttons[1],
-                                  self.active_buttons[-1])
+            return
+        button.button_state = "down"
         return
 
-    def show_scatterplot(self, b1, b2, b3=None):
-        if len(self.plot.plots) > 0:
-            self.plot.delplot(self.plot.plots.keys()[0])
-
-        if b3 is None:
-            cur_plot = self.plot.plot((b1.plotname+"_y", b2.plotname+"_y"), type="scatter",
-                                      marker="circle",
-                                      color="red",
-                                      marker_size=4,
-                                      )
-
+    def button_deselected(self, button):
+        if DEBUG:
+            print "active:", [b.plotname for b in self.active_buttons]
+            print "new button deselected:", button.plotname
+        if button not in self.active_buttons:
+            button.button_state = "up"
+            return
+        numbuttons = len(self.active_buttons)
+        if numbuttons == 1:
+            if button in self.active_buttons:
+                self.active_buttons.remove(button)
+            button.hide_overlay()
+        elif numbuttons == 2:
+            if button in self.active_buttons:
+                self.active_buttons.remove(button)
+                self.hide_scatterplot()
+                remaining_button = self.active_buttons[0]
+                remaining_button.show_overlay()
         else:
-            cur_plot = self.plot.plot((b1.plotname+"_y", b2.plotname+"_y", b3.plotname+"_y"),
-                                      type="cmap_scatter",
-                                      marker="circle",
-                                      marker_size=4,
-                                      color_mapper=jet,
-                                      )
+            return
+        button.button_state = "up"
+        return
+
+    def show_scatterplot(self, b1, b2):
+        if len(self.plot.plots) > 0:
+            self.plot.delplot(*self.plot.plots.keys())
+
+        cur_plot = self.plot.plot((b1.plotname+"_y", b2.plotname+"_y"), 
+                                  name=self._scatterplot_name,
+                                  type="scatter",
+                                  marker="square",
+                                  color=tuple(choice(COLOR_PALETTE)),
+                                  marker_size=8,
+                                  )
+        self.plot.index_axis.title = b1.plotname
+        #self.plot.value_axis.title = b2.plotname
+        self.plot.title = b1.plotname + " vs. " + b2.plotname
         self.plot_overlay.visible = True
         self.plot.request_redraw()
 
     def hide_scatterplot(self):
+        if self._scatterplot_name in self.plot.plots:
+            self.plot.delplot(self._scatterplot_name)
+            self.plot.index_range.set_bounds("auto", "auto")
+            self.plot.value_range.set_bounds("auto", "auto")
         self.plot_overlay.visible = False
         
 
 
 class DataSourceButton(PlotToolbarButton):
     
-    # The timeseries plot of this datasource
-    plot = Any()
+    # A TransientPlotOverlay containing the timeseries plot of this datasource
+    plot_overlay = Any
     
     plotname = Str
+
+    canvas = Any
     
     #overlay_bounds = List()
     
@@ -169,8 +186,8 @@ class DataSourceButton(PlotToolbarButton):
     resizable = ""
     
     # The overlay to display when the user holds the mouse down over us.
-    _overlay = Instance(AbstractOverlay)
-    
+    #_overlay = Instance(AbstractOverlay)
+
     def normal_left_down(self, event):
         self.button_state = "down"
         self.button_controller.notify(self, "down", event)
@@ -192,37 +209,31 @@ class DataSourceButton(PlotToolbarButton):
             return self.normal_left_down(event)
 
     def show_overlay(self):
-        if self._overlay is not None:
-            if self._overlay not in self.overlays:
-                self.overlays.append(self._overlay)
-            self._overlay.visible = True
+        if self.plot_overlay is not None:
+            self._do_layout()
+            self.plot_overlay.visible = True
         self.request_redraw()
         return
 
     def hide_overlay(self):
-        if self._overlay is not None:
-            self._overlay.visible = False
+        if self.plot_overlay is not None:
+            self.plot_overlay.visible = False
         self.request_redraw()
         return
 
     def _do_layout(self):
-        self._overlay.do_layout()
-
-    def _plot_changed(self, old, new):
-        if new is not None:
-            if self._overlay is None:
-                self._overlay = TransientPlotOverlay(component = self,
-                                                     border_visible=True)
-            
-            self._overlay.overlay_component = new
-        return
+        if self.canvas is not None:
+            boff = self.canvas.bounds_offset
+            self.plot_overlay.offset = (boff[0],
+                    boff[1] + self.y - self.container.y + self.height/2)
+        self.plot_overlay.do_layout()
 
 
 def add_basic_tools(plot):
-        plot.tools.append(PanTool(plot))
-        plot.tools.append(MoveTool(plot, drag_button="right"))
-        zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
-        plot.overlays.append(zoom)
+    plot.tools.append(PanTool(plot))
+    plot.tools.append(MoveTool(plot, drag_button="right"))
+    zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+    plot.overlays.append(zoom)
 
 def do_plot(name, pd):
     xname = name + "_x"
@@ -234,12 +245,126 @@ def do_plot(name, pd):
                 unified_draw = True,
                 border_visible = True,
                 )
-    add_basic_tools(plot)
     plot.x_axis.visible = False
+    plot.title = name
     plot.plot((xname, yname), name=name, type="line", color="blue",)
     return plot
+
+def clone_renderer(r):
+    """ Returns a clone of plot renderer r """
+    basic_traits = ["orientation", "line_width", "color", "outline_color", 
+                    "bgcolor", "border_visible", "border_color", "visible",
+                    "fill_padding", "resizable", "aspect_ratio",
+                    "draw_layer", "draw_order", "border_width", "resizable",
+                    "index", "value",]
+
+    scatter_traits = ["custom_symbol", "marker", "marker_size", "selection_marker",
+                      "selection_marker_size", "selection_line_width",
+                      "selection_color"]
+
+    line_traits = ["selected_color", "selected_line_style", "metadata_name",
+                   "render_style"]
+
+    if isinstance(r, ScatterPlot):
+        return r.clone_traits(basic_traits + scatter_traits)
+    elif isinstance(r, LinePlot):
+        return r.clone_traits(basic_traits + line_traits)
+
+def clone_plot(clonetool, drop_position):
+    # Create a new Plot object
+    oldplot = clonetool.component
+    newplot = Plot(oldplot.data)
+    basic_traits = ["orientation", "default_origin", "bgcolor", "border_color",
+                    "border_width", "border_visible", "draw_layer", "unified_draw",
+                    "fit_components", "fill_padding", "visible", "aspect_ratio",
+                    "title"]
+                   
+    for attr in basic_traits:
+        setattr(newplot, attr, getattr(oldplot, attr))
+
+    # copy the ranges
+    dst = newplot.range2d
+    src = oldplot.range2d
+    #for attr in ('_low_setting', '_low_value', '_high_setting', '_high_value'):
+    #    setattr(dst, attr, getattr(src, attr))
+    dst._xrange.sources = copy(src._xrange.sources)
+    dst._yrange.sources = copy(src._yrange.sources)
+
+    newplot.padding = oldplot.padding
+    newplot.bounds = oldplot.bounds[:]
+    newplot.resizable = ""
+    newplot.position = drop_position
+
+    newplot.datasources = copy(oldplot.datasources)
+
+    for name, renderers in oldplot.plots.items():
+        newrenderers = []
+        for renderer in renderers:
+            new_r = clone_renderer(renderer)
+            new_r.index_mapper = LinearMapper(range=newplot.index_range)
+            new_r.value_mapper = LinearMapper(range=newplot.value_range)
+            new_r._layout_needed = True
+            new_r.invalidate_draw()
+            new_r.resizable = "hv"
+            #new_r._debug = True
+            newrenderers.append(new_r)
+        newplot.plots[name] = newrenderers
+    #newplot.plots = copy(oldplot.plots)
+
+    for name, renderers in newplot.plots.items():
+        newplot.add(*renderers)
+
+    newplot.index_axis.title = oldplot.index_axis.title
+    newplot.value_axis.title = oldplot.value_axis.title
+
+    # Add tools to the new plot
+    pan_traits = ["drag_button", "constrain", "constrain_key", "constrain_direction",
+                  "speed"]
+    zoom_traits = ["tool_mode", "always_on", "axis", "enable_wheel", "drag_button",
+                   "wheel_zoom_step", "enter_zoom_key", "exit_zoom_key", "pointer",
+                   "color", "alpha", "border_color", "border_size", "disable_on_complete",
+                   "minimum_screen_delta", "max_zoom_in_factor", "max_zoom_out_factor"]
+    move_traits = ["drag_button", "end_drag_on_leave", "cancel_keys", "capture_mouse",
+                   "modifier_key"]
+    for tool in oldplot.tools:
+        if isinstance(tool, PanTool):
+            newtool = tool.clone_traits(pan_traits)
+            newtool.component = newplot
+            break
+    else:
+        newtool = PanTool(newplot)
+    # Reconfigure the pan tool to always use the left mouse, because we will
+    # put plot move on the right mouse button
+    newtool.drag_button = "left"
+    newplot.tools.append(newtool)
+
+    for tool in oldplot.tools:
+        if isinstance(tool, MoveTool):
+            newtool = tool.clone_traits(move_traits)
+            newtool.component = newplot
+            break
+    else:
+        newtool = MoveTool(newplot, drag_button="right")
+    newplot.tools.append(newtool)
+
+    for tool in oldplot.tools:
+        if isinstance(tool, SimpleZoom):
+            newtool = tool.clone_traits(zoom_traits)
+            newtool.component = newplot
+            break
+    else:
+        newtool = SimpleZoom(newplot)
+    newplot.tools.append(newtool)
+
+    newplot._layout_needed = True
+    newplot.invalidate_draw()
+
+    clonetool.dest.add(newplot)
+    return
+
     
-def make_toolbar():
+def make_toolbar(canvas):
+    # Create the toolbar
     toolbar = PlotCanvasToolbar(bounds=[70, 200], 
                                 position=[50,350],
                                 fill_padding=True,
@@ -247,67 +372,55 @@ def make_toolbar():
                                 padding = 5,
                                 align = "left",
                                 )
-    controller = ButtonController()
-    
-    buttons = []
-    pd = ArrayPlotData()
-    for name in DATA.keys():
-        plot = do_plot(name, pd)
-        toolbar.add(DataSourceButton(label=name, 
-                                bounds=[60,24],
-                                padding = 5,
-                                button_controller = controller,
-                                plot = plot,
-                                plotname = name))
 
+    # Create the scatterplot
+    pd = ArrayPlotData()
     scatterplot = Plot(pd, padding=15, bgcolor="white", unified_draw=True,
                        border_visible=True)
-    add_basic_tools(scatterplot)
-    controller.plot = scatterplot
-    controller.plot_overlay = TransientPlotOverlay(component=toolbar,
-                                 overlay_component=scatterplot,
-                                 bounds=[500,500],
-                                 border_visible=True,
-                                 visible = False,  # initially invisible
-                                 )
-    toolbar.overlays.append(controller.plot_overlay)
-    toolbar.tools.append(MoveTool(toolbar, drag_button="right"))
-    return toolbar
+    scatterplot.tools.append(PanTool(scatterplot, drag_button="right"))
+    scatterplot.overlays.append(PlotCloneTool(scatterplot, dest=canvas,
+                                              plot_cloner=clone_plot))
+    scatterplot.tools.append(SimpleZoom(scatterplot))
 
-def make_default_plots():
-    # Create some x-y data series to plot
-    x = linspace(-2.0, 10.0, 100)
-    pd = ArrayPlotData(index = x)
-    for i in range(5):
-        pd.set_data("y" + str(i), jn(i,x))
-
-    # Create some line plots of some of the data
-    plot1 = Plot(pd, resizable="", bounds=[300,300],
-                 position=[100, 100],
-                 border_visible=True,
-                 unified_draw = True)
-    plot1.plot(("index", "y0", "y1", "y2"), name="j_n, n<3", color="red")
-    plot1.plot(("index", "y3"), name="j_3", color="blue")
-
-    # Tweak some of the plot properties
-    #plot1.title = "Line Plot"
-    plot1.padding = 50
-    #plot1.legend.visible = True
-    #plot1.legend.tools.append(LegendTool(plot1.legend, drag_button="right"))
-
-    # Create a second scatter plot of one of the datasets, linking its 
-    # range to the first plot
-    plot2 = Plot(pd, range2d=plot1.range2d, padding=50,
-                 resizable="", bounds=[300,300], position=[500,100],
-                 border_visible=True,
-                 unified_draw = True,
-                 bgcolor = (1,1,1,0.8))
-    plot2.plot(('index', 'y3'), type="scatter", color="blue", 
-               marker_size=10, marker="circle")
+    # Create the overlay
+    overlay = TransientPlotOverlay(component=toolbar,
+                                   overlay_component=scatterplot,
+                                   bounds=[350,350],
+                                   border_visible=True,
+                                   visible = False,  # initially invisible
+                                   )
+    scatterplot.container = overlay
     
-    add_basic_tools(plot1)
-    add_basic_tools(plot2)
-    return plot1, plot2
+    # Create buttons 
+    controller = ButtonController()
+    for name in DATA.keys():
+        plot = do_plot(name, pd)
+        plot.tools.append(PanTool(plot, drag_button="right", constrain=True,
+                                  constrain_direction="x"))
+        plot.tools.append(SimpleZoom(plot, tool_mode="range", axis="index",
+                                     always_on=False))
+        plot.overlays.append(PlotCloneTool(plot, dest=canvas,
+                                           plot_cloner=clone_plot))
+        plot_overlay = TransientPlotOverlay(component=toolbar,
+                                            overlay_component=plot,
+                                            border_visible=True,
+                                            visible=False,
+                                            )
+        plot.container = plot_overlay
+        button = DataSourceButton(label=name, 
+                                  bounds=[60,24],
+                                  padding = 5,
+                                  button_controller = controller,
+                                  #canvas = canvas,
+                                  plot_overlay = plot_overlay,
+                                  plotname = name)
+        toolbar.add(button)
+        canvas.overlays.append(plot_overlay)
+    controller.plot = scatterplot
+    controller.plot_overlay = overlay
+    canvas.overlays.append(overlay)
+
+    return toolbar
 
 
 class PlotFrame(DemoFrame):
@@ -316,12 +429,12 @@ class PlotFrame(DemoFrame):
         # Create a container and add our plots
         canvas = PlotCanvas()
 
-        plots = make_default_plots()
-        toolbar = make_toolbar()
-        canvas.add(*plots)
-        #canvas.add(make_toolbar())
+        toolbar = make_toolbar(canvas)
         toolbar.component = canvas
         canvas.overlays.append(toolbar)
+
+        #grid = CanvasGrid(component=canvas)
+        #canvas.underlays.append(grid)
 
         viewport = Viewport(component=canvas)
         viewport.tools.append(ViewportPanTool(viewport, drag_button="right"))
