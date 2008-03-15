@@ -198,6 +198,10 @@ def clone_plot(clonetool, drop_position):
 
     else:
         pz = MPPanZoom(newplot)
+        pz.pan.constrain = "True"
+        pz.pan.constrain_direction = "index"
+        pz.zoom.mode = "range"
+        pz.zoom.axis = "index"
         newplot.tools.append(MPPanZoom(newplot))
         #newplot.tools.append(MTMoveTool(
 

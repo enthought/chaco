@@ -139,7 +139,7 @@ class MPAxisTool(AxisTool):
                 event.window.capture_blob(self, event.bid,
                                           event.net_transform())
     
-    def dragging_blob_up(self, event):
+    def normal_blob_up(self, event):
         print "Axis blob up"
         if event.bid == self.cur_bid:
             if hasattr(event, "bid"):
