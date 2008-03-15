@@ -24,6 +24,7 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
 
     # Override default values of some inherited traits
     unified_draw = True
+    resizable = ""
 
     def _bounds_default(self):
         return [350, 150]
@@ -34,6 +35,10 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
         gc.clear_clip_path()
         self.overlay_component._draw(gc, view_bounds, mode)
         gc.restore_state()
+
+    # TODO: Implement this more intelligently than the one in BasePlotContainer
+    #def get_preferred_size(self):
+    #    pass
 
     def _do_layout(self):
         component = self.component

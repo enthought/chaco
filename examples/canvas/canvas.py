@@ -3,9 +3,11 @@
 The main app for the PlotCanvas application
 """
 
+MULTITOUCH = False
+DEBUG = False
+
 # Major library imports
 from copy import copy
-from random import choice
 from numpy import arange, fabs, linspace, pi, sin
 from numpy import random
 from scipy.special import jn
@@ -13,7 +15,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.api import Viewport, Window
-from enthought.enable2.tools.api import MoveTool, ViewportPanTool
+from enthought.enable2.tools.api import MoveTool, ResizeTool, ViewportPanTool
 from enthought.enable2.example_support import DemoFrame, demo_main
 from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
                                  List, Str
@@ -22,19 +24,22 @@ from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
 # Chaco imports
 from enthought.chaco2.api import AbstractOverlay, ArrayPlotData, \
         Plot, jet, ScatterPlot, LinePlot, LinearMapper
-from enthought.chaco2.example_support import COLOR_PALETTE
 from enthought.chaco2.tools.api import PanTool, SimpleZoom , LegendTool
 
 # Canvas imports
 from enthought.chaco2.plot_canvas import PlotCanvas
 from enthought.chaco2.plot_canvas_toolbar import PlotCanvasToolbar, PlotToolbarButton
 from transient_plot_overlay import TransientPlotOverlay
+from axis_tool import AxisTool, RangeController
 from plot_clone_tool import PlotCloneTool
+from data_source_button import ButtonController, DataSourceButton
 #from canvas_grid import CanvasGrid
 
+# Multitouch imports
+if MULTITOUCH:
+    from enactable.enable.mptools import MPPanTool, MPDragZoom, MPLegendTool, \
+            MPPanZoom, MPRangeSelection
 
-
-DEBUG = False
 
 NUMPOINTS = 250
 DATA = {
@@ -49,184 +54,6 @@ DATA = {
     "DELL": random.uniform(-2.0, 10.0, NUMPOINTS),
     }
 
-class ButtonController(HasTraits):
-    """ Tells buttons what to do 
-    
-    Buttons defer to this when they are activated.
-    """
-    
-    modifier = Enum("control", "shift", "alt")
-    
-    # The list of buttons that are currently "down"
-    active_buttons = List
-
-    # A reference to the Plot object that displays scatterplots of multiple
-    # dataseries
-    plot = Instance(Plot)
-
-    # The transient plot overlay housing self.plot
-    plot_overlay = Any
-
-    # The name of the scatter plot in the Plot
-    _scatterplot_name = "ButtonControllerPlot"
-
-    def notify(self, button, type, event):
-        """ Informs the controller that the particular **button** just
-        got an event.  **Type** is either "up" or "down".  Event is the
-        actual mouse event.
-        """
-        control_down = getattr(event, self.modifier + "_down", False)
-        if DEBUG:
-            print "[notify]", button.plotname, type, "control:", control_down
-        if type == "down":
-            if control_down and button in self.active_buttons:
-                self.button_deselected(button)
-            else:
-                if not control_down:
-                    # Deselect all current buttons and select the new one
-                    [self.button_deselected(b) for b in self.active_buttons \
-                            if b is not button]
-                self.button_selected(button)
-        else:  # type == "up"
-            if not control_down:
-                self.button_deselected(button)
-        return
-
-    def button_selected(self, button):
-        if DEBUG:
-            print "active:", [b.plotname for b in self.active_buttons]
-            print "new button selected:", button.plotname
-        if button in self.active_buttons:
-            return
-        numbuttons = len(self.active_buttons)
-        if numbuttons == 0:
-            self.active_buttons.append(button)
-            button.show_overlay()
-        elif numbuttons == 1:
-            self.active_buttons[0].hide_overlay()
-            self.active_buttons.append(button)
-            self.show_scatterplot(*self.active_buttons)
-        elif numbuttons == 2:
-            # Replace the last active button with the new one
-            self.active_buttons[1].button_state = "up"
-            self.active_buttons[1] = button
-            self.hide_scatterplot()
-            self.show_scatterplot(*self.active_buttons)
-        else:
-            return
-        button.button_state = "down"
-        return
-
-    def button_deselected(self, button):
-        if DEBUG:
-            print "active:", [b.plotname for b in self.active_buttons]
-            print "new button deselected:", button.plotname
-        if button not in self.active_buttons:
-            button.button_state = "up"
-            return
-        numbuttons = len(self.active_buttons)
-        if numbuttons == 1:
-            if button in self.active_buttons:
-                self.active_buttons.remove(button)
-            button.hide_overlay()
-        elif numbuttons == 2:
-            if button in self.active_buttons:
-                self.active_buttons.remove(button)
-                self.hide_scatterplot()
-                remaining_button = self.active_buttons[0]
-                remaining_button.show_overlay()
-        else:
-            return
-        button.button_state = "up"
-        return
-
-    def show_scatterplot(self, b1, b2):
-        if len(self.plot.plots) > 0:
-            self.plot.delplot(*self.plot.plots.keys())
-
-        cur_plot = self.plot.plot((b1.plotname+"_y", b2.plotname+"_y"), 
-                                  name=self._scatterplot_name,
-                                  type="scatter",
-                                  marker="square",
-                                  color=tuple(choice(COLOR_PALETTE)),
-                                  marker_size=8,
-                                  )
-        self.plot.index_axis.title = b1.plotname
-        #self.plot.value_axis.title = b2.plotname
-        self.plot.title = b1.plotname + " vs. " + b2.plotname
-        self.plot_overlay.visible = True
-        self.plot.request_redraw()
-
-    def hide_scatterplot(self):
-        if self._scatterplot_name in self.plot.plots:
-            self.plot.delplot(self._scatterplot_name)
-            self.plot.index_range.set_bounds("auto", "auto")
-            self.plot.value_range.set_bounds("auto", "auto")
-        self.plot_overlay.visible = False
-        
-
-
-class DataSourceButton(PlotToolbarButton):
-    
-    # A TransientPlotOverlay containing the timeseries plot of this datasource
-    plot_overlay = Any
-    
-    plotname = Str
-
-    canvas = Any
-    
-    #overlay_bounds = List()
-    
-    # Can't call this "controller" because it conflicts with old tool dispatch
-    button_controller = Instance(ButtonController)
-    
-    # Override inherited trait
-    label_color = (0,0,0,1)
-
-    resizable = ""
-    
-    # The overlay to display when the user holds the mouse down over us.
-    #_overlay = Instance(AbstractOverlay)
-
-    def normal_left_down(self, event):
-        self.button_state = "down"
-        self.button_controller.notify(self, "down", event)
-        event.handled = True
-        self.request_redraw()
-    
-    def normal_left_up(self, event):
-        self.button_state = "up"
-        self.button_controller.notify(self, "up", event)
-        event.handled = True
-        self.request_redraw()
-    
-    def normal_mouse_leave(self, event):
-        if event.left_down:
-            return self.normal_left_up(event)
-    
-    def normal_mouse_enter(self, event):
-        if event.left_down:
-            return self.normal_left_down(event)
-
-    def show_overlay(self):
-        if self.plot_overlay is not None:
-            self._do_layout()
-            self.plot_overlay.visible = True
-        self.request_redraw()
-        return
-
-    def hide_overlay(self):
-        if self.plot_overlay is not None:
-            self.plot_overlay.visible = False
-        self.request_redraw()
-        return
-
-    def _do_layout(self):
-        if self.canvas is not None:
-            boff = self.canvas.bounds_offset
-            self.plot_overlay.offset = (boff[0],
-                    boff[1] + self.y - self.container.y + self.height/2)
-        self.plot_overlay.do_layout()
 
 
 def add_basic_tools(plot):
@@ -271,6 +98,10 @@ def clone_renderer(r):
         return r.clone_traits(basic_traits + line_traits)
 
 def clone_plot(clonetool, drop_position):
+    # A little sketchy...
+    canvas = clonetool.component.container.component.component
+    print "Canvas:", canvas
+
     # Create a new Plot object
     oldplot = clonetool.component
     newplot = Plot(oldplot.data)
@@ -306,7 +137,6 @@ def clone_plot(clonetool, drop_position):
             new_r._layout_needed = True
             new_r.invalidate_draw()
             new_r.resizable = "hv"
-            #new_r._debug = True
             newrenderers.append(new_r)
         newplot.plots[name] = newrenderers
     #newplot.plots = copy(oldplot.plots)
@@ -315,7 +145,13 @@ def clone_plot(clonetool, drop_position):
         newplot.add(*renderers)
 
     newplot.index_axis.title = oldplot.index_axis.title
+    newplot.index_axis.unified_draw = True
     newplot.value_axis.title = oldplot.value_axis.title
+    newplot.value_axis.unified_draw = True
+
+    # Add new tools to the new plot
+    newplot.tools.append(AxisTool(component=newplot, 
+        range_controller=None)) #canvas.range_controller))
 
     # Add tools to the new plot
     pan_traits = ["drag_button", "constrain", "constrain_key", "constrain_direction",
@@ -355,6 +191,7 @@ def clone_plot(clonetool, drop_position):
     else:
         newtool = SimpleZoom(newplot)
     newplot.tools.append(newtool)
+
 
     newplot._layout_needed = True
     newplot.invalidate_draw()
@@ -425,9 +262,10 @@ def make_toolbar(canvas):
 
 class PlotFrame(DemoFrame):
 
-    def _create_window(self):
+    def _create_viewport(self):
         # Create a container and add our plots
         canvas = PlotCanvas()
+        canvas.range_controller = RangeController(cavas = canvas)
 
         toolbar = make_toolbar(canvas)
         toolbar.component = canvas
@@ -438,9 +276,33 @@ class PlotFrame(DemoFrame):
 
         viewport = Viewport(component=canvas)
         viewport.tools.append(ViewportPanTool(viewport, drag_button="right"))
+        return viewport
 
-        # Return a window containing our plots
+    def _create_window_mt(self):
+        viewport = self._create_viewport()
+
+        from enactable.configuration import arg_parser, get_global_config
+        from enactable.enable.enable_blob_listener import BlobWindow
+        from enactable.enable.blobprovider import NetworkBlobProvider
+        parser = arg_parser()
+        args = parser.parse_args()
+        cfg = get_global_config()
+        tconf = cfg.conf
+        tconf.from_arguments(args)
+
+        provider = NetworkBlobProvider(host=tconf.Server.host, port=tconf.Server.port)
+        provider.start()
+        return BlobWindow(self, -1, component=viewport, blob_provider=provider)
+    
+    def _create_window_simple(self):
+        viewport = self._create_viewport()
         return Window(self, -1, component=viewport)
+
+    def _create_window(self):
+        if MULTITOUCH:
+            return self._create_window_mt()
+        else:
+            return self._create_window_simple()
         
 if __name__ == "__main__":
     demo_main(PlotFrame, size=(1000,700), title="PlotCanvas")
