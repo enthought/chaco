@@ -30,8 +30,8 @@ from enthought.chaco2.tools.api import PanTool, SimpleZoom , LegendTool
 from enthought.chaco2.plot_canvas import PlotCanvas
 from enthought.chaco2.plot_canvas_toolbar import PlotCanvasToolbar, PlotToolbarButton
 from transient_plot_overlay import TransientPlotOverlay
-from axis_tool import AxisTool, RangeController
-from plot_clone_tool import PlotCloneTool
+from axis_tool import AxisTool, RangeController, MPAxisTool
+from plot_clone_tool import PlotCloneTool, MPPlotCloneTool
 from data_source_button import ButtonController, DataSourceButton
 #from canvas_grid import CanvasGrid
 
@@ -39,7 +39,6 @@ from data_source_button import ButtonController, DataSourceButton
 if MULTITOUCH:
     from enactable.enable.mptools import MPPanTool, MPDragZoom, MPLegendTool, \
             MPPanZoom, MPRangeSelection
-
 
 NUMPOINTS = 250
 DATA = {
@@ -100,7 +99,6 @@ def clone_renderer(r):
 def clone_plot(clonetool, drop_position):
     # A little sketchy...
     canvas = clonetool.component.container.component.component
-    print "Canvas:", canvas
 
     # Create a new Plot object
     oldplot = clonetool.component

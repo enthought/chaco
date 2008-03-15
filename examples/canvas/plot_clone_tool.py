@@ -3,7 +3,7 @@
 
 
 # Enthought library imports
-from enthought.traits.api import Bool, Callable, Enum, Float, Instance, Trait, Tuple
+from enthought.traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
 from enthought.enable2.api import Canvas, Component, Container
 
 # Chaco imports
@@ -86,4 +86,24 @@ class PlotCloneTool(AbstractOverlay, DragTool):
         self._offset = None
         self.visible = False
         self.component.request_redraw()
+
+
+class MPPlotCloneTool(PlotCloneTool):
+
+    cur_bid = Int(-1)
+
+    def normal_blob_down(self, event):
+        if self.cur_bid == -1 and self.is_draggable(event.x, event.y):
+            self.cur_bid = event.bid
+            self.drag_start(event)
+    
+    def dragging_blob_up(self, event):
+        if event.bid == self.cur_bid:
+            self.cur_bid = -1
+            self.drag_end(event)
+
+    def dragging_blob_move(self, event):
+        if event.bid == self.cur_bid:
+            self.dragging(event)
+
 
