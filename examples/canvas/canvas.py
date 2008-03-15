@@ -243,13 +243,13 @@ def make_toolbar(canvas):
     controller = ButtonController()
     for name in DATA.keys():
         plot = do_plot(name, pd)
-        if not MULTITOUCH:
+        if MULTITOUCH:
+            plot.tools.append(MPPanZoom(plot))
+        else:
             plot.tools.append(PanTool(plot, drag_button="right", constrain=True,
                                       constrain_direction="x"))
             plot.tools.append(SimpleZoom(plot, tool_mode="range", axis="index",
                                          always_on=False))
-        else:
-            plot.tools.append(MPPanZoom(plot))
         plot.overlays.append(PlotCloneTool(plot, dest=canvas,
                                            plot_cloner=clone_plot))
         plot_overlay = TransientPlotOverlay(component=toolbar,
