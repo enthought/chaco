@@ -1,19 +1,49 @@
 
 from enthought.enable2.api import BaseTool, ColorTrait
-from enthought.traits.api import Any, Bool, Enum, HasTraits, Trait
+from enthought.traits.api import Any, Bool, Dict, Enum, HasTraits, List, Trait
 
 class RangeController(HasTraits):
+
     canvas = Any
 
-    def notify(self, axistool, type, event):
+    # The list of active plots and which of their ranges was set
+    plots_ranges = List
+    
+    # Stores the old ranges
+    _ranges = Dict
+
+    def notify(self, axistool, rangename, type, event):
+        plot = axistool.component
+        range = getattr(plot, rangename)
+        if (type == "down") and ((plot, rangename) not in self.plots_ranges):
+            if len(self.plots_ranges) > 0:
+                src_plot, src_rangename = self.plots_ranges[0]
+                src_range = getattr(src_plot, src_rangename)
+                self.link(src_range, plot, rangename)
+            self.plots_ranges.append((plot, rangename))
+        else:
+            if (plot, rangename) in self.plots_ranges:
+                if len(self.plots_ranges) > 1:
+                    self.unlink(plot, rangename)
+                self.plots_ranges.remove((plot, rangename))
         return True
+
+    def link(self, src_range, dst_plot, dst_rangename):
+        self._ranges[(dst_plot, dst_rangename)] = getattr(dst_plot, dst_rangename)
+        setattr(dst_plot, dst_rangename, src_range)
+        dst_plot.request_redraw()
+
+    def unlink(self, plot, rangename):
+        setattr(plot, rangename, self._ranges.pop((plot, rangename)))
+        plot.request_redraw()
+
 
 class AxisTool(BaseTool):
 
     # The object to notify when we've been clicked
     # We notify by calling its .notify method, which should have the
     # signature:
-    #     should_handle_event = notify(axis_tool, down_or_up, event)
+    #     should_handle_event = notify(axis_tool, axis, down_or_up, event)
     #
     # It should return a bool indicating whether or not we should process the
     # event.
@@ -39,21 +69,23 @@ class AxisTool(BaseTool):
     def normal_left_down(self, event):
         if self.component is None:
             return
+        plot = self.component
+        if plot.index_axis.is_in(event.x, event.y):
+            axis = plot.index_axis
+            rangename = "index_range"
+        elif plot.value_axis.is_in(event.x, event.y):
+            axis = plot.value_axis
+            rangename = "value_range"
+        else:
+            return
 
         # If we have a controller, we let it decide whether
         # or not we get to handle the event.
         if self.range_controller is not None:
-            should_handle = self.range_controller.notify(self, "down", event)
+            should_handle = self.range_controller.notify(self, rangename, "down", event)
             if not should_handle:
                 return
 
-        plot = self.component
-        if plot.index_axis.is_in(event.x, event.y):
-            axis = plot.index_axis
-        elif plot.value_axis.is_in(event.x, event.y):
-            axis = plot.value_axis
-        else:
-            return
         for attr in self.attr_list:
             cached = "_cached_" + attr
             down = "down_" + attr
@@ -69,22 +101,27 @@ class AxisTool(BaseTool):
     def normal_left_up(self, event):
         if self.component is None:
             return
-        if self.range_controller is not None:
-            should_handle = self.range_controller.notify(self, "up", event)
-            if not should_handle:
-                return
-
         plot = self.component
         if plot.index_axis.is_in(event.x, event.y):
             axis = plot.index_axis
+            rangename = "index_range"
         elif plot.value_axis.is_in(event.x, event.y):
             axis = plot.value_axis
+            rangename = "value_range"
         else:
             return
+        
+        if self.range_controller is not None:
+            should_handle = self.range_controller.notify(self, rangename, "up", event)
+            if not should_handle:
+                return
+
         for attr in self.attr_list:
-            setattr(axis, attr, getattr(self, "_cached_" + attr))
+            cached = "_cached_" + attr
+            setattr(axis, attr, getattr(self, cached))
 
         axis.request_redraw()
         event.handled = True
         return
+
 

@@ -151,7 +151,7 @@ def clone_plot(clonetool, drop_position):
 
     # Add new tools to the new plot
     newplot.tools.append(AxisTool(component=newplot, 
-        range_controller=None)) #canvas.range_controller))
+        range_controller=canvas.range_controller))
 
     # Add tools to the new plot
     pan_traits = ["drag_button", "constrain", "constrain_key", "constrain_direction",
