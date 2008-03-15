@@ -39,9 +39,9 @@ from mp_viewport_pan_tool import MPViewportPanTool
 
 # Multitouch imports
 if MULTITOUCH:
-    from enactable.enable.mptools import MPPanTool, MPDragZoom, MPLegendTool, \
+    from mptools import MPPanTool, MPDragZoom, MPLegendTool, \
             MPPanZoom, MPRangeSelection
-    AxisTool = MPAxisTool
+    #AxisTool = MPAxisTool
     PlotCloneTool = MPPlotCloneTool
 
 NUMPOINTS = 250
@@ -198,17 +198,19 @@ def clone_plot(clonetool, drop_position):
 
     else:
         pz = MPPanZoom(newplot)
-        pz.pan.constrain = "True"
-        pz.pan.constrain_direction = "index"
-        pz.zoom.mode = "range"
-        pz.zoom.axis = "index"
+        #pz.pan.constrain = True
+        #pz.pan.constrain_direction = "x"
+        #pz.zoom.mode = "range"
+        #pz.zoom.axis = "index"
         newplot.tools.append(MPPanZoom(newplot))
         #newplot.tools.append(MTMoveTool(
 
     newplot._layout_needed = True
-    newplot.invalidate_draw()
 
     clonetool.dest.add(newplot)
+    newplot.invalidate_draw()
+    newplot.request_redraw()
+    canvas.request_redraw()
     return
 
     
@@ -263,7 +265,7 @@ def make_toolbar(canvas):
                                             )
         plot.container = plot_overlay
         button = DataSourceButton(label=name, 
-                                  bounds=[60,24],
+                                  bounds=[80,46],
                                   padding = 5,
                                   button_controller = controller,
                                   #canvas = canvas,

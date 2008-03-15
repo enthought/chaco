@@ -15,3 +15,6 @@ class MPMoveTool(MoveTool):
         if event.bid == self.cur_bid:
             self.cur_bid = -1
             self.normal_left_up(event)
+
+
+

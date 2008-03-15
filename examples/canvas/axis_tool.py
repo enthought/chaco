@@ -133,11 +133,11 @@ class MPAxisTool(AxisTool):
     def normal_blob_down(self, event):
         if self.cur_bid == -1:
             self.cur_bid = event.bid
-            self.normal_left_down(event)
-            self._last_blob_pos = (event.x, event.y)
             if hasattr(event, "bid"):
                 event.window.capture_blob(self, event.bid,
                                           event.net_transform())
+            self.normal_left_down(event)
+            self._last_blob_pos = (event.x, event.y)
     
     def normal_blob_up(self, event):
         print "Axis blob up"
