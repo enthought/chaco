@@ -27,7 +27,7 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
     resizable = ""
 
     def _bounds_default(self):
-        return [350, 150]
+        return [450, 250]
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         self._do_layout()

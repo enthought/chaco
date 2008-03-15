@@ -92,7 +92,7 @@ class MPPlotCloneTool(PlotCloneTool):
 
     cur_bid = Int(-1)
 
-    #_last_blob_pos = Tuple
+    _last_blob_pos = Tuple
 
     def normal_blob_down(self, event):
         if self.cur_bid == -1 and self.is_draggable(event.x, event.y):
@@ -107,7 +107,7 @@ class MPPlotCloneTool(PlotCloneTool):
     def dragging_blob_move(self, event):
         if event.bid == self.cur_bid:
             self.dragging(event)
-            #self._last_blob_pos = (event.x, event.y)
+            self._last_blob_pos = (event.x, event.y)
 
     def drag_start(self, event):
         if self.component:
@@ -127,5 +127,10 @@ class MPPlotCloneTool(PlotCloneTool):
         if hasattr(event, "bid"):
             event.window.release_blob(event.bid)
         self.event_state = "normal"
-        #event.x, event.y = self._last_blob_pos
-        PlotCloneTool.drag_end(self, event)
+        if self.plot_cloner is not None:
+            offset = self._offset_from_plot
+            drop_position = self._last_blob_pos
+            if len(drop_position) == 2:
+                self.plot_cloner(self, (drop_position[0] - offset[0],
+                                        drop_position[1] - offset[1]))
+        self._offset = None

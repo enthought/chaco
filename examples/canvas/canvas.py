@@ -3,7 +3,7 @@
 The main app for the PlotCanvas application
 """
 
-MULTITOUCH = False
+MULTITOUCH = True
 DEBUG = False
 
 # Major library imports
@@ -71,7 +71,7 @@ def do_plot(name, pd):
     pd.set_data(xname, range(len(DATA[name])))
     pd.set_data(yname, DATA[name])
     
-    plot = Plot(pd, padding = 15,
+    plot = Plot(pd, padding = 30,
                 unified_draw = True,
                 border_visible = True,
                 )
@@ -286,7 +286,7 @@ class PlotFrame(DemoFrame):
         canvas.overlays.append(toolbar)
 
         viewport = Viewport(component=canvas)
-        if not MULTITOUCH:
+        if MULTITOUCH:
             viewport.tools.append(MPViewportPanTool(viewport))
         else:
             viewport.tools.append(ViewportPanTool(viewport, drag_button="right"))
@@ -301,7 +301,7 @@ class PlotFrame(DemoFrame):
         parser = arg_parser()
         args = parser.parse_args()
         cfg = get_global_config()
-        tconf = cfg.conf
+        tconf = cfg.tconf
         tconf.from_arguments(args)
 
         provider = NetworkBlobProvider(host=tconf.Server.host, port=tconf.Server.port)

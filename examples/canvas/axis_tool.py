@@ -1,6 +1,6 @@
 
 from enthought.enable2.api import BaseTool, ColorTrait
-from enthought.traits.api import Any, Bool, Dict, Enum, HasTraits, Int, List, Trait
+from enthought.traits.api import Any, Bool, Dict, Enum, HasTraits, Int, List, Trait, Tuple
 
 class RangeController(HasTraits):
 
@@ -128,19 +128,23 @@ class AxisTool(BaseTool):
 class MPAxisTool(AxisTool):
 
     cur_bid = Int(-1)
+    _last_blob_pos = Tuple
 
     def normal_blob_down(self, event):
         if self.cur_bid == -1:
             self.cur_bid = event.bid
             self.normal_left_down(event)
+            self._last_blob_pos = (event.x, event.y)
             if hasattr(event, "bid"):
                 event.window.capture_blob(self, event.bid,
                                           event.net_transform())
     
     def dragging_blob_up(self, event):
+        print "Axis blob up"
         if event.bid == self.cur_bid:
             if hasattr(event, "bid"):
                 event.window.release_blob(event.bid)
             self.cur_bid = -1
+            event.x, event.y = self._last_blob_pos
             self.normal_left_up(event)
 
