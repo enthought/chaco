@@ -1,6 +1,6 @@
 
 from enthought.enable2.api import BaseTool, ColorTrait
-from enthought.traits.api import Any, Bool, Dict, Enum, HasTraits, List, Trait
+from enthought.traits.api import Any, Bool, Dict, Enum, HasTraits, Int, List, Trait
 
 class RangeController(HasTraits):
 

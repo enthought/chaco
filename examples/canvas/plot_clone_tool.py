@@ -106,4 +106,21 @@ class MPPlotCloneTool(PlotCloneTool):
         if event.bid == self.cur_bid:
             self.dragging(event)
 
+    def drag_start(self, event):
+        if self.component:
+            self.original_padding = self.component.padding
+            if hasattr(event, "bid"):
+                event.window.capture_blob(self, event.bid,
+                                          event.net_transform())
+            else:
+                event.window.set_mouse_owner(self, event.net_transform())
+            self.mouse_down_position = (event.x,event.y)
+            self.event_state = "dragging"
+            event.handled = True
+        return
 
+    def drag_end(self, event):
+        if hasattr(event, "bid"):
+            event.window.release_blob(event.bid)
+        self.event_state = "normal"
+        PlotCloneTool.drag_end(self, event)

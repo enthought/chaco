@@ -33,12 +33,16 @@ from transient_plot_overlay import TransientPlotOverlay
 from axis_tool import AxisTool, RangeController, MPAxisTool
 from plot_clone_tool import PlotCloneTool, MPPlotCloneTool
 from data_source_button import ButtonController, DataSourceButton
+from mp_move_tool import MPMoveTool
+from mp_viewport_pan_tool import MPViewportPanTool
 #from canvas_grid import CanvasGrid
 
 # Multitouch imports
 if MULTITOUCH:
     from enactable.enable.mptools import MPPanTool, MPDragZoom, MPLegendTool, \
             MPPanZoom, MPRangeSelection
+    AxisTool = MPAxisTool
+    PlotCloneTool = MPPlotCloneTool
 
 NUMPOINTS = 250
 DATA = {
@@ -160,36 +164,42 @@ def clone_plot(clonetool, drop_position):
                    "minimum_screen_delta", "max_zoom_in_factor", "max_zoom_out_factor"]
     move_traits = ["drag_button", "end_drag_on_leave", "cancel_keys", "capture_mouse",
                    "modifier_key"]
-    for tool in oldplot.tools:
-        if isinstance(tool, PanTool):
-            newtool = tool.clone_traits(pan_traits)
-            newtool.component = newplot
-            break
-    else:
-        newtool = PanTool(newplot)
-    # Reconfigure the pan tool to always use the left mouse, because we will
-    # put plot move on the right mouse button
-    newtool.drag_button = "left"
-    newplot.tools.append(newtool)
 
-    for tool in oldplot.tools:
-        if isinstance(tool, MoveTool):
-            newtool = tool.clone_traits(move_traits)
-            newtool.component = newplot
-            break
-    else:
-        newtool = MoveTool(newplot, drag_button="right")
-    newplot.tools.append(newtool)
+    if not MULTITOUCH:
+        for tool in oldplot.tools:
+            if isinstance(tool, PanTool):
+                newtool = tool.clone_traits(pan_traits)
+                newtool.component = newplot
+                break
+        else:
+            newtool = PanTool(newplot)
+        # Reconfigure the pan tool to always use the left mouse, because we will
+        # put plot move on the right mouse button
+        newtool.drag_button = "left"
+        newplot.tools.append(newtool)
 
-    for tool in oldplot.tools:
-        if isinstance(tool, SimpleZoom):
-            newtool = tool.clone_traits(zoom_traits)
-            newtool.component = newplot
-            break
-    else:
-        newtool = SimpleZoom(newplot)
-    newplot.tools.append(newtool)
+        for tool in oldplot.tools:
+            if isinstance(tool, MoveTool):
+                newtool = tool.clone_traits(move_traits)
+                newtool.component = newplot
+                break
+        else:
+            newtool = MoveTool(newplot, drag_button="right")
+        newplot.tools.append(newtool)
 
+        for tool in oldplot.tools:
+            if isinstance(tool, SimpleZoom):
+                newtool = tool.clone_traits(zoom_traits)
+                newtool.component = newplot
+                break
+        else:
+            newtool = SimpleZoom(newplot)
+        newplot.tools.append(newtool)
+
+    else:
+        pz = MPPanZoom(newplot)
+        newplot.tools.append(MPPanZoom(newplot))
+        #newplot.tools.append(MTMoveTool(
 
     newplot._layout_needed = True
     newplot.invalidate_draw()
@@ -212,10 +222,13 @@ def make_toolbar(canvas):
     pd = ArrayPlotData()
     scatterplot = Plot(pd, padding=15, bgcolor="white", unified_draw=True,
                        border_visible=True)
-    scatterplot.tools.append(PanTool(scatterplot, drag_button="right"))
+    if not MULTITOUCH:
+        scatterplot.tools.append(PanTool(scatterplot, drag_button="right"))
+        scatterplot.tools.append(SimpleZoom(scatterplot))
+    else:
+        scatterplot.tools.append(MPPanZoom(scatterplot))
     scatterplot.overlays.append(PlotCloneTool(scatterplot, dest=canvas,
                                               plot_cloner=clone_plot))
-    scatterplot.tools.append(SimpleZoom(scatterplot))
 
     # Create the overlay
     overlay = TransientPlotOverlay(component=toolbar,
@@ -230,10 +243,13 @@ def make_toolbar(canvas):
     controller = ButtonController()
     for name in DATA.keys():
         plot = do_plot(name, pd)
-        plot.tools.append(PanTool(plot, drag_button="right", constrain=True,
-                                  constrain_direction="x"))
-        plot.tools.append(SimpleZoom(plot, tool_mode="range", axis="index",
-                                     always_on=False))
+        if not MULTITOUCH:
+            plot.tools.append(PanTool(plot, drag_button="right", constrain=True,
+                                      constrain_direction="x"))
+            plot.tools.append(SimpleZoom(plot, tool_mode="range", axis="index",
+                                         always_on=False))
+        else:
+            plot.tools.append(MPPanZoom(plot))
         plot.overlays.append(PlotCloneTool(plot, dest=canvas,
                                            plot_cloner=clone_plot))
         plot_overlay = TransientPlotOverlay(component=toolbar,
@@ -269,11 +285,11 @@ class PlotFrame(DemoFrame):
         toolbar.component = canvas
         canvas.overlays.append(toolbar)
 
-        #grid = CanvasGrid(component=canvas)
-        #canvas.underlays.append(grid)
-
         viewport = Viewport(component=canvas)
-        viewport.tools.append(ViewportPanTool(viewport, drag_button="right"))
+        if not MULTITOUCH:
+            viewport.tools.append(MPViewportPanTool(viewport))
+        else:
+            viewport.tools.append(ViewportPanTool(viewport, drag_button="right"))
         return viewport
 
     def _create_window_mt(self):
