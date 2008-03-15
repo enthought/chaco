@@ -31,6 +31,7 @@ class MPViewportPanTool(ViewportPanTool):
             self.mouse_down_position = (event.x,event.y)
             self.event_state = "dragging"
             event.handled = True
+            ViewportPanTool.drag_start(self, event)
         return
 
     def drag_end(self, event):

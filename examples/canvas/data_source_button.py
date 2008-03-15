@@ -33,7 +33,8 @@ class ButtonController(HasTraits):
         got an event.  **Type** is either "up" or "down".  Event is the
         actual mouse event.
         """
-        control_down = getattr(event, self.modifier + "_down", False)
+        #control_down = getattr(event, self.modifier + "_down", False)
+        control_down = True
         if DEBUG:
             print "[notify]", button.plotname, type, "control:", control_down
         if type == "down":
@@ -46,7 +47,8 @@ class ButtonController(HasTraits):
                             if b is not button]
                 self.button_selected(button)
         else:  # type == "up"
-            if not control_down:
+            #if not control_down:
+            if 1:
                 self.button_deselected(button)
         return
 
