@@ -133,9 +133,14 @@ class MPAxisTool(AxisTool):
         if self.cur_bid == -1:
             self.cur_bid = event.bid
             self.normal_left_down(event)
+            if hasattr(event, "bid"):
+                event.window.capture_blob(self, event.bid,
+                                          event.net_transform())
     
     def dragging_blob_up(self, event):
         if event.bid == self.cur_bid:
+            if hasattr(event, "bid"):
+                event.window.release_blob(event.bid)
             self.cur_bid = -1
             self.normal_left_up(event)
 
