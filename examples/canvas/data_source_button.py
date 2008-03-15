@@ -1,6 +1,6 @@
 
 from random import choice
-from enthought.traits.api import Any, Enum, HasTraits, Instance, List, Str
+from enthought.traits.api import Any, Enum, HasTraits, Instance, Int, List, Str
 from enthought.chaco2.example_support import COLOR_PALETTE
 from enthought.chaco2.api import Plot
 from enthought.chaco2.plot_canvas_toolbar import PlotToolbarButton
@@ -142,6 +142,8 @@ class DataSourceButton(PlotToolbarButton):
     label_color = (0,0,0,1)
 
     resizable = ""
+
+    cur_bid = Int(-1)
     
     # The overlay to display when the user holds the mouse down over us.
     #_overlay = Instance(AbstractOverlay)
@@ -157,6 +159,16 @@ class DataSourceButton(PlotToolbarButton):
         self.button_controller.notify(self, "up", event)
         event.handled = True
         self.request_redraw()
+
+    def normal_blob_down(self, event):
+        if self.cur_bid == -1:
+            self.cur_bid = event.bid
+            self.normal_left_down(event)
+    
+    def dragging_blob_up(self, event):
+        if event.bid == self.cur_bid:
+            self.cur_bid = -1
+            self.normal_left_up(event)
     
     def normal_mouse_leave(self, event):
         if event.left_down:
