@@ -416,6 +416,18 @@ class PlotAxis(AbstractOverlay):
                 h_offset += max([l._bounding_box[0] for l in self.ticklabel_cache]) 
             offset = array([self._origin_point[0] - h_offset, self._origin_point[1] + v_offset])
 
+        elif self.title_angle == 270:
+            # Center the text vertically
+            if calculate_v_offset:
+                if not self.ticklabel_cache:
+                    v_offset = 25
+                else:
+                    v_offset = (self._end_axis_point[1] - self._origin_point[1] + tl_bounds[0])/2.0
+            h_offset = self.tick_out + tl_bounds[1] + 8
+            if len(self.ticklabel_cache) > 0:
+                h_offset += max([l._bounding_box[0] for l in self.ticklabel_cache]) 
+            offset = array([self._origin_point[0] + h_offset, self._origin_point[1] + v_offset])
+
         else:
             if calculate_v_offset:
                 if not self.ticklabel_cache:
@@ -651,7 +663,10 @@ class PlotAxis(AbstractOverlay):
                 flip_from_gc = True
             else: 
                 flip_from_gc = False
-            self.title_angle = 90.0
+            if self.orientation == 'left':
+                self.title_angle = 90.0
+            else:
+                self.title_angle = 270.0                
 
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
