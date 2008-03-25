@@ -17,8 +17,10 @@ class TabbedPlots(HasTraits):
     plot2 = Instance(Plot)
 
     view = View(Group(
-                   Item('plot1', editor=PlotContainerEditor(), show_label=False),
-                   Item('plot2', editor=PlotContainerEditor(), show_label=False),
+                   Item('plot1', editor=PlotContainerEditor(), 
+                        dock='tab', show_label=False),
+                   Item('plot2', editor=PlotContainerEditor(), 
+                        dock='tab', show_label=False),
                    layout="tabbed"),
                 width=800,
                 height=600,
