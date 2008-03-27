@@ -89,6 +89,9 @@ class PlotAxis(AbstractOverlay):
     # The font of the title.
     title_font = KivaFont('modern 12')
 
+    # The spacing between the axis line and the title
+    title_spacing = Trait('auto', 'auto', Float)
+
     # The color of the title.
     title_color = black_color_trait
 
@@ -380,6 +383,7 @@ class PlotAxis(AbstractOverlay):
         """
         #put in rotation code for right side
 
+
         if label is None:
             title_label = Label(text=self.title,
                                 font=self.title_font,
@@ -389,7 +393,9 @@ class PlotAxis(AbstractOverlay):
             title_label = label
         tl_bounds = array(title_label.get_width_height(gc), float64)
 
-        calculate_v_offset = v_offset is None
+        if self.title_spacing != 'auto':
+            v_offset = self.title_spacing
+        calculate_v_offset = self.title_spacing == 'auto'
         
         if self.title_angle == 0:
             text_center_to_corner = -tl_bounds/2.0
