@@ -46,6 +46,9 @@ class ContourLinePlot(Base2DPlot):
     # for full intensity.
     alpha = Trait(1.0, Range(0.0, 1.0))
 
+    # If present, the color mapper for the colorbar to look at.
+    color_mapper = Property(Instance("ColorMapper"))
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -292,3 +295,12 @@ class ContourLinePlot(Base2DPlot):
             self._update_colors()
             self.invalidate_draw()
 
+    #------------------------------------------------------------------------
+    # Trait properties
+    #------------------------------------------------------------------------
+
+    def _get_color_mapper(self):
+        if isinstance(self.colors, ColorMapper):
+            return self.colors
+        else:
+            return None
