@@ -6,8 +6,8 @@ from numpy import array
 from enthought.enable2.api import white_color_trait
 from enthought.kiva import STROKE, font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
-from enthought.traits.api import Any, Dict, Enum, false, HasTraits, Int, \
-                                 Instance, List, true, Trait
+from enthought.traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
+                                 Instance, List, Trait
 
 # Local relative imports
 from abstract_overlay import AbstractOverlay
@@ -105,6 +105,14 @@ class Legend(AbstractOverlay):
     # alphabetical order.  Otherwise, only the items in the **labels**
     # list are drawn in the legend.  Labels are ordered from top to bottom.
     labels = List
+
+    # Whether or not to hide plots that are not visible.  (This is checked during
+    # layout.)  This option *will* filter out the items in **labels** above, so
+    # if you absolutely, positively want to set the items that will always
+    # display in the legend, regardless of anything else, then you should turn
+    # this option off.  Otherwise, it usually makes sense that a plot renderer
+    # that is not visible will also not be in the legend.
+    hide_invisible_plots = Bool(True)
 
     # The renderer that draws the icons for the legend.
     composite_icon_renderer = Instance(AbstractCompositeIconRenderer)
@@ -264,6 +272,24 @@ class Legend(AbstractOverlay):
                 self._cached_label_names = []
                 self.outer_bounds = [0, 0]
                 return
+
+        if self.hide_invisible_plots:
+            visible_labels = []
+            for name in label_names:
+                val = self.plots[name]
+                # Rather than checking for a list/TraitListObject/etc., we just check
+                # for the attribute first
+                if hasattr(val, 'visible'):
+                    if val.visible:
+                        visible_labels.append(name)
+                else:
+                    # If we have a list of renderers, add the name if any of them are
+                    # visible
+                    for renderer in val:
+                        if renderer.visible:
+                            visible_labels.append(name)
+                            break
+            label_names = visible_labels
 
         # Create the labels
         labels = [Label(text=text, font=self.font, margin=0, bgcolor="transparent",
