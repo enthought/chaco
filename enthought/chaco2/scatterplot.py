@@ -117,8 +117,12 @@ class ScatterPlot(BaseXYPlot):
         #
         # For now, we just use slicing to assign the X and Y arrays.
         data_array = asarray(data_array)
-        x_ary = data_array[:, 0]
-        y_ary = data_array[:, 1]
+        if len(data_array.shape) == 1:
+            x_ary = data_array[0]
+            y_ary = data_array[1]
+        else:
+            x_ary = data_array[:, 0]
+            y_ary = data_array[:, 1]
 
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
