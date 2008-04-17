@@ -113,7 +113,15 @@ class LassoSelection(AbstractController):
         """
         self.selecting_left_up(event)
         return
+
+    def normal_key_pressed(self, event):
+        """ Handles the user pressing a key in the 'normal' state.
         
+        If the user presses the Escape key, the tool is reset.
+        """
+        if event.character == "Esc":
+            self._reset()
+        return
     #----------------------------------------------------------------------
     # Protected Methods
     #----------------------------------------------------------------------
@@ -121,14 +129,18 @@ class LassoSelection(AbstractController):
     def _dataspace_points_default(self):
         return empty((0,2))
     
+    def _reset(self):
+        self.event_state='normal'
+        self.dataspace_points = empty((0,2))
+        self._update_selection()
+    
     def _update_selection(self):
-        if len(self.dataspace_points)>0:
-            selected_mask = points_in_polygon(self._get_data(), self.dataspace_points, False)
-            if sometrue(selected_mask) and self.selection_mode == "exclude":
-                selected_mask = 1 - selected_mask
-            if sometrue(selected_mask != self.selection_datasource.metadata['selection']):
-                self.selection_datasource.metadata['selection'] = selected_mask
-                self.selection_changed = True
+        selected_mask = points_in_polygon(self._get_data(), self.dataspace_points, False)
+        if sometrue(selected_mask) and self.selection_mode == "exclude":
+            selected_mask = 1 - selected_mask
+        if sometrue(selected_mask != self.selection_datasource.metadata['selection']):
+            self.selection_datasource.metadata['selection'] = selected_mask
+            self.selection_changed = True
         return
         
     def _map_screen(self, points):
