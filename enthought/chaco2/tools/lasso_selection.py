@@ -1,11 +1,12 @@
 """ Defines the LassoSelection controller class.
 """
 # Major library imports
+import numpy
 from numpy import array, asarray, empty, sometrue, transpose, vstack, zeros
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Enum, Event, false, Instance, \
-                                 Property, Trait, true
+from enthought.traits.api import Any, Array, Enum, Event, Bool, Instance, \
+                                 Property, Trait, true, List, Property
 from enthought.kiva.agg import points_in_polygon
 
 # Chaco imports
@@ -18,8 +19,11 @@ class LassoSelection(AbstractController):
     "Lassoing" means drawing an arbitrary selection region around the points
     by dragging the mouse along the outline of the region.
     """
-    # An Nx2 array of points in data space representing the polygon.
-    dataspace_points = Array
+    # An Nx2 array of points in data space representing all selected points.
+    dataspace_points = Property(Array)
+    
+    # A list of all the selection polygons.
+    disjoint_selections = Property(List)
     
     # Fires whenever **dataspace_points** changes, necessitating a redraw of the
     # selection region.
@@ -33,7 +37,7 @@ class LassoSelection(AbstractController):
     
     # If True, the selection mask is updated as the mouse moves, rather
     # than only at the beginning and end of the selection operation.
-    incremental_select = false
+    incremental_select = Bool(False)
     
     # The selection mode of the lasso pointer: "include" or "exclude" points
     # from the selection. The two settings essentially invert the selection mask.
@@ -65,6 +69,36 @@ class LassoSelection(AbstractController):
     # The PlotComponent associated with this tool.
     _plot = Trait(None, Any)
 
+    # To support multiple selections, a list of cached selections and the
+    # active selection are maintained. A single list is not used because the
+    # active selection is re-created every time a new point is added via
+    # the vstack function.
+    _active_selection = Array
+    _cached_selections = List(Array)
+    
+    #----------------------------------------------------------------------
+    # Properties
+    #----------------------------------------------------------------------
+    
+    def _get_dataspace_points(self):
+        """ Returns a complete list of all selected points. 
+        
+            This property exists for backwards compatibility, as the 
+            disjoint_selections property is almost always the preferred 
+            method of accessingselected points
+        """
+        composite = empty((0,2))
+        for region in self.disjoint_selections:
+            if len(region) > 0:
+                composite = vstack((composite, region))
+
+        return composite
+    
+    def _get_disjoint_selections(self):
+        """ Returns a list of all disjoint selections composed of 
+            the previous selections and the active selection
+        """
+        return self._cached_selections + [self._active_selection]
     
     #----------------------------------------------------------------------
     # Event Handlers
@@ -77,10 +111,21 @@ class LassoSelection(AbstractController):
         Puts the tool into 'selecting' mode, and starts defining the selection.
         """
         # We may want to generalize this for the n-dimensional case...
+        
+        self._active_selection = empty((0,2))
+
         self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()))
-        self.dataspace_points = empty((0,2))
         self.event_state = 'selecting'
         self.selecting_mouse_move(event)
+        
+        if (not event.shift_down) and (not event.control_down):
+            self._cached_selections = []
+        else:
+            if event.control_down:
+                selection_mode = "exclude"
+            else:
+                selection_mode = "include"
+            
         return
         
     def selecting_left_up(self, event):
@@ -91,6 +136,8 @@ class LassoSelection(AbstractController):
         self.event_state = 'normal'
         self.selection_completed = True
         self._update_selection()
+        
+        self._cached_selections.append(self._active_selection)
         return
 
     def selecting_mouse_move(self, event):
@@ -99,10 +146,11 @@ class LassoSelection(AbstractController):
         The selection is extended to the current mouse position.
         """
         new_point = self._map_data(array((event.x, event.y)))
-        self.dataspace_points = vstack((self.dataspace_points, array((new_point,))))
+        self._active_selection = vstack((self._active_selection, array((new_point,))))
         self.updated = True
         if self.incremental_select:
             self._update_selection()
+            
         return
 
     def selecting_mouse_leave(self, event):
@@ -122,6 +170,7 @@ class LassoSelection(AbstractController):
         if event.character == "Esc":
             self._reset()
         return
+        
     #----------------------------------------------------------------------
     # Protected Methods
     #----------------------------------------------------------------------
@@ -131,11 +180,19 @@ class LassoSelection(AbstractController):
     
     def _reset(self):
         self.event_state='normal'
-        self.dataspace_points = empty((0,2))
+        self._active_selection = empty((0,2))
+        self._cached_selections = []
         self._update_selection()
     
     def _update_selection(self):
-        selected_mask = points_in_polygon(self._get_data(), self.dataspace_points, False)
+        
+        selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.int32)
+        data = self._get_data()
+        
+        # compose the selection mask from the disjoint selections
+        for selection in self.disjoint_selections:
+            selected_mask |= (points_in_polygon(data, selection, False))
+        
         if sometrue(selected_mask) and self.selection_mode == "exclude":
             selected_mask = 1 - selected_mask
         if sometrue(selected_mask != self.selection_datasource.metadata['selection']):

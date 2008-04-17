@@ -57,17 +57,18 @@ class LassoOverlay(AbstractOverlay):
         try:
             # We may need to make map_screen more flexible in the number of dimensions
             # it accepts for ths to work well.
-            points = self.component.map_screen(self.lasso_selection.dataspace_points)
-            if len(points) == 0:
-                return
-            points = concatenate((points, points[0, newaxis]), axis=0)
-            gc.set_line_width(self.border_width)
-            gc.set_line_dash(self.selection_border_dash_)
-            gc.set_fill_color(self.selection_fill_color_)
-            gc.set_stroke_color(self.selection_border_color_)
-            gc.set_alpha(self.selection_alpha)
-            gc.lines(points)
-            gc.draw_path()
+            for selection in self.lasso_selection.disjoint_selections:
+                points = self.component.map_screen(selection)
+                if len(points) == 0:
+                    return
+                points = concatenate((points, points[0, newaxis]), axis=0)
+                gc.set_line_width(self.border_width)
+                gc.set_line_dash(self.selection_border_dash_)
+                gc.set_fill_color(self.selection_fill_color_)
+                gc.set_stroke_color(self.selection_border_color_)
+                gc.set_alpha(self.selection_alpha)
+                gc.lines(points)
+                gc.draw_path()
         finally:
             gc.restore_state()
         
