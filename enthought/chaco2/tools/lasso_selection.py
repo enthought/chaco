@@ -39,9 +39,13 @@ class LassoSelection(AbstractController):
     # than only at the beginning and end of the selection operation.
     incremental_select = Bool(False)
     
-    # The selection mode of the lasso pointer: "include" or "exclude" points
-    # from the selection. The two settings essentially invert the selection mask.
-    selection_mode = Enum("include", "exclude")
+    # The selection mode of the lasso pointer: "include", "exclude" or 
+    # "invert" points from the selection. The "include" and "exclude" 
+    # settings essentially invert the selection mask. The "invert" setting
+    # differs from "exclude" in that "invert" inverses the selection of all 
+    # points the the lasso'ed polygon, while "exclude" operates only on
+    # points included in a previous selection.
+    selection_mode = Enum("include", "exclude", "invert")
     
     # The data source that the mask of selected points is attached to.  Note
     # that the indices in this data source must match the indices of the data 
@@ -170,6 +174,13 @@ class LassoSelection(AbstractController):
         """
         if event.character == "Esc":
             self._reset()
+        elif event.character == 'a' and event.control_down:
+            self._reset()
+            self._select_all()
+        elif event.character == 'i' and event.control_down:
+            self.selecting_left_up(None)
+            self.selection_mode = 'invert'
+            self._select_all()
         return
         
     #----------------------------------------------------------------------
@@ -184,6 +195,24 @@ class LassoSelection(AbstractController):
         self._active_selection = empty((0,2))
         self._cached_selections = []
         self._update_selection()
+
+    def _select_all(self):
+        """ Uses mouse events to select the entire plot.
+        
+            Mouse events are used instead of just picking in the points
+            from the value and index for two reasons:
+             1. n-dimensional plots may require different logic, which would
+                benefit from only occurring once in the code
+             2. 
+         """
+        points = [self._map_data(array((self.plot.x, self.plot.y2))),
+                  self._map_data(array((self.plot.x2, self.plot.y2))),
+                  self._map_data(array((self.plot.x2, self.plot.y))),
+                  self._map_data(array((self.plot.x, self.plot.y)))]
+                  
+        self._active_selection = numpy.array(points)
+        self._update_selection()
+    
     
     def _update_selection(self):
         
@@ -199,6 +228,8 @@ class LassoSelection(AbstractController):
             
         if self.selection_mode == 'exclude':
             selected_mask &= -1 * (points_in_polygon(data, self._active_selection, False)-1)
+        elif self.selection_mode == 'invert':
+            selected_mask = -1 * (selected_mask -points_in_polygon(data, self._active_selection, False))
         else:
             selected_mask |= (points_in_polygon(data, self._active_selection, False))        
             
