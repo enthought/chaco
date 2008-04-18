@@ -191,20 +191,19 @@ class LassoSelection(AbstractController):
         return empty((0,2))
     
     def _reset(self):
+        """ Resets the selection
+        """
         self.event_state='normal'
         self._active_selection = empty((0,2))
         self._cached_selections = []
         self._update_selection()
 
     def _select_all(self):
-        """ Uses mouse events to select the entire plot.
-        
-            Mouse events are used instead of just picking in the points
-            from the value and index for two reasons:
-             1. n-dimensional plots may require different logic, which would
-                benefit from only occurring once in the code
-             2. 
-         """
+        """ Selects all points in the plot. This is done by making a rectangle
+            using the corners of the plot, which is simple but effective. A
+            much cooler, but more time-intensive solution would be to make
+            a selection polygon representing the convex hull.
+        """
         points = [self._map_data(array((self.plot.x, self.plot.y2))),
                   self._map_data(array((self.plot.x2, self.plot.y2))),
                   self._map_data(array((self.plot.x2, self.plot.y))),
@@ -215,6 +214,9 @@ class LassoSelection(AbstractController):
     
     
     def _update_selection(self):
+        """ Sets the selection datasource's 'selection' metadata element
+            to a mask of all the points selected
+        """
         
         selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.int32)
         data = self._get_data()
