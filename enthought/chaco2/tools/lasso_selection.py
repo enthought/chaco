@@ -115,6 +115,7 @@ class LassoSelection(AbstractController):
         self._active_selection = empty((0,2))
 
         self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()))
+        self.selection_mode = "include"
         self.event_state = 'selecting'
         self.selecting_mouse_move(event)
         
@@ -122,9 +123,9 @@ class LassoSelection(AbstractController):
             self._cached_selections = []
         else:
             if event.control_down:
-                selection_mode = "exclude"
+                self.selection_mode = "exclude"
             else:
-                selection_mode = "include"
+                self.selection_mode = "include"
             
         return
         
@@ -189,12 +190,18 @@ class LassoSelection(AbstractController):
         selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.int32)
         data = self._get_data()
         
-        # compose the selection mask from the disjoint selections
-        for selection in self.disjoint_selections:
-            selected_mask |= (points_in_polygon(data, selection, False))
+        # Compose the selection mask from the cached selections first, then
+        # the active selection, taking into account the selection mode only
+        # for the active selection
         
-        if sometrue(selected_mask) and self.selection_mode == "exclude":
-            selected_mask = 1 - selected_mask
+        for selection in self._cached_selections:
+            selected_mask |= (points_in_polygon(data, selection, False))
+            
+        if self.selection_mode == 'exclude':
+            selected_mask &= -1 * (points_in_polygon(data, self._active_selection, False)-1)
+        else:
+            selected_mask |= (points_in_polygon(data, self._active_selection, False))        
+            
         if sometrue(selected_mask != self.selection_datasource.metadata['selection']):
             self.selection_datasource.metadata['selection'] = selected_mask
             self.selection_changed = True
