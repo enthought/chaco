@@ -1,4 +1,6 @@
-""" This module is not currently used.
+""" This module is a cut-n-paste job of axis.py.  This is meant to be a
+a temporary solution until we merge the Scales functionality into the
+mainline of Chaco development.
 """
 # Major library import
 from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
@@ -204,11 +206,14 @@ class PlotAxis(AbstractOverlay):
     # Public methods
     #------------------------------------------------------------------------
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, component=None, **kwargs):
         # TODO: change this back to a factory in the instance trait some day
         self.tick_generator = DefaultTickGenerator()
+        # Override init so that our component gets set last.  We want the
+        # _component_changed() event handler to get run last.
         super(PlotAxis, self).__init__(**kwargs)
-
+        if component is not None:
+            self.component = component
 
     def invalidate(self):
         """
@@ -702,11 +707,12 @@ class PlotAxis(AbstractOverlay):
 
     def _bounds_changed(self, old, new):
         super(PlotAxis, self)._bounds_changed(old, new)
+        self._layout_needed = True
         self._invalidate()
-#        self._request_redraw()
 
     def _bounds_items_changed(self, event):
         super(PlotAxis, self)._bounds_items_changed(event)
+        self._layout_needed = True
         self._invalidate()
 
     def _mapper_changed(self, old, new):
@@ -715,7 +721,6 @@ class PlotAxis(AbstractOverlay):
         if new is not None:
             new.on_trait_change(self.mapper_updated, "updated")
         self._invalidate()
-#        self.request_redraw()
 
     def mapper_updated(self):
         """
@@ -726,16 +731,31 @@ class PlotAxis(AbstractOverlay):
     def _position_changed(self, old, new):
         super(PlotAxis, self)._position_changed(old, new)
         self._cache_valid = False
-#        self.request_redraw()
 
     def _position_items_changed(self, event):
         super(PlotAxis, self)._position_items_changed(event)
         self._cache_valid = False
 
+    def _position_changed_for_component(self):
+        self._cache_valid = False
+
+    def _position_items_changed_for_component(self):
+        self._cache_valid = False
+
+    def _bounds_changed_for_component(self):
+        self._cache_valid = False
+        self._layout_needed = True
+
+    def _bounds_items_changed_for_component(self):
+        self._cache_valid = False
+        self._layout_needed = True
+
+    def _origin_changed_for_component(self):
+        self._invalidate()
+
     def _updated_fired(self):
         """If our bounds changed, redraw."""
         self._cache_valid = False
-#        self._request_redraw()
         return
 
     def _invalidate(self):
@@ -746,6 +766,26 @@ class PlotAxis(AbstractOverlay):
 #            self.component.request_redraw()
 #        else:
 #            self.request_redraw()
+        return
+
+    def _component_changed(self):
+        if self.mapper is not None:
+            # If there is a mapper set, just leave it be.
+            return
+
+        # Try to pick the most appropriate mapper for our orientation 
+        # and what information we can glean from our component.
+        attrmap = { "left": ("ymapper", "y_mapper", "value_mapper"),
+                    "bottom": ("xmapper", "x_mapper", "index_mapper"), }
+        attrmap["right"] = attrmap["left"]
+        attrmap["top"] = attrmap["bottom"]
+
+        component = self.component
+        attr1, attr2, attr3 = attrmap[self.orientation]
+        for attr in attrmap[self.orientation]:
+            if hasattr(component, attr):
+                self.mapper = getattr(component, attr)
+                break
         return
 
     #------------------------------------------------------------------------
