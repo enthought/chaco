@@ -395,7 +395,7 @@ class PlotAxis(AbstractOverlay):
 
         if self.title_spacing != 'auto':
             v_offset = self.title_spacing
-        calculate_v_offset = self.title_spacing == 'auto'
+       	calculate_v_offset = (self.title_spacing) and (v_offset is None )
         
         if self.title_angle == 0:
             text_center_to_corner = -tl_bounds/2.0
