@@ -92,15 +92,13 @@ if ETSConfig.toolkit == 'wx':
         app.MainLoop()
 
 elif ETSConfig.toolkit == 'qt4':
-    import sys
     from PyQt4 import QtGui
 
-    # FIXME
-    # There is a strange interaction between traits and PyQt (at least on
-    # Linux) that means we need to create the QApplication instance before
-    # traits is imported.  For this to work this module should be imported
-    # first.
-    _app = QtGui.QApplication(sys.argv)
+    _app = QtGui.QApplication.instance()
+
+    if _app is None:
+        import sys
+        _app = QtGui.QApplication(sys.argv)
 
     class DemoFrame(QtGui.QWidget):
         def __init__ (self, parent, **kw):
