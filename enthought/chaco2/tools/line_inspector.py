@@ -254,6 +254,7 @@ class LineInspector(BaseTool):
         gc.save_state()
         try:
             gc.set_stroke_color(self.color_)
+            gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
             gc.move_to(sx, self.component.y)
             gc.line_to(sx, self.component.y2)
@@ -272,6 +273,7 @@ class LineInspector(BaseTool):
         gc.save_state()
         try:
             gc.set_stroke_color(self.color_)
+            gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
             gc.move_to(self.component.x, sy)
             gc.line_to(self.component.x2, sy)
