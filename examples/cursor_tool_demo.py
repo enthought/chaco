@@ -8,7 +8,7 @@ from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 from enthought.chaco2.tools.cursor_tool import CursorTool, BaseCursorTool
 from enthought.traits.api import HasTraits, Instance, DelegatesTo, Delegate
-from enthought.traits.ui.api import View, Item, HGroup
+from enthought.traits.ui.api import View, Item, HGroup, VGroup
 import numpy
 
 class CursorTest(HasTraits):
@@ -92,10 +92,13 @@ class CursorTest(HasTraits):
         cmapImgPlot.overlays.append(SimpleZoom(cmapImgPlot))
 
         
-    traits_view = View(Item('plot',
-                            editor=PlotContainerEditor()),
-                        HGroup(Item('cursoridx1', width=300),
-                               Item('cursoridx2', width=300)),
+    traits_view = View(VGroup(
+                            HGroup(Item('plot',
+                                        editor=PlotContainerEditor(),
+                                        resizable=True, springy=True),
+                                        springy=True),
+                            HGroup(Item('cursoridx1', width=300),
+                                   Item('cursoridx2', width=300))),
                         resizable=True,
                         width=800,
                         height=400)
