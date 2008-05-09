@@ -1,5 +1,9 @@
 """
 A Demonstration of the CursorTool functionality
+
+Left-button drag to move the cursors round.
+Right-drag to pan the plots. 'z'-key to Zoom
+
 """
 
 from enthought.chaco2.api import create_line_plot, OverlayPlotContainer,\
@@ -16,14 +20,17 @@ class CursorTest(HasTraits):
     cursor1 = Instance(BaseCursorTool)
     cursor2 = Instance(BaseCursorTool)
     
-    #these don't update in the View. Why not?
-    cursoridx1 = DelegatesTo('cursor1', prefix='current_index')
-    cursoridx2 = DelegatesTo('cursor2', prefix='current_index')
+    cursor1pos = DelegatesTo('cursor1', prefix='current_position')
+    cursor2pos = DelegatesTo('cursor2', prefix='current_position')
     
     def __init__(self):
+        #The delegates views don't work unless we caller the superclass __init__
+        super(CursorTest, self).__init__()
+        
         container = HPlotContainer(padding=0, spacing=20)
         self.plot = container
-        #a subcontainer for the first plot. I'm not sure why this is required
+        #a subcontainer for the first plot. 
+        #I'm not sure why this is required. Without it, the layout doesn't work right.
         subcontainer = OverlayPlotContainer(padding=40)
         container.add(subcontainer)
         
@@ -44,10 +51,6 @@ class CursorTest(HasTraits):
         self.cursor1 = csr
         #and set it's initial position (in data-space units)
         csr.current_position = 0.0, 0.0
-        
-        def onchange():
-            print csr.current_index, self.cursoridx1
-        csr.on_trait_change(onchange, name='current_position')
         
         #this is a rendered component so it goes in the overlays list
         line.overlays.append(csr)
@@ -95,10 +98,11 @@ class CursorTest(HasTraits):
     traits_view = View(VGroup(
                             HGroup(Item('plot',
                                         editor=PlotContainerEditor(),
-                                        resizable=True, springy=True),
+                                        resizable=True, springy=True,
+                                        show_label=False),
                                         springy=True),
-                            HGroup(Item('cursoridx1', width=300),
-                                   Item('cursoridx2', width=300))),
+                            HGroup(Item('cursor1pos', width=300),
+                                   Item('cursor2pos', width=300))),
                         resizable=True,
                         width=800,
                         height=400)
