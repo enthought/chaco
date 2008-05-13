@@ -803,11 +803,11 @@ class Plot(DataView):
 
     def _set_title_position(self, pos):
         if self._title is not None:
-            self.title.overlay_position = pos
+            self._title.overlay_position = pos
 
     def _get_title_position(self):
         if self._title is not None:
-            return self.title.overlay_position
+            return self._title.overlay_position
         else:
             return None
 
