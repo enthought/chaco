@@ -37,7 +37,6 @@ from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
                                        LegendTool, TraitsTool, DragZoom
 
 
-
 class PlotFrame(DemoFrame):
     def _create_window(self):
         container = OverlayPlotContainer(padding = 50, fill_padding = True,
@@ -61,6 +60,7 @@ class PlotFrame(DemoFrame):
                 plot.index.sort_order = "ascending"
             else:
                 plot = create_scatter_plot((x,y), color=tuple(COLOR_PALETTE[i]))
+
             plot.bgcolor = "white"
             plot.border_visible = True
             if i == 0:
@@ -68,6 +68,10 @@ class PlotFrame(DemoFrame):
                 index_mapper = plot.index_mapper
                 add_default_grids(plot)
                 add_default_axes(plot)
+                plot.index_range.tight_bounds = False
+                plot.index_range.refresh()
+                plot.value_range.tight_bounds = False
+                plot.value_range.refresh()
             else:
                 plot.value_mapper = value_mapper
                 value_mapper.range.add(plot.value)
