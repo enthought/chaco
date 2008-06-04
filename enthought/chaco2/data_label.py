@@ -19,7 +19,7 @@ from tooltip import ToolTip
 # be one of the text strings indicated, or a tuple or list of floats representing
 # the (x_offset, y_offset) in screen space of the label's lower left corner.
 LabelPositionTrait = Trait("top right",
-                           Enum("center", "bottom", "left", "right", "top",
+                           Enum("bottom", "left", "right", "top",
                                 "top right", "top left", "bottom left", "bottom right"),
                            Tuple, List)
 
@@ -225,13 +225,17 @@ class DataLabel(ToolTip):
         # draw the arrow if necessary
         if self.arrow_visible:
             if self._cached_arrow is None:
-                if self.arrow_root == "auto" or self.arrow_root not in self._position_root_map:
+                if self.arrow_root in self._root_positions:
+                    ox, oy = self._root_positions[self.arrow_root]
+                else:
+                    if self.arrow_root == "auto":
+                        arrow_root = self.label_position
+                    else:
+                        arrow_root = self.arrow_root
                     ox, oy = self._root_positions.get(
-                                 self._position_root_map.get(self.label_position, "DUMMY"),
+                                 self._position_root_map.get(arrow_root, "DUMMY"),
                                  (self.x+self.width/2, self.y+self.height/2)
                                  )
-                else:
-                    ox, oy = self._root_positions[self.arrow_root]
                     
                 if type(ox) == str:
                     ox = getattr(self, ox)
