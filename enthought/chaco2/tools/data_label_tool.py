@@ -28,7 +28,8 @@ class DataLabelTool(DragTool):
     _original_offset = Any
 
     # This is used in the auto_arrow_root = 'corners' case.
-    _corner_names = ("bottom left", "bottom right", "top right", "top left")
+    _corner_names = ("bottom left", "bottom right", "top right", "top left", 
+                     "center", "center", "center", "center")
         
     def is_draggable(self, x, y):
         """ Returns whether the (x,y) position is in a region that is OK to 
@@ -78,8 +79,11 @@ class DataLabelTool(DragTool):
                 x, y = label.position
                 x2 = label.x2
                 y2 = label.y2
-                corners = array(((x, y), (x2, y), (x2, y2), (x, y2)))
-                diff = corners - p
+                xmid = (x+x2)/2
+                ymid = (y+y2)/2
+                anchors = array(((x, y), (x2, y), (x2, y2), (x, y2), 
+                                (xmid, y), (xmid, y2), (x, ymid), (x2, ymid)))
+                diff = anchors - p
                 closest = argmin(sqrt(map(sum, diff * diff)))
                 label.arrow_root = self._corner_names[closest]
                 
