@@ -8,7 +8,7 @@ from math import ceil, floor, log
 from numpy import compress, inf, isnan
 
 # Enthought library imports
-from enthought.traits.api import CFloat, Enum, false, Property, Trait, true
+from enthought.traits.api import Bool, CFloat, Enum, Float, Property, Trait
 
 # Local relative imports
 from base import arg_find_runs
@@ -44,7 +44,11 @@ class DataRange1D(BaseDataRange):
 
     # Do "auto" bounds imply an exact fit to the data? If False, 
     # they pad a little bit of margin on either side.
-    tight_bounds = true
+    tight_bounds = Bool(True)
+    
+    # The amount of margin to place on either side of the data, expressed as
+    # a percentage of the full data width
+    margin = Float(0.05)
 
     # The minimum percentage difference between low and high.  That is,
     # (high-low) >= epsilon * low.
@@ -66,7 +70,7 @@ class DataRange1D(BaseDataRange):
     default_state = Enum('auto','high_track', 'low_track')
     
     # Is this range dependent upon another range?
-    fit_to_subset = false
+    fit_to_subset = Bool(False)
 
     #------------------------------------------------------------------------
     # Private traits
@@ -277,7 +281,9 @@ class DataRange1D(BaseDataRange):
 
             low_start, high_start = calc_bounds(self._low_setting, self._high_setting,
                                                 mins, maxes, self.epsilon, 
-                                                self.tight_bounds, self.tracking_amount)
+                                                self.tight_bounds,
+                                                margin = self.margin,
+                                                track_amount = self.tracking_amount)
                 
         
         if (self._low_value != low_start) or (self._high_value != high_start):
@@ -315,7 +321,8 @@ class DataRange1D(BaseDataRange):
     
 
 ###### method to calculate bounds for a given 1-dimensional set of data
-def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds, track_amount):
+def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
+                margin=0.08, track_amount=0):
     """ Calculates bounds for a given 1-D set of data.
     
     Parameters
@@ -333,6 +340,9 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds, track_amo
     tight_bounds : Boolean
         Do 'auto' bounds imply an exact fit to the data? If False, they pad a
         little bit of margin on either side.
+    margin : float (default=0.08)
+        The margin, expressed as a percentage of total data width, to place 
+        on either side of the data if tight_bounds is False.
     track_amount : number
         The amount by which a 'track' bound tracks another bound.
     
@@ -346,7 +356,7 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds, track_amo
     Setting both *low_set* and *high_set* to 'track' is an invalid state; 
     the method copes by setting *high_set* to 'auto', and proceeding.
     """
-    
+
     if (low_set == 'track') and (high_set == 'track'):
         high_set = 'auto'
     
@@ -397,7 +407,22 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds, track_amo
             real_max = 1.0
 
     if not tight_bounds:
-        return heckbert_interval(real_min, real_max)[0:2]
+        low, high = heckbert_interval(real_min, real_max)[0:2]
+        if abs(low - real_min) / (high-low) < margin:
+            modified_min = real_min - (high-low) * margin
+            rerun = True
+        else:
+            modified_min = real_min
+            rerun = False
+        if abs(high - real_max) / (high-low) < margin:
+            modified_max = real_max + (high-low) * margin
+            rerun = True
+        else:
+            modified_max = real_max
+        if rerun:
+            return heckbert_interval(modified_min, modified_max)[0:2]
+        else:
+            return low, high
     
     return real_min, real_max
 
