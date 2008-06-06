@@ -3,7 +3,7 @@
 The main app for the PlotCanvas application
 """
 
-MULTITOUCH = True
+MULTITOUCH = False
 DEBUG = False
 
 # Major library imports
