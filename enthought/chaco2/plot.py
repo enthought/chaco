@@ -394,7 +394,7 @@ class Plot(DataView):
         else:
             raise ValueError("xbounds must be None, a tuple, an array, or a PlotData name")
 
-        # process xbounds to get a linspace
+        # process ybounds to get a linspace
         if isinstance(ybounds, basestring):
             ybounds = self._get_or_create_datasource(ybounds).get_data()
         if ybounds is None:
