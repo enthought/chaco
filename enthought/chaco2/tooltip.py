@@ -118,27 +118,6 @@ class ToolTip(AbstractOverlay):
             gc.restore_state()
         return
 
-    def _new_draw_overlay(self, gc, view_bounds=None, mode='normal'):
-        """ Draws the overlay layer of a component.
-        
-        Overrides PlotComponent.
-        """
-        gc.save_state()
-        try:
-            edge_space = self.border_width + self.border_padding
-            gc.translate_ctm(self.x + edge_space, self.y)
-            y = self.height - edge_space
-            for i, label in enumerate(self._cached_labels):
-                label_height = self._cached_line_sizes[i][1]
-                y -= label_height
-                gc.translate_ctm(0,y)
-                label.draw(gc)
-                gc.translate_ctm(0,-y)
-                y -= self.line_spacing
-        finally:
-            gc.restore_state()
-        return
-
 
     def _do_layout(self):
         """Computes the size of the tooltip, and creates the label objects
