@@ -597,21 +597,6 @@ class Plot(DataView):
             renderer.visible = True
         return
 
-    def map_screen(self, data_array):
-        """ Maps an array of data points to screen space and returns an array
-        of screen space points.
-        """
-        # data_array is Nx2 array
-        if len(data_array) == 0:
-            return []
-        x_ary, y_ary = transpose(data_array)
-        sx = self.index_mapper.map_screen(x_ary)
-        sy = self.value_mapper.map_screen(y_ary)
-        if self.orientation == "h":
-            return transpose(array((sx,sy)))
-        else:
-            return transpose(array((sy,sx)))
-
 
     #------------------------------------------------------------------------
     # Private methods

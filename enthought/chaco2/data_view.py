@@ -189,6 +189,32 @@ class DataView(OverlayPlotContainer):
             self._update_mappers()
         return
 
+    def map_screen(self, data_array):
+        """ Maps an array of data points to screen space and returns an array
+        of screen space points.
+        """
+        # data_array is Nx2 array
+        if len(data_array) == 0:
+            return []
+        x_ary, y_ary = transpose(data_array)
+        sx = self.index_mapper.map_screen(x_ary)
+        sy = self.value_mapper.map_screen(y_ary)
+        if self.orientation == "h":
+            return transpose(array((sx,sy)))
+        else:
+            return transpose(array((sy,sx)))
+
+    def map_data(self, screen_pt):
+        """ Maps a screen space point into the 2D data space of this plot.
+        (Note that this differs from the BaseXYPlot implementation, which by
+        default only maps into the 1D index space.)
+        """
+        # At some point it would be good to change the DataView to use
+        # the GridMapper, and then use its map_data() method.
+        x, y = screen_pt
+        return array((self.index_mapper.map_data(x),
+                      self.value_mapper.map_data(y)))
+
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
