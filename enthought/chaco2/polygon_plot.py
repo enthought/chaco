@@ -10,7 +10,8 @@ import numpy as np
 # Enthought library imports.
 from enthought.enable2.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
-from enthought.traits.api import Float
+from enthought.kiva.agg import points_in_polygon
+from enthought.traits.api import Enum, Float
 
 # Local imports.
 from base_xy_plot import BaseXYPlot
@@ -53,6 +54,8 @@ class PolygonPlot(BaseXYPlot):
     # The color of the face of the polygon.
     face_color = transparent_color_trait
 
+    # Override the hittest_type trait inherited from BaseXYPlot
+    hittest_type = Enum("poly", "point", "line")
 
     #### Private 'BaseXYPlot' interface ########################################
 
@@ -113,6 +116,26 @@ class PolygonPlot(BaseXYPlot):
         gc.draw_rect((x,y,width,height))
         gc.restore_state()
         return
+
+    def hittest(self, screen_pt, threshold=7.0, return_distance=False):
+        """ Performs point-in-polygon testing or point/line proximity testing.
+        If self.hittest_type is "line" or "point", then behaves like the
+        parent class BaseXYPlot.hittest().
+
+        If self.hittest_type is "poly", then returns True if the given
+        point is inside the polygon, and False otherwise.
+        """
+        if self.hittest_type in ("line", "point"):
+            return BaseXYPlot.hittest(self, screen_pt, threshold, return_distance)
+        
+        data_pt = self.map_data(screen_pt, all_values=True)
+        index = self.index.get_data()
+        value = self.value.get_data()
+        poly = np.vstack((index,value)).T
+        if points_in_polygon([data_pt], poly)[0] == 1:
+            return True
+        else:
+            return False
 
 
 #### EOF #######################################################################
