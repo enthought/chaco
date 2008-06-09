@@ -54,6 +54,7 @@ from data_label import DataLabel
 from lasso_overlay import LassoOverlay
 from color_bar import ColorBar
 from text_box_overlay import TextBoxOverlay
+from scatter_inspector_overlay import ScatterInspectorOverlay
 
 # Renderers
 from barplot import BarPlot
