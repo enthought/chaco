@@ -1,7 +1,7 @@
 
 # Enthought library imports
 from enthought.enable2.api import BaseTool, ColorTrait
-from enthought.traits.api import on_trait_change, Float, Int, Trait
+from enthought.traits.api import Float, Int, Trait
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay
@@ -31,7 +31,10 @@ class ScatterInspectorOverlay(AbstractOverlay):
     selection_color = Trait(None, None, ColorTrait)
     selection_outline_color = Trait(None, None, ColorTrait)
 
-    @on_trait_change('component.index.metadata_changed,component.value.metadata_changed')
+    # For now, implement the equivalent of this Traits 3 feature manually
+    # using a series of trait change handlers (defined at the end of the
+    # class)
+    #@on_trait_change('component.index.metadata_changed,component.value.metadata_changed')
     def metadata_changed(self, object, name, old, new):
         if self.component is not None:
             self.component.request_redraw()
@@ -81,5 +84,25 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
         self.overlay(self.component, gc, view_bounds, mode)
+
+    def _component_changed(self, old, new):
+        if old:
+            old.on_trait_change(self._ds_changed, 'index', remove=True)
+            old.on_trait_change(self._ds_changed, 'value', remove=True)
+        if new:
+            new.on_trait_change(self._ds_changed, 'index')
+            new.on_trait_change(self._ds_changed, 'value')
+            if new.index:
+                self._ds_changed(new, 'index', None, new.index)
+            if new.value:
+                self._ds_changed(new, 'value', None, new.value)
+        return
+
+    def _ds_changed(self, object, name, old, new):
+        if old:
+            old.on_trait_change(self.metadata_changed, 'metadata_changed', remove=True)
+        if new:
+            new.on_trait_change(self.metadata_changed, 'metadata_changed')
+        return
 
 
