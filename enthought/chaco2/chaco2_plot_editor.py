@@ -250,12 +250,9 @@ class Chaco2PlotEditor ( Editor ):
                 object.on_trait_change( self._update_data, name)
         for name in (plotitem.x_label_trait, plotitem.y_label_trait):
             object.on_trait_change(lambda s: self._update_axis_grids(), name)
-        if plotitem.type_trait is not None:
-            object.on_trait_change(self.help, plotitem.type_trait)
+        if plotitem.type_trait not in ("", None):
+            object.on_trait_change(self.update_editor, plotitem.type_trait)
         return
-    
-    def help(self, old, new):
-        print "help", old, new
 
     #---------------------------------------------------------------------------
     #  Disposes of the contents of an editor:
@@ -352,7 +349,6 @@ class Chaco2PlotEditor ( Editor ):
         """ Updates the editor when the object trait changes externally to the
             editor.
         """
-
         if self._plot is None:
             self.update_editor()
         else:
