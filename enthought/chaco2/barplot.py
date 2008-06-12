@@ -120,13 +120,7 @@ class BarPlot(AbstractPlotRenderer):
         # data_array is Nx2 array
         if len(data_array) == 0:
             return []
-        elif len(data_array) == 1:
-            xtmp, ytmp = transpose(data_array)
-            x_ary = xtmp
-            y_ary = ytmp
-        else:
-            x_ary = data_array[:,0]
-            y_ary = data_array[:,1]
+        x_ary, y_ary = transpose(data_array)
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
 
