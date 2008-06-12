@@ -5,6 +5,7 @@ import logging
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
 from enthought.traits.api import Any, Bool, Enum, Float, Instance, Property
 from enthought.enable2.api import black_color_trait
+from enthought.kiva import FILL_STROKE
 
 # Local relative imports
 from enthought.chaco2.abstract_plot_renderer import AbstractPlotRenderer
@@ -301,6 +302,14 @@ class BarPlot(AbstractPlotRenderer):
                 gc.stroke_path()
         gc.restore_state()
         return
+
+    def _render_icon(self, gc, x, y, width, height):
+        gc.save_state()
+        gc.set_fill_color(self.fill_color_)
+        gc.set_stroke_color(self.line_color_)
+        gc.rect(x+width/4, y+height/4, width/2, height/2)
+        gc.draw_path(FILL_STROKE)
+        gc.restore_state()
 
     def _post_load(self):
         super(BarPlot, self)._post_load()
