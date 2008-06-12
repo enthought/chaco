@@ -1,6 +1,8 @@
 """ Defines the DataView class, and associated property traits and property
 functions.
 """
+from numpy import array, transpose
+
 from enthought.traits.api import Enum, Instance, Property
 
 from axis import PlotAxis
