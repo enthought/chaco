@@ -1,4 +1,7 @@
 
+# Major library imports
+from numpy import array
+
 # Enthought library imports
 from enthought.enable2.api import BaseTool, ColorTrait
 from enthought.traits.api import Float, Int, Trait
@@ -47,15 +50,20 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
         for name in ('hover', 'selection'):
             if name in plot.index.metadata and name in plot.value.metadata:
-                index_ndx = plot.index.metadata.get(name, None)
-                value_ndx = plot.value.metadata.get(name, None)
-                screen_pt = plot.map_screen((plot.index.get_data()[index_ndx],
-                                             plot.value.get_data()[value_ndx]))
+                index = plot.index.metadata.get(name, None)
+                value = plot.value.metadata.get(name, None)
+                # TODO: need to improve handling of cases when len(index) != len(value)
+                if index is not None and value is not None:
+                    if len(index) == 0 and len(value) == 0:
+                        continue
+                    screen_pt = plot.map_screen(array((plot.index.get_data()[index],
+                                                       plot.value.get_data()[value])).T)
 
-                self._render_at_data_indices(gc, screen_pt, name)
+                    self._render_at_data_indices(gc, screen_pt, name)
         return
 
     def _render_at_data_indices(self, gc, screen_pt, prefix, sep="_"):
+        """ screen_pt should always be a list """
         plot = self.component
 
         mapped_attribs = ("color", "outline_color", "marker")
@@ -79,7 +87,10 @@ class ScatterInspectorOverlay(AbstractOverlay):
         if kwargs.get("marker", None) == "custom":
             kwargs["custom_symbol"] = plot.custom_symbol
 
-        render_markers(gc, [screen_pt], **kwargs)
+        gc.save_state()
+        gc.clip_to_rect(plot.x, plot.y, plot.width, plot.height)
+        render_markers(gc, screen_pt, **kwargs)
+        gc.restore_state()
 
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
