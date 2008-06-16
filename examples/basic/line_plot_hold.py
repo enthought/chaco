@@ -30,22 +30,19 @@ class PlotFrame(DemoFrame):
         pd = ArrayPlotData(index = x, y0=jn(0,x))
 
         # Create some line plots of some of the data
-        plot1 = Plot(pd)
-        lineplot = plot1.plot(("index", "y0"), name="j_0", color="red", render_style="hold")
-
-        # Tweak some of the plot properties
-        plot1.title = "render_style = hold"
-        plot1.padding = 50
+        plot1 = Plot(pd, title="render_style = hold", padding=50, border_visible=True,
+                     overlay_border = True)
         plot1.legend.visible = True
+        lineplot = plot1.plot(("index", "y0"), name="j_0", color="red", render_style="hold")
 
         # Attach some tools to the plot
         attach_tools(plot1)
 
         # Create a second scatter plot of one of the datasets, linking its 
         # range to the first plot
-        plot2 = Plot(pd, range2d=plot1.range2d, padding=50)
+        plot2 = Plot(pd, range2d=plot1.range2d, title="render_style = connectedhold",
+                     padding=50, border_visible=True, overlay_border=True)
         plot2.plot(('index', 'y0'), color="blue", render_style="connectedhold")
-        plot2.title = "render_style = connectedhold"
         attach_tools(plot2)
 
         # Create a container and add our plots

@@ -34,14 +34,11 @@ class PlotFrame(DemoFrame):
             pd.set_data("y" + str(i), jn(i,x))
 
         # Create some line plots of some of the data
-        plot1 = Plot(pd)
+        plot1 = Plot(pd, title="Line Plot", padding=50, border_visible=True, 
+                     overlay_border=True)
+        plot1.legend.visible = True
         plot1.plot(("index", "y0", "y1", "y2"), name="j_n, n<3", color="red")
         plot1.plot(("index", "y3"), name="j_3", color="blue")
-
-        # Tweak some of the plot properties
-        plot1.title = "My First Line Plot"
-        plot1.padding = 50
-        plot1.legend.visible = True
 
         # Attach some tools to the plot
         plot1.tools.append(PanTool(plot1))
@@ -50,7 +47,8 @@ class PlotFrame(DemoFrame):
 
         # Create a second scatter plot of one of the datasets, linking its 
         # range to the first plot
-        plot2 = Plot(pd, range2d=plot1.range2d, padding=50)
+        plot2 = Plot(pd, range2d=plot1.range2d, title="Scatter plot", padding=50, 
+                     border_visible=True, overlay_order=True)
         plot2.plot(('index', 'y3'), type="scatter", color="blue", marker="circle")
 
         # Create a container and add our plots
