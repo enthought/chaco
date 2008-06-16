@@ -126,6 +126,10 @@ class Plot(DataView):
     #------------------------------------------------------------------------
 
     def __init__(self, data=None, **kwtraits):
+        if "title" in kwtraits:
+            title = kwtraits.pop("title")
+        else:
+            title = None
         super(Plot, self).__init__(**kwtraits)
         if data is not None:
             if isinstance(data, AbstractPlotData):
@@ -139,7 +143,9 @@ class Plot(DataView):
         if not self._title:
             self._title = PlotLabel(font=self.title_font, visible=False,
                                    overlay_position="top", component=self)
-
+        if title is not None:
+            self.title = title
+    
         if not self.legend:
             self.legend = Legend(visible=False, align="ur", error_icon="blank",
                                  padding=10, component=self)
