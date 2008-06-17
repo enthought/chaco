@@ -295,6 +295,8 @@ class Chaco2PlotEditor ( Editor ):
         """
 
         factory  = self.factory
+        if factory is None:
+            return
         plotitem = factory.plotitem
 
         # Remove the old plot
@@ -386,6 +388,9 @@ class Chaco2PlotEditor ( Editor ):
         self._update_axis_grids(new_plot, plotitem)
 
     def _update_axis_grids(self, plot=None, plotitem=None):
+        if self.factory is None:
+            return
+
         if plot is None:
             plot = self._plot
         if plotitem is None:
