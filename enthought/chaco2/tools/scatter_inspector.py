@@ -40,10 +40,19 @@ class ScatterInspector(BaseTool):
     # and **multi** selection modes.
     multiselect_modifier = Instance(KeySpec, args=(None, "control"), allow_none=True)
 
-    # This tool is not visible (overrides BaseTool).
+    # If persistent_hover is False, then a point will be de-hovered as soon as
+    # the mouse leaves its hittesting area.  If persistent_hover is True, then
+    # a point does no de-hover until another point get hover focus.
+    persistent_hover = Bool(False)
+
+    #------------------------------------------------------------------------
+    # Override/configure inherited traits
+    #------------------------------------------------------------------------
+    
+    # This tool is not visible
     visible = False
 
-    # This tool does not have a visual reprentation (overrides BaseTool).
+    # This tool does not have a visual reprentation
     draw_mode = "none"
 
     def normal_mouse_move(self, event):
@@ -57,7 +66,7 @@ class ScatterInspector(BaseTool):
         if index:
             plot.index.metadata["hover"] = [index]
             plot.value.metadata["hover"] = [index]
-        else:
+        elif not self.persistent_hover:
             plot.index.metadata.pop("hover", None)
             plot.value.metadata.pop("hover", None)
         return
@@ -73,15 +82,15 @@ class ScatterInspector(BaseTool):
         if self.selection_mode != "off":
             plot = self.component
             index = plot.map_index((event.x, event.y), threshold=self.threshold)
-            index_md = plot.index.metadata.get("selection", None)
-            value_md = plot.value.metadata.get("selection", None)
+            index_md = plot.index.metadata.get("selections", None)
+            value_md = plot.value.metadata.get("selections", None)
             
             already_selected = False
             for name in ('index', 'value'):
                 md = getattr(plot, name).metadata
-                if md is None or "selection" not in md:
+                if md is None or "selections" not in md:
                     continue
-                if index in md["selection"]:
+                if index in md["selections"]:
                     already_selected = True
                     break
 
@@ -114,28 +123,28 @@ class ScatterInspector(BaseTool):
         plot = self.component
         for name in ('index', 'value'):
             md = getattr(plot, name).metadata
-            if not "selection" in md:
+            if not "selections" in md:
                 pass
-            elif index in md["selection"]:
-                md["selection"].remove(index)
+            elif index in md["selections"]:
+                md["selections"].remove(index)
         return
 
     def _select(self, index, append=True):
         plot = self.component
         for name in ('index', 'value'):
             md = getattr(plot, name).metadata
-            selection = md.get("selection", None)
+            selection = md.get("selections", None)
 
             # If no existing selection
             if selection is None:
-                md["selection"] = [index]
+                md["selections"] = [index]
             # check for list-like object supporting append
             else:
                 if append:
-                    if index not in md["selection"]:
-                        md["selection"].append(index)
+                    if index not in md["selections"]:
+                        md["selections"].append(index)
                 else:
-                    md["selection"] = [index]
+                    md["selections"] = [index]
         return
 
 

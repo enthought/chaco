@@ -4,7 +4,7 @@ from numpy import array
 
 # Enthought library imports
 from enthought.enable2.api import BaseTool, ColorTrait
-from enthought.traits.api import Float, Int, Trait
+from enthought.traits.api import Enum, Float, Instance, Int, Trait
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay
@@ -48,21 +48,33 @@ class ScatterInspectorOverlay(AbstractOverlay):
         if not plot or not plot.index or not plot.value:
             return
 
-        for name in ('hover', 'selection'):
-            if name in plot.index.metadata and name in plot.value.metadata:
-                index = plot.index.metadata.get(name, None)
-                value = plot.value.metadata.get(name, None)
+        for inspect_type in ('hover', 'selections'):
+            if inspect_type in plot.index.metadata and inspect_type in plot.value.metadata:
+                index = plot.index.metadata.get(inspect_type, None)
+                value = plot.value.metadata.get(inspect_type, None)
                 # TODO: need to improve handling of cases when len(index) != len(value)
                 if index is not None and value is not None:
                     if len(index) == 0 and len(value) == 0:
                         continue
-                    screen_pt = plot.map_screen(array((plot.index.get_data()[index],
+                    screen_pts = plot.map_screen(array((plot.index.get_data()[index],
                                                        plot.value.get_data()[value])).T)
 
-                    self._render_at_data_indices(gc, screen_pt, name)
+                    # Hmm.. this is a little klunky, but I prefer for the visual
+                    # appearance traits to be named "selection_*" and the metadata
+                    # name should be "selections", and so we have to bridge
+                    # the difference here.
+                    if inspect_type == "selections":
+                        prefix = "selection"
+                    else:
+                        prefix = "hover"
+                    self._render_at_indices(gc, screen_pts, prefix)
         return
 
-    def _render_at_data_indices(self, gc, screen_pt, prefix, sep="_"):
+    def _render_at_indices(self, gc, screen_pts, inspect_type):
+        """ screen_pt should always be a list """
+        self._render_marker_at_indices(gc, screen_pts, inspect_type)
+
+    def _render_marker_at_indices(self, gc, screen_pts, prefix, sep="_"):
         """ screen_pt should always be a list """
         plot = self.component
 
@@ -89,7 +101,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
         gc.save_state()
         gc.clip_to_rect(plot.x, plot.y, plot.width, plot.height)
-        render_markers(gc, screen_pt, **kwargs)
+        render_markers(gc, screen_pts, **kwargs)
         gc.restore_state()
 
 
