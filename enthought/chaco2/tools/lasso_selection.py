@@ -229,7 +229,9 @@ class LassoSelection(AbstractController):
             selected_mask |= (points_in_polygon(data, selection, False))
             
         if self.selection_mode == 'exclude':
-            selected_mask &= -1 * (points_in_polygon(data, self._active_selection, False)-1)
+            selected_mask |= (points_in_polygon(data, self._active_selection, False))
+            selected_mask = 1 - selected_mask
+            
         elif self.selection_mode == 'invert':
             selected_mask = -1 * (selected_mask -points_in_polygon(data, self._active_selection, False))
         else:
