@@ -113,7 +113,7 @@ class PlotUI(HasTraits):
 
 
     num_levels = Int(15)
-    colormap = Any  #Enum(color_map_name_dict.keys())
+    colormap = Enum(color_map_name_dict.keys())
 
     #---------------------------------------------------------------------------
     # Private Traits
