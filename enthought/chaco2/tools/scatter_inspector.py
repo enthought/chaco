@@ -127,6 +127,7 @@ class ScatterInspector(BaseTool):
                 pass
             elif index in md["selections"]:
                 md["selections"].remove(index)
+                getattr(plot, name).metadata_changed = True
         return
 
     def _select(self, index, append=True):
@@ -143,6 +144,12 @@ class ScatterInspector(BaseTool):
                 if append:
                     if index not in md["selections"]:
                         md["selections"].append(index)
+                        # Manually trigger the metadata_changed event on
+                        # the datasource.  Datasources only automatically
+                        # fire notifications when the values inside the
+                        # metadata dict change, but they do not listen
+                        # for further changes on those values.
+                        getattr(plot, name).metadata_changed = True
                 else:
                     md["selections"] = [index]
         return
