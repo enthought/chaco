@@ -35,14 +35,12 @@ def float_or_auto(val):
             return val
     raise TraitError, "Tick interval must be a number or 'auto'."
 
-
 # Traits UI for a PlotAxis.
 AxisView = View(VGroup(
                 Group(
                     Item("title", label="Title", editor=TextEditor()),
-                    #Item("title_font", label="Font"),
+                    Item("title_font", label="Font", style="simple"),
                     Item("title_color", label="Color", style="custom"),
-                         #editor=EnableRGBAColorEditor()),
                     Item("tick_interval", label="Interval", editor=TextEditor(evaluate=float_or_auto)),
                     label="Main"),
                 Group(
