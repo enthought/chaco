@@ -4,7 +4,7 @@ Example of how to use a DataView and bare renderers to create plots
 
 from numpy import linspace, sin, cos
 
-from enthought.chaco2.api import DataView, ArrayDataSource, ScatterPlot, LinePlot
+from enthought.chaco2.api import DataView, ArrayDataSource, ScatterPlot, LinePlot, LinearMapper
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 from enthought.enable2.api import Window
 from enthought.enable2.example_support import DemoFrame, demo_main
@@ -22,14 +22,14 @@ class PlotFrame(DemoFrame):
                               marker = "square",
                               color = "red",
                               outline_color = "transparent",
-                              index_mapper = view.index_mapper,
-                              value_mapper = view.value_mapper)
+                              index_mapper = LinearMapper(range=view.index_range),
+                              value_mapper = LinearMapper(range=view.value_range))
 
         line = LinePlot(index = scatter.index,
                         value = ArrayDataSource(y2),
                         color = "blue",
-                        index_mapper = view.index_mapper,
-                        value_mapper = view.value_mapper)
+                        index_mapper = LinearMapper(range=view.index_range),
+                        value_mapper = LinearMapper(range=view.value_range))
 
         # Add the plot's index and value datasources to the dataview's
         # ranges so that it can auto-scale and fit appropriately
@@ -43,7 +43,7 @@ class PlotFrame(DemoFrame):
         view.add(line)
 
         view.tools.append(PanTool(view))
-        #view.overlays.append(SimpleZoom(view))
+        view.overlays.append(SimpleZoom(view))
 
         return Window(self, -1, component=view)
 
