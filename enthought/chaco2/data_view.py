@@ -168,9 +168,7 @@ class DataView(OverlayPlotContainer):
     # Background color (overrides Enable2 Component)
     bgcolor = "white"
 
-    # Draw borders as part of the background layer (overrides PlotComponent).
-    overlay_border = False
-
+    border_visible = True
 
     #------------------------------------------------------------------------
     # Public methods
