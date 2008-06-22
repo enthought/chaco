@@ -66,5 +66,5 @@ class PlotContainerEditor( BasicEditorFactory ):
     klass = _PlotContainerEditor
 
     # The background color for the window
-    bgcolor = ColorTrait('lightgray')
+    bgcolor = ColorTrait('sys_window')
 

@@ -30,13 +30,6 @@ from scatter_markers import marker_trait
 # Somewhat unorthodox...
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
-
-#-------------------------------------------------------------------------------
-#  Constants:
-#-------------------------------------------------------------------------------
-
-WindowColor = "lightgray"
-
 #-------------------------------------------------------------------------------
 #  Trait definitions:
 #-------------------------------------------------------------------------------
@@ -119,7 +112,7 @@ class Chaco2PlotItem(Item):
     # Background color of the plot (deprecated).
     bg_color = Property   # backwards compatibility; deprecated
     # Color of the background padding.
-    padding_bg_color = ColorTrait(WindowColor)
+    padding_bg_color = ColorTrait("sys_window")
 
     # Border properties
 
