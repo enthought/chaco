@@ -1,4 +1,5 @@
 #! /bin/env python
+import os.path
 import wave
 import numpy
 
@@ -17,9 +18,9 @@ def wav_to_numeric( fname ):
   return index, data
   
 def test():
-    fname = r"C:\Program Files\Windows NT\Pinball\SOUND999.WAV"    
+    fname = os.path.join(r'..', r'data', r'SOUND999.WAV')   
     index, data = wav_to_numeric(fname)
-    #print ary[:100]
+    #print data[:100]
     return index, data
     
 if __name__== '__main__':
