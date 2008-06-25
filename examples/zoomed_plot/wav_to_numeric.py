@@ -18,9 +18,9 @@ def wav_to_numeric( fname ):
   return index, data
   
 def test():
-    fname = os.path.join(r'..', r'data', r'SOUND999.WAV')   
+    fname = os.path.join(r'..', r'data', r'sample.wav')   
     index, data = wav_to_numeric(fname)
-    #print data[:100]
+    print data[:100]
     return index, data
     
 if __name__== '__main__':
