@@ -170,8 +170,6 @@ class LinePlot(BaseXYPlot):
                     return
 
             if len(index) == 0 or len(value) == 0 or len(index) != len(value):
-                warnings.warn("Chaco2.LinePLot: using empty dataset; index_len=%d, value_len=%d." \
-                            % (len(index), len(value)))
                 self._cached_data_pts = []
                 self._cache_valid = True
 

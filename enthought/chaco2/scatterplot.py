@@ -1,8 +1,6 @@
 """ Defines the ScatterPlot class, and associated Traits UI view and helper
 function.
 """
-# Standard library imports.
-import logging
 
 # Major library imports
 from numpy import argmin, around, array, asarray, compress, empty, invert, isnan, \
@@ -21,9 +19,6 @@ from scatter_markers import AbstractMarker, CircleMarker, CustomMarker, \
                             DiamondMarker, MarkerNameDict, marker_trait, \
                             PixelMarker
 from speedups import scatterplot_gather_points
-
-# Set up a logger for this module.
-logger = logging.getLogger(__name__)
 
 
 class ScatterPlotView(View):
@@ -180,8 +175,6 @@ class ScatterPlot(BaseXYPlot):
         value, value_mask = self.value.get_data_mask()
 
         if len(index) == 0 or len(value) == 0 or len(index) != len(value):
-            logger.warn("Chaco2: using empty dataset; index_len=%d, value_len=%d." \
-                                % (len(index), len(value)))
             self._cached_data_pts = []
             self._cache_valid = True
             return
