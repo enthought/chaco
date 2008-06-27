@@ -7,6 +7,9 @@ from numpy import abs, all, array, asarray, amax, amin
 from safetime import localtime, strftime, time
 
 
+__all__ = ['NullFormatter', 'BasicFormatter', 'IntegerFormatter',
+    'OffsetFormatter', 'TimeFormatter']
+
 class NullFormatter(object):
     """ Formatter for empty labels.
     """
@@ -34,6 +37,10 @@ class BasicFormatter(object):
     # Any number smaller than 10 ** limits[0] or larger than 10 ** limits[1]
     # will be represented using scientific notiation.
     scientific_limits = (-3, 5)
+
+    def __init__(self, **kwds):
+        # Allow the user to override the class-level defaults.
+        self.__dict__.update(kwds)
 
     def oldformat(self, ticks, numlabels=None, char_width=None):
         """ This function is adapted from matplotlib's "OldScalarFormatter".
@@ -217,6 +224,16 @@ class BasicFormatter(object):
         return est_ticks, est_ticks * avg_size
 
 
+class IntegerFormatter(BasicFormatter):
+    """ Format integer tick labels as integers.
+    """
+
+    def format(self, ticks, numlabels=None, char_width=None, fill_ratio=0.3):
+        """ Formats integer tick labels.
+        """
+        return map(str, map(int, ticks))
+
+
 class OffsetFormatter(BasicFormatter):
     """ This formatter is like BasicFormatter, but it supports formatting
     ticks using an offset.  This is useful for viewing small ranges within
@@ -390,7 +407,8 @@ class TimeFormatter(object):
     formats = {}
 
 
-    def __init__(self):
+    def __init__(self, **kwds):
+        self.__dict__.update(kwds)
         self._compute_format_weights()
 
     def _compute_format_weights(self):

@@ -114,10 +114,12 @@ class FixedScale(AbstractScale):
     multiples of the resolution.  An optional zero value can be defined
     that offsets the "nice" points to (N*resolution+zero).
     """
-    def __init__(self, resolution, zero=0.0):
+    def __init__(self, resolution, zero=0.0, formatter=None):
         self.resolution = resolution
         self.zero = zero
-        self.formatter = BasicFormatter()
+        if formatter is None:
+            formatter = BasicFormatter()
+        self.formatter = formatter
         
     def ticks(self, start, end, desired_ticks=None):
         """ For FixedScale, *desired_ticks* is ignored. 
@@ -204,8 +206,10 @@ class DefaultScale(AbstractScale):
     """ A dynamic scale that tries to place ticks at nice numbers (1, 2, 5, 10)
     so that ticks don't "pop" as the resolution changes.
     """
-    def __init__(self):
-        self.formatter = BasicFormatter()
+    def __init__(self, formatter=None):
+        if formatter is None:
+            formatter = BasicFormatter()
+        self.formatter = formatter
         
     def ticks(self, start, end, desired_ticks=8):
         """ Returns the set of "nice" positions on this scale that enclose and
@@ -232,8 +236,10 @@ class Pow10Scale(AbstractScale):
     (including powers < 1).
     """
 
-    def __init__(self):
-        self.formatter = BasicFormatter()
+    def __init__(self, formatter=None):
+        if formatter is None:
+            formatter = BasicFormatter()
+        self.formatter = formatter
 
     def ticks(self, start, end, desired_ticks=8):
         """ Returns the set of "nice" positions on this scale that enclose and
@@ -262,8 +268,10 @@ class LogScale(AbstractScale):
     """ A dynamic scale that only produces ticks and labels that work well when
     plotting data on a logarithmic scale.
     """
-    def __init__(self):
-        self.formatter = BasicFormatter()
+    def __init__(self, formatter=None):
+        if formatter is None:
+            formatter = BasicFormatter()
+        self.formatter = formatter
 
     def ticks(self, start, end, desired_ticks=8):
 
