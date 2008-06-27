@@ -16,11 +16,6 @@ from enthought.traits.api import Enum, Float
 # Local imports.
 from base_xy_plot import BaseXYPlot
 
-
-# Setup a logger for this module.
-logger = logging.getLogger(__name__)
-
-
 class PolygonPlot(BaseXYPlot):
     """ Plots a polygon in dataspace.
 
@@ -73,8 +68,6 @@ class PolygonPlot(BaseXYPlot):
             return
 
         if len(index) == 0 or len(value) == 0 or len(index) != len(value):
-            logger.warn("Chaco2: using empty dataset; index_len=%d, value_len=%d." \
-                                % (len(index), len(value)))
             self._cached_data_pts = []
             self._cache_valid = True
             return
