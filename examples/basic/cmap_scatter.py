@@ -32,7 +32,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
 
         # Create some data
-        numpts = 5000
+        numpts = 1000
         x = sort(random(numpts))
         y = random(numpts)
         color = exp(-(x**2 + y**2))
@@ -72,7 +72,7 @@ class PlotFrame(DemoFrame):
         plot.tools.append(PanTool(plot, constrain_key="shift"))
         zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
-        selection = ColormappedSelectionOverlay(my_plot, selection_type="mask")
+        selection = ColormappedSelectionOverlay(my_plot, fade_alpha=0.35, selection_type="mask")
         my_plot.overlays.append(selection)
         
         # Create the colorbar, handing in the appropriate range and colormap

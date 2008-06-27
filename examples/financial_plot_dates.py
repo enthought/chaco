@@ -109,7 +109,7 @@ class PlotFrame(DemoFrame):
                                       constrain_direction="x"))
 
         container = VPlotContainer(bgcolor = "lightblue",
-                                   spacing = 20, 
+                                   spacing = 40, 
                                    padding = 50,
                                    fill_padding=False)
         container.add(vol_plot)

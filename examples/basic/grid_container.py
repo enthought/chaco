@@ -35,7 +35,7 @@ class PlotFrame(DemoFrame):
         # Create a GridContainer to hold all of our plots
         container = GridContainer(padding=20, fill_padding=True,
                                   bgcolor="lightgray", use_backbuffer=True,
-                                  shape=(2,3), spacing=(12,12))
+                                  shape=(2,3), spacing=(20,20))
         
         # Create the initial series of data
         x = linspace(-5, 15.0, 100)
