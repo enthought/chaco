@@ -312,10 +312,14 @@ class DataView(OverlayPlotContainer):
         # new mapper configuration.  Using the self.x_mapper and self.y_mapper
         # properties will grab the correct mappers corresponding to our new
         # orientation.
-        self.x_grid.mapper = self.x_mapper
-        self.y_grid.mapper = self.y_mapper
-        self.x_axis.mapper = self.x_mapper
-        self.y_axis.mapper = self.y_mapper
+        if self.x_grid is not None:
+            self.x_grid.mapper = self.x_mapper
+        if self.y_grid is not None:
+            self.y_grid.mapper = self.y_mapper
+        if self.x_axis is not None:
+            self.x_axis.mapper = self.x_mapper
+        if self.y_axis is not None:
+            self.y_axis.mapper = self.y_mapper
         self._update_mappers()
         for renderer in self.components:
             if hasattr(renderer, "orientation"):

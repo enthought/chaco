@@ -20,10 +20,6 @@ from color_mapper import ColorMapper
 from scatterplot import ScatterPlot, ScatterPlotView
 
 
-# Setup a logger for this module.
-logger = logging.getLogger(__name__)
-
-
 class ColormappedScatterPlotView(ScatterPlotView):
     """ Traits UI View for customizing a color-mapped scatter plot.
     """
@@ -132,8 +128,6 @@ class ColormappedScatterPlot(ScatterPlot):
         value, value_mask = self.value.get_data_mask()
 
         if len(index) == 0 or len(value) == 0 or len(index) != len(value):
-            logger.warn("Chaco2: using empty dataset; index_len=%d, value_len=%d." \
-                                % (len(index), len(value)))
             self._cached_data_pts = []
             self._cache_valid = True
             return
