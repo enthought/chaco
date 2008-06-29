@@ -383,8 +383,13 @@ class ColormappedScatterPlot(ScatterPlot):
         self._either_data_changed()
         return
 
-    def _color_mapper_changed(self):
+    def _color_mapper_changed(self, old, new):
         self._cache_valid = False
+
+        if hasattr(new, 'range') and new.range is None and old is not None:
+            # Someone passed in a ColorMapper that has no range associated with
+            # it. Use the range on the old ColorMapper.
+            new.range = old.range
 
         # fix me: Peter, I needed a redraw.  Is this the correct thing to do?
         self.invalidate_draw()

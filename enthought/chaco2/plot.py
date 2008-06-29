@@ -295,7 +295,7 @@ class Plot(DataView):
                 if isinstance(colormap, AbstractColormap):
                     self.color_mapper = colormap
                     if colormap.range is None:
-                        colormap.range = DataRange1D(value)
+                        colormap.range = DataRange1D(color)
                 elif callable(colormap):
                     self.color_mapper = colormap(DataRange1D(color))
                 else:
