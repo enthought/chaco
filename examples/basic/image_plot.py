@@ -28,11 +28,12 @@ class PlotFrame(DemoFrame):
 
     def _create_window(self):
 
-        # Create some RGB image data
-        image = zeros((200,400,3), dtype=uint8)
+        # Create some RGBA image data
+        image = zeros((200,400,4), dtype=uint8)
         image[:,0:40,0] += 255     # Vertical red stripe
         image[0:25,:,1] += 255     # Horizontal green stripe; also yellow square
         image[-80:,-160:,2] += 255 # Blue square
+        image[:,:,3] = 255
         
         # Create a plot data obect and give it this data
         pd = ArrayPlotData()
