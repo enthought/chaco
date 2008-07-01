@@ -147,6 +147,8 @@ class ScatterPlot(BaseXYPlot):
         # Brute force implementation
         all_data = transpose(array([self.index.get_data(), self.value.get_data()]))
         screen_points = around(self.map_screen(all_data))
+        if len(screen_points) == 0:
+            return None
         delta = screen_points - array([screen_pt])
         distances = sqrt(sum(delta*delta, axis=1))
         closest_ndx = argmin(distances)
