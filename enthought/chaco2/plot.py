@@ -91,7 +91,9 @@ class Plot(DataView):
     auto_colors = List(["gold", "brown", "lightblue", "darkblue", "purple"])
 
     # index into auto_colors list
-    _auto_color_idx = Int
+    _auto_color_idx = Int(0)
+    _auto_edge_color_idx = Int(0)
+    _auto_face_color_idx = Int(0)
 
     #------------------------------------------------------------------------
     # Annotations and decorations
@@ -254,6 +256,15 @@ class Plot(DataView):
                     cls = ScatterPlot
                 elif plot_type == "polygon":
                     cls = PolygonPlot
+                    # handle auto-coloring request
+                    if styles.get("edge_color") == "auto":
+                        self._auto_edge_color_idx = \
+                            (self._auto_edge_color_idx + 1) % len(self.auto_colors)
+                        styles["edge_color"] = self.auto_colors[self._auto_edge_color_idx]
+                    if styles.get("face_color") == "auto":
+                        self._auto_face_color_idx = \
+                            (self._auto_face_color_idx + 1) % len(self.auto_colors)
+                        styles["face_color"] = self.auto_colors[self._auto_face_color_idx]
                 else:
                     raise ValueError("Unhandled plot type: " + plot_type)
 
