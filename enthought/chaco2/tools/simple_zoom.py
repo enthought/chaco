@@ -5,7 +5,7 @@ from numpy import array
 # Enthought library imports
 from enthought.enable2.api import ColorTrait, KeySpec
 from enthought.traits.api \
-    import Enum, false, Float, Instance, Int, Str, Trait, true, Tuple
+    import Bool, Enum, Float, Instance, Int, Str, Trait, Tuple
 
 # Chaco imports
 from enthought.chaco2.api import AbstractOverlay
@@ -32,7 +32,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     
     # Is the tool always "on"? If True, left-clicking always initiates
     # a zoom operation; if False, the user must press a key to enter zoom mode.
-    always_on = false
+    always_on = Bool(False)
     
     #-------------------------------------------------------------------------
     # Zoom control
@@ -47,7 +47,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     #-------------------------------------------------------------------------
     
     # Enable the mousewheel for zooming?
-    enable_wheel = true
+    enable_wheel = Bool(True)
     
     # The mouse button that initiates the drag.  If "None", then the tool
     # will not respond to drag.  (It can still respond to mousewheel events.)
@@ -65,7 +65,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     exit_zoom_key = Instance(KeySpec, args=("z",))
     
     # Disable the tool after the zoom is completed?
-    disable_on_complete = true
+    disable_on_complete = Bool(True)
     
     # The minimum amount of screen space the user must select in order for
     # the tool to actually take effect.
@@ -111,7 +111,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     # If **always_on** is False, this attribute indicates whether the tool
     # is currently enabled.
-    _enabled = false
+    _enabled = Bool(False)
 
     # the original numerical screen ranges
     _orig_low_setting = Trait(None, Tuple, Float, Str)

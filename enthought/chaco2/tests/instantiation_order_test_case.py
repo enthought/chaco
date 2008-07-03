@@ -5,11 +5,9 @@ re-assigned in any order.
 
 import unittest
 
-from numpy import arange, array, ones, zeros
-from enthought.chaco2.api import ArrayDataSource, PointDataSource, DataRange1D, \
-                                 LinearMapper, LogMapper, SimplePlotFrame, \
-                                 OverlayPlotContainer, HPlotContainer, VPlotContainer, \
-                                 ScatterPlot, LinePlot, PlotAxis, PlotGrid
+from numpy import array
+from enthought.chaco2.api import ArrayDataSource, DataRange1D, \
+                                 LinearMapper
 
 class DataPipelineTestCase(unittest.TestCase):
     def test_piecewise_construction(self):
@@ -50,24 +48,6 @@ class DataPipelineTestCase(unittest.TestCase):
         return
 
 
-    def test_null_data(self):
-        
-        pass
-
-
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(DataPipelineTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
-
-
-# EOF
+if __name__ == '__main__':
+    import nose
+    nose.run()

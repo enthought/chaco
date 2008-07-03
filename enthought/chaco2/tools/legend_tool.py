@@ -1,10 +1,8 @@
 """ Defines the LegendTool class.
 """
-# Major library imports
-from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Array, Enum, false, true
+from enthought.traits.api import Bool, Enum
 
 # Local relative imports
 from drag_tool import DragTool
@@ -22,7 +20,7 @@ class LegendTool(DragTool):
     
     # Whether to change the legend's **align** property in accord with
     # the quadrant into which it is dropped.
-    auto_align = true
+    auto_align = Bool(True)
     
     
     def is_draggable(self, x, y):

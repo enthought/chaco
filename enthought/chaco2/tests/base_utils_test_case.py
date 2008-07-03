@@ -4,8 +4,9 @@ Unit tests for utility functions in chaco2.base
 
 import unittest
 from math import sqrt
-from enthought.util.testingx import *
 from numpy import arange, array
+from numpy.testing import assert_equal, assert_almost_equal
+
 from enthought.chaco2.api import bin_search, find_runs, reverse_map_1d, point_line_distance
 
 class BinSearchTestCase(unittest.TestCase):
@@ -164,20 +165,6 @@ class PointLineDistanceTestCase(unittest.TestCase):
         assert_almost_equal(dist, 0.0)
     
 
-
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(BinSearchTestCase, "test_"))
-    suites.append(unittest.makeSuite(ReverseMap1DTestCase, "test_"))
-    suites.append(unittest.makeSuite(FindRunsTestCase, "test_"))
-    suites.append(unittest.makeSuite(PointLineDistanceTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
+if __name__ == '__main__':
+    import nose
+    nose.run()

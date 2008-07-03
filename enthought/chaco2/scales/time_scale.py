@@ -4,7 +4,7 @@ A scale for time and calendar intervals.
 
 from math import floor
 
-from scales import AbstractScale, DefaultScale, ScaleSystem, frange, heckbert_interval
+from scales import AbstractScale, ScaleSystem, frange, heckbert_interval
 from formatters import TimeFormatter
 from safetime import mktime, safe_fromtimestamp, datetime, timedelta, MINYEAR, MAXYEAR
 

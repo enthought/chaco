@@ -1,11 +1,11 @@
 """ Defines the ToolTip class.
 """
 
-from numpy import array, pi
+from numpy import array
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, white_color_trait
-from enthought.kiva import STROKE, font_metrics_provider
+from enthought.kiva import font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Bool, List, Int, Float
 

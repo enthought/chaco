@@ -2,7 +2,7 @@
 """
 # Enthought library imports
 from enthought.enable2.api import BaseTool, Pointer
-from enthought.traits.api import Enum, false, Float, Tuple
+from enthought.traits.api import Bool, Enum, Float, Tuple
 
 
 class PanTool(BaseTool):
@@ -27,7 +27,7 @@ class PanTool(BaseTool):
     constrain_key = Enum(None, "shift", "control", "alt")
     
     # Constrain the panning to one direction?
-    constrain = false
+    constrain = Bool(False)
     
     # The direction of constrained draw. A value of None means that the user
     # has initiated the drag and pressed the constrain_key, but hasn't moved
@@ -44,7 +44,7 @@ class PanTool(BaseTool):
 
     # Was constrain=True triggered by the **contrain_key**? If False, it was
     # set programmatically.
-    _auto_constrain = false
+    _auto_constrain = Bool(False)
     
     
     #------------------------------------------------------------------------

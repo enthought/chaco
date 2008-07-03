@@ -1,6 +1,6 @@
 
 # Major library imports
-from numpy import array, column_stack, compress, invert, isnan, transpose
+from numpy import column_stack, compress, invert, isnan, transpose
 import logging
 
 # Enthought library imports

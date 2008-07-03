@@ -4,7 +4,7 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Any, Enum, false, Instance, Int, List, Trait, true, Tuple
+from enthought.traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
 from enthought.enable2.api import cursor_style_trait, Line
 
 # Chaco imports
@@ -52,7 +52,7 @@ class LineSegmentTool(AbstractOverlay):
     # Is the point being dragged is a newly placed point? This informs the 
     # "dragging" state about what to do if the user presses Escape while 
     # dragging.
-    _drag_new_point = false
+    _drag_new_point = Bool(False)
     
     # The previous event state that the tool was in. This is used for states
     # that can be canceled (e.g., by pressing the Escape key), so that the
@@ -80,7 +80,7 @@ class LineSegmentTool(AbstractOverlay):
     draw_mode = "overlay"
     
     # The tool is initially invisible, because there is nothing to draw.
-    visible = false
+    visible = Bool(False)
     
 
     #------------------------------------------------------------------------

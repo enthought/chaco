@@ -1,17 +1,15 @@
 """ Defines the base class for 2-D plots.
 """
 # Standard library imports
-from math import ceil, floor
-from numpy import isnan, swapaxes
+from numpy import isnan
 
 # Enthought library imports.
-from enthought.traits.api import Any, Either, Enum, Event, false, HasTraits, \
-                                 Instance, List, Property, Range, Trait, Tuple
-from enthought.kiva.agg import GraphicsContextArray, pix_format_string_map
+from enthought.traits.api import Enum, Event, Instance, Property, Range, Trait
 
 # Local relative imports
 from abstract_plot_renderer import AbstractPlotRenderer
 from base import reverse_map_1d
+from plot_label import PlotLabel
 from grid_data_source import GridDataSource
 from grid_mapper import GridMapper
 from image_data import ImageData
@@ -25,13 +23,13 @@ class Base2DPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     
     # The data source to use for the index coordinate.
-    index = Instance("GridDataSource") 
+    index = Instance(GridDataSource) 
     
     # The data source to use as value points.
-    value = Instance("ImageData")
+    value = Instance(ImageData)
 
     # Screen mapper for 2-D structured (gridded) index data.
-    index_mapper = Instance("GridMapper")
+    index_mapper = Instance(GridMapper)
 
     # Convenience property for accessing the datarange of the mapper.
     index_range = Property

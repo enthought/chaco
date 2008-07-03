@@ -120,12 +120,12 @@ class PointDataSource(ArrayDataSource):
         min_val = lowerleft[index]
         max_val = upperright[index]
         val = pt[index]
-        if (val < minval):
+        if (val < min_val):
             if outside_returns_none:
                 return None
             else:
                 return self._min_index
-        elif (val > maxval):
+        elif (val > max_val):
             if outside_returns_none:
                 return None
             else:

@@ -3,7 +3,7 @@
 from numpy import logical_and
 
 # Enthought library imports
-from enthought.traits.api import Any, false, Float, Instance, Property, Enum
+from enthought.traits.api import Any, Bool, Float, Instance, Property, Enum
 
 # Local imports
 from abstract_overlay import AbstractOverlay
@@ -36,7 +36,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     
     _plot = Instance(ColormappedScatterPlot)
     
-    _visible = false
+    _visible = Bool(False)
     
     _old_alpha = Float
     _old_outline_color = Any

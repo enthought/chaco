@@ -2,7 +2,7 @@
 """
 # Enthought library imports
 from enthought.enable2.api import Interactor
-from enthought.traits.api import false, Instance, true
+from enthought.traits.api import Instance
 
 # Relative imports
 from plot_component import PlotComponent

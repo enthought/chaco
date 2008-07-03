@@ -5,10 +5,8 @@ from numpy import array, take, transpose
 
 # Enthought library imports
 from enthought.enable2.api import BaseTool, ColorTrait
-from enthought.traits.api import Any, Enum, false, Float, Str, Trait
+from enthought.traits.api import Enum, Float
 
-# Chaco imports
-from enthought.chaco2.api import BaseXYPlot
 
 class PointMarker(BaseTool):
     """ This tool looks at an XY plot's index data source and draws a

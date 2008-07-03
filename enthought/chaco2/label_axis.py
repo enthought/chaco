@@ -9,9 +9,7 @@ from enthought.traits.api import Any, Str, List, Float
 
 # Local, relative imports
 from axis import PlotAxis
-from base import reverse_map_1d
 from label import Label
-from ticks import auto_ticks
 
 
 class LabelAxis(PlotAxis):
@@ -93,4 +91,4 @@ class LabelAxis(PlotAxis):
         except:
             print_exc()
         return
-        
+

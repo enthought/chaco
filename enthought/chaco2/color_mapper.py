@@ -3,13 +3,13 @@
 
 # Major library imports
 from types import IntType, FloatType
-from numpy import add, arange, array, asarray, choose, clip, concatenate, \
-                  divide, isnan, ones, put, ravel, resize, searchsorted, shape, \
+from numpy import arange, array, asarray, clip, \
+                  divide, isnan, ones, searchsorted, shape, \
                   sometrue, sort, take, where, zeros
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Dict, Event, Float, HasTraits, \
-                                 Int, Property, Str, Trait, true, Tuple
+from enthought.traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
+                                 Int, Property, Str, Trait
 
 # Relative imports
 from abstract_colormap import AbstractColormap
@@ -93,7 +93,7 @@ class ColorMapper(AbstractColormap):
     updated = Event
 
     # Are the mapping arrays out of date?
-    _dirty = true
+    _dirty = Bool(True)
     
     # The raw segment data for creating the mapping array.
     _segmentdata = Dict  # (Str, Tuple | List)

@@ -1,19 +1,17 @@
 """ Defines the ColorBar class.
 """
 # Major library imports
-from numpy import compress, array, arange, ones, transpose, uint8
+from numpy import array, arange, ones, transpose, uint8
 
 # Enthought library imports
-from enthought.traits.api import Any, Enum, Instance, Property, true
+from enthought.traits.api import Any, Bool, Enum, Instance, Property
 from enthought.kiva.backend_image import GraphicsContext
 
 # Local imports
 from base_xy_plot import BaseXYPlot
-from color_mapper import ColorMapper
 from abstract_plot_renderer import AbstractPlotRenderer
 from abstract_mapper import AbstractMapper
 from array_data_source import ArrayDataSource
-from colormapped_scatterplot import ColormappedScatterPlot
 from grid import PlotGrid
 from axis import PlotAxis
 
@@ -35,10 +33,10 @@ class ColorBar(AbstractPlotRenderer):
     plot = Any
 
     # Is there a visible grid on the colorbar?
-    grid_visible = true
+    grid_visible = Bool(True)
     
     # Is there a visible axis on the colorbar?
-    axis_visible = true
+    axis_visible = Bool(True)
 
     #------------------------------------------------------------------------
     # Override default values of inherited traits

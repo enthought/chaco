@@ -5,10 +5,8 @@ from numpy import arange, array
 
 # Enthought library imports
 from enthought.enable2.api import ColorTrait, LineStyle
-from enthought.traits.api \
-    import Any, Enum, Float, Instance, Int, Property, Str, Trait
-from enthought.chaco2.api import AbstractOverlay, arg_find_runs, PlotComponent
-
+from enthought.traits.api import Any, Enum, Float, Int, Property, Str, Trait
+from enthought.chaco2.api import AbstractOverlay, arg_find_runs
 
 
 class RangeSelectionOverlay(AbstractOverlay):

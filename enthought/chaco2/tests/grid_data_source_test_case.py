@@ -1,8 +1,7 @@
 
 import unittest
 
-from numpy import alltrue, arange, array, ravel, transpose, ones, zeros, inf, isinf
-from enthought.util.testingx import *
+from numpy import alltrue, array, ravel, isinf
 
 from enthought.chaco2.api import GridDataSource
 
@@ -56,17 +55,6 @@ class GridDataSourceTestCase(unittest.TestCase):
 
 
 
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(GridDataSourceTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
 def assert_close_(desired,actual):
     diff_allowed = 1e-5
     diff = abs(ravel(actual) - ravel(desired))
@@ -83,9 +71,6 @@ def assert_ary_(desired, actual):
     return    
 
 
-
-if __name__ == "__main__":
-    test()
-
-
-
+if __name__ == '__main__':
+    import nose
+    nose.run()

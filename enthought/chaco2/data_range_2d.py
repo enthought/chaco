@@ -2,13 +2,11 @@
 Defines the DataRange2D class.
 """
 
-from math import ceil, floor, log
-from numpy import arange, array, compress, concatenate, inf, ones, transpose, zeros
+from numpy import compress, inf, transpose
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Delegate, Event, false, CFloat, \
-                                 HasTraits, \
-                                 Instance, List, Property, Trait, true, Tuple
+from enthought.traits.api import Any, Bool, CFloat, Instance, Property, Trait, \
+    Tuple
 
 # Local relative imports
 from base_data_range import BaseDataRange
@@ -48,7 +46,7 @@ class DataRange2D(BaseDataRange):
     
     # Do "auto" bounds imply an exact fit to the data? (One Boolean per 
     # dimension) If False, the bounds pad a little bit of margin on either side. 
-    tight_bounds = Tuple(true, true)
+    tight_bounds = Tuple(Bool(True), Bool(True))
     # The minimum percentage difference between low and high for each dimension.
     # That is, (high-low) >= epsilon * low.
     epsilon = Tuple(CFloat(1.0e-4), CFloat(1.0e-4))

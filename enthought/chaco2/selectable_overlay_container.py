@@ -4,7 +4,7 @@
 from numpy import array, float64
 
 # Enthought library imports
-from enthought.traits.api import Float, false, Enum
+from enthought.traits.api import Bool, Float, Enum
 from enthought.enable2.api import ColorTrait
 
 # Local imports
@@ -22,7 +22,7 @@ class SelectableOverlayPlotContainer(OverlayPlotContainer):
     # y-dimension, depending on **selection_direction**.
     selection_screen_end = Float(0.0)
     # Is there an active selection?
-    selection_active = false
+    selection_active = Bool(False)
     # The direction of the selection.
     selection_direction = Enum('v', 'h')
     # The color to use to fill the selected region.

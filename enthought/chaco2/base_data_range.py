@@ -2,9 +2,6 @@
 Defines the BaseDataRange class.
 """
 
-# Enthought library imports
-from enthought.traits.api import Event, HasTraits
-
 # Local relative imports
 from abstract_data_range import AbstractDataRange
 

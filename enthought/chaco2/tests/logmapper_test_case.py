@@ -1,8 +1,7 @@
 
-import pdb, unittest
-from numpy import array, arange, nan
-
-from enthought.util.testingx import *
+import unittest
+from numpy import array, nan
+from numpy.testing import assert_array_almost_equal, assert_equal
 
 from enthought.chaco2.api import ArrayDataSource, DataRange1D, LogMapper
 
@@ -14,7 +13,6 @@ class LogMapperTestCase(unittest.TestCase):
         r = DataRange1D(ds)
         mapper = LogMapper(range=r, low_pos=50, high_pos=90)
         result = mapper.map_screen(ary)
-        pdb
         assert_equal(result, array([50, 60, 70, 80, 90]))
         return
 
@@ -76,19 +74,6 @@ class LogMapperTestCase(unittest.TestCase):
         return
         
 
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(LogMapperTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
-
-
-# EOF
+if __name__ == '__main__':
+    import nose
+    nose.run()

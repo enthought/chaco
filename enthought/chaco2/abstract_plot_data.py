@@ -1,6 +1,6 @@
 """ Defines the base class for plot data.
 """
-from enthought.traits.api import Event, HasTraits, true
+from enthought.traits.api import Bool, Event, HasTraits
 
 
 class AbstractPlotData(HasTraits):
@@ -25,10 +25,10 @@ class AbstractPlotData(HasTraits):
 
     # Can consumers (Plots) write data back through this interface using 
     # set_data()?
-    writable = true
+    writable = Bool(True)
 
     # Can consumers (Plots) set selections?
-    selectable = true
+    selectable = Bool(True)
 
 
     def list_data(self):

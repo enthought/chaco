@@ -1,11 +1,9 @@
 """ Defines the LineInspector tool class.
 """
-# Major library imports
-from numpy import array, take, transpose
 
 # Enthought library imports
 from enthought.enable2.api import BaseTool, ColorTrait, LineStyle
-from enthought.traits.api import Any, Enum, false, Float, Str, Trait, true
+from enthought.traits.api import Any, Bool, Enum, Float, Str, Trait
 
 # Chaco imports
 from enthought.chaco2.api import BaseXYPlot, Base2DPlot
@@ -30,15 +28,15 @@ class LineInspector(BaseTool):
     inspect_mode = Enum("space", "indexed")
     
     # Respond to user mouse events?
-    is_interactive = true
+    is_interactive = Bool(True)
     
     # Does the tool respond to updates in the metadata on the data source
     # and update its own position?
-    is_listener = false
+    is_listener = Bool(False)
     
     # If interactive, does the line inspector write the current data space point
     # to the appropriate data source's metadata?
-    write_metadata = false
+    write_metadata = Bool(False)
     
     # The name of the metadata field to listen or write to.
     metadata_name = Str("selections")

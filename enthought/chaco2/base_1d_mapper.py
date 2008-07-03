@@ -1,10 +1,7 @@
 """ Defines the Base1DMapper class.
 """
-# Major library imports
-from numpy import array
-
 # Enthought library imports
-from enthought.traits.api import Event, Instance, HasTraits, Float, false, Property
+from enthought.traits.api import Bool, Instance, Float, Property
 
 # Local relative imports
 from abstract_mapper import AbstractMapper
@@ -31,7 +28,7 @@ class Base1DMapper(AbstractMapper):
 
     # If the subclass uses a cache, _cache_valid is maintained to 
     # monitor its status
-    _cache_valid = false
+    _cache_valid = Bool(False)
 
 
     #------------------------------------------------------------------------

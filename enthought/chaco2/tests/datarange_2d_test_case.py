@@ -1,8 +1,8 @@
 
 import unittest
 
-from numpy import alltrue, arange, array, ravel, transpose, ones, zeros, inf, isinf
-from enthought.util.testingx import *
+from numpy import alltrue, arange, array, ravel, transpose, zeros, inf, isinf
+from numpy.testing import assert_equal
 
 from enthought.chaco2.api import DataRange2D, GridDataSource, PointDataSource
 
@@ -183,17 +183,6 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_equal(r.mask_data(ary) , zeros(len(ary)))
         return
 
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(DataRange2DTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
 def assert_close_(desired,actual):
     diff_allowed = 1e-5
     diff = abs(ravel(actual) - ravel(desired))
@@ -211,9 +200,6 @@ def assert_ary_(desired, actual):
 
 
 
-if __name__ == "__main__":
-    test()
-
-
-
-# EOF
+if __name__ == '__main__':
+    import nose
+    nose.run()

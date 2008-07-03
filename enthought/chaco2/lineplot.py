@@ -5,8 +5,8 @@
 import warnings
 
 # Major library imports
-from numpy import any, argsort, array, compress, concatenate, inf, invert, isnan, \
-                  ndarray, roll, take, transpose, zeros
+from numpy import argsort, array, concatenate, inf, invert, isnan, \
+                  take, transpose, zeros
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, ColorTrait, LineStyle

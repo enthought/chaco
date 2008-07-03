@@ -1,12 +1,9 @@
 """ Defines the ColormappedScatterPlot and ColormappedScatterPlotView classes.
 """
 
-# Standard library imports.
-import logging
-
 # Major library imports
-from numpy import argsort, array, compress, concatenate, nonzero, invert, take, \
-                  isnan, isreal, transpose, newaxis, zeros
+from numpy import argsort, array, concatenate, nonzero, invert, take, \
+                  isnan, transpose, newaxis, zeros
 
 # Enthought library imports
 from enthought.kiva import STROKE

@@ -159,7 +159,8 @@ elif ETSConfig.toolkit == 'pyglet':
             window = frame.enable_win.control
         else:
             window = demo_class().control
-        window.set_size(*size)
+        if not window._fullscreen:
+            window.set_size(*size)
         window.set_caption(title)
         app.set_main_window(window)
         app.run()

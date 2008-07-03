@@ -8,7 +8,7 @@ from math import ceil, floor, log10
 from numpy import abs, argmin, array, linspace
 
 # Local imports
-from formatters import NullFormatter, BasicFormatter
+from formatters import BasicFormatter
 
 
 __all__ = ["AbstractScale", "DefaultScale", "FixedScale", "Pow10Scale",

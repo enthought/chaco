@@ -4,9 +4,8 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.enable2.api import ColorTrait
-from enthought.traits.api import Any, Array, Bool, Enum, Event, false, Float, Int, List, \
-                             Property, Str, Trait, true, Tuple
+from enthought.traits.api import Any, Array, Bool, Enum, Event, Float, Int, List, \
+                             Property, Trait, Tuple
 
 # Chaco imports
 from enthought.chaco2.api import AbstractController

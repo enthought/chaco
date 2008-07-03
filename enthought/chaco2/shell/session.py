@@ -4,7 +4,7 @@
 # Enthoght library imports
 from enthought.chaco2.array_plot_data import ArrayPlotData
 from enthought.chaco2.default_colormaps import *
-from enthought.traits.api import Any, Dict, false, HasTraits, Instance, Int, \
+from enthought.traits.api import Any, Bool, Dict, HasTraits, Instance, Int, \
                                  List, Property, Trait, Str
 
 
@@ -29,7 +29,7 @@ class PlotSession(HasTraits):
     window_map = Dict(Str, PlotWindow)
 
     # The current hold state.
-    hold = false
+    hold = Bool(False)
 
     # The session holds a single ArrayPlotData instance to which it adds unnamed
     # arrays that are provided to various plotting commands.

@@ -1,7 +1,5 @@
 
-import pdb, unittest
-
-from enthought.traits.api import Tuple
+import unittest
 
 from enthought.chaco2.api import HPlotContainer, OverlayPlotContainer, PlotComponent, \
                                  VPlotContainer, GridContainer
@@ -355,21 +353,6 @@ class GridContainerTestCase(ContainerTestCase):
 
     
 
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(OverlayPlotContainerTestCase, "test_"))
-    suites.append(unittest.makeSuite(HPlotContainerTestCase, "test_"))
-    suites.append(unittest.makeSuite(VPlotContainerTestCase, "test_"))
-    suites.append(unittest.makeSuite(GridContainerTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
-
-# EOF
+if __name__ == '__main__':
+    import nose
+    nose.run()

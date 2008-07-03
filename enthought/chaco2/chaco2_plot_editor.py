@@ -12,7 +12,7 @@ from enthought.enable2.traits.ui.wx.rgba_color_editor import \
 from enthought.enable2.api import black_color_trait, LineStyle, ColorTrait, white_color_trait
 from enthought.enable2.wx_backend.api import Window
 from enthought.kiva.traits.kiva_font_trait import KivaFont
-from enthought.traits.api import Enum, false, Str, Range, Tuple, \
+from enthought.traits.api import Enum, Str, Range, Tuple, \
                                  Bool, Trait, Int, Any, Property
 from enthought.traits.ui.api import Item
 from enthought.traits.ui.wx.editor import Editor
@@ -119,7 +119,7 @@ class Chaco2PlotItem(Item):
     # Width of the plot border
     border_width = Int(1)
     # Is the border visible?
-    border_visible = false
+    border_visible = Bool(False)
     # Line style of the border.
     border_dash = LineStyle
     # Color of the border.

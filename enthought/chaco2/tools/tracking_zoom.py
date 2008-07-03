@@ -1,13 +1,9 @@
 """ Defines the TrackingZoom class.
 """
-from numpy import allclose, array, inf
-
-# Enthought library imports
-from enthought.enable2.api import ColorTrait, KeySpec
-from enthought.traits.api import Enum, false, Float, Instance, Int, Trait, true, Tuple
 
 # Chaco imports
 from enthought.chaco2.tools.api import SimpleZoom
+
 
 class TrackingZoom(SimpleZoom):
     """ Allows the user to zoom in or out on a plot that is using tracking.

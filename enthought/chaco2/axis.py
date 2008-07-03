@@ -9,8 +9,8 @@ from enthought.enable2.api import black_color_trait, transparent_color_trait, \
                                   LineStyle
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Float, Int, Str, Trait, Unicode, \
-                                 Bool, Event, List, Array, Instance, Enum, false, \
-                                 true, TraitError
+                                 Bool, Event, List, Array, Instance, Enum, \
+                                 TraitError
 from enthought.traits.ui.api import View, HGroup, Group, VGroup, Item, TextEditor
 
 
@@ -119,7 +119,7 @@ class PlotAxis(AbstractOverlay):
     tick_out = Int(5)
 
     # Are ticks visible at all?
-    tick_visible = true
+    tick_visible = Bool(True)
 
     # The dataspace interval between ticks.
     tick_interval = Trait('auto', 'auto', Float)
@@ -132,7 +132,7 @@ class PlotAxis(AbstractOverlay):
     orientation = Enum("top", "bottom", "left", "right")
 
     # Is the axis line visible?
-    axis_line_visible = true
+    axis_line_visible = Bool(True)
 
     # The color of the axis line.
     axis_line_color = black_color_trait
@@ -145,15 +145,15 @@ class PlotAxis(AbstractOverlay):
 
     # A special version of the axis line that is more useful for geophysical
     # plots.
-    small_haxis_style = false     # TODO: MOVE THIS OUT OF HERE!
+    small_haxis_style = Bool(False)     # TODO: MOVE THIS OUT OF HERE!
 
     # Does the axis ensure that its end labels fall within its bounding area?
-    ensure_labels_bounded = false
+    ensure_labels_bounded = Bool(False)
 
     # Does the axis prevent the ticks from being rendered outside its bounds?
     # This flag is off by default because the standard axis *does* render ticks
     # that encroach on the plot area.
-    ensure_ticks_bounded = false
+    ensure_ticks_bounded = Bool(False)
 
     # Fired when the axis's range bounds change.
     updated = Event

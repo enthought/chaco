@@ -1,8 +1,8 @@
 
-import pdb, unittest
-from numpy import array, arange
+import unittest
+from numpy import array
+from numpy.testing import assert_equal
 
-from enthought.util.testingx import *
 
 from enthought.chaco2.api import ArrayDataSource, DataRange1D, LinearMapper
 
@@ -26,20 +26,6 @@ class LinearMapperTestCase(unittest.TestCase):
         assert_equal(result , array([100, 80, 60, 40, 20, 0]))
         return
 
-
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(LinearMapperTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
-
-
-# EOF
+if __name__ == '__main__':
+    import nose
+    nose.run()

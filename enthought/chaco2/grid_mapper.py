@@ -7,7 +7,7 @@ into a structured (gridded) 1-D output space.
 from numpy import transpose
 
 # Enthought library imports
-from enthought.traits.api import Instance, false, Float, Property
+from enthought.traits.api import Bool, Instance, Float, Property
 
 # Local relative imports
 from abstract_mapper import AbstractMapper
@@ -51,10 +51,10 @@ class GridMapper(AbstractMapper):
     # Private Traits
     #------------------------------------------------------------------------
 
-    _updating_submappers = false
+    _updating_submappers = Bool(False)
     
-    _xmapper = Instance("Base1DMapper")
-    _ymapper = Instance("Base1DMapper")
+    _xmapper = Instance(Base1DMapper)
+    _ymapper = Instance(Base1DMapper)
     
 
     #------------------------------------------------------------------------

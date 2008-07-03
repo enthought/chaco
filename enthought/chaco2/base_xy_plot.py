@@ -1,11 +1,11 @@
 """ Defines the base class for XY plots.
 """
 from math import sqrt
-from numpy import around, array, column_stack, isnan, transpose
+from numpy import around, array, isnan, transpose
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait
-from enthought.traits.api import Any, Array, Enum, false, Float, Instance, \
+from enthought.traits.api import Any, Array, Bool, Enum, Float, Instance, \
                              Property
 
 
@@ -97,11 +97,11 @@ class BaseXYPlot(AbstractPlotRenderer):
     # Does the plot use downsampling?
     # This is not used right now.  It needs an implementation of robust, fast
     # downsampling, which does not exist yet.
-    use_downsampling = false
+    use_downsampling = Bool(False)
     
     # Does the plot use a spatial subdivision structure for fast hit-testing?
     # This makes data updates slower, but makes hit-tests extremely fast.
-    use_subdivision = false
+    use_subdivision = Bool(False)
     
     # Overrides the default background color trait in PlotComponent.
     bgcolor = "transparent"
@@ -114,14 +114,14 @@ class BaseXYPlot(AbstractPlotRenderer):
     # Defines a the origin axis width, for testing.
     origin_axis_width = Float(1.0)
     # Defines the origin axis visibility, for testing.
-    origin_axis_visible = false
+    origin_axis_visible = Bool(False)
     
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
     
     # Are the cache traits valid? If False, new ones need to be compute.
-    _cache_valid = false
+    _cache_valid = Bool(False)
 
     # Cached array of (x,y) data-space points; regardless of self.orientation,
     # these points are always stored as (index_pt, value_pt).
@@ -132,7 +132,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     
     # Does **_cached_screen_pts** contain the screen-space coordinates
     # of the points currently in **_cached_data_pts**?
-    _screen_cache_valid = false
+    _screen_cache_valid = Bool(False)
 
     # Reference to a spatial subdivision acceleration structure.
     _subdivision = Any

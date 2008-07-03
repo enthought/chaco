@@ -1,10 +1,11 @@
 """ Defines the LogMapper and InvalidDataRangeException classes.
 """
 # Major library imports
-from numpy import array, isnan, log, exp, putmask, zeros, sometrue, floor, ceil
+from numpy import array, isnan, log, log10, exp, zeros, sometrue,\
+    floor, ceil
 
 # Enthought library imports
-from enthought.traits.api import false, Float
+from enthought.traits.api import Bool, Float
 
 #Local relative imports
 from base_1d_mapper import Base1DMapper
@@ -31,8 +32,8 @@ class LogMapper(Base1DMapper):
     _inter_offset = Float(0.0)
     _screen_scale = Float(0.0)
     _screen_offset = Float(0.0)
-    _null_screen_range = false
-    _null_data_range = false
+    _null_screen_range = Bool(False)
+    _null_data_range = Bool(False)
 
     #------------------------------------------------------------------------
     # Public methods
@@ -50,16 +51,10 @@ class LogMapper(Base1DMapper):
             intermediate = data_array*0.0
         else:
             try:
-                mask = (data_array <= LOG_MINIMUM) | (isnan(data_array))
+                mask = (data_array <= LOG_MINIMUM) | isnan(data_array)
                 if sometrue(mask):
-                    old_array = data_array
-                    if type(old_array) == int or type(old_array) == float or \
-                           isnan(old_array):
-                        old_array = array([old_array])
-                        
-                    data_array = old_array[:]
-                    fill_array = zeros(len(data_array)) + self.fill_value
-                    putmask(data_array, mask, fill_array)
+                    data_array = array(data_array, copy=True, ndmin=1)
+                    data_array[mask] = self.fill_value
                 intermediate = (log(data_array) - self._inter_offset)/self._inter_scale
             except ValueError:
                 intermediate = zeros(len(data_array))

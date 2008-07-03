@@ -16,7 +16,7 @@ Also defines the convenience function::
 """
 
 
-from enthought.traits.api import Dict, false, HasTraits, Instance, Str
+from enthought.traits.api import Bool, Dict, HasTraits, Instance, Str
 
 
 
@@ -143,7 +143,7 @@ class CodeTemplate(PlotTemplate):
     #-------------------------------------------------------------------------
 
     # Is the template completely bound?
-    is_bound = false
+    is_bound = Bool(False)
     
     
     #-------------------------------------------------------------------------

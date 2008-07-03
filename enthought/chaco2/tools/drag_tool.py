@@ -1,7 +1,7 @@
 """ Defines the base DragTool class.
 """
 # Enthought library imports
-from enthought.traits.api import Enum, false, true, Tuple
+from enthought.traits.api import Bool, Enum, Tuple
 from enthought.enable2.api import BaseTool
 
 
@@ -16,7 +16,7 @@ class DragTool(BaseTool):
     drag_button = Enum("left", "right")
 
     # End the drag operation if the mouse leaves the associated component?
-    end_drag_on_leave = true
+    end_drag_on_leave = Bool(True)
     
     # These keys, if pressed during drag, cause the drag operation to reset.
     cancel_keys = Tuple("Esc")
@@ -41,7 +41,7 @@ class DragTool(BaseTool):
     # getting mouse focus while the mouse button is down (either from
     # window_enter or programmatically) and erroneously
     # initiating a drag.
-    _mouse_down_received = false
+    _mouse_down_received = Bool(False)
 
 
     #------------------------------------------------------------------------

@@ -4,10 +4,8 @@
 from numpy import array, linspace, meshgrid, transpose
 
 # Enthought library imports
-from enthought.enable2.api import black_color_trait, ColorTrait, LineStyle
-from enthought.kiva.agg import GraphicsContextArray
-from enthought.traits.api import Any, Dict, false, Float, HasTraits, Instance, \
-                                 Int, List, Property, Range, Str, Trait
+from enthought.enable2.api import ColorTrait
+from enthought.traits.api import Bool, Dict, Instance, Int, List, Range, Trait
 
 # Local relative imports
 from base_2d_plot import Base2DPlot
@@ -30,7 +28,7 @@ class ContourPolyPlot(Base2DPlot):
     levels = Trait("auto", Int, List)
 
     # Mapping of values to colors
-    color_mapper = Instance("ColorMapper")
+    color_mapper = Instance(ColorMapper)
 
     alpha = Trait(1.0, Range(0.0, 1.0))
 
@@ -39,15 +37,15 @@ class ContourPolyPlot(Base2DPlot):
     #------------------------------------------------------------------------
     
     # Are the cached contours valid? If False, new ones need to be computed.
-    _poly_cache_valid = false
+    _poly_cache_valid = Bool(False)
 
     # Cached collection of traces.
     _cached_polys = Dict
 
     # Is the cached level data valid?
-    _level_cache_valid = false
+    _level_cache_valid = Bool(False)
     # Is the cached color data valid?
-    _colors_cache_valid = false
+    _colors_cache_valid = Bool(False)
     
     # List of levels and their associated line properties.
     _levels = List

@@ -3,10 +3,7 @@
 
 # Enthought library imports
 from enthought.enable2.api import BaseTool, KeySpec
-from enthought.traits.api import Any, Bool, Enum, Float, Instance, Str
-
-# Chaco imports
-from enthought.chaco2.api import ScatterPlot
+from enthought.traits.api import Bool, Enum, Float, Instance
 
 
 class ScatterInspector(BaseTool):

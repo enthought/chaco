@@ -3,7 +3,7 @@ from enthought.traits.api import Any, Enum, Int
 from enthought.enable2.drawing.api import ToolbarButton
 
 # Local, relative imports
-from plot_containers import HPlotContainer, VPlotContainer
+from plot_containers import VPlotContainer
 from plot_component import PlotComponent
 
 

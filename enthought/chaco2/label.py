@@ -1,13 +1,13 @@
 """ Defines the Label class.
 """
 # Major library imports
-from math import pi
+from math import cos, sin, pi
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, transparent_color_trait
 from enthought.kiva.traits.kiva_font_trait import KivaFont
-from enthought.traits.api import Any, false, Float, HasTraits, Int, \
-                                 List, Str, Instance
+from enthought.traits.api import Bool, Float, HasTraits, Int, \
+                                 List, Str
 
 
 class Label(HasTraits):
@@ -48,7 +48,7 @@ class Label(HasTraits):
     #------------------------------------------------------------------------
 
     _bounding_box = List()
-    _position_cache_valid = false
+    _position_cache_valid = Bool(False)
 
 
     def __init__(self, **traits):

@@ -4,10 +4,10 @@ CompositeIconRenderer classes.
 from numpy import array
 
 from enthought.enable2.api import white_color_trait
-from enthought.kiva import STROKE, font_metrics_provider
+from enthought.kiva import font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
-                                 Instance, List, Trait
+                                 Instance, List
 
 # Local relative imports
 from abstract_overlay import AbstractOverlay

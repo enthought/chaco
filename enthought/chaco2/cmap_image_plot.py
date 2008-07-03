@@ -2,9 +2,7 @@
 from numpy import invert, zeros
 
 # Enthought library imports.
-from enthought.traits.api import Any, false, Float, HasTraits, Instance, \
-                                 List, Property, Tuple
-from enthought.kiva.agg import GraphicsContextArray
+from enthought.traits.api import Any, Bool, Float, Instance, Property, Tuple
 
 # Local relative imports
 from image_plot import ImagePlot
@@ -23,7 +21,7 @@ class CMapImagePlot(ImagePlot):
     #------------------------------------------------------------------------
     
     # Maps from scalar data values in self.data.value to color tuples
-    value_mapper = Instance("ColorMapper")
+    value_mapper = Instance(ColorMapper)
 
     # Convenience property for value_mapper as color_mapper
     color_mapper = Property
@@ -44,7 +42,7 @@ class CMapImagePlot(ImagePlot):
     #------------------------------------------------------------------------
 
     # Is the mapped image valid?
-    _mapped_image_cache_valid = false
+    _mapped_image_cache_valid = Bool(False)
 
     # Cache of the fully mapped image.
     _cached_mapped_image = Any

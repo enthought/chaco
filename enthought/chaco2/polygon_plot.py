@@ -1,9 +1,6 @@
 """ Defines the PolygonPlot class.
 """
 
-# Standard library imports.
-import logging
-
 # Major library imports
 import numpy as np
 

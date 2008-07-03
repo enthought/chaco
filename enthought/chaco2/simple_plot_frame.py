@@ -10,11 +10,10 @@
 
 
 # Enthought library imports
-from enthought.traits.api import Enum, false, Float, true
+from enthought.traits.api import Bool
 
 # Local, relative imports
 from base_plot_frame import BasePlotFrame
-from chaco_traits import box_edge_enum, box_position_enum
 from plot_containers import OverlayPlotContainer
 
 class SimplePlotFrame(BasePlotFrame):
@@ -45,7 +44,7 @@ class SimplePlotFrame(BasePlotFrame):
     #------------------------------------------------------------------------
 
     # Does the component need to do a layout call?
-    _layout_needed = true
+    _layout_needed = Bool(True)
 
 
     def __init__(self, **kwtraits):

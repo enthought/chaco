@@ -50,28 +50,6 @@ def sort_points(points, index=0):
         raise RuntimeError, "sort_points(): Array of wrong shape."
     return take( points, argsort(points[:,index]) )
 
-def concat_point_arrays(list_of_arrays):
-    """
-    concat_point_arrays(list_of_point_arrays) -> point_array (Nx2)
-    
-    The *list_of_point_arrays* parameter is a standard Python list-like object
-    with Nx2 arrays inside it.
-    
-    Example::
-        
-        concat_point_arrays( [array([[0,0], [1,1]]), array([[2,2], [3,3]])] )
-        
-    returns the following result::
-        
-        array([ [0,0], [1,1], [2,2], [3,3] ])
-    """
-    # shortcut if list is length 1
-    if len(list_of_arrays) == 1:
-        return list_of_arrays[0]
-    else:
-        ravelled = [ravel(x) for x in list_of_arrays]
-        return resize(concatenate(ravelled), (len(ravelled)/2, 2))
-
 def array_zip(*arys):
     """
     Returns a Numeric array that is the concatenation of the input 1-D

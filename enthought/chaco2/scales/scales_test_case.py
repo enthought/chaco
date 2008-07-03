@@ -1,7 +1,10 @@
 
-import pdb, unittest
+import unittest
 
-from scales import *
+from numpy import array
+
+from formatters import BasicFormatter, OffsetFormatter
+from scales import Pow10Scale, FixedScale, LogScale, DefaultScale, ScaleSystem, frange
 
 
 class TicksTestCase(unittest.TestCase):
@@ -68,7 +71,6 @@ class ScaleSystemTestCase(TicksTestCase):
         pass
 
 
-from formatters import *
 
 class BasicFormatterTestCase(TicksTestCase):
 
@@ -82,7 +84,7 @@ class BasicFormatterTestCase(TicksTestCase):
         
         ticks = scale.ticks(start, end, numlabels)
         labels = fmt.format(ticks, numlabels, None)
-        desired = map(str, range(12, 19))
+        desired = [str(float(x)) for x in range(12, 19)]
         self.check_labels(labels, desired)
 
         # test with small numbers
@@ -90,7 +92,7 @@ class BasicFormatterTestCase(TicksTestCase):
         start, end = 5e-5, 8.5e-4
         ticks = scale.ticks(start, end, numlabels)
         labels = fmt.format(ticks, numlabels, None)
-        desired = [str(i)+"e-4" for i in range(1, 9)]
+        desired = [str(float(i))+"e-4" for i in range(1, 9)]
         self.check_labels(labels, desired)
 
     def test2_nice_sci(self):
@@ -193,19 +195,6 @@ class OffsetFormatterTestCase(TicksTestCase):
 
 
 
-def test_suite(level=1):
-    suites = []
-##     suites.append(unittest.makeSuite(ScalesTestCase, "test_"))
-##     suites.append(unittest.makeSuite(ScaleSystemTestCase, "test_"))
-    suites.append(unittest.makeSuite(BasicFormatterTestCase, "test2_"))
-    #suites.append(unittest.makeSuite(OffsetFormatterTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
 if __name__ == "__main__":
-    test()
+    import nose
+    nose.run()

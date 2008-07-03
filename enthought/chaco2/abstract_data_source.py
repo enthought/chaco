@@ -2,7 +2,7 @@
 Defines the AbstractDataSource class.
 """
 
-from enthought.traits.api import Any, Dict, Event, false, HasTraits, Instance, true
+from enthought.traits.api import Bool, Dict, Event, HasTraits
 
 # Local relative imports
 from base import DimensionTrait
@@ -50,7 +50,7 @@ class AbstractDataSource(HasTraits):
     
     # Should the data that this datasource refers to be serialized when
     # the datasource is serialized?
-    persist_data = true
+    persist_data = Bool(True)
     
     #------------------------------------------------------------------------
     # Abstract methods

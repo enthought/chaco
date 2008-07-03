@@ -4,7 +4,7 @@
 from math import ceil, floor, pi
 
 # Enthought library imports.
-from enthought.traits.api import Either, Enum, false, Instance, \
+from enthought.traits.api import Bool, Either, Enum, Instance, \
                                  List, Range, Trait, Tuple
 from enthought.kiva.agg import GraphicsContextArray
 
@@ -31,7 +31,7 @@ class ImagePlot(Base2DPlot):
     #------------------------------------------------------------------------
     
     # Are the cache traits valid? If False, new ones need to be computed.
-    _image_cache_valid = false
+    _image_cache_valid = Bool(False)
 
     # Cached image of the bmp data (not the bmp data in self.data.value).
     _cached_image = Instance(GraphicsContextArray)

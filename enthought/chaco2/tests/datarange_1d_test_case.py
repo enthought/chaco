@@ -1,8 +1,8 @@
 
 import unittest
 
-from numpy import arange, array, ones, zeros, inf
-from enthought.util.testingx import *
+from numpy import arange, array, zeros, inf
+from numpy.testing import assert_equal
 
 from enthought.chaco2.api import DataRange1D, ArrayDataSource
 
@@ -126,20 +126,6 @@ class DataRangeTestCase(unittest.TestCase):
         assert_equal(bounds , (7,11))
         return
 
-
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(DataRangeTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
-
-
-# EOF
+if __name__ == '__main__':
+    import nose
+    nose.run()

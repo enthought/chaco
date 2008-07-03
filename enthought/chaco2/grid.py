@@ -2,13 +2,12 @@
 function.
 """
 
-import pdb
 from numpy import around, array, column_stack, float64, inf, zeros_like
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, LineStyle
-from enthought.traits.api import Any, Enum, false, Float, Instance, Int, CInt, Trait, \
-                            Array, Property, TraitError
+from enthought.traits.api import Any, Bool, Enum, Float, Instance, CInt, Trait, \
+                            Property, TraitError
 from enthought.traits.ui.api import HGroup, Item, VGroup, View, TextEditor
 
 # Local, relative imports
@@ -64,7 +63,7 @@ class PlotGrid(AbstractOverlay):
     # Draw the ticks starting at the end of the mapper range? If False, the
     # ticks are drawn starting at 0. This setting can be useful to keep the 
     # grid from from "flashing" as the user resizes the plot area.
-    flip_axis = false
+    flip_axis = Bool(False)
     
     # The color of the grid lines.
     line_color = black_color_trait
@@ -91,7 +90,7 @@ class PlotGrid(AbstractOverlay):
     
     # Private traits; cached info
     
-    _cache_valid = false
+    _cache_valid = Bool(False)
     _tick_list = Any
     _tick_positions = Any
     _length = Float(0.0)

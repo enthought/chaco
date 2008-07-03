@@ -2,9 +2,8 @@
 """
 # Enthought library imports
 from enthought.enable2.api import Component
-from enthought.traits.api import Any, Bool, Enum, Instance, List, \
-                             Property, Str
-from enthought.kiva import GraphicsContext, FILL
+from enthought.traits.api import Bool, Instance, Str
+from enthought.kiva import GraphicsContext
 
 
 DEFAULT_DRAWING_ORDER = ["background", "image", "underlay",      "plot",

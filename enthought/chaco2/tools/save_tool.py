@@ -5,7 +5,7 @@
 import os.path
 
 # Enthought library imports
-from enthought.traits.api import Enum, Str, Trait, Tuple
+from enthought.traits.api import Enum, Str, Tuple
 from enthought.enable2.api import BaseTool
 
 

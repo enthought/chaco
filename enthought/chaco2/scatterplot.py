@@ -3,9 +3,8 @@ function.
 """
 
 # Major library imports
-from numpy import argmin, around, array, asarray, compress, empty, invert, isnan, \
+from numpy import argmin, around, array, asarray, compress, invert, isnan, \
                 sqrt, sum, transpose
-import numpy as np
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, ColorTrait
@@ -15,9 +14,8 @@ from enthought.traits.ui.api import View, VGroup, Item
 
 # Local relative imports
 from base_xy_plot import BaseXYPlot
-from scatter_markers import AbstractMarker, CircleMarker, CustomMarker, \
-                            DiamondMarker, MarkerNameDict, marker_trait, \
-                            PixelMarker
+from scatter_markers import AbstractMarker, CustomMarker, \
+                            MarkerNameDict, marker_trait
 from speedups import scatterplot_gather_points
 
 

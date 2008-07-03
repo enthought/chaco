@@ -3,8 +3,8 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.enable2.api import BaseTool, ColorTrait
-from enthought.traits.api import Enum, Float, Instance, Int, Trait
+from enthought.enable2.api import ColorTrait
+from enthought.traits.api import Float, Int, Trait
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay

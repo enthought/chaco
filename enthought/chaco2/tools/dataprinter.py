@@ -1,11 +1,12 @@
 """ Defines the DataPrinter tool class.
 """
 # Enthought library imports
-from enthought.traits.api import Any, Float, Str, Trait
+from enthought.traits.api import Str
 from enthought.enable2.api import BaseTool
 
 # Chaco imports
 from enthought.chaco2.api import BaseXYPlot
+
 
 class DataPrinter(BaseTool):
     """ Simple listener tool that prints the (x,y) data space position of the

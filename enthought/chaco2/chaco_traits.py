@@ -2,7 +2,7 @@
 """
 
 # Enthought library imports
-from enthought.traits.api import Any, Enum, false, Float, Int, Str, Trait, true
+from enthought.traits.api import Enum
     
 #----------------------------------------------------------------------------
 # Box positioning traits: used to specify positions of boxes relative to

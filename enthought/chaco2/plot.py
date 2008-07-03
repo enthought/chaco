@@ -3,7 +3,7 @@
 # Major library imports
 import itertools
 import warnings
-from numpy import arange, array, ndarray, linspace, transpose
+from numpy import arange, array, ndarray, linspace
 from types import FunctionType
 
 # Enthought library imports

@@ -1,13 +1,10 @@
 
-from cPickle import Pickler, Unpickler, load, dump, loads, dumps
-import pdb, unittest
-
-from enthought.traits.api import HasTraits, Str, Float, Enum, Property, Trait, List, \
-                             false, true, Instance, Int
+from cPickle import loads, dumps
+import unittest
 
 # pickling child classes doesn't work well in the unittest framework unless 
 # the classes to be pickled are in a different file
-from serializable_base import Root, Shape, Circle, Poly
+from serializable_base import Circle, Poly
 
 class SimpleSerializationTestCase(unittest.TestCase):
     
@@ -25,18 +22,7 @@ class SimpleSerializationTestCase(unittest.TestCase):
             else:
                 self.assert_(o1 == o2)
         return
-    
-    def create_objects(self):
-        "creates some inter-related objects to serialize"
-        c1 = Circle(radius=5.0, name="c1", x=1.0, y=2.0)
-        c2 = Circle(radius=10.0, name="c2", x=2.0, y=3.0)
-        poly = Poly(numside = 12, name="poly")
-        self.c1 = c1
-        self.c2 = c2
-        self.poly = poly
-        self.click1 = click1
-        return
-    
+
     def test_basic_save(self):
         c = Circle(radius=5.0, name="c1", x=1.0, y=2.0)
         c2 = loads(dumps(c))
@@ -58,19 +44,6 @@ class PlotSerializationTestCase(unittest.TestCase):
     pass    
 
 
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(SimpleSerializationTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
-
-
-# EOF
+if __name__ == '__main__':
+    import nose
+    nose.run()

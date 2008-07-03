@@ -3,11 +3,9 @@
 # Enthought library imports
 from enthought.traits.api import Enum, Tuple
 
-# Chaco imports
-from enthought.chaco2.api import AbstractController
-
 # Local, relative imports
 from drag_tool import DragTool
+
 
 class MoveTool(DragTool):
     """ A tool for moving a component.

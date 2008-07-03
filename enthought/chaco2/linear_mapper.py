@@ -7,7 +7,7 @@ into a 1-D output space.
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import false, Float
+from enthought.traits.api import Bool, Float
 
 # Local relative imports
 from base_1d_mapper import Base1DMapper
@@ -29,9 +29,9 @@ class LinearMapper(Base1DMapper):
     # Number of screen space units per data space unit.
     _scale = Float(1.0)
     # Is the range of the screen space empty?
-    _null_screen_range = false
+    _null_screen_range = Bool(False)
     # Is the range of the data space empty?
-    _null_data_range = false
+    _null_data_range = Bool(False)
 
     #------------------------------------------------------------------------
     # Public methods

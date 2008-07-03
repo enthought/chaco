@@ -1,10 +1,10 @@
 """ Defines the DrawPointsTool class.
 """
 # Major library imports
-from numpy import array, float64, hstack, resize
+from numpy import array, float64, hstack
 
 # Enthought library imports
-from enthought.traits.api import Instance, Bool, true
+from enthought.traits.api import Instance, Bool
 from enthought.enable2.api import BaseTool
 
 # Chaco import
@@ -20,7 +20,7 @@ class DrawPointsTool(BaseTool):
     # A data source for the y-dimension of the drawn points.
     ydata = Instance(ArrayDataSource)
     # Is this the active tool?
-    activated = true
+    activated = Bool(True)
     
     #It would be nice to set the pointer to a cross
     

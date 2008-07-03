@@ -1,14 +1,10 @@
 """ Defines the BasePlotContainer class.
 """
-from sets import Set
-from numpy import array
 import warnings
 
 # Enthought library imports
-from enthought.enable2.api import Container, Interactor, black_color_trait, \
-                            white_color_trait, color_table, empty_rectangle, \
-                            intersect_bounds
-from enthought.traits.api import Bool, Enum, List, Property, Tuple
+from enthought.enable2.api import Container
+from enthought.traits.api import Property, Tuple
 
 # Local, relative imports
 from plot_component import PlotComponent
@@ -40,11 +36,11 @@ class BasePlotContainer(PlotComponent, Container):
     #------------------------------------------------------------------------
 
     def _get_plot_components(self):
-        warnings.warn("Use of plot_components attribute deprecated. Use components attribute instead.")
+        warnings.warn("Use of plot_components attribute deprecated. Use components attribute instead.", DeprecationWarning)
         return self._components
 
     def _set_plot_components(self, new):
-        warnings.warn("Use of plot_components attribute deprecated. Use components attribute instead.")
+        warnings.warn("Use of plot_components attribute deprecated. Use components attribute instead.", DeprecationWarning)
         self._components = new
 
       

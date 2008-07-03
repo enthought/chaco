@@ -2,7 +2,6 @@
 from enthought.traits.api import Any, Enum, Int, Property, Trait
 
 from enthought.enable2.api import NativeScrollBar
-from enthought.chaco2.api import AbstractOverlay
 
 class PlotScrollBar(NativeScrollBar):
     """

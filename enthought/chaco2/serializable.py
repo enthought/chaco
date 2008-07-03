@@ -1,7 +1,5 @@
 """ Defines the Serializable mix-in class.
 """
-import inspect, pdb
-from sets import Set
 
 class Serializable(object):
     """

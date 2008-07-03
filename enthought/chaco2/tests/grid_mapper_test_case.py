@@ -1,8 +1,7 @@
 
-import pdb, unittest
-from numpy import array, arange, transpose
-
-from enthought.util.testingx import *
+import unittest
+from numpy import array, transpose
+from numpy.testing import assert_equal
 
 from enthought.chaco2.api import GridDataSource, DataRange2D, GridMapper
 
@@ -22,29 +21,7 @@ class GridMapperTestCase(unittest.TestCase):
         assert_equal(result, [(50,0), (60,0), (70,5), 
                               (80,5), (90,10), (100,10)])
 
-#    def test_reversed(self):
-#        x_ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
-#        ds = GridDataSource(ary)
-#        r = DataRange2D(ds)
-#        mapper = GridMapper(range=r, low_pos=100, high_pos=0)
-#        result = mapper.map_screen(ary)
-#        assert_equal(result , array([100, 80, 60, 40, 20, 0]))
-#        return
 
-
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(GridMapperTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
-
-
-# EOF
+if __name__ == '__main__':
+    import nose
+    nose.run()

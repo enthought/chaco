@@ -4,7 +4,6 @@ from enthought.enable2.api import Canvas
 from enthought.traits.api import Instance, Tuple
 
 # Local, relative chaco imports
-from plot_component import PlotComponent
 from plot_containers import DEFAULT_DRAWING_ORDER
 
 class PlotCanvas(Canvas):

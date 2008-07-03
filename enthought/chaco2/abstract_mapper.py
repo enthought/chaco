@@ -4,7 +4,7 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Event, Instance, HasTraits, Float, false, Property
+from enthought.traits.api import Event, HasTraits
 
 
 class AbstractMapper(HasTraits):

@@ -40,7 +40,7 @@ class PlotLabel(AbstractOverlay):
     # Should this PlotLabel modify the padding on its underlying component
     # if there is not enough room to lay out the text?
     # FIXME: This could cause cycles in layout, so not implemented for now
-    #modify_component = true
+    #modify_component = Bool(True)
 
     # By default, this acts like a component and will render on the main
     # "plot" layer unless its **component** attribute gets set.

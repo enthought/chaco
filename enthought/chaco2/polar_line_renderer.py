@@ -1,20 +1,15 @@
 """ Defines the PolarLineRenderer class.
 """
 # Major library imports
-from numpy import add, arange, array, compress, concatenate, cos, pi, sin, transpose, zeros
+from numpy import array, cos, pi, sin, transpose
 
 # Enthought library imports
 from enthought.enable2.api import black_color_trait, LineStyle
-from enthought.traits.api import Any, Float, Int, Str, Trait, Unicode, \
-                                 Bool, Event, List, Array, Instance, Enum, false, true
+from enthought.traits.api import Float
 
 # Local, relative imports
 from abstract_plot_renderer import AbstractPlotRenderer
-from array_data_source import ArrayDataSource
-from base import reverse_map_1d
-from base_xy_plot import BaseXYPlot
-from label import Label
-import ticks
+
 
 class PolarLineRenderer(AbstractPlotRenderer):
     """ A renderer for polar line plots.

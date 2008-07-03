@@ -7,10 +7,9 @@ into a 1-D output space.
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Event, false, Float, HasTraits
+from enthought.traits.api import Bool, Float
 
 # Local relative imports
-from data_range_1d import DataRange1D
 from abstract_mapper import AbstractMapper
 
 ###############################################################
@@ -31,8 +30,8 @@ class PolarMapper(AbstractMapper):
     
     
     _scale = Float(1.0)   # number of screen space units per data space unit
-    _null_screen_range = false
-    _null_data_range = false
+    _null_screen_range = Bool(False)
+    _null_data_range = Bool(False)
     
     #------------------------------------------------------------------------
     # Public methods

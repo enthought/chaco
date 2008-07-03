@@ -1,9 +1,6 @@
 
-from cPickle import Pickler, Unpickler, load, dump, loads, dumps
-import pdb, unittest
 
-from enthought.traits.api import HasTraits, Str, Float, Enum, Property, Trait, List, \
-                             false, true, Instance, Int
+from enthought.traits.api import Bool, HasTraits, Str, Float, Enum, List, Int
 from enthought.chaco2.serializable import Serializable
 
 class Root(HasTraits):
@@ -13,7 +10,7 @@ class Root(HasTraits):
 
 class Shape(Serializable, Root):
     color = Enum("red", "green", "blue")
-    filled = true
+    filled = Bool(True)
     tools = List
     _pickles = ("tools", "filled", "color", "x")
 

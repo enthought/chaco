@@ -4,7 +4,7 @@ Test of basic dataseries behavior.
 
 import unittest
 
-from numpy import arange, array, ones, zeros, allclose
+from numpy import arange, array, allclose
 from enthought.chaco2.api import ArrayDataSource, PointDataSource
 
 
@@ -62,18 +62,6 @@ class PointDataTestCase(unittest.TestCase):
         self.assertEqual(pd.get_bounds(),((0,0), (9,90)))
         return
         
-
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(ArrayDataTestCase, "test_"))
-    suites.append(unittest.makeSuite(PointDataTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-if __name__ == "__main__":
-    test()
+if __name__ == '__main__':
+    import nose
+    nose.run()

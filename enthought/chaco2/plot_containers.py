@@ -1,13 +1,11 @@
 """ Defines various plot container classes, including stacked, grid, and overlay.
 """
 # Major library imports
-from numpy import arange, array, cumsum, hstack, isnan, ones, sum, zeros
+from numpy import arange, array, cumsum, hstack, ones, sum, zeros
 
 # Enthought library imports
-from enthought.traits.api \
-    import Any, Array, Either, Enum, false, Float, Instance, List, Property, \
-           true, Trait, Tuple
-from enthought.enable2.api import Container
+from enthought.traits.api import Any, Array, Either, Enum, Float, Instance, \
+    List, Property, Trait, Tuple
 
 # Local relative imports
 from base_plot_container import BasePlotContainer

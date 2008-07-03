@@ -10,9 +10,11 @@ class RectZoomTool(SimpleZoom):
     This is a subclass of SimpleZoom, with different default values for some
     traits.
     """
+
     # Selects a box in two dimensions (overrides SimpleZoom).
     tool_mode = "box"
+
     # The tool is always on; left-clicking initiates a zoom (overrides 
     # SimpleZoom).
     always_on = True
-    
+

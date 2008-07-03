@@ -1,8 +1,7 @@
 
 import unittest
 
-from numpy import alltrue, arange, array, ravel, transpose, ones, zeros, \
-        inf, isinf, isnan, linspace
+from numpy import alltrue, array, ravel, zeros, isinf, linspace
 
 from enthought.chaco2 import _speedups as speedups
 from enthought.chaco2 import _speedups_fallback as fallback
@@ -16,7 +15,7 @@ def assert_close(desired,actual):
             assert alltrue(d <= diff_allowed)
             return
 
-class GatherPointsTestCase(unittest.TestCase):
+class GatherPointsBase(object):
 
     # The module to look for the gather_points function in; subclasses
     # should override this.
@@ -62,7 +61,7 @@ class GatherPointsTestCase(unittest.TestCase):
     func = property(_get_func)
 
 
-class SpeedupsTestCase(GatherPointsTestCase):
+class SpeedupsTestCase(GatherPointsBase, unittest.TestCase):
     module = speedups
 
 
@@ -72,7 +71,7 @@ class SpeedupsFallbackTestCase(SpeedupsTestCase):
 
 def timing_test_gather_points():
     import time
-    from numpy import sin, cos, pi
+    from numpy import sin, pi
 
     numpoints = 10000
     numruns = 10
@@ -92,20 +91,7 @@ def timing_test_gather_points():
     return
 
 
-def test_suite(level=1):
-    suites = [
-        unittest.makeSuite(SpeedupsTestCase, "test_"),
-        unittest.makeSuite(SpeedupsFallbackTestCase, "test_")
-        ]
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
-
-if __name__ == "__main__":
-    test()
+if __name__ == '__main__':
+    import nose
+    nose.run()
 

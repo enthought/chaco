@@ -5,7 +5,7 @@ from numpy import array, isscalar, issubsctype, linspace, meshgrid, number, tran
 
 # Enthought library imports
 from enthought.enable2.api import ColorTrait, LineStyle
-from enthought.traits.api import Dict, false, Float, Instance, \
+from enthought.traits.api import Bool, Dict, Float, Instance, \
         Int, List, Property, Range, Str, Trait, Tuple
 
 # Local relative imports
@@ -54,19 +54,19 @@ class ContourLinePlot(Base2DPlot):
     #------------------------------------------------------------------------
     
     # Are the cached contours valid? If False, new ones need to be computed.
-    _contour_cache_valid = false
+    _contour_cache_valid = Bool(False)
 
     # Cached collection of traces.
     _cached_contours = Dict
 
     # Is the cached level data valid?
-    _level_cache_valid = false
+    _level_cache_valid = Bool(False)
     # Is the cached width data valid?
-    _widths_cache_valid = false
+    _widths_cache_valid = Bool(False)
     # Is the cached style data valid?
-    _styles_cache_valid = false
+    _styles_cache_valid = Bool(False)
     # Is the cached color data valid
-    _colors_cache_valid = false
+    _colors_cache_valid = Bool(False)
     
     # Cached list of levels and their associated line properties
     _levels = List

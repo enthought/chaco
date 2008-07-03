@@ -2,15 +2,16 @@
 """
 # Major library imports
 import numpy
-from numpy import array, asarray, empty, sometrue, transpose, vstack, zeros
+from numpy import array, empty, sometrue, transpose, vstack, zeros
 
 # Enthought library imports
 from enthought.traits.api import Any, Array, Enum, Event, Bool, Instance, \
-                                 Property, Trait, true, List, Property
+                                 Property, Trait, List
 from enthought.kiva.agg import points_in_polygon
 
 # Chaco imports
 from enthought.chaco2.api import AbstractController, AbstractDataSource
+
 
 class LassoSelection(AbstractController):
     """ A controller that represents the interaction of "lassoing" a set of 

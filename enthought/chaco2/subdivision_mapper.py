@@ -4,7 +4,7 @@
 import math
 from sets import Set
 from numpy import array, arange, concatenate, searchsorted, nonzero, transpose, \
-                  argsort, zeros, sort
+                  argsort, zeros, sort, vstack
 import numpy
 
 # Enthought library imports
@@ -12,7 +12,7 @@ from enthought.traits.api import List, Array, Tuple, Int, Float
 
 # Local, relative imports
 from datamapper import AbstractDataMapper, right_shift, left_shift, \
-                       sort_points, concat_point_arrays, ArraySortTrait, \
+                       sort_points, ArraySortTrait, \
                        array_zip
 from subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
                               arg_find_runs
@@ -20,7 +20,7 @@ from subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
 
 class SubdivisionDataMapper(AbstractDataMapper):
     """
-    A data mapper that uses a uniform grid of rectangular cells. It dooesn't make
+    A data mapper that uses a uniform grid of rectangular cells. It doesn't make
     any assumptions about the continuity of the input data set, and explicitly
     stores each point in the data set in its cell.
     
@@ -52,7 +52,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
             self._last_region = self._cells_to_rects(indices)
             # unique-ify the list of cells
             cell_points = [c.get_points() for c in Set(cells)]
-        return concat_point_arrays(cell_points)
+        return vstack(cell_points)
 
     
     def get_points_in_rect(self, rect):
@@ -66,7 +66,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
         self._last_region = ( self._cell_lefts[min_i], self._cell_bottoms[min_j], \
                               (max_i - min_i + 1) * self._cell_extents[0], \
                               (max_j - min_j + 1) * self._cell_extents[1] )
-        return concat_point_arrays(cellpts)
+        return vstack(cellpts)
 
     
     def get_last_region(self):

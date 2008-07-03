@@ -1,7 +1,7 @@
 
 import unittest
 
-from numpy import *
+import numpy as np
 from numpy.testing.utils import assert_almost_equal
 from enthought.chaco2.shell.plot_maker import make_data_sources
 
@@ -9,18 +9,18 @@ class MakeDataSourcesTestCase(unittest.TestCase):
     
     def test_1D_single(self):
         session = None
-        ary = array([3.0, 2.1, 1.3, 1.8, 5.7])
+        ary = np.array([3.0, 2.1, 1.3, 1.8, 5.7])
         sources = make_data_sources(session, "none", ary)
-        assert_almost_equal(sources[0][0].get_data(), arange(len(ary)))
+        assert_almost_equal(sources[0][0].get_data(), np.arange(len(ary)))
         assert_almost_equal(sources[0][1].get_data(), ary)
         return
     
     def test_1d_multiple(self):
         session = None
-        index = arange(-pi, pi, pi/30.0)
-        s = sin(index)
-        c = cos(index)
-        t = tan(index)
+        index = np.arange(-np.pi, np.pi, np.pi/30.0)
+        s = np.sin(index)
+        c = np.cos(index)
+        t = np.tan(index)
         sources = make_data_sources(session, "ascending", index, s, c, t)
         assert_almost_equal(sources[0][0].get_data(), index)
         self.assert_(sources[0][0] == sources[1][0])

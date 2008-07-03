@@ -1,11 +1,9 @@
 
-import pdb, unittest
 from itertools import starmap
 from datetime import datetime as DT
-from safetime import *
 
-from scales import frange, ScaleSystem
-from time_scale import *
+from scales import ScaleSystem
+from time_scale import dt_to_sec, trange, TimeScale, HMSScales
 from formatters import TimeFormatter
 
 from scales_test_case import TicksTestCase
@@ -190,20 +188,6 @@ class TimeFormatterTestCase(TicksTestCase):
         return
 
 
-
-def test_suite(level=1):
-    suites = []
-    suites.append(unittest.makeSuite(TRangeTestCase, "test_"))
-    suites.append(unittest.makeSuite(TimeScaleTestCase, "test_"))
-    suites.append(unittest.makeSuite(CalendarScaleSystemTestCase, "test_"))
-    suites.append(unittest.makeSuite(TimeFormatterTestCase, "test_"))
-    return unittest.TestSuite(suites)
-
-def test(level=10):
-    all_tests = test_suite(level)
-    runner = unittest.TextTestRunner()
-    runner.run(all_tests)
-    return runner
-
 if __name__ == "__main__":
-    test()
+    import nose
+    nose.run()

@@ -6,11 +6,11 @@ Defines markers classes, used by a variety of renderers.
 from numpy import array, pi
 
 # Enthought library imports
-from enthought.traits.api import HasTraits, Bool, Enum, Instance, Trait
+from enthought.traits.api import HasTraits, Bool, Instance, Trait
 from enthought.traits.ui.api import EnumEditor
-from enthought.kiva.constants import FILL, EOF_FILL, STROKE, FILL_STROKE, \
-            EOF_FILL_STROKE, SQUARE_MARKER, DIAMOND_MARKER, CIRCLE_MARKER, \
-            CROSSED_CIRCLE_MARKER, CROSS_MARKER, TRIANGLE_MARKER, \
+from enthought.kiva.constants import STROKE, FILL_STROKE, \
+            SQUARE_MARKER, DIAMOND_MARKER, CIRCLE_MARKER, \
+            CROSS_MARKER, TRIANGLE_MARKER, \
             INVERTED_TRIANGLE_MARKER, PLUS_MARKER, DOT_MARKER, \
             PIXEL_MARKER, NO_MARKER
 from enthought.kiva import CompiledPath

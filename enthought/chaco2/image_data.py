@@ -4,8 +4,7 @@
 from numpy import nanmax, nanmin, swapaxes
 
 # Enthought library imports
-from enthought.traits.api import false, Float, HasTraits, Int, Property, \
-                             ReadOnly, Tuple
+from enthought.traits.api import Bool, Int, Property, ReadOnly, Tuple
 
 # Local relative imports
 from base import DimensionTrait, ImageTrait
@@ -56,7 +55,7 @@ class ImageData(AbstractDataSource):
     #
     # Rather than transposing or swapping axes on the data and destroying
     # continuity, this class exposes the data as both **value** and **raw_value**.
-    transposed = false
+    transposed = Bool(False)
 
     # A read-only attribute that exposes the underlying array.
     raw_value = Property(ImageTrait)
@@ -71,7 +70,7 @@ class ImageData(AbstractDataSource):
     _data = ImageTrait
 
     # Is the bounds cache valid? If False, it needs to be computed.
-    _bounds_cache_valid = false
+    _bounds_cache_valid = Bool(False)
 
     # Cached value of min and max as long as **data** doesn't change.
     _bounds_cache = Tuple
