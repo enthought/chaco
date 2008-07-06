@@ -4,8 +4,8 @@
 # Major library imports
 from types import IntType, FloatType
 from numpy import arange, array, asarray, clip, \
-                  divide, isnan, ones, searchsorted, shape, \
-                  sometrue, sort, take, where, zeros
+                  divide, isnan, ones, searchsorted, \
+                  sometrue, sort, take, where, zeros, linspace
 
 # Enthought library imports
 from enthought.traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
@@ -103,81 +103,116 @@ class ColorMapper(AbstractColormap):
     # Static methods.
     #------------------------------------------------------------------------
 
-    def from_palette_array(palette, **traits):
+    def from_palette_array(cls, palette, **traits):
         """ Creates a ColorMapper from a palette array.
 
         The palette colors are linearly interpolated across the range of
         mapped values.
         
-        The *palette* parameter is a 3xN array of intensity values, where N > 1::
+        The *palette* parameter is a Nx3 or Nx4 array of intensity values, where
+        N > 1::
 
             [[R0, G0, B0], ... [R(N-1), G(N-1), B(N-1)]]
+
+            [[R0, G0, B0, A0], ... [R(N-1), G(N-1), B(N-1), A(N-1]]
         """
 
-        n_colors = shape(palette)[0]
+        palette = asarray(palette)
+        n_colors, n_components = palette.shape
         if n_colors < 2:
             raise ValueError("Palette must contain at least two colors.")
+        if n_components not in (3,4):
+            raise ValueError("Palette must be of RGB or RGBA colors. "
+                "Got %s color components." % n_components)
 
         # Compute the % offset for each of the color locations.
-        offsets = zeros(n_colors, float)
-        offsets[:-1] = arange(0.0, 1.0, 1.0/(n_colors-1))
-        offsets[-1] = 1.0
+        offsets = linspace(0.0, 1.0, n_colors)
 
         # From the offsets and the color data, generate a segment map.
         segment_map = {}
-        red_values = palette[::,0]
+        red_values = palette[:,0]
         segment_map['red'] = zip(offsets, red_values, red_values)
-        green_values = palette[::,1]
+        green_values = palette[:,1]
         segment_map['green'] = zip(offsets, green_values, green_values)
-        blue_values = palette[::,2]
+        blue_values = palette[:,2]
         segment_map['blue'] = zip(offsets, blue_values, blue_values)
+        if n_components == 3:
+            alpha_values = ones(n_colors)
+        else:
+            alpha_values = palette[:,3]
+        segment_map['alpha'] = zip(offsets, alpha_values, alpha_values)
 
-        return ColorMapper(segment_map, **traits)
+        return cls(segment_map, **traits)
 
-    from_palette_array = staticmethod(from_palette_array)
+    from_palette_array = classmethod(from_palette_array)
 
-    def from_segment_map(segment_map, **traits):
+    def from_segment_map(cls, segment_map, **traits):
         """ Creates a Colormapper from a segment map.
 
         The *segment_map* parameter is a dictionary with 'red', 'green', and 
-        'blue' entries.  Each entry is a list of (x, y0, y1) tuples:
+        'blue' (and optionally 'alpha') entries.  Each entry is a list of 
+        (x, y0, y1) tuples:
         
-        * x: an offset (offsets within the list must be in ascending order)
+        * x: an offset in [0..1] (offsets within the list must be in ascending order)
         * y0: value for the color channel for values less than or equal to x
         * y1: value for the color channel for values greater than x
+
+        When a data value gets mapped to a color, it will be normalized to be
+        within [0..1]. For each RGB(A) component, the two adjacent values will
+        be found in the segment_map. The mapped component value will be found by
+        linearly interpolating the two values.
+
+        Generally, y0==y1. Colormaps with sharp transitions will have y0!=y1 at
+        the transitions.
         """
 
-        return ColorMapper(segment_map, **traits)
+        if 'alpha' not in segment_map:
+            segment_map = segment_map.copy()
+            segment_map['alpha'] = [(0.0, 1.0, 1.0), (1.0, 1.0, 1.0)]
+        return cls(segment_map, **traits)
 
-    from_segment_map = staticmethod(from_segment_map)
+    from_segment_map = classmethod(from_segment_map)
 
-    def from_file(filename, **traits):
+    def from_file(cls, filename, **traits):
         """ Creates a ColorMapper from a file.
         
         The *filename* parameter is the name of a file whose lines each contain
-        4 float values between 0.0 and 1.0. The first value is an offset, and
-        the remaining 3 values are red, green, and blue values for the color
-        corresponding to that offset.
+        4 or 5 float values between 0.0 and 1.0. The first value is an offset in
+        the range [0..1], and the remaining 3 or 4 values are red, green, blue,
+        and optionally alpha values for the color corresponding to that offset.
+
+        The first line is assumed to contain the name of the colormap.
         """
         colormap_file = open(filename, 'r')
         lines = colormap_file.readlines()
-        rgbarr = [[],[],[]]
+        colormap_file.close()
+        rgba_arr = [[],[],[],[]]
         for line in lines[1:]:
-            strvalues = line.rstrip().split(' ')
+            strvalues = line.strip().split()
             values = [float(value) for value in strvalues]
-            for colorchannel in range(3):
-                channeltuple = (values[0],
-                                values[colorchannel+1],
-                                values[colorchannel+1])
-                rgbarr[colorchannel].append(channeltuple)
-        traits['name'] = lines[0].rstrip()
-        rgbdict = {'red':rgbarr[0],
-                   'green':rgbarr[1],
-                   'blue':rgbarr[2]}
+            if len(values) > 4:
+                channels = (0,1,2,3)
+            else:
+                channels = (0,1,2)
+            for i in channels:
+                channeltuple = (values[0], values[i+1], values[i+1])
+                rgba_arr[i].append(channeltuple)
+        # Alpha is frequently unspecified.
+        if len(rgba_arr[-1]) == 0:
+            rgba_arr[-1] = [(0.0, 1.0, 1.0), (1.0, 1.0, 1.0)]
+        if 'name' not in traits:
+            # Don't override the code.
+            traits['name'] = lines[0].strip()
+        rgba_dict = {
+            'red': rgba_arr[0],
+            'green': rgba_arr[1],
+            'blue': rgba_arr[2],
+            'alpha': rgba_arr[3],
+        }
         
-        return ColorMapper(rgbdict, **traits)
+        return cls(rgba_dict, **traits)
 
-    from_file = staticmethod(from_file)
+    from_file = classmethod(from_file)
         
             
 
@@ -186,15 +221,23 @@ class ColorMapper(AbstractColormap):
     #------------------------------------------------------------------------
 
     def __init__(self, segmentdata, **kwtraits):
-        """ Creates a ColorMapper instance.
+        """ Creates a Colormapper from a segment map.
+
+        The *segment_map* parameter is a dictionary with 'red', 'green', and 
+        'blue' (and optionally 'alpha') entries.  Each entry is a list of 
+        (x, y0, y1) tuples:
         
-        The *segmentdata* parameter is a dictionary with red, green, and blue 
-        entries. Each entry must be a list of (x, y0, y1) tuples:
-            
-        * x: an offset (offsets within the list must be in ascending order)
+        * x: an offset in [0..1] (offsets within the list must be in ascending order)
         * y0: value for the color channel for values less than or equal to x
         * y1: value for the color channel for values greater than x
 
+        When a data value gets mapped to a color, it will be normalized to be
+        within [0..1]. For each RGB(A) component, the two adjacent values will
+        be found in the segment_map. The mapped component value will be found by
+        linearly interpolating the two values.
+
+        Generally, y0==y1. Colormaps with sharp transitions will have y0!=y1 at
+        the transitions.
         """
         self._segmentdata = segmentdata
         super(ColorMapper, self).__init__(**kwtraits)
@@ -214,7 +257,7 @@ class ColorMapper(AbstractColormap):
         if high == low:
             norm_data = ones(len(data_array))
         else:
-            norm_data =clip((data_array - low) / (high - low), 0.0, 1.0)
+            norm_data = clip((data_array - low) / (high - low), 0.0, 1.0)
         
         return self._map(norm_data)
 
@@ -233,7 +276,7 @@ class ColorMapper(AbstractColormap):
     def reverse_colormap(self):
         """ Reverses the color bands of this colormap.
         """
-        for name in ("red", "green", "blue"):
+        for name in ("red", "green", "blue", "alpha"):
             data = asarray(self._segmentdata[name])
             data[:, (1,2)] = data[:, (2,1)]
             data[:,0] = (1.0 - data[:,0])
@@ -252,12 +295,11 @@ class ColorMapper(AbstractColormap):
         if self._dirty:
             self._recalculate()
 
+        luts = [self._red_lut, self._green_lut, self._blue_lut]
         if self.color_depth is 'rgba':
-            alpha = ones(self.steps)
-            result = zip(self._red_lut, self._green_lut, self._blue_lut, alpha)
+            luts.append(self._alpha_lut)
 
-        else:
-            result = zip(self._red_lut, self._green_lut, self._blue_lut)
+        result = zip(*luts)
 
         return result
     
@@ -273,6 +315,9 @@ class ColorMapper(AbstractColormap):
         )
         self._blue_lut = self._make_mapping_array(
             self.steps, self._segmentdata['blue']
+        )
+        self._alpha_lut = self._make_mapping_array(
+            self.steps, self._segmentdata['alpha']
         )
         self.updated = True
         self._dirty = False
@@ -333,23 +378,20 @@ class ColorMapper(AbstractColormap):
         lut[-1] = y0[-1]
         
         # ensure that the lut is confined to values between 0 and 1 by clipping it
-        lut = where(lut > 1., 1., lut)
-        lut = where(lut < 0., 0., lut)
+        lut = lut.clip(0, 1)
         return lut
 
     #### matplotlib ####
-    def _map(self, X, alpha=1.0):
+    def _map(self, X):
         """ Maps from a scalar or an array to an RGBA value or array.
         
         The *X* parameter is either a scalar or an array (of any dimension).
         If it is scalar, the function returns a tuple of RGBA values; otherwise
         it returns an array with the new shape = oldshape+(4,).  Any values
         that are outside the 0,1 interval are clipped to that interval before
-        generating RGB values.  The *alpha* parameter must be a scalar
+        generating RGB values.
         """
         
-        alpha = min(alpha, 1.0) # alpha must be between 0 and 1
-        alpha = max(alpha, 0.0)
         if type(X) in [IntType, FloatType]:
             vtype = 'scalar'
             xa = array([X])
@@ -363,12 +405,12 @@ class ColorMapper(AbstractColormap):
 
         
         nanmask = isnan(xa)
-        xa = where(nanmask, 0, (xa *(self.steps-1)).astype(int))
+        xa = where(nanmask, 0, (xa * (self.steps-1)).astype(int))
         rgba = zeros(xa.shape+(4,), float)
         rgba[...,0] = where(nanmask, 0, take(self._red_lut, xa))
         rgba[...,1] = where(nanmask, 0, take(self._green_lut, xa))
         rgba[...,2] = where(nanmask, 0, take(self._blue_lut, xa))
-        rgba[...,3] = where(nanmask, 0, alpha)        
+        rgba[...,3] = where(nanmask, 0, take(self._alpha_lut, xa))        
         if vtype == 'scalar':
             rgba = tuple(rgba[0,:])
             

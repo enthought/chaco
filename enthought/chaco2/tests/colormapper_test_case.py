@@ -10,9 +10,9 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
     def setUp(self):
         """ Set up called before each test case. """
 
-        _gray_data =  {'red':   ((0., 0, 0), (1., 1, 1)),
-                       'green': ((0., 0, 0), (1., 1, 1)),
-                       'blue':  ((0., 0, 0), (1., 1, 1))}      
+        _gray_data =  {'red':   [(0., 0, 0), (1., 1.0, 1.0)],
+                       'green': [(0., 0, 0), (1., 1.0, 1.0)],
+                       'blue':  [(0., 0, 0), (1., 1.0, 1.0)]}      
                 
         self.colormap = ColorMapper.from_segment_map(_gray_data)
         self.colormap.range = DataRange1D()
@@ -92,6 +92,35 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
 
         return
         
+    def test_alpha_palette(self):
+        """ Create a colormap with a varying alpha channel from a palette array.
+        """
+        cm = ColorMapper.from_palette_array([[0.0,0.0,0.0,0.5],[1.0,1.0,1.0,1.0]])
+        sd = {'alpha': [(0.0, 0.5, 0.5), (1.0, 1.0, 1.0)],
+              'blue': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)],
+              'green': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)],
+              'red': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)]}
+        assert cm._segmentdata == sd
+
+    def test_alpha_segment_data(self):
+        """ Create a colormap with a varying alpha channel from segment data.
+        """
+        sd = {'alpha': [(0.0, 0.5, 0.5), (1.0, 1.0, 1.0)],
+              'blue': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)],
+              'green': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)],
+              'red': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)]}
+        cm = ColorMapper.from_segment_map(sd)
+        assert cm._segmentdata == sd
+
+    def test_no_alpha(self):
+        """ Check that the defaults when no alpha is specified are correct.
+        """
+        sd = {'alpha': [(0.0, 1.0, 1.0), (1.0, 1.0, 1.0)],
+              'blue': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)],
+              'green': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)],
+              'red': [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)]}
+        assert self.colormap._segmentdata == sd
+
 
 ##     def test_no_interpolation(self):
 ##         grayscale_colors = array([[0.0,0.0,0.0,1.0], [1.0, 1.0, 1.0, 1.0]])
