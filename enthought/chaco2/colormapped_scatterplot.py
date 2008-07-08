@@ -388,7 +388,6 @@ class ColormappedScatterPlot(ScatterPlot):
             # it. Use the range on the old ColorMapper.
             new.range = old.range
 
-        # fix me: Peter, I needed a redraw.  Is this the correct thing to do?
         self.invalidate_draw()
         self.request_redraw()
 
