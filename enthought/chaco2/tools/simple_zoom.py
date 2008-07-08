@@ -407,6 +407,10 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                     self._orig_low_setting
                 x_range.high_setting, y_range.high_setting = \
                     self._orig_high_setting
+
+                # resetting the ranges will allow 'auto' to pick the values
+                x_range.reset()
+                y_range.reset()
                
         else:   
             if self.tool_mode == "range":
@@ -428,7 +432,11 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 y_range = self.component.y_mapper.range
                 x_range.low, y_range.low = low
                 x_range.high, y_range.high = high
-           
+                
+                # resetting the ranges will allow 'auto' to pick the values
+                x_range.reset()
+                y_range.reset()
+        
         self.component.request_redraw()
         return
 
