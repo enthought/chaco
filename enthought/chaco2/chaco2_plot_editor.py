@@ -385,7 +385,10 @@ class Chaco2PlotEditor ( Editor ):
             return
 
         if plot is None:
-            plot = self._plot
+            if self._plot is None:
+                return
+            else:
+                plot = self._plot
         if plotitem is None:
             plotitem = self.factory.plotitem
 
