@@ -9,7 +9,6 @@ class DataViewTestCase(unittest.TestCase):
     def test_empty(self):
         dv = DataView()
         self.assert_(dv.orientation=="h")
-        self.assert_(dv.index_direction=="normal")
         self.assert_(dv.index_scale=="linear")
         self.assert_(dv.bgcolor=="white")
         self.assert_(dv.overlay_border==True)
