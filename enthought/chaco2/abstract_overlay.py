@@ -40,12 +40,16 @@ class AbstractOverlay(PlotComponent):
         pass
 
     def _draw(self, gc, view_bounds=None, mode="normal"):
-        """ Draws the component, paying attention to **draw_order**.
+        """ Draws the component, paying attention to **draw_order**.  If the
+        overlay has a non-null .component, then renders as an overlay; 
+        otherwise, default to the standard PlotComponent behavior.
         
         Overrides PlotComponent.
         """
         if self.component is not None:
             self.overlay(self.component, gc, view_bounds, mode)
+        else:
+            PlotComponent._draw(self, gc, view_bounds, mode)
         return
 
     def _request_redraw(self):
