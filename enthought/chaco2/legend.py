@@ -309,8 +309,7 @@ class Legend(AbstractOverlay):
             label_names = visible_labels
 
         # Create the labels
-        labels = [Label(text=text, font=self.font, margin=0, bgcolor="transparent",
-                        border_width=0) for text in label_names]
+        labels = [self._create_label(text) for text in label_names]
 
         # We need a dummy GC in order to get font metrics
         dummy_gc = font_metrics_provider()
@@ -339,6 +338,13 @@ class Legend(AbstractOverlay):
             width, height = self.get_preferred_size()
             self.outer_bounds = [width, height]
         return
+
+    def _create_label(self, text):
+        """ Returns a new Label instance for the given text.  Subclasses can
+        override this method to customize the creation of labels.
+        """
+        return Label(text=text, font=self.font, margin=0, bgcolor="transparent",
+                     border_width=0) 
 
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
