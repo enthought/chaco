@@ -43,11 +43,9 @@ class SelectableLegend(Legend, SelectTool):
     #------------------------------------------------------------------------
 
     def _get_selection_state(self, event):
-        event_x = event.x - self.x 
-        event_y = event.y - self.y
         for ndx, dims in enumerate(self._cached_label_dims):
             x, y, w, h = dims
-            if (x <= event_x <= x+w) and (y <= event_y <= y+h):
+            if (x <= event.x <= x+w) and (y <= event.y <= y+h):
                 return (ndx in self.selections), True
         else:
             if len(self._cached_label_dims) > 0:
@@ -56,11 +54,9 @@ class SelectableLegend(Legend, SelectTool):
                 return False, False
 
     def _get_selection_token(self, event):
-        event_x = event.x - self.x
-        event_y = event.y - self.y
         for ndx, dims in enumerate(self._cached_label_dims):
             x, y, w, h = dims
-            if (x <= event_x <= x+w) and (y <= event_y <= y+h):
+            if (x <= event.x <= x+w) and (y <= event.y <= y+h):
                 return ndx
         else:
             return None
@@ -68,15 +64,12 @@ class SelectableLegend(Legend, SelectTool):
     def _select(self, index, append=True):
         if append:
             self.selections.append(index)
-            print "appending", index
         else:
             self.selections = [index]
-            print "selecting", index
         return
 
     def _deselect(self, index=None):
         if index in self.selections:
             self.selections.remove(index)
-            print "deselecting", index
         return
 
