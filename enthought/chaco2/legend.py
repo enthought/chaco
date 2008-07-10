@@ -126,10 +126,7 @@ class Legend(AbstractOverlay):
     error_icon = Enum("skip", "blank", "questionmark")
 
     # The legend is not resizable (overrides PlotComponent).
-    resizable = ""     # TODO: Make this work when the legend is standalone,
-                       # by setting this to "hv", then having the Legend
-                       # manually reset its bounds and position from the
-                       # container-given bounds, using the 'align' setting.
+    resizable = "hv" 
 
     # The legend draws itself as in one pass when its parent is drawing
     # the **draw_layer** (overrides PlotComponent).
@@ -169,8 +166,29 @@ class Legend(AbstractOverlay):
         PlotComponent._draw(self, gc, view_bounds, mode)
         return
 
+    # The following two methods implement the functionality of the Legend
+    # to act as a first-class component instead of merely as an overlay.
+    # The make the Legend use the normal PlotComponent render methods when
+    # it does not have a .component attribute, so that it can have its own
+    # overlays (e.g. a PlotLabel).
+    # 
+    # The core legend rendering method is named _draw_as_overlay() so that
+    # it can be called from _draw_plot() when the Legend is not an overlay,
+    # and from _draw_overlay() when the Legend is an overlay.
+
+    def _draw_plot(self, gc, view_bounds=None, mode="normal"):
+        if self.component is None:
+            self._draw_as_overlay(gc, view_bounds, mode)
+        return
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
+        if self.component is not None:
+            self._draw_as_overlay(gc, view_bounds, mode)
+        else:
+            PlotComponent._draw_overlay(self, gc, view_bounds, mode)
+        return
+
+    def _draw_as_overlay(self, gc, view_bounds=None, mode="normal"):
         """ Draws the overlay layer of a component.
         
         Overrides PlotComponent.
@@ -187,6 +205,7 @@ class Legend(AbstractOverlay):
         gc.save_state()
         try:
 
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
             edge_space = self.border_width + self.border_padding
             icon_width, icon_height = self.icon_bounds
 
@@ -253,13 +272,11 @@ class Legend(AbstractOverlay):
         else:
             return False
 
-
-    def _do_layout(self):
+    def get_preferred_size(self):
         """
         Computes the size and position of the legend based on the maximum size of
         the labels, the alignment, and position of the component to overlay.
         """
-
         # Gather the names of all the labels we will create
         label_names = self.labels
         if len(label_names) == 0:
@@ -306,11 +323,21 @@ class Legend(AbstractOverlay):
                         + self.hpadding + 2*self.border_padding
         legend_height = total_label_height + self.vpadding + 2*self.border_padding
 
-        self.outer_bounds = [legend_width, legend_height]
-
         self._cached_labels = labels
         self._cached_label_sizes = label_sizes
         self._cached_label_names = label_names
+
+        if "h" not in self.resizable:
+            legend_width = self.outer_width
+        if "v" not in self.resizable:
+            legend_height = self.outer_height
+        return [legend_width, legend_height]
+
+    def _do_layout(self):
+        if self.component is not None or len(self._cached_labels) == 0 or \
+                self._cached_label_sizes is None or len(self._cached_label_names) == 0:
+            width, height = self.get_preferred_size()
+            self.outer_bounds = [width, height]
         return
 
     def _composite_icon_renderer_default(self):
@@ -319,7 +346,8 @@ class Legend(AbstractOverlay):
     def _anytrait_changed(self, name, old, new):
         if name in ("font", "border_padding", "padding", "line_spacing", "icon_bounds",
                     "icon_spacing", "labels", "plots", "plots_items", "labels_items",
-                    "border_width", "align"):
+                    "border_width", "align", "position", "position_items", "bounds",
+                    "bounds_items"):
             self._layout_needed = True
         return
 
