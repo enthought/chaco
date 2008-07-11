@@ -17,6 +17,7 @@ from numpy import arange, array, hstack, random
 from enthought.traits.api import Array, Bool, Callable, Enum, Float, HasTraits, \
                                  Instance, Int, Trait
 from enthought.traits.ui.api import Group, Item, View
+from enthought.pyface.timer.api import Timer
 
 # Chaco imports
 from enthought.chaco2.chaco2_plot_editor import Chaco2PlotItem
@@ -83,7 +84,7 @@ class Controller(HasTraits):
                       orientation="vertical"),
                       buttons=["OK", "Cancel"])
     
-    def timer_tick(self, event):
+    def timer_tick(self, *args):
         """ Callback function that should get called based on a wx timer
         tick.  This will generate a new random datapoint and set it on
         the .data array of our viewer object.
@@ -139,7 +140,29 @@ class MyApp(wx.PySimpleApp):
         self.timer.Start(100.0, wx.TIMER_CONTINUOUS)
         return
 
+# NOTE: The Demo class is being created for the purpose of running this
+# example using a TraitsDemo-like app (see examples/demo/demo.py in Traits3). 
+# The demo.py file looks for a 'demo' or 'popup' or 'modal popup' keyword
+# when it executes this file, and displays a view for it.
 
+class Demo(HasTraits):
+    controller = Instance(Controller)
+    viewer = Instance(Viewer, ())
+    timer = Instance(Timer)
+    view = View(Item('controller', style='custom'), 
+                Item('viewer', style='custom'), 
+                resizable=True)
+    
+    def __init__(self, **traits):
+        super(Demo, self).__init__(**traits)
+        self.timer=Timer(100, self.controller.timer_tick)
+    
+    def _controller_default(self):
+        return Controller(viewer=self.viewer)
+    
+demo=Demo()
+
+# This is called when this example is to be run in a standalone mode.
 if __name__ == "__main__":
     app = MyApp()
     app.MainLoop()
