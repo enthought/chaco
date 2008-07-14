@@ -42,7 +42,7 @@ class ScatterInspector(SelectTool):
         """
         plot = self.component
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
-        if index:
+        if index is not None:
             plot.index.metadata["hover"] = [index]
             plot.value.metadata["hover"] = [index]
         elif not self.persistent_hover:
