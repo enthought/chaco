@@ -308,7 +308,8 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
 def do_imread(*data, **kwargs):
     """ Returns image file as array. """
 
-    if isinstance(data[0], basestring):
+    # Check to see if the data given is either a file path or a file object
+    if isinstance(data[0], basestring) or isinstance(data[0], file):
         return ImageData.fromfile(data[0])
     else:
         raise ValueError("do_imread takes a string filename")

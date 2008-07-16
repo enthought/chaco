@@ -82,7 +82,7 @@ class ImageData(AbstractDataSource):
     @classmethod
     def fromfile(cls, filename):
         """ Alternate constructor to create an ImageData from an image file
-        on disk.
+        on disk. 'filename' may be a file path or a file object.
         """
         
         from enthought.kiva.backend_image import Image
