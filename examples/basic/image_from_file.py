@@ -45,7 +45,8 @@ class DemoView(HasTraits):
     ### Private Traits #########################################################
 
     # File name to load image from
-    _load_file = File("capitol.jpg")
+    image_path = os.path.join(sys.path[0], 'capitol.jpg')
+    _load_file = File(image_path)
 
     # File name to save image to 
     _save_file = File

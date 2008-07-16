@@ -1,13 +1,11 @@
 #Standard library imports
-import sys
-from os import path
+import os, sys
 
 #Enthought library imports
 from enthought.chaco2.shell import imread, imshow, title, show
 
 #Assemble the path to the image
-example_dir = sys.path[0]
-image_path = path.join(example_dir, '..', 'basic', 'capitol.jpg')
+image_path = os.path.join(sys.path[0], '..', 'basic', 'capitol.jpg')
 
 #Create data
 image = imread(image_path)
