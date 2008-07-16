@@ -126,6 +126,21 @@ class DataRangeTestCase(unittest.TestCase):
         assert_equal(bounds , (7,11))
         return
 
+    def test_custom_bounds_func(self):
+        def custom_func(low, high, margin, tight_bounds):
+            assert low==0.0
+            assert high==9.0
+            assert tight_bounds==False
+            assert margin==1.0
+            return -999., 999.
+        
+        r = DataRange1D(tight_bounds=False, margin=1.0, bounds_func=custom_func)
+        ary = arange(10.0)
+        ds = ArrayDataSource(ary)
+        r.sources.append(ds)
+        assert r.low==-999.
+        assert r.high==999.
+
 if __name__ == '__main__':
     import nose
     nose.run()

@@ -8,7 +8,8 @@ from math import ceil, floor, log
 from numpy import compress, inf, isnan
 
 # Enthought library imports
-from enthought.traits.api import Bool, CFloat, Enum, Float, Property, Trait
+from enthought.traits.api import Bool, CFloat, Enum, Float, Property, Trait, \
+                                 Callable
 
 # Local relative imports
 from base import arg_find_runs
@@ -45,6 +46,11 @@ class DataRange1D(BaseDataRange):
     # Do "auto" bounds imply an exact fit to the data? If False, 
     # they pad a little bit of margin on either side.
     tight_bounds = Bool(True)
+
+    # A user supplied function returning the proper bounding interval.
+    # bounds_func takes (data_low, data_high, margin, tight_bounds)
+    # and returns (low, high)
+    bounds_func = Callable
     
     # The amount of margin to place on either side of the data, expressed as
     # a percentage of the full data width
@@ -279,11 +285,18 @@ class DataRange1D(BaseDataRange):
         else:
             mins, maxes = zip(*bounds_list)
 
+            print calc_bounds(self._low_setting, self._high_setting,
+                                                mins, maxes, self.epsilon, 
+                                                self.tight_bounds,
+                                                margin = self.margin,
+                                                track_amount = self.tracking_amount,
+                                                bounds_func=self.bounds_func)
             low_start, high_start = calc_bounds(self._low_setting, self._high_setting,
                                                 mins, maxes, self.epsilon, 
                                                 self.tight_bounds,
                                                 margin = self.margin,
-                                                track_amount = self.tracking_amount)
+                                                track_amount = self.tracking_amount,
+                                                bounds_func=self.bounds_func)
                 
         
         if (self._low_value != low_start) or (self._high_value != high_start):
@@ -322,7 +335,7 @@ class DataRange1D(BaseDataRange):
 
 ###### method to calculate bounds for a given 1-dimensional set of data
 def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
-                margin=0.08, track_amount=0):
+                margin=0.08, track_amount=0, bounds_func=None):
     """ Calculates bounds for a given 1-D set of data.
     
     Parameters
@@ -345,6 +358,8 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
         on either side of the data if tight_bounds is False.
     track_amount : number
         The amount by which a 'track' bound tracks another bound.
+    bounds_func : Callable
+        A callable which can override the bounds calculation.
     
     Returns
     -------
@@ -406,7 +421,9 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
             real_min = -1.0
             real_max = 1.0
 
-    if not tight_bounds:
+    if bounds_func is not None:
+        return bounds_func(real_min, real_max, margin, tight_bounds)
+    elif not tight_bounds:
         low, high = heckbert_interval(real_min, real_max)[0:2]
         if abs(low - real_min) / (high-low) < margin:
             modified_min = real_min - (high-low) * margin
@@ -423,6 +440,6 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
             return heckbert_interval(modified_min, modified_max)[0:2]
         else:
             return low, high
-    
-    return real_min, real_max
+    else:
+        return real_min, real_max
 
