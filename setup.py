@@ -7,7 +7,7 @@ contour = Extension(
     sources=['enthought/chaco2/contour/cntr.c'],
     include_dirs=[get_include()],
     define_macros=[('NUMPY', None)]
-)
+    )
 
 speedups = Extension(
     'enthought.chaco2._speedups',
@@ -40,9 +40,8 @@ setup(
     tests_require = [
         'nose >= 0.9',
         ],
-    test_suite = 'nose.collector',
+    test_suite = 'test_all',
     url = 'http://code.enthought.com/chaco',
     version = INFO["version"],
     zip_safe = False,
     )
-
