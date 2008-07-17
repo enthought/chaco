@@ -183,7 +183,8 @@ class LinePlot(BaseXYPlot):
                 index_max = len(value)
                 index = index[:index_max]
 
-            # Check for selections
+            # TODO: restore the functionality of rendering highlighted portions 
+            # of the line
             #selection = self.index.metadata.get(self.metadata_name, None) 
             #if selection is not None and type(selection) in (ndarray, list) and \
             #        len(selection) > 0:
@@ -294,7 +295,7 @@ class LinePlot(BaseXYPlot):
                 }
         render = render_method_dict.get(self.render_style, self._render_normal)
 
-        if selected_points:
+        if selected_points is not None:
             gc.set_stroke_color(self.selected_color_)
             gc.set_line_width(self.line_width+10.0)
             gc.set_line_dash(self.selected_line_style_)
