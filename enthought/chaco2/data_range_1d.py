@@ -285,12 +285,6 @@ class DataRange1D(BaseDataRange):
         else:
             mins, maxes = zip(*bounds_list)
 
-            print calc_bounds(self._low_setting, self._high_setting,
-                                                mins, maxes, self.epsilon, 
-                                                self.tight_bounds,
-                                                margin = self.margin,
-                                                track_amount = self.tracking_amount,
-                                                bounds_func=self.bounds_func)
             low_start, high_start = calc_bounds(self._low_setting, self._high_setting,
                                                 mins, maxes, self.epsilon, 
                                                 self.tight_bounds,
