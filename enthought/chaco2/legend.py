@@ -288,7 +288,7 @@ class Legend(AbstractOverlay):
                 self._cached_label_sizes = []
                 self._cached_label_names = []
                 self.outer_bounds = [0, 0]
-                return
+                return [0, 0]
 
         if self.hide_invisible_plots:
             visible_labels = []
