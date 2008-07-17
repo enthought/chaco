@@ -60,8 +60,7 @@ USE_DATA_UPDATE = 1
 class Chaco2PlotItem(Item):
     """ A Traits UI Item for a Chaco2 plot, for use in Traits UI Views.
     
-    NOTE: PlotContainerEditor is preferred over this class, as it is more
-    flexible.
+    NOTE: ComponentEditor is preferred over this class, as it is more flexible.
     """
     # Name of the trait that references the index data source.
     index = Str

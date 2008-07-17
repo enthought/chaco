@@ -8,9 +8,9 @@ Right-drag to pan the plots. 'z'-key to Zoom
 
 from enthought.chaco2.api import create_line_plot, OverlayPlotContainer,\
              PlotComponent, HPlotContainer, Plot, ArrayPlotData, jet
-from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 from enthought.chaco2.tools.cursor_tool import CursorTool, BaseCursorTool
+from enthought.enable2.component_editor import ComponentEditor
 from enthought.traits.api import HasTraits, Instance, DelegatesTo, Delegate
 from enthought.traits.ui.api import View, Item, HGroup, VGroup
 import numpy
@@ -97,7 +97,7 @@ class CursorTest(HasTraits):
         
     traits_view = View(VGroup(
                             HGroup(Item('plot',
-                                        editor=PlotContainerEditor(),
+                                        editor=ComponentEditor(),
                                         resizable=True, springy=True,
                                         show_label=False),
                                         springy=True),

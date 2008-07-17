@@ -2,9 +2,9 @@
 from enthought.traits.api import Instance, HasTraits, List
 from enthought.traits.ui.api import View, Item
 from enthought.enable2.api import Container
+from enthought.enable2.component_editor import ComponentEditor
 from enthought.chaco2.api import VPlotContainer
 from enthought.chaco2.plot import Plot
-from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 from enthought.traits.ui.wx.constants import WindowColor
@@ -13,7 +13,7 @@ class PlotWindow(HasTraits):
     plot = Instance(Container)
 
     traits_view = View(Item('plot',
-                            editor=PlotContainerEditor(),
+                            editor=ComponentEditor(),
                             height=300,
                             width=500,
                             show_label=False,

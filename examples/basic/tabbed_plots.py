@@ -4,9 +4,9 @@ from numpy import linspace, pi, sin, tan
 from enthought.traits.api import HasTraits, Instance
 from enthought.traits.ui.api import Item, Tabbed, View
 
-from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
 from enthought.chaco2.api import Plot, AbstractPlotData, ArrayPlotData
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
+from enthought.enable2.component_editor import ComponentEditor
 
 
 class TabbedPlots(HasTraits):
@@ -18,8 +18,8 @@ class TabbedPlots(HasTraits):
 
     view = View(
         Tabbed(
-            Item('plot1', editor=PlotContainerEditor(), dock='tab'),
-            Item('plot2', editor=PlotContainerEditor(), dock='tab'),
+            Item('plot1', editor=ComponentEditor(), dock='tab'),
+            Item('plot2', editor=ComponentEditor(), dock='tab'),
             show_labels=False
         ),
         width=0.67,

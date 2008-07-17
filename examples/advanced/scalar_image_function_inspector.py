@@ -18,7 +18,7 @@ from enthought.chaco2.api import ArrayDataSource, ArrayPlotData, ColorBar, Conto
                                  HPlotContainer, ImageData, LinearMapper, \
                                  LinePlot, OverlayPlotContainer, Plot, PlotAxis
 from enthought.chaco2.default_colormaps import *
-from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
+from enthought.enable2.component_editor import ComponentEditor
 from enthought.chaco2.tools.api import LineInspector, PanTool, RangeSelection, \
                                    RangeSelectionOverlay, SimpleZoom
 from enthought.enable2.api import Window
@@ -93,7 +93,7 @@ class PlotUI(HasTraits):
     #Traits view definitions:
     traits_view = View(
         Group(Item('container',
-                   editor=PlotContainerEditor(),
+                   editor=ComponentEditor(),
                    show_label=False)),
         buttons=NoButtons,
         menubar=MenuBar(Menu(Action(name="Edit Model",

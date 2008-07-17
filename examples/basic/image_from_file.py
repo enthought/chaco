@@ -23,7 +23,7 @@ from enthought.traits.ui.menu \
 # Chaco imports
 from enthought.chaco2.api \
     import ArrayPlotData, ImageData, Plot, PlotGraphicsContext
-from enthought.chaco2.chaco2_plot_container_editor import PlotContainerEditor
+from enthought.enable2.component_editor import ComponentEditor
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 
@@ -75,7 +75,7 @@ class DemoView(HasTraits):
     # This is the default Traits UI view
     traits_view = View(
         Item('plot',
-             editor=PlotContainerEditor(),
+             editor=ComponentEditor(),
              show_label=False,
         ), 
         menubar=MenuBar(
