@@ -4,7 +4,7 @@ from numpy import array
 
 # Enthought library imports
 from enthought.enable2.api import ColorTrait
-from enthought.traits.api import Float, Int, Trait
+from enthought.traits.api import Float, Int, Str, Trait
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay
@@ -21,6 +21,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
     """
 
     # The style to use when a point is hovered over
+    hover_metadata_name = Str('hover')
     hover_marker = Trait(None, None, marker_trait)
     hover_marker_size = Trait(None, None, Int)
     hover_line_width = Trait(None, None, Float)
@@ -28,6 +29,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
     hover_outline_color = Trait(None, None, ColorTrait)
 
     # The style to use when a point has been selected by a click
+    selection_metadata_name = Str('selections')
     selection_marker = Trait(None, None, marker_trait)
     selection_marker_size = Trait(None, None, Int)
     selection_line_width = Trait(None, None, Float)
@@ -48,22 +50,21 @@ class ScatterInspectorOverlay(AbstractOverlay):
         if not plot or not plot.index or not plot.value:
             return
 
-        for inspect_type in ('hover', 'selections'):
+        for inspect_type in (self.hover_metadata_name, self.selection_metadata_name):
             if inspect_type in plot.index.metadata and inspect_type in plot.value.metadata:
                 index = plot.index.metadata.get(inspect_type, None)
-                value = plot.value.metadata.get(inspect_type, None)
-                # TODO: need to improve handling of cases when len(index) != len(value)
-                if index is not None and value is not None:
-                    if len(index) == 0 and len(value) == 0:
-                        continue
+                # FIXME: In order to work around some problems with the
+                # selection model, we will only use the selection on the index.
+                # The assumption that they are the same is implicit, though
+                # unchecked, already.
+                #value = plot.value.metadata.get(inspect_type, None)
+                value = index
+
+                if index is not None:
                     screen_pts = plot.map_screen(array((plot.index.get_data()[index],
                                                        plot.value.get_data()[value])).T)
 
-                    # Hmm.. this is a little klunky, but I prefer for the visual
-                    # appearance traits to be named "selection_*" and the metadata
-                    # name should be "selections", and so we have to bridge
-                    # the difference here.
-                    if inspect_type == "selections":
+                    if inspect_type == self.selection_metadata_name:
                         prefix = "selection"
                     else:
                         prefix = "hover"
