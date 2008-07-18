@@ -15,6 +15,7 @@ import os, sys
 # Major library imports
 
 # Enthought library imports
+from enthought.util.resource import find_resource
 from enthought.traits.api import File, HasTraits, Instance
 from enthought.traits.ui.api import Group, Handler, Item, View
 from enthought.traits.ui.menu \
@@ -45,7 +46,10 @@ class DemoView(HasTraits):
     ### Private Traits #########################################################
 
     # File name to load image from
-    image_path = os.path.join(sys.path[0], 'capitol.jpg')
+    resource_path = os.path.join('examples','basic','capitol.jpg')
+    alt_path = 'capitol.jpg'
+    image_path = find_resource('Chaco', resource_path, alt_path=alt_path,
+        return_path=True)
     _load_file = File(image_path)
 
     # File name to save image to 
