@@ -87,8 +87,11 @@ class Plot(DataView):
     # destroyed if no color plots are on the plot.
     color_mapper = Instance(AbstractColormap)
 
-    # List of colors to cycle through when auto-coloring is requested
-    auto_colors = List(["gold", "brown", "lightblue", "darkblue", "purple"])
+    # List of colors to cycle through when auto-coloring is requested. Picked 
+    # and ordered to be red-green color-blind friendly, though should not
+    # be an issue for blue-yellow.
+    auto_colors = List(["green", "lightgreen", "blue", "lightblue", "red", 
+                        "pink", "darkgray", "silver"])
 
     # index into auto_colors list
     _auto_color_idx = Int(0)
