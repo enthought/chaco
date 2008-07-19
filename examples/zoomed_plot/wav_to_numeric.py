@@ -1,7 +1,12 @@
 #! /bin/env python
+
+# Standard library imports
 import os.path
 import wave
 import numpy
+
+# Enthought library imports
+from enthought.util.resource import find_resource
 
 def wav_to_numeric( fname ):
   f = wave.open( fname, 'rb' )
@@ -18,7 +23,10 @@ def wav_to_numeric( fname ):
   return index, data
   
 def test():
-    fname = os.path.join(r'..', r'data', r'sample.wav')   
+    sample_path = os.path.join('examples','data','sample.wav')
+    alt_path = os.path.join('..','data','sample.wav')
+    fname = find_resource('Chaco', sample_path, alt_path=alt_path,
+        return_path=True)
     index, data = wav_to_numeric(fname)
     print data[:100]
     return index, data
