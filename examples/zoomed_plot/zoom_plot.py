@@ -22,7 +22,7 @@ from enthought.chaco2.tools.api import RangeSelection
 from grid_plot_factory import create_gridded_line_plot
 from zoom_overlay import ZoomOverlay
 
-fname = r"C:\Program Files\Windows NT\Pinball\SOUND1.WAV"    
+fname = r"Chaco\examples\data\sample.wav"
 numpts = 54000
 
 def read_music_data():
