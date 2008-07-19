@@ -5,6 +5,8 @@ Right-click and drag on the upper plot to select a region to view in detail
 in the lower plot.  The selected region can be moved around by dragging,
 or resized by clicking on one of its edges and dragging.
 """
+# Standard library imports
+import os
 
 # Major library imports
 from numpy import amin, amax, arange, searchsorted, sin, pi, linspace
@@ -13,6 +15,7 @@ from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought imports
 from enthought.enable2.api import Window
+from enthought.util.resource import find_resource
 
 # Chaco imports
 from enthought.chaco2.api import SimplePlotFrame, VPlotContainer
@@ -22,7 +25,10 @@ from enthought.chaco2.tools.api import RangeSelection
 from grid_plot_factory import create_gridded_line_plot
 from zoom_overlay import ZoomOverlay
 
-fname = r"Chaco\examples\data\sample.wav"
+sample_path = os.path.join('examples','data','sample.wav')
+alt_path = os.path.join('..','data','sample.wav')
+fname = find_resource('Chaco', sample_path, alt_path=alt_path,
+    return_path=True)
 numpts = 54000
 
 def read_music_data():
