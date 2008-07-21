@@ -38,9 +38,9 @@ setup(
         'examples.zoomed_plot'
         ]),
     tests_require = [
-        'nose >= 0.9',
+        'nose >= 0.10.3',
         ],
-    test_suite = 'test_all',
+    test_suite = 'nose.collector',
     url = 'http://code.enthought.com/chaco',
     version = INFO["version"],
     zip_safe = False,
