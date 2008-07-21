@@ -57,15 +57,15 @@ class ScatterInspector(SelectTool):
     def _get_selection_state(self, event):
         plot = self.component
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
-        index_md = plot.index.metadata.get(self.selections_metadata_name, None)
-        value_md = plot.value.metadata.get(self.selections_metadata_name, None)
+        index_md = plot.index.metadata.get(self.selection_metadata_name, None)
+        value_md = plot.value.metadata.get(self.selection_metadata_name, None)
         
         already_selected = False
         for name in ('index', 'value'):
             md = getattr(plot, name).metadata
-            if md is None or self.selections_metadata_name not in md:
+            if md is None or self.selection_metadata_name not in md:
                 continue
-            if index in md[self.selections_metadata_name]:
+            if index in md[self.selection_metadata_name]:
                 already_selected = True
                 break
         return already_selected, (index is not None)
@@ -82,10 +82,10 @@ class ScatterInspector(SelectTool):
         plot = self.component
         for name in ('index', 'value'):
             md = getattr(plot, name).metadata
-            if not self.selections_metadata_name in md:
+            if not self.selection_metadata_name in md:
                 pass
-            elif index in md[self.selections_metadata_name]:
-                md[self.selections_metadata_name].remove(index)
+            elif index in md[self.selection_metadata_name]:
+                md[self.selection_metadata_name].remove(index)
                 getattr(plot, name).metadata_changed = True
         return
 
@@ -93,16 +93,16 @@ class ScatterInspector(SelectTool):
         plot = self.component
         for name in ('index', 'value'):
             md = getattr(plot, name).metadata
-            selection = md.get(self.selections_metadata_name, None)
+            selection = md.get(self.selection_metadata_name, None)
 
             # If no existing selection
             if selection is None:
-                md[self.selections_metadata_name] = [index]
+                md[self.selection_metadata_name] = [index]
             # check for list-like object supporting append
             else:
                 if append:
-                    if index not in md[self.selections_metadata_name]:
-                        md[self.selections_metadata_name].append(index)
+                    if index not in md[self.selection_metadata_name]:
+                        md[self.selection_metadata_name].append(index)
                         # Manually trigger the metadata_changed event on
                         # the datasource.  Datasources only automatically
                         # fire notifications when the values inside the
@@ -110,7 +110,7 @@ class ScatterInspector(SelectTool):
                         # for further changes on those values.
                         getattr(plot, name).metadata_changed = True
                 else:
-                    md[self.selections_metadata_name] = [index]
+                    md[self.selection_metadata_name] = [index]
         return
 
 
