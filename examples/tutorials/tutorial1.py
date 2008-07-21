@@ -35,7 +35,21 @@ myplot.bounds = [400,400]
 plot_gc = chaco2.PlotGraphicsContext(myplot.outer_bounds)
 plot_gc.render_component(myplot)
 
+# Get the directory to save the image in
+import os, sys
+print 'Please enter a path in which to place generated plots.'
+print 'Press <ENTER> to generate in the current directory.'
+path = raw_input('Path: ').strip()
+
+if len(path) > 0 and not os.path.exists(path):
+    print 'The given path does not exist.'
+    sys.exit()
+    
+if len(path) == 0:
+    answer = raw_input('Generate plots in the current directory? [Y/N]: ')
+    if answer.lower() <> 'y':
+        sys.exit()
 
 # Finally, we tell the graphics context to save itself to disk as an image.
-plot_gc.save("tutorial1.png")
+plot_gc.save(os.path.join(path, "tutorial1.png"))
 

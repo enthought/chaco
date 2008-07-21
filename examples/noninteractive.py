@@ -3,6 +3,8 @@
 This demonstrates how to create a plot offscreen and save it to an image
 file on disk.
 """
+# Standard library imports
+import os, sys
 
 # Major library imports
 from numpy import fabs, linspace, pi, sin
@@ -56,11 +58,28 @@ def draw_pdf(filename, size=(800,600)):
     gc = PdfPlotGraphicsContext(filename=filename, dest_box = (0.5, 0.5, 5.0, 5.0))
     gc.render_component(container)
     gc.save()
+    
+def get_directory(filename):
+    print 'Please enter a path in which to place generated plots.'
+    print 'Press <ENTER> to generate in the current directory.'
+    path = raw_input('Path: ').strip()
+    
+    if len(path) > 0 and not os.path.exists(path):
+        print 'The given path does not exist.'
+        sys.exit()
+        
+    if len(path) == 0:
+        answer = raw_input('Generate plots in the current directory? [Y/N]: ')
+        if answer.lower() <> 'y':
+            sys.exit()
+            
+    return os.path.join(path, filename)
+        
 
 if __name__ == "__main__":
-    draw_plot("noninteractive.png", size=(800, 600))
+    draw_plot(get_directory('noninteractive.png'), size=(800, 600))
     
     # If you have ReportLab installed, you can uncomment the following:
-    #draw_pdf("noninteractive.pdf")
+    #draw_pdf(get_directory('noninteractive.pdf'))
 
 # EOF
