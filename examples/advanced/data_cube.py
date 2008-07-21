@@ -13,6 +13,8 @@ Click or click-drag in any data window to set the slice to view.
 #  - try to eliminate the use of model.xs, ys, zs in favor of bounds tuples
 from numpy import amin, amax, zeros, fromfile, transpose, uint8
 
+# Standard library imports
+import os, sys, shutil
 
 # Major library imports
 from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
@@ -26,7 +28,15 @@ from enthought.enable2.example_support import DemoFrame, demo_main
 from enthought.enable2.api import Window
 from enthought.traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
         Event, Float, HasTraits, Int, Trait, on_trait_change
+        
+# Will hold the path that the user chooses to download to. Will be an empty
+# string if the user decides to download to the current directory.
+dl_path = ''
 
+# Determines if the script should ask the user if they would like to remove the
+# downloaded data. Will remain True unless the download fails or the
+# destination directory cannot be written to.
+run_cleanup = True
 
 class Model(HasTraits):
     npts_x = CInt(256)
@@ -79,12 +89,14 @@ class BrainModel(Model):
         super(BrainModel, self).__init__(*args, **kwargs)
 
     def compute_model(self):
+        global dl_path
+        mrbrain_path = os.path.join(dl_path, 'voldata', 'MRbrain.')
         nx = 256
         ny = 256
         nz = 109
         full_arr = zeros((nx, ny, nz), dtype='f')
         for i in range(1, 110):
-            arr = fromfile(r'./voldata/MRbrain.' + str(i), dtype='>u2')
+            arr = fromfile(mrbrain_path + str(i), dtype='>u2')
             arr.shape = (256,256)
             full_arr[:,:,i-1] = arr
         self.vals = full_arr
@@ -212,6 +224,8 @@ class PlotFrame(DemoFrame):
         try:
             self.model = model = BrainModel()
             cmap = bone
+        except SystemExit:
+            sys.exit()
         except:
             self.model = model = Model()
             cmap = jet
@@ -288,31 +302,76 @@ class PlotFrame(DemoFrame):
         pd.set_data("yz", cube[self.slice_x, :, :])
 
 def download_data():
-    import os
+    global dl_path, run_cleanup
+    
+    print 'Please enter a path to download data to (7.8MB).'
+    print 'Press <ENTER> to download to the current directory.'
+    dl_path = raw_input('Path: ').strip()
+    
+    if len(dl_path) > 0 and not os.path.exists(dl_path):
+        print 'The given path does not exist.'
+        run_cleanup = False
+        sys.exit()
+    
+    if len(dl_path) == 0:
+        answer = raw_input('Download to current directory? [Y/N]: ')
+        if answer.lower() <> 'y':
+            run_cleanup = False
+            sys.exit()
+        
+    voldata_path = os.path.join(dl_path, 'voldata')
+    tar_path = os.path.join(dl_path, 'MRbrain.tar.gz')
     
     data_good = True
     try:
-        data_good = len(os.listdir('voldata')) == 109
+        data_good = len(os.listdir(voldata_path)) == 109
     except:
         data_good = False
     
     if not data_good:
         import urllib
         import tarfile
-        # download and extract the file
-        print "Downloading data, Please Wait (7.8MB)"
-        opener = urllib.urlopen('http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz')
-        open('MRbrain.tar.gz', 'wb').write(opener.read())
-        tar_file = tarfile.open('MRbrain.tar.gz')
+        
         try:
-            os.mkdir('voldata')
+            # download and extract the file
+            print "Downloading data, Please Wait (7.8MB)"
+            opener = urllib.urlopen('http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz')
+        except:
+            print 'Download error. Opening backup data.'
+            run_cleanup = False
+            raise
+        
+        try:
+            open(tar_path, 'wb').write(opener.read())
+        except:
+            print 'Cannot write to the destination directory specified. ' \
+                  'Opening backup data.'
+            run_cleanup = False
+            raise
+        
+        tar_file = tarfile.open(tar_path)
+        try:
+            os.mkdir(voldata_path)
         except:
             pass
-        tar_file.extractall('voldata')
+        tar_file.extractall(voldata_path)
         tar_file.close()
-        os.unlink('MRbrain.tar.gz')
+        os.unlink(tar_path)
+    else:
+        print 'Previously downloaded data detected.'
+        
+def cleanup_data():
+    global dl_path
+    
+    answer = raw_input('Remove downloaded files? [Y/N]: ')
+    if answer.lower() == 'y':
+        try:
+            shutil.rmtree(os.path.join(dl_path, 'voldata'))
+        except:
+            pass
         
 if __name__ == "__main__":
-    import os
     demo_main(PlotFrame, size=(800,700), title="Cube analyzer")
+    if run_cleanup:
+        cleanup_data()
 
