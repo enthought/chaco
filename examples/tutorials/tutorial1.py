@@ -27,29 +27,31 @@ myplot = chaco2.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis
 myplot.padding = 50
 myplot.bounds = [400,400]
 
-
-# Now we create a canvas of the appropriate size and ask it to render
-# our component.  (If we wanted to display this plot in a window, we
-# would not need to create the graphics context ourselves; it would be
-# created for us by the window.)
-plot_gc = chaco2.PlotGraphicsContext(myplot.outer_bounds)
-plot_gc.render_component(myplot)
-
-# Get the directory to save the image in
-import os, sys
-print 'Please enter a path in which to place generated plots.'
-print 'Press <ENTER> to generate in the current directory.'
-path = raw_input('Path: ').strip()
-
-if len(path) > 0 and not os.path.exists(path):
-    print 'The given path does not exist.'
-    sys.exit()
+def main():
+    # Now we create a canvas of the appropriate size and ask it to render
+    # our component.  (If we wanted to display this plot in a window, we
+    # would not need to create the graphics context ourselves; it would be
+    # created for us by the window.)
+    plot_gc = chaco2.PlotGraphicsContext(myplot.outer_bounds)
+    plot_gc.render_component(myplot)
     
-if len(path) == 0:
-    answer = raw_input('Generate plots in the current directory? [Y/N]: ')
-    if answer.lower() <> 'y':
+    # Get the directory to save the image in
+    import os, sys
+    print 'Please enter a path in which to place generated plots.'
+    print 'Press <ENTER> to generate in the current directory.'
+    path = raw_input('Path: ').strip()
+    
+    if len(path) > 0 and not os.path.exists(path):
+        print 'The given path does not exist.'
         sys.exit()
+        
+    if len(path) == 0:
+        answer = raw_input('Generate plots in the current directory? [Y/N]: ')
+        if answer.lower() <> 'y':
+            sys.exit()
+    
+    # Finally, we tell the graphics context to save itself to disk as an image.
+    plot_gc.save(os.path.join(path, "tutorial1.png"))
 
-# Finally, we tell the graphics context to save itself to disk as an image.
-plot_gc.save(os.path.join(path, "tutorial1.png"))
-
+if __name__ == '__main__':
+    main()
