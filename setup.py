@@ -1,12 +1,12 @@
 import os, zipfile
 from setuptools import setup, Extension, find_packages
 from numpy import get_include
-from setup_data import INFO
-
 from setuptools.command.develop import develop
 from distutils.command.build import build as distbuild
 from distutils import log
 from pkg_resources import require, DistributionNotFound
+
+from setup_data import INFO
 from make_docs import HtmlBuild
 
 contour = Extension(
