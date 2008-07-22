@@ -29,7 +29,7 @@ sample_path = os.path.join('examples','data','sample.wav')
 alt_path = os.path.join('..','data','sample.wav')
 fname = find_resource('Chaco', sample_path, alt_path=alt_path,
     return_path=True)
-numpts = 54000
+numpts = 3000
 
 def read_music_data():
     from wav_to_numeric import wav_to_numeric

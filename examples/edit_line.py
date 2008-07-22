@@ -169,7 +169,7 @@ class PlotFrame(DemoFrame):
         container.add(scatter)
 
         # Add the title at the top
-        container.overlays.append(PlotLabel("Bessel functions",
+        container.overlays.append(PlotLabel("Line Editor",
                                   component=container,
                                   font = "swiss 16",
                                   overlay_position="top"))
