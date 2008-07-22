@@ -41,7 +41,7 @@ class PlotCanvas(Canvas):
     def draw(self, gc, view_bounds=None, mode="default"):
         if self.view_bounds is None:
             self.view_bounds = view_bounds
-        if self._layout_needed:
+        if self.layout_needed:
             self.do_layout()
         self._draw(gc, view_bounds, mode)
 

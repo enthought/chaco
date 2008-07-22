@@ -661,6 +661,10 @@ class BaseXYPlot(AbstractPlotRenderer):
         self.request_redraw()
         return
 
+    def _visible_changed(self, old, new):
+        if new:
+            self._layout_needed = True
+
     def _bgcolor_changed(self):
         self.invalidate_draw()
     
