@@ -4,6 +4,7 @@ This class is primarily used so that tools can easily distinguish between
 data-related plot items and the decorators on them.
 """
 
+from enthought.enable2.api import Component
 from enthought.traits.api import Instance
 
 from plot_component import PlotComponent
@@ -20,7 +21,7 @@ class AbstractOverlay(PlotComponent):
 
     # The component that this object overlays. This can be None. By default, if 
     # this object is called to draw(), it tries to render onto this component.
-    component = Instance(PlotComponent)
+    component = Instance(Component)
     
     # The default layer that this component draws into.
     draw_layer = "overlay"

@@ -1,5 +1,6 @@
 
 
+from enthought.enable2.api import Component
 from enthought.traits.api import Enum, Float, Instance, Trait, Tuple
 
 from enthought.chaco2.api import AbstractOverlay, PlotComponent, BasePlotContainer
@@ -9,7 +10,7 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
     """
     
     # The PlotComponent to draw as an overlay
-    overlay_component = Instance(PlotComponent)
+    overlay_component = Instance(Component)
 
     # Where this overlay should draw relative to our .component
     align = Enum("right", "left", "top", "bottom")

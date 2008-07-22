@@ -4,8 +4,8 @@
 from numpy import array
 
 # Enthought library imports
+from enthought.enable2.api import Component, cursor_style_trait, Line
 from enthought.traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
-from enthought.enable2.api import cursor_style_trait, Line
 
 # Chaco imports
 from enthought.chaco2.api import AbstractOverlay, PlotComponent
@@ -17,8 +17,8 @@ class LineSegmentTool(AbstractOverlay):
     series of points connected by lines.
     """
     
-    # The component that this tool overlays (overrides PlotComponent).
-    component = Instance(PlotComponent)
+    # The component that this tool overlays
+    component = Instance(Component)
     
     # The current line segment being drawn.
     line = Instance(Line, args=())

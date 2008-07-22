@@ -10,7 +10,7 @@ from enthought.traits.api import Bool, Instance, Property, Str, Tuple
 from plot_component import DEFAULT_DRAWING_ORDER, PlotComponent
 
 
-class BasePlotContainer(Container, PlotComponent):
+class BasePlotContainer(Container):
     """
     A container for PlotComponents that conforms to being laid out by
     PlotFrames.  Serves as the base class for other PlotContainers.

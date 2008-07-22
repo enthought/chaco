@@ -1,11 +1,8 @@
 """ Defines the base class for controllers.
 """
 # Enthought library imports
-from enthought.enable2.api import Interactor
+from enthought.enable2.api import Component, Interactor
 from enthought.traits.api import Instance
-
-# Relative imports
-from plot_component import PlotComponent
 
 
 class AbstractController(Interactor):
@@ -14,7 +11,7 @@ class AbstractController(Interactor):
     controller attaches to a single PlotComponent.
     """
     
-    component = Instance(PlotComponent)
+    component = Instance(Component)
     
     def __init__(self, component, *args, **kw):
         self.component = component
