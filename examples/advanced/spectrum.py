@@ -7,10 +7,10 @@ Based on updating_plot.py
 
 # Major library imports
 from pyaudio import PyAudio, paInt16
-from enthought.chaco2.default_colormaps import gray, jet
+from enthought.chaco2.default_colormaps import jet
 
 import wx
-from numpy import fabs, zeros, linspace, short, fromstring, hstack, transpose, array
+from numpy import zeros, linspace, short, fromstring, hstack, transpose
 from scipy import fft
 
 # Enthought library imports
@@ -19,7 +19,6 @@ from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Chaco imports
 from enthought.chaco2.api import Plot, ArrayPlotData, HPlotContainer
-from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 NUM_SAMPLES = 1024
 SAMPLING_RATE = 11025
@@ -49,7 +48,7 @@ class PlotFrame(DemoFrame):
         # Time Series plot
         times = linspace(0., float(NUM_SAMPLES)/SAMPLING_RATE, num=NUM_SAMPLES)
         self.time_data = ArrayPlotData(time=times)
-        empty_amplitude = y_values = zeros(NUM_SAMPLES)
+        empty_amplitude = zeros(NUM_SAMPLES)
         self.time_data.set_data('amplitude', empty_amplitude)
 
         self.time_plot = Plot(self.time_data)
