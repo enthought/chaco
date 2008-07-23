@@ -44,14 +44,17 @@ def main():
     if len(path) > 0 and not os.path.exists(path):
         print 'The given path does not exist.'
         sys.exit()
+    
+    # The file name to save the plot as
+    file_name = "tutorial1.png"
         
-    if len(path) == 0:
-        answer = raw_input('Generate plots in the current directory? [Y/N]: ')
-        if answer.lower() <> 'y':
-            sys.exit()
+    if not os.path.isabs(path):
+        print 'Creating image: ' + os.path.join(os.getcwd(), path, file_name)
+    else:
+        print 'Creating image: ' + os.path.join(path, file_name)
     
     # Finally, we tell the graphics context to save itself to disk as an image.
-    plot_gc.save(os.path.join(path, "tutorial1.png"))
+    plot_gc.save(os.path.join(path, file_name))
 
 if __name__ == '__main__':
     main()

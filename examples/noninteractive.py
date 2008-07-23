@@ -68,10 +68,10 @@ def get_directory(filename):
         print 'The given path does not exist.'
         sys.exit()
         
-    if len(path) == 0:
-        answer = raw_input('Generate plots in the current directory? [Y/N]: ')
-        if answer.lower() <> 'y':
-            sys.exit()
+    if not os.path.isabs(path):
+        print 'Creating image: ' + os.path.join(os.getcwd(), path, filename)
+    else:
+        print 'Creating image: ' + os.path.join(path, filename)
             
     return os.path.join(path, filename)
         

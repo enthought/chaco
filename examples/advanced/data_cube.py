@@ -313,11 +313,10 @@ def download_data():
         run_cleanup = False
         sys.exit()
     
-    if len(dl_path) == 0:
-        answer = raw_input('Download to current directory? [Y/N]: ')
-        if answer.lower() <> 'y':
-            run_cleanup = False
-            sys.exit()
+    if not os.path.isabs(dl_path):
+        print 'Downloading to: ' + os.path.join(os.getcwd(), dl_path)
+    else:
+        print 'Downloading to: ' + dl_path
         
     voldata_path = os.path.join(dl_path, 'voldata')
     tar_path = os.path.join(dl_path, 'MRbrain.tar.gz')
