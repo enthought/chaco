@@ -3,18 +3,14 @@
 # Major library imports
 from cPickle import load, dump
 import wx
-from numpy import arange, fabs, pi, sin
+from numpy import arange
 from scipy.special import jn
 
 # Enthought library imports
 from enthought.enable2.wx_backend.api import Window
-from enthought.traits.api import false
-
-# Chaco imports
 from enthought.enable2.example_support import DemoFrame, demo_main
-from enthought.chaco2.api import CrossPlotFrame, PlotComponent, OverlayPlotContainer, \
-                                 HPlotContainer, create_line_plot, add_default_axes, \
-                                 add_default_grids
+from enthought.chaco2.api import OverlayPlotContainer, create_line_plot, \
+                                 add_default_axes, add_default_grids
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 
@@ -75,7 +71,6 @@ class SavePlotDemoFrame(DemoFrame):
             print "Saving plot to", path, "..."
             try:
                 f = file(path, "wb")
-                self.plot_container._pre_save()
                 dump(self.plot_container, f)
                 f.close()
             except:
