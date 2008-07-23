@@ -6,6 +6,8 @@ from numpy import arange, array, cumsum, hstack, ones, sum, zeros
 # Enthought library imports
 from enthought.traits.api import Any, Array, Either, Enum, Float, Instance, \
     List, Property, Trait, Tuple
+from enthought.enable2.simple_layout import simple_container_get_preferred_size, \
+                                            simple_container_do_layout
 
 # Local relative imports
 from base_plot_container import BasePlotContainer
@@ -36,86 +38,13 @@ class OverlayPlotContainer(BasePlotContainer):
  
         Overrides PlotComponent.
         """
-        if self.resizable == "":
-            return self.outer_bounds
-        
-        if components is None:
-            components = self.components
-        
-        # this is used to determine if we should use our default bounds
-        no_visible_components = True
-        
-        max_width = 0.0
-        max_height = 0.0
-        for component in components:
-            if not self._should_layout(component):
-                continue
-            no_visible_components = False
-            pref_size = None
-            
-            if "h" not in component.resizable:
-                pref_size = component.get_preferred_size()
-                if pref_size[0] > max_width:
-                    max_width = pref_size[0]
-            
-            if "v" not in component.resizable:
-                if pref_size is None:
-                    pref_size = component.get_preferred_size()
-                if pref_size[1] > max_height:
-                    max_height = pref_size[1]
-
-        if "h" not in self.resizable:
-            max_width = self.width
-        elif no_visible_components or (max_width == 0):
-            max_width = self.default_size[0]
-            
-        if "v" not in self.resizable:
-            max_height = self.height
-        elif no_visible_components or (max_height == 0):
-            max_height = self.default_size[1]
-        
-        # Add in our padding and border
-        self._cached_preferred_size = (max_width + self.hpadding, max_height + self.vpadding)
-        return self._cached_preferred_size
+        simple_container_get_preferred_size(self, components=components)
 
     def _do_layout(self):
         """ Actually performs a layout (called by do_layout()).
         """
-        width, height = self.bounds
-        if "h" in self.fit_components:
-            width = self._cached_preferred_size[0] - self.hpadding
-        if "v" in self.fit_components:
-            height = self._cached_preferred_size[1] - self.vpadding
-        
-        x = self.x
-        y = self.y
-        width = self.width
-        height = self.height
-        
-        for component in self.components:
-            if not self._should_layout(component):
-                continue
-            
-            position = list(component.outer_position)
-            bounds = list(component.outer_bounds)
-            if "h" in component.resizable:
-                position[0] = 0
-                bounds[0] = width
-            if "v" in component.resizable:
-                position[1] = 0
-                bounds[1] = height
-
-            # Set both bounds at once.  This is a slight perforance fix because
-            # it only fires two trait events instead of four.  It is also needed
-            # in order for the event-based aspect ratio enforcement code to work.
-            component.outer_position = position
-            component.outer_bounds = bounds
-        
-        # Tell all of our components to do a layout
-        for component in self.components:
-            component.do_layout()
+        simple_container_do_layout(self)
         return
-
 
 class StackedPlotContainer(BasePlotContainer):
     """
