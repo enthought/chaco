@@ -5,18 +5,21 @@ Left-button drag to move the cursors round.
 Right-drag to pan the plots. 'z'-key to Zoom
 
 """
+# Major library imports
+import numpy
 
-from enthought.chaco2.api import create_line_plot, OverlayPlotContainer,\
-             PlotComponent, HPlotContainer, Plot, ArrayPlotData, jet
+# Enthought library imports
+from enthought.chaco2.api import create_line_plot, OverlayPlotContainer, \
+             HPlotContainer, Plot, ArrayPlotData, jet
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 from enthought.chaco2.tools.cursor_tool import CursorTool, BaseCursorTool
 from enthought.enable2.component_editor import ComponentEditor
 from enthought.traits.api import HasTraits, Instance, DelegatesTo, Delegate
 from enthought.traits.ui.api import View, Item, HGroup, VGroup
-import numpy
+
 
 class CursorTest(HasTraits):
-    plot = Instance(PlotComponent)
+    plot = Instance(HPlotContainer)
     cursor1 = Instance(BaseCursorTool)
     cursor2 = Instance(BaseCursorTool)
     
