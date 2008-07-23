@@ -71,6 +71,7 @@ class SavePlotDemoFrame(DemoFrame):
             print "Saving plot to", path, "..."
             try:
                 f = file(path, "wb")
+                self.plot_container._pre_save()
                 dump(self.plot_container, f)
                 f.close()
             except:
