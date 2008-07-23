@@ -1,14 +1,17 @@
 
-# imports
-from numpy import *
-from enthought.chaco2.shell import *
-from enthought.chaco2.default_colormaps import *
+# Mayor Library Imports
+from numpy import linspace, meshgrid, tanh
+
+# Enthought Library Imports
+from enthought.chaco2.shell import contourf, colormap, title, show
+from enthought.chaco2.default_colormaps import jet
+
 
 # Crate some scalar data
-xs = linspace(-10,10,200); 
-ys = linspace(-10,10,400); 
-x,y=meshgrid(xs,ys); 
-z = x*tanh(y)
+xs = linspace(-10,10,200)
+ys = linspace(-10,10,400) 
+x, y = meshgrid(xs,ys)
+z = x * tanh(y)
 
 # Create a filled contour plot
 contourf(x,y,z)
