@@ -1,5 +1,6 @@
 # Standard library imports
-import os, sys
+import os.path
+import sys
 
 # Enthought library imports
 from enthought.util.resource import find_resource
@@ -9,6 +10,13 @@ from enthought.chaco2.shell import imread, imshow, title, show
 image_path = os.path.join('examples','basic','capitol.jpg')
 alt_path = os.path.join('..','basic','capitol.jpg')
 image_file = find_resource('Chaco', image_path, alt_path=alt_path)
+
+# FIXME:
+print '''\
+! This example has a small bug !
+When you drag the image plot up or down the result is inverted,
+so that the image moves in the opposite direction.
+'''
 
 # Check to see if the image was found
 if image_file is None:
