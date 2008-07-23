@@ -4,6 +4,8 @@ This plot displays the audio spectrum from the microphone.
 
 Based on updating_plot.py
 """
+# Standard library imports
+import sys
 
 # Major library imports
 from pyaudio import PyAudio, paInt16
@@ -85,12 +87,20 @@ class PlotFrame(DemoFrame):
         container.add(self.time_plot)
         container.add(spectrogram_plot)
         
+        # Bind the exit event to the onClose function which will force the
+        # example to close. The PyAudio package causes problems that normally
+        # prevent the user from closing the example using the 'X' button.
+        self.Bind(wx.EVT_CLOSE, self.onClose)
+        
         # Set the timer to generate events to us
         timerId = wx.NewId()
         self.timer = wx.Timer(self, timerId)
         self.Bind(wx.EVT_TIMER, self.onTimer, id=timerId)
         self.timer.Start(20.0, wx.TIMER_CONTINUOUS)
         return Window(self, -1, component=container)
+    
+    def onClose(self, event):
+        sys.exit()
 
     def onTimer(self, event):
         spectrum, time = get_audio_data()
