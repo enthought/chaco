@@ -152,7 +152,7 @@ class PdfPlotGraphicsContext(GraphicsContext):
         self.clip_to_rect(0, 0, trans_width, trans_height)
         old_bb_setting = component.use_backbuffer
         component.use_backbuffer = False
-        component.draw(self)
+        component.draw(self, view_bounds=(0, 0, trans_width, trans_height))
         component.use_backbuffer = old_bb_setting
         return
 

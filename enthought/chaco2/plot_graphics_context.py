@@ -50,7 +50,7 @@ class PlotGraphicsContext(GraphicsContext):
             x = -x
             y = -y
         self.translate_ctm(x, y)
-        component.draw(self)
+        component.draw(self, view_bounds=(0, 0, self.width(), self.height()))
         return
 
     def clip_to_rect(self, x, y, width, height):
