@@ -17,7 +17,7 @@ import os, sys
 # Enthought library imports
 from enthought.util.resource import find_resource
 from enthought.traits.api import File, HasTraits, Instance
-from enthought.traits.ui.api import Group, Handler, Item, View
+from enthought.traits.ui.api import Handler, Item, View
 from enthought.traits.ui.menu \
     import Action, CloseAction, Menu, MenuBar, OKCancelButtons, Separator
 
