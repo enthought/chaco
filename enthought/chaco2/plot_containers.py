@@ -36,9 +36,9 @@ class OverlayPlotContainer(BasePlotContainer):
     def get_preferred_size(self, components=None):
         """ Returns the size (width,height) that is preferred for this component.
  
-        Overrides PlotComponent.
+        Overrides PlotComponent
         """
-        simple_container_get_preferred_size(self, components=components)
+        return simple_container_get_preferred_size(self, components=components)
 
     def _do_layout(self):
         """ Actually performs a layout (called by do_layout()).
