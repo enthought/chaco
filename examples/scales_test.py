@@ -30,7 +30,7 @@ from enthought.traits.api import false
 # Chaco imports
 from enthought.chaco2.api import create_line_plot, add_default_axes, \
                                  OverlayPlotContainer, PlotLabel, VPlotContainer, \
-                                 create_scatter_plot, Legend, PlotComponent, PlotGrid
+                                 create_scatter_plot, Legend, PlotGrid
 from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
                                        LegendTool, TraitsTool
 

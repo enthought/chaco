@@ -1,9 +1,9 @@
 
 from numpy import array, amax, amin, clip
 
-from enthought.enable2.api import ColorTrait
+from enthought.enable2.api import ColorTrait, Component
 from enthought.traits.api import Float, Instance, Int
-from enthought.chaco2.api import AbstractOverlay, BaseXYPlot, PlotComponent
+from enthought.chaco2.api import AbstractOverlay, BaseXYPlot
 
 
 class ZoomOverlay(AbstractOverlay):
@@ -14,7 +14,7 @@ class ZoomOverlay(AbstractOverlay):
     """
     
     source = Instance(BaseXYPlot)
-    destination = Instance(PlotComponent)
+    destination = Instance(Component)
     
     border_color = ColorTrait((0, 0, 0.7, 1))
     border_width = Int(1)

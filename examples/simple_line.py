@@ -18,7 +18,7 @@ Double-clicking on line or scatter plots brings up a traits editor for the plot.
 """
 
 # Major library imports
-from numpy import arange, fabs, pi, sin
+from numpy import arange
 from scipy.special import jn
 
 from enthought.chaco2.example_support import COLOR_PALETTE
@@ -26,15 +26,13 @@ from enthought.enable2.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable2.api import Window
-from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco2.api import create_line_plot, add_default_axes, \
-                                 add_default_grids, OverlayPlotContainer, \
-                                 PlotLabel, VPlotContainer, \
-                                 create_scatter_plot, Legend, PlotComponent
-from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
-                                       LegendTool, TraitsTool, DragZoom
+        add_default_grids, OverlayPlotContainer, PlotLabel, \
+        create_scatter_plot, Legend
+from enthought.chaco2.tools.api import PanTool, SimpleZoom, LegendTool, \
+        TraitsTool, DragZoom
 
 
 class PlotFrame(DemoFrame):

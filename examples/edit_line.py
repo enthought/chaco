@@ -21,21 +21,20 @@ from enthought.enable2.example_support import DemoFrame, demo_main
 from enthought.chaco2.example_support import COLOR_PALETTE
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable2.api import Component, Window
 from enthought.enable2.tools.api import DragTool
 from enthought.traits.api import Instance, Int, Tuple
 
 # Chaco imports
 from enthought.chaco2.api import add_default_axes, add_default_grids, \
-        OverlayPlotContainer, PlotLabel, ScatterPlot, create_line_plot, \
-        PlotComponent
+        OverlayPlotContainer, PlotLabel, ScatterPlot, create_line_plot
 from enthought.chaco2.tools.api import PanTool, SimpleZoom
 
 
 
 class PointDraggingTool(DragTool):
     
-    component = Instance(PlotComponent)
+    component = Instance(Component)
 
     # The pixel distance from a point that the cursor is still considered
     # to be 'on' the point
