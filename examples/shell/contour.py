@@ -1,14 +1,16 @@
 
-# imports
-from numpy import *
+# Mayor Library imports
+from numpy import linspace, meshgrid, sin
 from scipy.special import jn
-from enthought.chaco2.shell import *
-from enthought.chaco2.default_colormaps import *
+
+# Enthought library imports
+from enthought.chaco2.shell import show, title, contour
+
 
 # Crate some scalar data
-xs = linspace(-10,10,200); 
-ys = linspace(-10,10,400); 
-x,y=meshgrid(xs,ys); 
+xs = linspace(-10,10,200)
+ys = linspace(-10,10,400)
+x,y = meshgrid(xs,ys)
 z = sin(x)*x*jn(0,y)
 
 # Create a contour line plot

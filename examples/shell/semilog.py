@@ -1,8 +1,10 @@
 
-# imports
-from numpy import *
-from enthought.chaco2.shell import *
-from enthought.chaco2.default_colormaps import *
+# Mayor Library imports
+from numpy import linspace, exp
+
+# Enthought library imports
+from enthought.chaco2.shell import semilogy, hold, title, show
+
 
 # Create some data
 x = linspace(1, 10, 200)

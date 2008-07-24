@@ -1,8 +1,10 @@
 
-# imports
-from numpy import *
-from enthought.chaco2.shell import *
-from enthought.chaco2.default_colormaps import *
+# Mayor Library imports
+from numpy import linspace, pi, sin
+
+# Enthought library imports
+from enthought.chaco2.shell import show, plot, title, curplot
+from enthought.chaco2.scales.api import CalendarScaleSystem
 
 # Create some data
 numpoints = 100
@@ -22,7 +24,6 @@ plot(dates, y1, "b-", bgcolor="white")
 title("Plotting Dates")
 
 # Set the plot's horizontal axis to be a time scale
-from enthought.chaco2.scales.api import CalendarScaleSystem
 curplot().x_axis.tick_generator.scale = CalendarScaleSystem()
 
 #This command is only necessary if running from command line

@@ -1,14 +1,17 @@
 
-# imports
-from numpy import *
-from enthought.chaco2.shell import *
-from enthought.chaco2.default_colormaps import *
+# Mayor Library imports
+from numpy import linspace, meshgrid, sin
+
+# Enthought library imports
+from enthought.chaco2.shell import show, title, pcolor, colormap
+from enthought.chaco2.default_colormaps import jet
+
 
 # Crate some scalar data
-xs = linspace(0,10,200); 
-ys = linspace(0,20,400); 
-x,y=meshgrid(xs,ys); 
-z = sin(x)*y
+xs = linspace(0,10,200) 
+ys = linspace(0,20,400) 
+x,y = meshgrid(xs,ys)
+z = sin(x) * y
 
 # Create a pseudo-color-map
 pcolor(x,y,z)
