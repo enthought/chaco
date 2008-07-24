@@ -86,7 +86,9 @@ class PlotFrame(DemoFrame):
         price_plot.overlays.append(SimpleZoom(price_plot, drag_button="right",
                                               always_on=True,
                                               tool_mode="range",
-                                              axis="index"))
+                                              axis="index",
+                                              max_zoom_out_factor=10.0,
+                                             ))
         
         vol_plot = BarPlot(index = time_ds, value = vol_ds,
                            index_mapper = xmapper,
