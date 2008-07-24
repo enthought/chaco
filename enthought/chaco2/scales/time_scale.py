@@ -16,6 +16,7 @@ datetime_zeros = zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1])
 __all__ = ["TimeScale", "CalendarScaleSystem", "HMSScales", "MDYScales",
            "trange", "tfrac", "dt_to_sec"]
 
+EPOCH = safe_fromtimestamp(0.0)
 
 def td_to_sec(td):
     """ Returns the floating point number of seconds in a timedelta object. 
@@ -30,13 +31,7 @@ def dt_to_sec(t):
     This value is more accurate than mktime(t.timetuple()) because it 
     preserves milliseconds.
     """
-    tup = t.timetuple()
-    try:
-        return mktime(tup) + t.microsecond*1e-6
-    except OverflowError:
-        # Kludge working in PDT only.
-        if tup[:6] == (1969, 12, 31, 15, 59, 59):
-            return -1 + t.microsecond*1e-6
+    return td_to_sec(t - EPOCH)
 
 
 def tfrac(t, **time_unit):

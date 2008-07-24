@@ -21,7 +21,7 @@ def safe_fromtimestamp(timestamp, *args, **kwds):
     try:
         return datetime.fromtimestamp(timestamp, *args, **kwds)
     except (ValueError, OverflowError):
-        warnings.warn("Bad timestamp: %s" % str(timestamp) + ".  Returning safe default value.")
+        warnings.warn("Timestamp out of range.  Returning safe default value.")
         if timestamp <= 0:
             return datetime(MINYEAR, 1, 1, 0, 0, 0)
         else:
@@ -40,4 +40,32 @@ def mktime(t):
         # mktime() returns a float
         return 0.0
 
+def doy(dt):
+    """ Find the day of year of the datetime.
+
+    The returned DoY is in the range [1-366].
+    """
+    date = dt.date()
+    jan01 = date.replace(month=1, day=1)
+    doy = (date - jan01).days + 1
+    return doy
+
+struct_time = type(stdlib_time.localtime())
+
+def localtime(t=None):
+    """
+    localtime([seconds]) -> (tm_year,tm_mon,tm_day,tm_hour,tm_min,tm_sec,tm_wday,tm_yday,tm_isdst)
+    
+    Convert seconds since the Epoch to a time tuple expressing local time.
+    When 'seconds' is not passed in, convert the current time instead.
+
+    Modified to accept timestamps before the Epoch.
+    """
+    if t is None:
+        dt = datetime.now()
+    else:
+        dt = safe_fromtimestamp(t)
+    timetuple = (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second,
+        dt.weekday(), doy(dt), -1)
+    return struct_time(timetuple)
 
