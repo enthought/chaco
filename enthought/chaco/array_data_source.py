@@ -1,0 +1,275 @@
+""" Defines the ArrayDataSource xlass."""
+
+# Major library imports
+from numpy import array, ones, nanargmin, nanargmax
+
+# Enthought library imports
+from enthought.traits.api import Any, Constant, Int, Tuple
+
+# Chaco imports
+from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
+from abstract_data_source import AbstractDataSource
+
+
+class ArrayDataSource(AbstractDataSource):
+    """ A data source representing a single, continuous array of numerical data.
+    
+    This class does not listen to the array for value changes; if you need that
+    behavior, create a subclass that hooks up the appropriate listeners.
+    """
+    
+    #------------------------------------------------------------------------
+    # AbstractDataSource traits
+    #------------------------------------------------------------------------
+    
+    # The dimensionality of the indices into this data source (overrides
+    # AbstractDataSource).
+    index_dimension = Constant('scalar')
+    
+    # The dimensionality of the value at each index point (overrides 
+    # AbstractDataSource).
+    value_dimension = Constant('scalar')
+    
+    # The sort order of the data.
+    # This is a specialized optimization for 1-D arrays, but it's an important
+    # one that's used everywhere.
+    sort_order = SortOrderTrait
+
+    
+    #------------------------------------------------------------------------
+    # Private traits
+    #------------------------------------------------------------------------
+    
+    # The data array itself.
+    _data = NumericalSequenceTrait
+    
+    # Cached values of min and max as long as **_data** doesn't change.
+    _cached_bounds = Tuple
+    
+    # Not necessary, since this is not a filter, but provided for convenience.
+    _cached_mask = Any
+    
+    # The index of the (first) minimum value in self._data
+    _min_index = Int
+    
+    # The index of the (first) maximum value in self._data
+    _max_index = Int
+    
+    
+    #------------------------------------------------------------------------
+    # Public methods
+    #------------------------------------------------------------------------
+    
+    def __init__(self, data=array([]), sort_order="none", **kw):
+        AbstractDataSource.__init__(self, **kw)
+        self.set_data(data, sort_order)
+        return
+    
+    def set_data(self, newdata, sort_order=None):
+        """ Sets the data, and optionally the sort order, for this data source.
+        
+        Parameters
+        ----------
+        newdata : array
+            The data to use.
+        sort_order : SortOrderTrait
+            The sort order of the data
+        """
+        self._data = newdata
+        if sort_order is not None:
+            self.sort_order = sort_order
+        self._compute_bounds()
+        self.data_changed = True
+        return
+    
+    def set_mask(self, mask):
+        """ Sets the mask for this data source.
+        """
+        self._cached_mask = mask
+        self.data_changed = True
+        return
+    
+    def remove_mask(self):
+        """ Removes the mask on this data source.
+        """
+        self._cached_mask = None
+        self.data_changed = True
+        return
+    
+    #------------------------------------------------------------------------
+    # AbstractDataSource interface
+    #------------------------------------------------------------------------
+    
+    def get_data(self):
+        """ Returns the data for this data source, or 0.0 if it has no data.
+        
+        Implements AbstractDataSource.
+        """
+        if self._data is not None:
+            return self._data
+        else:
+            return 0.0
+    
+    def get_data_mask(self):
+        """get_data_mask() -> (data_array, mask_array)
+        
+        Implements AbstractDataSource.
+        """
+        if self._cached_mask is None:
+            return self._data, ones(len(self._data), dtype=bool)
+        else:
+            return self._data, self._cached_mask
+    
+    def is_masked(self):
+        """is_masked() -> bool
+        
+        Implements AbstractDataSource.
+        """
+        if self._cached_mask is not None:
+            return True
+        else:
+            return False
+    
+    def get_size(self):
+        """get_size() -> int
+        
+        Implements AbstractDataSource.
+        """
+        if self._data is not None:
+            return len(self._data)
+        else:
+            return 0
+    
+    def get_bounds(self):
+        """ Returns the minimum and maximum values of the data source's data.
+        
+        Implements AbstractDataSource.
+        """
+        if self._cached_bounds is None or self._cached_bounds == () or \
+               self._cached_bounds == 0.0:
+            self._compute_bounds()
+        return self._cached_bounds
+
+    def reverse_map(self, pt, index=0, outside_returns_none=True):
+        """Returns the index of *pt* in the data source.
+        
+        Parameters
+        ----------
+        pt : scalar value 
+            value to find
+        index 
+            ignored for data series with 1-D indices
+        outside_returns_none : Boolean
+            Whether the method returns None if *pt* is outside the range of
+            the data source; if False, the method returns the value of the 
+            bound that *pt* is outside of.
+        """
+        if self.sort_order == "none":
+            raise NotImplementedError
+        
+        # index is ignored for dataseries with 1-dimensional indices
+        minval, maxval = self._cached_bounds
+        if (pt < minval):
+            if outside_returns_none:
+                return None
+            else:
+                return self._min_index
+        elif (pt > maxval):
+            if outside_returns_none:
+                return None
+            else:
+                return self._max_index
+        else:
+            return reverse_map_1d(self._data, pt, self.sort_order)
+
+
+    #------------------------------------------------------------------------
+    # Private methods
+    #------------------------------------------------------------------------
+
+    def _compute_bounds(self, data=None):
+        """ Computes the minimum and maximum values of self._data.  
+        
+        If a data array is passed in, then that is used instead of self._data.
+        This behavior is useful for subclasses.
+        """
+        # TODO: as an optimization, perhaps create and cache a sorted
+        #       version of the dataset?
+        
+        if data is None:
+            # Several sources weren't setting the _data attribute, so we
+            # go through the interface.  This seems like the correct thing
+            # to do anyway... right?
+            #data = self._data
+            data = self.get_data()
+            
+        data_len = 0
+        try:
+            data_len = len(data)
+        except:
+            pass
+        if data_len == 0:
+            self._min_index = 0
+            self._max_index = 0
+            self._cached_bounds = (0.0, 0.0)
+        elif data_len == 1:
+            self._min_index = 0
+            self._max_index = 0
+            self._cached_bounds = (data[0], data[0])
+        else:
+            if self.sort_order == "ascending":
+                self._min_index = 0
+                self._max_index = -1
+            elif self.sort_order == "descending":
+                self._min_index = -1
+                self._max_index = 0
+            else:
+                # ignore NaN values.  This is probably a little slower,
+                # but also much safer.                
+
+                # data might be an array of strings or objects that 
+                # can't have argmin calculated on them.
+                try:
+                    self._min_index = nanargmin(data)
+                    self._max_index = nanargmax(data)
+                except (TypeError, IndexError):
+                    # For strings and objects, we punt...  These show up in
+                    # label-ish data sources.
+                    self._cached_bounds = (0.0, 0.0)
+                    
+            self._cached_bounds = (data[self._min_index],
+                               data[self._max_index])
+        return
+    
+    #------------------------------------------------------------------------
+    # Event handlers
+    #------------------------------------------------------------------------
+
+    def _metadata_changed(self, event):
+        self.metadata_changed = True
+
+    def _metadata_items_changed(self, event):
+        self.metadata_changed = True
+
+    #------------------------------------------------------------------------
+    # Persistence-related methods
+    #------------------------------------------------------------------------
+    
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        if not self.persist_data:
+            state.pop("_data", None)
+            state.pop("_cached_mask", None)
+            state.pop("_cached_bounds", None)
+            state.pop("_min_index", None)
+            state.pop("_max_index", None)
+        return state
+    
+    def _post_load(self):
+        super(ArrayDataSource, self)._post_load()
+        self._cached_bounds = ()
+        self._cached_mask = None
+        return
+
+
+# EOF
