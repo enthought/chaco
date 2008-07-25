@@ -151,6 +151,9 @@ class LassoSelection(AbstractController):
         
         The selection is extended to the current mouse position.
         """
+        # Translate the event's location to be relative to this container
+        xform = self.component.get_event_transform(event)
+        event.push_transform(xform, caller=self)
         new_point = self._map_data(array((event.x, event.y)))
         self._active_selection = vstack((self._active_selection, array((new_point,))))
         self.updated = True
