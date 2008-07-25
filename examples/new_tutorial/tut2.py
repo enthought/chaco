@@ -4,8 +4,8 @@
 # plots side-by-side.  We will also add tools to make the plots interactive.
 
 from numpy import *
-from enthought.chaco2.api import *
-from enthought.chaco2.tools.api import *
+from enthought.chaco.api import *
+from enthought.chaco.tools.api import *
 from scipy.special import jn
 
 from tut1 import PlotFrame

@@ -4,9 +4,9 @@ from numpy import linspace, pi, sin, tan
 from enthought.traits.api import HasTraits, Instance
 from enthought.traits.ui.api import Item, Tabbed, View
 
-from enthought.chaco2.api import Plot, AbstractPlotData, ArrayPlotData
-from enthought.chaco2.tools.api import PanTool, SimpleZoom
-from enthought.enable2.component_editor import ComponentEditor
+from enthought.chaco.api import Plot, AbstractPlotData, ArrayPlotData
+from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.enable.component_editor import ComponentEditor
 
 
 class TabbedPlots(HasTraits):

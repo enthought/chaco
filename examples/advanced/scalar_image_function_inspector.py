@@ -11,17 +11,17 @@ import sys
 from numpy import array, linspace, meshgrid, nanmin, nanmax,  pi, zeros
 
 # Enthought library imports
-from enthought.chaco2.api import ArrayDataSource, ArrayPlotData, ColorBar, ContourLinePlot, \
+from enthought.chaco.api import ArrayDataSource, ArrayPlotData, ColorBar, ContourLinePlot, \
                                  ColormappedScatterPlot, CMapImagePlot, \
                                  ContourPolyPlot, DataRange1D, VPlotContainer, \
                                  DataRange2D, GridMapper, GridDataSource, \
                                  HPlotContainer, ImageData, LinearMapper, \
                                  LinePlot, OverlayPlotContainer, Plot, PlotAxis
-from enthought.chaco2.default_colormaps import *
-from enthought.enable2.component_editor import ComponentEditor
-from enthought.chaco2.tools.api import LineInspector, PanTool, RangeSelection, \
+from enthought.chaco.default_colormaps import *
+from enthought.enable.component_editor import ComponentEditor
+from enthought.chaco.tools.api import LineInspector, PanTool, RangeSelection, \
                                    RangeSelectionOverlay, SimpleZoom
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 from enthought.traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
                              Int, Instance, Str, Trait
 from enthought.traits.ui.api import Group, Handler, HGroup, Item, View

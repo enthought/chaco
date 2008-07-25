@@ -7,14 +7,14 @@ Demonstrates the different 'hold' styles of LinePlot
 from numpy import linspace
 from scipy.special import jn
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco2.tools.api import PanTool, SimpleZoom 
+from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
+from enthought.chaco.tools.api import PanTool, SimpleZoom 
 
 def attach_tools(plot):
     plot.tools.append(PanTool(plot))

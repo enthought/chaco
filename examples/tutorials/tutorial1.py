@@ -18,8 +18,8 @@ y = sin(x)
 # plot types (line, scatter, etc.).  In later tutorials we'll see what the
 # factories are actually doing, and how to manually assemble plotting
 # primitives in more powerful ways.  For now, factories suit our needs.
-from enthought.chaco2 import api as chaco2
-myplot = chaco2.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
+from enthought.chaco import api as chaco
+myplot = chaco.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
 
 # We now need to set the plot's size, and add a little padding for the axes.
 # (Normally, when Chaco plots are placed inside WX windows, the bounds are
@@ -32,7 +32,7 @@ def main():
     # our component.  (If we wanted to display this plot in a window, we
     # would not need to create the graphics context ourselves; it would be
     # created for us by the window.)
-    plot_gc = chaco2.PlotGraphicsContext(myplot.outer_bounds)
+    plot_gc = chaco.PlotGraphicsContext(myplot.outer_bounds)
     plot_gc.render_component(myplot)
     
     # Get the directory to save the image in

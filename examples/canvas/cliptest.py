@@ -8,9 +8,9 @@ from numpy import arange, fabs, linspace, pi, sin
 
 # Enthought library imports
 from enthought.traits.api import Float
-from enthought.enable2.api import Window, Container, Component, Pointer
-from enthought.enable2.tools.api import MoveTool
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.api import Window, Container, Component, Pointer
+from enthought.enable.tools.api import MoveTool
+from enthought.enable.example_support import DemoFrame, demo_main
 
 
 class Box(Component):

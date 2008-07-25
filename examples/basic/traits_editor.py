@@ -19,7 +19,7 @@ from enthought.traits.api import Array, Dict, Enum, HasTraits, Str
 from enthought.traits.ui.api import Item, View
 
 # Chaco imports
-from enthought.chaco2.chaco2_plot_editor import Chaco2PlotEditor, \
+from enthought.chaco.chaco_plot_editor import Chaco2PlotEditor, \
                                                 Chaco2PlotItem
 
 

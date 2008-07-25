@@ -1,9 +1,9 @@
 
 
-from enthought.enable2.api import Component
+from enthought.enable.api import Component
 from enthought.traits.api import Enum, Float, Instance, Trait, Tuple
 
-from enthought.chaco2.api import AbstractOverlay, PlotComponent, BasePlotContainer
+from enthought.chaco.api import AbstractOverlay, PlotComponent, BasePlotContainer
 
 class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
     """ Allows an arbitrary plot component to be overlaid on top of another one.

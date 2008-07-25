@@ -9,14 +9,14 @@ and you can move it around my right-click and dragging in the smaller plot.
 from numpy import linspace
 from scipy.special import jn
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, OverlayPlotContainer, Plot
-from enthought.chaco2.tools.api import PanTool, SimpleZoom, MoveTool
+from enthought.chaco.api import ArrayPlotData, OverlayPlotContainer, Plot
+from enthought.chaco.tools.api import PanTool, SimpleZoom, MoveTool
 
 
 class PlotFrame(DemoFrame):

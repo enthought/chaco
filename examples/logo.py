@@ -3,8 +3,8 @@
 from numpy import array, cos, invert, isnan, nan, pi, sin, vstack
 from enthought.traits.api import Array, Enum, Float, HasTraits, Instance, Range
 from enthought.traits.ui.api import Group, Item, View
-from enthought.enable2.api import ColorTrait
-from enthought.chaco2.api import arg_find_runs, AbstractOverlay
+from enthought.enable.api import ColorTrait
+from enthought.chaco.api import arg_find_runs, AbstractOverlay
 
 class Turtle(AbstractOverlay):
     x = Float

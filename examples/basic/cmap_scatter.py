@@ -13,16 +13,16 @@ cancel the range selection.
 from numpy import arange, exp, sort
 from numpy.random import random
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, ColorBar, \
+from enthought.chaco.api import ArrayPlotData, ColorBar, \
                                  ColormappedSelectionOverlay, HPlotContainer, \
                                  jet, LinearMapper, Plot
-from enthought.chaco2.tools.api import PanTool, SimpleZoom, RangeSelection, \
+from enthought.chaco.tools.api import PanTool, SimpleZoom, RangeSelection, \
                                        RangeSelectionOverlay
 
 

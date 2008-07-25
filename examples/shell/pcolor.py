@@ -3,8 +3,8 @@
 from numpy import linspace, meshgrid, sin
 
 # Enthought library imports
-from enthought.chaco2.shell import show, title, pcolor, colormap
-from enthought.chaco2.default_colormaps import jet
+from enthought.chaco.shell import show, title, pcolor, colormap
+from enthought.chaco.default_colormaps import jet
 
 
 # Crate some scalar data

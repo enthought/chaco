@@ -11,15 +11,15 @@ import os
 # Major library imports
 from numpy import amin, amax, arange, searchsorted, sin, pi, linspace
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 from enthought.util.resource import find_resource
 
 # Chaco imports
-from enthought.chaco2.api import SimplePlotFrame, VPlotContainer
-from enthought.chaco2.tools.api import RangeSelection
+from enthought.chaco.api import SimplePlotFrame, VPlotContainer
+from enthought.chaco.tools.api import RangeSelection
 
 # Relative imports
 from grid_plot_factory import create_gridded_line_plot

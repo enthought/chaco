@@ -16,16 +16,16 @@ alt-right-arrow moves you forwards and backwards through the "zoom history".
 from numpy import arange, fabs, pi
 from scipy.special import jn
 
-from enthought.enable2.example_support import DemoFrame, demo_main
-from enthought.chaco2.example_support import COLOR_PALETTE
+from enthought.enable.example_support import DemoFrame, demo_main
+from enthought.chaco.example_support import COLOR_PALETTE
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import create_line_plot, add_default_axes, add_default_grids, \
+from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids, \
                                  OverlayPlotContainer, VPlotContainer, DataLabel
-from enthought.chaco2.tools.api import PanTool, SimpleZoom, DataLabelTool
+from enthought.chaco.tools.api import PanTool, SimpleZoom, DataLabelTool
 
 
 

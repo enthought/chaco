@@ -3,7 +3,7 @@
 # This tutorial shows how to use the ScatterInspector tool to interact with
 # data in a plot.
 
-from enthought.chaco2.tools.api import *
+from enthought.chaco.tools.api import *
 
 from tut3 import Tut3Frame
 

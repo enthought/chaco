@@ -19,14 +19,14 @@ Line segment drawing:
 from numpy import arange, sort
 from numpy.random import random
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, Plot
-from enthought.chaco2.tools.api import LineSegmentTool, PanTool, SimpleZoom
+from enthought.chaco.api import ArrayPlotData, Plot
+from enthought.chaco.tools.api import LineSegmentTool, PanTool, SimpleZoom
 
 
 class MyLineDrawer(LineSegmentTool):

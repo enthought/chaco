@@ -13,15 +13,15 @@ Draws an colormapped image plot
 from numpy import linspace, meshgrid, pi
 from scipy.special import jn
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, ColorBar, HPlotContainer, jet, \
+from enthought.chaco.api import ArrayPlotData, ColorBar, HPlotContainer, jet, \
                                  LinearMapper, Plot
-from enthought.chaco2.tools.api import PanTool, RangeSelection, \
+from enthought.chaco.tools.api import PanTool, RangeSelection, \
                                        RangeSelectionOverlay, SimpleZoom
 
 

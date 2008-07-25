@@ -14,8 +14,8 @@ from scipy.special import jn
 from enthought.traits.api import false
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, Plot, PlotGraphicsContext
-from enthought.chaco2.example_support import COLOR_PALETTE
+from enthought.chaco.api import ArrayPlotData, Plot, PlotGraphicsContext
+from enthought.chaco.example_support import COLOR_PALETTE
 
 DPI = 72.0
 
@@ -51,7 +51,7 @@ def draw_plot(filename, size=(800,600)):
     return
 
 def draw_pdf(filename, size=(800,600)):
-    from enthought.chaco2.pdf_graphics_context import PdfPlotGraphicsContext
+    from enthought.chaco.pdf_graphics_context import PdfPlotGraphicsContext
     container = create_plot()
     container.bounds = list(size)
     container.do_layout(force=True)

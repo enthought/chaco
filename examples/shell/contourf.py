@@ -3,8 +3,8 @@
 from numpy import linspace, meshgrid, tanh
 
 # Enthought Library Imports
-from enthought.chaco2.shell import contourf, colormap, title, show
-from enthought.chaco2.default_colormaps import jet
+from enthought.chaco.shell import contourf, colormap, title, show
+from enthought.chaco.default_colormaps import jet
 
 
 # Crate some scalar data

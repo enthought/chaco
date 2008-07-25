@@ -10,9 +10,9 @@
 import wx
 from scipy import arange
 from scipy.special import jn
-from enthought.chaco2.api import *
-from enthought.chaco2.tools.api import *
-from enthought.enable2.wx_backend.api import Window
+from enthought.chaco.api import *
+from enthought.chaco.tools.api import *
+from enthought.enable.wx_backend.api import Window
 
 
 class PlotFrame(wx.Frame):

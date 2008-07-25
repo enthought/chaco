@@ -1,9 +1,9 @@
 
 import wx
-from enthought.enable2.wx_backend.api import Window
-from enthought.enable2.api import ColorTrait
-from enthought.chaco2.api import *
-from enthought.chaco2.tools.api import DragTool
+from enthought.enable.wx_backend.api import Window
+from enthought.enable.api import ColorTrait
+from enthought.chaco.api import *
+from enthought.chaco.tools.api import DragTool
 from enthought.kiva import Font
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Enum, Float, Int, Str, Tuple

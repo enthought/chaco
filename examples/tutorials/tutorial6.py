@@ -3,7 +3,7 @@
 #
 # Tutorial 6. Writing a tool
 
-from enthought.chaco2.api import AbstractController
+from enthought.chaco.api import AbstractController
 
 # This interactor just prints out all the events it receives
 class EventPrinter(AbstractController):

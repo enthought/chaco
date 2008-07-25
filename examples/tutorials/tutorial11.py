@@ -10,7 +10,7 @@
 
 
 from tutorial10b import PlotFrame3
-from enthought.chaco2.tools.api import LineInspector
+from enthought.chaco.tools.api import LineInspector
 
 class PlotFrame4(PlotFrame3):
     def _create_plot(self):

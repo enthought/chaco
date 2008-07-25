@@ -15,17 +15,17 @@ import sys
 from numpy import arange, fabs, pi, sin
 from scipy.special import jn
 
-from enthought.chaco2.example_support import COLOR_PALETTE
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.chaco.example_support import COLOR_PALETTE
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 from enthought.traits.api import false
 
 # Chaco imports
-from enthought.chaco2.api import OverlayPlotContainer, create_line_plot, add_default_axes, \
+from enthought.chaco.api import OverlayPlotContainer, create_line_plot, add_default_axes, \
                                  add_default_grids
-from enthought.chaco2.tools.api import RangeSelection, RangeSelectionOverlay, PanTool,\
+from enthought.chaco.tools.api import RangeSelection, RangeSelectionOverlay, PanTool,\
                                        SimpleZoom
 
 

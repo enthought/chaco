@@ -17,18 +17,18 @@ alt-right-arrow moves you forwards and backwards through the "zoom history".
 from numpy import linspace
 from scipy.special import jn
 
-from enthought.enable2.example_support import DemoFrame, demo_main
-from enthought.chaco2.example_support import COLOR_PALETTE
+from enthought.enable.example_support import DemoFrame, demo_main
+from enthought.chaco.example_support import COLOR_PALETTE
 
 # Enthought library imports
-from enthought.enable2.api import Component, Window
-from enthought.enable2.tools.api import DragTool
+from enthought.enable.api import Component, Window
+from enthought.enable.tools.api import DragTool
 from enthought.traits.api import Instance, Int, Tuple
 
 # Chaco imports
-from enthought.chaco2.api import add_default_axes, add_default_grids, \
+from enthought.chaco.api import add_default_axes, add_default_grids, \
         OverlayPlotContainer, PlotLabel, ScatterPlot, create_line_plot
-from enthought.chaco2.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, SimpleZoom
 
 
 

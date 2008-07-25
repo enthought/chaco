@@ -8,22 +8,22 @@ in that it uses a date-oriented axis.
 from numpy import abs, arange, cumprod, linspace, random
 import time
 
-from enthought.chaco2.example_support import COLOR_PALETTE
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.chaco.example_support import COLOR_PALETTE
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayDataSource, BarPlot, DataRange1D, \
+from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
         LabelAxis, LinearMapper, VPlotContainer, PlotAxis, PlotGrid, \
         FilledLinePlot, add_default_grids, PlotLabel
-from enthought.chaco2.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, SimpleZoom
 
 
-from enthought.chaco2.scales.api import CalendarScaleSystem
-from enthought.chaco2.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco2.scales_axis import PlotAxis as ScalesPlotAxis
+from enthought.chaco.scales.api import CalendarScaleSystem
+from enthought.chaco.scales_tick_generator import ScalesTickGenerator
+from enthought.chaco.scales_axis import PlotAxis as ScalesPlotAxis
 
 
 def create_dates(numpoints, units="days"):

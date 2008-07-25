@@ -6,16 +6,16 @@ renderers and scales.
 # Major library imports
 from numpy import abs, arange, cumprod, random
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayDataSource, BarPlot, DataRange1D, \
+from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
         LinearMapper, VPlotContainer, PlotAxis, FilledLinePlot, \
         add_default_grids, PlotLabel
-from enthought.chaco2.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, SimpleZoom
 
 
 class PlotFrame(DemoFrame):

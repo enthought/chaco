@@ -3,7 +3,7 @@
 from numpy import linspace, pi, sin, cos
 
 # Enthought library imports
-from enthought.chaco2.shell import plot, hold, title, show
+from enthought.chaco.shell import plot, hold, title, show
 
 
 # Create some data

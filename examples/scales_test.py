@@ -20,23 +20,23 @@ from numpy import arange, fabs, linspace, pi, sin
 from scipy.special import jn
 from time import time
 
-from enthought.chaco2.example_support import COLOR_PALETTE
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.chaco.example_support import COLOR_PALETTE
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 from enthought.traits.api import false
 
 # Chaco imports
-from enthought.chaco2.api import create_line_plot, add_default_axes, \
+from enthought.chaco.api import create_line_plot, add_default_axes, \
                                  OverlayPlotContainer, PlotLabel, VPlotContainer, \
                                  create_scatter_plot, Legend, PlotGrid
-from enthought.chaco2.tools.api import PanTool, RectZoomTool, SimpleZoom, \
+from enthought.chaco.tools.api import PanTool, RectZoomTool, SimpleZoom, \
                                        LegendTool, TraitsTool
 
-from enthought.chaco2.scales.api import CalendarScaleSystem
-from enthought.chaco2.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco2.scales_axis import PlotAxis
+from enthought.chaco.scales.api import CalendarScaleSystem
+from enthought.chaco.scales_tick_generator import ScalesTickGenerator
+from enthought.chaco.scales_axis import PlotAxis
 
 def add_default_axes(plot, orientation="normal", vtitle="",htitle=""):
     """

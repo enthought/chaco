@@ -3,14 +3,14 @@
 # Major library imports
 from numpy import arange, cos, linspace, pi, sin, ones
 
-from enthought.chaco2.example_support import COLOR_PALETTE
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.chaco.example_support import COLOR_PALETTE
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
+from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
                                 LinearMapper, OverlayPlotContainer, PlotAxis, PlotGrid, \
                                 DataLabel
 

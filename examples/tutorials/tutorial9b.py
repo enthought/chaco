@@ -5,7 +5,7 @@
 
 
 from tutorial8 import PlotFrame
-from enthought.chaco2.tools.api import SimpleZoom
+from enthought.chaco.tools.api import SimpleZoom
 
 class PlotFrame2(PlotFrame):
     def _create_plot(self):

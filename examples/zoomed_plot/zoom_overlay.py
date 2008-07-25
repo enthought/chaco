@@ -1,9 +1,9 @@
 
 from numpy import array, amax, amin, clip
 
-from enthought.enable2.api import ColorTrait, Component
+from enthought.enable.api import ColorTrait, Component
 from enthought.traits.api import Float, Instance, Int
-from enthought.chaco2.api import AbstractOverlay, BaseXYPlot
+from enthought.chaco.api import AbstractOverlay, BaseXYPlot
 
 
 class ZoomOverlay(AbstractOverlay):

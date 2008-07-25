@@ -1,12 +1,12 @@
-# Like pcolor.py, except demonstrates how a chaco2.shell plot object ca
+# Like pcolor.py, except demonstrates how a chaco.shell plot object ca
 # be customized by adding a tool and overlay.
 
 # Mayor Library imports
 from numpy import linspace, meshgrid, sin
 
 # Enthought library imports
-from enthought.chaco2.shell import show, title, plot, pcolor, colormap, curplot
-from enthought.chaco2.default_colormaps import jet
+from enthought.chaco.shell import show, title, plot, pcolor, colormap, curplot
+from enthought.chaco.default_colormaps import jet
 
 # Crate some scalar data
 xs = linspace(0,10,200)
@@ -24,7 +24,7 @@ colormap(jet)
 title("pseudo colormap image plot")
 
 # Add a custom tool - in this case, an ImageInspector
-from enthought.chaco2.tools.api import ImageInspectorTool, ImageInspectorOverlay
+from enthought.chaco.tools.api import ImageInspectorTool, ImageInspectorOverlay
 img_plot = curplot().plots.values()[0][0]
 tool = ImageInspectorTool(img_plot)
 img_plot.tools.append(tool)

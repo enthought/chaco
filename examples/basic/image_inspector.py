@@ -15,15 +15,15 @@ plot.  The underlying plot is similar to the one in cmap_image_plot.py.
 # Major library imports
 from numpy import linspace, meshgrid, pi, sin
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, jet, Plot
-from enthought.chaco2.tools.api import PanTool, SimpleZoom
-from enthought.chaco2.tools.image_inspector_tool import ImageInspectorTool, \
+from enthought.chaco.api import ArrayPlotData, jet, Plot
+from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.image_inspector_tool import ImageInspectorTool, \
      ImageInspectorOverlay
 
 

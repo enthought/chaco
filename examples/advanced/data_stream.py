@@ -20,7 +20,7 @@ from enthought.traits.ui.api import Group, Item, View
 from enthought.pyface.timer.api import Timer
 
 # Chaco imports
-from enthought.chaco2.chaco2_plot_editor import Chaco2PlotItem
+from enthought.chaco.chaco_plot_editor import Chaco2PlotItem
 
 
 class Viewer(HasTraits):

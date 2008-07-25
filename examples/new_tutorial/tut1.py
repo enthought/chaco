@@ -4,7 +4,7 @@
 
 import wx
 from numpy import *
-from enthought.chaco2.api import *
+from enthought.chaco.api import *
 
 # This is a little boilerplate main() function that runs the wx main event
 # loop.  Note that we're using "PlotFrame" as the top-level frame for our
@@ -20,7 +20,7 @@ def main():
 # The only new thing is that we're going to import a Window from the Enable
 # library, and embed our plot in that.  This Window object just allows our
 # plot to look like a generic Panel to WX.
-from enthought.enable2.wx_backend.api import Window
+from enthought.enable.wx_backend.api import Window
 
 class PlotFrame(wx.Frame):
     

@@ -4,11 +4,11 @@
 
 # Enthought library imports
 from enthought.traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
-from enthought.enable2.api import Canvas, Component, Container
+from enthought.enable.api import Canvas, Component, Container
 
 # Chaco imports
-from enthought.chaco2.api import AbstractOverlay
-from enthought.enable2.tools.api import DragTool
+from enthought.chaco.api import AbstractOverlay
+from enthought.enable.tools.api import DragTool
 
 
 class PlotCloneTool(AbstractOverlay, DragTool):

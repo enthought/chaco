@@ -14,21 +14,21 @@ from scipy.special import jn
 
 
 # Enthought library imports
-from enthought.enable2.api import Viewport, Window
-from enthought.enable2.tools.api import MoveTool, ResizeTool, ViewportPanTool
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.api import Viewport, Window
+from enthought.enable.tools.api import MoveTool, ResizeTool, ViewportPanTool
+from enthought.enable.example_support import DemoFrame, demo_main
 from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
                                  List, Str
 
 
 # Chaco imports
-from enthought.chaco2.api import AbstractOverlay, ArrayPlotData, \
+from enthought.chaco.api import AbstractOverlay, ArrayPlotData, \
         Plot, jet, ScatterPlot, LinePlot, LinearMapper
-from enthought.chaco2.tools.api import PanTool, SimpleZoom , LegendTool
+from enthought.chaco.tools.api import PanTool, SimpleZoom , LegendTool
 
 # Canvas imports
-from enthought.chaco2.plot_canvas import PlotCanvas
-from enthought.chaco2.plot_canvas_toolbar import PlotCanvasToolbar, PlotToolbarButton
+from enthought.chaco.plot_canvas import PlotCanvas
+from enthought.chaco.plot_canvas_toolbar import PlotCanvasToolbar, PlotToolbarButton
 from transient_plot_overlay import TransientPlotOverlay
 from axis_tool import AxisTool, RangeController, MPAxisTool
 from plot_clone_tool import PlotCloneTool, MPPlotCloneTool

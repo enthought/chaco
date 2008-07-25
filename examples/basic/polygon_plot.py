@@ -13,16 +13,16 @@ Draws some different polygons
 import math
 from numpy import array, transpose
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 from enthought.traits.api import Enum, Tuple, Dict
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco2.base import n_gon
-from enthought.chaco2.tools.api import PanTool, SimpleZoom, DragTool
+from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
+from enthought.chaco.base import n_gon
+from enthought.chaco.tools.api import PanTool, SimpleZoom, DragTool
 
 
 class SpinTool(DragTool):

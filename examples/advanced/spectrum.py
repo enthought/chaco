@@ -9,18 +9,18 @@ import sys
 
 # Major library imports
 from pyaudio import PyAudio, paInt16
-from enthought.chaco2.default_colormaps import jet
+from enthought.chaco.default_colormaps import jet
 
 import wx
 from numpy import zeros, linspace, short, fromstring, hstack, transpose
 from scipy import fft
 
 # Enthought library imports
-from enthought.enable2.api import Window
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.api import Window
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Chaco imports
-from enthought.chaco2.api import Plot, ArrayPlotData, HPlotContainer
+from enthought.chaco.api import Plot, ArrayPlotData, HPlotContainer
 
 NUM_SAMPLES = 1024
 SAMPLING_RATE = 11025

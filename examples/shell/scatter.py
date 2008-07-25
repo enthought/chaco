@@ -3,7 +3,7 @@
 from numpy import linspace, random, pi
 
 # Enthought library imports
-from enthought.chaco2.shell import plot, hold, title, show
+from enthought.chaco.shell import plot, hold, title, show
 
 
 # Create some data

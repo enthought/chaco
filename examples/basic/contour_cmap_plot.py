@@ -10,15 +10,15 @@ Renders some contoured and colormapped images of a scalar value field.
 # Major library imports
 from numpy import cos, linspace, log, meshgrid, pi, sin
 
-from enthought.enable2.example_support import DemoFrame, demo_main
+from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable2.api import Window
+from enthought.enable.api import Window
 
 # Chaco imports
-from enthought.chaco2.api import ArrayPlotData, ColorBar, gmt_drywet, \
+from enthought.chaco.api import ArrayPlotData, ColorBar, gmt_drywet, \
                                  HPlotContainer, LinearMapper, Plot
-from enthought.chaco2.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, SimpleZoom
 
 
 class PlotFrame(DemoFrame):

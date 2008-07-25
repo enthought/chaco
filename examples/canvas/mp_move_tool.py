@@ -1,6 +1,6 @@
 
 from enthought.traits.api import Int
-from enthought.enable2.tools.api import MoveTool
+from enthought.enable.tools.api import MoveTool
 
 class MPMoveTool(MoveTool):
 

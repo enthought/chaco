@@ -3,7 +3,7 @@
 from numpy import linspace, exp
 
 # Enthought library imports
-from enthought.chaco2.shell import semilogy, hold, title, show
+from enthought.chaco.shell import semilogy, hold, title, show
 
 
 # Create some data
