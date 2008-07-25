@@ -4,7 +4,7 @@
 from numpy import ones
 
 # Enthought library imports
-from enthought.traits.api import Enum, Float
+from enthought.traits.api import Enum, Float, Str
 from enthought.enable.api import BaseTool
 
 # Chaco imports
@@ -15,6 +15,9 @@ class HighlightTool(BaseTool):
     """ A tool that enables the user to select a plot to be highlighted on the
     graph by clicking on it.
     """
+
+    # The name of the data source metadata which controls selections.
+    metadata_name = Str('selections')
 
     # The mouse button that initiates the selection.
     drag_button = Enum("left", "right")
@@ -56,14 +59,14 @@ class HighlightTool(BaseTool):
             closest_plot = self._find_curve(self.component.components, event)
             if closest_plot:
                 index = closest_plot.index
-                index.metadata['selections'] = ones(len(index.get_data()), dtype=bool)
+                index.metadata[self.metadata_name] = ones(len(index.get_data()), dtype=bool)
                 closest_plot.request_redraw()
             else:
                 # If we are attached to a plot container, then we can deselect
                 # all of the plots in the container
                 for p in self.component.components:
-                    if "selections" in p.index.metadata:
-                        del p.index.metadata['selections']
+                    if self.metadata_name in p.index.metadata:
+                        del p.index.metadata[self.metadata_name]
                         p.request_redraw()
             event.pop()
 
@@ -71,10 +74,10 @@ class HighlightTool(BaseTool):
             hit_point = self.component.hittest((event.x, event.y), self.threshold)
             index = self.component.index
             if hit_point is not None:
-                index.metadata['selections'] = ones(len(index.get_data()), dtype=bool)
+                index.metadata[self.metadata_name] = ones(len(index.get_data()), dtype=bool)
                 self.component.request_redraw()
-            elif "selections" in index.metadata:
-                del index.metadata["selections"]
+            elif self.metadata_name in index.metadata:
+                del index.metadata[self.metadata_name]
                 self.component.request_redraw()
  
         event.handled = True
