@@ -6,7 +6,8 @@ from math import floor
 
 from scales import AbstractScale, ScaleSystem, frange, heckbert_interval
 from formatters import TimeFormatter
-from safetime import mktime, safe_fromtimestamp, datetime, timedelta, MINYEAR, MAXYEAR
+from safetime import (mktime, safe_fromtimestamp, datetime, timedelta, EPOCH,
+    MINYEAR, MAXYEAR)
 
 # Labels for date and time units.
 datetime_scale = ["microsecond", "second", "minute", "hour", "day", "month", "year"]
@@ -15,8 +16,6 @@ datetime_zeros = zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1])
 
 __all__ = ["TimeScale", "CalendarScaleSystem", "HMSScales", "MDYScales",
            "trange", "tfrac", "dt_to_sec"]
-
-EPOCH = safe_fromtimestamp(0.0)
 
 def td_to_sec(td):
     """ Returns the floating point number of seconds in a timedelta object. 

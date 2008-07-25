@@ -9,18 +9,21 @@ from time import *
 from datetime import datetime, timedelta, MINYEAR, MAXYEAR
 
 __all__ = ([x for x in dir(stdlib_time) if not x.startswith('_')]
-    + ['safe_fromtimestamp', 'datetime', 'timedelta', 'MINYEAR', 'MAXYEAR'])
+    + ['safe_fromtimestamp', 'datetime', 'timedelta', 'MINYEAR', 'MAXYEAR',
+        'EPOCH'])
+
+EPOCH = datetime.fromtimestamp(0.0)
 
 # Can't monkeypatch methods of anything in datetime, so we have to wrap them
 def safe_fromtimestamp(timestamp, *args, **kwds):
-    """ safe_fromtimestamp(timestamp[, tz]) -> tz's local time from POSIX timestamp.
+    """ safe_fromtimestamp(timestamp) -> UTC time from POSIX timestamp.
 
     Timestamps outside of the valid range will be assigned datetime objects of
     Jan 1 of either MINYEAR or MAXYEAR, whichever appears closest.
     """    
     try:
-        return datetime.fromtimestamp(timestamp, *args, **kwds)
-    except (ValueError, OverflowError):
+        return EPOCH + timedelta(seconds=timestamp)
+    except (ValueError, OverflowError), e:
         warnings.warn("Timestamp out of range.  Returning safe default value.")
         if timestamp <= 0:
             return datetime(MINYEAR, 1, 1, 0, 0, 0)
@@ -36,7 +39,7 @@ def mktime(t):
     try:
         return stdlib_time.mktime(t)
     except (ValueError, OverflowError):
-        warnings.warn("Bad time for mktime(): %s" % str(t) + ".  Returning 0.")
+        warnings.warn("Bad time for mktime().  Returning 0.")
         # mktime() returns a float
         return 0.0
 
