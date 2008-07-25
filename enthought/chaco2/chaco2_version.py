@@ -1,2 +1,4 @@
 # proxy    
-from enthought.chaco.chaco2_version import *
+from enthought.chaco.chaco_version import *
+
+chaco2_version = chaco_version
