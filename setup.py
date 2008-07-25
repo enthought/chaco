@@ -10,15 +10,15 @@ from setup_data import INFO
 from make_docs import HtmlBuild
 
 contour = Extension(
-    'enthought.chaco2.contour.contour',
-    sources=['enthought/chaco2/contour/cntr.c'],
+    'enthought.chaco.contour.contour',
+    sources=['enthought/chaco/contour/cntr.c'],
     include_dirs=[get_include()],
     define_macros=[('NUMPY', None)]
     )
 
 speedups = Extension(
-    'enthought.chaco2._speedups',
-    sources = ['enthought/chaco2/_speedups.cpp'],
+    'enthought.chaco._speedups',
+    sources = ['enthought/chaco/_speedups.cpp'],
     include_dirs = [get_include()],
     define_macros=[('NUMPY', None)]
     )
