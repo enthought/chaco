@@ -13,7 +13,7 @@ from enthought.chaco.default_colormaps import Greens, Greys, OrRd, Oranges
 from enthought.chaco.default_colormaps import PRGn, PiYG, PuBu, PuBuGn, PuOr
 from enthought.chaco.default_colormaps import PuRd, Purples, RdBu, RdGy, RdPu
 from enthought.chaco.default_colormaps import RdYlBu, RdYlGn, Reds, Spectral
-from enthought.chaco.default_colormaps import YlGn, YlGnBu, YlOrBu, YlOrBr
+from enthought.chaco.default_colormaps import YlGn, YlGnBu, YlOrBr
 from enthought.chaco.default_colormaps import YlOrRd, gist_earth, gist_gray
 from enthought.chaco.default_colormaps import gist_heat, gist_ncar, gist_rainbow
 from enthought.chaco.default_colormaps import gist_stern, gist_yarg
