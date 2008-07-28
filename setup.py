@@ -29,7 +29,7 @@ def generate_docs():
     doc_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'docs')
     source_dir = os.path.join(doc_dir, 'source')
     html_zip = os.path.join(doc_dir,  'html.zip')
-    dest_dir = os.path.join(doc_dir, 'html')
+    dest_dir = doc_dir
     
     required_sphinx_version = "0.4.1"
     sphinx_installed = False
