@@ -18,7 +18,7 @@ from enthought.enable.api import Window
 from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
         LabelAxis, LinearMapper, VPlotContainer, PlotAxis, PlotGrid, \
         FilledLinePlot, add_default_grids, PlotLabel
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 
 from enthought.chaco.scales.api import CalendarScaleSystem
@@ -83,7 +83,7 @@ class PlotFrame(DemoFrame):
 
         price_plot.tools.append(PanTool(price_plot, constrain=True,
                                         constrain_direction="x"))
-        price_plot.overlays.append(SimpleZoom(price_plot, drag_button="right",
+        price_plot.overlays.append(ZoomTool(price_plot, drag_button="right",
                                               always_on=True,
                                               tool_mode="range",
                                               axis="index",
