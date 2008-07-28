@@ -18,7 +18,7 @@ from enthought.enable.api import Window
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, ColorBar, gmt_drywet, \
                                  HPlotContainer, LinearMapper, Plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotFrame(DemoFrame):
@@ -55,7 +55,7 @@ class PlotFrame(DemoFrame):
         lplot.fill_padding = True 
 
         # Add some tools to the plot
-        zoom = SimpleZoom(lplot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(lplot, tool_mode="box", always_on=False)
         lplot.overlays.append(zoom)
         lplot.tools.append(PanTool(lplot, constrain_key="shift"))
 
@@ -88,7 +88,7 @@ class PlotFrame(DemoFrame):
                            colors=gmt_drywet)
 
         # Add some tools to the plot
-        zoom = SimpleZoom(rplot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(rplot, tool_mode="box", always_on=False)
         rplot.overlays.append(zoom)
         rplot.tools.append(PanTool(rplot, constrain_key="shift"))
 

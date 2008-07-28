@@ -19,7 +19,7 @@ from enthought.enable.api import Window
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotFrame(DemoFrame):
@@ -53,7 +53,7 @@ class PlotFrame(DemoFrame):
 
         # Attach some tools to the plot
         plot.tools.append(PanTool(plot, constrain_key="shift"))
-        zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
         # Return a window containing our plots

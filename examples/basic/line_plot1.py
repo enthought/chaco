@@ -20,7 +20,7 @@ from enthought.enable.api import Window
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom 
+from enthought.chaco.tools.api import PanTool, ZoomTool 
 
 
 class PlotFrame(DemoFrame):
@@ -42,7 +42,7 @@ class PlotFrame(DemoFrame):
 
         # Attach some tools to the plot
         plot1.tools.append(PanTool(plot1))
-        zoom = SimpleZoom(component=plot1, tool_mode="box", always_on=False)
+        zoom = ZoomTool(component=plot1, tool_mode="box", always_on=False)
         plot1.overlays.append(zoom)
 
         # Create a second scatter plot of one of the datasets, linking its 

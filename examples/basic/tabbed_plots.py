@@ -5,7 +5,7 @@ from enthought.traits.api import HasTraits, Instance
 from enthought.traits.ui.api import Item, Tabbed, View
 
 from enthought.chaco.api import Plot, AbstractPlotData, ArrayPlotData
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.enable.component_editor import ComponentEditor
 
 
@@ -31,7 +31,7 @@ class TabbedPlots(HasTraits):
         p = Plot(self.data)
         p.plot(data, name=name, color=color)
         p.tools.append(PanTool(p))
-        p.overlays.append(SimpleZoom(p))
+        p.overlays.append(ZoomTool(p))
         return p
 
     def create_plots(self):

@@ -19,7 +19,7 @@ from enthought.enable.api import Window
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.chaco.tools.image_inspector_tool import ImageInspectorTool, \
      ImageInspectorOverlay
 
@@ -49,7 +49,7 @@ class PlotFrame(DemoFrame):
 
         # Attach some tools to the plot
         plot.tools.append(PanTool(plot, constrain_key="shift"))
-        plot.overlays.append(SimpleZoom(component=plot, 
+        plot.overlays.append(ZoomTool(component=plot, 
                                         tool_mode="box", always_on=False))
 
         imgtool = ImageInspectorTool(img_plot)

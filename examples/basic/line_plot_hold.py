@@ -14,11 +14,11 @@ from enthought.enable.api import Window
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom 
+from enthought.chaco.tools.api import PanTool, ZoomTool 
 
 def attach_tools(plot):
     plot.tools.append(PanTool(plot))
-    zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
 
 class PlotFrame(DemoFrame):

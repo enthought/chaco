@@ -22,7 +22,7 @@ from enthought.enable.api import Window
 from enthought.chaco.api import ArrayPlotData, ColorBar, HPlotContainer, jet, \
                                  LinearMapper, Plot
 from enthought.chaco.tools.api import PanTool, RangeSelection, \
-                                       RangeSelectionOverlay, SimpleZoom
+                                       RangeSelectionOverlay, ZoomTool
 
 
 class PlotFrame(DemoFrame):
@@ -57,7 +57,7 @@ class PlotFrame(DemoFrame):
 
         # Attach some tools to the plot
         plot.tools.append(PanTool(plot))
-        zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
         # Create the colorbar, handing in the appropriate range and colormap

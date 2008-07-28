@@ -14,7 +14,7 @@ from enthought.enable.api import Window
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot, ScatterInspectorOverlay
-from enthought.chaco.tools.api import PanTool, SimpleZoom, LegendTool, ScatterInspector
+from enthought.chaco.tools.api import PanTool, ZoomTool, LegendTool, ScatterInspector
 
 
 class PlotFrame(DemoFrame):
@@ -34,7 +34,7 @@ class PlotFrame(DemoFrame):
 
         # Attach some tools to the plot
         plot.tools.append(PanTool(plot))
-        plot.overlays.append(SimpleZoom(plot))
+        plot.overlays.append(ZoomTool(plot))
 
         # Attach the inspector and its overlay
         scatter.tools.append(ScatterInspector(scatter))

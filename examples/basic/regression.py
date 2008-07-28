@@ -23,7 +23,7 @@ from enthought.enable.api import Window
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom, RegressionLasso, \
+from enthought.chaco.tools.api import PanTool, ZoomTool, RegressionLasso, \
         RegressionOverlay
 
 
@@ -45,7 +45,7 @@ class PlotFrame(DemoFrame):
 
         # Attach some tools to the plot
         plot.tools.append(PanTool(plot, drag_button="right"))
-        plot.overlays.append(SimpleZoom(plot))
+        plot.overlays.append(ZoomTool(plot))
 
         # Add the regression tool and overlay.  These need to be added
         # directly to the scatterplot instance (and not the Plot instance).

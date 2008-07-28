@@ -26,7 +26,7 @@ from enthought.enable.api import Window
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import LineSegmentTool, PanTool, SimpleZoom
+from enthought.chaco.tools.api import LineSegmentTool, PanTool, ZoomTool
 
 
 class MyLineDrawer(LineSegmentTool):
@@ -76,7 +76,7 @@ class PlotFrame(DemoFrame):
         # Attach some tools to the plot
         pan = PanTool(plot, drag_button="right", constrain_key="shift")
         plot.tools.append(pan)
-        zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
         plot.overlays.append(MyLineDrawer(plot))
 

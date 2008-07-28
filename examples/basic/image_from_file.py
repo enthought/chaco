@@ -25,7 +25,7 @@ from enthought.traits.ui.menu \
 from enthought.chaco.api \
     import ArrayPlotData, ImageData, Plot, PlotGraphicsContext
 from enthought.enable.component_editor import ComponentEditor
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 
 #-------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ class DemoView(HasTraits):
         plot.padding = 50
         plot.padding_top = 75
         plot.tools.append(PanTool(plot))
-        zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
         # Load the default image

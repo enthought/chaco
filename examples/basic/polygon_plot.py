@@ -22,7 +22,7 @@ from enthought.traits.api import Enum, Tuple, Dict
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
 from enthought.chaco.base import n_gon
-from enthought.chaco.tools.api import PanTool, SimpleZoom, DragTool
+from enthought.chaco.tools.api import PanTool, ZoomTool, DragTool
 
 
 class SpinTool(DragTool):
@@ -93,7 +93,7 @@ class PlotFrame(DemoFrame):
         # Attach some tools to the plot
         polyplot.tools.append(PanTool(polyplot))
         polyplot.tools.append(SpinTool(polyplot, drag_button="right"))
-        zoom = SimpleZoom(polyplot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(polyplot, tool_mode="box", always_on=False)
         polyplot.overlays.append(zoom)
 
         # Return a window containing our plots
