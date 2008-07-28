@@ -83,7 +83,7 @@ contained components and do simple bounding-box culling of possible listeners
 for any given event.  Since Chaco containers frequently have a large amount of
 interesting state that user tools should be able to manipulate,
 BasePlotContainer hooks into the _container_handle_mouse_event() dispatch
-method (defined in the base class enable2.Container) and explicitly calls
+method (defined in the base class enable.Container) and explicitly calls
 the _dispatch_stateful_event() defined in Interactor, which converts mouse
 events into the familiar "self.normal_mouse_move()"-type of calls.
 
