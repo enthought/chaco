@@ -1,6 +1,6 @@
 """
 This example creates a simple 1D function examiner, illustrating the use of 
-Chaco2PlotEditors for displaying simple plot relations, as well as TraitsUI
+ChacoPlotEditors for displaying simple plot relations, as well as TraitsUI
 integration. Any 1D numpy/scipy.special function should work in the function
 text box.
  - Left-drag pans the plot.
@@ -19,8 +19,8 @@ from enthought.traits.api import Array, Dict, Enum, HasTraits, Str
 from enthought.traits.ui.api import Item, View
 
 # Chaco imports
-from enthought.chaco.chaco_plot_editor import Chaco2PlotEditor, \
-                                                Chaco2PlotItem
+from enthought.chaco.chaco_plot_editor import ChacoPlotEditor, \
+                                                ChacoPlotItem
 
 
 class Foo(HasTraits):
@@ -31,7 +31,7 @@ class Foo(HasTraits):
     eq = Str("sin(x)")
 
     # Default TraitsUI view
-    traits_view = View(Chaco2PlotItem("xdata", "_ydata", 
+    traits_view = View(ChacoPlotItem("xdata", "_ydata", 
                                       type_trait="plot_type",
                                       
                                       # Basic axis and label properties

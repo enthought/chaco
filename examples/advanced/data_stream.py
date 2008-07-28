@@ -20,7 +20,7 @@ from enthought.traits.ui.api import Group, Item, View
 from enthought.pyface.timer.api import Timer
 
 # Chaco imports
-from enthought.chaco.chaco_plot_editor import Chaco2PlotItem
+from enthought.chaco.chaco_plot_editor import ChacoPlotItem
 
 
 class Viewer(HasTraits):
@@ -38,7 +38,7 @@ class Viewer(HasTraits):
     # This "view" attribute defines how an instance of this class will
     # be displayed when .edit_traits() is called on it.  (See MyApp.OnInit()
     # below.)
-    view = View(Chaco2PlotItem("index", "data",
+    view = View(ChacoPlotItem("index", "data",
                                type_trait="plot_type",
                                resizable=True,
                                x_label="Time",
