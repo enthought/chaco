@@ -114,13 +114,13 @@ x = arange(-2*pi, 2*pi+step/2, step)
 y = sin(x)
 
 # Create the plot and set its size
-from enthought import chaco2
-myplot = chaco2.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
+from enthought import chaco
+myplot = chaco.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
 myplot.padding = 50
 myplot.bounds = [400,400]
 
 # Create a graphics context for offline rendering
-plot_gc = chaco2.PlotGraphicsContext(myplot.outer_bounds)
+plot_gc = chaco.PlotGraphicsContext(myplot.outer_bounds)
 plot_gc.render_component(myplot)
 plot_gc.save("tutorial1.png")
 </textarea>
@@ -137,7 +137,7 @@ plot_gc.save("tutorial1.png")
 <textarea name="highlightcode" class="py:nocontrols">
 # tutorial2.py
 import wx
-from enthought import chaco2
+from enthought import chaco
 
 # Import the plot from Tutorial 1
 from tutorial1 import myplot
@@ -233,7 +233,7 @@ their tools.
 
 from tutorial2 import myplot, PlotFrame, main
 
-from enthought.chaco2.tools import PanTool
+from enthought.chaco.tools import PanTool
 
 myplot.tools.append(PanTool(myplot))
 </textarea>
@@ -250,7 +250,7 @@ of overlays instead of the list of tools.  (It will still get events.)
 
 from tutorial2 import myplot, PlotFrame, main
 
-from enthought.chaco2.tools import SimpleZoom
+from enthought.chaco.tools import SimpleZoom
 
 # Create an instance of the tool and add it as an overlay..
 myplot.overlays.append(SimpleZoom(myplot, tool_mode="box", always_on=True))
@@ -268,7 +268,7 @@ to play nicely with others:
 # tutorial5.py
 
 from tutorial2 import myplot, PlotFrame, main
-from enthought.chaco2.tools import PanTool, SimpleZoom
+from enthought.chaco.tools import PanTool, SimpleZoom
 
 myplot.tools.append(PanTool(myplot))
 
@@ -286,7 +286,7 @@ Diagnostic tool to dump out the events we are getting:
 # tutorial6.py
 
 # AbstractController is the base class for non-rendering tools
-from enthought.chaco2.api import AbstractController
+from enthought.chaco.api import AbstractController
 
 class EventPrinter(AbstractController):
     
@@ -311,7 +311,7 @@ coordinates in data space:
 <textarea name="highlightcode" class="py:nocontrols">
 # tutorial7.py
 
-from enthought.chaco2.api import AbstractController
+from enthought.chaco.api import AbstractController
 
 class DataPrinter(AbstractController):
     def dispatch(self, event, suffix):
@@ -340,7 +340,7 @@ myplot.tools.append(DataPrinter(myplot))
 <textarea name="highlightcode" class="py:nocontrols">
 # from tutorial1.py
 
-myplot = chaco2.create_line_plot((x,y))
+myplot = chaco.create_line_plot((x,y))
 </textarea>
 
 What does the create_line_plot() actually do?
