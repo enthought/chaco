@@ -24,5 +24,5 @@ from simple_zoom import SimpleZoom
 from tracking_pan_tool import TrackingPanTool
 from tracking_zoom import TrackingZoom
 from traits_tool import TraitsTool
-
+from zoom_tool import ZoomTool
 # EOF
