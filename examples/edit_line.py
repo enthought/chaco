@@ -28,7 +28,7 @@ from enthought.traits.api import Instance, Int, Tuple
 # Chaco imports
 from enthought.chaco.api import add_default_axes, add_default_grids, \
         OverlayPlotContainer, PlotLabel, ScatterPlot, create_line_plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 
 
@@ -157,9 +157,9 @@ class PlotFrame(DemoFrame):
 
         scatter.tools.append(PanTool(scatter, drag_button="right"))
         
-        # The SimpleZoom tool is stateful and allows drawing a zoom
+        # The ZoomTool tool is stateful and allows drawing a zoom
         # box to select a zoom region.
-        zoom = SimpleZoom(scatter, tool_mode="box", always_on=False, drag_button=None)
+        zoom = ZoomTool(scatter, tool_mode="box", always_on=False, drag_button=None)
         scatter.overlays.append(zoom)
 
         scatter.tools.append(PointDraggingTool(scatter))

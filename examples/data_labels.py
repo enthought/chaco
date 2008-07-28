@@ -13,7 +13,7 @@ alt-right-arrow moves you forwards and backwards through the "zoom history".
 """
 
 # Major library imports
-from numpy import arange, fabs, pi
+from numpy import arange
 from scipy.special import jn
 
 from enthought.enable.example_support import DemoFrame, demo_main
@@ -24,8 +24,8 @@ from enthought.enable.api import Window
 
 # Chaco imports
 from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids, \
-                                 OverlayPlotContainer, VPlotContainer, DataLabel
-from enthought.chaco.tools.api import PanTool, SimpleZoom, DataLabelTool
+                                 OverlayPlotContainer, DataLabel
+from enthought.chaco.tools.api import PanTool, ZoomTool, DataLabelTool
 
 
 
@@ -50,7 +50,7 @@ class PlotFrame(DemoFrame):
 
         # Add some tools
         plot.tools.append(PanTool(plot))
-        zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(plot, tool_mode="box", always_on=False)
         plot.overlays.append(zoom)
 
         # Add a dynamic label.  This can be dragged and moved around using the

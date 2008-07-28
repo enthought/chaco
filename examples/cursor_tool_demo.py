@@ -11,7 +11,7 @@ import numpy
 # Enthought library imports
 from enthought.chaco.api import create_line_plot, OverlayPlotContainer, \
              HPlotContainer, Plot, ArrayPlotData, jet
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.chaco.tools.cursor_tool import CursorTool, BaseCursorTool
 from enthought.enable.component_editor import ComponentEditor
 from enthought.traits.api import HasTraits, Instance, DelegatesTo, Delegate
@@ -60,7 +60,7 @@ class CursorTest(HasTraits):
         
         #some other standard tools
         line.tools.append(PanTool(line, drag_button="right"))
-        line.overlays.append(SimpleZoom(line))
+        line.overlays.append(ZoomTool(line))
         
         #make some 2D data for a colourmap plot
         x = numpy.linspace(-5,5,100)
@@ -95,7 +95,7 @@ class CursorTest(HasTraits):
         #add some standard tools. Note, I'm assigning the PanTool to the 
         #right mouse-button to avoid conflicting with the cursors
         cmapImgPlot.tools.append(PanTool(cmapImgPlot, drag_button="right"))
-        cmapImgPlot.overlays.append(SimpleZoom(cmapImgPlot))
+        cmapImgPlot.overlays.append(ZoomTool(cmapImgPlot))
 
         
     traits_view = View(VGroup(

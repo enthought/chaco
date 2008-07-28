@@ -5,7 +5,7 @@ Example of how to use a DataView and bare renderers to create plots
 from numpy import linspace, sin, cos
 
 from enthought.chaco.api import DataView, ArrayDataSource, ScatterPlot, LinePlot, LinearMapper
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.enable.api import Window
 from enthought.enable.example_support import DemoFrame, demo_main
 
@@ -43,7 +43,7 @@ class PlotFrame(DemoFrame):
         view.add(line)
 
         view.tools.append(PanTool(view))
-        view.overlays.append(SimpleZoom(view))
+        view.overlays.append(ZoomTool(view))
 
         return Window(self, -1, component=view)
 

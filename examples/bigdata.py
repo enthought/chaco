@@ -12,21 +12,19 @@ is also available, but panning is not.
 
 # Major library imports
 import sys
-from numpy import arange, fabs, pi, sin
 from scipy.special import jn
+from numpy import arange
 
 from enthought.chaco.example_support import COLOR_PALETTE
 from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable.api import Window
-from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco.api import OverlayPlotContainer, create_line_plot, add_default_axes, \
                                  add_default_grids
-from enthought.chaco.tools.api import RangeSelection, RangeSelectionOverlay, PanTool,\
-                                       SimpleZoom
+from enthought.chaco.tools.api import RangeSelection, RangeSelectionOverlay, ZoomTool
 
 
 class PlotFrame(DemoFrame):
@@ -36,8 +34,6 @@ class PlotFrame(DemoFrame):
                                          use_backbuffer = True,
                                          border_visible = True,
                                          fill_padding = True)
-
-        #container.use_backbuffer = False
 
         self.container = container
 
@@ -69,7 +65,7 @@ class PlotFrame(DemoFrame):
 
         selection_overlay = RangeSelectionOverlay(component = plot)
         plot.tools.append(RangeSelection(plot))
-        zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(plot, tool_mode="box", always_on=False)
         plot.overlays.append(selection_overlay)
         plot.overlays.append(zoom)
 

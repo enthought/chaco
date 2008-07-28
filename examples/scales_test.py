@@ -16,7 +16,7 @@ Double-clicking on line or scatter plots brings up a traits editor for the plot.
 """
 
 # Major library imports
-from numpy import arange, fabs, linspace, pi, sin
+from numpy import linspace
 from scipy.special import jn
 from time import time
 
@@ -25,13 +25,11 @@ from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable.api import Window
-from enthought.traits.api import false
 
 # Chaco imports
-from enthought.chaco.api import create_line_plot, add_default_axes, \
-                                 OverlayPlotContainer, PlotLabel, VPlotContainer, \
+from enthought.chaco.api import create_line_plot, OverlayPlotContainer, PlotLabel, \
                                  create_scatter_plot, Legend, PlotGrid
-from enthought.chaco.tools.api import PanTool, RectZoomTool, SimpleZoom, \
+from enthought.chaco.tools.api import PanTool, ZoomTool, \
                                        LegendTool, TraitsTool
 
 from enthought.chaco.scales.api import CalendarScaleSystem
@@ -137,7 +135,7 @@ class PlotFrame(DemoFrame):
 
             if i==0:
                 plot.tools.append(PanTool(plot))
-                zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
+                zoom = ZoomTool(plot, tool_mode="box", always_on=False)
                 plot.overlays.append(zoom)
                 # Add a legend in the upper right corner, and make it relocatable
                 legend = Legend(component=plot, padding=10, align="ur")

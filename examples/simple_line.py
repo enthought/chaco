@@ -31,7 +31,7 @@ from enthought.enable.api import Window
 from enthought.chaco.api import create_line_plot, add_default_axes, \
         add_default_grids, OverlayPlotContainer, PlotLabel, \
         create_scatter_plot, Legend
-from enthought.chaco.tools.api import PanTool, SimpleZoom, LegendTool, \
+from enthought.chaco.tools.api import PanTool, ZoomTool, LegendTool, \
         TraitsTool, DragZoom
 
 
@@ -79,9 +79,9 @@ class PlotFrame(DemoFrame):
             if i==0:
                 plot.tools.append(PanTool(plot))
                 
-                # The SimpleZoom tool is stateful and allows drawing a zoom
+                # The ZoomTool tool is stateful and allows drawing a zoom
                 # box to select a zoom region.
-                zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
+                zoom = ZoomTool(plot, tool_mode="box", always_on=False)
                 plot.overlays.append(zoom)
 
                 # The DragZoom tool just zooms in and out as the user drags
