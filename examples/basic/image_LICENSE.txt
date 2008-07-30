@@ -1,0 +1,7 @@
+These are my best guesses at where each image came from,
+this file should be updated whenever icons change.
+
+filename                 source
+-------------------------------------
+capitol.jpg              Peter Wang
+cat.jpg                  Peter Wang
