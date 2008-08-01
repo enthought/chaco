@@ -361,6 +361,7 @@ class GridPlotContainer(BasePlotContainer):
     _cached_min_heights = Array
     _cached_col_resizable = Array
     _cached_row_resizable = Array
+    _cached_fixed_size = Array
 
     def get_preferred_size(self, components=None):
         """ Returns the size (width,height) that is preferred for this component.
@@ -368,6 +369,8 @@ class GridPlotContainer(BasePlotContainer):
         Overrides PlotComponent.
         """
         if self.resizable == "":
+            # TODO: fix bug where none of the _cached size prefs are computed at all if
+            # we are unresizable
             return self.outer_bounds
         
         if components is None:
@@ -385,6 +388,8 @@ class GridPlotContainer(BasePlotContainer):
         v_resizable = ones(numrows, dtype=int)
 
         no_visible_components = True
+        total_fixed_width = 0
+        total_fixed_height = 0
         for i, row in enumerate(components):
             for j, component in enumerate(row):
                 if not self._should_layout(component):
@@ -395,11 +400,16 @@ class GridPlotContainer(BasePlotContainer):
                     pref_size = component.get_preferred_size()
                     
                     min_widths[j] = max(min_widths[j], pref_size[0])
-                    h_resizable[j] = h_resizable[j] & ("h" in component.resizable)
                     min_heights[i] = max(min_heights[i], pref_size[1])
-                    v_resizable[i] = v_resizable[i] & ("v" in component.resizable)
+                    if "h" not in component.resizable:
+                        h_resizable[j] = 0
+                    if "v" not in component.resizable:
+                        v_resizable[i] = 0
 
         total_size = array([sum(min_widths) + self.hpadding, sum(min_heights) + self.vpadding])
+        total_fixed_width = sum(min_widths * (1-h_resizable)) + self.hpadding
+        total_fixed_height = sum(min_heights * (1-v_resizable)) + self.vpadding
+        total_fixed_size = array((total_fixed_width, total_fixed_height))
 
         # Account for spacing.  There are N+1 of spaces, where N is the size in
         # each dimension.
@@ -407,7 +417,9 @@ class GridPlotContainer(BasePlotContainer):
             spacing = zeros(2)
         else:
             spacing = array(self.spacing)
-        total_size += array(components.shape[::-1]) * spacing * 2 * (total_size>0)
+        total_spacing = array(components.shape[::-1]) * spacing * 2 * (total_size>0)
+        total_size += total_spacing
+        total_fixed_size += total_spacing
         
         for orientation, ndx in (("h", 0), ("v", 1)):
             if (orientation not in self.resizable) and \
@@ -421,7 +433,7 @@ class GridPlotContainer(BasePlotContainer):
         self._cached_min_widths = min_widths
         self._cached_col_resizable = h_resizable
         self._cached_row_resizable = v_resizable
-        
+        self._cached_fixed_size = total_fixed_size
         return self._cached_total_size    
     
     
@@ -454,7 +466,7 @@ class GridPlotContainer(BasePlotContainer):
         else:
             spacing = array(self.spacing)
         total_spacing = spacing * 2 * shape
-        avail_space = array(size) - array(self._cached_total_size)
+        avail_space = array(size) - array(self._cached_fixed_size)
 
         num_resiz_cols = sum(resiz_cols)
         widths = self._cached_min_widths[:]

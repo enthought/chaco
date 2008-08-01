@@ -3,6 +3,7 @@ import unittest
 
 from enthought.chaco.api import HPlotContainer, OverlayPlotContainer, PlotComponent, \
                                  VPlotContainer, GridContainer
+from enthought.traits.api import Any, Tuple
 
 
 class ContainerTestCase(unittest.TestCase):
@@ -13,12 +14,23 @@ class ContainerTestCase(unittest.TestCase):
 
 class StaticPlotComponent(PlotComponent):
     """ A plotcomponent with fixed dimensions """
+
+    # An optional trait for expressing the preferred size of this component,
+    # regardless of whether or not it is resizable.
+    fixed_preferred_size = Any
+
     def __init__(self, bounds, *args, **kw):
         kw["bounds"] = bounds
         if not kw.has_key("resizable"):
             kw["resizable"] = ""
         PlotComponent.__init__(self, *args, **kw)
         return
+
+    def get_preferred_size(self):
+        if self.fixed_preferred_size is not None:
+            return self.fixed_preferred_size
+        else:
+            return PlotComponent.get_preferred_size(self)
 
 
 class OverlayPlotContainerTestCase(ContainerTestCase):
@@ -300,6 +312,26 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(lr.bounds, (100,100))
         return
 
+    def test_resizable2(self):
+        # Tests a resizable component that also has a preferred size
+        cont = GridContainer(shape=(2,2), spacing=(0,0),
+                             halign="center", valign="center")
+        ul = StaticPlotComponent([150,150], resizable="hv")
+        lr = StaticPlotComponent([0,0], resizable="hv")
+        top = StaticPlotComponent([0,0], resizable="hv")
+        left = StaticPlotComponent([0,0], resizable="hv")
+        cont.component_grid = [[ul, top], [left, lr]]
+        cont.bounds = [200, 200]
+        cont.do_layout()
+        self.assert_tuple(ul.position, (0,100))
+        self.assert_tuple(ul.bounds, (100,100))
+        self.assert_tuple(top.position, (100,100))
+        self.assert_tuple(top.bounds, (100,100))
+        self.assert_tuple(left.position, (0,0))
+        self.assert_tuple(left.bounds, (100,100))
+        self.assert_tuple(lr.position, (100,0))
+        self.assert_tuple(lr.bounds, (100,100))
+
     def test_resizable_mixed(self):
         """ Tests mixing resizable and non-resizable components """
         cont = GridContainer(shape=(2,2), spacing=(10,10),
@@ -320,6 +352,32 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(lr.position, (130,10))
         self.assert_tuple(lr.bounds, (100,100))
         return
+
+    def test_resizable_mixed2(self):
+        # Tests laying out resizable components with preferred
+        # sized alongside non-resizable components.
+        cont = GridContainer(shape=(2,2), spacing=(0,0),
+                             halign="center", valign="center")
+        ul = StaticPlotComponent([0,0], resizable="hv", fixed_preferred_size = [150,150])
+        lr = StaticPlotComponent([50,50], resizable="")
+        top = StaticPlotComponent([0,0], resizable="hv")
+        left = StaticPlotComponent([0,0], resizable="hv")
+        cont.component_grid = [[ul, top], [left, lr]]
+        cont.bounds = [200, 200]
+        cont.do_layout()
+        self.assert_tuple(ul.position, (0,50))
+        self.assert_tuple(ul.bounds, (150,150))
+        self.assert_tuple(top.position, (150,50))
+        self.assert_tuple(top.bounds, (50,150))
+        self.assert_tuple(left.position, (0,0))
+        self.assert_tuple(left.bounds, (150,50))
+        self.assert_tuple(lr.position, (150,0))
+        self.assert_tuple(lr.bounds, (50,50))
+        cont.bounds = [250,250]
+        cont.do_layout()
+        for c in cont.components:
+            print "pos:", c.position, "bounds:", c.bounds
+
 
     def test_non_resizable(self):
         cont = GridContainer(shape=(2,2), spacing=(10,10),
@@ -350,7 +408,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(ll.bounds, (100,100))
         self.assert_tuple(lr.position, (160,20))
         self.assert_tuple(lr.bounds, (100,100))
-
     
 
 if __name__ == '__main__':
