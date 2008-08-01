@@ -262,19 +262,23 @@ class OffsetFormatter(BasicFormatter):
 
     # There are two possible formats for the offset.
     #
-    #    "sci": uses scientific notation for the offset
-    #    "decimal": pad with zeroes left or right until the decimal
+    # "sci"
+    #     uses scientific notation for the offset
+    # "decimal"
+    #     pads with zeroes left or right until the decimal
     #
     # The following table shows some example ranges and how an intermediate
     # tick will be displayed.  These all assume an offset_display value of
     # "none" or "firstlast".
     # 
+    #  ============     ==========       =========      =========
     #     start            end             sci          decimal  
-    #   ---------       ---------       ---------      --------- 
+    #  ============     ==========       =========      =========
     #    90.0004         90.0008         5.0e-4          .0005   
     #    90.0004         90.0015         1.2e-3          .0012   
     #   -1200015        -1200003           12              12    
     #    2300015000     2300015030       1.502e4         15020   
+    #  ============     ==========       =========      =========
     #
     offset_format = "sci"
 
@@ -361,10 +365,12 @@ class OffsetFormatter(BasicFormatter):
 def strftimeEx(fmt, t, timetuple=None):
     """
     Extends time.strftime() to format milliseconds and microseconds.
+    
     Expects input to be a floating-point number of seconds since epoch.
     The formats are:
-           %(ms) :  milliseconds
-           %(us) :  microseconds
+        
+    - ``%(ms)``:  milliseconds
+    - ``%(us)``:  microseconds
     """
 
     if "%(ms)" in fmt:

@@ -104,6 +104,7 @@ def fix(func, range):
     func : callable
         A colormap factory function like those provided in this module.
     range : DataRange1D or (low, high) tuple.
+        The range to apply.
 
     Returns
     -------

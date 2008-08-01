@@ -34,6 +34,7 @@ class BasePlotContainer(Container):
     # PlotComponent to avoid MRO complications with trait handlers and property
     # getters/setters.
     #------------------------------------------------------------------------
+
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     draw_layer = Str("plot")
 

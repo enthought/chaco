@@ -15,17 +15,22 @@ class SelectTool(BaseTool):
     # The threshold, in pixels, around the cursor location to search for points.
     threshold = Float(5.0)
 
-    # How selections are handled
-    #   "toggle": The user clicks on points (while optionally holding down a 
-    #             modifier key) to select or deselect them.  If the point is
-    #             already selected, clicking it again deselects it.  The
-    #             modifier key to use is set by **multiselect_modifier**.  The
-    #             only way to deselect points is by clicking on them; clicking
-    #             on a screen space outside of the plot will not deselect points.
-    #   "multi":  Like **toggle** mode, except that the user can deselect all
-    #             points at once by clicking on the plot area away from a point.
-    #   "single": The user can only select a single point at a time.  
-    #   "off":    The user cannot select points via clicking.
+    # How selections are handled:
+    #
+    # "toggle"
+    #     The user clicks on points (while optionally holding down a modifier
+    #     key) to select or deselect them. If the point is already selected,
+    #     clicking it again deselects it. The modifier key to use is set by
+    #     **multiselect_modifier**. The only way to deselect points is by 
+    #     clicking on them; clicking on a screen space outside of the plot does
+    #     not deselect points.
+    # "multi"
+    #     Like **toggle** mode, except that the user can deselect all points
+    #     at once by clicking on the plot area away from a point.
+    # "single"
+    #     The user can only select a single point at a time.  
+    # "off"
+    #     The user cannot select points via clicking.
     selection_mode = Enum("toggle", "multi", "single", "off")
 
     # The modifier key to use to multi-select points.  Only used in **toggle**

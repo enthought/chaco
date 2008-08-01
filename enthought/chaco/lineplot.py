@@ -46,14 +46,18 @@ class LinePlot(BaseXYPlot):
     line_style = LineStyle
 
     # The rendering style of the line plot.
-    #   connectedpoints - "normal" style (default); each point is connected to
-    #       subsequent and prior points by line segments
-    #   hold - each point is represented by a line segment parallel to the
-    #       abscissa (index axis) and spanning the length between the point
-    #       and its subsequent point.
-    #   connectedhold - like "hold" style, but line segments are drawn at
-    #       each point of the plot to connect the hold lines of the prior
-    #       point and the current point.  Also called a "right angle plot".
+    #
+    # connectedpoints
+    #     "normal" style (default); each point is connected to subsequent and 
+    #     prior points by line segments
+    # hold
+    #     each point is represented by a line segment parallel to the abscissa
+    #     (index axis) and spanning the length between the point and its
+    #     subsequent point.
+    # connectedhold
+    #     like "hold" style, but line segments are drawn at each point of the
+    #     plot to connect the hold lines of the prior point and the current
+    #     point.  Also called a "right angle plot".
     render_style = Enum("connectedpoints", "hold", "connectedhold")
 
     # Traits UI View for customizing the plot.

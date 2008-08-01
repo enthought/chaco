@@ -33,11 +33,13 @@ def scatterplot_gather_points(index, index_low, index_high,
     Parameters 
     ---------- 
     index : float array (1D)  
+       Array of indexes of the points
     index_low : float or None 
        The minimum acceptable value in the index array 
     index_high : float or None  
        The maximum acceptable value in the index array 
     value : float array (1D)  
+       Array of values of the points
     value_low : float or None 
        The minimum acceptable value in the value array 
     value_high : float or None  
@@ -46,11 +48,13 @@ def scatterplot_gather_points(index, index_low, index_high,
     Optional Parameters 
     ------------------- 
     index_mask : bool or int array (1D)  
+      Mask array for the indexes
     index_sel : sequence of ints  
        A list/tuple/array of indices of selected positions in the index array  
     index_sel_mask : array of ints or bools 
        An mask array with True values indicating which points are selected 
     value_mask : bool or int array (1D)  
+       Mask array for the values
     value_sel : sequence of ints  
        A list/tuple/array of indices of selected positions in the value array  
     value_sel_mask : array of ints or bools 
