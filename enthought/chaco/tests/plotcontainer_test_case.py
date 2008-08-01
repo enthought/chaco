@@ -227,6 +227,16 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp1.bounds, (200,300))
         return
 
+    def test_nonresizable_container(self):
+        cont = GridContainer(shape=(1,1), resizable="")
+        comp1 = StaticPlotComponent([200,300])
+        cont.add(comp1)
+        cont.do_layout()
+        self.assert_tuple(comp1.position, (0,0))
+        self.assert_tuple(comp1.bounds, (200,300))
+        return
+
+
     def test_row(self):
         cont = GridContainer(shape=(1,3), halign="center", valign="center")
         c1 = StaticPlotComponent([50,50])
@@ -375,9 +385,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(lr.bounds, (50,50))
         cont.bounds = [250,250]
         cont.do_layout()
-        for c in cont.components:
-            print "pos:", c.position, "bounds:", c.bounds
-
 
     def test_non_resizable(self):
         cont = GridContainer(shape=(2,2), spacing=(10,10),

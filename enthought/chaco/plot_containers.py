@@ -368,11 +368,6 @@ class GridPlotContainer(BasePlotContainer):
  
         Overrides PlotComponent.
         """
-        if self.resizable == "":
-            # TODO: fix bug where none of the _cached size prefs are computed at all if
-            # we are unresizable
-            return self.outer_bounds
-        
         if components is None:
             components = self.component_grid
         else:
@@ -434,7 +429,10 @@ class GridPlotContainer(BasePlotContainer):
         self._cached_col_resizable = h_resizable
         self._cached_row_resizable = v_resizable
         self._cached_fixed_size = total_fixed_size
-        return self._cached_total_size    
+        if self.resizable == "":
+            return self.outer_bounds
+        else:
+            return self._cached_total_size    
     
     
     def _do_layout(self):
