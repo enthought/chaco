@@ -14,7 +14,7 @@ class PlotWindow(wx.Frame):
     """
 
     def __init__(self, is_image=False, bgcolor="white", 
-        image_default_origin="top left", *args, **kw):
+                 image_default_origin="top left", *args, **kw):
 
         kw.setdefault("size", (600,600))
         wx.Frame.__init__(self, None, *args, **kw )
