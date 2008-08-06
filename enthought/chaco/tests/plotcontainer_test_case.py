@@ -5,19 +5,20 @@ from enthought.chaco.api import HPlotContainer, OverlayPlotContainer, PlotCompon
                                  VPlotContainer, GridContainer
 from enthought.traits.api import Any, Tuple
 
+SizePrefs = GridContainer.SizePrefs
+
+
+from nose.tools import set_trace
 
 class ContainerTestCase(unittest.TestCase):
     def assert_tuple(self, t1, t2):
-        self.assertEquals(t1[0], t2[0])
-        self.assertEquals(t1[1], t2[1])
+        self.assertEquals(len(t1), len(t2))
+        for i in xrange(len(t1)):
+            self.assertEquals(t1[i], t2[i])
 
 
 class StaticPlotComponent(PlotComponent):
     """ A plotcomponent with fixed dimensions """
-
-    # An optional trait for expressing the preferred size of this component,
-    # regardless of whether or not it is resizable.
-    fixed_preferred_size = Any
 
     def __init__(self, bounds, *args, **kw):
         kw["bounds"] = bounds
@@ -25,6 +26,21 @@ class StaticPlotComponent(PlotComponent):
             kw["resizable"] = ""
         PlotComponent.__init__(self, *args, **kw)
         return
+
+class ResizablePlotComponent(PlotComponent):
+    """ A resizable PlotComponent with a fixed preferred size. """
+
+    # An optional trait for expressing the preferred size of this component,
+    # regardless of whether or not it is resizable.
+    fixed_preferred_size = Any
+
+    # Override default value in PlotComponent
+    resizable = "hv"
+
+    def __init__(self, preferred_size=None, *args, **kw):
+        if preferred_size is not None:
+            self.fixed_preferred_size = preferred_size
+        PlotComponent.__init__(self, *args, **kw)
 
     def get_preferred_size(self):
         if self.fixed_preferred_size is not None:
@@ -214,6 +230,172 @@ class VPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp2.outer_position, (0,110))
 
 
+
+class SizePrefsTestCase(unittest.TestCase):
+    def assert_tuple(self, t1, t2):
+        self.assertEquals(t1[0], t2[0])
+        self.assertEquals(t1[1], t2[1])
+
+    def test_sequential_non_resizable(self):
+        prefs = SizePrefs(4, "h")
+        components = [StaticPlotComponent([100,100]) for i in range(4)]
+        for i, c in enumerate(components):
+            prefs.update_from_component(c, i)
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (100,100,100,100))
+        sizes = prefs.compute_size_array(400)
+        self.assert_tuple(sizes, (100,100,100,100))
+        sizes2 = prefs.compute_size_array(500)
+        self.assert_tuple(sizes, (100,100,100,100))
+
+    def test_overlapping_non_resizable(self):
+        prefs = SizePrefs(1, "h")
+        prefs.update_from_component(StaticPlotComponent([100,10]), 0)
+        prefs.update_from_component(StaticPlotComponent([200,10]), 0)
+        prefs.update_from_component(StaticPlotComponent([300,10]), 0)
+        pref_size = prefs.get_preferred_size()
+        self.assertEquals(pref_size[0], 300)
+        sizes = prefs.compute_size_array(400)
+        self.assertEquals(sizes[0], 400)
+
+    def test_sequential_resizable(self):
+        prefs = SizePrefs(3, "v")
+        prefs.update_from_component(ResizablePlotComponent([10,100]), 0)
+        prefs.update_from_component(ResizablePlotComponent([10,200]), 1)
+        prefs.update_from_component(ResizablePlotComponent([10,300]), 2)
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (100,200,300))
+        sizes = prefs.compute_size_array(600)
+        self.assert_tuple(sizes, [100, 200, 300])
+        sizes2 = prefs.compute_size_array(60)
+        self.assert_tuple(sizes2, [10, 20, 30])
+        sizes3 = prefs.compute_size_array(6000)
+        self.assert_tuple(sizes3, [1000, 2000, 3000])
+
+    def test_overlapping_resizable(self):
+        prefs = SizePrefs(2, "h")
+        prefs.update_from_component(ResizablePlotComponent([50, 10]), 0)
+        prefs.update_from_component(ResizablePlotComponent([100, 10]), 0)
+        prefs.update_from_component(ResizablePlotComponent([80, 10]), 1)
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (100,80))
+        sizes = prefs.compute_size_array(180)
+        self.assert_tuple(sizes, (100, 80))
+        sizes2 = prefs.compute_size_array(360)
+        self.assert_tuple(sizes2, (200, 160))
+
+    def test_sequential_fully_resizable(self):
+        prefs = SizePrefs(3, "h")
+        for i in range(3):
+            prefs.update_from_component(ResizablePlotComponent(), i)
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (0,0,0))
+        sizes = prefs.compute_size_array(60)
+        self.assert_tuple(sizes, (20, 20, 20))
+
+    def test_overlapping_fully_resizable(self):
+        prefs = SizePrefs(1, "h")
+        for i in range(3):
+            prefs.update_from_component(ResizablePlotComponent(), 0)
+        pref_size = prefs.get_preferred_size()
+        self.assertEquals(pref_size[0], 0)
+        sizes = prefs.compute_size_array(60)
+        self.assertEquals(sizes[0], 60)
+
+    def test_sequential_mixed_resizable(self):
+        # Tests a sequence of resizable and fully resizable components.
+        prefs = SizePrefs(3, "h")
+        prefs.update_from_component(ResizablePlotComponent(), 0)
+        prefs.update_from_component(ResizablePlotComponent([100,10]), 1)
+        prefs.update_from_component(ResizablePlotComponent(), 2)
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (0, 100, 0))
+        sizes = prefs.compute_size_array(50)
+        self.assert_tuple(sizes, (0, 50, 0))
+        sizes2 = prefs.compute_size_array(100)
+        self.assert_tuple(sizes2, (0, 100, 0))
+        sizes3 = prefs.compute_size_array(200)
+        self.assert_tuple(sizes3, (50, 100, 50))
+
+    def test_overlapping_mixed_resizable(self):
+        # Tests a sequence of overlapping resizable and fully resizable components.
+        prefs = SizePrefs(4, "h")
+        # Slot 1
+        prefs.update_from_component(ResizablePlotComponent([100,10]), 0)
+        prefs.update_from_component(ResizablePlotComponent(), 0)
+        # Slot 2
+        prefs.update_from_component(ResizablePlotComponent(), 1)
+        prefs.update_from_component(ResizablePlotComponent([50,10]), 1)
+        # Slot 3
+        prefs.update_from_component(ResizablePlotComponent(), 2)
+        prefs.update_from_component(ResizablePlotComponent([40,10]), 2)
+        # Slot 4
+        prefs.update_from_component(ResizablePlotComponent(), 3)
+        prefs.update_from_component(ResizablePlotComponent(), 3)
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (100, 50, 40, 0))
+        sizes = prefs.compute_size_array(95)
+        self.assert_tuple(sizes, (50, 25, 20, 0))
+        sizes2 = prefs.compute_size_array(230)
+        self.assert_tuple(sizes2, (100, 50, 40, 40))
+
+    def test_sequential_mixed_resizable_static(self):
+        # Tests a sequence of static and resizable components.
+        prefs = SizePrefs(3, "h")
+        prefs.update_from_component(StaticPlotComponent([100,10]), 0)
+        prefs.update_from_component(ResizablePlotComponent([50,10]), 1)
+        prefs.update_from_component(ResizablePlotComponent([75,10]), 2)
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (100,50,75))
+        sizes = prefs.compute_size_array(225)
+        self.assert_tuple(sizes, (100,50,75))
+        sizes2 = prefs.compute_size_array(350)
+        self.assert_tuple(sizes2, (100,100,150))
+
+    def test_sequential_mixed_resizable_static2(self):
+        # Tests a sequence of non-overlapping static, resizable, and fully
+        # resizable components.
+        prefs = SizePrefs(4, "h")
+        prefs.update_from_component(StaticPlotComponent([100,10]), 0)
+        prefs.update_from_component(ResizablePlotComponent([50,10]), 1)
+        prefs.update_from_component(ResizablePlotComponent([75,10]), 2)
+        prefs.update_from_component(ResizablePlotComponent(), 3)
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (100,50,75,0))
+        sizes = prefs.compute_size_array(300)
+        self.assert_tuple(sizes, (100,50,75,75))
+
+    def test_overlapping_mixed_resizable_static(self):
+        prefs = SizePrefs(5, "h")
+        # Slot 1 - static and smaller resizable
+        prefs.update_from_component(StaticPlotComponent([100,10]), 0)
+        prefs.update_from_component(ResizablePlotComponent([50,10]), 0)
+        # Slot 2 - static and larger resizable
+        prefs.update_from_component(StaticPlotComponent([30,10]), 1)
+        prefs.update_from_component(ResizablePlotComponent([60,10]), 1)
+        # Slot 3 - static and fully resizable
+        prefs.update_from_component(StaticPlotComponent([50,10]), 2)
+        prefs.update_from_component(ResizablePlotComponent(), 2)
+        # Slot 4 - resizable and fully resizable
+        prefs.update_from_component(ResizablePlotComponent([90,10]), 3)
+        prefs.update_from_component(ResizablePlotComponent(), 3)
+        # Slot 5 - fully resizable
+        prefs.update_from_component(ResizablePlotComponent(), 4)
+
+        pref_size = prefs.get_preferred_size()
+        self.assert_tuple(pref_size, (100, 60, 50, 90, 0))
+        
+        # Test scaling down of resizable components in slots 2 and 4
+        sizes = prefs.compute_size_array(180 + 60)
+        self.assert_tuple(sizes, (100, 30+15, 50, 45, 0))
+
+        # Test scaling up of fully resizable component in slot 5, and proper
+        # allocation of slot 2's resizable component's full preferred size.
+        sizes2 = prefs.compute_size_array(300 + 35)
+        self.assert_tuple(sizes2, (100, 60, 50, 90, 35))
+
+
+
 class GridContainerTestCase(ContainerTestCase):
 
     def test_single_cell(self):
@@ -368,7 +550,7 @@ class GridContainerTestCase(ContainerTestCase):
         # sized alongside non-resizable components.
         cont = GridContainer(shape=(2,2), spacing=(0,0),
                              halign="center", valign="center")
-        ul = StaticPlotComponent([0,0], resizable="hv", fixed_preferred_size = [150,150])
+        ul = ResizablePlotComponent([150,150])
         lr = StaticPlotComponent([50,50], resizable="")
         top = StaticPlotComponent([0,0], resizable="hv")
         left = StaticPlotComponent([0,0], resizable="hv")
@@ -383,8 +565,26 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(left.bounds, (150,50))
         self.assert_tuple(lr.position, (150,0))
         self.assert_tuple(lr.bounds, (50,50))
-        cont.bounds = [250,250]
+
+    def test_resizable_mixed_h(self):
+        # Tests the layout of a non-resizable component, a resizable with a
+        # preferred size, and a fully resizable component in a horizontal
+        # GridContainer
+        cont = GridContainer(shape=(3,1), spacing=(0,0),
+                             halign="center", valign="center")
+        left = StaticPlotComponent([50,10], resizable="")
+        middle = ResizablePlotComponent([100,10])
+        right = StaticPlotComponent([0,0], resizable="hv")
+        
+        cont.component_grid = [[left, middle, right]]
+        cont.bounds = [200, 10]
         cont.do_layout()
+        self.assert_tuple(left.position, (0,0))
+        self.assert_tuple(left.bounds, (50,10))
+        self.assert_tuple(middle.position, (50,0))
+        self.assert_tuple(middle.bounds, (100,10))
+        self.assert_tuple(right.position, (150,0))
+        self.assert_tuple(right.bounds, (50,10))
 
     def test_non_resizable(self):
         cont = GridContainer(shape=(2,2), spacing=(10,10),
@@ -394,6 +594,7 @@ class GridContainerTestCase(ContainerTestCase):
         ll = StaticPlotComponent([100,100], resizable="")
         lr = StaticPlotComponent([100,100], resizable="")
         cont.component_grid = [[ul, ur], [ll, lr]]
+
         cont.bounds = [240, 240]
         cont.do_layout()
         self.assert_tuple(ul.position, (10,130))
