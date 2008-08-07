@@ -1,6 +1,6 @@
 
 # Major library imports
-from numpy import array
+from numpy import array, asarray
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait
@@ -55,6 +55,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
                 index = plot.index.metadata.get(inspect_type, None)
 
                 if index is not None and len(index) > 0:
+                    index = asarray(index)
                     index_data = plot.index.get_data()
                     value_data = plot.value.get_data()
                     
@@ -68,9 +69,8 @@ class ScatterInspectorOverlay(AbstractOverlay):
                     #value = plot.value.metadata.get(inspect_type, None)
                     value = index
                     
-                    screen_pts = plot.map_screen(array((index_data[index],
-                                                        value_data[value])).T)
-
+                    screen_pts = plot.map_screen(array([index_data[index],
+                                                        value_data[value]]).T)
                     if inspect_type == self.selection_metadata_name:
                         prefix = "selection"
                     else:
@@ -84,6 +84,9 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
     def _render_marker_at_indices(self, gc, screen_pts, prefix, sep="_"):
         """ screen_pt should always be a list """
+        if len(screen_pts) == 0:
+            return
+
         plot = self.component
 
         mapped_attribs = ("color", "outline_color", "marker")
