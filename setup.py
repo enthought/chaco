@@ -30,6 +30,15 @@ Features
 - **Data model for ease of extension and embedding**: Chaco separates the data
   from any transformations of the data that are needed for displaying it. This
   separation makes it easier to extend Chaco, or embed it in applications.
+  
+Prerequisites
+-------------
+You must have the following libraries installed before building or installing
+Chaco:
+    
+* `Numpy <http://pypi.python.org/pypi/numpy/1.1.1>`_ version 1.0.4 or later. 
+* `setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_
+
 """
 
 
