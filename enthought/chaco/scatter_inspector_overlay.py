@@ -53,16 +53,23 @@ class ScatterInspectorOverlay(AbstractOverlay):
         for inspect_type in (self.hover_metadata_name, self.selection_metadata_name):
             if inspect_type in plot.index.metadata and inspect_type in plot.value.metadata:
                 index = plot.index.metadata.get(inspect_type, None)
-                # FIXME: In order to work around some problems with the
-                # selection model, we will only use the selection on the index.
-                # The assumption that they are the same is implicit, though
-                # unchecked, already.
-                #value = plot.value.metadata.get(inspect_type, None)
-                value = index
 
-                if index is not None:
-                    screen_pts = plot.map_screen(array((plot.index.get_data()[index],
-                                                       plot.value.get_data()[value])).T)
+                if index is not None and len(index) > 0:
+                    index_data = plot.index.get_data()
+                    value_data = plot.value.get_data()
+                    
+                    # Only grab the indices which fall within the data range.
+                    index = index[index < len(index_data)]
+
+                    # FIXME: In order to work around some problems with the
+                    # selection model, we will only use the selection on the
+                    # index.  The assumption that they are the same is
+                    # implicit, though unchecked, already.
+                    #value = plot.value.metadata.get(inspect_type, None)
+                    value = index
+                    
+                    screen_pts = plot.map_screen(array((index_data[index],
+                                                        value_data[value])).T)
 
                     if inspect_type == self.selection_metadata_name:
                         prefix = "selection"
