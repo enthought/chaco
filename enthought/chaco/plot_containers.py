@@ -679,9 +679,29 @@ class GridPlotContainer(BasePlotContainer):
 
     def _set_component_grid(self, val):
         grid = array(val)
+        grid_set = set(grid.flatten())
+
+        # Figure out which of the components in the component_grid are new,
+        # and which have been removed.
+        existing = set(array(self._grid).flatten())
+        new = grid_set - existing
+        removed = existing - grid_set
+
+        for component in removed:
+            if component is not None:
+                component.container = None
+        for component in new:
+            if component is not None and component.container is not None:
+                component.container.remove(component)
+            component.container = self
+
         self.set(shape=grid.shape, trait_change_notify=False)
         self._components = list(grid.flatten())
-        
+
+        if self._should_compact():
+            self.compact()
+
+        self.invalidate_draw()
         return
 
 

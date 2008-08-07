@@ -8,8 +8,6 @@ from enthought.traits.api import Any, Tuple
 SizePrefs = GridContainer.SizePrefs
 
 
-from nose.tools import set_trace
-
 class ContainerTestCase(unittest.TestCase):
     def assert_tuple(self, t1, t2):
         self.assertEquals(len(t1), len(t2))
@@ -128,7 +126,6 @@ class HPlotContainerTestCase(ContainerTestCase):
         comp3 = StaticPlotComponent([80,90])
         container.add(comp1, comp2, comp3)
         container.do_layout()
-        #pdb.set_trace()
         self.assert_tuple(container.get_preferred_size(), (270,90))
         self.assert_tuple(container.bounds, (300,100))
         self.assert_tuple(comp1.position, (0,0))
@@ -398,6 +395,35 @@ class SizePrefsTestCase(unittest.TestCase):
 
 class GridContainerTestCase(ContainerTestCase):
 
+    def test_empty_container(self):
+        cont = GridContainer(shape=(1,1))
+        cont.bounds = [100,100]
+        cont.do_layout()
+        return
+
+    def test_all_empty_cells(self):
+        cont = GridContainer(shape=(2,2), spacing=(0,0))
+        cont.component_grid = [[None, None], [None, None]]
+        size = cont.get_preferred_size()
+        self.assert_tuple(size, (0,0))
+        cont.bounds = (100,100)
+        cont.do_layout()
+        return
+
+    def test_some_empty_cells(self):
+        cont = GridContainer(shape=(2,2), spacing=(0,0))
+        a = StaticPlotComponent([100,30])
+        b = StaticPlotComponent([50,40])
+        cont.component_grid = [[a, None], [None, b]]
+        size = cont.get_preferred_size()
+        self.assert_tuple(size, (150, 70))
+        cont.bounds = size
+        cont.do_layout()
+        self.assert_tuple(a.outer_position, (0, 40))
+        self.assert_tuple(a.outer_bounds, (100, 30))
+        self.assert_tuple(b.outer_position, (100,0))
+        self.assert_tuple(b.outer_bounds, (50, 40))
+
     def test_single_cell(self):
         cont = GridContainer(shape=(1,1))
         comp1 = StaticPlotComponent([200,300])
@@ -417,7 +443,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp1.position, (0,0))
         self.assert_tuple(comp1.bounds, (200,300))
         return
-
 
     def test_row(self):
         cont = GridContainer(shape=(1,3), halign="center", valign="center")
@@ -616,7 +641,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(ll.bounds, (100,100))
         self.assert_tuple(lr.position, (160,20))
         self.assert_tuple(lr.bounds, (100,100))
-    
 
 if __name__ == '__main__':
     import nose
