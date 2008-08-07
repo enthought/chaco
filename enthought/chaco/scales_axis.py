@@ -505,9 +505,13 @@ class PlotAxis(AbstractOverlay):
         self.tick_generator.font = self.tick_label_font
 
         if hasattr(self.tick_generator, "get_ticks_and_labels"):
-            ticks, labels = self.tick_generator.get_ticks_and_labels(datalow, datahigh,
+            tmp = self.tick_generator.get_ticks_and_labels(datalow, datahigh,
                                    screenlow, screenhigh)
-
+            if len(tmp) == 0:
+                ticks = []
+                labels = []
+            else:
+                ticks, labels = tmp
             mapped_tick_positions = (array(self.mapper.map_screen(ticks))-screenlow) / \
                                                 (screenhigh-screenlow)
             self._tick_positions = around(array([self._axis_vector*tickpos + self._origin_point \

@@ -5,7 +5,7 @@ special handling of time and calendar axes.
 
 from bisect import bisect
 from math import ceil, floor, log10
-from numpy import abs, argmin, array, linspace
+from numpy import abs, argmin, array, isnan, linspace
 
 # Local imports
 from formatters import BasicFormatter
@@ -380,6 +380,8 @@ class ScaleSystem(object):
 
         if numticks == 0:
             return []
+        elif start == end or isnan(start) or isnan(end):
+            return []
         elif numticks is None:
             numticks = self.default_numticks
 
@@ -408,7 +410,7 @@ class ScaleSystem(object):
         -------
         A list of (tick position, string) tuples.
         """
-        if numlabels == 0 or char_width == 0:
+        if numlabels == 0 or char_width == 0 or isnan(start) or isnan(end):
             return []
 
         # There are three cases:

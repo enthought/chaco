@@ -35,8 +35,12 @@ class ScalesTickGenerator(AbstractTickGenerator):
         if self.font is not None and hasattr(metrics, "set_font"):
             metrics.set_font(self.font)
         test_str = "0123456789-+"
-        #import pdb; pdb.set_trace()
         charsize = metrics.get_full_text_extent(test_str)[0] / len(test_str)
         numchars = (bounds_high - bounds_low) / charsize
-        ticks, labels = zip(*self.scale.labels(data_low, data_high, numlabels=8, char_width=numchars))
-        return array(ticks), labels
+        tmp = zip(*self.scale.labels(data_low, data_high, numlabels=8, char_width=numchars))
+        # Check to make sure we actually have labels/ticks to show before
+        # unpacking the return tuple into (tick_array, labels).
+        if len(tmp) == 0:
+            return array([]), []
+        else:
+            return array(tmp[0]), tmp[1]
