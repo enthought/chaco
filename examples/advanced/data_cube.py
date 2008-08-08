@@ -34,9 +34,10 @@ from enthought.traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
 dl_path = ''
 
 # Determines if the script should ask the user if they would like to remove the
-# downloaded data. Will remain True unless the download fails or the
-# destination directory cannot be written to.
-run_cleanup = True
+# downloaded data.  This defaults to False, because data deletion is 
+# irreversible, and in the worst case, the user will have to remove it
+# manually themselves. 
+run_cleanup = False
 
 class Model(HasTraits):
     npts_x = CInt(256)
@@ -227,6 +228,7 @@ class PlotFrame(DemoFrame):
         except SystemExit:
             sys.exit()
         except:
+            print "Unable to load BrainModel, using generated data cube."
             self.model = model = Model()
             cmap = jet
         self._update_model(cmap)
@@ -304,32 +306,41 @@ class PlotFrame(DemoFrame):
 def download_data():
     global dl_path, run_cleanup
     
-    print 'Please enter a path to download data to (7.8MB).'
+    print 'Please enter the location of the "voldata" subdirectory containing'
+    print 'the data files for this demo, or enter a path to download to (7.8MB).'
     print 'Press <ENTER> to download to the current directory.'
-    dl_path = raw_input('Path: ').strip()
+    dl_path = raw_input('Path: ').strip().rstrip("/").rstrip("\\")
     
-    if len(dl_path) > 0 and not os.path.exists(dl_path):
-        print 'The given path does not exist.'
-        run_cleanup = False
-        sys.exit()
-    
-    if not os.path.isabs(dl_path):
-        print 'Downloading to: ' + os.path.join(os.getcwd(), dl_path)
+    if not dl_path.endswith("voldata"):
+        voldata_path = os.path.join(dl_path, 'voldata')
     else:
-        print 'Downloading to: ' + dl_path
-        
-    voldata_path = os.path.join(dl_path, 'voldata')
+        voldata_path = dl_path
     tar_path = os.path.join(dl_path, 'MRbrain.tar.gz')
     
     data_good = True
     try:
-        data_good = len(os.listdir(voldata_path)) == 109
+        for i in range(1,110):
+            if not os.path.isfile(os.path.join(voldata_path, "MRbrain.%d" % i)):
+                data_good = False
+                break
+        else:
+            data_good = True
     except:
         data_good = False
     
     if not data_good:
         import urllib
         import tarfile
+
+        if len(dl_path) > 0 and not os.path.exists(dl_path):
+            print 'The given path does not exist.'
+            run_cleanup = False
+            sys.exit()
+
+        if not os.path.isabs(dl_path):
+            print 'Downloading to: ' + os.path.join(os.getcwd(), dl_path)
+        else:
+            print 'Downloading to: ' + dl_path
         
         try:
             # download and extract the file
