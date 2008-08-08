@@ -1,0 +1,43 @@
+
+from numpy import linspace, meshgrid, exp
+
+from enthought.chaco.api import ArrayPlotData, Plot, jet
+from enthought.enable.component_editor import ComponentEditor
+from enthought.traits.api import Enum, HasTraits, Instance
+from enthought.traits.ui.api import Group, Item, View
+
+class ImagePlotTraits(HasTraits):
+
+    plot = Instance(Plot)
+    origin = Enum("bottom left", "top left", "bottom right", "top right")
+
+    traits_view = View(
+                    Group(
+                        Item('origin', label="Data origin"),
+                        Item('plot', editor=ComponentEditor(), show_label=False),
+                        orientation = "vertical"),
+                    width=600, height=600, resizable=True,
+                    )
+
+    def _plot_default(self):
+        # Create the data and the PlotData object.  For a 2D plot, we need to 
+        # take the row of X points and Y points and create a grid from them
+        # using meshgrid().
+        x = linspace(0, 8, 50)
+        y = linspace(0, 6, 50)
+        xgrid, ygrid = meshgrid(x, y)
+        z = exp(-(xgrid*xgrid + ygrid*ygrid) / 100)
+        plotdata = ArrayPlotData(imagedata = z)
+        # Create a Plot and associate it with the PlotData
+        plot = Plot(plotdata)
+        # Create a line plot in the Plot
+        plot.img_plot("imagedata", name="plot1", xbounds=x, ybounds=y, colormap=jet)
+        return plot
+
+    def _origin_changed(self):
+        self.plot.plots["plot1"][0].origin = self.origin
+        self.plot.request_redraw()
+
+if __name__ == "__main__":
+    ImagePlotTraits().edit_traits(kind="livemodal")
+
