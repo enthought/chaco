@@ -1,10 +1,35 @@
-***************
-Getting Started
-***************
+**********
+Quickstart
+**********
 
 .. note::
    This section is currently actively being developed in preparation
    for the Scipy 2008 tutorial session.
+
+.. contents::
+
+Installation
+============
+
+There are several different ways to get Chaco:
+
+  #. Install the Enthought Python Distribution.
+     Chaco and the rest of the Enthought Tool Suite are bundled with it.
+  
+  #. Install from PyPI using easy_install::
+     
+        easy_install Chaco
+
+  #. (Linux) Install via the distribution's packaging mechanism.
+     We provide .debs for Debian and Ubuntu and RPMs for Redhat.
+
+  #. Download source as tarballs or from Subversion and build.  See 
+     the :ref:`installation` section.
+
+
+
+Tutorials
+=========
 
 Currently, the examples and the scipy 2006 tutorial are the best ways  
 to get going quickly. (See http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html)
@@ -16,6 +41,9 @@ custom overlay with its own trait editor and reusing an existing tool
 from the built-in set of tools.  You can browse them on our SVN server  
 at:
 https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008
+
+API Docs
+========
 
 There are API docs for the 2.7.1 version of Chaco (not the trunk  
 version) at:
