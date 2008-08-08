@@ -168,11 +168,15 @@ class LineInspector(BaseTool):
         if not self.is_interactive:
             return
         self._last_position = None
-        if self.component:
+        plot = self.component
+        if plot is not None:
             if self.write_metadata:
-                self.component.index.metadata.pop(self.metadata_name, None)
-                self.component.value.metadata.pop(self.metadata_name, None)
-            self.component.request_redraw()
+                if isinstance(plot, BaseXYPlot):
+                    plot.index.metadata.pop(self.metadata_name, None)
+                    plot.value.metadata.pop(self.metadata_name, None)
+                elif isinstance(plot, Base2DPlot):
+                    plot.index.metadata.pop(self.metadata_name, None)
+            plot.request_redraw()
         return
 
     #------------------------------------------------------------------------
