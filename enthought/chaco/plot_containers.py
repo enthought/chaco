@@ -691,9 +691,10 @@ class GridPlotContainer(BasePlotContainer):
             if component is not None:
                 component.container = None
         for component in new:
-            if component is not None and component.container is not None:
-                component.container.remove(component)
-            component.container = self
+            if component is not None:
+                if component.container is not None:
+                    component.container.remove(component)
+                component.container = self
 
         self.set(shape=grid.shape, trait_change_notify=False)
         self._components = list(grid.flatten())
