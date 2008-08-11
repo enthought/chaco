@@ -126,7 +126,7 @@ class FixedScale(AbstractScale):
         
         Overrides AbstractScale.
         """
-        if start == end:
+        if start == end or isnan(start) or isnan(end):
             return []
         res = self.resolution
         start -= self.zero
@@ -154,6 +154,7 @@ def _nice(x, round=False):
     have been changed to use (1, 2.5, 5, 10) as the nice values instead of
     (1, 2, 5, 10).
     """
+
     expv = floor(log10(x))
     f = x / pow(10, expv)
     if round:
@@ -217,7 +218,7 @@ class DefaultScale(AbstractScale):
         
         Implements AbstractScale.
         """
-        if start == end:
+        if start == end or isnan(start) or isnan(end):
             return [start]
         min, max, delta = heckbert_interval(start, end, desired_ticks, enclose=True)
         return frange(min, max, delta)
@@ -244,9 +245,11 @@ class Pow10Scale(AbstractScale):
     def ticks(self, start, end, desired_ticks=8):
         """ Returns the set of "nice" positions on this scale that enclose and
         fall inside the interval (*start*,*end*). 
-        
+
         Implements AbstractScale.
         """
+        if start == end or isnan(start) or isnan(end):
+            return [start]
         min, max, delta = heckbert_interval(start, end, desired_ticks,
                                             nicefunc=self._nice_pow10,
                                             enclose = True)
