@@ -642,6 +642,7 @@ class PlotAxis(AbstractOverlay):
             self._origin_point = array(new_origin)
             self._inside_vector = array(inside_vec)
         else:
+            #FIXME: Why aren't we setting self._inside_vector here?
             overlay_component = self
             new_origin = array(self.position)
 

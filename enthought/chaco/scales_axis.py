@@ -479,6 +479,7 @@ class PlotAxis(AbstractOverlay):
         datahigh = self.mapper.range.high
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
+        direction = 'normal'
         if overlay_component is not None and hasattr(overlay_component, "x_direction") and\
                                              hasattr(overlay_component, "y_direction"):
             if self.orientation in ("top", "bottom"):
@@ -486,8 +487,11 @@ class PlotAxis(AbstractOverlay):
             elif self.orientation in ("left", "right"):
                 direction = overlay_component.y_direction
 
-            if direction == "flipped":
-                screenlow, screenhigh = screenhigh, screenlow
+        else:
+            if screenlow>screenhigh:
+                direction = 'flipped'
+        if direction == "flipped":
+            screenlow, screenhigh = screenhigh, screenlow
 
 
         if (datalow == datahigh) or (screenlow == screenhigh) or \
@@ -556,7 +560,8 @@ class PlotAxis(AbstractOverlay):
 
     def _compute_labels(self, gc):
         """Computes the positions and generates the label objects.  Waits
-        for the cache to become invalid."""
+        for the cache to become invalid.
+        """
         self.ticklabel_cache = []
         formatter = self.tick_label_formatter
 #        if formatter is not None:
@@ -683,14 +688,16 @@ class PlotAxis(AbstractOverlay):
     #------------------------------------------------------------------------
 
     def _rotmatrix(self, theta):
-        """Returns a 2x2 rotation matrix for angle theta"""
+        """Returns a 2x2 rotation matrix for angle theta
+        """
         return array([[cos(theta), sin(theta)], [-sin(theta), cos(theta)]], float64)
 
     def _center_dist(self, vect, width, height, rotation=0.0):
         """Given a width and height of a rectangle, find the distance in units of the vector,
         in the direction of the vector, from the center of the rectangle, to wherever the vector
         leaves the rectangle.  This is useful for determining where to place text so it doesn't
-        run into other things. """
+        run into other things.
+        """
         rotvec = transpose(dot(self._rotmatrix(rotation*pi/180.0), transpose(array([vect], float64))))[0]
         absvec = absolute(rotvec)
         if absvec[1] != 0:
