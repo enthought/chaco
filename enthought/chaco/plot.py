@@ -306,12 +306,21 @@ class Plot(DataView):
                     raise ValueError("Scalar 2D data requires a color_mapper.")
 
                 colormap = styles.pop("color_mapper", None)
+
+                if self.color_mapper is not None and self.color_mapper.range is not None:
+                    color_range = self.color_mapper.range
+                else:
+                    color_range = DataRange1D()
+
                 if isinstance(colormap, AbstractColormap):
                     self.color_mapper = colormap
                     if colormap.range is None:
-                        colormap.range = DataRange1D(color)
+                        color_range.add(color)
+                        colormap.range = color_range
+                        
                 elif callable(colormap):
-                    self.color_mapper = colormap(DataRange1D(color))
+                    color_range.add(color)
+                    self.color_mapper = colormap(color_range)
                 else:
                     raise ValueError("Unexpected colormap %r in plot()." % colormap)
                 
