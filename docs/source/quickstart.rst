@@ -1,21 +1,21 @@
-**********
+##########
 Quickstart
-**********
+##########
 
 .. note::
    This section is currently actively being developed in preparation
    for the Scipy 2008 tutorial session.
 
-.. contents::
+.. toctree::
 
-Installation
-============
+Installation Overview
+=====================
 
 There are several different ways to get Chaco:
 
   #. Install the Enthought Python Distribution.
      Chaco and the rest of the Enthought Tool Suite are bundled with it.
-  
+
   #. Install from PyPI using easy_install::
      
         easy_install Chaco
@@ -27,9 +27,53 @@ There are several different ways to get Chaco:
      the :ref:`installation` section.
 
 
+EPD
+------
 
-Tutorials
-=========
+
+PyPI
+-------
+
+
+Linux-based Systems
+-------------------
+
+
+Source install
+--------------
+
+
+Running Some Examples
+=====================
+
+
+Command line or IPython
+-----------------------
+
+
+Start Menu (MS Windows)
+-----------------------
+
+
+
+Creating a Plot
+===============
+
+
+Further Reading
+===============
+
+Once you have Chaco installed, you can either visit the :ref:`tutorials`
+to learn how to use the package, or you can run the examples (see the
+:ref:`examples` section for more information on running and understanding
+various examples).
+
+
+Presentations
+-------------
+
+There have been several presentations on Chaco at previous PyCon and 
+SciPy conferences.  Slides and demos from these are described below.
 
 Currently, the examples and the scipy 2006 tutorial are the best ways  
 to get going quickly. (See http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html)
@@ -43,7 +87,7 @@ at:
 https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008
 
 API Docs
-========
+--------
 
 There are API docs for the 2.7.1 version of Chaco (not the trunk  
 version) at:
