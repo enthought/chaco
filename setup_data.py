@@ -43,5 +43,5 @@ INFO = {
         TRAITS_UI,
         ],
     "name": 'Chaco',
-    "version": '3.0.0',
+    "version": '3.0.1',
     }
