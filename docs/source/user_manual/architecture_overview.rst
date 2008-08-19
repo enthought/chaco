@@ -7,11 +7,17 @@ Architecture Overview
    At this time, this is an overview of not just Chaco, but also Kiva and
    Enable.
 
+.. contents::
+
+
 Chaco, Enable, and Kiva are three packages in the Enthought Tool Suite.
 They have been there for a long time now, since almost the beginning of
 Enthought as a company.  Enthought has delivered many applications using
 these toolkits. The Kiva and Enable packages are bundled together in the
 "Enable" project.
+
+Kiva
+----
 
 Kiva is a 2D vector drawing library for python.  It serves a purpose
 similar to `Cairo <http://cairographics.org/>`_.  It allows us to compose
@@ -39,6 +45,9 @@ events and drawing a single component.  Usually, this component is a
 container with other containers and components inside it.  The container
 can perform layout on its internal components, and it controls how events
 are subsequently dispatched to its set of components.
+
+Enable
+------
 
 Almost every single graphical component in Chaco is an instance of an
 Enable component or container.  We're currently trying to push more of the
@@ -125,5 +134,21 @@ The basic things to remember about Enable are that:
     install wxPython just to play with Chaco.
 
 
+Chaco
+-----
+
+At the highest level, Chaco consists of:
+
+    * visual components that render to screen or an output device
+      (e.g. ``LinePlot``, ``ScatterPlot``, ``PlotGrid``, ``PlotAxis``,
+      ``Legend``)
+
+    * data handling classes that wrap input data, interface with
+      application-specific data sources, and transform coordinates
+      between data and screen space (e.g. ``ArrayDataSource``,
+      ``GridDataSource``, ``LinearMapper``)
+
+    * tools that handle keyboard or mouse events and modify other
+      components (e.g. ``PanTool``, ``ZoomTool``, ``ScatterInspector``)
 
 
