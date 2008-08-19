@@ -11,9 +11,8 @@ from enthought.enable.api import Window
 from enthought.traits.api import false
 
 # Chaco imports
-from enthought.chaco.api import HPlotContainer, create_line_plot
-from enthought.chaco.tools.api import DataPrinter, LineInspector, PointMarker, \
-                                       RangeSelection, SaveTool, SimpleZoom, PanTool
+from enthought.chaco.api import HPlotContainer, ArrayPlotData, Plot
+from enthought.chaco.tools.api import LineInspector, ZoomTool, PanTool
 
 
 class MyFrame(DemoFrame):
@@ -24,35 +23,36 @@ class MyFrame(DemoFrame):
         low = -5
         high = 15.0
         x = arange(low, high, (high-low)/numpoints)
+        plotdata = ArrayPlotData(x=x, y1=jn(0,x), y2=jn(1,x))
 
         # Create the left plot
-        y = jn(0, x)
-        left_plot = create_line_plot((x,y), color="blue", width=2.0)
-        left_plot.origin_axis_visible = True
-        left_plot.overlays.append(LineInspector(left_plot, axis='value',
+        left_plot = Plot(plotdata)
+        left_plot.x_axis.title = "X"
+        left_plot.y_axis.title = "j0(x)"
+        renderer = left_plot.plot(("x", "y1"), type="line", color="blue", width=2.0)[0]
+        renderer.overlays.append(LineInspector(renderer, axis='value',
                                                 write_metadata=True,
                                                 is_listener=True))
-        left_plot.overlays.append(LineInspector(left_plot, axis="index",
+        renderer.overlays.append(LineInspector(renderer, axis="index",
                                                 write_metadata=True,
                                                 is_listener=True))
-
-        left_plot.overlays.append(SimpleZoom(left_plot, tool_mode="range"))
-        left_plot.tools.append(PanTool(left_plot, drag_button="right"))
+        left_plot.overlays.append(ZoomTool(left_plot, tool_mode="range"))
+        left_plot.tools.append(PanTool(left_plot))
 
         # Create the right plot
-        y = jn(1, x)
-        right_plot = create_line_plot((x,y), color="red", width=2.0)
-
-        right_plot.index = left_plot.index
-        right_plot.index_mapper.range = left_plot.index_mapper.range
-        right_plot.origin_axis_visible = True
+        right_plot = Plot(plotdata)
+        right_plot.index_range = left_plot.index_range
         right_plot.orientation = "v"
-        right_plot.origin = "top left"
-        right_plot.overlays.append(LineInspector(right_plot, write_metadata=True, is_listener=True))
-        right_plot.overlays.append(LineInspector(right_plot, axis="value", is_listener=True))
-        right_plot.tools.append(PanTool(right_plot, drag_button="right"))
+        right_plot.x_axis.title = "j1(x)"
+        right_plot.y_axis.title = "X"
+        renderer2 = right_plot.plot(("x","y2"), type="line", color="red", width=2.0)[0]
+        renderer2.index = renderer.index
+        renderer2.overlays.append(LineInspector(renderer2, write_metadata=True, is_listener=True))
+        renderer2.overlays.append(LineInspector(renderer2, axis="value", is_listener=True))
+        right_plot.overlays.append(ZoomTool(right_plot, tool_mode="range"))
+        right_plot.tools.append(PanTool(right_plot))
 
-        container = HPlotContainer(spacing=20, padding=40, background="lightgray")
+        container = HPlotContainer(background="lightgray")
         container.add(left_plot)
         container.add(right_plot)
 
