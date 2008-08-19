@@ -10,6 +10,44 @@ Architecture Overview
 .. contents::
 
 
+Core Ideas
+==========
+
+The Chaco toolkit is defined by a few core architectural ideas:
+
+    * **Plots are compositions of visual components**
+
+      Everything you see in a plot is some sort of graphical widget,
+      with position, shape, and appearance attributes, and with an
+      opportunity to respond to events.
+
+    * **Separation between data and screen space**
+
+      Although everything in a plot eventually ends up rendering into a common
+      visual area, there are aspects of the plot which are intrinsically
+      screen-space, and some which are fundamentally data-space.  Preserving
+      the distinction between these two domains allows us to think about
+      visualizations in a structured way.
+
+    * **Modular design and extensible classes**
+
+      Chaco is meant to be used for writing tools and applications, and code
+      reuse and good class design is important.  We use the math behind the
+      data and visualizations to give us architectural direction and conceptual
+      modularity.  The Traits framework allows us to use events to couple
+      disjoint components at another level of modularity.
+
+      Also, rather than building super-flexible core objects with myriad
+      configuration attributes, Chaco's classes are written with subclassing in
+      mind.  While they are certainly configurable, the classes themselves are
+      written in a modular way so that subclasses can easily customize
+      particular aspects of a visual component's appearance or a tool's
+      behavior.
+
+
+The Relationship Between Chaco, Enable, and Kiva
+================================================
+
 Chaco, Enable, and Kiva are three packages in the Enthought Tool Suite.
 They have been there for a long time now, since almost the beginning of
 Enthought as a company.  Enthought has delivered many applications using

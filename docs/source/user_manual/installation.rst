@@ -6,9 +6,6 @@ Installing and Building Chaco
 
 .. contents::
 
-Overview
-========
-
 Chaco is one of the packages in the Enthought Tool Suite.  It can be installed
 as part of ETS or as a separate package.  Even when it is installed as a 
 standalone package, there are few other dependency packages that you will need.
