@@ -6,7 +6,14 @@ Quickstart
    This section is currently actively being developed in preparation
    for the Scipy 2008 tutorial session.
 
-.. toctree::
+.. contents::
+
+This section is meant to help users on well-supported platforms and common
+Python environments get started using Chaco as quickly as possible.  If your
+platform is not listed here, or your Python installation has some quirks, then
+some of the following instructions might not work for you.  If you encounter
+any problems in the steps below, please refer to the :ref:`installation`
+section for more detailed instructions.
 
 Installation Overview
 =====================
@@ -26,13 +33,27 @@ There are several different ways to get Chaco:
   #. Download source as tarballs or from Subversion and build.  See 
      the :ref:`installation` section.
 
+Chaco requires Python version 2.5.
 
-EPD
-------
+
+Enthought Python Distribution
+-----------------------------
+
+Go to the main `Enthought Python Distribution (EPD)
+<http://www.enthought.com/epd>`_ web site and download the appropriate
+version for your platform.  After running the installer, you will have
+a working version of Chaco.
+
+*Available platforms: win32, Mac OS X 10.4 and 10.5, RedHat
+Enterprise Linux 3 (32-bit and 64-bit.*
 
 
 PyPI
 -------
+
+Chaco and its dependencies are available as binary eggs on PyPI.
+
+*Available platforms: win32, Mac OS X 10.4 and 10.5*
 
 
 Linux-based Systems
@@ -46,14 +67,171 @@ Source install
 Running Some Examples
 =====================
 
+Depending on how you installed Chaco, you may or may not have the examples already.
 
-Command line or IPython
------------------------
+If you installed Chaco as part of EPD, the location of the examples depends on 
+your platform::
+
+    * On Windows, they are in the ``Examples\`` subdirectory of your installation
+      location.  This is typically ``C:\Python25\Examples``.
+
+    * On Linux, they are in the ``Examples/`` subdirectory of your installation
+      location.
+
+    * On Mac OS X, they are in the ``/Applications/<EPD Version>/Examples/`` 
+      directory.
+
+If you downloaded and installed Chaco from source (via the PyPI tar.gz file, or
+from an SVN checkout), the examples are located in the ``examples`` subdirectory
+inside the root of the Chaco source tree, next to ``docs`` and the ``enthought``
+Python package directory.
+
+If you installed Chaco as a binary egg from PyPI for your platform, then you
+will need to download the examples separately from (TODO).
+
+Also, if you happen to be on a machine with Chaco installed, but you
+don't know the exact installation mechanism, you can just download the
+examples and run them.  Almost all of the Chaco examples are stand-alone
+files that can be run individually, from any location.
+
+All of the following instructions that involve the command line assume
+you are in the same directory as the examples.
+
+Command line
+------------
+
+Run the ``simple_line`` example::
+
+    $ python simple_line.py
+
+This should bring up a plot of several Bessel functions and a legend.
+
+.. image:: images/simple_line.png
+
+You can interact with the plot in several ways:
+
+    * Pan the plot by holding down the left mouse button inside the plot area
+      (but not on the legend) and dragging around.
+
+    * There are three ways to zoom the plot:
+
+        * Mouse wheel: wheel up zooms in, and wheel down zooms out.
+        
+        * Zoom box: Press "z", then draw a box region to zoom in to.  (There
+          is no box-based zoom out.)  Use Ctrl-Left and Ctrl-Right to go
+          back and forward in your zoom box history.
+        
+        * Drag: hold down the right mouse button and drag the mouse up
+          or down.  Up zooms in, down zooms out.
+        
+        * For any of the above, pressing Escape resets the zoom to the
+          original view.
+
+    * Move the legend by holding down the right mouse button inside the
+      legend and moving it around.  Note that you can move the legend
+      outside of the plot area.
+
+    * Exit the plot by clicking the "close window" button on the window frame
+      (Windows, Linux) or selecting the Quit option on the Python menu (on
+      Mac).  Alternatively, can you press Ctrl-C in the terminal.
+
+You should be able to run most of the examples in the top-level ``examples``
+directory, the ``examples/basic/`` directory, and the ``examples/shell/``
+directory.  The ``examples/advanced/`` directory has some examples that
+may or may not work on your system:
+
+    * ``spectrum.py`` requires that you have PyAudio installed and a working
+      microphone.  
+
+    * ``data_cube.py`` needs to download about 7.3mb of data from the internet
+      the first time it is executed, so you will need to have a working
+      internet connection.  Once the data is downloaded, it can be saved so the
+      example can be run offline in the future.
+
+For detailed information about each built-in example, see the :ref:`examples`
+section.
+
+IPython
+-------
+
+While all of the Chaco examples can be launched from the command line using the
+standard python interpreter, if you have IPython installed, you can poke around
+them in a more interactive fashion.
+
+Chaco provides a subpackage, currently named the "Chaco Shell", for doing
+command-line plotting like Matlab or Matplotlib.  The examples in the
+``examples/shell/`` directory use this subpackage, and they are particularly
+amenable to exploration with IPython.
+
+The first example we'll look at is the ``lines.py`` example.  First, we'll
+run it using the standard Python interpreter::
+
+    $ python lines.py
+
+This brings up two overlapping line plots.
+
+.. image:: images/lines.png
+
+You can interact with the plot in the following ways:
+
+    * Pan the plot by holding down the left mouse button inside the plot area
+      and dragging around.
+
+    * There are two ways to zoom the plot:
+
+        * Mouse wheel: wheel up zooms in, and wheel down zooms out.
+
+        * Zoom box: hold down the right mouse button, then draw a box region to
+          zoom in to.  (There is no box-based zoom out.)  Use Ctrl-Left and
+          Ctrl-Right to go back and forward in your zoom box history.
+        
+        * For either of the above, pressing Escape resets the zoom to the
+          original view.
+
+Now exit the plot, and start IPython with the -wthread option::
+
+    $ ipython -wthread
+
+This tells IPython to start a wxPython mainloop in a background thread.  Now
+run the previous example again::
+
+    In [1]: run lines.py
+
+This should display the plot window, but you should be presented with another
+IPython prompt.  You can now use various commands from the ``chaco.shell``
+package to interact with the plot.  First, import them::
+
+    In [2]: from enthought.chaco.shell import *
+
+Now set the X-axis title::
+
+    In [3]: xtitle("X data")
+
+Toggle the legend::
+
+    In [4]: legend()
+
+After running these commands, you plot should look like:
+
+.. image:: images/lines_final.png
+
+The ``chaco_commands()`` function will display a list of commands with brief
+descriptions.
+
+You can now explore the Chaco object hierarchy, as well.  The ``shell`` 
+commands are just convenience functions that wrap a rich object hierarchy
+that comprise the actual plot.  See the :ref:`tutorial_ipython` section
+for information on more complex and interesting things you can do with Chaco
+from within IPython.
 
 
 Start Menu (MS Windows)
 -----------------------
 
+If you installed the Enthought Python Distribution (EPD), you will have
+shortcuts installed in your Start Menu for many of the Chaco examples.  You can
+run them by just clicking the shortcut.  (This just invokes python.exe on the
+example file itself.)
 
 
 Creating a Plot

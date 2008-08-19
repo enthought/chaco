@@ -1,7 +1,7 @@
 .. _installation:
 
 *****************************
-Building and Installing Chaco
+Installing and Building Chaco
 *****************************
 
 .. contents::
