@@ -35,7 +35,7 @@ class PlotFrame(DemoFrame):
         plot1.plot(("index", "y3"), name="j_3", color="blue")
 
         # Tweak some of the plot properties
-        plot1.title = "My First Line Plot"
+        plot1.title = "Inset Plot"
         plot1.padding = 50
 
         # Attach some tools to the plot
@@ -49,7 +49,7 @@ class PlotFrame(DemoFrame):
         plot2.plot(('index', 'y3'), type="scatter", color="blue", marker="circle")
         plot2.set(resizable = "", 
                   bounds = [250, 250],
-                  position = [550,200],
+                  position = [550,150],
                   bgcolor = "white",
                   border_visible = True,
                   unified_draw = True
