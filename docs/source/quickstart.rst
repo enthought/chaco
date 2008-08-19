@@ -21,47 +21,32 @@ Installation Overview
 There are several different ways to get Chaco:
 
   #. Install the Enthought Python Distribution.
-     Chaco and the rest of the Enthought Tool Suite are bundled with it.
+     Chaco and the rest of the Enthought Tool Suite are bundled with it.  Go to
+     the main `Enthought Python Distribution (EPD)
+     <http://www.enthought.com/epd>`_ web site and download the appropriate
+     version for your platform.  After running the installer, you will have a
+     working version of Chaco.
 
-  #. Install from PyPI using easy_install::
+     *Available platforms: win32, Mac OS X 10.4 and 10.5, RedHat Enterprise Linux 3 (32-bit and 64-bit)*
+
+
+  #. *(Windows, Mac)* Install from PyPI using easy_install from the command line::
      
         easy_install Chaco
 
-  #. (Linux) Install via the distribution's packaging mechanism.
-     We provide .debs for Debian and Ubuntu and RPMs for Redhat.
+  #. *(Linux)* Install distribution-specific eggs from Enthought's repository.
+     See the `ETS wiki <https://svn.enthought.com/enthought/wiki/Install#UsingEnthoughtsEggRepo>`_
+     for instructions for installing pre-built binary eggs for your specific
+     distribution of Linux.
+
+  #. *(Linux)* Install via the distribution's packaging mechanism.  We provide
+     .debs for Debian and Ubuntu and .rpms for Redhat.  (TODO)
 
   #. Download source as tarballs or from Subversion and build.  See 
      the :ref:`installation` section.
 
 Chaco requires Python version 2.5.
 
-
-Enthought Python Distribution
------------------------------
-
-Go to the main `Enthought Python Distribution (EPD)
-<http://www.enthought.com/epd>`_ web site and download the appropriate
-version for your platform.  After running the installer, you will have
-a working version of Chaco.
-
-*Available platforms: win32, Mac OS X 10.4 and 10.5, RedHat
-Enterprise Linux 3 (32-bit and 64-bit.*
-
-
-PyPI
--------
-
-Chaco and its dependencies are available as binary eggs on PyPI.
-
-*Available platforms: win32, Mac OS X 10.4 and 10.5*
-
-
-Linux-based Systems
--------------------
-
-
-Source install
---------------
 
 
 Running Some Examples
@@ -237,14 +222,15 @@ example file itself.)
 Creating a Plot
 ===============
 
+(TODO)
+
 
 Further Reading
 ===============
 
 Once you have Chaco installed, you can either visit the :ref:`tutorials`
 to learn how to use the package, or you can run the examples (see the
-:ref:`examples` section for more information on running and understanding
-various examples).
+:ref:`examples` section).
 
 
 Presentations
@@ -267,12 +253,10 @@ https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy
 API Docs
 --------
 
-There are API docs for the 2.7.1 version of Chaco (not the trunk  
-version) at:
-http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html
+The API docs for Chaco 3.0 (in ETS 3.0) is at:
+http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html
 
-There will be API documentation for ETS 3.0 once that gets released  
-(as of 8/8/2008, ETS 3.0 is at beta2, which will be the last beta
-release).
+The API docs for Chaco2 (in ETS 2.7.1) is at:
+http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html
 
 

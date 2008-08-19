@@ -42,9 +42,9 @@ copyright = '2008, Enthought'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '3.0.0b2'
+version = '3.0.0'
 # The full version, including alpha/beta/rc tags.
-release = '3.0.0b2'
+release = '3.0.0'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:

@@ -1,34 +1,42 @@
 
 .. _tutorials:
 
-Overview of Tutorials
-=====================
+Tutorials
+=========
 
-Chaco is a plotting application toolkit for Python.  It can be used
-to create stand-alone plots, but it is designed for interactive plotting.
-There are three basic ways to use Chaco:
+There are three tutorials for Chaco, each corresponding to one of the
+three different ways to use Chaco:
 
     #. Using Traits UI to create a stand-alone application or a widget
        that can be integrated with an existing Traits UI view.  See
        :ref:`tutorial_traits`.
+        
+       This is the by far the most common usage of Chaco.  It is a good
+       approach for those who are relatively new to developing GUI
+       applications.  Using Chaco with Traits UI allows the scientist or novice
+       programmer to easily develop plotting applications, but it also provides
+       them room to grow as their requirements change and increase in
+       complexity.
 
-    #. Creating a stand-alone wxPython application, or embedding a Chaco
-       plot within a wxPython application.  See :ref:`tutorial_wx`.
+       Traits UI can also be used by a more experienced developer to build more
+       involved applications, and Chaco can be used to embed visualizations or
+       to leverage interactive graphs as controllers for an application.
 
-    #. Using the Chaco Shell command-line plotting interface to build
-       plots, in a Matlab or gnuplot-like style.  See 
+    #. Creating a stand-alone wxPython or Qt application, or embedding a Chaco
+       plot within an existing application.  See :ref:`tutorial_wx`.
+
+       This tutorial is suited for those who are familiar with programming
+       using wxPython or Qt and prefer to write directly to those toolkits.   It
+       shows how to embed Chaco components directly into an enclosing widget,
+       panel, or dialog.  It also demonstrates more advanced usages like using
+       a wxPython Timer to display live, updating data
+       streams.
+
+    #. Using the Chaco Shell command-line plotting interface to build plots, in
+       a Matlab or gnuplot-like style.  Although this approach doesn't lend itself
+       to building more reusable utilities or applications, it can be a quick way
+       to get plots on the screen and build one-off visualizations.  See
        :ref:`tutorial_ipython`.
-
-There is a separate tutorial covering each of these uses.  For those who are
-relatively new to developing GUI applications, we recommend approach #1.  Using
-Chaco with Traits UI allows the scientist or novice programmer to easily
-develop plotting applications, but it also provides them room to grow as their
-requirements change and increase in complexity.
-
-For those who are familiar with GUI programming using WX or Qt, the second
-tutorial shows how to embed Chaco components directly into an enclosing widget,
-panel, or dialog.  It also demonstrates more advanced usages like using
-a wxPython Timer to display live, updating data streams.
 
 .. toctree::
     :maxdepth: 2

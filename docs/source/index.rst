@@ -1,5 +1,5 @@
-Chaco User Manual
-=================
+Chaco Documentation
+===================
 
 Chaco is a Python toolkit for building interactive 2D visualizations.  It
 includes renderers for many popular plot types, built-in implementations of
