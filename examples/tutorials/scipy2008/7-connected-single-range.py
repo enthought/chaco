@@ -39,7 +39,7 @@ class ConnectedRange(HasTraits):
         line.tools.append(ZoomTool(line))
         
         # Set the two plots' ranges to be the same
-        scatter.range2d = line.range2d
+        scatter.index_range = line.index_range
 
 if __name__ == "__main__":
     ConnectedRange().configure_traits()

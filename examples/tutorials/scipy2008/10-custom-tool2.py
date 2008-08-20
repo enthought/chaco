@@ -9,22 +9,14 @@ from enthought.traits.ui.api import Item, View
 
 class CustomTool(BaseTool):
     
-    event_state = Enum("normal", "mousedown")
-    
     def normal_mouse_move(self, event):
-        print "Screen:", event.x, event.y
-    
-    def normal_left_down(self, event):
-        self.event_state = "mousedown"
-        event.handled = True
-    
-    def mousedown_mouse_move(self, event):
-        print "Data:", self.component.map_data((event.x, event.y))
-        
-    def mousedown_left_up(self, event):
-        self.event_state = "normal"
-        event.handled = True
+        print "Screen point:", event.x, event.y
 
+    def normal_left_down(self, event):
+        print "Mouse went down at", event.x, event.y
+
+    def normal_left_up(self, event):
+        print "Mouse went up at:", event.x, event.y
 
 class ScatterPlot(HasTraits):
 

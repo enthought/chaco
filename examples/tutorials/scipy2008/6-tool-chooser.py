@@ -2,7 +2,7 @@
 from numpy import linspace, sin
 
 from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom, DragZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool, DragZoom
 from enthought.enable.component_editor import ComponentEditor
 from enthought.traits.api import HasTraits, Instance, List
 from enthought.traits.ui.api import Item, View, CheckListEditor
@@ -10,12 +10,13 @@ from enthought.traits.ui.api import Item, View, CheckListEditor
 class ToolChooserExample(HasTraits):
 
     plot = Instance(Plot)
-    tools = List(editor=CheckListEditor(values = ["PanTool", "SimpleZoom", "DragZoom"]))
+    tools = List(editor=CheckListEditor(values = ["PanTool", "ZoomTool", "DragZoom"]))
     traits_view = View(Item("tools", label="Tools", style="custom"),
                        Item('plot', editor=ComponentEditor(), show_label=False), 
-                       width=800, height=600, resizable=True)
+                       width=800, height=600, resizable=True,
+                       title="Tool Chooser")
 
-    def _plot_default(self):
+    def __init__(self):
         # Create the data and the PlotData object
         x = linspace(-14, 14, 500)
         y = sin(x) * x**3
@@ -24,7 +25,7 @@ class ToolChooserExample(HasTraits):
         plot = Plot(plotdata)
         # Create a line plot in the Plot
         plot.plot(("x", "y"), type="line", color="blue")
-        return plot
+        self.plot = plot
     
     def _tools_changed(self):
         classes = [eval(class_name) for class_name in self.tools]
@@ -40,5 +41,5 @@ class ToolChooserExample(HasTraits):
         return
 
 if __name__ == "__main__":
-    ToolChooserExample().edit_traits(kind="livemodal")
+    ToolChooserExample().configure_traits()
 
