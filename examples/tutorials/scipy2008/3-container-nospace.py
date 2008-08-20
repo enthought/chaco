@@ -11,8 +11,7 @@ class ContainerExample(HasTraits):
     plot = Instance(HPlotContainer)
 
     traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
-                       width=1000, height=600, resizable=True,
-                       title="Chaco Plot")
+                       width=1000, height=600, resizable=True)
 
     def __init__(self):
         # Create the data and the PlotData object
@@ -27,6 +26,11 @@ class ContainerExample(HasTraits):
         line.plot(("x", "y"), type="line", color="blue")
         # Create a horizontal container and put the two plots inside it
         container = HPlotContainer(scatter, line)
+        container.spacing = 0
+        scatter.padding_right = 0
+        line.padding_left = 0
+        line.y_axis.orientation = "right"
+
         self.plot = container
 
 if __name__ == "__main__":

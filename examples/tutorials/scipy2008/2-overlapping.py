@@ -11,9 +11,10 @@ class OverlappingExample(HasTraits):
     plot = Instance(Plot)
 
     traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
-                       width=800, height=600, resizable=True)
+                       width=800, height=600, resizable=True,
+                       title="Chaco Plot")
 
-    def _plot_default(self):
+    def __init__(self):
         # Create the data and the PlotData object
         x = linspace(-14, 14, 100)
         y = x/2 * sin(x)
@@ -25,8 +26,8 @@ class OverlappingExample(HasTraits):
         plot.plot(("x", "y"), type="scatter", color="blue")
         # Create an overlapping line plot
         plot.plot(("x", "y2"), type="line", color="red")
-        return plot
+        self.plot = plot
 
 if __name__ == "__main__":
-    OverlappingExample().edit_traits(kind="livemodal")
+    OverlappingExample().configure_traits()
 

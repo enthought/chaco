@@ -11,9 +11,11 @@ class ImagePlot(HasTraits):
     plot = Instance(Plot)
 
     traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
-                       width=600, height=600, resizable=True)
+                       width=600, height=600, 
+                       resizable=True,
+                       title="Chaco Plot")
 
-    def _plot_default(self):
+    def __init__(self):
         # Create the data and the PlotData object.  For a 2D plot, we need to 
         # take the row of X points and Y points and create a grid from them
         # using meshgrid().
@@ -26,8 +28,8 @@ class ImagePlot(HasTraits):
         plot = Plot(plotdata)
         # Create a line plot in the Plot
         plot.img_plot("imagedata", xbounds=x, ybounds=y, colormap=jet)
-        return plot
+        self.plot = plot
 
 if __name__ == "__main__":
-    ImagePlot().edit_traits(kind="livemodal")
+    ImagePlot().configure_traits()
 

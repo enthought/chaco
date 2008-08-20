@@ -13,7 +13,7 @@ class ContainerExample2(HasTraits):
     traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
                        width=600, height=800, resizable=True)
 
-    def _plot_default(self):
+    def __init__(self):
         # Create the data and the PlotData object
         x = linspace(-14, 14, 100)
         y = sin(x) * x**3
@@ -26,9 +26,9 @@ class ContainerExample2(HasTraits):
         line.plot(("x", "y"), type="line", color="blue")
         # Create a vertical container and put the two plots inside it
         container = VPlotContainer(scatter, line)
-        return container
+        self.plot = container
 
 if __name__ == "__main__":
-    ContainerExample2().edit_traits(kind="livemodal")
+    ContainerExample2().configure_traits()
 
 
