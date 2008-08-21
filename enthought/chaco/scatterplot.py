@@ -50,7 +50,7 @@ class ScatterPlot(BaseXYPlot):
     marker = marker_trait
 
     # The pixel size of the marker, not including the thickness of the outline.
-    marker_size = Int(4)
+    marker_size = Float(4.0)
 
     # The thickness, in pixels, of the outline to draw around the marker.  If
     # this is 0, no outline is drawn.
@@ -75,7 +75,7 @@ class ScatterPlot(BaseXYPlot):
 
     selection_marker = marker_trait
 
-    selection_marker_size = Int(4)
+    selection_marker_size = Float(4.0)
 
     selection_line_width = Float(1.0)
 
