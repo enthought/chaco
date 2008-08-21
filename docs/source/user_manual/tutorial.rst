@@ -38,6 +38,28 @@ three different ways to use Chaco:
        to get plots on the screen and build one-off visualizations.  See
        :ref:`tutorial_ipython`.
 
+All three tutorials introduce a newcomer to the core concepts of Chaco and
+some of their content overlaps.  By the end of any of the above tutorials,
+the reader will have seen how to:
+
+    * create a Python script or module that creates a Chaco plot
+
+    * display scatter, line, and image plots on the screen
+
+    * save a plot to disk
+
+    * plot multiple data items in overlapping, side-by-side, or other
+      layouts
+
+    * create a custom plot renderer
+
+    * create a custom tool that interacts with the mouse
+       
+The reader will also be familiar with the concepts of data sources, components,
+containers, renderers, the graphics context, tools, and events.  Armed with
+this knowledge, the reader can move on to the :ref:`Modules and Classes
+<modules_and_classes>` and the :ref:`programmers_reference` sections.
+
 .. toctree::
     :maxdepth: 2
 

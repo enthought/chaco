@@ -30,9 +30,9 @@ There are several different ways to get Chaco:
      *Available platforms: win32, Mac OS X 10.4 and 10.5, RedHat Enterprise Linux 3 (32-bit and 64-bit)*
 
 
-  #. *(Windows, Mac)* Install from PyPI using easy_install from the command line::
-     
-        easy_install Chaco
+  #. *(Windows, Mac)* Install from PyPI using easy_install from the command line:
+
+        :command:`easy_install Chaco`
 
   #. *(Linux)* Install distribution-specific eggs from Enthought's repository.
      See the `ETS wiki <https://svn.enthought.com/enthought/wiki/Install#UsingEnthoughtsEggRepo>`_
@@ -55,29 +55,40 @@ Running Some Examples
 Depending on how you installed Chaco, you may or may not have the examples already.
 
 If you installed Chaco as part of EPD, the location of the examples depends on 
-your platform::
+your platform:
 
-    * On Windows, they are in the ``Examples\`` subdirectory of your installation
-      location.  This is typically ``C:\Python25\Examples``.
+    * On Windows, they are in the :file:`Examples\\` subdirectory of your installation
+      location.  This is typically :file:`C:\\Python25\\Examples`.
 
-    * On Linux, they are in the ``Examples/`` subdirectory of your installation
+    * On Linux, they are in the :file:`Examples/` subdirectory of your installation
       location.
 
-    * On Mac OS X, they are in the ``/Applications/<EPD Version>/Examples/`` 
+    * On Mac OS X, they are in the :file:`/Applications/<EPD Version>/Examples/`
       directory.
 
 If you downloaded and installed Chaco from source (via the PyPI tar.gz file, or
-from an SVN checkout), the examples are located in the ``examples`` subdirectory
-inside the root of the Chaco source tree, next to ``docs`` and the ``enthought``
-Python package directory.
+from an SVN checkout), the examples are located in the :file:`examples/` subdirectory
+inside the root of the Chaco source tree, next to :file:`docs/` and the :file:`enthought/`
+directories.
 
-If you installed Chaco as a binary egg from PyPI for your platform, then you
-will need to download the examples separately from (TODO).
+If you installed Chaco as a binary egg from PyPI for your platform, or if you
+happen to be on a machine with Chaco installed, but you don't know the exact
+installation mechanism, then you will need to download the examples separately
+from Subversion:
 
-Also, if you happen to be on a machine with Chaco installed, but you
-don't know the exact installation mechanism, you can just download the
-examples and run them.  Almost all of the Chaco examples are stand-alone
-files that can be run individually, from any location.
+    * ETS 3.0 or Chaco 3.0:
+      
+      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples`
+
+    * ETS 2.8 or Chaco 2.0.x:
+      
+      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
+
+.. [COMMENT]::
+    (TODO):  Add links to examples tarball.
+
+Almost all of the Chaco examples are stand-alone files that can be run
+individually, from any location.
 
 All of the following instructions that involve the command line assume
 you are in the same directory as the examples.
@@ -85,9 +96,9 @@ you are in the same directory as the examples.
 Command line
 ------------
 
-Run the ``simple_line`` example::
+Run the ``simple_line`` example:
 
-    $ python simple_line.py
+    :command:`python simple_line.py`
 
 This should bring up a plot of several Bessel functions and a legend.
 
@@ -120,15 +131,15 @@ You can interact with the plot in several ways:
       (Windows, Linux) or selecting the Quit option on the Python menu (on
       Mac).  Alternatively, can you press Ctrl-C in the terminal.
 
-You should be able to run most of the examples in the top-level ``examples``
-directory, the ``examples/basic/`` directory, and the ``examples/shell/``
-directory.  The ``examples/advanced/`` directory has some examples that
+You should be able to run most of the examples in the top-level :file:`examples`
+directory, the :file:`examples/basic/` directory, and the :file:`examples/shell/`
+directory.  The :file:`examples/advanced/` directory has some examples that
 may or may not work on your system:
 
-    * ``spectrum.py`` requires that you have PyAudio installed and a working
+    * :file:`spectrum.py` requires that you have PyAudio installed and a working
       microphone.  
 
-    * ``data_cube.py`` needs to download about 7.3mb of data from the internet
+    * :file:`data_cube.py` needs to download about 7.3mb of data from the internet
       the first time it is executed, so you will need to have a working
       internet connection.  Once the data is downloaded, it can be saved so the
       example can be run offline in the future.
@@ -145,13 +156,13 @@ them in a more interactive fashion.
 
 Chaco provides a subpackage, currently named the "Chaco Shell", for doing
 command-line plotting like Matlab or Matplotlib.  The examples in the
-``examples/shell/`` directory use this subpackage, and they are particularly
+:file:`examples/shell/` directory use this subpackage, and they are particularly
 amenable to exploration with IPython.
 
-The first example we'll look at is the ``lines.py`` example.  First, we'll
-run it using the standard Python interpreter::
+The first example we'll look at is the :file:`lines.py` example.  First, we'll
+run it using the standard Python interpreter:
 
-    $ python lines.py
+    :command:`python lines.py`
 
 This brings up two overlapping line plots.
 
@@ -173,9 +184,9 @@ You can interact with the plot in the following ways:
         * For either of the above, pressing Escape resets the zoom to the
           original view.
 
-Now exit the plot, and start IPython with the -wthread option::
+Now exit the plot, and start IPython with the -wthread option:
 
-    $ ipython -wthread
+    :command:`ipython -wthread`
 
 This tells IPython to start a wxPython mainloop in a background thread.  Now
 run the previous example again::
@@ -183,7 +194,7 @@ run the previous example again::
     In [1]: run lines.py
 
 This should display the plot window, but you should be presented with another
-IPython prompt.  You can now use various commands from the ``chaco.shell``
+IPython prompt.  You can now use various commands from the :mod:`chaco.shell`
 package to interact with the plot.  First, import them::
 
     In [2]: from enthought.chaco.shell import *
@@ -200,10 +211,10 @@ After running these commands, you plot should look like:
 
 .. image:: images/lines_final.png
 
-The ``chaco_commands()`` function will display a list of commands with brief
+The :func:`chaco_commands` function will display a list of commands with brief
 descriptions.
 
-You can now explore the Chaco object hierarchy, as well.  The ``shell`` 
+You can now explore the Chaco object hierarchy, as well.  The :mod:`chaco.shell` 
 commands are just convenience functions that wrap a rich object hierarchy
 that comprise the actual plot.  See the :ref:`tutorial_ipython` section
 for information on more complex and interesting things you can do with Chaco
@@ -249,6 +260,8 @@ custom overlay with its own trait editor and reusing an existing tool
 from the built-in set of tools.  You can browse them on our SVN server  
 at:
 https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008
+
+.. _api_docs:
 
 API Docs
 --------
