@@ -1,13 +1,13 @@
 """ Defines the Legend, AbstractCompositeIconRenderer, and
 CompositeIconRenderer classes.
 """
-from numpy import array
+from numpy import array, zeros_like
 
 from enthought.enable.api import white_color_trait
 from enthought.kiva import font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
-                                 Instance, List
+                                 Instance, List, Float
 
 # Local relative imports
 from abstract_overlay import AbstractOverlay
@@ -114,6 +114,10 @@ class Legend(AbstractOverlay):
     # that is not visible will also not be in the legend.
     hide_invisible_plots = Bool(True)
 
+    # If hide_invisible_plots is False, we can still choose to render the names
+    # of invisible plots with an alpha.
+    invisible_plot_alpha = Float(0.33)
+
     # The renderer that draws the icons for the legend.
     composite_icon_renderer = Instance(AbstractCompositeIconRenderer)
 
@@ -145,6 +149,8 @@ class Legend(AbstractOverlay):
     _cached_label_sizes = Any
     # A cached list of label names.
     _cached_label_names = List
+    # A cached array of label positions relative to the legend's origin
+    _cached_label_positions = Any
 
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
@@ -213,10 +219,13 @@ class Legend(AbstractOverlay):
             text_x = icon_x + icon_width + self.icon_spacing
             y = self.y2 - edge_space
 
+            self._cached_label_positions[:,0] = icon_x
+
             for i, label_name in enumerate(self._cached_label_names):
                 # Compute the current label's position
                 label_height = self._cached_label_sizes[i][1]
                 y -= label_height
+                self._cached_label_positions[i][1] = y
 
                 # Try to render the icon
                 icon_y = y + (label_height - icon_height) / 2
@@ -225,12 +234,28 @@ class Legend(AbstractOverlay):
 
                 try:
                     if isinstance(plots, list) or isinstance(plots, tuple):
+                        # TODO: How do we determine if a *group* of plots is
+                        # visible or not?  For now, just look at the first one
+                        # and assume that applies to all of them
+                        if not plots[0].visible:
+                            # TODO: the get_alpha() method isn't supported on the Mac kiva backend
+                            #old_alpha = gc.get_alpha()
+                            old_alpha = 1.0
+                            gc.set_alpha(self.invisible_plot_alpha)
+                        else:
+                            old_alpha = None
                         if len(plots) == 1:
                             plots[0]._render_icon(*render_args)
                         else:
                             self.composite_icon_renderer.render_icon(plots, *render_args)
                     else:
                         # Single plot
+                        if not plots.visible:
+                            #old_alpha = gc.get_alpha()
+                            old_alpha = 1.0
+                            gc.set_alpha(self.invisible_plot_alpha)
+                        else:
+                            old_alpha = None
                         plots._render_icon(*render_args)
 
                     icon_drawn = True
@@ -247,6 +272,8 @@ class Legend(AbstractOverlay):
 
                     # Advance y to the next label's baseline
                     y -= self.line_spacing
+                if old_alpha is not None:
+                    gc.set_alpha(old_alpha)
 
         finally:
             gc.restore_state()
@@ -324,6 +351,7 @@ class Legend(AbstractOverlay):
 
         self._cached_labels = labels
         self._cached_label_sizes = label_sizes
+        self._cached_label_positions = zeros_like(label_sizes)
         self._cached_label_names = label_names
 
         if "h" not in self.resizable:
@@ -331,6 +359,16 @@ class Legend(AbstractOverlay):
         if "v" not in self.resizable:
             legend_height = self.outer_height
         return [legend_width, legend_height]
+
+    def get_label_at(self, x, y):
+        """ Returns the label object at (x,y) """
+        for i, pos in enumerate(self._cached_label_positions):
+            size = self._cached_label_sizes[i]
+            corner = pos + size
+            if (pos[0] <= x <= corner[0]) and (pos[1] <= y <= corner[1]):
+                return self._cached_labels[i]
+        else:
+            return None
 
     def _do_layout(self):
         if self.component is not None or len(self._cached_labels) == 0 or \
