@@ -57,7 +57,10 @@ class BaseZoomTool(HasTraits):
         customize SimpleZoom to work with all sorts of components just by
         overriding this method.
         """
-        return getattr(self.component, self.axis + "_mapper")
+        if self.component is not None:
+            return getattr(self.component, self.axis + "_mapper")
+        else:
+            return None
         
 
     def _get_axis_coord(self, event, axis="index"):
