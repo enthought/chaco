@@ -135,16 +135,13 @@ class PanTool(BaseTool):
             else:
                 self.constrain_direction = "y"
     
-        xrange = plot.x_mapper.range
-        yrange = plot.y_mapper.range
-    
         for direction, bound_name, ndx in [("x","width",0), ("y","height",1)]:
-            mapper = getattr(plot, direction + "_mapper")
-            range = mapper.range
-            eventpos = getattr(event, direction)
-            origpos = self._original_xy[ndx]
-    
             if not self.constrain or self.constrain_direction == direction:
+                mapper = getattr(plot, direction + "_mapper")
+                range = mapper.range
+                eventpos = getattr(event, direction)
+                origpos = self._original_xy[ndx]
+    
                 screenlow, screenhigh = mapper.screen_bounds               
                 screendelta = self.speed * (eventpos - origpos)
                 #if getattr(plot, direction + "_direction", None) == "flipped":
