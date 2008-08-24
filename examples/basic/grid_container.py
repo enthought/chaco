@@ -33,7 +33,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
             
         # Create a GridContainer to hold all of our plots
-        container = GridContainer(padding=20, fill_padding=True,
+        container = GridContainer(padding=40, fill_padding=True,
                                   bgcolor="lightgray", use_backbuffer=True,
                                   shape=(2,3), spacing=(20,20))
         

@@ -78,5 +78,5 @@ class Foo(HasTraits):
             pass
 
 if __name__ == "__main__":
-    foo = Foo(xdata=linspace(-2*pi, 2*pi ,1000), eq="sin(x)")
+    foo = Foo(xdata=linspace(-2*pi, 2*pi ,100), eq="sin(x)")
     foo.edit_traits(kind="modal")
