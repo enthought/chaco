@@ -550,8 +550,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         """
         if self.tool_mode == "range":
             mapper = self._get_mapper()
-            self._reset_state((mapper.range.low,
-                               mapper.range.high))
+            if mapper is not None:
+                self._reset_state((mapper.range.low,
+                                   mapper.range.high))
         else:
             x_range = self.component.x_mapper.range
             y_range = self.component.y_mapper.range
