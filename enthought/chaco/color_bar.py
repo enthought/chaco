@@ -38,6 +38,13 @@ class ColorBar(AbstractPlotRenderer):
     # Is there a visible axis on the colorbar?
     axis_visible = Bool(True)
 
+    # Corresponds to either **index_mapper** or None, depending on
+    # the orientation of the plot.
+    x_mapper = Property
+    # Corresponds to either **index_mapper** or None, depending on
+    # the orientation of the plot.
+    y_mapper = Property
+
     #------------------------------------------------------------------------
     # Override default values of inherited traits
     #------------------------------------------------------------------------
@@ -219,6 +226,18 @@ class ColorBar(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     # Property setters and getters
     #------------------------------------------------------------------------
+
+    def _get_x_mapper(self):
+        if self.orientation == "h":
+            return self.index_mapper
+        else:
+            return None
+    
+    def _get_y_mapper(self):
+        if self.orientation == "h":
+            return None
+        else:
+            return self.index_mapper
 
     def _get_color_mapper(self):
         if self.plot:
