@@ -79,7 +79,7 @@ class LassoSelection(AbstractController):
     # active selection is re-created every time a new point is added via
     # the vstack function.
     _active_selection = Array
-    _cached_selections = List(Array)
+    _previous_selections = List(Array)
     
     #----------------------------------------------------------------------
     # Properties
@@ -103,7 +103,10 @@ class LassoSelection(AbstractController):
         """ Returns a list of all disjoint selections composed of 
             the previous selections and the active selection
         """
-        return self._cached_selections + [self._active_selection]
+        if len(self._active_selection) == 0:
+            return self._previous_selections
+        else:
+            return self._previous_selections + [self._active_selection]
     
     #----------------------------------------------------------------------
     # Event Handlers
@@ -125,7 +128,7 @@ class LassoSelection(AbstractController):
         self.selecting_mouse_move(event)
         
         if (not event.shift_down) and (not event.control_down):
-            self._cached_selections = []
+            self._previous_selections = []
         else:
             if event.control_down:
                 self.selection_mode = "exclude"
@@ -143,7 +146,8 @@ class LassoSelection(AbstractController):
         self.selection_completed = True
         self._update_selection()
         
-        self._cached_selections.append(self._active_selection)
+        self._previous_selections.append(self._active_selection)
+        self._active_selection = empty((0,2))
         return
 
     def selecting_mouse_move(self, event):
@@ -199,7 +203,7 @@ class LassoSelection(AbstractController):
         """
         self.event_state='normal'
         self._active_selection = empty((0,2))
-        self._cached_selections = []
+        self._previous_selections = []
         self._update_selection()
 
     def _select_all(self):
@@ -229,7 +233,7 @@ class LassoSelection(AbstractController):
         # the active selection, taking into account the selection mode only
         # for the active selection
         
-        for selection in self._cached_selections:
+        for selection in self._previous_selections:
             selected_mask |= (points_in_polygon(data, selection, False))
             
         if self.selection_mode == 'exclude':

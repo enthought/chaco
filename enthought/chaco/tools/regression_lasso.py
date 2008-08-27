@@ -1,8 +1,7 @@
 """ Defines the RegressionLasso class.
 """
 # Major library imports
-from numpy import compress
-from scipy import polyfit
+from numpy import compress, polyfit
 from math import fabs
 
 # Enthought library imports
