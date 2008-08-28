@@ -32,8 +32,6 @@ INFO = {
         'nonets': [
             'numpy >= 1.1.0',
             #'PyQt4', -- not really required by everyone.
-            'reportlab',
-            'scipy',
             #'wxPython', -- not really required by everyone.
             ],
         },
