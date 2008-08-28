@@ -15,7 +15,7 @@ class DragZoom(DragTool, BaseZoomTool):
     """
 
     # The mouse button that initiates the drag
-    drag_button = Enum("left", "right")
+    drag_button = Enum("left", "right", "middle")
 
     # Scaling factor on the zoom "speed".  A speed of 1.0 implies a zoom rate of
     # 5% for every 10 pixels.
