@@ -38,6 +38,10 @@ def float_or_auto(val):
 # Traits UI for a PlotAxis.
 AxisView = View(VGroup(
                 Group(
+                    Item("object.mapper.range.low", label="Low Range"),
+                    Item("object.mapper.range.high", label="High Range"),
+                    ),
+                Group(
                     Item("title", label="Title", editor=TextEditor()),
                     Item("title_font", label="Font", style="simple"),
                     Item("title_color", label="Color", style="custom"),

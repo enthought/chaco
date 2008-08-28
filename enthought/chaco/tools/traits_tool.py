@@ -3,7 +3,7 @@ function.
 """
 # Enthought library imports
 from enthought.enable.api import BaseTool, Container
-from enthought.traits.api import List, Dict
+from enthought.traits.api import List, Dict, Str
 
 # Chaco imports
 from enthought.chaco.api import BasePlotContainer, BaseXYPlot, PlotAxis, ColorBar
@@ -76,16 +76,18 @@ class TraitsTool(BaseTool):
 
     # A dict of Class : View providing alternate views for a particular component
     views = Dict
-    
-    def normal_left_dclick(self, event):
-        """ Handles the left mouse button being double-clicked when the tool
-        is in the 'normal' state.
-        
-        If the event occurred on this tool's component (or any contained 
-        component of that component), the method opens a Traits UI view on the
-        component that was double-clicked, setting the tool as the active tool
-        for the duration of the view.
+
+    # The event to trigger the edit on
+    event = Str('left_dclick')
+
+    def _dispatch_stateful_event(self, event, suffix):
+        """If the event type matches the specification in *event*, look for a component that
+           matches one of the classes in *classes* in our containment hierarchy.  If one is found,
+           edit it using either the default editor, or an alternate editor specified in *views*
         """
+        if suffix != self.event:
+            return
+
         x = event.x
         y = event.y
 
@@ -102,7 +104,7 @@ class TraitsTool(BaseTool):
             if candidate.is_in(x-offset[0], y-offset[1]):
                 item=candidate
                 break
-            
+
         if item is not None:
             self.component.active_tool = self
             if item.__class__ in self.views:
