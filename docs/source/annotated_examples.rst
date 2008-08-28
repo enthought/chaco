@@ -474,3 +474,15 @@ the data bounds of the color bar.
 source: `zoomable_colorbar.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/zoomable_colorbar.py>`_
 
 .. image:: images/zoomable_colorbar.png
+
+``zoomed_plot``
+------------------------
+The main executable file for the zoom_plot demo.
+ 
+Right-click and drag on the upper plot to select a region to view in detail
+in the lower plot.  The selected region can be moved around by dragging,
+or resized by clicking on one of its edges and dragging.
+
+source: `zoomed_plot <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/zoomed_plot/>`_
+
+.. image:: images/zoomed_plot.png
