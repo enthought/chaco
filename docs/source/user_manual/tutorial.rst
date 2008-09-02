@@ -23,7 +23,7 @@ Tutorials
 There are several tutorials for Chaco, each covering slightly different
 aspects:
 
-    #. Tutorial 1, :ref:`tutorial_1`, introduces some basic concepts of how
+    #. Tutorial 1, :ref:`tutorial_1`, introduces some basic concepts of 
        how to use Chaco and Traits UI to do basic plots, customize
        layout, and add interactivity.  
        

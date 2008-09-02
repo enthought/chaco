@@ -14,30 +14,37 @@ Installing and Building Chaco
 
 Chaco is one of the packages in the Enthought Tool Suite.  It can be installed
 as part of ETS or as a separate package.  Even when it is installed as a 
-standalone package, there are few other dependency packages that you will need.
+standalone package, it depends on a few other packages.
 
 
 Installing via EPD
 ===================
 
-Chaco and the rest of ETS is installed as part of the `Enthought Python
+Chaco and the rest of ETS are installed as part of the `Enthought Python
 Distribution (EPD) <http://www.enthought.com/epd>`_.  If you have installed
 EPD, then you already have Chaco!
 
+.. note::
+    
+   Enthought Python Distribution is free for academic and personal use, and 
+   fee-based for commercial and government use.
 
 easy_install
 ============
 
 Chaco and its dependencies are available as binary eggs for Windows and Mac OS
-X from the `Python Package Index <http://pypi.python.org/pypi>`_.  For these
-platforms, you can do a single command to install Chaco::
+X from the `Python Package Index <http://pypi.python.org/pypi>`_.  
 
-    $ easy_install Chaco
+Chaco depends on Numpy and either wxPython or Qt. These packages are not
+installed by the default installation command. If you do not have these
+packages installed, use the following command to install Chaco:
 
-If you do not already have Numpy and either wxPython or Qt, then use the
-following command instead to install numpy and wxPython if necessary::
+    :command:`easy_install Chaco[nonets]`
 
-    $ easy_install Chaco[nonets]
+If you *do* have Numpy and either wxPython or Qt installed, you can use a 
+simpler command to install Chaco:
+
+    :command:`easy_install Chaco`
 
 Because eggs do not distinguish between various distributions of Linux,
 Enthought hosts its own egg repository for Linux eggs.  See the `ETS wiki
@@ -80,15 +87,15 @@ C extensions and they build with most modern compilers.  Frequently the more
 difficult to build piece is actually the Enable package on which Chaco 
 depends.
 
-On most platforms, in order to build Enable, you will need Swig > 1.3.30 and
-wxPython > 2.8.  If you are on OS X, you will also need a recent Pyrex.
+On most platforms, in order to build Enable, you need Swig > 1.3.30 and
+wxPython > 2.8.  If you are on OS X, you also need a recent Pyrex.
 
 Obtaining the source
 --------------------
 
 You can get Chaco and its dependencies from PyPI as source tarballs, or
 you can download the source directly from Enthought's Subversion server.
-The URL is::
+The URL is:
 
     https://svn.enthought.com/svn/enthought/Chaco/trunk
 

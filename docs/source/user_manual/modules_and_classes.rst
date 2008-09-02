@@ -7,7 +7,7 @@ Commonly Used Modules and Classes
 Base Classes
 ------------
 
-**PlotComponent**
+.. rubric:: Plot Component
 
 All visual components in Chaco subclass from PlotComponent.  It defines all of
 the common visual attributes like background color, border styles and color,
@@ -22,24 +22,28 @@ behaviors, but if they do, there are several easy extension points.
 Data Objects
 ------------
 
-**DataSource**
+Data Source
+~~~~~~~~~~~
 
-Data sources are wrapper objects for the actual data that it will be
-handling.  They provide methods for retrieving data, estimating a size of the
+A data source is a wrapper object for the actual data that it will be
+handling. It provides methods for retrieving data, estimating a size of the
 dataset, indications about the dimensionality of the data, a place for metadata
 (such as selections and annotations), and events that fire when the data gets
-changed.  There are two primary reasons for the datasource class: it provides a
-way for different plotting objects to reference the same data, and it defines
-the interface for embedding Chaco into an existing application.  In most cases,
-the standard ArrayDataSource will suffice. 
+changed. There are two primary reasons for a data source class: 
 
-    *Interface*: ``AbstractDataSource``
+* It provides a way for different plotting objects to reference the same data.
+* It defines the interface for embedding Chaco into an existing application.  
+  In most cases, the standard ArrayDataSource will suffice. 
 
-    *Subclasses*: ``ArrayDataSource``, ``MultiArrayDataSource``, ``PointDataSource``, ``GridDataSource``, ``ImageData``
+    *Interface:* :class:`AbstractDataSource``
 
-**DataRange**
+    *Subclasses:* :class:`ArrayDataSource`, :class:`MultiArrayDataSource`, 
+    :class:`PointDataSource`, :class:`GridDataSource`, :class:`ImageData`
 
-A DataRange expresses bounds on data space of some dimensionality.  The
+Data Range
+~~~~~~~~~~
+
+A data range expresses bounds on data space of some dimensionality.  The
 simplest data range is just a set of two scalars representing (low, high)
 bounds in 1-D.  One of the important aspects of DataRanges is that their bounds
 can be set to ``auto``, which means that they automatically scale to fit their
