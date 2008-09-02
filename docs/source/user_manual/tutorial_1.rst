@@ -64,5 +64,101 @@ corner.
 
 .. image:: images/regression.png
 
+This example starts to demonstrate interacting with the dataset in an
+exploratory way.  Whereas interactivity in the previous example was limited to
+basic pan and zoom (which are fairly common in most plotting libraries), this is
+an example of a more advanced interaction that allows a level of data exploration
+beyond the standard view manipuations.
+
+With this example, the user can select a region of data space, and a simple
+line fit is applied to the selected points.  The equation of the line is
+then displayed in a text label.
+
+The lasso selection tool and regression overlay are both built in to Chaco,
+but they also serve a dual purpose of demonstrating how one can build complex
+data-centric interactions and displays on top of the Chaco framework.
+
 .. image:: images/scalar_function.png
+
+(TODO)
+
+Script-oriented Plotting
+========================
+
+We distinguish between "static" plots and "interactive visualizations"
+because these different applications of a library affect the structure
+of how the library is written, as well as the code you write to use the
+library.
+
+Here is a simple example of the "script-oriented" approach for building up
+a static plot.  This will be familiar to anyone who has used Gnuplot,
+MATLAB, or Matplotlib::
+
+    from numpy import *
+    from enthought.chaco.shell import *
+
+    x = linspace(-2*pi, 2*pi, 100)
+    y = sin(x)
+
+    plot(x, y, "r-")
+    title("First plot")
+    ytitle("sin(x)")
+    show()
+
+.. image::images/script_oriented.png
+
+The basic structure is that we generate some data, then we call functions to plot the data and configure the plot.  There is a global concept of "the active plot", and the functions do high-level manipulations on it.  The generated plot is then
+usually saved to disk for inclusion in a journal article or presentation slides.
+
+Now, as it so happens, this particular example uses the chaco.shell script plotting package, so when you run this script, the plot that Chaco pops up does have some basic interactivity.  You can pan and zoom, and even move forwards and backwards through your zoom history.  But ultimately it's a pretty static view into the data.
+
+
+Application-oriented Plotting
+=============================
+
+The second approach to plotting can be thought of as "application-oriented", for
+lack of a better term.  There is definitely a bit more code, and the plot initially doesn't look much different, but it sets us up to do more interesting things, as you'll see later on::
+
+    class LinePlot(HasTraits):
+        plot = Instance(Plot)
+        traits_view = View(
+            Item('plot',editor=ComponentEditor(),
+                 show_label=False), 
+            width=500, height=500,
+            resizable=True,
+            title="Chaco Plot")
+
+        def __init__(self):
+            x = linspace(-14, 14, 100)
+            y = sin(x) * x**3
+            plotdata = ArrayPlotData(x = x, y = y)
+            plot = Plot(plotdata)
+            plot.plot(("x", "y"), type="line",
+                      color="blue")
+            plot.title = "sin(x) * x^3"
+            self.plot = plot
+
+    if __name__ == "__main__":
+        LinePlot().configure_traits()
+
+This produces a plot similar to the previous script-oriented code snippet:
+
+.. image::images/first_plot.png
+
+So, this is our first "real" Chaco plot, and we'll walk through this code and
+look at what each bit does.  This example serves as the basis for many of the
+later examples.
+
+Understanding the First Plot
+============================
+
+We'll start with the basics.  First, we declare a class to represent our
+class, called "LinePlot"::
+
+    class LinePlot(HasTraits):
+        plot = Instance(Plot)
+
+This class uses the Enthought Traits package, so we subclass from 
+:class:`HasTraits`. 
+
 
