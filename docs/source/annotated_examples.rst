@@ -160,13 +160,15 @@ source: `simple_line.py <https://svn.enthought.com/enthought/browser/Chaco/trunk
 
 .. image:: images/simple_line.png
 
-``simple_polar.py``
--------------------
-Draws a static polar plot.
+.. [COMMENT]::
 
-source: `simple_polar.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/simple_polar.py>`_
+    ``simple_polar.py``
+    -------------------
+    Draws a static polar plot.
 
-.. image:: images/simple_polar.png
+    source: `simple_polar.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/simple_polar.py>`_
+
+    .. image:: images/simple_polar.png
 
 ``tornado.py``
 --------------
