@@ -31,7 +31,7 @@ Layout and Rendering
 Writing Components
 ==================
 
-How do I...
+*How do I...*
 
     * compose multiple renderers?
     * write a custom renderer?
@@ -43,7 +43,7 @@ How do I...
 Advanced
 ========
 
-How do I...
+*How do I...*
 
     * properly change/override draw dispatch?
     * modify event dispatch?

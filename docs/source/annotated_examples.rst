@@ -13,8 +13,6 @@ difficult to find in other plotting packages.
 Extensibility is a core design goal of Chaco, and many people have used the
 examples as starting points for their own applications.
 
-.. contents::
-
 ``bar_plot.py``
 ---------------
 An example showing Chaco's BarPlot class.
@@ -78,8 +76,8 @@ source: `edit_line.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/e
 ``financial_plot.py``
 ---------------------
 Implementation of a standard financial plot visualization using Chaco renderers
-and scales. Right-clicking and selecting an area in the top window will zoom in
-the corresopnding area in the lower window.
+and scales. Right-clicking and selecting an area in the top window zooms in
+the corresponding area in the lower window.
 
 source: `financial_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/financial_plot.py>`_
 
@@ -88,7 +86,7 @@ source: `financial_plot.py <https://svn.enthought.com/enthought/browser/Chaco/tr
 ``financial_plot_dates.py``
 ---------------------------
 Implementation of a standard financial plot visualization using Chaco renderers
-and scales. Right-clicking and selecting an area in the top window will zoom in
+and scales. Right-clicking and selecting an area in the top window zooms in
 the corresopnding area in the lower window.
 This differs from the financial_plot.py example in that it uses a date-oriented
 axis.
@@ -112,8 +110,8 @@ source: `multiaxis.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/e
 Draws some x-y line and scatter plots. On the left hand plot:
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
-   region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
+ - Pressing "z" opens the Zoom Box, and you can click-drag a rectangular 
+   region to zoom. If you use a sequence of zoom boxes, pressing alt-left-arrow
    and alt-right-arrow moves you forwards and backwards through the "zoom 
    history".
 
@@ -132,7 +130,7 @@ source: `noninteractive.py <https://svn.enthought.com/enthought/browser/Chaco/tr
 
 ``range_selection_demo.py``
 ---------------------------
-Demo of the RangeSelection on a line plot.  Left-click and drag will create a
+Demo of the RangeSelection on a line plot.  Left-click and drag creates a
 horizontal range selection; this selection can then be dragged around, or
 resized by dragging its edges.
 
@@ -144,7 +142,7 @@ source: `range_selection_demo.py <https://svn.enthought.com/enthought/browser/Ch
 ------------------
 Draws several overlapping line plots.
 
-Double-clicking on line or scatter plots brings up a traits editor for the plot.
+Double-clicking on line or scatter plots opens a Traits editor for the plot.
 
 source: `scales_test.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/scales_test.py>`_
 
@@ -154,7 +152,7 @@ source: `scales_test.py <https://svn.enthought.com/enthought/browser/Chaco/trunk
 ------------------
 Draws several overlapping line plots.
 
-Double-clicking on line or scatter plots brings up a traits editor for the plot.
+Double-clicking on line or scatter plots opens a Traits editor for the plot.
 
 source: `simple_line.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/simple_line.py>`_
 
@@ -190,8 +188,8 @@ source: `two_plots.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/e
 --------------------
 Draws a static plot of bessel functions, oriented vertically, side-by-side.
 
-You can experiment with using different containers (uncomment lines 30-31)
-or different orientations on the plots (comment out line 41 and uncomment 42).
+You can experiment with using different containers (uncomment lines 32-33)
+or different orientations on the plots (comment out line 43 and uncomment 44).
 
 source: `vertical_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/vertical_plot.py>`_
 
@@ -199,7 +197,7 @@ source: `vertical_plot.py <https://svn.enthought.com/enthought/browser/Chaco/tru
 
 ``data_cube.py``
 ----------------
-Allows isometric viewing of a 3D data cube (downloads the necessary data, about 7.8 MB)
+Allows isometric viewing of a 3-D data cube (downloads the necessary data, about 7.8 MB)
 
 source: `data_cube.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/advanced/data_cube.py>`_
 
@@ -214,6 +212,7 @@ Two frames are opened: one has the plot and allows configuration of
 various plot properties, and one which simulates controls for the hardware
 device from which the data is being acquired; in this case, it is a mockup
 random number generator whose mean and standard deviation 
+.. TODO: Sentence incomplete?
 
 source: `data_stream.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/advanced/data_stream.py>`_
 
@@ -247,7 +246,7 @@ source: `cmap_image_plot.py <https://svn.enthought.com/enthought/browser/Chaco/t
 ``cmap_image_select.py``
 -------------------------
 Draws a colormapped image plot. Selecting colors in the spectrum on the right
-will highlight the corresponding colors in the color map.
+highlights the corresponding colors in the color map.
 
 source: `cmap_image_select.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/cmap_image_select.py>`_
 
@@ -380,8 +379,8 @@ source: `polygon_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trun
 
 ``polygon_move.py``
 -------------------
-Shares same basic interactions as polygon_plot.py, but adds a new one: right-
-click and drag to move a polygon around.
+Shares same basic interactions as polygon_plot.py, but adds a new one: 
+right-click and drag to move a polygon around.
 
 source: `polygon_move.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/polygon_move.py>`_
 
@@ -394,7 +393,7 @@ Demonstrates the Regression Selection tool.
 Hold down the left mouse button to use the mouse to draw a selection region
 around some points, and a line fit is drawn through the center of the points.
 The parameters of the line are displayed at the bottom of the plot region.  You
-can do this repeatedly to draw different regions.1
+can do this repeatedly to draw different regions.
 
 source: `regression.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/regression.py>`_
 
@@ -453,9 +452,9 @@ source: `tabbed_plots.py <https://svn.enthought.com/enthought/browser/Chaco/trun
 
 ``traits_editor.py``
 --------------------
-This example creates a simple 1D function examiner, illustrating the use of
-ChacoPlotEditors for displaying simple plot relations, as well as TraitsUI
-integration. Any 1D numpy/scipy.special function should work in the function
+This example creates a simple 1-D function examiner, illustrating the use of
+ChacoPlotEditors for displaying simple plot relations, as well as Traits UI
+integration. Any 1-D numpy/scipy.special function works in the function
 text box.
 
 source: `traits_editor.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/traits_editor.py>`_
@@ -466,11 +465,11 @@ source: `traits_editor.py <https://svn.enthought.com/enthought/browser/Chaco/tru
 ------------------------
 Draws a colormapped scatterplot of some random data.
 
-Interactions on the plot are the same as simple_line, and additionally, 
+Interactions on the plot are the same as for simple_line.py, and additionally, 
 pan and zoom are available on the colorbar. 
 
-Left click will pan the colorbar's data region.  Right-click-drag will
-select a zoom range.  Mousewheel up and down will zoom in and out on
+Left-click pans the colorbar's data region.  Right-click-drag 
+selects a zoom range.  Mousewheel up and down zoom in and out on
 the data bounds of the color bar.
 
 source: `zoomable_colorbar.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/zoomable_colorbar.py>`_

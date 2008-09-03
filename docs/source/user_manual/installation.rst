@@ -10,8 +10,6 @@ Installing and Building Chaco
     up-to-date information can be found on the `ETS Wiki <http://svn.enthought.com/enthought/>`_, and,
     more specifically, the `Install pages <https://svn.enthought.com/enthought/wiki/Install>`_.
 
-.. contents::
-
 Chaco is one of the packages in the Enthought Tool Suite.  It can be installed
 as part of ETS or as a separate package.  Even when it is installed as a 
 standalone package, it depends on a few other packages.

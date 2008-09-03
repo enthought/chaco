@@ -35,7 +35,7 @@ changed. There are two primary reasons for a data source class:
 * It defines the interface for embedding Chaco into an existing application.  
   In most cases, the standard ArrayDataSource will suffice. 
 
-    *Interface:* :class:`AbstractDataSource``
+    *Interface:* :class:`AbstractDataSource`
 
     *Subclasses:* :class:`ArrayDataSource`, :class:`MultiArrayDataSource`, 
     :class:`PointDataSource`, :class:`GridDataSource`, :class:`ImageData`
@@ -50,36 +50,42 @@ can be set to ``auto``, which means that they automatically scale to fit their
 associated datasources.  (Each DataSource can be associated with multiple
 ranges, and each DataRange can be associated with multiple datasources.)
 
-    *Interface*: ``AbstractDataRange``
+    *Interface*: :class:`AbstractDataRange`
 
-    *Subclasses*: ``BaseDataRange``, ``DataRange1D``, ``DataRange2D``
+    *Subclasses*: :class:`BaseDataRange`, :class:`DataRange1D`, 
+    :class:`DataRange2D`
  
-**Mapper**
+Mapper
+~~~~~~
 
 Mappers perform the job of mapping a data space region to screen space, and
 vice versa.
 
-    *Interface*: ``AbstractMapper``
+    *Interface*: :class:`AbstractMapper`
 
-    *Subclasses*: ``Base1DMapper``, ``LinearMapper``, ``LogMapper``, ``GridMapper``, ``PolarMapper``
+    *Subclasses*: :class:`Base1DMapper`, :class:`LinearMapper`, 
+    :class:`LogMapper`, :class:`GridMapper`, :class:`PolarMapper`
 
 
 Containers
 ----------
 
-**PlotContainer**
+PlotContainer
+~~~~~~~~~~~~~
 
-PlotContainers are Chaco's way for handling layout.  Because they logically
+PlotContainers are Chaco's way of handling layout. Because they logically
 partition the screen space, they also serve as a way for efficient event
-dispatch.  They are very similar to sizers or layout grids in GUI toolkits like
-WX.  Containers are subclasses of PlotComponent, thus allowing them to be
-nested.  BasePlotContainer implements the logic to correctly render and
-dispatch events to sub-components, while its subclasses implement the different
-layout calculations.  Chaco currently has three types of containers: 
+dispatch. They are very similar to sizers or layout grids in GUI toolkits like
+WX. Containers are subclasses of :class:`PlotComponent`, thus allowing them to
+be nested. :class:`BasePlotContainer` implements the logic to correctly render
+and dispatch events to sub-components, while its subclasses implement the
+different layout calculations. Chaco currently has three types of containers, 
+described in the following sections.
 
-    *Interface*: ``BasePlotContainer``
+    *Interface*: :class:`BasePlotContainer`
 
-    *Subclasses*: ``OverlayPlotContainer``, ``HPlotContainer``, ``VPlotContainer``, ``GridPlotContainer``
+    *Subclasses*: :class:`OverlayPlotContainer`, :class:`HPlotContainer`, 
+    :class:`VPlotContainer`, :class:`GridPlotContainer`
 
 
 Renderers

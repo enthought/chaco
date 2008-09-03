@@ -19,7 +19,13 @@ Tutorials
 
         * `SciPy 2008 Tutorial slides (pdf) <https://svn.enthought.com/svn/enthought/Chaco/trunk/docs/scipy08_tutorial.pdf>`_: These slides are currently being converted into the :ref:`tutorial_1` tutorial.
 
+.. toctree::
+  :maxdepth: 1
 
+  tutorial_1.rst
+  tutorial_wx.rst
+  tutorial_ipython.rst
+  
 There are several tutorials for Chaco, each covering slightly different
 aspects:
 

@@ -2,8 +2,6 @@
 Frequently Asked Questions
 ##########################
 
-.. contents::
-
 
 Where does the name "Chaco" come from?
 ======================================
@@ -21,13 +19,13 @@ Why was Chaco named "Chaco2" for a while?
 
 Starting in January of 2006, we refactored and reimplemented much of the core
 Chaco API. The effort has been named "chaco2", and lives in the
-:mod:`enthought.chaco2` namespace. During that time, the original chaco package ("Chaco
-Classic") was in maintenance-only mode, but there was still code that needed
-features from both Chaco Classic and Chaco2.  That code has finally been either
-shelved or refactored, and the latest versions of Chaco (3.0 and up) are back
-to residing in the :mod:`enthought.chaco` namespace.  We still have compatibility
-modules in :mod:`enthought.chaco2`, but they just proxy for the real code in
-:mod:`enthought.chaco`.
+:mod:`enthought.chaco2` namespace. During that time, the original Chaco package
+("Chaco Classic") was in maintenance-only mode, but there was still code that
+needed features from both Chaco Classic and Chaco2.  That code has finally been
+either shelved or refactored, and the latest versions of Chaco (3.0 and up) are
+back to residing in the :mod:`enthought.chaco` namespace.  We still have
+compatibility modules in :mod:`enthought.chaco2`, but they just proxy for the
+real code in :mod:`enthought.chaco`.
 
 The same applies to the :mod:`enthought.enable` and :mod:`enthought.enable2`
 packages.

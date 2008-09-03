@@ -7,9 +7,6 @@ Architecture Overview
    At this time, this is an overview of not just Chaco, but also Kiva and
    Enable.
 
-.. contents::
-
-
 Core Ideas
 ==========
 
@@ -57,14 +54,14 @@ these toolkits. The Kiva and Enable packages are bundled together in the
 Kiva
 ----
 
-Kiva is a 2D vector drawing library for python.  It serves a purpose
+Kiva is a 2-D vector drawing library for Python.  It serves a purpose
 similar to `Cairo <http://cairographics.org/>`_.  It allows us to compose
 vector graphics for display on the screen or for saving to a variety of
 vector and image file formats.  To use Kiva, a program instantiates a Kiva
 GraphicsContext object of an appropriate type, and then makes drawing calls
 on it like gc.draw_image(), gc.line_to(), and gc.show_text().  Kiva
-integrates with windowing toolkits like wxWindows and QT, and it has an
-OpenGL backend as well.  For wxPython and QT, Kiva actually performs a
+integrates with windowing toolkits like wxWindows and Qt, and it has an
+OpenGL backend as well.  For wxPython and Qt, Kiva actually performs a
 high-quality, fast software rasterization using the Anti-Grain Geometry
 (AGG) library.  For OpenGL, Kiva has a python extension that makes native
 OpenGL calls from C++.
@@ -106,23 +103,25 @@ Enable, for the time being, if you want some kind of canvas-like thing to
 model more than just pixel space on the screen, implement it using
 the mechanisms in Chaco.
 
+.. [COMMENT]: A diagram would be helpful to illustrate the following paragraph.
+
 The way that Enable hooks up to the underlying GUI toolkit system is via an
 :class:`enable.Window` object. Each toolkit has its own implementation of this
 object, and they all subclass from :class:`enable.AbstractWindow`. They usually
 contain an instance of the GUI toolkit's specific window object, whether it's a
 :class:`wx.Window` or :class:`Qt.QWidget` or :class:`pyglet.window.Window`. This
-instance is created upon initialization of the enable.Window and stored
-as :attr:`control` on the enable Window. From the perspective of the GUI
+instance is created upon initialization of the enable.Window and stored as the
+:attr:`control` attribute on the Enable window. From the perspective of the GUI
 toolkit, an opaque widget gets created and stuck inside a parent control (or
 dialog or frame or window). This instance serves as a proxy between the GUI
 toolkit and the world of Enable. When the user clicks inside the widget area,
-the :attr:`control` widget calls a method on the enable.Window object,
-which then in turn can dispatch the event down the stack of Enable containers
-and components. When the system tells the widget to draw itself (e.g., as the
-result of a PAINT or EXPOSE event from the OS), the enable.Window is responsible
-for creating an appropriate Kiva GraphicsContext (GC), then passing it down
-through the object hierarchy so that everyone gets a chance to draw. After all
-the components have drawn onto the GC, for the AGG-based bitmap backends, the
+the :attr:`control` widget calls a method on the enable.Window object, which
+then in turn can dispatch the event down the stack of Enable containers and
+components. When the system tells the widget to draw itself (e.g., as the result
+of a PAINT or EXPOSE event from the OS), the enable.Window is responsible for
+creating an appropriate Kiva GraphicsContext (GC), then passing it down through
+the object hierarchy so that everyone gets a chance to draw. After all the
+components have drawn onto the GC, for the AGG-based bitmap backends, the
 enable.Window object is responsible for blitting the rastered off-screen buffer
 of the GC into the actual widget's space on the screen. (For Kiva's OpenGL
 backend, there is no final blit, since calls to the GC render in immediate mode

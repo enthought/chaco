@@ -2,8 +2,6 @@
 Quickstart
 ##########
 
-.. contents::
-
 This section is meant to help users on well-supported platforms and common
 Python environments get started using Chaco as quickly as possible.  If your
 platform is not listed here, or your Python installation has some quirks, then
