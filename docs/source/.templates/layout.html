@@ -1,0 +1,22 @@
+{# Filename: .templates/layout.html #}
+{% extends '!layout.html' %}
+
+{# Change page TOC title #}
+{%- block sidebartoc %}
+{%- if display_toc %}
+<h3>Page Contents</h3>
+{{ toc }}
+{%- endif %}
+{%- endblock %}
+
+{# Remove "Next topic" and "Previous topic" links from sidebar #}
+{%- block sidebarrel %}
+{%- endblock %}
+
+{# Include current page title in breadcrumbs #}
+{% block relbaritems %}
+  {% if current_page_name != 'index' %}
+    <li><a href="{{ pathto(current_page_name) }}">{{ title }}</a></li>
+  {% endif %}
+{% endblock %}
+
