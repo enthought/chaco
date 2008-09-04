@@ -4,7 +4,7 @@ import inspect
 import textwrap
 import tokenize
 
-from enthought.blocks.compiler_unparse import unparse
+from compiler_unparse import unparse
 
 
 class Comment(object):
