@@ -4,5 +4,12 @@
 Programmer's Reference
 ======================
 
-For now, please see the :ref:`api_docs`.
+.. toctree::
+  :maxdepth: 2
+
+  api/data_sources.rst
+  api/data_ranges.rst
+  api/mappers.rst
+  api/containers.rst
+
 
