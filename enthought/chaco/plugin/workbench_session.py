@@ -50,8 +50,7 @@ class WorkbenchSession(PlotSession):
         if name != None:
             self.window_map[name] = new_win
 
-        workbench.active_window.add_editor(new_win)
-        workbench.active_window.activate_editor(new_win)
+        workbench.edit(new_win.obj, kind=lambda *args, **kwds: new_win)
 
         return len(self.windows)-1
 
