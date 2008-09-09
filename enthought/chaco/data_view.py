@@ -168,6 +168,12 @@ class DataView(OverlayPlotContainer):
     # Background color (overrides Enable Component)
     bgcolor = "white"
 
+    # Padding defaults.
+    padding_top = 50
+    padding_bottom = 50
+    padding_left = 50
+    padding_right = 50
+
     border_visible = True
 
     #------------------------------------------------------------------------
@@ -175,11 +181,6 @@ class DataView(OverlayPlotContainer):
     #------------------------------------------------------------------------
 
     def __init__(self, **kwtraits):
-        # Crappy - have to initialize a property this way instead of by
-        # overriding the defaults
-        if "padding" not in kwtraits:
-            kwtraits["padding"] = 50
-
         super(DataView, self).__init__(**kwtraits)
         self._init_components()
 
