@@ -136,7 +136,8 @@ class PlotSession(HasTraits):
     def _colormap_changed(self):
         plots = []
         for w in self.windows:
-            for vals in w.plot_window.component.plots.values():
+            container = w.get_container()
+            for vals in container.plots.values():
                 plots.extend(vals)
         for p in plots:
             if hasattr(p, "color_mapper"):
