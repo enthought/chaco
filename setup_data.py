@@ -15,7 +15,7 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-ENABLE_TRAITS = etsdep('Enable[traits]', '3.0.1')
+ENABLE_TRAITS = etsdep('Enable[traits]', '3.0.2')
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.1')
 #TRAITSBACKENDQT -- not needed due to the way it is used in chaco2_plot_container_editor.py
 TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.2')  # -- directly imported by chaco2_plot_editor.py
