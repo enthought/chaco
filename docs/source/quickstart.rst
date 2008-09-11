@@ -14,38 +14,38 @@ Installation Overview
 
 There are several different ways to get Chaco:
 
-  *  Install the Enthought Python Distribution.
-     Chaco and the rest of the Enthought Tool Suite are bundled with it.  Go to
-     the main `Enthought Python Distribution (EPD)
-     <http://www.enthought.com/epd>`_ web site and download the appropriate
-     version for your platform.  After running the installer, you will have a
-     working version of Chaco.
+* Install the Enthought Python Distribution.
+  Chaco and the rest of the Enthought Tool Suite are bundled with it.  Go to
+  the main `Enthought Python Distribution (EPD)
+  <http://www.enthought.com/epd>`_ web site and download the appropriate
+  version for your platform.  After running the installer, you will have a
+  working version of Chaco.
+  
+  *Available platforms:* 
+  
+  * Windows 32-bit
+  * Mac OS X 10.4 and 10.5
+  * RedHat Enterprise Linux 3 (32-bit and 64-bit)
 
-     *Available platforms:* 
-     
-     * Windows 32-bit
-     * Mac OS X 10.4 and 10.5
-     * RedHat Enterprise Linux 3 (32-bit and 64-bit)
+  .. note::
+     Enthought Python Distribution is free for academic and personal
+     use, and fee-based for commercial and government use.
 
-.. note::
-   Enthought Python Distribution is free for academic and personal
-   use, and fee-based for commercial and government use.
+* *(Windows, Mac)* Install from PyPI using easy_install (part of setuptools)
+  from the command line:
 
-  *  *(Windows, Mac)* Install from PyPI using easy_install (part of setuptools)
-     from the command line:
+  :command:`easy_install Chaco`
 
-        :command:`easy_install Chaco`
+* *(Linux)* Install distribution-specific eggs from Enthought's repository.
+  See the `ETS wiki <https://svn.enthought.com/enthought/wiki/Install#UsingEnthoughtsEggRepo>`_
+  for instructions for installing pre-built binary eggs for your specific
+  distribution of Linux.
 
-  *  *(Linux)* Install distribution-specific eggs from Enthought's repository.
-     See the `ETS wiki <https://svn.enthought.com/enthought/wiki/Install#UsingEnthoughtsEggRepo>`_
-     for instructions for installing pre-built binary eggs for your specific
-     distribution of Linux.
+* *(Linux)* Install via the distribution's packaging mechanism.  We provide
+  .debs for Debian and Ubuntu and .rpms for Redhat.  (TODO)
 
-  *  *(Linux)* Install via the distribution's packaging mechanism.  We provide
-     .debs for Debian and Ubuntu and .rpms for Redhat.  (TODO)
-
-  *  Download source as tarballs or from Subversion and build.  See 
-     the :ref:`installation` section.
+* Download source as tarballs or from Subversion and build.  See 
+  the :ref:`installation` section.
 
 Chaco requires Python version 2.5.
 
@@ -59,14 +59,14 @@ Depending on how you installed Chaco, you may or may not have the examples alrea
 If you installed Chaco as part of EPD, the location of the examples depends on 
 your platform:
 
-    * On Windows, they are in the :file:`Examples\\` subdirectory of your installation
-      location.  This is typically :file:`C:\\Python25\\Examples`.
+* On Windows, they are in the :file:`Examples\\` subdirectory of your installation
+  location.  This is typically :file:`C:\\Python25\\Examples`.
 
-    * On Linux, they are in the :file:`Examples/` subdirectory of your installation
-      location.
+* On Linux, they are in the :file:`Examples/` subdirectory of your installation
+  location.
 
-    * On Mac OS X, they are in the :file:`/Applications/<EPD Version>/Examples/`
-      directory.
+* On Mac OS X, they are in the :file:`/Applications/<EPD Version>/Examples/`
+  directory.
 
 If you downloaded and installed Chaco from source (via the PyPI tar.gz file, or
 from an SVN checkout), the examples are located in the :file:`examples/` subdirectory
@@ -78,13 +78,13 @@ happen to be on a machine with Chaco installed, but you don't know the exact
 installation mechanism, then you will need to download the examples separately
 using Subversion:
 
-    * ETS 3.0 or Chaco 3.0:
-      
-      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples`
+* ETS 3.0 or Chaco 3.0:
+  
+  :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples`
 
-    * ETS 2.8 or Chaco 2.0.x:
-      
-      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
+* ETS 2.8 or Chaco 2.0.x:
+  
+  :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
 
 .. [COMMENT]::
     (TODO):  Add links to examples tarball.
@@ -108,43 +108,43 @@ This opens a plot of several Bessel functions and a legend.
 
 You can interact with the plot in several ways:
 
-    * To pan the plot, hold down the left mouse button inside the plot area
-      (but not on the legend) and drag the mouse.
+* To pan the plot, hold down the left mouse button inside the plot area
+  (but not on the legend) and drag the mouse.
 
-    * To zoom the plot:
+* To zoom the plot:
 
-        * Mouse wheel: scroll up to zoom in, and scroll down to zoom out.
-        
-        * Zoom box: Press "z", and then draw a box region to zoom in on. (There
-          is no box-based zoom out.) Press Ctrl-Left and Ctrl-Right to go
-          back and forward in your zoom box history.
-        
-        * Drag: hold down the right mouse button and drag the mouse up
-          or down. Up zooms in, and down zooms out.
-        
-        * For any of the above, press Escape to resets the zoom to the
-          original view.
+    * Mouse wheel: scroll up to zoom in, and scroll down to zoom out.
+    
+    * Zoom box: Press "z", and then draw a box region to zoom in on. (There
+      is no box-based zoom out.) Press Ctrl-Left and Ctrl-Right to go
+      back and forward in your zoom box history.
+    
+    * Drag: hold down the right mouse button and drag the mouse up
+      or down. Up zooms in, and down zooms out.
+    
+    * For any of the above, press Escape to resets the zoom to the
+      original view.
 
-    * To move the legend, hold down the right mouse button inside the
-      legend and drag it around. Note that you can move the legend
-      outside of the plot area.
+* To move the legend, hold down the right mouse button inside the
+  legend and drag it around. Note that you can move the legend
+  outside of the plot area.
 
-    * To exit the plot, click the "close window" button on the window frame
-      (Windows, Linux) or choose the Quit option on the Python menu (on
-      Mac).  Alternatively, can you press Ctrl-C in the terminal.
+* To exit the plot, click the "close window" button on the window frame
+  (Windows, Linux) or choose the Quit option on the Python menu (on
+  Mac).  Alternatively, can you press Ctrl-C in the terminal.
 
 You can run most of the examples in the top-level :file:`examples`
 directory, the :file:`examples/basic/` directory, and the :file:`examples/shell/`
 directory.  The :file:`examples/advanced/` directory has some examples that
 may or may not work on your system:
 
-    * :file:`spectrum.py` requires that you have PyAudio installed and a working
-      microphone.  
+* :file:`spectrum.py` requires that you have PyAudio installed and a working
+  microphone.  
 
-    * :file:`data_cube.py` needs to download about 7.3mb of data from the Internet
-      the first time it is executed, so you must have a working
-      Internet connection. Once the data is downloaded, you can save it so you 
-      can run the example offline in the future.
+* :file:`data_cube.py` needs to download about 7.3mb of data from the Internet
+  the first time it is executed, so you must have a working
+  Internet connection. Once the data is downloaded, you can save it so you 
+  can run the example offline in the future.
 
 For detailed information about each built-in example, see the :ref:`examples`
 section.

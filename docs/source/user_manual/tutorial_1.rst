@@ -34,11 +34,11 @@ Goals
 
 By the end of this tutorial, you will have learned how to:
 
-    - create Chaco plots of various types
-    - arrange plots of data items in various layouts
-    - configure and interact with your plots using Traits UI
-    - create a custom plot overlay
-    - create a custom tool that interacts with the mouse
+- create Chaco plots of various types
+- arrange plots of data items in various layouts
+- configure and interact with your plots using Traits UI
+- create a custom plot overlay
+- create a custom tool that interacts with the mouse
 
 
 Introduction

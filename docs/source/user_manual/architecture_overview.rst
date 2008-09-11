@@ -174,17 +174,17 @@ Chaco
 
 At the highest level, Chaco consists of:
 
-    * Visual components that render to screen or an output device
-      (e.g., :class:`LinePlot`, :class:`ScatterPlot`, :class:`PlotGrid`, 
-      :class:`PlotAxis`, :class:`Legend`)
+* Visual components that render to screen or an output device
+  (e.g., :class:`LinePlot`, :class:`ScatterPlot`, :class:`PlotGrid`, 
+  :class:`PlotAxis`, :class:`Legend`)
 
-    * Data handling classes that wrap input data, interface with
-      application-specific data sources, and transform coordinates
-      between data and screen space (e.g., :class:`ArrayDataSource`,
-      :class:`GridDataSource`, :class:`LinearMapper`)
+* Data handling classes that wrap input data, interface with
+  application-specific data sources, and transform coordinates
+  between data and screen space (e.g., :class:`ArrayDataSource`,
+  :class:`GridDataSource`, :class:`LinearMapper`)
 
-    * Tools that handle keyboard or mouse events and modify other
-      components (e.g., :class:`PanTool`, :class:`ZoomTool`, 
-      :class:`ScatterInspector`)
+* Tools that handle keyboard or mouse events and modify other
+  components (e.g., :class:`PanTool`, :class:`ZoomTool`, 
+  :class:`ScatterInspector`)
 
 

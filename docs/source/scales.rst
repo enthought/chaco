@@ -19,13 +19,13 @@ takes into account whitespace, the formatted size of labels produced
 by each scale in the ScaleSystem, etc.  So, the basic numerical Scales  
 defined in scales.py are:
 
-  * FixedScale: Simple scale with a fixed interval; places ticks at
-    multiples of the resolution
-  * DefaultScale: Scale that tries to place ticks at 1,2,5, and 10 so  that
-    ticks don't "pop" or suddenly jump when the resolution changes  (when
-    zooming)
-  * LogScale: Dynamic scale that only produces ticks and labels that  work
-    well when doing logarithmic plots
+* FixedScale: Simple scale with a fixed interval; places ticks at
+  multiples of the resolution
+* DefaultScale: Scale that tries to place ticks at 1,2,5, and 10 so  that
+  ticks don't "pop" or suddenly jump when the resolution changes  (when
+  zooming)
+* LogScale: Dynamic scale that only produces ticks and labels that  work
+  well when doing logarithmic plots
 
 By comparison, the default ticking logic in DefaultTickGenerator (in  
 ticks.py) is basically just the DefaultScale.  (This is currently the  
