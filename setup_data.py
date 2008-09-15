@@ -18,8 +18,8 @@ def etsdep(p, min, max=None, literal=False):
 ENABLE_TRAITS = etsdep('Enable[traits]', '3.0.2')
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.1')
 #TRAITSBACKENDQT -- not needed due to the way it is used in chaco2_plot_container_editor.py
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.2')  # -- directly imported by chaco2_plot_editor.py
-TRAITS_UI = etsdep('Traits[ui]', '3.0.2')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.3')  # -- directly imported by chaco2_plot_editor.py
+TRAITS_UI = etsdep('Traits[ui]', '3.0.3')
 
 INFO = {
     "extras_require": {
