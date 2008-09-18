@@ -601,14 +601,16 @@ class PlotAxis(AbstractOverlay):
             overlay_component = self
             new_origin = array(self.position)
 
-        direction = None
+        origin = getattr(overlay_component, "origin", 'bottom left')
         if self.orientation in ('top', 'bottom'):
             self._major_axis_size = overlay_component.bounds[0]
             self._minor_axis_size = overlay_component.bounds[1]
             self._major_axis = array([1., 0.])
             self._title_orientation = array([0.,1.])
-            if hasattr(overlay_component, "x_direction"):
-                direction = overlay_component.x_direction
+            if "right" in origin: 
+                flip_from_gc = True
+            else: 
+                flip_from_gc = False
             #this could be calculated...
             self.title_angle = 0.0
         elif self.orientation in ('left', 'right'):
@@ -616,16 +618,23 @@ class PlotAxis(AbstractOverlay):
             self._minor_axis_size = overlay_component.bounds[0]
             self._major_axis = array([0., 1.])
             self._title_orientation = array([-1., 0])
-            if hasattr(overlay_component, "y_direction"):
-                direction = overlay_component.y_direction
-            self.title_angle = 90.0
+            origin = getattr(overlay_component, "origin", 'bottom left')
+            if "top" in origin: 
+                flip_from_gc = True
+            else: 
+                flip_from_gc = False
+            if self.orientation == 'left':
+                self.title_angle = 90.0
+            else:
+                self.title_angle = 270.0                
 
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
 
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
-        if direction == "flipped":
+        # TODO: should this be here, or not?
+        if flip_from_gc:
             screenlow, screenhigh = screenhigh, screenlow
 
         self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point

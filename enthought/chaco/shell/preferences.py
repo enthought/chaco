@@ -25,7 +25,7 @@ class Preferences(HasTraits):
     bgcolor = white_color_trait
 
     # The default location of the origin for new image plots
-    image_default_origin = Enum("bottom left", "top left", 
+    image_default_origin = Enum("top left", "bottom left", 
                                 "bottom right", "top right")
 
     @classmethod
