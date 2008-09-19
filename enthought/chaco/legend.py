@@ -219,7 +219,8 @@ class Legend(AbstractOverlay):
             text_x = icon_x + icon_width + self.icon_spacing
             y = self.y2 - edge_space
 
-            self._cached_label_positions[:,0] = icon_x
+            if self._cached_label_positions is not None:
+                self._cached_label_positions[:,0] = icon_x
 
             for i, label_name in enumerate(self._cached_label_names):
                 # Compute the current label's position
