@@ -16,7 +16,7 @@ from enthought.traits.api import Enum, Str, Range, Tuple, \
                                  Bool, Trait, Int, Any, Property
 from enthought.traits.ui.api import Item
 from enthought.traits.ui.wx.editor import Editor
-from enthought.traits.ui.wx.editor_factory import EditorFactory
+from enthought.traits.ui.editor_factory import EditorFactory
 
 
 # Local relative imports
@@ -177,30 +177,14 @@ class ChacoEditorFactory ( EditorFactory ):
     #  'Editor' factory methods:
     #---------------------------------------------------------------------------
 
-    def simple_editor ( self, ui, object, name, description, parent ):
-        return ChacoPlotEditor( parent,
-                                 factory     = self,
-                                 ui          = ui,
-                                 object      = object,
-                                 name        = name,
-                                 description = description )
+    def _get_simple_editor_class ( self ):
+        return ChacoPlotEditor
 
-    def text_editor ( self, ui, object, name, description, parent ):
-        return ChacoPlotEditor( parent,
-                                 factory     = self,
-                                 ui          = ui,
-                                 object      = object,
-                                 name        = name,
-                                 description = description )
+    def _get_text_editor_class ( self ):
+        return ChacoPlotEditor
 
-    def readonly_editor ( self, ui, object, name, description, parent ):
-        return ChacoPlotEditor( parent,
-                                 factory     = self,
-                                 ui          = ui,
-                                 object      = object,
-                                 name        = name,
-                                 description = description )
-
+    def _get_readonly_editor_class ( self ):
+        return ChacoPlotEditor
 
 class ChacoPlotEditor ( Editor ):
     """ Traits UI editor for displaying trait values in a Chaco plot.
