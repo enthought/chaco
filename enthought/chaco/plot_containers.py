@@ -71,6 +71,7 @@ class StackedPlotContainer(BasePlotContainer):
         Overrides PlotComponent.
         """
         if self.resizable == "":
+            self._cached_preferred_size = self.outer_bounds[:]
             return self.outer_bounds
         
         if components is None:
