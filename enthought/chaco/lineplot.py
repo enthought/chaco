@@ -373,6 +373,12 @@ class LinePlot(BaseXYPlot):
         #... TODO ...
         return
 
+    def _alpha_changed(self):
+        self.color_ = self.color_[0:3] + (self.alpha,)
+        self.invalidate_draw()
+        self.request_redraw()
+        return
+
     def _color_changed(self):
         self.invalidate_draw()
         self.request_redraw()

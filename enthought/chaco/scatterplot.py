@@ -296,6 +296,12 @@ class ScatterPlot(BaseXYPlot):
     # Event handlers
     #------------------------------------------------------------------------
 
+    def _alpha_changed(self):
+        self.color_ = self.color_[0:3] + (self.alpha,)
+        self.outline_color_ = self.outline_color_[0:3] + (self.alpha,)
+        self.invalidate_draw()
+        self.request_redraw()
+
     def _marker_changed(self):
         self.invalidate_draw()
         self.request_redraw()

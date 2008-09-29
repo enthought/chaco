@@ -127,5 +127,15 @@ class PolygonPlot(BaseXYPlot):
         else:
             return False
 
+    #------------------------------------------------------------------------
+    # Event handlers
+    #------------------------------------------------------------------------
+
+    def _alpha_changed(self):
+        self.edge_color_ = self.edge_color_[0:3] + (self.alpha,)
+        self.face_color_ = self.face_color_[0:3] + (self.alpha,)
+        self.invalidate_draw()
+        self.request_redraw()
+
 
 #### EOF #######################################################################

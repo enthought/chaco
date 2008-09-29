@@ -6,7 +6,7 @@ from numpy import around, array, isnan, transpose
 # Enthought library imports
 from enthought.enable.api import black_color_trait
 from enthought.traits.api import Any, Array, Bool, Enum, Float, Instance, \
-                             Property
+                             Property, Range
 
 
 # Local relative imports
@@ -73,7 +73,10 @@ class BaseXYPlot(AbstractPlotRenderer):
     
     # The orientation of the index axis.
     orientation = Enum("h", "v")
-    
+
+    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    alpha = Range(0.0, 1.0, 1.0)
+
     #------------------------------------------------------------------------
     # Convenience readonly properties for common annotations
     #------------------------------------------------------------------------
