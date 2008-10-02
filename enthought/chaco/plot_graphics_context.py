@@ -49,8 +49,12 @@ class PlotGraphicsContext(GraphicsContext):
         if not container_coords:
             x = -x
             y = -y
+        self.save_state()
         self.translate_ctm(x, y)
-        component.draw(self, view_bounds=(0, 0, self.width(), self.height()))
+        try:
+            component.draw(self, view_bounds=(0, 0, self.width(), self.height()))
+        finally:
+            self.restore_state()
         return
 
     def clip_to_rect(self, x, y, width, height):
