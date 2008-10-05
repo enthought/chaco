@@ -88,7 +88,9 @@ class LegendTool(DragTool):
         
         Implements DragTool.
         """
-        if self.auto_align and self.component:
+        # Make sure we have both a legend and that the legend is overlaying
+        # a component
+        if self.auto_align and self.component and self.component.component:
             # Determine which boundaries of the legend's overlaid component are
             # closest to the center of the legend
             legend = self.component
