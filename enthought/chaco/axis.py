@@ -5,14 +5,10 @@ from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
                   sqrt, sin, transpose
 
 # Enthought Library imports
-from enthought.enable.api import black_color_trait, transparent_color_trait, \
-                                  LineStyle
+from enthought.enable.api import ColorTrait, LineStyle
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Float, Int, Str, Trait, Unicode, \
-                                 Bool, Event, List, Array, Instance, Enum, \
-                                 TraitError
-from enthought.traits.ui.api import View, HGroup, Group, VGroup, Item, TextEditor
-
+     Bool, Event, List, Array, Instance, Enum, Callable
 
 # Local relative imports
 from ticks import AbstractTickGenerator, DefaultTickGenerator
@@ -22,55 +18,8 @@ from label import Label
 from log_mapper import LogMapper
 
 
-def float_or_auto(val):
-    """
-    Validator function that returns *val* if *val* is either a number or
-    the word 'auto'.  This is used as a validator for the text editor
-    in the Traits UI for the **tick_interval** trait.
-    """
-    try:
-        return float(val)
-    except:
-        if isinstance(val, basestring) and val == "auto":
-            return val
-    raise TraitError, "Tick interval must be a number or 'auto'."
-
-# Traits UI for a PlotAxis.
-AxisView = View(VGroup(
-                Group(
-                    Item("object.mapper.range.low", label="Low Range"),
-                    Item("object.mapper.range.high", label="High Range"),
-                    ),
-                Group(
-                    Item("title", label="Title", editor=TextEditor()),
-                    Item("title_font", label="Font", style="simple"),
-                    Item("title_color", label="Color", style="custom"),
-                    Item("tick_interval", label="Interval", editor=TextEditor(evaluate=float_or_auto)),
-                    label="Main"),
-                Group(
-                    Item("tick_color", label="Color", style="custom"),
-                         #editor=EnableRGBAColorEditor()),
-                    Item("tick_weight", label="Thickness"),
-                    #Item("tick_label_font", label="Font"),
-                    Item("tick_label_color", label="Label color", style="custom"),
-                         #editor=EnableRGBAColorEditor()),
-                    HGroup(
-                        Item("tick_in", label="Tick in"),
-                        Item("tick_out", label="Tick out"),
-                        ),
-                    Item("tick_visible", label="Visible"),
-                    label="Ticks"),
-                Group(
-                    Item("axis_line_color", label="Color", style="custom"),
-                         #editor=EnableRGBAColorEditor()),
-                    Item("axis_line_weight", label="Thickness"),
-                    Item("axis_line_visible", label="Visible"),
-                    label="Line"),
-                ),
-                buttons = ["OK", "Cancel"]
-            )
-
-
+def DEFAULT_TICK_FORMATTER(val):
+    return ("%f"%val).rstrip("0").rstrip(".")
 
 class PlotAxis(AbstractOverlay):
     """
@@ -95,7 +44,7 @@ class PlotAxis(AbstractOverlay):
     title_spacing = Trait('auto', 'auto', Float)
 
     # The color of the title.
-    title_color = black_color_trait
+    title_color = ColorTrait("black")
 
     # Not used right now.
     markers = Any     # TODO: Implement this
@@ -104,17 +53,17 @@ class PlotAxis(AbstractOverlay):
     tick_weight = Float(1.0)
 
     # The color of the ticks.
-    tick_color = black_color_trait
+    tick_color = ColorTrait("black")
 
     # The font of the tick labels.
     tick_label_font = KivaFont('modern 10')
 
     # The color of the tick labels.
-    tick_label_color = black_color_trait
+    tick_label_color = ColorTrait("black")
 
     # A callable that is passed the numerical value of each tick label and
     # that returns a string.
-    tick_label_formatter = Any
+    tick_label_formatter = Callable(DEFAULT_TICK_FORMATTER)
 
     # The number of pixels by which the ticks extend into the plot area.
     tick_in = Int(5)
@@ -139,7 +88,7 @@ class PlotAxis(AbstractOverlay):
     axis_line_visible = Bool(True)
 
     # The color of the axis line.
-    axis_line_color = black_color_trait
+    axis_line_color = ColorTrait("black")
 
     # The line thickness (in pixels) of the axis line.
     axis_line_weight = Float(1.0)
@@ -162,16 +111,13 @@ class PlotAxis(AbstractOverlay):
     # Fired when the axis's range bounds change.
     updated = Event
 
-    # Default traits UI view.
-    traits_view = AxisView
-
     #------------------------------------------------------------------------
     # Override default values of inherited traits
     #------------------------------------------------------------------------
 
     # Background color (overrides AbstractOverlay). Axes usually let the color of
     # the container show through.
-    bgcolor = transparent_color_trait
+    bgcolor = ColorTrait("transparent")
 
     # Dimensions that the axis is resizable in (overrides PlotComponent). 
     # Typically, axes are resizable in both dimensions.
@@ -223,6 +169,15 @@ class PlotAxis(AbstractOverlay):
         self._reset_cache()
         self.invalidate_draw()
         return
+
+    def traits_view(self):
+        """ Returns a View instance for use with Traits UI.  This method is
+        called automatically be the Traits framework when .edit_traits() is
+        invoked.
+        """
+        from axis_view import AxisView
+        return AxisView
+
 
     #------------------------------------------------------------------------
     # PlotComponent and AbstractOverlay interface
@@ -607,7 +562,7 @@ class PlotAxis(AbstractOverlay):
             if formatter is not None:
                 tickstring = formatter(val)
             else:
-                tickstring = ("%.2f"%val).rstrip("0").rstrip(".")
+                tickstring = str(val)
             ticklabel = Label(text=tickstring,
                               font=self.tick_label_font,
                               color=self.tick_label_color)
