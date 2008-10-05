@@ -270,7 +270,9 @@ class ScatterPlot(BaseXYPlot):
         """
 
         if not icon_mode:
+            gc.save_state()
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
+
         render_markers(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_,
                        self.custom_symbol)
@@ -285,6 +287,7 @@ class ScatterPlot(BaseXYPlot):
         if not icon_mode:
             # Draw the default axes, if necessary
             self._draw_default_axes(gc)
+            gc.restore_state()
 
 
     def _render_icon(self, gc, x, y, width, height):
