@@ -7,7 +7,7 @@ from enthought.enable.api import white_color_trait
 from enthought.kiva import font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
-                                 Instance, List, Float
+                                 Instance, List, CList, Float
 
 # Local relative imports
 from abstract_overlay import AbstractOverlay
@@ -145,10 +145,19 @@ class Legend(AbstractOverlay):
 
     # A cached list of Label instances
     _cached_labels = List
+    
     # A cached array of label sizes.
     _cached_label_sizes = Any
+    
     # A cached list of label names.
-    _cached_label_names = List
+    _cached_label_names = CList
+
+    # A list of the visible plots.  Each plot corresponds to the label at
+    # the same index in _cached_label_names.  This list does not necessarily
+    # correspond to self.plots.value() because it is sorted according to
+    # the plot name and it potentially excludes invisible plots.
+    _cached_visible_plots = CList
+
     # A cached array of label positions relative to the legend's origin
     _cached_label_positions = Any
 
@@ -230,7 +239,8 @@ class Legend(AbstractOverlay):
 
                 # Try to render the icon
                 icon_y = y + (label_height - icon_height) / 2
-                plots = self.plots[label_name]
+                #plots = self.plots[label_name]
+                plots = self._cached_visible_plots[i]
                 render_args = (gc, icon_x, icon_y, icon_width, icon_height)
 
                 try:
@@ -306,33 +316,37 @@ class Legend(AbstractOverlay):
         the labels, the alignment, and position of the component to overlay.
         """
         # Gather the names of all the labels we will create
+        plot_names, visible_plots = zip(*sorted(self.plots.items()))
         label_names = self.labels
         if len(label_names) == 0:
             if len(self.plots) > 0:
-                label_names = self.plots.keys()
-                label_names.sort()
+                label_names = plot_names
             else:
                 self._cached_labels = []
                 self._cached_label_sizes = []
                 self._cached_label_names = []
+                self._cached_visible_plots = []
                 self.outer_bounds = [0, 0]
                 return [0, 0]
 
         if self.hide_invisible_plots:
             visible_labels = []
-            for name in label_names:
-                val = self.plots[name]
+            visible_plots = []
+            for i, name in enumerate(label_names):
+                val = self.plots[plot_names[i]]
                 # Rather than checking for a list/TraitListObject/etc., we just check
                 # for the attribute first
                 if hasattr(val, 'visible'):
                     if val.visible:
                         visible_labels.append(name)
+                        visible_plots.append(val)
                 else:
                     # If we have a list of renderers, add the name if any of them are
                     # visible
                     for renderer in val:
                         if renderer.visible:
                             visible_labels.append(name)
+                            visible_plots.append(val)
                             break
             label_names = visible_labels
 
@@ -354,6 +368,7 @@ class Legend(AbstractOverlay):
         self._cached_label_sizes = label_sizes
         self._cached_label_positions = zeros_like(label_sizes)
         self._cached_label_names = label_names
+        self._cached_visible_plots = visible_plots
 
         if "h" not in self.resizable:
             legend_width = self.outer_width
