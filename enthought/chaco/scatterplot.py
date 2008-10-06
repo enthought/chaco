@@ -83,8 +83,14 @@ class ScatterPlot(BaseXYPlot):
 
     selection_outline_color = black_color_trait
 
+    #------------------------------------------------------------------------
+    # Private traits
+    #------------------------------------------------------------------------
+
     _cached_selected_pts = Trait(None, None, Array)
     _cached_selected_screen_pts = Array
+    _cached_point_mask = Array
+    _cached_selection_point_mask = Array
     _selection_cache_valid = Bool(False)
 
     #------------------------------------------------------------------------
@@ -176,6 +182,7 @@ class ScatterPlot(BaseXYPlot):
 
         if len(index) == 0 or len(value) == 0 or len(index) != len(value):
             self._cached_data_pts = []
+            self._cached_point_mask = []
             self._cache_valid = True
             return
 
@@ -189,6 +196,7 @@ class ScatterPlot(BaseXYPlot):
         if not self._cache_valid:
             points = transpose(array((index,value)))
             self._cached_data_pts = compress(point_mask, points, axis=0)
+            self._cached_point_mask = point_mask[:]
             self._cache_valid = True
 
         if not self._selection_cache_valid:
@@ -208,7 +216,8 @@ class ScatterPlot(BaseXYPlot):
                     point_mask &= ds.metadata['selection_mask']
                 else:
                     continue
-
+                
+                self._cached_selection_point_mask = point_mask
                 self._cached_selected_pts = compress(point_mask, points, axis=0)
                 self._selection_cache_valid = True
                 break
