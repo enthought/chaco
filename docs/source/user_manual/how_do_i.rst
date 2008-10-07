@@ -62,8 +62,27 @@ Layout and Rendering
 *How do I...*
 
 * put multiple plots in a single window?
-* change the background color?
-* turn off borders? 
+* change the background color?::
+
+    def make_black_plot(index, data_series):
+        plot_data = ArrayPlotData(index=index)
+        plot_data.set_data('data_series', data_series)
+        plot = Plot(plot_data, bgcolor='black')
+        plot.plot(('index', 'data_series'))
+
+    def change_bgcolor(plot):
+        plot.bgcolor = 'black'
+
+* turn off borders? ::
+
+    def make_borderless_plot(index, data_series):
+        plot_data = ArrayPlotData(index=index)
+        plot_data.set_data('data_series', data_series)
+        plot = Plot(plot_data, border_visible=False)
+        plot.plot(('index', 'data_series'))
+
+    def change_to_borderless_plot(plot):
+        plot.border_visible = False
 
 
 Writing Components
