@@ -17,13 +17,23 @@ Basics
         plot.outer_bounds = [width, height]
         plot.do_layout(force=True)
         gc = PlotGraphicsContext(size, dpi=72)
-        gc.render_component(plot)
+        gc.render_component((width, height))
         gc.save(filename)
 
 * render data to screen?
 * integrate a Chaco plot into my WX app?
 * integrate a Chaco plot into my Traits UI?
-* make an application to render many streams of data?
+* make an application to render many streams of data?::
+
+    def plot_several_series(index, series_list):
+        plot_data = ArrayPlotData(index=index)
+        plot = Plot(plot_data)
+
+        for i, data_series in enumerate(series_list):
+            series_name = "series_%d" % i
+            plot_data.set_data(series_name, data_series)
+            plot.plot(('index', series_name))
+
 * make a plot the right size?::
 
     def resize_plot(plot, width, height):
