@@ -1,27 +1,18 @@
 
 .. _tutorial_2:
 
-#######################################
-Plotting Scientific Problems with Chaco
-#######################################
+############################################
+Modelling Van Der Waal's Equation With Chaco
+############################################
 
 Overview
 ========
 
-Chaco is an interactive 2D plotting package for Python.  Once you have
-defined a Chaco plot, the application takes care of updating itself,
-which leaves you with relatively little coding overhead.  For further
-information, Chaco also has it's own page on the wiki that can be
-found `here. <https://svn.enthought.com/enthought/wiki/ChacoProject>`_
-This resource includes further documentation, examples and tutorials.
-
-This tutorial explains more about Chaco and Traits through the
-creation of an example program that generates the plot of a scientific
-equation.  In particular, we will model `Van Der Waal's Equation
+This tutorial walks through the creation of an example program that plots a
+scientific equation.  In particular, we will model `Van Der Waal's Equation
 <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_, which is a
-modification to the ideal gas law that takes into account the nonzero
-size of molecules and the attraction to each other that they
-experience.
+modification to the ideal gas law that takes into account the nonzero size of
+molecules and the attraction to each other that they experience.
 
 
 .. contents::
@@ -29,19 +20,17 @@ experience.
 Development Setup
 =================
 
-In review, Traits is a manifest typing package for python.  It also
-provides UI features that will be used to create a simple GUI.  The
-Traits and Traits UI user manuals are good resources for learning
-about the packages and can be found on the `Traits Wiki
-<https://svn.enthought.com/enthought/wiki/Traits>`_.  The wiki
-includes features, technical notes, cookbooks, FAQ and more.
+In review, Traits is a manifest typing and reactive programming package for
+Python.  It also provides UI features that will be used to create a simple GUI.
+The Traits and Traits UI user manuals are good resources for learning about the
+packages and can be found on the `Traits Wiki
+<https://svn.enthought.com/enthought/wiki/Traits>`_.  The wiki includes
+features, technical notes, cookbooks, FAQ and more.
 
-You must have Chaco and it's dependencies installed:
-
+You must have Chaco and its dependencies installed:
    * Traits
    * TraitsGUI
    * Enable
-   * Chaco
 
 
 Writing the Program
@@ -56,7 +45,7 @@ respectively, and are defined as arrays.  The variables attraction and
 totVolume are the input parameters specified by the user.  The type of
 the variables as will dictate their appearance in the GUI.  For
 example, attraction and totVolume are defined as Ranges, so they will
-show up as slide bars.  Likewise, plot_type will be shown as a drop
+show up as slider bars.  Likewise, plot_type will be shown as a drop
 down menu since it is defined as an Enum::
 
     # We'll also import a few things to be used later.
@@ -190,7 +179,7 @@ the new values.
 Screenshots
 ===========
 
-Here is what the program looks like,
+Here is what the program looks like:
 
 .. image:: images/vanderwaals.png
 
