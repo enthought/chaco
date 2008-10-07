@@ -22,7 +22,34 @@ Basics
 
 * render data to screen?
 * integrate a Chaco plot into my WX app?
-* integrate a Chaco plot into my Traits UI?
+* integrate a Chaco plot into my Traits UI?::
+
+    import numpy
+    from enthought.chaco.api import Plot, ArrayPlotData
+    from enthought.enable.enable_component import EnableComponent
+    from enthought.traits.api import HasTraits, Instance
+    from enthought.traits.ui.api import Item, View
+
+    class MyPlot(HasTraits):
+        plot = Instance(Plot)
+
+        traits_view = View(Item('plot', editor=ComponentEditor())) 
+
+        def __init__(self, index, data_series, **kw):
+            super(MyPlot, self).__init__(**kw)
+
+            plot_data = ArrayPlotData(index=index)
+            plot_data.set_data('data_series', data_series)
+            self.plot = Plot(plot_data)
+            self.plot.plot(('index', 'data_series'))
+
+    index = numpy.array([1,2,3,4,5])
+    data_series = index**2
+
+    my_plot = MyPlot(index, data_series)
+    my_plot.configure_traits()
+
+
 * make an application to render many streams of data?::
 
     def plot_several_series(index, series_list):
