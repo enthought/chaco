@@ -23,6 +23,7 @@ Tutorials
   :maxdepth: 1
 
   tutorial_1.rst
+  tutorial_2.rst
   tutorial_wx.rst
   tutorial_ipython.rst
   
@@ -43,6 +44,10 @@ aspects:
        Traits UI can also be used by a more experienced developer to build more
        involved applications, and Chaco can be used to embed visualizations or
        to leverage interactive graphs as controllers for an application.
+
+    #. Tutorial 2, :ref:`tutorial_2`, is another example of creating a data
+       model and then using Traits and Chaco to rapidly create interactive 
+       plot GUIs.
 
     #. :ref:`tutorial_wx`: Creating a stand-alone wxPython application, or
        embedding a Chaco plot within an existing Wx application.
