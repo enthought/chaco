@@ -11,7 +11,9 @@ Basics
 
 *How do I...*
 
-* render data to an image file?::
+* render data to an image file?
+
+::
 
     def save_plot(plot, filename, width, height):
         plot.outer_bounds = [width, height]
@@ -22,7 +24,9 @@ Basics
 
 * render data to screen?
 * integrate a Chaco plot into my WX app?
-* integrate a Chaco plot into my Traits UI?::
+* integrate a Chaco plot into my Traits UI?
+
+::
 
     import numpy
     from enthought.chaco.api import Plot, ArrayPlotData
@@ -50,7 +54,9 @@ Basics
     my_plot.configure_traits()
 
 
-* make an application to render many streams of data?::
+* make an application to render many streams of data?
+
+::
 
     def plot_several_series(index, series_list):
         plot_data = ArrayPlotData(index=index)
@@ -61,12 +67,16 @@ Basics
             plot_data.set_data(series_name, data_series)
             plot.plot(('index', series_name))
 
-* make a plot the right size?::
+* make a plot the right size?
+
+::
 
     def resize_plot(plot, width, height):
         plot.outer_bounds = [width, height]
 
-* copy a plot the the clipboard?::
+* copy a plot the the clipboard?
+
+::
 
     def copy_to_clipboard(plot):
         # WX specific, though QT implementation is similar using 
@@ -99,7 +109,9 @@ Layout and Rendering
 *How do I...*
 
 * put multiple plots in a single window?
-* change the background color?::
+* change the background color?
+
+::
 
     def make_black_plot(index, data_series):
         plot_data = ArrayPlotData(index=index)
@@ -110,7 +122,9 @@ Layout and Rendering
     def change_bgcolor(plot):
         plot.bgcolor = 'black'
 
-* turn off borders? ::
+* turn off borders? 
+
+::
 
     def make_borderless_plot(index, data_series):
         plot_data = ArrayPlotData(index=index)

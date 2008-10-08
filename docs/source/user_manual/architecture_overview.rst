@@ -54,31 +54,30 @@ these toolkits. The Kiva and Enable packages are bundled together in the
 Kiva
 ----
 
-Kiva is a 2-D vector drawing library for Python.  It serves a purpose
-similar to `Cairo <http://cairographics.org/>`_.  It allows us to compose
-vector graphics for display on the screen or for saving to a variety of
-vector and image file formats.  To use Kiva, a program instantiates a Kiva
-GraphicsContext object of an appropriate type, and then makes drawing calls
-on it like gc.draw_image(), gc.line_to(), and gc.show_text().  Kiva
-integrates with windowing toolkits like wxWindows and Qt, and it has an
-OpenGL backend as well.  For wxPython and Qt, Kiva actually performs a
-high-quality, fast software rasterization using the Anti-Grain Geometry
-(AGG) library.  For OpenGL, Kiva has a python extension that makes native
-OpenGL calls from C++.
+Kiva is a 2-D vector drawing library for Python. It serves a purpose similar to
+`Cairo <http://cairographics.org/>`_. It allows us to compose vector graphics
+for display on the screen or for saving to a variety of vector and image file
+formats. To use Kiva, a program instantiates a Kiva :class:`GraphicsContext`
+object of an appropriate type, and then makes drawing calls on it like
+:meth:`gc.draw_image`, :meth:`gc.line_to`, and :meth:`gc.show_text`. Kiva
+integrates with windowing toolkits like wxWindows and Qt, and it has an OpenGL
+backend as well. For wxPython and Qt, Kiva actually performs a high-quality,
+fast software rasterization using the Anti-Grain Geometry (AGG) library. For
+OpenGL, Kiva has a python extension that makes native OpenGL calls from C++.
 
 Kiva provides a GraphicsContext for drawing onto the screen or saving out to
 disk, but it provides no mechanism for user input and control. For this
 "control" layer, it would be convenient to have to write only one set of event
 callbacks or handlers for all the platforms we support, and all the toolkits on
-each platform. Enable provides this layer. It insulates all the rendering and
-event handling code in Chaco from the minutiae of each GUI toolkit.
-Additionally, and to some extent more importantly, Enable defines the concept of
-"components" and "containers" that form the foundation of Chaco's architecture.
-In the Enable model, the top-most Window object is responsible for dispatching
-events and drawing a single component. Usually, this component is a container
-with other containers and components inside it. The container can perform layout
-on its internal components, and it controls how events are subsequently
-dispatched to its set of components.
+each platform. The Enable package provides this layer. It insulates all the
+rendering and event handling code in Chaco from the minutiae of each GUI
+toolkit. Additionally, and to some extent more importantly, Enable defines the
+concept of "components" and "containers" that form the foundation of Chaco's
+architecture. In the Enable model, the top-most Window object is responsible for
+dispatching events and drawing a single component. Usually, this component is a
+container with other containers and components inside it. The container can
+perform layout on its internal components, and it controls how events are
+subsequently dispatched to its set of components.
 
 Enable
 ------
@@ -128,17 +127,17 @@ backend, there is no final blit, since calls to the GC render in immediate mode
 in the window's active OpenGL context, but the idea is the same, and the
 enable.Window object does perform initialization on the GL GraphicsContext.)
 
-Some of the advantages to using Enable are that it makes mouse and key
-events from disparate windowing systems all share the same kind of
-signature, and be accessible via the same name.  So, if you write bare
-wxPython and handle a key_pressed event in wx, this might generate a value
-of wx.WXK_BACK.  Using Enable, you would just get a "key" back and its
-value would be the string "Backspace", and this would hold true on Qt4 and
-Pyglet.  Almost all of the event handling and rendering code in Chaco is
-identical under all of the backends; there are very few backend-specific
-changes that need to be handled at the Chaco level.
+Some of the advantages to using Enable are that it makes mouse and key events
+from disparate windowing systems all share the same kind of signature, and be
+accessible via the same name. So, if you write bare wxPython and handle a
+:obj:`key_pressed` event in wx, this might generate a value of
+:obj:`wx.WXK_BACK`. Using Enable, you would just get a "key" back and its value
+would be the string "Backspace", and this would hold true on Qt4 and Pyglet.
+Almost all of the event handling and rendering code in Chaco is identical under
+all of the backends; there are very few backend-specific changes that need to be
+handled at the Chaco level.
 
-The enable.Window object has a reference to a single top-level graphical
+The :class:`enable.Window` object has a reference to a single top-level graphical
 component (which includes containers, since they are subclasses of
 component).  Whenever it gets user input events, it recursively dispatches
 all the way down the potentially-nested stack of components.  Whenever a

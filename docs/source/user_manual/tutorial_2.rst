@@ -1,9 +1,9 @@
 
 .. _tutorial_2:
 
-############################################
-Modelling Van Der Waal's Equation With Chaco
-############################################
+#######################################################
+Modelling Van Der Waal's Equation With Chaco and Traits
+#######################################################
 
 Overview
 ========
@@ -15,22 +15,21 @@ modification to the ideal gas law that takes into account the nonzero size of
 molecules and the attraction to each other that they experience.
 
 
-.. contents::
-
 Development Setup
 =================
 
 In review, Traits is a manifest typing and reactive programming package for
-Python.  It also provides UI features that will be used to create a simple GUI.
+Python. It also provides UI features that will be used to create a simple GUI.
 The Traits and Traits UI user manuals are good resources for learning about the
-packages and can be found on the `Traits Wiki
-<https://svn.enthought.com/enthought/wiki/Traits>`_.  The wiki includes
-features, technical notes, cookbooks, FAQ and more.
+packages and can be found on the 
+`Traits Wiki <https://svn.enthought.com/enthought/wiki/Traits>`_. The wiki 
+includes features, technical notes, cookbooks, FAQ and more.
 
 You must have Chaco and its dependencies installed:
-   * Traits
-   * TraitsGUI
-   * Enable
+
+* Traits
+* TraitsGUI
+* Enable
 
 
 Writing the Program
@@ -38,15 +37,17 @@ Writing the Program
 
 First, define a Traits class and the elements necessary need to model
 the task.  The following Traits class is made for the Van Der Waal
-equation, whose variables can be viewed on this wiki page, `Wikipedia
-link <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_.  The
-volume and pressure variables hold lists of our X and Y coordinates,
-respectively, and are defined as arrays.  The variables attraction and
-totVolume are the input parameters specified by the user.  The type of
-the variables as will dictate their appearance in the GUI.  For
-example, attraction and totVolume are defined as Ranges, so they will
-show up as slider bars.  Likewise, plot_type will be shown as a drop
-down menu since it is defined as an Enum::
+equation, whose variables can be viewed on 
+`this wiki page <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_.  The
+:attr:`volume` and :attr:`pressure` attributes hold lists of our X- and 
+Y-coordinates, respectively, and are defined as arrays. The attributes 
+:attr:`attraction` and :attr:`totVolume` are  input parameters specified by the
+user.  The type of the variables dictates their appearance in the GUI.  For
+example, :attr:`attraction` and :attr:`totVolume` are defined as Ranges, so they
+show up as slider bars.  Likewise, :attr:`plot_type` is shown as a drop-down
+list, since it is defined as an Enum.
+
+::
 
     # We'll also import a few things to be used later.
     from enthought.traits.api \
@@ -70,18 +71,19 @@ down menu since it is defined as an Enum::
 Creating the View
 =================
 
-The main GUI window is created by defining a Traits View instance.
+The main GUI window is created by defining a Traits :class:`View` instance.
 This View contains all of the GUI elements, including the plot.  To
 link a variable with a widget element on the GUI, we create a Traits
-Item instance with the same name as the variable and pass it as an
-argument of the Traits View instance declaration.  The Traits UI user
-manual discusses the View and Item objects in depth.  In order to
+:class:`Item` instance with the same name as the variable and pass it as an
+argument of the Traits View instance declaration.  The 
+`Traits UI User Guide <https://svn.enthought.com/svn/enthought/Traits/tags/enthought.traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf>`_
+discusses the View and Item objects in depth. In order to
 embed a Chaco plot into a Traits View, you need to import the
-ChacoPlotItem, which can be passed as a parameter to View just like a
-the Item objects.  The first two arguments to ChacoPlotItem are the
-lists of X and Y coordinates for the graph.  The variables volume and
-pressure hold the lists of X and Y coordinates, and therefore are the
-first two arguments to the Chaco2PlotItem.  Other parameters have been
+:class:`ChacoPlotItem` class, which can be passed as a parameter to View just
+like the Item objects. The first two arguments to ChacoPlotItem are the
+lists of X- and Y-coordinates for the graph.  The attribues :attr:`volume` and
+:attr:`pressure` hold the lists of X- and Y-coordinates, and therefore are the
+first two arguments to Chaco2PlotItem.  Other parameters have been
 provided to the plot for additional customization::
 
     class Data(HasTraits):
@@ -117,28 +119,28 @@ provided to the plot for additional customization::
 Updating the Plot
 =================
 
-The power of Traits and Chaco enable the plot to update itself
-whenever the X or Y arrays are changed.  So, we need a function to
-re-calculate the X and Y coordinate lists whenever the input
+The power of Traits and Chaco enables the plot to update itself
+whenever the X- or Y-arrays are changed.  So, we need a function to
+re-calculate the X- and Y-coordinate lists whenever the input
 parameters are changed by the user moving the sliders in the GUI.
 
-The volume variable is the independent variable and pressure is the
-dependent variable.  The relationship between pressure and volume, as
-derived from the equation found on the wiki page, is::
+The :attr:`volume` attribute is the independent variable and :attr:`pressure` is
+the dependent variable. The relationship between pressure and volume, as derived
+from the equation found on the wiki page, is::
  
                r_constant * Temperature       attraction
    Pressure =  ------------------------   -   ----------
                   Volume - totVolume          Volume**2
 
 
-Next, there are two programing tasks to complete,
+Next, there are two programing tasks to complete:
 
 1. Define trait listener methods for your input parameters. These
-   methods should be automatically called whenever the parameters are
-   changed since it will be time to recalculate the pressure array.
+   methods are automatically called whenever the parameters are
+   changed, since it will be time to recalculate the :attr:`pressure` array.
 
-2. Write a calculation method that will update your lists of X and
-   Y coordinates for your plot.
+2. Write a calculation method that updates your lists of X- and
+   Y-coordinates for your plot.
 
 The following is the code for these two needs::
 
@@ -152,11 +154,11 @@ The following is the code for these two needs::
                         -(self.attraction/(self.volume*self.volume)))
         return
 
-The calc() function computes the pressure array using the current
+The :func:`calc` function computes the :attr:`pressure` array using the current
 values of the independent variables.  Meanwhile, the
-@on_trait_change() decorator (provided by Traits) tells Python to call
-calc() whenever any of the variables attraction, totVolume, or
-temperature change.
+:func:`@on_trait_change` decorator (provided by Traits) tells Python to call
+:func:`calc` whenever any of the attributes :attr:`attraction`, 
+:attr:`totVolume`, or :attr:`temperature` changes.
 
 
 Testing your Program
@@ -164,7 +166,7 @@ Testing your Program
 
 The application is complete, and can be tested by instantiating a copy
 of the class and then creating the view by calling the
-configure_traits() method on the class.  For a simple test, run these
+:meth:`configure_traits` method on the class.  For a simple test, run these
 lines from an interpreter or a separate module::
 
     from vanderwaals import Data
@@ -172,9 +174,8 @@ lines from an interpreter or a separate module::
     viewer.calc()            # Must calculate the initial (x,y) lists
     viewer.configure_traits()
 
-Clicking and dragging on the sliders in the GUI will dynamically
-update the pressure data array, and cause the plot to update, showing
-the new values.
+Clicking and dragging on the sliders in the GUI dynamically updates the pressure
+data array, and causes the plot to update, showing the new values.
 
 Screenshots
 ===========
@@ -188,48 +189,48 @@ But it could be better....
 ==========================
 
 It seems inconvenient to have to call a calculation function manually
-before we configure_traits().  Also, the pressure equation depends on
-the values of other variables, it would be nice to make the
+before we call :meth:`configure_traits`.  Also, the pressure equation depends on
+the values of other variables. It would be nice to make the
 relationship between the dependant and independent variables clearer.
 There is another way we could define our variables that is easier for
-the user, and provides better source documentation.
+the user to understand, and provides better source documentation.
 
-Since our X values remain constant in this example it is wasteful to
-keep recreating the volume array.  The Y array, pressure, is the
+Since our X-values remain constant in this example, it is wasteful to
+keep recreating the :attr:`volume` array.  The Y-array, :attr:`pressure`, is the
 single array that needs to be updated when the independent variables
-change.  So, instead of defining pressure as an Array, we will define
-it as a Property.  Property is a Traits type that allows you to define
-a variable whose value is recalculated whenever it is requested.  In
-addition, when the depends_on argument of a Property constructor is
-set to list of traits in your HasTraits class, the property's trait
-events will fire whenever any of the dependent trait's change events
-fire.  This means that the pressure variable will fire a trait change
-whenever our depends_on traits are changed.  Meanwhile, the Chaco plot
-is automatically listening to the pressure variable, so the plot
-display will get the new value of pressure whenever someone changes
+change. So, instead of defining :attr:`pressure` as an :class:`Array`, we define
+it as a :class:`Property`. Property is a Traits type that allows you to define
+a variable whose value is recalculated whenever it is requested. In
+addition, when the *depends_on* argument of a Property constructor is
+set to list of traits in your :class:`HasTraits` class, the property's trait
+events fire whenever any of the dependent trait's change events
+fire. This means that the :attr:`pressure` attribute fires a trait change
+whenever our *depends_on* traits are changed. Meanwhile, the Chaco plot
+is automatically listening to the :attr:`pressure` attribute, so the plot
+display gets the new value of :attr:`pressure` whenever someone changes
 the input parameters!
 
 When the value of a Property trait is requested, the
-_get_<trait_name>() method is called to calculate and return its
-current value, so we define use the _get_pressure() method as our new
+:samp:`\_get_{trait_name}` method is called to calculate and return its
+current value. So we define use the :meth:`_get_pressure` method as our new
 calculation method.  It is important to note that this implementation
 does have a weakness.  Since we are calculating new pressures each
 time someone changes the value of the input variables, this could slow
-down the program if your calculation is long.  When the user drags a
-slider widget, each stopping point along the slider will request a
+down the program if the calculation is long.  When the user drags a
+slider widget, each stopping point along the slider requests a
 recompute.
 
 For the new implementation, these are the necessary changes:
 
-1. Define the Y coordinate array variable as a Property instead of an
+1. Define the Y-coordinate array variable as a Property instead of an
    Array.
-2. Perform the calculations in the _get_<trait>() method for the Y
-   coordinate array variable, which will be _get_pressure() in this 
+2. Perform the calculations in the :samp:`\_get_{trait_name}` method for the 
+   Y-coordinate array variable, which is :meth:`_get_pressure` in this 
    example.
-3. Define the _<trait>_default() method to set the initial value of
-   the X coordinate array so _get_pressure() does not have to keep 
+3. Define the :samp:`\_{trait}_default` method to set the initial value of
+   the X-coordinate array, so :meth:`\_get_pressure` does not have to keep 
    recalculating it.
-4. Remove the previous @on_trait_change() decorator and calculation 
+4. Remove the previous :func:`@on_trait_change` decorator and calculation 
    method.
 
 The new pieces of code to add to the Data class are::
@@ -252,13 +253,13 @@ The new pieces of code to add to the Data class are::
                  -(self.attraction/(self.volume*self.volume)))
 
 You now no longer have to call an inconvenient calculation function
-before the first call to configure_traits()!  
+before the first call to :meth:`configure_traits`!  
 
 
 Source Code
 ===========
 
-The final version on the program, vanderwaals.py::
+The final version on the program,:file:`vanderwaals.py`::
 
     from enthought.traits.api \
         import HasTraits, Array, Range, Float, Enum, on_trait_change, Property
