@@ -554,10 +554,24 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 self._reset_state((mapper.range.low,
                                    mapper.range.high))
         else:
-            x_range = self.component.x_mapper.range
-            y_range = self.component.y_mapper.range
-            self._reset_state(((x_range.low, y_range.low),
-                               (x_range.high, y_range.high)))
+            if self.component.x_mapper is not None:
+                x_range = self.component.x_mapper.range
+                xlow = x_range.low
+                xhigh = x_range.high
+            else:
+                xlow = "auto"
+                xhigh = "auto"
+
+            if self.component.y_mapper is not None:
+                y_range = self.component.y_mapper.range
+                ylow = y_range.low
+                yhigh = y_range.high
+            else:
+                ylow = "auto"
+                yhigh = "auto"
+
+            self._reset_state(((xlow, ylow),
+                               (xhigh, yhigh)))
 
     def _reset_state_pressed(self):
         """ Called when the tool needs to reset its history. 
