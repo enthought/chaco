@@ -43,7 +43,7 @@ class PlotAxis(AbstractOverlay):
     title_font = KivaFont('modern 12')
 
     # The color in which to render the title
-    axis_line_color = ColorTrait("black")
+    title_color = ColorTrait("black")
 
     # Not used right now.
     # TODO: Implement this
