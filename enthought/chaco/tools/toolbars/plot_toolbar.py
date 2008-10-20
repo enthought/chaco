@@ -18,17 +18,8 @@ class PlotToolbar(HoverToolbar):
     bgcolor = ( WindowColor.Red() / 255.0, WindowColor.Green() / 255.0, 
                 WindowColor.Blue() / 255.0, 0.75 )
     
-    #def __init__(self, component=None, *args, **kw):
-        ## self.component should be a CanvasViewport
-        #self.component = component
-        #for buttontype in self.buttons:
-            #self.add_button(buttontype())
-            
-        ## skip the ViewportToolbar, but call its parent
-        #super(ViewportToolbar, self).__init__(*args, **kw)
-
     def _buttons_default(self):
-        return [ IndexAxisLogButton, ValueAxisLogButton, GhostButton,
+        return [ IndexAxisLogButton, ValueAxisLogButton,
                  SaveAsButton, CopyToClipboardButton, ZoomResetButton ]
         
     def _do_layout(self, component=None):

@@ -60,7 +60,7 @@ class ValueAxisLogButton(ToolbarButton):
 
 class ZoomResetButton(ToolbarButton):
     label = 'Zoom reset'
-    image = 'view_previous'
+    image = 'Gtk-refresh'
     
     def perform(self, event):
         plot_component = self.container.component
@@ -73,7 +73,7 @@ class ZoomResetButton(ToolbarButton):
     
 class SaveAsButton(ToolbarButton):
     label = 'Save As'
-    image = 'save_as'
+    image = 'document-save'
     
     file = File()
     
