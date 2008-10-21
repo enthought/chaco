@@ -37,8 +37,10 @@ class ScatterPlot(BaseXYPlot):
     Renders a scatter plot, given an index and value arrays.
     """
 
-    # The symbol to use if **marker** is set to "custom". This attribute must
-    # be a compiled path for the given Kiva context.
+    # The CompiledPath to use if **marker** is set to "custom". This attribute
+    # must be a compiled path for the Kiva context onto which this plot will
+    # be rendered.  Usually, importing enthought.kiva.GraphicsContext will do
+    # the right thing.
     custom_symbol = Any
 
     #------------------------------------------------------------------------
