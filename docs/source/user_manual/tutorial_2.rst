@@ -1,9 +1,9 @@
 
 .. _tutorial_2:
 
-#######################################################
-Modelling Van Der Waal's Equation With Chaco and Traits
-#######################################################
+######################################################
+Modeling Van der Waal's Equation With Chaco and Traits
+######################################################
 
 Overview
 ========
@@ -81,7 +81,7 @@ discusses the View and Item objects in depth. In order to
 embed a Chaco plot into a Traits View, you need to import the
 :class:`ChacoPlotItem` class, which can be passed as a parameter to View just
 like the Item objects. The first two arguments to ChacoPlotItem are the
-lists of X- and Y-coordinates for the graph.  The attribues :attr:`volume` and
+lists of X- and Y-coordinates for the graph.  The attributes :attr:`volume` and
 :attr:`pressure` hold the lists of X- and Y-coordinates, and therefore are the
 first two arguments to Chaco2PlotItem.  Other parameters have been
 provided to the plot for additional customization::
@@ -111,7 +111,7 @@ provided to the plot for additional customization::
                            Item(name='plot_type'),
                            resizable = True,
                            buttons = ["OK"],
-                           title='Van der waal Equation',
+                           title='Van der Waal Equation',
                            width=900, height=800)
     ....
 
@@ -299,7 +299,7 @@ The final version on the program,:file:`vanderwaals.py`::
                            Item(name='plot_type'),
                            resizable = True,
                            buttons = ["OK"],
-                           title='Van der waal Equation',
+                           title='Van der Waal Equation',
                            width=900, height=800)
     
     
