@@ -2,7 +2,7 @@
 """
 import wx
 
-from enthought.enable.wx_backend.api import Window
+from enthought.enable.api import Window
 from enthought.chaco.shell.scaly_plot import ScalyPlot
 
 
