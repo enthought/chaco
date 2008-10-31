@@ -24,6 +24,7 @@ Tutorials
 
   tutorial_1.rst
   tutorial_2.rst
+  tutorial_hyetograph.rst
   tutorial_wx.rst
   tutorial_ipython.rst
   
