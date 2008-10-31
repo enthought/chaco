@@ -259,7 +259,7 @@ before the first call to :meth:`configure_traits`!
 Source Code
 ===========
 
-The final version on the program,:file:`vanderwaals.py`::
+The final version on the program, `vanderwaals.py` ::
 
     from enthought.traits.api \
         import HasTraits, Array, Range, Float, Enum, on_trait_change, Property
