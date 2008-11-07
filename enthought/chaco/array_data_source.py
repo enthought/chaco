@@ -1,7 +1,7 @@
 """ Defines the ArrayDataSource xlass."""
 
 # Major library imports
-from numpy import array, ones, nanargmin, nanargmax
+from numpy import array, ones, nanargmin, nanargmax, ndarray
 
 # Enthought library imports
 from enthought.traits.api import Any, Constant, Int, Tuple
@@ -230,8 +230,11 @@ class ArrayDataSource(AbstractDataSource):
                 # data might be an array of strings or objects that 
                 # can't have argmin calculated on them.
                 try:
-                    self._min_index = nanargmin(data)
-                    self._max_index = nanargmax(data)
+                    # the data may be in a subclass of numpy.array, viewing
+                    # the data as a ndarray will remove side effects of
+                    # the subclasses, such as different operator behaviors
+                    self._min_index = nanargmin(data.view(ndarray))
+                    self._max_index = nanargmax(data.view(ndarray))
                 except (TypeError, IndexError):
                     # For strings and objects, we punt...  These show up in
                     # label-ish data sources.

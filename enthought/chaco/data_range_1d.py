@@ -5,7 +5,7 @@ Defines the DataRange1D class.
 
 # Major library imports
 from math import ceil, floor, log
-from numpy import compress, inf, isnan
+from numpy import compress, inf, isnan, ndarray
 
 # Enthought library imports
 from enthought.traits.api import Bool, CFloat, Enum, Float, Property, Trait, \
@@ -116,7 +116,7 @@ class DataRange1D(BaseDataRange):
         
         Implements AbstractDataRange.
         """
-        return (data>=self._low_value) & (data<=self._high_value)
+        return (data.view(ndarray)>=self._low_value) & (data.view(ndarray)<=self._high_value)
     
     def bound_data(self, data):
         """ Returns a tuple of indices for the start and end of the first run

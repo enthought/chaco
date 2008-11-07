@@ -7,7 +7,7 @@ from math import radians, sqrt
 
 # Major library imports
 from numpy import (array, argsort, concatenate, cos, dot, empty, nonzero,
-    pi, sin, take)
+    pi, sin, take, ndarray)
 
 # Enthought library imports
 from enthought.traits.api import CArray, Enum, Trait
@@ -202,7 +202,7 @@ def arg_find_runs(int_array, order='ascending'):
         increment = -1
     else:
         increment = 0
-    rshifted = right_shift(int_array, int_array[0]-increment)
+    rshifted = right_shift(int_array, int_array[0]-increment).view(ndarray)
     start_indices = concatenate([[0], nonzero(int_array - (rshifted+increment))[0]])
     end_indices = left_shift(start_indices, len(int_array))
     return zip(start_indices, end_indices)
