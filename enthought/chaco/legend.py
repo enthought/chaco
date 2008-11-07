@@ -316,6 +316,9 @@ class Legend(AbstractOverlay):
         the labels, the alignment, and position of the component to overlay.
         """
         # Gather the names of all the labels we will create
+        if len(self.plots) == 0:
+            return [0, 0]
+
         plot_names, visible_plots = zip(*sorted(self.plots.items()))
         label_names = self.labels
         if len(label_names) == 0:
