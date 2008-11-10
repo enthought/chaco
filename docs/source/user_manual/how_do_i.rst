@@ -18,8 +18,8 @@ Basics
     def save_plot(plot, filename, width, height):
         plot.outer_bounds = [width, height]
         plot.do_layout(force=True)
-        gc = PlotGraphicsContext(size, dpi=72)
-        gc.render_component((width, height))
+        gc = PlotGraphicsContext((width, height), dpi=72)
+        gc.render_component(plot)
         gc.save(filename)
 
 * render data to screen?
