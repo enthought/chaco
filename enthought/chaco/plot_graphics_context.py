@@ -1,6 +1,6 @@
 """ Defines the PlotGraphicsContext class.
 """
-from enthought.kiva.backend_image import GraphicsContext
+from enthought.kiva import GraphicsContext
 
 class PlotGraphicsContext(GraphicsContext):
     """ A Kiva graphics context, which facilitates rendering plots and plot
