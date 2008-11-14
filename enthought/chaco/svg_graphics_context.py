@@ -1,8 +1,8 @@
 """ Defines the PlotGraphicsContext class.
 """
-from enthought.kiva.backend_image import GraphicsContext
+from enthought.kiva.backend_svg import GraphicsContext
 
-class PlotGraphicsContext(GraphicsContext):
+class SVGGraphicsContext(GraphicsContext):
     """ A Kiva graphics context, which facilitates rendering plots and plot
     components into an offscreen or memory buffer.  
     
@@ -20,7 +20,7 @@ class PlotGraphicsContext(GraphicsContext):
         if type(size_or_ary) in (list, tuple) and len(size_or_ary) == 2:
             size_or_ary = (size_or_ary[0]*scale + 1, size_or_ary[1]*scale + 1)
         
-        super(PlotGraphicsContext, self).__init__(size_or_ary, *args, **kw)
+        super(SVGGraphicsContext, self).__init__(size_or_ary, *args, **kw)
         self.translate_ctm(0.5, 0.5)
         self.scale_ctm(scale, scale)
         return
