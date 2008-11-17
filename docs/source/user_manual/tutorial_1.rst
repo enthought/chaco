@@ -453,7 +453,7 @@ of these capabilities.  Here is the full listing of the modified code,
 including some of the new import lines. ::
 
     from enthought.traits.api import HasTraits, Instance, Int 
-    from enthought.enable.api import ColorTraits 
+    from enthought.enable.api import ColorTrait
     from enthought.chaco.api import marker_trait 
 
     class ScatterPlotTraits(HasTraits):
