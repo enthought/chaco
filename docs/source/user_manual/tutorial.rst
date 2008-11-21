@@ -49,6 +49,9 @@ aspects:
     #. Tutorial 2, :ref:`tutorial_2`, is another example of creating a data
        model and then using Traits and Chaco to rapidly create interactive 
        plot GUIs.
+       
+    #. :ref:`tutorial_hyetograph` introduces the ``on_trait_listener`` 
+       decorator and uses Chaco, simple Traits views, and live GUI interaction.
 
     #. :ref:`tutorial_wx`: Creating a stand-alone wxPython application, or
        embedding a Chaco plot within an existing Wx application.
