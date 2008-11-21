@@ -181,7 +181,7 @@ Next, we declare a Traits UI View for this class::
 
 Inside this view, we are placing a reference to the :attr:`plot` trait and
 telling Traits UI to use the :class:`ComponentEditor` (imported from 
-:module:`enthought.enable.api`) to display it. If the
+:mod:`enthought.enable.api`) to display it. If the
 trait were an Int or Str or Float, Traits can automatically pick an appropriate
 GUI element to display it. Since Traits UI doesn't natively know how to display
 Chaco components, we explicitly tell it what kind of editor to use.
