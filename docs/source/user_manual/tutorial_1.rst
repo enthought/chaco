@@ -10,17 +10,17 @@ Overview
 
 This tutorial is an introduction to Chaco. We're going to build several
 mini-applications of increasing capability and complexity. Chaco was designed to
-be used primarily by scientific programmers, and this tutorial only requires
+be used primarily by scientific programmers, and this tutorial requires only
 basic familiarity with Python.
 
-Knowledge of Numpy can be helpful for certain parts of the tutorial. Knowledge
+Knowledge of NumPy can be helpful for certain parts of the tutorial. Knowledge
 of GUI programming concepts such as widgets, windows, and events are helpful
 for the last portion of the tutorial, but it is not required.
 
-This tutorial will demonstrate using Chaco with Traits UI, so knowledge of the
+This tutorial demonstrates using Chaco with Traits UI, so knowledge of the
 Traits framework is also helpful. We don't use very many sophisticated aspects
 of Traits or Traits UI, and it is entirely possible to pick it up as you go
-through the tutorial.
+through the tutorial. This tutorial applies to Enthought Tool Suite version 3.x.
 
 It's also worth pointing out that you don't *have* to use Traits UI in order to
 use Chaco --- you can integrate Chaco directly with Qt or wxPython --- but for
@@ -180,7 +180,8 @@ Next, we declare a Traits UI View for this class::
             width=500, height=500, resizable=True, title="Chaco Plot") 
 
 Inside this view, we are placing a reference to the :attr:`plot` trait and
-telling Traits UI to use the :class:`ComponentEditor` to display it. If the
+telling Traits UI to use the :class:`ComponentEditor` (imported from 
+:module:`enthought.enable.api`) to display it. If the
 trait were an Int or Str or Float, Traits can automatically pick an appropriate
 GUI element to display it. Since Traits UI doesn't natively know how to display
 Chaco components, we explicitly tell it what kind of editor to use.
