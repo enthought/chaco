@@ -110,9 +110,9 @@ The above code snippet shows a number of Traits features,
     5. Traits are always contained within the class definition, and
        each instance of the class will have a unique copy of the traits.
 
-The Traits user manual contains more information about the standard
-Trait types, `Traits UI User Guide
-<https://svn.enthought.com/svn/enthought/Traits/tags/enthought.traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf>`_
+The Traits API Reference contains more information about the standard
+Trait types; see the :mod:`trait_types` module in the `Traits API Reference 
+<http://code.enthought.com/projects/files/ETS3_API/enthought.traits.trait_types.html>`_.
 
 
 Setting up the User Interface (UI)
