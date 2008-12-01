@@ -4,7 +4,7 @@ function.
 
 # Major library imports
 from numpy import argmin, around, array, asarray, compress, invert, isnan, \
-                sqrt, sum, transpose
+                sqrt, sum, transpose, where
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, ColorTrait
@@ -210,17 +210,20 @@ class ScatterPlot(BaseXYPlot):
             # we'll have to define a small algebra about how they are combined,
             # and this will fall out...
             for ds in (self.index, self.value):
-                if ds.metadata.get('selections', None) is not None:
+                if ds.metadata.get('selection_masks', None) is not None:
+                    for mask in ds.metadata['selection_masks']:
+                        point_mask &= mask
+                    indices = where(point_mask == True)
+                    points = transpose(array((index[indices], value[indices])))
+                elif ds.metadata.get('selections', None) is not None:
                     indices = ds.metadata['selections']
                     point_mask = point_mask[indices]
                     points = transpose(array((index[indices], value[indices])))
-                elif ds.metadata.get('selection_mask', None) is not None:
-                    point_mask &= ds.metadata['selection_mask']
                 else:
                     continue
                 
                 self._cached_selection_point_mask = point_mask
-                self._cached_selected_pts = compress(point_mask, points, axis=0)
+                self._cached_selected_pts = points
                 self._selection_cache_valid = True
                 break
             else:
