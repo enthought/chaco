@@ -213,12 +213,13 @@ Now, let's look at the constructor, where the real work gets done::
         y = sin(x) * x**3 
         plotdata = ArrayPlotData(x=x, y=y) 
 
-The first thing we do here is call the super-class's __init__ method, which
-ensures that all the Traits machinery is properly set up. Then we create some
-mock data, just like in the script-oriented approach. But rather than directly
-calling some sort of plotting function to throw up a plot, we create this
-:class:`ArrayPlotData` object and stick the data in there. The ArrayPlotData
-object is a simple structure that associates a name with a NumPy array.
+The first thing we do here is call the super-class's :meth:`__init__` method,
+which ensures that all the Traits machinery is properly set up, even though the
+:meth:`__init__` method is overridden. Then we create some mock data, just like
+in the script-oriented approach. But rather than directly calling some sort of
+plotting function to throw up a plot, we create this :class:`ArrayPlotData`
+object and stick the data in there. The ArrayPlotData object is a simple
+structure that associates a name with a NumPy array.
 
 In a script-oriented approach to plotting, whenever you have to update the data
 or tweak any part of the plot, you basically re-run the entire script.  Chaco's
