@@ -7,7 +7,7 @@ into a structured (gridded) 1-D output space.
 from numpy import transpose
 
 # Enthought library imports
-from enthought.traits.api import Bool, Instance, Float, Property
+from enthought.traits.api import Bool, DelegatesTo, Instance, Float, Property
 
 # Local relative imports
 from abstract_mapper import AbstractMapper
@@ -46,6 +46,12 @@ class GridMapper(AbstractMapper):
     # Must be a tuple (x_low_pos, x_high_pos, y_low_pos, y_high_pos).
     screen_bounds = Property
 
+    # Should the mapper stretch the dataspace when its screen space bounds are
+    # modified (default), or should it preserve the screen-to-data ratio and
+    # resize the data bounds?  If the latter, it will only try to preserve
+    # the ratio if both screen and data space extents are non-zero.
+    stretch_data_x = DelegatesTo("_xmapper", prefix="stretch_data")
+    stretch_data_y = DelegatesTo("_ymapper", prefix="stretch_data")
 
     #------------------------------------------------------------------------
     # Private Traits
@@ -61,22 +67,39 @@ class GridMapper(AbstractMapper):
     # Public methods
     #------------------------------------------------------------------------
 
-    def __init__(self, x_type="linear", y_type="linear", **kwargs):
+    def __init__(self, x_type="linear", y_type="linear", range=None, **kwargs):
+        # TODO: This is currently an implicit assumption, i.e. that the range
+        # will be passed in to the constructor.  It would be impossible to 
+        # create the xmapper and ymapper otherwise.  However, this should be
+        # changed so that the mappers get created or modified in response to
+        # the .range attribute changing, instead of requiring the range to
+        # be passed in at construction time.
+        self.range = range
+
+        if "_xmapper" not in kwargs:
+            if x_type == "linear":
+                self._xmapper = LinearMapper(range=self.range.x_range)
+            elif x_type == "log":
+                self._xmapper = LogMapper(range=self.range.x_range)
+            else:
+                raise ValueError("Invalid x axis type: %s" % x_type)
+        else:
+            self._xmapper = kwargs.pop("_xmapper")
+
+        if "_ymapper" not in kwargs:
+            if y_type == "linear":
+                self._ymapper = LinearMapper(range=self.range.y_range)
+            elif y_type == "log":
+                self._ymapper = LogMapper(range=self.range.y_range)
+            else:
+                raise ValueError("Invalid y axis type: %s" % y_type)
+        else:
+            self._ymapper = kwargs.pop("_ymapper")
+
+        # Now that the mappers are created, we can go to the normal HasTraits
+        # constructor, which might set values that depend on us having a valid
+        # range and mappers.
         super(GridMapper, self).__init__(**kwargs)
-
-        if x_type == "linear":
-            self._xmapper = LinearMapper(range=self.range.x_range)
-        elif x_type == "log":
-            self._xmapper = LogMapper(range=self.range.x_range)
-        else:
-            raise ValueError("Invalid x axis type: %s" % x_type)
-
-        if y_type == "linear":
-            self._ymapper = LinearMapper(range=self.range.y_range)
-        elif y_type == "log":
-            self._ymapper = LogMapper(range=self.range.y_range)
-        else:
-            raise ValueError("Invalid y axis type: %s" % y_type)
         
 
     def map_screen(self, data_pts):

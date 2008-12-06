@@ -272,13 +272,17 @@ class Plot(DataView):
                     raise ValueError("Unhandled plot type: " + plot_type)
 
                 if self.index_scale == "linear":
-                    imap = LinearMapper(range=self.index_range)
+                    imap = LinearMapper(range=self.index_range, 
+                                stretch_data=self.index_mapper.stretch_data)
                 else:
-                    imap = LogMapper(range=self.index_range)
+                    imap = LogMapper(range=self.index_range,
+                                stretch_data=self.index_mapper.stretch_data)
                 if self.value_scale == "linear":
-                    vmap = LinearMapper(range=self.value_range)
+                    vmap = LinearMapper(range=self.value_range,
+                                stretch_data=self.value_mapper.stretch_data)
                 else:
-                    vmap = LogMapper(range=self.value_range)
+                    vmap = LogMapper(range=self.value_range,
+                                stretch_data=self.value_mapper.stretch_data)
 
                 plot = cls(index=index,
                            value=value,
@@ -325,13 +329,17 @@ class Plot(DataView):
                     raise ValueError("Unexpected colormap %r in plot()." % colormap)
                 
                 if self.index_scale == "linear":
-                    imap = LinearMapper(range=self.index_range)
+                    imap = LinearMapper(range=self.index_range,
+                                stretch_data=self.index_mapper.stretch_data)
                 else:
-                    imap = LogMapper(range=self.index_range)
+                    imap = LogMapper(range=self.index_range,
+                                stretch_data=self.index_mapper.stretch_data)
                 if self.value_scale == "linear":
-                    vmap = LinearMapper(range=self.value_range)
+                    vmap = LinearMapper(range=self.value_range,
+                                stretch_data=self.value_mapper.stretch_data)
                 else:
-                    vmap = LogMapper(range=self.value_range)
+                    vmap = LogMapper(range=self.value_range,
+                                stretch_data=self.value_mapper.stretch_data)
 
                 plot = ColormappedScatterPlot(index=index,
                            index_mapper=imap,
@@ -443,7 +451,9 @@ class Plot(DataView):
         # Create the index and add its datasources to the appropriate ranges
         index = GridDataSource(xs, ys, sort_order=('ascending', 'ascending'))
         self.range2d.add(index)
-        mapper = GridMapper(range=self.range2d)
+        mapper = GridMapper(range=self.range2d, 
+                            stretch_data_x=self.x_mapper.stretch_data,
+                            stretch_data_y=self.y_mapper.stretch_data)
 
         plot = cls(index=index, 
                    value=value, 
@@ -557,7 +567,9 @@ class Plot(DataView):
         # Create the index and add its datasources to the appropriate ranges
         index = GridDataSource(xs, ys, sort_order=('ascending', 'ascending'))
         self.range2d.add(index)
-        mapper = GridMapper(range=self.range2d)
+        mapper = GridMapper(range=self.range2d,
+                            stretch_data_x=self.x_mapper.stretch_data,
+                            stretch_data_y=self.y_mapper.stretch_data)
 
         plot = cls(index=index, 
                    value=value, 
@@ -722,10 +734,12 @@ class Plot(DataView):
         if not self.range2d: return
         if self.index_scale == "linear":
             imap = LinearMapper(range=self.index_range,
-                                screen_bounds=self.index_mapper.screen_bounds)
+                                screen_bounds=self.index_mapper.screen_bounds,
+                                stretch_data=self.index_mapper.stretch_data)
         else:
             imap = LogMapper(range=self.index_range,
-                             screen_bounds=self.index_mapper.screen_bounds)
+                             screen_bounds=self.index_mapper.screen_bounds,
+                             stretch_data=self.index_mapper.stretch_data)
         self.index_mapper = imap
         for key in self.plots:
             for plot in self.plots[key]:
@@ -733,10 +747,12 @@ class Plot(DataView):
                     raise ValueError("log scale only supported on XY plots")
                 if self.index_scale == "linear":
                     imap = LinearMapper(range=plot.index_range,
-                                screen_bounds=plot.index_mapper.screen_bounds)
+                                screen_bounds=plot.index_mapper.screen_bounds,
+                                stretch_data=self.index_mapper.stretch_data)
                 else:
                     imap = LogMapper(range=plot.index_range,
-                                screen_bounds=plot.index_mapper.screen_bounds)
+                                screen_bounds=plot.index_mapper.screen_bounds,
+                                stretch_data=self.index_mapper.stretch_data)
                 plot.index_mapper = imap
 
     def _value_scale_changed(self, old, new):
@@ -745,10 +761,12 @@ class Plot(DataView):
         if not self.range2d: return
         if self.value_scale == "linear":
             vmap = LinearMapper(range=self.value_range,
-                                screen_bounds=self.value_mapper.screen_bounds)
+                                screen_bounds=self.value_mapper.screen_bounds,
+                                stretch_data=self.value_mapper.stretch_data)
         else:
             vmap = LogMapper(range=self.value_range,
-                             screen_bounds=self.value_mapper.screen_bounds)
+                             screen_bounds=self.value_mapper.screen_bounds,
+                                stretch_data=self.value_mapper.stretch_data)
         self.value_mapper = vmap
         for key in self.plots:
             for plot in self.plots[key]:
@@ -756,10 +774,12 @@ class Plot(DataView):
                     raise ValueError("log scale only supported on XY plots")
                 if self.value_scale == "linear":
                     vmap = LinearMapper(range=plot.value_range,
-                                screen_bounds=plot.value_mapper.screen_bounds)
+                                screen_bounds=plot.value_mapper.screen_bounds,
+                                stretch_data=self.value_mapper.stretch_data)
                 else:
                     vmap = LogMapper(range=plot.value_range,
-                                screen_bounds=plot.value_mapper.screen_bounds)
+                                screen_bounds=plot.value_mapper.screen_bounds,
+                                stretch_data=self.value_mapper.stretch_data)
                 plot.value_mapper = vmap
 
     def __title_changed(self, old, new):

@@ -26,10 +26,19 @@ class Base1DMapper(AbstractMapper):
     # Must be a tuple (low_pos, high_pos).
     screen_bounds = Property
 
+    # Should the mapper stretch the dataspace when its screen space bounds are
+    # modified (default), or should it preserve the screen-to-data ratio and
+    # resize the data bounds?  If the latter, it will only try to preserve
+    # the ratio if both screen and data space extents are non-zero.
+    stretch_data = Bool(True)
+
     # If the subclass uses a cache, _cache_valid is maintained to 
     # monitor its status
     _cache_valid = Bool(False)
 
+    # Indicates whether or not the bounds have been set at all, or if they
+    # are at their initial default values.
+    _bounds_initialized = Bool(False)
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -66,10 +75,20 @@ class Base1DMapper(AbstractMapper):
         return (self.low_pos, self.high_pos)
 
     def _set_screen_bounds(self, new_bounds):
+        if new_bounds[0] == self.low_pos and new_bounds[1] == self.high_pos:
+            return
+        if not self.stretch_data and self.range is not None and self._bounds_initialized:
+            rangelow = self.range.low
+            rangehigh = self.range.high
+            d_data = rangehigh - rangelow
+            d_screen = self.high_pos - self.low_pos
+            if d_data != 0 and d_screen != 0:
+                new_data_extent = d_data / d_screen * abs(new_bounds[1] - new_bounds[0])
+                self.range.set_bounds(rangelow, rangelow + new_data_extent)
         self.set(low_pos = new_bounds[0], trait_change_notify=False)
         self.set(high_pos = new_bounds[1], trait_change_notify=False)
         self._cache_valid = False
+        self._bounds_initialized = True
         self.updated = True
         return
 
-# EOF
