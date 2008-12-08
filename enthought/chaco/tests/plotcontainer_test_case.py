@@ -111,6 +111,7 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         comp1 = StaticPlotComponent([200, 50])
         comp2 = StaticPlotComponent([60, 300])
         container = OverlayPlotContainer(resizable='hv', bounds=[30,30])
+        container.fit_components = "hv"
         container.add(comp1, comp2)
         container.do_layout()
         self.assert_tuple(container.get_preferred_size(), (200,300))
