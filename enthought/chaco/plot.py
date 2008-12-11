@@ -245,18 +245,17 @@ class Plot(DataView):
                 data = data[1:]
 
             new_plots = []
+            simple_plot_types = dict(line=LinePlot, scatter=ScatterPlot)
             for value_name in data:
                 value = self._get_or_create_datasource(value_name)
                 self.value_range.add(value)
-                if plot_type == "line":
-                    cls = LinePlot
+                if plot_type in simple_plot_types:
+                    cls = simple_plot_types[plot_type]
                     # handle auto-coloring request
                     if styles.get("color") == "auto":
                         self._auto_color_idx = \
                             (self._auto_color_idx + 1) % len(self.auto_colors)
                         styles["color"] = self.auto_colors[self._auto_color_idx]
-                elif plot_type == "scatter":
-                    cls = ScatterPlot
                 elif plot_type == "polygon":
                     cls = PolygonPlot
                     # handle auto-coloring request
