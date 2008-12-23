@@ -17,8 +17,9 @@ class Anchor(HasTraits):
         """
         Pins this element's position to the position of the given anchor
         The relationship of this anchor's position relative to its
-        group's position can be expressed as:
-                self.position = A*group.position + B
+        group's position can be expressed as::
+            
+            self.position = A*group.position + B
         """
         if isinstance(anchor_or_element, AnchorGroup):
             self.group = anchor_or_element

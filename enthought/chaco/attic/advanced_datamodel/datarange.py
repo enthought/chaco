@@ -48,9 +48,7 @@ class AbstractRange(HasTraits):
     #------------------------------------------------------------------------
     
     def __init__(self, view, **kwtraits):
-        """__init__(self, view: DataView, **traits)
-        
-        Initializes the DataRange with a DataView and, optionally,
+        """Initializes the DataRange with a DataView and, optionally,
         a list of traits defined using keyword arguments.
         """
         HasTraits.__init__(self, **kwtraits)

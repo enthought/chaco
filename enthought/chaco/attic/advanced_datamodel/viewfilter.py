@@ -64,10 +64,10 @@ class BaseViewFilter(AbstractFilter):
     #------------------------------------------------------------------------
 
     def __init__(self, dataview, **traits):
-        """__init__(dataview, **traits)
+        """Creates this viewfilter as a child of dataview.  
         
-        Creates this viewfilter as a child of dataview.  An Upstream (parent)
-        DataSource can be specified with the "parent=" keyword argument.
+        An Upstream (parent) DataSource can be specified with the "parent" 
+        keyword argument.
         """
         AbstractFilter.__init__(self, **traits)
         self.view = dataview

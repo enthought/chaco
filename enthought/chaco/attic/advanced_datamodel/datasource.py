@@ -38,6 +38,7 @@ class DataSource(HasTraits):
     # All DataSources must be able to reverse-map a value back to a set
     # of indices.  The levels of granularity that this reverse map can
     # return are:
+    #
     #   1. "object": a reference to the object containing the point
     #   2. "range": a tuple of (lower,upper) indices that bracket the point
     #   3. "precise": a single index representing the position of the point
