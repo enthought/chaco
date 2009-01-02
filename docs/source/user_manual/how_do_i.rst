@@ -30,7 +30,7 @@ Basics
 
     import numpy
     from enthought.chaco.api import Plot, ArrayPlotData
-    from enthought.enable.enable_component import EnableComponent
+    from enthought.enable.component_editor import ComponentEditor
     from enthought.traits.api import HasTraits, Instance
     from enthought.traits.ui.api import Item, View
 
