@@ -16,7 +16,7 @@ from enthought.traits.api import Enum, Str, Range, Tuple, \
                                  Bool, Trait, Int, Any, Property
 from enthought.traits.ui.api import Item
 from enthought.traits.ui.wx.editor import Editor
-from enthought.traits.ui.wx.editor_factory import EditorFactory
+from enthought.traits.ui.editor_factory import EditorFactory
 
 
 # Local relative imports
