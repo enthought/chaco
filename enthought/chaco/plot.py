@@ -98,6 +98,18 @@ class Plot(DataView):
     _auto_edge_color_idx = Int(0)
     _auto_face_color_idx = Int(0)
 
+    # Mapping of renderer type string to renderer class
+    # This can be overriden to customize what renderer type the Plot
+    # will instantiate for its various plotting methods.
+    renderer_map = Dict(dict(line = LinePlot,
+                             scatter = ScatterPlot, 
+                             polygon = PolygonPlot,
+                             cmap_scatter = ColormappedScatterPlot,
+                             img_plot = ImagePlot,
+                             cmap_img_plot = CMapImagePlot,
+                             contour_line_plot = ContourLinePlot,
+                             contour_poly_plot = ContourPolyPlot))
+
     #------------------------------------------------------------------------
     # Annotations and decorations
     #------------------------------------------------------------------------
@@ -245,19 +257,19 @@ class Plot(DataView):
                 data = data[1:]
 
             new_plots = []
-            simple_plot_types = dict(line=LinePlot, scatter=ScatterPlot)
+            simple_plot_types = ("line", "scatter")
             for value_name in data:
                 value = self._get_or_create_datasource(value_name)
                 self.value_range.add(value)
                 if plot_type in simple_plot_types:
-                    cls = simple_plot_types[plot_type]
+                    cls = self.renderer_map[plot_type]
                     # handle auto-coloring request
                     if styles.get("color") == "auto":
                         self._auto_color_idx = \
                             (self._auto_color_idx + 1) % len(self.auto_colors)
                         styles["color"] = self.auto_colors[self._auto_color_idx]
                 elif plot_type == "polygon":
-                    cls = PolygonPlot
+                    cls = self.renderer_map["polygon"]
                     # handle auto-coloring request
                     if styles.get("edge_color") == "auto":
                         self._auto_edge_color_idx = \
@@ -340,7 +352,8 @@ class Plot(DataView):
                     vmap = LogMapper(range=self.value_range,
                                 stretch_data=self.value_mapper.stretch_data)
 
-                plot = ColormappedScatterPlot(index=index,
+                cls = self.renderer_map["cmap_scatter"]
+                plot = cls(index=index,
                            index_mapper=imap,
                            value=value,
                            value_mapper=vmap,
@@ -396,7 +409,7 @@ class Plot(DataView):
         if len(array_data.shape) == 3:
             if array_data.shape[2] not in (3,4):
                 raise ValueError("Image plots require color depth of 3 or 4.")
-            cls = ImagePlot
+            cls = self.renderer_map["img_plot"]
             kwargs = dict(**styles)
         else:
             if colormap is None:
@@ -410,7 +423,7 @@ class Plot(DataView):
             else:
                 colormap = colormap(DataRange1D(value))
             self.color_mapper = colormap
-            cls = CMapImagePlot
+            cls = self.renderer_map["cmap_img_plot"]
             kwargs = dict(value_mapper=colormap, **styles)
 
         # process xbounds to get a linspace
@@ -507,7 +520,7 @@ class Plot(DataView):
         if value.value_depth != 1:
             raise ValueError("Contour plots require 2D scalar field")
         if type == "line":
-            cls = ContourLinePlot
+            cls = self.renderer_map["contour_line_plot"]
             kwargs = dict(**styles)
             # if colors is given as a factory func, use it to make a
             # concrete colormapper. Better way to do this?
@@ -524,7 +537,7 @@ class Plot(DataView):
                 poly_cmap = poly_cmap(DataRange1D(value))
             elif getattr(poly_cmap, 'range', 'dummy') is None:
                 poly_cmap.range = DataRange1D(value)
-            cls = ContourPolyPlot
+            cls = self.renderer_map["contour_poly_plot"]
             kwargs = dict(color_mapper=poly_cmap, **styles)
         else:
             raise ValueError("Unhandled contour plot type: " + type)
