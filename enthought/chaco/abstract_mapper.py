@@ -4,7 +4,7 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Event, HasTraits
+from enthought.traits.api import Event, HasTraits, Tuple
 
 
 class AbstractMapper(HasTraits):
@@ -16,6 +16,11 @@ class AbstractMapper(HasTraits):
     # on this mapper for visual output should do a redraw or repaint.
     updated = Event
 
+    # A tuple representing the minimum and maximum values of the domain (data
+    # space).  The dimensionality of each value varies depending on the
+    # dimensions of the mapper, so for 1D mappers these will be scalars, for
+    # image and 2D mappers these will be tuples.
+    domain_limits = Tuple(None, None)
 
     def map_screen(self, data_array):
         """ map_screen(data_array) -> screen_array

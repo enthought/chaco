@@ -127,7 +127,7 @@ class PanTool(BaseTool):
         state.
         """
         plot = self.component
-       
+
         if self._auto_constrain and self.constrain_direction is None:
             # Determine the constraint direction
             if abs(event.x - self._original_xy[0]) > abs(event.y - self._original_xy[1]):
@@ -139,6 +139,7 @@ class PanTool(BaseTool):
             if not self.constrain or self.constrain_direction == direction:
                 mapper = getattr(plot, direction + "_mapper")
                 range = mapper.range
+                domain_min, domain_max = mapper.domain_limits
                 eventpos = getattr(event, direction)
                 origpos = self._original_xy[ndx]
     
@@ -149,6 +150,25 @@ class PanTool(BaseTool):
     
                 newlow = mapper.map_data(screenlow - screendelta)
                 newhigh = mapper.map_data(screenhigh - screendelta)
+
+                # Don't set the range in this dimension if the panning
+                # would exceed the domain limits.
+                # To do this offset properly, we would need to iteratively
+                # solve for a root using map_data on successive trial
+                # values.  As a first approximation, we're just going to
+                # use a linear approximation, which works perfectly for
+                # linear mappers (which is used 99% of the time).
+                if (domain_min is not None and newlow < domain_min):
+                    delta = newhigh - newlow
+                    newlow = domain_min
+                    newhigh = domain_min + delta
+                if (domain_max is not None and newhigh > domain_max):
+                    delta = newhigh - newlow
+                    newhigh = domain_max
+                    newlow = domain_max - delta
+
+                # Use .set_bounds() so that we don't generate two range_changed
+                # events on the DataRange
                 range.set_bounds(newlow, newhigh)
                
         event.handled = True
