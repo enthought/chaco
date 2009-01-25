@@ -1,0 +1,94 @@
+#!/usr/bin/env python
+"""
+Draws a simple scatterplot of random data.  The user can pan and zoom 
+with the mouse, but left-clicking on a point in the scatter plot will
+toggle it.
+
+"""
+
+# Major library imports
+from numpy import arange, sort, compress, arange
+from numpy.random import random
+
+from enthought.enable.example_support import DemoFrame, demo_main
+
+# Enthought library imports
+from enthought.enable.api import Window
+from enthought.traits.api import Instance
+
+# Chaco imports
+from enthought.chaco.api import AbstractDataSource, ArrayPlotData, Plot, \
+    HPlotContainer, ScatterInspectorOverlay
+from enthought.chaco.tools.api import ScatterInspector, PanTool, ZoomTool
+
+
+class PlotFrame(DemoFrame):
+
+    index_datasource = Instance(AbstractDataSource)
+    
+    def _create_window(self):
+
+        # Create some data
+        npts = 100
+        x = sort(random(npts))
+        y = random(npts)
+
+        # Create a plot data obect and give it this data
+        pd = ArrayPlotData()
+        pd.set_data("index", x)
+        pd.set_data("value", y)
+
+        # Create the plot
+        plot = Plot(pd)
+        plot.plot(("index", "value"),
+                  type="scatter",
+                  name="my_plot",
+                  marker="circle",
+                  index_sort="ascending",
+                  color="slategray",
+                  marker_size=6,
+                  bgcolor="white")
+
+        # Tweak some of the plot properties
+        plot.title = "Scatter Plot With Selection"
+        plot.line_width = 1
+        plot.padding = 50
+
+        # Right now, some of the tools are a little invasive, and we need the 
+        # actual ScatterPlot object to give to them
+        my_plot = plot.plots["my_plot"][0]
+
+        # Attach some tools to the plot
+        my_plot.tools.append(ScatterInspector(my_plot, selection_mode="toggle",
+                                              persistent_hover=False))
+        my_plot.overlays.append(
+                ScatterInspectorOverlay(my_plot,
+                    hover_color = "transparent",
+                    hover_marker_size = 10,
+                    hover_outline_color = "purple",
+                    hover_line_width = 2,
+                    selection_marker_size = 8,
+                    selection_color = "lawngreen")
+                )
+
+        my_plot.tools.append(PanTool(my_plot))
+        my_plot.overlays.append(ZoomTool(my_plot, drag_button="right"))
+
+        # Set up the trait handler for the selection
+        self.index_datasource = my_plot.index
+        self.index_datasource.on_trait_change(self._metadata_handler, "metadata_changed")
+        
+        # Return a window containing our plot container
+        return Window(self, -1, component=plot, bg_color="lightgray")
+
+    def _metadata_handler(self):
+        sel_indices = self.index_datasource.metadata.get('selections', [])
+        print "Selection indices:", sel_indices
+    
+        hover_indices = self.index_datasource.metadata.get('hover', [])
+        print "Hover indices:", hover_indices
+
+if __name__ == "__main__":
+    demo_main(PlotFrame, size=(650,650), title="Scatter plot with selection")
+
+# EOF
