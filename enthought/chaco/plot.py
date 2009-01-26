@@ -372,7 +372,7 @@ class Plot(DataView):
 
 
     def img_plot(self, data, name=None, colormap=None,
-                 xbounds=None, ybounds=None, origin=None, **styles):
+                 xbounds=None, ybounds=None, origin=None, hide_grids=True, **styles):
         """ Adds image plots to this Plot object.
 
         If *data* has shape (N, M, 3) or (N, M, 4), then it is treated as RGB or
@@ -395,6 +395,8 @@ class Plot(DataView):
         origin : string
             Which corner the origin of this plot should occupy: 
                 "bottom left", "top left", "bottom right", "top right"
+        hide_grids : bool, default True
+            Whether or not to automatically hide the grid lines on the plot
         styles : series of keyword arguments
             Attributes and values that apply to one or more of the
             plot types requested, e.g.,'line_color' or 'line_width'.
@@ -474,9 +476,9 @@ class Plot(DataView):
                    origin=origin,
                    **kwargs)
 
-        # turn grids off by default on image plots
-        self.x_grid.visible = False
-        self.y_grid.visible = False
+        if hide_grids:
+            self.x_grid.visible = False
+            self.y_grid.visible = False
 
         self.add(plot)
         self.plots[name] = [plot]
@@ -484,7 +486,7 @@ class Plot(DataView):
 
 
     def contour_plot(self, data, type="line", name=None, poly_cmap=None,
-                     xbounds=None, ybounds=None, origin=None, **styles):
+                     xbounds=None, ybounds=None, origin=None, hide_grids=True, **styles):
         """ Adds contour plots to this Plot object.
 
         Parameters
@@ -506,6 +508,8 @@ class Plot(DataView):
         origin : string
             Which corner the origin of this plot should occupy: 
                 "bottom left", "top left", "bottom right", "top right"
+        hide_grids : bool, default True
+            Whether or not to automatically hide the grid lines on the plot
         styles : series of keyword arguments
             Attributes and values that apply to one or more of the
             plot types requested, e.g.,'line_color' or 'line_width'.
@@ -590,9 +594,9 @@ class Plot(DataView):
                    origin=origin,
                    **kwargs)
 
-        # turn grids off by default on contour plots
-        self.x_grid.visible = False
-        self.y_grid.visible = False
+        if hide_grids:
+            self.x_grid.visible = False
+            self.y_grid.visible = False
 
         self.add(plot)
         self.plots[name] = [plot]
