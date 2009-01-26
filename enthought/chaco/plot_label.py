@@ -179,6 +179,9 @@ class PlotLabel(AbstractOverlay):
         self.do_layout()
         return
 
+    def _overlay_position_changed(self):
+        self.do_layout()
+
     def _component_changed(self, old, new):
         if new:
             self.draw_layer = "overlay"
