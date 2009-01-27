@@ -1,6 +1,13 @@
 """
 Implementation of a standard financial plot visualization using Chaco 
 renderers and scales.
+
+In the main price plot area, mouse wheel zooms and mouse drag pans (if
+the plot is not at the edge of the time series data).  In the bottom 
+overview plot area, right-click-drag selects a range of times to display
+on the top two plots.  Once a region is selected, it can be moved
+around by left-dragging or resized by left-dragging one of its
+edges.
 """
 
 # Major library imports
@@ -112,8 +119,9 @@ class PlotFrame(DemoFrame):
 
     def _create_vol_plot(self, times, volumes, height=100):
         "Creates and returns the volume plot"
+        index_range = self.price_plot.index_range
         vol_plot = BarPlot(index = times, value = volumes,
-                       index_mapper = LinearMapper(range=DataRange1D(times)),
+                       index_mapper = LinearMapper(range=index_range),
                        value_mapper = LinearMapper(range=DataRange1D(volumes)),
                        line_color = "transparent",
                        fill_color = "black",
@@ -153,6 +161,7 @@ class PlotFrame(DemoFrame):
 
         # Create the volume plot
         vol_plot = self._create_vol_plot(time_ds, vol_ds)
+        vol_plot.index_mapper.domain_limits = (index[0], index[-1])
 
         # Set the plot's bottom axis to use the Scales ticking system
         ticker = ScalesTickGenerator(scale=CalendarScaleSystem())
@@ -168,12 +177,9 @@ class PlotFrame(DemoFrame):
                                    spacing = 40, 
                                    padding = 50,
                                    fill_padding=False)
-        container.add(vol_plot, mini_plot, price_plot)
-        container.overlays.append(PlotLabel("Stock price and volume",
-                                            component=container,
-                                            font="Arial 24"))
+        container.add(mini_plot, vol_plot, price_plot)
         
         return Window(self, -1, component=container)
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(800,600), title="Financial plot")
+    demo_main(PlotFrame, size=(800,600), title="Stock price and volume")
