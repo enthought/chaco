@@ -76,26 +76,6 @@ class DemoView(HasTraits):
         resizable=True,
     )
 
-    # This is the default Traits UI view
-    traits_view = View(
-        Item('plot',
-             editor=ComponentEditor(),
-             show_label=False,
-        ), 
-        menubar=MenuBar(
-            Menu(Action(name="Save Plot", action="save"), # see Controller for
-                 Action(name="Load Plot", action="load"), # these callbacks
-                 Separator(),
-                 CloseAction,
-                 name="File",
-            ),
-        ),
-        width=600,
-        height=600,
-        resizable=True,
-    )
-
-
     #---------------------------------------------------------------------------
     # Public 'DemoView' interface
     #---------------------------------------------------------------------------
@@ -118,7 +98,32 @@ class DemoView(HasTraits):
         # Plot the image plot with this image
         self.plot.img_plot("imagedata")
 
-
+    def default_traits_view(self):
+        """ Returns the default view to use for this class.
+        """
+        # NOTE: I moved the view to this method so we can declare a handler
+        # for the view. Alternatively, we could move the DemoController class 
+        # to the top and declare view=Instance(HasTraits) instead. 
+        traits_view = View(
+            Item('plot',
+                 editor=ComponentEditor(),
+                 show_label=False,
+            ), 
+            menubar=MenuBar(
+                Menu(Action(name="Save Plot", action="save"), # see Controller for
+                     Action(name="Load Plot", action="load"), # these callbacks
+                     Separator(),
+                     CloseAction,
+                     name="File",
+                ),
+            ),
+            width=600,
+            height=600,
+            resizable=True,
+            handler=DemoController
+        )
+        return traits_view
+    
     #---------------------------------------------------------------------------
     # Private 'DemoView' interface
     #---------------------------------------------------------------------------
@@ -164,6 +169,12 @@ class DemoController(Handler):
     # Public 'DemoController' interface
     #---------------------------------------------------------------------------
 
+    def init(self, info):
+        """ Initializes the controls of a user interface.
+        Overridden here to assign the 'view' trait.
+        """
+        self.view = info.object
+        
     def save(self, ui_info):
         """ 
         Callback for the 'Save Image' menu option.
@@ -181,14 +192,20 @@ class DemoController(Handler):
             self.view._load()
 
 
+#===============================================================================
+# # popup object that is used by the demo.py application.
+#===============================================================================
+# Note: we declare a 'popup' rather than a 'demo' since the menubar doesn't seem
+# to show up in a 'panel' mode.
+popup = DemoView()
+
 #-------------------------------------------------------------------------------
 # Function 'main'
 #-------------------------------------------------------------------------------
 
 def main(argv=None):
     view = DemoView()
-    controller = DemoController(view=view)
-    view.configure_traits(handler=controller)
+    view.configure_traits()
 
 
 #-------------------------------------------------------------------------------

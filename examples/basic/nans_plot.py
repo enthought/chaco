@@ -16,43 +16,80 @@ from scipy.special import jn
 from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window
+from enthought.enable.api import Component, ComponentEditor, Window
+from enthought.traits.api import HasTraits, Instance
+from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot
 from enthought.chaco.tools.api import PanTool, ZoomTool 
 
+#===============================================================================
+# # Create the Chaco plot.
+#===============================================================================
+def _create_plot_component():
+    
+    # Create some x-y data series (with NaNs) to plot
+    x = linspace(-5.0, 15.0, 500)
+    x[75:125] = nan
+    x[200:250] = nan
+    x[300:330] = nan
+    pd = ArrayPlotData(index = x)
+    pd.set_data("value1", jn(0, x))
+    pd.set_data("value2", jn(1, x))
 
-class PlotFrame(DemoFrame):
-    def _create_window(self):
+    # Create some line and scatter plots of the data
+    plot = Plot(pd)
+    plot.plot(("index", "value1"), name="j_0(x)", color="red", width=2.0)
+    plot.plot(("index", "value2"), type="scatter", marker_size=1,
+              name="j_1(x)", color="green")
+
+    # Tweak some of the plot properties
+    plot.title = "Plots with NaNs"
+    plot.padding = 50
+    plot.legend.visible = True
+
+    # Attach some tools to the plot
+    plot.tools.append(PanTool(plot))
+    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
+    plot.overlays.append(zoom)
+
+    return plot
+
+#===============================================================================
+# Attributes to use for the plot view.
+size = (800, 700)
+title = "Nan Test"
         
-        # Create some x-y data series (with NaNs) to plot
-        x = linspace(-5.0, 15.0, 500)
-        x[75:125] = nan
-        x[200:250] = nan
-        x[300:330] = nan
-        pd = ArrayPlotData(index = x)
-        pd.set_data("value1", jn(0, x))
-        pd.set_data("value2", jn(1, x))
+#===============================================================================
+# # Demo class that is used by the demo.py application.
+#===============================================================================
+class Demo(HasTraits):
+    plot = Instance(Component)
+    
+    traits_view = View(
+                    Group(
+                        Item('plot', editor=ComponentEditor(size=size), 
+                             show_label=False),
+                        orientation = "vertical"),
+                    resizable=True, title=title
+                    )
+    
+    def _plot_default(self):
+         return _create_plot_component()
+    
+demo = Demo()
 
-        # Create some line and scatter plots of the data
-        plot = Plot(pd)
-        plot.plot(("index", "value1"), name="j_0(x)", color="red", width=2.0)
-        plot.plot(("index", "value2"), type="scatter", marker_size=1,
-                  name="j_1(x)", color="green")
+#===============================================================================
+# Stand-alone frame to display the plot.
+#===============================================================================
+class PlotFrame(DemoFrame):
 
-        # Tweak some of the plot properties
-        plot.title = "Plots with NaNs"
-        plot.padding = 50
-        plot.legend.visible = True
-
-        # Attach some tools to the plot
-        plot.tools.append(PanTool(plot))
-        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
-        plot.overlays.append(zoom)
-
+    def _create_window(self):
         # Return a window containing our plots
-        return Window(self, -1, component=plot)
-
+        return Window(self, -1, component=_create_plot_component())
+    
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(800,700), title="Nan Test")
+    demo_main(PlotFrame, size=size, title=title)
+
+#--EOF---

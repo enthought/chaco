@@ -31,7 +31,8 @@ class Foo(HasTraits):
     eq = Str("sin(x)")
 
     # Default TraitsUI view
-    traits_view = View(ChacoPlotItem("xdata", "_ydata", 
+    traits_view = View(
+                       ChacoPlotItem("xdata", "_ydata", 
                                       type_trait="plot_type",
                                       
                                       # Basic axis and label properties
@@ -76,7 +77,11 @@ class Foo(HasTraits):
             self._ydata = eval(new, self._d)
         except:
             pass
+        
+#===============================================================================
+# # demo object that is used by the demo.py application.
+#===============================================================================
+demo = Foo(xdata=linspace(-2*pi, 2*pi ,100), eq="sin(x)")
 
 if __name__ == "__main__":
-    foo = Foo(xdata=linspace(-2*pi, 2*pi ,100), eq="sin(x)")
-    foo.edit_traits(kind="modal")
+    demo.edit_traits(kind="modal")

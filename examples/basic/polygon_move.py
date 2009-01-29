@@ -11,8 +11,9 @@ from numpy import array, transpose
 from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window
-from enthought.traits.api import Enum, CArray, Dict
+from enthought.enable.api import Component, ComponentEditor, Window
+from enthought.traits.api import HasTraits, Instance, Enum, CArray, Dict
+from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
@@ -50,50 +51,83 @@ class DataspaceMoveTool(DragTool):
         plot.request_redraw()
         
 
+#===============================================================================
+# # Create the Chaco plot.
+#===============================================================================
+def _create_plot_component():
 
+    # Use n_gon to compute center locations for our polygons
+    points = n_gon(center=(0,0), r=4, nsides=8)
+ 
+    # Choose some colors for our polygons
+    colors = {3:0xaabbcc,   4:'orange', 5:'yellow',    6:'lightgreen',
+              7:'green', 8:'blue',   9:'lavender', 10:'purple'}
+ 
+        # Create a PlotData object to store the polygon data
+    pd = ArrayPlotData()
+
+    # Create a Polygon Plot to draw the regular polygons
+    polyplot = Plot(pd)
+
+    # Store path data for each polygon, and plot
+    nsides = 3
+    for p in points:
+        npoints = n_gon(center=p, r=2, nsides=nsides)
+        nxarray, nyarray = transpose(npoints)
+        pd.set_data("x" + str(nsides), nxarray)
+        pd.set_data("y" + str(nsides), nyarray)
+        plot = polyplot.plot(("x"+str(nsides), "y"+str(nsides)), 
+                      type="polygon", 
+                      face_color=colors[nsides],
+                      hittest_type="poly")[0]
+        plot.tools.append(DataspaceMoveTool(plot, drag_button="right"))
+        nsides = nsides + 1
+
+    # Tweak some of the plot properties
+    polyplot.padding = 50
+    polyplot.title = "Polygon Plot"
+
+    # Attach some tools to the plot
+    polyplot.tools.append(PanTool(polyplot))
+    zoom = ZoomTool(polyplot, tool_mode="box", always_on=False)
+    polyplot.overlays.append(zoom)
+
+    return polyplot
+
+#===============================================================================
+# Attributes to use for the plot view.
+size=(800,800)
+title="Polygon Plot"
+
+#===============================================================================
+# # Demo class that is used by the demo.py application.
+#===============================================================================
+class Demo(HasTraits):
+    plot = Instance(Component)
+    
+    traits_view = View(
+                    Group(
+                        Item('plot', editor=ComponentEditor(size=size), 
+                             show_label=False),
+                        orientation = "vertical"),
+                    resizable=True, title=title
+                    )
+    
+    def _plot_default(self):
+         return _create_plot_component()
+    
+demo = Demo()
+
+#===============================================================================
+# Stand-alone frame to display the plot.
+#===============================================================================
 class PlotFrame(DemoFrame):
 
     def _create_window(self):
-
-        # Use n_gon to compute center locations for our polygons
-        points = n_gon(center=(0,0), r=4, nsides=8)
- 
-        # Choose some colors for our polygons
-        colors = {3:0xaabbcc,   4:'orange', 5:'yellow',    6:'lightgreen',
-                  7:'green', 8:'blue',   9:'lavender', 10:'purple'}
- 
-        # Create a PlotData object to store the polygon data
-        pd = ArrayPlotData()
-
-        # Create a Polygon Plot to draw the regular polygons
-        polyplot = Plot(pd)
-
-        # Store path data for each polygon, and plot
-        nsides = 3
-        for p in points:
-            npoints = n_gon(center=p, r=2, nsides=nsides)
-            nxarray, nyarray = transpose(npoints)
-            pd.set_data("x" + str(nsides), nxarray)
-            pd.set_data("y" + str(nsides), nyarray)
-            plot = polyplot.plot(("x"+str(nsides), "y"+str(nsides)), 
-                          type="polygon", 
-                          face_color=colors[nsides],
-                          hittest_type="poly")[0]
-            plot.tools.append(DataspaceMoveTool(plot, drag_button="right"))
-            nsides = nsides + 1
-
-        # Tweak some of the plot properties
-        polyplot.padding = 50
-        polyplot.title = "Polygon Plot"
-
-        # Attach some tools to the plot
-        polyplot.tools.append(PanTool(polyplot))
-        zoom = ZoomTool(polyplot, tool_mode="box", always_on=False)
-        polyplot.overlays.append(zoom)
-
         # Return a window containing our plots
-        return Window(self, -1, component=polyplot)
+        return Window(self, -1, component=_create_plot_component())
+    
+if __name__ == "__main__":
+    demo_main(PlotFrame, size=size, title=title)
 
-if __name__ == '__main__':
-    demo_main(PlotFrame, size=(800,800), title="Polygon Plot")
-
+#--EOF---

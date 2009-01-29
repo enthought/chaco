@@ -44,8 +44,12 @@ class TabbedPlots(HasTraits):
         self.create_plots()
 
 
+#===============================================================================
+# # demo object that is used by the demo.py application.
+#===============================================================================
+x = linspace(-2*pi, 2*pi, 100)
+demo = TabbedPlots(data = ArrayPlotData(x=x, y1=sin(x), y2=tan(x)))
+
 if __name__ == "__main__":
-    x = linspace(-2*pi, 2*pi, 100)
-    obj = TabbedPlots(data = ArrayPlotData(x=x, y1=sin(x), y2=tan(x)))
-    obj.configure_traits()
+    demo.configure_traits()
 

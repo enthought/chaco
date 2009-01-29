@@ -22,7 +22,9 @@ from numpy.random import random
 from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window
+from enthought.enable.api import Component, ComponentEditor, Window
+from enthought.traits.api import HasTraits, Instance
+from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot
@@ -40,49 +42,83 @@ class MyLineDrawer(LineSegmentTool):
         for point in self.points:
             print "\t", point
 
+#===============================================================================
+# # Create the Chaco plot.
+#===============================================================================
+def _create_plot_component():
 
+    # Create some data
+    numpts = 1000
+    x = sort(random(numpts))
+    y = random(numpts)
 
+    # Create a plot data obect and give it this data
+    pd = ArrayPlotData()
+    pd.set_data("index", x)
+    pd.set_data("value", y)
+
+    # Create the plot
+    plot = Plot(pd)
+    plot.plot(("index", "value"),
+              type="scatter",
+              name="my_plot",
+              marker="square",
+              index_sort="ascending",
+              color="lightblue",
+              outline_color="none",
+              marker_size=3,
+              bgcolor="white")
+
+    # Tweak some of the plot properties
+    plot.title = "Scatter Plot"
+    plot.padding = 50
+    plot.line_width = 1
+
+    # Attach some tools to the plot
+    pan = PanTool(plot, drag_button="right", constrain_key="shift")
+    plot.tools.append(pan)
+    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
+    plot.overlays.append(zoom)
+    plot.overlays.append(MyLineDrawer(plot))
+    return plot
+
+#===============================================================================
+# Attributes to use for the plot view.
+size=(650,650)
+title="Simple scatter plot"
+bg_color="lightgray"
+
+#===============================================================================
+# # Demo class that is used by the demo.py application.
+#===============================================================================
+class Demo(HasTraits):
+    plot = Instance(Component)
+    
+    traits_view = View(
+                    Group(
+                        Item('plot', editor=ComponentEditor(size=size,
+                                                            bgcolor=bg_color), 
+                             show_label=False),
+                        orientation = "vertical"),
+                    resizable=True, title=title
+                    )
+    
+    def _plot_default(self):
+         return _create_plot_component()
+    
+demo = Demo()
+
+#===============================================================================
+# Stand-alone frame to display the plot.
+#===============================================================================
 class PlotFrame(DemoFrame):
 
     def _create_window(self):
-
-        # Create some data
-        numpts = 1000
-        x = sort(random(numpts))
-        y = random(numpts)
-
-        # Create a plot data obect and give it this data
-        pd = ArrayPlotData()
-        pd.set_data("index", x)
-        pd.set_data("value", y)
-
-        # Create the plot
-        plot = Plot(pd)
-        plot.plot(("index", "value"),
-                  type="scatter",
-                  name="my_plot",
-                  marker="square",
-                  index_sort="ascending",
-                  color="lightblue",
-                  outline_color="none",
-                  marker_size=3,
-                  bgcolor="white")
-
-        # Tweak some of the plot properties
-        plot.title = "Scatter Plot"
-        plot.padding = 50
-        plot.line_width = 1
-
-        # Attach some tools to the plot
-        pan = PanTool(plot, drag_button="right", constrain_key="shift")
-        plot.tools.append(pan)
-        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
-        plot.overlays.append(zoom)
-        plot.overlays.append(MyLineDrawer(plot))
-
         # Return a window containing our plots
-        return Window(self, -1, component=plot, bg_color="lightgray")
-
+        return Window(self, -1, component=_create_plot_component(),
+                      bg_color=bg_color)
+    
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(650,650), title="Simple scatter plot")
+    demo_main(PlotFrame, size=size, title=title)
 
+#--EOF---
