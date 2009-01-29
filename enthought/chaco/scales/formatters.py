@@ -95,10 +95,11 @@ class BasicFormatter(object):
         """
         if len(ticks) == 0:
             return []
-        
-        if self.use_scientific and (abs(amax(ticks)) >= 10 ** self.scientific_limits[1] or \
-                abs(amin(ticks)) <= 10 ** self.scientific_limits[0]):
-            scientific = True
+
+        ticks = asarray(ticks)
+        if self.use_scientific:
+            scientific = (((ticks % 10 ** self.scientific_limits[1]) == 0) | 
+                          (abs(ticks) <= 10 ** self.scientific_limits[0])).all()
         else:
             scientific = False
         
@@ -125,17 +126,20 @@ class BasicFormatter(object):
 
         else:
             # For decimal mode, 
-            labels = map(str, ticks)
+            if not (ticks % 1).any():
+                labels = map(str, ticks.astype(int))
+            else:
+                labels = map(str, ticks)
 
         return labels
-    
+
     def _nice_sci(self, val, mdigits, force_sign=False):
         """ Formats *val* nicely using scientific notation.  *mdigits* is the
         max number of digits to use for the mantissa.  If *force_sign* is True,
         then always show the sign of the mantissa, otherwise only show the sign
         if *val* is negative.
         """
-        if val > 0:
+        if val != 0:
             e = int(floor(log10(abs(val))))
         else:
             e = 0
