@@ -95,8 +95,12 @@ class MyPlot(HasTraits):
             renderer.value_mapper.stretch_data = not self.fixed_y
         self.plot.request_redraw()
 
+#===============================================================================
+# # Create the demo object to be used by the demo.py application.
+#===============================================================================
+demo = myplot = MyPlot()
+
 if __name__ == "__main__":
-    myplot = MyPlot()
     myplot.configure_traits()
 
 # EOF

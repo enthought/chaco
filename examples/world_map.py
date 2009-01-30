@@ -110,7 +110,10 @@ class WorldMapPlot(HasTraits):
             print "Downloading map image"
             urllib.urlretrieve(self.image_url, self.image_path)
             
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = WorldMapPlot()
 
 if __name__ == "__main__":
-    map_plot = WorldMapPlot()
-    map_plot.configure_traits()
+    demo.configure_traits()

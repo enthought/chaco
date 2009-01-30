@@ -2,7 +2,7 @@ import numpy
 
 from enthought.chaco.plot import Plot, ArrayPlotData
 from enthought.enable.tools.hover_tool import HoverTool
-from enthought.enable.component_editor import ComponentEditor
+from enthought.enable.api import Component, ComponentEditor
 from enthought.traits.api import Bool, Instance, Event, Type, HasTraits
 from enthought.traits.ui.api import View, Item
 
@@ -68,19 +68,23 @@ class ToolbarPlot(Plot):
         super(ToolbarPlot, self)._bounds_changed(old, new)
 
 class ExamplePlotApp(HasTraits):
-    plot = Instance(ToolbarPlot)
+    plot = Instance(Plot)
     
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False))
+    traits_view = View(Item('plot', editor=ComponentEditor(),
+                            width = 600, height = 600,
+                            show_label=False),
+                            resizable=True)
     
     def __init__(self, index, series, **kw):
-        super(ExamplePlotApp, **kw)
-        
+        super(ExamplePlotApp, self).__init__(**kw)
         plot_data = ArrayPlotData(index=index)
         plot_data.set_data('series', series)
         
         self.plot = ToolbarPlot(plot_data)
         self.plot.plot(('index', 'series'), color='auto')
-
+        
 index = numpy.arange(0., 30., 0.01)
-plot_app = ExamplePlotApp(index, numpy.sin(index))
-plot_app.configure_traits()
+demo = ExamplePlotApp(index, numpy.sin(index))
+
+if __name__== '__main__':
+    demo.configure_traits()

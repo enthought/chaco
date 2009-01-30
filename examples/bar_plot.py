@@ -6,19 +6,27 @@ from enthought.chaco.example_support import COLOR_PALETTE
 from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window
+from enthought.enable.api import Component, ComponentEditor, Window
+from enthought.traits.api import HasTraits, Instance
+from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
                                  LinearMapper, OverlayPlotContainer, PlotAxis, PlotGrid
 
-def make_curves(spec):
-    (index_points, value_points) = spec.get_points()
+
+def get_points():
+    index = linspace(pi/4, 3*pi/2, 9)
+    data = sin(index) + 2
+    return (range(1, 10), data)
+    
+def make_curves():
+    (index_points, value_points) = get_points()
     size = len(index_points)
 
     # Create our data sources
-    spec.index_source = idx = ArrayDataSource(index_points[:(size/2)])
-    spec.value_source = vals = ArrayDataSource(value_points[:(size/2)], sort_order="none")
+    idx = ArrayDataSource(index_points[:(size/2)])
+    vals = ArrayDataSource(value_points[:(size/2)], sort_order="none")
 
     idx2 = ArrayDataSource(index_points[(size/2):])
     vals2 = ArrayDataSource(value_points[(size/2):], sort_order="none")
@@ -60,36 +68,65 @@ def make_curves(spec):
 
     return [plot1, plot2, plot3]
 
+#===============================================================================
+# # Create the Chaco plot.
+#===============================================================================
+def _create_plot_component():
+    
+    container = OverlayPlotContainer(bgcolor = "white")
+    plots = make_curves()
+    for plot in plots:
+        plot.padding = 50
+        container.add(plot)
+
+    left_axis = PlotAxis(plot, orientation='left')
+
+    bottom_axis = LabelAxis(plot, orientation='bottom',
+                           title='Categories',
+                           positions = range(1, 10),
+                           labels = ['a', 'b', 'c', 'd', 'e',
+                                     'f', 'g', 'h', 'i'],
+                           small_haxis_style=True)
+
+    plot.underlays.append(left_axis)
+    plot.underlays.append(bottom_axis)
+        
+    return container
+
+#===============================================================================
+# Attributes to use for the plot view.
+size = (800, 600)
+title = "Bar Plot"
+        
+#===============================================================================
+# # Demo class that is used by the demo.py application.
+#===============================================================================
+class Demo(HasTraits):
+    plot = Instance(Component)
+    
+    traits_view = View(
+                    Group(
+                        Item('plot', editor=ComponentEditor(size=size), 
+                             show_label=False),
+                        orientation = "vertical"),
+                    resizable=True, title=title
+                    )
+    
+    def _plot_default(self):
+         return _create_plot_component()
+    
+demo = Demo()
+
+#===============================================================================
+# Stand-alone frame to display the plot.
+#===============================================================================
 class PlotFrame(DemoFrame):
 
-    def get_points(self):
-        index = linspace(pi/4, 3*pi/2, 9)
-        data = sin(index) + 2
-        return (range(1, 10), data)
-
     def _create_window(self):
-        container = OverlayPlotContainer(bgcolor = "white")
-        
-        self.container = container
-        
-        plots = make_curves(self)
-        for plot in plots:
-            plot.padding = 50
-            container.add(plot)
-
-        left_axis = PlotAxis(plot, orientation='left')
-
-        bottom_axis = LabelAxis(plot, orientation='bottom',
-                               title='Categories',
-                               positions = range(1, 10),
-                               labels = ['a', 'b', 'c', 'd', 'e',
-                                         'f', 'g', 'h', 'i'],
-                               small_haxis_style=True)
-
-        plot.underlays.append(left_axis)
-        plot.underlays.append(bottom_axis)
-        
-        return Window(self, -1, component=container)
-
+        # Return a window containing our plots
+        return Window(self, -1, component=_create_plot_component())
+    
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(800,600), title="Bar plot")
+    demo_main(PlotFrame, size=size, title=title)
+
+#--EOF---

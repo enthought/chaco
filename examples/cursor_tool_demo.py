@@ -106,10 +106,16 @@ class CursorTest(HasTraits):
                                         springy=True),
                             HGroup(Item('cursor1pos', width=300),
                                    Item('cursor2pos', width=300))),
+                        title="Cursor Tool Demo",
                         resizable=True,
                         width=800,
                         height=400)
     
-test = CursorTest()
-test.configure_traits()
+#===============================================================================
+# # demo object that is used by the demo.py application.
+#===============================================================================    
+demo = CursorTest()
+
+if __name__=='__main__':
+    demo.configure_traits()
 
