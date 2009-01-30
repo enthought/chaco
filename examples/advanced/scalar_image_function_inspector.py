@@ -23,7 +23,7 @@ from enthought.chaco.tools.api import LineInspector, PanTool, RangeSelection, \
                                    RangeSelectionOverlay, SimpleZoom
 from enthought.enable.api import Window
 from enthought.traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
-                             Int, Instance, Str, Trait
+                             Int, Instance, Str, Trait, on_trait_change
 from enthought.traits.ui.api import Group, Handler, HGroup, Item, View
 from enthought.traits.ui.menu import Action, CloseAction, Menu, \
                                      MenuBar, NoButtons, Separator
@@ -93,17 +93,9 @@ class PlotUI(HasTraits):
     #Traits view definitions:
     traits_view = View(
         Group(Item('container',
-                   editor=ComponentEditor(),
+                   editor=ComponentEditor(size=(800,600)),
                    show_label=False)),
         buttons=NoButtons,
-        menubar=MenuBar(Menu(Action(name="Edit Model",
-                                     action="edit_model"),
-                             Action(name="Edit Plot",
-                                    action="edit_plot"),
-                             CloseAction,
-                             name="File")),
-        width=800,
-        height=600,
         resizable=True)
 
     plot_edit_view = View(
@@ -119,8 +111,8 @@ class PlotUI(HasTraits):
     # Private Traits
     #---------------------------------------------------------------------------
     
-    _image_index = Instance("GridDataSource")
-    _image_value = Instance("ImageData")
+    _image_index = Instance(GridDataSource)
+    _image_value = Instance(ImageData)
 
     _cmap = Trait(jet, Callable)
 
@@ -317,8 +309,8 @@ class PlotUI(HasTraits):
             self.pd.set_data("line_value2", array([]))
 
     def _colormap_changed(self):
+        self._cmap = color_map_name_dict[self.colormap]
         if hasattr(self, "polyplot"):
-            self._cmap = color_map_name_dict[self.colormap]
             value_range = self.polyplot.color_mapper.range
             self.polyplot.color_mapper = self._cmap(value_range)
             value_range = self.cross_plot.color_mapper.range
@@ -342,14 +334,16 @@ class Controller(Handler):
     # State traits
     #---------------------------------------------------------------------------
 
-    model = Instance("Model")
-    view = Instance("PlotUI")
+    model = Instance(Model)
+    view = Instance(PlotUI)
 
     #---------------------------------------------------------------------------
     # Handler interface
     #---------------------------------------------------------------------------
 
     def init(self, info):
+        self.model = info.object.model
+        self.view = info.object.view
         self.model.on_trait_change(self._model_changed, "model_changed")
 
 
@@ -358,10 +352,10 @@ class Controller(Handler):
     #---------------------------------------------------------------------------
 
     def edit_model(self, ui_info):
-        self.model.configure_traits(handler=self)
+        self.model.configure_traits()
 
     def edit_plot(self, ui_info):
-        self.view.configure_traits(handler=self, view="plot_edit_view")
+        self.view.configure_traits(view="plot_edit_view")
 
 
     #---------------------------------------------------------------------------
@@ -369,16 +363,41 @@ class Controller(Handler):
     #---------------------------------------------------------------------------
 
     def _model_changed(self):
-        if self.view is not None: self.view.update(self.model)
+        if self.view is not None: 
+            self.view.update(self.model)
 
+class ModelView(HasTraits):
+    
+    model = Instance(Model)
+    view = Instance(PlotUI)
+    traits_view = View(Item('@view', 
+                            show_label=False),
+                       menubar=MenuBar(Menu(Action(name="Edit Model",
+                                                   action="edit_model"),
+                                            Action(name="Edit Plot",
+                                                   action="edit_plot"),
+                                            CloseAction,
+                                            name="File")),
+                       handler = Controller,
+                       resizable=True)
+    
+    @on_trait_change('model, view')
+    def update_view(self):
+        if self.model is not None and self.view is not None:
+            self.view.update(self.model)
+        
+options_dict = {'colormap' : "jet", 
+                'num_levels' : 15,
+                'function' : "tanh(x**2+y)*cos(y)*jn(0,x+y*2)"}
+model=Model(**options_dict)
+view=PlotUI(**options_dict)
+popup = ModelView(model=model, view=view)
 
 def show_plot(**kwargs):
     model = Model(**kwargs)
     view = PlotUI(**kwargs)
-    controller = Controller(model=model, view=view)
-    view.update(model)
-    view.configure_traits(handler=controller)
-
+    modelview=ModelView(model=model, view=view)
+    modelview.configure_traits()
 
 def main(argv=None):
 
@@ -405,7 +424,7 @@ def main(argv=None):
 
     if len(args) > 0:
         parser.error("Incorrect number of arguments")
-
+        
     show_plot(colormap=opts.colormap, num_levels=opts.num_levels,
               function=opts.function)
 

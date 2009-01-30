@@ -585,6 +585,32 @@ def main(embedded=False):
         raise
     return
 
+#===============================================================================
+# # Demo class that is used by the demo.py application.
+#===============================================================================
+# NOTE: The Demo class is being created for the purpose of running this
+# example using a TraitsDemo-like app (see examples/demo/demo.py in Traits3). 
+# The demo.py file looks for a 'demo' or 'popup' or 'modal popup' keyword
+# when it executes this file, and displays a view for it.
+
+# NOTE2: In this case, Demo class is just a mock object. Essentially we want to
+# execute main instead of displaying a UI for Demo: so we hack this by 
+# overriding configure_traits and edit_traits to return a blank UI.
+
+from enthought.traits.api import HasTraits
+from enthought.traits.ui.api import UI, Handler
+
+class Demo(HasTraits):
+    
+    def configure_traits(self, *args, **kws):
+        main(embedded=True)
+        return True
+    
+    def edit_traits(self, *args, **kws):
+        main(embedded=True)
+        return UI(handler=Handler())
+    
+popup = Demo()
 
 if __name__ == "__main__":
     if '-e' in sys.argv or '--embedded' in sys.argv:

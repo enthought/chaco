@@ -16,7 +16,7 @@ from numpy import arange, array, hstack, random
 # Enthought imports
 from enthought.traits.api import Array, Bool, Callable, Enum, Float, HasTraits, \
                                  Instance, Int, Trait
-from enthought.traits.ui.api import Group, Item, View
+from enthought.traits.ui.api import Group, HGroup, Item, View, spring, Handler
 from enthought.pyface.timer.api import Timer
 
 # Chaco imports
@@ -47,8 +47,9 @@ class Viewer(HasTraits):
                                bgcolor="white",
                                border_visible=True,
                                border_width=1,
-                               padding_bg_color="lightgray"),
-                Item("plot_type"),
+                               padding_bg_color="lightgray",
+                               width=800, height=380),
+                HGroup(spring, Item("plot_type", style='custom'), spring),
                 resizable = True,
                 buttons = ["OK"],
                 width=800, height=500)
@@ -109,7 +110,52 @@ class Controller(HasTraits):
             self._generator = random.normal
         else:
             self._generator = random.lognormal
+            
+#===============================================================================
+# # Demo class that is used by the demo.py application.
+#===============================================================================
+# NOTE: The Demo class is being created for the purpose of running this
+# example using a TraitsDemo-like app (see examples/demo/demo.py in Traits3). 
+# The demo.py file looks for a 'demo' or 'popup' or 'modal popup' keyword
+# when it executes this file, and displays a view for it.
+   
+class DemoHandler(Handler):
+    
+    def closed(self, info, is_ok):
+        """ Handles a dialog-based user interface being closed by the user.
+        Overridden here to stop the timer once the window is destroyed.
+        """
+        
+        info.object.timer.Stop()
+        return
+    
+class Demo(HasTraits):
+    controller = Instance(Controller)
+    viewer = Instance(Viewer, ())
+    timer = Instance(Timer)
+    view = View(Item('controller', style='custom', show_label=False), 
+                Item('viewer', style='custom', show_label=False), 
+                handler = DemoHandler,
+                resizable=True)
+            
+    def edit_traits(self, *args, **kws):        
+        # Start up the timer! We should do this only when the demo actually
+        # starts and not when the demo object is created.
+        self.timer=Timer(100, self.controller.timer_tick)
+        return super(Demo, self).edit_traits(*args, **kws)
+            
+    def configure_traits(self, *args, **kws):        
+        # Start up the timer! We should do this only when the demo actually
+        # starts and not when the demo object is created.
+        self.timer=Timer(100, self.controller.timer_tick)
+        return super(Demo, self).configure_traits(*args, **kws)
+    
+    def _controller_default(self):
+        return Controller(viewer=self.viewer)
+    
+popup=Demo()
 
+# wxApp used when this file is run from the command line.
 
 class MyApp(wx.PySimpleApp):
     
@@ -140,32 +186,10 @@ class MyApp(wx.PySimpleApp):
         self.timer.Start(100.0, wx.TIMER_CONTINUOUS)
         return
 
-# NOTE: The Demo class is being created for the purpose of running this
-# example using a TraitsDemo-like app (see examples/demo/demo.py in Traits3). 
-# The demo.py file looks for a 'demo' or 'popup' or 'modal popup' keyword
-# when it executes this file, and displays a view for it.
-
-class Demo(HasTraits):
-    controller = Instance(Controller)
-    viewer = Instance(Viewer, ())
-    timer = Instance(Timer)
-    view = View(Item('controller', style='custom'), 
-                Item('viewer', style='custom'), 
-                resizable=True)
-    
-    def __init__(self, **traits):
-        super(Demo, self).__init__(**traits)
-        self.timer=Timer(100, self.controller.timer_tick)
-    
-    def _controller_default(self):
-        return Controller(viewer=self.viewer)
-    
-demo=Demo()
 
 # This is called when this example is to be run in a standalone mode.
 if __name__ == "__main__":
     app = MyApp()
-    app.MainLoop()
-    
+    app.MainLoop()    
 
 # EOF
