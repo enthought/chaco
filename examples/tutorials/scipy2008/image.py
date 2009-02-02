@@ -30,6 +30,10 @@ class ImagePlot(HasTraits):
         plot.img_plot("imagedata", xbounds=x, ybounds=y, colormap=jet)
         self.plot = plot
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = ImagePlot()
 if __name__ == "__main__":
-    ImagePlot().configure_traits()
+    demo.configure_traits()
 

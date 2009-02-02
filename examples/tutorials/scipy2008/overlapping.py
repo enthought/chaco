@@ -28,6 +28,10 @@ class OverlappingExample(HasTraits):
         plot.plot(("x", "y2"), type="line", color="red")
         self.plot = plot
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = OverlappingExample()
 if __name__ == "__main__":
-    OverlappingExample().configure_traits()
+    demo.configure_traits()
 

@@ -43,7 +43,12 @@ class ScatterPlotTraits(HasTraits):
 
     def _marker_size_changed(self):
         self.renderer.marker_size = self.marker_size
+        
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = ScatterPlotTraits()
 
 if __name__ == "__main__":
-    ScatterPlotTraits().configure_traits()
+    demo.configure_traits()
 

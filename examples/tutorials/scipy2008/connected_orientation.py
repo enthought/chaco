@@ -41,6 +41,9 @@ class FlippedExample(HasTraits):
         # Set the two plots' ranges to be the same
         scatter.range2d = line.range2d
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = FlippedExample()
 if __name__ == "__main__":
-    FlippedExample().configure_traits()
-
+    demo.configure_traits()

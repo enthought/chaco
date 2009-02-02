@@ -27,6 +27,11 @@ class ScatterPlot(HasTraits):
         plot.plot(("x", "y"), type="scatter", color="blue")
         self.plot = plot
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = ScatterPlot()
+
 if __name__ == "__main__":
-    ScatterPlot().configure_traits()
+    demo.configure_traits()
 

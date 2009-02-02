@@ -41,6 +41,10 @@ class ConnectedRange(HasTraits):
         # Set the two plots' ranges to be the same
         scatter.range2d = line.range2d
 
-if __name__ == "__main__":
-    ConnectedRange().configure_traits()
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo=ConnectedRange()
+if __name__ == "__main__":
+    demo.configure_traits()

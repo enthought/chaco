@@ -35,6 +35,10 @@ class DataChooser(HasTraits):
         self.plotdata.set_data("y", self.data[self.data_name])
 
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo=DataChooser()
 if __name__ == "__main__":
-    DataChooser().configure_traits()
+    demo.configure_traits()
 

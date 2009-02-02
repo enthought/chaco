@@ -33,6 +33,9 @@ class ScatterPlot(HasTraits):
         plot.tools.append(CustomTool(plot))
         return plot
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo=ScatterPlot()
 if __name__ == "__main__":
-    ScatterPlot().edit_traits(kind="livemodal")
-
+    demo.edit_traits(kind="livemodal")

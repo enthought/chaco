@@ -40,6 +40,11 @@ class ToolChooserExample(HasTraits):
             self.plot.tools.append(cls(self.plot))
         return
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = ToolChooserExample()
+
 if __name__ == "__main__":
-    ToolChooserExample().configure_traits()
+    demo.configure_traits()
 

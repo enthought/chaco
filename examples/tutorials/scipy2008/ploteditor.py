@@ -5,7 +5,7 @@ from enthought.chaco.api import ArrayPlotData, Plot
 from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.enable.component_editor import ComponentEditor
 from enthought.traits.api import Enum, HasTraits, Instance
-from enthought.traits.ui.api import Item, View
+from enthought.traits.ui.api import Item, Group, View
 
 class PlotEditor(HasTraits):
 
@@ -14,8 +14,7 @@ class PlotEditor(HasTraits):
     orientation = Enum("horizontal", "vertical")
     traits_view = View(Item('orientation', label="Orientation"),
                        Item('plot', editor=ComponentEditor(), show_label=False), 
-                       width=500, height=500, resizable=True,
-                       title="Chaco Plot")
+                       width=500, height=500, resizable=True)
 
     def __init__(self, *args, **kw):
         HasTraits.__init__(self, *args, **kw)
@@ -35,15 +34,40 @@ class PlotEditor(HasTraits):
             self.plot.orientation = "v"
         else:
             self.plot.orientation = "h"
+        self.plot.request_redraw()
+        
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+class Demo(HasTraits):
+    
+    # Scatter plot.
+    scatter_plot = Instance(PlotEditor)
+    
+    # Line plot.
+    line_plot = Instance(PlotEditor)
+    
+    traits_view = View(Group(
+                             Item('@scatter_plot', show_label=False),
+                             label='Scatter'),
+                        Group(Item('@line_plot', show_label= False ),
+                              label='Line'),
+                              title='Chaco Plot',
+                              resizable=True)
+    
+    def __init__(self, *args, **kws):
+        super(Demo, self). __init__(*args, **kws)
+        #Hook up the ranges.
+        self.scatter_plot.plot.range2d = self.line_plot.plot.range2d
+        
+    def _scatter_plot_default(self):
+        return PlotEditor(plot_type="scatter")
+    
+    def _line_plot_default(self):
+        return PlotEditor(plot_type="line")
+    
+demo = Demo()
 if __name__ == "__main__":
-    # Create the two plots
-    scatter = PlotEditor(plot_type = "scatter")
-    line = PlotEditor(plot_type = "line")
-    # Hook up their ranges
-    scatter.plot.range2d = line.plot.range2d
-    # Bring up both plots by calling edit_traits().  (We call configure_traits()
-    # on the second one so that the application main loop stays running.)
-    line.edit_traits()
-    scatter.configure_traits()
+    demo.configure_traits()
 

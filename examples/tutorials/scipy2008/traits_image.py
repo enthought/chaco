@@ -33,12 +33,18 @@ class ImagePlotTraits(HasTraits):
         plot = Plot(plotdata)
         # Create a line plot in the Plot
         self.renderer = plot.img_plot("imagedata", name="plot1", xbounds=x, ybounds=y, colormap=jet)[0]
-        return plot
+        self.plot = plot
+        return
 
     def _origin_changed(self):
         self.renderer.origin = self.origin
         self.plot.request_redraw()
+        
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = ImagePlotTraits()
 
 if __name__ == "__main__":
-    ImagePlotTraits().configure_traits()
+    demo.configure_traits()
 

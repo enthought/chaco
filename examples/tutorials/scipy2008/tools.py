@@ -29,6 +29,11 @@ class ToolsExample(HasTraits):
         plot.tools.append(DragZoom(plot, drag_button="right"))
         self.plot = plot
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo = ToolsExample()
+
 if __name__ == "__main__":
-    ToolsExample().configure_traits()
+    demo.configure_traits()
 

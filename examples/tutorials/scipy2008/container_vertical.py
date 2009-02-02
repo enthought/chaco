@@ -28,7 +28,11 @@ class ContainerExample2(HasTraits):
         container = VPlotContainer(scatter, line)
         self.plot = container
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo=ContainerExample2()
 if __name__ == "__main__":
-    ContainerExample2().configure_traits()
+    demo.configure_traits()
 
 

@@ -30,6 +30,10 @@ class LinePlot(HasTraits):
         # Assign it to our self.plot attribute
         self.plot = plot
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo=LinePlot()
 if __name__ == "__main__":
-    LinePlot().configure_traits()
+    demo.configure_traits()
 

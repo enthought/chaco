@@ -5,8 +5,10 @@ from enthought.chaco.api import ArrayPlotData, Plot, AbstractOverlay
 from enthought.chaco.tools.api import PanTool, MoveTool
 from enthought.enable.component_editor import ComponentEditor
 from enthought.enable.api import ColorTrait
-from enthought.traits.api import CArray, Bool, Float, Range, HasTraits, Instance, Property
-from enthought.traits.ui.api import Item, View, Group, RangeEditor
+from enthought.traits.api import Button, CArray, Bool, Float, Range, \
+                                 HasTraits, Instance, Property
+from enthought.traits.ui.api import Item, View, Group, RangeEditor, \
+                                    HGroup, Handler, spring
 
 class CustomOverlay(AbstractOverlay):
     x = Float(10, editor=RangeEditor(low=1.0, high=600, mode="slider"))
@@ -49,11 +51,25 @@ class CustomOverlay(AbstractOverlay):
             # Map our current x,y point into data space
             self._anchor = self.component.map_data((self.x, self.y))
     
+class ScatterPlotHandler(Handler):
+    
+    def object_edit_overlay_changed(self, info):
+        info.object.plot.overlays[-1].edit_traits(parent=info.ui.control)
+        return
+    
 class ScatterPlot(HasTraits):
 
     plot = Instance(Plot)
-
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
+    
+    edit_overlay = Button('Edit Overlay')
+    
+    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
+                       HGroup(spring, 
+                              Item('edit_overlay', show_label=False,
+                                   emphasized=True,
+                                   height=50),
+                              spring),
+                       handler = ScatterPlotHandler,  
                        width=800, height=600, resizable=True)
 
     def _plot_default(self):
@@ -74,10 +90,9 @@ class ScatterPlot(HasTraits):
         plot.overlays.append(overlay)
         return plot
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================    
+demo = ScatterPlot()
 if __name__ == "__main__":
-    # Create the main plot and bring it up via calling edit_traits()
-    plot = ScatterPlot()
-    plot.edit_traits(kind="live")
-    # Get a handle to the overlay and edit the traits on it as well
-    overlay = plot.plot.overlays[-1]
-    overlay.configure_traits()
+    demo.configure_traits()

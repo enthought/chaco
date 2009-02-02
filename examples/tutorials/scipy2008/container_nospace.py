@@ -33,6 +33,9 @@ class ContainerExample(HasTraits):
 
         self.plot = container
 
+#===============================================================================
+# demo object that is used by the demo.py application.
+#===============================================================================
+demo=ContainerExample()
 if __name__ == "__main__":
-    ContainerExample().configure_traits()
-
+    demo.configure_traits()
