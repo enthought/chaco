@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #
-#  Copyright (c) 2005, Enthought, Inc.
+#  Copyright (c) 2009, Enthought, Inc.
 #  All rights reserved.
 # 
 #  This software is provided without warranty under the terms of the BSD
@@ -10,17 +10,19 @@
 #
 #  Thanks for using Enthought open source!
 # 
-#  Author: David C. Morrill
-#  Date:   09/15/2005
+#  Author: Vibha Srinivasan
+#  Date: 02/03/2009
 #  
 #-------------------------------------------------------------------------------
 
-""" Run the Traits UI demo.
+""" Run the Chaco demo.
 """
 
 from enthought.traits.ui.extras.demo import demo
 
 # Uncomment the config_filename portion to see a tree editor based on the
 # examples.cfg file.
-demo(use_files=True) #, config_filename='examples.cfg')
+demo(use_files=True, 
+     # config_filename='examples.cfg'
+    )
     
