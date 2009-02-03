@@ -28,7 +28,7 @@ except ImportError:
         from ohlc_renderer import OHLCPlot, PriceDataSource, \
                 CandleOHLCPlot, HeikinAshiPlot
     except ImportError:
-        raise "Missing HLOC renderer module, unable to run this demo"
+        raise ImportError, "Missing HLOC renderer module, unable to run this demo"
 
 def create_dates(numpoints, units="days"):
     """ Returns **numpoints** number of dates that evenly bracket the current
@@ -133,6 +133,6 @@ class MyApp(HasTraits):
         container.add(price_plot)
         return container
 
+demo = MyApp()
 if __name__ == "__main__":
-    app = MyApp()
-    app.configure_traits()
+    demo.configure_traits()

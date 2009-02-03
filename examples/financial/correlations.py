@@ -153,7 +153,7 @@ class PlotApp(HasTraits):
         plot.request_redraw()
 
 
-
+demo = PlotApp("AAPL", "GOOG", "MSFT")
 if __name__ == "__main__":
-    PlotApp("AAPL", "GOOG", "MSFT").configure_traits()
+    demo.configure_traits()
 
