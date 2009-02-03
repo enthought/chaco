@@ -1,5 +1,5 @@
 
-from numpy import linspace, random, zeros, arange
+from numpy import linspace, random, zeros, arange, cumprod
 import time
 
 # ETS imports (non-chaco)
@@ -78,7 +78,7 @@ class PlotApp(HasTraits):
         plot = Plot(self.plotdata)
         plot.legend.visible = True
         #FIXME: The legend move tool doesn't seem to quite work right now
-        plot.legend.tools.append(LegendTool(plot.legend))
+        #plot.legend.tools.append(LegendTool(plot.legend))
         plot.x_axis = None
         x_axis = ScalesPlotAxis(plot, orientation="bottom",
                         tick_generator=ScalesTickGenerator(scale=CalendarScaleSystem()))
@@ -109,13 +109,15 @@ class PlotApp(HasTraits):
         plot = Plot(self.plotdata, padding=0)
         plot.padding_left = 25
         plot.padding_bottom = 25
+        plot.tools.append(PanTool(plot))
+        plot.overlays.append(ZoomTool(plot))
         self.corr_plot = plot
 
     def _create_data(self, *names):
         numpoints = self.numpoints
         plotdata = ArrayPlotData(times = create_dates(numpoints))
         for name in names:
-            plotdata.set_data(name, random.lognormal(0.01, 0.1, size=numpoints))
+            plotdata.set_data(name, cumprod(random.lognormal(0.0, 0.04, size=numpoints)))
         self.plotdata = plotdata
 
     def _selections_changed(self, event):
