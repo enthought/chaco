@@ -402,6 +402,10 @@ class DataView(OverlayPlotContainer):
                     setattr(renderer, 'value_range', self.value_range)
         return
 
+    def _range2d_default(self):
+        """ Default trait initializer for the range2d trait """
+        return DataRange2D()
+
 
     #------------------------------------------------------------------------
     # Property getters and setters
