@@ -298,18 +298,23 @@ class LogScale(AbstractScale):
         if log_interval < 1.0:
             # If the data is spaced by less than a factor of 10, then use
             # regular/linear ticking
-            min, max, delta = heckbert_interval(start, end, desired_ticks)
+            min, max, delta = heckbert_interval(start, end, desired_ticks,
+                                                                enclose=True)
             return frange(min, max, delta)
 
         elif log_interval < desired_ticks:
             for interval in magic_numbers:
                 ticklist = []
-                for exp in range(int(floor(log_start)), int(ceil(log_end))):
-                    for multiplier in linspace(interval, 10.0, round(10.0/interval),
-                                               endpoint=1):
+                for exp in range(int(floor(log_start)),
+                                    int(ceil(log_end))+(interval==1)):
+                    for multiplier in linspace(interval, 10.0,
+                                               round(10.0/interval)-(interval==1),
+                                               endpoint=(interval != 1)):
                         tick = 10**exp * multiplier
                         if start <= tick <= end:
                             ticklist.append(tick)
+                        elif tick > end:
+                            break
                 if len(ticklist) < desired_ticks * 1.5:
                     return ticklist
             return ticklist

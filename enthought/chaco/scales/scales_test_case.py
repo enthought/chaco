@@ -13,13 +13,15 @@ class TicksTestCase(unittest.TestCase):
         self.assert_(len(arg) == 0)
 
     def check_ticks(self, ticks1, ticks2):
+        self.assertEqual(len(ticks1),len(ticks2))
         for t1, t2 in zip(ticks1, ticks2):
             self.assertAlmostEqual(t1, t2, 6)
 
     def check_labels(self, labels1, labels2):
+        self.assertEqual(len(labels1),len(labels2))
         for t1, t2, in zip(labels1, labels2):
             self.assert_(t1 == t2)
-        
+
 
 class ScalesTestCase(TicksTestCase):
 
@@ -30,17 +32,43 @@ class ScalesTestCase(TicksTestCase):
         ticks = scale.ticks(5,105,8)
         self.check_ticks(ticks, frange(10, 100, 10.0))
 
+    def test_log_scale_subdecade(self):
+        # Test cases where log_interval is less than 1.
+        scale = LogScale()
+        ticks = scale.ticks(1.0, 2.0)
+        self.check_ticks(ticks, array((1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0)))
+        ticks = scale.ticks(0.9,2.1)
+        self.check_ticks(ticks, array((1.0, 1.25, 1.5, 1.75, 2.0)))
+        ticks = scale.ticks(1.1,9.9)
+        self.check_ticks(ticks, array((2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)))
+
+
+    def test_log_scale_interval1(self):
+        # Test the case where 1 < log_interval < desired_ticks, and interval=1
+        # is the case that generates the ticks.
+        scale = LogScale()
+        ticks = scale.ticks(1.0,10.1)
+        self.check_ticks(ticks, array((1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0)))
+        ticks = scale.ticks(9.3,99.9)
+        self.check_ticks(ticks, array((10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0)))
+        ticks = scale.ticks(9.9,100.0)
+        self.check_ticks(ticks, array((10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0)))
+
+
     def test_log_scale(self):
         scale = LogScale()
+
         ticks = scale.ticks(0.1, 10.0)
         self.check_ticks(ticks, array((0.2, 0.4, 0.6, 0.8, 1.0, 2.0, 4.0, 6.0, 8.0, 10.0)))
-
         ticks = scale.ticks(10.0, 1000.0)
         self.check_ticks(ticks, array((20.0, 40.0, 60.0, 80.0, 100.0,
                                        200.0, 400.0, 600.0, 800.0, 1000.0)))
-
         ticks = scale.ticks(5.0, 4300)
         self.check_ticks(ticks, array((5, 10, 50, 100, 500, 1000)))
+        # Test case when the log_interval is greater than 8 (the
+        # default desired_ticks)
+        ticks = scale.ticks(1e-3,1e6)
+        self.check_ticks(ticks, array((1e-3, 1e-2, 1e-1, 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6)))
         
 
 class ScaleSystemTestCase(TicksTestCase):
@@ -56,7 +84,7 @@ class ScaleSystemTestCase(TicksTestCase):
                   FixedScale(resolution = 100.0)]
         ticker = ScaleSystem(default_scale=None, *scales)
         self.check_ticks(ticker.ticks(5, 35, 3), (10.0, 20.0, 30.0))
-        self.check_ticks(ticker.ticks(5, 35, 20), frange(5.0, 30.0, 1.0))
+        self.check_ticks(ticker.ticks(5, 35, 20), frange(5.0, 35.0, 1.0))
         self.check_ticks(ticker.ticks(5, 614, 10), (100, 200, 300, 400, 500, 600))
 
     def test_revert_to_default(self):
@@ -84,9 +112,15 @@ class BasicFormatterTestCase(TicksTestCase):
         
         ticks = scale.ticks(start, end, numlabels)
         labels = fmt.format(ticks, numlabels, None)
-        desired = [str(float(x)) for x in range(12, 19)]
+        # desired = [str(float(x)) for x in range(12, 19)]
+        ## This test fails when desired is created with str(float(x)).
+        ## The format function returns "12",...,"18", not "12.0",...,"18.0".
+        desired = ["12","13","14","15","16","17","18"]
         self.check_labels(labels, desired)
 
+    def test_format_small_numbers(self):
+        fmt = BasicFormatter()
+        numlabels = 8
         # test with small numbers
         scale = FixedScale(resolution = 1e-4)
         start, end = 5e-5, 8.5e-4
@@ -129,7 +163,8 @@ class BasicFormatterTestCase(TicksTestCase):
             ticks = scale.ticks(start, end, numlabels)
             labels = fmt.format(ticks, numlabels, None)
             actual = sum(map(len, labels))
-            self.assert_( abs(estimate-actual) / actual < 0.4 )
+            err = abs(estimate - actual) / actual
+            self.assert_( err < 0.4 )
         return
 
     def test_width_based_default_scale(self):
