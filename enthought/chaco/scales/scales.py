@@ -276,10 +276,60 @@ class LogScale(AbstractScale):
             formatter = BasicFormatter()
         self.formatter = formatter
 
-    def ticks(self, start, end, desired_ticks=8):
+    # In the following utility functions, "irep" stands for "integer representation".
+    # For a given base interval size i (i.e. "magic number"), there is a one-to-one
+    # mapping between the nice tick values and the integers.
 
-        magic_numbers = [1, 2, 5]
-        
+    def _irep_to_value(self,n,i):
+        """ For a given "magic number" i (i.e. spacing of the evenly spaced ticks
+        in the decade [1,10]), compute the tick value of the given integer
+        representation."""
+        if i == 1:
+            j,k = divmod(n,9)
+            v = (k+1)*10**j
+            return v
+        else:
+            j,k = divmod(n,int(10.0/i))
+            if k == 0:
+                v = 10**j
+            else:
+                v = i*k*10**j
+            return v
+
+    def _power_and_interval(self,x,i):
+        # j is the power of 10 of the decade in which x lies
+        j = int(ceil(log10(x))) - 1
+        # b is the interval size of the evenly spaced ticks in the decade
+        b = i*10**j
+        return (j,b)
+
+    def _power_and_index_to_irep(self,j,k,i):
+        if i == 1:
+            n = j*9+(k-1)
+        else:
+            n = j*int(10.0/i)+k
+        return n
+
+    def _logtickceil_as_irep(self,x,i):
+        """ For a given "magic number" i (i.e. spacing of the evenly spaced ticks
+        in the decade [1,10]), compute the integer representation of the smallest
+        tick not less than x.""" 
+        j,b = self._power_and_interval(x,i)
+        k = int(ceil(float(x)/b))
+        n = self._power_and_index_to_irep(j,k,i)
+        return n
+
+    def _logtickfloor_as_irep(self,x,i):
+        """ For a given "magic number" i (i.e. spacing of the evenly spaced ticks
+        in the decade [1,10]), compute the integer representation of the largest
+        tick not greater than x.""" 
+        j,b = self._power_and_interval(x,i)
+        k = int(floor(float(x)/b))
+        n = self._power_and_index_to_irep(j,k,i)
+        return n
+
+    def ticks(self, start, end, desired_ticks=8):
+        """ Compute a "nice" set of ticks for a log scale."""
         if start > end:
             start, end = end, start
 
@@ -303,21 +353,14 @@ class LogScale(AbstractScale):
             return frange(min, max, delta)
 
         elif log_interval < desired_ticks:
+            magic_numbers = [1, 2, 5]
             for interval in magic_numbers:
-                ticklist = []
-                for exp in range(int(floor(log_start)),
-                                    int(ceil(log_end))+(interval==1)):
-                    for multiplier in linspace(interval, 10.0,
-                                               round(10.0/interval)-(interval==1),
-                                               endpoint=(interval != 1)):
-                        tick = 10**exp * multiplier
-                        if start <= tick <= end:
-                            ticklist.append(tick)
-                        elif tick > end:
-                            break
-                if len(ticklist) < desired_ticks * 1.5:
-                    return ticklist
-            return ticklist
+                n1 = self._logtickceil_as_irep(start,interval)
+                n2 = self._logtickfloor_as_irep(end,interval)
+                ticks = [self._irep_to_value(n,interval) for n in range(n1,n2+1)]
+                if len(ticks) < desired_ticks * 1.5:
+                    return ticks
+            return ticks
         
         else:
             # Put lines at every power of ten

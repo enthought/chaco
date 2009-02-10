@@ -59,9 +59,12 @@ class ScalesTestCase(TicksTestCase):
         scale = LogScale()
 
         ticks = scale.ticks(0.1, 10.0)
-        self.check_ticks(ticks, array((0.2, 0.4, 0.6, 0.8, 1.0, 2.0, 4.0, 6.0, 8.0, 10.0)))
+        self.check_ticks(ticks, array((0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 2.0, 4.0, 6.0, 8.0, 10.0)))
         ticks = scale.ticks(10.0, 1000.0)
-        self.check_ticks(ticks, array((20.0, 40.0, 60.0, 80.0, 100.0,
+        self.check_ticks(ticks, array((10.0, 20.0, 40.0, 60.0, 80.0, 100.0,
+                                       200.0, 400.0, 600.0, 800.0, 1000.0)))
+        ticks = scale.ticks(9.9, 1000.0)
+        self.check_ticks(ticks, array((10.0, 20.0, 40.0, 60.0, 80.0, 100.0,
                                        200.0, 400.0, 600.0, 800.0, 1000.0)))
         ticks = scale.ticks(5.0, 4300)
         self.check_ticks(ticks, array((5, 10, 50, 100, 500, 1000)))
