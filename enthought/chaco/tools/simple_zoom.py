@@ -414,16 +414,17 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                
         else:   
             if self.tool_mode == "range":
-                if self._zoom_limit_reached(orig_low, orig_high, low, high):
+                mapper = self._get_mapper()
+                if self._zoom_limit_reached(orig_low, orig_high, low, high, mapper):
                     self._pop_state()
                     return
-                mapper = self._get_mapper()
                 mapper.range.low = low
                 mapper.range.high = high
             else:
                 for ndx in (0, 1):
+                    mapper = (self.component.x_mapper, self.component.y_mapper)[ndx]
                     if self._zoom_limit_reached(orig_low[ndx], orig_high[ndx],
-                                                low[ndx], high[ndx]):
+                                                low[ndx], high[ndx], mapper):
                         # pop _current_state off the stack and leave the actual
                         # bounds unmodified.
                         self._pop_state()
