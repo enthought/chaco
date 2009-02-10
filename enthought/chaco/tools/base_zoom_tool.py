@@ -23,9 +23,9 @@ class BaseZoomTool(HasTraits):
     # bounds.  If None, then there is no limit.
     max_zoom_out_factor = Float(1e5, allow_none=True)
     
-    def _zoom_limit_reached(self, orig_low, orig_high, new_low, new_high):
+    def _zoom_limit_reached(self, orig_low, orig_high, new_low, new_high, mapper=None):
         """ Returns True if the new low and high exceed the maximum zoom
-        limits
+        limits, or (optionally) exceeds the domain limits of the mapper
         """
         orig_bounds = orig_high - orig_low
 
@@ -33,17 +33,30 @@ class BaseZoomTool(HasTraits):
             # There isn't really a good way to handle the case when the
             # original bounds were infinite, since any finite zoom
             # range will certainly exceed whatever zoom factor is set.
-            # In this case, we just allow unbounded levels of zoom.
-            return False
-        
-        new_bounds = new_high - new_low
-        if allclose(orig_bounds, 0.0):
-            return True
-        if allclose(new_bounds, 0.0):
-            return True
-        if (new_bounds / orig_bounds) > self.max_zoom_out_factor or \
-           (orig_bounds / new_bounds) > self.max_zoom_in_factor:
-            return True
+            # If this is the case, we skip the zoom factor checks,
+            # and move on to the domain limits checks
+            pass
+        else:
+            new_bounds = new_high - new_low
+            if allclose(orig_bounds, 0.0):
+                return True
+            if allclose(new_bounds, 0.0):
+                return True
+            if (new_bounds / orig_bounds) > self.max_zoom_out_factor or \
+               (orig_bounds / new_bounds) > self.max_zoom_in_factor:
+                return True
+
+        if mapper is not None:
+            domain_min, domain_max = getattr(mapper, "domain_limits", (None,None))
+            if domain_min is None:
+                domain_min = -inf
+            if domain_max is None:
+                domain_max = inf
+            # A little bit of UI niceness.  In general, if the new low and
+            # high values exceed the domain limits, then we will want to
+            # just return True.  However
+            if new_low <= domain_min or new_high >= domain_max:
+                return True
         return False
 
     #------------------------------------------------------------------------

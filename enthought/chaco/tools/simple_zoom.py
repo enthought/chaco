@@ -509,13 +509,19 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 else:
                     ol, oh = orig_low, orig_high
                
-                if self._zoom_limit_reached(ol, oh, newlow, newhigh):
+                if self._zoom_limit_reached(ol, oh, newlow, newhigh, mapper):
                     # Ignore other axes, we're done.
                     event.handled = True
                     return
-               
+
                 todo_list.append((mapper,newlow,newhigh))
-           
+
+            # Check the domain limits on each dimension, and rescale the zoom
+            # amount if necessary.  (We always have to rescale both dimensions
+            # if either needs rescaling, so that aspect ratio is preserved.)
+            #for ndx, (mapper, newlow, newhigh) in enumerate(todo_list):
+            #    domain_min, domain_max = mapper.domain_limits
+
             # All axes can be rescaled, do it.
             for mapper, newlow, newhigh in todo_list:
                 if newlow > newhigh:
