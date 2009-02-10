@@ -1,5 +1,8 @@
 """ Defines the PanTool class.
 """
+
+from numpy import inf
+
 # Enthought library imports
 from enthought.enable.api import BaseTool, Pointer
 from enthought.traits.api import Bool, Enum, Float, Tuple
@@ -158,11 +161,18 @@ class PanTool(BaseTool):
                 # values.  As a first approximation, we're just going to
                 # use a linear approximation, which works perfectly for
                 # linear mappers (which is used 99% of the time).
-                if (domain_min is not None and newlow < domain_min):
+                if domain_min is None:
+                    domain_min = -inf
+                if domain_max is None:
+                    domain_max = inf
+                if (newlow <= domain_min) and (newhigh >= domain_max):
+                    # Don't do anything; effectively, freeze the pan
+                    continue
+                if newlow <= domain_min:
                     delta = newhigh - newlow
                     newlow = domain_min
                     newhigh = domain_min + delta
-                if (domain_max is not None and newhigh > domain_max):
+                if newhigh >= domain_max:
                     delta = newhigh - newlow
                     newhigh = domain_max
                     newlow = domain_max - delta
