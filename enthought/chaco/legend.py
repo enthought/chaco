@@ -129,6 +129,9 @@ class Legend(AbstractOverlay):
     # * 'questionmark': render a "question mark" icon
     error_icon = Enum("skip", "blank", "questionmark")
 
+    # Should the legend clip to the bounds it needs, or to its parent?
+    clip_to_component = Bool(False)
+
     # The legend is not resizable (overrides PlotComponent).
     resizable = "hv" 
 
@@ -178,7 +181,13 @@ class Legend(AbstractOverlay):
         else:
             x = component.x
         self.outer_position = [x, y]
+        if self.clip_to_component:
+            c = self.component
+            gc.save_state()
+            gc.clip_to_rect(c.x, c.y, c.width, c.height)
         PlotComponent._draw(self, gc, view_bounds, mode)
+        if self.clip_to_component:
+            gc.restore_state()
         return
 
     # The following two methods implement the functionality of the Legend
@@ -219,7 +228,6 @@ class Legend(AbstractOverlay):
 
         gc.save_state()
         try:
-
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             edge_space = self.border_width + self.border_padding
             icon_width, icon_height = self.icon_bounds
