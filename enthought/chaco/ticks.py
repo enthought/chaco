@@ -434,7 +434,7 @@ def log_auto_ticks(data_low, data_high,
         return auto_ticks(data_low, data_high,
                           bound_low, bound_high,
                           tick_interval,
-                          use_endpoints = True)
+                          use_endpoints = False)
     
     elif log_interval < (tick_goal+1)/2 or explicit_ticks:
         # If there's enough space, try to put lines at the magic number multipliers
