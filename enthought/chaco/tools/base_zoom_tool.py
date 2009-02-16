@@ -25,7 +25,7 @@ class BaseZoomTool(HasTraits):
     
     def _zoom_limit_reached(self, orig_low, orig_high, new_low, new_high, mapper=None):
         """ Returns True if the new low and high exceed the maximum zoom
-        limits, or (optionally) exceeds the domain limits of the mapper
+        limits
         """
         orig_bounds = orig_high - orig_low
 
@@ -46,17 +46,6 @@ class BaseZoomTool(HasTraits):
                (orig_bounds / new_bounds) > self.max_zoom_in_factor:
                 return True
 
-        if mapper is not None:
-            domain_min, domain_max = getattr(mapper, "domain_limits", (None,None))
-            if domain_min is None:
-                domain_min = -inf
-            if domain_max is None:
-                domain_max = inf
-            # A little bit of UI niceness.  In general, if the new low and
-            # high values exceed the domain limits, then we will want to
-            # just return True.  However
-            if new_low <= domain_min or new_high >= domain_max:
-                return True
         return False
 
     #------------------------------------------------------------------------

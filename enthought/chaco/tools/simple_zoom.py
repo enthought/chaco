@@ -494,7 +494,6 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             # If any of the axes reaches its zoom limit, we should cancel the zoom.
             # We should first calculate the new ranges and store them. If none of
             # the axes reach zoom limit, we can apply the new ranges.
-    
             todo_list = []
             for ndx, mapper in mapper_list:
                 screenrange = mapper.screen_bounds
@@ -514,14 +513,17 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                     # Ignore other axes, we're done.
                     event.handled = True
                     return
-
                 todo_list.append((mapper,newlow,newhigh))
 
             # Check the domain limits on each dimension, and rescale the zoom
-            # amount if necessary.  (We always have to rescale both dimensions
-            # if either needs rescaling, so that aspect ratio is preserved.)
-            #for ndx, (mapper, newlow, newhigh) in enumerate(todo_list):
-            #    domain_min, domain_max = mapper.domain_limits
+            # amount if necessary. 
+            for ndx, (mapper, newlow, newhigh) in enumerate(todo_list):
+                domain_min, domain_max = getattr(mapper, "domain_limits", (None,None))
+                if domain_min is not None and newlow < domain_min:
+                    newlow = domain_min
+                if domain_max is not None and newhigh > domain_max:
+                    newhigh = domain_max
+                todo_list[ndx] = (mapper, newlow, newhigh)
 
             # All axes can be rescaled, do it.
             for mapper, newlow, newhigh in todo_list:
