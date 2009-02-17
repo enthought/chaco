@@ -5,7 +5,7 @@ and returns different data depending on that range.
 """
 
 # Major library imports
-from numpy import array, linspace, sin
+from numpy import array, linspace, sin, ceil
 from scipy.special import jn
 
 from enthought.enable.example_support import DemoFrame, demo_main
@@ -27,7 +27,10 @@ from enthought.chaco.function_data_source import FunctionDataSource
 numpoints = 500
 
 def xfunc(low, high):
-    return linspace(low, high, numpoints)
+    dx = (high - low) / numpoints
+    real_low = ceil(low/dx) * dx
+    real_high = ceil(high/dx) * dx
+    return linspace(real_low, real_high, numpoints)
 
 def yfunc(low, high):
     x = xfunc(low, high)
@@ -57,11 +60,11 @@ def _create_plot_component():
                        marker_size = 3,
                        line_width = 0)
 
-    #plot = LinePlot(index = xds, value = yds, index_mapper = xmapper,
-    #                value_mapper = ymapper,
-    #                color = "green")
+    plot2 = LinePlot(index = xds, value = yds, index_mapper = xmapper,
+                    value_mapper = ymapper,
+                    color = "lightgray")
     
-    container.add(plot)
+    container.add(plot2, plot)
     plot.tools.append(PanTool(plot, constrain_direction="x", constrain=True))
     plot.tools.append(ZoomTool(plot, axis="index", tool_mode="range"))
 
