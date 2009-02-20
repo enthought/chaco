@@ -237,7 +237,8 @@ class Legend(AbstractOverlay):
             y = self.y2 - edge_space
 
             if self._cached_label_positions is not None:
-                self._cached_label_positions[:,0] = icon_x
+                if len(self._cached_label_positions) > 0:
+                    self._cached_label_positions[:,0] = icon_x
 
             for i, label_name in enumerate(self._cached_label_names):
                 # Compute the current label's position
@@ -368,9 +369,13 @@ class Legend(AbstractOverlay):
         dummy_gc = font_metrics_provider()
         label_sizes = array([label.get_width_height(dummy_gc) for label in labels])
 
-        max_label_width = max(label_sizes[:, 0])
-        total_label_height = sum(label_sizes[:, 1]) + (len(label_sizes)-1)*self.line_spacing
-
+        if len(label_sizes) > 0:
+            max_label_width = max(label_sizes[:, 0])
+            total_label_height = sum(label_sizes[:, 1]) + (len(label_sizes)-1)*self.line_spacing
+        else:
+            max_label_width = 0
+            total_label_height = 0
+        
         legend_width = max_label_width + self.icon_spacing + self.icon_bounds[0] \
                         + self.hpadding + 2*self.border_padding
         legend_height = total_label_height + self.vpadding + 2*self.border_padding
