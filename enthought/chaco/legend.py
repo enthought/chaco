@@ -133,7 +133,7 @@ class Legend(AbstractOverlay):
     clip_to_component = Bool(False)
 
     # The legend is not resizable (overrides PlotComponent).
-    resizable = "hv" 
+    resizable = "hv"
 
     # The legend draws itself as in one pass when its parent is drawing
     # the **draw_layer** (overrides PlotComponent).
@@ -148,10 +148,10 @@ class Legend(AbstractOverlay):
 
     # A cached list of Label instances
     _cached_labels = List
-    
+
     # A cached array of label sizes.
     _cached_label_sizes = Any
-    
+
     # A cached list of label names.
     _cached_label_names = CList
 
@@ -164,10 +164,25 @@ class Legend(AbstractOverlay):
     # A cached array of label positions relative to the legend's origin
     _cached_label_positions = Any
 
+    def is_in(self, x, y):
+        """ overloads from parent class because legend alignment
+            and padding does not cooperatate with the basic implementation
+
+            This may just be caused byt a questionable implementation of the
+            legend tool, but it works by adjusting the padding. The Component
+            class implementation of is_in uses the outer positions which
+            includes the padding
+        """
+        in_x = (x >= self.x) and (x <= self.x + self.width)
+        in_y = (y >= self.y) and (y <= self.y + self.height)
+
+        return in_x and in_y
+
+
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
-        
+
         Implements AbstractOverlay.
         """
         self.do_layout()
@@ -195,7 +210,7 @@ class Legend(AbstractOverlay):
     # The make the Legend use the normal PlotComponent render methods when
     # it does not have a .component attribute, so that it can have its own
     # overlays (e.g. a PlotLabel).
-    # 
+    #
     # The core legend rendering method is named _draw_as_overlay() so that
     # it can be called from _draw_plot() when the Legend is not an overlay,
     # and from _draw_overlay() when the Legend is an overlay.
@@ -214,7 +229,7 @@ class Legend(AbstractOverlay):
 
     def _draw_as_overlay(self, gc, view_bounds=None, mode="normal"):
         """ Draws the overlay layer of a component.
-        
+
         Overrides PlotComponent.
         """
         # Determine the position we are going to draw at from our alignment
@@ -302,9 +317,9 @@ class Legend(AbstractOverlay):
 
     def _render_error(self, gc, icon_x, icon_y, icon_width, icon_height):
         """ Renders an error icon or performs some other action when a
-        plot is unable to render its icon.  
-        
-        Returns True if something was actually drawn (and hence the legend 
+        plot is unable to render its icon.
+
+        Returns True if something was actually drawn (and hence the legend
         needs to advance the line) or False if nothing was drawn.
         """
         if self.error_icon == "skip":
@@ -414,7 +429,7 @@ class Legend(AbstractOverlay):
         override this method to customize the creation of labels.
         """
         return Label(text=text, font=self.font, margin=0, bgcolor="transparent",
-                     border_width=0) 
+                     border_width=0)
 
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
