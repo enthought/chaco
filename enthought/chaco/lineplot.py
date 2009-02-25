@@ -171,6 +171,8 @@ class LinePlot(BaseXYPlot):
             for ds, rng in ((self.index, self.index_range), (self.value, self.value_range)):
                 low, high = ds.get_bounds()
                 if low > rng.high or high < rng.low:
+                    self._cached_data_pts = []
+                    self._cached_valid = True
                     return
 
             if len(index) == 0 or len(value) == 0 or len(index) != len(value):
