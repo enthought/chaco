@@ -3,7 +3,7 @@ function.
 """
 
 # Major library imports
-from numpy import argmin, around, array, asarray, compress, invert, isnan, \
+from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, \
                 sqrt, sum, transpose, where
 
 # Enthought library imports
@@ -155,8 +155,11 @@ class ScatterPlot(BaseXYPlot):
         screen_points = around(self.map_screen(all_data))
         if len(screen_points) == 0:
             return None
-        delta = screen_points - array([screen_pt])
-        distances = sqrt(sum(delta*delta, axis=1))
+        if index_only:
+            distances = abs(screen_points[:,0] - screen_pt[0])
+        else:
+            delta = screen_points - array([screen_pt])
+            distances = sqrt(sum(delta*delta, axis=1))
         closest_ndx = argmin(distances)
         if distances[closest_ndx] <= threshold:
             return closest_ndx
