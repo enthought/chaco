@@ -41,8 +41,8 @@ class SizeMismatch(ChacoShellError):
 #-----------------------------------------------------------------------------
 
 def is1D (a):
-    as = shape(a)
-    return ((len(as) == 1) or (as[0] == 1) or (as[1] == 1))
+    s = shape(a)
+    return ((len(s) == 1) or (s[0] == 1) or (s[1] == 1))
 
 def is2D (a):
     return (len(shape(a)) == 2)
