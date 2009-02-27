@@ -68,7 +68,7 @@ class StatusOverlay(AbstractOverlay):
         return
         
     def fade_out(self):
-        self.timer = Timer(0.05, self._fade_out_step)
+        self.timer = Timer(50, self._fade_out_step)
         
     def _fade_out_step(self):
         """ Fades out the overlay over a half second. then removes it from
