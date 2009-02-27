@@ -7,6 +7,9 @@ from enthought.traits.api import HasTraits, Instance, Button
 from enthought.traits.ui.api import Item, View, HGroup
 
 class MyPlot(HasTraits):
+    """ Displays a plot with a few buttons to control which overlay
+        to display
+    """
     plot = Instance(Plot)
     status_overlay = Instance(StatusOverlay)
     
@@ -28,22 +31,38 @@ class MyPlot(HasTraits):
         self.plot.plot(('index', 'data_series'))
         
     def _error_button_fired(self, event):
+        """ removes the old overlay and replaces it with
+            an error overlay
+        """
         if self.status_overlay is not None:
+            # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
+            
         self.status_overlay = ErrorOverlay(component=self.plot)
         self.plot.overlays.append(self.status_overlay)
+        
         self.plot.request_redraw()
          
     def _warn_button_fired(self, event):
+        """ removes the old overlay and replaces it with
+            an warning overlay
+        """
         if self.status_overlay is not None:
+            # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
+            
         self.status_overlay = WarningOverlay(component=self.plot)
         self.plot.overlays.append(self.status_overlay)
+        
         self.plot.request_redraw()
 
     def _no_problem_button_fired(self, event):
+        """ removes the old overlay
+        """
         if self.status_overlay is not None:
+            # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
+            
         self.plot.request_redraw()
 
 index = numpy.array([1,2,3,4,5])
