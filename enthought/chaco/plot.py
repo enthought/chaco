@@ -220,7 +220,7 @@ class Plot(DataView):
 
         Returns
         =======
-        [str] -> list of names of the new plots created
+        [renderers] -> list of renderers created in response to this call to plot()
         """
 
         if len(data) == 0:
