@@ -214,14 +214,20 @@ class ScatterPlot(BaseXYPlot):
             # and this will fall out...
             for ds in (self.index, self.value):
                 if ds.metadata.get('selection_masks', None) is not None:
-                    for mask in ds.metadata['selection_masks']:
-                        point_mask &= mask
-                    indices = where(point_mask == True)
-                    points = transpose(array((index[indices], value[indices])))
+                    try:
+                        for mask in ds.metadata['selection_masks']:
+                            point_mask &= mask
+                        indices = where(point_mask == True)
+                        points = transpose(array((index[indices], value[indices])))
+                    except:
+                        continue
                 elif ds.metadata.get('selections', None) is not None:
-                    indices = ds.metadata['selections']
-                    point_mask = point_mask[indices]
-                    points = transpose(array((index[indices], value[indices])))
+                    try:
+                        indices = ds.metadata['selections']
+                        point_mask = point_mask[indices]
+                        points = transpose(array((index[indices], value[indices])))
+                    except:
+                        continue
                 else:
                     continue
                 
