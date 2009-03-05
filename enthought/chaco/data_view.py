@@ -393,8 +393,10 @@ class DataView(OverlayPlotContainer):
                 if new is not None:
                     new.add(datasource)
         for renderer in self.components:
-            if hasattr(renderer, 'range2d') or isinstance(renderer, Base2DPlot):
-                setattr(renderer, 'range2d', new)
+            if hasattr(renderer, 'range2d'): 
+                renderer.range2d = new
+            elif isinstance(renderer, Base2DPlot):
+                renderer.index_range = new
             else:
                 if hasattr(renderer, 'index_range'):
                     setattr(renderer, 'index_range', self.index_range)
