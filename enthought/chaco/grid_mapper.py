@@ -150,6 +150,10 @@ class GridMapper(AbstractMapper):
             old.on_trait_change(self._update_range, "updated", remove=True)
         if new is not None:
             new.on_trait_change(self._update_range, "updated")
+            if self._xmapper is not None:
+                self._xmapper.range = new.x_range
+            if self._ymapper is not None:
+                self._ymapper.range = new.y_range
             self._update_range()
 
     def _x_low_pos_changed(self):
