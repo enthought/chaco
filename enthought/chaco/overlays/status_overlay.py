@@ -3,12 +3,12 @@ import xml.etree.cElementTree as etree
 
 from enthought.chaco.api import AbstractOverlay
 from enthought.pyface.timer.timer import Timer
-from enthought.traits.api import Instance, Str
+from enthought.traits.api import Instance, Str, Enum, Float, Int
 from enthought.savage.svg.document import SVGDocument
 from enthought.savage.svg.backends.kiva.renderer import Renderer as KivaRenderer
 
 class StatusOverlay(AbstractOverlay):
-    
+
     filename = Str()
     document = Instance(SVGDocument)
 
@@ -18,58 +18,96 @@ class StatusOverlay(AbstractOverlay):
     doc_width = 48.0
     doc_height = 48.0
 
-    alpha = 1.0
+    # The position of the legend with respect to its overlaid component.
+    #
+    # * c  = Center
+    # * ur = Upper Right
+    # * ul = Upper Left
+    # * ll = Lower Left
+    # * lr = Lower Right
+    align = Enum("c", "ur", "ul", "ll", "lr")
+
+    # How big should the graphic be in comparison to the rest of the plot
+    # area
+    scale_factor = Float(0.5)
+
+    # Initial transparency
+    alpha = Float(1.0)
+
+    # The minimum time it takes for the the layer to fade out, in
+    # milliseconds. Actual time may be longer, depending on the pyface toolkit
+    fade_out_time = Float(50)
+
+    # The number of steps to take to fade from the initial transparency to
+    # invisible
+    fade_out_steps = Int(10)
 
     def __init__(self, component, *args, **kw):
         super(StatusOverlay, self).__init__(component, *args, **kw)
 
         if self.document is None:
             if self.filename == '':
-                self.filename = os.path.join(os.path.dirname(__file__), 'data', 
+                self.filename = os.path.join(os.path.dirname(__file__), 'data',
                                             'Dialog-error.svg')
             tree = etree.parse(self.filename)
             root = tree.getroot()
             self.document = SVGDocument(root, renderer=KivaRenderer)
-    
+
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
-        
+
         Implements AbstractOverlay.
         """
         gc.save_state()
 
         gc.set_alpha(self.alpha)
 
-        # zoom percentage, I want it to be 50% of the plot size.
+        # zoom percentage, use the scale_factor as a % of the plot size.
         # base the size on the smaller aspect - if the plot is tall and narrow
         # the overlay should be 50% of the width, if the plot is short and wide
         # the overlay should be 50% of the height.
         if gc.height() < gc.width():
-            scale = (gc.height()/self.doc_height)*0.5
+            scale = (gc.height()/self.doc_height)*self.scale_factor
         else:
-            scale = (gc.width()/self.doc_width)*0.5
+            scale = (gc.width()/self.doc_width)*self.scale_factor
 
         scale_width = scale*self.doc_width
         scale_height = scale*self.doc_height
 
-        # SVG origin is upper right with y positive is down. argh.
-        # Set up the transforms to fix this up.
-        gc.translate_ctm((gc.width()-scale_width)/2,
-                         (gc.height()+scale_height)/2)
-        
+        # Set up the transforms to align the graphic to the desired
+        # position keeping in mind the SVG origin is the upper right
+        # with y positive down
+        if self.align == 'c':
+            gc.translate_ctm((gc.width()-scale_width)/2,
+                            (gc.height()+scale_height)/2)
+        elif self.align == 'ur':
+            gc.translate_ctm((gc.width()+scale_width)/2,
+                            gc.height() - scale_height/2)
+        elif self.align == 'lr':
+            gc.translate_ctm((gc.width()+scale_width)/2,
+                            (gc.height()-scale_height)/2)
+        elif self.align == 'ul':
+            gc.translate_ctm(scale_width/2,
+                            gc.height() - scale_height/2)
+        elif self.align == 'll':
+            gc.translate_ctm(scale_width/2,
+                            (gc.height()-scale_height)/2)
+
+
         gc.scale_ctm(scale, -scale)
 
         self.document.render(gc)
-                
+
         self._draw_component(gc, view_bounds, mode)
         gc.restore_state()
 
         return
-        
+
     def fade_out(self):
-        self.timer = Timer(50, self._fade_out_step)
-        
+        interval = self.fade_out_time/self.fade_out_steps
+        self.timer = Timer(interval, self._fade_out_step)
+
     def _fade_out_step(self):
         """ Fades out the overlay over a half second. then removes it from
             the other_component's overlays
@@ -81,11 +119,11 @@ class StatusOverlay(AbstractOverlay):
         else:
             self.alpha -= 0.1
             self.component.request_redraw()
-                    
+
 class ErrorOverlay(StatusOverlay):
-    filename = os.path.join(os.path.dirname(__file__), 'data', 
+    filename = os.path.join(os.path.dirname(__file__), 'data',
                                             'Dialog-error.svg')
-                                            
+
 class WarningOverlay(StatusOverlay):
-    filename = os.path.join(os.path.dirname(__file__), 'data', 
+    filename = os.path.join(os.path.dirname(__file__), 'data',
                                             'Dialog-warning.svg')

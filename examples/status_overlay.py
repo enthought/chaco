@@ -12,7 +12,7 @@ class MyPlot(HasTraits):
     """
     plot = Instance(Plot)
     status_overlay = Instance(StatusOverlay)
-    
+
     error_button = Button('error')
     warn_button = Button('warning')
     no_problem_button = Button('No problem')
@@ -20,7 +20,8 @@ class MyPlot(HasTraits):
     traits_view = View( HGroup(Item('error_button', show_label=False),
                                Item('warn_button', show_label=False),
                                Item('no_problem_button', show_label=False)),
-                        Item('plot', editor=ComponentEditor(), show_label=False))
+                        Item('plot', editor=ComponentEditor(), show_label=False),
+                        resizable=True)
 
     def __init__(self, index, data_series, **kw):
         super(MyPlot, self).__init__(**kw)
@@ -29,7 +30,7 @@ class MyPlot(HasTraits):
         plot_data.set_data('data_series', data_series)
         self.plot = Plot(plot_data)
         self.plot.plot(('index', 'data_series'))
-        
+
     def _error_button_fired(self, event):
         """ removes the old overlay and replaces it with
             an error overlay
@@ -37,12 +38,13 @@ class MyPlot(HasTraits):
         if self.status_overlay is not None:
             # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
-            
-        self.status_overlay = ErrorOverlay(component=self.plot)
+
+        self.status_overlay = ErrorOverlay(component=self.plot,
+                                            align='ul', scale_factor=0.25)
         self.plot.overlays.append(self.status_overlay)
-        
+
         self.plot.request_redraw()
-         
+
     def _warn_button_fired(self, event):
         """ removes the old overlay and replaces it with
             an warning overlay
@@ -50,10 +52,11 @@ class MyPlot(HasTraits):
         if self.status_overlay is not None:
             # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
-            
-        self.status_overlay = WarningOverlay(component=self.plot)
+
+        self.status_overlay = WarningOverlay(component=self.plot,
+                                            align='ur', scale_factor=0.25)
         self.plot.overlays.append(self.status_overlay)
-        
+
         self.plot.request_redraw()
 
     def _no_problem_button_fired(self, event):
@@ -62,7 +65,7 @@ class MyPlot(HasTraits):
         if self.status_overlay is not None:
             # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
-            
+
         self.plot.request_redraw()
 
 index = numpy.array([1,2,3,4,5])
