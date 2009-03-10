@@ -63,14 +63,20 @@ class StatusOverlay(AbstractOverlay):
 
         gc.set_alpha(self.alpha)
 
+        plot_width = self.component.width
+        plot_height = self.component.height
+
+        origin_x = self.component.padding_left
+        origin_y = self.component.padding_top
+
         # zoom percentage, use the scale_factor as a % of the plot size.
         # base the size on the smaller aspect - if the plot is tall and narrow
         # the overlay should be 50% of the width, if the plot is short and wide
         # the overlay should be 50% of the height.
         if gc.height() < gc.width():
-            scale = (gc.height()/self.doc_height)*self.scale_factor
+            scale = (plot_height/self.doc_height)*self.scale_factor
         else:
-            scale = (gc.width()/self.doc_width)*self.scale_factor
+            scale = (plot_width/self.doc_width)*self.scale_factor
 
         scale_width = scale*self.doc_width
         scale_height = scale*self.doc_height
@@ -78,21 +84,21 @@ class StatusOverlay(AbstractOverlay):
         # Set up the transforms to align the graphic to the desired
         # position keeping in mind the SVG origin is the upper right
         # with y positive down
-        if self.align == 'c':
-            gc.translate_ctm((gc.width()-scale_width)/2,
-                            (gc.height()+scale_height)/2)
-        elif self.align == 'ur':
-            gc.translate_ctm((gc.width()+scale_width)/2,
-                            gc.height() - scale_height/2)
+        if self.align == 'ur':
+            gc.translate_ctm(origin_x + (plot_width-scale_width),
+                            origin_y + plot_height)
         elif self.align == 'lr':
-            gc.translate_ctm((gc.width()+scale_width)/2,
-                            (gc.height()-scale_height)/2)
+            gc.translate_ctm(origin_x + (plot_width-scale_width),
+                            origin_y + scale_height)
         elif self.align == 'ul':
-            gc.translate_ctm(scale_width/2,
-                            gc.height() - scale_height/2)
+            gc.translate_ctm(origin_x,
+                            origin_y + plot_height)
         elif self.align == 'll':
-            gc.translate_ctm(scale_width/2,
-                            (gc.height()-scale_height)/2)
+            gc.translate_ctm(origin_x,
+                            origin_y + scale_height)
+        else:
+            gc.translate_ctm(origin_x + (plot_width-scale_width)/2,
+                             origin_y + (plot_height+scale_height)/2)
 
 
         gc.scale_ctm(scale, -scale)
