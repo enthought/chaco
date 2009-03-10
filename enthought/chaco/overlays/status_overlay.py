@@ -81,9 +81,7 @@ class StatusOverlay(AbstractOverlay):
         scale_width = scale*self.doc_width
         scale_height = scale*self.doc_height
 
-        # Set up the transforms to align the graphic to the desired
-        # position keeping in mind the SVG origin is the upper right
-        # with y positive down
+        # Set up the transforms to align the graphic to the desired position
         if self.align == 'ur':
             gc.translate_ctm(origin_x + (plot_width-scale_width),
                             origin_y + plot_height)
@@ -101,6 +99,8 @@ class StatusOverlay(AbstractOverlay):
                              origin_y + (plot_height+scale_height)/2)
 
 
+        # SVG origin is the upper right with y positive down, so
+        # we need to flip everything
         gc.scale_ctm(scale, -scale)
 
         self.document.render(gc)
