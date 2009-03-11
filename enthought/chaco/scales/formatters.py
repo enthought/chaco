@@ -416,7 +416,6 @@ class TimeFormatter(object):
     # two arrays, (widths, format strings).
     formats = {}
 
-
     def __init__(self, **kwds):
         self.__dict__.update(kwds)
         self._compute_format_weights()
@@ -461,6 +460,14 @@ class TimeFormatter(object):
             resol = "years"
         return resol
         
+    def _get_dst_for_time(self, t):
+        """ returns the Daylight Savings Time offset for time t
+        """
+        import time
+        if not time.daylight:
+            return 0
+        return time.timezone - time.altzone
+
     def format(self, ticks, numlabels=None, char_width=None, fill_ratio = 0.3,
                ticker=None):
         """ Formats a set of time values.
@@ -510,6 +517,9 @@ class TimeFormatter(object):
         labels = []
         resol_ndx = self.format_order.index(resol)
         for t in ticks:
+            # account for DST
+            t += self._get_dst_for_time(t)
+
             tm = localtime(t)
             s = strftimeEx(format, t, tm)
 
