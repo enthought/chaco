@@ -123,7 +123,7 @@ class StatusLayer(AbstractOverlay):
             the other_component's overlays
         """
         if self.alpha <= 0:
-            if self.type = 'overlay':
+            if self.type == 'overlay':
                 self.component.overlays.remove(self)
             else:
                 self.component.underlays.remove(self)

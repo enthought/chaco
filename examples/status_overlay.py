@@ -1,7 +1,6 @@
 import numpy
 from enthought.chaco.api import Plot, ArrayPlotData
-from enthought.chaco.layers.status_overlay import ErrorLayer, WarningLayer, \
-        StatusLayer
+from enthought.chaco.layers.api import ErrorLayer, WarningLayer, StatusLayer
 from enthought.enable.component_editor import ComponentEditor
 from enthought.traits.api import HasTraits, Instance, Button
 from enthought.traits.ui.api import Item, View, HGroup
