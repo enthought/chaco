@@ -7,7 +7,7 @@ from enthought.traits.api import Instance, Str, Enum, Float, Int
 from enthought.savage.svg.document import SVGDocument
 from enthought.savage.svg.backends.kiva.renderer import Renderer as KivaRenderer
 
-class StatusOverlay(AbstractOverlay):
+class StatusLayer(AbstractOverlay):
 
     filename = Str()
     document = Instance(SVGDocument)
@@ -17,6 +17,10 @@ class StatusOverlay(AbstractOverlay):
     # similar. For now the image size is hard coded
     doc_width = 48.0
     doc_height = 48.0
+
+    # The type determines if the layer is displayed as part of the component's
+    # overlay or underlays
+    type = Enum('overlay', 'underlay')
 
     # The position of the legend with respect to its overlaid component.
     #
@@ -43,7 +47,7 @@ class StatusOverlay(AbstractOverlay):
     fade_out_steps = Int(10)
 
     def __init__(self, component, *args, **kw):
-        super(StatusOverlay, self).__init__(component, *args, **kw)
+        super(StatusLayer, self).__init__(component, *args, **kw)
 
         if self.document is None:
             if self.filename == '':
@@ -119,17 +123,20 @@ class StatusOverlay(AbstractOverlay):
             the other_component's overlays
         """
         if self.alpha <= 0:
-            self.component.overlays.remove(self)
+            if self.type = 'overlay':
+                self.component.overlays.remove(self)
+            else:
+                self.component.underlays.remove(self)
             self.alpha = 1.0
             raise StopIteration
         else:
             self.alpha -= 0.1
             self.component.request_redraw()
 
-class ErrorOverlay(StatusOverlay):
+class ErrorLayer(StatusLayer):
     filename = os.path.join(os.path.dirname(__file__), 'data',
                                             'Dialog-error.svg')
 
-class WarningOverlay(StatusOverlay):
+class WarningLayer(StatusLayer):
     filename = os.path.join(os.path.dirname(__file__), 'data',
                                             'Dialog-warning.svg')

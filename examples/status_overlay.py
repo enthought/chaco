@@ -1,7 +1,7 @@
 import numpy
 from enthought.chaco.api import Plot, ArrayPlotData
-from enthought.chaco.overlays.status_overlay import StatusOverlay, \
-        ErrorOverlay, WarningOverlay
+from enthought.chaco.layers.status_overlay import ErrorLayer, WarningLayer, \
+        StatusLayer
 from enthought.enable.component_editor import ComponentEditor
 from enthought.traits.api import HasTraits, Instance, Button
 from enthought.traits.ui.api import Item, View, HGroup
@@ -11,7 +11,7 @@ class MyPlot(HasTraits):
         to display
     """
     plot = Instance(Plot)
-    status_overlay = Instance(StatusOverlay)
+    status_overlay = Instance(StatusLayer)
 
     error_button = Button('error')
     warn_button = Button('warning')
@@ -39,7 +39,7 @@ class MyPlot(HasTraits):
             # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
 
-        self.status_overlay = ErrorOverlay(component=self.plot,
+        self.status_overlay = ErrorLayer(component=self.plot,
                                             align='ul', scale_factor=0.25)
         self.plot.overlays.append(self.status_overlay)
 
@@ -53,7 +53,7 @@ class MyPlot(HasTraits):
             # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
 
-        self.status_overlay = WarningOverlay(component=self.plot,
+        self.status_overlay = WarningLayer(component=self.plot,
                                             align='ur', scale_factor=0.25)
         self.plot.overlays.append(self.status_overlay)
 
