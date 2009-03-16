@@ -20,6 +20,9 @@ def safe_fromtimestamp(timestamp, *args, **kwds):
 
     Timestamps outside of the valid range will be assigned datetime objects of
     Jan 1 of either MINYEAR or MAXYEAR, whichever appears closest.
+
+    WARNING: This function does not behave properly with Daylight Savings Time,
+    due to a documented issue with datetime arithmetic.
     """    
     try:
         return EPOCH + timedelta(seconds=timestamp)
