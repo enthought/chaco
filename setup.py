@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2008 by Enthought, Inc.
+# Copyright (c) 2008-2009 by Enthought, Inc.
 # All rights reserved.
-#
+
 
 """
 Interactive 2-Dimensional Plotting
@@ -43,13 +43,15 @@ Chaco:
 """
 
 
+import os
+import zipfile
+
 from distutils import log
 from distutils.command.build import build as distbuild
 from numpy import get_include
 from setuptools import setup, Extension, find_packages
 from setuptools.command.develop import develop
-import os
-import zipfile
+
 
 # FIXME: This works around a setuptools bug which gets setup_data.py metadata
 # from incorrect packages. Ticket #1592
@@ -57,6 +59,7 @@ import zipfile
 setup_data = dict(__name__='', __file__='setup_data.py')
 execfile('setup_data.py', setup_data)
 INFO = setup_data['INFO']
+
 
 # Pull the description values for the setup keywords from our file docstring.
 DOCLINES = __doc__.split("\n")
@@ -113,9 +116,6 @@ setup(
         'develop': MyDevelop,
         'build': MyBuild
     },
-    dependency_links = [
-        'http://code.enthought.com/enstaller/eggs/source',
-        ],
     description = DOCLINES[1],
     extras_require = INFO["extras_require"],
     ext_modules = [contour, speedups],
