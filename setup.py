@@ -117,6 +117,7 @@ setup(
         'build': MyBuild
     },
     description = DOCLINES[1],
+    download_url = 'http://www.enthought.com/repo/ETS/Chaco-3.1.0.tar.gz',
     extras_require = INFO["extras_require"],
     ext_modules = [contour, speedups],
     html_doc_repo = 'https://svn.enthought.com/svn/cec/trunk/projects/chaco/docs/',
