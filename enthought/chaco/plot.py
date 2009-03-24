@@ -16,6 +16,7 @@ from abstract_plot_data import AbstractPlotData
 from array_data_source import ArrayDataSource
 from array_plot_data import ArrayPlotData
 from base_xy_plot import BaseXYPlot
+from candle_plot import CandlePlot
 from colormapped_scatterplot import ColormappedScatterPlot
 from contour_line_plot import ContourLinePlot
 from contour_poly_plot import ContourPolyPlot
@@ -602,7 +603,132 @@ class Plot(DataView):
         self.plots[name] = [plot]
         return self.plots[name]
 
+    def candle_plot(self, data, name=None, value_scale="linear", origin=None,
+                    **styles):
+        """ Adds a new sub-plot using the given data and plot style.
 
+        Parameters
+        ==========
+        data : list(string), tuple(string)
+            The names of the data to be plotted in the ArrayDataSource.  The
+            number of arguments determines how they are interpreted:
+
+            (index, bar_min, bar_max)
+                filled or outline-only bar extending from **bar_min** to 
+                **bar_max**
+
+            (index, bar_min, center, bar_max)
+                above, plus a center line of a different color at **center**
+
+            (index, min, bar_min, bar_max, max)
+                bar extending from **bar_min** to **bar_max**, with thin 
+                bars at **min** and **max** connected to the bar by a long
+                stem
+
+            (index, min, bar_min, center, bar_max, max)
+                like above, plus a center line of a different color and 
+                configurable thickness at **center**
+
+        name : string
+            The name of the plot.  If None, then a default one is created.
+
+        value_scale : string
+            The type of scale to use for the value axis.  If not "linear",
+            then a log scale is used.
+
+        Styles
+        ======
+        These are all optional keyword arguments.
+        
+        bar_color : string, 3- or 4-tuple
+            The fill color of the bar; defaults to "auto".
+        bar_line_color : string, 3- or 4-tuple
+            The color of the rectangular box forming the bar.
+        stem_color : string, 3- or 4-tuple (default = bar_line_color)
+            The color of the stems reaching from the bar to the min and
+            max values.
+        center_color : string, 3- or 4-tuple (default = bar_line_color)
+            The color of the line drawn across the bar at the center values.
+        line_width : int (default = 1)
+            The thickness, in pixels, of the outline around the bar.
+        stem_width : int (default = line_width)
+            The thickness, in pixels, of the stem lines
+        center_width : int (default = line_width)
+            The width, in pixels, of the line drawn across the bar at the
+            center values.
+        end_cap : bool (default = True)
+            Whether or not to draw bars at the min and max extents of the
+            error bar.
+
+        Returns
+        =======
+        [renderers] -> list of renderers created in response to this call.
+        """
+        if len(data) == 0:
+            return
+        self.value_scale = value_scale
+        
+        if name is None:
+            name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
+        plot_name = name
+
+        # Create the datasources
+        if len(data) == 3:
+            index, bar_min, bar_max = map(self._get_or_create_datasource, data)
+            self.value_range.add(bar_min, bar_max)
+            center = None
+            min = None
+            max = None
+        elif len(data) == 4:
+            index, bar_min, center, bar_max = map(self._get_or_create_datasource, data)
+            self.value_range.add(bar_min, center, bar_max)
+            min = None
+            max = None
+        elif len(data) == 5:
+            index, min, bar_min, bar_max, max = \
+                            map(self._get_or_create_datasource, data)
+            self.value_range.add(min, bar_min, bar_max, max)
+            center = None
+        elif len(data) == 6:
+            index, min, bar_min, center, bar_max, max = \
+                            map(self._get_or_create_datasource, data)
+            self.value_range.add(min, bar_min, center, bar_max, max)
+        self.index_range.add(index)
+
+        if styles.get("bar_color") == "auto":
+            self._auto_color_idx = \
+                (self._auto_color_idx + 1) % len(self.auto_colors)
+            styles["bar_color"] = self.auto_colors[self._auto_color_idx]
+
+        if self.index_scale == "linear":
+            imap = LinearMapper(range=self.index_range, 
+                        stretch_data=self.index_mapper.stretch_data)
+        else:
+            imap = LogMapper(range=self.index_range,
+                        stretch_data=self.index_mapper.stretch_data)
+        if self.value_scale == "linear":
+            vmap = LinearMapper(range=self.value_range,
+                        stretch_data=self.value_mapper.stretch_data)
+        else:
+            vmap = LogMapper(range=self.value_range,
+                        stretch_data=self.value_mapper.stretch_data)
+
+        plot = CandlePlot(index = index,
+                          min_values = min, 
+                          bar_min = bar_min,
+                          center_values = center,
+                          bar_max = bar_max, 
+                          max_values = max,
+                          index_mapper = imap,
+                          value_mapper = vmap,
+                          orientation = self.orientation,
+                          origin = self.origin,
+                          **styles)
+        self.add(plot)
+        self.plots[name] = [plot]
+        return [plot]
 
     def delplot(self, *names):
         """ Removes the named sub-plots. """
