@@ -36,8 +36,6 @@ def _create_plot_component():
     #                            fill_padding=True, padding = 10)
 
 
-    self.container = container
-
     # Plot some bessel functions
     value_range = None
     for i in range(10):
