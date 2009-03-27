@@ -697,10 +697,10 @@ class Plot(DataView):
             self.value_range.add(min, bar_min, center, bar_max, max)
         self.index_range.add(index)
 
-        if styles.get("bar_color") == "auto":
+        if styles.get("bar_color") == "auto" or styles.get("color") == "auto":
             self._auto_color_idx = \
                 (self._auto_color_idx + 1) % len(self.auto_colors)
-            styles["bar_color"] = self.auto_colors[self._auto_color_idx]
+            styles["color"] = self.auto_colors[self._auto_color_idx]
 
         if self.index_scale == "linear":
             imap = LinearMapper(range=self.index_range, 
