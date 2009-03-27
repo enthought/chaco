@@ -1,6 +1,7 @@
 
 # Major library imports
-from numpy import array, column_stack, compress, concatenate, empty_like
+from numpy import array, column_stack, compress, concatenate, empty_like, \
+        searchsorted
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait
@@ -61,6 +62,8 @@ class CandlePlot(ScatterPlot):
     # endcap line will be drawn above each bar.
     max_values = Instance(AbstractDataSource)
 
+    value = Property
+
     #------------------------------------------------------------------------
     # Appearance traits
     #------------------------------------------------------------------------
@@ -111,6 +114,51 @@ class CandlePlot(ScatterPlot):
         return array((self.index_mapper.map_data(x),
                       self.value_mapper.map_data(y)))
 
+    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
+                  index_only = True):
+        if not index_only:
+            raise NotImplementedError("Candle Plots only support index_only map_index()")
+        if len(screen_pt) == 0:
+            return None
+
+        # Find the closest index point using numpy
+        index_data = self.index.get_data()
+        target_data = self.index_mapper.map_data(screen_pt[0])
+
+        index = searchsorted(index_data, [target_data])[0]
+        if index == len(index_data):
+            index -= 1
+        # Bracket index and map those points to screen space, then
+        # compute the distance
+        if index > 0:
+            lower = index_data[index-1]
+            upper = index_data[index]
+            screen_low, screen_high = self.index_mapper.map_screen(array([lower, upper]))
+            # Find the closest index
+            low_dist = abs(screen_pt[0] - screen_low)
+            high_dist = abs(screen_pt[0] - screen_high)
+            if low_dist < high_dist:
+                index = index - 1
+                dist = low_dist
+            else:
+                dist = high_dist
+            # Determine if we need to check the threshold
+            if threshold > 0 and dist >= threshold:
+                return None
+            else:
+                return index
+        else:
+            screen = self.index_mapper.map_screen(index_data[0])
+            if threshold > 0 and abs(screen - screen_pt[0]) >= threshold:
+                return None
+            else:
+                return index
+
+    def get_screen_points(self):
+        # Override the ScatterPlot implementation so that this is just
+        # a pass-through, in case anyone calls it.
+        pass
+
     def _gather_points(self):
         index = self.index.get_data()
         mask = broaden(self.index_range.mask_data(index))
@@ -121,8 +169,9 @@ class CandlePlot(ScatterPlot):
             return
 
         data_pts = [compress(mask, index)]
+
         for v in (self.min_values, self.bar_min, self.center_values, self.bar_max, self.max_values):
-            if v is None:
+            if v is None or len(v.get_data()) == 0:
                 data_pts.append(None)
             else:
                 data_pts.append(compress(mask, v.get_data()))
@@ -154,7 +203,7 @@ class CandlePlot(ScatterPlot):
             width = 5.0
         else:
             width = (index[1] - index[0]) / 2.5
-        
+
         stack = column_stack
         gc.save_state()
 
@@ -170,7 +219,7 @@ class CandlePlot(ScatterPlot):
         # of drawing a single line from min to max.
         if min is not None or max is not None:
             if self.stem_color is None:
-                stem_color = self.bar_line_color_
+                stem_color = self.outline_color_
             else:
                 stem_color = self.stem_color_
             gc.set_stroke_color(stem_color)
@@ -211,7 +260,7 @@ class CandlePlot(ScatterPlot):
         # Draw the center line
         if center is not None:
             if self.center_color is None:
-                gc.set_stroke_color(self.bar_line_color_)
+                gc.set_stroke_color(self.outline_color_)
             else:
                 gc.set_stroke_color(self.center_color_)
             if self.center_width is None:
@@ -222,4 +271,12 @@ class CandlePlot(ScatterPlot):
             gc.stroke_path()
 
         gc.restore_state()
+
+    def _get_value(self):
+        if self.center_values is not None:
+            return self.center_values
+        elif self.bar_min is not None:
+            return self.bar_min
+        elif self.bar_max is not None:
+            return self.bar_max
 
