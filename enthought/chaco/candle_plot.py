@@ -123,6 +123,9 @@ class CandlePlot(ScatterPlot):
 
         # Find the closest index point using numpy
         index_data = self.index.get_data()
+        if len(index_data) == 0:
+            return None
+
         target_data = self.index_mapper.map_data(screen_pt[0])
 
         index = searchsorted(index_data, [target_data])[0]
