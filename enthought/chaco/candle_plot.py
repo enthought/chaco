@@ -275,6 +275,14 @@ class CandlePlot(ScatterPlot):
 
         gc.restore_state()
 
+    def _render_icon(self, gc, x, y, width, height):
+        min = array([y + 1])
+        max = array([y + height - 1])
+        bar_min = array([y + height / 3])
+        bar_max = array([y + height - (height / 3)])
+        center = array([y + (height / 2)])
+        self._render(gc, array([x+width/2]), min, bar_min, center, bar_max, max)
+
     def _get_value(self):
         if self.center_values is not None:
             return self.center_values
