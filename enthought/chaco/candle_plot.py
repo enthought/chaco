@@ -1,19 +1,13 @@
 
 # Major library imports
-from numpy import array, column_stack, compress, concatenate, empty_like, \
-        searchsorted
+from numpy import array, compress, concatenate, searchsorted
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait
-from enthought.traits.api import Bool, Int, Instance, List, Property, Trait
+from enthought.traits.api import Instance, Property
 
 # Chaco imports
 from abstract_data_source import AbstractDataSource
-from scatterplot import ScatterPlot
-
-def Alias(name):
-    return Property(lambda obj: getattr(obj, name),
-                    lambda obj, val: setattr(obj, name, val))
+from base_candle_plot import BaseCandlePlot
 
 def broaden(mask):
     """ Takes a 1D boolean mask array and returns a copy with all the non-zero
@@ -29,12 +23,16 @@ def broaden(mask):
     return newmask
 
 
-class CandlePlot(ScatterPlot):
+class CandlePlot(BaseCandlePlot):
     """ A plot consisting of a filled bar with an optional centerline and
     stems extending to extrema.  Usually used to represent some statistics
     on bins of data, with the centerline representing the mean, the bar
     extents representing +/- 1 standard dev or 10th/90th percentiles, and
     the stems extents representing the minimum and maximum samples.
+
+    The values in the **index** datasource indicate the centers of the bins;
+    the widths of the bins are *not* specified in data space, and are
+    determined by the minimum space between adjacent index values.
     """
 
     #------------------------------------------------------------------------
@@ -63,44 +61,6 @@ class CandlePlot(ScatterPlot):
     max_values = Instance(AbstractDataSource)
 
     value = Property
-
-    #------------------------------------------------------------------------
-    # Appearance traits
-    #------------------------------------------------------------------------
-
-    # The fill color of the bar
-    bar_color = Alias("color")
-    
-    # The color of the rectangular box forming the bar.
-    bar_line_color = Alias("outline_color")
-
-    # The color of the stems reaching from the bar ends to the min and max
-    # values.  Also the color of the endcap line segments at min and max.  If
-    # None, this defaults to **bar_line_color**.
-    stem_color = Trait(None, None, ColorTrait("black"))
-
-    # The color of the line drawn across the bar at the center values.
-    # If None, this defaults to **bar_line_color**.
-    center_color = Trait(None, None, ColorTrait("outline_color"))
-
-    # The thickness, in pixels, of the stem lines.  If None, this defaults
-    # to **line_width**.
-    stem_width = Trait(None, None, Int(1))
-
-    # The thickeness, in pixels, of the line drawn across the bar at the
-    # center values.  If None, this defaults to **line_width**.
-    center_width = Trait(None, None, Int(1))
-    
-    # Whether or not to draw bars at the min and max extents of the error bar
-    end_cap = Bool(True)
-
-    #------------------------------------------------------------------------
-    # Private traits
-    #------------------------------------------------------------------------
-
-    # Override the base class definition of this because we store a list of
-    # arrays and not a single array.
-    _cached_data_pts = List()
 
     def map_data(self, screen_pt, all_values=True):
         """ Maps a screen space point into the "index" space of the plot.
@@ -157,11 +117,6 @@ class CandlePlot(ScatterPlot):
             else:
                 return index
 
-    def get_screen_points(self):
-        # Override the ScatterPlot implementation so that this is just
-        # a pass-through, in case anyone calls it.
-        pass
-
     def _gather_points(self):
         index = self.index.get_data()
         mask = broaden(self.index_range.mask_data(index))
@@ -196,93 +151,20 @@ class CandlePlot(ScatterPlot):
                 vals.append(self.value_mapper.map_screen(v))
         gc.save_state()
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
-        self._render(gc, index, *vals)
-        gc.restore_state() 
 
-    def _render(self, gc, index, min, bar_min, center, bar_max, max):
+        # Compute lefts and rights from self.index, which represents bin
+        # centers.
         if len(index) == 0:
             return
         elif len(index) == 1:
             width = 5.0
         else:
-            width = empty_like(index)
-            width[:-1] = (index[1:] - index[:-1]) / 2.5
-            width[-1] = (index[-1] - index[-2]) / 2.5
-
-        stack = column_stack
-        gc.save_state()
-
+            width = (index[1:] - index[:-1]).min() / 2.5
         left = index - width
         right = index + width
-        widths = width * 2.0
 
-        # Draw the stem lines for min to max.  Draw these first so we can
-        # draw the boxes on top.
-        # A little tricky: we need to account for cases when either min or max
-        # are None.  To do this, just draw to bar_min or from bar_max instead
-        # of drawing a single line from min to max.
-        if min is not None or max is not None:
-            if self.stem_color is None:
-                stem_color = self.outline_color_
-            else:
-                stem_color = self.stem_color_
-            gc.set_stroke_color(stem_color)
-
-            if self.stem_width is None:
-                stem_width = self.line_width
-            else:
-                stem_width = self.stem_width
-            gc.set_line_width(stem_width)
-            
-            if min is None:
-                gc.line_set(stack((index, bar_max)), stack((index, max)))
-                if self.end_cap:
-                    gc.line_set(stack((left, max)), stack((right, max)))
-            elif max is None:
-                gc.line_set(stack((index, min)), stack((index, bar_min)))
-                if self.end_cap:
-                    gc.line_set(stack((left, min)), stack((right, min)))
-            else:
-                gc.line_set(stack((index, min)), stack((index, max)))
-                if self.end_cap:
-                    gc.line_set(stack((left, max)), stack((right, max)))
-                    gc.line_set(stack((left, min)), stack((right, min)))
-            gc.stroke_path()
-
-        # Draw the candlestick boxes
-        boxes = stack((left, bar_min, widths, bar_max - bar_min))
-        gc.set_antialias(False)
-        gc.set_stroke_color(self.outline_color_)
-        gc.set_line_width(self.line_width)
-        gc.rects(boxes)
-        if self.color in ("none", "transparent", "clear"):
-            gc.stroke_path()
-        else:
-            gc.set_fill_color(self.color_)
-            gc.draw_path()
-
-        # Draw the center line
-        if center is not None:
-            if self.center_color is None:
-                gc.set_stroke_color(self.outline_color_)
-            else:
-                gc.set_stroke_color(self.center_color_)
-            if self.center_width is None:
-                gc.set_line_width(self.line_width)
-            else:
-                gc.set_line_width(self.center_width)
-            gc.line_set(stack((left, center)), stack((right, center)))
-            gc.stroke_path()
-
-        gc.restore_state()
-
-    def _render_icon(self, gc, x, y, width, height):
-        min = array([y + 1])
-        max = array([y + height - 1])
-        bar_min = array([y + height / 3])
-        bar_max = array([y + height - (height / 3)])
-        center = array([y + (height / 2)])
-        self._render(gc, array([x+width/2]), min, bar_min, center, bar_max, max)
+        self._render(gc, left, right, *vals)
+        gc.restore_state() 
 
     def _get_value(self):
         if self.center_values is not None:
@@ -291,4 +173,5 @@ class CandlePlot(ScatterPlot):
             return self.bar_min
         elif self.bar_max is not None:
             return self.bar_max
+
 
