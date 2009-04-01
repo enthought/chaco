@@ -158,7 +158,7 @@ class BaseCandlePlot(BaseXYPlot):
         bar_min = array([y + height / 3])
         bar_max = array([y + height - (height / 3)])
         center = array([y + (height / 2)])
-        self._render(gc, array([x+width/2]), min, bar_min, center, bar_max, max)
+        self._render(gc, array([x-width/4]), array([x+width/4]), min, bar_min, center, bar_max, max)
 
 
 
