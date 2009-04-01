@@ -205,15 +205,16 @@ class CandlePlot(ScatterPlot):
         elif len(index) == 1:
             width = 5.0
         else:
-            width = (index[1] - index[0]) / 2.5
+            width = empty_like(index)
+            width[:-1] = (index[1:] - index[:-1]) / 2.5
+            width[-1] = (index[-1] - index[-2]) / 2.5
 
         stack = column_stack
         gc.save_state()
 
         left = index - width
         right = index + width
-        widths = empty_like(index)
-        widths.fill(width * 2.0)
+        widths = width * 2.0
 
         # Draw the stem lines for min to max.  Draw these first so we can
         # draw the boxes on top.
