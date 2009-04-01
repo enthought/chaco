@@ -399,11 +399,11 @@ class TimeFormatter(object):
     _formats = {
         'microseconds': ('%(us)us', '%(ms).%(us)'),
         'milliseconds': ('%(ms)ms', '%S.%(ms)s'),
-        'seconds': (':%S',), # '%Ss'),
+        'seconds': (':%S', '%Ss'),
         'minsec': ('%M:%S',), # '%Mm%S', '%Mm%Ss'),
         'minutes': ('%Mm',),
         'hourmin': ('%H:%M',), #'%Hh%M', '%Hh%Mm', '%H:%M:%S','%Hh %Mm %Ss'),
-        'hours': ('%Hh',),
+        'hours': ('%Hh', '%H:%M'),
         'days': ('%m/%d', '%a%d',),
         'months': ('%m/%Y', '%b%y'),
         'years': ("'%y", '%Y')
@@ -416,6 +416,9 @@ class TimeFormatter(object):
     # A dict whose are keys are the strings in **format_order**; each value is
     # two arrays, (widths, format strings).
     formats = {}
+
+    # Whether or not to strip the leading zeros on tick labels.
+    strip_leading_zeros = True
 
     def __init__(self, **kwds):
         self.__dict__.update(kwds)
@@ -509,24 +512,44 @@ class TimeFormatter(object):
         # Apply the format to the tick values
         labels = []
         resol_ndx = self.format_order.index(resol)
+
+        # This dictionary maps the name of a time resolution (in self.format_order)
+        # to its index in a time.localtime() timetuple.  The default is to map
+        # everything to index 0, which is year.  This is not ideal; it might cause
+        # a problem with the tick at midnight, january 1st, 0 a.d. being incorrectly
+        # promoted at certain tick resolutions.
+        time_tuple_ndx_for_resol = dict.fromkeys(self.format_order, 0)
+        time_tuple_ndx_for_resol.update( {
+                "seconds" : 5,
+                "minsec" : 4,
+                "minutes" : 4,
+                "hourmin" : 3,
+                "hours" : 3,
+                })
+
+        # As we format each tick, check to see if we are at a boundary of the
+        # next higher unit of time.  If so, replace the current format with one
+        # from that resolution.  This is not the best heuristic in the world,
+        # but it works!  There is some trickiness here due to having to deal
+        # with hybrid formats in a reasonable manner.
         for t in ticks:
             tm = localtime(t)
             s = strftimeEx(format, t, tm)
 
-            # Check to see if we are at a boundary of the next higher unit
-            # of time.  If so, replace the current format with one from
-            # that resolution.  This is not the best heuristic in the
-            # world, but it works!  There is some trickiness here due to
-            # having to deal with hybrid formats in a reasonable manner.
             hybrid_handled = False
             next_ndx = resol_ndx
-            while s.startswith(":00") or s.startswith("00"):
+
+            # The way to check that we are at the boundary of the next unit of
+            # time is by checking that we have 0 units of the resolution, i.e.
+            # we are at zero minutes, so display hours, or we are at zero seconds,
+            # so display minutes (and if that is zero as well, then display hours).
+            while tm[ time_tuple_ndx_for_resol[self.format_order[next_ndx]] ] == 0:
                 next_ndx += 1
                 if next_ndx == len(self.format_order):
                     break
                 if resol in ("minsec", "hourmin") and not hybrid_handled:
                     if (resol == "minsec" and tm.tm_min == 0 and tm.tm_sec != 0) or \
-                       (resol == "hourmin" and tm.tm_hour == 0 and tm.tm_min != 0):
+                        (resol == "hourmin" and tm.tm_hour == 0 and tm.tm_min != 0):
                         next_format = self.formats[self.format_order[resol_ndx-1]][1][0]
                         s = strftimeEx(next_format, t, tm)
                         break
@@ -536,7 +559,10 @@ class TimeFormatter(object):
                 next_format = self.formats[self.format_order[next_ndx]][1][0]
                 s = strftimeEx(next_format, t, tm)
 
-            labels.append(s.lstrip("0"))
+            if self.strip_leading_zeros:
+                labels.append(s.lstrip("0"))
+            else:
+                labels.append(s)
             
         return labels
 
