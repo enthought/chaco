@@ -22,8 +22,43 @@ Basics
         gc.render_component(plot)
         gc.save(filename)
 
-* render data to screen?
 * integrate a Chaco plot into my WX app?
+
+::
+
+    import wx
+    from scipy import arange
+    from scipy.special import jn
+    from enthought.chaco.api import HPlotContainer, create_line_plot
+    from enthought.enable.wx_backend.api import Window
+
+    class PlotFrame(wx.Frame):
+	def __init__(self, *args, **kw):
+	    kw["size"] = (850, 550)
+	    wx.Frame.__init__( *(self,) + args, **kw )
+	    self.plot_window = Window(self, component=self._create_plot())
+	    sizer = wx.BoxSizer(wx.HORIZONTAL)
+	    sizer.Add(self.plot_window.control, 1, wx.EXPAND)
+	    self.SetSizer(sizer)
+	    self.SetAutoLayout(True)
+	    self.Show(True)
+	    return
+
+	def _create_plot(self):
+	    x = arange(-5.0, 15.0, 20.0/100)
+	    y = jn(0, x)
+	    plot = create_line_plot((x,y), bgcolor="white",
+					add_grid=True, add_axis=True)
+	    container = HPlotContainer(spacing=20, padding=50, bgcolor="lightgray")
+	    container.add(plot)
+	    return container
+
+    if __name__ == "__main__":
+	app = wx.PySimpleApp()
+	frame = PlotFrame(None)
+	app.MainLoop()
+
+* integrate a Chaco plot into my QT app?
 * integrate a Chaco plot into my Traits UI?
 
 ::
