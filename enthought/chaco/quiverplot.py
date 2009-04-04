@@ -14,8 +14,7 @@ class QuiverPlot(ScatterPlot):
     # Determines how to interpret the data in the **vectors** data source.
     #   "vector": each tuple is a (dx, dy)
     #   "radial": each tuple is an (r, theta)
-    # TODO: implement "radial"
-    data_type = Enum("vector", "radial")
+    data_type = Enum("vector", "radial") # TODO: implement "radial"
 
     # A datasource that returns an Nx2 array array indicating directions
     # of the vectors.  The interpretation of this array is dependent on 
