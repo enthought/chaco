@@ -215,6 +215,9 @@ class ImagePlot(Base2DPlot):
         if (image_width < 1.5*plot_width) and (image_height < 1.5*plot_height):
             return (None, None)
 
+        if 0 in (plot_width, plot_height, image_width, image_height):
+            return (None, None)
+
         # We figure out the subimage coordinates using a two-step process:
         # 1. convert the plot boundaries from screen space into pixel offsets
         #    in the virtual image
