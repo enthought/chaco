@@ -70,6 +70,10 @@ class StackedPlotContainer(BasePlotContainer):
  
         Overrides PlotComponent.
         """
+        if self.fixed_preferred_size == "":
+            self._cached_preferred_size = self.fixed_preferred_size
+            return self.fixed_preferred_size
+
         if self.resizable == "":
             self._cached_preferred_size = self.outer_bounds[:]
             return self.outer_bounds
@@ -521,6 +525,9 @@ class GridPlotContainer(BasePlotContainer):
  
         Overrides PlotComponent.
         """
+        if self.fixed_preferred_size is not None:
+            return self.fixed_preferred_size
+
         if components is None:
             components = self.component_grid
         else:
