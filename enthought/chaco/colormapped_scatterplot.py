@@ -64,7 +64,7 @@ class ColormappedScatterPlot(ScatterPlot):
     # A dict mapping color-map indices to arrays of indices into self.data.
     # This is used for the "banded" render method.
     # This mapping is only valid if **_cache_valid** is True.
-    _index_bands = Dict
+    _index_bands = Dict()
 
     # Traits UI View for customizing the plot. Overrides the ScatterPlot value.
     traits_view = ColormappedScatterPlotView()
@@ -175,7 +175,6 @@ class ColormappedScatterPlot(ScatterPlot):
 
         gc.save_state()
         try:
-            gc.set_alpha(self.fill_alpha)
             if method == 'bruteforce' or (not batch_capable):
                 self._render_bruteforce(gc, points)
             elif method == 'banded':
