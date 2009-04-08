@@ -1,7 +1,7 @@
 """ Defines the PlotLabel class.
 """
 from enthought.kiva import font_metrics_provider
-from enthought.traits.api import Delegate, Enum, Instance
+from enthought.traits.api import Delegate, Enum, Instance, Str, Trait
 
 from abstract_overlay import AbstractOverlay
 from label import Label
@@ -35,7 +35,13 @@ class PlotLabel(AbstractOverlay):
     vjustify = Enum("center", "bottom", "top")
     
     # The position of this label relative to the object it is overlaying.
-    overlay_position = Enum("top", "bottom", "left", "right", None)
+    # Can be "top", "left", "right", "bottom", and optionally can be preceeded
+    # by the words "inside" or "outside", separated by a space.  If "inside"
+    # and "outside" are not provided, then defaults to "outside".
+    # Examples:
+    #     inside top
+    #     outside right
+    overlay_position = Trait("outside top", Str, None)
     
     # Should this PlotLabel modify the padding on its underlying component
     # if there is not enough room to lay out the text?
@@ -120,7 +126,7 @@ class PlotLabel(AbstractOverlay):
             #gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
             # We have to translate to our position because the label
-            # tries to draw at (0,0)
+            # tries to draw at (0,0).
             gc.translate_ctm(self.x + x_offset, self.y + y_offset)
             self._label.draw(gc)
         finally:
@@ -141,24 +147,53 @@ class PlotLabel(AbstractOverlay):
         """
         if self.component is not None:
             orientation = self.overlay_position
+            outside = True
+            if "inside" in orientation:
+                tmp = orientation.split()
+                tmp.remove("inside")
+                orientation = tmp[0]
+                outside = False
+            elif "outside" in orientation:
+                tmp = orientation.split()
+                tmp.remove("outside")
+                orientation = tmp[0]
+
             if orientation in ("left", "right"):
                 self.y = self.component.y
                 self.height = self.component.height
+                if not outside:
+                    gc = font_metrics_provider()
+                    self.width = self._label.get_bounding_box(gc)[0]
                 if orientation == "left":
-                    self.width = self.component.padding_left
-                    self.x = self.component.outer_x
+                    if outside:
+                        self.x = self.component.outer_x
+                        self.width = self.component.padding_left
+                    else:
+                        self.outer_x = self.component.x
                 elif orientation == "right":
-                    self.width = self.component.padding_right
-                    self.x = self.component.x2 + 1
+                    if outside:
+                        self.x = self.component.x2 + 1
+                        self.width = self.component.padding_right
+                    else:
+                        self.x = self.component.x2 - self.outer_width
             elif orientation in ("bottom", "top"):
                 self.x = self.component.x
                 self.width = self.component.width
+                if not outside:
+                    gc = font_metrics_provider()
+                    self.height = self._label.get_bounding_box(gc)[1]
                 if orientation == "bottom":
-                    self.height = self.component.padding_bottom
-                    self.y = self.component.outer_y
+                    if outside:
+                        self.y = self.component.outer_y
+                        self.height = self.component.padding_bottom
+                    else:
+                        self.outer_y = self.component.y
                 elif orientation == "top":
-                    self.height = self.component.padding_top
-                    self.y = self.component.y2 + 1
+                    if outside:
+                        self.y = self.component.y2 + 1
+                        self.height = self.component.padding_top
+                    else:
+                        self.y = self.component.y2 - self.outer_height
             else:
                 # Leave the position alone
                 pass
