@@ -73,6 +73,7 @@ from polygon_plot import PolygonPlot
 from errorbar_plot import ErrorBarPlot
 from filled_line_plot import FilledLinePlot
 from quiverplot import QuiverPlot
+from candle_plot import CandlePlot
 
 # Plot factories
 from plot_factory import create_bar_plot, create_line_plot, create_scatter_plot, \
