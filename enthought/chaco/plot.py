@@ -109,7 +109,8 @@ class Plot(DataView):
                              img_plot = ImagePlot,
                              cmap_img_plot = CMapImagePlot,
                              contour_line_plot = ContourLinePlot,
-                             contour_poly_plot = ContourPolyPlot))
+                             contour_poly_plot = ContourPolyPlot,
+                             candle = CandlePlot))
 
     #------------------------------------------------------------------------
     # Annotations and decorations
@@ -715,7 +716,8 @@ class Plot(DataView):
             vmap = LogMapper(range=self.value_range,
                         stretch_data=self.value_mapper.stretch_data)
 
-        plot = CandlePlot(index = index,
+        cls = self.renderer_map["candle"]
+        plot = cls(index = index,
                           min_values = min, 
                           bar_min = bar_min,
                           center_values = center,
