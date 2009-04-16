@@ -101,17 +101,17 @@ class ScatterPlot(BaseXYPlot):
 
     def map_screen(self, data_array):
         """ Maps an array of data points into screen space and returns it as
-        an array. 
-        
+        an array.
+
         Implements the AbstractPlotRenderer interface.
         """
         # data_array is Nx2 array
         if len(data_array) == 0:
             return []
-        
+
         # XXX: For some reason, doing the tuple unpacking doesn't work:
         #        x_ary, y_ary = transpose(data_array)
-        # There is a mysterious error "object of too small depth for 
+        # There is a mysterious error "object of too small depth for
         # desired array".  However, if you catch this exception and
         # try to execute the very same line of code again, it works
         # without any complaints.
@@ -134,7 +134,7 @@ class ScatterPlot(BaseXYPlot):
 
     def map_data(self, screen_pt, all_values=True):
         """ Maps a screen space point into the "index" space of the plot.
-        
+
         Overrides the BaseXYPlot implementation, and always returns an
         array of (index, value) tuples.
         """
@@ -147,7 +147,7 @@ class ScatterPlot(BaseXYPlot):
     def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True, \
                   index_only = False):
         """ Maps a screen space point to an index into the plot's index array(s).
-        
+
         Overrides the BaseXYPlot implementation..
         """
         # Brute force implementation
@@ -173,7 +173,7 @@ class ScatterPlot(BaseXYPlot):
 
     def _gather_points_old(self):
         """
-        Collects the data points that are within the bounds of the plot and 
+        Collects the data points that are within the bounds of the plot and
         caches them
         """
         if self._cache_valid and self._selection_cache_valid:
@@ -230,7 +230,7 @@ class ScatterPlot(BaseXYPlot):
                         continue
                 else:
                     continue
-                
+
                 self._cached_selection_point_mask = point_mask
                 self._cached_selected_pts = points
                 self._selection_cache_valid = True
@@ -264,7 +264,7 @@ class ScatterPlot(BaseXYPlot):
 
         points, selections = scatterplot_gather_points(index, index_range.low, index_range.high,
                                     value, value_range.low, value_range.high,
-                                    index_mask = index_mask, 
+                                    index_mask = index_mask,
                                     value_mask = value_mask,
                                     **kw)
 
@@ -280,7 +280,7 @@ class ScatterPlot(BaseXYPlot):
                 self._cached_selected_pts = None
                 self._selection_cache_valid = True
 
-        
+
     def _gather_points(self):
         #self._gather_points_fast()
         self._gather_points_old()
@@ -361,10 +361,10 @@ def render_markers(gc, points, marker, marker_size,
                    color, line_width, outline_color,
                    custom_symbol=None, debug=False):
     """ Helper function for a PlotComponent instance to render a
-    set of (x,y) points onto a graphics context.  Currently, it makes some 
-    assumptions about the attributes on the plot object; these may be factored 
+    set of (x,y) points onto a graphics context.  Currently, it makes some
+    assumptions about the attributes on the plot object; these may be factored
     out eventually.
-    
+
     Parameters
     ----------
     gc : GraphicsContext
@@ -379,7 +379,7 @@ def render_markers(gc, points, marker, marker_size,
         The color of the markers
     line_width : number
         The width, in pixels, of the marker outline
-    outline_color : RGB(A) color 
+    outline_color : RGB(A) color
         The color of the marker outline
     custom_symbol : CompiledPath
         If the marker style is 'custom', this is the symbol
@@ -398,6 +398,10 @@ def render_markers(gc, points, marker, marker_size,
 
     gc.set_line_dash(None)
     if marker.draw_mode == STROKE:
+        # markers with the STROKE draw mode will not be visible
+        # if the line width is zero, so set it to 1
+        if line_width == 0:
+            line_width = 1.0
         gc.set_stroke_color(color)
         gc.set_line_width(line_width)
     else:
