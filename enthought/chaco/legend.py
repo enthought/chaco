@@ -7,7 +7,7 @@ from enthought.enable.api import white_color_trait
 from enthought.kiva import font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
-                                 Instance, List, CList, Float
+                                 Instance, List, CList, Float, Str
 
 # Local relative imports
 from abstract_overlay import AbstractOverlay
@@ -134,6 +134,12 @@ class Legend(AbstractOverlay):
 
     # The legend is not resizable (overrides PlotComponent).
     resizable = "hv"
+    
+    # An optional title string to show on the legend.
+    title = Str('')
+    
+    # If True, title is at top, if False then at bottom.
+    title_at_top = Bool(True)
 
     # The legend draws itself as in one pass when its parent is drawing
     # the **draw_layer** (overrides PlotComponent).
@@ -283,7 +289,7 @@ class Legend(AbstractOverlay):
                             plots[0]._render_icon(*render_args)
                         else:
                             self.composite_icon_renderer.render_icon(plots, *render_args)
-                    else:
+                    elif plots is not None:
                         # Single plot
                         if not plots.visible:
                             #old_alpha = gc.get_alpha()
@@ -292,6 +298,8 @@ class Legend(AbstractOverlay):
                         else:
                             old_alpha = None
                         plots._render_icon(*render_args)
+                    else:
+                        old_alpha = None  # Or maybe 1.0?
 
                     icon_drawn = True
                 except:
@@ -379,6 +387,16 @@ class Legend(AbstractOverlay):
 
         # Create the labels
         labels = [self._create_label(text) for text in label_names]
+        
+        # For the legend title
+        if self.title_at_top:
+            labels.insert(0, self._create_label(self.title))
+            label_names.insert(0, 'Legend Label')
+            visible_plots.insert(0, None)
+        else:
+            labels.append(self._create_label(self.title))
+            label_names.append(self.title)
+            visible_plots.append(None)
 
         # We need a dummy GC in order to get font metrics
         dummy_gc = font_metrics_provider()
@@ -434,15 +452,37 @@ class Legend(AbstractOverlay):
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
 
+    #-- trait handlers --------------------------------------------------------
     def _anytrait_changed(self, name, old, new):
-        if name in ("font", "border_padding", "padding", "line_spacing", "icon_bounds",
-                    "icon_spacing", "labels", "plots", "plots_items", "labels_items",
-                    "border_width", "align", "position", "position_items", "bounds",
-                    "bounds_items"):
+        if name in ("font", "border_padding", "padding", "line_spacing", 
+                    "icon_bounds", "icon_spacing", "labels", "plots", 
+                    "plots_items", "labels_items", "border_width", "align", 
+                    "position", "position_items", "bounds", "bounds_items",
+                    "label_at_top"):
             self._layout_needed = True
         return
 
 
+    def _title_at_top_changed(self, old, new):
+        """ Trait handler for when self.title_at_top changes. """
+        if old == True:
+            indx = 0
+        else:
+            indx = -1
+        if old != None:
+            self._cached_labels.pop(indx) 
+            self._cached_label_names.pop(indx) 
+            self._cached_visible_plots.pop(indx)
+      
+        # For the legend title
+        if self.title_at_top:
+            self._cached_labels.insert(0, self._create_label(self.title))
+            self._cached_label_names.insert(0, '__legend_label__')
+            self._cached_visible_plots.insert(0, None)
+        else:
+            self._cached_labels.append(self._create_label(self.title))
+            self._cached_label_names.append(self.title)
+            self._cached_visible_plots.append(None)
+#-- end Legend ---------------------------------------------------------------- 
 
 
-# EOF
