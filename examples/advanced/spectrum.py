@@ -94,10 +94,16 @@ def _create_plot_component(obj):
 
 
 def get_audio_data():
+    # FIXME:
+    #     The audio stream is currently opened (and close) every time this
+    #     function is called.  It would be better to keep the stream open,
+    #     such that this function reads from the open stream.
     pa = PyAudio()
     stream = pa.open(format=paInt16, channels=1, rate=SAMPLING_RATE, input=True,
                      frames_per_buffer=NUM_SAMPLES)
     string_audio_data = stream.read(NUM_SAMPLES)
+    stream.close()
+
     audio_data  = fromstring(string_audio_data, dtype=short)
     normalized_data = audio_data / 32768.0
     return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
