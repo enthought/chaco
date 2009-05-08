@@ -20,19 +20,17 @@ class ToolbarPlot(Plot):
     toolbar = Instance(PlotToolbar)
     toolbar_class = Type(PlotToolbar)
     toolbar_added = False
-    
-    ghost_requested = Event
 
     def __init__(self, *args, **kw):
         super(ToolbarPlot, self).__init__(*args, **kw)
-        
+
         self.hovertool = HoverTool(self, area_type="top",
                                    callback=self.add_toolbar)
         self.tools.append(self.hovertool)
-        
+
         self.toolbar = self.toolbar_class(self)
         self.add_toolbar()
-    
+
     def add_toolbar(self):
         if not self.toolbar_added:
             self.overlays.append(self.toolbar)
@@ -69,20 +67,20 @@ class ToolbarPlot(Plot):
 
 class ExamplePlotApp(HasTraits):
     plot = Instance(Plot)
-    
+
     traits_view = View(Item('plot', editor=ComponentEditor(),
                             width = 600, height = 600,
                             show_label=False),
                             resizable=True)
-    
+
     def __init__(self, index, series, **kw):
         super(ExamplePlotApp, self).__init__(**kw)
         plot_data = ArrayPlotData(index=index)
         plot_data.set_data('series', series)
-        
+
         self.plot = ToolbarPlot(plot_data)
         self.plot.plot(('index', 'series'), color='auto')
-        
+
 index = numpy.arange(0., 30., 0.01)
 demo = ExamplePlotApp(index, numpy.sin(index))
 
