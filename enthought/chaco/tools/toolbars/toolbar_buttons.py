@@ -5,6 +5,7 @@ from enthought.chaco.tools.simple_zoom import SimpleZoom
 from enthought.chaco.api import PlotGraphicsContext
 from enthought.kiva.backend_image import Image
 from enthought.pyface.image_resource import ImageResource
+from enthought.pyface.api import FileDialog, OK
 from enthought.traits.api import Instance, Str, File
 from enthought.traits.ui.api import View, Item
 
@@ -67,16 +68,16 @@ class SaveAsButton(ToolbarButton):
     label = 'Save As'
     image = 'document-save'
 
-    file = File()
-
-    traits_view = View(Item('file'), width=300, buttons=['OK', 'Cancel'])
-
     def perform(self, event):
         plot_component = self.container.component
 
-        ui = self.edit_traits(kind='modal')
-        if not ui.result:
+        filter = 'PNG file (*.png)|*.png|\nTIFF file (*.tiff)|*.tiff|'
+        dialog = FileDialog(action='save as', wildcard=filter)
+
+        if dialog.open() != OK:
             return
+
+        filename = dialog.path
 
         # We need to hide the toolbar, then put it back after the
         # plot has been saved
@@ -87,7 +88,7 @@ class SaveAsButton(ToolbarButton):
 
         gc = PlotGraphicsContext((width, height), dpi=72)
         gc.render_component(plot_component)
-        gc.save(self.file)
+        gc.save(filename)
 
 class CopyToClipboardButton(ToolbarButton):
     label = 'Copy to the clipboard'
