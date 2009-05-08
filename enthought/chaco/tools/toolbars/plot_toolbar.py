@@ -3,7 +3,7 @@ from enthought.chaco.plot import Plot
 from enthought.traits.api import Instance, List, Type
 from enthought.traits.ui.wx.constants import WindowColor
 
-from toolbar_buttons import ToolbarButton, IndexAxisLogButton, GhostButton, \
+from toolbar_buttons import ToolbarButton, IndexAxisLogButton, \
         CopyToClipboardButton, SaveAsButton, ZoomResetButton, \
         ValueAxisLogButton
 
