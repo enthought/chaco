@@ -90,6 +90,10 @@ class SaveAsButton(ToolbarButton):
         gc.render_component(plot_component)
         gc.save(filename)
 
+        # Reset the auto_hide trait so the toolbar is no longer hidden
+        plot_component.auto_hide = auto_hide_reset
+
+
 class CopyToClipboardButton(ToolbarButton):
     label = 'Copy to the clipboard'
     image = 'clipboard'
