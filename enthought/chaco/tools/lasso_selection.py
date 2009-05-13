@@ -10,7 +10,8 @@ from enthought.traits.api import Any, Array, Enum, Event, Bool, Instance, \
 from enthought.kiva.agg import points_in_polygon
 
 # Chaco imports
-from enthought.chaco.api import AbstractController, AbstractDataSource
+from enthought.chaco.api import AbstractController, AbstractDataSource, \
+        BaseXYPlot, Base2DPlot
 
 
 class LassoSelection(AbstractController):
@@ -122,7 +123,8 @@ class LassoSelection(AbstractController):
         
         self._active_selection = empty((0,2))
 
-        self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()))
+        if self.selection_datasource is not None:
+            self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()))
         self.selection_mode = "include"
         self.event_state = 'selecting'
         self.selecting_mouse_move(event)
@@ -134,7 +136,7 @@ class LassoSelection(AbstractController):
                 self.selection_mode = "exclude"
             else:
                 self.selection_mode = "include"
-            
+        self.trait_property_changed("disjoint_selections", [], self.disjoint_selections)
         return
         
     def selecting_left_up(self, event):
@@ -163,7 +165,8 @@ class LassoSelection(AbstractController):
         self.updated = True
         if self.incremental_select:
             self._update_selection()
-            
+        # Report None for the previous selections
+        self.trait_property_changed("disjoint_selections", None)
         return
 
     def selecting_mouse_leave(self, event):
@@ -225,6 +228,8 @@ class LassoSelection(AbstractController):
         """ Sets the selection datasource's 'selection' metadata element
             to a mask of all the points selected
         """
+        if self.selection_datasource is None:
+            return
         
         selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.int32)
         data = self._get_data()
@@ -264,7 +269,13 @@ class LassoSelection(AbstractController):
         Normally this method is a pass-through, but for plots that have more 
         data than just (x,y), proper transformations need to happen here.
         """
-        return self.plot.map_data(point, all_values=True)[:2]
+        if isinstance(self.plot, Base2DPlot):
+            # Base2DPlot.map_data takes an array of points, for some reason
+            return self.plot.map_data([point])[0]
+        elif isinstance(self.plot, BaseXYPlot):
+            return self.plot.map_data(point, all_values=True)[:2]
+        else:
+            raise RuntimeError("LassoSelection only supports BaseXY and Base2D plots")
     
     def _get_data(self):
         """ Returns the datapoints in the plot, as an Nx2 array of (x,y).
