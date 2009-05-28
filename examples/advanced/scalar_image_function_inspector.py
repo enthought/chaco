@@ -379,6 +379,7 @@ class ModelView(HasTraits):
                                             CloseAction,
                                             name="File")),
                        handler = Controller,
+                       title = "Function Inspector", 
                        resizable=True)
     
     @on_trait_change('model, view')
