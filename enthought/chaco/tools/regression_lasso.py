@@ -30,8 +30,12 @@ class RegressionLasso(LassoSelection):
         if any(indices):
             x = compress(indices, self.component.index.get_data())
             y = compress(indices, self.component.value.get_data())
-            self.fit_params = tuple(polyfit(x,y,1))
-            self.centroid = (sum(x)/len(x)), (sum(y)/len(y))
+            if len(x) < 2 or len(y) < 2:
+                self.fit_params = None
+                self.centroid = None
+            else:
+                self.fit_params = tuple(polyfit(x,y,1))
+                self.centroid = (sum(x)/len(x)), (sum(y)/len(y))
         else:
             self.fit_params = None
             self.centroid = None
