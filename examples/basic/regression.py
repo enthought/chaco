@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-#what i am
-# doing to test
-# everything
 """
 Demonstrates the Regression Selection tool.
 
