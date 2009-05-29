@@ -70,7 +70,7 @@ def _create_plot_component():
               bgcolor="white")
 
     # Tweak some of the plot properties
-    plot.title = "Scatter Plot"
+    plot.title = "Click to add points, press Enter to finalize selection"
     plot.padding = 50
     plot.line_width = 1
 
@@ -85,7 +85,7 @@ def _create_plot_component():
 #===============================================================================
 # Attributes to use for the plot view.
 size=(650,650)
-title="Simple scatter plot"
+title="Line drawing example"
 bg_color="lightgray"
 
 #===============================================================================
