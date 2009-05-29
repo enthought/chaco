@@ -12,9 +12,7 @@ class StatusLayer(AbstractOverlay):
     filename = Str()
     document = Instance(SVGDocument)
 
-    # its possible to get the doc width and height, though the entire
-    # image would have to be rendered to a temporary gc or something
-    # similar. For now the image size is hard coded
+    # Default size attributes if the svg does not specify them
     doc_width = 48.0
     doc_height = 48.0
 
@@ -56,6 +54,10 @@ class StatusLayer(AbstractOverlay):
             tree = etree.parse(self.filename)
             root = tree.getroot()
             self.document = SVGDocument(root, renderer=KivaRenderer)
+
+        if hasattr(self.document, 'getSize'):
+            self.doc_width = self.document.getSize()[0]
+            self.doc_height = self.document.getSize()[1]
 
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
