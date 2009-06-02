@@ -28,18 +28,8 @@ from enthought.etsconfig.api import ETSConfig
 #    pass
 
 
-# This is a palette of 10 nice colors to use for mapping/discrete
-# color differentiation.  From ColorBrewer.
-COLOR_PALETTE = (array([166,206,227,
-                        31,120,180,
-                        178,223,138,
-                        51,160,44,
-                        251,154,153,
-                        227,26,28,
-                        253,191,111,
-                        255,127,0,
-                        202,178,214,
-                        106,61,154], dtype=float)/255).reshape(10,3)
+# Import a default palette for backwards compatibility
+from default_colors import cbrewer as COLOR_PALETTE
 
 
 # FIXME - it should be enough to do the following import, but because of the

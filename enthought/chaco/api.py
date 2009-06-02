@@ -28,8 +28,9 @@ from log_mapper import LogMapper
 from linear_mapper import LinearMapper
 from color_mapper import ColorMapper, ColorMapTemplate
 
-# Colormaps
+# Colormaps and color palettes
 from default_colormaps import *
+from default_colors import *
 
 # Visual components
 from abstract_plot_renderer import AbstractPlotRenderer
