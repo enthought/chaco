@@ -51,14 +51,27 @@ class ScalyPlot(Plot):
     y_axis = Any()
     x_ticks = Any()
     y_ticks = Any()
-    linear_scale = Any()
-    log_scale = Any()
+    linear_scale_factory = Any()
+    log_scale_factory = Any()
 
     def _linear_scale_default(self):
-        return ScaleSystem(DefaultScale())
+        return self._make_scale("linear")
 
     def _log_scale_default(self):
-        return ScaleSystem(LogScale())
+        return self._make_scale("log")
+
+    def _make_scale(self, scale_type="linear"):
+        """ Returns a new linear or log scale """
+        if scale_type == "linear":
+            if self.linear_scale_factory is not None:
+                return self.linear_scale_factory()
+            else:
+                return ScaleSystem(DefaultScale())
+        else:
+            if self.log_scale_factory is not None:
+                return self.log_scale_factory()
+            else:
+                return ScaleSystem(LogScale())
 
     def _init_components(self):
         # Since this is called after the HasTraits constructor, we have to make
@@ -83,13 +96,9 @@ class ScalyPlot(Plot):
             self.value_mapper = vmap
 
         if self.x_ticks is None:
-            scale = dict(linear=self.linear_scale, log=self.log_scale).get(
-                self.index_scale, self.linear_scale)
-            self.x_ticks = ScalesTickGenerator(scale=scale)
+            self.x_ticks = ScalesTickGenerator(scale=self._make_scale(self.index_scale))
         if self.y_ticks is None:
-            scale = dict(linear=self.linear_scale, log=self.log_scale).get(
-                self.value_scale, self.linear_scale)
-            self.y_ticks = ScalesTickGenerator(scale=scale)
+            self.y_ticks = ScalesTickGenerator(scale=self._make_scale(self.value_scale))
 
         if self.x_grid is None:
             self.x_grid = PlotGrid(mapper=self.x_mapper, orientation="vertical",
@@ -109,12 +118,9 @@ class ScalyPlot(Plot):
     def _index_scale_changed(self, old, new):
         Plot._index_scale_changed(self, old, new)
         # Now adjust the ScaleSystems.
-        scale = dict(linear=self.linear_scale, log=self.log_scale).get(
-            self.index_scale, self.linear_scale)
-        self.x_ticks.scale = scale
+        self.x_ticks.scale = self._make_scale(self.index_scale)
 
     def _value_scale_changed(self, old, new):
         Plot._value_scale_changed(self, old, new)
-        scale = dict(linear=self.linear_scale, log=self.log_scale).get(
-            self.value_scale, self.linear_scale)
-        self.y_ticks.scale = scale
+        # Now adjust the ScaleSystems.
+        self.y_ticks.scale = self._make_scale(self.value_scale)
