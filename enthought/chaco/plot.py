@@ -95,9 +95,9 @@ class Plot(DataView):
                         "pink", "darkgray", "silver"])
 
     # index into auto_colors list
-    _auto_color_idx = Int(0)
-    _auto_edge_color_idx = Int(0)
-    _auto_face_color_idx = Int(0)
+    _auto_color_idx = Int(-1)
+    _auto_edge_color_idx = Int(-1)
+    _auto_face_color_idx = Int(-1)
 
     # Mapping of renderer type string to renderer class
     # This can be overriden to customize what renderer type the Plot
