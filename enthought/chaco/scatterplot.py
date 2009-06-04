@@ -17,6 +17,7 @@ from base_xy_plot import BaseXYPlot
 from scatter_markers import AbstractMarker, CustomMarker, \
                             MarkerNameDict, marker_trait
 from speedups import scatterplot_gather_points
+from base import reverse_map_1d
 
 
 class ScatterPlotView(View):
@@ -150,21 +151,62 @@ class ScatterPlot(BaseXYPlot):
 
         Overrides the BaseXYPlot implementation..
         """
-        # Brute force implementation
-        all_data = transpose(array([self.index.get_data(), self.value.get_data()]))
-        screen_points = around(self.map_screen(all_data))
-        if len(screen_points) == 0:
-            return None
-        if index_only:
-            distances = abs(screen_points[:,0] - screen_pt[0])
+        if index_only and self.index.sort_order != "none":
+            data_pt = self.map_data(screen_pt)[0]
+            # The rest of this was copied out of BaseXYPlot.
+            # We can't just used BaseXYPlot.map_index because
+            # it expect map_data to return a value, not a pair.
+            if ((data_pt < self.index_mapper.range.low) or \
+                (data_pt > self.index_mapper.range.high)) and outside_returns_none:
+                return None
+            index_data = self.index.get_data()
+            value_data = self.value.get_data()
+
+            if len(value_data) == 0 or len(index_data) == 0:
+                return None
+
+            try:
+                ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
+            except IndexError, e:
+                # if reverse_map raises this exception, it means that data_pt is
+                # outside the range of values in index_data.
+                if outside_returns_none:
+                    return None
+                else:
+                    if data_pt < index_data[0]:
+                        return 0
+                    else:
+                        return len(index_data) - 1
+
+            if threshold == 0.0:
+                # Don't do any threshold testing
+                return ndx
+
+            x = index_data[ndx]
+            y = value_data[ndx]
+            if isnan(x) or isnan(y):
+                return None
+            sx, sy = self.map_screen([x,y])
+            if ((threshold == 0.0) or (screen_pt[0]-sx) < threshold):
+                return ndx
+            else:
+                return None
         else:
-            delta = screen_points - array([screen_pt])
-            distances = sqrt(sum(delta*delta, axis=1))
-        closest_ndx = argmin(distances)
-        if distances[closest_ndx] <= threshold:
-            return closest_ndx
-        else:
-            return None
+            # Brute force implementation
+            all_data = transpose(array([self.index.get_data(), self.value.get_data()]))
+            screen_points = around(self.map_screen(all_data))
+            if len(screen_points) == 0:
+                return None
+            if index_only:
+                distances = abs(screen_points[:,0] - screen_pt[0])
+            else:
+                delta = screen_points - array([screen_pt])
+                distances = sqrt(sum(delta*delta, axis=1))
+            closest_ndx = argmin(distances)
+            if distances[closest_ndx] <= threshold:
+                return closest_ndx
+            else:
+                return None
 
 
     #------------------------------------------------------------------------
