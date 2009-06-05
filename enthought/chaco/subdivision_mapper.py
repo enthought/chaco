@@ -2,13 +2,13 @@
 """
 # Major library imports
 import math
-from sets import Set
 from numpy import array, arange, concatenate, searchsorted, nonzero, transpose, \
                   argsort, zeros, sort, vstack
 import numpy
 
 # Enthought library imports
 from enthought.traits.api import List, Array, Tuple, Int, Float
+from enthought.util.api import Set
 
 # Local, relative imports
 from datamapper import AbstractDataMapper, right_shift, left_shift, \

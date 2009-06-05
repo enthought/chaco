@@ -10,11 +10,10 @@ and functions.
 """
 
 
-from sets import Set
-
 from numpy import array, concatenate, take, argsort, argmin, \
                   argmax, transpose, newaxis, sort
 
+from enthought.util.api import Set
 from enthought.traits.api import HasStrictTraits, Bool, Enum, Tuple, \
                              Property, Any, Float
 
