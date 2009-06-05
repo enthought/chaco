@@ -8,7 +8,6 @@ import numpy
 
 # Enthought library imports
 from enthought.traits.api import List, Array, Tuple, Int, Float
-from enthought.util.api import Set
 
 # Local, relative imports
 from datamapper import AbstractDataMapper, right_shift, left_shift, \
@@ -51,7 +50,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
             cells = [self._cellgrid[i,j] for (i,j) in indices]
             self._last_region = self._cells_to_rects(indices)
             # unique-ify the list of cells
-            cell_points = [c.get_points() for c in Set(cells)]
+            cell_points = [c.get_points() for c in set(cells)]
         return vstack(cell_points)
 
     
@@ -191,7 +190,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
         # For now, we just look for horizontal runs and return those.
         cells = array(cells)
         y_sorted = sort_points(cells, index=1)  # sort acoording to row
-        rownums = sort(array(tuple(Set(cells[:,1]))))
+        rownums = sort(array(tuple(set(cells[:,1]))))
         
         row_start_indices = searchsorted(y_sorted[:,1], rownums)
         row_end_indices = left_shift(row_start_indices, len(cells))
