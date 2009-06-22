@@ -31,7 +31,7 @@ class ToolbarButton(Button):
 
 class IndexAxisLogButton(ToolbarButton):
     label = 'Change index axis scale'
-    image = 'log_x'
+    image = 'zoom-fit-width'
 
     def perform(self, event):
         if self.container.component.index_scale == 'linear':
@@ -42,7 +42,7 @@ class IndexAxisLogButton(ToolbarButton):
 
 class ValueAxisLogButton(ToolbarButton):
     label = 'Change value axis scale'
-    image = 'log_y'
+    image = 'zoom-fit-height'
 
     def perform(self, event):
         if self.container.component.value_scale == 'linear':
@@ -53,7 +53,7 @@ class ValueAxisLogButton(ToolbarButton):
 
 class ZoomResetButton(ToolbarButton):
     label = 'Zoom reset'
-    image = 'Gtk-refresh'
+    image = 'zoom-original'
 
     def perform(self, event):
         plot_component = self.container.component
@@ -96,7 +96,7 @@ class SaveAsButton(ToolbarButton):
 
 class CopyToClipboardButton(ToolbarButton):
     label = 'Copy to the clipboard'
-    image = 'clipboard'
+    image = 'edit-copy'
 
     def perform(self, event):
         plot_component = self.container.component
