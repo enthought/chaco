@@ -5,8 +5,7 @@ Project                 License                   File
 ----------------------------------------------------------------------------
 Eclipse                 Eclipse Public License    image_LICENSE_Eclipse.txt
 Enthought               BSD 3-Clause              LICENSE.txt
-GV (Gael Varoquaux)     Public Domain             N/A
-Nuvola                  LGPL                      image_LICENSE_Nuvola.txt
+Oxygen                  CC-SA 3.0                 http://creativecommons.org/licenses/by-sa/3.0/
 
 Unless stated in this file, icons are the work of Enthought, and are
 released under a 3 clause BSD license.
@@ -14,8 +13,9 @@ released under a 3 clause BSD license.
 Files and orginal authors:
 ----------------------------------------------------------------------------
 enthought/developer/tools/images:
-                      clipboard.png | GV
-                  document-save.png | Enthought
-                          log_x.png | Enthought
-                          log_y.png | Enthought
-                        Gtk-refresh | NV
+                          edit-copy | Oxygen
+                  document-save.png | Oxygen
+                    zoom-fit-height | Oxygen
+                     zoom-fit-width | Oxygen
+                      zoom-original | Oxygen
+
