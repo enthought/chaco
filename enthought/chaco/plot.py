@@ -23,6 +23,7 @@ from contour_poly_plot import ContourPolyPlot
 from cmap_image_plot import CMapImagePlot
 from data_range_1d import DataRange1D
 from data_view import DataView
+from default_colormaps import jet
 from grid_data_source import GridDataSource
 from grid_mapper import GridMapper
 from image_data import ImageData
@@ -380,8 +381,9 @@ class Plot(DataView):
         If *data* has shape (N, M, 3) or (N, M, 4), then it is treated as RGB or
         RGBA (respectively) and *colormap* is ignored.
 
-        If *data* is an array of floating-point data, and no colormap is provided,
-        then a ValueError is thrown.
+        If *data* is an array of floating-point data, then a colormap can
+        be provided via the *colormap* argument, or the default of 'jet'
+        will be used.
 
         *Data* should be in row-major order, so that xbounds corresponds to
         *data*'s second axis, and ybounds corresponds to the first axis.
@@ -418,7 +420,7 @@ class Plot(DataView):
         else:
             if colormap is None:
                 if self.color_mapper is None:
-                    raise ValueError("Scalar 2D data requires a colormap.")
+                    colormap = jet(DataRange1D(value))
                 else:
                     colormap = self.color_mapper
             elif isinstance(colormap, AbstractColormap):
@@ -498,7 +500,8 @@ class Plot(DataView):
             floating point data.
         type : comma-delimited string of "line", "poly"
             The type of contour plot to add. If the value is "poly"
-            and no colormap is provided, then a ValueError is thrown.
+            and no colormap is provided via the *poly_cmap* argument, then 
+            a default colormap of 'jet' is used.
         name : string
             The name of the plot; if omitted, then a name is generated.
         poly_cmap : string
@@ -538,7 +541,7 @@ class Plot(DataView):
                     cmap.range = DataRange1D(value)
         elif type == "poly":
             if poly_cmap is None:
-                raise ValueError("Scalar 2D data requires a colormap.")
+                poly_cmap = jet(DataRange1D(value))
             elif isinstance(poly_cmap, FunctionType):
                 poly_cmap = poly_cmap(DataRange1D(value))
             elif getattr(poly_cmap, 'range', 'dummy') is None:
