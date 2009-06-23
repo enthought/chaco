@@ -299,9 +299,12 @@ class ImagePlot(Base2DPlot):
 
     def _index_data_changed_fired(self):
         self._image_cache_valid = False
+        self.request_redraw()
 
     def _index_mapper_changed_fired(self):
         self._image_cache_valid = False
+        self.request_redraw()
 
     def _value_data_changed_fired(self):
         self._image_cache_valid = False
+        self.request_redraw()
