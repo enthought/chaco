@@ -47,9 +47,6 @@ class CMapImagePlot(ImagePlot):
     # Cache of the fully mapped image.
     _cached_mapped_image = Any
 
-    # (dx, dy) in data space
-    _cached_image_data_widths = Tuple
-
     #------------------------------------------------------------------------
     # Public methods
     #------------------------------------------------------------------------
@@ -75,7 +72,6 @@ class CMapImagePlot(ImagePlot):
             del self.value.metadata["selection_masks"]
 
         self._update_selections()
-
 
     #------------------------------------------------------------------------
     # Base2DPlot interface
@@ -115,7 +111,6 @@ class CMapImagePlot(ImagePlot):
                     self.fade_alpha*(cached_mapped_image[invmask,0:3] -
                                      self.fade_background) + self.fade_background
             self._cached_mapped_image = cached_mapped_image
-            self._cached_image_data_widths = self._get_index_mapper_data_bounds()
             self._mapped_image_cache_valid = True
 
         mapped_value = self._cached_mapped_image
@@ -128,13 +123,6 @@ class CMapImagePlot(ImagePlot):
     def _update_selections(self):
         self._mapped_image_cache_valid = False
         self.invalidate_draw() 
-
-    def _get_index_mapper_data_bounds(self):
-        xmin, ymin = self.index_mapper.range.low
-        xmax, ymax = self.index_mapper.range.high
-        dx = xmax - xmin
-        dy = ymax - ymin
-        return (dx, dy)
 
     #------------------------------------------------------------------------
     # Properties
@@ -176,12 +164,5 @@ class CMapImagePlot(ImagePlot):
     def _index_data_changed_fired(self):
         super(CMapImagePlot, self)._index_data_changed_fired()
         self._mapped_image_cache_valid = False
-        return
-
-    def _index_mapper_changed_fired(self):
-        super(CMapImagePlot, self)._index_mapper_changed_fired()
-        bounds = self._get_index_mapper_data_bounds()
-        if bounds != self._cached_image_data_widths:
-            self._mapped_image_cache_valid = False
         return
 
