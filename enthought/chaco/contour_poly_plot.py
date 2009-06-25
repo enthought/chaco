@@ -148,13 +148,24 @@ class ContourPolyPlot(Base2DPlot):
     #------------------------------------------------------------------------
 
     def _index_data_changed_fired(self):
+        # If the index data has changed, the reset the levels cache (which
+        # also triggers all the other caches to reset).
+        self._level_cache_valid = False
+        self.invalidate_draw()
+
+    def _value_data_changed_fired(self):
+        # If the index data has changed, the reset the levels cache (which
+        # also triggers all the other caches to reset).
         self._level_cache_valid = False
         self.invalidate_draw()
 
     def _index_mapper_changed_fired(self):
+        # If the index mapper has changed, then we need to redraw
         self.invalidate_draw()
 
-    def _value_data_changed_fired(self):
+    def _value_mapper_changed_fired(self):
+        # If the value mapper has changed, then we need to recompute the
+        # levels and cached data associated with that.
         self._level_cache_valid = False
         self.invalidate_draw()
 
