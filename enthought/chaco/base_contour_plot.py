@@ -54,6 +54,12 @@ class BaseContourPlot(Base2DPlot):
     _color_map_trait = ColorTrait
 
 
+    def __init__(self, *args, **kwargs):
+        super(BaseContourPlot, self).__init__(*args, **kwargs)
+        if self.color_mapper:
+            self.color_mapper.on_trait_change(self._update_color_mapper, "updated")
+        return
+
     def _update_levels(self):
         """ Updates the levels cache.  """
         low, high = self.value.get_bounds()
@@ -138,8 +144,8 @@ class BaseContourPlot(Base2DPlot):
         # If the index mapper has changed, then we need to redraw
         self.invalidate_draw()
 
-    def _value_mapper_changed_fired(self):
-        # If the value mapper has changed, then we need to recompute the
+    def _update_color_mapper(self):
+        # If the color mapper has changed, then we need to recompute the
         # levels and cached data associated with that.
         self._level_cache_valid = False
         self.invalidate_draw()
@@ -165,5 +171,18 @@ class BaseContourPlot(Base2DPlot):
             return None
 
     def _set_color_mapper(self, color_mapper):
-        self.colors = color_mapper
+        # Remove the dynamic event handler from the old color mapper
+        if self.colors is not None and isinstance(self.colors, ColorMapper):
+            self.colors.on_trait_change(self._update_color_mapper, "updated", remove=True)
 
+            # Check to see if we should copy over the range as well
+            if color_mapper is not None:
+                if color_mapper.range is None and self.colors.range is not None:
+                    color_mapper.range = self.colors.range
+
+        # Attach the dynamic event handler to the new color mapper
+        if color_mapper is not None:
+            color_mapper.on_trait_change(self._update_color_mapper, "updated")
+
+        self.colors = color_mapper
+        self._update_color_mapper()
