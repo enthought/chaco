@@ -38,6 +38,7 @@ class IndexAxisLogButton(ToolbarButton):
             self.container.component.index_scale = 'log'
         else:
             self.container.component.index_scale = 'linear'
+        self.container.request_redraw()
         return
 
 class ValueAxisLogButton(ToolbarButton):
@@ -49,6 +50,7 @@ class ValueAxisLogButton(ToolbarButton):
             self.container.component.value_scale = 'log'
         else:
             self.container.component.value_scale = 'linear'
+        self.container.request_redraw()
         return
 
 class ZoomResetButton(ToolbarButton):
@@ -61,6 +63,8 @@ class ZoomResetButton(ToolbarButton):
         for overlay in plot_component.overlays:
             if isinstance(overlay, SimpleZoom):
                 overlay._reset_state_pressed()
+
+        self.container.request_redraw()
 
 
 
