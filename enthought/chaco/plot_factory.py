@@ -206,7 +206,8 @@ def create_polar_plot(data, orientation='h', color='black', width=1.0,
     return plot
 
 
-def add_default_axes(plot, orientation="normal", vtitle="",htitle=""):
+def add_default_axes(plot, orientation="normal", vtitle="", htitle="", 
+                     axis_class=PlotAxis):
     """
     Creates left and bottom axes for a plot.  Assumes that the index is
     horizontal and value is vertical by default; set *orientation* to
@@ -219,12 +220,12 @@ def add_default_axes(plot, orientation="normal", vtitle="",htitle=""):
         v_mapper = plot.index_mapper
         h_mapper = plot.value_mapper
     
-    left = PlotAxis(orientation='left',
+    left = axis_class(orientation='left',
                     title= vtitle,
                     mapper=v_mapper,
                     component=plot)
     
-    bottom = PlotAxis(orientation='bottom',
+    bottom = axis_class(orientation='bottom',
                       title= htitle,
                       mapper=h_mapper,
                       component=plot)
