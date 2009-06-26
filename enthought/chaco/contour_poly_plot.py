@@ -1,37 +1,22 @@
 """ Defines the ContourPolyPlot class.
 """
 # Major library imports
-from numpy import array, linspace, meshgrid, transpose
+from numpy import array, meshgrid, transpose
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait
-from enthought.traits.api import Bool, Dict, Instance, Int, List, Range, Trait
+from enthought.traits.api import Bool, Dict 
 
 # Local relative imports
-from base_2d_plot import Base2DPlot
-from color_mapper import ColorMapper
+from base_contour_plot import BaseContourPlot
 from contour.contour import Cntr
 
 
-class ContourPolyPlot(Base2DPlot):
+class ContourPolyPlot(BaseContourPlot):
     """ Contour image plot.  Takes a value data object whose elements are
     scalars, and renders them as a contour plot.
     """
 
     # TODO: Modify ImageData to explicitly support scalar value arrays
-
-    #------------------------------------------------------------------------
-    # Data-related traits
-    #------------------------------------------------------------------------
-
-    # List of levels to contour.
-    levels = Trait("auto", Int, List)
-
-    # Mapping of values to colors
-    color_mapper = Instance(ColorMapper)
-
-    alpha = Trait(1.0, Range(0.0, 1.0))
-
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -41,22 +26,6 @@ class ContourPolyPlot(Base2DPlot):
 
     # Cached collection of traces.
     _cached_polys = Dict
-
-    # Is the cached level data valid?
-    _level_cache_valid = Bool(False)
-    # Is the cached color data valid?
-    _colors_cache_valid = Bool(False)
-    
-    # List of levels and their associated line properties.
-    _levels = List
-    # List of colors
-    _colors = List
-
-    # Mapped trait used to convert user-suppied color values to AGG-acceptable
-    # ones. (Mapped traits in lists are not supported, must be converted one at 
-    # a time.)
-    _color_map_trait = ColorTrait
-
 
     #------------------------------------------------------------------------
     # Private methods
@@ -96,8 +65,7 @@ class ContourPolyPlot(Base2DPlot):
         gc.restore_state()
 
     def _update_polys(self):
-        """ Updates the contour cache.
-        """
+        """ Updates the cache of contour polygons """
         # x and ydata are "fenceposts" so ignore the last value
         # XXX: this truncation is causing errors in Cntr() as of r13735
         if self.orientation == "h":
@@ -118,68 +86,11 @@ class ContourPolyPlot(Base2DPlot):
         self._poly_cache_valid = True
 
     def _update_levels(self):
-        """ Updates the levels cache.
-        """
-        low, high = self.value.get_bounds()
-        if self.levels == "auto":
-            self._levels = list(linspace(low, high, 10))
-        elif isinstance(self.levels, int):
-            self._levels = list(linspace(low, high, self.levels))
-        else:
-            self._levels = self.levels
-            self._levels.sort()
-        self._level_cache_valid = True
+        """ Extends the parent method to also invalidate some other things """
+        super(ContourPolyPlot, self)._update_levels()
         self._poly_cache_valid = False
-        self._colors_cache_valid = False
 
     def _update_colors(self):
-        """ Updates the colors cache.
-        """
-        cmap = self.color_mapper
-        self._colors =  []
-        mapped_colors = cmap.map_screen(array(self._levels))
-        for i in range(len(self._levels)-1):
-            self._color_map_trait = tuple(mapped_colors[i])
-            self._colors.append(self._color_map_trait_)
-
-
-    #------------------------------------------------------------------------
-    # Event handlers
-    #------------------------------------------------------------------------
-
-    def _index_data_changed_fired(self):
-        # If the index data has changed, the reset the levels cache (which
-        # also triggers all the other caches to reset).
-        self._level_cache_valid = False
-        self.invalidate_draw()
-
-    def _value_data_changed_fired(self):
-        # If the index data has changed, the reset the levels cache (which
-        # also triggers all the other caches to reset).
-        self._level_cache_valid = False
-        self.invalidate_draw()
-
-    def _index_mapper_changed_fired(self):
-        # If the index mapper has changed, then we need to redraw
-        self.invalidate_draw()
-
-    def _value_mapper_changed_fired(self):
-        # If the value mapper has changed, then we need to recompute the
-        # levels and cached data associated with that.
-        self._level_cache_valid = False
-        self.invalidate_draw()
-
-    def _levels_changed(self):
-        self._update_levels()
-        self.invalidate_draw()
-        self.request_redraw()
-        
-    def _color_mapper_changed(self):
-        if self._level_cache_valid: 
-            self._update_colors()
-            self.invalidate_draw()
-
-
-
+        BaseContourPlot._update_colors(self, numcolors = len(self._levels) - 1)
 
 

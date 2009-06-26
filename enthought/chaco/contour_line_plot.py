@@ -1,20 +1,20 @@
 """ Defines the ContourLinePlot class.
 """
+
 # Major library imports
-from numpy import array, isscalar, issubsctype, linspace, meshgrid, number, transpose
+from numpy import array, meshgrid, transpose
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait, LineStyle
-from enthought.traits.api import Bool, Dict, Float, Instance, \
-        Int, List, Property, Range, Str, Trait, Tuple
+from enthought.enable.api import LineStyle
+from enthought.traits.api import Bool, Dict, Float, List, Str, Trait
 
 # Local relative imports
-from base_2d_plot import Base2DPlot
+from base_contour_plot import BaseContourPlot
 from color_mapper import ColorMapper
 from contour.contour import Cntr
 
 
-class ContourLinePlot(Base2DPlot):
+class ContourLinePlot(BaseContourPlot):
     """ Takes a value data object whose elements are scalars, and renders them
     as a contour plot.
     """
@@ -25,9 +25,6 @@ class ContourLinePlot(Base2DPlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # List of levels to contour.
-    levels = Trait("auto", "auto", Int, List)
-
     # The thickness(es) of the contour lines.
     widths = Trait(1.0, Float, List)
     
@@ -36,18 +33,9 @@ class ContourLinePlot(Base2DPlot):
 
     # Line style for positive levels.
     positive_style = LineStyle("solid")
+
     # Line style for negative levels.
     negative_style = LineStyle("dash")
-
-    # The color(s) of the lines.
-    colors = Trait(None, Str, Instance("ColorMapper"), List, Tuple)
-
-    # Overall alpha value of the plot. Ranges from 0.0 for transparent to 1.0
-    # for full intensity.
-    alpha = Trait(1.0, Range(0.0, 1.0))
-
-    # If present, the color mapper for the colorbar to look at.
-    color_mapper = Property(Instance("ColorMapper"))
 
     #------------------------------------------------------------------------
     # Private traits
@@ -59,28 +47,18 @@ class ContourLinePlot(Base2DPlot):
     # Cached collection of traces.
     _cached_contours = Dict
 
-    # Is the cached level data valid?
-    _level_cache_valid = Bool(False)
     # Is the cached width data valid?
     _widths_cache_valid = Bool(False)
+
     # Is the cached style data valid?
     _styles_cache_valid = Bool(False)
-    # Is the cached color data valid
-    _colors_cache_valid = Bool(False)
     
-    # Cached list of levels and their associated line properties
-    _levels = List
     # Cached list of line widths
     _widths = List
+
     # Cached list of line styles
     _styles = List
-    # Cached list of line colors
-    _colors = List
 
-    # Mapped trait used to convert user-suppied color values to AGG-acceptable
-    # ones. (Mapped traits in lists are not supported, must be converted one at 
-    # a time.)
-    _color_map_trait = ColorTrait
     # Mapped trait used to convert user-suppied line style values to 
     # AGG-acceptable ones. (Mapped traits in lists are not supported, must be
     # converted one at a time.)
@@ -127,8 +105,7 @@ class ContourLinePlot(Base2DPlot):
         gc.restore_state()
 
     def _update_contours(self):
-        """ Updates the contour cache.
-        """
+        """ Updates the cache of contour lines """
         # x and ydata are "fenceposts" so ignore the last value        
         # XXX: this truncaton is causing errors in Cntr() as of r13735
         if self.orientation == "h":
@@ -148,20 +125,11 @@ class ContourLinePlot(Base2DPlot):
         self._contour_cache_valid = True
 
     def _update_levels(self):
-        """ Updates the levels cache.
-        """
-        low, high = self.value.get_bounds()
-        if self.levels == "auto":
-            self._levels = list(linspace(low, high, 10))
-        elif isinstance(self.levels, int):
-            self._levels = list(linspace(low, high, self.levels))
-        else:
-            self._levels = self.levels
-        self._level_cache_valid = True
+        """ Extends the parent method to also invalidate some other things """
+        super(ContourLinePlot, self)._update_levels()
         self._contour_cache_valid = False
         self._widths_cache_valid = False
         self._styles_cache_valid = False
-        self._colors_cache_valid = False
 
     def _update_widths(self):
         """ Updates the widths cache.
@@ -207,79 +175,10 @@ class ContourLinePlot(Base2DPlot):
 
         self._styles_cache_valid = True
 
-    def _update_colors(self):
-        """ Updates the colors cache.
-        """
-        colors = self.colors
-        # If we are given no colors, set a default for all levels
-        if colors is None: 
-            self._color_map_trait = "black"
-            self._colors = [self._color_map_trait_] * len(self._levels)
-
-        # If we are given a single color, apply it to all levels 
-        elif isinstance(colors, basestring):
-            self._color_map_trait = colors
-            self._colors = [self._color_map_trait_] * len(self._levels)
-
-        # If we are given a colormap, use it to map all the levels to colors 
-        elif isinstance(colors, ColorMapper):
-            cmap = colors
-            self._colors =  []
-            mapped_colors = cmap.map_screen(array(self._levels))
-            for i in range(len(self._levels)):
-                self._color_map_trait = tuple(mapped_colors[i])
-                self._colors.append(self._color_map_trait_)
-
-        # A list or tuple
-        # This could be a length 3 or 4 sequence of scalars, which indicates
-        # a color; otherwise, this is interpreted as a list of items to
-        # be converted via self._color_map_trait.
-        else:
-            if len(colors) in (3,4) and \
-                    (isscalar(colors[0]) and issubsctype(type(colors[0]), number)):
-                self._color_map_trait = colors
-                self._colors = [self._color_map_trait_] * len(self._levels)
-            else:
-                # if the list of colors is shorter than the list of levels, simply
-                # repeat colors from the beginning of the list as needed
-                self._colors = []
-                for i in range(len(self._levels)):
-                    self._color_map_trait = colors[i%len(colors)]    
-                    self._colors.append(self._color_map_trait_)
-
-        self._colors_cache_valid = True
-
 
     #------------------------------------------------------------------------
     # Event handlers
     #------------------------------------------------------------------------
-
-    def _index_data_changed_fired(self):
-        # If the index data has changed, the reset the levels cache (which
-        # also triggers all the other caches to reset).
-        self._level_cache_valid = False
-        self.invalidate_draw()
-
-    def _value_data_changed_fired(self):
-        # If the index data has changed, the reset the levels cache (which
-        # also triggers all the other caches to reset).
-        self._level_cache_valid = False
-        self.invalidate_draw()
-
-    def _index_mapper_changed_fired(self):
-        # If the index mapper has changed, then we need to redraw
-        self.invalidate_draw()
-
-    def _value_mapper_changed_fired(self):
-        # If the value mapper has changed, then we need to recompute the
-        # levels and cached data associated with that.
-        self._level_cache_valid = False
-        self.invalidate_draw()
-
-    def _levels_changed(self):
-        self._update_levels()
-        self.invalidate_draw()
-        #self.request_redraw()
         
     def _widths_changed(self):
         if self._level_cache_valid: 
@@ -301,17 +200,3 @@ class ContourLinePlot(Base2DPlot):
             self._update_styles()
             self.invalidate_draw()
 
-    def _colors_changed(self):
-        if self._level_cache_valid: 
-            self._update_colors()
-            self.invalidate_draw()
-
-    #------------------------------------------------------------------------
-    # Trait properties
-    #------------------------------------------------------------------------
-
-    def _get_color_mapper(self):
-        if isinstance(self.colors, ColorMapper):
-            return self.colors
-        else:
-            return None
