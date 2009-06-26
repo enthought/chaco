@@ -1,4 +1,5 @@
 import numpy
+import sys
 
 from enthought.chaco.api import AbstractOverlay
 from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
@@ -104,9 +105,18 @@ class PlotToolbar(Container, AbstractOverlay):
                 x + self.width + self.end_radius,
                 y, self.end_radius)
 
-        gc.linear_gradient(x, y, x, y+100,
-                numpy.array([starting_color, ending_color]),
-                2, "")
+        if sys.platform == 'darwin':
+            from enthought.kiva.mac.ABCGI import AxialShading, PiecewiseLinearColorFunction
+            stops = numpy.array([starting_color, ending_color]).transpose().tolist()
+            func = PiecewiseLinearColorFunction(stops)
+            shading = AxialShading(func, (x,y), (x,y+100),
+                                   extend_start=1, extend_end=1)
+            gc.clip()
+            gc.draw_shading(shading)
+        else:
+            gc.linear_gradient(x, y, x, y+100,
+                    numpy.array([starting_color, ending_color]),
+                    2, "")
 
         gc.draw_path()
 
