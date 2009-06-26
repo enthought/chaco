@@ -1,7 +1,9 @@
 import numpy
 
 from enthought.chaco.api import AbstractOverlay
-from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton
+from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
+        IndexAxisLogButton, ValueAxisLogButton, SaveAsButton, \
+        CopyToClipboardButton, ZoomResetButton
 from enthought.enable.api import Container
 from enthought.traits.api import Bool, Float, Property, on_trait_change, List, Type
 
@@ -39,6 +41,10 @@ class PlotToolbar(Container, AbstractOverlay):
             self.add_button(buttontype())
             
         self._calculate_width()
+    
+    def _buttons_default(self):
+        return [ IndexAxisLogButton, ValueAxisLogButton,
+                 SaveAsButton, CopyToClipboardButton, ZoomResetButton ]
     
     def add_button(self, button):
         """ adds a button to the toolbar
