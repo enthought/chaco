@@ -116,6 +116,10 @@ setup(
         'develop': MyDevelop,
         'build': MyBuild
     },
+    data_files=[('enthought/chaco/layers/data',
+        ['enthought/chaco/layers/data/Dialog-error.svg', 
+         'enthought/chaco/layers/data/Dialog-warning.svg', 
+         'enthought/chaco/layers/data/range_selection.svg'])],
     description = DOCLINES[1],
     download_url = ('http://www.enthought.com/repo/ETS/Chaco-%s.tar.gz' %
         INFO['version']),
