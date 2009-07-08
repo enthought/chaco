@@ -42,9 +42,8 @@ Chaco:
 
 """
 
-
-import os
-import zipfile
+import traceback
+import sys
 
 from distutils import log
 from distutils.command.build import build as distbuild
@@ -84,12 +83,21 @@ speedups = Extension(
 class MyDevelop(develop):
     def run(self):
         develop.run(self)
-        self.run_command('build_docs')
+        try:
+            self.run_command('build_docs')
+        except:
+            log.warn("Couldn't build documentation:\n%s" %
+                     traceback.format_exception(*sys.exc_info()))
+
 
 class MyBuild(distbuild):
     def run(self):
         distbuild.run(self)
-        self.run_command('build_docs')
+        try:
+            self.run_command('build_docs')
+        except:
+            log.warn("Couldn't build documentation:\n%s" %
+                     traceback.format_exception(*sys.exc_info()))
 
 
 # The actual setup call.
