@@ -64,6 +64,19 @@ class ArrayPlotData(AbstractPlotData):
             self.arrays['series'+str(i)] = data[i-1]
         return
 
+    #------------------------------------------------------------------------
+    # Dictionary Interface
+    #------------------------------------------------------------------------
+
+    def __getitem__(self, name):
+        return self.arrays.get(name, None)
+
+    def __setitem__(self, name, value):
+        return self.set_data(name, value)
+
+    def __delitem__(self, name):
+        return self.del_data(name)
+    
 
     def list_data(self):
         """ Returns a list of the names of the arrays managed by this instance.
