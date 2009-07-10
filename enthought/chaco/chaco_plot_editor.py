@@ -10,7 +10,7 @@ traits.ui.wx.plot_editor.
 from enthought.enable.traits.ui.wx.rgba_color_editor import \
     RGBAColorEditor
 from enthought.enable.api import black_color_trait, LineStyle, ColorTrait,\
-    white_color_trait, marker_trait
+    white_color_trait, MarkerTrait
 from enthought.enable.wx_backend.api import Window
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Enum, Str, Range, Tuple, \
@@ -132,7 +132,7 @@ class ChacoPlotItem(Item):
     # plot-specific properties.  These might not apply to all plot types.
 
     # Type of marker (for plots that use markers).
-    marker = marker_trait
+    marker = MarkerTrait
     # Size of marker (for plots that use markers).
     marker_size = Int(4)
     # Marker outline color (for plots that user markers).

@@ -7,7 +7,7 @@ from numpy.linalg import norm
 # Enthought library imports
 from enthought.traits.api import Any, Array, Bool, Enum, Float, Int, List, \
      Str, Tuple, Trait
-from enthought.enable.api import ColorTrait, marker_trait
+from enthought.enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
 from scatterplot import render_markers
@@ -139,7 +139,7 @@ class DataLabel(ToolTip):
 
     # The type of marker to use.  This is a mapped trait using strings as the
     # keys.
-    marker = marker_trait
+    marker = MarkerTrait
     
     # The pixel size of the marker (doesn't include the thickness of the outline).
     marker_size = Int(4)

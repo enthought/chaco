@@ -8,7 +8,7 @@ from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, 
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, ColorTrait, AbstractMarker, \
-        CustomMarker, MarkerNameDict, marker_trait
+        CustomMarker, MarkerNameDict, MarkerTrait
 from enthought.kiva import STROKE
 from enthought.traits.api import Any, Array, Bool, Float, Int, Trait
 from enthought.traits.ui.api import View, VGroup, Item
@@ -49,7 +49,7 @@ class ScatterPlot(BaseXYPlot):
 
     # The type of marker to use.  This is a mapped trait using strings as the
     # keys.
-    marker = marker_trait
+    marker = MarkerTrait
 
     # The pixel size of the marker, not including the thickness of the outline.
     marker_size = Float(4.0)
@@ -75,7 +75,7 @@ class ScatterPlot(BaseXYPlot):
     # datasource.
     #------------------------------------------------------------------------
 
-    selection_marker = marker_trait
+    selection_marker = MarkerTrait
 
     selection_marker_size = Float(4.0)
 
