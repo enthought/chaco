@@ -3,12 +3,11 @@
 from numpy import array, asarray
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait
+from enthought.enable.api import ColorTrait, marker_trait
 from enthought.traits.api import Float, Int, Str, Trait
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay
-from scatter_markers import marker_trait
 from scatterplot import render_markers
 
 class ScatterInspectorOverlay(AbstractOverlay):

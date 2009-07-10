@@ -7,11 +7,10 @@ from numpy.linalg import norm
 # Enthought library imports
 from enthought.traits.api import Any, Array, Bool, Enum, Float, Int, List, \
      Str, Tuple, Trait
-from enthought.enable.api import ColorTrait
+from enthought.enable.api import ColorTrait, marker_trait
 
 # Local, relative imports
 from scatterplot import render_markers
-from scatter_markers import marker_trait
 from tooltip import ToolTip
 
 

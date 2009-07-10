@@ -69,12 +69,12 @@ from contour_poly_plot import ContourPolyPlot
 from lineplot import LinePlot
 from colormapped_scatterplot import ColormappedScatterPlot
 from colormapped_selection_overlay import ColormappedSelectionOverlay
-from scatter_markers import marker_trait
 from polygon_plot import PolygonPlot
 from errorbar_plot import ErrorBarPlot
 from filled_line_plot import FilledLinePlot
 from quiverplot import QuiverPlot
 from candle_plot import CandlePlot
+
 
 # Plot factories
 from plot_factory import create_bar_plot, create_line_plot, create_scatter_plot, \
@@ -101,9 +101,9 @@ from grid import PlotGrid
 # Tools
 from abstract_controller import AbstractController
 
-# Even though it's no longer in the Chaco package, leave this import in here
-# for backwards compatibility
+# Importing various symbols into the Chaco namespace for backwards 
+# compatibility.  New code should directly import from Enable.
 from enthought.enable.base_tool import BaseTool, KeySpec
-
+from enthought.enable.markers import marker_trait
 
 #EOF

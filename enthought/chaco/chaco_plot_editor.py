@@ -9,7 +9,8 @@ traits.ui.wx.plot_editor.
 # Enthought library imports
 from enthought.enable.traits.ui.wx.rgba_color_editor import \
     RGBAColorEditor
-from enthought.enable.api import black_color_trait, LineStyle, ColorTrait, white_color_trait
+from enthought.enable.api import black_color_trait, LineStyle, ColorTrait,\
+    white_color_trait, marker_trait
 from enthought.enable.wx_backend.api import Window
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Enum, Str, Range, Tuple, \
@@ -25,7 +26,6 @@ from plot_containers import OverlayPlotContainer
 from plot_factory import create_line_plot, create_scatter_plot, \
                          add_default_grids, add_default_axes
 from plot_label import PlotLabel
-from scatter_markers import marker_trait
 
 # Somewhat unorthodox...
 from enthought.chaco.tools.api import PanTool, SimpleZoom
