@@ -118,14 +118,14 @@ class Plot(DataView):
     #------------------------------------------------------------------------
 
     # The title of the plot.
-    title = Property
+    title = Property()
 
     # The font to use for the title.
-    title_font = Str("swiss 16")
+    title_font = Property()
 
     # Convenience attribute for title.overlay_position; can be "top",
     # "bottom", "left", or "right".
-    title_position = Property
+    title_position = Property()
 
     # Use delegates to expose the other PlotLabel attributes of the plot title
     title_text = Delegate("_title", prefix="text", modify=True)
@@ -161,7 +161,7 @@ class Plot(DataView):
                                   "of type " + str(type(data))
 
         if not self._title:
-            self._title = PlotLabel(font=self.title_font, visible=False,
+            self._title = PlotLabel(font="swiss 16", visible=False,
                                    overlay_position="top", component=self)
         if title is not None:
             self.title = title
@@ -932,9 +932,6 @@ class Plot(DataView):
     def __title_changed(self, old, new):
         self._overlay_change_helper(old, new)
 
-    def _title_font_changed(self, old, new):
-        self._title.font = new
-
     def _legend_changed(self, old, new):
         self._overlay_change_helper(old, new)
         if new:
@@ -991,4 +988,13 @@ class Plot(DataView):
             return self._title.overlay_position
         else:
             return None
+        
+    def _set_title_font(self, font):
+        old_font = self._title.font
+        self._title.font = font
+        self.trait_property_changed("title_font", old_font, font)
+        
+    def _get_title_font(self):
+        return self._title.font
+            
 
