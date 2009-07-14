@@ -386,18 +386,21 @@ class RangeSelection(AbstractController):
 
                 self.component.request_redraw()
         return
-    
+
+    def selecting_button_up(self, event):
+        self.event_state = "selected"
+
+        # Fire the "completed" event
+        self.selection_completed = self.selection
+        return
+
     def selecting_right_up(self, event):
         """ Handles the right mouse button coming up when the tool is in the
         'selecting' state.
         
         Switches the tool to the 'selected' state and completes the selection.
         """
-        self.event_state = "selected"
-        
-        # Fire the "completed" event
-        self.selection_completed = self.selection
-        return
+        self.selecting_button_up(event)
     
     def selecting_left_up(self, event):
         """ Handles the left mouse button coming up when the tool is in the
@@ -405,8 +408,7 @@ class RangeSelection(AbstractController):
         
         Switches the tool to the 'selected' state.
         """
-        self.event_state = "selected"
-        return
+        self.selecting_button_up(event)
     
     def selecting_mouse_leave(self, event):
         """ Handles the mouse leaving the plot when the tool is in the 
@@ -428,7 +430,7 @@ class RangeSelection(AbstractController):
             selection_high = self.mapper.map_data(high)
         elif pos <= low:
             selection_low = self.mapper.map_data(low)
-        
+
         self.selection = (selection_low, selection_high)
         event.window.set_pointer("arrow")
         self.component.request_redraw()
@@ -442,11 +444,11 @@ class RangeSelection(AbstractController):
         is treated as if the right mouse button was released. Otherwise,
         the method sets the cursor to show that it is selecting.
         """
-        if not event.right_down:
-            # If we were in the "selecting" state when the mouse left, and
-            # the mouse has entered withou the right button being down,
-            # then treat this like we got a selecting_right_up event.
-            return self.selecting_right_up(event)
+        # If we were in the "selecting" state when the mouse left, and
+        # the mouse has entered without a button being down,
+        # then treat this like we got a button up event.
+        if not (event.right_down or event.left_down):
+            return self.selecting_button_up(event)
         else:
             self._set_sizing_cursor(event)
         return
