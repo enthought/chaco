@@ -330,7 +330,7 @@ class PlotGrid(AbstractOverlay):
             gc.set_stroke_color(self.line_color_)
             gc.set_antialias(False)
 
-            if self.component is None:
+            if self.component is not None:
                 gc.clip_to_rect(*(self.component.position + self.component.bounds))
             else:
                 gc.clip_to_rect(*(self.position + self.bounds))
