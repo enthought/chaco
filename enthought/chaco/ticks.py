@@ -94,7 +94,8 @@ class ShowAllTickGenerator(AbstractTickGenerator):
     # A sequence of positions for ticks.
     positions = Any
     
-    def get_ticks(self, data_low, data_high, bounds_low, bounds_high, interval):
+    def get_ticks(self, data_low, data_high, bounds_low, bounds_high, interval,
+                  use_endpoints=False, scale='linear'):
         """ Returns an array based on **positions**.
         """
         # ignore all the high, low, etc. data and just return every position
