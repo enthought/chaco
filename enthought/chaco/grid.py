@@ -2,12 +2,12 @@
 function.
 """
 
-from numpy import around, array, column_stack, float64, inf, zeros_like
+from numpy import around, array, asarray, column_stack, float64, inf, zeros, zeros_like
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, LineStyle
-from enthought.traits.api import Any, Bool, Enum, Float, Instance, CInt, Trait, \
-                            Property, TraitError
+from enthought.traits.api import Any, Bool, Callable, Enum, Float, Instance, \
+        CInt, Trait, Property, TraitError, Tuple, on_trait_change
 from enthought.traits.ui.api import HGroup, Item, VGroup, View, TextEditor
 
 # Local, relative imports
@@ -54,16 +54,66 @@ class PlotGrid(AbstractOverlay):
     multiple grids with different settings for the horizontal and vertical
     lines in a plot.
     """
+    
+    #------------------------------------------------------------------------
+    # Data-related traits
+    #------------------------------------------------------------------------
+
     # The mapper (and associated range) that drive this PlotGrid.
     mapper = Instance(AbstractMapper)
 
-    # The orientation of the grid lines.
+    # The dataspace interval between grid lines.
+    grid_interval = Trait('auto', 'auto', Float)
+
+    # The dataspace value at which to start this grid.  If None, then
+    # uses the mapper.range.low.
+    data_min = Trait(None, None, Float)
+
+    # The dataspace value at which to end this grid.  If None, then uses
+    # the mapper.range.high.
+    data_max = Trait(None, None, Float)
+
+    # A callable that implements the AbstractTickGenerator Interface.
+    tick_generator = Instance(AbstractTickGenerator)
+
+    #------------------------------------------------------------------------
+    # Layout traits
+    #------------------------------------------------------------------------
+    
+    # The orientation of the grid lines.  "horizontal" means that the grid
+    # lines are parallel to the X axis and the ticker and grid interval
+    # refer to the Y axis.
     orientation = Enum('horizontal', 'vertical')
     
     # Draw the ticks starting at the end of the mapper range? If False, the
     # ticks are drawn starting at 0. This setting can be useful to keep the 
     # grid from from "flashing" as the user resizes the plot area.
     flip_axis = Bool(False)
+
+    # Optional specification of the grid bounds in the dimension transverse
+    # to the ticking/gridding dimension, i.e. along the direction specified
+    # by self.orientation.  If this is specified but transverse_mapper is
+    # not specified, then there is no effect.
+    #
+    #   None : use self.bounds or self.component.bounds (if overlay)
+    #   Tuple : (low, high) extents, used for every grid line
+    #   Callable : Function that takes an array of dataspace grid ticks
+    #              and returns either an array of shape (N,2) of (starts,ends) 
+    #              for each grid point or a single tuple (low, high)
+    transverse_bounds = Trait(None, Tuple, Callable)
+
+    # Mapper in the direction corresponding to self.orientation, i.e. transverse
+    # to the direction of self.mapper.  This is used to compute the screen
+    # position of transverse_bounds.  If this is not specified, then
+    # transverse_bounds has no effect, and vice versa.
+    transverse_mapper = Instance(AbstractMapper)
+
+    # Dimensions that the grid is resizable in (overrides PlotComponent).
+    resizable = "hv"
+    
+    #------------------------------------------------------------------------
+    # Appearance traits
+    #------------------------------------------------------------------------
     
     # The color of the grid lines.
     line_color = black_color_trait
@@ -73,27 +123,24 @@ class PlotGrid(AbstractOverlay):
     
     # The thickness, in pixels, of the grid lines.
     line_width = CInt(1)
-    
     line_weight = Alias("line_width")
-
-    # The dataspace interval between grid lines.
-    grid_interval = Trait('auto', 'auto', Float)
-
-    # A callable that implements the AbstractTickGenerator Interface.
-    tick_generator = Instance(AbstractTickGenerator)
-
-    # Dimensions that the grid is resizable in (overrides PlotComponent).
-    resizable = "hv"
     
     # Default Traits UI View for modifying grid attributes.
     traits_view = GridView
     
-    # Private traits; cached info
+    #------------------------------------------------------------------------
+    # Private traits; mostly cached information
+    #------------------------------------------------------------------------
     
     _cache_valid = Bool(False)
     _tick_list = Any
     _tick_positions = Any
-    _length = Float(0.0)
+
+    # An array (N,2) of start,end positions in the transverse direction
+    # i.e. the direction corresponding to self.orientation
+    _tick_extents = Any
+    
+    #_length = Float(0.0)
     
     
     #------------------------------------------------------------------------
@@ -107,6 +154,7 @@ class PlotGrid(AbstractOverlay):
         self.bgcolor = "none" #make sure we're transparent
         return
 
+    @on_trait_change("bounds,bounds_items,position,position_items")
     def invalidate(self):
         """ Invalidate cached information about the grid.
         """
@@ -152,7 +200,7 @@ class PlotGrid(AbstractOverlay):
         """ Clears the cached tick positions.
         """
         self._tick_positions = array([], dtype=float)
-        self._length = 0.0
+        self._tick_extents = array([], dtype=float)
         self._cache_valid = False
         return
     
@@ -164,10 +212,18 @@ class PlotGrid(AbstractOverlay):
             self._cache_valid = True
             return
         
-        datalow = self.mapper.range.low
-        datahigh = self.mapper.range.high
-        screenhigh = self.mapper.high_pos
-        screenlow = self.mapper.low_pos
+        if self.data_min is None:
+            datalow = self.mapper.range.low
+        else:
+            datalow = self.data_min
+        if self.data_max is None:
+            datahigh = self.mapper.range.high
+        else:
+            datahigh = self.data_max
+
+        # Map the low and high data points
+        screenhigh = self.mapper.map_screen(datalow)
+        screenlow = self.mapper.map_screen(datahigh)
         
         if (datalow == datahigh) or (screenlow == screenhigh) or \
            (datalow in [inf, -inf]) or (datahigh in [inf, -inf]):
@@ -196,17 +252,36 @@ class PlotGrid(AbstractOverlay):
         tick_positions = self.mapper.map_screen(array(ticks, float64))
         
         if self.orientation == 'horizontal':
-            length = bounds[0]
             self._tick_positions = around(column_stack((zeros_like(tick_positions) + position[0],
                                            tick_positions)))
         elif self.orientation == 'vertical':
-            length = bounds[1]
             self._tick_positions = around(column_stack((tick_positions,
                                            zeros_like(tick_positions) + position[1])))
         else:
             raise self.NotImplementedError
 
-        self._length = length
+        # Compute the transverse direction extents
+        self._tick_extents = zeros((len(ticks), 2), dtype=float)
+        if self.transverse_bounds is None or self.transverse_mapper is None:
+            # No mapping needed, just use the extents
+            if self.orientation == 'horizontal':
+                extents = (position[0], position[0] + bounds[0])
+            elif self.orientation == 'vertical':
+                extents = (position[1], position[1] + bounds[1])
+            self._tick_extents[:] = extents
+        elif callable(self.transverse_bounds):
+            data_extents = self.transverse_bounds(ticks)
+            tmapper = self.transverse_mapper
+            if isinstance(data_extents, tuple):
+                self._tick_extents[:] = tmapper.map_screen(asarray(data_extents))
+            else:
+                extents = array([tmapper.map_screen(data_extents[:,0]),
+                                 tmapper.map_screen(data_extents[:,1])]).T
+                self._tick_extents = extents
+        else:
+            # Already a tuple
+            self._tick_extents[:] = self.transverse_mapper.map_screen(asarray(self.transverse_bounds))
+            
         self._cache_valid = True
         
     
@@ -254,14 +329,23 @@ class PlotGrid(AbstractOverlay):
             gc.set_line_dash(self.line_style_)
             gc.set_stroke_color(self.line_color_)
             gc.set_antialias(False)
-            gc.begin_path()
-            
-            if self.orientation == "horizontal":
-                length_vec = array((self._length, 0.0))
+
+            if self.component is None:
+                gc.clip_to_rect(*(self.component.position + self.component.bounds))
             else:
-                length_vec = array((0.0, self._length))
-            starts = self._tick_positions
-            ends = starts + length_vec
+                gc.clip_to_rect(*(self.position + self.bounds))
+
+            gc.begin_path()
+            if self.orientation == "horizontal":
+                starts = self._tick_positions.copy()
+                starts[:,0] = self._tick_extents[:,0]
+                ends = self._tick_positions.copy()
+                ends[:,0] = self._tick_extents[:,1]
+            else:
+                starts = self._tick_positions.copy()
+                starts[:,1] = self._tick_extents[:,0]
+                ends = self._tick_positions.copy()
+                ends[:,1] = self._tick_extents[:,1]
             if self.flip_axis:
                 starts, ends = ends, starts
             gc.line_set(starts, ends)
@@ -284,22 +368,6 @@ class PlotGrid(AbstractOverlay):
         """
         self.invalidate()
         return
-    
-    def _bounds_changed(self, old, new):
-        super(PlotGrid, self)._bounds_changed(old, new)
-        self.invalidate()
-    
-    def _bounds_items_changed(self, event):
-        super(PlotGrid, self)._bounds_items_changed(event)
-        self.invalidate()
-
-    def _position_changed(self, old, new):
-        super(PlotGrid, self)._position_changed(old, new)
-        self.invalidate()
-
-    def _position_items_changed(self, event):
-        super(PlotGrid, self)._position_items_changed(event)
-        self.invalidate()
 
     def _position_changed_for_component(self):
         self.invalidate()
@@ -317,6 +385,7 @@ class PlotGrid(AbstractOverlay):
     # Event handlers for visual attributes.  These mostly just call request_redraw()
     #------------------------------------------------------------------------
     
+    @on_trait_change("visible,line_color,line_style,line_weight")
     def visual_attr_changed(self):
         """ Called when an attribute that affects the appearance of the grid
         is changed.
@@ -327,19 +396,7 @@ class PlotGrid(AbstractOverlay):
         else:
             self.invalidate_draw()
             self.request_redraw()
-        
-    def _visible_changed(self):
-        self.visual_attr_changed()
 
-    def _line_color_changed(self):
-        self.visual_attr_changed()
-        
-    def _line_style_changed(self):
-        self.visual_attr_changed()
-        
-    def _line_weight_changed(self):
-        self.visual_attr_changed()
-        
     def _grid_interval_changed(self):
         self.invalidate()
         self.visual_attr_changed()
@@ -349,8 +406,6 @@ class PlotGrid(AbstractOverlay):
         self.visual_attr_changed()
         return
 
-        
-
 
     ### Persistence ###########################################################
     #_pickles = ("orientation", "line_color", "line_style", "line_weight",
@@ -358,7 +413,7 @@ class PlotGrid(AbstractOverlay):
 
     def __getstate__(self):
         state = super(PlotGrid,self).__getstate__()
-        for key in ['_cache_valid', '_tick_list', '_tick_positions', '_length_vec']:
+        for key in ['_cache_valid', '_tick_list', '_tick_positions', '_tick_extents']:
             if state.has_key(key):
                 del state[key]
 
