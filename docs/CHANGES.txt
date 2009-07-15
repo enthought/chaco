@@ -2,6 +2,84 @@
 Chaco Change Log
 ****************
 
+3.2.0 (July 15, 2009)
+=====================
+
+Enhancements
+------------
+
+  * Bounded grids - Horizontal and Vertical grid line start and end points can
+    now be set to a fixed value in data space, or to be the return value of an
+    arbitrary callable.  The start and end tick can also be configured via the
+    data_min and data_max traits.
+
+  * Added dictionary interface to ArrayPlotData
+
+  * Added a Traits UI view to the ScalesAxis
+
+  * Added a new chaco.overlays subpackage and a new overlay, the DataBox.
+
+  * Improved appearance of PlotToolbar
+
+  * Changed add_default_axis() in the plot_factory module to take an axis
+    class as a keyword argument.
+
+  * Refactored contour plots into a common base class and implemented proper
+    event handling when their colormaps or data ranges change.
+
+  * Changed default colormap on img_plot() and contour_plot() method of Plot
+    to be Spectral instead of Jet.
+
+  * Added two more color palettes to the auto color palette, and created a
+    default_colors module.
+
+  * Added CandlePlot renderer
+
+  * Changed Plot Labels to able to display inside the plot area, instead of only
+    on the outside
+
+  * Added optional title attribute to plot legends
+
+  * Updated all containers to respect and use the new fixed_preferred_size
+    trait on enable.Component
+
+  * New Examples:
+    * Interval trait editor as a Chaco example (from Stefan van der Walt)
+    * embedding an interactive Chaco plot inside a VTK RenderWindow using 
+      the new Enable VTK backend
+    * lasso tool on an image plot
+    * bounded grid
+    * candle plot
+
+Fixes
+-----
+
+  * Fixed call signature of ShowAllTickGenerator.get_ticks()
+  
+  * Plot.title_font is now a delegate to the underlying PlotLabel object (from
+    Chris Colbert)
+
+  * Fixed mouse event handling bug in RangeSelection (from Stefan van der Walt)
+
+  * ImagePlots now redraw when their input data changes.
+
+  * Fixed cached image invalidation in colormapped image plots
+
+  * Optimized ScatterPlot.map_index() when index_only is True and the index
+    data is sorted
+
+  * Changed ColormappedScatterPlot to no longer incorrectly apply the
+    fill_alpha to the outline color
+
+  * Improved date ticking heuristics in chaco.scales subpackage, specifically
+    eliminating the bug where all times between, midnight and 1am would be
+    formatted at too course of a time resolution.
+
+  * Cleanup of various examples (titles, appearance)
+
+  * The spectrum.py (audio spectrograph) example now properly closes the 
+    audio stream.
+
 
 3.1.0 (March 20, 2009)
 ======================
