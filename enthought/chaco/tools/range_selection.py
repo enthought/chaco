@@ -136,6 +136,7 @@ class RangeSelection(AbstractController):
         deselection as an optional argument.
         """
         self.selection = None
+        self.selection_completed = None
         self.event_state = "normal"
         self.component.request_redraw()
         if event:
@@ -265,6 +266,7 @@ class RangeSelection(AbstractController):
         Switches the tool to the 'selected' state.
         """
         self.event_state = "selected"
+        self.selection_completed = self.selection
         return
     
     def moving_mouse_move(self, event):
