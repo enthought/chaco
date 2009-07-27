@@ -272,7 +272,7 @@ class DataLabel(ToolTip):
             return
         ToolTip._do_layout(self)
 
-        self._screen_coords = self.component.map_screen(self.data_point)
+        self._screen_coords = self.component.map_screen([self.data_point])[0]
         sx, sy = self._screen_coords
 
         if isinstance(self.label_position, str):
