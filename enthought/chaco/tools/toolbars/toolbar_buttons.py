@@ -1,5 +1,4 @@
-import wx
-
+from enthought.etsconfig.api import ETSConfig
 from enthought.enable.tools.toolbars.toolbar_buttons import Button
 from enthought.chaco.tools.simple_zoom import SimpleZoom
 from enthought.chaco.api import PlotGraphicsContext
@@ -115,6 +114,16 @@ class CopyToClipboardButton(ToolbarButton):
         gc = PlotGraphicsContext((width, height), dpi=72)
         gc.render_component(plot_component)
 
+        if ETSConfig.toolkit == 'wx':
+	    self._perform_wx(width, height, gc)
+	else:
+	    pass
+
+        plot_component.auto_hide = auto_hide_reset
+
+    def _perform_wx(self, width, height, gc):
+        import wx
+
         bitmap = wx.BitmapFromBufferRGBA(width+1, height+1, gc.bmp_array.flatten())
         data = wx.BitmapDataObject()
         data.SetBitmap(bitmap)
@@ -124,4 +133,4 @@ class CopyToClipboardButton(ToolbarButton):
         else:
             wx.MessageBox("Unable to open the clipboard.", "Error")
 
-        plot_component.auto_hide = auto_hide_reset
+
