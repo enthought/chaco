@@ -7,7 +7,7 @@ from numpy import array
 from enthought.enable.api import black_color_trait, white_color_trait
 from enthought.kiva import font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
-from enthought.traits.api import Any, Bool, List, Int, Float
+from enthought.traits.api import Any, Bool, List, Int, Float, on_trait_change
 
 
 # Local imports
@@ -164,25 +164,15 @@ class ToolTip(AbstractOverlay):
     def __font_metrics_provider_default(self):
         return font_metrics_provider()
 
-    def _font_changed(self):
+    @on_trait_change("font,text_color,lines,lines_items")
+    def _invalidate_text_props(self):
         self._text_props_valid = False
         self._layout_needed = True
 
-    def _lines_changed(self):
-        self._text_props_valid = False
+    @on_trait_change("border_padding,line_spacing,lines,lines_items,padding," \
+                     "left_space,right_space,below_space,above_space")
+    def _invalidate_layout(self):
         self._layout_needed = True
-        
-    def _lines_items_changed(self):
-        self._text_props_valid = False
-        self._layout_needed = True
-        
-    def foo_anytrait_changed(self, name, old, new):
-        layout_traits = ("font", "border_padding", "line_spacing", "lines",
-                         "padding", "left_space", "right_space", "below_space",
-                         "above_space")
-        #if name in layout_traits:
-        if name != "_layout_needed":
-            self._layout_needed = True
-            self.request_redraw()
+        self.request_redraw()
 
 
