@@ -103,6 +103,7 @@ class ColorMapper(AbstractColormap):
     # Static methods.
     #------------------------------------------------------------------------
 
+    @classmethod
     def from_palette_array(cls, palette, **traits):
         """ Creates a ColorMapper from a palette array.
 
@@ -144,8 +145,7 @@ class ColorMapper(AbstractColormap):
 
         return cls(segment_map, **traits)
 
-    from_palette_array = classmethod(from_palette_array)
-
+    @classmethod
     def from_segment_map(cls, segment_map, **traits):
         """ Creates a Colormapper from a segment map.
 
@@ -171,8 +171,7 @@ class ColorMapper(AbstractColormap):
             segment_map['alpha'] = [(0.0, 1.0, 1.0), (1.0, 1.0, 1.0)]
         return cls(segment_map, **traits)
 
-    from_segment_map = classmethod(from_segment_map)
-
+    @classmethod
     def from_file(cls, filename, **traits):
         """ Creates a ColorMapper from a file.
         
@@ -212,9 +211,6 @@ class ColorMapper(AbstractColormap):
         
         return cls(rgba_dict, **traits)
 
-    from_file = classmethod(from_file)
-        
-            
 
     #------------------------------------------------------------------------
     # Public methods
