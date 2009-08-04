@@ -1,7 +1,7 @@
 """ Defines the ArrayDataSource xlass."""
 
 # Major library imports
-from numpy import array, ones, nanargmin, nanargmax, ndarray
+from numpy import array, isfinite, ones, nanargmin, nanargmax, ndarray
 
 # Enthought library imports
 from enthought.traits.api import Any, Constant, Int, Tuple
@@ -10,6 +10,19 @@ from enthought.traits.api import Any, Constant, Int, Tuple
 from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
 from abstract_data_source import AbstractDataSource
 
+def bounded_nanargmin(arr):
+    min = nanargmin(arr)
+    if isfinite(min):
+        return min
+    else:
+        return 0
+
+def bounded_nanargmax(arr):
+    max = nanargmax(arr)
+    if isfinite(max):
+        return max
+    else:
+        return -1
 
 class ArrayDataSource(AbstractDataSource):
     """ A data source representing a single, continuous array of numerical data.
@@ -233,8 +246,8 @@ class ArrayDataSource(AbstractDataSource):
                     # the data may be in a subclass of numpy.array, viewing
                     # the data as a ndarray will remove side effects of
                     # the subclasses, such as different operator behaviors
-                    self._min_index = nanargmin(data.view(ndarray))
-                    self._max_index = nanargmax(data.view(ndarray))
+                    self._min_index = bounded_nanargmin(data.view(ndarray))
+                    self._max_index = bounded_nanargmax(data.view(ndarray))
                 except (TypeError, IndexError):
                     # For strings and objects, we punt...  These show up in
                     # label-ish data sources.
