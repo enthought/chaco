@@ -25,8 +25,9 @@ class RangeSelection(AbstractController):
     # and fires change-events as the user is dragging.
     selection = Property
     
-    # This event is fired when the user completes the selection.  The value of
-    # the event is the data space range
+    # This event is fired whenever the user completes the selection, or when a
+    # finalized selection gets modified.  The value of the event is the data
+    # space range.
     selection_completed = Event
 
     # The possible event states of this selection tool (overrides 
@@ -290,6 +291,7 @@ class RangeSelection(AbstractController):
             new_selection = (range.high - selection_data_width, range.high)
             
         self.selection = new_selection
+        self.selection_completed = new_selection
         self.component.request_redraw()
         return
 
