@@ -6,7 +6,32 @@ from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
         IndexAxisLogButton, ValueAxisLogButton, SaveAsButton, \
         CopyToClipboardButton, ZoomResetButton
 from enthought.enable.api import Container
-from enthought.traits.api import Bool, Float, Property, on_trait_change, List, Type
+from enthought.enable.tools.api import HoverTool
+from enthought.traits.api import Bool, Float, Property, on_trait_change, List, \
+        Tuple, Type
+
+class PlotToolbarHover(HoverTool):
+    _last_xy = Tuple()
+    
+    def _is_in(self, x, y):
+        return self.component.is_in(x, y)
+    
+    def normal_mouse_move(self, event):
+        self._last_xy = (event.x, event.y)
+        super(PlotToolbarHover, self).normal_mouse_move(event)
+    
+
+    def on_hover(self):
+        """ This gets called when all the conditions of the hover action have
+        been met, and the tool determines that the mouse is, in fact, hovering
+        over a target region on the component.
+
+        By default, this method call self.callback (if one is configured).
+        """
+        for component in self.component.components:
+            if component.is_in(*self._last_xy):
+                self.callback(component.label)                
+
 
 class PlotToolbar(Container, AbstractOverlay):
     """ A toolbar for embedding buttons in
@@ -41,6 +66,9 @@ class PlotToolbar(Container, AbstractOverlay):
         for buttontype in self.buttons:
             self.add_button(buttontype())
             
+        hover_tool = PlotToolbarHover(component=self, callback=self.on_hover)
+        self.tools.append(hover_tool)
+            
         self._calculate_width()
     
     def _buttons_default(self):
@@ -58,8 +86,12 @@ class PlotToolbar(Container, AbstractOverlay):
     def normal_mouse_move(self, event):
         """ handler for normal mouse move
         """
+        self.on_hover('')
         if self.hiding:
             self.hiding = False
+            
+    def on_hover(self, tooltip):
+        self.component.window.set_tooltip(tooltip)
             
     def normal_left_down(self, event):
         """ handler for a left mouse click
