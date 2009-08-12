@@ -8,18 +8,29 @@ import numpy
 # Enthought library imports
 from enthought.util.resource import find_resource
 
-def wav_to_numeric( fname ):
+def wav_to_numeric( fname, max_frames=-1 ):
   f = wave.open( fname, 'rb' )
   sampleRate = f.getframerate()
   channels = f.getnchannels()
+
+  if max_frames < 0:
+      max_frames = f.getnframes()
+
+  frames = f.readframes(max_frames)
   
-  # get the first million samples...
-  s = f.readframes(10000000)
-  
-  # I think we need to be a little more careful about type here.
-  # We also may need to work with byteswap
-  data = numpy.fromstring(s, numpy.dtype('uint8')).astype(numpy.float64) - 127.5
-  index = numpy.arange(len(data)) * 1.0/sampleRate  
+  if f.getsampwidth() == 2:
+      data = numpy.fromstring(frames, numpy.uint16).astype(numpy.float64) - (2**15 - 0.5) 
+  else:
+      data = numpy.fromstring(frames, numpy.uint8).astype(numpy.float64) - 127.5 
+
+  if channels == 2:
+      left = data[0::2]
+      right = data[1::2]
+
+      data = left
+
+  index = numpy.arange(len(data)) * 1.0/sampleRate
+
   return index, data
   
 def test():
