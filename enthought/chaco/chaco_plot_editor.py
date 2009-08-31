@@ -3,22 +3,20 @@ Traits UI editor for WX, based on the Chaco1 PlotEditor in
 traits.ui.wx.plot_editor.
 """
 
-# Major library imports
-#import wx
-
 # Enthought library imports
-from enthought.enable.traits.ui.wx.rgba_color_editor import \
-    RGBAColorEditor
+from enthought.etsconfig.api import ETSConfig
 from enthought.enable.api import black_color_trait, LineStyle, ColorTrait,\
-    white_color_trait, MarkerTrait
-from enthought.enable.wx_backend.api import Window
+    white_color_trait, MarkerTrait, Window
+from enthought.enable.traits.ui.api import RGBAColorEditor
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Enum, Str, Range, Tuple, \
                                  Bool, Trait, Int, Any, Property
 from enthought.traits.ui.api import Item
-from enthought.traits.ui.wx.editor import Editor
 from enthought.traits.ui.editor_factory import EditorFactory
 
+# Toolkit dependent imports
+from enthought.traits.ui.toolkit import toolkit_object
+Editor = toolkit_object('editor:Editor')
 
 # Local relative imports
 from axis import PlotAxis
@@ -223,20 +221,29 @@ class ChacoPlotEditor ( Editor ):
                                          use_backbuffer=True)
 
         if plotitem.title != '':
-            container.overlays.append(PlotLabel(plotitem.title, component=container,
+            container.overlays.append(PlotLabel(plotitem.title, 
+                                                component=container,
                                                 overlay_position="top"))
 
         self._container = container
         window = Window(parent, component = container)
+
+        # FIXME: Toolkit specifc code here. The AbstractWindow should have a
+        # 'set size' method as part of its API.
         self.control = control = window.control
-        control.SetSize((factory.width, factory.height))
-        object = self.object
+        if ETSConfig.toolkit == 'wx':
+            control.SetSize((factory.width, factory.height))
+        elif ETSConfig.toolkit == 'qt4':
+            control.resize(factory.width, factory.height)
+        else:
+            raise NotImplementedError
 
         # Attach listeners to the object's traits appropriately so we can
         # update the plot when they change.  For the _update_axis_grids()
         # callback, we have to wrap it in a lambda to keep traits from
         # inferring the calling convention based on introspecting the argument
         # list.
+        object = self.object
         if USE_DATA_UPDATE == 1:
             for name in (plotitem.index, plotitem.value):
                 object.on_trait_change( self._update_data, name)
