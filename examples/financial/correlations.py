@@ -5,7 +5,7 @@ import time
 # ETS imports (non-chaco)
 from enthought.enable.component_editor import ComponentEditor
 from enthought.traits.api import HasTraits, Instance, Int, List, Str, Enum, \
-        on_trait_change, Any
+        on_trait_change, Any, DelegatesTo
 from enthought.traits.ui.api import Item, View, HSplit, VGroup, EnumEditor
 
 # Chaco imports
@@ -37,7 +37,7 @@ class PlotApp(HasTraits):
 
     plotdata = Instance(ArrayPlotData)
     numpoints = Int(300)
-    symbols = List
+    symbols = List()
 
     sym1 = Enum(values="symbols")
     sym2 = Enum(values="symbols")
@@ -93,12 +93,15 @@ class PlotApp(HasTraits):
         # Tricky: need to set auto_handle_event on the RangeSelection
         # so that it passes left-clicks to the PanTool
         # FIXME: The range selection is still getting the initial left down
-        renderer.tools.append(RangeSelection(renderer, auto_handle_event = False))
-        plot.tools.append(PanTool(plot, constrain=True, constrain_direction="x"))
+        renderer.tools.append(RangeSelection(renderer, left_button_selects = False,
+            auto_handle_event = False))
+        plot.tools.append(PanTool(plot, drag_button="left", constrain=True,
+            constrain_direction="x"))
         plot.overlays.append(ZoomTool(plot, tool_mode="range", max_zoom_out=1.0)) 
         # Attach the range selection to the last renderer; any one will do
-        renderer.overlays.append(RangeSelectionOverlay(renderer,
-                                    metadata_name="selections"))
+        self._range_selection_overlay = RangeSelectionOverlay(renderer,
+                                    metadata_name="selections")
+        renderer.overlays.append(self._range_selection_overlay)
         # Grab a reference to the Time axis datasource and add a listener to its
         # selections metadata
         self.times_ds = renderer.index
