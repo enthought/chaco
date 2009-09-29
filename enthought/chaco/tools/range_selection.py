@@ -142,6 +142,7 @@ class RangeSelection(AbstractController):
         self.component.request_redraw()
         if event:
             event.window.set_pointer("arrow")
+            event.handled = True
         return
     
     #------------------------------------------------------------------------
@@ -183,6 +184,7 @@ class RangeSelection(AbstractController):
             self._original_selection = array(self.selection)
         else:
             self.deselect(event)
+        event.handled = True
         return
 
     def selected_right_down(self, event):
@@ -221,6 +223,7 @@ class RangeSelection(AbstractController):
             # Treat this as a combination deselect + right down
             self.deselect(event)
             self.normal_right_down(event)
+        event.handled = True
         return
     
     def selected_mouse_move(self, event):
@@ -245,6 +248,7 @@ class RangeSelection(AbstractController):
                     self._set_sizing_cursor(event)
                     return
         event.window.set_pointer("arrow")
+        event.handled = True
         return
     
     def selected_mouse_leave(self, event):
@@ -268,6 +272,7 @@ class RangeSelection(AbstractController):
         """
         self.event_state = "selected"
         self.selection_completed = self.selection
+        event.handled = True
         return
     
     def moving_mouse_move(self, event):
@@ -293,6 +298,7 @@ class RangeSelection(AbstractController):
         self.selection = new_selection
         self.selection_completed = new_selection
         self.component.request_redraw()
+        event.handled = True
         return
 
     def moving_mouse_leave(self, event):
@@ -389,6 +395,7 @@ class RangeSelection(AbstractController):
                         self._drag_edge = "high"
 
                 self.component.request_redraw()
+            event.handled = True
         return
 
     def selecting_button_up(self, event):
@@ -396,6 +403,7 @@ class RangeSelection(AbstractController):
 
         # Fire the "completed" event
         self.selection_completed = self.selection
+        event.handled = True
         return
 
     def selecting_right_up(self, event):
