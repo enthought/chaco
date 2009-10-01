@@ -5,7 +5,7 @@ Commonly Used Modules and Classes
 =================================
 
 Base Classes
-------------
+-----------------------------------------------------------------------------
 
 .. rubric:: Plot Component
 
@@ -29,10 +29,9 @@ if you want to size the component correctly.
  
 
 Data Objects
-------------
+-----------------------------------------------------------------------------
 
-Data Source
-~~~~~~~~~~~
+.. rubric:: Data Source
 
 A data source is a wrapper object for the actual data that it will be
 handling. It provides methods for retrieving data, estimating a size of the
@@ -49,8 +48,7 @@ changed. There are two primary reasons for a data source class:
     *Subclasses:* :class:`ArrayDataSource`, :class:`MultiArrayDataSource`, 
     :class:`PointDataSource`, :class:`GridDataSource`, :class:`ImageData`
 
-Data Range
-~~~~~~~~~~
+.. rubric:: Data Range
 
 A data range expresses bounds on data space of some dimensionality. The simplest
 data range is just a set of two scalars representing (low, high) bounds in 1-D.
@@ -64,8 +62,7 @@ and each data range can be associated with multiple data sources.)
     *Subclasses*: :class:`BaseDataRange`, :class:`DataRange1D`, 
     :class:`DataRange2D`
     
-Data Source
-~~~~~~~~~~~
+.. rubric:: Data Source
 
 A data source is an object that supplies data to Chaco. For the most part, a
 data source looks like an array of values, with an optional mask and metadata.
@@ -86,8 +83,7 @@ Events that are fired on data sources are:
  * :attr:`metadata_changed`
  
     
-Mapper
-~~~~~~
+.. rubric:: Mapper
 
 Mappers perform the job of mapping a data space region to screen space, and
 vice versa. Bounds on mappers are set by data range objects. 
@@ -99,10 +95,9 @@ vice versa. Bounds on mappers are set by data range objects.
 
 
 Containers
-----------
+-----------------------------------------------------------------------------
 
-PlotContainer
-~~~~~~~~~~~~~
+.. rubric:: PlotContainer
 
 :class:`PlotContainer` is Chaco's way of handling layout. Because it logically
 partitions the screen space, it also serves as a way for efficient event
@@ -127,8 +122,10 @@ described in the following sections.
 The listed subclasses are defined in the module 
 :mod:`enthought.chaco.plot_containers`.
 
+
 Renderers
----------
+-----------------------------------------------------------------------------
+
 Plot renderers are the classes that actually draw a type of plot. 
 
     *Interface*: :class:`AbstractPlotRenderer`
@@ -141,7 +138,7 @@ Plot renderers are the classes that actually draw a type of plot.
         * :class:`ContourPolyPlot`
         * :class:`ImagePlot`: displays an image file, or color-maps scalar
           data to make an image
-          * :class:`CMapImagePlot`
+        * :class:`CMapImagePlot`
           
       * :class:`BaseXYPlot`: This class is often emulated by writers of other
         plot renderers, but renderers don't *need* to be structured this way.
@@ -175,12 +172,13 @@ renderers, and axes in a single screen region. It is a subclass of
 :class:`DataView`.
       
 Tools
------
+-----------------------------------------------------------------------------
+
 Tools attach to a component, which gives events to the tool.
 
-:class:`BaseTool` is an Enable :class:`Interactor`.
-
-Do not try to make tools that draw: use an overlay for that.
+All tools subclass from Enable's :class:`BaseTool`, which is in turn an Enable
+:class:`Interactor`.  Do not try to make tools that draw: use an overlay for
+that.
 
 Some tool subclasses exist in both Enable and Chaco, because they were created
 first in Chaco, and then moved into Enable. 
@@ -238,10 +236,10 @@ DragTool is a base class for tools that do dragging.
 Other tools do things like panning, moving, highlighting, line segments, range selection, drag zoom, move data labels, scatter inspection, Traits UI. 
 
 Overlays
---------
+-----------------------------------------------------------------------------
 
 
 Miscellaneous
--------------
+-----------------------------------------------------------------------------
 
 

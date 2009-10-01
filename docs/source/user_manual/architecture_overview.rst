@@ -4,8 +4,11 @@ Architecture Overview
 
 .. note::
 
-   At this time, this is an overview of not just Chaco, but also Kiva and
-   Enable.
+   This is an overview of not just Chaco, but also Kiva and Enable.
+
+.. contents::
+
+
 
 Core Ideas
 ==========
@@ -169,8 +172,14 @@ The basic things to remember about Enable are that:
 
 
 Chaco
------
+===========================================================================
 
+.. note::
+
+    This section provides an overview of the relationships between these
+    classes, and illustrates some sample usages.  For a more detailed list of
+    the class hierarchy, please see :ref:`modules_and_classes`.
+    
 At the highest level, Chaco consists of:
 
 * Visual components that render to screen or an output device
@@ -185,5 +194,36 @@ At the highest level, Chaco consists of:
 * Tools that handle keyboard or mouse events and modify other
   components (e.g., :class:`PanTool`, :class:`ZoomTool`, 
   :class:`ScatterInspector`)
+
+Every Chaco plot is composed of these elements.  One can think of them
+as comprising a "display pipepline", although the components form more
+of a graph.
+
+For example, a simple scatter plot will have:
+
+* Two :class:`ArrayDataSource` objects, one for the array of X data and one for
+  the Y data
+
+* Two :class:`DataRange1D` ranges, one for the X axis and one for the Y axis.
+  If we want the ranges to automatically compute the bounds of the dataset,
+  then they need a reference to the an :class:`ArrayDataSource`.
+
+* Two independent :class:`LinearMapper` mappers, one for X axis and one for the
+  Y axis.  The mappers convert from screen space to data space and vice verse,
+  so they need a reference to the :class:`DataRange1D` objects so they know the
+  data space extents. 
+
+* A :class:`ScatterPlot` renderer, that has a reference to two mappers, as
+  well as an index and a value :class:`ArrayDataSource`.
+
+This creates *only* the renderer that draws scatter markers in some region of
+screen space.  This does not create an X-axis, a Y-axis, or horizontal and
+vertical grids.  These other visuals are embodied as separate, distinct
+components: axes are drawn by the :class:`PlotAxis` component, and grids are
+drawn by the :class:`PlotGrid` component.  Both of these overlays require a
+mapper in order to know where on the screen they should draw.
+
+So, the pipline looks like:
+
 
 
