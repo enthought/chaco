@@ -19,7 +19,7 @@ An example showing Chaco's BarPlot class.
 
 source: `bar_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/bar_plot.py>`_
 
-.. image:: images/bar_plot.png
+.. image:: example_images/bar_plot.png
 
 ``bigdata.py``
 --------------
@@ -35,7 +35,7 @@ is also available, but panning is not.
 
 source: `bigdata.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/bigdata.py>`_
 
-.. image:: images/bigdata.png
+.. image:: example_images/bigdata.png
 
 ``cursor_tool_demo.py``
 -----------------------
@@ -46,7 +46,7 @@ Right-drag to pan the plots. 'z'-key to Zoom
 
 source: `cursor_tool_demo.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/cursor_tool_demo.py>`_
 
-.. image:: images/cursor_tool_demo.png
+.. image:: example_images/cursor_tool_demo.png
 
 ``data_labels.py``
 ------------------
@@ -55,7 +55,7 @@ plots.
 
 source: `data_labels.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/data_labels.py>`_
 
-.. image:: images/data_labels.png
+.. image:: example_images/data_labels.png
 
 ``data_view.py``
 ----------------
@@ -63,7 +63,7 @@ Example of how to use a DataView and bare renderers to create plots.
 
 source: `data_view.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/data_view.py>`_
 
-.. image:: images/data_view.png
+.. image:: example_images/data_view.png
 
 ``edit_line.py``
 ----------------
@@ -71,7 +71,7 @@ Allows editing of a line plot.
 
 source: `edit_line.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/edit_line.py>`_
 
-.. image:: images/edit_line.png
+.. image:: example_images/edit_line.png
 
 ``financial_plot.py``
 ---------------------
@@ -81,7 +81,7 @@ the corresponding area in the lower window.
 
 source: `financial_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/financial_plot.py>`_
 
-.. image:: images/financial_plot.png
+.. image:: example_images/financial_plot.png
 
 ``financial_plot_dates.py``
 ---------------------------
@@ -93,7 +93,7 @@ axis.
 
 source: `financial_plot_dates.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/financial_plot_dates.py>`_
 
-.. image:: images/financial_plot_dates.png
+.. image:: example_images/financial_plot_dates.png
 
 ``multiaxis.py``
 ----------------
@@ -103,7 +103,7 @@ Demonstrates use of the BroadcasterTool.
 
 source: `multiaxis.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/multiaxis.py>`_
 
-.. image:: images/multiaxis.png
+.. image:: example_images/multiaxis.png
 
 ``multiaxis_using_Plot.py``
 ---------------------------
@@ -117,7 +117,7 @@ Draws some x-y line and scatter plots. On the left hand plot:
 
 source: `multiaxis_using_Plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/multiaxis_using_Plot.py>`_
 
-.. image:: images/multiaxis_using_Plot.png
+.. image:: example_images/multiaxis_using_Plot.png
 
 ``noninteractive.py``
 ---------------------
@@ -126,7 +126,7 @@ on disk. The image is what is saved.
 
 source: `noninteractive.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/noninteractive.py>`_
 
-.. image:: images/noninteractive.png
+.. image:: example_images/noninteractive.png
 
 ``range_selection_demo.py``
 ---------------------------
@@ -136,7 +136,7 @@ resized by dragging its edges.
 
 source: `range_selection_demo.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/range_selection_demo.py>`_
 
-.. image:: images/range_selection_demo.png
+.. image:: example_images/range_selection_demo.png
 
 ``scales_test.py``
 ------------------
@@ -146,7 +146,7 @@ Double-clicking on line or scatter plots opens a Traits editor for the plot.
 
 source: `scales_test.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/scales_test.py>`_
 
-.. image:: images/scales_test.png
+.. image:: example_images/scales_test.png
 
 ``simple_line.py``
 ------------------
@@ -156,7 +156,7 @@ Double-clicking on line or scatter plots opens a Traits editor for the plot.
 
 source: `simple_line.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/simple_line.py>`_
 
-.. image:: images/simple_line.png
+.. image:: example_images/simple_line.png
 
 .. [COMMENT]::
 
@@ -166,7 +166,7 @@ source: `simple_line.py <https://svn.enthought.com/enthought/browser/Chaco/trunk
 
     source: `simple_polar.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/simple_polar.py>`_
 
-    .. image:: images/simple_polar.png
+    .. image:: example_images/simple_polar.png
 
 ``tornado.py``
 --------------
@@ -174,7 +174,7 @@ Tornado plot example from Brennan Williams.
 
 source: `tornado.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tornado.py>`_
 
-.. image:: images/tornado.png
+.. image:: example_images/tornado.png
 
 ``two_plots.py``
 ----------------
@@ -182,7 +182,7 @@ Demonstrates plots sharing datasources, ranges, etc...
 
 source: `two_plots.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/two_plots.py>`_
 
-.. image:: images/two_plots.png
+.. image:: example_images/two_plots.png
 
 ``vertical_plot.py``
 --------------------
@@ -193,7 +193,7 @@ or different orientations on the plots (comment out line 43 and uncomment 44).
 
 source: `vertical_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/vertical_plot.py>`_
 
-.. image:: images/vertical_plot.png
+.. image:: example_images/vertical_plot.png
 
 ``data_cube.py``
 ----------------
@@ -201,7 +201,7 @@ Allows isometric viewing of a 3-D data cube (downloads the necessary data, about
 
 source: `data_cube.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/advanced/data_cube.py>`_
 
-.. image:: images/data_cube.png
+.. image:: example_images/data_cube.png
 
 ``data_stream.py``
 ------------------
@@ -216,7 +216,7 @@ random number generator whose mean and standard deviation
 
 source: `data_stream.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/advanced/data_stream.py>`_
 
-.. image:: images/data_stream.png
+.. image:: example_images/data_stream.png
 
 ``scalar_image_function_inspector.py``
 --------------------------------------
@@ -225,7 +225,7 @@ chosen by a line interactor.
 
 source: `scalar_image_function_inspector.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/advanced/scalar_image_function_inspector.py>`_
 
-.. image:: images/scalar_image_function_inspector.png
+.. image:: example_images/scalar_image_function_inspector.png
 
 ``spectrum.py``
 --------------------------------------
@@ -233,7 +233,7 @@ This plot displays the audio spectrum from the microphone.
 
 source: `spectrum.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/advanced/spectrum.py>`_
 
-.. image:: images/spectrum.png
+.. image:: example_images/spectrum.png
 
 ``cmap_image_plot.py``
 ----------------------
@@ -241,7 +241,7 @@ Draws a colormapped image plot.
 
 source: `cmap_image_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/cmap_image_plot.py>`_
 
-.. image:: images/cmap_image_plot.png
+.. image:: example_images/cmap_image_plot.png
 
 ``cmap_image_select.py``
 -------------------------
@@ -250,7 +250,7 @@ highlights the corresponding colors in the color map.
 
 source: `cmap_image_select.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/cmap_image_select.py>`_
 
-.. image:: images/cmap_image_select.png
+.. image:: example_images/cmap_image_select.png
 
 ``cmap_scatter.py``
 -------------------
@@ -258,7 +258,7 @@ Draws a colormapped scatterplot of some random data. Selection works the same as
 
 source: `cmap_scatter.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/cmap_scatter.py>`_
 
-.. image:: images/cmap_scatter.png
+.. image:: example_images/cmap_scatter.png
 
 ``contour_cmap_plot.py``
 --------------------------
@@ -266,7 +266,7 @@ Renders some contoured and colormapped images of a scalar value field.
 
 source: `countour_cmap_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/contour_cmap_plot.py>`_
 
-.. image:: images/contour_cmap_plot.png
+.. image:: example_images/contour_cmap_plot.png
 
 ``contour_plot.py``
 -------------------
@@ -274,7 +274,7 @@ Draws an contour polygon plot with a contour line plot on top.
 
 source: `countour_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/contour_plot.py>`_
 
-.. image:: images/contour_plot.png
+.. image:: example_images/contour_plot.png
 
 ``grid_container.py``
 ---------------------
@@ -282,7 +282,7 @@ Draws several overlapping line plots.
 
 source: `grid_container.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/grid_container.py>`_
 
-.. image:: images/grid_container.png
+.. image:: example_images/grid_container.png
 
 ``grid_container_aspect_ratio``
 -------------------------------
@@ -291,7 +291,7 @@ fixed screen space aspect ratio for plot components.
 
 source: `grid_container_aspect_ratio.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/grid_container_aspect_ratio.py>`_
 
-.. image:: images/grid_container_aspect_ratio.png
+.. image:: example_images/grid_container_aspect_ratio.png
 
 ``image_from_file.py``
 ----------------------
@@ -299,7 +299,7 @@ Loads and saves RGB images from disk.
 
 source: `image_from_file.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/image_from_file.py>`_
 
-.. image:: images/image_from_file.png
+.. image:: example_images/image_from_file.png
 
 ``image_inspector.py``
 ----------------------
@@ -308,7 +308,7 @@ The underlying plot is similar to the one in cmap_image_plot.py.
 
 source: `image_inspector.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/image_inspector.py>`_
 
-.. image:: images/image_inspector.png
+.. image:: example_images/image_inspector.png
 
 ``image_plot.py``
 -----------------
@@ -316,7 +316,7 @@ Draws a simple RGB image
 
 source: `image_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/image_plot.py>`_
 
-.. image:: images/image_plot.png
+.. image:: example_images/image_plot.png
 
 ``inset_plot.py``
 -----------------
@@ -326,7 +326,7 @@ can move it around my right-click and dragging in the smaller plot.
 
 source: `inset_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/inset_plot.py>`_
 
-.. image:: images/inset_plot.png
+.. image:: example_images/inset_plot.png
 
 ``line_drawing.py``
 --------------------
@@ -335,7 +335,7 @@ simple_scatter.py.
 
 source: `line_drawing.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/line_drawing.py>`_
 
-.. image:: images/line_drawing.png
+.. image:: example_images/line_drawing.png
 
 ``line_plot1.py``
 -----------------
@@ -343,7 +343,7 @@ Draws some x-y line and scatter plots.
 
 source: `line_plot1.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/line_plot1.py>`_
 
-.. image:: images/line_plot1.png
+.. image:: example_images/line_plot1.png
 
 ``line_plot_hold.py``
 ---------------------
@@ -351,7 +351,7 @@ Demonstrates the different 'hold' styles of LinePlot.
 
 source: `line_plot_hold.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/line_plot_hold.py>`_
 
-.. image:: images/line_plot_hold.png
+.. image:: example_images/line_plot_hold.png
 
 ``log_plot.py``
 -----------------
@@ -359,7 +359,7 @@ Draws some x-y log plots. (No Tools).
 
 source: `log_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/log_plot.py>`_
 
-.. image:: images/log_plot.png
+.. image:: example_images/log_plot.png
 
 ``nans_plot.py``
 ----------------
@@ -367,7 +367,7 @@ This plot displays chaco's ability to handle data interlaced with NaNs.
 
 source: `nans_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/nans_plot.py>`_
 
-.. image:: images/nans_plot.png
+.. image:: example_images/nans_plot.png
 
 ``polygon_plot.py``
 -------------------
@@ -375,7 +375,7 @@ Draws some different polygons.
 
 source: `polygon_plot.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/polygon_plot.py>`_
 
-.. image:: images/polygon_plot.png
+.. image:: example_images/polygon_plot.png
 
 ``polygon_move.py``
 -------------------
@@ -384,7 +384,7 @@ right-click and drag to move a polygon around.
 
 source: `polygon_move.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/polygon_move.py>`_
 
-.. image:: images/polygon_move.png
+.. image:: example_images/polygon_move.png
 
 ``regression.py``
 -------------------
@@ -397,7 +397,7 @@ can do this repeatedly to draw different regions.
 
 source: `regression.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/regression.py>`_
 
-.. image:: images/regression.png
+.. image:: example_images/regression.png
 
 ``scatter.py``
 -------------------
@@ -405,7 +405,7 @@ Draws a simple scatterplot of a set of random points.
 
 source: `scatter.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/scatter.py>`_
 
-.. image:: images/scatter.png
+.. image:: example_images/scatter.png
 
 ``scatter_inspector.py``
 ------------------------
@@ -413,7 +413,7 @@ Example of using tooltips on Chaco plots.
 
 source: `scatter_inspector.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/scatter_inspector.py>`_
 
-.. image:: images/scatter_inspector.png
+.. image:: example_images/scatter_inspector.png
 
 ``scatter_select.py``
 ------------------------
@@ -424,7 +424,7 @@ printed to the console.
 
 source: `scatter_select.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/scatter_select.py>`_
 
-.. image:: images/scatter_select.png
+.. image:: example_images/scatter_select.png
 
 console output::
 
@@ -439,7 +439,7 @@ Draws some x-y line and scatter plots.
 
 source: `scrollbar.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/scrollbar.py>`_
 
-.. image:: images/scrollbar.png
+.. image:: example_images/scrollbar.png
 
 ``tabbed_plots.py``
 -------------------
@@ -447,8 +447,8 @@ Draws some x-y line and scatter plots.
 
 source: `tabbed_plots.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/tabbed_plots.py>`_
 
-.. image:: images/tabbed_plots1.png
-.. image:: images/tabbed_plots2.png
+.. image:: example_images/tabbed_plots1.png
+.. image:: example_images/tabbed_plots2.png
 
 ``traits_editor.py``
 --------------------
@@ -459,7 +459,7 @@ text box.
 
 source: `traits_editor.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/traits_editor.py>`_
 
-.. image:: images/traits_editor.png
+.. image:: example_images/traits_editor.png
 
 ``zoomable_colorbar.py``
 ------------------------
@@ -474,7 +474,7 @@ the data bounds of the color bar.
 
 source: `zoomable_colorbar.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/basic/zoomable_colorbar.py>`_
 
-.. image:: images/zoomable_colorbar.png
+.. image:: example_images/zoomable_colorbar.png
 
 ``zoomed_plot``
 ------------------------
@@ -486,4 +486,4 @@ or resized by clicking on one of its edges and dragging.
 
 source: `zoomed_plot <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/zoomed_plot/>`_
 
-.. image:: images/zoomed_plot.png
+.. image:: example_images/zoomed_plot.png

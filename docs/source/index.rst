@@ -25,14 +25,9 @@ not require WX or Qt.
   :maxdepth: 2
 
   quickstart.rst
-  user_manual/installation.rst
   user_manual/tutorial.rst
-  user_manual/architecture_overview.rst
-  user_manual/modules_and_classes.rst
-  user_manual/how_do_i.rst
-  user_manual/faq.rst
+  user_manual/index.rst
   programmers_reference.rst
-  annotated_examples.rst
   tech_notes.rst
 
 
