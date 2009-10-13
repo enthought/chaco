@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Demo of the RangeSelection on a line plot.  Left-click and drag will
+Demo of the RangeSelection Tool on a line plot.  Left-click and drag will
 create a horizontal range selection; this selection can then be dragged
 around, or resized by dragging its edges.
 """
@@ -19,7 +19,6 @@ from enthought.traits.ui.api import Item, Group, View
 # Chaco imports
 from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids
 from enthought.chaco.tools.api import LineInspector, RangeSelection, RangeSelectionOverlay
-from enthought.chaco.layers.svg_range_selection_overlay import SvgRangeSelectionOverlay
 
 
 
@@ -38,7 +37,7 @@ def _create_plot_component():
     plot = create_line_plot((x,y), color=(0,0,1,1), width=2.0, index_sort="ascending")
     value_range = plot.value_mapper.range
     plot.active_tool = RangeSelection(plot, left_button_selects = True)
-    plot.overlays.append(SvgRangeSelectionOverlay(component=plot))
+    plot.overlays.append(RangeSelectionOverlay(component=plot))
     plot.bgcolor = "white"
     plot.padding = 50
     add_default_grids(plot)
