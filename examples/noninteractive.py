@@ -50,6 +50,15 @@ def draw_plot(filename, size=(800,600)):
     gc.save(filename)
     return
 
+def draw_svg(filename, size=(800,600)):
+    from enthought.chaco.svg_graphics_context import SVGGraphicsContext
+    container = create_plot()
+    container.bounds = list(size)
+    container.do_layout(force=True)
+    gc = SVGGraphicsContext(size)
+    gc.render_component(container)
+    gc.save(filename)
+
 def draw_pdf(filename, size=(800,600)):
     from enthought.chaco.pdf_graphics_context import PdfPlotGraphicsContext
     container = create_plot()
@@ -78,6 +87,9 @@ def get_directory(filename):
 
 if __name__ == "__main__":
     draw_plot(get_directory('noninteractive.png'), size=(800, 600))
+
+    # Render the plot as a SVG
+    #draw_svg(get_directory('noninteractive.svg'), size=(800,600))
     
     # If you have ReportLab installed, you can uncomment the following:
     #draw_pdf(get_directory('noninteractive.pdf'))
