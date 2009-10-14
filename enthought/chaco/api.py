@@ -83,6 +83,7 @@ from plot_factory import create_bar_plot, create_line_plot, create_scatter_plot,
 from abstract_plot_data import AbstractPlotData
 from array_plot_data import ArrayPlotData
 from plot import Plot
+from toolbar_plot import ToolbarPlot
 
 # Axis
 from axis import PlotAxis
