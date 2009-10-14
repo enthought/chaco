@@ -102,6 +102,7 @@ class PlotToolbar(Container, AbstractOverlay):
             for button in self.components:
                 if button.is_in(event.x, event.y):
                     button.perform(event)
+                    event.handled = True
                     break
         
     ############################################################
@@ -112,8 +113,8 @@ class PlotToolbar(Container, AbstractOverlay):
         """ Draws this component overlaid on another component.
         """
 
-        starting_color = numpy.array([0.0, 1.0, 1.0, 1.0, 1.0])
-        ending_color = numpy.array([1.0, 0.0, 0.0, 0.0, 1.0])
+        starting_color = numpy.array([0.0, 1.0, 1.0, 1.0, 0.5])
+        ending_color = numpy.array([1.0, 0.0, 0.0, 0.0, 0.5])
         
         x = self.x
         y = self.y
