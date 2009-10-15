@@ -1,7 +1,7 @@
 from enthought.enable.tools.hover_tool import HoverTool
 from enthought.chaco.api import Plot
 from enthought.chaco.tools.toolbars.plot_toolbar import PlotToolbar
-from enthought.traits.api import Type, Bool, Instance
+from enthought.traits.api import Type, Bool, Instance, on_trait_change
 
 class ToolbarPlot(Plot):
     # Should we turn on the auto-hide feature on the toolbar?
@@ -59,3 +59,13 @@ class ToolbarPlot(Plot):
     def _bounds_changed(self, old, new):
         self.toolbar.do_layout(force=True)
         super(ToolbarPlot, self)._bounds_changed(old, new)
+
+    @on_trait_change('toolbar')
+    def _toolbar_changed(self, name, obj, old, new):
+        if self.toolbar_added:
+            # fixup the new toolbar's component to match the old one
+            new.component = old.component
+            
+            self.overlays.remove(old)
+            self.toolbar_added = False
+            self.add_toolbar()        
