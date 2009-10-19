@@ -38,6 +38,9 @@ class PanTool(BaseTool):
     # event will determine the constrain_direction.
     constrain_direction = Enum(None, "x", "y")
     
+    # Restrict to the bounds of the plot data
+    restrict_to_data = Bool(False)
+    
     # (x,y) of the point where the mouse button was pressed.
     _original_xy = Tuple
     
@@ -162,9 +165,15 @@ class PanTool(BaseTool):
                 # use a linear approximation, which works perfectly for
                 # linear mappers (which is used 99% of the time).
                 if domain_min is None:
-                    domain_min = -inf
+                    if self.restrict_to_data:
+                        domain_min = min([source.get_data().min() for source in range.sources])
+                    else:
+                        domain_min = -inf
                 if domain_max is None:
-                    domain_max = inf
+                    if self.restrict_to_data:
+                        domain_max = max([source.get_data().max() for source in range.sources])
+                    else:
+                        domain_max = inf
                 if (newlow <= domain_min) and (newhigh >= domain_max):
                     # Don't do anything; effectively, freeze the pan
                     continue
@@ -175,7 +184,7 @@ class PanTool(BaseTool):
                 if newhigh >= domain_max:
                     delta = newhigh - newlow
                     newhigh = domain_max
-                    newlow = domain_max - delta
+                    newlow = domain_max - delta                    
 
                 # Use .set_bounds() so that we don't generate two range_changed
                 # events on the DataRange
