@@ -81,8 +81,8 @@ class ExamplePlotApp(HasTraits):
         self.plot = ToolbarPlot(plot_data)
         self.plot.plot(('index', 'series'), color='auto')
 
-index = numpy.arange(0., 30., 0.01)
-demo = ExamplePlotApp(index, numpy.sin(index))
+index = numpy.arange(0.1, 10., 0.01)
+demo = ExamplePlotApp(index, (100.0 + index) / (100.0 - 20*index**2 + 5.0*index**4))
 
 if __name__== '__main__':
     demo.configure_traits()
