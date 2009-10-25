@@ -36,7 +36,7 @@ def _create_plot_component():
 
     x = linspace(-2.0, 10.0, 100)
     for i in range(5):
-        color = tuple(COLOR_PALETTE[i]*0.66)
+        color = tuple(COLOR_PALETTE[i])
         y = jn(i, x)
         renderer = create_line_plot((x, y), color=color)
         plot_area.add(renderer)
