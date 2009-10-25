@@ -1,7 +1,7 @@
 import numpy
 import sys
 
-from enthought.chaco.api import AbstractOverlay
+from enthought.chaco.abstract_overlay import AbstractOverlay
 from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
         IndexAxisLogButton, ValueAxisLogButton, SaveAsButton, \
         CopyToClipboardButton, ZoomResetButton

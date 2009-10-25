@@ -8,7 +8,7 @@ from enthought.traits.api \
     import Bool, Enum, Float, Instance, Int, Str, Trait, Tuple
 
 # Chaco imports
-from enthought.chaco.api import AbstractOverlay
+from enthought.chaco.abstract_overlay import AbstractOverlay
 from base_zoom_tool import BaseZoomTool
 from tool_history_mixin import ToolHistoryMixin
 

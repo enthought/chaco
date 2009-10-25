@@ -1,7 +1,7 @@
 from enthought.etsconfig.api import ETSConfig
 from enthought.enable.tools.toolbars.toolbar_buttons import Button
 from enthought.chaco.tools.simple_zoom import SimpleZoom
-from enthought.chaco.api import PlotGraphicsContext
+from enthought.chaco.plot_graphics_context import PlotGraphicsContext
 from enthought.kiva.backend_image import Image
 from enthought.pyface.image_resource import ImageResource
 from enthought.pyface.api import FileDialog, OK
