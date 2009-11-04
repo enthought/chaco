@@ -144,14 +144,14 @@ class ImagePlot(Base2DPlot):
             i1, j1, i2, j2 = img_pixels
             if "top" in self.origin:
                 y_length = self.value.get_array_bounds()[1][1]
-                j1 = y_length + 1 - j1
-                j2 = y_length + 1 - j2
+                j1 = y_length - j1
+                j2 = y_length - j2
                 # swap so that j1 < j2
                 j1, j2 = j2, j1
             if "right" in self.origin:
                 x_length = self.value.get_array_bounds()[0][1]
-                i1 = x_length + 1 - i1
-                i2 = x_length + 1 - i2
+                i1 = x_length - i1
+                i2 = x_length - i2
                 # swap so that i1 < i2
                 i1, i2 = i2, i1
 
