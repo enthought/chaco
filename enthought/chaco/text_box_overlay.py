@@ -100,6 +100,7 @@ class TextBoxOverlay(AbstractOverlay):
             y = 0
 
         # apply the alpha channel
+        color = self.bgcolor_
         if self.bgcolor != "transparent":
             if self.alpha:
                 color = list(self.bgcolor_)
@@ -107,8 +108,6 @@ class TextBoxOverlay(AbstractOverlay):
                     color[3] = self.alpha
                 else:
                     color += [self.alpha]
-            else:
-                color = self.bgcolor_
 
         gc.save_state()
         gc.translate_ctm(x, y)
