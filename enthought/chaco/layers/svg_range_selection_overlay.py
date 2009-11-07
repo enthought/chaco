@@ -1,6 +1,7 @@
 import os
 import numpy
 
+from enthought.chaco.api import LinearMapper
 from enthought.traits.api import Property, Enum, Str, cached_property
 
 from status_layer import StatusLayer
@@ -63,7 +64,10 @@ class SvgRangeSelectionOverlay(StatusLayer):
         origin_y = self.component.padding_top
 
         if self.axis == 'index':
-            scale_width = (coords[0][-1] - coords[0][0])/self.doc_width
+            if isinstance(self.mapper, LinearMapper):
+                scale_width = (coords[0][-1] - coords[0][0])/self.doc_width
+            else:
+                scale_width = (coords[-1][0] - coords[0][0])/self.doc_width
             scale_height = float(plot_height)/self.doc_height
             gc.translate_ctm(coords[0][0], origin_y + plot_height)
         else:
@@ -94,7 +98,13 @@ class SvgRangeSelectionOverlay(StatusLayer):
         # "selections" metadata must be a tuple
         if self.metadata_name == "selections":
             if selection is not None and len(selection) == 2:
-                return [self.mapper.map_screen(numpy.array(selection))]
+                if isinstance(self.mapper, LinearMapper):        
+                    return [self.mapper.map_screen(numpy.array(selection))]
+                else:
+                    if self.axis == 'index':
+                        return [self.mapper.map_screen([(pt, 0)])[0] for pt in selection]
+                    else:
+                        return [self.mapper.map_screen([(0, pt)])[0] for pt in selection]
             else:
                 return []
         # All other metadata is interpreted as a mask on dataspace
