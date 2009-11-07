@@ -63,6 +63,11 @@ class SvgRangeSelectionOverlay(StatusLayer):
         origin_x = self.component.padding_left
         origin_y = self.component.padding_top
 
+        if self.component.container is not None:
+            origin_x += self.component.container.padding_left
+            origin_y += self.component.container.padding_top
+            
+
         if self.axis == 'index':
             if isinstance(self.mapper, LinearMapper):
                 scale_width = (coords[0][-1] - coords[0][0])/self.doc_width
