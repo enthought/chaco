@@ -211,8 +211,8 @@ acquisition and visualization system.
 Two frames are opened: one has the plot and allows configuration of
 various plot properties, and one which simulates controls for the hardware
 device from which the data is being acquired; in this case, it is a mockup
-random number generator whose mean and standard deviation 
-.. TODO: Sentence incomplete?
+random number generator whose mean and standard deviation can be controlled
+by the user.
 
 source: `data_stream.py <https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/advanced/data_stream.py>`_
 

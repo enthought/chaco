@@ -5,7 +5,8 @@ acquisition and visualization system.
 Two frames are opened: one has the plot and allows configuration of
 various plot properties, and one which simulates controls for the hardware
 device from which the data is being acquired; in this case, it is a mockup
-random number generator whose mean and standard deviation can be controlled.
+random number generator whose mean and standard deviation can be controlled
+by the user.
 """
 
 # Major library imports
@@ -48,7 +49,9 @@ class Viewer(HasTraits):
                                border_visible=True,
                                border_width=1,
                                padding_bg_color="lightgray",
-                               width=800, height=380),
+                               width=800,
+                               height=380,
+                               show_label=False),
                 HGroup(spring, Item("plot_type", style='custom'), spring),
                 resizable = True,
                 buttons = ["OK"],
