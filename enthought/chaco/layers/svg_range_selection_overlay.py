@@ -1,7 +1,7 @@
 import os
 import numpy
 
-from enthought.chaco.api import LinearMapper
+from enthought.chaco.api import GridMapper
 from enthought.traits.api import Property, Enum, Str, cached_property
 
 from status_layer import StatusLayer
@@ -69,10 +69,10 @@ class SvgRangeSelectionOverlay(StatusLayer):
             
 
         if self.axis == 'index':
-            if isinstance(self.mapper, LinearMapper):
-                scale_width = (coords[0][-1] - coords[0][0])/self.doc_width
-            else:
+            if isinstance(self.mapper, GridMapper):
                 scale_width = (coords[-1][0] - coords[0][0])/self.doc_width
+            else:
+                scale_width = (coords[0][-1] - coords[0][0])/self.doc_width
             scale_height = float(plot_height)/self.doc_height
             gc.translate_ctm(coords[0][0], origin_y + plot_height)
         else:
@@ -91,7 +91,6 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
         return
 
-
     def _get_selection_screencoords(self):
         """ Returns a tuple of (x1, x2) screen space coordinates of the start
         and end selection points.
@@ -103,13 +102,13 @@ class SvgRangeSelectionOverlay(StatusLayer):
         # "selections" metadata must be a tuple
         if self.metadata_name == "selections":
             if selection is not None and len(selection) == 2:
-                if isinstance(self.mapper, LinearMapper):        
-                    return [self.mapper.map_screen(numpy.array(selection))]
-                else:
+                if isinstance(self.mapper, GridMapper):        
                     if self.axis == 'index':
                         return [self.mapper.map_screen([(pt, 0)])[0] for pt in selection]
                     else:
                         return [self.mapper.map_screen([(0, pt)])[0] for pt in selection]
+                else:
+                    return [self.mapper.map_screen(numpy.array(selection))]
             else:
                 return []
         # All other metadata is interpreted as a mask on dataspace
@@ -120,7 +119,7 @@ class SvgRangeSelectionOverlay(StatusLayer):
             for inds in runs:
                 start = ds._data[ar[selection][inds[0]]]
                 end = ds._data[ar[selection][inds[1]-1]]
-                coords.append(self.mapper.map_screen(numpy.array((start, end))))
+                coords.append(self.map_screen(numpy.array((start, end))))
             return coords
 
     @cached_property
@@ -129,4 +128,9 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
     @cached_property
     def _get_mapper(self):
-        return getattr(self.plot, self.axis + "_mapper")
+        # If the plot's mapper is a GridMapper, but the has a container,
+        # use the container's mapper instead. 
+        mapper = getattr(self.plot, self.axis + "_mapper")
+        if isinstance(mapper, GridMapper) \
+                and self.plot.container is not None:
+            return getattr(self.plot.container, self.axis + "_mapper")

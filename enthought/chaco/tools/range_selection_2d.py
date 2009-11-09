@@ -55,7 +55,7 @@ class RangeSelection2D(RangeSelection):
         if tmp[self.axis_index] >= low and tmp[self.axis_index] <= high:
             self.event_state = "moving"
             self._down_point = array([event.x, event.y])
-            self._down_data_coord = self.mapper.map_data([self._down_point])[0][self.axis_index]
+            self._down_data_coord = self._map_data([self._down_point])[0][self.axis_index]
             
             self._original_selection = array(self.selection)
         else:
@@ -140,7 +140,7 @@ class RangeSelection2D(RangeSelection):
         that endpoint.
         """
         cur_point = array([event.x, event.y])
-        cur_data_point = self.mapper.map_data([cur_point])[0]
+        cur_data_point = self._map_data([cur_point])[0]
         original_selection = self._original_selection
         new_selection = original_selection + (cur_data_point[self.axis_index] \
                                               - self._down_data_coord)
@@ -164,7 +164,7 @@ class RangeSelection2D(RangeSelection):
     #------------------------------------------------------------------------
     # Event handlers for the "normal" event state
     #------------------------------------------------------------------------
-    
+        
     def normal_right_down(self, event):
         """ Handles the right mouse button being pressed when the tool is in 
         the 'normal' state.
@@ -175,7 +175,7 @@ class RangeSelection2D(RangeSelection):
         """
         x_pos = self._get_axis_coord(event, "index")
         y_pos = self._get_axis_coord(event, "value")
-        mapped_pos = self.mapper.map_data([(x_pos,y_pos)])
+        mapped_pos = self._map_data([(x_pos,y_pos)])
         self.selection = mapped_pos[0]
             
         self._set_sizing_cursor(event)
@@ -202,7 +202,7 @@ class RangeSelection2D(RangeSelection):
             if tmp >= low and tmp <= high:
                 x_pos = self._get_axis_coord(event, "index")
                 y_pos = self._get_axis_coord(event, "value")
-                new_edge = self.mapper.map_data([(x_pos,y_pos)])[0][self.axis_index]
+                new_edge = self._map_data([(x_pos,y_pos)])[0][self.axis_index]
                                     
                 if self._drag_edge == "high":
                     low_val = self.selection[0]
@@ -241,14 +241,14 @@ class RangeSelection2D(RangeSelection):
         pos = self._get_axis_coord(event)
         if pos >= high:
             if self.axis == 'index':
-                selection_high = self.mapper.map_data([(high, 0)])[0][self.axis_index]
+                selection_high = self._map_data([(high, 0)])[0][self.axis_index]
             else:
-                selection_high = self.mapper.map_data([(0, high)])[0][self.axis_index]                    
+                selection_high = self._map_data([(0, high)])[0][self.axis_index]                    
         elif pos <= low:
             if self.axis == 'index':
-                selection_low = self.mapper.map_data([(low, 0)])[0][self.axis_index]
+                selection_low = self._map_data([(low, 0)])[0][self.axis_index]
             else:
-                selection_low = self.mapper.map_data([(0, low)])[0][self.axis_index]
+                selection_low = self._map_data([(0, low)])[0][self.axis_index]
 
         self.selection = (selection_low, selection_high)
         event.window.set_pointer("arrow")
@@ -259,6 +259,25 @@ class RangeSelection2D(RangeSelection):
     # Private methods
     #------------------------------------------------------------------------
     
+    def _map_data(self, screen_pts):
+        # If there is a container, the GridMapper will not take the padding
+        # into account, so use the container to map the screen points to
+        # data space
+        if self.component.container is not None:
+            return [self.component.container.map_data(pt) for pt in screen_pts]
+        else:
+            return self.mapper.map_data(screen_pts)
+        
+    def _map_screen(self, data_pts):
+        # If there is a container, the GridMapper will not take the padding
+        # into account, so use the container to map the screen points to
+        # data space
+        if self.component.container is not None:
+            return [self.component.container.map_screen(pt) for pt in data_pts]
+        else:
+            return self.mapper.map_screen(screen_pts)
+
+    
     def _get_selection_screencoords(self):
         """ Returns a tuple of (x1, x2) screen space coordinates of the start
         and end selection points.  
@@ -267,6 +286,6 @@ class RangeSelection2D(RangeSelection):
         """
         selection = self.selection
         if selection is not None and len(selection) == 2:
-            return self.mapper.map_screen([selection])[0]
+            return self._map_screen([selection])[0]
         else:
             return None
