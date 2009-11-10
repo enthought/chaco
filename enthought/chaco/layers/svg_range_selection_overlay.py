@@ -128,9 +128,15 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
     @cached_property
     def _get_mapper(self):
-        # If the plot's mapper is a GridMapper, but the has a container,
-        # use the container's mapper instead. 
+        # If the plot's mapper is a GridMapper, return either its
+        # x mapper or y mapper
+        
         mapper = getattr(self.plot, self.axis + "_mapper")
-        if isinstance(mapper, GridMapper) \
-                and self.plot.container is not None:
-            return getattr(self.plot.container, self.axis + "_mapper")
+        
+        if isinstance(mapper, GridMapper):
+            if self.axis == 'index':
+                return mapper._xmapper
+            else:
+                return mapper._ymapper
+        else:
+            return mapper

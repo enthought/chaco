@@ -1,7 +1,7 @@
 """ Defines the RangeSelection controller class.
 """
 # Major library imports
-from numpy import array
+import numpy
 
 # Enthought library imports
 from enthought.traits.api import Any, Array, Bool, Enum, Event, Float, Int, List, \
@@ -54,10 +54,10 @@ class RangeSelection2D(RangeSelection):
         
         if tmp[self.axis_index] >= low and tmp[self.axis_index] <= high:
             self.event_state = "moving"
-            self._down_point = array([event.x, event.y])
+            self._down_point = numpy.array([event.x, event.y])
             self._down_data_coord = self._map_data([self._down_point])[0][self.axis_index]
             
-            self._original_selection = array(self.selection)
+            self._original_selection = numpy.array(self.selection)
         else:
             self.deselect(event)
         event.handled = True
@@ -139,7 +139,7 @@ class RangeSelection2D(RangeSelection):
         selection range overlaps the endpoints of the data, it is truncated to
         that endpoint.
         """
-        cur_point = array([event.x, event.y])
+        cur_point = numpy.array([event.x, event.y])
         cur_data_point = self._map_data([cur_point])[0]
         original_selection = self._original_selection
         new_selection = original_selection + (cur_data_point[self.axis_index] \
@@ -260,23 +260,10 @@ class RangeSelection2D(RangeSelection):
     #------------------------------------------------------------------------
     
     def _map_data(self, screen_pts):
-        # If there is a container, the GridMapper will not take the padding
-        # into account, so use the container to map the screen points to
-        # data space
-        if self.component.container is not None:
-            return [self.component.container.map_data(pt) for pt in screen_pts]
-        else:
-            return self.mapper.map_data(screen_pts)
+        return self.mapper.map_data(screen_pts)
         
     def _map_screen(self, data_pts):
-        # If there is a container, the GridMapper will not take the padding
-        # into account, so use the container to map the screen points to
-        # data space
-        if self.component.container is not None:
-            return [self.component.container.map_screen(pt) for pt in data_pts]
-        else:
-            return self.mapper.map_screen(screen_pts)
-
+        return self.mapper.map_screen(data_pts)
     
     def _get_selection_screencoords(self):
         """ Returns a tuple of (x1, x2) screen space coordinates of the start
@@ -286,6 +273,10 @@ class RangeSelection2D(RangeSelection):
         """
         selection = self.selection
         if selection is not None and len(selection) == 2:
-            return self._map_screen([selection])[0]
+            if self.axis == 'index':
+                return [x for x,y in self._map_screen([(x,0) for x in self.selection])]
+            else:
+                return [y for x,y in self._map_screen([(0,y) for y in self.selection])]
+                
         else:
             return None
