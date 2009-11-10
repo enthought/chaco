@@ -5,8 +5,9 @@ from numpy import arange, array
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait, LineStyle
-from enthought.traits.api import Any, Enum, Float, Int, Property, Str, Trait
-from enthought.chaco.api import AbstractOverlay, arg_find_runs
+from enthought.traits.api import Any, Enum, Float, Int, Property, Str, Trait, \
+        cached_property
+from enthought.chaco.api import AbstractOverlay, arg_find_runs, GridMapper
 
 
 class RangeSelectionOverlay(AbstractOverlay):
@@ -21,7 +22,7 @@ class RangeSelectionOverlay(AbstractOverlay):
     
     # Mapping from screen space to data space. By default, it is just 
     # self.component.
-    plot = Property
+    plot = Property(depends_on='component')
     
     # The mapper (and associated range) that drive this RangeSelectionOverlay.
     # By default, this is the mapper on self.plot that corresponds to self.axis.
@@ -51,22 +52,6 @@ class RangeSelectionOverlay(AbstractOverlay):
     fill_color = ColorTrait("lightskyblue")
     # The transparency of the fill color.
     alpha = Float(0.3)
-
-    #------------------------------------------------------------------------
-    # Private traits
-    #------------------------------------------------------------------------
-    
-    # The value of the override plot to use, if any.  If None, then uses
-    # self.component.
-    _plot = Trait(None, Any)
-
-    # The value of the override mapper to use, if any.  If None, then uses the
-    # mapper on self.component.
-    _mapper = Trait(None, Any)
-    
-    # Shadow trait for the **axis_index** property
-    _axis_index = Trait(None, None, Int)
-
 
     #------------------------------------------------------------------------
     # AbstractOverlay interface
@@ -185,34 +170,19 @@ class RangeSelectionOverlay(AbstractOverlay):
     # Property getter/setters
     #------------------------------------------------------------------------
     
+    @cached_property
     def _get_plot(self):
-        if self._plot is not None:
-            return self._plot
-        else:
-            return self.component
-    
-    def _set_plot(self, val):
-        self._plot = val
-        return
-    
+        return self.component
+        
+    @cached_property
     def _get_mapper(self):
-        if self._mapper is not None:
-            return self._mapper
-        else:
-            return getattr(self.plot, self.axis + "_mapper")
+        mapper = getattr(self.plot, self.axis + "_mapper")
+        if isinstance(mapper, GridMapper) \
+                and self.plot.container is not None:
+            return getattr(self.plot.container, self.axis + "_mapper")
     
-    def _set_mapper(self, new_mapper):
-        self._mapper = new_mapper
-        return
-    
+    @cached_property
     def _get_axis_index(self):
-        if self._axis_index is None:
-            return self._determine_axis()
-        else:
-            return self._axis_index
-
-    def _set_axis_index(self, val):
-        self._axis_index = val
-        return
+        return self._determine_axis()
 
 # EOF
