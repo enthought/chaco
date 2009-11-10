@@ -26,6 +26,8 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
     # The axis to which this tool is perpendicular.
     axis = Enum("index", "value")
+    
+    axis_index = Property(depends_on='axis')
 
     # Mapping from screen space to data space. By default, it is just
     # self.component.
@@ -40,13 +42,11 @@ class SvgRangeSelectionOverlay(StatusLayer):
     # a boolean array mask of seleted dataspace points with any other name
     metadata_name = Str("selections")
 
-
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
 
         Overrides AbstractOverlay.
         """
-
         # Draw the selection
         coords = self._get_selection_screencoords()
 
@@ -62,12 +62,7 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
         origin_x = self.component.padding_left
         origin_y = self.component.padding_top
-
-        if self.component.container is not None:
-            origin_x += self.component.container.padding_left
-            origin_y += self.component.container.padding_top
-            
-
+        
         if self.axis == 'index':
             if isinstance(self.mapper, GridMapper):
                 scale_width = (coords[-1][0] - coords[0][0])/self.doc_width
@@ -99,16 +94,11 @@ class SvgRangeSelectionOverlay(StatusLayer):
         """
         ds = getattr(self.plot, self.axis)
         selection = ds.metadata[self.metadata_name]
+        
         # "selections" metadata must be a tuple
         if self.metadata_name == "selections":
             if selection is not None and len(selection) == 2:
-                if isinstance(self.mapper, GridMapper):        
-                    if self.axis == 'index':
-                        return [self.mapper.map_screen([(pt, 0)])[0] for pt in selection]
-                    else:
-                        return [self.mapper.map_screen([(0, pt)])[0] for pt in selection]
-                else:
-                    return [self.mapper.map_screen(numpy.array(selection))]
+                return [self.mapper.map_screen(numpy.array(selection))]
             else:
                 return []
         # All other metadata is interpreted as a mask on dataspace
@@ -125,6 +115,13 @@ class SvgRangeSelectionOverlay(StatusLayer):
     @cached_property
     def _get_plot(self):
         return self.component
+    
+    @cached_property
+    def _get_axis_index(self):
+        if self.axis == 'index':
+            return 0
+        else:
+            return 1
 
     @cached_property
     def _get_mapper(self):
