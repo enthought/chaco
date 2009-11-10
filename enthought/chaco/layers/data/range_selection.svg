@@ -46,7 +46,7 @@
        y1="484.38297"
        x2="14.102018"
        y2="484.38297"
-       spreadMethod="reflect" />
+       spreadMethod="repeat" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3173"
@@ -56,7 +56,7 @@
        y1="484.38297"
        x2="494"
        y2="484.38297"
-       spreadMethod="reflect" />
+       spreadMethod="repeat" />
   </defs>
   <sodipodi:namedview
      id="base"
