@@ -5,9 +5,9 @@ from numpy import arange, array
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait, LineStyle
-from enthought.traits.api import Any, Enum, Float, Int, Property, Str, Trait, \
+from enthought.traits.api import Enum, Float, Property, Str, Instance, \
         cached_property
-from enthought.chaco.api import AbstractOverlay, arg_find_runs, GridMapper
+from enthought.chaco.api import AbstractOverlay, arg_find_runs, GridMapper, AbstractMapper
 
 
 class RangeSelectionOverlay(AbstractOverlay):
@@ -26,7 +26,7 @@ class RangeSelectionOverlay(AbstractOverlay):
     
     # The mapper (and associated range) that drive this RangeSelectionOverlay.
     # By default, this is the mapper on self.plot that corresponds to self.axis.
-    mapper = Property
+    mapper = Instance(AbstractMapper)
     
     # The element of an (x,y) tuple that corresponds to the axis index.
     # By default, this is set based on self.asix and self.plot.orientation,
@@ -167,20 +167,26 @@ class RangeSelectionOverlay(AbstractOverlay):
         return
 
     #------------------------------------------------------------------------
-    # Property getter/setters
+    # Default initializers
     #------------------------------------------------------------------------
     
-    @cached_property
-    def _get_plot(self):
-        return self.component
+    def _mapper_default(self):
+        # If the plot's mapper is a GridMapper, but the plot has a container,
+        # use the container's mapper instead. 
         
-    @cached_property
-    def _get_mapper(self):
         mapper = getattr(self.plot, self.axis + "_mapper")
         if isinstance(mapper, GridMapper) \
                 and self.plot.container is not None:
             return getattr(self.plot.container, self.axis + "_mapper")
-    
+
+    #------------------------------------------------------------------------
+    # Property getter/setters
+    #------------------------------------------------------------------------
+        
+    @cached_property
+    def _get_plot(self):
+        return self.component    
+
     @cached_property
     def _get_axis_index(self):
         return self._determine_axis()
