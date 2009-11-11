@@ -486,6 +486,7 @@ class TimeFormatter(object):
         List of formatted labels.
 
         """
+        print "TimeFormatter.format:"
         # In order to pick the right set of labels, we need to determine
         # the resolution of the ticks.  We can do this using a ticker if
         # it's provided, or by computing the resolution from the actual
@@ -560,10 +561,14 @@ class TimeFormatter(object):
                 s = strftimeEx(next_format, t, tm)
 
             if self.strip_leading_zeros:
-                labels.append(s.lstrip("0"))
+                ss = s.lstrip('0')
+                if ss != s and (ss == '' or not ss[0].isdigit()):
+                    # A label such as '000ms' should leave one zero.
+                    ss = '0' + ss
+                labels.append(ss)
             else:
                 labels.append(s)
-            
+
         return labels
 
     def estimate_width(self, start, end, numlabels=None, char_width=None,
