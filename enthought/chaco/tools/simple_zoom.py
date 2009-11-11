@@ -522,6 +522,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             # Check the domain limits on each dimension, and rescale the zoom
             # amount if necessary.
             for ndx, (mapper, newlow, newhigh) in enumerate(todo_list):
+                if newlow > newhigh:
+                    # This happens when the orientation of the axis is reversed.
+                    newlow, newhigh = newhigh, newlow                    
                 domain_min, domain_max = getattr(mapper, "domain_limits", (None,None))
                 if domain_min is not None and newlow < domain_min:
                     newlow = domain_min
