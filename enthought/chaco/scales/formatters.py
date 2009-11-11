@@ -486,7 +486,6 @@ class TimeFormatter(object):
         List of formatted labels.
 
         """
-        print "TimeFormatter.format:"
         # In order to pick the right set of labels, we need to determine
         # the resolution of the ticks.  We can do this using a ticker if
         # it's provided, or by computing the resolution from the actual
