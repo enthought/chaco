@@ -14,13 +14,20 @@ TODO:
     
 """
 
-from enthought.chaco.tools.api import DragTool, LineInspector
-from enthought.chaco.scatter_markers import CircleMarker
-from enthought.chaco.api import BaseXYPlot, Base2DPlot
+# Major library imports
+import numpy
 
+# Enthought library imports
+from enthought.enable.tools.drag_tool import DragTool
 from enthought.traits.api import Int, Property, cached_property, Float,\
                                 Bool, Instance, Tuple, Disallow
-import numpy
+
+# Chaco imports
+from enthought.chaco.scatter_markers import CircleMarker
+from enthought.chaco.base_xy_plot import BaseXYPlot
+from enthought.chaco.base_2d_plot import Base2DPlot
+from line_inspector import LineInspector
+
 
 def CursorTool(component, *args, **kwds):
     """
