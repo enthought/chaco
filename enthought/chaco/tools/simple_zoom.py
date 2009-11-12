@@ -394,17 +394,23 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     def _do_zoom(self):
         """ Does the zoom operation.
+        
+        This method does not handle zooms triggered by scrolling the mouse wheel.
+        Those are handled by `normal_mouse_wheel()`.
         """
-        # Sets the bounds on the component using _cur_stack_index
+        # Sets the bounds on the component using _history_index.
         low, high = self._current_state()
         orig_low, orig_high = self._history[0]
 
         if self._history_index == 0:
+            # Reset to the original range(s).
             if self.tool_mode == "range":
+                # "range" mode; reset the one axis.
                 mapper = self._get_mapper()
                 mapper.range.low_setting = self._orig_low_setting
                 mapper.range.high_setting = self._orig_high_setting
             else:
+                # "box" mode; reset both axes.
                 x_range = self.component.x_mapper.range
                 y_range = self.component.y_mapper.range
                 x_range.low_setting, y_range.low_setting = \
@@ -417,7 +423,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 y_range.reset()
 
         else:
+            # Do a new zoom.
             if self.tool_mode == "range":
+                # "range" mode; zoom the one axis.
                 mapper = self._get_mapper()
                 if self._zoom_limit_reached(orig_low, orig_high, low, high, mapper):
                     self._pop_state()
@@ -425,6 +433,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 mapper.range.low = low
                 mapper.range.high = high
             else:
+                # "box" mode; zoom both axes.
                 for ndx in (0, 1):
                     mapper = (self.component.x_mapper, self.component.y_mapper)[ndx]
                     if self._zoom_limit_reached(orig_low[ndx], orig_high[ndx],
