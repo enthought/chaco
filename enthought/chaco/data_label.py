@@ -6,7 +6,7 @@ from numpy.linalg import norm
 
 # Enthought library imports
 from enthought.traits.api import Any, Array, Bool, Enum, Float, Int, List, \
-     Str, Tuple, Trait
+     Str, Tuple, Trait, on_trait_change
 from enthought.enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
@@ -163,7 +163,7 @@ class DataLabel(ToolTip):
     arrow_visible = Bool(True)   # FIXME: replace with some sort of ArrowStyle
 
     # The length of the arrowhead, in screen points (e.g., pixels).
-    arrow_size = Float(5)
+    arrow_size = Float(10)
 
     # The color of the arrow.
     arrow_color = ColorTrait("black")
@@ -212,13 +212,14 @@ class DataLabel(ToolTip):
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws the tooltip overlaid on another component.
         
-        Overrides ToolTip.
+        Overrides and extends ToolTip.overlay()
         """
         if self.clip_to_plot:
             gc.save_state()
             c = component
             gc.clip_to_rect(c.x, c.y, c.width, c.height)
 
+        print "drawing label, color:", self.text_color
         self.do_layout()
         
         # draw the arrow if necessary
@@ -241,6 +242,7 @@ class DataLabel(ToolTip):
                     oy = getattr(self, oy)
                 self._cached_arrow = draw_arrow(gc, (ox, oy), self._screen_coords,
                                                 self.arrow_color_,
+                                                arrowhead_size=self.arrow_size,
                                                 offset1=3,
                                                 offset2=self.marker_size+3,
                                                 minlen=self.arrow_min_length,
@@ -266,10 +268,12 @@ class DataLabel(ToolTip):
     def _do_layout(self, size=None):
         """Computes the size and position of the label and arrow.
         
-        Overrides ToolTip.
+        Overrides and extends ToolTip._do_layout()
         """
         if not self.component or not hasattr(self.component, "map_screen"):
             return
+
+        # Call the parent class layout.  This computes all the label 
         ToolTip._do_layout(self)
 
         self._screen_coords = self.component.map_screen([self.data_point])[0]
@@ -331,38 +335,12 @@ class DataLabel(ToolTip):
         # This gets fired whenever a mapper on our plot fires its 'updated' event.
         self._layout_needed = True
 
-    def _arrow_size_changed(self):
+    @on_trait_change("arrow_size,arrow_root,arrow_min_length,arrow_max_length")
+    def _invalidate_arrow(self):
         self._cached_arrow = None
         self._layout_needed = True
 
-    def _arrow_root_changed(self):
-        self._cached_arrow = None
-        self._layout_needed = True
-
-    def _arrow_min_length_changed(self):
-        self._cached_arrow = None
-        self._layout_needed = True
-
-    def _arrow_max_length_changed(self):
-        self._cached_arrow = None
-        self._layout_needed = True
-
-    def _label_position_changed(self):
-        self._layout_needed = True
-
-    def _position_changed(self, old, new):
-        super(DataLabel, self)._position_changed(old, new)
-        self._layout_needed = True
-
-    def _position_items_changed(self, event):
-        super(DataLabel, self)._position_items_changed(event)
-        self._layout_needed = True
-
-    def _bounds_changed(self, old, new):
-        super(DataLabel, self)._bounds_changed(old, new)
-        self._layout_needed = True
-
-    def _bounds_items_changed(self, event):
-        super(DataLabel, self)._bounds_items_changed(event)
+    @on_trait_change("label_position,position,position_items,bounds,bounds_items")
+    def _invalidate_layout(self):
         self._layout_needed = True
 
