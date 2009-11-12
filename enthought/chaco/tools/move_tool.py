@@ -15,7 +15,7 @@ class MoveTool(DragTool):
     event_state = Enum("normal", "dragging")
 
     # The (x,y) offset of the start of the drag relative to the component.
-    _offset = Tuple
+    _offset = Tuple((0,0))
 
     def drag_start(self, event):
         """ Called when the drag operation starts.  
@@ -33,9 +33,9 @@ class MoveTool(DragTool):
         """
         c = self.component
         c.position = [event.x - self._offset[0], event.y - self._offset[1]]
-        if hasattr(c, "x_mapper"):
+        if getattr(c, "x_mapper", None):
             c.x_mapper.updated = True
-        if hasattr(c, "y_mapper"):
+        if getattr(c, "y_mapper", None):
             c.y_mapper.updated = True
         if getattr(c, "vgrid", None):
             c.vgrid.invalidate()
