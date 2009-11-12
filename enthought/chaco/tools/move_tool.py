@@ -1,18 +1,13 @@
 """ Defines the MoveTool class.
 """
 # Enthought library imports
-from enthought.traits.api import Enum, Tuple
-
-# Local, relative imports
-from drag_tool import DragTool
+from enthought.traits.api import Tuple
+from enthought.enable.tools.drag_tool import DragTool
 
 
 class MoveTool(DragTool):
-    """ A tool for moving a component.
+    """ A tool for moving a plot component.
     """
-
-    # The possible event states for this tool.
-    event_state = Enum("normal", "dragging")
 
     # The (x,y) offset of the start of the drag relative to the component.
     _offset = Tuple((0,0))
