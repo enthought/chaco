@@ -3,9 +3,7 @@
 
 # Enthought library imports
 from enthought.traits.api import Bool, Enum
-
-# Local relative imports
-from drag_tool import DragTool
+from enthought.enable.tools.drag_tool import DragTool
 
 
 class LegendTool(DragTool):
