@@ -2,11 +2,11 @@
 """
 
 # Enthought library imports
+from enthought.enable.tools.drag_tool import DragTool
 from enthought.traits.api import Bool, Enum, Float, Tuple
 
 # Chaco imports
 from base_zoom_tool import BaseZoomTool
-from drag_tool import DragTool
 
 
 class DragZoom(DragTool, BaseZoomTool):
