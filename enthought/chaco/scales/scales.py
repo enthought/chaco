@@ -461,6 +461,11 @@ class ScaleSystem(object):
         -------
         A list of (tick position, string) tuples.
         """
+
+        # Check for insufficient arguments.
+        if numlabels is None and char_width is None:
+            raise ValueError, "Either numlabels or char_width (or both) must be given."
+
         if numlabels == 0 or char_width == 0 or isnan(start) or isnan(end):
             return []
 
@@ -475,11 +480,14 @@ class ScaleSystem(object):
         # Case 3: Use numlabels to find the closest scale based on tick count.
 
         if numlabels and not char_width:
+            # numlabels was given, but not char_width.
             scale = self._get_scale(start, end, numlabels)
             labels = scale.labels(start, end, numlabels)
 
-        elif char_width:
+        else:
+            # char_width was given.
             if numlabels:
+                # Both numlabels and char_width were given.
                 scale = self._get_scale(start, end, numlabels)
                 try:
                     ndx = list(self.scales).index(scale)
@@ -489,6 +497,7 @@ class ScaleSystem(object):
                 except ValueError:
                     scales = [scale]
             else:
+                # Only char_width was given.
                 if len(self.scales) == 0:
                     scales = [self.default_scale]
                 else:
