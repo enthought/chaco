@@ -78,6 +78,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assert_(r.high == 1.0)
         return
 
+
     def test_multi_source(self):
         ds1 = ArrayDataSource(array([3, 4, 5, 6, 7]))
         ds2 = ArrayDataSource(array([5, 10, 15, 20]))
@@ -140,6 +141,28 @@ class DataRangeTestCase(unittest.TestCase):
         r.sources.append(ds)
         assert r.low==-999.
         assert r.high==999.
+
+    def test_inf_in_source(self):
+        r = DataRange1D()
+        ary1 = array([1.0, inf])
+        ds1 = ArrayDataSource(ary1)
+        r.sources.append(ds1)
+        self.assert_(r.low == 1.0)
+        self.assert_(r.high == inf)
+        data = array([-100.0, 0.0, 100.0])
+        assert_equal(r.clip_data(data) , array([100.0]))
+
+        r = DataRange1D()
+        ary2 = array([-inf, 1.0])
+        ds2 = ArrayDataSource(ary2)
+        r.sources.append(ds2)
+        self.assert_(r.low == -inf)
+        self.assert_(r.high == 1.0)
+
+        r.sources.append(ds1)
+        self.assert_(r.low == -inf)
+        self.assert_(r.high == inf)
+
 
 if __name__ == '__main__':
     import nose

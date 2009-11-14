@@ -5,7 +5,7 @@ Defines the DataRange1D class.
 
 # Major library imports
 from math import ceil, floor, log
-from numpy import compress, inf, isnan, ndarray
+from numpy import compress, inf, isinf, isnan, ndarray
 
 # Enthought library imports
 from enthought.traits.api import Bool, CFloat, Enum, Float, Property, Trait, \
@@ -394,7 +394,8 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
     if isnan(real_max) or isnan(real_min):
         return 0,0
 
-    if abs(real_max - real_min) <= abs(epsilon * real_min):
+    if not isinf(real_min) and not isinf(real_max) and \
+            (abs(real_max - real_min) <= abs(epsilon * real_min)):
         # If we get here, then real_min and real_max are (for all
         # intents and purposes) identical, and so we just base
         # everything off of real_min.
