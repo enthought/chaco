@@ -374,13 +374,18 @@ def strftimeEx(fmt, t, timetuple=None):
     Expects input to be a floating-point number of seconds since epoch.
     The formats are:
         
-    - ``%(ms)``:  milliseconds
-    - ``%(us)``:  microseconds
+    - ``%(ms)``:  milliseconds (uses round())
+    - ``%(ms_)``: milliseconds (uses floor())
+    - ``%(us)``:  microseconds (uses round())
     """
 
     if "%(ms)" in fmt:
         ms = round(fmod(t, 1) * 1000)
         fmt = fmt.replace("%(ms)", "%03d" % ms)
+
+    if "%(ms_)" in fmt:
+        ms = floor(fmod(t, 1) * 1000)
+        fmt = fmt.replace("%(ms_)", "%03d" % ms)
 
     if "%(us)" in fmt:
         us = round(fmod(t, 1e-3) * 1000000)
@@ -397,7 +402,7 @@ class TimeFormatter(object):
     # This table of format is convert into the 'formats' dict.  Each tuple of
     # formats must be ordered from shortest to longest.  Use %T for milliseconds.
     _formats = {
-        'microseconds': ('%(us)us', '%(ms).%(us)'),
+        'microseconds': ('%(us)us', '%(ms_).%(us)ms'),
         'milliseconds': ('%(ms)ms', '%S.%(ms)s'),
         'seconds': (':%S', '%Ss'),
         'minsec': ('%M:%S',), # '%Mm%S', '%Mm%Ss'),
