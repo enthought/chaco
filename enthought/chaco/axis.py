@@ -352,8 +352,8 @@ class PlotAxis(AbstractOverlay):
 
         if self.title_spacing != 'auto':
             v_offset = self.title_spacing
-       	calculate_v_offset = (self.title_spacing) and (v_offset is None )
-        
+        calculate_v_offset = (self.title_spacing) and (v_offset is None )
+           
         if self.title_angle == 0:
             text_center_to_corner = -tl_bounds/2.0
             if calculate_v_offset:
@@ -361,6 +361,12 @@ class PlotAxis(AbstractOverlay):
                     v_offset = 25
                 else:
                     v_offset = max([l._bounding_box[1] for l in self.ticklabel_cache]) * 1.3
+                    
+            # The text_center_to_corner is used on the bottom as where the 
+            # top, left of the text should be. On the top of the plot, it 
+            # should not be used 
+            if self.orientation == 'top':
+                text_center_to_corner[1] = 0
                            
             offset = (self._origin_point+self._end_axis_point)/2
             center_dist = self._center_dist(-self._inside_vector, tl_bounds[0], tl_bounds[1], rotation=self.title_angle)
@@ -656,7 +662,7 @@ class PlotAxis(AbstractOverlay):
             # fixme: this should take into account axis orientation
             screenhigh = self.x2
             screenlow = self.x
-
+            
         if self.orientation in ('top', 'bottom'):
             self._major_axis_size = self.bounds[0]
             self._minor_axis_size = self.bounds[1]
