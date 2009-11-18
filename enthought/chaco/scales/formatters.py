@@ -380,19 +380,22 @@ def strftimeEx(fmt, t, timetuple=None):
     """
 
     if "%(ms)" in fmt:
-        ms = round(fmod(t, 1) * 1000)
+        # Assume that fmt does not also contain %(ms_) and %(us).
+        # (It really doesn't make sense to mix %(ms) with those.)
+        secs, frac = divmod(round(t,3), 1)
+        ms = int(round(1e3*frac))
         fmt = fmt.replace("%(ms)", "%03d" % ms)
-
-    if "%(ms_)" in fmt:
-        ms = floor(fmod(t, 1) * 1000)
-        fmt = fmt.replace("%(ms_)", "%03d" % ms)
-
-    if "%(us)" in fmt:
-        us = round(fmod(t, 1e-3) * 1000000)
+    else:
+        # Assume fmt contains %(ms_) and %(us).
+        secs, frac = divmod(round(t,6), 1)
+        ms = int(round(1e3*frac))
+        ms_, us = divmod(int(round(1e6*frac)),1000)
+        fmt = fmt.replace("%(ms_)", "%03d" % ms_)
         fmt = fmt.replace("%(us)", "%03d" % us)
 
     if not timetuple:
-        timetuple = localtime(t)
+        timetuple = localtime(secs)
+
     return strftime(fmt, timetuple)
     
 
