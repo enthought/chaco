@@ -403,7 +403,7 @@ class TimeFormatter(object):
     """ Formatter for time values.
     """
     # This table of format is convert into the 'formats' dict.  Each tuple of
-    # formats must be ordered from shortest to longest.  Use %T for milliseconds.
+    # formats must be ordered from shortest to longest.
     _formats = {
         'microseconds': ('%(us)us', '%(ms_).%(us)ms'),
         'milliseconds': ('%(ms)ms', '%S.%(ms)s'),
