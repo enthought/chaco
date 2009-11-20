@@ -31,19 +31,21 @@ class ImageInspectorTool(BaseTool):
    
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
-    _old_visible = Trait(None, Bool(True))
+    _old_visible = Enum(None, True, False) #Trait(None, Bool(True))
 
     def normal_key_pressed(self, event):
         if self.inspector_key.match(event):
             self.visible = not self.visible
 
     def normal_mouse_leave(self, event):
-        self._old_visible = self.visible
-        self.visible = False
+        if self._old_visible is None:
+            self._old_visible = self.visible
+            self.visible = False
 
     def normal_mouse_enter(self, event):
         if self._old_visible is not None:
             self.visible = self._old_visible
+            self._old_visible = None
 
     def normal_mouse_move(self, event):
         """ Handles the mouse being moved.
@@ -73,6 +75,7 @@ class ImageInspectorTool(BaseTool):
                     self.new_value = \
                         dict(indices=ndx,
                              color_value=image_data.data[y_index, x_index])
+                    
                 self.last_mouse_position = (event.x, event.y)
         return
     
