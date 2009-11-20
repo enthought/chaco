@@ -311,7 +311,7 @@ def semilogx(*data, **kwargs):
 
     Example::
         
-        x = linspace(0, 10.0 100)
+        x = linspace(0.01, 10.0 100)
         semilogx(x, sqrt(x), "b-")
 
     To use previous data, specify names instead of actual data arrays.
@@ -349,7 +349,7 @@ def loglog(*data, **kwargs):
 
     Example::
         
-        x = linspace(0, 10.0, 100)
+        x = linspace(0.001, 10.0, 100)
         loglog(x, x**2, "b-")
 
     To use previous data, specify names instead of actual data arrays.
