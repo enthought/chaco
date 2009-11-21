@@ -113,14 +113,14 @@ class TimeScaleTestCase(TicksTestCase):
         ts = TimeScale(day_of_month=(1,8,15,22))
         start = DTS(2005,3,12)
         end = DTS(2005,5,3)
-        desired = starmap(DTS, ((2005,3,15), (2005,3,22), (2005,4,1), (2005,4,8),
-                                (2005,4,15), (2005,4,22), (2005,5,1)))
+        desired = list(starmap(DTS, ((2005,3,15), (2005,3,22), (2005,4,1), (2005,4,8),
+                                (2005,4,15), (2005,4,22), (2005,5,1))))
         self.check_ticks(ts.ticks(start,end), desired)
 
         # test adjacent months
         start = DTS(2005, 3, 12)
         end = DTS(2005, 4, 10)
-        desired = starmap(DTS, ((2005,3,15), (2005,3,22), (2005,4,1), (2005,4,8)))
+        desired = list(starmap(DTS, ((2005,3,15), (2005,3,22), (2005,4,1), (2005,4,8))))
         self.check_ticks(ts.ticks(start,end), desired)
 
 
@@ -128,7 +128,7 @@ class TimeScaleTestCase(TicksTestCase):
         ts = TimeScale(month_of_year=(1,4,8))
         start = DTS(2005,1,1)
         end = DTS(2006,5,1)
-        desired = starmap(DTS, ((2005,1,1), (2005,4,1), (2005,8,1), (2006,1,1), (2006,4,1)))
+        desired = list(starmap(DTS, ((2005,1,1), (2005,4,1), (2005,8,1), (2006,1,1), (2006,4,1))))
         self.check_ticks(ts.ticks(start,end), desired)
 
     def test_microsecond(self):
@@ -154,8 +154,8 @@ class CalendarScaleSystemTestCase(TicksTestCase):
     def test_yearly_scales(self):
         ticker = ScaleSystem(TimeScale(month_of_year=1), default_scale=None)
         ticks = ticker.ticks(DTS(2000,1,1), DTS(2007,1,1), 10)
-        desired = starmap(DTS, ((2000,1,1), (2001,1,1), (2002,1,1), (2003,1,1),
-                                (2004,1,1), (2005,1,1), (2006,1,1), (2007,1,1)))
+        desired = list(starmap(DTS, ((2000,1,1), (2001,1,1), (2002,1,1), (2003,1,1),
+                                (2004,1,1), (2005,1,1), (2006,1,1), (2007,1,1))))
         self.check_ticks(ticks, desired)
 
 
