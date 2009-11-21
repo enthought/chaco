@@ -45,11 +45,17 @@ class TRangeTestCase(TicksTestCase):
         return
 
     def test_microseconds(self):
+        # Testing the microsecond scale is dicey--`base` is a 10 digit integer,
+        # so an increment of, say, 3 microseconds is only about a factor of 10
+        # more than machine precision.
         base = DTS(2005, 3, 15, 10, 45, 10)
+        print "base: ", base
         start = base + 0.0000027
-        end = base + 0.0000088
-        ticks = trange(start, end, microseconds=1)
-        desired = [base+i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6)]
+        end   = base + 0.0000177
+        ticks = trange(start, end, microseconds=5)
+        desired = [base+i for i in (5e-6, 10e-6, 15e-6)]
+        print "ticks:   ", ticks
+        print "desired: ", desired
         self.check_ticks(ticks, desired)
 
     def test_milliseconds(self):
@@ -66,7 +72,10 @@ class TRangeTestCase(TicksTestCase):
         base = DTS(2005, 1, 1)
         secs_per_day = 24*3600
         ticks = trange(base, base + secs_per_day*5, days=1)
-        self.check_ticks(ticks, [base+i*secs_per_day for i in range(5)])
+        desired = [base+i*secs_per_day for i in range(6)]
+        print "ticks:   ", ticks
+        print "desired: ", desired
+        self.check_ticks(ticks, desired)
 
     def test_daily_leap(self):
         start = DTS(2004, 2, 27)
@@ -85,7 +94,9 @@ class TRangeTestCase(TicksTestCase):
     def test_multiday_increment(self):
         start = DTS(2005, 1, 1)
         ticks = trange(start, start + 9*24*3600, days=3)
-        self.check_ticks(ticks, [start+i*3*24*3600 for i in range(3)])
+        desired = [start+i*3*24*3600 for i in range(4)]
+        print "ticks: ", ticks, " desired: ", desired
+        self.check_ticks(ticks, desired)
 
 
 
@@ -132,13 +143,25 @@ class TimeScaleTestCase(TicksTestCase):
         self.check_ticks(ts.ticks(start,end), desired)
 
     def test_microsecond(self):
+        ts = TimeScale(microseconds=5)
+        base = DTS(1975, 3, 15, 10, 45, 10)
+        start = base  +  20.8e-6
+        end   = start + 151.2e-6
+        desired = [base+i for i in (5e-6, 10e-6, 15e-6, 20e-6, 25e-6, 30e-6)]
+        self.check_ticks(ticks, desired)
+
+    def test_microsecond(self):
+        # This test is dicey, because the values being tested are close to
+        # machine precision. See the comment in TRangeTestCase.test_microseconds().
         ts = TimeScale(microseconds=1)
         base = DTS(1975, 3, 15, 10, 45, 10)
         start = base + 2.8e-6
         end = start + 9.2e-6
+        ticks = ts.ticks(start, end)
         desired = [base+i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6, 9e-6)]
-        self.check_ticks(ts.ticks(start, end), desired)
-        
+        print "ticks:   ", ticks
+        print "desired: ", desired
+        self.check_ticks(ticks, desired)
 
 
 class CalendarScaleSystemTestCase(TicksTestCase):
