@@ -58,8 +58,12 @@ class RangeSelection2D(RangeSelection):
             self._down_data_coord = self._map_data([self._down_point])[0][self.axis_index]
             
             self._original_selection = numpy.array(self.selection)
-        else:
+        elif self.allow_deselection:
             self.deselect(event)
+        else:
+            # Treat this as a combination deselect + left down
+            self.deselect(event)
+            self.normal_left_down(event)
         event.handled = True
         return
 
@@ -93,8 +97,12 @@ class RangeSelection2D(RangeSelection):
                     self.event_state = "selecting"
                     self._drag_edge = "low"
                     self.selecting_mouse_move(event)
-                else:
+                elif self.allow_deselection:
                     self.deselect(event)
+                else:
+                    # Treat this as a combination deselect + right down
+                    self.deselect(event)
+                    self.normal_right_down(event)
         else:
             # Treat this as a combination deselect + right down
             self.deselect(event)

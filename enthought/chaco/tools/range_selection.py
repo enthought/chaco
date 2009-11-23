@@ -86,6 +86,9 @@ class RangeSelection(AbstractController):
     # Allow the left button begin a selection?
     left_button_selects = Bool(False)
     
+    # Allow the tool to be put into the deselected state via mouse clicks
+    allow_deselection = Bool(True)
+    
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -182,8 +185,12 @@ class RangeSelection(AbstractController):
             self._down_point = array([event.x, event.y])
             self._down_data_coord = self.mapper.map_data(self._down_point)[self.axis_index]
             self._original_selection = array(self.selection)
-        else:
+        elif self.allow_deselection:
             self.deselect(event)
+        else:
+            # Treat this as a combination deselect + left down
+            self.deselect(event)
+            self.normal_left_down(event)
         event.handled = True
         return
 
@@ -217,8 +224,12 @@ class RangeSelection(AbstractController):
                     self.event_state = "selecting"
                     self._drag_edge = "low"
                     self.selecting_mouse_move(event)
-                else:
+                elif self.allow_deselection:
                     self.deselect(event)
+                else:
+                    # Treat this as a combination deselect + right down
+                    self.deselect(event)
+                    self.normal_right_down(event)
         else:
             # Treat this as a combination deselect + right down
             self.deselect(event)
