@@ -28,6 +28,7 @@ class ToolbarPlot(Plot):
             self.toolbar = self.toolbar_class(self)
         else:
             self.toolbar = toolbar
+            toolbar.component = self
         self.add_toolbar()
 
     def add_toolbar(self):
