@@ -17,13 +17,17 @@ class ToolbarPlot(Plot):
     toolbar_added = False
 
     def __init__(self, *args, **kw):
+        toolbar = kw.pop("toolbar", None)
         super(ToolbarPlot, self).__init__(*args, **kw)
 
         self.hovertool = HoverTool(self, area_type="top",
                                    callback=self.add_toolbar)
         self.tools.append(self.hovertool)
 
-        self.toolbar = self.toolbar_class(self)
+        if toolbar is None:
+            self.toolbar = self.toolbar_class(self)
+        else:
+            self.toolbar = toolbar
         self.add_toolbar()
 
     def add_toolbar(self):
