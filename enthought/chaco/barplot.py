@@ -125,26 +125,10 @@ class BarPlot(AbstractPlotRenderer):
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
 
-        # reverse the directions as indicated
-        if self.index_direction == "flipped":
-            x_sign = -1.0
-            x_offset = self.bounds[0]
-        else:
-            x_sign = 1.0
-            x_offset = 0.0
-
-        if self.value_direction == "flipped":
-            y_sign = -1.0
-            y_offset = self.bounds[1]
-        else:
-            y_sign = 1.0
-            y_offset = 0.0
-
-        # now return map based on orientation
         if self.orientation == "h":
-            return transpose(array((x_sign*sx+x_offset,y_sign*sy+y_offset)))
+            return transpose(array((sx,sy)))
         else:
-            return transpose(array((y_sign*sy+y_offset,x_sign*sx+x_offset)))
+            return transpose(array((sy,sx)))
 
     def map_data(self, screen_pt):
         """ Maps a screen space point into the "index" space of the plot.
