@@ -63,10 +63,14 @@ class ArrayDataSource(AbstractDataSource):
     _cached_mask = Any
     
     # The index of the (first) minimum value in self._data
-    _min_index = Int
+    # FIXME: This is an Any instead of an Int trait because of how Traits
+    # typechecks numpy.int64 on 64-bit Windows systems.
+    _min_index = Any
     
     # The index of the (first) maximum value in self._data
-    _max_index = Int
+    # FIXME: This is an Any instead of an Int trait because of how Traits
+    # typechecks numpy.int64 on 64-bit Windows systems.
+    _max_index = Any
     
     
     #------------------------------------------------------------------------
