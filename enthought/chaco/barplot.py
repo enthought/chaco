@@ -3,7 +3,8 @@
 import logging
 
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
-from enthought.traits.api import Any, Bool, Enum, Float, Instance, Property
+from enthought.traits.api import Any, Bool, Enum, Float, Instance, Property, \
+        Range
 from enthought.enable.api import black_color_trait
 from enthought.kiva import FILL_STROKE
 
@@ -68,6 +69,10 @@ class BarPlot(AbstractPlotRenderer):
     line_color = black_color_trait
     # Color to fill the bars.
     fill_color = black_color_trait
+    
+    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    alpha = Range(0.0, 1.0, 1.0)
+    
 
     #use_draw_order = False
 
@@ -111,6 +116,13 @@ class BarPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     # AbstractPlotRenderer interface
     #------------------------------------------------------------------------
+
+    def __init__(self, *args, **kw):
+        super(BarPlot, self).__init__(*args, **kw)
+        
+        # update colors to use the correct alpha channel
+        self.line_color_ = self.line_color_[0:3] + (self.alpha,)
+        self.fill_color_ = self.fill_color_[0:3] + (self.alpha,)
 
     def map_screen(self, data_array):
         """ Maps an array of data points into screen space and returns it as
@@ -380,6 +392,12 @@ class BarPlot(AbstractPlotRenderer):
 
         self.invalidate_draw()
         self._cache_valid = False
+
+    def _alpha_changed(self):
+        self.line_color_ = self.line_color_[0:3] + (self.alpha,)
+        self.fill_color_ = self.fill_color_[0:3] + (self.alpha,)
+        self.invalidate_draw()
+        self.request_redraw()
 
     def _bounds_changed(self, old, new):
         super(BarPlot, self)._bounds_changed(old, new)
