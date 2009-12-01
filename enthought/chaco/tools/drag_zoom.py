@@ -20,6 +20,12 @@ class DragZoom(DragTool, BaseZoomTool):
     By setting **maintain_aspect_ratio** to False, this tool will separably zoom
     the X and Y axis ranges by the (possibly different) horizontal and vertical 
     drag motions.  This is similar to the drag zoom interaction in Matplotlib.
+    
+    By setting single_axis to True, dragging will only zoom in the axis specified
+    by the axis attribute.
+    
+    By setting restrict_domain to True, the zoom will be limited to the domain
+    of the axis mappers.
     """
 
     # The mouse button that initiates the drag
@@ -36,6 +42,11 @@ class DragZoom(DragTool, BaseZoomTool):
     # The pointer to use when we're in the act of zooming
     drag_pointer = "magnifier"
 
+    # Whether or not to zoom in one axis only
+    single_axis = Bool(False)
+    
+    # Whether to restrict zoom to the domain of the mappers
+    restrict_domain = Bool(False)
 
     #------------------------------------------------------------------------------
     # Private traits
@@ -79,8 +90,11 @@ class DragZoom(DragTool, BaseZoomTool):
         # The original screen bounds are used to test if we've reached max_zoom
         orig_low, orig_high = self._orig_screen_bounds
 
-        datarange_list = [(0, c.x_mapper.range, zoom_x), (1, c.y_mapper.range, zoom_y)]
-        for ndx, datarange, zoom in datarange_list:
+        datarange_list = [(0, c.x_mapper, zoom_x), (1, c.y_mapper, zoom_y)]
+        for ndx, mapper, zoom in datarange_list:
+            datarange = mapper.range
+            if self.single_axis and ndx != self._determine_axis():
+                continue
             mouse_val = self._original_data[ndx]
             newlow = mouse_val - zoom * (mouse_val - low_pt[ndx])
             newhigh = mouse_val + zoom * (high_pt[ndx] - mouse_val)
@@ -89,6 +103,17 @@ class DragZoom(DragTool, BaseZoomTool):
             if self._zoom_limit_reached(ol, oh, newlow, newhigh):
                 event.handled = True
                 return
+
+            # prohibit zooming outside the domain of the axis
+            if self.restrict_domains:
+                if newlow > newhigh:
+                    # This happens when the orientation of the axis is reversed.
+                    newlow, newhigh = newhigh, newlow                    
+                domain_min, domain_max = getattr(mapper, "domain_limits", (None,None))
+                if domain_min is not None and newlow < domain_min:
+                    newlow = domain_min
+                if domain_max is not None and newhigh > domain_max:
+                    newhigh = domain_max
             
             datarange.set_bounds(newlow, newhigh)
        
