@@ -47,9 +47,18 @@ class PolygonPlot(BaseXYPlot):
     face_color = transparent_color_trait
 
     # Override the hittest_type trait inherited from BaseXYPlot
-    hittest_type = Enum("poly", "point", "line")
+    hittest_type = Enum("poly", "point", "line")    
 
     #### Private 'BaseXYPlot' interface ########################################
+
+    def __init__(self, *args, **kw):
+        super(PolygonPlot, self).__init__(*args, **kw)
+        
+        # update colors to use the correct alpha channel
+        self.edge_color_ = self.edge_color_[0:3] + (self.alpha,)
+        self.face_color_ = self.face_color_[0:3] + (self.alpha,)
+        
+        
 
     def _gather_points(self):
         """ Collects the data points that are within the bounds of the plot and
@@ -78,6 +87,7 @@ class PolygonPlot(BaseXYPlot):
     def _render(self, gc, points):
         """ Renders an Nx2 array of screen-space points as a polygon.
         """
+        
         gc.save_state()
 
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
