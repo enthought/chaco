@@ -186,7 +186,6 @@ class PlotToolbar(Container, AbstractOverlay):
                 widest_button = max([button.width for button in self.components])
                 self.width = width = widest_button + self.horizontal_padding*2
 
-
         if component is not None:
             if self.location is 'top':
                 self.x = (component.width - self.width)/2 + component.padding_left
@@ -198,13 +197,13 @@ class PlotToolbar(Container, AbstractOverlay):
                 self.x = component.padding_left + 2
                 self.y = (component.height - self.height)/2 + component.padding_bottom
             else:  # 'right'
-                self.x = component.width + component.padding_bottom - width - 2
+                self.x = component.width + component.padding_left - width - 2
                 self.y = (component.height - self.height)/2 + component.padding_bottom
 
         if self.location in ['top', 'bottom']:
             v_position = self.y + self.vertical_padding
 
-            last_button_position = self.x + self.horizontal_padding
+            last_button_position = self.x + self.horizontal_padding + self.button_spacing
             for button in self.components:
                 button.x = last_button_position
                 button.y = v_position
@@ -213,7 +212,7 @@ class PlotToolbar(Container, AbstractOverlay):
             # location is 'left' or 'right'
             h_position = self.x + self.horizontal_padding
 
-            last_button_position = self.y + self.vertical_padding
+            last_button_position = self.y + self.vertical_padding + self.button_spacing
             for button in reversed(self.components):
                 button.y = last_button_position
                 button.x = h_position
@@ -250,7 +249,7 @@ class PlotToolbar(Container, AbstractOverlay):
     @on_trait_change('components, location')
     def _calculate_height(self):
         if self.location in ['left', 'right']:
-            height = self.horizontal_padding*2
+            height = self.vertical_padding*2
             for button in self.components:
                 height += button.height + self.button_spacing*2
 
