@@ -143,14 +143,6 @@ class TimeScaleTestCase(TicksTestCase):
         self.check_ticks(ts.ticks(start,end), desired)
 
     def test_microsecond(self):
-        ts = TimeScale(microseconds=5)
-        base = DTS(1975, 3, 15, 10, 45, 10)
-        start = base  +  20.8e-6
-        end   = start + 151.2e-6
-        desired = [base+i for i in (5e-6, 10e-6, 15e-6, 20e-6, 25e-6, 30e-6)]
-        self.check_ticks(ticks, desired)
-
-    def test_microsecond(self):
         # This test is dicey, because the values being tested are close to
         # machine precision. See the comment in TRangeTestCase.test_microseconds().
         ts = TimeScale(microseconds=1)
