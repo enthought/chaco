@@ -1,7 +1,7 @@
 from enthought.enable.tools.hover_tool import HoverTool
 from enthought.chaco.api import Plot
 from enthought.chaco.tools.toolbars.plot_toolbar import PlotToolbar
-from enthought.traits.api import Type, Bool, Instance, on_trait_change
+from enthought.traits.api import Type, Bool, Instance, Enum, on_trait_change
 
 class ToolbarPlot(Plot):
     # Should we turn on the auto-hide feature on the toolbar?
@@ -13,8 +13,16 @@ class ToolbarPlot(Plot):
 
     # Hover Toolbar - is always visible when auto-hide is False
     toolbar = Instance(PlotToolbar)
+
     toolbar_class = Type(PlotToolbar)
     toolbar_added = False
+
+    # Location of the default toolbar that is created if a toolbar
+    # is not specified with the `toolbar` attribute.  Changing this
+    # attribute after the ToolbarPlot instance is created has no effect;
+    # use obj.toolbar.location to dynamically change the location of the
+    # instance `obj`s toolbar.
+    toolbar_location = Enum('top', 'right', 'bottom', 'left')
 
     def __init__(self, *args, **kw):
         toolbar = kw.pop("toolbar", None)
@@ -25,7 +33,7 @@ class ToolbarPlot(Plot):
         self.tools.append(self.hovertool)
 
         if toolbar is None:
-            self.toolbar = self.toolbar_class(self)
+            self.toolbar = self.toolbar_class(self, location=self.toolbar_location)
         else:
             self.toolbar = toolbar
             toolbar.component = self
