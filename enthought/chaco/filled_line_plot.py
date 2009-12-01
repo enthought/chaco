@@ -48,8 +48,9 @@ class FilledLinePlot(PolygonPlot):
             gc.close_path()
             gc.fill_path()
 
-        # If the line color is not transparent, then draw the line:
-        if self.edge_color_[-1] != 0 and self.edge_color_[:3] != (0,0,0):
+        # If the line color is not transparent, or tha same color
+        # as the filled area:
+        if self.edge_color_[-1] != 0 and self.edge_color_ != self.face_color_:
             gc.set_stroke_color(self.edge_color_)
             gc.set_line_width(self.edge_width)
             gc.set_line_dash(self.edge_style_)
