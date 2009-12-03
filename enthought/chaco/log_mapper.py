@@ -2,7 +2,7 @@
 """
 # Major library imports
 from numpy import array, isnan, log, log10, exp, zeros, sometrue,\
-    floor, ceil
+    floor, ceil, ndarray
 
 # Enthought library imports
 from enthought.traits.api import Bool, Float
@@ -44,7 +44,10 @@ class LogMapper(Base1DMapper):
 
         Overrides AbstractMapper. Maps values from data space to screen space.
         """
-        #First convert to a [0,1] space, then to the screen space
+        # Ensure that data_array is actually an array.
+        if not isinstance(data_array, ndarray):
+            data_array = array(data_array, ndmin=1)
+        # First convert to a [0,1] space, then to the screen space.
         if not self._cache_valid:
             self._compute_scale()
         if self._inter_scale == 0.0:
@@ -59,7 +62,8 @@ class LogMapper(Base1DMapper):
             except ValueError:
                 intermediate = zeros(len(data_array))
 
-        return intermediate * self._screen_scale + self._screen_offset
+        result = intermediate * self._screen_scale + self._screen_offset
+        return result
 
     def map_data(self, screen_val):
         """ map_data(screen_val) -> data_val
