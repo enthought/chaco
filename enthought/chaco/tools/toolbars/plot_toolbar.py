@@ -55,6 +55,7 @@ class PlotToolbar(Container, AbstractOverlay):
     # how many pixels to put on top and bottom the set of buttons 
     vertical_padding = Float(5.0)
     
+    # The edge against which the toolbar is placed.
     location = Enum('top', 'right', 'bottom', 'left')
 
     ############################################################
