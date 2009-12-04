@@ -10,7 +10,7 @@ from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, 
 from enthought.enable.api import black_color_trait, ColorTrait, AbstractMarker, \
         CustomMarker, MarkerNameDict, MarkerTrait
 from enthought.kiva import STROKE
-from enthought.traits.api import Any, Array, Bool, Float, Int, Trait
+from enthought.traits.api import Any, Array, Bool, Float, Int, Trait, Callable
 from enthought.traits.ui.api import View, VGroup, Item
 
 # Local relative imports
@@ -18,6 +18,9 @@ from base_xy_plot import BaseXYPlot
 from speedups import scatterplot_gather_points
 from base import reverse_map_1d
 
+#------------------------------------------------------------------------------
+# Traits UI View for customizing a scatter plot.
+#------------------------------------------------------------------------------
 
 class ScatterPlotView(View):
     """ Traits UI View for customizing a scatter plot.
@@ -30,6 +33,117 @@ class ScatterPlotView(View):
                 )
         super(ScatterPlotView, self).__init__(vgroup)
         self.buttons = ["OK", "Cancel"]
+
+#------------------------------------------------------------------------------
+# Helper functions for scatterplot rendering
+#------------------------------------------------------------------------------
+
+def render_markers(gc, points, marker, marker_size,
+                   color, line_width, outline_color,
+                   custom_symbol=None, debug=False):
+    """ Helper function for a PlotComponent instance to render a
+    set of (x,y) points onto a graphics context.  Currently, it makes some
+    assumptions about the attributes on the plot object; these may be factored
+    out eventually.
+
+    Parameters
+    ----------
+    gc : GraphicsContext
+        The target for rendering the points
+    points : array of (x,y) points
+        The points to render
+    marker : string, class, or instance
+        The type of marker to use for the points
+    marker_size : number
+        The size of the markers
+    color : RGB(A) color
+        The color of the markers
+    line_width : number
+        The width, in pixels, of the marker outline
+    outline_color : RGB(A) color
+        The color of the marker outline
+    custom_symbol : CompiledPath
+        If the marker style is 'custom', this is the symbol
+    """
+
+    if len(points) == 0:
+        return
+
+    # marker can be string, class, or instance
+    if type(marker) == str:
+        marker = MarkerNameDict[marker]()
+    elif issubclass(marker, AbstractMarker):
+        marker = marker()
+
+    gc.save_state()
+
+    gc.set_line_dash(None)
+    if marker.draw_mode == STROKE:
+        # markers with the STROKE draw mode will not be visible
+        # if the line width is zero, so set it to 1
+        if line_width == 0:
+            line_width = 1.0
+        gc.set_stroke_color(color)
+        gc.set_line_width(line_width)
+    else:
+        gc.set_stroke_color(outline_color)
+        gc.set_line_width(line_width)
+        gc.set_fill_color(color)
+
+    gc.begin_path()
+
+    # This is the fastest method - use one of the kiva built-in markers
+    if (not debug) and hasattr(gc, "draw_marker_at_points") \
+        and (marker.__class__ != CustomMarker) \
+        and (gc.draw_marker_at_points(points,
+                                      marker_size,
+                                      marker.kiva_marker) != 0):
+            pass
+
+    # The second fastest method - draw the path into a compiled path, then
+    # draw the compiled path at each point
+    elif hasattr(gc, 'draw_path_at_points'):
+        #if debug:
+        #    import pdb; pdb.set_trace()
+        if marker.__class__ != CustomMarker:
+            path = gc.get_empty_path()
+            marker.add_to_path(path, marker_size)
+            mode = marker.draw_mode
+        else:
+            path = custom_symbol
+            mode = STROKE
+        if not marker.antialias:
+            gc.set_antialias(False)
+        gc.draw_path_at_points(points, path, mode)
+
+    # Neither of the fast functions worked, so use the brute-force, manual way
+    else:
+        if not marker.antialias:
+            gc.set_antialias(False)
+        if marker.__class__ != CustomMarker:
+            for sx,sy in points:
+                gc.save_state()
+                gc.translate_ctm(sx, sy)
+                # Kiva GCs have a path-drawing interface
+                marker.add_to_path(gc, marker_size)
+                gc.draw_path(marker.draw_mode)
+                gc.restore_state()
+        else:
+            path = custom_symbol
+            for sx,sy in points:
+                gc.save_state()
+                gc.translate_ctm(sx, sy)
+                gc.add_path(path)
+                gc.draw_path(STROKE)
+                gc.restore_state()
+
+
+    gc.restore_state()
+    return
+
+#------------------------------------------------------------------------------
+# The scatter plot
+#------------------------------------------------------------------------------
 
 
 class ScatterPlot(BaseXYPlot):
@@ -53,6 +167,9 @@ class ScatterPlot(BaseXYPlot):
 
     # The pixel size of the marker, not including the thickness of the outline.
     marker_size = Float(4.0)
+    
+    # The function which actually renders the markers
+    render_markers_func = Callable(render_markers)
 
     # The thickness, in pixels, of the outline to draw around the marker.  If
     # this is 0, no outline is drawn.
@@ -337,13 +454,13 @@ class ScatterPlot(BaseXYPlot):
             gc.save_state()
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
-        render_markers(gc, points, self.marker, self.marker_size,
+        self.render_markers_func(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_,
                        self.custom_symbol)
 
         if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
             sel_pts = self.map_screen(self._cached_selected_pts)
-            render_markers(gc, sel_pts, self.selection_marker,
+            self.render_markers_func(gc, sel_pts, self.selection_marker,
                     self.selection_marker_size, self.selection_color_,
                     self.selection_line_width, self.selection_outline_color_,
                     self.custom_symbol)
@@ -393,114 +510,6 @@ class ScatterPlot(BaseXYPlot):
         self._selection_cache_valid = False
         self.invalidate_draw()
         self.request_redraw()
-
-#------------------------------------------------------------------------------
-# Helper functions for scatterplot rendering
-#------------------------------------------------------------------------------
-
-def render_markers(gc, points, marker, marker_size,
-                   color, line_width, outline_color,
-                   custom_symbol=None, debug=False):
-    """ Helper function for a PlotComponent instance to render a
-    set of (x,y) points onto a graphics context.  Currently, it makes some
-    assumptions about the attributes on the plot object; these may be factored
-    out eventually.
-
-    Parameters
-    ----------
-    gc : GraphicsContext
-        The target for rendering the points
-    points : array of (x,y) points
-        The points to render
-    marker : string, class, or instance
-        The type of marker to use for the points
-    marker_size : number
-        The size of the markers
-    color : RGB(A) color
-        The color of the markers
-    line_width : number
-        The width, in pixels, of the marker outline
-    outline_color : RGB(A) color
-        The color of the marker outline
-    custom_symbol : CompiledPath
-        If the marker style is 'custom', this is the symbol
-    """
-
-    if len(points) == 0:
-        return
-
-    # marker can be string, class, or instance
-    if type(marker) == str:
-        marker = MarkerNameDict[marker]()
-    elif issubclass(marker, AbstractMarker):
-        marker = marker()
-
-    gc.save_state()
-
-    gc.set_line_dash(None)
-    if marker.draw_mode == STROKE:
-        # markers with the STROKE draw mode will not be visible
-        # if the line width is zero, so set it to 1
-        if line_width == 0:
-            line_width = 1.0
-        gc.set_stroke_color(color)
-        gc.set_line_width(line_width)
-    else:
-        gc.set_stroke_color(outline_color)
-        gc.set_line_width(line_width)
-        gc.set_fill_color(color)
-
-    gc.begin_path()
-
-    # This is the fastest method - use one of the kiva built-in markers
-    if (not debug) and hasattr(gc, "draw_marker_at_points") \
-        and (marker.__class__ != CustomMarker) \
-        and (gc.draw_marker_at_points(points,
-                                      marker_size,
-                                      marker.kiva_marker) != 0):
-            pass
-
-    # The second fastest method - draw the path into a compiled path, then
-    # draw the compiled path at each point
-    elif hasattr(gc, 'draw_path_at_points'):
-        #if debug:
-        #    import pdb; pdb.set_trace()
-        if marker.__class__ != CustomMarker:
-            path = gc.get_empty_path()
-            marker.add_to_path(path, marker_size)
-            mode = marker.draw_mode
-        else:
-            path = custom_symbol
-            mode = STROKE
-        if not marker.antialias:
-            gc.set_antialias(False)
-        gc.draw_path_at_points(points, path, mode)
-
-    # Neither of the fast functions worked, so use the brute-force, manual way
-    else:
-        if not marker.antialias:
-            gc.set_antialias(False)
-        if marker.__class__ != CustomMarker:
-            for sx,sy in points:
-                gc.save_state()
-                gc.translate_ctm(sx, sy)
-                # Kiva GCs have a path-drawing interface
-                marker.add_to_path(gc, marker_size)
-                gc.draw_path(marker.draw_mode)
-                gc.restore_state()
-        else:
-            path = custom_symbol
-            for sx,sy in points:
-                gc.save_state()
-                gc.translate_ctm(sx, sy)
-                gc.add_path(path)
-                gc.draw_path(STROKE)
-                gc.restore_state()
-
-
-    gc.restore_state()
-    return
-
 
 
 # EOF
