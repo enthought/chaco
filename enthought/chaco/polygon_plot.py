@@ -110,11 +110,15 @@ class PolygonPlot(BaseXYPlot):
         Used by the legend.
         """
         gc.save_state()
-        gc.set_stroke_color(self.edge_color_)
-        gc.set_line_width(self.line_width)
-        gc.set_line_dash(self.line_style_)
-        gc.draw_rect((x,y,width,height))
-        gc.restore_state()
+        try:
+            gc.set_stroke_color(self.edge_color_)
+            gc.set_line_width(self.line_width)
+            gc.set_fill_color(self.face_color_)
+            if hasattr(self, 'line_style_'):
+                gc.set_line_dash(self.line_style_)
+            gc.draw_rect((x,y,width,height))
+        finally:
+            gc.restore_state()
         return
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
