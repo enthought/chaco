@@ -140,27 +140,34 @@ class DataRange1D(BaseDataRange):
         """
         if low == 'track':
             # Set the high setting first
-            self._do_set_high_setting(high, fire_event=False)
-            self._do_set_low_setting(low)
+            result_high = self._do_set_high_setting(high, fire_event=False)
+            result_low = self._do_set_low_setting(low, fire_event=False)
+            result = result_low or result_high
         else:
             # Either set low first or order doesn't matter
-            self._do_set_low_setting(low, fire_event=False)
-            self._do_set_high_setting(high)
+            result_low = self._do_set_low_setting(low, fire_event=False)
+            result_high = self._do_set_high_setting(high, fire_event=False)
+            result = result_high or result_low
+        if result:
+            self.updated = result
             
     def scale_tracking_amount(self, multiplier):
         """ Sets the **tracking_amount** to a new value, scaled by *multiplier*.
         """
         self.tracking_amount = self.tracking_amount * multiplier
+        self._do_track()
         
     def set_tracking_amount(self, amount):
         """ Sets the **tracking_amount** to a new value, *amount*.
         """
         self.tracking_amount = amount
-        
+        self._do_track()
+
     def set_default_tracking_amount(self, amount):
         """ Sets the **default_tracking_amount** to a new value, *amount*.
         """
         self.default_tracking_amount = amount
+
  
     #------------------------------------------------------------------------
     # Public methods
@@ -208,22 +215,43 @@ class DataRange1D(BaseDataRange):
         return self._low_setting
 
     def _do_set_low_setting(self, val, fire_event=True):
+        """
+        Returns
+        -------
+        If fire_event is False and the change would have fired an event, returns
+        the tuple of the new low and high values.  Otherwise returns None.  In
+        particular, if fire_event is True, it always returns None.
+        """
+        new_values = None
         if self._low_setting != val:
+            
+            # Save the new setting.
             self._low_setting = val
+
+            # If val is 'auto' or 'track', get the corresponding numerical value.
             if val == 'auto':
                 if len(self.sources) > 0:
                     val = min([source.get_bounds()[0] for source in self.sources])
                 else:
                     val = -inf
-            if val == 'track':
-                if len(self.sources) > 0:
+            elif val == 'track':
+                if len(self.sources) > 0 or self._high_setting != 'auto':
                     val = self._high_value - self.tracking_amount
                 else:
                     val = -inf
+
+            # val is now a numerical value.  If it is the same as the current
+            # value, there is nothing to do.
             if self._low_value != val:
                 self._low_value = val
+                if self._high_setting == 'track':
+                    self._high_value = val + self.tracking_amount
                 if fire_event:
                     self.updated = (self._low_value, self._high_value)
+                else:
+                    new_values = (self._low_value, self._high_value)
+
+        return new_values
 
     def _set_low_setting(self, val):
         self._do_set_low_setting(val, True)
@@ -238,22 +266,42 @@ class DataRange1D(BaseDataRange):
         return self._high_setting
     
     def _do_set_high_setting(self, val, fire_event=True):
+        """
+        Returns
+        -------
+        If fire_event is False and the change would have fired an event, returns
+        the tuple of the new low and high values.  Otherwise returns None.  In
+        particular, if fire_event is True, it always returns None.
+        """
+        new_values = None
         if self._high_setting != val:
+
+            # Save the new setting.
             self._high_setting = val
+
+            # If val is 'auto' or 'track', get the corresponding numerical value.
             if val == 'auto':
                 if len(self.sources) > 0:
                     val = max([source.get_bounds()[1] for source in self.sources])
                 else:
                     val = inf
             if val == 'track':
-                if len(self.sources) > 0:
+                if len(self.sources) > 0 or self._low_setting not in ['auto','track']:
                     val = self._low_value + self.tracking_amount
                 else:
                     val = inf
+
+            # val is now a numerical value.  If it is the same as the current
+            # value, there is nothing to do.
             if self._high_value != val:
                 self._high_value = val
+                if self._low_setting == 'track':
+                    self._low_value = val - self.tracking_amount
                 if fire_event:
                     self.updated = (self._low_value, self._high_value)
+                else:
+                    new_values = (self._low_value, self._high_value)
+        return new_values
 
     def _set_high_setting(self, val):
         self._do_set_high_setting(val, True)
@@ -298,6 +346,21 @@ class DataRange1D(BaseDataRange):
             self._high_value = high_start
             self.updated = (self._low_value, self._high_value)
         return
+
+    def _do_track(self):
+        changed = False
+        if self._low_setting == 'track':
+            new_value = self._high_value - self.tracking_amount
+            if self._low_value != new_value:
+                self._low_value = new_value
+                changed = True
+        elif self._high_setting == 'track':
+            new_value = self._low_value + self.tracking_amount
+            if self._high_value != new_value:
+                self._high_value = new_value
+                changed = True
+        if changed:
+            self.updated = (self._low_value, self._high_value)
 
     #------------------------------------------------------------------------
     # Event handlers

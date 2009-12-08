@@ -4,7 +4,23 @@ import unittest
 from numpy import arange, array, zeros, inf
 from numpy.testing import assert_equal
 
+from enthought.traits.api import HasTraits, Instance, Bool, on_trait_change
+
 from enthought.chaco.api import DataRange1D, ArrayDataSource
+
+
+class Foo(HasTraits):
+    """
+    This class is used to test the firing of the `updated` event of DataRange1D.
+    """
+    
+    range = Instance(DataRange1D)
+    
+    range_updated = Bool(False)
+
+    @on_trait_change('range.updated')
+    def range_changed(self):
+        self.range_updated = True
 
 
 class DataRangeTestCase(unittest.TestCase):
@@ -22,7 +38,121 @@ class DataRangeTestCase(unittest.TestCase):
         self.assert_(r.low == 5.0)
         self.assert_(r.high == 10.0)
         return
-    
+
+    def test_set_bounds1(self):
+        """Change both low and high with set_bounds()."""
+        foo = Foo(range=DataRange1D(low=0.0, high=1.0))
+        # Paranoid check first (not the main point of this test):
+        self.assert_(foo.range.low == 0.0)
+        self.assert_(foo.range.high == 1.0)
+        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        foo.range_updated = False
+        foo.range.set_bounds(-1.0, 2.0)
+        # Verify the values.
+        self.assert_(foo.range.low == -1.0)
+        self.assert_(foo.range.high == 2.0)
+        # Verify that the `updated` event fired.
+        self.assert_(foo.range_updated)
+
+    def test_set_bounds2(self):
+        """Change only the high value with set_bounds()."""
+        foo = Foo(range=DataRange1D(low=0.0, high=1.0))
+        # Paranoid check first (not the main point of this test):
+        self.assert_(foo.range.low == 0.0)
+        self.assert_(foo.range.high == 1.0)
+        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        foo.range_updated = False
+        foo.range.set_bounds(0.0, 2.0)
+        # Verify the values.
+        self.assert_(foo.range.low == 0.0)
+        self.assert_(foo.range.high == 2.0)
+        # Verify that the `updated` event fired.
+        self.assert_(foo.range_updated)
+
+    def test_set_bounds3(self):
+        """Change only the low value with set_bounds()."""
+        foo = Foo(range=DataRange1D(low=0.0, high=1.0))
+        # Paranoid check first (not the main point of this test):
+        self.assert_(foo.range.low == 0.0)
+        self.assert_(foo.range.high == 1.0)
+        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        foo.range_updated = False
+        foo.range.set_bounds(0.5, 1.0)
+        # Verify the values.
+        self.assert_(foo.range.low == 0.5)
+        self.assert_(foo.range.high == 1.0)
+        # Verify that the `updated` event fired.
+        self.assert_(foo.range_updated)
+
+    def test_set_bounds4(self):
+        """Set set_bounds() with high='track'."""
+        foo = Foo(range=DataRange1D(tracking_amount=1.0))
+        foo.range.low_setting = 0.0
+        foo.range.high_setting = 'track'
+        # Paranoid check first (not the main point of this test):
+        self.assert_(foo.range.low == 0.0)
+        self.assert_(foo.range.high == 1.0)
+        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        foo.range_updated = False
+        foo.range.set_bounds(100.0, 'track')
+        print foo.range.low, foo.range.high
+        # Verify the values.
+        self.assert_(foo.range.low == 100.0)
+        self.assert_(foo.range.high == 101.0)
+        # Verify that the `updated` event fired.
+        self.assert_(foo.range_updated)
+
+    def test_set_bounds5(self):
+        """Set set_bounds() with low='track'."""
+        foo = Foo(range=DataRange1D(tracking_amount=1.0))
+        foo.range.low_setting = 'track'
+        foo.range.high_setting = 1.0
+        # Paranoid check first (not the main point of this test):
+        self.assert_(foo.range.low == 0.0)
+        self.assert_(foo.range.high == 1.0)
+        # Now reset foo's range_updated flag and set the bounds with set_bounds().
+        foo.range_updated = False
+        foo.range.set_bounds('track', 100.0)
+        # Verify the values.
+        self.assert_(foo.range.low == 99.0)
+        self.assert_(foo.range.high == 100.0)
+        # Verify that the `updated` event fired.
+        self.assert_(foo.range_updated)
+
+    def test_set_tracking_amount(self):
+        """Test setting the tracking amount using the set_tracking_amount() method."""
+        foo = Foo(range=DataRange1D(tracking_amount=1.0))
+        foo.range.low_setting = 'track'
+        foo.range.high_setting = 1.0
+        # Paranoid check first (not the main point of this test):
+        self.assert_(foo.range.low == 0.0)
+        self.assert_(foo.range.high == 1.0)
+        # Now reset foo's range_updated flag and change the tracking amount.
+        foo.range_updated = False
+        foo.range.set_tracking_amount(2.0)
+        # Verify the values.
+        self.assert_(foo.range.low == -1.0)
+        self.assert_(foo.range.high == 1.0)
+        # Verify that the `updated` event fired.
+        self.assert_(foo.range_updated)        
+
+    def test_scale_tracking_amount(self):
+        """Test setting the tracking amount using the scale_tracking_amount() method."""
+        foo = Foo(range=DataRange1D(tracking_amount=1.0))
+        foo.range.low_setting = 'track'
+        foo.range.high_setting = 1.0
+        # Paranoid check first (not the main point of this test):
+        self.assert_(foo.range.low == 0.0)
+        self.assert_(foo.range.high == 1.0)
+        # Now reset foo's range_updated flag and change the tracking amount.
+        foo.range_updated = False
+        foo.range.scale_tracking_amount(0.5)
+        # Verify the values.
+        self.assert_(foo.range.low ==  0.5)
+        self.assert_(foo.range.high == 1.0)
+        # Verify that the `updated` event fired.
+        self.assert_(foo.range_updated) 
+
     def test_single_source(self):
         r = DataRange1D()
         ary = arange(10.0)
