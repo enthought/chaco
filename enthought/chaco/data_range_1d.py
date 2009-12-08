@@ -285,8 +285,8 @@ class DataRange1D(BaseDataRange):
                     val = max([source.get_bounds()[1] for source in self.sources])
                 else:
                     val = inf
-            if val == 'track':
-                if len(self.sources) > 0 or self._low_setting not in ['auto','track']:
+            elif val == 'track':
+                if len(self.sources) > 0 or self._low_setting != 'auto':
                     val = self._low_value + self.tracking_amount
                 else:
                     val = inf
@@ -301,6 +301,7 @@ class DataRange1D(BaseDataRange):
                     self.updated = (self._low_value, self._high_value)
                 else:
                     new_values = (self._low_value, self._high_value)
+
         return new_values
 
     def _set_high_setting(self, val):
