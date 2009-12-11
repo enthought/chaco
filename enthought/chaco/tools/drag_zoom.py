@@ -105,7 +105,7 @@ class DragZoom(DragTool, BaseZoomTool):
                 return
 
             # prohibit zooming outside the domain of the axis
-            if self.restrict_domains:
+            if self.restrict_domain:
                 if newlow > newhigh:
                     # This happens when the orientation of the axis is reversed.
                     newlow, newhigh = newhigh, newlow                    
