@@ -128,17 +128,25 @@ class ColorBar(AbstractPlotRenderer):
             axis_dim = 1
         
         mapper = self.index_mapper
-        low = mapper.range.low
-        high = mapper.range.high
-        if high == low:
-            data_points = array([high])
+
+        scrn_points = arange(mapper.low_pos, mapper.high_pos+1)
+        
+        # Get the data values associated with the list of screen points.
+        if mapper.range.low == mapper.range.high:
+            # LogMapper.map_data() returns something unexpected if low==high,
+            # so we'll handle that case here.
+            data_points = array([mapper.range.high])
         else:
-            data_points = arange(low, high, (high-low)/self.bounds[axis_dim])
+            data_points = mapper.map_data(scrn_points)
+
         if self.direction == 'flipped':
             data_points = data_points[::-1]
+            
+        # Get the colors associated with the data points.
         colors = self.color_mapper.map_screen(data_points)
         
-        img = self._make_color_image(colors, self.bounds[perpendicular_dim], self.orientation, self.direction)
+        img = self._make_color_image(colors, self.bounds[perpendicular_dim],
+                                                self.orientation, self.direction)
         try:
             gc.draw_image(img, (self.x, self.y, self.width, self.height))
         finally:
@@ -150,7 +158,8 @@ class ColorBar(AbstractPlotRenderer):
         values (Nx3 or Nx4). The *width* parameter is the width of the 
         colorbar, and *orientation* is the orientation of the plot.
         """
-        bmparray = ones((width, color_values.shape[0], color_values.shape[1]))* color_values * 255
+        bmparray = ones((width, color_values.shape[0],
+                                    color_values.shape[1]))* color_values * 255
         
         if orientation == "v":
             bmparray = transpose(bmparray, axes=(1,0,2))[::-1]
@@ -207,6 +216,11 @@ class ColorBar(AbstractPlotRenderer):
         self.request_redraw()
         
     def _index_mapper_changed(self):
+        # Keep the grid and axis index_mappers the same as our index_mapper.
+        if self._grid is not None:
+            self._grid.mapper = self.index_mapper
+        if self._axis is not None:
+            self._axis.mapper = self.index_mapper
         self._either_mapper_changed()
 
     def _color_mapper_changed(self):
