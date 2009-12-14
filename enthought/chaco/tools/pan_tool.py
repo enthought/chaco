@@ -180,11 +180,15 @@ class PanTool(BaseTool):
                 if newlow <= domain_min:
                     delta = newhigh - newlow
                     newlow = domain_min
-                    newhigh = domain_min + delta
-                if newhigh >= domain_max:
+                    # Don't let the adjusted newhigh exceed domain_max; this
+                    # can happen with a nonlinear mapper.
+                    newhigh = min(domain_max, domain_min + delta)
+                elif newhigh >= domain_max:
                     delta = newhigh - newlow
                     newhigh = domain_max
-                    newlow = domain_max - delta                    
+                    # Don't let the adjusted newlow go below domain_min; this
+                    # can happen with a nonlinear mapper.
+                    newlow = max(domain_min, domain_max - delta)
 
                 # Use .set_bounds() so that we don't generate two range_changed
                 # events on the DataRange
