@@ -5,7 +5,7 @@
 from types import IntType, FloatType
 from numpy import arange, array, asarray, clip, \
                   divide, isnan, ones, searchsorted, \
-                  sometrue, sort, take, where, zeros, linspace
+                  sometrue, sort, take, where, zeros, linspace, ones_like
 
 # Enthought library imports
 from enthought.traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
@@ -251,7 +251,7 @@ class ColorMapper(AbstractColormap):
         
         # Handle null ranges
         if high == low:
-            norm_data = ones(len(data_array))
+            norm_data = 0.5*ones_like(data_array)
         else:
             norm_data = clip((data_array - low) / (high - low), 0.0, 1.0)
         
