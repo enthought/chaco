@@ -162,7 +162,6 @@ class RangeSelection2D(RangeSelection):
         elif max(new_selection) > range_high:
             new_selection = (range_high - selection_data_width, range_high)
                 
-        
         self.selection = new_selection
         self.selection_completed = new_selection
         self.component.request_redraw()
@@ -184,6 +183,7 @@ class RangeSelection2D(RangeSelection):
         x_pos = self._get_axis_coord(event, "index")
         y_pos = self._get_axis_coord(event, "value")
         mapped_pos = self._map_data([(x_pos,y_pos)])[0][self.axis_index]
+        
         self.selection = (mapped_pos, mapped_pos)
             
         self._set_sizing_cursor(event)
@@ -214,19 +214,33 @@ class RangeSelection2D(RangeSelection):
                                     
                 if self._drag_edge == "high":
                     low_val = self.selection[0]
-                    if new_edge >= low_val:
+                    
+                    # the selection should be a range consisting of 2 points, 
+                    # if it appears that only 1 point is selected, move one 
+                    # edge over a pixel
+                    if new_edge == low_val:
+                        new_edge = self._map_data([(x_pos+1,y_pos+1)])[0][self.axis_index]
+                        
+                    if new_edge > low_val:
                         self.selection = (low_val, new_edge)
                     else:
                         self.selection = (new_edge, low_val)
                         self._drag_edge = "low"
                 else:
                     high_val = self.selection[1]
-                    if new_edge <= high_val:
+                    
+                    # the selection should be a range consisting of 2 points, 
+                    # if it appears that only 1 point is selected, move one 
+                    # edge over a pixel
+                    if new_edge == high_val:
+                        new_edge = self._map_data([(x_pos-1,y_pos-1)])[0][self.axis_index]
+                        
+                    if new_edge < high_val:
                         self.selection = (new_edge, high_val)
                     else:
                         self.selection = (high_val, new_edge)
                         self._drag_edge = "high"
-
+                        
                 self.component.request_redraw()
             event.handled = True
         return
