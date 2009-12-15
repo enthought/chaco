@@ -42,6 +42,10 @@ class PlotToolbar(Container, AbstractOverlay):
     # Should the toolbar be hidden
     hiding = Bool(True)
     
+    # should the toolbar go automatically go back into hiding when the mouse
+    # is not hovering over it
+    auto_hide = Bool(True)
+    
     # the radius used to determine how round to make the toolbar's edges
     end_radius = Float(4.0)
     
@@ -228,7 +232,8 @@ class PlotToolbar(Container, AbstractOverlay):
                 self.normal_left_down(event)
                 event.handled = True
         else:
-            self.hiding = True
+            if self.auto_hide:
+                self.hiding = True
                 
         return
 
@@ -263,3 +268,7 @@ class PlotToolbar(Container, AbstractOverlay):
         self._layout_needed = True
         self.request_redraw()
         
+    @on_trait_change('auto_hide')
+    def _auto_hide_changed(self):
+        self.hiding = self.auto_hide
+        self.request_redraw()
