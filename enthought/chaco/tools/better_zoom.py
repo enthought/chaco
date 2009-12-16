@@ -1,9 +1,38 @@
 import numpy
 
 from enthought.enable.api import BaseTool, KeySpec
-from enthought.traits.api import Enum, Float, Instance, Bool
+from enthought.traits.api import Enum, Float, Instance, Bool, HasTraits, List
 
 from tool_history_mixin import ToolHistoryMixin
+
+class ZoomState(HasTraits):
+    """ A zoom state which can be applied and reverted.
+    
+        This class exists so that subclasses can introduce new types
+        of events which can be applied and reverted in the same manner.
+        This greatly eases the code for managing history
+    """
+    def __init__(self, old, new):
+        self.old = old
+        self.new = new
+        
+    def apply(self, zoom_tool):
+        zoom_tool._zoom_in_mapper(zoom_tool.component.index_mapper, 
+                                  self.new[0]/self.old[0])
+        zoom_tool._zoom_in_mapper(zoom_tool.component.value_mapper, 
+                                  self.new[1]/self.old[1])
+        
+        zoom_tool._index_factor = self.new[0]
+        zoom_tool._value_factor = self.new[1]
+    
+    def revert(self, zoom_tool):
+        zoom_tool._zoom_in_mapper(zoom_tool.component.index_mapper, 
+                                  self.old[0]/self.new[0])
+        zoom_tool._zoom_in_mapper(zoom_tool.component.value_mapper, 
+                                  self.old[1]/self.new[1])
+
+        zoom_tool._index_factor = self.old[0]
+        zoom_tool._value_factor = self.old[1]
 
 class BetterZoom(BaseTool, ToolHistoryMixin):
     
@@ -47,7 +76,8 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     _index_factor = Float(1.0)
     _value_factor = Float(1.0)
 
-    _history = [(1.0, 1.0)]
+    # inherited from ToolHistoryMixin, but requires instances of ZoomState
+    _history = List(ZoomState, [ZoomState((1.0, 1.0), (1.0, 1.0))])
     
     #--------------------------------------------------------------------------
     #  public interface
@@ -56,86 +86,85 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     def zoom_in(self, factor=0):
         if factor == 0:
             factor = self.zoom_factor
-        if self.axis != 'value':
-            self._zoom_in_mapper(self.component.index_mapper, factor)
-            self._index_factor *= factor
-        if self.axis != 'index':
-            self._zoom_in_mapper(self.component.value_mapper, factor)
-            self._value_factor *= factor
             
-        self._append_state((self._index_factor, self._value_factor))
+        new_index_factor = self._index_factor * factor
+        new_value_factor = self._value_factor * factor
+                    
+        if self.axis == 'value':
+            new_index_factor = self._index_factor
+        elif self.axis == 'index':
+            new_value_factor = self._value_factor
+            
+        zoom_state = ZoomState((self._index_factor, self._value_factor),
+                               (new_index_factor, new_value_factor))
+        
+        zoom_state.apply(self)
+        self._append_state(zoom_state)
     
     def zoom_out(self, factor=0):
         if factor == 0:
             factor = self.zoom_factor
-        if self.axis != 'value':
-            self._zoom_out_mapper(self.component.index_mapper, factor)
-            self._index_factor /= factor
-        if self.axis != 'index':
-            self._zoom_out_mapper(self.component.value_mapper, factor)
-            self._value_factor /= factor
             
-        self._append_state((self._index_factor, self._value_factor))
+        new_index_factor = self._index_factor / factor
+        new_value_factor = self._value_factor / factor
+                    
+        if self.axis == 'value':
+            new_index_factor = self._index_factor
+        elif self.axis == 'index':
+            new_value_factor = self._value_factor
+            
+        zoom_state = ZoomState((self._index_factor, self._value_factor),
+                               (new_index_factor, new_value_factor))
         
+        zoom_state.apply(self)
+        self._append_state(zoom_state)
+                
     def zoom_in_x(self, factor=0):
         if factor == 0:
             factor = self.zoom_factor
-
-        if self.component.orientation == "h":
-            mapper = self.component.index_mapper
-            self._zoom_in_mapper(mapper, factor)
-            self._index_factor *= factor
-        else:
-            mapper = self.component.value_mapper
-            self._zoom_in_mapper(mapper, factor)
-            self._value_factor *= factor
-
-        self._append_state((self._index_factor, self._value_factor))
+            
+        new_index_factor = self._index_factor * factor
+        zoom_state = ZoomState((self._index_factor, self._value_factor),
+                               (new_index_factor, self._value_factor))
+        
+        zoom_state.apply(self)            
+        self._append_state(zoom_state)        
 
     def zoom_out_x(self, factor=0):
         if factor == 0:
             factor = self.zoom_factor
-
-        if self.component.orientation == "h":
-            mapper = self.component.index_mapper
-            self._zoom_out_mapper(mapper, factor)
-            self._index_factor /= factor
-        else:
-            mapper = self.component.value_mapper
-            self._zoom_out_mapper(mapper, factor)
-            self._value_factor /= factor
-
-        self._append_state((self._index_factor, self._value_factor))
+            
+        new_index_factor = self._index_factor / factor
+        zoom_state = ZoomState((self._index_factor, self._value_factor),
+                               (new_index_factor, self._value_factor))
+        
+        zoom_state.apply(self)
+        self._append_state(zoom_state)        
 
     def zoom_in_y(self, factor=0):
         if factor == 0:
             factor = self.zoom_factor
-
-        if self.component.orientation == "v":
-            mapper = self.component.index_mapper
-            self._zoom_in_mapper(mapper, factor)
-            self._index_factor *= factor
-        else:
-            mapper = self.component.value_mapper
-            self._zoom_in_mapper(mapper, factor)
-            self._value_factor *= factor
-
-        self._append_state((self._index_factor, self._value_factor))
+            
+        new_value_factor = self._value_factor * factor
+        zoom_state = ZoomState((self._index_factor, self._value_factor),
+                               (self._index_factor, new_value_factor))
+        
+        zoom_state.apply(self)
+        self._append_state(zoom_state)        
 
     def zoom_out_y(self, factor=0):
         if factor == 0:
             factor = self.zoom_factor
-
-        if self.component.orientation == "v":
-            mapper = self.component.index_mapper
-            self._zoom_out_mapper(mapper, factor)
-            self._index_factor /= factor
-        else:
-            mapper = self.component.value_mapper
-            self._zoom_out_mapper(mapper, factor)
-            self._value_factor /= factor
             
-        self._append_state((self._index_factor, self._value_factor))
+        new_value_factor = self._value_factor / factor
+        zoom_state = ZoomState((self._index_factor, self._value_factor),
+                               (self._index_factor, new_value_factor))
+        
+        zoom_state.apply(self)
+            
+        self._value_factor = new_value_factor
+            
+        self._append_state(zoom_state)        
         
     #--------------------------------------------------------------------------
     #  BaseTool interface
@@ -169,6 +198,9 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         return
     
     def normal_mouse_wheel(self, event):
+        if not self.enable_wheel:
+            return
+        
         if event.mouse_wheel != 0:
             if event.mouse_wheel > 0:
                 self.zoom_in()
@@ -209,18 +241,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         if self.component.orientation == "h":
             return self.component.value_mapper
         return self.component.index_mapper
-    
-    def _update_from_state_change(self):
-        index_factor, value_factor = self._current_state()
         
-        self._zoom_in_mapper(self.component.index_mapper, 
-                             index_factor/self._index_factor)
-        self._zoom_in_mapper(self.component.value_mapper, 
-                             value_factor/self._value_factor)
-        
-        self._index_factor = index_factor
-        self._value_factor = value_factor
-    
     #--------------------------------------------------------------------------
     #  ToolHistoryMixin interface
     #--------------------------------------------------------------------------
@@ -232,7 +253,8 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         The **_history_index** will have already been set to the index 
         corresponding to the next state.
         """
-        self._update_from_state_change()   
+        
+        self._current_state().apply(self)
 
     def _prev_state_pressed(self):
         """ Called when the tool needs to advance to the previous state in the
@@ -241,11 +263,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         The **_history_index** will have already been set to the index
         corresponding to the previous state.
         """
-        self._update_from_state_change()           
+        self._history[self._history_index+1].revert(self)
     
     def _reset_state_pressed(self):
         """ Called when the tool needs to reset its history.  
         
         The history index will have already been set to 0.
         """
-        self._update_from_state_change()   
+        for state in self._history[::-1]:
+            state.revert(self)
+            
