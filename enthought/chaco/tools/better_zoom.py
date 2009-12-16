@@ -122,10 +122,16 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     def zoom_in_x(self, factor=0):
         if factor == 0:
             factor = self.zoom_factor
+
+        if self.component.orientation == 'h':
+            new_index_factor = self._index_factor * factor
+            new_value_factor = self._value_factor
+        else:
+            new_index_factor = self._index_factor
+            new_value_factor = self._value_factor * factor
             
-        new_index_factor = self._index_factor * factor
         zoom_state = ZoomState((self._index_factor, self._value_factor),
-                               (new_index_factor, self._value_factor))
+                               (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)            
         self._append_state(zoom_state)        
@@ -134,9 +140,15 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         if factor == 0:
             factor = self.zoom_factor
             
-        new_index_factor = self._index_factor / factor
+        if self.component.orientation == 'h':
+            new_index_factor = self._index_factor / factor
+            new_value_factor = self._value_factor
+        else:
+            new_index_factor = self._index_factor
+            new_value_factor = self._value_factor / factor
+            
         zoom_state = ZoomState((self._index_factor, self._value_factor),
-                               (new_index_factor, self._value_factor))
+                               (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)
         self._append_state(zoom_state)        
@@ -145,9 +157,15 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         if factor == 0:
             factor = self.zoom_factor
             
-        new_value_factor = self._value_factor * factor
+        if self.component.orientation == 'v':
+            new_index_factor = self._index_factor * factor
+            new_value_factor = self._value_factor
+        else:
+            new_index_factor = self._index_factor
+            new_value_factor = self._value_factor * factor
+            
         zoom_state = ZoomState((self._index_factor, self._value_factor),
-                               (self._index_factor, new_value_factor))
+                               (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)
         self._append_state(zoom_state)        
@@ -156,9 +174,15 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         if factor == 0:
             factor = self.zoom_factor
             
-        new_value_factor = self._value_factor / factor
+        if self.component.orientation == 'v':
+            new_index_factor = self._index_factor / factor
+            new_value_factor = self._value_factor
+        else:
+            new_index_factor = self._index_factor
+            new_value_factor = self._value_factor / factor
+            
         zoom_state = ZoomState((self._index_factor, self._value_factor),
-                               (self._index_factor, new_value_factor))
+                               (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)
             
