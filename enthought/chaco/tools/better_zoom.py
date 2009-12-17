@@ -232,6 +232,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                 self.zoom_out()
             event.handled = True
 
+    def normal_mouse_enter(self, event):
+        """ Try to set the focus to the window when the mouse enters, otherwise
+            the keypress events will not be triggered.
+        """
+        if self.component._window is not None:
+            self.component._window._set_focus()
+
     #--------------------------------------------------------------------------
     #  private interface
     #--------------------------------------------------------------------------
