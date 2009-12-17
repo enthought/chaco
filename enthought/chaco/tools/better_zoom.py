@@ -12,27 +12,27 @@ class ZoomState(HasTraits):
         of events which can be applied and reverted in the same manner.
         This greatly eases the code for managing history
     """
-    def __init__(self, old, new):
-        self.old = old
-        self.new = new
+    def __init__(self, prev, next):
+        self.prev = prev
+        self.next = next
         
     def apply(self, zoom_tool):
         zoom_tool._zoom_in_mapper(zoom_tool.component.index_mapper, 
-                                  self.new[0]/self.old[0])
+                                  self.next[0]/self.prev[0])
         zoom_tool._zoom_in_mapper(zoom_tool.component.value_mapper, 
-                                  self.new[1]/self.old[1])
+                                  self.next[1]/self.prev[1])
         
-        zoom_tool._index_factor = self.new[0]
-        zoom_tool._value_factor = self.new[1]
+        zoom_tool._index_factor = self.next[0]
+        zoom_tool._value_factor = self.next[1]
     
     def revert(self, zoom_tool):
         zoom_tool._zoom_in_mapper(zoom_tool.component.index_mapper, 
-                                  self.old[0]/self.new[0])
+                                  self.prev[0]/self.next[0])
         zoom_tool._zoom_in_mapper(zoom_tool.component.value_mapper, 
-                                  self.old[1]/self.new[1])
+                                  self.prev[1]/self.next[1])
 
-        zoom_tool._index_factor = self.old[0]
-        zoom_tool._value_factor = self.old[1]
+        zoom_tool._index_factor = self.prev[0]
+        zoom_tool._value_factor = self.prev[1]
 
 class BetterZoom(BaseTool, ToolHistoryMixin):
     

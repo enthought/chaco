@@ -1,4 +1,5 @@
 from better_zoom import BetterZoom
+from better_selecting_zoom import BetterSelectingZoom
 from broadcaster import BroadcasterTool
 from dataprinter import DataPrinter
 from data_label_tool import DataLabelTool
