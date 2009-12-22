@@ -1,12 +1,13 @@
+
 from enthought.etsconfig.api import ETSConfig
 from enthought.enable.tools.toolbars.toolbar_buttons import Button
 from enthought.chaco.tools.simple_zoom import SimpleZoom
 from enthought.chaco.plot_graphics_context import PlotGraphicsContext
 from enthought.kiva.backend_image import Image
 from enthought.pyface.image_resource import ImageResource
-from enthought.pyface.api import FileDialog, OK
-from enthought.traits.api import Instance, Str, File
-from enthought.traits.ui.api import View, Item
+from enthought.pyface.api import FileDialog, OK, error
+from enthought.traits.api import Instance, Str
+
 
 class ToolbarButton(Button):
     image = Str()
@@ -72,6 +73,7 @@ class SaveAsButton(ToolbarButton):
     image = 'document-save'
 
     def perform(self, event):
+        
         plot_component = self.container.component
 
         filter = 'PNG file (*.png)|*.png|\nTIFF file (*.tiff)|*.tiff|'
@@ -80,21 +82,29 @@ class SaveAsButton(ToolbarButton):
         if dialog.open() != OK:
             return
 
-        filename = dialog.path
+        # Remove the toolbar before saving the plot, so the output doesn't
+        # include the toolbar.
+        plot_component.remove_toolbar()
 
-        # We need to hide the toolbar, then put it back after the
-        # plot has been saved
-        auto_hide_reset = plot_component.auto_hide
-        plot_component.auto_hide = True
+        filename = dialog.path
 
         width, height = plot_component.outer_bounds
 
         gc = PlotGraphicsContext((width, height), dpi=72)
         gc.render_component(plot_component)
-        gc.save(filename)
+        try:
+            gc.save(filename)
+        except KeyError, e:
+            errmsg = "The filename must have an extension that matches a graphics"
+            errmsg = errmsg + " format, such as '.png' or '.tiff'."
+            if str(e.message) != '':
+                errmsg = ("Unknown filename extension: '%s'\n" % str(e.message)) + errmsg
+            
+            error(None, errmsg, title="Invalid Filename Extension")
 
-        # Reset the auto_hide trait so the toolbar is no longer hidden
-        plot_component.auto_hide = auto_hide_reset
+        # Restore the toolbar.
+        plot_component.add_toolbar()
+
 
 
 class CopyToClipboardButton(ToolbarButton):
@@ -104,10 +114,9 @@ class CopyToClipboardButton(ToolbarButton):
     def perform(self, event):
         plot_component = self.container.component
 
-        # We need to hide the toolbar, then put it back after the
-        # plot has been saved
-        auto_hide_reset = plot_component.auto_hide
-        plot_component.auto_hide = True
+        # Remove the toolbar before saving the plot, so the output doesn't
+        # include the toolbar.
+        plot_component.remove_toolbar()
 
         width, height = plot_component.outer_bounds
 
@@ -115,11 +124,13 @@ class CopyToClipboardButton(ToolbarButton):
         gc.render_component(plot_component)
 
         if ETSConfig.toolkit == 'wx':
-	    self._perform_wx(width, height, gc)
-	else:
-	    pass
+            self._perform_wx(width, height, gc)
+        else:
+            pass
 
-        plot_component.auto_hide = auto_hide_reset
+        # Restore the toolbar.
+        plot_component.add_toolbar()
+
 
     def _perform_wx(self, width, height, gc):
         import wx
