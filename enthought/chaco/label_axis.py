@@ -2,7 +2,7 @@
 """
 # Major library imports
 from traceback import print_exc
-from numpy import array, compress, float64, inf, searchsorted, take
+from numpy import array, float64, inf, take, allclose
 
 # Enthought library imports
 from enthought.traits.api import Any, Str, List, Float
@@ -46,31 +46,33 @@ class LabelAxis(PlotAxis):
         if not self.tick_generator:
             return
         
+        # Get a set of ticks from the tick generator.
         tick_list = array(self.tick_generator.get_ticks(datalow, datahigh,
                                                         datalow, datahigh,
                                                         self.tick_interval), float64)
-                
-        
-        tick_indices = searchsorted(self.positions, tick_list)
-        tick_indices = compress(tick_indices < len(self.positions), tick_indices)
-        tick_positions =  take(self.positions, tick_indices)
+
+        # Keep only the subset of ticks that correspond to elements in `self.positions`.
+        # `tick_indices` is the list of indices of `self.positions` of the ticks to
+        # keep.
+        tick_indices = []
+        for tick in tick_list:
+            for i, pos in enumerate(self.positions):
+                if allclose(pos, tick):
+                    tick_indices.append(i)
+
+        # Create arrays of the tick positions and their labels.
+        tick_positions = take(self.positions, tick_indices)
         self._tick_label_list = take(self.labels, tick_indices)
-        
+
         if datalow > datahigh:
             raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
-        
-        if self.small_haxis_style:
-            mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
-                                       (screenhigh-screenlow)) for pos in tick_positions]
-            self._tick_positions = [self._axis_vector*tickpos + self._origin_point \
-                                          for tickpos in mapped_label_positions]    
-            self._tick_label_positions = self._tick_positions        
-        else:
-            mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
-                                       (screenhigh-screenlow)) for pos in tick_positions]
-            self._tick_positions = [self._axis_vector*tickpos + self._origin_point \
-                                    for tickpos in mapped_label_positions]
-            self._tick_label_positions = self._tick_positions
+
+        mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
+                                   (screenhigh-screenlow)) for pos in tick_positions]
+        self._tick_positions = [self._axis_vector*tickpos + self._origin_point \
+                                        for tickpos in mapped_label_positions]    
+        self._tick_label_positions = self._tick_positions        
+ 
         return
         
         
