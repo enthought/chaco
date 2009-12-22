@@ -101,16 +101,10 @@ class ColorBar(AbstractPlotRenderer):
             else:
                 self.origin = 'top left'
         
-        if self.orientation == 'h':
-            grid_orientation = 'vertical'
-            axis_orientation = 'bottom'
-        else:
-            grid_orientation = 'horizontal'
-            axis_orientation = 'left'
-        self._grid = PlotGrid(orientation=grid_orientation,
+        self._grid = PlotGrid(orientation='horizontal',
                               mapper=self.index_mapper,
                               component=self)
-        self._axis = PlotAxis(orientation=axis_orientation,
+        self._axis = PlotAxis(orientation='left',
                               mapper=self.index_mapper,
                               component=self)
         self.overlays.append(self._grid)
