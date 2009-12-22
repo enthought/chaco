@@ -59,6 +59,7 @@ class LabelAxis(PlotAxis):
             for i, pos in enumerate(self.positions):
                 if allclose(pos, tick):
                     tick_indices.append(i)
+                    break
 
         # Create arrays of the tick positions and their labels.
         tick_positions = take(self.positions, tick_indices)
