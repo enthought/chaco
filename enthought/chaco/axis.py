@@ -864,6 +864,15 @@ class PlotAxis(AbstractOverlay):
 
     def _tick_label_color_changed(self):
         return self._invalidate()
+    
+    def _tick_label_rotate_angle_changed(self):
+        return self._invalidate()
+    
+    def _tick_label_margin_changed(self):
+        return self._invalidate()
+    
+    def _tick_label_offset_changed(self):
+        return self._invalidate()
 
     def _tick_in_changed(self):
         return self._invalidate()
