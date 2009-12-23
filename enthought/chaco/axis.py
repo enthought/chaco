@@ -458,9 +458,10 @@ class PlotAxis(AbstractOverlay):
             #Note: This is not necessarily optimal for non
             #horizontal/vertical axes.  More work could be done on this.
 
-            base_position = (self._center_dist(-self._inside_vector, *tl_bounds)+self.tick_label_offset) \
-                                * -self._inside_vector \
-                                - tl_bounds/2.0 + self._tick_label_positions[i]
+            base_position = (self._center_dist(-self._inside_vector,
+                rotation=self.tick_label_rotate_angle, *tl_bounds) + \
+                self.tick_label_offset) * -self._inside_vector - \
+                tl_bounds/2.0 + self._tick_label_positions[i]
 
             if self.ensure_labels_bounded:
                 pushdir = 0

@@ -12,13 +12,16 @@ from enthought.traits.api import Bool, Float, HasTraits, Int, \
 
 class Label(HasTraits):
     """ A label used by overlays.
+    
+    Rotated text is drawn with the lower left corner of the bounding box at
+    the current origin of the graphics context when the draw method is called.
     """
 
     # The label text.  Carriage returns (\n) are always connverted into
     # line breaks.
     text = Str
 
-    # The angle of rotation of the label.  Only multiples of 90 are supported.
+    # The angle of rotation of the label.
     rotate_angle = Float(0)
 
     # The color of the label text.
@@ -138,9 +141,16 @@ class Label(HasTraits):
         self._calc_line_positions(gc)
         try:
             gc.save_state()
+            
+            bb_width, bb_height = self.get_bounding_box(gc)
+
+            # Rotate label about center of bounding box
+            width, height = self._bounding_box
+            gc.translate_ctm(bb_width/2.0, bb_height/2.0)
+            gc.rotate_ctm(pi/180.0*self.rotate_angle)
+            gc.translate_ctm(-width/2.0, -height/2.0)
 
             # Draw border and fill background
-            width, height = self._bounding_box
             if self.bgcolor != "transparent":
                 gc.set_fill_color(self.bgcolor_)
                 gc.rect(0, 0, width, height)
@@ -160,8 +170,6 @@ class Label(HasTraits):
             else:
                 gc.set_antialias(1)
 
-            gc.rotate_ctm(pi/180.0*self.rotate_angle)
-
             #margin = self.margin
             lines = self.text.split("\n")
             gc.translate_ctm(self.border_width, self.border_width)
@@ -170,15 +178,8 @@ class Label(HasTraits):
             for i, line in enumerate(lines):
                 if line == "":
                     continue
-
-                if self.rotate_angle==90. or self.rotate_angle==270.:
-                    x_offset = round(self._line_ypos[i])
-                    # this should really be "... - height/2" but
-                    # that looks wrong
-                    y_offset = round(self._line_xpos[i] - height)
-                else:
-                    x_offset = round(self._line_xpos[i])
-                    y_offset = round(self._line_ypos[i])
+                x_offset = round(self._line_xpos[i])
+                y_offset = round(self._line_ypos[i])
                 gc.set_text_position(0,0)
                 gc.translate_ctm(x_offset, y_offset)
 
