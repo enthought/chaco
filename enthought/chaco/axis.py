@@ -60,6 +60,15 @@ class PlotAxis(AbstractOverlay):
 
     # The color of the tick labels.
     tick_label_color = ColorTrait("black")
+    
+    # The rotation of the tick labels.  (Only multiples of 90 are supported)
+    tick_label_rotate_angle = Float(0)
+    
+    # The margin around the tick labels.
+    tick_label_margin = Int(2)
+    
+    # The distance of the tick label from the axis.
+    tick_label_offset = Float(8.)
 
     # A callable that is passed the numerical value of each tick label and
     # that returns a string.
@@ -449,7 +458,7 @@ class PlotAxis(AbstractOverlay):
             #Note: This is not necessarily optimal for non
             #horizontal/vertical axes.  More work could be done on this.
 
-            base_position = (self._center_dist(-self._inside_vector, *tl_bounds)+8) \
+            base_position = (self._center_dist(-self._inside_vector, *tl_bounds)+self.tick_label_offset) \
                                 * -self._inside_vector \
                                 - tl_bounds/2.0 + self._tick_label_positions[i]
 
@@ -571,7 +580,9 @@ class PlotAxis(AbstractOverlay):
                 tickstring = str(val)
             ticklabel = Label(text=tickstring,
                               font=self.tick_label_font,
-                              color=self.tick_label_color)
+                              color=self.tick_label_color,
+                              rotate_angle=self.tick_label_rotate_angle,
+                              margin=self.tick_label_margin)
             self.ticklabel_cache.append(ticklabel)
 
         # TODO: Right now we are hardcoding this handling of a scaled CTM,
