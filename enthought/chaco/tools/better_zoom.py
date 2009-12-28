@@ -17,10 +17,15 @@ class ZoomState(HasTraits):
         self.next = next
         
     def apply(self, zoom_tool):
-        zoom_tool._zoom_in_mapper(zoom_tool.component.index_mapper, 
-                                  self.next[0]/self.prev[0])
-        zoom_tool._zoom_in_mapper(zoom_tool.component.value_mapper, 
-                                  self.next[1]/self.prev[1])
+        index_factor = self.next[0]/self.prev[0]
+        value_factor = self.next[1]/self.prev[1]
+        
+        if index_factor != 1.0:
+            zoom_tool._zoom_in_mapper(zoom_tool.component.index_mapper, 
+                                      index_factor)
+        if value_factor != 1.0:
+            zoom_tool._zoom_in_mapper(zoom_tool.component.value_mapper, 
+                                      value_factor)
         
         zoom_tool._index_factor = self.next[0]
         zoom_tool._value_factor = self.next[1]
@@ -129,6 +134,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         else:
             new_index_factor = self._index_factor
             new_value_factor = self._value_factor * factor
+            
             
         zoom_state = ZoomState((self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
@@ -244,6 +250,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     #--------------------------------------------------------------------------
 
     def _zoom_in_mapper(self, mapper, factor):
+
         high = mapper.range.high
         low = mapper.range.low
         range = high-low
