@@ -68,11 +68,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     
     # The maximum ratio between the original data space bounds and the zoomed-in
     # data space bounds.  If No limit is desired, set to inf
-    max_zoom_factor = Float(1e5)
+    x_max_zoom_factor = Float(1e5)
+    y_max_zoom_factor = Float(1e5)
 
     # The maximum ratio between the zoomed-out data space bounds and the original
     # bounds.  If No limit is desired, set to -inf
-    min_zoom_factor = Float(1e-5)
+    x_min_zoom_factor = Float(1e-5)
+    y_min_zoom_factor = Float(1e-5)
 
     # The amount to zoom in by. The zoom out will be inversely proportional
     zoom_factor = 2.0
@@ -100,10 +102,16 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         elif self.axis == 'index':
             new_value_factor = self._value_factor
 
-        if self._zoom_limit_reached(new_index_factor):
-            return
-        if self._zoom_limit_reached(new_value_factor):
-            return
+        if self.component.orientation == 'h':
+            if self._zoom_limit_reached(new_index_factor, 'x'):
+                return
+            if self._zoom_limit_reached(new_value_factor, 'y'):
+                return
+        else:
+            if self._zoom_limit_reached(new_index_factor, 'y'):
+                return
+            if self._zoom_limit_reached(new_value_factor, 'x'):
+                return
                     
         zoom_state = ZoomState((self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
@@ -123,10 +131,16 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         elif self.axis == 'index':
             new_value_factor = self._value_factor
             
-        if self._zoom_limit_reached(new_index_factor):
-            return
-        if self._zoom_limit_reached(new_value_factor):
-            return
+        if self.component.orientation == 'h':
+            if self._zoom_limit_reached(new_index_factor, 'x'):
+                return
+            if self._zoom_limit_reached(new_value_factor, 'y'):
+                return
+        else:
+            if self._zoom_limit_reached(new_index_factor, 'y'):
+                return
+            if self._zoom_limit_reached(new_value_factor, 'x'):
+                return
                     
         zoom_state = ZoomState((self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
@@ -141,14 +155,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         if self.component.orientation == 'h':
             new_index_factor = self._index_factor * factor
             new_value_factor = self._value_factor
+            if self._zoom_limit_reached(new_index_factor, 'x'):
+                return
         else:
             new_index_factor = self._index_factor
             new_value_factor = self._value_factor * factor
-            
-        if self._zoom_limit_reached(new_index_factor):
-            return
-        if self._zoom_limit_reached(new_value_factor):
-            return
+            if self._zoom_limit_reached(new_value_factor, 'x'):
+                return
                                 
         zoom_state = ZoomState((self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
@@ -163,14 +176,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         if self.component.orientation == 'h':
             new_index_factor = self._index_factor / factor
             new_value_factor = self._value_factor
+            if self._zoom_limit_reached(new_index_factor, 'x'):
+                return
         else:
             new_index_factor = self._index_factor
-            new_value_factor = self._value_factor / factor
-            
-        if self._zoom_limit_reached(new_index_factor):
-            return
-        if self._zoom_limit_reached(new_value_factor):
-            return
+            new_value_factor = self._value_factor / factor            
+            if self._zoom_limit_reached(new_value_factor, 'x'):
+                return
                     
         zoom_state = ZoomState((self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
@@ -185,14 +197,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         if self.component.orientation == 'v':
             new_index_factor = self._index_factor * factor
             new_value_factor = self._value_factor
+            if self._zoom_limit_reached(new_index_factor, 'y'):
+                return
         else:
             new_index_factor = self._index_factor
-            new_value_factor = self._value_factor * factor
-            
-        if self._zoom_limit_reached(new_index_factor):
-            return
-        if self._zoom_limit_reached(new_value_factor):
-            return
+            new_value_factor = self._value_factor * factor            
+            if self._zoom_limit_reached(new_value_factor, 'y'):
+                return
                     
         zoom_state = ZoomState((self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
@@ -207,14 +218,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         if self.component.orientation == 'v':
             new_index_factor = self._index_factor / factor
             new_value_factor = self._value_factor
+            if self._zoom_limit_reached(new_index_factor, 'y'):
+                return
         else:
             new_index_factor = self._index_factor
-            new_value_factor = self._value_factor / factor
-            
-        if self._zoom_limit_reached(new_index_factor):
-            return
-        if self._zoom_limit_reached(new_value_factor):
-            return
+            new_value_factor = self._value_factor / factor            
+            if self._zoom_limit_reached(new_value_factor, 'y'):
+                return
                     
         zoom_state = ZoomState((self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
@@ -278,14 +288,19 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     #  private interface
     #--------------------------------------------------------------------------
 
-    def _zoom_limit_reached(self, factor):
+    def _zoom_limit_reached(self, factor, xy_axis):
         """ Returns True if the new low and high exceed the maximum zoom
         limits
         """
         
-        if factor <= self.max_zoom_factor and factor >= self.min_zoom_factor:
-            return False
-        return True
+        if xy_axis == 'x':
+            if factor <= self.x_max_zoom_factor and factor >= self.x_min_zoom_factor:
+                return False
+            return True
+        else:
+            if factor <= self.y_max_zoom_factor and factor >= self.y_min_zoom_factor:
+                return False
+            return True
 
     def _zoom_in_mapper(self, mapper, factor):
 
