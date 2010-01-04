@@ -459,7 +459,7 @@ class PlotAxis(AbstractOverlay):
             #horizontal/vertical axes.  More work could be done on this.
 
             base_position = (self._center_dist(-self._inside_vector,
-                rotation=self.tick_label_rotate_angle, *tl_bounds) + \
+                rotation=0, *tl_bounds) + \
                 self.tick_label_offset) * -self._inside_vector - \
                 tl_bounds/2.0 + self._tick_label_positions[i]
 
@@ -729,7 +729,8 @@ class PlotAxis(AbstractOverlay):
         the center of the rectangle, to wherever the vector leaves the
         rectangle. This method is useful for determining where to place text so
         it doesn't run into other components. """
-        rotvec = transpose(dot(self._rotmatrix(rotation*pi/180.0), transpose(array([vect], float64))))[0]
+        rotvec = transpose(dot(self._rotmatrix(rotation*pi/180.0),
+            transpose(array([vect], float64))))[0]
         absvec = absolute(rotvec)
         if absvec[1] != 0:
             heightdist = (float(height)/2)/float(absvec[1])
