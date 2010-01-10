@@ -219,7 +219,6 @@ class DataLabel(ToolTip):
             c = component
             gc.clip_to_rect(c.x, c.y, c.width, c.height)
 
-        print "drawing label, color:", self.text_color
         self.do_layout()
         
         # draw the arrow if necessary
