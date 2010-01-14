@@ -3,7 +3,7 @@ CompositeIconRenderer classes.
 """
 from numpy import array, zeros_like
 
-from enthought.enable.api import white_color_trait
+from enthought.enable.api import black_color_trait, white_color_trait
 from enthought.kiva import font_metrics_provider
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
@@ -74,6 +74,9 @@ class Legend(AbstractOverlay):
 
     # The border is visible (overrides Enable Component).
     border_visible = True
+
+    # The color of the text labels
+    color = black_color_trait
 
     # The background color of the legend (overrides AbstractOverlay).
     bgcolor = white_color_trait
@@ -446,8 +449,8 @@ class Legend(AbstractOverlay):
         """ Returns a new Label instance for the given text.  Subclasses can
         override this method to customize the creation of labels.
         """
-        return Label(text=text, font=self.font, margin=0, bgcolor="transparent",
-                     border_width=0)
+        return Label(text=text, font=self.font, margin=0, color=self.color_,
+                     bgcolor="transparent", border_width=0)
 
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
@@ -460,6 +463,8 @@ class Legend(AbstractOverlay):
                     "position", "position_items", "bounds", "bounds_items",
                     "label_at_top"):
             self._layout_needed = True
+        if name == "color":
+            self.get_preferred_size()
         return
 
 
