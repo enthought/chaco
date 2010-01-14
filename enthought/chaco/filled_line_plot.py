@@ -1,6 +1,6 @@
 
 
-from enthought.traits.api import Property
+from enthought.traits.api import Property, Enum
 
 # Local imports
 from polygon_plot import PolygonPlot
@@ -16,9 +16,16 @@ class FilledLinePlot(PolygonPlot):
     """ Draws a line plot filled to the axis """
 
     fill_color = Alias("face_color")
+    
+    # Direction to fill. Down is towards the origin, up is towards the max
+    fill_direction = Enum("down", "up")
 
     def _render(self, gc, points):
-        ox, oy = self.map_screen([[0,0]])[0]
+        if self.fill_direction == 'down':
+            ox, oy = self.map_screen([[0,0]])[0]
+        else:
+            ox, oy = self.map_screen([[self.x_mapper.range.high, 
+                                      self.y_mapper.range.high]])[0]
         gc.save_state()
 
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
