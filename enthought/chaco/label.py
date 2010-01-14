@@ -6,16 +6,25 @@ from math import cos, sin, pi
 # Enthought library imports
 from enthought.enable.api import black_color_trait, transparent_color_trait
 from enthought.kiva.traits.kiva_font_trait import KivaFont
-from enthought.traits.api import Bool, Float, HasTraits, Int, \
-                                 List, Str
+from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Int, \
+                                 List, Str, on_trait_change
 
 
 class Label(HasTraits):
     """ A label used by overlays.
-    
-    Rotated text is drawn with the lower left corner of the bounding box at
-    the current origin of the graphics context when the draw method is called.
+
+    Label is not a Component; it's just an object encapsulating text settings
+    and appearance attributes.  It can be used by components that need text
+    labels to store state, perform layout, and render the text.
     """
+
+    # The anchor point is the position on the label that is placed at the
+    # label's position.  The label is also rotated relative to this point.
+    # "Left" refers to the left edge of the text's bounding box (including
+    # margin), while "center" refers to the horizontal and vertical center
+    # of the bounding box.
+    anchor = Enum("left", "right", "top", "bottom", "center",
+                  "top left", "top right", "bottom left", "bottom right")
 
     # The label text.  Carriage returns (\n) are always connverted into
     # line breaks.
@@ -52,7 +61,8 @@ class Label(HasTraits):
 
     _bounding_box = List()
     _position_cache_valid = Bool(False)
-
+    _line_xpos = Any()
+    _line_ypos = Any()
 
     def __init__(self, **traits):
         HasTraits.__init__(self, **traits)
@@ -111,7 +121,6 @@ class Label(HasTraits):
     def get_bounding_box(self, gc):
         """ Returns a rectangular bounding box for the Label as (width,height).
         """
-        # FIXME: Need to deal with non 90 deg rotations
         width, height = self.get_width_height(gc)
         if self.rotate_angle in (90.0, 270.0):
             return (height, width)
@@ -137,7 +146,6 @@ class Label(HasTraits):
         of this text label's box.
         """
         # For this version we're not supporting rotated text.
-        # temp modified for only one line
         self._calc_line_positions(gc)
         try:
             gc.save_state()
@@ -189,15 +197,7 @@ class Label(HasTraits):
             gc.restore_state()
         return
 
-    def _font_changed(self):
-        self._position_cache_valid = False
-
-    def _margin_changed(self):
-        self._position_cache_valid = False
-
-    def _text_changed(self):
-        self._position_cache_valid = False
-
-    def _rotate_angle_changed(self):
+    @on_trait_change("font,margin,text,rotate_angle")
+    def _invalidate_position_cache(self):
         self._position_cache_valid = False
 
