@@ -30,7 +30,10 @@ class PlotToolbarHover(HoverTool):
         """
         for component in self.component.components:
             if component.is_in(*self._last_xy):
-                self.callback(component.label)                
+                self.callback(component.label)   
+                return
+        
+        self.callback('')           
 
 
 class PlotToolbar(Container, AbstractOverlay):
@@ -61,6 +64,9 @@ class PlotToolbar(Container, AbstractOverlay):
     
     # The edge against which the toolbar is placed.
     location = Enum('top', 'right', 'bottom', 'left')
+    
+    # Should tooltips be shown?
+    show_tooltips = Bool(False)
 
     ############################################################
     # PlotToolbar API
@@ -105,7 +111,8 @@ class PlotToolbar(Container, AbstractOverlay):
             self.hiding = False
             
     def on_hover(self, tooltip):
-        self.component.window.set_tooltip(tooltip)
+        if self.show_tooltips:
+            self.component.window.set_tooltip(tooltip)
             
     def normal_left_down(self, event):
         """ handler for a left mouse click
@@ -206,7 +213,7 @@ class PlotToolbar(Container, AbstractOverlay):
                 self.y = (component.height - self.height)/2 + component.padding_bottom
 
         if self.location in ['top', 'bottom']:
-            v_position = self.y + self.vertical_padding
+            v_position = self.y + self.vertical_padding*2
 
             last_button_position = self.x + self.horizontal_padding + self.button_spacing
             for button in self.components:

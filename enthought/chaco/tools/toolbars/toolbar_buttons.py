@@ -4,33 +4,61 @@ from enthought.enable.tools.toolbars.toolbar_buttons import Button
 from enthought.chaco.tools.simple_zoom import SimpleZoom
 from enthought.chaco.plot_graphics_context import PlotGraphicsContext
 from enthought.kiva.backend_image import Image
+from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.pyface.image_resource import ImageResource
 from enthought.pyface.api import FileDialog, OK, error
-from enthought.traits.api import Instance, Str
+from enthought.traits.api import Instance, Str, Property, cached_property, Int
 
 
 class ToolbarButton(Button):
     image = Str()
     _image = Instance(Image)
 
-    color = 'white'
-
+    color = 'black'
+    
+    width = Property(Int, depends_on='label, image')
+    height = Property(Int, depends_on='label, image')
 
     def __init__(self, *args, **kw):
         super(ToolbarButton, self).__init__(*args, **kw)
-
+        
         image_resource = ImageResource(self.image)
         self._image = Image(image_resource.absolute_path)
 
-        self.height = self._image.height()
-        self.width = self._image.width()
+    @cached_property
+    def _get_width(self):
+        gc = PlotGraphicsContext((100,100), dpi=72)
+        gc.set_font(self.label_font)
+        (w, h, descent, leading) = gc.get_full_text_extent(self.label)
+        return max(self._image.width(), w)
+    
+    @cached_property
+    def _get_height(self):
+        gc = PlotGraphicsContext((100,100), dpi=72)
+        gc.set_font(self.label_font)
+        (w, h, descent, leading) = gc.get_full_text_extent(self.label)
+        return self._image.height() + h
 
     def _draw_actual_button(self, gc):
+        x_offset = self.x + (self.width - self._image.width())/2
         gc.draw_image(self._image,
-                      (self.x, self.y+2, self._image.width(), self._image.height()))
+                      (x_offset, self.y+2, self._image.width(), self._image.height()))
+        
+        if self.label is not None and len(self.label) > 0:
+            gc.set_font(self.label_font)
+            
+            (w, h, descent, leading) = gc.get_full_text_extent(self.label)
+            if w < self.width:
+                x_offset = self.x + (self.width - w)/2
+            else:
+                x_offset = self.x
+            
+            gc.set_text_position(x_offset, self.y-8)
+            gc.show_text(self.label)
 
 class IndexAxisLogButton(ToolbarButton):
-    label = 'Change index axis scale'
+    label = 'X Log Scale'
+    tooltip = 'Change index axis scale'
     image = 'zoom-fit-width'
 
     def perform(self, event):
@@ -42,7 +70,8 @@ class IndexAxisLogButton(ToolbarButton):
         return
 
 class ValueAxisLogButton(ToolbarButton):
-    label = 'Change value axis scale'
+    label = 'Y Log Scale'
+    tooltip = 'Change value axis scale'
     image = 'zoom-fit-height'
 
     def perform(self, event):
@@ -54,7 +83,8 @@ class ValueAxisLogButton(ToolbarButton):
         return
 
 class ZoomResetButton(ToolbarButton):
-    label = 'Zoom reset'
+    label = 'Zoom Reset'
+    tooltip = 'Zoom Reset'
     image = 'zoom-original'
 
     def perform(self, event):
@@ -70,6 +100,7 @@ class ZoomResetButton(ToolbarButton):
 
 class SaveAsButton(ToolbarButton):
     label = 'Save As'
+    tooltip = 'Save As'
     image = 'document-save'
 
     def perform(self, event):
@@ -108,7 +139,8 @@ class SaveAsButton(ToolbarButton):
 
 
 class CopyToClipboardButton(ToolbarButton):
-    label = 'Copy to the clipboard'
+    label = "Copy"
+    tooltip = 'Copy to the clipboard'
     image = 'edit-copy'
 
     def perform(self, event):
