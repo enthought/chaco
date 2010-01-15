@@ -226,8 +226,9 @@ class PlotToolbar(Container, AbstractOverlay):
 
             last_button_position = self.y + self.vertical_padding + self.button_spacing
             for button in reversed(self.components):
+                h_offset = (self.width - button.width)/2 
                 button.y = last_button_position
-                button.x = h_position
+                button.x = h_position + h_offset
                 last_button_position += button.height + self.button_spacing*2            
 
 
