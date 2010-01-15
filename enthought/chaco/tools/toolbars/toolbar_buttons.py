@@ -4,10 +4,10 @@ from enthought.enable.tools.toolbars.toolbar_buttons import Button
 from enthought.chaco.tools.simple_zoom import SimpleZoom
 from enthought.chaco.plot_graphics_context import PlotGraphicsContext
 from enthought.kiva.backend_image import Image
-from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.pyface.image_resource import ImageResource
 from enthought.pyface.api import FileDialog, OK, error
-from enthought.traits.api import Instance, Str, Property, cached_property, Int
+from enthought.traits.api import Instance, Str, Property, cached_property, \
+    List, Int
 
 
 class ToolbarButton(Button):
@@ -18,6 +18,9 @@ class ToolbarButton(Button):
     
     width = Property(Int, depends_on='label, image')
     height = Property(Int, depends_on='label, image')
+    
+    # bounds are used for hit testing
+    bounds = Property(List, depends_on='label, image')
 
     def __init__(self, *args, **kw):
         super(ToolbarButton, self).__init__(*args, **kw)
@@ -39,6 +42,10 @@ class ToolbarButton(Button):
         (w, h, descent, leading) = gc.get_full_text_extent(self.label)
         return self._image.height() + h
 
+    @cached_property
+    def _get_bounds(self):
+        return [self.width, self.height]
+    
     def _draw_actual_button(self, gc):
         x_offset = self.x + (self.width - self._image.width())/2
         gc.draw_image(self._image,
