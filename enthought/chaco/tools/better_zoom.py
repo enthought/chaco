@@ -96,7 +96,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             
         new_index_factor = self._index_factor * factor
         new_value_factor = self._value_factor * factor
-
+        
         if self.axis == 'value':
             new_index_factor = self._index_factor
         elif self.axis == 'index':
@@ -363,4 +363,4 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         """
         for state in self._history[::-1]:
             state.revert(self)
-            
+        self._history = []
