@@ -8,7 +8,7 @@ Peter Wang              Public domain             N/A
 Unless stated in this file, icons are the work of Enthought, and are
 released under a 3 clause BSD license.
 
-Files and orginal authors:
+Files and original authors:
 ----------------------------------------------------------------------------
 examples/basic:
                         capitol.jpg | Peter Wang
