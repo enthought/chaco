@@ -64,6 +64,9 @@ class PlotAxis(AbstractOverlay):
     # The rotation of the tick labels.  (Only multiples of 90 are supported)
     tick_label_rotate_angle = Float(0)
     
+    # Whether to align to corners or edges (corner is better for 45 degree rotation)
+    tick_label_alignment = Enum('edge', 'corner')
+    
     # The margin around the tick labels.
     tick_label_margin = Int(2)
     
@@ -458,10 +461,17 @@ class PlotAxis(AbstractOverlay):
             #Note: This is not necessarily optimal for non
             #horizontal/vertical axes.  More work could be done on this.
 
-            base_position = (self._center_dist(-self._inside_vector,
-                rotation=0, *tl_bounds) + \
-                self.tick_label_offset) * -self._inside_vector - \
-                tl_bounds/2.0 + self._tick_label_positions[i]
+            if self.tick_label_alignment == 'edge':
+                base_position = (self._center_dist(-self._inside_vector,
+                    rotation=0, *tl_bounds) + \
+                    self.tick_label_offset) * -self._inside_vector - \
+                    tl_bounds/2.0 + self._tick_label_positions[i]
+            else:
+                base_position = self._tick_label_positions[i] - \
+                    self._corner_dist(-self._inside_vector,
+                        ticklabel.get_bounding_poly(gc)[:-1]) - \
+                    self.tick_label_offset*self._inside_vector
+                    
 
             if self.ensure_labels_bounded:
                 pushdir = 0
@@ -743,7 +753,13 @@ class PlotAxis(AbstractOverlay):
 
         return min(heightdist, widthdist)
 
-
+    def _corner_dist(self, vect, corners):
+        """Given a list of corner vectors, this method finds the
+        corner which is most extreme in the direction of the vector.
+        """
+        dots = array([dot(vect, corner) for corner in corners])
+        return corners[dots.argmin()]
+        
     #------------------------------------------------------------------------
     # Event handlers
     #------------------------------------------------------------------------

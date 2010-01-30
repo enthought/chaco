@@ -2,6 +2,7 @@
 """
 # Major library imports
 from math import cos, sin, pi
+from numpy import array, dot
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, transparent_color_trait
@@ -63,6 +64,7 @@ class Label(HasTraits):
     _position_cache_valid = Bool(False)
     _line_xpos = Any()
     _line_ypos = Any()
+    _rot_matrix = Any()
 
     def __init__(self, **traits):
         HasTraits.__init__(self, **traits)
@@ -136,7 +138,24 @@ class Label(HasTraits):
         Returns a list [(x0,y0), (x1,y1),...] of tuples representing a polygon
         that bounds the label.
         """
-        raise NotImplementedError
+        width, height = self.get_width_height(gc)
+        offset = array(self.get_bounding_box(gc))/2.
+        # unrotated points relative to centre
+        base_points = [
+            array([[-width/2.], [-height/2.]]),
+            array([[-width/2.], [height/2.]]),
+            array([[width/2.], [height/2.]]),
+            array([[width/2.], [-height/2.]]),
+            array([[-width/2.], [-height/2.]]),
+        ]
+        # rotate about centre, and offset to bounding box coords
+        points = [dot(self.get_rotation_matrix(), point).transpose()[0]+offset
+            for point in base_points]
+        return points
+     
+    def get_rotation_matrix(self):
+        return array([[cos(self.rotate_angle), -sin(self.rotate_angle)],
+            [sin(self.rotate_angle), cos(self.rotate_angle)]])
 
     def draw(self, gc):
         """ Draws the label.
