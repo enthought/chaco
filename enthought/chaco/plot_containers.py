@@ -70,7 +70,7 @@ class StackedPlotContainer(BasePlotContainer):
  
         Overrides PlotComponent.
         """
-        if self.fixed_preferred_size == "":
+        if self.fixed_preferred_size is not None:
             self._cached_preferred_size = self.fixed_preferred_size
             return self.fixed_preferred_size
 
@@ -126,6 +126,7 @@ class StackedPlotContainer(BasePlotContainer):
     def _do_stack_layout(self, components, align):
         """ Helper method that does the actual work of layout.
         """
+
 
         size = list(self.bounds)
         if self.fit_components != "":
