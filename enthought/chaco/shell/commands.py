@@ -695,6 +695,22 @@ def yscale(system=None):
     """
     _set_scale('y', system)
 
+def legend(setting=None):
+    """ Sets or toggles the presence of the legend
+
+    Usage
+    -----
+    * ``legend()``: toggles the legend; if it is currently visible, it is hideen, and if it is currently hidden, then it is displayed
+    * ``legend(True)``: shows the legend
+    * ``legend(False)``: hides the legend
+    """
+    p = curplot()
+    if p:
+        if setting is None:
+            setting = not p.legend.visible
+        p.legend.visible = setting
+        p.request_redraw()
+
 
 #-----------------------------------------------------------------------------
 # Tools
