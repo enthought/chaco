@@ -71,17 +71,12 @@ class LineSegmentTool(AbstractOverlay):
     move_cursor = cursor_style_trait("sizing")
 
 
-
     #------------------------------------------------------------------------
-    # Traits inherited from BaseTool
+    # Traits inherited from Component
     #------------------------------------------------------------------------
-    
-    # How the tool draws on top of its component. Deprecated.
-    draw_mode = "overlay"
     
     # The tool is initially invisible, because there is nothing to draw.
     visible = Bool(False)
-    
 
     #------------------------------------------------------------------------
     # Public methods
