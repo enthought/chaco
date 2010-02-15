@@ -3,10 +3,6 @@
 # Major library imports
 import numpy
 
-# Enthought library imports
-from enthought.traits.api import Any, Array, Bool, Enum, Event, Float, Int, List, \
-                             Property, Trait, Tuple
-
 # Chaco imports
 from range_selection import RangeSelection
 

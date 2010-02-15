@@ -6,7 +6,7 @@ from enthought.enable.api import BaseTool, Container
 from enthought.traits.api import List, Dict, Str
 
 # Chaco imports
-from enthought.chaco.api import BasePlotContainer, BaseXYPlot, PlotAxis, ColorBar
+from enthought.chaco.api import PlotAxis, ColorBar
 
 
 class Fifo(object):

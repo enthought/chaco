@@ -8,7 +8,7 @@ from enthought.enable.api import Component, cursor_style_trait, Line
 from enthought.traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
 
 # Chaco imports
-from enthought.chaco.api import AbstractOverlay, PlotComponent
+from enthought.chaco.api import AbstractOverlay
 
 
 

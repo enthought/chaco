@@ -1,9 +1,7 @@
-import datetime
 
 from enthought.enable.api import BaseTool, KeySpec
-from enthought.traits.api import Str, Bool, Event, Tuple, Enum
+from enthought.traits.api import Bool, Event, Tuple, Enum
 
-from geoduck.model.channel_transforms import channel_to_depth
 
 class SimpleInspectorTool(BaseTool):
     """ This is a simple tool that reports the data-space coordinates of the
