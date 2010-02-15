@@ -24,6 +24,7 @@ from regression_lasso import RegressionLasso, RegressionOverlay
 from save_tool import SaveTool
 from scatter_inspector import ScatterInspector
 from select_tool import SelectTool
+from simple_inspector import SimpleInspectorTool
 from simple_zoom import SimpleZoom
 from tracking_pan_tool import TrackingPanTool
 from tracking_zoom import TrackingZoom
