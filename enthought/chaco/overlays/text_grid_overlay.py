@@ -1,3 +1,5 @@
+""" An overlay containing a TextGrid
+"""
 
 from enthought.traits.api import Instance
 from enthought.enable.text_grid import TextGrid
@@ -5,11 +7,18 @@ from enthought.enable.text_grid import TextGrid
 from aligned_container_overlay import AlignedContainerOverlay
 
 class TextGridOverlay(AlignedContainerOverlay):
-
+    """ Overlay for plots containing a TextGrid
+    
+    This subclass of AlignedContainerOverlay has a TextGrid which it
+    displays.  Subclasses or users are responsible for the content and
+    formatting of the TextGrid.
+    """
+    # The text grid component we contain.
     text_grid = Instance(TextGrid)
+
+    # XXX put some delegated traits for the text_grid here?
     
     def _text_grid_changed(self, old, new):
-        print 'text_grid', old, new
         if old is not None:
             self.remove(old)
         if new is not None:

@@ -110,31 +110,33 @@ class TextBoxOverlay(AbstractOverlay):
                     color += [self.alpha]
 
         gc.save_state()
-        gc.translate_ctm(x, y)
-        
-        gc.set_line_width(self.border_size)
-        gc.set_stroke_color(self.border_color_)
-        gc.set_fill_color(color)
-
-        # draw a rounded rectangle
-        x = y = 0
-        end_radius = 8.0
-        gc.begin_path()
-        gc.move_to(x + end_radius, y)
-        gc.arc_to(x + width, y,
-                x + width,
-                y + end_radius, end_radius)
-        gc.arc_to(x + width,
-                y + height,
-                x + width - end_radius,
-                y + height, end_radius)
-        gc.arc_to(x, y + height,
-                x, y,
-                end_radius)
-        gc.arc_to(x, y,
-                x + width + end_radius,
-                y, end_radius)
-        gc.draw_path()
-
-        label.draw(gc)
-        gc.restore_state()
+        try:
+            gc.translate_ctm(x, y)
+            
+            gc.set_line_width(self.border_size)
+            gc.set_stroke_color(self.border_color_)
+            gc.set_fill_color(color)
+    
+            # draw a rounded rectangle
+            x = y = 0
+            end_radius = 8.0
+            gc.begin_path()
+            gc.move_to(x + end_radius, y)
+            gc.arc_to(x + width, y,
+                    x + width,
+                    y + end_radius, end_radius)
+            gc.arc_to(x + width,
+                    y + height,
+                    x + width - end_radius,
+                    y + height, end_radius)
+            gc.arc_to(x, y + height,
+                    x, y,
+                    end_radius)
+            gc.arc_to(x, y,
+                    x + width + end_radius,
+                    y, end_radius)
+            gc.draw_path()
+    
+            label.draw(gc)
+        finally:
+            gc.restore_state()

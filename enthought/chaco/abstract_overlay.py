@@ -50,7 +50,7 @@ class AbstractOverlay(PlotComponent):
         if self.component is not None:
             self.overlay(self.component, gc, view_bounds, mode)
         else:
-            PlotComponent._draw(self, gc, view_bounds, mode)
+            super(AbstractOverlay, self)._draw(gc, view_bounds, mode)
         return
 
     def _request_redraw(self):

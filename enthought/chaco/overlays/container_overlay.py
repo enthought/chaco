@@ -1,7 +1,8 @@
-""" Abstract base class for plot decorators and overlays.
+"""Plot overlay which is an Enable Container
 
-This class is primarily used so that tools can easily distinguish between 
-data-related plot items and the decorators on them.
+This module provides an Enable Container subclass which renders itself
+into the overlay of a plot.  This allows the easy use of standard Enable
+components in plot overlays.
 """
 
 from enthought.traits.api import Instance
@@ -10,9 +11,12 @@ from enthought.chaco.api import PlotComponent
 
 
 class ContainerOverlay(Container, PlotComponent):
-    """ This is an overlay which draws arbitrary Enable components
-    inside it.
+    """ Container which is also a Chaco plot overlay
+
+    Since this is an Enable container, any Components that it contains will
+    be rendered into the overlay layer of the plot.
     """
+    # XXX this works, but I'm not sure that it's quite right.
 
     # The component that this object overlays. This can be None. By default, if 
     # this object is called to draw(), it tries to render onto this component.
@@ -32,9 +36,6 @@ class ContainerOverlay(Container, PlotComponent):
         self.draw(gc, view_bounds, mode)
 
     def _request_redraw(self):
-        """ Overrides Enable Component.
-        """
         if self.component is not None:
-            #self.component.invalidate_draw([self.bounds])
             self.component.request_redraw()
         super(ContainerOverlay, self)._request_redraw()
