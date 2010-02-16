@@ -1,6 +1,6 @@
 
 from enthought.enable.api import BaseTool, KeySpec
-from enthought.traits.api import Bool, Event, Tuple, Enum
+from enthought.traits.api import Str, Bool, Event, Tuple, Enum, Callable
 
 
 class SimpleInspectorTool(BaseTool):
@@ -21,6 +21,10 @@ class SimpleInspectorTool(BaseTool):
 
     # This key will show and hide any overlays listening to this tool.
     inspector_key = KeySpec('p')
+    
+    # A callable that computes other values for the new_value event
+    # this takes a dictionary as an argument, and returns a dictionary
+    value_generator = Callable
    
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
@@ -43,9 +47,15 @@ class SimpleInspectorTool(BaseTool):
     def normal_mouse_move(self, event):
         plot = self.component
         if plot is not None:
-            index, value = self._map_to_data(event.x, event.y)
-            self.new_value = {'index': index, 'value': value}
+            self.gather_values(event)
             self.last_mouse_position = (event.x, event.y)
+
+    def gather_values(self, event):
+        x, y, index, value = self._map_to_data(event.x, event.y)
+        d = {'index': index, 'value': value, 'x': x, 'y': y}
+        if self.value_generator is not None:
+            d = self.value_generator(d)
+        self.new_value = d
 
     def _map_to_data(self, x, y):
         """ Returns the data space coordinates of the given x and y.  
@@ -55,9 +65,9 @@ class SimpleInspectorTool(BaseTool):
         
         plot = self.component
         if plot.orientation == "h":
-            index = plot.index_mapper.map_data(x)
-            value = plot.value_mapper.map_data(y)
+            index = x = plot.x_mapper.map_data(x)
+            value = y = plot.y_mapper.map_data(y)
         else:
-            index = plot.index_mapper.map_data(y)
-            value = plot.value_mapper.map_data(x)
-        return index, value
+            index = y = plot.y_mapper.map_data(y)
+            value = x = plot.x_mapper.map_data(x)
+        return x, y, index, value
