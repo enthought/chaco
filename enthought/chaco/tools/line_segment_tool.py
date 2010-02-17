@@ -4,7 +4,7 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.enable.api import Component, cursor_style_trait, Line
+from enthought.enable.api import Component, Pointer, Line
 from enthought.traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
 
 # Chaco imports
@@ -62,13 +62,13 @@ class LineSegmentTool(AbstractOverlay):
     # The cursor shapes to use for various modes
     
     # Cursor shape for non-tool use.
-    original_cursor = cursor_style_trait("arrow")
+    original_cursor = Pointer("arrow")
     # Cursor shape for drawing.
-    normal_cursor = cursor_style_trait("pencil")
+    normal_cursor = Pointer("pencil")
     # Cursor shape for deleting points.
-    delete_cursor = cursor_style_trait("bullseye")
+    delete_cursor = Pointer("bullseye")
     # Cursor shape for moving points.
-    move_cursor = cursor_style_trait("sizing")
+    move_cursor = Pointer("sizing")
 
 
     #------------------------------------------------------------------------
