@@ -3,8 +3,8 @@ import unittest
 
 from numpy import alltrue, array, ravel, zeros, isinf, linspace
 
-from enthought.chaco import _speedups as speedups
-from enthought.chaco import _speedups_fallback as fallback
+#from enthought.chaco import _speedups as speedups
+#from enthought.chaco import _speedups_fallback as fallback
 
 
 def assert_close(desired,actual):
@@ -61,37 +61,33 @@ class GatherPointsBase(object):
     func = property(_get_func)
 
 
-class SpeedupsTestCase(GatherPointsBase, unittest.TestCase):
-    module = speedups
+#class SpeedupsTestCase(GatherPointsBase, unittest.TestCase):
+#    module = speedups
 
 
-class SpeedupsFallbackTestCase(SpeedupsTestCase):
-    module = fallback
+#class SpeedupsFallbackTestCase(SpeedupsTestCase):
+#    module = fallback
 
 
-def timing_test_gather_points():
-    import time
-    from numpy import sin, pi
+#def timing_test_gather_points():
+#    import time
+#    from numpy import sin, pi
 
-    numpoints = 10000
-    numruns = 10
+#    numpoints = 10000
+#    numruns = 10
 
-    x = linspace(-8*pi, 8*pi, numpoints)
-    y = sin(x)
-    args = (x, -30, 30, y, -0.5, 0.5)
+#    x = linspace(-8*pi, 8*pi, numpoints)
+#    y = sin(x)
+#    args = (x, -30, 30, y, -0.5, 0.5)
 
-    funcs = {"Fallback": fallback.scatterplot_gather_points,
-             "C-based": speedups.scatterplot_gather_points}
-    
-    for name, func in funcs.items():
-        now = time.time()
-        for i in range(numruns):
-            points, selection = func(*args)
-        print "%s (%d pts, %d runs):" % (name, numpoints, numruns), (time.time() - now)
-    return
+#    funcs = {"Fallback": fallback.scatterplot_gather_points,
+#             "C-based": speedups.scatterplot_gather_points}
+#    
+#    for name, func in funcs.items():
+#        now = time.time()
+#        for i in range(numruns):
+#            points, selection = func(*args)
+#        print "%s (%d pts, %d runs):" % (name, numpoints, numruns), (time.time() - now)
+#    return
 
-
-if __name__ == '__main__':
-    import nose
-    nose.run()
 
