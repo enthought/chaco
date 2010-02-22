@@ -1,6 +1,6 @@
 
 # Major library imports
-from numpy import arange, cos, linspace, pi, sin
+from numpy import cos, linspace, pi, sin
 
 from enthought.chaco.example_support import COLOR_PALETTE
 from enthought.enable.example_support import DemoFrame, demo_main
@@ -12,7 +12,7 @@ from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
-                                 LinearMapper, OverlayPlotContainer, PlotAxis, PlotGrid
+                                 LinearMapper, OverlayPlotContainer, PlotAxis
 
 
 def get_points():
@@ -113,7 +113,7 @@ class Demo(HasTraits):
                     )
     
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
     
 demo = Demo()
 
