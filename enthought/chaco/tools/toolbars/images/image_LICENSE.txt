@@ -18,4 +18,5 @@ enthought/developer/tools/images:
                     zoom-fit-height | Oxygen
                      zoom-fit-width | Oxygen
                       zoom-original | Oxygen
+           application-vnd-ms-excel | Oxygen
 

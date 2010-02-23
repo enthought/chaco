@@ -146,7 +146,7 @@ class SaveAsButton(ToolbarButton):
 
 
 class CopyToClipboardButton(ToolbarButton):
-    label = "Copy"
+    label = "Copy Image"
     tooltip = 'Copy to the clipboard'
     image = 'edit-copy'
 
@@ -179,6 +179,56 @@ class CopyToClipboardButton(ToolbarButton):
         data.SetBitmap(bitmap)
         if wx.TheClipboard.Open():
             wx.TheClipboard.SetData(data)
+            wx.TheClipboard.Close()
+        else:
+            wx.MessageBox("Unable to open the clipboard.", "Error")
+
+class ExportDataToClipboardButton(ToolbarButton):
+    label = "Copy Data"
+    tooltip = 'Copy data to the clipboard'
+    image = 'application-vnd-ms-excel'
+
+    def perform(self, event):
+        plot_component = self.container.component
+
+        # Remove the toolbar before saving the plot, so the output doesn't
+        # include the toolbar.
+        plot_component.remove_toolbar()
+
+        width, height = plot_component.outer_bounds
+
+        gc = PlotGraphicsContext((width, height), dpi=72)
+        gc.render_component(plot_component)
+
+        if ETSConfig.toolkit == 'wx':
+            self._perform_wx(width, height, gc)
+        else:
+            pass
+
+        # Restore the toolbar.
+        plot_component.add_toolbar()
+
+    def _get_data_from_plots(self):
+        data = []
+        for renderers in self.container.component.plots.values():
+            for renderer in renderers:
+                data.append(renderer.index.get_data())
+                data.append(renderer.value.get_data())
+        return data
+
+    def _perform_wx(self, width, height, gc):
+        import wx
+        
+        data = self._get_data_from_plots()
+        data_str = ''
+        for row in data:
+            data_str += ','.join(['%f' % f for f in row.tolist()]) + '\n'
+        data_obj = wx.TextDataObject(data_str)
+
+        import pdb;pdb.set_trace()
+        
+        if wx.TheClipboard.Open():
+            wx.TheClipboard.SetData(data_obj)
             wx.TheClipboard.Close()
         else:
             wx.MessageBox("Unable to open the clipboard.", "Error")

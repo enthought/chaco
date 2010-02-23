@@ -1,13 +1,12 @@
 import numpy
-import sys
 
 from enthought.chaco.abstract_overlay import AbstractOverlay
 from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
         IndexAxisLogButton, ValueAxisLogButton, SaveAsButton, \
-        CopyToClipboardButton, ZoomResetButton
+        CopyToClipboardButton, ZoomResetButton, ExportDataToClipboardButton
 from enthought.enable.api import Container
 from enthought.enable.tools.api import HoverTool
-from enthought.traits.api import Bool, Float, Property, on_trait_change, List, \
+from enthought.traits.api import Bool, Float, on_trait_change, List, \
         Tuple, Type, Enum
 
 class PlotToolbarHover(HoverTool):
@@ -93,7 +92,8 @@ class PlotToolbar(Container, AbstractOverlay):
     
     def _buttons_default(self):
         return [ IndexAxisLogButton, ValueAxisLogButton,
-                 SaveAsButton, CopyToClipboardButton, ZoomResetButton ]
+                 SaveAsButton, CopyToClipboardButton, 
+                 ExportDataToClipboardButton, ZoomResetButton ]
     
     def add_button(self, button):
         """ adds a button to the toolbar
