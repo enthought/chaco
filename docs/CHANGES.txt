@@ -1,13 +1,24 @@
-Chaco 3.2.1 (not yet released)
+Chaco 3.3.0 (Feb 24, 2010)
 ==============================
 
 Enhancements
 ------------
 
+ * Added new ToolbarPlot class which is similar to Plot, but provides a toolbar
+ * Added toolbar button to copy plot data to the clipboard to the default plot toolbar
+ * Plot toolbar buttons now can have labels
+ * Added BetterZoom tool which is more feature rich than the SimpleZoom tool, including key bindings and configurable zoom levels
+ * Added BetterSelectingZoom tool, based on the ZoomTool, but allows for the user to draw a zoom region
+ * ScatterPlot now has a Callable attribute for the function which renders the markers. This allows for each point to be rendered differently
+ * Added legend highligher tool which adds a click-to-highlight interaction to the legend
+ * Added range selection tool for use with 2D image plots
 
 Fixes
 -----
 
+ * BarPlot can now respects the fillcolor alpha value 
+ * FilledLinePlot now draws black lines. Previously lines would be drawn for any color, except black
+ * Fixed placement of title when orientation='top'
 
 
 
