@@ -225,8 +225,6 @@ class ExportDataToClipboardButton(ToolbarButton):
             data_str += ','.join(['%f' % f for f in row.tolist()]) + '\n'
         data_obj = wx.TextDataObject(data_str)
 
-        import pdb;pdb.set_trace()
-        
         if wx.TheClipboard.Open():
             wx.TheClipboard.SetData(data_obj)
             wx.TheClipboard.Close()
