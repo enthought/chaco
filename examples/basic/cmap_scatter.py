@@ -58,7 +58,7 @@ def _create_plot_component():
               bgcolor = "white")
     
     # Tweak some of the plot properties
-    plot.title = "My First Colormapped Scatter Plot"
+    plot.title = "Colormapped Scatter Plot"
     plot.padding = 50
     plot.x_grid.visible = False
     plot.y_grid.visible = False
@@ -67,19 +67,19 @@ def _create_plot_component():
     
     # Right now, some of the tools are a little invasive, and we need the 
     # actual ColomappedScatterPlot object to give to them
-    my_plot = plot.plots["my_plot"][0]
+    cmap_renderer = plot.plots["my_plot"][0]
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot, constrain_key="shift"))
     zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
-    selection = ColormappedSelectionOverlay(my_plot, fade_alpha=0.35, 
+    selection = ColormappedSelectionOverlay(cmap_renderer, fade_alpha=0.35, 
                                             selection_type="mask")
-    my_plot.overlays.append(selection)
+    cmap_renderer.overlays.append(selection)
     
     # Create the colorbar, handing in the appropriate range and colormap
     colorbar = create_colorbar(plot.color_mapper)
-    colorbar.plot = my_plot
+    colorbar.plot = cmap_renderer
     colorbar.padding_top = plot.padding_top
     colorbar.padding_bottom = plot.padding_bottom
     
