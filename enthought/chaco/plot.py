@@ -431,62 +431,8 @@ class Plot(DataView):
             self.color_mapper = colormap
             cls = self.renderer_map["cmap_img_plot"]
             kwargs = dict(value_mapper=colormap, **styles)
-
-        # process xbounds to get a linspace
-        if isinstance(xbounds, basestring):
-            xbounds = self._get_or_create_datasource(xbounds).get_data()
-        if xbounds is None:
-            xs = arange(array_data.shape[1])
-        elif isinstance(xbounds, tuple):
-            xs = linspace(xbounds[0], xbounds[1], array_data.shape[1])
-        elif isinstance(xbounds, ndarray):
-            if len(xbounds.shape) == 1 and len(xbounds) == array_data.shape[1]:
-                xs = linspace(xbounds[0], xbounds[-1], array_data.shape[1])
-            elif xbounds.shape == array_data.shape:
-                xs = xbounds[0,:]
-            else:
-                raise ValueError("xbounds shape not commensurate with data")
-        else:
-            raise ValueError("xbounds must be None, a tuple, an array, or a PlotData name")
-
-        # process ybounds to get a linspace
-        if isinstance(ybounds, basestring):
-            ybounds = self._get_or_create_datasource(ybounds).get_data()
-        if ybounds is None:
-            ys = arange(array_data.shape[0])
-        elif isinstance(ybounds, tuple):
-            ys = linspace(ybounds[0], ybounds[1], array_data.shape[0])
-        elif isinstance(ybounds, ndarray):
-            if len(ybounds.shape) == 1 and len(ybounds) == array_data.shape[0]:
-                ys = linspace(ybounds[0], ybounds[-1], array_data.shape[0])
-            elif ybounds.shape == array_data.shape:
-                ys = ybounds[:,0]
-            else:
-                raise ValueError("ybounds shape not commensurate with data")
-        else:
-            raise ValueError("ybounds must be None, a tuple, an array, or a PlotData name")
-
-        # Create the index and add its datasources to the appropriate ranges
-        index = GridDataSource(xs, ys, sort_order=('ascending', 'ascending'))
-        self.range2d.add(index)
-        mapper = GridMapper(range=self.range2d, 
-                            stretch_data_x=self.x_mapper.stretch_data,
-                            stretch_data_y=self.y_mapper.stretch_data)
-
-        plot = cls(index=index, 
-                   value=value, 
-                   index_mapper=mapper, 
-                   orientation=self.orientation,
-                   origin=origin,
-                   **kwargs)
-
-        if hide_grids:
-            self.x_grid.visible = False
-            self.y_grid.visible = False
-
-        self.add(plot)
-        self.plots[name] = [plot]
-        return self.plots[name]
+        return self._create_2d_plot(cls, name, origin, xbounds, ybounds, value,
+                                    hide_grids, **kwargs)
 
 
     def contour_plot(self, data, type="line", name=None, poly_cmap=None,
@@ -551,35 +497,57 @@ class Plot(DataView):
         else:
             raise ValueError("Unhandled contour plot type: " + type)
 
+        return self._create_2d_plot(cls, name, origin, xbounds, ybounds, value,
+                                    hide_grids, **kwargs)
+
+    def _create_2d_plot(self, cls, name, origin, xbounds, ybounds, value_ds, 
+                        hide_grids, **kwargs):
+        if name is None:
+            name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
+
+        array_data = value_ds.get_data()
+
         # process xbounds to get a linspace
         if isinstance(xbounds, basestring):
             xbounds = self._get_or_create_datasource(xbounds).get_data()
+        num_x_ticks = array_data.shape[1] + 1
         if xbounds is None:
-            xs = arange(array_data.shape[1])
+            xs = arange(num_x_ticks)
         elif isinstance(xbounds, tuple):
-            xs = linspace(xbounds[0], xbounds[1], array_data.shape[1])
+            xs = linspace(xbounds[0], xbounds[1], num_x_ticks)
         elif isinstance(xbounds, ndarray):
-            if len(xbounds.shape) == 1 and len(xbounds) == array_data.shape[1]:
-                xs = linspace(xbounds[0], xbounds[-1], array_data.shape[1])
+            if len(xbounds.shape) == 1 and len(xbounds) == num_x_ticks:
+                xs = linspace(xbounds[0], xbounds[-1], num_x_ticks)
+            elif len(xbounds.shape) == 1 and len(xbounds) == num_x_ticks-1:
+                # Explicitly treat this as an error
+                raise ValueError("The xbounds array of an image plot needs to have 1 more element that its corresponding data shape, because it represents the locations of pixel boundaries.")
             elif xbounds.shape == array_data.shape:
-                xs = linspace(xbounds[0,0],xbounds[0,-1],array_data.shape[1])
+                # FIXME: When would this case ever be triggered?
+                xs = xbounds[0,:]
             else:
                 raise ValueError("xbounds shape not commensurate with data")
         else:
             raise ValueError("xbounds must be None, a tuple, an array, or a PlotData name")
 
-        # process xbounds to get a linspace
+        # process ybounds to get a linspace
         if isinstance(ybounds, basestring):
             ybounds = self._get_or_create_datasource(ybounds).get_data()
+        num_y_ticks = array_data.shape[0] + 1
         if ybounds is None:
-            ys = arange(array_data.shape[0])
+            ys = arange(num_y_ticks)
         elif isinstance(ybounds, tuple):
-            ys = linspace(ybounds[0], ybounds[1], array_data.shape[0])
+            ys = linspace(ybounds[0], ybounds[1], num_y_ticks)
         elif isinstance(ybounds, ndarray):
-            if len(ybounds.shape) == 1 and len(ybounds) == array_data.shape[0]:
-                ys = linspace(ybounds[0], ybounds[-1], array_data.shape[0])
+            if len(ybounds.shape) == 1 and len(ybounds) == num_y_ticks:
+                ys = linspace(ybounds[0], ybounds[-1], num_y_ticks)
+            elif len(ybounds.shape) == 1 and len(ybounds) == num_y_ticks-1:
+                # Explicitly treat this as an error
+                raise ValueError("The ybounds array of an image plot needs to have 1 more element that its corresponding data shape, because it represents the locations of pixel boundaries.")
             elif ybounds.shape == array_data.shape:
-                ys = linspace(ybounds[0,0],ybounds[-1,0],array_data.shape[0])
+                # FIXME: When would this case ever be triggered?
+                ys = ybounds[:,0]
             else:
                 raise ValueError("ybounds shape not commensurate with data")
         else:
@@ -588,12 +556,12 @@ class Plot(DataView):
         # Create the index and add its datasources to the appropriate ranges
         index = GridDataSource(xs, ys, sort_order=('ascending', 'ascending'))
         self.range2d.add(index)
-        mapper = GridMapper(range=self.range2d,
+        mapper = GridMapper(range=self.range2d, 
                             stretch_data_x=self.x_mapper.stretch_data,
                             stretch_data_y=self.y_mapper.stretch_data)
 
         plot = cls(index=index, 
-                   value=value, 
+                   value=value_ds, 
                    index_mapper=mapper, 
                    orientation=self.orientation,
                    origin=origin,
