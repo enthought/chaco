@@ -1,6 +1,10 @@
 """ Defines commands for the Chaco shell.
 """
-import wx
+
+try:
+    from wx import GetApp
+except ImportError:
+    GetApp = lambda: None
 
 from enthought.chaco.api import Plot, color_map_name_dict
 from enthought.chaco.scales.api import ScaleSystem
@@ -179,7 +183,10 @@ def show():
     prompt.
     """
 
-    app = wx.GetApp()
+    app = GetApp()
+    if not app:
+        return
+
     if not(app.IsMainLoopRunning()):
         frame = session.active_window
         app.SetTopWindow(frame)
