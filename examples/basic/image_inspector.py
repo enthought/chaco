@@ -33,8 +33,10 @@ from enthought.chaco.tools.image_inspector_tool import ImageInspectorTool, \
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():# Create a scalar field to colormap
-    xs = linspace(-2*pi, 2*pi, 600)
-    ys = linspace(-1.5*pi, 1.5*pi, 300)
+    xbounds = (-2*pi, 2*pi, 600)
+    ybounds = (-1.5*pi, 1.5*pi, 300)
+    xs = linspace(*xbounds)
+    ys = linspace(*ybounds)
     x, y = meshgrid(xs,ys)
     z = sin(x)*y
 
@@ -45,8 +47,8 @@ def _create_plot_component():# Create a scalar field to colormap
     # Create the plot
     plot = Plot(pd)
     img_plot = plot.img_plot("imagedata", 
-                             xbounds=xs,
-                             ybounds=ys,
+                             xbounds = xbounds[:2],
+                             ybounds = ybounds[:2],
                              colormap=jet)[0]
 
     # Tweak some of the plot properties

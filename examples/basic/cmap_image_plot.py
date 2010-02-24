@@ -28,7 +28,7 @@ from enthought.chaco.tools.api import PanTool, ZoomTool
 #===============================================================================
 def _create_plot_component():
     # Create a scalar field to colormap
-    xs = linspace(0, 10, 30)
+    xs = linspace(0, 10, 600)
     ys = linspace(0, 5, 600)
     x, y = meshgrid(xs,ys)
     z = exp(-(x**2+y**2)/100)
@@ -40,8 +40,8 @@ def _create_plot_component():
     # Create the plot
     plot = Plot(pd)
     plot.img_plot("imagedata", 
-                  xbounds=xs,
-                  ybounds=ys,
+                  xbounds=(0, 10),
+                  ybounds=(0, 5),
                   colormap=jet)
 
     # Tweak some of the plot properties
