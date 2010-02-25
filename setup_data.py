@@ -15,11 +15,11 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-ENABLE_TRAITS = etsdep('Enable[traits]', '3.3.0')
-ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.4')
+ENABLE_TRAITS = etsdep('Enable[traits]', '3.3.1')
+ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.5')
 #TRAITSBACKENDQT -- not needed due to the way it is used in chaco2_plot_container_editor.py
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.3.0')  # used by chaco_plot_editor.py
-TRAITS_UI = etsdep('Traits[ui]', '3.3.0')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.3.1')  # used by chaco_plot_editor.py
+TRAITS_UI = etsdep('Traits[ui]', '3.3.1')
 
 
 INFO = {
@@ -42,6 +42,5 @@ INFO = {
         TRAITS_UI,
         ],
     "name": 'Chaco',
-    "version": '3.3.0',
+    "version": '3.3.1',
     }
-
