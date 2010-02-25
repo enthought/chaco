@@ -27,7 +27,8 @@ Fixes
 
 There have been a lot of minor fixes on a variety of classes as well.  A
 constant push has been made to reduce the reliance of direct imports on wx,
-so that users on Qt will not get any import warnings or errors.
+so that users on Qt will not get any import warnings or errors.  Some of
+issues that have been fixed are:
 
  * BarPlot now respects the fillcolor alpha value 
  * FilledLinePlot now draws black lines. Previously lines would be drawn for any color, except black.
@@ -36,6 +37,8 @@ so that users on Qt will not get any import warnings or errors.
  * Wrapped a lot of direct imports of wx, so that users with only Qt will not see any import errors.
  * Fixed a bug in horizontal and vertical plot containers wherein fixed_preferred_size was not being respected during layout.
  * Fixed the correlation plot example to be more user-friendly.
+ * Fixed incorrect firing of the 'updated' event and the handling of the 'track' setting in the DataRange1D class.
+
 
 One final note is that the "chaco2" legacy backwards compatibility package will
 be removed by the next release.  If you have any code that imports from
