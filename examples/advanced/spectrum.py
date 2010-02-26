@@ -4,9 +4,6 @@ This plot displays the audio spectrum from the microphone.
 
 Based on updating_plot.py
 """
-# Standard library imports
-import sys
-
 # Major library imports
 import pyaudio
 import wx
@@ -34,7 +31,7 @@ SPECTROGRAM_LENGTH = 100
 
 def _create_plot_component(obj):
     # Setup the spectrum plot
-    frequencies = linspace(0., float(SAMPLING_RATE)/2, num=NUM_SAMPLES/2)
+    frequencies = linspace(0.0, float(SAMPLING_RATE)/2, num=NUM_SAMPLES/2)
     obj.spectrum_data = ArrayPlotData(frequency=frequencies)
     empty_amplitude = zeros(NUM_SAMPLES/2)
     obj.spectrum_data.set_data('amplitude', empty_amplitude)
@@ -51,7 +48,7 @@ def _create_plot_component(obj):
     obj.spectrum_plot.value_axis.title = 'Amplitude'
 
     # Time Series plot
-    times = linspace(0., float(NUM_SAMPLES)/SAMPLING_RATE, num=NUM_SAMPLES)
+    times = linspace(0.0, float(NUM_SAMPLES)/SAMPLING_RATE, num=NUM_SAMPLES)
     obj.time_data = ArrayPlotData(time=times)
     empty_amplitude = zeros(NUM_SAMPLES)
     obj.time_data.set_data('amplitude', empty_amplitude)
@@ -71,14 +68,12 @@ def _create_plot_component(obj):
     obj.spectrogram_plotdata = ArrayPlotData()
     obj.spectrogram_plotdata.set_data('imagedata', spectrogram_data)
     spectrogram_plot = Plot(obj.spectrogram_plotdata)
-    spectrogram_time = linspace(
-        0.0, float(SPECTROGRAM_LENGTH*NUM_SAMPLES)/float(SAMPLING_RATE),
-        num=SPECTROGRAM_LENGTH)
-    spectrogram_freq = linspace(0.0, float(SAMPLING_RATE/2), num=NUM_SAMPLES/2)
+    max_time = float(SPECTROGRAM_LENGTH * NUM_SAMPLES) / SAMPLING_RATE
+    max_freq = float(SAMPLING_RATE / 2)
     spectrogram_plot.img_plot('imagedata',
                               name='Spectrogram',
-                              xbounds=spectrogram_time,
-                              ybounds=spectrogram_freq,
+                              xbounds=(0, max_time),
+                              ybounds=(0, max_freq),
                               colormap=jet,
                               )
     range_obj = spectrogram_plot.plots['Spectrogram'][0].value_mapper.range
@@ -95,19 +90,12 @@ def _create_plot_component(obj):
     return container
 
 
-_stream = None
 def get_audio_data():
-    global _stream
-    if _stream is None:
-        # The audio stream is opened the first time this function gets called.
-        # The stream is always closed (if it was opened) in a try finally
-        # block at the end of this file,
-        pa = pyaudio.PyAudio()
-        _stream = pa.open(format=pyaudio.paInt16, channels=1,
-                          rate=SAMPLING_RATE,
-                          input=True, frames_per_buffer=NUM_SAMPLES)
-
-    audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
+    pa = pyaudio.PyAudio()
+    stream = pa.open(format=pyaudio.paInt16, channels=1, rate=SAMPLING_RATE,
+                     input=True, frames_per_buffer=NUM_SAMPLES)
+    audio_data  = fromstring(stream.read(NUM_SAMPLES), dtype=short)
+    stream.close()
     normalized_data = audio_data / 32768.0
     return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
 
@@ -214,9 +202,4 @@ class PlotFrame(DemoFrame):
 
 
 if __name__ == "__main__":
-    try:
-        demo_main(PlotFrame, size=size, title=title)
-    finally:
-        # Always close the audio stream
-        if _stream is not None:
-            _stream.close()
+    demo_main(PlotFrame, size=size, title=title)
