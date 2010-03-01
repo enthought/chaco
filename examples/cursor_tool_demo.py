@@ -14,7 +14,7 @@ from enthought.chaco.api import create_line_plot, OverlayPlotContainer, \
 from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.chaco.tools.cursor_tool import CursorTool, BaseCursorTool
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance, DelegatesTo, Delegate
+from enthought.traits.api import HasTraits, Instance, DelegatesTo
 from enthought.traits.ui.api import View, Item, HGroup, VGroup
 
 
@@ -63,8 +63,9 @@ class CursorTest(HasTraits):
         line.overlays.append(ZoomTool(line))
         
         #make some 2D data for a colourmap plot
-        x = numpy.linspace(-5,5,100)
-        y = numpy.linspace(-5,5,100)
+        xy_range = (-5, 5)
+        x = numpy.linspace(xy_range[0], xy_range[1] ,100)
+        y = numpy.linspace(xy_range[0], xy_range[1] ,100)
         X,Y = numpy.meshgrid(x, y)
         Z = numpy.sin(X)*numpy.arctan2(Y,X)
         
@@ -74,8 +75,8 @@ class CursorTest(HasTraits):
         
         img = Plot(ds, padding=40)
         cmapImgPlot = img.img_plot("img",
-                     xbounds = x,
-                     ybounds = y,
+                     xbounds = xy_range,
+                     ybounds = xy_range,
                      colormap = jet)[0]
         
         container.add(img)
