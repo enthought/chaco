@@ -6,7 +6,6 @@ Based on updating_plot.py
 """
 # Major library imports
 import pyaudio
-import wx
 from numpy import zeros, linspace, short, fromstring, hstack, transpose
 from scipy import fft
 
@@ -174,32 +173,58 @@ popup = Demo()
 # Stand-alone frame to display the plot.
 #============================================================================
 
-class PlotFrame(DemoFrame):
+from enthought.etsconfig.api import ETSConfig
 
-    def _create_window(self):
+if ETSConfig.enable_toolkit == "wx":
 
-        self.controller = TimerController()
-        container = _create_plot_component(self.controller)
-        # Bind the exit event to the onClose function which will force the
-        # example to close. The PyAudio package causes problems that normally
-        # prevent the user from closing the example using the 'X' button.
-        # NOTE: I believe it is sufficient to just stop the timer-Vibha.
-        self.Bind(wx.EVT_CLOSE, self.onClose)
+    import wx
+    class PlotFrame(DemoFrame):
 
-        # Set the timer to generate events to us
-        timerId = wx.NewId()
-        self.timer = wx.Timer(self, timerId)
-        self.Bind(wx.EVT_TIMER, self.controller.onTimer, id=timerId)
-        self.timer.Start(20.0, wx.TIMER_CONTINUOUS)
+        def _create_window(self):
 
-        # Return a window containing our plots
-        return Window(self, -1, component=container)
+            self.controller = TimerController()
+            container = _create_plot_component(self.controller)
+            # Bind the exit event to the onClose function which will force the
+            # example to close. The PyAudio package causes problems that normally
+            # prevent the user from closing the example using the 'X' button.
+            # NOTE: I believe it is sufficient to just stop the timer-Vibha.
+            self.Bind(wx.EVT_CLOSE, self.onClose)
 
-    def onClose(self, event):
-        #sys.exit()
-        self.timer.Stop()
-        event.Skip()
+            # Set the timer to generate events to us
+            timerId = wx.NewId()
+            self.timer = wx.Timer(self, timerId)
+            self.Bind(wx.EVT_TIMER, self.controller.onTimer, id=timerId)
+            self.timer.Start(20.0, wx.TIMER_CONTINUOUS)
 
+            # Return a window containing our plots
+            return Window(self, -1, component=container)
+
+        def onClose(self, event):
+            #sys.exit()
+            self.timer.Stop()
+            event.Skip()
+
+elif ETSConfig.enable_toolkit == "qt4":
+
+    from PyQt4 import QtGui, QtCore
+
+    class PlotFrame(DemoFrame):
+        def _create_window(self):
+            self.controller = TimerController()
+            container = _create_plot_component(self.controller)
+
+            # start a continuous timer
+            self.timer = QtCore.QTimer()
+            self.timer.timeout.connect(self.controller.onTimer)
+            self.timer.start(20)
+
+            return Window(self, -1, component=container)
+
+        def closeEvent(self, event):
+            # stop the timer
+            if getattr(self, "timer", None):
+                self.timer.stop()
+            return super(PlotFrame, self).closeEvent(event)
 
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
