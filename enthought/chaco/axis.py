@@ -403,8 +403,8 @@ class PlotAxis(AbstractOverlay):
                 if not self.ticklabel_cache:
                     v_offset = 25
                 else:
-                    v_offset = (self._end_axis_point[1] - self._origin_point[1] + tl_bounds[0])/2.0
-            h_offset = self.tick_out + tl_bounds[1] + 8
+                    v_offset = (self._end_axis_point[1] - self._origin_point[1] - tl_bounds[0])/2.0
+            h_offset = self.tick_out + 4
             if len(self.ticklabel_cache) > 0:
                 h_offset += max([l._bounding_box[0] for l in self.ticklabel_cache]) 
             offset = array([self._origin_point[0] + h_offset, self._origin_point[1] + v_offset])
