@@ -1,3 +1,4 @@
+import numpy
 
 from enthought.etsconfig.api import ETSConfig
 from enthought.enable.tools.toolbars.toolbar_buttons import Button
@@ -7,7 +8,7 @@ from enthought.kiva.backend_image import Image
 from enthought.pyface.image_resource import ImageResource
 from enthought.pyface.api import FileDialog, OK, error
 from enthought.traits.api import Instance, Str, Property, cached_property, \
-    List, Int
+    List, Int, Enum
 
 
 class ToolbarButton(Button):
@@ -187,42 +188,49 @@ class ExportDataToClipboardButton(ToolbarButton):
     label = "Copy Data"
     tooltip = 'Copy data to the clipboard'
     image = 'application-vnd-ms-excel'
+    
+    orientation = Enum('v', 'h')
 
     def perform(self, event):
-        plot_component = self.container.component
-
-        # Remove the toolbar before saving the plot, so the output doesn't
-        # include the toolbar.
-        plot_component.remove_toolbar()
-
-        width, height = plot_component.outer_bounds
-
-        gc = PlotGraphicsContext((width, height), dpi=72)
-        gc.render_component(plot_component)
-
         if ETSConfig.toolkit == 'wx':
-            self._perform_wx(width, height, gc)
+            self._perform_wx()
         else:
             pass
 
-        # Restore the toolbar.
-        plot_component.add_toolbar()
 
     def _get_data_from_plots(self):
-        data = []
+        values = []
+        indices = []
         for renderers in self.container.component.plots.values():
             for renderer in renderers:
-                data.append(renderer.index.get_data())
-                data.append(renderer.value.get_data())
-        return data
+                indices.append(renderer.index.get_data())
+                values.append(renderer.value.get_data())
+        return indices, values
+    
+    def _serialize_data(self, indices, values):
+                
+        # if all of rows are the same length, use faster algorithms,
+        # otherwise go element by element adding the necessary empty strings
+        if len(set([len(l) for l in values])) == 1:
+            data = [indices[0]] + values
+            if self.orientation == 'v':
+                data = numpy.array(data).T.tolist() 
 
-    def _perform_wx(self, width, height, gc):
+            data_str = ''
+            for row in data:
+                data_str += ','.join(['%f' % v for v in row]) + '\n'
+            return data_str
+        
+        else:
+            # There might not be a single solution which fits all cases,
+            # so this is left to specific implementations to override
+            raise NotImplementedError()
+            
+    def _perform_wx(self):
         import wx
         
-        data = self._get_data_from_plots()
-        data_str = ''
-        for row in data:
-            data_str += ','.join(['%f' % f for f in row.tolist()]) + '\n'
+        indices, values = self._get_data_from_plots()
+        data_str = self._serialize_data(indices, values)   
         data_obj = wx.TextDataObject(data_str)
 
         if wx.TheClipboard.Open():
