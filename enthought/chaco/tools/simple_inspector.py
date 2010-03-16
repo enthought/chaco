@@ -5,9 +5,9 @@ the current mouse cursor position in a plot.  It is intended for use with
 SimpleInspectorOverlay, but other objects can potentially hook into its API.
 """
 
+from enthought.chaco.image_plot import ImagePlot
 from enthought.enable.api import BaseTool, KeySpec
 from enthought.traits.api import Bool, Event, Tuple, Enum, Callable
-
 
 class SimpleInspectorTool(BaseTool):
     """ Simple inspector tool for plots
@@ -77,6 +77,13 @@ class SimpleInspectorTool(BaseTool):
         """
         x, y, index, value = self.map_to_data(event.x, event.y)
         d = {'index': index, 'value': value, 'x': x, 'y': y}
+        
+        if isinstance(self.component, ImagePlot):
+            x_ind, y_ind = self.component.map_index((event.x, event.y))
+            z =  self.component.value.data[y_ind, x_ind]
+            d['z'] = z
+            d['color'] = z
+        
         if self.value_generator is not None:
             d = self.value_generator(d)
         return d
