@@ -5,6 +5,7 @@ from numpy import array, transpose
 
 from enthought.traits.api import Enum, Instance, Property
 
+from abstract_overlay import AbstractOverlay
 from axis import PlotAxis
 from base_1d_mapper import Base1DMapper
 from base_2d_plot import Base2DPlot
@@ -97,6 +98,10 @@ class DataView(OverlayPlotContainer):
     # The origin reported to axes, etc
     origin = Property(depends_on='default_origin')
 
+    # Whether our map_screen and map_data should treat screen-space
+    # coords as being in our coordinate space or in our contained
+    # coordinate space.
+
     # The mapper to use for the index data.
     index_mapper = Instance(Base1DMapper)
 
@@ -135,12 +140,23 @@ class DataView(OverlayPlotContainer):
     # The horizontal axis.  Its position relative to the plot
     # area can be "top", "bottom", or "float".  The default position for a new
     # x-axis is "bottom".
-    x_axis = Instance(PlotAxis)
+    #
+    # TODO: For now, this is an instance of AbstractOverlay instead of PlotAxis
+    # because scales_axis.PlotAxis doesn't inherit from PlotAxis, but instead is a
+    # semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis 
+    # inherit a concrete class, I chose to loosen this trait by specifying
+    # a more general base class of PlotAxis.  This incurs lower risk of subtle
+    # and difficult-to-catch bugs being introduced by changes to the
+    # axis.PlotAxis class.  This same comment applies to the y_axis trait
+    # below.  --pwang
+    #x_axis = Instance(PlotAxis)
+    x_axis = Instance(AbstractOverlay)
     
     # The vertical axis.  Its position relative to the plot
     # area can be "left", "right", or "float".  The default position for a new
     # y-axis is "left".
-    y_axis = Instance(PlotAxis)
+    #y_axis = Instance(PlotAxis)
+    y_axis = Instance(AbstractOverlay)
 
     # The grid that intersects the x-axis, i.e., a set of vertical lines.
     x_grid = Instance(PlotGrid)
