@@ -137,7 +137,7 @@ class Base2DPlot(AbstractPlotRenderer):
             x_pt,y_pt = self.map_data([screen_pt])[0]
         else:
             x_pt,y_pt = self.map_data([(screen_pt[1],screen_pt[0])])[0]
-        
+            
         if ((x_pt < self.index_mapper.range.low[0]) or 
             (x_pt > self.index_mapper.range.high[0]) or
             (y_pt < self.index_mapper.range.low[1]) or
@@ -155,23 +155,28 @@ class Base2DPlot(AbstractPlotRenderer):
         try:
             x_ndx = reverse_map_1d(x_data, x_pt, self.index.sort_order[0], 
                                    floor_only=True)
+        except IndexError, e:
+            if outside_returns_none:
+                return None, None
+            
+            # x index
+            if x_pt < x_data[0]:
+                x_ndx =  0
+            else:
+                x_ndx = len(x_data) - 1
+
+        try:
             y_ndx = reverse_map_1d(y_data, y_pt, self.index.sort_order[1], 
                                    floor_only=True)
         except IndexError, e:
             if outside_returns_none:
                 return None, None
+            
+            # y index
+            if y_pt < y_data[0]:
+                y_ndx =  0
             else:
-                # x index
-                if x_pt < x_index_data[0]:
-                    x_ndx =  0
-                else:
-                    x_ndx = len(x_index_data) - 1
-
-                # y index
-                if y_pt < y_index_data[0]:
-                    y_ndx =  0
-                else:
-                    y_ndx = len(y_index_data) - 1
+                y_ndx = len(y_data) - 1
 
         if threshold == 0:
             return x_ndx, y_ndx

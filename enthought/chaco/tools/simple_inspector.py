@@ -79,8 +79,17 @@ class SimpleInspectorTool(BaseTool):
         d = {'index': index, 'value': value, 'x': x, 'y': y}
         
         if isinstance(self.component, ImagePlot):
-            x_ind, y_ind = self.component.map_index((event.x, event.y))
-            z =  self.component.value.data[y_ind, x_ind]
+            x_ndx, y_ndx = self.component.map_index((event.x, event.y),
+                                                    outside_returns_none=False)
+            
+            # FIXME: off-by-one error. The size of the index is +1 to the size of
+            # the image array
+            if y_ndx == self.component.value.data.shape[0]:
+                y_ndx -= 1
+            if x_ndx == self.component.value.data.shape[1]:
+                x_ndx += 1
+            
+            z =  self.component.value.data[y_ndx, x_ndx]
             d['z'] = z
             d['color'] = z
         
