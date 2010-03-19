@@ -118,8 +118,19 @@ class BarPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
 
     def __init__(self, *args, **kw):
+        # These Traits depend on others, so we'll defer setting them until
+        # after the HasTraits initialization has been completed.
+        later_list = ['index_direction', 'value_direction']
+        postponed = {}
+        for name in later_list:
+            if name in kw:
+                postponed[name] = kw.pop(name)
+
         super(BarPlot, self).__init__(*args, **kw)
-        
+
+        # Set any keyword Traits that were postponed.
+        self.set(**postponed)
+
         # update colors to use the correct alpha channel
         self.line_color_ = self.line_color_[0:3] + (self.alpha,)
         self.fill_color_ = self.fill_color_[0:3] + (self.alpha,)
@@ -153,7 +164,7 @@ class BarPlot(AbstractPlotRenderer):
             screen_coord = screen_pt[1]
         return self.index_mapper.map_data(screen_coord)
 
-    def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True, \
+    def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True,
                   index_only=False):
         """ Maps a screen space point to an index into the plot's index array(s).
         
@@ -163,7 +174,6 @@ class BarPlot(AbstractPlotRenderer):
         if ((data_pt < self.index_mapper.range.low) or \
             (data_pt > self.index_mapper.range.high)) and outside_returns_none:
             return None
-        half = threshold / 2.0
         index_data = self.index.get_data()
         value_data = self.value.get_data()
 
