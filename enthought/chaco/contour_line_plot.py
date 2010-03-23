@@ -107,7 +107,7 @@ class ContourLinePlot(BaseContourPlot):
     def _update_contours(self):
         """ Updates the cache of contour lines """
         # x and ydata are "fenceposts" so ignore the last value        
-        # XXX: this truncaton is causing errors in Cntr() as of r13735
+        # XXX: this truncation is causing errors in Cntr() as of r13735
         if self.orientation == "h":
             xg, yg = meshgrid(self.index._xdata.get_data(), #[:-1],
                               self.index._ydata.get_data()) #[:-1])
