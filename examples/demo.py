@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 #
-#  Copyright (c) 2009, Enthought, Inc.
+#  Copyright (c) 2009-2010, Enthought, Inc.
 #  All rights reserved.
 # 
 #  This software is provided without warranty under the terms of the BSD
