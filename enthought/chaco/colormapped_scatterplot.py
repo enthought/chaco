@@ -50,16 +50,22 @@ class ColormappedScatterPlot(ScatterPlot):
 
     # Determines what drawing approach to use:
     #
-    # bruteforce:
-    #     Set the stroke color before drawing each marker.
     # bands:
     #     Draw the points color-band by color-band, thus reducing the number of
-    #     set_stroke_color() calls
+    #     set_stroke_color() calls. Disadvantage is that some colors will 
+    #     appear more prominently than others if there are a lot of
+    #     overlapping points.
+    # bruteforce:
+    #     Set the stroke color before drawing each marker.  Slower, but doesn't
+    #     produce the banding effect that puts some colors on top of others;
+    #     useful if there is a lot of overlap of the data.
+    # auto:
+    #     Determines which render method to use based on the number of points
     #
     # TODO: Based on preliminary results, "banded" isn't significantly
     # more expensive than "bruteforce" for small datasets (<1000),
     # so perhaps bruteforce should be removed.
-    _render_method = Enum("banded", "bruteforce")
+    render_method = Enum("auto", "banded", "bruteforce")
 
     # A dict mapping color-map indices to arrays of indices into self.data.
     # This is used for the "banded" render method.
@@ -171,7 +177,10 @@ class ColormappedScatterPlot(ScatterPlot):
         else:
             batch_capable = False
 
-        method = self._calc_render_method(len(points))
+        if self.render_method == 'auto':
+            method = self._calc_render_method(len(points))
+        else:
+            method = self.render_method
 
         gc.save_state()
         try:
@@ -208,8 +217,7 @@ class ColormappedScatterPlot(ScatterPlot):
         color_data = points[:,2]
         color_indices = self.color_mapper.map_index(color_data)
 
-        self._render_method = self._calc_render_method(len(color_data))
-        if smartmode and self._render_method == 'bruteforce':
+        if smartmode and self.render_method == 'bruteforce':
              pass
         else:
             # shuffle_indices indicates how to sort the points in self.data
