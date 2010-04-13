@@ -171,6 +171,59 @@ class Plot(DataView):
                                  padding=10, component=self)
         return
 
+    def add_xy_plot(self, index_name, value_name, renderer_factory, name=None,
+        origin=None, **kwds):
+        """ Add a BaseXYPlot renderer subclass to this Plot.
+ 
+        Parameters
+        ----------
+        index_name : str
+            The name of the index datasource.
+        value_name : str
+            The name of the value datasource.
+        renderer_factory : callable
+            The callable that creates the renderer.
+        name : string (optional)
+            The name of the plot.  If None, then a default one is created
+            (usually "plotNNN").
+        origin : string (optional)
+            Which corner the origin of this plot should occupy: 
+                "bottom left", "top left", "bottom right", "top right"
+        **kwds :
+            Additional keywords to pass to the factory.
+        """
+        if name is None:
+            name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
+        index = self._get_or_create_datasource(index_name)
+        self.index_range.add(index)
+        value = self._get_or_create_datasource(value_name)
+        self.value_range.add(value)
+ 
+        if self.index_scale == "linear":
+            imap = LinearMapper(range=self.index_range)
+        else:
+            imap = LogMapper(range=self.index_range)
+        if self.value_scale == "linear":
+            vmap = LinearMapper(range=self.value_range)
+        else:
+            vmap = LogMapper(range=self.value_range)
+ 
+        renderer = renderer_factory(
+            index = index,
+            value = value,
+            index_mapper = imap,
+            value_mapper = vmap,
+            orientation = self.orientation,
+            origin = origin,
+            **kwds
+        )
+        self.add(renderer)
+        self.plots[name] = [renderer]
+        self.invalidate_and_redraw()
+        return self.plots[name]
+
     def plot(self, data, type="line", name=None, index_scale="linear",
              value_scale="linear", origin=None, **styles):
         """ Adds a new sub-plot using the given data and plot style.
@@ -241,7 +294,6 @@ class Plot(DataView):
             name = self._make_new_plot_name()
         if origin is None:
             origin = self.default_origin
-        plot_name = name
         if plot_type in ("line", "scatter", "polygon"):
             if len(data) == 1:
                 if self.default_index is None:
@@ -471,7 +523,6 @@ class Plot(DataView):
             origin = self.default_origin
 
         value = self._get_or_create_datasource(data)
-        array_data = value.get_data()
         if value.value_depth != 1:
             raise ValueError("Contour plots require 2D scalar field")
         if type == "line":
@@ -644,7 +695,6 @@ class Plot(DataView):
             name = self._make_new_plot_name()
         if origin is None:
             origin = self.default_origin
-        plot_name = name
 
         # Create the datasources
         if len(data) == 3:
