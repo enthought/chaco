@@ -222,15 +222,15 @@ class PlotFrame(DemoFrame):
     
     def _create_window(self):
         # Create the model
-        try:
-            self.model = model = BrainModel()
-            cmap = bone
-        except SystemExit:
-            sys.exit()
-        except:
-            print "Unable to load BrainModel, using generated data cube."
-            self.model = model = Model()
-            cmap = jet
+        #try:
+        #    self.model = model = BrainModel()
+        #    cmap = bone
+        #except SystemExit:
+        #    sys.exit()
+        #except:
+        #    print "Unable to load BrainModel, using generated data cube."
+        self.model = model = Model()
+        cmap = jet
         self._update_model(cmap)
 
         datacube = self.colorcube
@@ -241,24 +241,30 @@ class PlotFrame(DemoFrame):
 
         # Center Plot
         centerplot = Plot(self.plotdata, padding=0)
-        imgplot = centerplot.img_plot("xy", xbounds=model.xs, ybounds=model.ys, 
-                            colormap=cmap)[0]
+        imgplot = centerplot.img_plot("xy", 
+                                xbounds=(model.xs[0], model.xs[-1]),
+                                ybounds=(model.ys[0], model.ys[-1]), 
+                                colormap=cmap)[0]
         self._add_plot_tools(imgplot, "xy")
         self.center = imgplot
 
         # Right Plot
         rightplot = Plot(self.plotdata, width=150, resizable="v", padding=0)
         rightplot.value_range = centerplot.value_range
-        imgplot = rightplot.img_plot("yz", xbounds=model.zs, ybounds=model.ys,
-                                     colormap=cmap)[0]
+        imgplot = rightplot.img_plot("yz", 
+                                xbounds=(model.zs[0], model.zs[-1]), 
+                                ybounds=(model.ys[0], model.ys[-1]),
+                                colormap=cmap)[0]
         self._add_plot_tools(imgplot, "yz")
         self.right = imgplot
 
         # Bottom Plot
         bottomplot = Plot(self.plotdata, height=150, resizable="h", padding=0)
         bottomplot.index_range = centerplot.index_range
-        imgplot = bottomplot.img_plot("xz", xbounds=model.xs, ybounds=model.zs,
-                                      colormap=cmap)[0]
+        imgplot = bottomplot.img_plot("xz", 
+                                xbounds=(model.xs[0], model.xs[-1]),
+                                ybounds=(model.zs[0], model.zs[-1]),
+                                colormap=cmap)[0]
         self._add_plot_tools(imgplot, "xz")
         self.bottom = imgplot
 
