@@ -2,7 +2,7 @@ import operator
 
 # ETS imports
 from enthought.chaco.tools.api import LegendTool
-from enthought.traits.api import List
+from enthought.traits.api import List, Float
 
 
 def get_hit_plots(legend, event):
@@ -35,6 +35,8 @@ class LegendHighlighter(LegendTool):
     """
 
     drag_button = "right"
+    
+    dim_factor = Float(3.0)
 
     # The currently selected renderers
     _selected_renderers = List
@@ -94,8 +96,7 @@ class LegendHighlighter(LegendTool):
                 plot.line_width = plot._orig_line_width * 2.0
                 plot.alpha = plot._orig_alpha
             else:
-                plot.alpha = min(plot._orig_alpha * 3.0, 1.0)
-                plot.alpha = plot._orig_alpha / 3.0
+                plot.alpha = plot._orig_alpha / self.dim_factor
                 plot.line_width = plot._orig_line_width / 2.0
         # Move the selected renderers to the front
         if len(self._selected_renderers) > 0:
