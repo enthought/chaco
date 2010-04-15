@@ -29,6 +29,8 @@ from enthought.chaco.tools.api import PanTool, ZoomTool
 def _create_plot_component():
 
     # Create a scalar field to colormap
+    x_extents = (-2*pi, 2*pi)
+    y_extents = (-1.5*pi, 1.5*pi)
     xs = linspace(-2*pi, 2*pi, 200)
     ys = linspace(-1.5*pi, 1.5*pi, 100)
     x, y = meshgrid(xs,ys)
@@ -43,13 +45,13 @@ def _create_plot_component():
     lplot = Plot(pd)
     lplot.img_plot("imagedata",
                    name="cm_plot",
-                   xbounds=xs,
-                   ybounds=ys,
+                   xbounds=x_extents,
+                   ybounds=y_extents,
                    colormap=gmt_drywet)
     lplot.contour_plot("imagedata", 
                        type="line",
-                       xbounds=xs,
-                       ybounds=ys)
+                       xbounds=x_extents,
+                       ybounds=y_extents)
 
     # Tweak some of the plot properties
     lplot.title = "Colormap and contours"
@@ -82,8 +84,8 @@ def _create_plot_component():
     rplot = Plot(pd, range2d=lplot.range2d)
     rplot.contour_plot("imagedata", 
                        type="line",
-                       xbounds=xs,
-                       ybounds=ys,
+                       xbounds=x_extents,
+                       ybounds=y_extents,
                        bgcolor="black", 
                        levels=15, 
                        styles="solid",

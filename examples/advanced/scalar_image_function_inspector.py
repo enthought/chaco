@@ -66,10 +66,19 @@ class Model(HasTraits):
         self.compute_model()
 
     def compute_model(self):
-        # Create the values
-        self.xs = linspace(self.min_x, self.max_x, self.npts_x)
-        self.ys = linspace(self.min_y, self.max_y, self.npts_y)
-        x, y = meshgrid(self.xs,self.ys)
+        # The xs and ys used for the image plot range need to be the 
+        # edges of the cells.
+        self.xs = linspace(self.min_x, self.max_x, self.npts_x+1)
+        self.ys = linspace(self.min_y, self.max_y, self.npts_y+1)
+        
+        # The grid of points at which we will evaluate the 2D function
+        # is located at cell centers, so use halfsteps from the 
+        # min/max values (which are edges)
+        xstep = (self.max_x - self.min_x) / self.npts_x
+        ystep = (self.max_y - self.min_y) / self.npts_y
+        gridx = linspace(self.min_x+xstep/2, self.max_x-xstep/2, self.npts_x)
+        gridy = linspace(self.min_y+xstep/2, self.max_y-xstep/2, self.npts_y)
+        x, y = meshgrid(gridx, gridy)
         try:
             d = dict(x=x, y=y)
             exec "from scipy import *" in d 

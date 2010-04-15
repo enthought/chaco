@@ -2,7 +2,7 @@
 """
 
 # Major library imports
-from numpy import array, meshgrid, transpose
+from numpy import array, linspace, meshgrid, transpose
 
 # Enthought library imports
 from enthought.enable.api import LineStyle
@@ -107,14 +107,15 @@ class ContourLinePlot(BaseContourPlot):
     def _update_contours(self):
         """ Updates the cache of contour lines """
         # x and ydata are "fenceposts" so ignore the last value        
-        # XXX: this truncation is causing errors in Cntr() as of r13735
+        # XXX: this truncaton is causing errors in Cntr() as of r13735
+        xdata = self.index._xdata.get_data()
+        ydata = self.index._ydata.get_data()
+        xs = linspace(xdata[0], xdata[-1], len(xdata)-1)
+        ys = linspace(ydata[0], ydata[-1], len(ydata)-1)
+        xg, yg = meshgrid(xs, ys)
         if self.orientation == "h":
-            xg, yg = meshgrid(self.index._xdata.get_data(), #[:-1],
-                              self.index._ydata.get_data()) #[:-1])
             c = Cntr(xg, yg, self.value.raw_value)
         else:
-            yg, xg = meshgrid(self.index._ydata.get_data(), #[:-1],
-                              self.index._xdata.get_data()) #[:-1])
             c = Cntr(xg, yg, self.value.raw_value.T)
         self._cached_contours = {}
         for level in self._levels:
