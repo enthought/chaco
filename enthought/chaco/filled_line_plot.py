@@ -1,10 +1,11 @@
-
+import logging
 
 from enthought.traits.api import Property, Enum
 
 # Local imports
 from polygon_plot import PolygonPlot
 
+logger = logging.getLogger(__name__)
 
 def Alias(name):
     return Property(lambda obj: getattr(obj, name),
@@ -21,6 +22,11 @@ class FilledLinePlot(PolygonPlot):
     fill_direction = Enum("down", "up")
 
     def _render(self, gc, points):
+        # If there is nothing to render, render nothing
+        if len(points) == 0:
+            logger.warning("No datasource for plot")
+            return
+        
         if self.fill_direction == 'down':
             ox, oy = self.map_screen([[0,0]])[0]
         else:
