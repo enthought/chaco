@@ -201,16 +201,23 @@ class MultiLinePlot(BaseXYPlot):
             coordinates = self.yindex.get_data()
         else:
             coordinates = []
-        if len(coordinates) < 2:
-            # Default amplitude scale when only 1 or fewer y coordinates.
-            return 1.0
-        dy = coordinates[1] - coordinates[0]
+            
+        if len(coordinates) > 1:
+            dy = coordinates[1] - coordinates[0]
+        else:
+            # default coordinate spacing if there is only 1 coordinate
+            dy = 1.0
+            
         if self.use_global_bounds:
             max_abs = max(abs(self.global_min), abs(self.global_max))
         else:
             data = self.value._data
             max_abs = np.max(np.abs(data))
-        amp_scale = 0.5 * dy / max_abs
+            
+        if max_abs == 0:
+            amp_scale = 0.5 * dy
+        else:
+            amp_scale = 0.5 * dy / max_abs
         return amp_scale
 
     @cached_property
@@ -266,11 +273,13 @@ class MultiLinePlot(BaseXYPlot):
         low, high = self.index.get_bounds()
         if low > self.index_range.high or high < self.index_range.low:
             outside = True
-        # Check y coordinates.
-        tmax = varray.max()
-        tmin = varray.min()
-        if tmax < self.value_range.low or tmin > self.value_range.high:
+            
+        # Check y coordinates. Use varray because it is nased on the yindex,
+        # but has been shifted up or down depending on the values.
+        ylow, yhigh = varray.min(), varray.max()
+        if ylow > self.value_range.high or yhigh < self.value_range.low:
             outside = True
+            
         if outside:
             self._cached_data_pts = []
             self._cached_valid = True
