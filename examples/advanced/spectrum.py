@@ -88,13 +88,14 @@ def _create_plot_component(obj):
 
     return container
 
-
+_stream = None
 def get_audio_data():
-    pa = pyaudio.PyAudio()
-    stream = pa.open(format=pyaudio.paInt16, channels=1, rate=SAMPLING_RATE,
+    global _stream
+    if _stream is None:
+        pa = pyaudio.PyAudio()
+        _stream = pa.open(format=pyaudio.paInt16, channels=1, rate=SAMPLING_RATE,
                      input=True, frames_per_buffer=NUM_SAMPLES)
-    audio_data  = fromstring(stream.read(NUM_SAMPLES), dtype=short)
-    stream.close()
+    audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
     normalized_data = audio_data / 32768.0
     return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
 
@@ -227,4 +228,8 @@ elif ETSConfig.enable_toolkit == "qt4":
             return super(PlotFrame, self).closeEvent(event)
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=size, title=title)
+    try:
+        demo_main(PlotFrame, size=size, title=title)
+    finally:
+        if _stream is not None:
+            _stream.close()
