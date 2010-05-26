@@ -3,7 +3,6 @@
 # Copyright (c) 2008-2010 by Enthought, Inc.
 # All rights reserved.
 
-
 """
 Interactive 2-Dimensional Plotting
 
@@ -163,4 +162,3 @@ setup(
     version = INFO["version"],
     zip_safe = False,
     )
-
