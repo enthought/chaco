@@ -305,20 +305,21 @@ class LinePlot(BaseXYPlot):
             gc.set_stroke_color(self.selected_color_)
             gc.set_line_width(self.line_width+10.0)
             gc.set_line_dash(self.selected_line_style_)
-            render(gc, selected_points)
+            render(gc, selected_points, self.orientation)
 
         # Render using the normal style
         gc.set_stroke_color(self.color_)
         gc.set_line_width(self.line_width)
         gc.set_line_dash(self.line_style_)
-        render(gc, points)
+        render(gc, points, self.orientation)
 
         # Draw the default axes, if necessary
         self._draw_default_axes(gc)
 
         gc.restore_state()
 
-    def _render_normal(self, gc, points):
+    @classmethod
+    def _render_normal(cls, gc, points, orientation):
         for ary in points:
             if len(ary) > 0:
                 gc.begin_path()
@@ -326,19 +327,27 @@ class LinePlot(BaseXYPlot):
                 gc.stroke_path()
         return
 
-    def _render_hold(self, gc, points):
+    @classmethod
+    def _render_hold(cls, gc, points, orientation):
         for starts in points:
             x,y = starts.T
-            ends = transpose(array( (x[1:], y[:-1]) ))
+            if orientation == "h":
+                ends = transpose(array( (x[1:], y[:-1]) ))
+            else:
+                ends = transpose(array( (x[:-1], y[1:]) ))
             gc.begin_path()
             gc.line_set(starts[:-1], ends)
             gc.stroke_path()
         return
 
-    def _render_connected_hold(self, gc, points):
+    @classmethod
+    def _render_connected_hold(cls, gc, points, orientation):
         for starts in points:
             x,y = starts.T
-            ends = transpose(array( (x[1:], y[:-1]) ))
+            if orientation == "h":
+                ends = transpose(array( (x[1:], y[:-1]) ))
+            else:
+                ends = transpose(array( (x[:-1], y[1:]) ))
             gc.begin_path()
             gc.line_set(starts[:-1], ends)
             gc.line_set(ends, starts[1:])
