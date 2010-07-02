@@ -576,11 +576,11 @@ class BaseXYPlot(AbstractPlotRenderer):
         super(BaseXYPlot, self)._bounds_items_changed(event)
         self._update_mappers()
 
-##     def _position_changed(self):
-##         self._update_mappers()
+    def _position_changed(self):
+        self._update_mappers()
 
-##     def _position_items_changed(self):
-##         self._update_mappers()
+    def _position_items_changed(self):
+        self._update_mappers()
 
     def _orientation_changed(self):
         self._update_mappers()
