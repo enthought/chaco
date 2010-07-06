@@ -1,4 +1,4 @@
-""" Defines the ArrayDataSource xlass."""
+""" Defines the ArrayDataSource class."""
 
 # Major library imports
 from numpy import array, isfinite, ones, nanargmin, nanargmax, ndarray
