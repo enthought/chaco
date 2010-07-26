@@ -1,3 +1,7 @@
+"""
+Implementation of a plut using a custom overlay and tool
+"""
+
 import numpy
 
 from enthought.traits.api import HasTraits, Instance, Enum
@@ -8,6 +12,15 @@ from enthought.enable.api import BaseTool
 from enthought.enable.markers import DOT_MARKER
 
 class BoxSelectTool(BaseTool):
+    """ Tool for selecting all points within a box
+    
+        There are 2 states for this tool, normal and selecting. While the
+        left mouse button is down the metadata on the datasources will be
+        updated with the current selected bounds.
+        
+        Note that the tool does not actually store the selected point, but the
+        bounds of the box. 
+    """
 
     event_state = Enum("normal", "selecting")
 
@@ -48,6 +61,11 @@ class BoxSelectTool(BaseTool):
         
 
 class XRayOverlay(AbstractOverlay):
+    """ Overlay which draws scatter markers on top of plot data points.
+    
+        This overlay should be combined with a tool which updates the 
+        datasources metadata with selection bounds.
+    """
     
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
         x_range = self._get_selection_index_screen_range()
@@ -59,12 +77,17 @@ class XRayOverlay(AbstractOverlay):
         x1, x2 = x_range
         y1, y2 = y_range
 
+        # whenever save_state is called, always make sure restore_state is 
+        # called
+        
         gc.save_state()
-        gc.set_alpha(0.8)
-        gc.set_fill_color((1.0,1.0,1.0))
-        gc.rect(x1, y1, x2-x1, y2-y1)
-        gc.draw_path()
-        gc.restore_state()      
+        try:
+            gc.set_alpha(0.8)
+            gc.set_fill_color((1.0,1.0,1.0))
+            gc.rect(x1, y1, x2-x1, y2-y1)
+            gc.draw_path()
+        finally:
+            gc.restore_state()      
 
         pts = self._get_selected_points()
         if len(pts) == 0:
@@ -73,6 +96,9 @@ class XRayOverlay(AbstractOverlay):
         gc.draw_marker_at_points(screen_pts, 3, DOT_MARKER)
         
     def _get_selected_points(self):
+        """ gets all the points within the bounds defined in the datasources
+            metadata
+        """
         index_datasource = self.component.index
         index_selection = index_datasource.metadata['selections']
         index = index_datasource.get_data()
@@ -91,14 +117,19 @@ class XRayOverlay(AbstractOverlay):
         
         return zip(sel_index, sel_value)
         
-        
     def _get_selection_index_screen_range(self):
+        """ maps the selected bounds which were set by the tool into screen
+            space. The screen space points can be used for drawing the overlay
+        """
         index_datasource = self.component.index
         index_mapper = self.component.index_mapper
         index_selection = index_datasource.metadata['selections']
         return tuple(index_mapper.map_screen(numpy.array(index_selection)))
 
     def _get_selection_value_screen_range(self):
+        """ maps the selected bounds which were set by the tool into screen
+            space. The screen space points can be used for drawing the overlay
+        """
         value_datasource = self.component.value
         value_mapper = self.component.value_mapper
         value_selection = value_datasource.metadata['selections']
