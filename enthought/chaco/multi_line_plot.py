@@ -137,8 +137,9 @@ class MultiLinePlot(BaseXYPlot):
     #------------------------------------------------------------------------
 
     # The projected 2D numpy array.
-    _trace_data = Property(Array, depends_on=['index', 'value', 'yindex',
-                                                'amplitude', 'scale', 'offset'])
+    _trace_data = Property(Array, depends_on=['index', 'index.data_changed',
+        'value', 'value.data_changed', 'yindex', 'yindex.data_changed',
+        'amplitude', 'scale', 'offset'])
 
     # Cached list of non-NaN arrays of (x,y) data-space points; regardless of
     # self.orientation, this is always stored as (index_pt, value_pt).  This is
