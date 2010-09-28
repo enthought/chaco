@@ -20,6 +20,14 @@ class ToolbarPlot(Plot):
     toolbar_location = Enum('top', 'right', 'bottom', 'left')
 
     def __init__(self, *args, **kw):
+        
+        # initialize the toolbar class before super() has a chance to create
+        # the default using the default class. This can happen because of 
+        # ordering issues
+        
+        if "toolbar_class" in kw:
+            self.toolbar_class = kw.pop("toolbar_class")
+        
         super(ToolbarPlot, self).__init__(*args, **kw)
         
         self.toolbar.component = self
