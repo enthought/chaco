@@ -10,13 +10,16 @@ from enthought.chaco.api import DataRange2D, ImageData
 
 class FunctionImageData(ImageData):
     """ A class that provides data for a 2-D image based upon the range
-    supplied.
+    supplied.  This class can be used as the data source for an image plot
+    or contour plot.
     
     Computation should be fairly swift for acceptable interactive performance.
     """
 
     # The function to call with the low and high values of the range
-    # in the x and y dimensions.  It should return a 2-D array of values.
+    # in the x and y dimensions.  It should return either a 2-D array
+    # of numerical values, or an array of RGB or RGBA values (shape should
+    # be (n, m), (n, m, 3) or (n, m, 4)).
     func = Callable
 
     # the 2D data_range required for the data shown
