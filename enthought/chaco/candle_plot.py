@@ -143,28 +143,28 @@ class CandlePlot(BaseCandlePlot):
             return
         
         index = self.index_mapper.map_screen(self._cached_data_pts[0])
+        if len(index) == 0:
+            return
+
         vals = []
         for v in self._cached_data_pts[1:]:
             if v is None:
                 vals.append(None)
             else:
                 vals.append(self.value_mapper.map_screen(v))
-        gc.save_state()
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
         # Compute lefts and rights from self.index, which represents bin
         # centers.
-        if len(index) == 0:
-            return
-        elif len(index) == 1:
+        if len(index) == 1:
             width = 5.0
         else:
             width = (index[1:] - index[:-1]).min() / 2.5
         left = index - width
         right = index + width
 
-        self._render(gc, left, right, *vals)
-        gc.restore_state() 
+        with gc:
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            self._render(gc, left, right, *vals)
 
     def _get_value(self):
         if self.center_values is not None:
