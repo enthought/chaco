@@ -1,10 +1,11 @@
 """ Makes a copy of the plot in the overlay and adds it to the canvas.
 """
 
+from __future__ import with_statement
 
 # Enthought library imports
 from enthought.traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
-from enthought.enable.api import Canvas, Component, Container
+from enthought.enable.api import Container
 
 # Chaco imports
 from enthought.chaco.api import AbstractOverlay
@@ -50,14 +51,13 @@ class PlotCloneTool(AbstractOverlay, DragTool):
         else:
             if self._offset is not None and (self._offset[0] > 10 or
                     self._offset[1] > 10):
-                gc.save_state()
-                gc.clear_clip_path()
-                gc.translate_ctm(*self._offset)
-                gc.set_alpha(self.alpha)
-                self._recursion_check = True
-                self.component._draw(gc, view_bounds, mode)
-                self._recursion_check = False
-                gc.restore_state()
+                with gc:
+                    gc.clear_clip_path()
+                    gc.translate_ctm(*self._offset)
+                    gc.set_alpha(self.alpha)
+                    self._recursion_check = True
+                    self.component._draw(gc, view_bounds, mode)
+                    self._recursion_check = False
 
     def drag_start(self, event):
         """ Called when the drag operation starts.  

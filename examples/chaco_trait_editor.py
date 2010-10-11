@@ -3,6 +3,8 @@ This particular editor allows the user to set two endpoints of an
 interval.
 """
 
+from __future__ import with_statement
+
 from enthought.traits.ui.editor_factory import EditorFactory
 from enthought.traits.ui.wx.editor import Editor
 
@@ -16,6 +18,7 @@ from enthought.chaco.tools.api import RangeSelection, RangeSelectionOverlay
 from enthought.traits.api import Int, TraitType, Instance, Float
 
 from math import pi
+
 
 class Interval(TraitType):
     """Trait that represents an interval.
@@ -38,6 +41,7 @@ class Interval(TraitType):
 
     def create_editor(self):
         return IntervalEditor()
+
 
 class IntervalEditorFactory(EditorFactory):
     width = Int(300)
@@ -68,8 +72,7 @@ class RangeKnobsOverlay(RangeSelectionOverlay):
         coords = self._get_selection_screencoords()
         for coord in coords:
             start, end = coord
-            gc.save_state()
-            try:
+            with gc:
                 gc.set_alpha(self.alpha)
                 gc.set_stroke_color(self.border_color_)
                 gc.set_line_width(self.border_width)
@@ -87,14 +90,11 @@ class RangeKnobsOverlay(RangeSelectionOverlay):
                 gc.set_fill_color(self.high_color_)
                 self._circle(gc, end, mid_y, self.radius)
                 gc.draw_path()
-            finally:
-                gc.restore_state()
 
     def _circle(self, gc, x, y, radius):
-        gc.save_state()
-        gc.translate_ctm(x, y)
-        gc.arc(0, 0, 2*radius, 0, 2*pi)
-        gc.restore_state()
+        with gc:
+            gc.translate_ctm(x, y)
+            gc.arc(0, 0, 2*radius, 0, 2*pi)
 
 
 class IntervalEditorImpl(Editor):
@@ -159,7 +159,7 @@ IntervalEditor = IntervalEditorFactory
 # --- Demonstration ---
 
 if __name__ == "__main__":
-    from enthought.traits.api import HasTraits, Range
+    from enthought.traits.api import HasTraits
     from enthought.traits.ui.api import View, Item
     class IntervalTest(HasTraits):
         interval = Interval(low=0, high=1)

@@ -1,9 +1,11 @@
 
+from __future__ import with_statement
 
 from enthought.enable.api import Component
 from enthought.traits.api import Enum, Float, Instance, Trait, Tuple
 
-from enthought.chaco.api import AbstractOverlay, PlotComponent, BasePlotContainer
+from enthought.chaco.api import AbstractOverlay, BasePlotContainer
+
 
 class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
     """ Allows an arbitrary plot component to be overlaid on top of another one.
@@ -32,10 +34,9 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         self._do_layout()
-        gc.save_state()
-        gc.clear_clip_path()
-        self.overlay_component._draw(gc, view_bounds, mode)
-        gc.restore_state()
+        with gc:
+            gc.clear_clip_path()
+            self.overlay_component._draw(gc, view_bounds, mode)
 
     # TODO: Implement this more intelligently than the one in BasePlotContainer
     #def get_preferred_size(self):

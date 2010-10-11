@@ -2,6 +2,8 @@
 Implementation of a plut using a custom overlay and tool
 """
 
+from __future__ import with_statement
+
 import numpy
 
 from enthought.traits.api import HasTraits, Instance, Enum
@@ -77,17 +79,11 @@ class XRayOverlay(AbstractOverlay):
         x1, x2 = x_range
         y1, y2 = y_range
 
-        # whenever save_state is called, always make sure restore_state is 
-        # called
-        
-        gc.save_state()
-        try:
+        with gc:
             gc.set_alpha(0.8)
             gc.set_fill_color((1.0,1.0,1.0))
             gc.rect(x1, y1, x2-x1, y2-y1)
             gc.draw_path()
-        finally:
-            gc.restore_state()      
 
         pts = self._get_selected_points()
         if len(pts) == 0:

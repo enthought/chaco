@@ -1,5 +1,7 @@
 
-from numpy import array, amax, amin, clip
+from __future__ import with_statement
+
+from numpy import array, amax, amin
 
 from enthought.enable.api import ColorTrait, Component
 from enthought.traits.api import Float, Instance, Int
@@ -64,8 +66,7 @@ class ZoomOverlay(AbstractOverlay):
         
         left_line, right_line, polygon = self.calculate_points(component)
        
-        gc.save_state()
-        try:
+        with gc:
             gc.translate_ctm(*component.position)
             gc.set_alpha(self.alpha)
             gc.set_fill_color(self.fill_color_)
@@ -79,8 +80,7 @@ class ZoomOverlay(AbstractOverlay):
             gc.lines(left_line)
             gc.lines(right_line)
             gc.stroke_path()
-        finally:
-            gc.restore_state()
+
         return
     
     def _get_selection_screencoords(self):

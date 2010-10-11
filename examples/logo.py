@@ -1,10 +1,13 @@
 """ LOGO overlay """
 
+from __future__ import with_statement
+
 from numpy import array, cos, invert, isnan, nan, pi, sin, vstack
-from enthought.traits.api import Array, Enum, Float, HasTraits, Instance, Range
+from enthought.traits.api import Array, Enum, Float, Range
 from enthought.traits.ui.api import Group, Item, View
 from enthought.enable.api import ColorTrait
 from enthought.chaco.api import arg_find_runs, AbstractOverlay
+
 
 class Turtle(AbstractOverlay):
     x = Float
@@ -30,8 +33,7 @@ class Turtle(AbstractOverlay):
         self.render(gc, other_component)
 
     def render_turtle(self, gc, component):
-        gc.save_state()
-        try:
+        with gc:
             x, y = component.map_screen(array([self.x, self.y], ndmin=2))[0]
             gc.translate_ctm(x, y)
             angle = self.angle * pi / 180.0
@@ -43,16 +45,13 @@ class Turtle(AbstractOverlay):
                       [-0.707*self.size, -0.707*self.size],
                       [self.size, 0.0]])
             gc.fill_path()
-        finally:
-            gc.restore_state()
 
     def render(self, gc, component):
         # Uses the component to map our path into screen space
         nan_mask = invert(isnan(self.path[:,0])).astype(int)
         blocks = [b for b in arg_find_runs(nan_mask, "flat") if nan_mask[b[0]] != 0]
         screen_pts = component.map_screen(self.path)
-        gc.save_state()
-        try:
+        with gc:
             gc.clip_to_rect(component.x, component.y, component.width, component.height)
             gc.set_stroke_color(self.line_color_)
             for start, end in blocks:
@@ -60,8 +59,6 @@ class Turtle(AbstractOverlay):
                 gc.lines(screen_pts[start:end])
                 gc.stroke_path()
             self.render_turtle(gc, component)
-        finally:
-            gc.restore_state()
     
     def pendown(self):
         self._pen = "down"

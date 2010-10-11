@@ -3,8 +3,7 @@
 The main app for the PlotCanvas application
 """
 
-# Major library imports
-from numpy import arange, fabs, linspace, pi, sin
+from __future__ import with_statement
 
 # Enthought library imports
 from enthought.traits.api import Float
@@ -32,20 +31,19 @@ class Box(Component):
         Component.__init__(self, *args, **kw)
 
     def _draw_mainlayer(self, gc, view_bounds=None, mode="default"):
-        gc.save_state()
-        gc.set_fill_color(self.fill_color)
-        dx, dy = self.bounds
-        x, y = self.position
-        gc.clip_to_rect(x, y, dx, dy)
-        gc.rect(x, y, dx, dy)
-        gc.fill_path()
-        
-        ## draw line around outer box
-        #gc.set_stroke_color((0,0,0,1))
-        #gc.rect(self.outer_x, self.outer_y, self.outer_width, self.outer_height)
-        #gc.stroke_path()
+        with gc:
+            gc.set_fill_color(self.fill_color)
+            dx, dy = self.bounds
+            x, y = self.position
+            gc.clip_to_rect(x, y, dx, dy)
+            gc.rect(x, y, dx, dy)
+            gc.fill_path()
+            
+            ## draw line around outer box
+            #gc.set_stroke_color((0,0,0,1))
+            #gc.rect(self.outer_x, self.outer_y, self.outer_width, self.outer_height)
+            #gc.stroke_path()
 
-        gc.restore_state()
         return
 
     def normal_left_down(self, event):
