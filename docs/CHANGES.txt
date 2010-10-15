@@ -1,6 +1,20 @@
-Chaco 3.3.1 (not yet released)
-==============================
+Chaco 3.3.2 (Oct 15, 2010)
+==========================
 
+Enhancements
+------------
+
+ * Adding hold and connectedhold render styles to FilledLinePlot
+ * New FunctionImageData class which is similar to FunctionDataSource
+ * Replacing all gc.save_state()/gc.restore_state() calls in Chaco with
+   the new GraphicsContext context handler, using "with gc:"
+ * New Xray Plot example
+ * Adding Spectrum Waterfall example
+
+Fixes
+-----
+ * Fixing some commented-out position traits handlers in BaseXYPlot
+ * Fixing MultiLinePlot's data listener
 
 
 Chaco 3.3.0 (Feb 24, 2010)
