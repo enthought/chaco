@@ -11,7 +11,7 @@ from enthought.traits.ui.api import View, Item
 from enthought.enable.api import ComponentEditor
 from enthought.chaco.api import Plot, ArrayPlotData, AbstractOverlay
 from enthought.enable.api import BaseTool
-from enthought.enable.markers import DOT_MARKER
+from enthought.enable.markers import DOT_MARKER, DotMarker
 
 class BoxSelectTool(BaseTool):
     """ Tool for selecting all points within a box
@@ -68,6 +68,8 @@ class XRayOverlay(AbstractOverlay):
         This overlay should be combined with a tool which updates the 
         datasources metadata with selection bounds.
     """
+
+    marker = DotMarker()
     
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
         x_range = self._get_selection_index_screen_range()
@@ -89,7 +91,17 @@ class XRayOverlay(AbstractOverlay):
         if len(pts) == 0:
             return
         screen_pts = self.component.map_screen(pts)
-        gc.draw_marker_at_points(screen_pts, 3, DOT_MARKER)
+        if hasattr(gc, 'draw_marker_at_points'):
+            gc.draw_marker_at_points(screen_pts, 3, DOT_MARKER)
+        else:
+            gc.save_state()
+            for sx,sy in screen_pts:
+                gc.translate_ctm(sx, sy)
+                gc.begin_path()
+                self.marker.add_to_path(gc, 3)
+                gc.draw_path(self.marker.draw_mode)
+                gc.translate_ctm(-sx, -sy)
+            gc.restore_state()
         
     def _get_selected_points(self):
         """ gets all the points within the bounds defined in the datasources
