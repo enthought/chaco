@@ -1,4 +1,3 @@
-
 # Function to convert simple ETS project names and versions to a requirements
 # spec that works for both development builds and stable builds.  Allows
 # a caller to specify a max version, which is intended to work along with
@@ -15,11 +14,11 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-ENABLE_TRAITS = etsdep('Enable[traits]', '3.3.1')
-ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.5')
+ENABLE_TRAITS = etsdep('Enable[traits]', '3.3.2')
+ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.6')
 #TRAITSBACKENDQT -- not needed due to the way it is used in chaco2_plot_container_editor.py
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.4.0')  # used by chaco_plot_editor.py
-TRAITS_UI = etsdep('Traits[ui]', '3.4.0')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.5.0')  # used by chaco_plot_editor.py
+TRAITS_UI = etsdep('Traits[ui]', '3.5.0')
 
 
 INFO = {
@@ -43,4 +42,4 @@ INFO = {
         ],
     "name": 'Chaco',
     "version": '3.3.2',
-    }
+}
