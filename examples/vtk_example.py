@@ -5,8 +5,8 @@ from scipy.special import jn
 from enthought.tvtk.api import tvtk
 from enthought.mayavi import mlab
 from enthought.enable.vtk_backend.vtk_window import EnableVTKWindow
-from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from enthought.chaco.api import ArrayPlotData, Plot, OverlayPlotContainer
+from enthought.chaco.tools.api import PanTool, ZoomTool, MoveTool
 
 def main():
     # Create some x-y data series to plot
@@ -16,7 +16,7 @@ def main():
         pd.set_data("y" + str(i), jn(i,x))
 
     # Create some line plots of some of the data
-    plot = Plot(pd, padding=30, border_visible=True, 
+    plot = Plot(pd, bgcolor="none", padding=30, border_visible=True, 
                  overlay_border=True, use_backbuffer=False)
     plot.legend.visible = True
     plot.plot(("index", "y0", "y1", "y2"), name="j_n, n<3", color="auto")
@@ -27,26 +27,33 @@ def main():
 
     # Create the mlab test mesh and get references to various parts of the
     # VTK pipeline
+    f = mlab.figure(size=(600,500))
     m = mlab.test_mesh()
     scene = mlab.gcf().scene
     render_window = scene.render_window
     renderer = scene.renderer
     rwi = scene.interactor
 
+    plot.resizable = ""
+    plot.bounds = [200,200]
+    plot.padding = 25
+    plot.outer_position = [30,30]
+    plot.tools.append(MoveTool(component=plot,drag_button="right"))
+
+    container = OverlayPlotContainer(bgcolor = "transparent",
+                    fit_window = True)
+    container.add(plot)
+
     # Create the Enable Window
     window = EnableVTKWindow(rwi, renderer, 
-            component=plot,
+            component=container,
             #istyle_class = tvtk.InteractorStyleSwitch,
-            istyle_class = tvtk.InteractorStyle,
-            resizable = "",
-            bounds = [200, 200],
-            padding_top = 20,
-            padding_bottom = 20,
-            padding_left = 20,
+            #istyle_class = tvtk.InteractorStyle,
+            istyle_class = tvtk.InteractorStyleTrackballCamera, 
+            bgcolor = "transparent",
+            event_passthrough = True,
             )
 
-    #rwi.render()
-    #rwi.start()
     mlab.show()
     return window, render_window
 
