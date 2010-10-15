@@ -30,7 +30,7 @@ INFO = {
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
         'nonets': [
-            'numpy >= 1.1.0',
+            'numpy >= 1.4.0',
             #'PyQt4', -- not really required by everyone.
             #'wxPython', -- not really required by everyone.
             ],
