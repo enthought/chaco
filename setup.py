@@ -131,7 +131,7 @@ setup(
     package_data={'enthought': ['chaco/tools/toolbars/images/*.png']},
     description = DOCLINES[1],
     download_url = ('http://www.enthought.com/repo/ETS/Chaco-%s.tar.gz' %
-        INFO['version']),
+                    INFO['version']),
     extras_require = INFO["extras_require"],
     ext_modules = [contour],
     html_doc_repo = 'https://svn.enthought.com/svn/cec/trunk/projects/chaco/docs/',
