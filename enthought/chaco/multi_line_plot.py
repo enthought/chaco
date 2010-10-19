@@ -381,37 +381,35 @@ class MultiLinePlot(BaseXYPlot):
         if len(line_points) == 0:
             return
 
-        gc.save_state()
-        gc.set_antialias(True)
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
+        with gc:
+            gc.set_antialias(True)
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
-        render = self._render_normal
+            render = self._render_normal
 
-        if selected_points is not None:
-            gc.set_stroke_color(self.selected_color_)
-            gc.set_line_width(self.line_width+10.0)
-            gc.set_line_dash(self.selected_line_style_)
-            render(gc, selected_points)
+            if selected_points is not None:
+                gc.set_stroke_color(self.selected_color_)
+                gc.set_line_width(self.line_width+10.0)
+                gc.set_line_dash(self.selected_line_style_)
+                render(gc, selected_points)
 
-        if self.color_func is not None:
-            # Existence of self.color_func overrides self.color.
-            color_func = self.color_func
-        else:
-            color_func = lambda k: self.color_
+            if self.color_func is not None:
+                # Existence of self.color_func overrides self.color.
+                color_func = self.color_func
+            else:
+                color_func = lambda k: self.color_
 
-        tmp = list(enumerate(line_points))
-        # Note: the list is reversed for testing with _render_filled.
-        for k, points in reversed(tmp):
-            color = color_func(k)
-            gc.set_stroke_color(color)
-            gc.set_line_width(self.line_width)
-            gc.set_line_dash(self.line_style_)
-            render(gc, points)
+            tmp = list(enumerate(line_points))
+            # Note: the list is reversed for testing with _render_filled.
+            for k, points in reversed(tmp):
+                color = color_func(k)
+                gc.set_stroke_color(color)
+                gc.set_line_width(self.line_width)
+                gc.set_line_dash(self.line_style_)
+                render(gc, points)
 
-        # Draw the default axes, if necessary
-        self._draw_default_axes(gc)
-
-        gc.restore_state()
+            # Draw the default axes, if necessary
+            self._draw_default_axes(gc)
 
     def _render_normal(self, gc, points):
         for ary in points:
@@ -423,17 +421,14 @@ class MultiLinePlot(BaseXYPlot):
 
 
     def _render_icon(self, gc, x, y, width, height):
-        gc.save_state()
-        gc.set_stroke_color(self.color_)
-        gc.set_line_width(self.line_width)
-        gc.set_line_dash(self.line_style_)
-        gc.set_antialias(0)
-        gc.move_to(x, y+height/2)
-        gc.line_to(x+width, y+height/2)
-        gc.stroke_path()
-        gc.restore_state()
-        return
-
+        with gc:
+            gc.set_stroke_color(self.color_)
+            gc.set_line_width(self.line_width)
+            gc.set_line_dash(self.line_style_)
+            gc.set_antialias(0)
+            gc.move_to(x, y+height/2)
+            gc.line_to(x+width, y+height/2)
+            gc.stroke_path()
 
 
     def _alpha_changed(self):
