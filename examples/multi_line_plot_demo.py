@@ -1,6 +1,6 @@
 import numpy as np
  
-from enthought.traits.api import Instance, HasTraits, Range
+from enthought.traits.api import Instance, HasTraits, Range, Array
 from enthought.traits.ui.api import View, Item, HGroup, VGroup, Group
 
 from enthought.enable.api import ComponentEditor
@@ -10,15 +10,37 @@ from enthought.chaco.multi_array_data_source import MultiArrayDataSource
 from enthought.chaco.multi_line_plot import MultiLinePlot
 
 
+class DataModel(HasTraits):
+    """This is the data to be plotted in the demo."""
+
+    # The x values of the data (1D numpy array).
+    x_index = Array()
+    
+    # The channel numbers (1D numpy array).
+    y_index = Array()
+    
+    # The data.  The shape of this 2D array must be (y_index.size, x_index.size)
+    data = Array()
+
+
 class MultiLinePlotDemo(HasTraits):
-    """Demonstrates the MultiLinePlot."""
+    """Demonstrates the MultiLinePlot.
+    
+    This demo assumes that 'model', an instance of DataModel containing the 2D
+    data to be plotted, will be given to the constructor, and will not change
+    later.
+    """
+
+    model = Instance(DataModel)
 
     plot = Instance(Plot)
 
     multi_line_plot_renderer = Instance(MultiLinePlot)
 
+    # Drives multi_line_plot_renderer.normalized_amplitude
     amplitude = Range(-1.5, 1.5, value=-0.5)
 
+    # Drives multi_line_plot_renderer.offset
     offset = Range(-1.0, 1.0, value=0)
 
     traits_view = \
@@ -43,43 +65,57 @@ class MultiLinePlotDemo(HasTraits):
             resizable=True,
         )
 
-    def __init__(self, x_index, y_index, data, **kw):
-        super(MultiLinePlotDemo, self).__init__(**kw)
-        
-        # Create the data source for the MultiLinePlot.
-        ds = MultiArrayDataSource(data=data)
-        
-        xs = ArrayDataSource(x_index, sort_order='ascending')
+
+    #-----------------------------------------------------------------------
+    # Trait defaults
+    #-----------------------------------------------------------------------
+
+    def _multi_line_plot_renderer_default(self):
+        """Create the default MultiLinePlot instance."""
+
+        xs = ArrayDataSource(self.model.x_index, sort_order='ascending')
         xrange = DataRange1D()
         xrange.add(xs)
         
-        ys = ArrayDataSource(y_index, sort_order='ascending')
+        ys = ArrayDataSource(self.model.y_index, sort_order='ascending')
         yrange = DataRange1D()
         yrange.add(ys)
+
+        # The data source for the MultiLinePlot.
+        ds = MultiArrayDataSource(data=self.model.data)
         
-        self.multi_line_plot_renderer = \
+        multi_line_plot_renderer = \
             MultiLinePlot(
                 index = xs,
                 yindex = ys,
                 index_mapper = LinearMapper(range=xrange),
                 value_mapper = LinearMapper(range=yrange),
                 value=ds,
-                global_max = data.max(),
-                global_min = data.min(),
-                **kw)
+                global_max = self.model.data.max(),
+                global_min = self.model.data.min())
 
-        self.plot = Plot(title="MultiLinePlot Demo")
-        self.plot.add(self.multi_line_plot_renderer)
+        return multi_line_plot_renderer
 
-        x_axis = PlotAxis(component=self.plot, 
+    def _plot_default(self):
+        """Create the Plot instance."""
+
+        plot = Plot(title="MultiLinePlot Demo")
+        plot.add(self.multi_line_plot_renderer)
+
+        x_axis = PlotAxis(component=plot, 
                             mapper=self.multi_line_plot_renderer.index_mapper,
                             orientation='bottom',
                             title='t (seconds)')
-        y_axis = PlotAxis(component=self.plot,
+        y_axis = PlotAxis(component=plot,
                             mapper=self.multi_line_plot_renderer.value_mapper,
                             orientation='left',
                             title='channel')
-        self.plot.overlays.extend([x_axis, y_axis])
+        plot.overlays.extend([x_axis, y_axis])
+        return plot
+
+    #-----------------------------------------------------------------------
+    # Trait change handlers
+    #-----------------------------------------------------------------------
 
     def _amplitude_changed(self, amp):
         self.multi_line_plot_renderer.normalized_amplitude = amp
@@ -104,5 +140,10 @@ if __name__ == "__main__":
     freqs = 3*(channels[:,None] + 1)
     y = np.sin(freqs * t)
 
-    demo = MultiLinePlotDemo(t, channels, y)
+    # Create an instance of DataModel.  This is the data to
+    # be plotted with a MultiLinePlot.
+    data = DataModel(x_index=t, y_index=channels, data=y)
+
+    # Create the demo class, and show it.
+    demo = MultiLinePlotDemo(model=data)
     demo.configure_traits()
