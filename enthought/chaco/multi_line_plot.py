@@ -1,6 +1,8 @@
 """ Defines the MultiLinePlot class.
 """
 
+from __future__ import with_statement
+
 # Standard library imports
 import warnings
 from math import ceil, floor
@@ -40,12 +42,17 @@ class MultiLinePlot(BaseXYPlot):
         These are the 'y' coordinates.
     
     value : instance of a MultiArrayDataSource
-        Note that the `scale`, `offset` and `amplitude` attributes of the
+        Note that the `scale`, `offset` and `normalized_amplitude` attributes of the
         MultiArrayDataSource control the projection of the traces into the (x,y)
-        plot.  In simplest case, `scale=1` and `offset=0`, and `amplitude` controls
-        the scaling of the traces relative to their base y value.
+        plot.  In simplest case, `scale=1` and `offset=0`, and `normalized_amplitude`
+        controls the scaling of the traces relative to their base y value.
 
-    amplitude : Float
+    global_min, global_max : float
+        The minimum and maximum values of the data in `value`.  For large
+        arrays, computing these could take excessive time, so they must be
+        provided when an instance is created.
+
+    normalized_amplitude : Float
 
     color : ColorTrait
 
@@ -194,7 +201,7 @@ class MultiLinePlot(BaseXYPlot):
     def _get_amplitude_scale(self):
         """
         If the amplitude is set to this value, the largest trace deviation from
-        is base y coordinates will be equal to the y coordinate spacing.
+        its base y coordinate will be equal to the y coordinate spacing.
         """
         # Note: Like the rest of the current code, this ignores the `scale` attribute.
 
