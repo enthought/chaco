@@ -24,8 +24,9 @@ class Label(HasTraits):
     # "Left" refers to the left edge of the text's bounding box (including
     # margin), while "center" refers to the horizontal and vertical center
     # of the bounding box.
-    anchor = Enum("left", "right", "top", "bottom", "center",
-                  "top left", "top right", "bottom left", "bottom right")
+    # TODO: Implement this and test thoroughly
+    #anchor = Enum("left", "right", "top", "bottom", "center",
+    #              "top left", "top right", "bottom left", "bottom right")
 
     # The label text.  Carriage returns (\n) are always connverted into
     # line breaks.
