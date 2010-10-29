@@ -2,7 +2,7 @@ import numpy
 
 from enthought.etsconfig.api import ETSConfig
 from enthought.enable.tools.toolbars.toolbar_buttons import Button
-from enthought.chaco.tools.simple_zoom import ZoomTool
+from enthought.chaco.tools.zoom_tool import ZoomTool
 from enthought.chaco.plot_graphics_context import PlotGraphicsContext
 from enthought.kiva.backend_image import Image
 from enthought.pyface.image_resource import ImageResource
