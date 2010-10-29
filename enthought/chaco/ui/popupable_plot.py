@@ -5,7 +5,7 @@ from enthought.enable.api import Container
 from enthought.enable.component_editor import ComponentEditor
 from enthought.chaco.api import VPlotContainer
 from enthought.chaco.plot import Plot
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 from enthought.traits.ui.wx.constants import WindowColor
 
@@ -37,7 +37,7 @@ class PopupablePlot(Plot):
         container = VPlotContainer(bgcolor=WindowColor)
         container.add(plot)
         plot.tools.append(PanTool(plot))
-        plot.overlays.append(SimpleZoom(plot))
+        plot.overlays.append(ZoomTool(plot))
         window = PlotWindow(plot=container)
         window.edit_traits(kind='live', parent=event.window.control)
 

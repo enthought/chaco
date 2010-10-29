@@ -2,7 +2,7 @@ import numpy
 
 from enthought.etsconfig.api import ETSConfig
 from enthought.enable.tools.toolbars.toolbar_buttons import Button
-from enthought.chaco.tools.simple_zoom import SimpleZoom
+from enthought.chaco.tools.simple_zoom import ZoomTool
 from enthought.chaco.plot_graphics_context import PlotGraphicsContext
 from enthought.kiva.backend_image import Image
 from enthought.pyface.image_resource import ImageResource
@@ -99,7 +99,7 @@ class ZoomResetButton(ToolbarButton):
         plot_component = self.container.component
 
         for overlay in plot_component.overlays:
-            if isinstance(overlay, SimpleZoom):
+            if isinstance(overlay, ZoomTool):
                 overlay._reset_state_pressed()
 
         self.container.request_redraw()

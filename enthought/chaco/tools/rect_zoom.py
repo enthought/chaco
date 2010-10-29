@@ -1,15 +1,12 @@
 """ Defines the RectZoomTool class.
 """
-import warnings
-warnings.warn("RectZoomTool has been deprecated, use ZoomTool", DeprecationWarning)
+from zoom_tool import ZoomTool
 
-from simple_zoom import SimpleZoom
-
-class RectZoomTool(SimpleZoom):
+class RectZoomTool(ZoomTool):
     """
     Allows the user to drag a zoom box around a region of the plot.
     
-    This is a subclass of SimpleZoom, with different default values for some
+    This is a subclass of ZoomTool, with different default values for some
     traits.
     """
 

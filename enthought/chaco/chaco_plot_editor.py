@@ -26,7 +26,7 @@ from plot_factory import create_line_plot, create_scatter_plot, \
 from plot_label import PlotLabel
 
 # Somewhat unorthodox...
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 #-------------------------------------------------------------------------------
 #  Trait definitions:
@@ -380,7 +380,7 @@ class ChacoPlotEditor ( Editor ):
                                     orientation=plotitem.orientation)
         add_default_grids(new_plot)
         new_plot.tools.append(PanTool(new_plot))
-        zoom = SimpleZoom(component=new_plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(component=new_plot, tool_mode="box", always_on=False)
         new_plot.overlays.append(zoom)
 
         # Update the titles and labels

@@ -2,10 +2,9 @@
 """
 
 # Chaco imports
-from enthought.chaco.tools.api import SimpleZoom
+from zoom_tool import ZoomTool
 
-
-class TrackingZoom(SimpleZoom):
+class TrackingZoom(ZoomTool):
     """ Allows the user to zoom in or out on a plot that is using tracking.
     
     The **default_state** of the data range determines the tracking behavior.
@@ -20,7 +19,7 @@ class TrackingZoom(SimpleZoom):
         """ Handles the mouse wheel being used when the tool is in the 'normal'
         state.
         
-        Overrides SimpleZoom.
+        Overrides ZoomTool
         """
         if self.enable_wheel and event.mouse_wheel != 0:
             if event.mouse_wheel > 0:
