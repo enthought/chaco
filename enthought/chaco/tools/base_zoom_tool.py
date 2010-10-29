@@ -1,5 +1,8 @@
 """ Defines the base class for various types of zoom tools.
 """
+import warnings
+warnings.warn("BaseZoomTool has been deprecated, use BetterZoomTool", DeprecationWarning)
+
 
 from numpy import allclose, inf
 

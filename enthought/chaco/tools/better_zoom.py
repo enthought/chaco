@@ -1,5 +1,6 @@
 import numpy
 
+from enthought.chaco.grid_mapper import GridMapper
 from enthought.enable.api import BaseTool, KeySpec
 from enthought.traits.api import Enum, Float, Instance, Bool, HasTraits, List
 
@@ -20,20 +21,32 @@ class ZoomState(HasTraits):
         index_factor = self.next[0]/self.prev[0]
         value_factor = self.next[1]/self.prev[1]
         
+        if isinstance(zoom_tool.component.index_mapper, GridMapper):
+            index_mapper = zoom_tool.component.index_mapper._xmapper
+            value_mapper = zoom_tool.component.index_mapper._ymapper
+        else:
+            index_mapper = zoom_tool.component.index_mapper
+            value_mapper = zoom_tool.component.value_mapper
+            
         if index_factor != 1.0:
-            zoom_tool._zoom_in_mapper(zoom_tool.component.index_mapper, 
-                                      index_factor)
+            zoom_tool._zoom_in_mapper(index_mapper, index_factor)
         if value_factor != 1.0:
-            zoom_tool._zoom_in_mapper(zoom_tool.component.value_mapper, 
-                                      value_factor)
+            zoom_tool._zoom_in_mapper(value_mapper, value_factor)
         
         zoom_tool._index_factor = self.next[0]
         zoom_tool._value_factor = self.next[1]
     
     def revert(self, zoom_tool):
-        zoom_tool._zoom_in_mapper(zoom_tool.component.index_mapper, 
+        if isinstance(zoom_tool.component.index_mapper, GridMapper):
+            index_mapper = zoom_tool.component.index_mapper._xmapper
+            value_mapper = zoom_tool.component.index_mapper._ymapper
+        else:
+            index_mapper = zoom_tool.component.index_mapper
+            value_mapper = zoom_tool.component.value_mapper
+        
+        zoom_tool._zoom_in_mapper(index_mapper, 
                                   self.prev[0]/self.next[0])
-        zoom_tool._zoom_in_mapper(zoom_tool.component.value_mapper, 
+        zoom_tool._zoom_in_mapper(value_mapper, 
                                   self.prev[1]/self.next[1])
 
         zoom_tool._index_factor = self.prev[0]
@@ -77,7 +90,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     y_min_zoom_factor = Float(1e-5)
 
     # The amount to zoom in by. The zoom out will be inversely proportional
-    zoom_factor = 2.0
+    zoom_factor = Float(2.0)
 
     # The zoom factor on each axis
     _index_factor = Float(1.0)
@@ -324,14 +337,24 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         mapper.range.low = center - new_range/2
         
     def _get_x_mapper(self):
-        if self.component.orientation == "h":
-            return self.component.index_mapper
-        return self.component.value_mapper
+        if isinstance(self.component.index_mapper, GridMapper):
+            if self.component.orientation == "h":
+                return self.component.index_mapper._xmapper
+            return self.component.index_mapper._ymapper
+        else:
+            if self.component.orientation == "h":
+                return self.component.index_mapper
+            return self.component.value_mapper
 
     def _get_y_mapper(self):
-        if self.component.orientation == "h":
-            return self.component.value_mapper
-        return self.component.index_mapper
+        if isinstance(self.component.index_mapper, GridMapper):
+            if self.component.orientation == "h":
+                return self.component.index_mapper._ymapper
+            return self.component.index_mapper._xmapper
+        else:
+            if self.component.orientation == "h":
+                return self.component.value_mapper
+            return self.component.index_mapper
         
     #--------------------------------------------------------------------------
     #  ToolHistoryMixin interface

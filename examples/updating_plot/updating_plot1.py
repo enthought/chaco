@@ -27,7 +27,7 @@ from enthought.traits.api import false
 
 # Chaco imports
 from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 class PlotFrame(DemoFrame):
 
@@ -68,7 +68,7 @@ class PlotFrame(DemoFrame):
 
         self.plot = plot
         plot.tools.append(PanTool(component=plot))
-        plot.overlays.append(SimpleZoom(component=plot, tool_mode="box",
+        plot.overlays.append(ZoomTool(component=plot, tool_mode="box",
                                         always_on=False))
 
         # Set the timer to generate events to us

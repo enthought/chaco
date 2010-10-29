@@ -1,5 +1,8 @@
 """ Defines the SimpleZoom class.
 """
+import warnings
+warnings.warn("SimpleZoom has been deprecated, use ZoomTool", DeprecationWarning)
+
 from numpy import array
 
 # Enthought library imports

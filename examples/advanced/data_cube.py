@@ -23,7 +23,7 @@ from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
 from enthought.chaco.api import ArrayPlotData, Plot, GridPlotContainer, \
                                  BaseTool, DataRange1D
 from enthought.chaco.default_colormaps import *
-from enthought.chaco.tools.api import LineInspector, SimpleZoom
+from enthought.chaco.tools.api import LineInspector, ZoomTool
 from enthought.enable.example_support import DemoFrame, demo_main
 from enthought.enable.api import Window
 from enthought.traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
@@ -280,9 +280,9 @@ class PlotFrame(DemoFrame):
         return Window(self, -1, component=container)
     
     def _add_plot_tools(self, imgplot, token):
-        """ Add LineInspectors, ImageIndexTool, and SimpleZoom to the image plots. """
+        """ Add LineInspectors, ImageIndexTool, and ZoomTool to the image plots. """
         
-        imgplot.overlays.append(SimpleZoom(component=imgplot, tool_mode="box",
+        imgplot.overlays.append(ZoomTool(component=imgplot, tool_mode="box",
                                            enable_wheel=False, always_on=False))
         imgplot.overlays.append(LineInspector(imgplot, axis="index_y", color="white",
             inspect_mode="indexed", write_metadata=True, is_listener=True))

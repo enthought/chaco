@@ -20,7 +20,7 @@ from enthought.chaco.api import ArrayDataSource, ArrayPlotData, ColorBar, Contou
 from enthought.chaco.default_colormaps import *
 from enthought.enable.component_editor import ComponentEditor
 from enthought.chaco.tools.api import LineInspector, PanTool, RangeSelection, \
-                                   RangeSelectionOverlay, SimpleZoom
+                                   RangeSelectionOverlay, ZoomTool
 from enthought.enable.api import Window
 from enthought.traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
                              Int, Instance, Str, Trait, on_trait_change
@@ -182,7 +182,7 @@ class PlotUI(HasTraits):
         # Add some tools to the plot
         self.polyplot.tools.append(PanTool(self.polyplot, 
                                            constrain_key="shift"))
-        self.polyplot.overlays.append(SimpleZoom(component=self.polyplot, 
+        self.polyplot.overlays.append(ZoomTool(component=self.polyplot, 
                                             tool_mode="box", always_on=False))
         self.polyplot.overlays.append(LineInspector(component=self.polyplot, 
                                                axis='index_x',

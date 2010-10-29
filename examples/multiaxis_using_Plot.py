@@ -23,7 +23,7 @@ from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco.tools.api import BroadcasterTool, PanTool, SimpleZoom 
+from enthought.chaco.tools.api import BroadcasterTool, PanTool, ZoomTool 
 from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids
 
 #===============================================================================
@@ -61,7 +61,7 @@ def _create_plot_component():
     broadcaster.tools.append(PanTool(foreign_plot))
 
     for c in (plot1, foreign_plot):
-        zoom = SimpleZoom(component=c, tool_mode="box", always_on=False)
+        zoom = ZoomTool(component=c, tool_mode="box", always_on=False)
         broadcaster.tools.append(zoom)
     
     plot1.tools.append(broadcaster)

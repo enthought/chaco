@@ -12,7 +12,7 @@ Double-clicking on line or scatter plots brings up a traits editor for the plot.
 """
 
 # Major library imports
-from numpy import arange, fabs, pi, sin
+from numpy import arange
 from scipy.special import jn
 
 from enthought.chaco.example_support import COLOR_PALETTE
@@ -20,15 +20,15 @@ from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable.api import Window, Component, ComponentEditor
-from enthought.traits.api import HasTraits, Instance, Dict, false, List
+from enthought.traits.api import HasTraits, Instance
 from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids, \
-                                 OverlayPlotContainer, PlotLabel, VPlotContainer, \
-                                 create_scatter_plot, Legend, PlotComponent, PlotAxis
-from enthought.chaco.tools.api import PanTool, RectZoomTool, SimpleZoom, \
-                                       LegendTool, TraitsTool, BroadcasterTool
+from enthought.chaco.api import create_line_plot, add_default_axes, \
+                                add_default_grids, OverlayPlotContainer, \
+                                PlotLabel, Legend, PlotAxis
+from enthought.chaco.tools.api import PanTool, LegendTool, TraitsTool, \
+                                      BroadcasterTool
 
 #===============================================================================
 # # Create the Chaco plot.
@@ -54,7 +54,6 @@ def _create_plot_component():
         plot.bgcolor = "white"
         plot.border_visible = True
         if i == 0:
-            plot0 = plot
             add_default_grids(plot)
             add_default_axes(plot)
 
@@ -62,9 +61,7 @@ def _create_plot_component():
         # manipulate, but don't attach it to the plot.  Instead, attach it to
         # the broadcaster.
         pan = PanTool(plot)
-        #zoom = SimpleZoom(plot, tool_mode="box", always_on=False)
         broadcaster.tools.append(pan)
-        #broadcaster.tools.append(zoom)
 
         container.add(plot)
         plots["Bessel j_%d"%i] = plot
@@ -118,7 +115,7 @@ class Demo(HasTraits):
                     )
     
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
     
 demo = Demo()
 

@@ -19,13 +19,11 @@ from point_marker import PointMarker
 from range_selection import RangeSelection
 from range_selection_2d import RangeSelection2D
 from range_selection_overlay import RangeSelectionOverlay
-from rect_zoom import RectZoomTool
 from regression_lasso import RegressionLasso, RegressionOverlay
 from save_tool import SaveTool
 from scatter_inspector import ScatterInspector
 from select_tool import SelectTool
 from simple_inspector import SimpleInspectorTool
-from simple_zoom import SimpleZoom
 from tracking_pan_tool import TrackingPanTool
 from tracking_zoom import TrackingZoom
 from traits_tool import TraitsTool

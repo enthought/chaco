@@ -5,12 +5,12 @@
 
 from tutorial2 import myplot, PlotFrame, main
 
-from enthought.chaco.tools.api import PanTool, SimpleZoom
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
-# The SimpleZoom tool has a visual component, so it needs to be added to the
+# The ZoomTool tool has a visual component, so it needs to be added to the
 # list of overlays instead of the list of bare tools.
 myplot.tools.append(PanTool(myplot))
-myplot.overlays.append(SimpleZoom(myplot, tool_mode="box", always_on=False))
+myplot.overlays.append(ZoomTool(myplot, tool_mode="box", always_on=False))
 
 # And now we just run it.
 if __name__ == "__main__":

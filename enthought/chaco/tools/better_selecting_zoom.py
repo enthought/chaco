@@ -1,8 +1,10 @@
 import numpy
 
 from enthought.chaco.abstract_overlay import AbstractOverlay
-from enthought.enable.api import ColorTrait
-from enthought.traits.api import Bool, Enum, Trait, Int, Float, Tuple
+from enthought.enable.api import ColorTrait, KeySpec
+from enthought.traits.api import Bool, Enum, Trait, Int, Float, Tuple, \
+        Instance, DelegatesTo, Property
+from enthought.util.deprecated import deprecated
 
 from better_zoom import BetterZoom, ZoomState
 
@@ -53,6 +55,27 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     # The minimum amount of screen space the user must select in order for
     # the tool to actually take effect.
     minimum_screen_delta = Int(10)
+    
+
+    #-------------------------------------------------------------------------
+    # deprecated interaction controls, used for API compatability with 
+    # SimpleZoom
+    #-------------------------------------------------------------------------
+    
+    # Conversion ratio from wheel steps to zoom factors.
+    wheel_zoom_step = Property(Float, depends_on='zoom_factor')
+
+    # The key press to enter zoom mode, if **always_on** is False.  Has no effect
+    # if **always_on** is True.
+    enter_zoom_key = Instance(KeySpec, args=("z",))
+
+    # The key press to leave zoom mode, if **always_on** is False.  Has no effect
+    # if **always_on** is True.
+    exit_zoom_key = Instance(KeySpec, args=("z",))
+
+    # Disable the tool after the zoom is completed?
+    disable_on_complete = Property()
+    
 
     #-------------------------------------------------------------------------
     # Appearance properties (for Box mode)
@@ -87,6 +110,9 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     # The (x,,y) screen point of the last seen mouse move event.
     _screen_end = Trait(None, None, Tuple)
     
+    # If **always_on** is False, this attribute indicates whether the tool
+    # is currently enabled.
+    _enabled = Bool(False)
     
     def __init__(self, component=None, *args, **kw):
         # Since this class uses multiple inheritance (eek!), lets be
@@ -104,7 +130,21 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     #--------------------------------------------------------------------------
     #  BetterZoom interface
     #--------------------------------------------------------------------------
-    
+ 
+    def normal_key_pressed(self, event):
+        """ Handles a key being pressed when the tool is in the 'normal'
+        state.
+        """
+        if self.enter_zoom_key.match(event) and not self._enabled:
+            self._start_select(event)
+            event.handled = True
+        if self.exit_zoom_key.match(event) and self._enabled:
+            self._end_select(event)
+            event.handled = True
+
+        if not event.handled:
+            super(BetterSelectingZoom, self).normal_key_pressed(event)
+   
     def normal_left_down(self, event):
         """ Handles the left mouse button being pressed while the tool is
         in the 'normal' state.
@@ -187,6 +227,22 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     #--------------------------------------------------------------------------
     #  private interface
     #--------------------------------------------------------------------------
+
+    @deprecated
+    def _get_disable_on_complete(self):
+        return True
+    
+    @deprecated
+    def _set_disable_on_complete(self, value):
+        return
+
+    @deprecated
+    def _get_wheel_zoom_step(self):
+        return self.zoom_factor - 1.0
+    
+    @deprecated
+    def _set_wheel_zoom_step(self, value):
+        self.zoom_factor = value + 1.0
 
     def _is_enabling_event(self, event):
         if self.always_on:

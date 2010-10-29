@@ -22,12 +22,12 @@ class Tut2Frame(PlotFrame):
         plot1.plot(("x", "y1"), type="line", color="red")
         plot1.plot(("x", "y2"), type="scatter", color="blue")
         plot1.tools.append(PanTool(plot1))
-        plot1.overlays.append(SimpleZoom(plot1))
+        plot1.overlays.append(ZoomTool(plot1))
 
         plot2 = Plot(pd)
         plot2.plot(("x", "y3"), type="scatter", color="purple")
         plot2.tools.append(PanTool(plot2))
-        plot2.overlays.append(SimpleZoom(plot2))
+        plot2.overlays.append(ZoomTool(plot2))
 
         c = HPlotContainer()
         c.add(plot1, plot2)

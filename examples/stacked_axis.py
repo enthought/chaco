@@ -19,10 +19,10 @@ from enthought.traits.api import HasTraits, Instance
 from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, HPlotContainer, \
+from enthought.chaco.api import HPlotContainer, \
     OverlayPlotContainer, PlotAxis, PlotGrid
-from enthought.chaco.tools.api import BroadcasterTool, PanTool, SimpleZoom 
-from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids
+from enthought.chaco.tools.api import BroadcasterTool, PanTool 
+from enthought.chaco.api import create_line_plot
 
 #===============================================================================
 # # Create the Chaco plot.
@@ -103,7 +103,7 @@ class Demo(HasTraits):
                     )
     
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
     
 demo = Demo()
 

@@ -20,7 +20,7 @@ from enthought.traits.api import false, HasTraits
 
 # Chaco imports
 from enthought.chaco.api import *
-from enthought.chaco.tools.api import MoveTool, PanTool, SimpleZoom
+from enthought.chaco.tools.api import MoveTool, PanTool, ZoomTool
 
 
 COLOR_PALETTE = ("mediumslateblue", "maroon", "darkgreen", "goldenrod",
@@ -48,7 +48,7 @@ class AnimatedPlot(HasTraits):
 
         plot.tools.append(PanTool(plot, drag_button="right"))
         plot.tools.append(MoveTool(plot))
-        plot.overlays.append(SimpleZoom(plot, tool_mode="box", always_on=False))
+        plot.overlays.append(ZoomTool(plot, tool_mode="box", always_on=False))
 
         self.plot = plot
         self.numpoints = len(self.x_values)

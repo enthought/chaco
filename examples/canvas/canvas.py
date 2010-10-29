@@ -24,7 +24,7 @@ from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
 # Chaco imports
 from enthought.chaco.api import AbstractOverlay, ArrayPlotData, \
         Plot, jet, ScatterPlot, LinePlot, LinearMapper
-from enthought.chaco.tools.api import PanTool, SimpleZoom , LegendTool
+from enthought.chaco.tools.api import PanTool, ZoomTool , LegendTool
 
 # Canvas imports
 from enthought.chaco.plot_canvas import PlotCanvas
@@ -62,7 +62,7 @@ DATA = {
 def add_basic_tools(plot):
     plot.tools.append(PanTool(plot))
     plot.tools.append(MoveTool(plot, drag_button="right"))
-    zoom = SimpleZoom(component=plot, tool_mode="box", always_on=False)
+    zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
 
 def do_plot(name, pd):
@@ -188,12 +188,12 @@ def clone_plot(clonetool, drop_position):
         newplot.tools.append(newtool)
 
         for tool in oldplot.tools:
-            if isinstance(tool, SimpleZoom):
+            if isinstance(tool, ZoomTool):
                 newtool = tool.clone_traits(zoom_traits)
                 newtool.component = newplot
                 break
         else:
-            newtool = SimpleZoom(newplot)
+            newtool = ZoomTool(newplot)
         newplot.tools.append(newtool)
 
     else:
@@ -230,7 +230,7 @@ def make_toolbar(canvas):
                        border_visible=True)
     if not MULTITOUCH:
         scatterplot.tools.append(PanTool(scatterplot, drag_button="right"))
-        scatterplot.tools.append(SimpleZoom(scatterplot))
+        scatterplot.tools.append(ZoomTool(scatterplot))
     else:
         scatterplot.tools.append(MPPanZoom(scatterplot))
     scatterplot.overlays.append(PlotCloneTool(scatterplot, dest=canvas,
@@ -254,7 +254,7 @@ def make_toolbar(canvas):
         else:
             plot.tools.append(PanTool(plot, drag_button="right", constrain=True,
                                       constrain_direction="x"))
-            plot.tools.append(SimpleZoom(plot, tool_mode="range", axis="index",
+            plot.tools.append(ZoomTool(plot, tool_mode="range", axis="index",
                                          always_on=False))
         plot.overlays.append(PlotCloneTool(plot, dest=canvas,
                                            plot_cloner=clone_plot))

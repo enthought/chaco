@@ -1,1 +1,1 @@
-from simple_zoom import SimpleZoom as ZoomTool
+from better_selecting_zoom import BetterSelectingZoom as ZoomTool

@@ -1,7 +1,9 @@
 """ Defines the RectZoomTool class.
 """
-from simple_zoom import SimpleZoom
+import warnings
+warnings.warn("RectZoomTool has been deprecated, use ZoomTool", DeprecationWarning)
 
+from simple_zoom import SimpleZoom
 
 class RectZoomTool(SimpleZoom):
     """
