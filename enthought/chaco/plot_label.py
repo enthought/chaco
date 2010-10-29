@@ -58,7 +58,7 @@ class PlotLabel(AbstractOverlay):
     
     # The label has a fixed height and can be resized horizontally. (Overrides
     # PlotComponent.)
-    resizable = "h"
+    resizable = ""
 
     # The Label instance this plot label is wrapping.
     _label = Instance(Label, args=())
@@ -105,6 +105,7 @@ class PlotLabel(AbstractOverlay):
         try:
             # Perform justification and compute the correct offsets for
             # the label position
+            #import pdb; pdb.set_trace()
             width, height = self._label.get_bounding_box(gc)
             if self.hjustify == "left":
                 x_offset = 0
@@ -140,7 +141,8 @@ class PlotLabel(AbstractOverlay):
             self._draw_overlay(gc, view_bounds, mode)
 
     def _layout_as_component(self, size=None, force=False):
-        pass
+        gc = font_metrics_provider()
+        self.width, self.height = self._label.get_bounding_box(gc)
     
     def _layout_as_overlay(self, size=None, force=False):
         """ Lays out the label as an overlay on another component.
