@@ -341,7 +341,7 @@ Image plots can be created in a similar fashion::
             super(ImagePlot, self).__init__()
             x = linspace(0, 10, 50)
             y = linspace(0, 5, 50)
-            xgrid, ygrid = meshgrid(x, y)
+            xgrid, ygrid = meshgrid(x[:-1], y[:-1])
             z = exp(-(xgrid*xgrid+ygrid*ygrid)/100)
             plotdata = ArrayPlotData(imagedata = z)
             plot = Plot(plotdata)
