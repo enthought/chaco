@@ -8,7 +8,7 @@ except ImportError:
 
 from enthought.chaco.api import Plot, color_map_name_dict
 from enthought.chaco.scales.api import ScaleSystem
-from enthought.chaco.tools.api import PanTool, RectZoomTool
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 # Note: these are imported to be exposed in the namespace.
 from enthought.chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
@@ -281,8 +281,8 @@ def _do_plot_boilerplate(kwargs, image=False):
     existing_tools = [type(t) for t in (cont.tools + cont.overlays)]
     if not PanTool in existing_tools:
         cont.tools.append(PanTool(cont))
-    if not RectZoomTool in existing_tools:
-        cont.overlays.append(RectZoomTool(cont, drag_button="right"))
+    if not ZoomTool in existing_tools:
+        cont.overlays.append(ZoomTool(cont, tool_mode="box", always_on=True, drag_button="right"))
 
     if not session.hold:
         cont.delplot(*cont.plots.keys())
