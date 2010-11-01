@@ -341,11 +341,11 @@ Image plots can be created in a similar fashion::
             super(ImagePlot, self).__init__()
             x = linspace(0, 10, 50)
             y = linspace(0, 5, 50)
-            xgrid, ygrid = meshgrid(x[:-1], y[:-1])
+            xgrid, ygrid = meshgrid(x, y)
             z = exp(-(xgrid*xgrid+ygrid*ygrid)/100)
             plotdata = ArrayPlotData(imagedata = z)
             plot = Plot(plotdata)
-            plot.img_plot("imagedata", xbounds=x, ybounds=y, colormap=jet)
+            plot.img_plot("imagedata", colormap=jet)
             self.plot = plot
             
     if __name__ == "__main__":
