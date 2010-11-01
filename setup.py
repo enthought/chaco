@@ -80,26 +80,6 @@ contour = Extension(
 #    )
 
 
-class MyDevelop(develop):
-    def run(self):
-        develop.run(self)
-        try:
-            self.run_command('build_docs')
-        except:
-            log.warn("Couldn't build documentation:\n%s" %
-                     traceback.format_exception(*sys.exc_info()))
-
-
-class MyBuild(distbuild):
-    def run(self):
-        distbuild.run(self)
-        try:
-            self.run_command('build_docs')
-        except:
-            log.warn("Couldn't build documentation:\n%s" %
-                     traceback.format_exception(*sys.exc_info()))
-
-
 # The actual setup call.
 setup(
     author = 'Peter Wang, et. al.',
@@ -120,10 +100,6 @@ setup(
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.strip()) > 0],
-    cmdclass = {
-        'develop': MyDevelop,
-        'build': MyBuild
-    },
     data_files=[('enthought/chaco/layers/data',
         ['enthought/chaco/layers/data/Dialog-error.svg',
          'enthought/chaco/layers/data/Dialog-warning.svg',
@@ -151,7 +127,6 @@ setup(
         'examples.zoomed_plot'
         ]),
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
-    setup_requires = 'setupdocs>=1.0',
     ssh_server = 'code.enthought.com',
     ssh_remote_dir = '/www/htdocs/code.enthought.com/projects/chaco/',
     tests_require = [
