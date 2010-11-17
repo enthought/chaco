@@ -155,10 +155,10 @@ if Canvas is not None:
 
             self.translate_ctm(trans_x, trans_y)
             self.scale_ctm(scale, scale)
-            self.clip_to_rect(0, 0, trans_width, trans_height)
+            self.clip_to_rect(0, 0, width, height)
             old_bb_setting = component.use_backbuffer
             component.use_backbuffer = False
-            component.draw(self, view_bounds=(0, 0, trans_width, trans_height))
+            component.draw(self, view_bounds=(0, 0, width, height))
             component.use_backbuffer = old_bb_setting
             return
 
