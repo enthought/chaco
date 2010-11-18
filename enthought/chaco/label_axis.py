@@ -82,18 +82,11 @@ class LabelAxis(PlotAxis):
         if datalow > datahigh:
             raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
         
-        if self.small_haxis_style:
-            mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
-                                       (screenhigh-screenlow)) for pos in tick_positions]
-            self._tick_positions = [self._axis_vector*tickpos + self._origin_point \
-                                          for tickpos in mapped_label_positions]    
-            self._tick_label_positions = self._tick_positions        
-        else:
-            mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
-                                       (screenhigh-screenlow)) for pos in tick_positions]
-            self._tick_positions = [self._axis_vector*tickpos + self._origin_point \
-                                    for tickpos in mapped_label_positions]
-            self._tick_label_positions = self._tick_positions
+        mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
+                                    (screenhigh-screenlow)) for pos in tick_positions]
+        self._tick_positions = [self._axis_vector*tickpos + self._origin_point \
+                                 for tickpos in mapped_label_positions]
+        self._tick_label_positions = self._tick_positions
         return
         
         

@@ -87,7 +87,6 @@ from toolbar_plot import ToolbarPlot
 
 # Axis
 from axis import PlotAxis
-#from scales_axis import PlotAxis
 from label_axis import LabelAxis
 from ticks import AbstractTickGenerator, DefaultTickGenerator, auto_ticks, auto_interval, \
                   tick_intervals, log_auto_ticks, auto_bounds, calc_bound

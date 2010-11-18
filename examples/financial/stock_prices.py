@@ -29,7 +29,6 @@ from enthought.chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
 
 from enthought.chaco.scales.api import CalendarScaleSystem
 from enthought.chaco.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco.scales_axis import PlotAxis as ScalesPlotAxis
 
 
 def create_dates(numpoints, units="days"):
@@ -166,8 +165,8 @@ class PlotFrame(DemoFrame):
         # Set the plot's bottom axis to use the Scales ticking system
         ticker = ScalesTickGenerator(scale=CalendarScaleSystem())
         for plot in price_plot, mini_plot, vol_plot:
-            bottom_axis = ScalesPlotAxis(plot, orientation="bottom", 
-                                         tick_generator = ticker)
+            bottom_axis = PlotAxis(plot, orientation="bottom", 
+                                   tick_generator = ticker)
             plot.overlays.append(bottom_axis)
             plot.overlays.append(PlotAxis(plot, orientation="left"))
             hgrid, vgrid = add_default_grids(plot)

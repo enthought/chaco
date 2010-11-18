@@ -9,10 +9,10 @@ from enthought.traits.api import HasTraits, Instance, Int, List, Str, Enum, \
 from enthought.traits.ui.api import Item, View, HSplit, VGroup, EnumEditor
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, Plot, ScatterInspectorOverlay
+from enthought.chaco.api import ArrayPlotData, Plot, PlotAxis, \
+        ScatterInspectorOverlay
 from enthought.chaco.scales.api import CalendarScaleSystem
 from enthought.chaco.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco.scales_axis import PlotAxis as ScalesPlotAxis
 from enthought.chaco.example_support import COLOR_PALETTE
 from enthought.chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
         RangeSelectionOverlay, LegendTool
@@ -80,7 +80,7 @@ class PlotApp(HasTraits):
         #FIXME: The legend move tool doesn't seem to quite work right now
         #plot.legend.tools.append(LegendTool(plot.legend))
         plot.x_axis = None
-        x_axis = ScalesPlotAxis(plot, orientation="bottom",
+        x_axis = PlotAxis(plot, orientation="bottom",
                         tick_generator=ScalesTickGenerator(scale=CalendarScaleSystem()))
         plot.overlays.append(x_axis)
         plot.x_grid.tick_generator = x_axis.tick_generator

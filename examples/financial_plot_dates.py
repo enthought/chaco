@@ -25,7 +25,6 @@ from enthought.chaco.tools.api import PanTool, ZoomTool
 
 from enthought.chaco.scales.api import CalendarScaleSystem
 from enthought.chaco.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco.scales_axis import PlotAxis as ScalesPlotAxis
 
 
 def create_dates(numpoints, units="days"):
@@ -77,7 +76,7 @@ def _create_plot_component():
     price_plot.overlays.append(PlotAxis(price_plot, orientation='left')), 
 
     # Set the plot's bottom axis to use the Scales ticking system
-    bottom_axis = ScalesPlotAxis(price_plot, orientation="bottom",# mapper=xmapper,
+    bottom_axis = PlotAxis(price_plot, orientation="bottom",# mapper=xmapper,
                     tick_generator=ScalesTickGenerator(scale=CalendarScaleSystem()))
     price_plot.overlays.append(bottom_axis)
     hgrid, vgrid = add_default_grids(price_plot)

@@ -4,8 +4,7 @@
 from enthought.traits.api import Any
 
 from enthought.chaco.api import (DataRange2D, LinearMapper, LogMapper,
-    PlotGrid, Plot)
-from enthought.chaco.scales_axis import PlotAxis
+    PlotGrid, Plot, PlotAxis)
 from enthought.chaco.scales_tick_generator import ScalesTickGenerator
 from enthought.chaco.scales.api import DefaultScale, LogScale, ScaleSystem
 

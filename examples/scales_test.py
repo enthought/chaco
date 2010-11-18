@@ -36,7 +36,7 @@ from enthought.chaco.tools.api import PanTool, ZoomTool, \
 
 from enthought.chaco.scales.api import CalendarScaleSystem
 from enthought.chaco.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco.scales_axis import PlotAxis
+from enthought.chaco.axis import PlotAxis
 
 #===============================================================================
 # # Create the Chaco plot.

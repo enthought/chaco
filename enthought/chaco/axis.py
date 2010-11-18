@@ -46,9 +46,6 @@ class PlotAxis(AbstractOverlay):
     # The color of the title.
     title_color = ColorTrait("black")
 
-    # Not used right now.
-    markers = Any     # TODO: Implement this
-
     # The thickness (in pixels) of each tick.
     tick_weight = Float(1.0)
 
@@ -107,10 +104,10 @@ class PlotAxis(AbstractOverlay):
 
     # The dash style of the axis line.
     axis_line_style = LineStyle('solid')
-
+    
     # A special version of the axis line that is more useful for geophysical
     # plots.
-    small_haxis_style = Bool(False)     # TODO: MOVE THIS OUT OF HERE!
+    small_haxis_style = Bool(False)
 
     # Does the axis ensure that its end labels fall within its bounding area?
     ensure_labels_bounded = Bool(False)
@@ -198,7 +195,7 @@ class PlotAxis(AbstractOverlay):
     def _do_layout(self, *args, **kw):
         """ Tells this component to do layout at a given size.
         
-        Overrides PlotComponent.
+        Overrides Component.
         """
         if self.use_draw_order and self.component is not None:
             self._layout_as_overlay(*args, **kw)
@@ -235,15 +232,15 @@ class PlotAxis(AbstractOverlay):
 
         if not self._cache_valid:
             if component is not None:
-                self._calculate_geometry(component)
+                self._calculate_geometry_overlay(component)
             else:
-                self._old_calculate_geometry()
+                self._calculate_geometry()
             self._compute_tick_positions(gc, component)
             self._compute_labels(gc)
 
         try:
             gc.save_state()
-
+            
             # slight optimization: if we set the font correctly on the
             # base gc before handing it in to our title and tick labels,
             # their set_font() won't have to do any work.
@@ -307,11 +304,10 @@ class PlotAxis(AbstractOverlay):
             gc.restore_state()
         return
 
-    def _draw_title_old(self, gc, label=None, v_offset=20):
+
+    def _draw_title(self, gc, label=None, axis_offset=None):
         """ Draws the title for the axis.
         """
-        #put in rotation code for right side
-
         if label is None:
             title_label = Label(text=self.title,
                                 font=self.title_font,
@@ -319,114 +315,30 @@ class PlotAxis(AbstractOverlay):
                                 rotate_angle=self.title_angle)
         else:
             title_label = label
-        tl_bounds = array(title_label.get_width_height(gc), float64)
-
-        if self.title_angle == 0:
-            text_center_to_corner = -tl_bounds/2.0
-            v_offset = max([l._bounding_box[1] for l in self.ticklabel_cache]) * 1.3
-        else:
-            v_offset = max([l._bounding_box[0] for l in self.ticklabel_cache]) * 1.3
-            corner_vec = transpose(-tl_bounds/2.0)
-            rotmatrix = self._rotmatrix(-self.title_angle*pi/180.0)
-            text_center_to_corner = transpose(dot(rotmatrix, corner_vec))[0]
+        
+        # get the _rotated_ bounding box of the label
+        tl_bounds = array(title_label.get_bounding_box(gc), float64)
+        text_center_to_corner = -tl_bounds/2.0
+        # which axis are we moving away from the axis line along?
+        axis_index = self._major_axis.argmin()
+    
+        if self.title_spacing != 'auto':
+            axis_offset = self.title_spacing
+    
+        if (self.title_spacing) and (axis_offset is None ):
+            if not self.ticklabel_cache:
+                axis_offset = 25
+            else:
+                axis_offset = max([l._bounding_box[axis_index] for l in self.ticklabel_cache]) * 1.3
 
         offset = (self._origin_point+self._end_axis_point)/2
-        center_dist = self._center_dist(-self._inside_vector, tl_bounds[0], tl_bounds[1], rotation=self.title_angle)
-        offset -= self._inside_vector * (center_dist + v_offset)
+        axis_dist = self.tick_out + tl_bounds[axis_index]/2.0 + axis_offset
+        offset -= self._inside_vector * axis_dist
         offset += text_center_to_corner
-
-        if self.title_angle == 90.0:
-            # Horrible hack to adjust for the fact that the generic math above isn't
-            # actually putting the label in the right place...
-            offset[1] = offset[1] - tl_bounds[0]/2.0
-
+    
         gc.translate_ctm(*offset)
         title_label.draw(gc)
         gc.translate_ctm(*(-offset))
-
-        return
-
-
-    def _draw_title(self, gc, label=None, v_offset=None):
-        """ Draws the title for the axis.
-        """
-        #put in rotation code for right side
-
-
-        if label is None:
-            title_label = Label(text=self.title,
-                                font=self.title_font,
-                                color=self.title_color,
-                                rotate_angle=self.title_angle)
-        else:
-            title_label = label
-        tl_bounds = array(title_label.get_width_height(gc), float64)
-
-        if self.title_spacing != 'auto':
-            v_offset = self.title_spacing
-        calculate_v_offset = (self.title_spacing) and (v_offset is None )
-           
-        if self.title_angle == 0:
-            text_center_to_corner = -tl_bounds/2.0
-            if calculate_v_offset:
-                if not self.ticklabel_cache:
-                    v_offset = 25
-                else:
-                    v_offset = max([l._bounding_box[1] for l in self.ticklabel_cache]) * 1.3
-                    
-            # The text_center_to_corner is used on the bottom as where the 
-            # top, left of the text should be. On the top of the plot, it 
-            # should not be used 
-            if self.orientation == 'top':
-                text_center_to_corner[1] = 0
-                           
-            offset = (self._origin_point+self._end_axis_point)/2
-            center_dist = self._center_dist(-self._inside_vector, tl_bounds[0], tl_bounds[1], rotation=self.title_angle)
-            offset -= self._inside_vector * (center_dist + v_offset)
-            offset += text_center_to_corner
-        
-        elif self.title_angle == 90:
-            # Center the text vertically
-            if calculate_v_offset:
-                if not self.ticklabel_cache:
-                    v_offset = 25
-                else:
-                    v_offset = (self._end_axis_point[1] - self._origin_point[1] - tl_bounds[0])/2.0
-            h_offset = self.tick_out + tl_bounds[1] + 8
-            if len(self.ticklabel_cache) > 0:
-                h_offset += max([l._bounding_box[0] for l in self.ticklabel_cache]) 
-            offset = array([self._origin_point[0] - h_offset, self._origin_point[1] + v_offset])
-
-        elif self.title_angle == 270:
-            # Center the text vertically
-            if calculate_v_offset:
-                if not self.ticklabel_cache:
-                    v_offset = 25
-                else:
-                    v_offset = (self._end_axis_point[1] - self._origin_point[1] - tl_bounds[0])/2.0
-            h_offset = self.tick_out + 4
-            if len(self.ticklabel_cache) > 0:
-                h_offset += max([l._bounding_box[0] for l in self.ticklabel_cache]) 
-            offset = array([self._origin_point[0] + h_offset, self._origin_point[1] + v_offset])
-
-        else:
-            if calculate_v_offset:
-                if not self.ticklabel_cache:
-                    v_offset = 25
-                else:
-                    v_offset = max([l._bounding_box[0] for l in self.ticklabel_cache]) * 1.3
-            corner_vec = transpose(-tl_bounds/2.0)
-            rotmatrix = self._rotmatrix(-self.title_angle*pi/180.0)
-            text_center_to_corner = transpose(dot(rotmatrix, corner_vec))[0]
-            offset = (self._origin_point+self._end_axis_point)/2
-            center_dist = self._center_dist(-self._inside_vector, tl_bounds[0], tl_bounds[1], rotation=self.title_angle)
-            offset -= self._inside_vector * (center_dist + v_offset)
-            offset += text_center_to_corner
-
-        gc.translate_ctm(*offset)
-        title_label.draw(gc)
-        gc.translate_ctm(*(-offset))
-
         return
 
 
@@ -450,6 +362,9 @@ class PlotAxis(AbstractOverlay):
     def _draw_labels(self, gc):
         """ Draws the tick labels for the axis.
         """
+        # which axis are we moving away from the axis line along?
+        axis_index = self._major_axis.argmin()
+        
         for i in range(len(self._tick_label_positions)):
             #We want a more sophisticated scheme than just 2 decimals all the time
             ticklabel = self.ticklabel_cache[i]
@@ -461,31 +376,30 @@ class PlotAxis(AbstractOverlay):
             #Note: This is not necessarily optimal for non
             #horizontal/vertical axes.  More work could be done on this.
 
-            if self.tick_label_alignment == 'edge':
-                base_position = (self._center_dist(-self._inside_vector,
-                    rotation=0, *tl_bounds) + \
-                    self.tick_label_offset) * -self._inside_vector - \
-                    tl_bounds/2.0 + self._tick_label_positions[i]
-            else:
-                base_position = self._tick_label_positions[i] - \
-                    self._corner_dist(-self._inside_vector,
-                        ticklabel.get_bounding_poly(gc)[:-1]) - \
-                    self.tick_label_offset*self._inside_vector
-                    
+            base_position = self._tick_label_positions[i].copy()
+            axis_dist = self.tick_label_offset + tl_bounds[axis_index]/2.0
+            base_position -= self._inside_vector * axis_dist
+            base_position -= tl_bounds/2.0
+            
+            if self.tick_label_alignment == 'corner':
+                if self.orientation in ("top", "bottom"):
+                    base_position[0] += tl_bounds[0]/2.0
+                elif self.orientation == "left":
+                    base_position[1] -= tl_bounds[1]/2.0
+                elif self.orientation == "right":
+                    base_position[1] += tl_bounds[1]/2.0
 
             if self.ensure_labels_bounded:
-                pushdir = 0
+                bound_idx = self._major_axis.argmax()
                 if i == 0:
-                    pushdir = 1
+                    base_position[bound_idx] = max(base_position[bound_idx],
+                                                   self._origin_point[bound_idx])
                 elif i == len(self._tick_label_positions)-1:
-                    pushdir = -1
-                push_pixel_vector = self._axis_pixel_vector * pushdir
-                tlpos = around((self._center_dist(push_pixel_vector,*tl_bounds)+4) \
-                                          * push_pixel_vector + base_position)
+                    base_position[bound_idx] = min(base_position[bound_idx],
+                                                   self._end_axis_point[bound_idx] - \
+                                                   tl_bounds[bound_idx])
 
-            else:
-                tlpos = around(base_position)
-
+            tlpos = around(base_position)
             gc.translate_ctm(*tlpos)
             ticklabel.draw(gc)
             gc.translate_ctm(*(-tlpos))
@@ -532,7 +446,6 @@ class PlotAxis(AbstractOverlay):
             if flip_from_gc:
                 screenlow, screenhigh = screenhigh, screenlow
 
-
         if (datalow == datahigh) or (screenlow == screenhigh) or \
            (datalow in [inf, -inf]) or (datahigh in [inf, -inf]):
             self._reset_cache()
@@ -544,35 +457,40 @@ class PlotAxis(AbstractOverlay):
 
         if not self.tick_generator:
             return
-
-        if isinstance(self.mapper, LogMapper):
-            scale = 'log'
+        
+        if hasattr(self.tick_generator, "get_ticks_and_labels"):
+            # generate ticks and labels simultaneously
+            tmp = self.tick_generator.get_ticks_and_labels(datalow, datahigh,
+                                                screenlow, screenhigh)
+            if len(tmp) == 0:
+                tick_list = []
+                labels = []
+            else:
+                tick_list, labels = tmp
+            # compute the labels here
+            self.ticklabel_cache = [Label(text=lab,
+                                          font=self.tick_label_font,
+                                          color=self.tick_label_color) \
+                                    for lab in labels]
+            self._tick_label_bounding_boxes = [array(ticklabel.get_bounding_box(gc), float64) \
+                                               for ticklabel in self.ticklabel_cache]
         else:
-            scale = 'linear'
-
-        tick_list = array(self.tick_generator.get_ticks(datalow, datahigh,
-                                                        datalow, datahigh,
-                                                        self.tick_interval,
-                                                        use_endpoints=False,
-                                                        scale=scale), float64)
+            scale = 'log' if isinstance(self.mapper, LogMapper) else 'linear'
+            if self.small_haxis_style:
+                tick_list = array([datalow, datahigh])
+            else:
+                tick_list = array(self.tick_generator.get_ticks(datalow, datahigh,
+                                                                datalow, datahigh,
+                                                                self.tick_interval,
+                                                                use_endpoints=False,
+                                                                scale=scale), float64)
 
         mapped_tick_positions = (array(self.mapper.map_screen(tick_list))-screenlow) / \
                                             (screenhigh-screenlow)
         self._tick_positions = around(array([self._axis_vector*tickpos + self._origin_point \
                                 for tickpos in mapped_tick_positions]))
-
-        if self.small_haxis_style:
-            # If we're a small axis, we want the endpoints to be the labels regardless of
-            # where the ticks are, as the labels represent the bounds, not where the tick
-            # marks are.
-            self._tick_label_list = array([datalow, datahigh])
-            mapped_label_positions = (array(self.mapper.map_screen(self._tick_label_list))-screenlow) / \
-                                     (screenhigh-screenlow)
-            self._tick_label_positions = [self._axis_vector*tickpos + self._origin_point \
-                                          for tickpos in mapped_label_positions]
-        else:
-            self._tick_label_list = tick_list
-            self._tick_label_positions = self._tick_positions
+        self._tick_label_list = tick_list
+        self._tick_label_positions = self._tick_positions
         return
 
 
@@ -581,116 +499,34 @@ class PlotAxis(AbstractOverlay):
         
         Waits for the cache to become invalid.
         """
-        self.ticklabel_cache = []
-        formatter = self.tick_label_formatter
-        for i in range(len(self._tick_label_positions)):
-            val = self._tick_label_list[i]
-            if formatter is not None:
-                tickstring = formatter(val)
-            else:
-                tickstring = str(val)
-            ticklabel = Label(text=tickstring,
-                              font=self.tick_label_font,
-                              color=self.tick_label_color,
-                              rotate_angle=self.tick_label_rotate_angle,
-                              margin=self.tick_label_margin)
-            self.ticklabel_cache.append(ticklabel)
+        # tick labels are already computed
+        if hasattr(self.tick_generator, "get_ticks_and_labels"):
+            return
 
-        # TODO: Right now we are hardcoding this handling of a scaled CTM,
-        # eventually it would be nice if we didn't have to do this.
-        ctm = gc.get_ctm()
-        if len(ctm) == 6:
-            # AffineMatrix class
-            scale = array((ctm[0], ctm[3]))
-        elif len(ctm) == 3:
-            # Mac GC
-            scale = array((ctm[0][0], ctm[1][1]))
-        else:
-            scale = array((1.0, 1.0))
-        self._tick_label_bounding_boxes = [array(ticklabel.get_bounding_box(gc), float) / scale
+        formatter = self.tick_label_formatter
+        def build_label(val):
+            tickstring = formatter(val) if formatter is not None else str(val)
+            return Label(text=tickstring,
+                         font=self.tick_label_font,
+                         color=self.tick_label_color,
+                         rotate_angle=self.tick_label_rotate_angle,
+                         margin=self.tick_label_margin)
+
+        self.ticklabel_cache = [build_label(val) for val in self._tick_label_list]
+        self._tick_label_bounding_boxes = [array(ticklabel.get_bounding_box(gc), float)
                                                for ticklabel in self.ticklabel_cache]
         return
 
 
-    def _calculate_geometry(self, overlay_component=None):
-        if overlay_component is not None:
-            if self.orientation == "top":
-                new_origin = [overlay_component.x, overlay_component.y2]
-                inside_vec = [0.0, -1.0]
-            elif self.orientation == "bottom":
-                new_origin = [overlay_component.x, overlay_component.y]
-                inside_vec = [0.0, 1.0]
-            elif self.orientation == "left":
-                new_origin = [overlay_component.x, overlay_component.y]
-                inside_vec = [1.0, 0.0]
-            else:  # self.orientation == "right":
-                new_origin = [overlay_component.x2, overlay_component.y]
-                inside_vec = [-1.0, 0.0]
-            self._origin_point = array(new_origin)
-            self._inside_vector = array(inside_vec)
-        else:
-            #FIXME: Why aren't we setting self._inside_vector here?
-            overlay_component = self
-            new_origin = array(self.position)
-
-        origin = getattr(overlay_component, "origin", 'bottom left')
-        if self.orientation in ('top', 'bottom'):
-            self._major_axis_size = overlay_component.bounds[0]
-            self._minor_axis_size = overlay_component.bounds[1]
-            self._major_axis = array([1., 0.])
-            self._title_orientation = array([0.,1.])
-            if "right" in origin: 
-                flip_from_gc = True
-            else: 
-                flip_from_gc = False
-            #this could be calculated...
-            self.title_angle = 0.0
-        elif self.orientation in ('left', 'right'):
-            self._major_axis_size = overlay_component.bounds[1]
-            self._minor_axis_size = overlay_component.bounds[0]
-            self._major_axis = array([0., 1.])
-            self._title_orientation = array([-1., 0])
-            origin = getattr(overlay_component, "origin", 'bottom left')
-            if "top" in origin: 
-                flip_from_gc = True
-            else: 
-                flip_from_gc = False
-            if self.orientation == 'left':
-                self.title_angle = 90.0
-            else:
-                self.title_angle = 270.0                
-
-        if self.ensure_ticks_bounded:
-            self._origin_point -= self._inside_vector*self.tick_in
-
+    def _calculate_geometry(self):
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
-        # TODO: should this be here, or not?
-        if flip_from_gc:
-            screenlow, screenhigh = screenhigh, screenlow
-        
-        self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
-        self._axis_vector = self._end_axis_point - self._origin_point
-        # This is the vector that represents one unit of data space in terms of screen space.
-        self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
-        return
 
-
-    def _old_calculate_geometry(self):
-        if hasattr(self, 'mapper') and self.mapper is not None:
-            screenhigh = self.mapper.high_pos
-            screenlow = self.mapper.low_pos
-        else:
-            # fixme: this should take into account axis orientation
-            screenhigh = self.x2
-            screenlow = self.x
-            
         if self.orientation in ('top', 'bottom'):
             self._major_axis_size = self.bounds[0]
             self._minor_axis_size = self.bounds[1]
             self._major_axis = array([1., 0.])
             self._title_orientation = array([0.,1.])
-            #this could be calculated...
             self.title_angle = 0.0
             if self.orientation == 'top':
                 self._origin_point = array(self.position) + self._major_axis * screenlow
@@ -698,21 +534,20 @@ class PlotAxis(AbstractOverlay):
             else: #self.oriention == 'bottom'
                 self._origin_point = array(self.position) + array([0., self.bounds[1]]) + self._major_axis*screenlow
                 self._inside_vector = array([0., 1.])
+
         elif self.orientation in ('left', 'right'):
             self._major_axis_size = self.bounds[1]
             self._minor_axis_size = self.bounds[0]
             self._major_axis = array([0., 1.])
             self._title_orientation = array([-1., 0])
-            self.title_angle = 90.0
             if self.orientation == 'left':
                 self._origin_point = array(self.position) + array([self.bounds[0], 0.]) + self._major_axis*screenlow
                 self._inside_vector = array([1., 0.])
+                self.title_angle = 90.0
             else: #self.orientation == 'right'
-                self._origin_point = array(self.position) + self._major_axis*screenlow
+                self._origin_point = array(self.position) + self._major_axis * screenlow
                 self._inside_vector = array([-1., 0.])
-
-#        if self.mapper.high_pos<self.mapper.low_pos:
-#            self._origin_point = self._origin_point + self._axis_
+                self.title_angle = 270.0
 
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
@@ -724,42 +559,55 @@ class PlotAxis(AbstractOverlay):
         return
 
 
-    #------------------------------------------------------------------------
-    # Private helper methods
-    #------------------------------------------------------------------------
+    def _calculate_geometry_overlay(self, overlay_component=None):
+        if overlay_component is None:
+            overlay_component = self
+        component_origin = getattr(overlay_component, "origin", 'bottom left')
 
-    def _rotmatrix(self, theta):
-        """Returns a 2x2 rotation matrix for angle *theta*.
-        """
-        return array([[cos(theta), sin(theta)], [-sin(theta), cos(theta)]], float64)
+        screenhigh = self.mapper.high_pos
+        screenlow = self.mapper.low_pos
 
-    def _center_dist(self, vect, width, height, rotation=0.0):
-        """Given a width and height of a rectangle, this method finds the
-        distance in units of the vector, in the direction of the vector, from
-        the center of the rectangle, to wherever the vector leaves the
-        rectangle. This method is useful for determining where to place text so
-        it doesn't run into other components. """
-        rotvec = transpose(dot(self._rotmatrix(rotation*pi/180.0),
-            transpose(array([vect], float64))))[0]
-        absvec = absolute(rotvec)
-        if absvec[1] != 0:
-            heightdist = (float(height)/2)/float(absvec[1])
-        else:
-            heightdist = 9999999
-        if absvec[0] != 0:
-            widthdist = (float(width)/2)/float(absvec[0])
-        else:
-            widthdist = 99999999
+        if self.orientation in ('top', 'bottom'):
+            self._major_axis_size = overlay_component.bounds[0]
+            self._minor_axis_size = overlay_component.bounds[1]
+            self._major_axis = array([1., 0.])
+            self._title_orientation = array([0.,1.])
+            self.title_angle = 0.0
+            if self.orientation == 'top':
+                self._origin_point = array([overlay_component.x, overlay_component.y2])
+                self._inside_vector = array([0.0, -1.0])
+            else:
+                self._origin_point = array([overlay_component.x, overlay_component.y])
+                self._inside_vector = array([0.0, 1.0])
+            if "right" in component_origin: 
+                screenlow, screenhigh = screenhigh, screenlow
 
-        return min(heightdist, widthdist)
+        elif self.orientation in ('left', 'right'):
+            self._major_axis_size = overlay_component.bounds[1]
+            self._minor_axis_size = overlay_component.bounds[0]
+            self._major_axis = array([0., 1.])
+            self._title_orientation = array([-1., 0])
+            if self.orientation == 'left':
+                self._origin_point = array([overlay_component.x, overlay_component.y])
+                self._inside_vector = array([1.0, 0.0])
+                self.title_angle = 90.0
+            else:
+                self._origin_point = array([overlay_component.x2, overlay_component.y])
+                self._inside_vector = array([-1.0, 0.0])
+                self.title_angle = 270.0              
+            if "top" in component_origin: 
+                screenlow, screenhigh = screenhigh, screenlow
+    
+        if self.ensure_ticks_bounded:
+            self._origin_point -= self._inside_vector*self.tick_in
 
-    def _corner_dist(self, vect, corners):
-        """Given a list of corner vectors, this method finds the
-        corner which is most extreme in the direction of the vector.
-        """
-        dots = array([dot(vect, corner) for corner in corners])
-        return corners[dots.argmin()]
-        
+        self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
+        self._axis_vector = self._end_axis_point - self._origin_point
+        # This is the vector that represents one unit of data space in terms of screen space.
+        self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
+        return
+
+
     #------------------------------------------------------------------------
     # Event handlers
     #------------------------------------------------------------------------
@@ -822,9 +670,6 @@ class PlotAxis(AbstractOverlay):
         self.invalidate_draw()
         if self.component:
             self.component.invalidate_draw()
-#            self.component.request_redraw()
-#        else:
-#            self.request_redraw()
         return
 
     def _component_changed(self):
@@ -858,9 +703,7 @@ class PlotAxis(AbstractOverlay):
         self.invalidate_draw()
         if self.component:
             self.component.invalidate_draw()
-#            self.component.request_redraw()
-#        else:
-#            self.request_redraw()
+        return
 
     def _title_color_changed(self):
         return self._invalidate()

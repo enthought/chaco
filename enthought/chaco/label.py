@@ -87,23 +87,24 @@ class Label(HasTraits):
             for line in self.text.split("\n")[::-1]:
                 if line != "":
                     (width, height, descent, leading) = gc.get_full_text_extent(line)
+                    ascent = height - abs(descent)
                     if width > max_width:
                         max_width = width
-                    new_y_pos = prev_y_pos + prev_y_height - descent + self.line_spacing
+                    new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
                 else:
                     # For blank lines, we use the height of the previous line, if there
                     # is one.  The width is 0.
                     leading = 0
                     if prev_y_height != -self.line_spacing:
                         new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
-                        height = prev_y_height
+                        ascent = prev_y_height
                     else:
                         new_y_pos = prev_y_pos
-                        height = 0
+                        ascent = 0
                 x_pos.append(-leading + margin)
                 y_pos.append(new_y_pos)
                 prev_y_pos = new_y_pos
-                prev_y_height = height
+                prev_y_height = ascent
             gc.restore_state()
 
             self._line_xpos = x_pos[::-1]
@@ -212,6 +213,8 @@ class Label(HasTraits):
                 gc.translate_ctm(x_offset, y_offset)
 
                 gc.show_text(line)
+                #gc.rect(0-self.margin,0-self.margin,width,height)
+                #gc.stroke_path()
                 gc.translate_ctm(-x_offset, -y_offset)
         finally:
             gc.restore_state()

@@ -18,7 +18,6 @@ from enthought.chaco.api import ArrayDataSource, DataRange1D, \
 from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.chaco.scales.api import CalendarScaleSystem
 from enthought.chaco.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco.scales_axis import PlotAxis as ScalesPlotAxis
 
 try:
     from enthought.chaco.hloc_renderer import OHLCPlot, PriceDataSource, \
@@ -86,8 +85,8 @@ class MyApp(HasTraits):
 
         # Set the plot's bottom axis to use the Scales ticking system
         ticker = ScalesTickGenerator(scale=CalendarScaleSystem())
-        bottom_axis = ScalesPlotAxis(price_plot, orientation="bottom", 
-                                     tick_generator = ticker)
+        bottom_axis = PlotAxis(price_plot, orientation="bottom", 
+                               tick_generator = ticker)
         price_plot.overlays.append(bottom_axis)
         price_plot.overlays.append(PlotAxis(price_plot, orientation="left"))
         hgrid, vgrid = add_default_grids(price_plot)
