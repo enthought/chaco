@@ -347,27 +347,35 @@ class ColormappedScatterPlot(ScatterPlot):
             gc.set_stroke_color(self.outline_color_)
             gc.set_line_width(self.line_width)
 
-            marker = self.marker_
+            marker_cls = self.marker_
             size = self.marker_size
-            mode = marker.draw_mode
+            mode = marker_cls.draw_mode
 
-            if marker != "custom":
+            if marker_cls != "custom":
                 if (hasattr(gc, "draw_marker_at_points") and self.marker not in ('custom', 'circle', 'diamond')):
-                    draw_func = lambda x, y: gc.draw_marker_at_points([[x,y]], size, marker.kiva_marker)
+                    draw_func = lambda x, y: gc.draw_marker_at_points([[x,y]], size, marker_cls.kiva_marker)
 
                 elif hasattr(gc, "draw_path_at_points"):
                     path = gc.get_empty_path()
                     # turn the class into an instance... we should make add_to_path a
                     # class method at some point.
-                    marker().add_to_path(path, size)
+                    marker_cls().add_to_path(path, size)
                     draw_func = lambda x, y: gc.draw_path_at_points([[x,y]], path, mode)
+                else:
+                    m = marker_cls()
+                    def draw_func(x, y):
+                        gc.translate_ctm(x, y)
+                        gc.begin_path()
+                        m.add_to_path(gc, size)
+                        gc.draw_path(mode)
+                        gc.translate_ctm(-x, -y)
 
                 for i in range(len(x)):
                     gc.set_fill_color(colors[i])
                     draw_func(x[i], y[i])
 
             else:
-                path = marker.custom_symbol
+                path = marker_cls.custom_symbol
                 for i in range(len(x)):
                     gc.set_fill_color(colors[i])
                     gc.draw_path_at_points([[x[i], y[i]]], path, STROKE)

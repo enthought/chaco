@@ -121,21 +121,25 @@ def render_markers(gc, points, marker, marker_size,
         if not marker.antialias:
             gc.set_antialias(False)
         if marker.__class__ != CustomMarker:
+            gc.save_state()
             for sx,sy in points:
-                gc.save_state()
                 gc.translate_ctm(sx, sy)
+                gc.begin_path()
                 # Kiva GCs have a path-drawing interface
                 marker.add_to_path(gc, marker_size)
                 gc.draw_path(marker.draw_mode)
-                gc.restore_state()
+                gc.translate_ctm(-sx, -sy)
+            gc.restore_state()
         else:
             path = custom_symbol
+            gc.save_state()
             for sx,sy in points:
-                gc.save_state()
                 gc.translate_ctm(sx, sy)
+                gc.begin_path()
                 gc.add_path(path)
                 gc.draw_path(STROKE)
-                gc.restore_state()
+                gc.translate_ctm(-sx, -sy)
+            gc.restore_state()
 
 
     gc.restore_state()
