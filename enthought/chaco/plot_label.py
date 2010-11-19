@@ -1,11 +1,13 @@
 """ Defines the PlotLabel class.
 """
 from enthought.kiva import font_metrics_provider
-from enthought.traits.api import Delegate, Enum, Instance, Str, Trait
+from enthought.traits.api import DelegatesTo, Enum, Instance, Str, Trait
 
 from abstract_overlay import AbstractOverlay
 from label import Label
 
+
+LabelDelegate = DelegatesTo("_label")
 
 class PlotLabel(AbstractOverlay):
     """ A label used by plots. 
@@ -14,14 +16,21 @@ class PlotLabel(AbstractOverlay):
     """
     
     # The text of the label.
-    text = Delegate("_label")
+    text = LabelDelegate
     # The color of the label text.
-    color = Delegate("_label", modify=True)
+    color = DelegatesTo("_label")
     # The font for the label text.
-    font = Delegate("_label")
+    font = LabelDelegate
     # The angle of rotation of the label.
-    angle = Delegate("_label", "rotate_angle")
-    
+    angle = DelegatesTo("_label", "rotate_angle")
+
+    bgcolor = LabelDelegate
+    border_width = LabelDelegate
+    border_color = LabelDelegate
+    border_visible = LabelDelegate
+    margin = LabelDelegate
+    line_spacing = LabelDelegate
+
     #------------------------------------------------------------------------
     # Layout-related traits
     #------------------------------------------------------------------------
@@ -58,7 +67,7 @@ class PlotLabel(AbstractOverlay):
     
     # The label has a fixed height and can be resized horizontally. (Overrides
     # PlotComponent.)
-    resizable = ""
+    resizable = "h"
 
     # The Label instance this plot label is wrapping.
     _label = Instance(Label, args=())
@@ -105,7 +114,6 @@ class PlotLabel(AbstractOverlay):
         try:
             # Perform justification and compute the correct offsets for
             # the label position
-            #import pdb; pdb.set_trace()
             width, height = self._label.get_bounding_box(gc)
             if self.hjustify == "left":
                 x_offset = 0
@@ -141,8 +149,7 @@ class PlotLabel(AbstractOverlay):
             self._draw_overlay(gc, view_bounds, mode)
 
     def _layout_as_component(self, size=None, force=False):
-        gc = font_metrics_provider()
-        self.width, self.height = self._label.get_bounding_box(gc)
+        pass
     
     def _layout_as_overlay(self, size=None, force=False):
         """ Lays out the label as an overlay on another component.

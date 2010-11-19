@@ -47,6 +47,9 @@ class Label(HasTraits):
     # The color of the border.
     border_color = black_color_trait
 
+    # Whether or not the border is visible
+    border_visible = Bool(True)
+
     # The font of the label text.
     font = KivaFont("modern 10")
 
@@ -109,8 +112,9 @@ class Label(HasTraits):
 
             self._line_xpos = x_pos[::-1]
             self._line_ypos = y_pos[::-1]
-            self._bounding_box[0] = max_width + 2*margin + 2*self.border_width
-            self._bounding_box[1] = prev_y_pos + prev_y_height + margin + 2*self.border_width
+            border_width = self.border_width if self.border_visible else 0
+            self._bounding_box[0] = max_width + 2*margin + 2*border_width
+            self._bounding_box[1] = prev_y_pos + prev_y_height + margin + 2*border_width
             self._position_cache_valid = True
         return
 
@@ -184,7 +188,7 @@ class Label(HasTraits):
                 gc.set_fill_color(self.bgcolor_)
                 gc.rect(0, 0, width, height)
                 gc.fill_path()
-            if self.border_width > 0:
+            if self.border_visible and self.border_width > 0:
                 gc.set_stroke_color(self.border_color_)
                 gc.set_line_width(self.border_width)
                 border_offset = (self.border_width-1)/2.0
@@ -201,7 +205,8 @@ class Label(HasTraits):
 
             #margin = self.margin
             lines = self.text.split("\n")
-            gc.translate_ctm(self.border_width, self.border_width)
+            if self.border_visible:
+                gc.translate_ctm(self.border_width, self.border_width)
             width, height = self.get_width_height(gc)
 
             for i, line in enumerate(lines):
