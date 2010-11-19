@@ -41,7 +41,7 @@ from cross_plot_frame import CrossPlotFrame
 from data_view import DataView
 from simple_plot_frame import SimplePlotFrame
 from plot_component import PlotComponent
-from plot_graphics_context import PlotGraphicsContext
+from plot_graphics_context import PlotGraphicsContext, PlotGraphicsContextMixin
 from selectable_overlay_container import SelectableOverlayPlotContainer
 from plot_containers import OverlayPlotContainer, HPlotContainer, VPlotContainer, \
                             GridPlotContainer
@@ -74,6 +74,8 @@ from errorbar_plot import ErrorBarPlot
 from filled_line_plot import FilledLinePlot
 from quiverplot import QuiverPlot
 from candle_plot import CandlePlot
+from multi_line_plot import MultiLinePlot
+from jitterplot import JitterPlot
 
 
 # Plot factories
