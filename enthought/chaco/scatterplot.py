@@ -196,6 +196,8 @@ class ScatterPlot(BaseXYPlot):
     # datasource.
     #------------------------------------------------------------------------
 
+    show_selection = Bool(True)
+
     selection_marker = MarkerTrait
 
     selection_marker_size = Float(4.0)
@@ -462,7 +464,7 @@ class ScatterPlot(BaseXYPlot):
                        self.color_, self.line_width, self.outline_color_,
                        self.custom_symbol)
 
-        if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
+        if self.show_selection and self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
             sel_pts = self.map_screen(self._cached_selected_pts)
             self.render_markers_func(gc, sel_pts, self.selection_marker,
                     self.selection_marker_size, self.selection_color_,
