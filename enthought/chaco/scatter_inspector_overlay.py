@@ -46,17 +46,18 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         plot = self.component
-        if not plot or not plot.index or not plot.value:
+        if not plot or not plot.index or not getattr(plot, "value", True):
             return
 
         for inspect_type in (self.hover_metadata_name, self.selection_metadata_name):
-            if inspect_type in plot.index.metadata and inspect_type in plot.value.metadata:
+            if inspect_type in plot.index.metadata:
+                if hasattr(plot,"value") and not inspect_type in plot.value.metadata:
+                    continue
                 index = plot.index.metadata.get(inspect_type, None)
 
                 if index is not None and len(index) > 0:
                     index = asarray(index)
                     index_data = plot.index.get_data()
-                    value_data = plot.value.get_data()
                     
                     # Only grab the indices which fall within the data range.
                     index = index[index < len(index_data)]
@@ -68,8 +69,13 @@ class ScatterInspectorOverlay(AbstractOverlay):
                     #value = plot.value.metadata.get(inspect_type, None)
                     value = index
                     
-                    screen_pts = plot.map_screen(array([index_data[index],
-                                                        value_data[value]]).T)
+                    if hasattr(plot, "value"):
+                        value_data = plot.value.get_data()
+                        screen_pts = plot.map_screen(array([index_data[index],
+                                                            value_data[value]]).T)
+                    else:
+                        screen_pts = plot.map_screen(index_data[index])
+
                     if inspect_type == self.selection_metadata_name:
                         prefix = "selection"
                     else:
@@ -121,14 +127,15 @@ class ScatterInspectorOverlay(AbstractOverlay):
     def _component_changed(self, old, new):
         if old:
             old.on_trait_change(self._ds_changed, 'index', remove=True)
-            old.on_trait_change(self._ds_changed, 'value', remove=True)
+            if hasattr(old, "value"):
+                old.on_trait_change(self._ds_changed, 'value', remove=True)
         if new:
-            new.on_trait_change(self._ds_changed, 'index')
-            new.on_trait_change(self._ds_changed, 'value')
-            if new.index:
-                self._ds_changed(new, 'index', None, new.index)
-            if new.value:
-                self._ds_changed(new, 'value', None, new.value)
+            for dsname in ("index", "value"):
+                if not hasattr(new, dsname):
+                    continue
+                new.on_trait_change(self._ds_changed, dsname)
+                if getattr(new, dsname):
+                    self._ds_changed(new, dsname, None, getattr(new,dsname))
         return
 
     def _ds_changed(self, object, name, old, new):

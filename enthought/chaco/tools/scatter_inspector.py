@@ -48,20 +48,24 @@ class ScatterInspector(SelectTool):
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
         if index is not None:
             plot.index.metadata[self.hover_metadata_name] = [index]
-            plot.value.metadata[self.hover_metadata_name] = [index]
+            if hasattr(plot, "value"):
+                plot.value.metadata[self.hover_metadata_name] = [index]
         elif not self.persistent_hover:
             plot.index.metadata.pop(self.hover_metadata_name, None)
-            plot.value.metadata.pop(self.hover_metadata_name, None)
+            if hasattr(plot, "value"):
+                plot.value.metadata.pop(self.hover_metadata_name, None)
         return
 
     def _get_selection_state(self, event):
         plot = self.component
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
-        index_md = plot.index.metadata.get(self.selection_metadata_name, None)
-        value_md = plot.value.metadata.get(self.selection_metadata_name, None)
+        #index_md = plot.index.metadata.get(self.selection_metadata_name, None)
+        #value_md = plot.value.metadata.get(self.selection_metadata_name, None)
         
         already_selected = False
         for name in ('index', 'value'):
+            if not hasattr(plot, name):
+                continue
             md = getattr(plot, name).metadata
             if md is None or self.selection_metadata_name not in md:
                 continue
@@ -81,17 +85,23 @@ class ScatterInspector(SelectTool):
         """
         plot = self.component
         for name in ('index', 'value'):
+            if not hasattr(plot, name):
+                continue
             md = getattr(plot, name).metadata
             if not self.selection_metadata_name in md:
                 pass
             elif index in md[self.selection_metadata_name]:
-                md[self.selection_metadata_name].remove(index)
+                new_list = md[self.selection_metadata_name][:]
+                new_list.remove(index)
+                md[self.selection_metadata_name] = new_list
                 getattr(plot, name).metadata_changed = True
         return
 
     def _select(self, index, append=True):
         plot = self.component
         for name in ('index', 'value'):
+            if not hasattr(plot, name):
+                continue
             md = getattr(plot, name).metadata
             selection = md.get(self.selection_metadata_name, None)
 
@@ -102,7 +112,8 @@ class ScatterInspector(SelectTool):
             else:
                 if append:
                     if index not in md[self.selection_metadata_name]:
-                        md[self.selection_metadata_name].append(index)
+                        new_list = md[self.selection_metadata_name] + [index]
+                        md[self.selection_metadata_name] = new_list
                         # Manually trigger the metadata_changed event on
                         # the datasource.  Datasources only automatically
                         # fire notifications when the values inside the
