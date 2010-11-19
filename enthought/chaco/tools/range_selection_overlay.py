@@ -77,6 +77,7 @@ class RangeSelectionOverlay(AbstractOverlay):
         
             gc.save_state()
             try:
+                gc.clip_to_rect(component.x, component.y, component.width, component.height)
                 gc.set_alpha(self.alpha)
                 gc.set_fill_color(self.fill_color_)
                 gc.set_stroke_color(self.border_color_)
@@ -97,12 +98,16 @@ class RangeSelectionOverlay(AbstractOverlay):
         """ Returns a tuple of (x1, x2) screen space coordinates of the start
         and end selection points.  
         
-        If there is no current selection, then returns None.
+        If there is no current selection, then returns an empty list.
         """
         ds = getattr(self.plot, self.axis)
-        selection = ds.metadata[self.metadata_name]
+        selection = ds.metadata.get(self.metadata_name, None)
+        if selection is None:
+            return []
+
         # "selections" metadata must be a tuple
-        if self.metadata_name == "selections":
+        if self.metadata_name == "selections" or \
+                (selection is not None and isinstance(selection, tuple)):
             if selection is not None and len(selection) == 2:
                 return [self.mapper.map_screen(array(selection))]
             else:

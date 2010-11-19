@@ -4,8 +4,9 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Bool, Enum, Event, Float, Int, List, \
-                             Property, Trait, Tuple
+from enthought.traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, List, \
+                             Property, Str, Trait, Tuple
+from enthought.enable.api import KeySpec
 
 # Chaco imports
 from enthought.chaco.api import AbstractController
@@ -25,11 +26,23 @@ class RangeSelection(AbstractController):
     # and fires change-events as the user is dragging.
     selection = Property
     
+    selection_mode = Enum("set", "append")
+    
     # This event is fired whenever the user completes the selection, or when a
     # finalized selection gets modified.  The value of the event is the data
     # space range.
     selection_completed = Event
 
+    # The name of the metadata on the datasource that we will write self.selection to
+    metadata_name = Str("selections")
+
+    # Either "set" or "append", depending on whether self.append_key was held down
+    selection_mode_metadata_name = Str("selection_mode")
+    
+    # The name of the metadata on the datasource that we will set to a numpy
+    # boolean array for masking the datasource's data
+    mask_metadata_name = Str("selection_masks")
+   
     # The possible event states of this selection tool (overrides 
     # enable.Interactor).
     #
@@ -86,8 +99,20 @@ class RangeSelection(AbstractController):
     # Allow the left button begin a selection?
     left_button_selects = Bool(False)
     
+    # Disable all left-mouse button interactions?
+    disable_left_mouse = Bool(False)
+
     # Allow the tool to be put into the deselected state via mouse clicks
     allow_deselection = Bool(True)
+
+    # The minimum span, in pixels, of a selection region.  Any attempt to
+    # select a region smaller than this will be treated as a deselection.
+    minimum_selection = Int(5)
+    
+    # The key which, if held down while the mouse is being dragged, will 
+    # indicate that the selection should be appended to an existing selection
+    # as opposed to overwriting it.
+    append_key = Instance(KeySpec, args=(None, "control"))
     
     #------------------------------------------------------------------------
     # Private traits
@@ -165,6 +190,9 @@ class RangeSelection(AbstractController):
         
         Otherwise, the selection becomes deselected.
         """
+        if self.disable_left_mouse:
+            return
+
         screen_bounds = self._get_selection_screencoords()
         if screen_bounds is None:
             self.deselect(event)
@@ -224,8 +252,8 @@ class RangeSelection(AbstractController):
                     self.event_state = "selecting"
                     self._drag_edge = "low"
                     self.selecting_mouse_move(event)
-                elif self.allow_deselection:
-                    self.deselect(event)
+                #elif self.allow_deselection:
+                #    self.deselect(event)
                 else:
                     # Treat this as a combination deselect + right down
                     self.deselect(event)
@@ -281,6 +309,9 @@ class RangeSelection(AbstractController):
         
         Switches the tool to the 'selected' state.
         """
+        if self.disable_left_mouse:
+            return
+
         self.event_state = "selected"
         self.selection_completed = self.selection
         event.handled = True
@@ -367,7 +398,13 @@ class RangeSelection(AbstractController):
         mapped_pos = self.mapper.map_data(pos)
         self.selection = (mapped_pos, mapped_pos)
         self._set_sizing_cursor(event)
+        self._down_point = array([event.x, event.y])
         self.event_state = "selecting"
+        if self.append_key is not None and self.append_key.match(event):
+            print "append key matched"
+            self.selection_mode = "append"
+        else:
+            self.selection_mode = "set"
         self.selecting_mouse_move(event)
         return
 
@@ -410,11 +447,20 @@ class RangeSelection(AbstractController):
         return
 
     def selecting_button_up(self, event):
-        self.event_state = "selected"
+        # Check to see if the selection region is bigger than the minimum
+        event.window.set_pointer("arrow")
+        start = self._down_point[self.axis_index]
+        end = self._get_axis_coord(event)
+        if self.minimum_selection > abs(start - end):
+            self.deselect(event)
+            event.handled = True
 
-        # Fire the "completed" event
-        self.selection_completed = self.selection
-        event.handled = True
+        else:
+            self.event_state = "selected"
+
+            # Fire the "completed" event
+            self.selection_completed = self.selection
+            event.handled = True
         return
 
     def selecting_right_up(self, event):
@@ -431,6 +477,8 @@ class RangeSelection(AbstractController):
         
         Switches the tool to the 'selected' state.
         """
+        if self.disable_left_mouse:
+            return
         self.selecting_button_up(event)
     
     def selecting_mouse_leave(self, event):
@@ -512,7 +560,7 @@ class RangeSelection(AbstractController):
         return
 
     def _get_selection(self):
-        selection = getattr(self.plot, self.axis).metadata["selections"]
+        selection = getattr(self.plot, self.axis).metadata[self.metadata_name]
         return selection
     
     def _set_selection(self, val):
@@ -523,25 +571,30 @@ class RangeSelection(AbstractController):
 
         if datasource is not None:
         
+            mdname = self.metadata_name
+
             # Set the selection range on the datasource
-            datasource.metadata["selections"] = val
-            datasource.metadata_changed = {"selections": val}
+            datasource.metadata[mdname] = val
+            datasource.metadata_changed = {mdname: val}
             
             # Set the selection mask on the datasource
             selection_masks = \
-                datasource.metadata.setdefault("selection_masks", [])
+                datasource.metadata.setdefault(self.mask_metadata_name, [])
             for index in range(len(selection_masks)):
                 if id(selection_masks[index]) == id(self._selection_mask):
                     del selection_masks[index]
                     break
 
+            # Set the selection mode on the datasource
+            datasource.metadata[self.selection_mode_metadata_name] = self.selection_mode
+                
             if val is not None:
                 low, high = val
                 data_pts = datasource.get_data()
                 new_mask = (data_pts>=low) & (data_pts<=high)
                 selection_masks.append(new_mask)
                 self._selection_mask = new_mask
-            datasource.metadata_changed = {"selection_masks": val}
+            datasource.metadata_changed = {self.mask_metadata_name: val}
             
         self.trait_property_changed("selection", oldval, val)
 
