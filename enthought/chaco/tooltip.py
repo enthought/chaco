@@ -39,25 +39,9 @@ class ToolTip(AbstractOverlay):
     # are disabled
     rotate_angle = Float(0.0)
 
-    # The available space in the four directions, used to determine layout
-    # If -1, assume there is enough space in that direction.
-
-    # Available space to the left of the tooltip; if -1 there is "enough" space.
-    left_space = Float(-1)
-
-    # Available space to the right of the tooltip; if -1 there is "enough" space.
-    right_space = Float(-1)
-
-    # Available space below the tooltip; if -1 there is "enough" space.
-    below_space = Float(-1)
-
-    # Available space above the tooltip; if -1 there is "enough" space.
-    above_space = Float(-1)
-
-    # The position of the corner of the tooltip.  Which corner this represents
-    # depends on the space available on each side, set by **left_space**, etc.
-    # If any of those values is -1, there is enough space in that direction.
-    corner_point = List
+    # Should the tooltip automatically reposition itself to remain visible
+    # and unclipped on its overlaid component?
+    auto_adjust = Bool(True)
 
     # The tooltip is a fixed size. (Overrides PlotComponent.)
     resizable = ""
@@ -133,22 +117,34 @@ class ToolTip(AbstractOverlay):
 
         self.outer_bounds = outer_bounds
 
-        if self.corner_point:
-            if self.right_space != -1 and self.right_space<outer_bounds[0]:
-                self.x = self.corner_point[0] - outer_bounds[0]
-            else:
-                self.x = self.corner_point[0]
-            if self.above_space != -1 and self.above_space<outer_bounds[1]:
-                self.y = self.corner_point[1] - outer_bounds[1]
-            else:
-                self.y = self.corner_point[1]
+        if self.auto_adjust and self.component is not None:
+            new_pos = list(self.outer_position)
+            for dimindex in (0,1):
+                pos = self.position[dimindex]
+                extent = outer_bounds[dimindex]
+                c_min = self.component.position[dimindex]
+                c_max = c_min + self.component.bounds[dimindex]
+                # Is the tooltip just too wide/tall?
+                if extent > (c_max - c_min):
+                    new_pos[dimindex] = c_min
+                # Does it extend over the c_max edge?  (right/top)
+                elif pos + extent > c_max:
+                    new_pos[dimindex] = c_max - extent
+
+                # Does it extend over the c_min edge? This is not an elif so
+                # that we can fix the situation where the c_max edge adjustment
+                # above pushes the position negative.
+                if new_pos[dimindex] < c_min:
+                    new_pos[dimindex] = c_min
+            
+            self.outer_position = new_pos
 
         self._layout_needed = False
 
     def _recompute_text(self):
         labels = [Label(text=line, font=self.font, margin=0,
                         bgcolor='transparent', border_width=0,
-                        color=self.text_color, rotate_angle=self.rotate_angle) 
+                        color=self.text_color, rotate_angle=self.rotate_angle)
                     for line in self.lines]
         dummy_gc = self._font_metrics_provider
         line_sizes = array([label.get_width_height(dummy_gc)
@@ -169,8 +165,7 @@ class ToolTip(AbstractOverlay):
         self._text_props_valid = False
         self._layout_needed = True
 
-    @on_trait_change("border_padding,line_spacing,lines,lines_items,padding," \
-                     "left_space,right_space,below_space,above_space")
+    @on_trait_change("border_padding,line_spacing,lines,lines_items,padding")
     def _invalidate_layout(self):
         self._layout_needed = True
         self.request_redraw()
