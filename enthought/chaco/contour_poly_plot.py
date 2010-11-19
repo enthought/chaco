@@ -52,6 +52,7 @@ class ContourPolyPlot(BaseContourPlot):
 
         for i in range(len(self._levels)-1):
             gc.set_fill_color(self._colors[i])
+            gc.set_stroke_color(self._colors[i])
             key = (self._levels[i], self._levels[i+1])
             for poly in self._cached_polys[key]:
                 if self.orientation == "h":

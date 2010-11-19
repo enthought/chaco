@@ -6,6 +6,7 @@ from numpy import array, linspace, meshgrid, transpose
 
 # Enthought library imports
 from enthought.enable.api import LineStyle
+from enthought.kiva import constants
 from enthought.traits.api import Bool, Dict, Float, List, Str, Trait
 
 # Local relative imports
@@ -88,6 +89,8 @@ class ContourLinePlot(BaseContourPlot):
         gc.set_antialias(True)
         gc.clip_to_rect(self.x, self.y, self.width, self.height)
         gc.set_alpha(self.alpha)
+        gc.set_line_join(constants.JOIN_BEVEL)
+        gc.set_line_cap(constants.CAP_ROUND)
         
         for i in range(len(self._levels)):
             gc.set_stroke_color(self._colors[i])
