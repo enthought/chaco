@@ -90,7 +90,7 @@ class SelectTool(BaseTool):
             if (self.selection_mode == "single") or\
                     (self.selection_mode == "multi" and not modifier_down):
                 if clicked and not already_selected:
-                    if self.selection_mode == "single":
+                    if self.selection_mode == "single" or not modifier_down:
                         self._select(token, append=False)
                     else:
                         self._select(token, append=True)
@@ -98,7 +98,7 @@ class SelectTool(BaseTool):
                 else:
                     self._deselect(token)
 
-            else:  # multi or toggle
+            else:  # multi or toggle, and modifier_down is true
                 if clicked:
                     if already_selected:
                         self._deselect(token)
