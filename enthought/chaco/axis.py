@@ -70,6 +70,9 @@ class PlotAxis(AbstractOverlay):
     # The distance of the tick label from the axis.
     tick_label_offset = Float(8.)
 
+    # Whether the tick labels appear to the inside or the outside of the plot area
+    tick_label_position = Enum("outside", "inside")
+
     # A callable that is passed the numerical value of each tick label and
     # that returns a string.
     tick_label_formatter = Callable(DEFAULT_TICK_FORMATTER)
@@ -365,6 +368,10 @@ class PlotAxis(AbstractOverlay):
         # which axis are we moving away from the axis line along?
         axis_index = self._major_axis.argmin()
         
+        inside_vector = self._inside_vector
+        if self.tick_label_position == "inside":
+            inside_vector = -inside_vector
+
         for i in range(len(self._tick_label_positions)):
             #We want a more sophisticated scheme than just 2 decimals all the time
             ticklabel = self.ticklabel_cache[i]
@@ -378,7 +385,7 @@ class PlotAxis(AbstractOverlay):
 
             base_position = self._tick_label_positions[i].copy()
             axis_dist = self.tick_label_offset + tl_bounds[axis_index]/2.0
-            base_position -= self._inside_vector * axis_dist
+            base_position -= inside_vector * axis_dist
             base_position -= tl_bounds/2.0
             
             if self.tick_label_alignment == 'corner':
