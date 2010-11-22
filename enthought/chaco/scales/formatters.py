@@ -4,8 +4,9 @@ Classes for formatting labels for values or times.
 
 from math import ceil, floor, fmod, log10
 from numpy import abs, all, array, asarray, amax, amin
-from safetime import strftime, time
+from safetime import strftime, time, safe_fromtimestamp
 from time import localtime
+import warnings
 
 
 __all__ = ['NullFormatter', 'BasicFormatter', 'IntegerFormatter',
@@ -372,12 +373,16 @@ def strftimeEx(fmt, t, timetuple=None):
     Extends time.strftime() to format milliseconds and microseconds.
     
     Expects input to be a floating-point number of seconds since epoch.
-    The formats are:
+    The additional formats are:
         
     - ``%(ms)``:  milliseconds (uses round())
     - ``%(ms_)``: milliseconds (uses floor())
     - ``%(us)``:  microseconds (uses round())
+
+    The format may also be a callable which will bypass time.strftime() entirely.
     """
+    if callable(fmt):
+        return fmt(t)
 
     if "%(ms)" in fmt:
         # Assume that fmt does not also contain %(ms_) and %(us).
@@ -399,6 +404,25 @@ def strftimeEx(fmt, t, timetuple=None):
     return strftime(fmt, timetuple)
     
 
+def _two_digit_year(t):
+    """ Round to the nearest Jan 1, roughly.
+    """
+    dt = safe_fromtimestamp(t)
+    year = dt.year
+    if dt.month >= 7:
+        year += 1
+    return "'%02d" % (year % 100)
+
+def _four_digit_year(t):
+    """ Round to the nearest Jan 1, roughly.
+    """
+    dt = safe_fromtimestamp(t)
+    year = dt.year
+    if dt.month >= 7:
+        year += 1
+    return str(year)
+
+
 class TimeFormatter(object):
     """ Formatter for time values.
     """
@@ -414,7 +438,7 @@ class TimeFormatter(object):
         'hours': ('%Hh', '%H:%M'),
         'days': ('%m/%d', '%a%d',),
         'months': ('%m/%Y', '%b%y'),
-        'years': ("'%y", '%Y')
+        'years': (_two_digit_year, _four_digit_year),
         }
 
     # Labels of time units, from finest to coarsest.
@@ -422,7 +446,7 @@ class TimeFormatter(object):
                     'hourmin', 'hours', 'days', 'months', 'years']
      
     # A dict whose are keys are the strings in **format_order**; each value is
-    # two arrays, (widths, format strings).
+    # two arrays, (widths, format strings/functions).
     formats = {}
 
     # Whether or not to strip the leading zeros on tick labels.
@@ -541,8 +565,13 @@ class TimeFormatter(object):
         # but it works!  There is some trickiness here due to having to deal
         # with hybrid formats in a reasonable manner.
         for t in ticks:
-            tm = localtime(t)
-            s = strftimeEx(format, t, tm)
+            try:
+                tm = localtime(t)
+                s = strftimeEx(format, t, tm)
+            except ValueError, e:
+                warnings.warn("Unable to convert tick for timestamp " + str(t))
+                labels.append("ERR")
+                continue
 
             hybrid_handled = False
             next_ndx = resol_ndx

@@ -154,7 +154,10 @@ def _nice(x, round=False):
     have been changed to use (1, 2.5, 5, 10) as the nice values instead of
     (1, 2, 5, 10).
     """
-
+    if x <= 0:
+        import warnings
+        warnings.warn("Invalid (negative) range passed to tick interval calculation")
+        x = abs(x)
     expv = floor(log10(x))
     f = x / pow(10, expv)
     if round:
@@ -163,7 +166,7 @@ def _nice(x, round=False):
         elif f < 3.75:
             nf = 2.5
         elif f < 7.0:
-            nf = 5.0;
+            nf = 5.0
         else:
             nf = 10.0
     else:
