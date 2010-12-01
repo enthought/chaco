@@ -11,7 +11,6 @@ from enthought.traits.api import Bool, Dict, Float, List, Str, Trait
 
 # Local relative imports
 from base_contour_plot import BaseContourPlot
-from color_mapper import ColorMapper
 from contour.contour import Cntr
 
 

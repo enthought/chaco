@@ -24,10 +24,10 @@ class BaseContourPlot(Base2DPlot):
     levels = Trait("auto", Int, List)
 
     # The color(s) of the lines.
-    colors = Trait(None, Str, Instance("ColorMapper"), List, Tuple)
+    colors = Trait(None, Str, Instance(ColorMapper), List, Tuple)
 
     # If present, the color mapper for the colorbar to look at.
-    color_mapper = Property(Instance("ColorMapper"))
+    color_mapper = Property(Instance(ColorMapper))
 
     # A global alpha value to apply to all the contours
     alpha = Trait(1.0, Range(0.0, 1.0))
