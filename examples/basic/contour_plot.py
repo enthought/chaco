@@ -45,8 +45,7 @@ def _create_plot_component():
                       type="poly",
                       poly_cmap=jet,
                       xbounds=(xs[0], xs[-1]), 
-                      ybounds=(ys[0], ys[-1]),
-                      colormap=jet)
+                      ybounds=(ys[0], ys[-1]))
 
     # Create a contour line plot for the data, too
     plot.contour_plot("imagedata", 
