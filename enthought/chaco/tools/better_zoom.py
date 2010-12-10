@@ -8,8 +8,7 @@ from tool_history_mixin import ToolHistoryMixin
 
 class ToolState(HasTraits):
 
-    def __init__(self, location, prev, next):
-        self.location = location
+    def __init__(self, prev, next):
         self.prev = prev
         self.next = next
     
@@ -19,14 +18,65 @@ class ToolState(HasTraits):
     def revert(self, tool):
         raise NotImplementedError()
 
+class GroupedToolState(ToolState):
+    
+    def __init__(self, states):
+        self.states = states
+        
+    def apply(self, tool):
+        for state in self.states:
+            state.apply(tool)
+            
+    def revert(self, tool):
+        for state in self.states[::-1]:
+            state.revert(tool)
+
 class PanState(ToolState):
 
 
     def apply(self, tool):
-        pass
-    
+        if isinstance(tool.component.index_mapper, GridMapper):
+            index_mapper = tool.component.index_mapper._xmapper
+            value_mapper = tool.component.index_mapper._ymapper
+        else:
+            index_mapper = tool.component.index_mapper
+            value_mapper = tool.component.value_mapper
+            
+        high = index_mapper.range.high
+        low = index_mapper.range.low
+        range = high-low
+        
+        index_mapper.range.high = self.next[0] + range/2
+        index_mapper.range.low = self.next[0] - range/2
+
+        high = value_mapper.range.high
+        low = value_mapper.range.low
+        range = high-low
+        
+        value_mapper.range.high = self.next[1] + range/2
+        value_mapper.range.low = self.next[1] - range/2
+            
     def revert(self, tool):
-        pass
+        if isinstance(tool.component.index_mapper, GridMapper):
+            index_mapper = tool.component.index_mapper._xmapper
+            value_mapper = tool.component.index_mapper._ymapper
+        else:
+            index_mapper = tool.component.index_mapper
+            value_mapper = tool.component.value_mapper
+            
+        high = index_mapper.range.high
+        low = index_mapper.range.low
+        range = high-low
+        
+        index_mapper.range.high = self.prev[0] + range/2
+        index_mapper.range.low = self.prev[0] - range/2
+
+        high = value_mapper.range.high
+        low = value_mapper.range.low
+        range = high-low
+        
+        value_mapper.range.high = self.prev[1] + range/2
+        value_mapper.range.low = self.prev[1] - range/2
 
 class ZoomState(ToolState):
     """ A zoom state which can be applied and reverted.
@@ -46,13 +96,10 @@ class ZoomState(ToolState):
             index_mapper = zoom_tool.component.index_mapper
             value_mapper = zoom_tool.component.value_mapper
             
-        mapped_location = (index_mapper.map_data(self.location[0]),
-                           value_mapper.map_data(self.location[1]))
-            
         if index_factor != 1.0:
-            zoom_tool._zoom_in_mapper(mapped_location[0], index_mapper, index_factor)
+            zoom_tool._zoom_in_mapper(index_mapper, index_factor)
         if value_factor != 1.0:
-            zoom_tool._zoom_in_mapper(mapped_location[1], value_mapper, value_factor)
+            zoom_tool._zoom_in_mapper(value_mapper, value_factor)
         
         zoom_tool._index_factor = self.next[0]
         zoom_tool._value_factor = self.next[1]
@@ -68,15 +115,10 @@ class ZoomState(ToolState):
         else:
             index_mapper = zoom_tool.component.index_mapper
             value_mapper = zoom_tool.component.value_mapper
-        
-        mapped_location = (index_mapper.map_data(self.location[0]),
-                           value_mapper.map_data(self.location[1]))
-        
-        zoom_tool._zoom_in_mapper(mapped_location[0],
-                                  index_mapper, 
+            
+        zoom_tool._zoom_in_mapper(index_mapper, 
                                   self.prev[0]/self.next[0])
-        zoom_tool._zoom_in_mapper(mapped_location[1],
-                                  value_mapper, 
+        zoom_tool._zoom_in_mapper(value_mapper, 
                                   self.prev[1]/self.next[1])
 
         zoom_tool._index_factor = self.prev[0]
@@ -107,7 +149,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     
     # if the mouse pointer should be used to control the center
     # of the zoom action
-    zoom_to_mouse = Bool(False)
+    zoom_to_mouse = Bool(True)
     
     # The axis to which the selection made by this tool is perpendicular. This
     # only applies in 'range' mode.
@@ -131,7 +173,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     _value_factor = Float(1.0)
 
     # inherited from ToolHistoryMixin, but requires instances of ZoomState
-    _history = List(ZoomState)
+    _history = List(ToolState, [ZoomState((1.0, 1.0), (1.0, 1.0))])
         
     #--------------------------------------------------------------------------
     #  public interface
@@ -162,15 +204,30 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             
         if self.zoom_to_mouse:
             location = self.position
-        else:
-            location = (self.component.width/2, self.component.height/2)
-                    
-        zoom_state = ZoomState(location,
-                               (self._index_factor, self._value_factor),
-                               (new_index_factor, new_value_factor))
+            
+            x_map = self._get_x_mapper()
+            y_map = self._get_y_mapper()
+            
+            next = (x_map.map_data(location[0]),
+                    y_map.map_data(location[1]))
+            prev = (x_map.map_data(self.component.bounds[0]/2),
+                    y_map.map_data(self.component.bounds[1]/2))
+            
+            pan_state = PanState(prev, next)
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            states = GroupedToolState([pan_state, zoom_state])
+            states.apply(self)
+            self._append_state(states)
         
-        zoom_state.apply(self)
-        self._append_state(zoom_state)
+        else:
+                    
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            zoom_state.apply(self)
+            self._append_state(zoom_state)
     
     def zoom_out(self, factor=0):
         if factor == 0:
@@ -197,15 +254,30 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                     
         if self.zoom_to_mouse:
             location = self.position
-        else:
-            location = (self.component.width/2, self.component.height/2)
             
-        zoom_state = ZoomState(location, 
-                               (self._index_factor, self._value_factor),
-                               (new_index_factor, new_value_factor))
+            x_map = self._get_x_mapper()
+            y_map = self._get_y_mapper()
+            
+            next = (x_map.map_data(location[0]),
+                    y_map.map_data(location[1]))
+            prev = (x_map.map_data(self.component.bounds[0]/2),
+                    y_map.map_data(self.component.bounds[1]/2))
+            
+            pan_state = PanState(prev, next)
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            states = GroupedToolState([pan_state, zoom_state])
+            states.apply(self)
+            self._append_state(states)
         
-        zoom_state.apply(self)
-        self._append_state(zoom_state)
+        else:
+                    
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            zoom_state.apply(self)
+            self._append_state(zoom_state)
                 
     def zoom_in_x(self, factor=0):
         if factor == 0:
@@ -224,15 +296,30 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                                 
         if self.zoom_to_mouse:
             location = self.position
-        else:
-            location = (self.component.width/2, self.component.height/2)
             
-        zoom_state = ZoomState(location, 
-                               (self._index_factor, self._value_factor),
-                               (new_index_factor, new_value_factor))
+            x_map = self._get_x_mapper()
+            y_map = self._get_y_mapper()
+            
+            next = (x_map.map_data(location[0]),
+                    y_map.map_data(location[1]))
+            prev = (x_map.map_data(self.component.bounds[0]/2),
+                    y_map.map_data(self.component.bounds[1]/2))
+            
+            pan_state = PanState(prev, next)
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            states = GroupedToolState([pan_state, zoom_state])
+            states.apply(self)
+            self._append_state(states)
         
-        zoom_state.apply(self)            
-        self._append_state(zoom_state)        
+        else:
+                    
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            zoom_state.apply(self)
+            self._append_state(zoom_state)
 
     def zoom_out_x(self, factor=0):
         if factor == 0:
@@ -251,15 +338,30 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
 
         if self.zoom_to_mouse:
             location = self.position
-        else:
-            location = (self.component.width/2, self.component.height/2)
-                    
-        zoom_state = ZoomState(location, 
-                               (self._index_factor, self._value_factor),
-                               (new_index_factor, new_value_factor))
+            
+            x_map = self._get_x_mapper()
+            y_map = self._get_y_mapper()
+            
+            next = (x_map.map_data(location[0]),
+                    y_map.map_data(location[1]))
+            prev = (x_map.map_data(self.component.bounds[0]/2),
+                    y_map.map_data(self.component.bounds[1]/2))
+            
+            pan_state = PanState(prev, next)
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            states = GroupedToolState([pan_state, zoom_state])
+            states.apply(self)
+            self._append_state(states)
         
-        zoom_state.apply(self)
-        self._append_state(zoom_state)        
+        else:
+                    
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            zoom_state.apply(self)
+            self._append_state(zoom_state)
 
     def zoom_in_y(self, factor=0):
         if factor == 0:
@@ -278,15 +380,30 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                     
         if self.zoom_to_mouse:
             location = self.position
-        else:
-            location = (self.component.width/2, self.component.height/2)
             
-        zoom_state = ZoomState(location, 
-                               (self._index_factor, self._value_factor),
-                               (new_index_factor, new_value_factor))
+            x_map = self._get_x_mapper()
+            y_map = self._get_y_mapper()
+            
+            next = (x_map.map_data(location[0]),
+                    y_map.map_data(location[1]))
+            prev = (x_map.map_data(self.component.bounds[0]/2),
+                    y_map.map_data(self.component.bounds[1]/2))
+            
+            pan_state = PanState(prev, next)
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            states = GroupedToolState([pan_state, zoom_state])
+            states.apply(self)
+            self._append_state(states)
         
-        zoom_state.apply(self)
-        self._append_state(zoom_state)        
+        else:
+                    
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            zoom_state.apply(self)
+            self._append_state(zoom_state)
 
     def zoom_out_y(self, factor=0):
         if factor == 0:
@@ -305,18 +422,30 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                     
         if self.zoom_to_mouse:
             location = self.position
-        else:
-            location = (self.component.width/2, self.component.height/2)
             
-        zoom_state = ZoomState(location,
-                               (self._index_factor, self._value_factor),
-                               (new_index_factor, new_value_factor))
+            x_map = self._get_x_mapper()
+            y_map = self._get_y_mapper()
+            
+            next = (x_map.map_data(location[0]),
+                    y_map.map_data(location[1]))
+            prev = (x_map.map_data(self.component.bounds[0]/2),
+                    y_map.map_data(self.component.bounds[1]/2))
+            
+            pan_state = PanState(prev, next)
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
+            
+            states = GroupedToolState([pan_state, zoom_state])
+            states.apply(self)
+            self._append_state(states)
         
-        zoom_state.apply(self)
+        else:
+                    
+            zoom_state = ZoomState((self._index_factor, self._value_factor),
+                                   (new_index_factor, new_value_factor))
             
-        self._value_factor = new_value_factor
-            
-        self._append_state(zoom_state)        
+            zoom_state.apply(self)
+            self._append_state(zoom_state)
         
     #--------------------------------------------------------------------------
     #  BaseTool interface
@@ -374,10 +503,6 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     #  private interface
     #--------------------------------------------------------------------------
 
-    def __history_default(self):
-        return [ZoomState((self.component.width/2, self.component.height/2),
-                          (1.0, 1.0), (1.0, 1.0))]
-    
     def _zoom_limit_reached(self, factor, xy_axis):
         """ Returns True if the new low and high exceed the maximum zoom
         limits
@@ -392,25 +517,17 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                 return False
             return True
 
-    def _zoom_in_mapper(self, center, mapper, factor):
+    def _zoom_in_mapper(self, mapper, factor):
 
         high = mapper.range.high
         low = mapper.range.low
         range = high-low
         
+        center = (low + high)/2.0
+        
         new_range = range/factor
         mapper.range.high = center + new_range/2
         mapper.range.low = center - new_range/2
-
-#    def _zoom_out_mapper(self, mapper, factor):
-#        high = mapper.range.high
-#        low = mapper.range.low
-#        range = high-low
-#        center = numpy.mean((low, high))
-#
-#        new_range = range*factor
-#        mapper.range.high = center + new_range/2
-#        mapper.range.low = center - new_range/2
         
     def _get_x_mapper(self):
         if isinstance(self.component.index_mapper, GridMapper):
