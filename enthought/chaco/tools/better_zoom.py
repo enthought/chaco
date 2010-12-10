@@ -456,21 +456,27 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         state.
         """
         if self.zoom_in_key.match(event):
+            self.position = self._center_screen()
             self.zoom_in()
             event.handled = True
         elif self.zoom_out_key.match(event):
+            self.position = self._center_screen()
             self.zoom_out()
             event.handled = True
         elif self.zoom_in_x_key.match(event):
+            self.position = self._center_screen()
             self.zoom_in_x(self.zoom_factor)
             event.handled = True
         elif self.zoom_out_x_key.match(event):
+            self.position = self._center_screen()
             self.zoom_out_x(self.zoom_factor)
             event.handled = True
         elif self.zoom_in_y_key.match(event):
+            self.position = self._center_screen()
             self.zoom_in_y(self.zoom_factor)
             event.handled = True
         elif self.zoom_out_y_key.match(event):
+            self.position = self._center_screen()
             self.zoom_out_y(self.zoom_factor)
             event.handled = True
             
@@ -502,6 +508,9 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     #--------------------------------------------------------------------------
     #  private interface
     #--------------------------------------------------------------------------
+
+    def _center_screen(self):
+        return self.component.bounds[0]/2, self.component.bounds[1]/2
 
     def _zoom_limit_reached(self, factor, xy_axis):
         """ Returns True if the new low and high exceed the maximum zoom
