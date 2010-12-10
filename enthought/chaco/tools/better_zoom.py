@@ -6,17 +6,35 @@ from enthought.traits.api import Enum, Float, Instance, Bool, HasTraits, List
 
 from tool_history_mixin import ToolHistoryMixin
 
-class ZoomState(HasTraits):
+class ToolState(HasTraits):
+
+    def __init__(self, location, prev, next):
+        self.location = location
+        self.prev = prev
+        self.next = next
+    
+    def apply(self, tool):
+        raise NotImplementedError()
+
+    def revert(self, tool):
+        raise NotImplementedError()
+
+class PanState(ToolState):
+
+
+    def apply(self, tool):
+        pass
+    
+    def revert(self, tool):
+        pass
+
+class ZoomState(ToolState):
     """ A zoom state which can be applied and reverted.
     
         This class exists so that subclasses can introduce new types
         of events which can be applied and reverted in the same manner.
         This greatly eases the code for managing history
     """
-    def __init__(self, prev, next):
-        self.prev = prev
-        self.next = next
-        
     def apply(self, zoom_tool):
         index_factor = self.next[0]/self.prev[0]
         value_factor = self.next[1]/self.prev[1]
@@ -28,13 +46,20 @@ class ZoomState(HasTraits):
             index_mapper = zoom_tool.component.index_mapper
             value_mapper = zoom_tool.component.value_mapper
             
+        mapped_location = (index_mapper.map_data(self.location[0]),
+                           value_mapper.map_data(self.location[1]))
+            
         if index_factor != 1.0:
-            zoom_tool._zoom_in_mapper(index_mapper, index_factor)
+            zoom_tool._zoom_in_mapper(mapped_location[0], index_mapper, index_factor)
         if value_factor != 1.0:
-            zoom_tool._zoom_in_mapper(value_mapper, value_factor)
+            zoom_tool._zoom_in_mapper(mapped_location[1], value_mapper, value_factor)
         
         zoom_tool._index_factor = self.next[0]
         zoom_tool._value_factor = self.next[1]
+        
+        # TODO: Clip to domain bounds by inserting a pan tool and altering the 
+        # index factor and value factor
+        
     
     def revert(self, zoom_tool):
         if isinstance(zoom_tool.component.index_mapper, GridMapper):
@@ -44,9 +69,14 @@ class ZoomState(HasTraits):
             index_mapper = zoom_tool.component.index_mapper
             value_mapper = zoom_tool.component.value_mapper
         
-        zoom_tool._zoom_in_mapper(index_mapper, 
+        mapped_location = (index_mapper.map_data(self.location[0]),
+                           value_mapper.map_data(self.location[1]))
+        
+        zoom_tool._zoom_in_mapper(mapped_location[0],
+                                  index_mapper, 
                                   self.prev[0]/self.next[0])
-        zoom_tool._zoom_in_mapper(value_mapper, 
+        zoom_tool._zoom_in_mapper(mapped_location[1],
+                                  value_mapper, 
                                   self.prev[1]/self.next[1])
 
         zoom_tool._index_factor = self.prev[0]
@@ -75,6 +105,10 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     # Enable the mousewheel for zooming?
     enable_wheel = Bool(True)    
     
+    # if the mouse pointer should be used to control the center
+    # of the zoom action
+    zoom_to_mouse = Bool(False)
+    
     # The axis to which the selection made by this tool is perpendicular. This
     # only applies in 'range' mode.
     axis = Enum("both", "index", "value")
@@ -97,8 +131,8 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     _value_factor = Float(1.0)
 
     # inherited from ToolHistoryMixin, but requires instances of ZoomState
-    _history = List(ZoomState, [ZoomState((1.0, 1.0), (1.0, 1.0))])
-    
+    _history = List(ZoomState)
+        
     #--------------------------------------------------------------------------
     #  public interface
     #--------------------------------------------------------------------------
@@ -125,8 +159,14 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                 return
             if self._zoom_limit_reached(new_value_factor, 'x'):
                 return
+            
+        if self.zoom_to_mouse:
+            location = self.position
+        else:
+            location = (self.component.width/2, self.component.height/2)
                     
-        zoom_state = ZoomState((self._index_factor, self._value_factor),
+        zoom_state = ZoomState(location,
+                               (self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)
@@ -155,7 +195,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             if self._zoom_limit_reached(new_value_factor, 'x'):
                 return
                     
-        zoom_state = ZoomState((self._index_factor, self._value_factor),
+        if self.zoom_to_mouse:
+            location = self.position
+        else:
+            location = (self.component.width/2, self.component.height/2)
+            
+        zoom_state = ZoomState(location, 
+                               (self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)
@@ -176,7 +222,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             if self._zoom_limit_reached(new_value_factor, 'x'):
                 return
                                 
-        zoom_state = ZoomState((self._index_factor, self._value_factor),
+        if self.zoom_to_mouse:
+            location = self.position
+        else:
+            location = (self.component.width/2, self.component.height/2)
+            
+        zoom_state = ZoomState(location, 
+                               (self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)            
@@ -196,8 +248,14 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             new_value_factor = self._value_factor / factor            
             if self._zoom_limit_reached(new_value_factor, 'x'):
                 return
+
+        if self.zoom_to_mouse:
+            location = self.position
+        else:
+            location = (self.component.width/2, self.component.height/2)
                     
-        zoom_state = ZoomState((self._index_factor, self._value_factor),
+        zoom_state = ZoomState(location, 
+                               (self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)
@@ -218,7 +276,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             if self._zoom_limit_reached(new_value_factor, 'y'):
                 return
                     
-        zoom_state = ZoomState((self._index_factor, self._value_factor),
+        if self.zoom_to_mouse:
+            location = self.position
+        else:
+            location = (self.component.width/2, self.component.height/2)
+            
+        zoom_state = ZoomState(location, 
+                               (self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)
@@ -239,7 +303,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             if self._zoom_limit_reached(new_value_factor, 'y'):
                 return
                     
-        zoom_state = ZoomState((self._index_factor, self._value_factor),
+        if self.zoom_to_mouse:
+            location = self.position
+        else:
+            location = (self.component.width/2, self.component.height/2)
+            
+        zoom_state = ZoomState(location,
+                               (self._index_factor, self._value_factor),
                                (new_index_factor, new_value_factor))
         
         zoom_state.apply(self)
@@ -289,6 +359,9 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             else:
                 self.zoom_out()
             event.handled = True
+            
+    def normal_mouse_move(self, event):
+        self.position = (event.x, event.y)
 
     def normal_mouse_enter(self, event):
         """ Try to set the focus to the window when the mouse enters, otherwise
@@ -301,40 +374,43 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     #  private interface
     #--------------------------------------------------------------------------
 
+    def __history_default(self):
+        return [ZoomState((self.component.width/2, self.component.height/2),
+                          (1.0, 1.0), (1.0, 1.0))]
+    
     def _zoom_limit_reached(self, factor, xy_axis):
         """ Returns True if the new low and high exceed the maximum zoom
         limits
-        """
+        """        
         
         if xy_axis == 'x':
             if factor <= self.x_max_zoom_factor and factor >= self.x_min_zoom_factor:
-                return False
+                return False            
             return True
         else:
             if factor <= self.y_max_zoom_factor and factor >= self.y_min_zoom_factor:
                 return False
             return True
 
-    def _zoom_in_mapper(self, mapper, factor):
+    def _zoom_in_mapper(self, center, mapper, factor):
 
         high = mapper.range.high
         low = mapper.range.low
         range = high-low
-        center = numpy.mean((low, high))
         
         new_range = range/factor
         mapper.range.high = center + new_range/2
         mapper.range.low = center - new_range/2
 
-    def _zoom_out_mapper(self, mapper, factor):
-        high = mapper.range.high
-        low = mapper.range.low
-        range = high-low
-        center = numpy.mean((low, high))
-
-        new_range = range*factor
-        mapper.range.high = center + new_range/2
-        mapper.range.low = center - new_range/2
+#    def _zoom_out_mapper(self, mapper, factor):
+#        high = mapper.range.high
+#        low = mapper.range.low
+#        range = high-low
+#        center = numpy.mean((low, high))
+#
+#        new_range = range*factor
+#        mapper.range.high = center + new_range/2
+#        mapper.range.low = center - new_range/2
         
     def _get_x_mapper(self):
         if isinstance(self.component.index_mapper, GridMapper):
