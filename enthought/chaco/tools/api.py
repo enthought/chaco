@@ -5,6 +5,7 @@ from dataprinter import DataPrinter
 from data_label_tool import DataLabelTool
 from enthought.enable.tools.drag_tool import DragTool
 from draw_points_tool import DrawPointsTool
+from drag_zoom import DragZoom
 from highlight_tool import HighlightTool
 from image_inspector_tool import ImageInspectorTool, ImageInspectorOverlay
 from lasso_selection import LassoSelection

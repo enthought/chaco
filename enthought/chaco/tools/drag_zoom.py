@@ -6,10 +6,10 @@ from enthought.enable.tools.drag_tool import DragTool
 from enthought.traits.api import Bool, Enum, Float, Tuple
 
 # Chaco imports
-from base_zoom_tool import BaseZoomTool
+from better_zoom import BetterZoom
 
 
-class DragZoom(DragTool, BaseZoomTool):
+class DragZoom(DragTool, BetterZoom):
     """ A zoom tool that zooms continuously with a mouse drag movement, instead
     of using a zoom box or range.
 
@@ -48,6 +48,8 @@ class DragZoom(DragTool, BaseZoomTool):
     # Whether to restrict zoom to the domain of the mappers
     restrict_domain = Bool(False)
 
+    zoom_to_mouse = Bool(False)
+    
     #------------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------------
@@ -78,49 +80,17 @@ class DragZoom(DragTool, BaseZoomTool):
 
         # Compute the zoom amount based on the pixel difference between
         # the previous mouse event and the current one.
+        
+        
         if self.maintain_aspect_ratio:
             zoom_x = zoom_y = self._calc_zoom(self._prev_y, event.y)
         else:
             zoom_x = self._calc_zoom(self._prev_x, event.x)
             zoom_y = self._calc_zoom(self._prev_y, event.y)
-
-        c = self.component
-        low_pt, high_pt = self._map_coordinate_box((c.x, c.y), (c.x2, c.y2))
-
-        # The original screen bounds are used to test if we've reached max_zoom
-        orig_low, orig_high = self._orig_screen_bounds
-
-        datarange_list = [(0, c.x_mapper, zoom_x), (1, c.y_mapper, zoom_y)]
-        for ndx, mapper, zoom in datarange_list:
-            datarange = mapper.range
-            if self.single_axis and ndx != self._determine_axis():
-                continue
-            mouse_val = self._original_data[ndx]
-            newlow = mouse_val - zoom * (mouse_val - low_pt[ndx])
-            newhigh = mouse_val + zoom * (high_pt[ndx] - mouse_val)
             
-            ol, oh = orig_low[ndx], orig_high[ndx]
-            if self._zoom_limit_reached(ol, oh, newlow, newhigh):
-                event.handled = True
-                return
-
-            # prohibit zooming outside the domain of the axis
-            if self.restrict_domain:
-                if newlow > newhigh:
-                    # This happens when the orientation of the axis is reversed.
-                    newlow, newhigh = newhigh, newlow                    
-                domain_min, domain_max = getattr(mapper, "domain_limits", (None,None))
-                if domain_min is not None and newlow < domain_min:
-                    newlow = domain_min
-                if domain_max is not None and newhigh > domain_max:
-                    newhigh = domain_max
-            
-            datarange.set_bounds(newlow, newhigh)
-       
-        self._prev_y = event.y
-        self._prev_x = event.x
-        event.handled = True
-        self.component.request_redraw()
+        self.zoom_in_x(zoom_x)
+        self.zoom_in_y(zoom_y)
+        
         return
 
     def drag_start(self, event, capture_mouse=True):
@@ -150,4 +120,3 @@ class DragZoom(DragTool, BaseZoomTool):
         # We express the built-in zoom scaling as 0.05/10 to indicate a scaling
         # of 5% every 10 pixels, per the docstring for the 'speed' trait.
         return 1.0 - self.speed * (clicked - original) * (0.05/10)
-
