@@ -1,5 +1,8 @@
 """ Defines the ColorBar class.
 """
+
+from __future__ import with_statement
+
 # Major library imports
 from numpy import array, arange, ones, transpose, uint8
 
@@ -123,38 +126,35 @@ class ColorBar(AbstractPlotRenderer):
         """ Draws the 'plot' layer.
         """
         self._update_mappers()
-        gc.save_state()
-        if self.orientation == 'h':
-            perpendicular_dim = 1
-            axis_dim = 0
-        else:
-            perpendicular_dim = 0
-            axis_dim = 1
-        
-        mapper = self.index_mapper
-
-        scrn_points = arange(mapper.low_pos, mapper.high_pos+1)
-        
-        # Get the data values associated with the list of screen points.
-        if mapper.range.low == mapper.range.high:
-            # LogMapper.map_data() returns something unexpected if low==high,
-            # so we'll handle that case here.
-            data_points = array([mapper.range.high])
-        else:
-            data_points = mapper.map_data(scrn_points)
-
-        if self.direction == 'flipped':
-            data_points = data_points[::-1]
+        with gc:
+            if self.orientation == 'h':
+                perpendicular_dim = 1
+                axis_dim = 0
+            else:
+                perpendicular_dim = 0
+                axis_dim = 1
             
-        # Get the colors associated with the data points.
-        colors = self.color_mapper.map_screen(data_points)
-        
-        img = self._make_color_image(colors, self.bounds[perpendicular_dim],
-                                                self.orientation, self.direction)
-        try:
+            mapper = self.index_mapper
+
+            scrn_points = arange(mapper.low_pos, mapper.high_pos+1)
+            
+            # Get the data values associated with the list of screen points.
+            if mapper.range.low == mapper.range.high:
+                # LogMapper.map_data() returns something unexpected if low==high,
+                # so we'll handle that case here.
+                data_points = array([mapper.range.high])
+            else:
+                data_points = mapper.map_data(scrn_points)
+
+            if self.direction == 'flipped':
+                data_points = data_points[::-1]
+                
+            # Get the colors associated with the data points.
+            colors = self.color_mapper.map_screen(data_points)
+            
+            img = self._make_color_image(colors, self.bounds[perpendicular_dim],
+                                                    self.orientation, self.direction)
             gc.draw_image(img, (self.x, self.y, self.width, self.height))
-        finally:
-            gc.restore_state()
     
     def _make_color_image(self, color_values, width, orientation, direction):
         """

@@ -1,5 +1,8 @@
 """ Defines the LassoOverlay class.
 """
+
+from __future__ import with_statement
+
 from numpy import concatenate, newaxis
 
 # Enthought library imports
@@ -36,11 +39,10 @@ class LassoOverlay(AbstractOverlay):
         
         Implements AbstractOverlay.
         """
-        gc.save_state()
-        c = other_component
-        gc.clip_to_rect(c.x, c.y, c.width, c.height)
-        self._draw_component(gc, view_bounds, mode)
-        gc.restore_state()
+        with gc:
+            c = other_component
+            gc.clip_to_rect(c.x, c.y, c.width, c.height)
+            self._draw_component(gc, view_bounds, mode)
         return
 
     def _updated_changed_for_lasso_selection(self):
@@ -53,8 +55,7 @@ class LassoOverlay(AbstractOverlay):
         This method is preserved for backwards compatibility with _old_draw().
         Overrides PlotComponent.
         """
-        gc.save_state()
-        try:
+        with gc:
             # We may need to make map_screen more flexible in the number of dimensions
             # it accepts for ths to work well.
             for selection in self.lasso_selection.disjoint_selections:
@@ -69,8 +70,3 @@ class LassoOverlay(AbstractOverlay):
                 gc.set_alpha(self.selection_alpha)
                 gc.lines(points)
                 gc.draw_path()
-        finally:
-            gc.restore_state()
-        
-        
-        

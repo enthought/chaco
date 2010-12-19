@@ -1,6 +1,9 @@
 """ Defines the Legend, AbstractCompositeIconRenderer, and
 CompositeIconRenderer classes.
 """
+
+from __future__ import with_statement
+
 from numpy import array, zeros_like
 
 from enthought.enable.api import black_color_trait, white_color_trait
@@ -208,12 +211,9 @@ class Legend(AbstractOverlay):
         
         if self.clip_to_component:
             c = self.component
-            gc.save_state()
-            try:
+            with gc:
                 gc.clip_to_rect(c.x, c.y, c.width, c.height)
                 PlotComponent._draw(self, gc, view_bounds, mode)
-            finally:
-                gc.restore_state()
         else:
             PlotComponent._draw(self, gc, view_bounds, mode)
             
@@ -256,8 +256,7 @@ class Legend(AbstractOverlay):
         # on the other hand, overlays of overlays seem like a rather obscure
         # feature.
 
-        gc.save_state()
-        try:
+        with gc:
             gc.clip_to_rect(int(self.x), int(self.y), 
                             int(self.width), int(self.height))
             edge_space = self.border_width + self.border_padding
@@ -328,9 +327,6 @@ class Legend(AbstractOverlay):
                 if old_alpha is not None:
                     gc.set_alpha(old_alpha)
 
-        finally:
-            gc.restore_state()
-
         return
 
     def _render_error(self, gc, icon_x, icon_y, icon_width, icon_height):
@@ -343,11 +339,10 @@ class Legend(AbstractOverlay):
         if self.error_icon == "skip":
             return False
         elif self.error_icon == "blank" or self.error_icon == "questionmark":
-            gc.save_state()
-            gc.set_fill_color(self.bgcolor_)
-            gc.rect(icon_x, icon_y, icon_width, icon_height)
-            gc.fill_path()
-            gc.restore_state()
+            with gc:
+                gc.set_fill_color(self.bgcolor_)
+                gc.rect(icon_x, icon_y, icon_width, icon_height)
+                gc.fill_path()
             return True
         else:
             return False

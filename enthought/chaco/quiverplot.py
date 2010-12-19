@@ -1,4 +1,6 @@
 
+from __future__ import with_statement
+
 from numpy import array, compress, matrix, newaxis, sqrt, zeros
 
 # Enthought library imports
@@ -67,34 +69,32 @@ class QuiverPlot(ScatterPlot):
 
     
     def _render(self, gc, points, icon_mode=False):
-        gc.save_state()
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
+        with gc:
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
-        gc.set_stroke_color(self.line_color_)
-        gc.set_line_width(self.line_width)
-        
-        # Draw the body of the arrow
-        starts = points
-        ends = points + self._cached_vector_data
-        gc.begin_path()
-        gc.line_set(starts, ends)
-        gc.stroke_path()
-
-        if self.arrow_size > 0:
-            vec = self._cached_vector_data
-            unit_vec = vec / sqrt(vec[:,0] ** 2 + vec[:,1] ** 2)[:, newaxis]
-            a = 0.707106781   # sqrt(2)/2
-
-            # Draw the left arrowhead (for an arrow pointing straight up)
-            arrow_ends = ends - array(unit_vec * matrix([[a, a], [-a, a]])) * self.arrow_size
+            gc.set_stroke_color(self.line_color_)
+            gc.set_line_width(self.line_width)
+            
+            # Draw the body of the arrow
+            starts = points
+            ends = points + self._cached_vector_data
             gc.begin_path()
-            gc.line_set(ends, arrow_ends)
+            gc.line_set(starts, ends)
             gc.stroke_path()
 
-            # Draw the left arrowhead (for an arrow pointing straight up)
-            arrow_ends = ends - array(unit_vec * matrix([[a, -a], [a, a]])) * self.arrow_size
-            gc.begin_path()
-            gc.line_set(ends, arrow_ends)
-            gc.stroke_path()
+            if self.arrow_size > 0:
+                vec = self._cached_vector_data
+                unit_vec = vec / sqrt(vec[:,0] ** 2 + vec[:,1] ** 2)[:, newaxis]
+                a = 0.707106781   # sqrt(2)/2
 
-        gc.restore_state()
+                # Draw the left arrowhead (for an arrow pointing straight up)
+                arrow_ends = ends - array(unit_vec * matrix([[a, a], [-a, a]])) * self.arrow_size
+                gc.begin_path()
+                gc.line_set(ends, arrow_ends)
+                gc.stroke_path()
+
+                # Draw the left arrowhead (for an arrow pointing straight up)
+                arrow_ends = ends - array(unit_vec * matrix([[a, -a], [a, a]])) * self.arrow_size
+                gc.begin_path()
+                gc.line_set(ends, arrow_ends)
+                gc.stroke_path()

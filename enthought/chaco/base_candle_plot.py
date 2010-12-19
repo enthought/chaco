@@ -1,4 +1,6 @@
 
+from __future__ import with_statement
+
 # Major library imports
 from numpy import array, column_stack
 
@@ -88,69 +90,67 @@ class BaseCandlePlot(BaseXYPlot):
     def _render(self, gc, right, left, min, bar_min, center, bar_max, max):
         stack = column_stack
 
-        gc.save_state()
-        widths = right - left
-        bar_vert_center = left + widths / 2.0
+        with gc:
+            widths = right - left
+            bar_vert_center = left + widths / 2.0
 
-        # Draw the stem lines for min to max.  Draw these first so we can
-        # draw the boxes on top.
-        # A little tricky: we need to account for cases when either min or max
-        # are None.  To do this, just draw to bar_min or from bar_max instead
-        # of drawing a single line from min to max.
-        if min is not None or max is not None:
-            if self.stem_color is None:
-                stem_color = self.outline_color_
-            else:
-                stem_color = self.stem_color_
-            gc.set_stroke_color(stem_color)
+            # Draw the stem lines for min to max.  Draw these first so we can
+            # draw the boxes on top.
+            # A little tricky: we need to account for cases when either min or max
+            # are None.  To do this, just draw to bar_min or from bar_max instead
+            # of drawing a single line from min to max.
+            if min is not None or max is not None:
+                if self.stem_color is None:
+                    stem_color = self.outline_color_
+                else:
+                    stem_color = self.stem_color_
+                gc.set_stroke_color(stem_color)
 
-            if self.stem_width is None:
-                stem_width = self.line_width
-            else:
-                stem_width = self.stem_width
-            gc.set_line_width(stem_width)
-            
-            if min is None:
-                gc.line_set(stack((bar_vert_center, bar_max)), stack((bar_vert_center, max)))
-                if self.end_cap:
-                    gc.line_set(stack((left, max)), stack((right, max)))
-            elif max is None:
-                gc.line_set(stack((bar_vert_center, min)), stack((bar_vert_center, bar_min)))
-                if self.end_cap:
-                    gc.line_set(stack((left, min)), stack((right, min)))
-            else:
-                gc.line_set(stack((bar_vert_center, min)), stack((bar_vert_center, max)))
-                if self.end_cap:
-                    gc.line_set(stack((left, max)), stack((right, max)))
-                    gc.line_set(stack((left, min)), stack((right, min)))
-            gc.stroke_path()
+                if self.stem_width is None:
+                    stem_width = self.line_width
+                else:
+                    stem_width = self.stem_width
+                gc.set_line_width(stem_width)
+                
+                if min is None:
+                    gc.line_set(stack((bar_vert_center, bar_max)), stack((bar_vert_center, max)))
+                    if self.end_cap:
+                        gc.line_set(stack((left, max)), stack((right, max)))
+                elif max is None:
+                    gc.line_set(stack((bar_vert_center, min)), stack((bar_vert_center, bar_min)))
+                    if self.end_cap:
+                        gc.line_set(stack((left, min)), stack((right, min)))
+                else:
+                    gc.line_set(stack((bar_vert_center, min)), stack((bar_vert_center, max)))
+                    if self.end_cap:
+                        gc.line_set(stack((left, max)), stack((right, max)))
+                        gc.line_set(stack((left, min)), stack((right, min)))
+                gc.stroke_path()
 
-        # Draw the candlestick boxes
-        boxes = stack((left, bar_min, widths, bar_max - bar_min))
-        gc.set_antialias(False)
-        gc.set_stroke_color(self.outline_color_)
-        gc.set_line_width(self.line_width)
-        gc.rects(boxes)
-        if self.color in ("none", "transparent", "clear"):
-            gc.stroke_path()
-        else:
-            gc.set_fill_color(self.color_)
-            gc.draw_path()
-
-        # Draw the center line
-        if center is not None:
-            if self.center_color is None:
-                gc.set_stroke_color(self.outline_color_)
+            # Draw the candlestick boxes
+            boxes = stack((left, bar_min, widths, bar_max - bar_min))
+            gc.set_antialias(False)
+            gc.set_stroke_color(self.outline_color_)
+            gc.set_line_width(self.line_width)
+            gc.rects(boxes)
+            if self.color in ("none", "transparent", "clear"):
+                gc.stroke_path()
             else:
-                gc.set_stroke_color(self.center_color_)
-            if self.center_width is None:
-                gc.set_line_width(self.line_width)
-            else:
-                gc.set_line_width(self.center_width)
-            gc.line_set(stack((left, center)), stack((right, center)))
-            gc.stroke_path()
+                gc.set_fill_color(self.color_)
+                gc.draw_path()
 
-        gc.restore_state()
+            # Draw the center line
+            if center is not None:
+                if self.center_color is None:
+                    gc.set_stroke_color(self.outline_color_)
+                else:
+                    gc.set_stroke_color(self.center_color_)
+                if self.center_width is None:
+                    gc.set_line_width(self.line_width)
+                else:
+                    gc.set_line_width(self.center_width)
+                gc.line_set(stack((left, center)), stack((right, center)))
+                gc.stroke_path()
 
     def _render_icon(self, gc, x, y, width, height):
         min = array([y + 1])

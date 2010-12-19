@@ -2,6 +2,8 @@
 function.
 """
 
+from __future__ import with_statement
+
 from numpy import around, array, asarray, column_stack, float64, inf, zeros, zeros_like
 
 # Enthought library imports
@@ -323,8 +325,7 @@ class PlotGrid(AbstractOverlay):
         if len(self._tick_positions) == 0:
             return
         
-        try:
-            gc.save_state()
+        with gc:
             gc.set_line_width(self.line_weight)
             gc.set_line_dash(self.line_style_)
             gc.set_stroke_color(self.line_color_)
@@ -350,8 +351,6 @@ class PlotGrid(AbstractOverlay):
                 starts, ends = ends, starts
             gc.line_set(starts, ends)
             gc.stroke_path()
-        finally:
-            gc.restore_state()
         return
         
     def _mapper_changed(self, old, new):

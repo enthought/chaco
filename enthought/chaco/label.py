@@ -1,5 +1,8 @@
 """ Defines the Label class.
 """
+
+from __future__ import with_statement
+
 # Major library imports
 from math import cos, sin, pi
 from numpy import array, dot
@@ -77,38 +80,37 @@ class Label(HasTraits):
 
     def _calc_line_positions(self, gc):
         if not self._position_cache_valid:
-            gc.save_state()
-            gc.set_font(self.font)
-            # The bottommost line starts at postion (0,0).
-            x_pos = []
-            y_pos = []
-            self._bounding_box = [0,0]
-            margin = self.margin
-            prev_y_pos = margin
-            prev_y_height = -self.line_spacing
-            max_width = 0
-            for line in self.text.split("\n")[::-1]:
-                if line != "":
-                    (width, height, descent, leading) = gc.get_full_text_extent(line)
-                    ascent = height - abs(descent)
-                    if width > max_width:
-                        max_width = width
-                    new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
-                else:
-                    # For blank lines, we use the height of the previous line, if there
-                    # is one.  The width is 0.
-                    leading = 0
-                    if prev_y_height != -self.line_spacing:
+            with gc:
+                gc.set_font(self.font)
+                # The bottommost line starts at postion (0,0).
+                x_pos = []
+                y_pos = []
+                self._bounding_box = [0,0]
+                margin = self.margin
+                prev_y_pos = margin
+                prev_y_height = -self.line_spacing
+                max_width = 0
+                for line in self.text.split("\n")[::-1]:
+                    if line != "":
+                        (width, height, descent, leading) = gc.get_full_text_extent(line)
+                        ascent = height - abs(descent)
+                        if width > max_width:
+                            max_width = width
                         new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
-                        ascent = prev_y_height
                     else:
-                        new_y_pos = prev_y_pos
-                        ascent = 0
-                x_pos.append(-leading + margin)
-                y_pos.append(new_y_pos)
-                prev_y_pos = new_y_pos
-                prev_y_height = ascent
-            gc.restore_state()
+                        # For blank lines, we use the height of the previous line, if there
+                        # is one.  The width is 0.
+                        leading = 0
+                        if prev_y_height != -self.line_spacing:
+                            new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
+                            ascent = prev_y_height
+                        else:
+                            new_y_pos = prev_y_pos
+                            ascent = 0
+                    x_pos.append(-leading + margin)
+                    y_pos.append(new_y_pos)
+                    prev_y_pos = new_y_pos
+                    prev_y_height = ascent
 
             self._line_xpos = x_pos[::-1]
             self._line_ypos = y_pos[::-1]
@@ -172,9 +174,8 @@ class Label(HasTraits):
         """
         # For this version we're not supporting rotated text.
         self._calc_line_positions(gc)
-        try:
-            gc.save_state()
             
+        with gc:
             bb_width, bb_height = self.get_bounding_box(gc)
 
             # Rotate label about center of bounding box
@@ -221,8 +222,7 @@ class Label(HasTraits):
                 #gc.rect(0-self.margin,0-self.margin,width,height)
                 #gc.stroke_path()
                 gc.translate_ctm(-x_offset, -y_offset)
-        finally:
-            gc.restore_state()
+
         return
 
     @on_trait_change("font,margin,text,rotate_angle")

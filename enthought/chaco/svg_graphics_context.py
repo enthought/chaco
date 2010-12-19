@@ -1,5 +1,7 @@
 """ Defines the PlotGraphicsContext class.
 """
+from __future__ import with_statement
+
 from enthought.kiva.backend_svg import GraphicsContext
 
 class SVGGraphicsContext(GraphicsContext):
@@ -49,12 +51,9 @@ class SVGGraphicsContext(GraphicsContext):
         if not container_coords:
             x = -x
             y = -y
-        self.save_state()
-        self.translate_ctm(x, y)
-        try:
+        with self:
+            self.translate_ctm(x, y)
             component.draw(self, view_bounds=(0, 0, self.width(), self.height()))
-        finally:
-            self.restore_state()
         return
 
     def clip_to_rect(self, x, y, width, height):

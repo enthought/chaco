@@ -1,5 +1,8 @@
 """ Defines the ContourPolyPlot class.
 """
+
+from __future__ import with_statement
+
 # Major library imports
 from numpy import array, linspace, meshgrid, transpose
 
@@ -44,26 +47,24 @@ class ContourPolyPlot(BaseContourPlot):
         if not self._colors_cache_valid:
             self._update_colors()
 
-        gc.save_state()
-        gc.set_antialias(True)
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
-        gc.set_line_width(0)
-        gc.set_alpha(self.alpha)
+        with gc:
+            gc.set_antialias(True)
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            gc.set_line_width(0)
+            gc.set_alpha(self.alpha)
 
-        for i in range(len(self._levels)-1):
-            gc.set_fill_color(self._colors[i])
-            gc.set_stroke_color(self._colors[i])
-            key = (self._levels[i], self._levels[i+1])
-            for poly in self._cached_polys[key]:
-                if self.orientation == "h":
-                    spoly = self.index_mapper.map_screen(poly)
-                else:
-                    spoly = array(self.index_mapper.map_screen(poly))[:,::-1]
-                gc.lines(spoly)
-                gc.close_path()
-                gc.draw_path()
-
-        gc.restore_state()
+            for i in range(len(self._levels)-1):
+                gc.set_fill_color(self._colors[i])
+                gc.set_stroke_color(self._colors[i])
+                key = (self._levels[i], self._levels[i+1])
+                for poly in self._cached_polys[key]:
+                    if self.orientation == "h":
+                        spoly = self.index_mapper.map_screen(poly)
+                    else:
+                        spoly = array(self.index_mapper.map_screen(poly))[:,::-1]
+                    gc.lines(spoly)
+                    gc.close_path()
+                    gc.draw_path()
 
     def _update_polys(self):
         """ Updates the cache of contour polygons """

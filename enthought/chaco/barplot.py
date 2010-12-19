@@ -1,5 +1,8 @@
 """ Defines the BarPlot class.
 """
+
+from __future__ import with_statement
+
 import logging
 
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
@@ -260,62 +263,61 @@ class BarPlot(AbstractPlotRenderer):
             # Nothing to draw.
             return
 
-        gc.save_state()
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
-        gc.set_antialias(self.antialias)
-        gc.set_stroke_color(self.line_color_)
-        gc.set_fill_color(self.fill_color_)
-        gc.set_line_width(self.line_width)
+        with gc:
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            gc.set_antialias(self.antialias)
+            gc.set_stroke_color(self.line_color_)
+            gc.set_fill_color(self.fill_color_)
+            gc.set_line_width(self.line_width)
 
-        if self.bar_width_type == "data":
-            # map the bar start and stop locations into screen space
-            lower_left_pts = self.map_screen(data[:,(0,2)])
-            upper_right_pts = self.map_screen(data[:,(1,3)])
-        else:
-            half_width = self.bar_width / 2.0
-            # map the bar centers into screen space and then compute the bar
-            # start and end positions
-            lower_left_pts = self.map_screen(data[:,(0,1)])
-            upper_right_pts = self.map_screen(data[:,(0,2)])
-            lower_left_pts[:,0] -= half_width
-            upper_right_pts[:,0] += half_width
+            if self.bar_width_type == "data":
+                # map the bar start and stop locations into screen space
+                lower_left_pts = self.map_screen(data[:,(0,2)])
+                upper_right_pts = self.map_screen(data[:,(1,3)])
+            else:
+                half_width = self.bar_width / 2.0
+                # map the bar centers into screen space and then compute the bar
+                # start and end positions
+                lower_left_pts = self.map_screen(data[:,(0,1)])
+                upper_right_pts = self.map_screen(data[:,(0,2)])
+                lower_left_pts[:,0] -= half_width
+                upper_right_pts[:,0] += half_width
 
-        bounds = upper_right_pts - lower_left_pts
-        gc.rects(column_stack((lower_left_pts, bounds)))
-        gc.draw_path()
-        gc.restore_state()
+            bounds = upper_right_pts - lower_left_pts
+            gc.rects(column_stack((lower_left_pts, bounds)))
+            gc.draw_path()
 
 
     def _draw_default_axes(self, gc):
         if not self.origin_axis_visible:
             return
-        gc.save_state()
-        gc.set_stroke_color(self.origin_axis_color_)
-        gc.set_line_width(self.origin_axis_width)
-        gc.set_line_dash(None)
 
-        for range in (self.index_mapper.range, self.value_mapper.range):
-            if (range.low < 0) and (range.high > 0):
-                if range == self.index_mapper.range:
-                    dual = self.value_mapper.range
-                    data_pts = array([[0.0,dual.low], [0.0, dual.high]])
-                else:
-                    dual = self.index_mapper.range
-                    data_pts = array([[dual.low,0.0], [dual.high,0.0]])
-                start,end = self.map_screen(data_pts)
-                gc.move_to(int(start[0])+0.5, int(start[1])+0.5)
-                gc.line_to(int(end[0])+0.5, int(end[1])+0.5)
-                gc.stroke_path()
-        gc.restore_state()
+        with gc:
+            gc.set_stroke_color(self.origin_axis_color_)
+            gc.set_line_width(self.origin_axis_width)
+            gc.set_line_dash(None)
+
+            for range in (self.index_mapper.range, self.value_mapper.range):
+                if (range.low < 0) and (range.high > 0):
+                    if range == self.index_mapper.range:
+                        dual = self.value_mapper.range
+                        data_pts = array([[0.0,dual.low], [0.0, dual.high]])
+                    else:
+                        dual = self.index_mapper.range
+                        data_pts = array([[dual.low,0.0], [dual.high,0.0]])
+                    start,end = self.map_screen(data_pts)
+                    gc.move_to(int(start[0])+0.5, int(start[1])+0.5)
+                    gc.line_to(int(end[0])+0.5, int(end[1])+0.5)
+                    gc.stroke_path()
+
         return
 
     def _render_icon(self, gc, x, y, width, height):
-        gc.save_state()
-        gc.set_fill_color(self.fill_color_)
-        gc.set_stroke_color(self.line_color_)
-        gc.rect(x+width/4, y+height/4, width/2, height/2)
-        gc.draw_path(FILL_STROKE)
-        gc.restore_state()
+        with gc:
+            gc.set_fill_color(self.fill_color_)
+            gc.set_stroke_color(self.line_color_)
+            gc.rect(x+width/4, y+height/4, width/2, height/2)
+            gc.draw_path(FILL_STROKE)
 
     def _post_load(self):
         super(BarPlot, self)._post_load()

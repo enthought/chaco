@@ -1,5 +1,8 @@
 """ Defines the PlotAxis class, and associated validator and UI.
 """
+
+from __future__ import with_statement
+
 # Major library import
 from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
                   sqrt, sin, transpose
@@ -240,10 +243,8 @@ class PlotAxis(AbstractOverlay):
                 self._calculate_geometry()
             self._compute_tick_positions(gc, component)
             self._compute_labels(gc)
-
-        try:
-            gc.save_state()
             
+        with gc:
             # slight optimization: if we set the font correctly on the
             # base gc before handing it in to our title and tick labels,
             # their set_font() won't have to do any work.
@@ -256,8 +257,6 @@ class PlotAxis(AbstractOverlay):
 
             self._draw_ticks(gc)
             self._draw_labels(gc)
-        finally:
-            gc.restore_state()
 
         self._cache_valid = True
         return
@@ -294,8 +293,7 @@ class PlotAxis(AbstractOverlay):
     def _draw_axis_line(self, gc, startpoint, endpoint):
         """ Draws the line for the axis.
         """
-        gc.save_state()
-        try:
+        with gc:
             gc.set_antialias(0)
             gc.set_line_width(self.axis_line_weight)
             gc.set_stroke_color(self.axis_line_color_)
@@ -303,8 +301,6 @@ class PlotAxis(AbstractOverlay):
             gc.move_to(*around(startpoint))
             gc.line_to(*around(endpoint))
             gc.stroke_path()
-        finally:
-            gc.restore_state()
         return
 
 

@@ -58,16 +58,13 @@ class SelectableOverlayPlotContainer(OverlayPlotContainer):
                 y2 = self.selection_screen_end
             lowerleft = array((min(x1, x2), min(y1, y2)), float64)
             upperright = array((max(x1, x2), max(y1, y2)), float64)
-            gc.save_state()
-            try:
+            with gc:
                 gc.translate_ctm(*self.position)
                 gc.set_fill_color(self.selection_fill_color_)
                 gc.set_stroke_color(self.selection_border_color_)
                 gc.set_alpha(self.selection_alpha)
                 gc.rect(lowerleft[0], lowerleft[1], upperright[0], upperright[1])
                 gc.draw_path()
-            finally:
-                gc.restore_state()
         return
     
             

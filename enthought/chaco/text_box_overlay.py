@@ -1,5 +1,7 @@
 """ Defines the TextBoxOverlay class.
 """
+from __future__ import with_statement
+
 # Enthought library imports
 from enthought.enable.api import ColorTrait
 from enthought.kiva.traits.kiva_font_trait import KivaFont
@@ -109,8 +111,7 @@ class TextBoxOverlay(AbstractOverlay):
                 else:
                     color += [self.alpha]
 
-        gc.save_state()
-        try:
+        with gc:
             gc.translate_ctm(x, y)
             
             gc.set_line_width(self.border_size)
@@ -138,5 +139,3 @@ class TextBoxOverlay(AbstractOverlay):
             gc.draw_path()
     
             label.draw(gc)
-        finally:
-            gc.restore_state()

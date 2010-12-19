@@ -182,14 +182,11 @@ class ColormappedScatterPlot(ScatterPlot):
         else:
             method = self.render_method
 
-        gc.save_state()
-        try:
+        with gc:
             if method == 'bruteforce' or (not batch_capable):
                 self._render_bruteforce(gc, points)
             elif method == 'banded':
                 self._render_banded(gc, points)
-        finally:
-            gc.restore_state()
         return
 
 
@@ -341,8 +338,7 @@ class ColormappedScatterPlot(ScatterPlot):
         alphas = (zeros(len(colors))+self.fill_alpha)[:, newaxis]
         colors = concatenate((colors[:, :3], alphas), axis=1)
 
-        gc.save_state()
-        try:
+        with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             gc.set_stroke_color(self.outline_color_)
             gc.set_line_width(self.line_width)
@@ -380,8 +376,6 @@ class ColormappedScatterPlot(ScatterPlot):
                     gc.set_fill_color(colors[i])
                     gc.draw_path_at_points([[x[i], y[i]]], path, STROKE)
 
-        finally:
-            gc.restore_state()
 
     #------------------------------------------------------------------------
     # Event handlers

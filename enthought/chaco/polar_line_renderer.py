@@ -1,5 +1,8 @@
 """ Defines the PolarLineRenderer class.
 """
+
+from __future__ import with_statement
+
 # Major library imports
 from numpy import array, cos, pi, sin, transpose
 
@@ -67,22 +70,19 @@ class PolarLineRenderer(AbstractPlotRenderer):
     def _render(self, gc, points):
         """ Actually draw the plot.
         """
-        gc.save_state()
+        with gc:
+            gc.set_antialias(True)
+            self._draw_default_axes(gc)
+            self._draw_default_grid(gc)
+            if len(points)>0:
+                gc.clip_to_rect(self.x, self.y, self.width, self.height)
+                gc.set_stroke_color(self.color_)
+                gc.set_line_width(self.line_width)
+                gc.set_line_dash(self.line_style_)
 
-        gc.set_antialias(True)
-        self._draw_default_axes(gc)
-        self._draw_default_grid(gc)
-        if len(points)>0:
-            gc.clip_to_rect(self.x, self.y, self.width, self.height)
-            gc.set_stroke_color(self.color_)
-            gc.set_line_width(self.line_width)
-            gc.set_line_dash(self.line_style_)
-
-            gc.begin_path()
-            gc.lines(points)
-            gc.stroke_path()
-
-        gc.restore_state()
+                gc.begin_path()
+                gc.lines(points)
+                gc.stroke_path()
 
         return
 
@@ -150,43 +150,41 @@ class PolarLineRenderer(AbstractPlotRenderer):
     def _draw_default_axes(self, gc):
         if not self.origin_axis_visible:
             return
-        gc.save_state()
-        gc.set_stroke_color(self.origin_axis_color_)
-        gc.set_line_width(self.origin_axis_width)
-        gc.set_line_dash(self.grid_style_)
-        x_data,y_data= transpose(self._cached_data_pts)
-        x_center=self.x + self.width/2.0
-        y_center=self.y + self.height/2.0
 
-        for theta in range(12):
-                r= min(self.width/2.0,self.height/2.0)
-                x= r*cos(theta*pi/6) + x_center
-                y= r*sin(theta*pi/6) + y_center
-                data_pts= array([[x_center,y_center],[x,y]])
-                start,end = data_pts
-                gc.move_to(int(start[0]), int(start[1]))
-                gc.line_to(int(end[0]), int(end[1]))
-                gc.stroke_path()
-        gc.restore_state()
+        with gc:
+            gc.set_stroke_color(self.origin_axis_color_)
+            gc.set_line_width(self.origin_axis_width)
+            gc.set_line_dash(self.grid_style_)
+            x_data,y_data= transpose(self._cached_data_pts)
+            x_center=self.x + self.width/2.0
+            y_center=self.y + self.height/2.0
+
+            for theta in range(12):
+                    r= min(self.width/2.0,self.height/2.0)
+                    x= r*cos(theta*pi/6) + x_center
+                    y= r*sin(theta*pi/6) + y_center
+                    data_pts= array([[x_center,y_center],[x,y]])
+                    start,end = data_pts
+                    gc.move_to(int(start[0]), int(start[1]))
+                    gc.line_to(int(end[0]), int(end[1]))
+                    gc.stroke_path()
         return
 
     def _draw_default_grid(self,gc):
         if not self.grid_visible:
             return
-        gc.save_state()
-        gc.set_stroke_color(self.origin_axis_color_)
-        gc.set_line_width(self.origin_axis_width)
-        gc.set_line_dash(self.grid_style_)
-        x_data,y_data = transpose(self._cached_data_pts)
-        x_center = self.x + self.width/2.0
-        y_center = self.y + self.height/2.0
-        rad = min(self.width/2.0, self.height/2.0)
-        for r_part in range(5):
-            r = rad*r_part/4
-            gc.arc(x_center, y_center, r, 0, 2*pi)
-            gc.stroke_path()
 
-        gc.restore_state()
+        with gc:
+            gc.set_stroke_color(self.origin_axis_color_)
+            gc.set_line_width(self.origin_axis_width)
+            gc.set_line_dash(self.grid_style_)
+            x_data,y_data = transpose(self._cached_data_pts)
+            x_center = self.x + self.width/2.0
+            y_center = self.y + self.height/2.0
+            rad = min(self.width/2.0, self.height/2.0)
+            for r_part in range(5):
+                r = rad*r_part/4
+                gc.arc(x_center, y_center, r, 0, 2*pi)
+                gc.stroke_path()
+
         return
-
-# EOF

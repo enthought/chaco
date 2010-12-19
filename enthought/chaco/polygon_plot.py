@@ -1,6 +1,8 @@
 """ Defines the PolygonPlot class.
 """
 
+from __future__ import with_statement
+
 # Major library imports
 import numpy as np
 
@@ -87,20 +89,16 @@ class PolygonPlot(BaseXYPlot):
     def _render(self, gc, points):
         """ Renders an Nx2 array of screen-space points as a polygon.
         """
-        
-        gc.save_state()
+        with gc:
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            gc.set_stroke_color(self.edge_color_)
+            gc.set_line_width(self.edge_width)
+            gc.set_line_dash(self.edge_style_)
+            gc.set_fill_color(self.face_color_)
 
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
-        gc.set_stroke_color(self.edge_color_)
-        gc.set_line_width(self.edge_width)
-        gc.set_line_dash(self.edge_style_)
-        gc.set_fill_color(self.face_color_)
-
-        gc.lines(points)
-        gc.close_path()
-        gc.draw_path()
-
-        gc.restore_state()
+            gc.lines(points)
+            gc.close_path()
+            gc.draw_path()
 
 
     def _render_icon(self, gc, x, y, width, height):
@@ -109,16 +107,13 @@ class PolygonPlot(BaseXYPlot):
 
         Used by the legend.
         """
-        gc.save_state()
-        try:
+        with gc:
             gc.set_stroke_color(self.edge_color_)
             gc.set_line_width(self.line_width)
             gc.set_fill_color(self.face_color_)
             if hasattr(self, 'line_style_'):
                 gc.set_line_dash(self.line_style_)
             gc.draw_rect((x,y,width,height))
-        finally:
-            gc.restore_state()
         return
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):

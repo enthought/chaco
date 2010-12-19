@@ -1,5 +1,8 @@
 """ Defines the ImagePlot class.
 """
+
+from __future__ import with_statement
+
 # Standard library imports
 from math import ceil, floor, pi
 
@@ -65,37 +68,36 @@ class ImagePlot(Base2DPlot):
         if self.orientation == "v" and sx == sy:
             sx, sy = -sx, -sy
             
-        gc.save_state()
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
-        gc.set_alpha(self.alpha)
+        with gc:
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            gc.set_alpha(self.alpha)
 
-        # Kiva image interpolation note:
-        # Kiva's Agg backend uses the interpolation setting of the *source*
-        # image to determine the type of interpolation to use when drawing the
-        # image.  The mac backend uses the interpolation setting on the
-        # destination GC.
-        old_interp = self._cached_image.get_image_interpolation()
-        if hasattr(gc, "set_interpolation_quality"):
-            from enthought.kiva.mac.ABCGI import InterpolationQuality
-            interp_quality_dict = {"nearest": InterpolationQuality.none,
-                    "bilinear": InterpolationQuality.low,
-                    "bicubic": InterpolationQuality.high}
-            gc.set_interpolation_quality(interp_quality_dict[self.interpolation])
-        elif hasattr(gc, "set_image_interpolation"):
-            self._cached_image.set_image_interpolation(self.interpolation)
-        x, y, w, h = self._cached_dest_rect
-        if self.orientation == "h":        # for horizontal orientation:
-            gc.translate_ctm(x+w/2, y+h/2)   # translate back normally
-        else:                              # for vertical orientation:
-            gc.translate_ctm(y+h/2, x+w/2)   # translate back with dx,dy swap
-        gc.scale_ctm(sx, sy)               # flip axes as appropriate
-        if self.orientation == "v":        # for vertical orientation:
-            gc.scale_ctm(1,-1)               # restore origin to lower left
-            gc.rotate_ctm(pi/2)              # rotate 1/4 turn clockwise
-        gc.translate_ctm(-x-w/2, -y-h/2)   # translate image center to origin
-        gc.draw_image(self._cached_image, self._cached_dest_rect)
-        self._cached_image.set_image_interpolation(old_interp)
-        gc.restore_state()
+            # Kiva image interpolation note:
+            # Kiva's Agg backend uses the interpolation setting of the *source*
+            # image to determine the type of interpolation to use when drawing the
+            # image.  The mac backend uses the interpolation setting on the
+            # destination GC.
+            old_interp = self._cached_image.get_image_interpolation()
+            if hasattr(gc, "set_interpolation_quality"):
+                from enthought.kiva.mac.ABCGI import InterpolationQuality
+                interp_quality_dict = {"nearest": InterpolationQuality.none,
+                        "bilinear": InterpolationQuality.low,
+                        "bicubic": InterpolationQuality.high}
+                gc.set_interpolation_quality(interp_quality_dict[self.interpolation])
+            elif hasattr(gc, "set_image_interpolation"):
+                self._cached_image.set_image_interpolation(self.interpolation)
+            x, y, w, h = self._cached_dest_rect
+            if self.orientation == "h":        # for horizontal orientation:
+                gc.translate_ctm(x+w/2, y+h/2)   # translate back normally
+            else:                              # for vertical orientation:
+                gc.translate_ctm(y+h/2, x+w/2)   # translate back with dx,dy swap
+            gc.scale_ctm(sx, sy)               # flip axes as appropriate
+            if self.orientation == "v":        # for vertical orientation:
+                gc.scale_ctm(1,-1)               # restore origin to lower left
+                gc.rotate_ctm(pi/2)              # rotate 1/4 turn clockwise
+            gc.translate_ctm(-x-w/2, -y-h/2)   # translate image center to origin
+            gc.draw_image(self._cached_image, self._cached_dest_rect)
+            self._cached_image.set_image_interpolation(old_interp)
 
     def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
                   index_only=False):

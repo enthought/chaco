@@ -8,6 +8,7 @@
 #
 #################################################################################
 
+from __future__ import with_statement
 
 # Enthought library imports
 from enthought.enable.api import Container
@@ -89,13 +90,10 @@ class BasePlotFrame(Container, PlotComponent):
 
         #if gc.window and gc.window.is_sizing:
         if 0:
-            gc.save_state()
-            try:
+            with gc:
                 gc.translate_ctm(*self.position)
                 #TODO: We are ignoring Container...
                 PlotComponent.draw(self, gc, view_bounds, "interactive")
-            finally:
-                gc.restore_state()
         else:
             super(BasePlotFrame, self).draw(gc, view_bounds, mode)
         return

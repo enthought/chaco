@@ -1,6 +1,8 @@
 """ Defines the ToolTip class.
 """
 
+from __future__ import with_statement
+
 from numpy import array
 
 # Enthought library imports
@@ -86,8 +88,7 @@ class ToolTip(AbstractOverlay):
         
         Overrides PlotComponent.
         """
-        gc.save_state()
-        try:
+        with gc:
             edge_space = self.border_width + self.border_padding
             gc.translate_ctm(self.x + edge_space, self.y)
             y = self.height - edge_space
@@ -98,8 +99,6 @@ class ToolTip(AbstractOverlay):
                 label.draw(gc)
                 gc.translate_ctm(0,-y)
                 y -= self.line_spacing
-        finally:
-            gc.restore_state()
         return
 
 
@@ -169,5 +168,3 @@ class ToolTip(AbstractOverlay):
     def _invalidate_layout(self):
         self._layout_needed = True
         self.request_redraw()
-
-

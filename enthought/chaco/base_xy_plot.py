@@ -441,26 +441,26 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _draw_default_axes(self, gc):
         if not self.origin_axis_visible:
             return
-        gc.save_state()
-        gc.set_stroke_color(self.origin_axis_color_)
-        gc.set_line_width(self.origin_axis_width)
-        gc.set_line_dash(None)
-        
-        for range in (self.index_mapper.range, self.value_mapper.range):
-            if (range.low < 0) and (range.high > 0):
-                if range == self.index_mapper.range:
-                    dual = self.value_mapper.range
-                    data_pts = array([[0.0,dual.low], [0.0, dual.high]])
-                else:
-                    dual = self.index_mapper.range
-                    data_pts = array([[dual.low,0.0], [dual.high,0.0]])
-                start,end = self.map_screen(data_pts)
-                start = around(start)
-                end = around(end)
-                gc.move_to(int(start[0]), int(start[1]))
-                gc.line_to(int(end[0]), int(end[1]))
-                gc.stroke_path()
-        gc.restore_state()
+
+        with gc:
+            gc.set_stroke_color(self.origin_axis_color_)
+            gc.set_line_width(self.origin_axis_width)
+            gc.set_line_dash(None)
+            
+            for range in (self.index_mapper.range, self.value_mapper.range):
+                if (range.low < 0) and (range.high > 0):
+                    if range == self.index_mapper.range:
+                        dual = self.value_mapper.range
+                        data_pts = array([[0.0,dual.low], [0.0, dual.high]])
+                    else:
+                        dual = self.index_mapper.range
+                        data_pts = array([[dual.low,0.0], [dual.high,0.0]])
+                    start,end = self.map_screen(data_pts)
+                    start = around(start)
+                    end = around(end)
+                    gc.move_to(int(start[0]), int(start[1]))
+                    gc.line_to(int(end[0]), int(end[1]))
+                    gc.stroke_path()
         return
 
     def _post_load(self):

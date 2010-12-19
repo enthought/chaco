@@ -1,6 +1,7 @@
 """ Defines the ScatterPlot class, and associated Traits UI view and helper
 function.
 """
+from __future__ import with_statement
 
 # Major library imports
 from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, \
@@ -75,74 +76,69 @@ def render_markers(gc, points, marker, marker_size,
     elif issubclass(marker, AbstractMarker):
         marker = marker()
 
-    gc.save_state()
-
-    gc.set_line_dash(None)
-    if marker.draw_mode == STROKE:
-        # markers with the STROKE draw mode will not be visible
-        # if the line width is zero, so set it to 1
-        if line_width == 0:
-            line_width = 1.0
-        gc.set_stroke_color(color)
-        gc.set_line_width(line_width)
-    else:
-        gc.set_stroke_color(outline_color)
-        gc.set_line_width(line_width)
-        gc.set_fill_color(color)
-
-    gc.begin_path()
-
-    # This is the fastest method - use one of the kiva built-in markers
-    if (not debug) and hasattr(gc, "draw_marker_at_points") \
-        and (marker.__class__ != CustomMarker) \
-        and (gc.draw_marker_at_points(points,
-                                      marker_size,
-                                      marker.kiva_marker) != 0):
-            pass
-
-    # The second fastest method - draw the path into a compiled path, then
-    # draw the compiled path at each point
-    elif hasattr(gc, 'draw_path_at_points'):
-        #if debug:
-        #    import pdb; pdb.set_trace()
-        if marker.__class__ != CustomMarker:
-            path = gc.get_empty_path()
-            marker.add_to_path(path, marker_size)
-            mode = marker.draw_mode
+    with gc:
+        gc.set_line_dash(None)
+        if marker.draw_mode == STROKE:
+            # markers with the STROKE draw mode will not be visible
+            # if the line width is zero, so set it to 1
+            if line_width == 0:
+                line_width = 1.0
+            gc.set_stroke_color(color)
+            gc.set_line_width(line_width)
         else:
-            path = custom_symbol
-            mode = STROKE
-        if not marker.antialias:
-            gc.set_antialias(False)
-        gc.draw_path_at_points(points, path, mode)
+            gc.set_stroke_color(outline_color)
+            gc.set_line_width(line_width)
+            gc.set_fill_color(color)
 
-    # Neither of the fast functions worked, so use the brute-force, manual way
-    else:
-        if not marker.antialias:
-            gc.set_antialias(False)
-        if marker.__class__ != CustomMarker:
-            gc.save_state()
-            for sx,sy in points:
-                gc.translate_ctm(sx, sy)
-                gc.begin_path()
-                # Kiva GCs have a path-drawing interface
-                marker.add_to_path(gc, marker_size)
-                gc.draw_path(marker.draw_mode)
-                gc.translate_ctm(-sx, -sy)
-            gc.restore_state()
+        gc.begin_path()
+
+        # This is the fastest method - use one of the kiva built-in markers
+        if (not debug) and hasattr(gc, "draw_marker_at_points") \
+            and (marker.__class__ != CustomMarker) \
+            and (gc.draw_marker_at_points(points,
+                                          marker_size,
+                                          marker.kiva_marker) != 0):
+                pass
+
+        # The second fastest method - draw the path into a compiled path, then
+        # draw the compiled path at each point
+        elif hasattr(gc, 'draw_path_at_points'):
+            #if debug:
+            #    import pdb; pdb.set_trace()
+            if marker.__class__ != CustomMarker:
+                path = gc.get_empty_path()
+                marker.add_to_path(path, marker_size)
+                mode = marker.draw_mode
+            else:
+                path = custom_symbol
+                mode = STROKE
+            if not marker.antialias:
+                gc.set_antialias(False)
+            gc.draw_path_at_points(points, path, mode)
+
+        # Neither of the fast functions worked, so use the brute-force, manual way
         else:
-            path = custom_symbol
-            gc.save_state()
-            for sx,sy in points:
-                gc.translate_ctm(sx, sy)
-                gc.begin_path()
-                gc.add_path(path)
-                gc.draw_path(STROKE)
-                gc.translate_ctm(-sx, -sy)
-            gc.restore_state()
+            if not marker.antialias:
+                gc.set_antialias(False)
+            if marker.__class__ != CustomMarker:
+                with gc:
+                    for sx,sy in points:
+                        gc.translate_ctm(sx, sy)
+                        gc.begin_path()
+                        # Kiva GCs have a path-drawing interface
+                        marker.add_to_path(gc, marker_size)
+                        gc.draw_path(marker.draw_mode)
+                        gc.translate_ctm(-sx, -sy)
+            else:
+                path = custom_symbol
+                with gc:
+                    for sx,sy in points:
+                        gc.translate_ctm(sx, sy)
+                        gc.begin_path()
+                        gc.add_path(path)
+                        gc.draw_path(STROKE)
+                        gc.translate_ctm(-sx, -sy)
 
-
-    gc.restore_state()
     return
 
 #------------------------------------------------------------------------------

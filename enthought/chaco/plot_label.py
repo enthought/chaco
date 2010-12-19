@@ -1,5 +1,8 @@
 """ Defines the PlotLabel class.
 """
+
+from __future__ import with_statement
+
 from enthought.kiva import font_metrics_provider
 from enthought.traits.api import DelegatesTo, Enum, Instance, Str, Trait
 
@@ -111,26 +114,24 @@ class PlotLabel(AbstractOverlay):
         
         Overrides PlotComponent.
         """
-        try:
-            # Perform justification and compute the correct offsets for
-            # the label position
-            width, height = self._label.get_bounding_box(gc)
-            if self.hjustify == "left":
-                x_offset = 0
-            elif self.hjustify == "right":
-                x_offset = self.width - width
-            elif self.hjustify == "center":
-                x_offset = int((self.width - width) / 2)
-            
-            if self.vjustify == "bottom":
-                y_offset = 0
-            elif self.vjustify == "top":
-                y_offset = self.height - height
-            elif self.vjustify == "center":
-                y_offset = int((self.height - height) / 2)
-            
-            gc.save_state()
-            
+        # Perform justification and compute the correct offsets for
+        # the label position
+        width, height = self._label.get_bounding_box(gc)
+        if self.hjustify == "left":
+            x_offset = 0
+        elif self.hjustify == "right":
+            x_offset = self.width - width
+        elif self.hjustify == "center":
+            x_offset = int((self.width - width) / 2)
+        
+        if self.vjustify == "bottom":
+            y_offset = 0
+        elif self.vjustify == "top":
+            y_offset = self.height - height
+        elif self.vjustify == "center":
+            y_offset = int((self.height - height) / 2)
+
+        with gc:
             # XXX: Uncomment this after we fix kiva GL backend's clip stack
             #gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
@@ -138,8 +139,7 @@ class PlotLabel(AbstractOverlay):
             # tries to draw at (0,0).
             gc.translate_ctm(self.x + x_offset, self.y + y_offset)
             self._label.draw(gc)
-        finally:
-            gc.restore_state()
+
         return
     
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):

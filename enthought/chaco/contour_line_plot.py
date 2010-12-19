@@ -1,6 +1,8 @@
 """ Defines the ContourLinePlot class.
 """
 
+from __future__ import with_statement
+
 # Major library imports
 from numpy import array, linspace, meshgrid, transpose
 
@@ -84,27 +86,25 @@ class ContourLinePlot(BaseContourPlot):
         if not self._colors_cache_valid:
             self._update_colors()
 
-        gc.save_state()
-        gc.set_antialias(True)
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
-        gc.set_alpha(self.alpha)
-        gc.set_line_join(constants.JOIN_BEVEL)
-        gc.set_line_cap(constants.CAP_ROUND)
-        
-        for i in range(len(self._levels)):
-            gc.set_stroke_color(self._colors[i])
-            gc.set_line_width(self._widths[i])
-            gc.set_line_dash(self._styles[i])
-            for trace in self._cached_contours[self._levels[i]]:
-                if self.orientation == "h":
-                    strace = self.index_mapper.map_screen(trace)
-                else:
-                    strace = array(self.index_mapper.map_screen(trace))[:,::-1]
-                gc.begin_path()
-                gc.lines(strace)
-                gc.stroke_path()
-
-        gc.restore_state()
+        with gc:
+            gc.set_antialias(True)
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            gc.set_alpha(self.alpha)
+            gc.set_line_join(constants.JOIN_BEVEL)
+            gc.set_line_cap(constants.CAP_ROUND)
+            
+            for i in range(len(self._levels)):
+                gc.set_stroke_color(self._colors[i])
+                gc.set_line_width(self._widths[i])
+                gc.set_line_dash(self._styles[i])
+                for trace in self._cached_contours[self._levels[i]]:
+                    if self.orientation == "h":
+                        strace = self.index_mapper.map_screen(trace)
+                    else:
+                        strace = array(self.index_mapper.map_screen(trace))[:,::-1]
+                    gc.begin_path()
+                    gc.lines(strace)
+                    gc.stroke_path()
 
     def _update_contours(self):
         """ Updates the cache of contour lines """

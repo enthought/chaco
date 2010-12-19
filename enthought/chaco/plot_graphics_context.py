@@ -1,5 +1,8 @@
 """ Defines the PlotGraphicsContext class.
 """
+
+from __future__ import with_statement
+
 from enthought.kiva.backend_image import GraphicsContext
 
 class PlotGraphicsContextMixin(object):
@@ -50,12 +53,9 @@ class PlotGraphicsContextMixin(object):
         if not container_coords:
             x = -x
             y = -y
-        self.save_state()
-        self.translate_ctm(x, y)
-        try:
+        with self:
+            self.translate_ctm(x, y)
             component.draw(self, view_bounds=(0, 0, self.width(), self.height()))
-        finally:
-            self.restore_state()
         return
 
     def clip_to_rect(self, x, y, width, height):

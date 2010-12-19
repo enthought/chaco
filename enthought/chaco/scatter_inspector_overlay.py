@@ -1,4 +1,6 @@
 
+from __future__ import with_statement
+
 # Major library imports
 from numpy import array, asarray
 
@@ -115,10 +117,9 @@ class ScatterInspectorOverlay(AbstractOverlay):
         if kwargs.get("marker", None) == "custom":
             kwargs["custom_symbol"] = plot.custom_symbol
 
-        gc.save_state()
-        gc.clip_to_rect(plot.x, plot.y, plot.width, plot.height)
-        render_markers(gc, screen_pts, **kwargs)
-        gc.restore_state()
+        with gc:
+            gc.clip_to_rect(plot.x, plot.y, plot.width, plot.height)
+            render_markers(gc, screen_pts, **kwargs)
 
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):

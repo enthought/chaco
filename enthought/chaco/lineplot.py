@@ -1,6 +1,8 @@
 """ Defines the LinePlot class.
 """
 
+from __future__ import with_statement
+
 # Standard library imports
 import warnings
 
@@ -290,33 +292,31 @@ class LinePlot(BaseXYPlot):
         if len(points) == 0:
             return
 
-        gc.save_state()
-        gc.set_antialias(True)
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
+        with gc:
+            gc.set_antialias(True)
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
-        render_method_dict = {
-                "hold": self._render_hold,
-                "connectedhold": self._render_connected_hold,
-                "connectedpoints": self._render_normal
-                }
-        render = render_method_dict.get(self.render_style, self._render_normal)
+            render_method_dict = {
+                    "hold": self._render_hold,
+                    "connectedhold": self._render_connected_hold,
+                    "connectedpoints": self._render_normal
+                    }
+            render = render_method_dict.get(self.render_style, self._render_normal)
 
-        if selected_points is not None:
-            gc.set_stroke_color(self.selected_color_)
-            gc.set_line_width(self.line_width+10.0)
-            gc.set_line_dash(self.selected_line_style_)
-            render(gc, selected_points, self.orientation)
+            if selected_points is not None:
+                gc.set_stroke_color(self.selected_color_)
+                gc.set_line_width(self.line_width+10.0)
+                gc.set_line_dash(self.selected_line_style_)
+                render(gc, selected_points, self.orientation)
 
-        # Render using the normal style
-        gc.set_stroke_color(self.color_)
-        gc.set_line_width(self.line_width)
-        gc.set_line_dash(self.line_style_)
-        render(gc, points, self.orientation)
+            # Render using the normal style
+            gc.set_stroke_color(self.color_)
+            gc.set_line_width(self.line_width)
+            gc.set_line_dash(self.line_style_)
+            render(gc, points, self.orientation)
 
-        # Draw the default axes, if necessary
-        self._draw_default_axes(gc)
-
-        gc.restore_state()
+            # Draw the default axes, if necessary
+            self._draw_default_axes(gc)
 
     @classmethod
     def _render_normal(cls, gc, points, orientation):
@@ -355,15 +355,14 @@ class LinePlot(BaseXYPlot):
         return
 
     def _render_icon(self, gc, x, y, width, height):
-        gc.save_state()
-        gc.set_stroke_color(self.color_)
-        gc.set_line_width(self.line_width)
-        gc.set_line_dash(self.line_style_)
-        gc.set_antialias(0)
-        gc.move_to(x, y+height/2)
-        gc.line_to(x+width, y+height/2)
-        gc.stroke_path()
-        gc.restore_state()
+        with gc:
+            gc.set_stroke_color(self.color_)
+            gc.set_line_width(self.line_width)
+            gc.set_line_dash(self.line_style_)
+            gc.set_antialias(0)
+            gc.move_to(x, y+height/2)
+            gc.line_to(x+width, y+height/2)
+            gc.stroke_path()
         return
 
     def _downsample_vectorized(self):

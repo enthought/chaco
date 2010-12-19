@@ -7,6 +7,7 @@
 #
 #################################################################################
 
+from __future__ import with_statement
 
 # Enthought library imports
 from enthought.traits.api import Bool, Float
@@ -90,16 +91,12 @@ class CrossPlotFrame(BasePlotFrame):
         This method is preserved for backwards compatibility with _old_draw().
         Overrides PlotComponent.
         """
-        try:
-            gc.save_state()
+        with gc:
             gc.translate_ctm(*self.position)
             for slotname in self.slot_names:
                 if getattr(self, slotname).visible:
-                    gc.save_state()
-                    self.get_slot(slotname).draw(gc, view_bounds, mode)
-                    gc.restore_state()
-        finally:
-            gc.restore_state()
+                    with gc:
+                        self.get_slot(slotname).draw(gc, view_bounds, mode)
         return
     
     def _do_layout(self):

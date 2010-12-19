@@ -1,4 +1,6 @@
 
+from __future__ import with_statement
+
 from numpy import empty
 from enthought.traits.api import Property, Enum
 
@@ -52,9 +54,8 @@ class FilledLinePlot(PolygonPlot):
         else:
             ox, oy = self.map_screen([[self.x_mapper.range.high, 
                                       self.y_mapper.range.high]])[0]
-        gc.save_state()
-        
-        try:
+
+        with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
     
             # If the fill color is not transparent, then draw the fill polygon first
@@ -87,9 +88,6 @@ class FilledLinePlot(PolygonPlot):
                 # Create a list around points because the LinePlot supports
                 # Nans, and its rendering methods expect lists of disjoint arrays.
                 render_lines(gc, [points], self.orientation)
-                
-        finally:
-            gc.restore_state()
 
 
     def _render_polys(self, gc, points, ox, oy):

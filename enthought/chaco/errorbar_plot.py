@@ -1,4 +1,6 @@
 
+from __future__ import with_statement
+
 # Major library imports
 from numpy import column_stack, compress, invert, isnan, transpose
 import logging
@@ -97,10 +99,8 @@ class ErrorBarPlot(LinePlot):
         if not icon_mode:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
-        gc.save_state()
-        gc.set_antialias(False)
-
-        try:
+        with gc:
+            gc.set_antialias(False)
             gc.set_stroke_color(self.color_)
             gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
@@ -125,9 +125,6 @@ class ErrorBarPlot(LinePlot):
                 self._render_bar_endcap(gc, start, end, low, high, axis)
             else:
                 gc.stroke_path()
-
-        finally:
-            gc.restore_state()
 
         if not icon_mode:
             self._draw_default_axes(gc)

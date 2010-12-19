@@ -8,6 +8,7 @@
 #
 #################################################################################
 
+from __future__ import with_statement
 
 # Enthought library imports
 from enthought.traits.api import Bool
@@ -68,17 +69,13 @@ class SimplePlotFrame(BasePlotFrame):
         This method is preserved for backwards compatibility with _old_draw().
         Overrides PlotComponent.
         """
-        try:
-            gc.save_state()
+        with gc:
             # Translate to our .position, because even though we are supposed
             # to be a top-level Chaco component, we might still be contained
             # within other Enable components.
             gc.translate_ctm(*self.position)
-            gc.save_state()
-            self.center.draw(gc, view_bounds, mode)
-            gc.restore_state()
-        finally:
-            gc.restore_state()
+            with gc:
+                self.center.draw(gc, view_bounds, mode)
         return
 
     def get_preferred_size(self):
