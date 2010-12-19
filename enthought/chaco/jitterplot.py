@@ -1,4 +1,6 @@
 
+from __future__ import with_statement
+
 from itertools import izip
 from math import sqrt
 import numpy as np
@@ -256,11 +258,9 @@ class JitterPlot(AbstractPlotRenderer):
         self._screen_cache_valid = False
 
     def _render(self, gc, pts):
-        gc.save_state()
-        gc.clip_to_rect(self.x, self.y, self.width, self.height)
-        try:
+        with gc:
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
             if not self.index:
-                gc.restore_state()
                 return
             name = self.selection_metadata_name
             md = self.index.metadata
@@ -285,8 +285,6 @@ class JitterPlot(AbstractPlotRenderer):
                 self.render_markers_func(gc, pts, self.marker, self.marker_size,
                         self.color_, self.line_width, self.outline_color_,
                         self.custom_symbol)
-        finally:
-            gc.restore_state()
 
     def _set_seed(self, data_array):
         """ Sets the internal random seed based on some input data """
