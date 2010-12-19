@@ -65,54 +65,52 @@ class StatusLayer(AbstractOverlay):
 
         Implements AbstractOverlay.
         """
-        gc.save_state()
+        with gc:
+            gc.set_alpha(self.alpha)
 
-        gc.set_alpha(self.alpha)
+            plot_width = self.component.width
+            plot_height = self.component.height
 
-        plot_width = self.component.width
-        plot_height = self.component.height
+            origin_x = self.component.padding_left
+            origin_y = self.component.padding_top
 
-        origin_x = self.component.padding_left
-        origin_y = self.component.padding_top
+            # zoom percentage, use the scale_factor as a % of the plot size.
+            # base the size on the smaller aspect - if the plot is tall and narrow
+            # the overlay should be 50% of the width, if the plot is short and wide
+            # the overlay should be 50% of the height.
+            if gc.height() < gc.width():
+                scale = (plot_height/self.doc_height)*self.scale_factor
+            else:
+                scale = (plot_width/self.doc_width)*self.scale_factor
 
-        # zoom percentage, use the scale_factor as a % of the plot size.
-        # base the size on the smaller aspect - if the plot is tall and narrow
-        # the overlay should be 50% of the width, if the plot is short and wide
-        # the overlay should be 50% of the height.
-        if gc.height() < gc.width():
-            scale = (plot_height/self.doc_height)*self.scale_factor
-        else:
-            scale = (plot_width/self.doc_width)*self.scale_factor
+            scale_width = scale*self.doc_width
+            scale_height = scale*self.doc_height
 
-        scale_width = scale*self.doc_width
-        scale_height = scale*self.doc_height
-
-        # Set up the transforms to align the graphic to the desired position
-        if self.align == 'ur':
-            gc.translate_ctm(origin_x + (plot_width-scale_width),
-                            origin_y + plot_height)
-        elif self.align == 'lr':
-            gc.translate_ctm(origin_x + (plot_width-scale_width),
-                            origin_y + scale_height)
-        elif self.align == 'ul':
-            gc.translate_ctm(origin_x,
-                            origin_y + plot_height)
-        elif self.align == 'll':
-            gc.translate_ctm(origin_x,
-                            origin_y + scale_height)
-        else:
-            gc.translate_ctm(origin_x + (plot_width-scale_width)/2,
-                             origin_y + (plot_height+scale_height)/2)
+            # Set up the transforms to align the graphic to the desired position
+            if self.align == 'ur':
+                gc.translate_ctm(origin_x + (plot_width-scale_width),
+                                origin_y + plot_height)
+            elif self.align == 'lr':
+                gc.translate_ctm(origin_x + (plot_width-scale_width),
+                                origin_y + scale_height)
+            elif self.align == 'ul':
+                gc.translate_ctm(origin_x,
+                                origin_y + plot_height)
+            elif self.align == 'll':
+                gc.translate_ctm(origin_x,
+                                origin_y + scale_height)
+            else:
+                gc.translate_ctm(origin_x + (plot_width-scale_width)/2,
+                                 origin_y + (plot_height+scale_height)/2)
 
 
-        # SVG origin is the upper right with y positive down, so
-        # we need to flip everything
-        gc.scale_ctm(scale, -scale)
+            # SVG origin is the upper right with y positive down, so
+            # we need to flip everything
+            gc.scale_ctm(scale, -scale)
 
-        self.document.render(gc)
+            self.document.render(gc)
 
-        self._draw_component(gc, view_bounds, mode)
-        gc.restore_state()
+            self._draw_component(gc, view_bounds, mode)
 
         return
 

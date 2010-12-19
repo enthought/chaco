@@ -1,3 +1,6 @@
+
+from __future__ import with_statement
+
 import os
 import numpy
 
@@ -53,36 +56,34 @@ class SvgRangeSelectionOverlay(StatusLayer):
         if len(coords) == 0:
             return
 
-        gc.save_state()
+        with gc:
+            gc.set_alpha(self.alpha)
 
-        gc.set_alpha(self.alpha)
+            plot_width = self.component.width
+            plot_height = self.component.height
 
-        plot_width = self.component.width
-        plot_height = self.component.height
-
-        origin_x = self.component.padding_left
-        origin_y = self.component.padding_top
-        
-        if self.axis == 'index':
-            if isinstance(self.mapper, GridMapper):
-                scale_width = (coords[-1][0] - coords[0][0])/self.doc_width
+            origin_x = self.component.padding_left
+            origin_y = self.component.padding_top
+            
+            if self.axis == 'index':
+                if isinstance(self.mapper, GridMapper):
+                    scale_width = (coords[-1][0] - coords[0][0])/self.doc_width
+                else:
+                    scale_width = (coords[0][-1] - coords[0][0])/self.doc_width
+                scale_height = float(plot_height)/self.doc_height
+                gc.translate_ctm(coords[0][0], origin_y + plot_height)
             else:
-                scale_width = (coords[0][-1] - coords[0][0])/self.doc_width
-            scale_height = float(plot_height)/self.doc_height
-            gc.translate_ctm(coords[0][0], origin_y + plot_height)
-        else:
-            scale_height = (coords[0][-1] - coords[0][0])/self.doc_height
-            scale_width = float(plot_width)/self.doc_width
-            gc.translate_ctm(origin_x, coords[0][0])
+                scale_height = (coords[0][-1] - coords[0][0])/self.doc_height
+                scale_width = float(plot_width)/self.doc_width
+                gc.translate_ctm(origin_x, coords[0][0])
 
-        # SVG origin is the upper right with y positive down, so
-        # we need to flip everything
-        gc.scale_ctm(scale_width, -scale_height)
+            # SVG origin is the upper right with y positive down, so
+            # we need to flip everything
+            gc.scale_ctm(scale_width, -scale_height)
 
-        self.document.render(gc)
+            self.document.render(gc)
 
-        self._draw_component(gc, view_bounds, mode)
-        gc.restore_state()
+            self._draw_component(gc, view_bounds, mode)
 
         return
 
