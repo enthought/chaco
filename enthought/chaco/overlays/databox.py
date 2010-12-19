@@ -1,4 +1,6 @@
 
+from __future__ import with_statement
+
 from enthought.traits.api import (Bool, Enum, Float, Int, CList, Property, Trait,
         on_trait_change)
 from enthought.enable.api import ColorTrait
@@ -94,8 +96,7 @@ class DataBox(AbstractOverlay):
             self._updating = False
             self._bounds_valid = True
 
-        gc.save_state()
-        try:
+        with gc:
             gc.set_antialias(0)
             gc.set_line_width(self.border_size)
             gc.set_stroke_color(self.border_color_)
@@ -117,8 +118,7 @@ class DataBox(AbstractOverlay):
             else:
                 gc.rect(*rect)
                 gc.stroke_path()
-        finally:
-            gc.restore_state()
+
         return
 
     #-------------------------------------------------------------------------
