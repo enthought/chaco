@@ -1,5 +1,7 @@
 """ Defines the PointMarker tool class.
 """
+from __future__ import with_statement
+
 # Major library imports
 from numpy import array, take, transpose
 
@@ -64,27 +66,21 @@ class PointMarker(BaseTool):
     #------------------------------------------------------------------------
 
     def _draw_vertical_lines(self, gc, points):
-        gc.save_state()
-        try:
+        with gc:
             gc.set_stroke_color(self.color_)
             for pt in points:
                 gc.move_to(int(pt[0])+0.5, self.component.y)
                 gc.line_to(int(pt[0])+0.5, self.component.y2)
             gc.stroke_path()
-        finally:
-            gc.restore_state()
         return
     
     def _draw_horizontal_lines(self, gc, points):
-        gc.save_state()
-        try:
+        with gc:
             gc.set_stroke_color(self.color_)
             for pt in points:
                 gc.move_to(self.component.x, int(pt[1])+0.5)
                 gc.line_to(self.component.x2, int(pt[1])+0.5)
             gc.stroke_path()
-        finally:
-            gc.restore_state()
         return
 
     

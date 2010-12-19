@@ -1,5 +1,7 @@
 """ Defines the RangeSelectionOverlay class.
 """
+from __future__ import with_statement
+
 # Major library imports
 from numpy import arange, array
 
@@ -75,8 +77,7 @@ class RangeSelectionOverlay(AbstractOverlay):
             upper_right[axis_ndx] = end - start
             upper_right[1-axis_ndx] = component.bounds[1-axis_ndx]
         
-            gc.save_state()
-            try:
+            with gc:
                 gc.clip_to_rect(component.x, component.y, component.width, component.height)
                 gc.set_alpha(self.alpha)
                 gc.set_fill_color(self.fill_color_)
@@ -86,9 +87,6 @@ class RangeSelectionOverlay(AbstractOverlay):
                 gc.rect(lower_left[0], lower_left[1], 
                         upper_right[0], upper_right[1])
                 gc.draw_path()
-            finally:
-                gc.restore_state()
-
 
     #------------------------------------------------------------------------
     # Private methods

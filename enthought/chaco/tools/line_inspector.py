@@ -1,5 +1,6 @@
 """ Defines the LineInspector tool class.
 """
+from __future__ import with_statement
 
 # Enthought library imports
 from enthought.enable.api import BaseTool, ColorTrait, LineStyle
@@ -253,16 +254,13 @@ class LineInspector(BaseTool):
         if sx < self.component.x or sx > self.component.x2:
             return
             
-        gc.save_state()
-        try:
+        with gc:
             gc.set_stroke_color(self.color_)
             gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
             gc.move_to(sx, self.component.y)
             gc.line_to(sx, self.component.y2)
             gc.stroke_path()
-        finally:
-            gc.restore_state()
         return
     
     def _draw_horizontal_line(self, gc, sy):
@@ -272,16 +270,13 @@ class LineInspector(BaseTool):
         if sy < self.component.y or sy > self.component.y2:
             return
             
-        gc.save_state()
-        try:
+        with gc:
             gc.set_stroke_color(self.color_)
             gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
             gc.move_to(self.component.x, sy)
             gc.line_to(self.component.x2, sy)
             gc.stroke_path()
-        finally:
-            gc.restore_state()
         return
 
     

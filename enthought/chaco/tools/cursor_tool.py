@@ -13,6 +13,7 @@ TODO:
     plot component
     
 """
+from __future__ import with_statement
 
 # Major library imports
 import numpy
@@ -85,43 +86,41 @@ class BaseCursorTool(LineInspector, DragTool):
         marker = self.marker
         marker_size = self.marker_size
         points = [(sx,sy)]
-        gc.save_state()
-        gc.set_fill_color(self.color_)
-    
-        gc.begin_path()
-    
-        # This is the fastest method - use one of the kiva built-in markers
-        if hasattr(gc, "draw_marker_at_points") \
-            and (gc.draw_marker_at_points(points,
-                                          marker_size,
-                                          marker.kiva_marker) != 0):
-                pass
-    
-        # The second fastest method - draw the path into a compiled path, then
-        # draw the compiled path at each point
-        elif hasattr(gc, 'draw_path_at_points'):
-            #if debug:
-            #    import pdb; pdb.set_trace()
-            path = gc.get_empty_path()
-            marker.add_to_path(path, marker_size)
-            mode = marker.draw_mode
-            if not marker.antialias:
-                gc.set_antialias(False)
-            gc.draw_path_at_points(points, path, mode)
-    
-        # Neither of the fast functions worked, so use the brute-force, manual way
-        else:
-            if not marker.antialias:
-                gc.set_antialias(False)
-            for sx,sy in points:
-                gc.save_state()
-                gc.translate_ctm(sx, sy)
-                # Kiva GCs have a path-drawing interface
-                marker.add_to_path(gc, marker_size)
-                gc.draw_path(marker.draw_mode)
-                gc.restore_state()
-    
-        gc.restore_state()
+
+        with gc:
+            gc.set_fill_color(self.color_)
+        
+            gc.begin_path()
+        
+            # This is the fastest method - use one of the kiva built-in markers
+            if hasattr(gc, "draw_marker_at_points") \
+                and (gc.draw_marker_at_points(points,
+                                              marker_size,
+                                              marker.kiva_marker) != 0):
+                    pass
+        
+            # The second fastest method - draw the path into a compiled path, then
+            # draw the compiled path at each point
+            elif hasattr(gc, 'draw_path_at_points'):
+                #if debug:
+                #    import pdb; pdb.set_trace()
+                path = gc.get_empty_path()
+                marker.add_to_path(path, marker_size)
+                mode = marker.draw_mode
+                if not marker.antialias:
+                    gc.set_antialias(False)
+                gc.draw_path_at_points(points, path, mode)
+        
+            # Neither of the fast functions worked, so use the brute-force, manual way
+            else:
+                if not marker.antialias:
+                    gc.set_antialias(False)
+                for sx,sy in points:
+                    with gc:
+                        gc.translate_ctm(sx, sy)
+                        # Kiva GCs have a path-drawing interface
+                        marker.add_to_path(gc, marker_size)
+                        gc.draw_path(marker.draw_mode)    
         return
     
     def normal_mouse_move(self, event):

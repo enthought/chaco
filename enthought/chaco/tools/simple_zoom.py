@@ -1,5 +1,7 @@
 """ Defines the SimpleZoom class.
 """
+from __future__ import with_statement
+
 import warnings
 warnings.warn("SimpleZoom has been deprecated, use ZoomTool", DeprecationWarning)
 
@@ -209,8 +211,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         """ Draws the overlay as a box.
         """
         if self._screen_start and self._screen_end:
-            gc.save_state()
-            try:
+            with gc:
                 gc.set_antialias(0)
                 gc.set_line_width(self.border_size)
                 gc.set_stroke_color(self.border_color_)
@@ -233,8 +234,6 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 else:
                     gc.rect(*rect)
                     gc.stroke_path()
-            finally:
-                gc.restore_state()
         return
 
     def overlay_range(self, component, gc):
@@ -248,8 +247,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         upper_right[axis_ndx] = self._screen_end[axis_ndx] - self._screen_start[axis_ndx]
         upper_right[1-axis_ndx] = self.component.bounds[1-axis_ndx]
 
-        gc.save_state()
-        try:
+        with gc:
             gc.set_antialias(0)
             gc.set_alpha(self.alpha)
             gc.set_fill_color(self.color_)
@@ -257,8 +255,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             gc.clip_to_rect(component.x, component.y, component.width, component.height)
             gc.rect(lower_left[0], lower_left[1], upper_right[0], upper_right[1])
             gc.draw_path()
-        finally:
-            gc.restore_state()
+
         return
 
     def normal_left_down(self, event):

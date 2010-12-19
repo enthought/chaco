@@ -1,3 +1,5 @@
+from __future__ import with_statement
+
 import numpy
 
 from enthought.chaco.abstract_overlay import AbstractOverlay
@@ -141,40 +143,37 @@ class PlotToolbar(Container, AbstractOverlay):
         y = self.y
         height = self.height
         
-        gc.save_state()
+        with gc:
+            gc.begin_path()
+            gc.move_to(x + self.end_radius, y)
+            gc.arc_to(x + self.width, y,
+                    x + self.width,
+                    y + self.end_radius, self.end_radius)
+            gc.arc_to(x + self.width,
+                    y + height,
+                    x + self.width - self.end_radius,
+                    y + height, self.end_radius)
+            gc.arc_to(x, y + height,
+                    x, y,
+                    self.end_radius)
+            gc.arc_to(x, y,
+                    x + self.width + self.end_radius,
+                    y, self.end_radius)
 
-        gc.begin_path()
-        gc.move_to(x + self.end_radius, y)
-        gc.arc_to(x + self.width, y,
-                x + self.width,
-                y + self.end_radius, self.end_radius)
-        gc.arc_to(x + self.width,
-                y + height,
-                x + self.width - self.end_radius,
-                y + height, self.end_radius)
-        gc.arc_to(x, y + height,
-                x, y,
-                self.end_radius)
-        gc.arc_to(x, y,
-                x + self.width + self.end_radius,
-                y, self.end_radius)
+            if self.location in ['top','bottom']:
+                gc.linear_gradient(x, y, x, y+100,
+                        numpy.array([starting_color, ending_color]),
+                        "")
+            else:
+                gc.linear_gradient(x, y, x+100, y,
+                        numpy.array([starting_color, ending_color]),
+                        "")
 
-        if self.location in ['top','bottom']:
-            gc.linear_gradient(x, y, x, y+100,
-                    numpy.array([starting_color, ending_color]),
-                    "")
-        else:
-            gc.linear_gradient(x, y, x+100, y,
-                    numpy.array([starting_color, ending_color]),
-                    "")
+            gc.draw_path()
 
-        gc.draw_path()
-
-        if not self.hiding:
-            for button in self.components:
-                button.draw(gc)
-
-        gc.restore_state()
+            if not self.hiding:
+                for button in self.components:
+                    button.draw(gc)
 
     def is_in(self, x, y):
         if (x >= self.x and x <= self.x2) and (y >= self.y and y <= self.y2):

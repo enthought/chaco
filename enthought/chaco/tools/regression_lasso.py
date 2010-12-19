@@ -1,5 +1,7 @@
 """ Defines the RegressionLasso class.
 """
+from __future__ import with_statement
+
 # Major library imports
 from numpy import compress, polyfit
 from math import fabs
@@ -69,10 +71,9 @@ class RegressionOverlay(LassoOverlay):
             w, h = self._label.get_width_height(gc)
             x = (c.x+c.x2)/2 - w/2
             y = c.y + 5  # add some padding on the bottom
-            gc.save_state()
-            gc.translate_ctm(x, y)
-            self._label.draw(gc)
-            gc.restore_state()
+            with gc:
+                gc.translate_ctm(x, y)
+                self._label.draw(gc)
 
             # draw the line
             slope, y0 = selection.fit_params
@@ -88,15 +89,12 @@ class RegressionOverlay(LassoOverlay):
 
             left_pt, right_pt = c.map_screen([[left_x, left_y], [right_x, right_y]])
 
-            gc.save_state()
-            try:
+            with gc:
                 gc.set_line_dash(self.line_style_)
                 gc.set_stroke_color(self.line_color_)
                 gc.set_line_width(self.line_width)
                 gc.move_to(*left_pt)
                 gc.line_to(*right_pt)
                 gc.stroke_path()
-            finally:
-                gc.restore_state()
+
         return
-    

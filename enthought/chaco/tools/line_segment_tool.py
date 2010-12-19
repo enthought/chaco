@@ -1,5 +1,7 @@
 """ Defines the LineSegmentTool class.
 """
+from __future__ import with_statement
+
 # Major library imports
 from numpy import array
 
@@ -305,10 +307,9 @@ class LineSegmentTool(AbstractOverlay):
         """
         draw_func = getattr(self, self.event_state + "_draw", None)
         if draw_func:
-            gc.save_state()
-            gc.clip_to_rect(component.x, component.y, component.width-1, component.height-1)
-            draw_func(gc)
-            gc.restore_state()
+            with gc:
+                gc.clip_to_rect(component.x, component.y, component.width-1, component.height-1)
+                draw_func(gc)
         return
     
     def request_redraw(self):
