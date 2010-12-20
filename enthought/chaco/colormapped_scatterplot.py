@@ -1,6 +1,8 @@
 """ Defines the ColormappedScatterPlot and ColormappedScatterPlotView classes.
 """
 
+from __future__ import with_statement
+
 # Major library imports
 from numpy import argsort, array, concatenate, nonzero, invert, take, \
                   isnan, transpose, newaxis, zeros

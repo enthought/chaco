@@ -1,6 +1,8 @@
 """ Defines the SelectableOverlayPlotContainer class.
 """
 
+from __future__ import with_statement
+
 from numpy import array, float64
 
 # Enthought library imports

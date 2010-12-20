@@ -1,3 +1,6 @@
+
+from __future__ import with_statement
+
 import os.path
 import xml.etree.cElementTree as etree
 
