@@ -207,7 +207,7 @@ if ETSConfig.enable_toolkit == "wx":
 
 elif ETSConfig.enable_toolkit == "qt4":
 
-    from PyQt4 import QtGui, QtCore
+    from enthought.qt.api import QtGui, QtCore
 
     class PlotFrame(DemoFrame):
         def _create_window(self):
