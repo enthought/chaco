@@ -9,25 +9,7 @@ from enthought.traits.api import Bool, Enum, Trait, Int, Float, Tuple, \
 from enthought.util.deprecated import deprecated
 
 from better_zoom import BetterZoom, ZoomState
-
-class SelectedZoomState(ZoomState):
-    def apply(self, zoom_tool):
-        x_mapper = zoom_tool._get_x_mapper()
-        y_mapper = zoom_tool._get_y_mapper()
-        
-        x_mapper.range.low = self.next[0]
-        x_mapper.range.high = self.next[1]
-        y_mapper.range.low = self.next[2]
-        y_mapper.range.high = self.next[3]
-        
-    def revert(self, zoom_tool):
-        x_mapper = zoom_tool._get_x_mapper()
-        y_mapper = zoom_tool._get_y_mapper()
-        
-        x_mapper.range.low = self.prev[0]
-        x_mapper.range.high = self.prev[1]
-        y_mapper.range.low = self.prev[2]
-        y_mapper.range.high = self.prev[3]
+from tool_states import SelectedZoomState
 
 class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     """ Zooming tool which allows the user to draw a box which defines the 

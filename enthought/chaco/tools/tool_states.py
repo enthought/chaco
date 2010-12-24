@@ -117,3 +117,22 @@ class ZoomState(ToolState):
 
         zoom_tool._index_factor = self.prev[0]
         zoom_tool._value_factor = self.prev[1]
+
+class SelectedZoomState(ZoomState):
+    def apply(self, zoom_tool):
+        x_mapper = zoom_tool._get_x_mapper()
+        y_mapper = zoom_tool._get_y_mapper()
+        
+        x_mapper.range.low = self.next[0]
+        x_mapper.range.high = self.next[1]
+        y_mapper.range.low = self.next[2]
+        y_mapper.range.high = self.next[3]
+        
+    def revert(self, zoom_tool):
+        x_mapper = zoom_tool._get_x_mapper()
+        y_mapper = zoom_tool._get_y_mapper()
+        
+        x_mapper.range.low = self.prev[0]
+        x_mapper.range.high = self.prev[1]
+        y_mapper.range.low = self.prev[2]
+        y_mapper.range.high = self.prev[3]
