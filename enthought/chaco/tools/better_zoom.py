@@ -5,7 +5,7 @@ from enthought.enable.api import BaseTool, KeySpec
 from enthought.traits.api import Enum, Float, Instance, Bool, HasTraits, List
 
 from tool_history_mixin import ToolHistoryMixin
-from tool_states import ZoomState, PanState, GroupedToolState
+from tool_states import ZoomState, PanState, GroupedToolState, ToolState
 
 
 class BetterZoom(BaseTool, ToolHistoryMixin):
