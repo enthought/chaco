@@ -204,7 +204,6 @@ class Label(HasTraits):
             else:
                 gc.set_antialias(1)
 
-            #margin = self.margin
             lines = self.text.split("\n")
             if self.border_visible:
                 gc.translate_ctm(self.border_width, self.border_width)
@@ -215,13 +214,8 @@ class Label(HasTraits):
                     continue
                 x_offset = round(self._line_xpos[i])
                 y_offset = round(self._line_ypos[i])
-                gc.set_text_position(0,0)
-                gc.translate_ctm(x_offset, y_offset)
-
+                gc.set_text_position(x_offset, y_offset)
                 gc.show_text(line)
-                #gc.rect(0-self.margin,0-self.margin,width,height)
-                #gc.stroke_path()
-                gc.translate_ctm(-x_offset, -y_offset)
 
         return
 
