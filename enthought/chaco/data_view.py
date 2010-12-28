@@ -4,6 +4,7 @@ functions.
 from numpy import array, transpose
 
 from enthought.traits.api import Enum, Instance, Property
+from enthought.enable.colors import color_table
 
 from abstract_overlay import AbstractOverlay
 from axis import PlotAxis
@@ -257,14 +258,20 @@ class DataView(OverlayPlotContainer):
             else:
                 vmap = LogMapper(range=self.range2d.y_range)
             self.value_mapper = vmap
+            
+        # make sure the grid and bgcolor are not the same color
+            
+        grid_color = 'lightgray'
+        if color_table[self.bgcolor] == color_table[grid_color]:
+            grid_color = 'white'
 
         if not self.x_grid:
             self.x_grid = PlotGrid(mapper=self.x_mapper, orientation="vertical",
-                                  line_color="lightgray", line_style="dot",
+                                  line_color=grid_color, line_style="dot",
                                   component=self)
         if not self.y_grid:
             self.y_grid = PlotGrid(mapper=self.y_mapper, orientation="horizontal",
-                                  line_color="lightgray", line_style="dot",
+                                  line_color=grid_color, line_style="dot",
                                   component=self)
 
         if not self.x_axis:
