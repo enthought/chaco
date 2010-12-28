@@ -12,6 +12,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.traits.api import false
+import enthought.kiva
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot, PlotGraphicsContext
@@ -29,7 +30,7 @@ def create_plot():
     high = 15.0
     x = linspace(low, high, numpoints)
     pd = ArrayPlotData(index=x)
-    p = Plot(pd, bgcolor="lightgray", padding=50, border_visible=True)
+    p = Plot(pd, bgcolor="oldlace", padding=50, border_visible=True)
     for i in range(10):
         pd.set_data("y" + str(i), jn(i,x))
         p.plot(("index", "y" + str(i)), color=tuple(COLOR_PALETTE[i]),
@@ -86,12 +87,13 @@ def get_directory(filename):
         
 
 if __name__ == "__main__":
-    draw_plot(get_directory('noninteractive.png'), size=(800, 600))
-
-    # Render the plot as a SVG
-    #draw_svg(get_directory('noninteractive.svg'), size=(800,600))
-    
-    # If you have ReportLab installed, you can uncomment the following:
-    #draw_pdf(get_directory('noninteractive.pdf'))
+    if enthought.kiva.backend() == 'svg':
+        # Render the plot as a SVG
+        draw_svg(get_directory('noninteractive.svg'), size=(800,600))        
+    elif enthought.kiva.backend() == 'pdf':
+        # Render the plot as a PDF, requires on ReportLab
+        draw_pdf(get_directory('noninteractive.pdf'))
+    else:        
+        draw_plot(get_directory('noninteractive.png'), size=(800, 600))
 
 # EOF
