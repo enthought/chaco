@@ -147,18 +147,17 @@ class PlotToolbar(Container, AbstractOverlay):
             gc.begin_path()
             gc.move_to(x + self.end_radius, y)
             gc.arc_to(x + self.width, y,
-                    x + self.width,
-                    y + self.end_radius, self.end_radius)
-            gc.arc_to(x + self.width,
-                    y + height,
-                    x + self.width - self.end_radius,
-                    y + height, self.end_radius)
+                    x + self.width, y + self.end_radius,
+                    self.end_radius)
+            gc.arc_to(x + self.width, y + height,
+                    x + self.width - self.end_radius, y + height,
+                    self.end_radius)
             gc.arc_to(x, y + height,
-                    x, y,
+                    x, y + height - self.end_radius,
                     self.end_radius)
             gc.arc_to(x, y,
-                    x + self.width + self.end_radius,
-                    y, self.end_radius)
+                    x + self.end_radius, y,
+                    self.end_radius)
 
             if self.location in ['top','bottom']:
                 gc.linear_gradient(x, y, x, y+100,
