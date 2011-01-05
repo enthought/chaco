@@ -749,6 +749,9 @@ class PlotAxis(AbstractOverlay):
 
     def _tick_interval_changed(self):
         return self._invalidate()
+    
+    def _tick_generator_changed(self):
+        return self._invalidate()
 
     def _axis_line_color_changed(self):
         return self._invalidate()
