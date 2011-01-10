@@ -176,7 +176,7 @@ popup = Demo()
 
 from enthought.etsconfig.api import ETSConfig
 
-if ETSConfig.enable_toolkit == "wx":
+if ETSConfig.toolkit == "wx":
 
     import wx
     class PlotFrame(DemoFrame):
@@ -205,7 +205,7 @@ if ETSConfig.enable_toolkit == "wx":
             self.timer.Stop()
             event.Skip()
 
-elif ETSConfig.enable_toolkit == "qt4":
+elif ETSConfig.toolkit == "qt4":
 
     from enthought.qt.api import QtGui, QtCore
 
