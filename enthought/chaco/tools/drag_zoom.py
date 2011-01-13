@@ -80,13 +80,16 @@ class DragZoom(DragTool, BetterZoom):
 
         # Compute the zoom amount based on the pixel difference between
         # the previous mouse event and the current one.
-        
-        
+                
         if self.maintain_aspect_ratio:
             zoom_x = zoom_y = self._calc_zoom(self._prev_y, event.y)
         else:
             zoom_x = self._calc_zoom(self._prev_x, event.x)
             zoom_y = self._calc_zoom(self._prev_y, event.y)
+            
+        # invert the zoom so scrolling up zooms in
+        zoom_x = 1.0/zoom_x
+        zoom_y = 1.0/zoom_y
             
         self.zoom_in_x(zoom_x)
         self.zoom_in_y(zoom_y)
