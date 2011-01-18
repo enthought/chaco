@@ -9,7 +9,7 @@ from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
 from enthought.traits.api import Any, Bool, Enum, Float, Instance, Property, \
         Range
 from enthought.enable.api import black_color_trait
-from enthought.kiva import FILL_STROKE
+from enthought.kiva.constants import FILL_STROKE
 
 # Local relative imports
 from enthought.chaco.abstract_plot_renderer import AbstractPlotRenderer

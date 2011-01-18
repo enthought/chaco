@@ -8,7 +8,7 @@ from numpy import array, arange, ones, transpose, uint8
 
 # Enthought library imports
 from enthought.traits.api import Any, Bool, Enum, Instance, Property
-from enthought.kiva.backend_image import GraphicsContext
+from enthought.kiva.image import GraphicsContext
 
 # Local imports
 from base_xy_plot import BaseXYPlot

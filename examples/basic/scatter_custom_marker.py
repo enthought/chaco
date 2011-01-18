@@ -11,9 +11,9 @@ from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable.api import Component, ComponentEditor, Window
+from enthought.enable.compiled_path import CompiledPath
 from enthought.traits.api import HasTraits, Instance
 from enthought.traits.ui.api import Item, Group, View
-from enthought.kiva import CompiledPath
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot

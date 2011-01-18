@@ -13,7 +13,7 @@ except ImportError:
     Canvas = None
     PdfPlotGraphicsContext = None
 
-from enthought.kiva.backend_pdf import GraphicsContext
+from enthought.kiva.pdf import GraphicsContext
 
 PAGE_SIZE_MAP = {
         "letter": letter,

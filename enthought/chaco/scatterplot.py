@@ -10,7 +10,7 @@ from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, ColorTrait, AbstractMarker, \
         CustomMarker, MarkerNameDict, MarkerTrait
-from enthought.kiva import STROKE
+from enthought.kiva.constants import STROKE
 from enthought.traits.api import Any, Array, Bool, Float, Int, Trait, Callable
 from enthought.traits.ui.api import View, VGroup, Item
 

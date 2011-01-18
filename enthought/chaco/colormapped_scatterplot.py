@@ -8,7 +8,7 @@ from numpy import argsort, array, concatenate, nonzero, invert, take, \
                   isnan, transpose, newaxis, zeros
 
 # Enthought library imports
-from enthought.kiva import STROKE
+from enthought.kiva.constants import STROKE
 from enthought.traits.api import Dict, Enum, Float, Instance
 from enthought.traits.ui.api import Item, RangeEditor
 

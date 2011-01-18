@@ -12,7 +12,7 @@ from scipy.special import jn
 
 # Enthought library imports
 from enthought.traits.api import false
-import enthought.kiva
+from enthought.etsconfig.api import ETSConfig
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot, PlotGraphicsContext
@@ -87,10 +87,10 @@ def get_directory(filename):
         
 
 if __name__ == "__main__":
-    if enthought.kiva.backend() == 'svg':
+    if ETSConfig.kiva_backend == 'svg':
         # Render the plot as a SVG
         draw_svg(get_directory('noninteractive.svg'), size=(800,600))        
-    elif enthought.kiva.backend() == 'pdf':
+    elif ETSConfig.kiva_backend == 'pdf':
         # Render the plot as a PDF, requires on ReportLab
         draw_pdf(get_directory('noninteractive.pdf'))
     else:        

@@ -3,7 +3,7 @@
 
 from __future__ import with_statement
 
-from enthought.kiva import font_metrics_provider
+from enthought.enable.font_metrics_provider import font_metrics_provider
 from enthought.traits.api import DelegatesTo, Enum, Instance, Str, Trait
 
 from abstract_overlay import AbstractOverlay

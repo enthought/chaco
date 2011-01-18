@@ -79,7 +79,7 @@ class ImagePlot(Base2DPlot):
             # destination GC.
             old_interp = self._cached_image.get_image_interpolation()
             if hasattr(gc, "set_interpolation_quality"):
-                from enthought.kiva.mac.ABCGI import InterpolationQuality
+                from enthought.kiva.quartz.ABCGI import InterpolationQuality
                 interp_quality_dict = {"nearest": InterpolationQuality.none,
                         "bilinear": InterpolationQuality.low,
                         "bicubic": InterpolationQuality.high}

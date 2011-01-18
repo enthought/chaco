@@ -4,7 +4,7 @@ from enthought.etsconfig.api import ETSConfig
 from enthought.enable.tools.toolbars.toolbar_buttons import Button
 from enthought.chaco.tools.zoom_tool import ZoomTool
 from enthought.chaco.plot_graphics_context import PlotGraphicsContext
-from enthought.kiva.backend_image import Image
+from enthought.kiva.image import Image
 from enthought.pyface.image_resource import ImageResource
 from enthought.pyface.api import FileDialog, OK, error
 from enthought.traits.api import Instance, Str, Property, cached_property, \
