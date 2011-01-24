@@ -182,7 +182,7 @@ class PolarLineRenderer(AbstractPlotRenderer):
             x_center = self.x + self.width/2.0
             y_center = self.y + self.height/2.0
             rad = min(self.width/2.0, self.height/2.0)
-            for r_part in range(5):
+            for r_part in range(1,5):
                 r = rad*r_part/4
                 gc.arc(x_center, y_center, r, 0, 2*pi)
                 gc.stroke_path()
