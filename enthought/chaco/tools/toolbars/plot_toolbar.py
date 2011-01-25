@@ -162,11 +162,11 @@ class PlotToolbar(Container, AbstractOverlay):
             if self.location in ['top','bottom']:
                 gc.linear_gradient(x, y, x, y+100,
                         numpy.array([starting_color, ending_color]),
-                        "")
+                        "pad")
             else:
                 gc.linear_gradient(x, y, x+100, y,
                         numpy.array([starting_color, ending_color]),
-                        "")
+                        "pad")
 
             gc.draw_path()
 
