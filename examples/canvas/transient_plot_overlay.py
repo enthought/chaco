@@ -31,11 +31,20 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
 
     def _bounds_default(self):
         return [450, 250]
+    
+    def _clear_bounds(self, gc, view_bounds):
+        if view_bounds is None:
+            view_bounds = (0,0, self.width, self.height)
+        gc.clip_to_rect(*view_bounds)
+        gc.set_fill_color((1.0,1.0,1.0,1.0))
+        gc.begin_path()
+        gc.rect(*view_bounds)
+        gc.fill_path()
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         self._do_layout()
         with gc:
-            gc.clear_clip_path()
+            self._clear_bounds(gc, view_bounds)
             self.overlay_component._draw(gc, view_bounds, mode)
 
     # TODO: Implement this more intelligently than the one in BasePlotContainer
