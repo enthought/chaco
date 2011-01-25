@@ -5,10 +5,14 @@ interval.
 
 from __future__ import with_statement
 
+# Force WX
+from enthought.etsconfig.api import ETSConfig
+ETSConfig.toolkit = 'wx'
+
 from enthought.traits.ui.editor_factory import EditorFactory
 from enthought.traits.ui.wx.editor import Editor
 
-from enthought.enable.wx_backend.api import Window
+from enthought.enable.window import Window
 from enthought.enable.api import ColorTrait
 
 from enthought.chaco.api import OverlayPlotContainer, create_line_plot, \
