@@ -7,7 +7,8 @@ from __future__ import with_statement
 from numpy import array, arange, ones, transpose, uint8
 
 # Enthought library imports
-from enthought.traits.api import Any, Bool, Enum, Instance, Property
+from enthought.traits.api import Any, Bool, Enum, Instance, Property, \
+                                 cached_property
 from enthought.kiva.image import GraphicsContext
 
 # Local imports
@@ -27,6 +28,9 @@ class ColorBar(AbstractPlotRenderer):
 
     # Screen mapper for color data
     color_mapper = Property #Instance(ColorMapper)
+    
+    # Screen mapper for value data (synonym for color_mapper)
+    value_mapper = Property(depends_on='color_mapper')
 
     # Optional index data source for generic tools to attach metadata to.
     index = Property
@@ -230,6 +234,9 @@ class ColorBar(AbstractPlotRenderer):
     def _color_mapper_changed(self):
         self._either_mapper_changed()
 
+    def _value_mapper_changed(self):
+        self._color_mapper_changed()
+
     def _plot_changed(self):
         self.request_redraw()
     
@@ -267,6 +274,13 @@ class ColorBar(AbstractPlotRenderer):
 
     def _set_color_mapper(self, val):
         self._color_mapper = val
+    
+    @cached_property
+    def _get_value_mapper(self):
+        return self._get_color_mapper()
+    
+    def _set_value_mapper(self, val):
+        self._set_color_mapper(val)
 
     def _get_index(self):
         if self.plot and hasattr(self.plot, "color_data"):
