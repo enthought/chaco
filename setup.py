@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2008-2010 by Enthought, Inc.
+# Copyright (c) 2008-2011 by Enthought, Inc.
 # All rights reserved.
 
 """
@@ -41,14 +41,8 @@ Chaco:
 
 """
 
-import traceback
-import sys
-
-from distutils import log
-from distutils.command.build import build as distbuild
 from numpy import get_include
 from setuptools import setup, Extension, find_packages
-from setuptools.command.develop import develop
 
 
 # FIXME: This works around a setuptools bug which gets setup_data.py metadata
@@ -136,4 +130,4 @@ setup(
     url = 'http://code.enthought.com/projects/chaco',
     version = INFO["version"],
     zip_safe = False,
-    )
+)
