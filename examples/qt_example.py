@@ -9,7 +9,7 @@ ETSConfig.toolkit = "qt4"
 import sys
 from numpy import linspace
 from scipy.special import jn
-from enthought.qt.api import QtGui, QtCore
+from enthought.qt import QtGui, QtCore
 
 from enthought.enable.api import Window
 
