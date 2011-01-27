@@ -8,7 +8,7 @@ from numpy import array, arange, ones, transpose, uint8
 
 # Enthought library imports
 from enthought.traits.api import Any, Bool, Enum, Instance, Property, \
-                                 cached_property
+                                 cached_property, on_trait_change
 from enthought.kiva.image import GraphicsContext
 
 # Local imports
@@ -219,6 +219,7 @@ class ColorBar(AbstractPlotRenderer):
     def _updated_changed_for_color_mapper(self):
         self._update_mappers()
 
+    @on_trait_change('[index_mapper,color_mapper].+')
     def _either_mapper_changed(self):
         self.invalidate_draw()
         self.request_redraw()
