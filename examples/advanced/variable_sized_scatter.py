@@ -41,6 +41,10 @@ def _create_plot_component():
     pd.set_data("index", x)
     pd.set_data("value", y)
     
+    # Because this is a non-standard renderer, we can't call plot.plot, which
+    # sets up the array data sources, mappers and default index/value ranges.
+    # So, its gotta be done manually for now.
+    
     index_ds = ArrayDataSource(x)
     value_ds = ArrayDataSource(y)
 
