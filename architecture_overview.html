@@ -1,0 +1,338 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Architecture Overview &mdash; Chaco v3.4.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '3.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/et.ico"/>
+    <link rel="top" title="Chaco v3.4.1 documentation" href="index.html" />
+    <link rel="up" title="Programmer’s Reference" href="programmers_reference.html" />
+    <link rel="next" title="Commonly Used Modules and Classes" href="modules_and_classes.html" />
+    <link rel="prev" title="Programmer’s Reference" href="programmers_reference.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="modules_and_classes.html" title="Commonly Used Modules and Classes"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="programmers_reference.html" title="Programmer’s Reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+          <li><a href="programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
+  
+    <li><a href="#">Architecture Overview</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="architecture-overview">
+<h1><a class="toc-backref" href="#id1">Architecture Overview</a><a class="headerlink" href="#architecture-overview" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is an overview of not just Chaco, but also Kiva and Enable.</p>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#architecture-overview" id="id1">Architecture Overview</a><ul>
+<li><a class="reference internal" href="#core-ideas" id="id2">Core Ideas</a></li>
+<li><a class="reference internal" href="#the-relationship-between-chaco-enable-and-kiva" id="id3">The Relationship Between Chaco, Enable, and Kiva</a><ul>
+<li><a class="reference internal" href="#kiva" id="id4">Kiva</a></li>
+<li><a class="reference internal" href="#enable" id="id5">Enable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chaco" id="id6">Chaco</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="core-ideas">
+<h2><a class="toc-backref" href="#id2">Core Ideas</a><a class="headerlink" href="#core-ideas" title="Permalink to this headline">¶</a></h2>
+<p>The Chaco toolkit is defined by a few core architectural ideas:</p>
+<ul>
+<li><p class="first"><strong>Plots are compositions of visual components</strong></p>
+<p>Everything you see in a plot is some sort of graphical widget,
+with position, shape, and appearance attributes, and with an
+opportunity to respond to events.</p>
+</li>
+<li><p class="first"><strong>Separation between data and screen space</strong></p>
+<p>Although everything in a plot eventually ends up rendering into a common
+visual area, there are aspects of the plot which are intrinsically
+screen-space, and some which are fundamentally data-space.  Preserving
+the distinction between these two domains allows us to think about
+visualizations in a structured way.</p>
+</li>
+<li><p class="first"><strong>Modular design and extensible classes</strong></p>
+<p>Chaco is meant to be used for writing tools and applications, and code
+reuse and good class design are important. We use the math behind the
+data and visualizations to give us architectural direction and conceptual
+modularity. The Traits framework allows us to use events to couple
+disjoint components at another level of modularity.</p>
+<p>Also, rather than building super-flexible core objects with myriad
+configuration attributes, Chaco&#8217;s classes are written with subclassing in
+mind.  While they are certainly configurable, the classes themselves are
+written in a modular way so that subclasses can easily customize
+particular aspects of a visual component&#8217;s appearance or a tool&#8217;s
+behavior.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="the-relationship-between-chaco-enable-and-kiva">
+<h2><a class="toc-backref" href="#id3">The Relationship Between Chaco, Enable, and Kiva</a><a class="headerlink" href="#the-relationship-between-chaco-enable-and-kiva" title="Permalink to this headline">¶</a></h2>
+<p>Chaco, Enable, and Kiva are three packages in the Enthought Tool Suite.
+They have been there for a long time now, since almost the beginning of
+Enthought as a company.  Enthought has delivered many applications using
+these toolkits. The Kiva and Enable packages are bundled together in the
+&#8220;Enable&#8221; project.</p>
+<div class="section" id="kiva">
+<h3><a class="toc-backref" href="#id4">Kiva</a><a class="headerlink" href="#kiva" title="Permalink to this headline">¶</a></h3>
+<p>Kiva is a 2-D vector drawing library for Python. It serves a purpose similar to
+<a class="reference external" href="http://cairographics.org/">Cairo</a>. It allows us to compose vector graphics
+for display on the screen or for saving to a variety of vector and image file
+formats. To use Kiva, a program instantiates a Kiva <tt class="xref py py-class docutils literal"><span class="pre">GraphicsContext</span></tt>
+object of an appropriate type, and then makes drawing calls on it like
+<tt class="xref py py-meth docutils literal"><span class="pre">gc.draw_image()</span></tt>, <tt class="xref py py-meth docutils literal"><span class="pre">gc.line_to()</span></tt>, and <tt class="xref py py-meth docutils literal"><span class="pre">gc.show_text()</span></tt>. Kiva
+integrates with windowing toolkits like wxWindows and Qt, and it has an OpenGL
+backend as well. For wxPython and Qt, Kiva actually performs a high-quality,
+fast software rasterization using the Anti-Grain Geometry (AGG) library. For
+OpenGL, Kiva has a python extension that makes native OpenGL calls from C++.</p>
+<p>Kiva provides a GraphicsContext for drawing onto the screen or saving out to
+disk, but it provides no mechanism for user input and control. For this
+&#8220;control&#8221; layer, it would be convenient to have to write only one set of event
+callbacks or handlers for all the platforms we support, and all the toolkits on
+each platform. The Enable package provides this layer. It insulates all the
+rendering and event handling code in Chaco from the minutiae of each GUI
+toolkit. Additionally, and to some extent more importantly, Enable defines the
+concept of &#8220;components&#8221; and &#8220;containers&#8221; that form the foundation of Chaco&#8217;s
+architecture. In the Enable model, the top-most Window object is responsible for
+dispatching events and drawing a single component. Usually, this component is a
+container with other containers and components inside it. The container can
+perform layout on its internal components, and it controls how events are
+subsequently dispatched to its set of components.</p>
+</div>
+<div class="section" id="enable">
+<h3><a class="toc-backref" href="#id5">Enable</a><a class="headerlink" href="#enable" title="Permalink to this headline">¶</a></h3>
+<p>Almost every graphical component in Chaco is an instance of an
+Enable component or container.  We&#8217;re currently trying to push more of the
+layout system (implemented as the various different kinds of Chaco plot
+containers) down into Enable, but as things currently stand, you have to
+use Chaco containers if you want to get layout.  The general trend has been
+that we implement some nifty new thing in Chaco, and then realize that it
+is a more general tool or overlay that will be useful for other
+non-plotting visual applications.  We then move it into Enable, and if
+there are plotting-specific aspects of it, we will create an appropriate
+subclass in Chaco to encapsulate that behavior.</p>
+<p>The sorts of applications that can and should be done at the Enable level
+include things like a visual programming canvas or a vector drawing tool.
+There is nothing at the Enable level that understands the concept of
+mapping between a data space to screen space and vice versa.  Although
+there has been some debate about the incorporating rudimentary mapping into
+Enable, for the time being, if you want some kind of canvas-like thing to
+model more than just pixel space on the screen, implement it using
+the mechanisms in Chaco.</p>
+<p>The way that Enable hooks up to the underlying GUI toolkit system is via an
+<tt class="xref py py-class docutils literal"><span class="pre">enable.Window</span></tt> object. Each toolkit has its own implementation of this
+object, and they all subclass from <tt class="xref py py-class docutils literal"><span class="pre">enable.AbstractWindow</span></tt>. They usually
+contain an instance of the GUI toolkit&#8217;s specific window object, whether it&#8217;s a
+<tt class="xref py py-class docutils literal"><span class="pre">wx.Window</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">Qt.QWidget</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">pyglet.window.Window</span></tt>. This
+instance is created upon initialization of the enable.Window and stored as the
+<tt class="xref py py-attr docutils literal"><span class="pre">control</span></tt> attribute on the Enable window. From the perspective of the GUI
+toolkit, an opaque widget gets created and stuck inside a parent control (or
+dialog or frame or window). This instance serves as a proxy between the GUI
+toolkit and the world of Enable. When the user clicks inside the widget area,
+the <tt class="xref py py-attr docutils literal"><span class="pre">control</span></tt> widget calls a method on the enable.Window object, which
+then in turn can dispatch the event down the stack of Enable containers and
+components. When the system tells the widget to draw itself (e.g., as the result
+of a PAINT or EXPOSE event from the OS), the enable.Window is responsible for
+creating an appropriate Kiva GraphicsContext (GC), then passing it down through
+the object hierarchy so that everyone gets a chance to draw. After all the
+components have drawn onto the GC, for the AGG-based bitmap backends, the
+enable.Window object is responsible for blitting the rastered off-screen buffer
+of the GC into the actual widget&#8217;s space on the screen. (For Kiva&#8217;s OpenGL
+backend, there is no final blit, since calls to the GC render in immediate mode
+in the window&#8217;s active OpenGL context, but the idea is the same, and the
+enable.Window object does perform initialization on the GL GraphicsContext.)</p>
+<p>Some of the advantages to using Enable are that it makes mouse and key events
+from disparate windowing systems all share the same kind of signature, and be
+accessible via the same name. So, if you write bare wxPython and handle a
+<tt class="xref py py-obj docutils literal"><span class="pre">key_pressed</span></tt> event in wx, this might generate a value of
+<tt class="xref py py-obj docutils literal"><span class="pre">wx.WXK_BACK</span></tt>. Using Enable, you would just get a &#8220;key&#8221; back and its value
+would be the string &#8220;Backspace&#8221;, and this would hold true on Qt4 and Pyglet.
+Almost all of the event handling and rendering code in Chaco is identical under
+all of the backends; there are very few backend-specific changes that need to be
+handled at the Chaco level.</p>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">enable.Window</span></tt> object has a reference to a single top-level graphical
+component (which includes containers, since they are subclasses of
+component).  Whenever it gets user input events, it recursively dispatches
+all the way down the potentially-nested stack of components.  Whenever a
+components wants to signal that it needs to be redrawn, it calls
+self.request_redraw(), which ultimately reaches the enable.Window, which
+can then make sure it schedules a PAINT event with the OS.  The nice thing
+about having the enable.Window object between the GUI toolkits and our
+apps, and sitting at the very top of event dispatch, is that we can easily
+interject new kinds of events; this is precisely what we did to enable all
+of our tools to work with Multitouch.</p>
+<p>The basic things to remember about Enable are that:</p>
+<ul class="simple">
+<li>Any place that your GUI toolkit allows you stick a generic widget, you
+can stick an Enable component (and this extends to Chaco components, as
+well).  Dave Morrill had a neat demonstration of this by embedding
+small Chaco plots as cells in a wx Table control.</li>
+<li>If you have some new GUI toolkit, and you want to provide an Enable
+backend for it, all you have to do is implement a new Window class for
+that backend.  You also need to make sure that Kiva can actually
+create a GraphicsContext for that toolkit.  Once the kiva_gl branch is
+committed to the trunk, Kiva will be able to render into any GL
+context. So if your newfangled unsupported GUI toolkit has a
+GLWindow type of thing, then you will be able to use Kiva, Enable, and
+Chaco inside it.  This is a pretty major improvement to
+interoperability, if only because users now don&#8217;t have to download and
+install wxPython just to play with Chaco.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="chaco">
+<h2><a class="toc-backref" href="#id6">Chaco</a><a class="headerlink" href="#chaco" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This section provides an overview of the relationships between these
+classes, and illustrates some sample usages.  For a more detailed list of
+the class hierarchy, please see <a class="reference internal" href="modules_and_classes.html#modules-and-classes"><em>Commonly Used Modules and Classes</em></a>.</p>
+</div>
+<p>At the highest level, Chaco consists of:</p>
+<ul class="simple">
+<li>Visual components that render to screen or an output device
+(e.g., <tt class="xref py py-class docutils literal"><span class="pre">LinePlot</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">PlotGrid</span></tt>,
+<tt class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">Legend</span></tt>)</li>
+<li>Data handling classes that wrap input data, interface with
+application-specific data sources, and transform coordinates
+between data and screen space (e.g., <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt>,
+<tt class="xref py py-class docutils literal"><span class="pre">GridDataSource</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt>)</li>
+<li>Tools that handle keyboard or mouse events and modify other
+components (e.g., <tt class="xref py py-class docutils literal"><span class="pre">PanTool</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">ZoomTool</span></tt>,
+<tt class="xref py py-class docutils literal"><span class="pre">ScatterInspector</span></tt>)</li>
+</ul>
+<p>Every Chaco plot is composed of these elements.  One can think of them
+as comprising a &#8220;display pipepline&#8221;, although the components form more
+of a graph.</p>
+<p>For example, a simple scatter plot will have:</p>
+<ul class="simple">
+<li>Two <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt> objects, one for the array of X data and one for
+the Y data</li>
+<li>Two <tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> ranges, one for the X axis and one for the Y axis.
+If we want the ranges to automatically compute the bounds of the dataset,
+then they need a reference to the an <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt>.</li>
+<li>Two independent <tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt> mappers, one for X axis and one for the
+Y axis.  The mappers convert from screen space to data space and vice verse,
+so they need a reference to the <tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> objects so they know the
+data space extents.</li>
+<li>A <tt class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></tt> renderer, that has a reference to two mappers, as
+well as an index and a value <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt>.</li>
+</ul>
+<p>This creates <em>only</em> the renderer that draws scatter markers in some region of
+screen space.  This does not create an X-axis, a Y-axis, or horizontal and
+vertical grids.  These other visuals are embodied as separate, distinct
+components: axes are drawn by the <tt class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></tt> component, and grids are
+drawn by the <tt class="xref py py-class docutils literal"><span class="pre">PlotGrid</span></tt> component.  Both of these overlays require a
+mapper in order to know where on the screen they should draw.</p>
+<p>So, the pipline looks like:</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+<h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Architecture Overview</a><ul>
+<li><a class="reference internal" href="#core-ideas">Core Ideas</a></li>
+<li><a class="reference internal" href="#the-relationship-between-chaco-enable-and-kiva">The Relationship Between Chaco, Enable, and Kiva</a><ul>
+<li><a class="reference internal" href="#kiva">Kiva</a></li>
+<li><a class="reference internal" href="#enable">Enable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chaco">Chaco</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/architecture_overview.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="modules_and_classes.html" title="Commonly Used Modules and Classes"
+             >next</a></li>
+        <li class="right" >
+          <a href="programmers_reference.html" title="Programmer’s Reference"
+             >previous</a> |</li>
+        <li><a href="index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+          <li><a href="programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
+  
+    <li><a href="#">Architecture Overview</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008, Enthought, Inc..
+      Last updated on Jan 27, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+    </div>
+  </body>
+</html>

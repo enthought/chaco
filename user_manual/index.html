@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>User Manual &mdash; Chaco v3.4.1 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="Chaco v3.4.1 documentation" href="../index.html" />
+    <link rel="next" title="Installing and Building Chaco" href="installation.html" />
+    <link rel="prev" title="Exploring Chaco with IPython" href="tutorial_ipython.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="installation.html" title="Installing and Building Chaco"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="tutorial_ipython.html" title="Exploring Chaco with IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+  
+    <li><a href="#">User Manual</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="user-manual">
+<h1>User Manual<a class="headerlink" href="#user-manual" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing and Building Chaco</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-via-epd">Installing via EPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#easy-install">easy_install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#building-from-source">Building from Source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#types-of-plotting">Types of Plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#a-basic-chaco-plot">A Basic Chaco Plot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plot_types.html">Plot Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#x-y-plot-types">X-Y Plot Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#image-and-2d-plots">Image and 2D Plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#other-plot-types">Other Plot Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="containers.html">Containers and Layout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="containers.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="containers.html#overlayplotcontainer">OverlayPlotContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="containers.html#hplotcontainer-and-vplotcontainer">HPlotContainer and VPlotContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="containers.html#gridplotcontainer">GridPlotContainer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools and Overlays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#interaction-tools">Interaction Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#inspector-type-tools">Inspector-type Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#selection-tools">Selection Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#drawing-tools">Drawing Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#core-overlays">Core Overlays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#annotation-overlays">Annotation Overlays</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common_patterns.html">Common Usages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common_patterns.html#linking-plots">Linking Plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_patterns.html#updating-streaming-data">Updating/Streaming Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_patterns.html#saving-screenshots">Saving Screenshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_patterns.html#non-interactive-offscreen-rendering">Non-interactive/Offscreen Rendering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_patterns.html#integrating-with-traits-ui-controls">Integrating with Traits UI Controls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how_do_i.html">How Do I...?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_do_i.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_do_i.html#layout-and-rendering">Layout and Rendering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_do_i.html#writing-components">Writing Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_do_i.html#advanced">Advanced</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-name-chaco-come-from">Where does the name &#8220;Chaco&#8221; come from?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#why-was-chaco-named-chaco2-for-a-while">Why was Chaco named &#8220;Chaco2&#8221; for a while?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-are-the-pros-and-cons-of-chaco-vs-matplotlib">What are the pros and cons of Chaco vs. matplotlib?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="annotated_examples.html">Annotated Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#bar-plot-py"><tt class="docutils literal"><span class="pre">bar_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#bigdata-py"><tt class="docutils literal"><span class="pre">bigdata.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#cursor-tool-demo-py"><tt class="docutils literal"><span class="pre">cursor_tool_demo.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#data-labels-py"><tt class="docutils literal"><span class="pre">data_labels.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#data-view-py"><tt class="docutils literal"><span class="pre">data_view.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#edit-line-py"><tt class="docutils literal"><span class="pre">edit_line.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#financial-plot-py"><tt class="docutils literal"><span class="pre">financial_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#financial-plot-dates-py"><tt class="docutils literal"><span class="pre">financial_plot_dates.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#multiaxis-py"><tt class="docutils literal"><span class="pre">multiaxis.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#multiaxis-using-plot-py"><tt class="docutils literal"><span class="pre">multiaxis_using_Plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#noninteractive-py"><tt class="docutils literal"><span class="pre">noninteractive.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#range-selection-demo-py"><tt class="docutils literal"><span class="pre">range_selection_demo.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#scales-test-py"><tt class="docutils literal"><span class="pre">scales_test.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#simple-line-py"><tt class="docutils literal"><span class="pre">simple_line.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#tornado-py"><tt class="docutils literal"><span class="pre">tornado.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#two-plots-py"><tt class="docutils literal"><span class="pre">two_plots.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#vertical-plot-py"><tt class="docutils literal"><span class="pre">vertical_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#data-cube-py"><tt class="docutils literal"><span class="pre">data_cube.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#data-stream-py"><tt class="docutils literal"><span class="pre">data_stream.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#scalar-image-function-inspector-py"><tt class="docutils literal"><span class="pre">scalar_image_function_inspector.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#spectrum-py"><tt class="docutils literal"><span class="pre">spectrum.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#cmap-image-plot-py"><tt class="docutils literal"><span class="pre">cmap_image_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#cmap-image-select-py"><tt class="docutils literal"><span class="pre">cmap_image_select.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#cmap-scatter-py"><tt class="docutils literal"><span class="pre">cmap_scatter.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#contour-cmap-plot-py"><tt class="docutils literal"><span class="pre">contour_cmap_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#contour-plot-py"><tt class="docutils literal"><span class="pre">contour_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#grid-container-py"><tt class="docutils literal"><span class="pre">grid_container.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#grid-container-aspect-ratio"><tt class="docutils literal"><span class="pre">grid_container_aspect_ratio</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#image-from-file-py"><tt class="docutils literal"><span class="pre">image_from_file.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#image-inspector-py"><tt class="docutils literal"><span class="pre">image_inspector.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#image-plot-py"><tt class="docutils literal"><span class="pre">image_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#inset-plot-py"><tt class="docutils literal"><span class="pre">inset_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#line-drawing-py"><tt class="docutils literal"><span class="pre">line_drawing.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#line-plot1-py"><tt class="docutils literal"><span class="pre">line_plot1.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#line-plot-hold-py"><tt class="docutils literal"><span class="pre">line_plot_hold.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#log-plot-py"><tt class="docutils literal"><span class="pre">log_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#nans-plot-py"><tt class="docutils literal"><span class="pre">nans_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#polygon-plot-py"><tt class="docutils literal"><span class="pre">polygon_plot.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#polygon-move-py"><tt class="docutils literal"><span class="pre">polygon_move.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#regression-py"><tt class="docutils literal"><span class="pre">regression.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#scatter-py"><tt class="docutils literal"><span class="pre">scatter.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#scatter-inspector-py"><tt class="docutils literal"><span class="pre">scatter_inspector.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#scatter-select-py"><tt class="docutils literal"><span class="pre">scatter_select.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#scrollbar-py"><tt class="docutils literal"><span class="pre">scrollbar.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#tabbed-plots-py"><tt class="docutils literal"><span class="pre">tabbed_plots.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#traits-editor-py"><tt class="docutils literal"><span class="pre">traits_editor.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#zoomable-colorbar-py"><tt class="docutils literal"><span class="pre">zoomable_colorbar.py</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_examples.html#zoomed-plot"><tt class="docutils literal"><span class="pre">zoomed_plot</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/user_manual/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="installation.html" title="Installing and Building Chaco"
+             >next</a></li>
+        <li class="right" >
+          <a href="tutorial_ipython.html" title="Exploring Chaco with IPython"
+             >previous</a> |</li>
+        <li><a href="../index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+  
+    <li><a href="#">User Manual</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008, Enthought, Inc..
+      Last updated on Jan 27, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+    </div>
+  </body>
+</html>

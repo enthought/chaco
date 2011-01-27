@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chaco Documentation &mdash; Chaco v3.4.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '3.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/et.ico"/>
+    <link rel="top" title="Chaco v3.4.1 documentation" href="#" />
+    <link rel="next" title="Quickstart" href="quickstart.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="quickstart.html" title="Quickstart"
+             accesskey="N">next</a></li>
+        <li><a href="#">Chaco v3.4.1 documentation</a> &raquo;</li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="chaco-documentation">
+<h1>Chaco Documentation<a class="headerlink" href="#chaco-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Chaco is a Python toolkit for building interactive 2-D visualizations.  It
+includes renderers for many popular plot types, built-in implementations of
+common interactions with those plots, and a framework for extending and
+customizing plots and interactions.  Chaco can also render graphics in a
+non-interactive fashion to images, in either raster or vector formats, and it
+has a subpackage for doing command-line plotting or simple scripting.</p>
+<p>Chaco is built on three other Enthought packages:</p>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="http://code.enthought.com/projects/traits">Traits</a>, as an event
+notification framework</li>
+<li>Kiva, for rendering 2-D graphics to a variety of backends across platforms</li>
+<li>Enable, as a framework for writing interactive visual components, and for
+abstracting away GUI-toolkit-specific details of mouse and keyboard
+handling</li>
+</ul>
+</blockquote>
+<p>Currently, Chaco requires either wxPython or PyQt to display interactive plots,
+but a cross-platform OpenGL backend (using Pyglet) is in the works, and it will
+not require WX or Qt.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation-overview">Installation Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#running-some-examples">Running Some Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#creating-a-plot">Creating a Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_manual/tutorial.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_1.html">Interactive Plotting with Chaco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_2.html">Modeling Van der Waal&#8217;s Equation With Chaco and Traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_hyetograph.html">Creating an interactive Hyetograph with Chaco and Traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_wx.html">WX-based Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_ipython.html">Exploring Chaco with IPython</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_manual/index.html">User Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/installation.html">Installing and Building Chaco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/plot_types.html">Plot Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/containers.html">Containers and Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/tools.html">Tools and Overlays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/common_patterns.html">Common Usages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/how_do_i.html">How Do I...?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_manual/annotated_examples.html">Annotated Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="programmers_reference.html">Programmer&#8217;s Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html">Commonly Used Modules and Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_sources.html">Data Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_ranges.html">Data Ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html">Mappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/containers.html">Containers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tech_notes.html">Tech Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scales.html">About the Chaco Scales package</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="quickstart.html" title="Quickstart"
+             >next</a></li>
+        <li><a href="#">Chaco v3.4.1 documentation</a> &raquo;</li>
+  
+
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008, Enthought, Inc..
+      Last updated on Jan 27, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+    </div>
+  </body>
+</html>

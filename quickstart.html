@@ -1,0 +1,367 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quickstart &mdash; Chaco v3.4.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '3.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/et.ico"/>
+    <link rel="top" title="Chaco v3.4.1 documentation" href="index.html" />
+    <link rel="next" title="Tutorials" href="user_manual/tutorial.html" />
+    <link rel="prev" title="Chaco Documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user_manual/tutorial.html" title="Tutorials"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index.html" title="Chaco Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+  
+    <li><a href="#">Quickstart</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>This section is meant to help users on well-supported platforms and common
+Python environments get started using Chaco as quickly as possible.  If your
+platform is not listed here, or your Python installation has some quirks, then
+some of the following instructions might not work for you.  If you encounter
+any problems in the steps below, please refer to the <a class="reference internal" href="user_manual/installation.html#installation"><em>Installing and Building Chaco</em></a>
+section for more detailed instructions.</p>
+<div class="section" id="installation-overview">
+<h2>Installation Overview<a class="headerlink" href="#installation-overview" title="Permalink to this headline">¶</a></h2>
+<p>There are several different ways to get Chaco:</p>
+<ul>
+<li><p class="first">Install the Enthought Python Distribution.
+Chaco and the rest of the Enthought Tool Suite are bundled with it.  Go to
+the main <a class="reference external" href="http://www.enthought.com/epd">Enthought Python Distribution (EPD)</a> web site and download the appropriate
+version for your platform.  After running the installer, you will have a
+working version of Chaco.</p>
+<p><em>Available platforms:</em></p>
+<ul class="simple">
+<li>Windows 32-bit</li>
+<li>Mac OS X 10.4 and 10.5</li>
+<li>RedHat Enterprise Linux 3 (32-bit and 64-bit)</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Enthought Python Distribution is free for academic and personal
+use, and fee-based for commercial and government use.</p>
+</div>
+</li>
+<li><p class="first"><em>(Windows, Mac)</em> Install from PyPI using easy_install (part of setuptools)
+from the command line:</p>
+<p><strong class="command">easy_install Chaco</strong></p>
+</li>
+<li><p class="first"><em>(Linux)</em> Install distribution-specific eggs from Enthought&#8217;s repository.
+See the <a class="reference external" href="https://svn.enthought.com/enthought/wiki/Install#UsingEnthoughtsEggRepo">ETS wiki</a>
+for instructions for installing pre-built binary eggs for your specific
+distribution of Linux.</p>
+</li>
+<li><p class="first"><em>(Linux)</em> Install via the distribution&#8217;s packaging mechanism.  We provide
+.debs for Debian and Ubuntu and .rpms for Redhat.  (TODO)</p>
+</li>
+<li><p class="first">Download source as tarballs or from Subversion and build.  See
+the <a class="reference internal" href="user_manual/installation.html#installation"><em>Installing and Building Chaco</em></a> section.</p>
+</li>
+</ul>
+<p>Chaco requires Python version 2.5.</p>
+</div>
+<div class="section" id="running-some-examples">
+<h2>Running Some Examples<a class="headerlink" href="#running-some-examples" title="Permalink to this headline">¶</a></h2>
+<p>Depending on how you installed Chaco, you may or may not have the examples already.</p>
+<p>If you installed Chaco as part of EPD, the location of the examples depends on
+your platform:</p>
+<ul class="simple">
+<li>On Windows, they are in the <tt class="file docutils literal"><span class="pre">Examples\</span></tt> subdirectory of your installation
+location.  This is typically <tt class="file docutils literal"><span class="pre">C:\Python25\Examples</span></tt>.</li>
+<li>On Linux, they are in the <tt class="file docutils literal"><span class="pre">Examples/</span></tt> subdirectory of your installation
+location.</li>
+<li>On Mac OS X, they are in the <tt class="file docutils literal"><span class="pre">/Applications/&lt;EPD</span> <span class="pre">Version&gt;/Examples/</span></tt>
+directory.</li>
+</ul>
+<p>If you downloaded and installed Chaco from source (via the PyPI tar.gz file, or
+from an SVN checkout), the examples are located in the <tt class="file docutils literal"><span class="pre">examples/</span></tt> subdirectory
+inside the root of the Chaco source tree, next to <tt class="file docutils literal"><span class="pre">docs/</span></tt> and the <tt class="file docutils literal"><span class="pre">enthought/</span></tt>
+directories.</p>
+<p>If you installed Chaco as a binary egg from PyPI for your platform, or if you
+happen to be on a machine with Chaco installed, but you don&#8217;t know the exact
+installation mechanism, then you will need to download the examples separately
+using Subversion:</p>
+<ul>
+<li><p class="first">ETS 3.0 or Chaco 3.0:</p>
+<p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples</strong></p>
+</li>
+<li><p class="first">ETS 2.8 or Chaco 2.0.x:</p>
+<p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples</strong></p>
+</li>
+</ul>
+<p>Almost all of the Chaco examples are stand-alone files that can be run
+individually, from any location.</p>
+<p>All of the following instructions that involve the command line assume that
+you are in the same directory as the examples.</p>
+<div class="section" id="command-line">
+<h3>Command line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
+<p>Run the <tt class="docutils literal"><span class="pre">simple_line</span></tt> example:</p>
+<blockquote>
+<strong class="command">python simple_line.py</strong></blockquote>
+<p>This opens a plot of several Bessel functions and a legend.</p>
+<img alt="_images/simple_line.png" src="_images/simple_line.png" />
+<p>You can interact with the plot in several ways:</p>
+<ul>
+<li><p class="first">To pan the plot, hold down the left mouse button inside the plot area
+(but not on the legend) and drag the mouse.</p>
+</li>
+<li><p class="first">To zoom the plot:</p>
+<blockquote>
+<ul class="simple">
+<li>Mouse wheel: scroll up to zoom in, and scroll down to zoom out.</li>
+<li>Zoom box: Press &#8220;z&#8221;, and then draw a box region to zoom in on. (There
+is no box-based zoom out.) Press Ctrl-Left and Ctrl-Right to go
+back and forward in your zoom box history.</li>
+<li>Drag: hold down the right mouse button and drag the mouse up
+or down. Up zooms in, and down zooms out.</li>
+<li>For any of the above, press Escape to resets the zoom to the
+original view.</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">To move the legend, hold down the right mouse button inside the
+legend and drag it around. Note that you can move the legend
+outside of the plot area.</p>
+</li>
+<li><p class="first">To exit the plot, click the &#8220;close window&#8221; button on the window frame
+(Windows, Linux) or choose the Quit option on the Python menu (on
+Mac).  Alternatively, can you press Ctrl-C in the terminal.</p>
+</li>
+</ul>
+<p>You can run most of the examples in the top-level <tt class="file docutils literal"><span class="pre">examples</span></tt>
+directory, the <tt class="file docutils literal"><span class="pre">examples/basic/</span></tt> directory, and the <tt class="file docutils literal"><span class="pre">examples/shell/</span></tt>
+directory.  The <tt class="file docutils literal"><span class="pre">examples/advanced/</span></tt> directory has some examples that
+may or may not work on your system:</p>
+<ul class="simple">
+<li><tt class="file docutils literal"><span class="pre">spectrum.py</span></tt> requires that you have PyAudio installed and a working
+microphone.</li>
+<li><tt class="file docutils literal"><span class="pre">data_cube.py</span></tt> needs to download about 7.3mb of data from the Internet
+the first time it is executed, so you must have a working
+Internet connection. Once the data is downloaded, you can save it so you
+can run the example offline in the future.</li>
+</ul>
+<p>For detailed information about each built-in example, see the <a class="reference internal" href="user_manual/annotated_examples.html#examples"><em>Annotated Examples</em></a>
+section.</p>
+</div>
+<div class="section" id="ipython">
+<h3>IPython<a class="headerlink" href="#ipython" title="Permalink to this headline">¶</a></h3>
+<p>While all of the Chaco examples can be launched from the command line using the
+standard Python interpreter, if you have IPython installed, you can poke around
+them in a more interactive fashion.</p>
+<p>Chaco provides a subpackage, currently named the &#8220;Chaco Shell&#8221;, for doing
+command-line plotting like Matlab or Matplotlib.  The examples in the
+<tt class="file docutils literal"><span class="pre">examples/shell/</span></tt> directory use this subpackage, and they are particularly
+amenable to exploration with IPython.</p>
+<p>The first example we&#8217;ll look at is the <tt class="file docutils literal"><span class="pre">lines.py</span></tt> example.  First, we&#8217;ll
+run it using the standard Python interpreter:</p>
+<blockquote>
+<strong class="command">python lines.py</strong></blockquote>
+<p>This shows two overlapping line plots.</p>
+<img alt="_images/lines.png" src="_images/lines.png" />
+<p>You can interact with the plot in the following ways:</p>
+<blockquote>
+<ul>
+<li><p class="first">To pan the plot, hold down the left mouse button inside the plot area
+and dragging the mouse.</p>
+</li>
+<li><p class="first">To zoom the plot:</p>
+<blockquote>
+<ul class="simple">
+<li>Mouse wheel: scroll up zooms in, and scroll down zooms out.</li>
+<li>Zoom box: hold down the right mouse button, and then draw a box region
+to zoom in on.  (There is no box-based zoom out.)  Press Ctrl-Left and
+Ctrl-Right to go back and forward in your zoom box history.</li>
+<li>For either of the above, press Escape to reset the zoom to the
+original view.</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<p>Now exit the plot, and start IPython with the -wthread option:</p>
+<blockquote>
+<strong class="command">ipython -wthread</strong></blockquote>
+<p>This tells IPython to start a wxPython mainloop in a background thread.  Now
+run the previous example again:</p>
+<div class="highlight-python"><pre>In [1]: run lines.py</pre>
+</div>
+<p>This displays the plot window, but gives you another
+IPython prompt.  You can now use various commands from the <tt class="xref py py-mod docutils literal"><span class="pre">chaco.shell</span></tt>
+package to interact with the plot.</p>
+<ul>
+<li><p class="first">Import the shell commands:</p>
+<div class="highlight-python"><pre>In [2]: from enthought.chaco.shell import *</pre>
+</div>
+</li>
+<li><p class="first">Set the X-axis title:</p>
+<div class="highlight-python"><pre>In [3]: xtitle("X data")</pre>
+</div>
+</li>
+<li><p class="first">Toggle the legend:</p>
+<div class="highlight-python"><pre>In [4]: legend()</pre>
+</div>
+</li>
+</ul>
+<p>After running these commands, your plot looks like this:</p>
+<img alt="_images/lines_final.png" src="_images/lines_final.png" />
+<p>The <tt class="xref py py-func docutils literal"><span class="pre">chaco_commands()</span></tt> function display a list of commands with brief
+descriptions.</p>
+<p>You can explore the Chaco object hierarchy, as well. The <tt class="xref py py-mod docutils literal"><span class="pre">chaco.shell</span></tt>
+commands are just convenience functions that wrap a rich object hierarchy
+that comprise the actual plot. See the <a class="reference internal" href="user_manual/tutorial_ipython.html#tutorial-ipython"><em>Exploring Chaco with IPython</em></a> section
+for information on more complex and interesting things you can do with Chaco
+from within IPython.</p>
+</div>
+<div class="section" id="start-menu-ms-windows">
+<h3>Start Menu (MS Windows)<a class="headerlink" href="#start-menu-ms-windows" title="Permalink to this headline">¶</a></h3>
+<p>If you installed the Enthought Python Distribution (EPD), you have
+shortcuts installed in your Start Menu for many of the Chaco examples.  You can
+run them by just clicking the shortcut.  (This just invokes python.exe on the
+example file itself.)</p>
+</div>
+</div>
+<div class="section" id="creating-a-plot">
+<h2>Creating a Plot<a class="headerlink" href="#creating-a-plot" title="Permalink to this headline">¶</a></h2>
+<p>(TODO)</p>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p>Once you have Chaco installed, you can either visit the <a class="reference internal" href="user_manual/tutorial.html#tutorials"><em>Tutorials</em></a>
+to learn how to use the package, or you can run the examples (see the
+<a class="reference internal" href="user_manual/annotated_examples.html#examples"><em>Annotated Examples</em></a> section).</p>
+<div class="section" id="presentations">
+<h3>Presentations<a class="headerlink" href="#presentations" title="Permalink to this headline">¶</a></h3>
+<p>There have been several presentations on Chaco at previous PyCon and
+SciPy conferences.  Slides and demos from these are described below.</p>
+<p>Currently, the examples and the scipy 2006 tutorial are the best ways
+to get going quickly. (See <a class="reference external" href="http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html">http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html</a>)</p>
+<p>Some tutorial examples were recently added into the examples/tutorials/scipy2008/
+directory on the trunk.  These examples are numbered and introduce
+concepts one at a time, going from a simple line plot to building a
+custom overlay with its own trait editor and reusing an existing tool
+from the built-in set of tools.  You can browse them on our SVN server
+at:
+<a class="reference external" href="https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008">https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008</a></p>
+</div>
+<div class="section" id="api-docs">
+<span id="id1"></span><h3>API Docs<a class="headerlink" href="#api-docs" title="Permalink to this headline">¶</a></h3>
+<p>The API docs for Chaco 3.0 (in ETS 3.0) are at:
+<a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html">http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html</a></p>
+<p>The API docs for Chaco2 (in ETS 2.7.1) are at:
+<a class="reference external" href="http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html">http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html</a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+<h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Quickstart</a><ul>
+<li><a class="reference internal" href="#installation-overview">Installation Overview</a></li>
+<li><a class="reference internal" href="#running-some-examples">Running Some Examples</a><ul>
+<li><a class="reference internal" href="#command-line">Command line</a></li>
+<li><a class="reference internal" href="#ipython">IPython</a></li>
+<li><a class="reference internal" href="#start-menu-ms-windows">Start Menu (MS Windows)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-a-plot">Creating a Plot</a></li>
+<li><a class="reference internal" href="#further-reading">Further Reading</a><ul>
+<li><a class="reference internal" href="#presentations">Presentations</a></li>
+<li><a class="reference internal" href="#api-docs">API Docs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/quickstart.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user_manual/tutorial.html" title="Tutorials"
+             >next</a></li>
+        <li class="right" >
+          <a href="index.html" title="Chaco Documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+  
+    <li><a href="#">Quickstart</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008, Enthought, Inc..
+      Last updated on Jan 27, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+    </div>
+  </body>
+</html>
