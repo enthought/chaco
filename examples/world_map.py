@@ -42,7 +42,7 @@ class WorldMapPlot(HasTraits):
 
     # The view
     traits_view = View(Item('plot', editor=ComponentEditor(),
-                            width=800, show_label=False),
+                            width=800, height=400, show_label=False),
                        resizable=True)
 
     #---------------------------------------------------------------------------
