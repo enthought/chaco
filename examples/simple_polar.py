@@ -31,7 +31,7 @@ def _create_plot_component():
 
     # Create a new polar plot with radius and theta data
     plot = create_polar_plot((radius,theta),color=(0.0,0.0,1.0,1), width=4.0)
-    
+
     return plot
 
 #===============================================================================
@@ -44,19 +44,19 @@ title="Simple Polar Plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -67,7 +67,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

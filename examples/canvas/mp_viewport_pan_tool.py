@@ -12,7 +12,7 @@ class MPViewportPanTool(ViewportPanTool):
         if self.cur_bid == -1 and self.is_draggable(event.x, event.y):
             self.cur_bid = event.bid
             self.drag_start(event)
-    
+
     def dragging_blob_up(self, event):
         if event.bid == self.cur_bid:
             self.cur_bid = -1

@@ -28,7 +28,7 @@ from _speedups_fallback import *
 
 #        return _speedups.scatterplot_gather_points(index, index_low, index_high,
 #                      value, value_low, value_high,
-#                      index_mask=index_mask, index_sel=index_sel, 
+#                      index_mask=index_mask, index_sel=index_sel,
 #                      index_sel_mask=index_sel_mask,
 #                      value_mask=value_mask, value_sel=value_sel,
 #                      value_sel_mask=value_sel_mask)

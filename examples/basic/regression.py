@@ -32,27 +32,27 @@ from enthought.chaco.tools.api import PanTool, ZoomTool, RegressionLasso, \
 #===============================================================================
 def _create_plot_component():
     pd = ArrayPlotData(x=random(100), y=random(100))
-    
+
     # Create some line plots of some of the data
     plot = Plot(pd)
-    
+
     # Create a scatter plot and get a reference to it (separate from the
     # Plot object) because we'll need it for the regression tool below.
     scatterplot = plot.plot(("x", "y"), color="blue", type="scatter")[0]
-    
+
     # Tweak some of the plot properties
     plot.padding = 50
-    
+
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot, drag_button="right"))
     plot.overlays.append(ZoomTool(plot))
-    
+
     # Add the regression tool and overlay.  These need to be added
     # directly to the scatterplot instance (and not the Plot instance).
     regression = RegressionLasso(scatterplot,
-    	selection_datasource=scatterplot.index)
+        selection_datasource=scatterplot.index)
     scatterplot.tools.append(regression)
-    scatterplot.overlays.append(RegressionOverlay(scatterplot, 
+    scatterplot.overlays.append(RegressionOverlay(scatterplot,
                                                   lasso_selection=regression))
     return plot
 
@@ -60,24 +60,24 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size = (600, 600)
 title = "Regression Selection"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -88,7 +88,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

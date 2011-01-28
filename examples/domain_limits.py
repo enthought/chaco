@@ -29,7 +29,7 @@ class ExamplePlotApp(HasTraits):
         # Add pan and zoom tools
         line_plot.tools.append(PanTool(line_plot))
         line_plot.tools.append(ZoomTool(line_plot))
-        
+
         # Set the domain_limits
         line_plot.index_mapper.domain_limits = (3.3, 6.6)
 

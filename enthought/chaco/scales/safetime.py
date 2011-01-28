@@ -23,7 +23,7 @@ def safe_fromtimestamp(timestamp, *args, **kwds):
 
     WARNING: This function does not behave properly with Daylight Savings Time,
     due to a documented issue with datetime arithmetic.
-    """    
+    """
     try:
         return EPOCH + timedelta(seconds=timestamp)
     except (ValueError, OverflowError), e:
@@ -35,10 +35,10 @@ def safe_fromtimestamp(timestamp, *args, **kwds):
 
 def mktime(t):
     """ mktime(tuple) -> floating point number
-    
+
     Convert a time tuple in local time to seconds since the Epoch. Invalid time
     tuples will be assigned the value 0.0 and a warning will be issued.
-    """    
+    """
     try:
         return stdlib_time.mktime(t)
     except (ValueError, OverflowError):
@@ -61,7 +61,7 @@ struct_time = type(stdlib_time.localtime())
 def localtime(t=None):
     """
     localtime([seconds]) -> (tm_year,tm_mon,tm_day,tm_hour,tm_min,tm_sec,tm_wday,tm_yday,tm_isdst)
-    
+
     Convert seconds since the Epoch to a time tuple expressing local time.
     When 'seconds' is not passed in, convert the current time instead.
 

@@ -3,9 +3,9 @@
 Loads and saves RGB images from disk
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 """
 
@@ -52,7 +52,7 @@ class DemoView(HasTraits):
         return_path=True)
     _load_file = File(image_path)
 
-    # File name to save image to 
+    # File name to save image to
     _save_file = File
 
 
@@ -60,8 +60,8 @@ class DemoView(HasTraits):
 
     # This view is for a file dialog to select the 'load' filename
     load_file_view = View(
-        Item('_load_file'), 
-        buttons=OKCancelButtons, 
+        Item('_load_file'),
+        buttons=OKCancelButtons,
         kind='livemodal',  # NB must use livemodal, plot objects don't copy well
         width=400,
         resizable=True,
@@ -69,8 +69,8 @@ class DemoView(HasTraits):
 
     # This view is for a file dialog to select the 'save' filename
     save_file_view = View(
-        Item('_save_file'), 
-        buttons=OKCancelButtons, 
+        Item('_save_file'),
+        buttons=OKCancelButtons,
         kind='livemodal',  # NB must use livemodal, plot objects don't copy well
         width=400,
         resizable=True,
@@ -102,13 +102,13 @@ class DemoView(HasTraits):
         """ Returns the default view to use for this class.
         """
         # NOTE: I moved the view to this method so we can declare a handler
-        # for the view. Alternatively, we could move the DemoController class 
-        # to the top and declare view=Instance(HasTraits) instead. 
+        # for the view. Alternatively, we could move the DemoController class
+        # to the top and declare view=Instance(HasTraits) instead.
         traits_view = View(
             Item('plot',
                  editor=ComponentEditor(),
                  show_label=False,
-            ), 
+            ),
             menubar=MenuBar(
                 Menu(Action(name="Save Plot", action="save"), # see Controller for
                      Action(name="Load Plot", action="load"), # these callbacks
@@ -123,7 +123,7 @@ class DemoView(HasTraits):
             handler=DemoController
         )
         return traits_view
-    
+
     #---------------------------------------------------------------------------
     # Private 'DemoView' interface
     #---------------------------------------------------------------------------
@@ -174,9 +174,9 @@ class DemoController(Handler):
         Overridden here to assign the 'view' trait.
         """
         self.view = info.object
-        
+
     def save(self, ui_info):
-        """ 
+        """
         Callback for the 'Save Image' menu option.
         """
         ui = self.view.edit_traits(view='save_file_view')
@@ -184,7 +184,7 @@ class DemoController(Handler):
             self.view._save()
 
     def load(self, ui_info):
-        """ 
+        """
         Callback for the 'Load Image' menu option.
         """
         ui = self.view.edit_traits(view='load_file_view')

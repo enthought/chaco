@@ -20,25 +20,25 @@ class TextBoxOverlay(AbstractOverlay):
 
     # The text to display in the box.
     text = Str
-    
+
     # The font to use for the text.
     font = KivaFont("modern 12")
-    
+
     # The background color for the box (overrides AbstractOverlay).
     bgcolor = ColorTrait("transparent")
-    
+
     # The alpha value to apply to **bgcolor**
     alpha = Trait(1.0, None, Float)
-    
+
     # The color of the outside box.
     border_color = ColorTrait("dodgerblue")
-    
+
     # The thickness of box border.
     border_size = Int(1)
-    
+
     # Number of pixels of padding around the text within the box.
     padding = Int(5)
-    
+
     # Alignment of the text in the box:
     #
     # * "ur": upper right
@@ -55,13 +55,13 @@ class TextBoxOverlay(AbstractOverlay):
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws the box overlaid on another component.
-        
+
         Overrides AbstractOverlay.
         """
 
         if not self.visible:
             return
-        
+
         # draw the label on a transparent box. This allows us to draw
         # different shapes and put the text inside it without the label
         # filling a rectangle on top of it
@@ -113,11 +113,11 @@ class TextBoxOverlay(AbstractOverlay):
 
         with gc:
             gc.translate_ctm(x, y)
-            
+
             gc.set_line_width(self.border_size)
             gc.set_stroke_color(self.border_color_)
             gc.set_fill_color(color)
-    
+
             # draw a rounded rectangle
             x = y = 0
             end_radius = 8.0
@@ -137,5 +137,5 @@ class TextBoxOverlay(AbstractOverlay):
                     x + width + end_radius,
                     y, end_radius)
             gc.draw_path()
-    
+
             label.draw(gc)

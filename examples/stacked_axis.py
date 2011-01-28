@@ -21,14 +21,14 @@ from enthought.traits.ui.api import Item, Group, View
 # Chaco imports
 from enthought.chaco.api import HPlotContainer, \
     OverlayPlotContainer, PlotAxis, PlotGrid
-from enthought.chaco.tools.api import BroadcasterTool, PanTool 
+from enthought.chaco.tools.api import BroadcasterTool, PanTool
 from enthought.chaco.api import create_line_plot
 
 #===============================================================================
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():
-    
+
     # Create some x-y data series to plot
     plot_area = OverlayPlotContainer(border_visible=True)
     container = HPlotContainer(padding=50, bgcolor="transparent")
@@ -74,12 +74,12 @@ def _create_plot_component():
     broadcaster = BroadcasterTool()
     for plot in plot_area.components:
         broadcaster.tools.append(PanTool(plot))
-    
+
     # Attach the broadcaster to one of the plots.  The choice of which
     # plot doesn't really matter, as long as one of them has a reference
     # to the tool and will hand events to it.
     plot.tools.append(broadcaster)
-    
+
     return container
 
 #===============================================================================
@@ -92,19 +92,19 @@ title="Multi-Y plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
         return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -115,7 +115,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

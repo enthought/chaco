@@ -10,7 +10,7 @@ from enthought.chaco.api import AbstractOverlay, BasePlotContainer
 class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
     """ Allows an arbitrary plot component to be overlaid on top of another one.
     """
-    
+
     # The PlotComponent to draw as an overlay
     overlay_component = Instance(Component)
 
@@ -31,7 +31,7 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
 
     def _bounds_default(self):
         return [450, 250]
-    
+
     def _clear_bounds(self, gc, view_bounds):
         if view_bounds is None:
             view_bounds = (0,0, self.width, self.height)
@@ -68,7 +68,7 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
                 y = component.outer_y2 + self.margin
             else:
                 y = component.outer_y - bounds[1] - self.margin
-        
+
         if self.offset is not None:
             x += self.offset[0]
             y += self.offset[1]

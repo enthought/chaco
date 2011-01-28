@@ -26,7 +26,7 @@ from enthought.chaco.tools.api import LineInspector, RangeSelection, RangeSelect
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():
-    
+
     numpoints = 100
     low = -5
     high = 15.001
@@ -42,7 +42,7 @@ def _create_plot_component():
     plot.padding = 50
     add_default_grids(plot)
     add_default_axes(plot)
-    
+
     return plot
 
 
@@ -56,19 +56,19 @@ title="Simple line plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -79,7 +79,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

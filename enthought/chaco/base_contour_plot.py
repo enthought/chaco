@@ -41,7 +41,7 @@ class BaseContourPlot(Base2DPlot):
 
     # Is the cached color data valid?
     _colors_cache_valid = Bool(False)
-    
+
     # List of levels and their associated line properties.
     _levels = List
 
@@ -49,7 +49,7 @@ class BaseContourPlot(Base2DPlot):
     _colors = List
 
     # Mapped trait used to convert user-suppied color values to AGG-acceptable
-    # ones. (Mapped traits in lists are not supported, must be converted one at 
+    # ones. (Mapped traits in lists are not supported, must be converted one at
     # a time.)
     _color_map_trait = ColorTrait
 
@@ -86,16 +86,16 @@ class BaseContourPlot(Base2DPlot):
 
         colors = self.colors
         # If we are given no colors, set a default for all levels
-        if colors is None: 
+        if colors is None:
             self._color_map_trait = "black"
             self._colors = [self._color_map_trait_] * numcolors
 
-        # If we are given a single color, apply it to all levels 
+        # If we are given a single color, apply it to all levels
         elif isinstance(colors, basestring):
             self._color_map_trait = colors
             self._colors = [self._color_map_trait_] * numcolors
 
-        # If we are given a colormap, use it to map all the levels to colors 
+        # If we are given a colormap, use it to map all the levels to colors
         elif isinstance(colors, ColorMapper):
             self._colors =  []
             mapped_colors = self.color_mapper.map_screen(array(self._levels))
@@ -117,7 +117,7 @@ class BaseContourPlot(Base2DPlot):
                 # repeat colors from the beginning of the list as needed
                 self._colors = []
                 for i in range(len(self._levels)):
-                    self._color_map_trait = colors[i%len(colors)]    
+                    self._color_map_trait = colors[i%len(colors)]
                     self._colors.append(self._color_map_trait_)
 
         self._colors_cache_valid = True
@@ -154,9 +154,9 @@ class BaseContourPlot(Base2DPlot):
         self._update_levels()
         self.invalidate_draw()
         self.request_redraw()
-        
+
     def _colors_changed(self):
-        if self._level_cache_valid: 
+        if self._level_cache_valid:
             self._update_colors()
             self.invalidate_draw()
 

@@ -20,10 +20,10 @@ class LogMapper(Base1DMapper):
     """ Defines a 1-D logarithmic scale mapping from a 1-D region in input
     space to a 1-D region in output space.
     """
-    
+
     # The value to map when asked to map values <= LOG_MINIMUM to screen space.
     fill_value = Float(1.0)
-    
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -80,7 +80,7 @@ class LogMapper(Base1DMapper):
 
     def map_data_array(self, screen_vals):
         return self.map_data(screen_vals)
-        
+
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
@@ -92,12 +92,12 @@ class LogMapper(Base1DMapper):
             low = LOG_MINIMUM
         else:
             low = orig_low
-        
+
         if orig_high < LOG_MINIMUM:
             high = LOG_MINIMUM
         else:
             high = orig_high
-        
+
         if low == high:
             if low == LOG_MINIMUM:
                 low = 1.0
@@ -109,18 +109,18 @@ class LogMapper(Base1DMapper):
                     high = pow(10, ceil(log_val))
                 else:
                     high = pow(10, ceil(log_val) + 1)
-        
+
         return (low, high)
 
     def _compute_scale(self):
         if self._cache_valid:
             return
-        
+
         if self.range is None:
             self._cache_valid = False
             return
-        
-        screen_range = self.high_pos - self.low_pos 
+
+        screen_range = self.high_pos - self.low_pos
         if screen_range == 0.0:
             self._null_screen_range = True
 
@@ -138,7 +138,7 @@ class LogMapper(Base1DMapper):
                 self._inter_offset = log(low)
             self._screen_scale = screen_range
             self._screen_offset = self.low_pos
-        
+
         self._cache_valid = True
         return
 

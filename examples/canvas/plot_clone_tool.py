@@ -60,8 +60,8 @@ class PlotCloneTool(AbstractOverlay, DragTool):
                     self._recursion_check = False
 
     def drag_start(self, event):
-        """ Called when the drag operation starts.  
-        
+        """ Called when the drag operation starts.
+
         Implements DragTool.
         """
         self._offset = (event.x - self.mouse_down_position[0],
@@ -70,7 +70,7 @@ class PlotCloneTool(AbstractOverlay, DragTool):
                                   self.mouse_down_position[1] - self.component.y)
         self.visible = True
         event.handled = True
-    
+
     def dragging(self, event):
         self._offset = (event.x - self.mouse_down_position[0],
                         event.y - self.mouse_down_position[1])
@@ -98,7 +98,7 @@ class MPPlotCloneTool(PlotCloneTool):
         if self.cur_bid == -1 and self.is_draggable(event.x, event.y):
             self.cur_bid = event.bid
             self.drag_start(event)
-    
+
     def dragging_blob_up(self, event):
         if event.bid == self.cur_bid:
             self.cur_bid = -1

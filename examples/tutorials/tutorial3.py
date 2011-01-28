@@ -23,4 +23,3 @@ myplot.tools.append(PanTool(myplot))
 # And now we just run it.
 if __name__ == "__main__":
     main()
-    

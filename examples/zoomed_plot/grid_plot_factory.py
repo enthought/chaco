@@ -9,12 +9,12 @@ def create_gridded_line_plot(x, y, orientation="h", color="red", width=1.0,
                              padding=30):
 
     assert len(x) == len(y)
-    
+
     # If you know it is monotonically increasing, sort_order can
     # be set to 'ascending'
     index = ArrayDataSource(x,sort_order='none')
     value = ArrayDataSource(y, sort_order="none")
-    
+
     index_range = DataRange1D(tight_bounds = False)
     index_range.add(index)
     index_mapper = LinearMapper(range=index_range)
@@ -22,7 +22,7 @@ def create_gridded_line_plot(x, y, orientation="h", color="red", width=1.0,
     value_range = DataRange1D(tight_bounds = False)
     value_range.add(value)
     value_mapper = value_mapper_class(range=value_range)
-    
+
     plot = LinePlot(index=index, value=value,
                     index_mapper = index_mapper,
                     value_mapper = value_mapper,
@@ -53,19 +53,19 @@ def create_gridded_line_plot(x, y, orientation="h", color="red", width=1.0,
                                line_color="gray",
                                line_style='dot',
                                use_draw_order = True)
-    
+
     vertical_axis = PlotAxis(orientation='left',
                              mapper=plot.value_mapper,
                              use_draw_order = True)
-    
+
     horizontal_axis = PlotAxis(orientation='bottom',
                                title='Time (s)',
                                mapper=plot.index_mapper,
                                use_draw_order = True)
-    
+
     plot.underlays.append(vertical_grid)
     plot.underlays.append(horizontal_grid)
-    
+
     # Have to add axes to overlays because we are backbuffering the main plot,
     # and only overlays get to render in addition to the backbuffer.
     plot.overlays.append(vertical_axis)
@@ -77,12 +77,12 @@ def create_gridded_scatter_plot(x, y, orientation="h", color="red", width=1.0,
                                 value_mapper_class=LinearMapper, padding=30):
 
     assert len(x) == len(y)
-    
+
     # If you know it is monotonically increasing, sort_order can
     # be set to 'ascending'
     index = ArrayDataSource(x,sort_order='none')
     value = ArrayDataSource(y, sort_order="none")
-    
+
     index_range = DataRange1D(tight_bounds = False)
     index_range.add(index)
     index_mapper = LinearMapper(range=index_range)
@@ -90,7 +90,7 @@ def create_gridded_scatter_plot(x, y, orientation="h", color="red", width=1.0,
     value_range = DataRange1D(tight_bounds = False)
     value_range.add(value)
     value_mapper = value_mapper_class(range=value_range)
-    
+
     plot = ScatterPlot(index=index, value=value,
                         index_mapper = index_mapper,
                         value_mapper = value_mapper,
@@ -122,19 +122,19 @@ def create_gridded_scatter_plot(x, y, orientation="h", color="red", width=1.0,
                                line_color="gray",
                                line_style='dot',
                                use_draw_order = True)
-    
+
     vertical_axis = PlotAxis(orientation='left',
                              mapper=plot.value_mapper,
                              use_draw_order = True)
-    
+
     horizontal_axis = PlotAxis(orientation='bottom',
                                title='Time (s)',
                                mapper=plot.index_mapper,
                                use_draw_order = True)
-    
+
     plot.underlays.append(vertical_grid)
     plot.underlays.append(horizontal_grid)
-    
+
     # Have to add axes to overlays because we are backbuffering the main plot,
     # and only overlays get to render in addition to the backbuffer.
     plot.overlays.append(vertical_axis)

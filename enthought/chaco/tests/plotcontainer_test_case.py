@@ -50,7 +50,7 @@ class ResizablePlotComponent(PlotComponent):
 
 
 class OverlayPlotContainerTestCase(ContainerTestCase):
-    
+
     def test_basics(self):
         container = OverlayPlotContainer(resizable='', bounds=[100.0,200.0])
         self.assert_tuple(container.get_preferred_size(), (100.0,200.0))
@@ -58,7 +58,7 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         container.do_layout()
         self.assertEquals(container._layout_needed, False)
         return
-    
+
     def test_fixed_size_component(self):
         container = OverlayPlotContainer(resizable='', bounds=[200.0,300.0])
         # non-resizable component
@@ -69,7 +69,7 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         self.assertEquals(container._layout_needed, True)
         container.do_layout()
         self.assertEquals(container._layout_needed, False)
-        
+
         # check the results of the layout
         self.assert_tuple(container.get_preferred_size(), (200.0,300.0))
         self.assert_tuple(component.position, (50.0,60.0))
@@ -83,20 +83,20 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         container.do_layout()
         self.assert_tuple(component.position, (0.0,0.0))
         self.assert_tuple(component.bounds, (200.0,300.0))
-        
+
         comp2 = PlotComponent(resizable="h", position=[10,20], bounds=[100,150])
         container.add(comp2)
         container.do_layout()
         self.assert_tuple(comp2.position, (0.0, 20.0))
         self.assert_tuple(comp2.bounds, (200.0, 150.0))
-        
+
         comp3 = PlotComponent(resizable="v", position=[30,40], bounds=[100,150])
         container.add(comp3)
         container.do_layout()
         self.assert_tuple(comp3.position, (30.0, 0.0))
         self.assert_tuple(comp3.bounds, (100,300))
         return
-    
+
     def test_min_size(self):
         container = OverlayPlotContainer(resizable='', bounds=[50.0,50.0])
         component = PlotComponent(resizable='', position=[50.0,60.0],
@@ -106,7 +106,7 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(component.position, (50.0,60.0))
         self.assert_tuple(component.bounds, (100.0,110.0))
         return
-        
+
     def test_multiple_min_size(self):
         comp1 = StaticPlotComponent([200, 50])
         comp2 = StaticPlotComponent([60, 300])
@@ -135,7 +135,7 @@ class HPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp2.position, (100,0))
         self.assert_tuple(comp3.position, (190,0))
         return
-    
+
     def test_stack_one_resize(self):
         "Checks stacking with 1 resizable component thrown in"
         container = HPlotContainer(bounds=[300,100])
@@ -152,7 +152,7 @@ class HPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp3.position, (190,0))
         self.assert_tuple(comp4.position, (260,0))
         return
-    
+
     def test_valign(self):
         container = HPlotContainer(bounds=[300,200], valign="center")
         comp1 = StaticPlotComponent([200,100])
@@ -167,7 +167,7 @@ class HPlotContainerTestCase(ContainerTestCase):
 
 class VPlotContainerTestCase(ContainerTestCase):
     # These tests are mostly transposes of the values in HPlotContainer
-    
+
     def test_stack_nonresize(self):
         container = VPlotContainer(bounds=[100,300])
         comp1 = StaticPlotComponent([70,100])
@@ -181,7 +181,7 @@ class VPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp2.position, (0,100))
         self.assert_tuple(comp3.position, (0,190))
         return
-        
+
     def test_stack_one_resize(self):
         "Checks stacking with 1 resizable component thrown in"
         container = VPlotContainer(bounds=[100,300])
@@ -384,7 +384,7 @@ class SizePrefsTestCase(unittest.TestCase):
 
         pref_size = prefs.get_preferred_size()
         self.assert_tuple(pref_size, (100, 60, 50, 90, 0))
-        
+
         # Test scaling down of resizable components in slots 2 and 4
         sizes = prefs.compute_size_array(180 + 60)
         self.assert_tuple(sizes, (100, 30+15, 50, 45, 0))
@@ -407,7 +407,7 @@ class GridContainerTestCase(ContainerTestCase):
         #   where I posted more details about this problem.
         if 'coverage' in sys.modules:
             raise nose.SkipTest
-        
+
         cont = GridContainer(shape=(1,1))
         cont.bounds = [100,100]
         cont.do_layout()
@@ -612,7 +612,7 @@ class GridContainerTestCase(ContainerTestCase):
         left = StaticPlotComponent([50,10], resizable="")
         middle = ResizablePlotComponent([100,10])
         right = StaticPlotComponent([0,0], resizable="hv")
-        
+
         cont.component_grid = [[left, middle, right]]
         cont.bounds = [200, 10]
         cont.do_layout()

@@ -29,7 +29,7 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
     # The axis to which this tool is perpendicular.
     axis = Enum("index", "value")
-    
+
     axis_index = Property(depends_on='axis')
 
     # Mapping from screen space to data space. By default, it is just
@@ -64,7 +64,7 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
             origin_x = self.component.padding_left
             origin_y = self.component.padding_top
-            
+
             if self.axis == 'index':
                 if isinstance(self.mapper, GridMapper):
                     scale_width = (coords[-1][0] - coords[0][0])/self.doc_width
@@ -95,7 +95,7 @@ class SvgRangeSelectionOverlay(StatusLayer):
         """
         ds = getattr(self.plot, self.axis)
         selection = ds.metadata[self.metadata_name]
-        
+
         # "selections" metadata must be a tuple
         if self.metadata_name == "selections":
             if selection is not None and len(selection) == 2:
@@ -116,7 +116,7 @@ class SvgRangeSelectionOverlay(StatusLayer):
     @cached_property
     def _get_plot(self):
         return self.component
-    
+
     @cached_property
     def _get_axis_index(self):
         if self.axis == 'index':
@@ -128,9 +128,9 @@ class SvgRangeSelectionOverlay(StatusLayer):
     def _get_mapper(self):
         # If the plot's mapper is a GridMapper, return either its
         # x mapper or y mapper
-        
+
         mapper = getattr(self.plot, self.axis + "_mapper")
-        
+
         if isinstance(mapper, GridMapper):
             if self.axis == 'index':
                 return mapper._xmapper

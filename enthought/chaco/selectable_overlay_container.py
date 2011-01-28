@@ -36,15 +36,15 @@ class SelectableOverlayPlotContainer(OverlayPlotContainer):
 
     def _draw_overlays(self, gc, view_bounds=None, mode='normal'):
         """ Method for backward compatability with old drawing scheme.
-        
+
         Overrides BasePlotContainer.
         """
         self._draw_selection(gc, view_bounds=view_bounds, mode=mode)
         return
-    
+
     def _draw_selection(self, gc, view_bounds=None, mode='normal'):
         """ Renders a selected subset of a component's data.
-        
+
         Overrides PlotComponent.
         """
         if self.selection_active:
@@ -68,5 +68,5 @@ class SelectableOverlayPlotContainer(OverlayPlotContainer):
                 gc.rect(lowerleft[0], lowerleft[1], upperright[0], upperright[1])
                 gc.draw_path()
         return
-    
-            
+
+

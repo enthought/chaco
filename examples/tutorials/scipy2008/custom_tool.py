@@ -8,19 +8,19 @@ from enthought.traits.api import Enum, HasTraits, Instance
 from enthought.traits.ui.api import Item, View
 
 class CustomTool(BaseTool):
-    
+
     event_state = Enum("normal", "mousedown")
-    
+
     def normal_mouse_move(self, event):
         print "Screen:", event.x, event.y
-    
+
     def normal_left_down(self, event):
         self.event_state = "mousedown"
         event.handled = True
-    
+
     def mousedown_mouse_move(self, event):
         print "Data:", self.component.map_data((event.x, event.y))
-        
+
     def mousedown_left_up(self, event):
         self.event_state = "normal"
         event.handled = True
@@ -30,7 +30,7 @@ class ScatterPlot(HasTraits):
 
     plot = Instance(Plot)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
+    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
                        width=800, height=600, resizable=True,
                        title="Custom Tool")
 

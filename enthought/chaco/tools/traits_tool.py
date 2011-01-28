@@ -36,10 +36,10 @@ class Fifo(object):
 
 def get_nested_components(container, classes):
     """ Returns a list of fundamental plotting components from a container
-    with nested containers.  
-    
+    with nested containers.
+
     Performs a breadth-first search of the containment hierarchy. Each element
-    in the returned list is a tuple (component, (x,y)) where (x,y) is the 
+    in the returned list is a tuple (component, (x,y)) where (x,y) is the
     coordinate frame offset of the component from the top-level container.
     """
     components = []
@@ -65,7 +65,7 @@ def get_nested_components(container, classes):
 class TraitsTool(BaseTool):
     """ Tool to edit the traits of plots, grids, and axes.
     """
-    
+
     # This tool does not have a visual representation (overrides BaseTool).
     draw_mode = "none"
     # This tool is not visible (overrides BaseTool).
@@ -119,7 +119,7 @@ class TraitsTool(BaseTool):
             item.request_redraw()
 
         return
-    
+
 
 
 # EOF

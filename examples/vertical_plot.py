@@ -63,7 +63,7 @@ def _create_plot_component():
                                         component=container,
                                         font = "swiss 16",
                                         overlay_position = "top"))
-    
+
     return container
 
 #===============================================================================
@@ -76,19 +76,19 @@ title="Vertical Line Plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -99,7 +99,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

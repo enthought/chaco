@@ -63,13 +63,13 @@ def render_variable_size_markers(gc, points, marker, marker_size,
 
     if len(points) == 0:
         return
-    
+
     # marker can be string, class, or instance
     if isinstance(marker, basestring):
         marker = MarkerNameDict[marker]()
     elif issubclass(marker, AbstractMarker):
         marker = marker()
-        
+
     with gc:
         gc.set_line_dash(None)
         if marker.draw_mode == STROKE:
@@ -83,9 +83,9 @@ def render_variable_size_markers(gc, points, marker, marker_size,
             gc.set_stroke_color(outline_color)
             gc.set_line_width(line_width)
             gc.set_fill_color(color)
-    
+
         gc.begin_path()
-    
+
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):

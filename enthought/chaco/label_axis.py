@@ -13,7 +13,7 @@ from label import Label
 
 
 class LabelAxis(PlotAxis):
-    """ An axis whose ticks are labeled with text instead of numbers. 
+    """ An axis whose ticks are labeled with text instead of numbers.
     """
 
     # List of labels to use on tick marks.
@@ -24,22 +24,22 @@ class LabelAxis(PlotAxis):
 
     # List of indices of ticks
     positions = Any  # List(Float), Array
-    
+
     def _compute_tick_positions(self, gc, component=None):
         """ Calculates the positions for the tick marks.
-        
+
         Overrides PlotAxis.
         """
         if (self.mapper is None):
             self._reset_cache()
             self._cache_valid = True
             return
-        
+
         datalow = self.mapper.range.low
         datahigh = self.mapper.range.high
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
-        
+
         if (datalow == datahigh) or (screenlow == screenhigh) or \
            (datalow in [inf, -inf]) or (datahigh in [inf, -inf]):
             self._reset_cache()
@@ -48,7 +48,7 @@ class LabelAxis(PlotAxis):
 
         if not self.tick_generator:
             return
-        
+
         # Get a set of ticks from the tick generator.
         tick_list = array(self.tick_generator.get_ticks(datalow, datahigh,
                                                         datalow, datahigh,
@@ -81,18 +81,18 @@ class LabelAxis(PlotAxis):
 
         if datalow > datahigh:
             raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
-        
+
         mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
                                     (screenhigh-screenlow)) for pos in tick_positions]
         self._tick_positions = [self._axis_vector*tickpos + self._origin_point \
                                  for tickpos in mapped_label_positions]
         self._tick_label_positions = self._tick_positions
         return
-        
-        
+
+
     def _compute_labels(self, gc):
-        """Generates the labels for tick marks. 
-        
+        """Generates the labels for tick marks.
+
         Overrides PlotAxis.
         """
         try:
@@ -102,7 +102,7 @@ class LabelAxis(PlotAxis):
                                   color=self.tick_label_color,
                                   rotate_angle=self.label_rotation)
                 self.ticklabel_cache.append(ticklabel)
-    
+
             self._tick_label_bounding_boxes = [array(ticklabel.get_bounding_box(gc), float64) for ticklabel in self.ticklabel_cache]
         except:
             print_exc()

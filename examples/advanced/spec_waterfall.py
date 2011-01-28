@@ -32,7 +32,7 @@ class WaterfallRenderer(LinePlot):
 
     # Maps each array in values into a contrained, short screen space
     y2_mapper = Instance(AbstractMapper)
-    
+
     _cached_data_pts = List()
     _cached_screen_pts = List()
 
@@ -48,7 +48,7 @@ class WaterfallRenderer(LinePlot):
             if numindex == 0 or all(len(v)==0 for v in values) or all(numindex != len(v) for v in values):
                 self._cached_data_pts = []
                 self._cache_valid = True
-            
+
             self._cached_data_pts = [transpose(array((index, v))) for v in values]
             self._cache_value = True
         return
@@ -58,7 +58,7 @@ class WaterfallRenderer(LinePlot):
         return [self.map_screen(pts, i) for i, pts in enumerate(self._cached_data_pts)]
 
     def map_screen(self, data_array, data_offset=None):
-        """ data_offset, if provided, is a float that will be mapped 
+        """ data_offset, if provided, is a float that will be mapped
         into screen space using self.value_mapper and then added to
         mapping data_array with y2_mapper.  If data_offset is not
         provided, then y2_mapper is used.
@@ -121,7 +121,7 @@ def _create_plot_component(obj):
     p = WaterfallRenderer(index = spec_renderer.index, values = values,
             index_mapper = LinearMapper(range = obj.spectrum_plot.index_mapper.range),
             value_mapper = LinearMapper(range = DataRange1D(low=0, high=SPECTROGRAM_LENGTH)),
-            y2_mapper = LinearMapper(low_pos=0, high_pos=8, 
+            y2_mapper = LinearMapper(low_pos=0, high_pos=8,
                             range=DataRange1D(low=0, high=15)),
             )
     spectrogram_plot = p

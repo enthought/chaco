@@ -79,12 +79,12 @@ def _create_plot_component():
     container = OverlayPlotContainer(bgcolor = "white")
     plots = make_curves()
     for plot in plots:
-       plot.padding = 60 
+       plot.padding = 60
        container.add(plot)
 
     bottom_axis = PlotAxis(plot, orientation='bottom')
 
-    label_list=['var a', 'var b', 'var c', 'var d', 'var e', 'var f', 
+    label_list=['var a', 'var b', 'var c', 'var d', 'var e', 'var f',
                 'var g', 'var h', 'var i']
     vertical_axis = LabelAxis(plot, orientation='left',
                             title='Categories',
@@ -110,19 +110,19 @@ title="Tornado Plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -131,11 +131,11 @@ demo = Demo()
 class PlotFrame(DemoFrame):
 
     def _create_window(self):
-        
+
         component = _create_plot_component()
         # Return a window containing our plots
         return Window(self, -1, component=component)
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

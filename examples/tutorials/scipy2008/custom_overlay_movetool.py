@@ -18,16 +18,16 @@ class CustomOverlay(AbstractOverlay):
     color = ColorTrait("red")
     dataspace = Bool(False)
     position = Property
-    
+
     _anchor = CArray
-    
+
     traits_view = View(Group(
                         Item("x"), Item("y"), Item("width"), Item("height"),
-                        Item("color"), 
+                        Item("color"),
                         Item("dataspace", label="Data space?"),
                         orientation = "vertical"
                         ))
-    
+
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         if self.dataspace:
             self.x, self.y = component.map_screen(self._anchor)
@@ -50,26 +50,26 @@ class CustomOverlay(AbstractOverlay):
         if self.dataspace:
             # Map our current x,y point into data space
             self._anchor = self.component.map_data((self.x, self.y))
-    
+
 class ScatterPlotHandler(Handler):
-    
+
     def object_edit_overlay_changed(self, info):
         info.object.plot.overlays[-1].edit_traits(parent=info.ui.control)
         return
-    
+
 class ScatterPlot(HasTraits):
 
     plot = Instance(Plot)
-    
+
     edit_overlay = Button('Edit Overlay')
-    
+
     traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
-                       HGroup(spring, 
+                       HGroup(spring,
                               Item('edit_overlay', show_label=False,
                                    emphasized=True,
                                    height=50),
                               spring),
-                       handler = ScatterPlotHandler,  
+                       handler = ScatterPlotHandler,
                        width=800, height=600, resizable=True)
 
     def _plot_default(self):
@@ -92,7 +92,7 @@ class ScatterPlot(HasTraits):
 
 #===============================================================================
 # demo object that is used by the demo.py application.
-#===============================================================================    
+#===============================================================================
 demo = ScatterPlot()
 if __name__ == "__main__":
     demo.configure_traits()

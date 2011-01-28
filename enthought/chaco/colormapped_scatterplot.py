@@ -54,7 +54,7 @@ class ColormappedScatterPlot(ScatterPlot):
     #
     # bands:
     #     Draw the points color-band by color-band, thus reducing the number of
-    #     set_stroke_color() calls. Disadvantage is that some colors will 
+    #     set_stroke_color() calls. Disadvantage is that some colors will
     #     appear more prominently than others if there are a lot of
     #     overlapping points.
     # bruteforce:
@@ -97,7 +97,7 @@ class ColormappedScatterPlot(ScatterPlot):
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """ Draws the 'plot' layer.
-        
+
         Overrides BaseXYPlot, which isn't really fully generic (it assumes that
         the output of map_screen() is sufficient to render the data).
         """
@@ -165,8 +165,8 @@ class ColormappedScatterPlot(ScatterPlot):
         return
 
     def _render(self, gc, points):
-        """ Actually draws the plot. 
-        
+        """ Actually draws the plot.
+
         Overrides the ScatterPlot implementation.
         """
         # If we don't have a color data set, then use the base class to render

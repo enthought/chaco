@@ -8,7 +8,7 @@ from enthought.traits.api import Enum, HasTraits, Instance
 from enthought.traits.ui.api import Item, View
 
 class CustomTool(BaseTool):
-    
+
     def normal_mouse_move(self, event):
         print "Screen point:", event.x, event.y
 
@@ -22,7 +22,7 @@ class ScatterPlot(HasTraits):
 
     plot = Instance(Plot)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
+    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
                        width=800, height=600, resizable=True,
                        title="Custom Tool")
 

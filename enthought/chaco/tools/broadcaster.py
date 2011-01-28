@@ -17,7 +17,7 @@ class BroadcasterTool(BaseTool):
 
     def dispatch(self, event, suffix):
         """ Dispatches a mouse event based on the current event state.
-        
+
         Overrides BaseTool.
         """
         handled = False   # keeps track of whether any tool handled this event

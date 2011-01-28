@@ -1,5 +1,5 @@
 """
-Implementation of a standard financial plot visualization using Chaco 
+Implementation of a standard financial plot visualization using Chaco
 renderers and scales.
 """
 
@@ -23,12 +23,12 @@ from enthought.chaco.tools.api import PanTool, ZoomTool
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():
-           
+
     # Create the data and datasource objects
     numpoints = 500
     index = arange(numpoints)
     returns = random.lognormal(0.01, 0.1, size=numpoints)
-    price = 100.0 * cumprod(returns)       
+    price = 100.0 * cumprod(returns)
     volume = abs(random.normal(1000.0, 1500.0, size=numpoints) + 2000.0)
 
     time_ds = ArrayDataSource(index)
@@ -55,7 +55,7 @@ def _create_plot_component():
                                           always_on=True,
                                           tool_mode="range",
                                           axis="index"))
-    
+
     vol_plot = BarPlot(index = time_ds, value = vol_ds,
                        index_mapper = xmapper,
                        value_mapper = vol_mapper,
@@ -75,7 +75,7 @@ def _create_plot_component():
                                   constrain_direction="x"))
 
     container = VPlotContainer(bgcolor = "lightblue",
-                               spacing = 20, 
+                               spacing = 20,
                                padding = 50,
                                fill_padding=False)
     container.add(vol_plot)
@@ -96,19 +96,19 @@ title="Financial plot example"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -119,7 +119,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

@@ -16,7 +16,7 @@ def main():
         pd.set_data("y" + str(i), jn(i,x))
 
     # Create some line plots of some of the data
-    plot = Plot(pd, bgcolor="none", padding=30, border_visible=True, 
+    plot = Plot(pd, bgcolor="none", padding=30, border_visible=True,
                  overlay_border=True, use_backbuffer=False)
     plot.legend.visible = True
     plot.plot(("index", "y0", "y1", "y2"), name="j_n, n<3", color="auto")
@@ -45,11 +45,11 @@ def main():
     container.add(plot)
 
     # Create the Enable Window
-    window = EnableVTKWindow(rwi, renderer, 
+    window = EnableVTKWindow(rwi, renderer,
             component=container,
             #istyle_class = tvtk.InteractorStyleSwitch,
             #istyle_class = tvtk.InteractorStyle,
-            istyle_class = tvtk.InteractorStyleTrackballCamera, 
+            istyle_class = tvtk.InteractorStyleTrackballCamera,
             bgcolor = "transparent",
             event_passthrough = True,
             )

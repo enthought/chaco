@@ -1,6 +1,6 @@
 """
 Demo of a javascript inspector tool that shows a black bar over the active
-value axis, as well as the values at the current index, with the numbers 
+value axis, as well as the values at the current index, with the numbers
 shown in the colors matching the legend.
 
 To Use
@@ -12,13 +12,13 @@ Run Python on this file which will generate six files,
     hover_coords.js
     plot_hover_coords_png_hover_data.js
     plot_hover2_coords_png_hover_data.js
-    
-Alternatively, if you pass in '-e' or '--embedded' on the command-line, then 
-a single HTML file will be created that has all JavaScript and images 
+
+Alternatively, if you pass in '-e' or '--embedded' on the command-line, then
+a single HTML file will be created that has all JavaScript and images
 directly embedded into it.
 
 The script should automatically load your webbrowser on the output file,
-but if it does not, then manually open the file hover_coords_plot.html in 
+but if it does not, then manually open the file hover_coords_plot.html in
 your browser to see the output.
 
 Author: Judah De Paula <judah@enthought.com>
@@ -39,15 +39,15 @@ from enthought.chaco.api \
 from enthought.chaco.example_support import COLOR_PALETTE
 
 
-#-- Constants ----------------------------------------------------------------- 
+#-- Constants -----------------------------------------------------------------
 DPI = 72.0
 
 
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 #  File templates:
 #     In a real application, these templates should be their own files,
 #     and a real templating engine (ex. Mako) would make things more flexible.
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 html_template_keys = {'filename1' : 'plot_hover_coords.png',
                       'filename2' : 'plot_hover2_coords.png',
                       'file1_src' : 'plot_hover_coords.png',
@@ -67,37 +67,37 @@ html_template = """
 </head>
 <body>
 <!------------------ What gets shown onmouseover. ------------------>
-<div id="Hover" 
-     style="background-color: White; color: Black; padding: 
-            5px; position: absolute; visibility: hidden;"> 0 
+<div id="Hover"
+     style="background-color: White; color: Black; padding:
+            5px; position: absolute; visibility: hidden;"> 0
 </div>
 
 <div id="BlackPixel"
-     style="background-color: White; color: Black; padding: 
+     style="background-color: White; color: Black; padding:
             0px; position: absolute; visibility: hidden;">
-     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxJREFUCNdjYGBgAAAABAABJzQnCgAAAABJRU5ErkJggg==" 
-          width="1" 
-          height="100" 
+     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxJREFUCNdjYGBgAAAABAABJzQnCgAAAABJRU5ErkJggg=="
+          width="1"
+          height="100"
           alt="black_pixel.inline"
           id="black_pixel.inline" />
 </div>
 <!------------------ Demo plot ------------------------------------->
 <div class = "tabbertab">
-    
-    <img src="%(file1_src)s" 
-         alt="%(filename1)s" 
+
+    <img src="%(file1_src)s"
+         alt="%(filename1)s"
          id="%(filename1)s"
-         onmouseover="javascript:ShowHovers('%(filename1)s', 
-                                            'Hover', 'BlackPixel')" 
-         onmouseout="javascript:HideHovers(event, 
+         onmouseover="javascript:ShowHovers('%(filename1)s',
+                                            'Hover', 'BlackPixel')"
+         onmouseout="javascript:HideHovers(event,
                                            'Hover', 'BlackPixel')" />
 
-    <img src="%(file2_src)s" 
-         alt="%(filename2)s" 
+    <img src="%(file2_src)s"
+         alt="%(filename2)s"
          id="%(filename2)s"
-         onmouseover="javascript:ShowHovers('%(filename2)s', 
-                                            'Hover', 'BlackPixel')" 
-         onmouseout="javascript:HideHovers(event, 
+         onmouseover="javascript:ShowHovers('%(filename2)s',
+                                            'Hover', 'BlackPixel')"
+         onmouseout="javascript:HideHovers(event,
                                            'Hover', 'BlackPixel')" />
 </div>
 </body>
@@ -154,7 +154,7 @@ var _yOffset = 15;
 
 
 /*
-   Convert an array of floats into an HTML formatted string ready for 
+   Convert an array of floats into an HTML formatted string ready for
    the screen.
  */
 function FormatToHTML(data) {
@@ -171,17 +171,17 @@ function FormatToHTML(data) {
 }
 
 
-/* 
+/*
    Slightly more clever get x function than the default.  Limited testing.
 */
 function GetMouseX(event) {
     if (!event) {
         event = window.event;
-    } 
+    }
     if (event.clientX) {
-        return event.clientX + 
-               (document.documentElement.scrollLeft 
-                ? document.documentElement.scrollLeft 
+        return event.clientX +
+               (document.documentElement.scrollLeft
+                ? document.documentElement.scrollLeft
                 : document.body.scrollLeft);
     } else if (event.pageX) {
         return event.pageX;
@@ -191,7 +191,7 @@ function GetMouseX(event) {
 }
 
 
-/* 
+/*
    Slightly more clever get y function than the default.  Limited testing.
 */
 function GetMouseY(event) {
@@ -199,24 +199,24 @@ function GetMouseY(event) {
         event = window.event;
     }
     if (event.clientY) {
-        return event.clientY + 
-               (document.documentElement.scrollTop 
-                ? document.documentElement.scrollTop 
+        return event.clientY +
+               (document.documentElement.scrollTop
+                ? document.documentElement.scrollTop
                 : document.body.scrollTop);
     } else if (event.pageY) {
-        return event.pageY; 
+        return event.pageY;
     } else {
         return 0;
     }
 }
 
 
-/* 
+/*
    Uses data registered by external *hover_data.js files.
 
-   Cannot figure out how to get relative coordinates.  Have to calculate 
+   Cannot figure out how to get relative coordinates.  Have to calculate
    it instead using the reference image element registered with the
-   hover IDs. 
+   hover IDs.
 */
 function ScreenXToImageX(mouseX) {
     var referenceX = document.getElementById(CurrentPlotKey);
@@ -241,13 +241,13 @@ function ScreenYPlotStart(event) {
 }
 
 
-/* 
+/*
    Uses data registered by external *hover_data.js files.
 
    Given the browser X coordinate compute the plot screen X coordinate
    and use that value to index into the data array of plot values for
    that index.
-*/ 
+*/
 function ScreenXToDataY(mouseX) {
     var dataY;
     var relativeX = ScreenXToImageX(mouseX);
@@ -268,18 +268,18 @@ function ScreenXToDataY(mouseX) {
 }
 
 
-/* 
+/*
    Uses data registered by external *hover_data.js files.
 
    Every time the mouse moves over the image, Follow() changes the hovering
-   object attributes so they move to the new location. 
-*/  
+   object attributes so they move to the new location.
+*/
 function Follow(event) {
     // Move the box
     var referenceElement = document.getElementById(CurrentPlotKey);
     var element = document.getElementById(BoxElementID);
     if (element != null) {
-        var style = element.style; 
+        var style = element.style;
         // ScreenXToDataY() hacked to have better control of line visibility.
         //style.visibility = 'visible';
         style.left = (parseInt(GetMouseX(event)) + _xOffset) + 'px';
@@ -291,18 +291,18 @@ function Follow(event) {
     var element = document.getElementById(LineElementID);
     var image_element = document.getElementById("black_pixel.inline");
     if (element != null) {
-        var style = element.style; 
+        var style = element.style;
         // ScreenXToDataY() hacked to have better control of line visibility.
         //style.visibility = 'visible';
         style.left = parseInt(GetMouseX(event)) + 'px';
-        style.top = parseInt(ScreenYPlotStart()) + 'px'; 
+        style.top = parseInt(ScreenYPlotStart()) + 'px';
         element.height = GlobalCursorData[CurrentPlotKey].height - 1;
         image_element.height = element.height;
     }
 }
 
 
-/* 
+/*
    Abstracted out Show() that assigns the Follow() to mouse movements.
 */
 function Show(referenceElementID) {
@@ -313,11 +313,11 @@ function Show(referenceElementID) {
 }
 
 
-/* 
+/*
    Abstracted out Hide() that assigns the Follow() to mouse movements.
    Turns the hover object invisible and disables the Follow() listener.
-   FIXME:  The listener is turned off for both hover objects even though 
-   only one object is hidden by this call.  
+   FIXME:  The listener is turned off for both hover objects even though
+   only one object is hidden by this call.
 */
 function Hide(referenceElementID, elementID) {
     var divStyle = document.getElementById(elementID).style;
@@ -328,7 +328,7 @@ function Hide(referenceElementID, elementID) {
 
 
 /*
-   Main entry point for onmouseover event of images.  Sets the globals 
+   Main entry point for onmouseover event of images.  Sets the globals
    to the active image the mouse just entered and turns on the hovers.
 */
 function ShowHovers(referenceElementID, boxElementID, lineElementID) {
@@ -349,7 +349,7 @@ function HideHovers(event, boxElementID, lineElementID) {
     if ((relatedTarget == null) ||
         (relatedTarget.id != boxElementID) &&
         (relatedTarget.id != lineElementID) &&
-        (relatedTarget.id != 'black_pixel.inline')) { 
+        (relatedTarget.id != 'black_pixel.inline')) {
         Hide(CurrentPlotKey, boxElementID);
         Hide(CurrentPlotKey, lineElementID);
     }
@@ -357,24 +357,24 @@ function HideHovers(event, boxElementID, lineElementID) {
 """
 
 
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 #  Data generation functions for *_hover_data.js files.
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 
 def get_pixel_data(segment, renderer, screen_width):
     """
     Take a segment of points and use a renderer to map them to screen coords.
-    
+
     Algorithm
     ---------
     Fast little function that only works if the samples are sorted.
     FIXME: Need more explanation.
     """
     screen_points = renderer.map_screen(segment)
-    
+
     if len(screen_points) == 0:
         return array([])
-    
+
     s_index = screen_points[:,0].astype(int)
     d_value = segment[:,1]
     if len(s_index) != len(d_value):
@@ -387,7 +387,7 @@ def get_pixel_data(segment, renderer, screen_width):
 def write_hover_coords(container, array_id, script_filename=None):
     """
     Create a JavaScript formatted file of screen index to data values.
-    
+
     Parameters
     ----------
     container : Plot
@@ -401,7 +401,7 @@ def write_hover_coords(container, array_id, script_filename=None):
     script_filename : str
         Full path to the desired output javascript file.  If no name
         is passed in, then no file is written.
-        
+
     Returns
     -------
     Returns the JavaScript data file as a string.
@@ -410,12 +410,12 @@ def write_hover_coords(container, array_id, script_filename=None):
     -----------
     To have a PNG plot show the values of the curves in a browser,
     JavaScript is used to get the screen X/Y and convert the X into the
-    corresponding plot data values.  This function creates that mapping 
-    array.  A couple of extra padding variables are also exported so the 
+    corresponding plot data values.  This function creates that mapping
+    array.  A couple of extra padding variables are also exported so the
     JavaScript can do some additional offset calculations.
     """
     screen_width = container.width
-    # For every renderer in the plot, create an array of the same length 
+    # For every renderer in the plot, create an array of the same length
     # as the screen width that contains the data value for each screen
     # position.  Stack all of these arrays together into the 2D 'pixel_data'
     # array, then pass it into the template for the hover_data javascript file.
@@ -452,7 +452,7 @@ def write_hover_coords(container, array_id, script_filename=None):
         data_s += '[' + line_template % tuple(row) +  '],'
     if len(pixel_data) > 0:
         data_s += '[' + line_template % tuple(row) + ']'
-    
+
     template_keys = dict(height = container.height,
                          padding_top = container.padding_top,
                          padding_left = container.padding_left,
@@ -473,9 +473,9 @@ def write_hover_coords(container, array_id, script_filename=None):
     return output
 
 
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 #  Plot and renderer generation functions.
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 def create_plot(num_plots=8, type='line'):
     """ Create a single plot object, with multiple renderers. """
     # This is a bit of a hack to work around that line widths don't scale
@@ -514,14 +514,14 @@ def draw_plot(filename, size=(800,600), num_plots=8, type='line', key=''):
     plot = make_palettized_png_str(gc)
     script_data = write_hover_coords(container, key, script_filename)
     return (plot, script_data)
-    
+
 
 def make_palettized_png_str(gc):
     """ Generate a png file in a string, base64 encoded. """
     format = gc.format()[:-2].upper()
     if format != "RGBA":
         gc = gc.convert_pixel_format("rgba32")
-    img = Image.fromstring("RGBA", 
+    img = Image.fromstring("RGBA",
                            (gc.width(), gc.height()), gc.bmp_array.tostring())
     img2 = img.convert("P")
     output_buf = cStringIO.StringIO()
@@ -531,14 +531,14 @@ def make_palettized_png_str(gc):
     return output
 
 
-#------------------------------------------------------------------------------ 
-#  Main 
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
+#  Main
+#------------------------------------------------------------------------------
 def main(embedded=False):
     """
     Create the files and load the output in a webbrowser.
     """
-    # 1. Create the JavaScript hover tool file.  
+    # 1. Create the JavaScript hover tool file.
     #    Only doing this to keep the demo file self-contained.
     target_path = os.path.join(os.getcwd(), 'hover_coords.js')
     if embedded:
@@ -546,18 +546,18 @@ def main(embedded=False):
     else:
         f = open(target_path, 'wt')
         f.write(hover_coords_js_file)
-        f.close()         
-    
+        f.close()
+
     # 2. Create the dynamically generated JavaScript data files.
     if embedded:
         html_template_keys['file1_src'] = None
         html_template_keys['file2_src'] = None
-    file1_strs = draw_plot(html_template_keys['file1_src'], 
+    file1_strs = draw_plot(html_template_keys['file1_src'],
                            size=(800, 600),
                            key=html_template_keys['filename1'])
-    file2_strs = draw_plot(html_template_keys['file2_src'], 
-                           size=(600, 400), 
-                           num_plots = 4, 
+    file2_strs = draw_plot(html_template_keys['file2_src'],
+                           size=(600, 400),
+                           num_plots = 4,
                            type='scatter',
                            key=html_template_keys['filename2'])
 
@@ -567,15 +567,15 @@ def main(embedded=False):
         html_template_keys['file1_src'] = src1
         src2 = 'data:image/png;base64,' + file2_strs[0]
         html_template_keys['file2_src'] = src2
-        html_template_keys['data1'] = '>\n%s\n' % file1_strs[1] 
-        html_template_keys['data2'] = '>\n%s\n' % file2_strs[1] 
-    
+        html_template_keys['data1'] = '>\n%s\n' % file1_strs[1]
+        html_template_keys['data2'] = '>\n%s\n' % file2_strs[1]
+
     # 4. Create the HTML file.
     out_html = os.path.join(os.getcwd(), 'plot_hover_coords.html')
     f = open(out_html, 'wt')
     f.write(html_template % html_template_keys)
     f.close()
-        
+
     # 5. Load the finished product.
     try:
         webbrowser.open(out_html)
@@ -589,27 +589,27 @@ def main(embedded=False):
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 # NOTE: The Demo class is being created for the purpose of running this
-# example using a TraitsDemo-like app (see examples/demo/demo.py in Traits3). 
+# example using a TraitsDemo-like app (see examples/demo/demo.py in Traits3).
 # The demo.py file looks for a 'demo' or 'popup' or 'modal popup' keyword
 # when it executes this file, and displays a view for it.
 
 # NOTE2: In this case, Demo class is just a mock object. Essentially we want to
-# execute main instead of displaying a UI for Demo: so we hack this by 
+# execute main instead of displaying a UI for Demo: so we hack this by
 # overriding configure_traits and edit_traits to return a blank UI.
 
 from enthought.traits.api import HasTraits
 from enthought.traits.ui.api import UI, Handler
 
 class Demo(HasTraits):
-    
+
     def configure_traits(self, *args, **kws):
         main(embedded=True)
         return True
-    
+
     def edit_traits(self, *args, **kws):
         main(embedded=True)
         return UI(handler=Handler())
-    
+
 popup = Demo()
 
 if __name__ == "__main__":

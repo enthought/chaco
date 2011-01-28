@@ -1,9 +1,9 @@
 """
-Implementation of a standard financial plot visualization using Chaco 
+Implementation of a standard financial plot visualization using Chaco
 renderers and scales.
 
 In the main price plot area, mouse wheel zooms and mouse drag pans (if
-the plot is not at the edge of the time series data).  In the bottom 
+the plot is not at the edge of the time series data).  In the bottom
 overview plot area, right-click-drag selects a range of times to display
 on the top two plots.  Once a region is selected, it can be moved
 around by left-dragging or resized by left-dragging one of its
@@ -53,14 +53,14 @@ class PlotFrame(DemoFrame):
         """ Creates the two plots of prices and returns them.  One of the
         plots can be zoomed and panned, and the other plot (smaller) always
         shows the full data.
-        
+
         *dates* and *prices* are two data sources.
         """
 
         # Create the price plot
         price_plot = FilledLinePlot(index = times, value = prices,
                         index_mapper = LinearMapper(range=DataRange1D(times)),
-                        value_mapper = LinearMapper(range=DataRange1D(prices)), 
+                        value_mapper = LinearMapper(range=DataRange1D(prices)),
                         edge_color = "blue",
                         face_color = "paleturquoise",
                         bgcolor = "white",
@@ -79,7 +79,7 @@ class PlotFrame(DemoFrame):
         # Create the miniplot
         miniplot = LinePlot(index = times, value = prices,
                         index_mapper = LinearMapper(range=DataRange1D(times)),
-                        value_mapper = LinearMapper(range=DataRange1D(prices)),  
+                        value_mapper = LinearMapper(range=DataRange1D(prices)),
                         color = "black",
                         border_visible = True,
                         bgcolor = "white",
@@ -99,7 +99,7 @@ class PlotFrame(DemoFrame):
         price_plot.index_range.on_trait_change(self._plot_range_handler, "updated")
 
         return price_plot, miniplot
-        
+
 
     def _range_selection_handler(self, event):
         # The event obj should be a tuple (low, high) in data space
@@ -136,16 +136,16 @@ class PlotFrame(DemoFrame):
         return vol_plot
 
     def _create_window(self):
-       
+
         # Create the data and datasource objects
-        # In order for the date axis to work, the index data points need to 
+        # In order for the date axis to work, the index data points need to
         # be in units of seconds since the epoch.  This is because we are using
         # the CalendarScaleSystem, whose formatters interpret the numerical values
-        # as seconds since the epoch.  
+        # as seconds since the epoch.
         numpoints = 500
         index = create_dates(numpoints)
         returns = random.lognormal(0.01, 0.1, size=numpoints)
-        price = 100.0 * cumprod(returns)       
+        price = 100.0 * cumprod(returns)
         volume = abs(random.normal(1000.0, 1500.0, size=numpoints) + 2000.0)
 
         time_ds = ArrayDataSource(index)
@@ -165,7 +165,7 @@ class PlotFrame(DemoFrame):
         # Set the plot's bottom axis to use the Scales ticking system
         ticker = ScalesTickGenerator(scale=CalendarScaleSystem())
         for plot in price_plot, mini_plot, vol_plot:
-            bottom_axis = PlotAxis(plot, orientation="bottom", 
+            bottom_axis = PlotAxis(plot, orientation="bottom",
                                    tick_generator = ticker)
             plot.overlays.append(bottom_axis)
             plot.overlays.append(PlotAxis(plot, orientation="left"))
@@ -173,11 +173,11 @@ class PlotFrame(DemoFrame):
             vgrid.tick_generator = bottom_axis.tick_generator
 
         container = VPlotContainer(bgcolor = "lightgray",
-                                   spacing = 40, 
+                                   spacing = 40,
                                    padding = 50,
                                    fill_padding=False)
         container.add(mini_plot, vol_plot, price_plot)
-        
+
         return Window(self, -1, component=container)
 
 if __name__ == "__main__":

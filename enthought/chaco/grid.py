@@ -21,7 +21,7 @@ from ticks import AbstractTickGenerator, DefaultTickGenerator
 
 def float_or_auto(val):
     """
-    Validator function that returns *val* if *val* is either a number or 
+    Validator function that returns *val* if *val* is either a number or
     the word 'auto'.  This is used as a validator for the text editor
     in the traits UI for the tick_interval trait.
     """
@@ -43,20 +43,20 @@ GridView = View(VGroup(
                 buttons = ["OK", "Cancel"]
             )
 
-    
+
 def Alias(name):
     return Property(lambda obj: getattr(obj, name),
                     lambda obj, val: setattr(obj, name, val))
 
 
 class PlotGrid(AbstractOverlay):
-    """ An overlay that represents a grid. 
-    
-    A grid is a set of parallel lines, horizontal or vertical. You can use 
+    """ An overlay that represents a grid.
+
+    A grid is a set of parallel lines, horizontal or vertical. You can use
     multiple grids with different settings for the horizontal and vertical
     lines in a plot.
     """
-    
+
     #------------------------------------------------------------------------
     # Data-related traits
     #------------------------------------------------------------------------
@@ -81,14 +81,14 @@ class PlotGrid(AbstractOverlay):
     #------------------------------------------------------------------------
     # Layout traits
     #------------------------------------------------------------------------
-    
+
     # The orientation of the grid lines.  "horizontal" means that the grid
     # lines are parallel to the X axis and the ticker and grid interval
     # refer to the Y axis.
     orientation = Enum('horizontal', 'vertical')
-    
+
     # Draw the ticks starting at the end of the mapper range? If False, the
-    # ticks are drawn starting at 0. This setting can be useful to keep the 
+    # ticks are drawn starting at 0. This setting can be useful to keep the
     # grid from from "flashing" as the user resizes the plot area.
     flip_axis = Bool(False)
 
@@ -100,7 +100,7 @@ class PlotGrid(AbstractOverlay):
     #   None : use self.bounds or self.component.bounds (if overlay)
     #   Tuple : (low, high) extents, used for every grid line
     #   Callable : Function that takes an array of dataspace grid ticks
-    #              and returns either an array of shape (N,2) of (starts,ends) 
+    #              and returns either an array of shape (N,2) of (starts,ends)
     #              for each grid point or a single tuple (low, high)
     transverse_bounds = Trait(None, Tuple, Callable)
 
@@ -112,28 +112,28 @@ class PlotGrid(AbstractOverlay):
 
     # Dimensions that the grid is resizable in (overrides PlotComponent).
     resizable = "hv"
-    
+
     #------------------------------------------------------------------------
     # Appearance traits
     #------------------------------------------------------------------------
-    
+
     # The color of the grid lines.
     line_color = black_color_trait
-    
+
     # The style (i.e., dash pattern) of the grid lines.
     line_style = LineStyle('solid')
-    
+
     # The thickness, in pixels, of the grid lines.
     line_width = CInt(1)
     line_weight = Alias("line_width")
-    
+
     # Default Traits UI View for modifying grid attributes.
     traits_view = GridView
-    
+
     #------------------------------------------------------------------------
     # Private traits; mostly cached information
     #------------------------------------------------------------------------
-    
+
     _cache_valid = Bool(False)
     _tick_list = Any
     _tick_positions = Any
@@ -141,10 +141,10 @@ class PlotGrid(AbstractOverlay):
     # An array (N,2) of start,end positions in the transverse direction
     # i.e. the direction corresponding to self.orientation
     _tick_extents = Any
-    
+
     #_length = Float(0.0)
-    
-    
+
+
     #------------------------------------------------------------------------
     # Public methods
     #------------------------------------------------------------------------
@@ -167,10 +167,10 @@ class PlotGrid(AbstractOverlay):
     #------------------------------------------------------------------------
     # PlotComponent and AbstractOverlay interface
     #------------------------------------------------------------------------
-    
+
     def do_layout(self, *args, **kw):
         """ Tells this component to do layout at a given size.
-        
+
         Overrides PlotComponent.
         """
         if self.use_draw_order and self.component is not None:
@@ -185,11 +185,11 @@ class PlotGrid(AbstractOverlay):
 
     def _do_layout(self):
         """ Performs a layout.
-        
+
         Overrides PlotComponent.
         """
         return
-    
+
     def _layout_as_overlay(self, size=None, force=False):
         """ Lays out the axis as an overlay on another component.
         """
@@ -197,7 +197,7 @@ class PlotGrid(AbstractOverlay):
             self.position = self.component.position
             self.bounds = self.component.bounds
         return
-    
+
     def _reset_cache(self):
         """ Clears the cached tick positions.
         """
@@ -205,7 +205,7 @@ class PlotGrid(AbstractOverlay):
         self._tick_extents = array([], dtype=float)
         self._cache_valid = False
         return
-    
+
     def _compute_ticks(self, component=None):
         """ Calculates the positions for the grid lines.
         """
@@ -213,7 +213,7 @@ class PlotGrid(AbstractOverlay):
             self._reset_cache()
             self._cache_valid = True
             return
-        
+
         if self.data_min is None:
             datalow = self.mapper.range.low
         else:
@@ -226,16 +226,16 @@ class PlotGrid(AbstractOverlay):
         # Map the low and high data points
         screenhigh = self.mapper.map_screen(datalow)
         screenlow = self.mapper.map_screen(datahigh)
-        
+
         if (datalow == datahigh) or (screenlow == screenhigh) or \
            (datalow in [inf, -inf]) or (datahigh in [inf, -inf]):
             self._reset_cache()
             self._cache_valid = True
             return
-        
+
         if component is None:
             component = self.component
-        
+
         if component is not None:
             bounds = component.bounds
             position = component.position
@@ -252,7 +252,7 @@ class PlotGrid(AbstractOverlay):
                                               self.grid_interval, use_endpoints = False,
                                               scale=scale)
         tick_positions = self.mapper.map_screen(array(ticks, float64))
-        
+
         if self.orientation == 'horizontal':
             self._tick_positions = around(column_stack((zeros_like(tick_positions) + position[0],
                                            tick_positions)))
@@ -283,13 +283,13 @@ class PlotGrid(AbstractOverlay):
         else:
             # Already a tuple
             self._tick_extents[:] = self.transverse_mapper.map_screen(asarray(self.transverse_bounds))
-            
+
         self._cache_valid = True
-        
-    
+
+
     def _draw_overlay(self, gc, view_bounds=None, mode='normal'):
         """ Draws the overlay layer of a component.
-        
+
         Overrides PlotComponent.
         """
         self._draw_component(gc, view_bounds, mode)
@@ -297,7 +297,7 @@ class PlotGrid(AbstractOverlay):
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
-        
+
         Overrides AbstractOverlay.
         """
         if not self.visible:
@@ -306,11 +306,11 @@ class PlotGrid(AbstractOverlay):
         self._draw_component(gc, view_bounds, mode)
         self._cache_valid = False
         return
-    
+
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
         """ Draws the component.
 
-        This method is preserved for backwards compatibility. Overrides 
+        This method is preserved for backwards compatibility. Overrides
         PlotComponent.
         """
         # What we're really trying to do with a grid is plot contour lines in
@@ -324,7 +324,7 @@ class PlotGrid(AbstractOverlay):
 
         if len(self._tick_positions) == 0:
             return
-        
+
         with gc:
             gc.set_line_width(self.line_weight)
             gc.set_line_dash(self.line_style_)
@@ -352,7 +352,7 @@ class PlotGrid(AbstractOverlay):
             gc.line_set(starts, ends)
             gc.stroke_path()
         return
-        
+
     def _mapper_changed(self, old, new):
         if old is not None:
             old.on_trait_change(self.mapper_updated, "updated", remove=True)
@@ -360,7 +360,7 @@ class PlotGrid(AbstractOverlay):
             new.on_trait_change(self.mapper_updated, "updated")
         self.invalidate()
         return
-        
+
     def mapper_updated(self):
         """
         Event handler that is bound to this mapper's **updated** event.
@@ -379,11 +379,11 @@ class PlotGrid(AbstractOverlay):
 
     def _bounds_items_changed_for_component(self):
         self.invalidate()
-    
+
     #------------------------------------------------------------------------
     # Event handlers for visual attributes.  These mostly just call request_redraw()
     #------------------------------------------------------------------------
-    
+
     @on_trait_change("visible,line_color,line_style,line_weight")
     def visual_attr_changed(self):
         """ Called when an attribute that affects the appearance of the grid
@@ -399,7 +399,7 @@ class PlotGrid(AbstractOverlay):
     def _grid_interval_changed(self):
         self.invalidate()
         self.visual_attr_changed()
-        
+
     def _orientation_changed(self):
         self.invalidate()
         self.visual_attr_changed()

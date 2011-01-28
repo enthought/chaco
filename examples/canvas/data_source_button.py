@@ -8,13 +8,13 @@ from enthought.chaco.plot_canvas_toolbar import PlotToolbarButton
 DEBUG = False
 
 class ButtonController(HasTraits):
-    """ Tells buttons what to do 
-    
+    """ Tells buttons what to do
+
     Buttons defer to this when they are activated.
     """
-    
+
     modifier = Enum("control", "shift", "alt")
-    
+
     # The list of buttons that are currently "down"
     active_buttons = List
 
@@ -104,7 +104,7 @@ class ButtonController(HasTraits):
         if len(self.plot.plots) > 0:
             self.plot.delplot(*self.plot.plots.keys())
 
-        cur_plot = self.plot.plot((b1.plotname+"_y", b2.plotname+"_y"), 
+        cur_plot = self.plot.plot((b1.plotname+"_y", b2.plotname+"_y"),
                                   name=self._scatterplot_name,
                                   type="scatter",
                                   marker="square",
@@ -123,30 +123,30 @@ class ButtonController(HasTraits):
             self.plot.index_range.set_bounds("auto", "auto")
             self.plot.value_range.set_bounds("auto", "auto")
         self.plot_overlay.visible = False
-        
+
 
 
 class DataSourceButton(PlotToolbarButton):
-    
+
     # A TransientPlotOverlay containing the timeseries plot of this datasource
     plot_overlay = Any
-    
+
     plotname = Str
 
     canvas = Any
-    
+
     #overlay_bounds = List()
-    
+
     # Can't call this "controller" because it conflicts with old tool dispatch
     button_controller = Instance(ButtonController)
-    
+
     # Override inherited trait
     label_color = (0,0,0,1)
 
     resizable = ""
 
     cur_bid = Int(-1)
-    
+
     # The overlay to display when the user holds the mouse down over us.
     #_overlay = Instance(AbstractOverlay)
 
@@ -155,7 +155,7 @@ class DataSourceButton(PlotToolbarButton):
         self.button_controller.notify(self, "down", event)
         event.handled = True
         self.request_redraw()
-    
+
     def normal_left_up(self, event):
         self.button_state = "up"
         self.button_controller.notify(self, "up", event)
@@ -169,18 +169,18 @@ class DataSourceButton(PlotToolbarButton):
             if hasattr(event, "bid"):
                 event.window.capture_blob(self, event.bid,
                                           event.net_transform())
-    
+
     def normal_blob_up(self, event):
         if event.bid == self.cur_bid:
             if hasattr(event, "bid"):
                 event.window.release_blob(event.bid)
             self.cur_bid = -1
             self.normal_left_up(event)
-    
+
     def normal_mouse_leave(self, event):
         if event.left_down:
             return self.normal_left_up(event)
-    
+
     def normal_mouse_enter(self, event):
         if event.left_down:
             return self.normal_left_down(event)

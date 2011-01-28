@@ -42,7 +42,7 @@ def create_plot():
     pd.set_data("index", x)
     pd.set_data("value", y)
     pd.set_data("color", color)
-    
+
     # Create the plot
     plot = Plot(pd)
     plot.plot(("index", "value", "color"),
@@ -55,7 +55,7 @@ def create_plot():
               outline_color = "black",
               border_visible = True,
               bgcolor = "white")
-    
+
     # Tweak some of the plot properties
     plot.title = "Colormapped Scatter Plot"
     plot.padding = 50
@@ -68,8 +68,8 @@ def create_plot():
     #plot.title_color = "white"
     #for axis in plot.x_axis, plot.y_axis:
     #    axis.set(title_color="white", tick_label_color="white")
-    
-    # Right now, some of the tools are a little invasive, and we need the 
+
+    # Right now, some of the tools are a little invasive, and we need the
     # actual ColomappedScatterPlot object to give to them
     cmap_renderer = plot.plots["my_plot"][0]
 
@@ -77,7 +77,7 @@ def create_plot():
     plot.tools.append(PanTool(plot, constrain_key="shift"))
     zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
-    selection = ColormappedSelectionOverlay(cmap_renderer, fade_alpha=0.35, 
+    selection = ColormappedSelectionOverlay(cmap_renderer, fade_alpha=0.35,
                                             selection_type="mask")
     cmap_renderer.overlays.append(selection)
     plot.tools.append(MoveTool(plot, drag_button="right"))
@@ -100,9 +100,9 @@ def start_vtk(component):
     render_window = scene.render_window
     renderer = scene.renderer
     rwi = scene.interactor
-    window = EnableVTKWindow(rwi, renderer, 
+    window = EnableVTKWindow(rwi, renderer,
             component = component,
-            istyle_class = tvtk.InteractorStyleTrackballCamera, 
+            istyle_class = tvtk.InteractorStyleTrackballCamera,
             bgcolor = "transparent",
             event_passthrough = True,
             )
@@ -121,7 +121,7 @@ def main():
     colorbar.plot = cmap_renderer
     colorbar.padding_top = plot.padding_top
     colorbar.padding_bottom = plot.padding_bottom
-    
+
     container = OverlayPlotContainer(bgcolor = "transparent",
                     fit_window = True)
     container.add(plot)

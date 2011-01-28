@@ -18,13 +18,13 @@ class PlotSession(HasTraits):
     Encapsulates all of the session-level globals, including preferences,
     windows, etc.
     """
-    
+
     # The preferences object in effect for this session.
     prefs = Instance(Preferences, args=())
 
     # The list of currently active windows.
     windows = List(PlotWindow)
-    
+
     # A dict mapping names to windows.
     window_map = Dict(Str, PlotWindow)
 
@@ -35,17 +35,17 @@ class PlotSession(HasTraits):
     # arrays that are provided to various plotting commands.
     data = Instance(ArrayPlotData, args=())
 
-    
+
     #------------------------------------------------------------------------
     # "active" pointers
     #------------------------------------------------------------------------
-    
+
     # The index of the active window.
     active_window_index = Trait(None, None, Int)
-    
+
     # The active window.
     active_window = Property
-    
+
     # The active colormap.
     colormap = Trait(jet, Any)
 
@@ -63,14 +63,14 @@ class PlotSession(HasTraits):
         new_win.data = self.data
         new_win.get_container().data = self.data
         new_win.session = self
-        
+
         if title is not None:
             new_win.set_title(title)
         elif name != None:
             new_win.set_title(name)
         else:
             new_win.set_title(self.prefs.default_window_name)
-        
+
         self.windows.append(new_win)
         if name != None:
             self.window_map[name] = new_win
@@ -87,11 +87,11 @@ class PlotSession(HasTraits):
 
     def del_window(self, ident):
         """ Deletes the specified window.
-        
+
         Parameters
         ----------
         ident : string or number
-            The name of the window in **window_map**, or the index of the 
+            The name of the window in **window_map**, or the index of the
             window in **windows**.
         """
         if isinstance(ident, basestring):
@@ -103,13 +103,13 @@ class PlotSession(HasTraits):
         elif type(ident) == int:
             if ident >= len(self.windows):
                 print "No such window %d." % ident
-                
+
             win = self.windows.pop(ident)
             if len(self.windows) == 0:
                 self.active_window = None
             elif self.active_window_index >= ident:
                 self.active_window_index -= 1
-                
+
             if win in self.window_map.values():
                 # we have to go through the whole dict and remove all keys
                 # that correspond to the deleted window

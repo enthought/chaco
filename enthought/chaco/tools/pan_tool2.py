@@ -23,22 +23,22 @@ class PanTool(DragTool):
     # direction.  To do so, set constrain=True, constrain_key=None, and
     # constrain_direction to the desired direction.
     constrain_key = Enum(None, "shift", "control", "alt")
-    
+
     # Constrain the panning to one direction?
     constrain = Bool(False)
-    
+
     # The direction of constrained draw. A value of None means that the user
     # has initiated the drag and pressed the constrain_key, but hasn't moved
     # the mouse yet; the magnitude of the components of the next mouse_move
     # event will determine the constrain_direction.
     constrain_direction = Enum(None, "x", "y")
-    
+
     # Restrict to the bounds of the plot data
     restrict_to_data = Bool(False)
 
     # (x,y) of the point where the mouse button was pressed.
     _original_xy = Tuple
-    
+
     # Data coordinates of **_original_xy**.  This may be either (index,value)
     # or (value,index) depending on the component's orientation.
     _original_data = Tuple
@@ -46,7 +46,7 @@ class PanTool(DragTool):
     # Was constrain=True triggered by the **contrain_key**? If False, it was
     # set programmatically.
     _auto_constrain = Bool(False)
-    
+
     #------------------------------------------------------------------------
     # Inherited BaseTool traits
     #------------------------------------------------------------------------
@@ -54,13 +54,13 @@ class PanTool(DragTool):
     # The tool does not have a visual representation (overrides
     # BaseTool).
     draw_mode = "none"
-  
+
     # The tool is not visible (overrides BaseTool).
     visible = False
-    
+
     # The possible event states of this tool (overrides enable.Interactor).
     #event_state = Enum("normal", "panning")
- 
+
 
     def drag_start(self, event):
         """ Called when the drag operation starts """
@@ -75,7 +75,7 @@ class PanTool(DragTool):
                 self.constrain_direction = "x"
             else:
                 self.constrain_direction = "y"
-    
+
         for direction, bound_name, ndx in [("x","width",0), ("y","height",1)]:
             if not self.constrain or self.constrain_direction == direction:
                 mapper = getattr(plot, direction + "_mapper")
@@ -83,12 +83,12 @@ class PanTool(DragTool):
                 domain_min, domain_max = mapper.domain_limits
                 eventpos = getattr(event, direction)
                 origpos = self._original_xy[ndx]
-    
-                screenlow, screenhigh = mapper.screen_bounds               
+
+                screenlow, screenhigh = mapper.screen_bounds
                 screendelta = self.speed * (eventpos - origpos)
                 #if getattr(plot, direction + "_direction", None) == "flipped":
                 #    screendelta = -screendelta
-    
+
                 newlow = mapper.map_data(screenlow - screendelta)
                 newhigh = mapper.map_data(screenhigh - screendelta)
 
@@ -128,7 +128,7 @@ class PanTool(DragTool):
                 # Use .set_bounds() so that we don't generate two range_changed
                 # events on the DataRange
                 range.set_bounds(newlow, newhigh)
-               
+
         event.handled = True
 
         self._original_xy = (event.x, event.y)

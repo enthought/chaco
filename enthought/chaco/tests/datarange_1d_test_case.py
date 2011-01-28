@@ -13,9 +13,9 @@ class Foo(HasTraits):
     """
     This class is used to test the firing of the `updated` event of DataRange1D.
     """
-    
+
     range = Instance(DataRange1D)
-    
+
     range_updated = Bool(False)
 
     @on_trait_change('range.updated')
@@ -24,7 +24,7 @@ class Foo(HasTraits):
 
 
 class DataRangeTestCase(unittest.TestCase):
-    
+
     def test_empty_range(self):
         r = DataRange1D()
         self.assert_(r.low == -inf)
@@ -134,7 +134,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assert_(foo.range.low == -1.0)
         self.assert_(foo.range.high == 1.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated)        
+        self.assert_(foo.range_updated)
 
     def test_scale_tracking_amount(self):
         """Test setting the tracking amount using the scale_tracking_amount() method."""
@@ -151,7 +151,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assert_(foo.range.low ==  0.5)
         self.assert_(foo.range.high == 1.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated) 
+        self.assert_(foo.range_updated)
 
     def test_single_source(self):
         r = DataRange1D()
@@ -167,13 +167,13 @@ class DataRangeTestCase(unittest.TestCase):
         self.assert_(r.high_setting == 6.0)
         self.assert_(r.low == 3.0)
         self.assert_(r.high == 6.0)
-        
+
         r.refresh()
         self.assert_(r.low_setting == 3.0)
         self.assert_(r.high_setting == 6.0)
         self.assert_(r.low == 3.0)
         self.assert_(r.high == 6.0)
-        
+
         r.low = "auto"
         self.assert_(r.low_setting == "auto")
         self.assert_(r.low == 0.0)
@@ -188,13 +188,13 @@ class DataRangeTestCase(unittest.TestCase):
         # it to the nearest power of ten above and below
         self.assert_(r.low == 1.0)
         self.assert_(r.high == 10.0)
-        
+
         r.remove(ds)
         ds = ArrayDataSource(array([31.4]))
         r.add(ds)
         self.assert_(r.low == 10.0)
         self.assert_(r.high == 100.0)
-        
+
         r.remove(ds)
         ds = ArrayDataSource(array([0.03]))
         r.add(ds)
@@ -221,12 +221,12 @@ class DataRangeTestCase(unittest.TestCase):
         r = DataRange1D(low=2.0, high=10.0)
         ary = array([1, 3, 4, 9.8, 10.2, 12])
         assert_equal(r.clip_data(ary) , array([3.0,4.0,9.8]))
-        
+
         r = DataRange1D(low=10, high=20)
         ary = array([5, 10, 15, 20, 25, 30])
         assert_equal(r.clip_data(ary) , array([10, 15, 20]))
         assert_equal(r.clip_data(ary[::-1]) , array([20, 15, 10]))
-        
+
         r = DataRange1D(low=2.0, high=2.5)
         assert_equal(len(r.clip_data(ary)) , 0)
         return
@@ -235,13 +235,13 @@ class DataRangeTestCase(unittest.TestCase):
         r = DataRange1D(low=2.0, high=10.0)
         ary = array([1, 3, 4, 9.8, 10.2, 12])
         assert_equal(r.mask_data(ary) , array([0,1,1,1,0,0], 'b'))
-        
+
         r = DataRange1D(low=10, high=20)
         ary = array([5, 10, 15, 20, 25, 30])
         target_mask = array([0,1,1,1,0,0], 'b')
         assert_equal(r.mask_data(ary) , target_mask)
         assert_equal(r.mask_data(ary[::-1]) , target_mask[::-1])
-        
+
         r = DataRange1D(low=2.0, high=2.5)
         assert_equal(r.mask_data(ary) , zeros(len(ary)))
         return
@@ -250,7 +250,7 @@ class DataRangeTestCase(unittest.TestCase):
         r = DataRange1D(low=2.9, high=6.1)
         ary = arange(10)
         assert_equal(r.bound_data(ary) , (3,6))
-        
+
         # test non-monotonic data
         ary = array([-5,-4,-7,-8,-2,1,2,3,4,5,4,3,8,9,10,9,8])
         bounds = r.bound_data(ary)
@@ -264,7 +264,7 @@ class DataRangeTestCase(unittest.TestCase):
             assert tight_bounds==False
             assert margin==1.0
             return -999., 999.
-        
+
         r = DataRange1D(tight_bounds=False, margin=1.0, bounds_func=custom_func)
         ary = arange(10.0)
         ds = ArrayDataSource(ary)

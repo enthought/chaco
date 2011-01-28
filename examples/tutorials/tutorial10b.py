@@ -10,15 +10,15 @@ from enthought.chaco.tools.api import LineInspector
 class PlotFrame3(PlotFrame2):
     def _create_plot(self):
         container = super(PlotFrame3, self)._create_plot()
-        
+
         self.left_plot.overlays.append(LineInspector(component=self.left_plot,
                 write_metadata=True, is_listener=True))
-        
+
         self.right_plot.overlays.append(LineInspector(component=self.right_plot,
                 write_metadata=True, is_listener=True))
-        
-        self.right_plot.index = self.left_plot.index 
-        
+
+        self.right_plot.index = self.left_plot.index
+
         return container
 
 if __name__ == "__main__":

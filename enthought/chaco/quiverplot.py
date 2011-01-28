@@ -19,7 +19,7 @@ class QuiverPlot(ScatterPlot):
     data_type = Enum("vector", "radial") # TODO: implement "radial"
 
     # A datasource that returns an Nx2 array array indicating directions
-    # of the vectors.  The interpretation of this array is dependent on 
+    # of the vectors.  The interpretation of this array is dependent on
     # the setting of the **data_type** attribute.
     #
     # Usually this will be a MultiArrayDataSource.
@@ -44,7 +44,7 @@ class QuiverPlot(ScatterPlot):
 
     _cached_vector_data = Array
     _selected_vector_data = Array
-    
+
     def _gather_points_old(self):
         # In addition to the standard scatterplot _gather_points, we need
         # to also grab the vectors that fall inside the view range
@@ -56,7 +56,7 @@ class QuiverPlot(ScatterPlot):
         if len(self._cached_point_mask) == 0:
             self._cached_vector_data = []
             return
-        
+
         vectors = self.vectors.get_data()
         self._cached_vector_data = compress(self._cached_point_mask, vectors, axis=0)
 
@@ -67,14 +67,14 @@ class QuiverPlot(ScatterPlot):
             self._selected_vector_data = None
         return
 
-    
+
     def _render(self, gc, points, icon_mode=False):
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
             gc.set_stroke_color(self.line_color_)
             gc.set_line_width(self.line_width)
-            
+
             # Draw the body of the arrow
             starts = points
             ends = points + self._cached_vector_data

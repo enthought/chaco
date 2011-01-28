@@ -34,25 +34,25 @@ def main():
     # created for us by the window.)
     plot_gc = chaco.PlotGraphicsContext(myplot.outer_bounds)
     plot_gc.render_component(myplot)
-    
+
     # Get the directory to save the image in
     import os, sys
     print 'Please enter a path in which to place generated plots.'
     print 'Press <ENTER> to generate in the current directory.'
     path = raw_input('Path: ').strip()
-    
+
     if len(path) > 0 and not os.path.exists(path):
         print 'The given path does not exist.'
         sys.exit()
-    
+
     # The file name to save the plot as
     file_name = "tutorial1.png"
-        
+
     if not os.path.isabs(path):
         print 'Creating image: ' + os.path.join(os.getcwd(), path, file_name)
     else:
         print 'Creating image: ' + os.path.join(path, file_name)
-    
+
     # Finally, we tell the graphics context to save itself to disk as an image.
     plot_gc.save(os.path.join(path, file_name))
 

@@ -32,29 +32,29 @@ class ArrayPlotData(AbstractPlotData):
     writable = True
 
     def __init__(self, *data, **kw):
-        """ ArrayPlotData can be constructed by passing in arrays.  
-        
+        """ ArrayPlotData can be constructed by passing in arrays.
+
         Keyword arguments can be used to give certain arrays specific names;
         unnamed arrays are given a generic name of the format 'seriesN', where
         N is its position in the argument list.
 
         For example::
-        
+
             ArrayPlotData(array1, array2, index=array3, foo=array4)
 
         This call results in the creation of four entries in self.arrays::
-            
+
             'series1' -> array1
             'series2' -> array2
             'index'   -> array3
             'foo'     -> array4
 
-        If any names in the keyword parameter list collide with the 
+        If any names in the keyword parameter list collide with the
         auto-generated positional names "series1", "series2", etc., then those
         arrays are replaced.
 
         Note that this factor means that keyword traits are *not* set using the
-        keyword parameters in the constructor. This strategy defies some 
+        keyword parameters in the constructor. This strategy defies some
         conventions, but was it chosen for convenience, since the raison d'etre
         of this class is convenience.
         """
@@ -76,7 +76,7 @@ class ArrayPlotData(AbstractPlotData):
 
     def __delitem__(self, name):
         return self.del_data(name)
-    
+
 
     def list_data(self):
         """ Returns a list of the names of the arrays managed by this instance.
@@ -86,7 +86,7 @@ class ArrayPlotData(AbstractPlotData):
 
     def get_data(self, name):
         """ Returns the array associated with *name*.
-        
+
         Implements AbstractDataSource.
         """
         return self.arrays.get(name, None)
@@ -104,20 +104,20 @@ class ArrayPlotData(AbstractPlotData):
     def set_data(self, name, new_data, generate_name=False):
         """ Sets the specified array as the value for either the specified
         name or a generated name.
-        
+
         Implements AbstractPlotData.
-        
+
         Parameters
         ----------
-        name : string 
+        name : string
             The name of the array whose value is to be set.
         new_data : array
             The array to set as the value of *name*.
         generate_name : Boolean
-            If True, a unique name of the form 'seriesN' is created for the 
+            If True, a unique name of the form 'seriesN' is created for the
             array, and is used in place of *name*. The 'N' in 'seriesN' is
             one greater the largest N already used.
-            
+
         Returns
         -------
         The name under which the array was set.
@@ -142,11 +142,11 @@ class ArrayPlotData(AbstractPlotData):
             event['changed'] = [name]
         else:
             event['added'] = [name]
-        
+
         self.arrays[name] = new_data
         self.data_changed = event
         return name
-    
+
 
     def set_selection(self, name, selection):
         """ Overrides AbstractPlotData to do nothing and not raise an error.

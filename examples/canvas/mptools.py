@@ -23,7 +23,7 @@ class MPPanTool(PanTool):
             self.cur_bid = event.bid
             self._start_pan(event, capture_mouse=False)
             event.window.capture_blob(self, event.bid, event.net_transform())
-    
+
     def panning_blob_up(self, event):
         if event.bid == self.cur_bid:
             self.cur_bid = BOGUS_BLOB_ID
@@ -32,11 +32,11 @@ class MPPanTool(PanTool):
     def panning_blob_move(self, event):
         if event.bid == self.cur_bid:
             self._dispatch_stateful_event(event, "mouse_move")
-    
+
     def panning_mouse_leave(self, event):
         """ Handles the mouse leaving the plot when the tool is in the 'panning'
         state.
-        
+
         Don't end panning.
         """
         return
@@ -108,7 +108,7 @@ class MPDragZoom(DragZoom):
     def normal_blob_down(self, event):
         if len(self._blobs) < 2:
             self._blobs[event.bid] = (event.x, event.y)
-            event.window.capture_blob(self, event.bid, 
+            event.window.capture_blob(self, event.bid,
                 transform=event.net_transform())
             event.handled = True
 
@@ -141,7 +141,7 @@ class MPDragZoom(DragZoom):
         # the relative sizes of the diagonals.
         diag = l2norm(high - low)
         zoom = self.speed * self.orig_diag / diag
-        
+
         # The original screen bounds are used to test if we've reached max_zoom
         orig_screen_low, orig_screen_high = \
                 map(asarray, self._map_coordinate_box(*self._orig_screen_bounds))
@@ -158,7 +158,7 @@ class MPDragZoom(DragZoom):
         c.y_mapper.range.set_bounds(new_low[1], new_high[1])
 
         self.component.request_redraw()
-    
+
     def dragging_blob_up(self, event):
         self._handle_blob_leave(event)
 
@@ -185,7 +185,7 @@ class MPPanZoom(BaseTool):
     """
 
     pan = Instance(MPPanTool)
-    
+
     zoom = Instance(MPDragZoom)
 
     event_state = Enum("normal", "pan", "zoom")
@@ -224,7 +224,7 @@ class MPPanZoom(BaseTool):
 
 
 class MPLegendTool(LegendTool):
-    
+
     event_state = Enum("normal", "dragging")
 
     cur_bid = Int(-1)
@@ -233,7 +233,7 @@ class MPLegendTool(LegendTool):
         if self.cur_bid == -1 and self.is_draggable(event.x, event.y):
             self.cur_bid = event.bid
             self.drag_start(event)
-    
+
     def dragging_blob_up(self, event):
         if event.bid == self.cur_bid:
             self.cur_bid = -1
@@ -242,7 +242,7 @@ class MPLegendTool(LegendTool):
     def dragging_blob_move(self, event):
         if event.bid == self.cur_bid:
             self.dragging(event)
-    
+
     def drag_start(self, event):
         if self.component:
             self.original_padding = self.component.padding
@@ -313,7 +313,7 @@ class MPRangeSelection(RangeSelection):
             #self.selecting_mouse_move(event)
             self._set_sizing_cursor(event)
             self.selection = sorted(self._axis_blobs.values())
-    
+
     def selecting_blob_move(self, event):
         if event.bid in self._blobs:
             self._blobs[event.bid] = event.x, event.y

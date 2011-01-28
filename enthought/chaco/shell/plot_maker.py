@@ -48,10 +48,10 @@ def is2D (a):
     return (len(shape(a)) == 2)
 
 def row ( a ):
-	return reshape( asarray( a ), [1,-1] )
+        return reshape( asarray( a ), [1,-1] )
 
 def col ( a ):
-	return reshape( asarray( a ), [-1,1] )
+        return reshape( asarray( a ), [-1,1] )
 
 
 #-----------------------------------------------------------------------------
@@ -59,10 +59,10 @@ def col ( a ):
 #-----------------------------------------------------------------------------
 
 def do_plotv(session, *args, **kw):
-    """ Creates a list of plots from the data in ``*args`` and options in 
+    """ Creates a list of plots from the data in ``*args`` and options in
     ``**kw``, according to the docstring on commands.plot().
     """
-    
+
     sort = kw.get("sort", "none")
     sources_list = make_data_sources(session, index_sort=sort, *args)
 
@@ -91,10 +91,10 @@ def make_data_sources(session, index_sort="none", *args):
             data.append(array(arg))
         else:
             data.append(arg)
-    
+
     if len(data) == 0:
         raise ChacoShellError, "Insufficient data for plot."
-    
+
     # 1D array(s)
     if len(data[0].shape) == 1:
         if len(data) == 1:
@@ -102,12 +102,12 @@ def make_data_sources(session, index_sort="none", *args):
             index_ds = ArrayDataSource(arange(len(data[0])), sort_order="ascending")
             value_ds = ArrayDataSource(data[0], sort_order="none")
             return [(index_ds, value_ds)]
-        
+
         else:
             # multiple arrays were provided
             index_ds = ArrayDataSource(data[0], sort_order=index_sort)
             return [(index_ds, ArrayDataSource(v, sort_order="none")) for v in data[1:]]
-    
+
     # 2D arrays
     elif len(data[0].shape) == 2:
         sources = []
@@ -142,15 +142,15 @@ color_trans = {
     'c': 'cyan',
     'r': 'red',
     'g': 'green',
-    'b': 'blue', 
+    'b': 'blue',
     'w': 'white',
     'k': 'black'
 }
-               
-# This one isn't quite right: 
+
+# This one isn't quite right:
 
 marker_re = re.compile('[ox+s^v]|(?:[^-])[.]')
-marker_trans = { 
+marker_trans = {
     '.': 'dot',
     'o': 'circle',
     'x': 'cross',
@@ -161,13 +161,13 @@ marker_trans = {
 }
 
 line_re = re.compile('--|-\.|[-:]')
-line_trans = { 
+line_trans = {
     '-':  'solid',
     ':':  'dot',
     '-.': 'dot dash',
-    '--': 'dash' 
+    '--': 'dash'
 }
-    
+
 def _process_format(format):
     """
     Converts a format string into a (color, line, marker, marker_color) tuple.
@@ -176,7 +176,7 @@ def _process_format(format):
         return ('black', 'solid', None, None)
     color, line, marker, marker_color = 'black', None, None, None
     m = color_re.findall(format)
-    if len(m) > 0: 
+    if len(m) > 0:
         color = marker_color = color_trans[m[0]]
         if len(m) > 1:
             marker_color = color_trans[m[1]]
@@ -185,12 +185,12 @@ def _process_format(format):
     if len(m) > 0:
         marker = marker_trans[m[0][-1]]
     m = line_re.findall(format)
-    if len(m): 
+    if len(m):
         line = line_trans[m[0]]
     return (color, line, marker, marker_color)
 
 def _process_group(group, plot_data=None):
-    """ Returns a (x_1D, y_1D, format_str) tuple from an input tuple 
+    """ Returns a (x_1D, y_1D, format_str) tuple from an input tuple
     of 1 to 3 elements: (x,y,format_str).
 
     A PlotData object can be optionally provided to disambiguate the cases
@@ -266,7 +266,7 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
 
     if len(cur_group) > 0:
         groups.append(cur_group)
-    
+
     # Process the list of groups and create a list of plots;
     # broadcast the keyword traits to all of them.
     plots = []
@@ -302,7 +302,7 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
                 break
         else:
             active_plot.tools.append(HighlightTool(active_plot))
-        
+
     return plots
 
 def do_imread(*data, **kwargs):
@@ -343,16 +343,16 @@ def do_imshow(plotdata, active_plot, *data, **kwargs):
     plot_list = [active_plot.img_plot(z, xbounds=x, ybounds=y, **kwargs)]
 
     return plot_list
-        
+
 
 def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
-    """ Creates a pseudocolor image plot on the active plot, given a 2-D 
+    """ Creates a pseudocolor image plot on the active plot, given a 2-D
     scalar data and a colormap.
     """
 
     valid_names = plotdata.list_data()
 
-    # if we get just one data source, it is assumed to be the scalar field 
+    # if we get just one data source, it is assumed to be the scalar field
     if len(data) == 1:
         x = None
         y = None
@@ -379,21 +379,21 @@ def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
             z = data[2]
     else:
         raise ValueError("do_pcolor takes one or three data sources")
-    
-    plot_list = [active_plot.img_plot(z, xbounds=x, ybounds=y, 
+
+    plot_list = [active_plot.img_plot(z, xbounds=x, ybounds=y,
                                 colormap=colormap, **kwargs)]
     return plot_list
 
 
 
 def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
-    """ Creates a contour plot on the active plot, given a 2-D 
+    """ Creates a contour plot on the active plot, given a 2-D
     scalar data and a colormap.
     """
 
     valid_names = plotdata.list_data()
 
-    # if we get just one data source, it is assumed to be the scalar field 
+    # if we get just one data source, it is assumed to be the scalar field
     if len(data) == 1:
         x = None
         y = None
@@ -420,14 +420,14 @@ def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
             z = data[2]
     else:
         raise ValueError("do_contour takes one or three data sources")
-    
+
     # TODO: find a better way to handle colormaps here, for now just pass
     # both ways
-    plot_list = [active_plot.contour_plot(z, type, xbounds=x, ybounds=y, 
-                                    poly_cmap=colormap, 
-                                    colors=colormap, 
+    plot_list = [active_plot.contour_plot(z, type, xbounds=x, ybounds=y,
+                                    poly_cmap=colormap,
+                                    colors=colormap,
                                     **kwargs)]
-    
+
     return plot_list
 
 

@@ -12,7 +12,7 @@ class DataChooser(HasTraits):
     plot = Instance(Plot)
     data_name = Enum("jn0", "jn1", "jn2")
     traits_view = View(Item('data_name', label="Y data"),
-                       Item('plot', editor=ComponentEditor(), show_label=False), 
+                       Item('plot', editor=ComponentEditor(), show_label=False),
                        width=800, height=600, resizable=True,
                        title="Data Chooser")
 

@@ -82,7 +82,7 @@ class GatherPointsBase(object):
 
 #    funcs = {"Fallback": fallback.scatterplot_gather_points,
 #             "C-based": speedups.scatterplot_gather_points}
-#    
+#
 #    for name, func in funcs.items():
 #        now = time.time()
 #        for i in range(numruns):

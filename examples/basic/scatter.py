@@ -2,9 +2,9 @@
 Draws a simple scatterplot of a set of random points.
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 """
 
@@ -57,7 +57,7 @@ def _create_plot_component():
     plot.tools.append(PanTool(plot, constrain_key="shift"))
     zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
-    
+
     return plot
 
 #===============================================================================
@@ -65,25 +65,25 @@ def _create_plot_component():
 size = (650, 650)
 title = "Basic scatter plot"
 bg_color="lightgray"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
                         Item('plot', editor=ComponentEditor(size=size,
-                                                            bgcolor=bg_color), 
+                                                            bgcolor=bg_color),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -95,7 +95,7 @@ class PlotFrame(DemoFrame):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component(),
                       bg_color=bg_color)
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

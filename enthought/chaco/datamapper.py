@@ -1,5 +1,5 @@
 """
-CAUTION: This is an old file from Chaco 1.x to support the spatial subdivision 
+CAUTION: This is an old file from Chaco 1.x to support the spatial subdivision
 structures.  It will be refactored soon.
 
 If you are looking for Chaco's mappers (subclasses of AbstractMapper),
@@ -21,7 +21,7 @@ from enthought.traits.api import HasStrictTraits, Bool, Enum, Tuple, \
 # Module-specific traits
 #-------------------------------------------------------------------
 
-# Expresses sorting order of 
+# Expresses sorting order of
 ArraySortTrait = Enum('ascending', 'descending')
 
 
@@ -40,7 +40,7 @@ def left_shift(ary, newval):
 def sort_points(points, index=0):
     """
     sort_points(array_of_points, index=<0|1>) -> sorted_array
-    
+
     Takes a list of points as an Nx2 array and sorts them according
     to their x-coordinate (index=0) or y-coordinate (index=1).
     """
@@ -51,7 +51,7 @@ def sort_points(points, index=0):
 def array_zip(*arys):
     """
     Returns a Numeric array that is the concatenation of the input 1-D
-    *arys* along a new axis.  This function is basically equivalent to 
+    *arys* along a new axis.  This function is basically equivalent to
     ``array(zip(*arys))``, but is more resource-efficient.
     """
     return transpose(array(arys))
@@ -65,7 +65,7 @@ class AbstractDataMapper(HasStrictTraits):
     includes returning rect-aligned "affected regions" enclosing all the
     returned points, etc.
     """
-    
+
     # How to sort the output list of intersected points that the
     # get_points_near_*() function returns.  The points are always sorted
     # by their domain (first/X-value) coordinate.
@@ -74,14 +74,14 @@ class AbstractDataMapper(HasStrictTraits):
     # A read-only property that describes the origin and size of the data
     # set in data space as a 4-tuple (min_x, min_y, width, height)
     extents = Property()
-    
-    
+
+
     #-------------------------------------------------------------------
     # Private traits
     #-------------------------------------------------------------------
-    
+
     _data = Any
-    
+
     # Internally we expect Nx2 arrays; if the user hands in something
     # different, we stored a transposed version but always remember to
     # transpose once again whenever we return data.
@@ -89,11 +89,11 @@ class AbstractDataMapper(HasStrictTraits):
 
     # the max and min points in data space expressed as a 4-tuple (x,y,w,h)
     _extents = Tuple
-    
+
     # a "fudge factor" to make the extents slightly larger than the actual
     # values in the data set
     _extents_delta = Float(0.1)
-    
+
     def __init__(self, data=None, data_sorting='none', **kw):
         "See set_data() for description."
         self._data = array([])
@@ -101,19 +101,19 @@ class AbstractDataMapper(HasStrictTraits):
         if data is not None:
             self.set_data(data, data_sorting)
         return
-    
+
     def get_points_near(self, pointlist, radius=0.0):
         """
         get_points_near([points], radius=0.0) -> Nx2 array of candidate points
-        
+
         Returns a list of points near the input points (Nx2 array).
-        
+
         For each point in the input set, *radius* is used to create a
         conceptual circle; if any points in the DataMapper's values lie inside
         this circle, they are returned.
 
         The returned list is not guaranteed to be a minimum or exact set,
-        but it is guaranteed to contain all points that intersect the 
+        but it is guaranteed to contain all points that intersect the
         *pointlist*.  The caller still must do fine-grained testing to see
         if the points in the returned point list are a match.
         """
@@ -122,32 +122,32 @@ class AbstractDataMapper(HasStrictTraits):
     def get_points_near_polyline(self, line):
         """
         get_points_near_polyline([v1, ... vN]) -> [ [points], [points], ... ]
-        
-        This method is like get_points_near(), except that it takes a polyline 
+
+        This method is like get_points_near(), except that it takes a polyline
         as input.  A polyline is a list of vertices, each connected to the next
-        by a straight line. The polyline has infinitely thin width.  
-        
+        by a straight line. The polyline has infinitely thin width.
+
         The input array can have shape 2xN or Nx2.
         """
         raise NotImplementedError
-    
+
     def get_points_in_rect(self, rect):
         """
         get_points_in_rect( (x,y,w,h) ) -> [ [points], [points], ... ]
-        
+
         This method is like get_points_near(), except that it takes a rectangle
         as input.  The rectangle has infinitely thin width.
         """
         raise NotImplementedError
-    
+
     def get_points_in_poly(self, poly):
         """
         get_points_in_poly([v1, ... vN]) -> [ [points], [points], ... ]
-        
-        This method is like get_points_near(), except that it takes a polygon 
-        as input.  The polygon has infinitely thin width and can be 
+
+        This method is like get_points_near(), except that it takes a polygon
+        as input.  The polygon has infinitely thin width and can be
         self-intersecting and concave.
-        
+
         The input array can have shape 2xN or Nx2.
         """
         raise NotImplementedError
@@ -158,34 +158,34 @@ class AbstractDataMapper(HasStrictTraits):
         points/lines/rect/polys in the last get_points_in_*() call.  The
         region returned by this method is guaranteed to only contain the points
         that were returned by the previous call.
-        
+
         The region is returned as a list of (possibly disjoint) rectangles,
         where each rectangle is a 4-tuple (x,y,w,h).
         """
         raise NotImplementedError
-    
+
     def set_data(self, new_data, new_data_sorting='none'):
         """
         set_data(new_data, new_data_sorting='none')
-        
+
         Sets the data used by this DataMapper.  The *new_data_sorting* parameter
         indicates how the new data is sorted: 'none', 'ascending', or 'descending'.
         The default is 'none', which causes the data mapper to perform
         a full sort of the input data.
-        
+
         The input data can be shaped 2xN or Nx2.
         """
         if len(new_data) == 0:
             self.clear()
             return
-        
+
         if new_data.shape[0] == 2:
             self._is_transposed = True
             self._data = transpose(new_data)
         else:
             self._is_transposed = False
             self._data = new_data
-        
+
         if new_data_sorting == 'none':
             if self.sort_order == 'ascending':
                 self._data = sort_points(self._data)
@@ -203,7 +203,7 @@ class AbstractDataMapper(HasStrictTraits):
     def clear(self):
         """
         clear()
-        
+
         Resets internal state and any cached data to reflect an empty
         data set/data space.
         """
@@ -223,10 +223,10 @@ class AbstractDataMapper(HasStrictTraits):
     # Concrete private methods and event handlers
     # Child classes shouldn't have to override these.
     #-------------------------------------------------------------------
-    
+
     def _get_extents(self):
         return self._extents
-    
+
     def _calc_data_extents(self):
         """
         Computes ((minX, minY), (width, height)) of self._data; sets self._extent and
@@ -249,7 +249,7 @@ class AbstractDataMapper(HasStrictTraits):
     #-------------------------------------------------------------------
     # Abstract private methods and event handlers
     #-------------------------------------------------------------------
-    
+
     def _update_datamap(self):
         """
         This function gets called after self._data has changed.  Child classes
@@ -257,7 +257,7 @@ class AbstractDataMapper(HasStrictTraits):
         data structures, etc.
         """
         return
-    
+
     def _clear(self):
         "Performs subclass-specific clearing/cleanup."
         return
@@ -272,16 +272,16 @@ class BruteForceDataMapper(AbstractDataMapper):
     This is basically the same behavior as not having a data mapper in
     the pipeline at all.
     """
-    
+
     def get_points_near(self, pointlist, radius=0):
         return self.get_data()
-        
+
     def get_points_near_polyline(self, line):
         return self.get_data()
-        
+
     def get_points_in_rect(self, rect):
         return self.get_data()
-    
+
     def get_points_in_poly(self, poly):
         return self.get_data()
 

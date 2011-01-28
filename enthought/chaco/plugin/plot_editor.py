@@ -24,7 +24,7 @@ class PlotEditor(TraitsUIEditor):
     """
 
     bgcolor = Str('white')
-    image_default_origin = Enum("bottom left", "top left", 
+    image_default_origin = Enum("bottom left", "top left",
                                 "bottom right", "top right")
 
     # The plot.
@@ -38,11 +38,11 @@ class PlotEditor(TraitsUIEditor):
     # to notify it of our being closed, etc.
     session = Any()
 
-    def __init__(self, is_image=False, bgcolor="white", 
+    def __init__(self, is_image=False, bgcolor="white",
                  image_default_origin="top left", *args, **kw):
 
         super(TraitsUIEditor, self).__init__(**kw)
-        
+
         # Some defaults which should be overridden by preferences.
         self.bgcolor = bgcolor
         self.image_default_origin = image_default_origin
@@ -63,13 +63,13 @@ class PlotEditor(TraitsUIEditor):
 
     def set_container(self, container):
         self.obj.component = container
-    
+
     def iconize(self, iconize):
         """Iconizes the window if *iconize* is True.
 
         Do nothing in this implementation.
         """
-    
+
     def maximize(self, maximize):
         """ If *maximize* is True, maximizes the window size; restores if False.
 
@@ -111,7 +111,7 @@ class PlotEditor(TraitsUIEditor):
 
     def _create_top_container(self):
         plot = ScalyPlot(
-            padding=50, 
+            padding=50,
             fill_padding=True,
             bgcolor=self.bgcolor,
             use_backbuffer=True,

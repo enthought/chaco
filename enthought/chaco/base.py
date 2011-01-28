@@ -47,13 +47,13 @@ def poly_point(center, r, degrees):
     return x,y
 
 def n_gon(center, r, nsides, rot_degrees=0):
-    """ Generates the points of a regular polygon with specified center,  
-    radius, and number of sides. 
-    
-    By default the rightmost point of the polygon is (*r*,0) but a 
+    """ Generates the points of a regular polygon with specified center,
+    radius, and number of sides.
+
+    By default the rightmost point of the polygon is (*r*,0) but a
     rotation about the center may be specified with *rot_degrees*.
     """
-    if nsides < 3: 
+    if nsides < 3:
         raise ValueError, 'Must have at least 3 sides in a polygon'
     rotation = radians(rot_degrees)
     theta = (pi * 2) / nsides
@@ -64,8 +64,8 @@ def n_gon(center, r, nsides, rot_degrees=0):
 def bin_search(values, value, ascending):
     """
     Performs a binary search of a sorted array looking for a specified value.
-    
-    Returns the lowest position where the value can be found or where the 
+
+    Returns the lowest position where the value can be found or where the
     array value is the last value less (greater) than the desired value.
     Returns -1 if *value* is beyond the minimum or maximum of *values*.
     """
@@ -91,19 +91,19 @@ def bin_search(values, value, ascending):
 
 def reverse_map_1d(data, pt, sort_order, floor_only=False):
     """Returns the index of *pt* in the array *data*.
-    
+
     Parameters
     ----------
-    data : 1-D array 
+    data : 1-D array
         data to search
-    pt : scalar value 
+    pt : scalar value
         value to find, which must be within the value range of *data*
     sort_order : string
         "ascending" or "descending"
     floor_only : bool
         if true, don't find "nearest" point, instead find last point
         less (greater) than pt
-        
+
     Raises IndexError if *pt* is outside the range of values in *data*.
     """
     if sort_order == "ascending":
@@ -112,7 +112,7 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
         ndx = bin_search(data, pt, -1)
     else:
         raise NotImplementedError, "reverse_map_1d() requires a sorted array"
-    
+
     if ndx == -1:
         raise IndexError, "value outside array data range"
 
@@ -157,10 +157,10 @@ def left_shift(ary, newval):
 def sort_points(points, index=0):
     """
     sort_points(array_of_points, index=<0|1>) -> sorted_array
-    
+
     Takes a list of points as an Nx2 array and sorts them according
     to their x- or y-coordinate.  If *index* is zero, the points are sorted
-    on their x-coordinate. 
+    on their x-coordinate.
     """
     if len(points.shape) != 2 or (2 not in points.shape):
         raise RuntimeError, "sort_points(): Array of wrong shape."
@@ -169,17 +169,17 @@ def sort_points(points, index=0):
 def find_runs(int_array, order='ascending'):
     """
     find_runs(int_array, order=<'ascending'|'flat'|'descending'>) -> list_of_int_arrays
-    
+
     Given an integer array sorted in ascending/descending order or flat order,
     returns a list of continuous runs of integers inside the list.  for example::
-        
+
         find_runs([1,2,3,6,7,8,9,10,11,15])
-          
+
     returns [ [1,2,3], [6,7,8,9,10,11], [15] ]
     and::
-        
+
         find_runs([0,0,0,1,1,1,1,0,0,0,0], "flat")
-        
+
     return [ [0,0,0], [1,1,1,1], [0,0,0,0] ]
     """
     ranges = arg_find_runs(int_array, order)

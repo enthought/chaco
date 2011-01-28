@@ -32,7 +32,7 @@ class PopupablePlot(Plot):
         for data, kw in self.command_queue:
             plot.plot(data, **kw)
             plot.title = self.title
-            
+
         plot.title = self.title
         container = VPlotContainer(bgcolor=WindowColor)
         container.add(plot)
@@ -46,5 +46,5 @@ class PopupablePlot(Plot):
         self.command_queue.append((data, kw))
         super(PopupablePlot, self).plot(data, **kw)
         return
-                            
-                            
+
+

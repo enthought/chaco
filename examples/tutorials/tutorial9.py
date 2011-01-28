@@ -9,9 +9,9 @@ from tutorial8 import PlotFrame
 class PlotFrame2(PlotFrame):
     def _create_plot(self):
         container = super(PlotFrame2, self)._create_plot()
-        
+
         self.right_plot.index_mapper.range = self.left_plot.index_mapper.range
-        
+
         return container
 
 if __name__ == "__main__":

@@ -57,7 +57,7 @@ state elsewhere in the application (e.g. updating values on a status bar,
 setting the tooltip at the cursor, etc.), they don't represent a stateful,
 "captive" interaction with the user.
 
-In contrast, if a PlotComponent has an active_tool, then it passes all 
+In contrast, if a PlotComponent has an active_tool, then it passes all
 received events on to that tool.  The active_tool gets a chance to handle
 the event, and after it returns, if the event's "handled" attribute is set,
 then event propagation is terminated.  In this way, the active tool has

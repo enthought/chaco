@@ -42,23 +42,23 @@ class BarPlot(AbstractPlotRenderer):
     # The orientation of the index axis.
     orientation = Enum("h", "v")
 
-    # The direction of the index axis with respect to the graphics context's 
+    # The direction of the index axis with respect to the graphics context's
     # direction.
     index_direction = Enum("normal", "flipped")
 
-    # The direction of the value axis with respect to the graphics context's 
+    # The direction of the value axis with respect to the graphics context's
     # direction.
     value_direction = Enum("normal", "flipped")
 
     # Type of width used for bars:
     #
-    # 'data' 
-    #     The width is in the units along the x-dimension of the data space.  
-    # 'screen' 
+    # 'data'
+    #     The width is in the units along the x-dimension of the data space.
+    # 'screen'
     #     The width uses a fixed width of pixels.
     bar_width_type = Enum("data", "screen")
 
-    # Width of the bars, in data or screen space (determined by 
+    # Width of the bars, in data or screen space (determined by
     # **bar_width_type**).
     bar_width = Float(10)
 
@@ -72,10 +72,10 @@ class BarPlot(AbstractPlotRenderer):
     line_color = black_color_trait
     # Color to fill the bars.
     fill_color = black_color_trait
-    
+
     # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     alpha = Range(0.0, 1.0, 1.0)
-    
+
 
     #use_draw_order = False
 
@@ -89,10 +89,10 @@ class BarPlot(AbstractPlotRenderer):
     # the orientation of the plot.
     y_mapper = Property
 
-    # Corresponds to either **index_direction** or **value_direction**, 
+    # Corresponds to either **index_direction** or **value_direction**,
     # depending on the orientation of the plot.
     x_direction = Property
-    # Corresponds to either **value_direction** or **index_direction**, 
+    # Corresponds to either **value_direction** or **index_direction**,
     # depending on the orientation of the plot
     y_direction = Property
 
@@ -140,8 +140,8 @@ class BarPlot(AbstractPlotRenderer):
 
     def map_screen(self, data_array):
         """ Maps an array of data points into screen space and returns it as
-        an array. 
-        
+        an array.
+
         Implements the AbstractPlotRenderer interface.
         """
         # data_array is Nx2 array
@@ -158,7 +158,7 @@ class BarPlot(AbstractPlotRenderer):
 
     def map_data(self, screen_pt):
         """ Maps a screen space point into the "index" space of the plot.
-        
+
         Implements the AbstractPlotRenderer interface.
         """
         if self.orientation == "h":
@@ -170,7 +170,7 @@ class BarPlot(AbstractPlotRenderer):
     def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True,
                   index_only=False):
         """ Maps a screen space point to an index into the plot's index array(s).
-        
+
         Implements the AbstractPlotRenderer interface.
         """
         data_pt = self.map_data(screen_pt)
@@ -190,7 +190,7 @@ class BarPlot(AbstractPlotRenderer):
 
         x = index_data[ndx]
         y = value_data[ndx]
-        
+
         result = self.map_screen(array([[x,y]]))
         if result is None:
             return None

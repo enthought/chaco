@@ -13,7 +13,7 @@ class PlotEditor(HasTraits):
     plot_type = Enum("scatter", "line")
     orientation = Enum("horizontal", "vertical")
     traits_view = View(Item('orientation', label="Orientation"),
-                       Item('plot', editor=ComponentEditor(), show_label=False), 
+                       Item('plot', editor=ComponentEditor(), show_label=False),
                        width=500, height=500, resizable=True,
                        title="Chaco Plot")
 
@@ -29,7 +29,7 @@ class PlotEditor(HasTraits):
         plot.tools.append(PanTool(plot))
         plot.tools.append(ZoomTool(plot))
         self.plot = plot
-    
+
     def _orientation_changed(self):
         if self.orientation == "vertical":
             self.plot.orientation = "v"

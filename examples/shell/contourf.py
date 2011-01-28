@@ -9,7 +9,7 @@ from enthought.chaco.default_colormaps import jet
 
 # Crate some scalar data
 xs = linspace(-10,10,200)
-ys = linspace(-10,10,400) 
+ys = linspace(-10,10,400)
 x, y = meshgrid(xs,ys)
 z = x * tanh(y)
 

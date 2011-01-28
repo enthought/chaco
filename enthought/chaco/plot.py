@@ -89,10 +89,10 @@ class Plot(DataView):
     # destroyed if no color plots are on the plot.
     color_mapper = Instance(AbstractColormap)
 
-    # List of colors to cycle through when auto-coloring is requested. Picked 
+    # List of colors to cycle through when auto-coloring is requested. Picked
     # and ordered to be red-green color-blind friendly, though should not
     # be an issue for blue-yellow.
-    auto_colors = List(["green", "lightgreen", "blue", "lightblue", "red", 
+    auto_colors = List(["green", "lightgreen", "blue", "lightblue", "red",
                         "pink", "darkgray", "silver"])
 
     # index into auto_colors list
@@ -104,7 +104,7 @@ class Plot(DataView):
     # This can be overriden to customize what renderer type the Plot
     # will instantiate for its various plotting methods.
     renderer_map = Dict(dict(line = LinePlot,
-                             scatter = ScatterPlot, 
+                             scatter = ScatterPlot,
                              polygon = PolygonPlot,
                              cmap_scatter = ColormappedScatterPlot,
                              img_plot = ImagePlot,
@@ -134,7 +134,7 @@ class Plot(DataView):
 
     # The PlotLabel object that contains the title.
     _title = Instance(PlotLabel)
-    
+
     # The legend on the plot.
     legend = Instance(Legend)
 
@@ -165,7 +165,7 @@ class Plot(DataView):
                                    overlay_position="top", component=self)
         if title is not None:
             self.title = title
-    
+
         if not self.legend:
             self.legend = Legend(visible=False, align="ur", error_icon="blank",
                                  padding=10, component=self)
@@ -174,7 +174,7 @@ class Plot(DataView):
     def add_xy_plot(self, index_name, value_name, renderer_factory, name=None,
         origin=None, **kwds):
         """ Add a BaseXYPlot renderer subclass to this Plot.
- 
+
         Parameters
         ----------
         index_name : str
@@ -187,7 +187,7 @@ class Plot(DataView):
             The name of the plot.  If None, then a default one is created
             (usually "plotNNN").
         origin : string (optional)
-            Which corner the origin of this plot should occupy: 
+            Which corner the origin of this plot should occupy:
                 "bottom left", "top left", "bottom right", "top right"
         **kwds :
             Additional keywords to pass to the factory.
@@ -200,7 +200,7 @@ class Plot(DataView):
         self.index_range.add(index)
         value = self._get_or_create_datasource(value_name)
         self.value_range.add(value)
- 
+
         if self.index_scale == "linear":
             imap = LinearMapper(range=self.index_range)
         else:
@@ -209,7 +209,7 @@ class Plot(DataView):
             vmap = LinearMapper(range=self.value_range)
         else:
             vmap = LogMapper(range=self.value_range)
- 
+
         renderer = renderer_factory(
             index = index,
             value = value,
@@ -258,7 +258,7 @@ class Plot(DataView):
             The type of scale to use for the value axis. If not "linear", then
             a log scale is used.
         origin : string
-            Which corner the origin of this plot should occupy: 
+            Which corner the origin of this plot should occupy:
                 "bottom left", "top left", "bottom right", "top right"
         styles : series of keyword arguments
             attributes and values that apply to one or more of the
@@ -338,7 +338,7 @@ class Plot(DataView):
                     raise ValueError("Unhandled plot type: " + plot_type)
 
                 if self.index_scale == "linear":
-                    imap = LinearMapper(range=self.index_range, 
+                    imap = LinearMapper(range=self.index_range,
                                 stretch_data=self.index_mapper.stretch_data)
                 else:
                     imap = LogMapper(range=self.index_range,
@@ -387,13 +387,13 @@ class Plot(DataView):
                     if colormap.range is None:
                         color_range.add(color)
                         colormap.range = color_range
-                        
+
                 elif callable(colormap):
                     color_range.add(color)
                     self.color_mapper = colormap(color_range)
                 else:
                     raise ValueError("Unexpected colormap %r in plot()." % colormap)
-                
+
                 if self.index_scale == "linear":
                     imap = LinearMapper(range=self.index_range,
                                 stretch_data=self.index_mapper.stretch_data)
@@ -449,7 +449,7 @@ class Plot(DataView):
         xbounds, ybounds : tuples of (low, high)
             Bounds in data space where this image resides.
         origin : string
-            Which corner the origin of this plot should occupy: 
+            Which corner the origin of this plot should occupy:
                 "bottom left", "top left", "bottom right", "top right"
         hide_grids : bool, default True
             Whether or not to automatically hide the grid lines on the plot
@@ -498,7 +498,7 @@ class Plot(DataView):
             floating point data.
         type : comma-delimited string of "line", "poly"
             The type of contour plot to add. If the value is "poly"
-            and no colormap is provided via the *poly_cmap* argument, then 
+            and no colormap is provided via the *poly_cmap* argument, then
             a default colormap of 'Spectral' is used.
         name : string
             The name of the plot; if omitted, then a name is generated.
@@ -509,7 +509,7 @@ class Plot(DataView):
         xbounds, ybounds : tuples of (low, high) in data space
             Bounds where this image resides.
         origin : string
-            Which corner the origin of this plot should occupy: 
+            Which corner the origin of this plot should occupy:
                 "bottom left", "top left", "bottom right", "top right"
         hide_grids : bool, default True
             Whether or not to automatically hide the grid lines on the plot
@@ -551,7 +551,7 @@ class Plot(DataView):
         return self._create_2d_plot(cls, name, origin, xbounds, ybounds, value,
                                     hide_grids, **kwargs)
 
-    def _create_2d_plot(self, cls, name, origin, xbounds, ybounds, value_ds, 
+    def _create_2d_plot(self, cls, name, origin, xbounds, ybounds, value_ds,
                         hide_grids, **kwargs):
         if name is None:
             name = self._make_new_plot_name()
@@ -607,13 +607,13 @@ class Plot(DataView):
         # Create the index and add its datasources to the appropriate ranges
         index = GridDataSource(xs, ys, sort_order=('ascending', 'ascending'))
         self.range2d.add(index)
-        mapper = GridMapper(range=self.range2d, 
+        mapper = GridMapper(range=self.range2d,
                             stretch_data_x=self.x_mapper.stretch_data,
                             stretch_data_y=self.y_mapper.stretch_data)
 
-        plot = cls(index=index, 
-                   value=value_ds, 
-                   index_mapper=mapper, 
+        plot = cls(index=index,
+                   value=value_ds,
+                   index_mapper=mapper,
                    orientation=self.orientation,
                    origin=origin,
                    **kwargs)
@@ -637,19 +637,19 @@ class Plot(DataView):
             number of arguments determines how they are interpreted:
 
             (index, bar_min, bar_max)
-                filled or outline-only bar extending from **bar_min** to 
+                filled or outline-only bar extending from **bar_min** to
                 **bar_max**
 
             (index, bar_min, center, bar_max)
                 above, plus a center line of a different color at **center**
 
             (index, min, bar_min, bar_max, max)
-                bar extending from **bar_min** to **bar_max**, with thin 
+                bar extending from **bar_min** to **bar_max**, with thin
                 bars at **min** and **max** connected to the bar by a long
                 stem
 
             (index, min, bar_min, center, bar_max, max)
-                like above, plus a center line of a different color and 
+                like above, plus a center line of a different color and
                 configurable thickness at **center**
 
         name : string
@@ -662,7 +662,7 @@ class Plot(DataView):
         Styles
         ======
         These are all optional keyword arguments.
-        
+
         bar_color : string, 3- or 4-tuple
             The fill color of the bar; defaults to "auto".
         bar_line_color : string, 3- or 4-tuple
@@ -690,7 +690,7 @@ class Plot(DataView):
         if len(data) == 0:
             return
         self.value_scale = value_scale
-        
+
         if name is None:
             name = self._make_new_plot_name()
         if origin is None:
@@ -725,7 +725,7 @@ class Plot(DataView):
             styles["color"] = self.auto_colors[self._auto_color_idx]
 
         if self.index_scale == "linear":
-            imap = LinearMapper(range=self.index_range, 
+            imap = LinearMapper(range=self.index_range,
                         stretch_data=self.index_mapper.stretch_data)
         else:
             imap = LogMapper(range=self.index_range,
@@ -739,10 +739,10 @@ class Plot(DataView):
 
         cls = self.renderer_map["candle"]
         plot = cls(index = index,
-                          min_values = min, 
+                          min_values = min,
                           bar_min = bar_min,
                           center_values = center,
-                          bar_max = bar_max, 
+                          bar_max = bar_max,
                           max_values = max,
                           index_mapper = imap,
                           value_mapper = vmap,
@@ -1006,13 +1006,13 @@ class Plot(DataView):
             return self._title.overlay_position
         else:
             return None
-        
+
     def _set_title_font(self, font):
         old_font = self._title.font
         self._title.font = font
         self.trait_property_changed("title_font", old_font, font)
-        
+
     def _get_title_font(self):
         return self._title.font
-            
+
 

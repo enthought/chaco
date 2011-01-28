@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" 
+"""
 Demonstrates the LassoTool and overlay on a colormapped image
 plot.  The underlying plot is similar to the one in cmap_image_plot.py.
 
@@ -17,7 +17,7 @@ from enthought.traits.api import HasTraits, Instance
 from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, jet, Plot, LassoOverlay 
+from enthought.chaco.api import ArrayPlotData, jet, Plot, LassoOverlay
 from enthought.chaco.tools.api import LassoSelection, LassoSelection
 
 #===============================================================================
@@ -25,7 +25,7 @@ from enthought.chaco.tools.api import LassoSelection, LassoSelection
 #===============================================================================
 
 def lasso_updated(lasso_tool, name, old, new_selections):
-    # new_selections is a list of arrays of coordinates in dataspace.  It is a 
+    # new_selections is a list of arrays of coordinates in dataspace.  It is a
     # list because the LassoSelection supports multiple, disjoint selection regions.
     for i, selection in enumerate(new_selections):
         print "Selection region", i
@@ -53,7 +53,7 @@ def _create_plot_component():# Create a scalar field to colormap
 
     # Create the plot
     plot = Plot(pd)
-    img_plot = plot.img_plot("imagedata", 
+    img_plot = plot.img_plot("imagedata",
                              xbounds=xbounds[:2],
                              ybounds=ybounds[:2],
                              colormap=jet)[0]
@@ -73,24 +73,24 @@ def _create_plot_component():# Create a scalar field to colormap
 # Attributes to use for the plot view.
 size = (800, 600)
 title="Image Plot with Lasso"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -101,7 +101,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

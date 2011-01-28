@@ -103,7 +103,7 @@ from grid import PlotGrid
 # Tools
 from abstract_controller import AbstractController
 
-# Importing various symbols into the Chaco namespace for backwards 
+# Importing various symbols into the Chaco namespace for backwards
 # compatibility.  New code should directly import from Enable.
 from enthought.enable.base_tool import BaseTool, KeySpec
 from enthought.enable.markers import marker_trait

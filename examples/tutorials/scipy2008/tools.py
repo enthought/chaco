@@ -10,7 +10,7 @@ from enthought.traits.ui.api import Item, View
 class ToolsExample(HasTraits):
 
     plot = Instance(Plot)
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
+    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
                        width=800, height=600, resizable=True,
                        title="Pan & Zoom")
 

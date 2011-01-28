@@ -20,7 +20,7 @@ class DataPipelineTestCase(unittest.TestCase):
         self.assert_(r.high_setting == "auto")
         self.assert_(r.low == 1)
         self.assert_(r.high == 7)
-        
+
         mapper = LinearMapper()
         mapper.range = r
         mapper.low_pos = 1.0
@@ -34,13 +34,13 @@ class DataPipelineTestCase(unittest.TestCase):
         r = DataRange1D()
         ds = ArrayDataSource()
         ary = array([1,2,3,4,5,6,7])
-        
+
         mapper.range = r
         mapper.low_pos = 1.0
         mapper.high_pos = 7.0
         r.add(ds)
         ds.set_data(ary)
-        
+
         self.assert_(r.low == 1)
         self.assert_(r.high == 7)
         screen_pts = mapper.map_screen(array([1,3,7]))

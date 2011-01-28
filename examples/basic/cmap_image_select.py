@@ -3,9 +3,9 @@
 Draws a colormapped image plot
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 """
 
@@ -44,7 +44,7 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    plot.img_plot("imagedata", 
+    plot.img_plot("imagedata",
                   name="my_plot",
                   xbounds=xbounds[:2],
                   ybounds=ybounds[:2],
@@ -54,7 +54,7 @@ def _create_plot_component():
     plot.title = "Selectable Image Plot"
     plot.padding = 50
 
-    # Right now, some of the tools are a little invasive, and we need the 
+    # Right now, some of the tools are a little invasive, and we need the
     # actual CMapImage object to give to them
     my_plot = plot.plots["my_plot"][0]
 
@@ -74,7 +74,7 @@ def _create_plot_component():
                         padding=20)
     colorbar.padding_top = plot.padding_top
     colorbar.padding_bottom = plot.padding_bottom
-    
+
     # create a range selection for the colorbar
     range_selection = RangeSelection(component=colorbar)
     colorbar.tools.append(range_selection)
@@ -99,24 +99,24 @@ def _create_plot_component():
 #===============================================================================
 # Attributes to use for the plot view.
 size=(800,600)
-title="Colormapped Image Plot"        
+title="Colormapped Image Plot"
 
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -124,8 +124,8 @@ demo = Demo()
 #===============================================================================
 class PlotFrame(DemoFrame):
 
-    def _create_window(self):        
-        
+    def _create_window(self):
+
         # Return a window containing our plot
         return Window(self, -1, component=_create_plot_component())
 

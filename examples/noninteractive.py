@@ -68,32 +68,32 @@ def draw_pdf(filename, size=(800,600)):
     gc = PdfPlotGraphicsContext(filename=filename, dest_box = (0.5, 0.5, 5.0, 5.0))
     gc.render_component(container)
     gc.save()
-    
+
 def get_directory(filename):
     print 'Please enter a path in which to place generated plots.'
     print 'Press <ENTER> to generate in the current directory.'
     path = raw_input('Path: ').strip()
-    
+
     if len(path) > 0 and not os.path.exists(path):
         print 'The given path does not exist.'
         sys.exit()
-        
+
     if not os.path.isabs(path):
         print 'Creating image: ' + os.path.join(os.getcwd(), path, filename)
     else:
         print 'Creating image: ' + os.path.join(path, filename)
-            
+
     return os.path.join(path, filename)
-        
+
 
 if __name__ == "__main__":
     if ETSConfig.kiva_backend == 'svg':
         # Render the plot as a SVG
-        draw_svg(get_directory('noninteractive.svg'), size=(800,600))        
+        draw_svg(get_directory('noninteractive.svg'), size=(800,600))
     elif ETSConfig.kiva_backend == 'pdf':
         # Render the plot as a PDF, requires on ReportLab
         draw_pdf(get_directory('noninteractive.pdf'))
-    else:        
+    else:
         draw_plot(get_directory('noninteractive.png'), size=(800, 600))
 
 # EOF

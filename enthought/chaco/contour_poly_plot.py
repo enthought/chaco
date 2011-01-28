@@ -7,7 +7,7 @@ from __future__ import with_statement
 from numpy import array, linspace, meshgrid, transpose
 
 # Enthought library imports
-from enthought.traits.api import Bool, Dict 
+from enthought.traits.api import Bool, Dict
 
 # Local relative imports
 from base_contour_plot import BaseContourPlot
@@ -23,7 +23,7 @@ class ContourPolyPlot(BaseContourPlot):
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
-    
+
     # Are the cached contours valid? If False, new ones need to be computed.
     _poly_cache_valid = Bool(False)
 
@@ -35,11 +35,11 @@ class ContourPolyPlot(BaseContourPlot):
     #------------------------------------------------------------------------
 
     def _render(self, gc):
-        """ Actually draws the plot. 
-        
+        """ Actually draws the plot.
+
         Implements the Base2DPlot interface.
         """
-        
+
         if not self._level_cache_valid:
             self._update_levels()
         if not self._poly_cache_valid:

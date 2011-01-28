@@ -21,7 +21,7 @@ class ImagePlot(Base2DPlot):
     #------------------------------------------------------------------------
     # Data-related traits
     #------------------------------------------------------------------------
-    
+
     # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     # for full intensity.
     alpha = Trait(1.0, Range(0.0, 1.0))
@@ -32,14 +32,14 @@ class ImagePlot(Base2DPlot):
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
-    
+
     # Are the cache traits valid? If False, new ones need to be computed.
     _image_cache_valid = Bool(False)
 
     # Cached image of the bmp data (not the bmp data in self.data.value).
     _cached_image = Instance(GraphicsContextArray)
-    
-    # Tuple-defined rectangle (x, y, dx, dy) in screen space in which the 
+
+    # Tuple-defined rectangle (x, y, dx, dy) in screen space in which the
     # **_cached_image** is to be drawn.
     _cached_dest_rect = Either(Tuple, List)
 
@@ -48,13 +48,13 @@ class ImagePlot(Base2DPlot):
     #------------------------------------------------------------------------
 
     def _render(self, gc):
-        """ Actually draws the plot. 
-        
+        """ Actually draws the plot.
+
         Implements the Base2DPlot interface.
         """
         if not self._image_cache_valid:
             self._compute_cached_image()
-        
+
         if "bottom" in self.origin:
             sy = -1
         else:
@@ -67,7 +67,7 @@ class ImagePlot(Base2DPlot):
         # If the orientation is flipped, the BR and TL cases are swapped
         if self.orientation == "v" and sx == sy:
             sx, sy = -sx, -sy
-            
+
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             gc.set_alpha(self.alpha)
@@ -102,7 +102,7 @@ class ImagePlot(Base2DPlot):
     def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
                   index_only=False):
         """ Maps a screen space point to an index into the plot's index array(s).
-        
+
         Implements the AbstractPlotRenderer interface. Uses 0.0 for *threshold*,
         regardless of the passed value.
         """
@@ -116,13 +116,13 @@ class ImagePlot(Base2DPlot):
     #------------------------------------------------------------------------
 
     def _compute_cached_image(self, data=None):
-        """ Computes the correct sub-image coordinates and renders an image 
-        into self._cached_image. 
-        
+        """ Computes the correct sub-image coordinates and renders an image
+        into self._cached_image.
+
         The parameter *data* is for subclasses that might not store an RGB(A)
         image as the value, but need to compute one to display (colormaps, etc.).
         """
-        
+
         if data == None:
             data = self.value.data
 
@@ -135,7 +135,7 @@ class ImagePlot(Base2DPlot):
             ll_y, ur_y = ur_y, ll_y
         virtual_width = ur_x - ll_x
         virtual_height = ur_y - ll_y
-        
+
         args = self.position \
              + self.bounds \
              + [ll_x, ll_y, virtual_width, virtual_height]
@@ -159,12 +159,12 @@ class ImagePlot(Base2DPlot):
 
             # Since data is row-major, j1 and j2 go first
             data = data[j1:j2, i1:i2]
-        
-        # Furthermore, the data presented to the GraphicsContextArray needs to 
+
+        # Furthermore, the data presented to the GraphicsContextArray needs to
         # be contiguous.  If it is not, we need to make a copy.
         if not data.flags['C_CONTIGUOUS']:
             data = data.copy()
-        
+
         if data.shape[2] == 3:
             kiva_depth = "rgb24"
         elif data.shape[2] == 4:
@@ -183,10 +183,10 @@ class ImagePlot(Base2DPlot):
     def _calc_zoom_coords(self, px, py, plot_width, plot_height,
                                 ix, iy, image_width, image_height):
         """ Calculates the coordinates of a zoomed sub-image.
-        
+
         Because of floating point limitations, it is not advisable to request a
         extreme level of zoom, e.g., idx or idy > 10^10.
-        
+
         Parameters
         ----------
         px : number
@@ -205,7 +205,7 @@ class ImagePlot(Base2DPlot):
             Width of image pixel bounds
         image_height : number
             Height of image pixel bounds
-            
+
         Returns
         -------
         ((i1, j1, i2, j2), (x, y, dx, dy))
@@ -229,7 +229,7 @@ class ImagePlot(Base2DPlot):
         #    the corners of the data array sub-indices
         # in all the cases below, x1,y1 refers to the lower-left corner, and
         # x2,y2 refers to the upper-right corner.
-        
+
         # 1. screen space -> pixel offsets
         if self.orientation == "h":
             x1 = px - ix
@@ -252,7 +252,7 @@ class ImagePlot(Base2DPlot):
         i2 = min(ceil(float(x2) / image_width * xpixels), xpixels)
         j1 = max(floor(float(y1) / image_height * ypixels), 0)
         j2 = min(ceil(float(y2) / image_height * ypixels), ypixels)
-        
+
         # 3. array indices -> new screen space coordinates
         x1 = float(i1)/xpixels * image_width + ix
         x2 = float(i2)/xpixels * image_width + ix

@@ -22,7 +22,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
     A data mapper that uses a uniform grid of rectangular cells. It doesn't make
     any assumptions about the continuity of the input data set, and explicitly
     stores each point in the data set in its cell.
-    
+
     If the incoming data is ordered in some fashion such that most cells end
     up with large ranges of data, then it's better to use the
     SubdivisionLineDataMapper subclass.
@@ -34,7 +34,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
     _cell_lefts = Array    # locations of left edge for all cells
     _cell_bottoms = Array  # locations of bottom edge for all cells
     _cell_extents = Tuple(Float, Float)         # the width and height of a cell
-    
+
     #-------------------------------------------------------------------
     # Public AbstractDataMapper methods
     #-------------------------------------------------------------------
@@ -53,7 +53,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
             cell_points = [c.get_points() for c in set(cells)]
         return vstack(cell_points)
 
-    
+
     def get_points_in_rect(self, rect):
         x_span = (rect[0], rect[0]+rect[2])
         y_span = (rect[1], rect[1]+rect[3])
@@ -67,7 +67,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
                               (max_j - min_j + 1) * self._cell_extents[1] )
         return vstack(cellpts)
 
-    
+
     def get_last_region(self):
         return self._last_region
 
@@ -93,12 +93,12 @@ class SubdivisionDataMapper(AbstractDataMapper):
             ll, ur = self._extents
             cell_width = ur[0]/num_x_cells
             cell_height = ur[1]/num_y_cells
-            
+
             # calculate the left and bottom edges of all the cells and store
             # them in two arrays
             self._cell_lefts = arange(ll[0], ll[0]+ur[0]-cell_width/2, step=cell_width)
             self._cell_bottoms = arange(ll[1], ll[1]+ur[1]-cell_height/2, step=cell_height)
-            
+
             self._cell_extents = (cell_width, cell_height)
 
             # insert the data points
@@ -124,13 +124,13 @@ class SubdivisionDataMapper(AbstractDataMapper):
             cell[0].reverse_indices()
         return
 
-    
+
     #-------------------------------------------------------------------
     # helper private methods
     #-------------------------------------------------------------------
 
     def _calc_grid_dimensions(self):
-        numpoints = self._data.shape[0] 
+        numpoints = self._data.shape[0]
         numcells = numpoints / self._points_per_cell
         ll, ur = self._extents
         aspect_ratio = (ur[0]-ll[0]) / (ur[1]-ll[1])
@@ -145,7 +145,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
     def _basic_insertion(self, celltype):
         # generate a list of which cell each point in self._data belongs in
         cell_indices = self._get_indices_for_points(self._data)
-        
+
         # We now look for ranges of points belonging to the same cell.
         # 1. shift lengthwise and difference; runs of cells with the same
         # (i,j) indices will be zero, and nonzero value for i or j will
@@ -156,10 +156,10 @@ class SubdivisionDataMapper(AbstractDataMapper):
         # together to detect any point where either X or Y are nonzero.  We have
         # to add 1 because we shifted cell_indices before differencing (above).
         diff_indices = nonzero(differences[:,0] + differences[:,1])[0] + 1
-        
+
         start_indices = concatenate([[0], diff_indices])
         end_indices = concatenate([diff_indices, [len(self._data)]])
-        
+
         for start,end in zip(start_indices, end_indices):
             gridx, gridy = cell_indices[start]  # can use 'end' here just as well
             if celltype == RangedCell:
@@ -176,7 +176,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
         x_array = searchsorted(self._cell_lefts, pointlist[:,0]) - 1
         y_array = searchsorted(self._cell_bottoms, pointlist[:,1]) - 1
         return array_zip(x_array, y_array)
-    
+
 
     def _cells_to_rects(self, cells):
         """
@@ -191,10 +191,10 @@ class SubdivisionDataMapper(AbstractDataMapper):
         cells = array(cells)
         y_sorted = sort_points(cells, index=1)  # sort acoording to row
         rownums = sort(array(tuple(set(cells[:,1]))))
-        
+
         row_start_indices = searchsorted(y_sorted[:,1], rownums)
         row_end_indices = left_shift(row_start_indices, len(cells))
-        
+
         rects = []
         for rownum, start, end in zip(rownums, row_start_indices, row_end_indices):
             # y_sorted is sorted by the J (row) coordinate, so after we

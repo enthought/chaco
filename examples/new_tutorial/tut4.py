@@ -13,7 +13,7 @@ class Tut4Frame(Tut3Frame):
 
         # We'll use the same pattern as in the previous examples: we just
         # extend the functionality of the make_plot() method in Tutorial 3
-        # (tut3.py). 
+        # (tut3.py).
         container = Tut3Frame.make_plot(self)
 
         # Before we return the container, though, we'll modify some of its
@@ -46,8 +46,8 @@ class Tut4Frame(Tut3Frame):
         print "Hover:", metadata["hover"]
         if "selection" in metadata:
             print "Selected:", metadata["selection"]
-            
-    
+
+
 if __name__ == "__main__":
     import wx
     app = wx.PySimpleApp()

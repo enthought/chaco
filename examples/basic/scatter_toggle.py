@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Draws a simple scatterplot of random data.  The user can pan and zoom 
+Draws a simple scatterplot of random data.  The user can pan and zoom
 with the mouse, but left-clicking on a point in the scatter plot will
 toggle it.
 
@@ -26,7 +26,7 @@ from enthought.chaco.tools.api import ScatterInspector, PanTool, ZoomTool
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():
-    
+
     # Create some data
     npts = 100
     x = sort(random(npts))
@@ -53,7 +53,7 @@ def _create_plot_component():
     plot.line_width = 1
     plot.padding = 50
 
-    # Right now, some of the tools are a little invasive, and we need the 
+    # Right now, some of the tools are a little invasive, and we need the
     # actual ScatterPlot object to give to them
     my_plot = plot.plots["my_plot"][0]
 
@@ -72,7 +72,7 @@ def _create_plot_component():
 
     my_plot.tools.append(PanTool(my_plot))
     my_plot.overlays.append(ZoomTool(my_plot, drag_button="right"))
-    
+
     return plot
 
 #===============================================================================
@@ -86,64 +86,64 @@ bg_color="lightgray"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
                         Item('plot', editor=ComponentEditor(size=size,
-                                                            bgcolor=bg_color), 
+                                                            bgcolor=bg_color),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-            
+
     def _metadata_handler(self):
         sel_indices = self.index_datasource.metadata.get('selections', [])
         print "Selection indices:", sel_indices
-    
+
         hover_indices = self.index_datasource.metadata.get('hover', [])
         print "Hover indices:", hover_indices
-        
+
     def _plot_default(self):
         plot = _create_plot_component()
-         
+
         # Retrieve the plot hooked to the tool.
         my_plot = plot.plots["my_plot"][0]
-        
+
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        self.index_datasource.on_trait_change(self._metadata_handler, 
+        self.index_datasource.on_trait_change(self._metadata_handler,
                                               "metadata_changed")
-         
+
         return plot
-     
+
 demo = Demo()
 
 #===============================================================================
 # Stand-alone frame to display the plot.
 #===============================================================================
 class PlotFrame(DemoFrame):
-    
+
     index_datasource = Instance(AbstractDataSource)
-    
+
     def _create_window(self):
-        
+
         component = _create_plot_component()
-        
+
         # Retrieve the plot hooked to the tool.
         my_plot = component.plots["my_plot"][0]
-        
+
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        self.index_datasource.on_trait_change(self._metadata_handler, 
+        self.index_datasource.on_trait_change(self._metadata_handler,
                                               "metadata_changed")
-        
+
         # Return a window containing our plot container
         return Window(self, -1, component=component, bg_color=bg_color)
 
     def _metadata_handler(self):
         sel_indices = self.index_datasource.metadata.get('selections', [])
         print "Selection indices:", sel_indices
-    
+
         hover_indices = self.index_datasource.metadata.get('hover', [])
         print "Hover indices:", hover_indices
 

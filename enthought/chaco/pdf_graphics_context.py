@@ -62,10 +62,10 @@ if Canvas is not None:
                 self.dest_box = dest_box
             if dest_box_units:
                 self.dest_box_units = dest_box_units
-            
+
             if pdf_canvas == None:
                 pdf_canvas = self._create_new_canvas()
-            
+
             GraphicsContext.__init__(self, pdf_canvas)
 
 
@@ -74,7 +74,7 @@ if Canvas is not None:
             """ Erases the current contents of the graphics context and renders the
             given component at the maximum possible scaling while preserving aspect
             ratio.
-            
+
             Parameters
             ----------
             component : Component
@@ -87,17 +87,17 @@ if Canvas is not None:
             valign : "center", "top", "bottom"
                 Determiens the position of the component if it is shorter than the
                 graphics context area (after scaling)
-                
-            Description 
+
+            Description
             -----------
-            If *container_coords* is False, then the (0,0) coordinate of this 
-            graphics context corresponds to the lower-left corner of the 
+            If *container_coords* is False, then the (0,0) coordinate of this
+            graphics context corresponds to the lower-left corner of the
             component's **outer_bounds**. If *container_coords* is True, then the
             method draws the component as it appears inside its container, i.e., it
             treats (0,0) of the graphics context as the lower-left corner of the
             container's outer bounds.
             """
-            
+
             x, y = component.outer_position
             if container_coords:
                 width, height = component.container.bounds
@@ -122,7 +122,7 @@ if Canvas is not None:
                 page_width += full_page_width - page_offset_x
             if page_height < 0:
                 page_height += full_page_height - page_offset_y
-            
+
             aspect = float(width) / float(height)
 
             if aspect >= page_width / page_height:
@@ -139,7 +139,7 @@ if Canvas is not None:
                     trans_y += page_height - trans_height
                 elif valign == "center":
                     trans_y += (page_height - trans_height) / 2.0
-                
+
             else:
                 # We are limited in height
                 scale = page_height / height

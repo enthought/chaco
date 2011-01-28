@@ -17,18 +17,18 @@ class Turtle(AbstractOverlay):
     line_color = ColorTrait("green")
     size = Float(10.0)
     path = Array
-    
+
     _pen = Enum("down", "up")
-    
+
     view = View(Group("x", "y", "angle", Item("color", style="custom"),
                       Item("line_color", style="custom"), "size",
                       orientation="vertical"))
-    
+
     def __init__(self, component=None, **traits):
         super(Turtle, self).__init__(component=component, **traits)
         if 'path' not in traits:
             self.path = array([self.x, self.y], ndmin=2)
-    
+
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         self.render(gc, other_component)
 
@@ -59,11 +59,11 @@ class Turtle(AbstractOverlay):
                 gc.lines(screen_pts[start:end])
                 gc.stroke_path()
             self.render_turtle(gc, component)
-    
+
     def pendown(self):
         self._pen = "down"
         self.path = vstack((self.path, [self.x, self.y]))
-        
+
     def penup(self):
         self.path = vstack((self.path, [nan,nan]))
         self._pen = "up"
@@ -74,24 +74,24 @@ class Turtle(AbstractOverlay):
         self.y += amt * sin(angle)
         if self._pen == "down":
             self.path = vstack((self.path, [self.x, self.y]))
-    
+
     def back(self, amt):
         self.forward(-amt)
-    
+
     def left(self, angle):
         self.angle = (self.angle + angle) % 360
-    
+
     def right(self, angle):
-        self.angle = ((self.angle - angle) + 360) % 360 
-    
+        self.angle = ((self.angle - angle) + 360) % 360
+
     def clear(self):
         self.path = array([self.x, self.y], ndmin=2)
-    
+
     def reset(self):
         self.x = self.y = 0.0
         self.angle = 90.0
         self.clear()
-    
+
     def _anytrait_changed(self, trait, val):
         self.component.request_redraw()
 

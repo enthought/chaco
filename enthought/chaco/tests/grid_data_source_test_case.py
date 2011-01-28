@@ -35,10 +35,10 @@ class GridDataSourceTestCase(unittest.TestCase):
                                          (max(test_xd),max(test_yd))))
 
     def test_set_data(self):
-        ds = GridDataSource(xdata=array([1,2,3]), 
+        ds = GridDataSource(xdata=array([1,2,3]),
                             ydata=array([1.5, 0.5, -0.5, -1.5]),
                             sort_order=('ascending', 'descending'))
-        
+
         test_xd = array([0,2,4])
         test_yd = array([0,1,2,3,4,5])
         test_sort_order = ('none', 'none')
@@ -62,13 +62,13 @@ def assert_close_(desired,actual):
         if not isinf(d):
             assert alltrue(d <= diff_allowed)
             return
-    
+
 def assert_ary_(desired, actual):
     if (desired == 'auto'):
         assert actual == 'auto'
     for d in range(len(desired)):
         assert desired[d] == actual[d]
-    return    
+    return
 
 
 if __name__ == '__main__':

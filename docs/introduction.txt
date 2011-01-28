@@ -11,7 +11,7 @@ specific application domains.
 
 Since interactivity and the model-view-controller model is central to Chaco's
 design, we say that it is a plotting application toolkit.  (Of course, Chaco
-can render static plots as well.)  
+can render static plots as well.)
 
 Chaco is architected to support interactive data visualization and integration
 into other applications.  Its components are meant to be connected and hooked
@@ -44,7 +44,7 @@ containment and layout hierarchy, a place in the rendering order, and can
 respond to keyboard and mouse events.  Examples of visual components include
 axes, grids, plot renderers, legends, and tooltip overlays.
 
-  * Renderers 
+  * Renderers
   * Tools
   * Overlays
 

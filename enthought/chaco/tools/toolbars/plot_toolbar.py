@@ -13,14 +13,14 @@ from enthought.traits.api import Bool, Float, on_trait_change, List, \
 
 class PlotToolbarHover(HoverTool):
     _last_xy = Tuple()
-    
+
     def _is_in(self, x, y):
         return self.component.is_in(x, y)
-    
+
     def normal_mouse_move(self, event):
         self._last_xy = (event.x, event.y)
         super(PlotToolbarHover, self).normal_mouse_move(event)
-    
+
 
     def on_hover(self):
         """ This gets called when all the conditions of the hover action have
@@ -31,10 +31,10 @@ class PlotToolbarHover(HoverTool):
         """
         for component in self.component.components:
             if component.is_in(*self._last_xy):
-                self.callback(component.label)   
+                self.callback(component.label)
                 return
-        
-        self.callback('')           
+
+        self.callback('')
 
 
 class PlotToolbar(Container, AbstractOverlay):
@@ -42,61 +42,61 @@ class PlotToolbar(Container, AbstractOverlay):
     """
 
     buttons = List(Type(ToolbarButton))
-    
+
     # Should the toolbar be hidden
     hiding = Bool(True)
-    
+
     # should the toolbar go automatically go back into hiding when the mouse
     # is not hovering over it
     auto_hide = Bool(True)
-    
+
     # the radius used to determine how round to make the toolbar's edges
     end_radius = Float(4.0)
-    
+
     # button spacing is defined as the number of pixels on either side of
     # a button. The gap between 2 buttons will be 2 x the button spacing
     button_spacing = Float(5.0)
-    
+
     # how many pixels to put before and after the set of buttons
     horizontal_padding = Float(5.0)
 
-    # how many pixels to put on top and bottom the set of buttons 
+    # how many pixels to put on top and bottom the set of buttons
     vertical_padding = Float(5.0)
-    
+
     # The edge against which the toolbar is placed.
     location = Enum('top', 'right', 'bottom', 'left')
-    
+
     # Should tooltips be shown?
     show_tooltips = Bool(False)
 
     ############################################################
     # PlotToolbar API
     ############################################################
-    
+
     def __init__(self, component=None, *args, **kw):
         super(PlotToolbar, self).__init__(*args, **kw)
         self.component = component
-        
+
         if component is not None and hasattr(component,'toolbar_location'):
             self.location = component.toolbar_location
 
         for buttontype in self.buttons:
             self.add_button(buttontype())
-            
+
         hover_tool = PlotToolbarHover(component=self, callback=self.on_hover)
         self.tools.append(hover_tool)
 
-        if self.location in ['top', 'bottom']:           
+        if self.location in ['top', 'bottom']:
             self._calculate_width()
         else:
             self._calculate_height()
 
-    
+
     def _buttons_default(self):
         return [ IndexAxisLogButton, ValueAxisLogButton,
-                 SaveAsButton, CopyToClipboardButton, 
+                 SaveAsButton, CopyToClipboardButton,
                  ExportDataToClipboardButton, ZoomResetButton ]
-    
+
     def add_button(self, button):
         """ adds a button to the toolbar
         """
@@ -111,11 +111,11 @@ class PlotToolbar(Container, AbstractOverlay):
         self.on_hover('')
         if self.hiding:
             self.hiding = False
-            
+
     def on_hover(self, tooltip):
         if self.show_tooltips:
             self.component.window.set_tooltip(tooltip)
-            
+
     def normal_left_down(self, event):
         """ handler for a left mouse click
         """
@@ -127,22 +127,22 @@ class PlotToolbar(Container, AbstractOverlay):
                     button.perform(event)
                     event.handled = True
                     break
-        
+
     ############################################################
     # AbstractOverlay API
     ############################################################
-    
+
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
         """
 
         starting_color = numpy.array([0.0, 1.0, 1.0, 1.0, 0.5])
         ending_color = numpy.array([1.0, 0.0, 0.0, 0.0, 0.5])
-        
+
         x = self.x
         y = self.y
         height = self.height
-        
+
         with gc:
             gc.begin_path()
             gc.move_to(x + self.end_radius, y)
@@ -224,10 +224,10 @@ class PlotToolbar(Container, AbstractOverlay):
 
             last_button_position = self.y + self.vertical_padding + self.button_spacing
             for button in reversed(self.components):
-                h_offset = (self.width - button.width)/2 
+                h_offset = (self.width - button.width)/2
                 button.y = last_button_position
                 button.x = h_position + h_offset
-                last_button_position += button.height + self.button_spacing*2            
+                last_button_position += button.height + self.button_spacing*2
 
 
     def _dispatch_stateful_event(self, event, suffix):
@@ -240,7 +240,7 @@ class PlotToolbar(Container, AbstractOverlay):
         else:
             if self.auto_hide:
                 self.hiding = True
-                
+
         return
 
     ############################################################
@@ -273,7 +273,7 @@ class PlotToolbar(Container, AbstractOverlay):
     def _hiding_changed(self):
         self._layout_needed = True
         self.request_redraw()
-        
+
     @on_trait_change('auto_hide')
     def _auto_hide_changed(self):
         self.hiding = self.auto_hide

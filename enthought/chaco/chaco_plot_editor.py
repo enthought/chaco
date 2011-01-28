@@ -57,7 +57,7 @@ USE_DATA_UPDATE = 1
 
 class ChacoPlotItem(Item):
     """ A Traits UI Item for a Chaco plot, for use in Traits UI Views.
-    
+
     NOTE: ComponentEditor is preferred over this class, as it is more flexible.
     """
     # Name of the trait that references the index data source.
@@ -221,7 +221,7 @@ class ChacoPlotEditor ( Editor ):
                                          use_backbuffer=True)
 
         if plotitem.title != '':
-            container.overlays.append(PlotLabel(plotitem.title, 
+            container.overlays.append(PlotLabel(plotitem.title,
                                                 component=container,
                                                 overlay_position="top"))
 
@@ -376,7 +376,7 @@ class ChacoPlotEditor ( Editor ):
         return plot
 
     def _add_axis_grids(self, new_plot, plotitem):
-        value_axis, index_axis = add_default_axes(new_plot, 
+        value_axis, index_axis = add_default_axes(new_plot,
                                     orientation=plotitem.orientation)
         add_default_grids(new_plot)
         new_plot.tools.append(PanTool(new_plot))
@@ -416,7 +416,7 @@ class ChacoPlotEditor ( Editor ):
             htitle, vtitle = vtitle, htitle
         plot.x_axis.title = htitle
         plot.y_axis.title = vtitle
-        
+
         # This is sort of crappy.. since we are using BaseXYPlots and not
         # Plot/DataViews, we actually can't easily get references to the plot's
         # index and value axes.  So we have to search through the underlays for
@@ -430,7 +430,7 @@ class ChacoPlotEditor ( Editor ):
             if isinstance(axis, PlotAxis) and axis.mapper.range is plot.value_range:
                 axis.title_font = plotitem.y_label_font
                 axis.title_color = plotitem.y_label_color
-        
+
         plot.request_redraw()
         return
 

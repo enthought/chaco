@@ -18,12 +18,12 @@ class DragZoom(DragTool, BetterZoom):
     configuration, the horizontal position of the drag motion has no effect.)
 
     By setting **maintain_aspect_ratio** to False, this tool will separably zoom
-    the X and Y axis ranges by the (possibly different) horizontal and vertical 
+    the X and Y axis ranges by the (possibly different) horizontal and vertical
     drag motions.  This is similar to the drag zoom interaction in Matplotlib.
-    
+
     By setting single_axis to True, dragging will only zoom in the axis specified
     by the axis attribute.
-    
+
     By setting restrict_domain to True, the zoom will be limited to the domain
     of the axis mappers.
     """
@@ -44,19 +44,19 @@ class DragZoom(DragTool, BetterZoom):
 
     # Whether or not to zoom in one axis only
     single_axis = Bool(False)
-    
+
     # Whether to restrict zoom to the domain of the mappers
     restrict_domain = Bool(False)
 
     zoom_to_mouse = Bool(False)
-    
+
     #------------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------------
 
     # (x,y) of the point where the mouse button was pressed.
     _original_xy = Tuple()
-    
+
     # Data coordinates of **_original_xy**.  This may be either (index,value)
     # or (value,index) depending on the component's orientation.
     _original_data = Tuple()
@@ -80,20 +80,20 @@ class DragZoom(DragTool, BetterZoom):
 
         # Compute the zoom amount based on the pixel difference between
         # the previous mouse event and the current one.
-                
+
         if self.maintain_aspect_ratio:
             zoom_x = zoom_y = self._calc_zoom(self._prev_y, event.y)
         else:
             zoom_x = self._calc_zoom(self._prev_x, event.x)
             zoom_y = self._calc_zoom(self._prev_y, event.y)
-            
+
         # invert the zoom so scrolling up zooms in
         zoom_x = 1.0/zoom_x
         zoom_y = 1.0/zoom_y
-            
+
         self.zoom_in_x(zoom_x)
         self.zoom_in_y(zoom_y)
-        
+
         return
 
     def drag_start(self, event, capture_mouse=True):
@@ -117,7 +117,7 @@ class DragZoom(DragTool, BetterZoom):
         return
 
     def _calc_zoom(self, original, clicked):
-        """ Returns the amount to scale the range based on the original 
+        """ Returns the amount to scale the range based on the original
         cursor position and a new, updated position.
         """
         # We express the built-in zoom scaling as 0.05/10 to indicate a scaling

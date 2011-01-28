@@ -29,9 +29,9 @@ class ContourLinePlot(BaseContourPlot):
 
     # The thickness(es) of the contour lines.
     widths = Trait(1.0, Float, List)
-    
+
     # The line dash style(s).
-    styles = Trait("signed", Str, List)   
+    styles = Trait("signed", Str, List)
 
     # Line style for positive levels.
     positive_style = LineStyle("solid")
@@ -42,7 +42,7 @@ class ContourLinePlot(BaseContourPlot):
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
-    
+
     # Are the cached contours valid? If False, new ones need to be computed.
     _contour_cache_valid = Bool(False)
 
@@ -54,14 +54,14 @@ class ContourLinePlot(BaseContourPlot):
 
     # Is the cached style data valid?
     _styles_cache_valid = Bool(False)
-    
+
     # Cached list of line widths
     _widths = List
 
     # Cached list of line styles
     _styles = List
 
-    # Mapped trait used to convert user-suppied line style values to 
+    # Mapped trait used to convert user-suppied line style values to
     # AGG-acceptable ones. (Mapped traits in lists are not supported, must be
     # converted one at a time.)
     _style_map_trait = LineStyle
@@ -71,8 +71,8 @@ class ContourLinePlot(BaseContourPlot):
     #------------------------------------------------------------------------
 
     def _render(self, gc):
-        """ Actually draws the plot. 
-        
+        """ Actually draws the plot.
+
         Implements the Base2DPlot interface.
         """
         if not self._level_cache_valid:
@@ -92,7 +92,7 @@ class ContourLinePlot(BaseContourPlot):
             gc.set_alpha(self.alpha)
             gc.set_line_join(constants.JOIN_BEVEL)
             gc.set_line_cap(constants.CAP_ROUND)
-            
+
             for i in range(len(self._levels)):
                 gc.set_stroke_color(self._colors[i])
                 gc.set_line_width(self._widths[i])
@@ -108,7 +108,7 @@ class ContourLinePlot(BaseContourPlot):
 
     def _update_contours(self):
         """ Updates the cache of contour lines """
-        # x and ydata are "fenceposts" so ignore the last value        
+        # x and ydata are "fenceposts" so ignore the last value
         # XXX: this truncaton is causing errors in Cntr() as of r13735
         xdata = self.index._xdata.get_data()
         ydata = self.index._ydata.get_data()
@@ -141,7 +141,7 @@ class ContourLinePlot(BaseContourPlot):
         if isinstance(self.widths, float):
             self._widths = [self.widths] * len(self._levels)
 
-        # If the list of widths is shorter than the list of levels, 
+        # If the list of widths is shorter than the list of levels,
         # simply repeat widths from the beginning of the list as needed
         else:
             self._widths = []
@@ -154,7 +154,7 @@ class ContourLinePlot(BaseContourPlot):
         """ Updates the styles cache.
         """
         # If the style type is "signed" then assign styles to levels based
-        # on their sign 
+        # on their sign
         if self.styles == "signed":
             self._styles = []
             for level in self._levels:
@@ -168,12 +168,12 @@ class ContourLinePlot(BaseContourPlot):
             self._style_map_trait = self.styles
             self._styles = [self._style_map_trait_] * len(self._levels)
 
-        # If the list of styles is shorter than the list of levels, 
+        # If the list of styles is shorter than the list of levels,
         # simply repeat styles from the beginning of the list as needed
         else:
             self._styles = []
             for i in range(len(self._levels)):
-                self._style_map_trait = self.styles[i%len(self.styles)]      
+                self._style_map_trait = self.styles[i%len(self.styles)]
                 self._styles.append(self._style_map_trait_)
 
         self._styles_cache_valid = True
@@ -182,24 +182,24 @@ class ContourLinePlot(BaseContourPlot):
     #------------------------------------------------------------------------
     # Event handlers
     #------------------------------------------------------------------------
-        
+
     def _widths_changed(self):
-        if self._level_cache_valid: 
+        if self._level_cache_valid:
             self._update_widths()
             self.invalidate_draw()
 
     def _styles_changed(self):
-        if self._level_cache_valid: 
+        if self._level_cache_valid:
             self._update_styles()
             self.invalidate_draw()
 
     def _negative_style_changed(self):
-        if self._level_cache_valid: 
+        if self._level_cache_valid:
             self._update_styles()
             self.invalidate_draw()
 
     def _positive_style_changed(self):
-        if self._level_cache_valid: 
+        if self._level_cache_valid:
             self._update_styles()
             self.invalidate_draw()
 

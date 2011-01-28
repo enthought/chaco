@@ -13,11 +13,11 @@ from enthought.traits.api import Float, Instance
 from abstract_overlay import AbstractOverlay
 
 class LassoOverlay(AbstractOverlay):
-    """ Draws a lasso selection region on top of a plot.  
-    
+    """ Draws a lasso selection region on top of a plot.
+
     LassoOverlay gets its data from a LassoSelection.
     """
-    
+
     # The LassoSelection that provides the data for this overlay.
     lasso_selection = Instance('enthought.chaco.tools.lasso_selection.LassoSelection')
     # The fill color for the selection region.
@@ -30,13 +30,13 @@ class LassoOverlay(AbstractOverlay):
     selection_border_width = Float(2.0)
     # The line style of the selection border.
     selection_border_dash = LineStyle
-    
+
     # The background color (overrides AbstractOverlay).
     bgcolor = 'clear'
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
-        
+
         Implements AbstractOverlay.
         """
         with gc:

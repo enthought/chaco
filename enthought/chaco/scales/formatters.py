@@ -24,7 +24,7 @@ class NullFormatter(object):
         """ Returns 0 for width and 0 for number of labels.
         """
         return 0, 0
-    
+
 
 class BasicFormatter(object):
     """ Formatter for numeric labels.
@@ -35,7 +35,7 @@ class BasicFormatter(object):
     # Toggles whether or not to use scientific notation when the values exceed
     # scientific_limits
     use_scientific = True
-    
+
     # Any number smaller than 10 ** limits[0] or larger than 10 ** limits[1]
     # will be represented using scientific notiation.
     scientific_limits = (-3, 5)
@@ -46,7 +46,7 @@ class BasicFormatter(object):
 
     def oldformat(self, ticks, numlabels=None, char_width=None):
         """ This function is adapted from matplotlib's "OldScalarFormatter".
-        
+
         Parameters
         ----------
         ticks : array of numbers
@@ -55,7 +55,7 @@ class BasicFormatter(object):
             Not used.
         char_width
             Not used.
-            
+
         Returns
         -------
         List of formatted labels.
@@ -63,7 +63,7 @@ class BasicFormatter(object):
         labels = []
         if len(ticks) == 0:
             return []
-        
+
         d = abs(ticks[-1] - ticks[0])
         for x in ticks:
             if abs(x)<1e4 and x==int(x):
@@ -100,11 +100,11 @@ class BasicFormatter(object):
 
         ticks = asarray(ticks)
         if self.use_scientific:
-            scientific = (((ticks % 10 ** self.scientific_limits[1]) == 0) | 
+            scientific = (((ticks % 10 ** self.scientific_limits[1]) == 0) |
                           (abs(ticks) <= 10 ** self.scientific_limits[0])).all()
         else:
             scientific = False
-        
+
         if scientific:
             if char_width is not None:
                 # We need to determine how many digits we can use in the
@@ -127,7 +127,7 @@ class BasicFormatter(object):
             labels = [self._nice_sci(x, mmax) for x in ticks]
 
         else:
-            # For decimal mode, 
+            # For decimal mode,
             if not (ticks % 1).any():
                 labels = map(str, ticks.astype(int))
             else:
@@ -155,11 +155,11 @@ class BasicFormatter(object):
         if mdigits > 0 and "." in m_str:
             max_len = max(m_str.index("."), mdigits)
             m_str = m_str[:max_len]
-        
-            # Strip off a trailing decimal 
+
+            # Strip off a trailing decimal
             if m_str[-1] == ".":
                 m_str = m_str[:-1]
-            
+
             # It's not sufficient just to truncate the string; we need to
             # handle proper rounding
 
@@ -167,14 +167,14 @@ class BasicFormatter(object):
             # Always strip off a trailing decimal
             if m_str[-1] == ".":
                 m_str = m_str[:-1]
-        
+
         if force_sign and not m_str.startswith("-"):
             m_str = "+" + m_str
 
         if e != 0:
             # Clean up the exponent
             e_str = str(e)
-            
+
             if e_str.startswith("+") and not force_sign:
                 e_str = e_str[1:]
             m_str += "e" + e_str
@@ -186,7 +186,7 @@ class BasicFormatter(object):
                        fill_ratio=0.3, ticker=None):
         """ Returns an estimate of the total number of characters used by the
         the labels for the given set of inputs, as well as the number of labels.
-        
+
         Parameters
         ----------
         start : number
@@ -194,7 +194,7 @@ class BasicFormatter(object):
         end : number
             The end of the interval.
         numlabels : number
-            The ideal number of labels to generate on the interval. 
+            The ideal number of labels to generate on the interval.
         char_width : number
             The total character width available for labelling the interval.
         fill_ratio : 0.0 < float <= 1.0
@@ -208,7 +208,7 @@ class BasicFormatter(object):
         """
         if numlabels == 0 or char_width == 0:
             return 0, 0
-        
+
         # use the start and end points as ticks and average their label sizes
         labelsizes = map(len, self.format([start, end]))
         avg_size = sum(labelsizes) / 2.0
@@ -223,7 +223,7 @@ class BasicFormatter(object):
 
         elif numlabels:
             est_ticks = numlabels
-        
+
         elif char_width:
             est_ticks = round(fill_ratio * char_width / avg_size)
 
@@ -254,7 +254,7 @@ class OffsetFormatter(BasicFormatter):
     # The threshold ratio of the data range to the average data value, below
     # which "offset" display mode will be used if use_offset is True.
     offset_threshold = 1e-3
-    
+
     # Determines which ticks to display the offset value at.  Can be "all",
     # "firstlast", or "none".
     offset_display = "firstlast"
@@ -263,7 +263,7 @@ class OffsetFormatter(BasicFormatter):
     # "offset" or "sci".
     end_label_format = "offset"
 
-    # Specifies the threshold values 
+    # Specifies the threshold values
     offset_limits = (-3, 4)
 
     # There are two possible formats for the offset.
@@ -276,14 +276,14 @@ class OffsetFormatter(BasicFormatter):
     # The following table shows some example ranges and how an intermediate
     # tick will be displayed.  These all assume an offset_display value of
     # "none" or "firstlast".
-    # 
+    #
     #  ============     ==========       =========      =========
-    #     start            end             sci          decimal  
+    #     start            end             sci          decimal
     #  ============     ==========       =========      =========
-    #    90.0004         90.0008         5.0e-4          .0005   
-    #    90.0004         90.0015         1.2e-3          .0012   
-    #   -1200015        -1200003           12              12    
-    #    2300015000     2300015030       1.502e4         15020   
+    #    90.0004         90.0008         5.0e-4          .0005
+    #    90.0004         90.0015         1.2e-3          .0012
+    #   -1200015        -1200003           12              12
+    #    2300015000     2300015030       1.502e4         15020
     #  ============     ==========       =========      =========
     #
     offset_format = "sci"
@@ -301,12 +301,12 @@ class OffsetFormatter(BasicFormatter):
             return ceil(amax(ticks) / pow_of_ten) * pow_of_ten
         else:
             return floor(amin(ticks) / pow_of_ten) * pow_of_ten
-        
+
 
     def format(self, ticks, numlabels=None, char_width=None):
         if len(ticks) == 0:
             return []
-        
+
         data_range = ticks[-1] - ticks[0]
         avg_data = sum(abs(ticks)) / len(ticks)
         if self.use_offset and data_range/avg_data < self.offset_threshold:
@@ -335,11 +335,11 @@ class OffsetFormatter(BasicFormatter):
 
             elif self.offset_display == "all":
                 labels = [offset_str + label for label in labels]
-            
+
             return labels
         else:
             return BasicFormatter.format(self, ticks, numlabels, char_width)
-    
+
     def estimate_width(self, start, end, numlabels=None, char_width=None,
                        fill_ratio=0.3, ticker=None):
         if numlabels == 0 or char_width == 0:
@@ -358,7 +358,7 @@ class OffsetFormatter(BasicFormatter):
 
         elif char_width:
             est_ticks = round(fill_ratio * char_width / avg_size)
-        
+
         start, mid, end = map(len, self.format([start, (start+end)/2.0, end]))
         if est_ticks > 2:
             size = start + end + (est_ticks-2) * mid
@@ -371,10 +371,10 @@ class OffsetFormatter(BasicFormatter):
 def strftimeEx(fmt, t, timetuple=None):
     """
     Extends time.strftime() to format milliseconds and microseconds.
-    
+
     Expects input to be a floating-point number of seconds since epoch.
     The additional formats are:
-        
+
     - ``%(ms)``:  milliseconds (uses round())
     - ``%(ms_)``: milliseconds (uses floor())
     - ``%(us)``:  microseconds (uses round())
@@ -402,7 +402,7 @@ def strftimeEx(fmt, t, timetuple=None):
         timetuple = localtime(secs)
 
     return strftime(fmt, timetuple)
-    
+
 
 def _two_digit_year(t):
     """ Round to the nearest Jan 1, roughly.
@@ -444,7 +444,7 @@ class TimeFormatter(object):
     # Labels of time units, from finest to coarsest.
     format_order = ['microseconds', 'milliseconds', 'seconds', 'minsec', 'minutes',
                     'hourmin', 'hours', 'days', 'months', 'years']
-     
+
     # A dict whose are keys are the strings in **format_order**; each value is
     # two arrays, (widths, format strings/functions).
     formats = {}
@@ -459,7 +459,7 @@ class TimeFormatter(object):
     def _compute_format_weights(self):
         if self.formats:
             return
-        
+
         for fmt_name, fmt_strings in self._formats.items():
             sizes = []
             tmptime = time()
@@ -495,11 +495,11 @@ class TimeFormatter(object):
         else:
             resol = "years"
         return resol
-        
+
     def format(self, ticks, numlabels=None, char_width=None, fill_ratio = 0.3,
                ticker=None):
         """ Formats a set of time values.
-                
+
         Parameters
         ----------
         ticks : array of numbers
@@ -512,7 +512,7 @@ class TimeFormatter(object):
             Ratio of the available width that will be occupied by label text.
         ticker : AbstractScale object
             Object that can calculate the number of labels needed.
-            
+
         Returns
         -------
         List of formatted labels.
@@ -611,7 +611,7 @@ class TimeFormatter(object):
                        fill_ratio = 0.2, ticker=None):
         """ Returns an estimate of the total number of characters used by the
         the labels for the given set of inputs, as well as the number of labels.
-        
+
         Parameters
         ----------
         start : number
@@ -619,7 +619,7 @@ class TimeFormatter(object):
         end : number
             The end of the interval.
         numlabels : number
-            The ideal number of labels to generate on the interval. 
+            The ideal number of labels to generate on the interval.
         char_width : number
             The total character width available for labelling the interval.
         fill_ratio : 0.0 < float <= 1.0
@@ -651,7 +651,7 @@ class TimeFormatter(object):
             return numlabels, numlabels * 6
 
         widths, strings = self.formats[unit]
-        
+
         if char_width:
             # Find an appropriate resolution in self.formats and pick between
             # the various format strings
@@ -666,7 +666,7 @@ class TimeFormatter(object):
         else:
             # Just pick the middle of the pack of format widths
             width = widths[ int(len(widths) / 2) ] * numlabels
-        
+
         return numlabels, width
-    
-        
+
+

@@ -29,19 +29,19 @@ class PlotFrame(wx.Frame):
     def __init__(self, *args, **kw):
         kw["size"] = (600,600)
         wx.Frame.__init__( *(self,) + args, **kw )
-        
+
         # Create the Enable Window object, and store a reference to it.
         # (This will be handy later.)  The Window requires a WX parent object
         # as its first argument, so we just pass 'self'.
         self.plot_window = Window(self, component=myplot)
-        
+
         # We'll create a default sizer to put our plot_window in.
         sizer = wx.BoxSizer(wx.HORIZONTAL)
-        
+
         # Since Window is an Enable object, we need to get its corresponding
         # WX control.  This is stored in its ".control" attribute.
         sizer.Add(self.plot_window.control, 1, wx.EXPAND)
-        
+
         # More WX boilerplate.
         self.SetSizer(sizer)
         self.SetAutoLayout(True)

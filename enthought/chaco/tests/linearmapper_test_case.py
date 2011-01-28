@@ -7,7 +7,7 @@ from numpy.testing import assert_equal
 from enthought.chaco.api import ArrayDataSource, DataRange1D, LinearMapper
 
 class LinearMapperTestCase(unittest.TestCase):
-    
+
     def test_basic(self):
         ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
         ds = ArrayDataSource(ary)

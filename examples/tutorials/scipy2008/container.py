@@ -10,7 +10,7 @@ class ContainerExample(HasTraits):
 
     plot = Instance(HPlotContainer)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
+    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
                        width=1000, height=600, resizable=True,
                        title="Chaco Plot")
 

@@ -12,7 +12,7 @@ class FunctionImageData(ImageData):
     """ A class that provides data for a 2-D image based upon the range
     supplied.  This class can be used as the data source for an image plot
     or contour plot.
-    
+
     Computation should be fairly swift for acceptable interactive performance.
     """
 

@@ -31,9 +31,9 @@ class PolygonPlot(BaseXYPlot):
     screen-space.
 
     If you don't want the edge of the polygon to be drawn, set **edge_color**
-    to transparent; don't try to do this by setting **edge_width** to 0. In 
+    to transparent; don't try to do this by setting **edge_width** to 0. In
     some drawing systems, such as PostScript, a line width of 0 means to make
-    the line as small as possible while still putting ink on the page. 
+    the line as small as possible while still putting ink on the page.
     """
 
     # The color of the line on the edge of the polygon.
@@ -49,18 +49,18 @@ class PolygonPlot(BaseXYPlot):
     face_color = transparent_color_trait
 
     # Override the hittest_type trait inherited from BaseXYPlot
-    hittest_type = Enum("poly", "point", "line")    
+    hittest_type = Enum("poly", "point", "line")
 
     #### Private 'BaseXYPlot' interface ########################################
 
     def __init__(self, *args, **kw):
         super(PolygonPlot, self).__init__(*args, **kw)
-        
+
         # update colors to use the correct alpha channel
         self.edge_color_ = self.edge_color_[0:3] + (self.alpha,)
         self.face_color_ = self.face_color_[0:3] + (self.alpha,)
-        
-        
+
+
 
     def _gather_points(self):
         """ Collects the data points that are within the bounds of the plot and
@@ -126,7 +126,7 @@ class PolygonPlot(BaseXYPlot):
         """
         if self.hittest_type in ("line", "point"):
             return BaseXYPlot.hittest(self, screen_pt, threshold, return_distance)
-        
+
         data_pt = self.map_data(screen_pt, all_values=True)
         index = self.index.get_data()
         value = self.value.get_data()

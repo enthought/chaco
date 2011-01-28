@@ -121,7 +121,7 @@ class Label(HasTraits):
         return
 
     def get_width_height(self, gc):
-        """ Returns the width and height of the label, in the rotated frame of 
+        """ Returns the width and height of the label, in the rotated frame of
         reference.
         """
         self._calc_line_positions(gc)
@@ -138,7 +138,7 @@ class Label(HasTraits):
             return (width, height)
         else:
             angle = self.rotate_angle
-            return (abs(width*cos(angle))+abs(height*sin(angle)), 
+            return (abs(width*cos(angle))+abs(height*sin(angle)),
                     abs(height*sin(angle))+abs(width*cos(angle)))
 
     def get_bounding_poly(self, gc):
@@ -160,7 +160,7 @@ class Label(HasTraits):
         points = [dot(self.get_rotation_matrix(), point).transpose()[0]+offset
             for point in base_points]
         return points
-     
+
     def get_rotation_matrix(self):
         return array([[cos(self.rotate_angle), -sin(self.rotate_angle)],
             [sin(self.rotate_angle), cos(self.rotate_angle)]])
@@ -174,7 +174,7 @@ class Label(HasTraits):
         """
         # For this version we're not supporting rotated text.
         self._calc_line_positions(gc)
-            
+
         with gc:
             bb_width, bb_height = self.get_bounding_box(gc)
 

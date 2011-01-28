@@ -2,9 +2,9 @@
 Draws a vector or "quiver" plot of a set of random points.
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 """
 
@@ -61,7 +61,7 @@ def _create_plot_component():
     quiverplot.overlays.append(zoom)
 
     container = OverlayPlotContainer(quiverplot, padding=50)
-    
+
     return container
 
 #===============================================================================
@@ -75,20 +75,20 @@ bg_color="lightgray"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
                         Item('plot', editor=ComponentEditor(size=size,
-                                                            bgcolor=bg_color), 
+                                                            bgcolor=bg_color),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -98,9 +98,9 @@ class PlotFrame(DemoFrame):
 
     def _create_window(self):
         # Return a window containing our plots
-        return Window(self, -1, component=_create_plot_component(), 
+        return Window(self, -1, component=_create_plot_component(),
                       bg_color=bg_color)
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

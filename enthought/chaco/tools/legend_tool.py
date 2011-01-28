@@ -8,23 +8,23 @@ from enthought.enable.tools.drag_tool import DragTool
 
 class LegendTool(DragTool):
     """ A tool for interacting with legends.
-    
+
     Attach this tool to a legend by setting the tool's **component**
     to the legend.
     """
-    
+
     # The mouse button that initiates the drag.
     drag_button = Enum("left", "right")
-    
+
     # Whether to change the legend's **align** property in accord with
     # the quadrant into which it is dropped.
     auto_align = Bool(True)
-    
-    
+
+
     def is_draggable(self, x, y):
-        """ Returns whether the (x,y) position is in a region that is OK to 
-        drag.  
-        
+        """ Returns whether the (x,y) position is in a region that is OK to
+        drag.
+
         Overrides DragTool.
         """
         if self.component:
@@ -33,11 +33,11 @@ class LegendTool(DragTool):
                     y >= legend.y and y <= legend.y2)
         else:
             return False
-    
-    
+
+
     def drag_start(self, event):
-        """ Called when the drag operation starts.  
-        
+        """ Called when the drag operation starts.
+
         Implements DragTool.
         """
         if self.component:
@@ -45,12 +45,12 @@ class LegendTool(DragTool):
             event.window.set_mouse_owner(self, event.net_transform())
             event.handled = True
         return
-    
-    
+
+
     def dragging(self, event):
-        """ This method is called for every mouse_move event that the tool 
-        receives while the user is dragging the mouse. 
-        
+        """ This method is called for every mouse_move event that the tool
+        receives while the user is dragging the mouse.
+
         Implements DragTool. Moves the legend by aligning it to a corner of its
         overlay component.
         """
@@ -61,7 +61,7 @@ class LegendTool(DragTool):
             legend = self.component
             valign, halign = legend.align
             left, right, top, bottom = self.original_padding
-            
+
             dy = int(event.y - self.mouse_down_position[1])
             if valign == "u":
                 # we subtract dy because if the mouse moves downwards, dy is
@@ -69,13 +69,13 @@ class LegendTool(DragTool):
                 legend.padding_top = top - dy
             else:
                 legend.padding_bottom = bottom + dy
-            
+
             dx = int(event.x - self.mouse_down_position[0])
             if halign == "r":
                 legend.padding_right = right - dx
             else:
                 legend.padding_left = left + dx
-            
+
             event.handled = True
             legend.request_redraw()
         return
@@ -83,7 +83,7 @@ class LegendTool(DragTool):
 
     def drag_end(self, event):
         """ Called when a mouse event causes the drag operation to end.
-        
+
         Implements DragTool.
         """
         # Make sure we have both a legend and that the legend is overlaying
@@ -93,7 +93,7 @@ class LegendTool(DragTool):
             # closest to the center of the legend
             legend = self.component
             component = legend.component
-            
+
             left = int(legend.x - component.x)
             right = int(component.x2 - legend.x2)
             if left < right:
@@ -102,7 +102,7 @@ class LegendTool(DragTool):
             else:
                 halign = "r"
                 legend.padding_right = right
-                
+
             bottom = int(legend.y - component.y)
             top = int(component.y2 - legend.y2)
             if bottom < top:
@@ -111,7 +111,7 @@ class LegendTool(DragTool):
             else:
                 valign = "u"
                 legend.padding_top = top
-            
+
             legend.align = valign + halign
             if event.window.mouse_owner == self:
                 event.window.set_mouse_owner(None)

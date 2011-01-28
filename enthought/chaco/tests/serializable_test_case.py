@@ -2,12 +2,12 @@
 from cPickle import loads, dumps
 import unittest
 
-# pickling child classes doesn't work well in the unittest framework unless 
+# pickling child classes doesn't work well in the unittest framework unless
 # the classes to be pickled are in a different file
 from serializable_base import Circle, Poly
 
 class SimpleSerializationTestCase(unittest.TestCase):
-    
+
     def compare_traits(self, a, b, trait_names=None):
         "Checks the traits of objects 'a' and 'b' and makes sure they all match."
         if trait_names is None:
@@ -30,7 +30,7 @@ class SimpleSerializationTestCase(unittest.TestCase):
             self.assert_(getattr(c, attrib) == getattr(c2, attrib))
         self.failUnlessEqual(c2.y, 2.0)
         return
-    
+
     def test_basic_save2(self):
         p = Poly(numside=3, name="poly", x=3.0, y=4.0)
         p2 = loads(dumps(p))
@@ -41,7 +41,7 @@ class SimpleSerializationTestCase(unittest.TestCase):
 
 
 class PlotSerializationTestCase(unittest.TestCase):
-    pass    
+    pass
 
 
 if __name__ == '__main__':

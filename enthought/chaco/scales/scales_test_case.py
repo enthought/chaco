@@ -72,7 +72,7 @@ class ScalesTestCase(TicksTestCase):
         # default desired_ticks)
         ticks = scale.ticks(1e-3,1e6)
         self.check_ticks(ticks, array((1e-3, 1e-2, 1e-1, 1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6)))
-        
+
 
 class ScaleSystemTestCase(TicksTestCase):
 
@@ -112,7 +112,7 @@ class BasicFormatterTestCase(TicksTestCase):
         scale = FixedScale(resolution = 1.0)
         start, end = 12.0, 18.0
         numlabels = 8
-        
+
         ticks = scale.ticks(start, end, numlabels)
         labels = fmt.format(ticks, numlabels, None)
         # desired = [str(float(x)) for x in range(12, 19)]
@@ -133,7 +133,7 @@ class BasicFormatterTestCase(TicksTestCase):
         self.check_labels(labels, desired)
 
     def test2_nice_sci(self):
-      
+
         # The table of numerical values and their proper representation
         # given a certain number of mantissa digits
         vals = [ (3.14159e10, (2, "3e10"), (3, '3.1e10'), (5, '3.141e10')),

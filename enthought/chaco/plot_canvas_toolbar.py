@@ -32,7 +32,7 @@ class PlotCanvasToolbar(VPlotContainer):
         self._do_layout()
         pref_size = self.get_preferred_size()
 
-        
+
         # Special check for when we are overlaying an instance of enable.Canvas
         if hasattr(component, 'view_bounds'):
             cx, cy, cx2, cy2 = component.view_bounds
@@ -68,7 +68,7 @@ class PlotCanvasToolbar(VPlotContainer):
         return
 
 class PlotToolbarButton(PlotComponent, ToolbarButton):
-    
+
     label_font = "Arial 12"
 
     unified_draw = True

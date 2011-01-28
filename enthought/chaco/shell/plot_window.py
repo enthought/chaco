@@ -11,17 +11,17 @@ if ETSConfig.toolkit == "wx":
     import wx
     class PlotWindow(wx.Frame):
         """ A window for holding top-level plot containers.
-        
+
         Contains many utility methods for controlling the appearance of the
         window, which mostly pass through to underlying WX calls.
         """
 
-        def __init__(self, is_image=False, bgcolor="white", 
+        def __init__(self, is_image=False, bgcolor="white",
                      image_default_origin="top left", *args, **kw):
 
             kw.setdefault("size", (600,600))
             wx.Frame.__init__(self, None, *args, **kw )
-            
+
             # Some defaults which should be overridden by preferences.
             self.bgcolor = bgcolor
             self.image_default_origin = image_default_origin
@@ -41,17 +41,17 @@ if ETSConfig.toolkit == "wx":
             # (This will be handy later.)  The Window requires a WX parent object
             # as its first argument, so we just pass 'self'.
             self.plot_window = Window(self, component=top_container)
-            
+
             # We'll create a default sizer to put our plot_window in.
             sizer = wx.BoxSizer(wx.HORIZONTAL)
-            
+
             # Since Window is an Enable object, we need to get its corresponding
             # WX control.  This is stored in its ".control" attribute.
             sizer.Add(self.plot_window.control, 1, wx.EXPAND)
 
             # Hook up event handlers for destroy, etc.
             wx.EVT_WINDOW_DESTROY(self, self._on_window_close)
-            
+
             # More WX boilerplate.
             self.SetSizer(sizer)
             self.SetAutoLayout(True)
@@ -63,12 +63,12 @@ if ETSConfig.toolkit == "wx":
 
         def set_container(self, container):
             self.plot_window.component = container
-        
+
         def iconize(self, iconize):
             """Iconizes the window if *iconize* is True.
             """
             self.Iconize(iconize)
-        
+
         def maximize(self, maximize):
             """ If *maximize* is True, maximizes the window size; restores if False.
             """
@@ -97,7 +97,7 @@ if ETSConfig.toolkit == "wx":
 
         def _create_top_container(self):
             plot = ScalyPlot(
-                padding=50, 
+                padding=50,
                 fill_padding=True,
                 bgcolor=self.bgcolor,
                 use_backbuffer=True,

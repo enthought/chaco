@@ -167,7 +167,7 @@ class ScatterPlot(BaseXYPlot):
 
     # The pixel size of the marker, not including the thickness of the outline.
     marker_size = Float(4.0)
-    
+
     # The function which actually renders the markers
     render_markers_func = Callable(render_markers)
 

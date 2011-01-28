@@ -25,8 +25,8 @@ from plot_label import PlotLabel
 
 class BaseXYPlot(AbstractPlotRenderer):
     """ Base class for simple X-vs-Y plots that consist of a single index
-    data array and a single value data array.  
-    
+    data array and a single value data array.
+
     Subclasses handle the actual rendering, but this base class takes care of
     most of making sure events are wired up between mappers and data or screen
     space changes, etc.
@@ -35,10 +35,10 @@ class BaseXYPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     # Data-related traits
     #------------------------------------------------------------------------
-    
+
     # The data source to use for the index coordinate.
     index = Instance(ArrayDataSource)
-    
+
     # The data source to use as value points.
     value = Instance(AbstractDataSource)
 
@@ -46,7 +46,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     index_mapper = Instance(AbstractMapper)
     # Screen mapper for value data
     value_mapper = Instance(AbstractMapper)
-    
+
 
     # Convenience properties that correspond to either index_mapper or
     # value_mapper, depending on the orientation of the plot.
@@ -58,13 +58,13 @@ class BaseXYPlot(AbstractPlotRenderer):
     # the orientation of the plot.
     y_mapper = Property
 
-    # Convenience property for accessing the index data range.    
+    # Convenience property for accessing the index data range.
     index_range = Property
     # Convenience property for accessing the value data range.
     value_range = Property
 
-    # The type of hit-testing that is appropriate for this renderer.  
-    # 
+    # The type of hit-testing that is appropriate for this renderer.
+    #
     # * 'line': Computes Euclidean distance to the line between the
     #   nearest adjacent points.
     # * 'point': Checks for adjacency to a marker or point.
@@ -73,7 +73,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     # Appearance-related traits
     #------------------------------------------------------------------------
-    
+
     # The orientation of the index axis.
     orientation = Enum("h", "v")
 
@@ -91,7 +91,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     # Read-only property for x-axis.
     x_axis = Property
     # Read-only property for y-axis.
-    y_axis = Property    
+    y_axis = Property
     # Read-only property for labels.
     labels = Property
 
@@ -99,43 +99,43 @@ class BaseXYPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     # Other public traits
     #------------------------------------------------------------------------
-    
+
     # Does the plot use downsampling?
     # This is not used right now.  It needs an implementation of robust, fast
     # downsampling, which does not exist yet.
     use_downsampling = Bool(False)
-    
+
     # Does the plot use a spatial subdivision structure for fast hit-testing?
     # This makes data updates slower, but makes hit-tests extremely fast.
     use_subdivision = Bool(False)
-    
+
     # Overrides the default background color trait in PlotComponent.
     bgcolor = "transparent"
 
     # This just turns on a simple drawing of the X and Y axes... not a long
     # term solution, but good for testing.
-    
+
     # Defines the origin axis color, for testing.
     origin_axis_color = black_color_trait
     # Defines a the origin axis width, for testing.
     origin_axis_width = Float(1.0)
     # Defines the origin axis visibility, for testing.
     origin_axis_visible = Bool(False)
-    
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
-    
+
     # Are the cache traits valid? If False, new ones need to be compute.
     _cache_valid = Bool(False)
 
     # Cached array of (x,y) data-space points; regardless of self.orientation,
     # these points are always stored as (index_pt, value_pt).
     _cached_data_pts = Array
-    
+
     # Cached array of (x,y) screen-space points.
     _cached_screen_pts = Array
-    
+
     # Does **_cached_screen_pts** contain the screen-space coordinates
     # of the points currently in **_cached_data_pts**?
     _screen_cache_valid = Bool(False)
@@ -149,12 +149,12 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def _render(self, gc, points):
         """ Abstract method for rendering points.
-        
+
         Parameters
         ----------
         gc : graphics context
             Target for drawing the points
-        points : List of Nx2 arrays 
+        points : List of Nx2 arrays
             Screen-space points to render
         """
         raise NotImplementedError
@@ -164,18 +164,18 @@ class BaseXYPlot(AbstractPlotRenderer):
         the plot, and cache them.
         """
         raise NotImplementedError
-    
+
     def _downsample(self):
         """ Abstract method that gives the renderer a chance to downsample in
-        screen space. 
+        screen space.
         """
         # By default, this just does a mapscreen and returns the result
         raise NotImplementedError
-    
+
     #------------------------------------------------------------------------
     # Concrete methods below
     #------------------------------------------------------------------------
-    
+
     def __init__(self, **kwtraits):
         # Handling the setting/initialization of these traits manually because
         # they should be initialized in a certain order.
@@ -205,10 +205,10 @@ class BaseXYPlot(AbstractPlotRenderer):
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
         """ Performs proximity testing between a given screen point and the
         plot.
-        
+
         Parameters
         ==========
-        screen_pt : (x,y) 
+        screen_pt : (x,y)
             A point to test.
         threshold : integer
             Optional maximum screen space distance (pixels) between
@@ -221,8 +221,8 @@ class BaseXYPlot(AbstractPlotRenderer):
         If self.hittest_type is 'point', then this method returns the screen
         coordinates of the closest point on the plot as a tuple (x,y)
 
-        If self.hittest_type is 'line', then this method returns the screen 
-        endpoints of the line segment closest to *screen_pt*, as 
+        If self.hittest_type is 'line', then this method returns the screen
+        endpoints of the line segment closest to *screen_pt*, as
         ((x1,y1), (x2,y2))
 
         If *screen_pt* does not fall within *threshold* of the plot, then this
@@ -244,14 +244,14 @@ class BaseXYPlot(AbstractPlotRenderer):
             return None
 
     def get_closest_point(self, screen_pt, threshold=7.0):
-        """ Tests for proximity in screen-space.  
-        
+        """ Tests for proximity in screen-space.
+
         This method checks only data points, not the line segments connecting
         them; to do the latter use get_closest_line() instead.
-        
+
         Parameters
         ==========
-        screen_pt : (x,y) 
+        screen_pt : (x,y)
             A point to test.
         threshold : integer
             Optional maximum screen space distance (pixels) between
@@ -270,14 +270,14 @@ class BaseXYPlot(AbstractPlotRenderer):
             return (x, y, sqrt((x-screen_pt[0])**2 + (y-screen_pt[1])**2))
         else:
             return None
-        
+
     def get_closest_line(self, screen_pt, threshold=7.0):
         """ Tests for proximity in screen-space against lines connecting the
         points in this plot's dataset.
-        
+
         Parameters
         ==========
-        screen_pt : (x,y) 
+        screen_pt : (x,y)
             A point to test.
         threshold : integer
             Optional maximum screen space distance (pixels) between
@@ -287,10 +287,10 @@ class BaseXYPlot(AbstractPlotRenderer):
         Returns
         =======
         (x1, y1, x2, y2, dist) of the endpoints of the line segment
-        closest to *screen_pt*.  The *dist* element is the perpendicular 
+        closest to *screen_pt*.  The *dist* element is the perpendicular
         distance from *screen_pt* to the line.  If there is only a single point
         in the renderer's data, then the method returns the same point twice.
-           
+
         If no data points are within *threshold* of *screen_pt*, returns None.
         """
         ndx = self.map_index(screen_pt, threshold=0.0)
@@ -331,8 +331,8 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def map_screen(self, data_array):
         """ Maps an array of data points into screen space and returns it as
-        an array. 
-        
+        an array.
+
         Implements the AbstractPlotRenderer interface.
         """
         # data_array is Nx2 array
@@ -345,13 +345,13 @@ class BaseXYPlot(AbstractPlotRenderer):
             return transpose(array((sx,sy)))
         else:
             return transpose(array((sy,sx)))
-    
+
     def map_data(self, screen_pt, all_values=False):
         """ Maps a screen space point into the "index" space of the plot.
-        
+
         Implements the AbstractPlotRenderer interface.
-        
-        If *all_values* is True, returns an array of (index, value) tuples; 
+
+        If *all_values* is True, returns an array of (index, value) tuples;
         otherwise, it returns only the index values.
         """
         x, y = screen_pt
@@ -362,11 +362,11 @@ class BaseXYPlot(AbstractPlotRenderer):
                       self.value_mapper.map_data(y)))
         else:
             return self.index_mapper.map_data(x)
-    
+
     def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True, \
                   index_only=False):
         """ Maps a screen space point to an index into the plot's index array(s).
-        
+
         Implements the AbstractPlotRenderer interface.
         """
 
@@ -376,10 +376,10 @@ class BaseXYPlot(AbstractPlotRenderer):
             return None
         index_data = self.index.get_data()
         value_data = self.value.get_data()
-        
+
         if len(value_data) == 0 or len(index_data) == 0:
             return None
-        
+
         try:
             ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
         except IndexError, e:
@@ -392,7 +392,7 @@ class BaseXYPlot(AbstractPlotRenderer):
                     return 0
                 else:
                     return len(index_data) - 1
-        
+
         if threshold == 0.0:
             # Don't do any threshold testing
             return ndx
@@ -410,8 +410,8 @@ class BaseXYPlot(AbstractPlotRenderer):
             return None
 
     def get_screen_points(self):
-        """Returns the currently visible screen-space points.  
-        
+        """Returns the currently visible screen-space points.
+
         Intended for use with overlays.
         """
         self._gather_points()
@@ -422,11 +422,11 @@ class BaseXYPlot(AbstractPlotRenderer):
         else:
             return self.map_screen(self._cached_data_pts)
 
-    
+
     #------------------------------------------------------------------------
     # PlotComponent interface
     #------------------------------------------------------------------------
-    
+
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """ Draws the 'plot' layer.
         """
@@ -449,7 +449,7 @@ class BaseXYPlot(AbstractPlotRenderer):
             gc.set_stroke_color(self.origin_axis_color_)
             gc.set_line_width(self.origin_axis_width)
             gc.set_line_dash(None)
-            
+
             for range in (self.index_mapper.range, self.value_mapper.range):
                 if (range.low < 0) and (range.high > 0):
                     if range == self.index_mapper.range:
@@ -475,7 +475,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         return
 
     def _update_subdivision(self):
-        
+
         return
 
     #------------------------------------------------------------------------
@@ -484,10 +484,10 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def _get_index_range(self):
         return self.index_mapper.range
-    
+
     def _set_index_range(self, val):
         self.index_mapper.range = val
-    
+
     def _get_value_range(self):
         return self.value_mapper.range
 
@@ -499,7 +499,7 @@ class BaseXYPlot(AbstractPlotRenderer):
             return self.index_mapper
         else:
             return self.value_mapper
-    
+
     def _get_y_mapper(self):
         if self.orientation == "h":
             return self.value_mapper
@@ -512,7 +512,7 @@ class BaseXYPlot(AbstractPlotRenderer):
                 return obj
         else:
             return None
-    
+
     def _get_vgrid(self):
         for obj in self.underlays+self.overlays:
             if isinstance(obj, PlotGrid) and obj.orientation=="vertical":
@@ -548,25 +548,25 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _update_mappers(self):
         x_mapper = self.index_mapper
         y_mapper = self.value_mapper
-        
+
         if self.orientation == "v":
             x_mapper, y_mapper = y_mapper, x_mapper
-        
+
         x = self.x
         x2 = self.x2
         y = self.y
         y2 = self.y2
-        
+
         if "left" in self.origin:
             x_mapper.screen_bounds = (x, x2)
         else:
             x_mapper.screen_bounds = (x2, x)
-        
+
         if "bottom" in self.origin:
             y_mapper.screen_bounds = (y, y2)
         else:
             y_mapper.screen_bounds = (y2, y)
-        
+
         self.invalidate_draw()
         self._cache_valid = False
         self._screen_cache_valid = False
@@ -598,7 +598,7 @@ class BaseXYPlot(AbstractPlotRenderer):
             new.on_trait_change(self._either_metadata_changed, "metadata_changed")
         self._either_data_changed()
         return
-    
+
     def _either_data_changed(self):
         self.invalidate_draw()
         self._cache_valid = False
@@ -609,7 +609,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _either_metadata_changed(self):
         # By default, don't respond to metadata change events.
         pass
-    
+
     def _value_changed(self, old, new):
         if old is not None:
             old.on_trait_change(self._either_data_changed, "data_changed", remove=True)
@@ -620,7 +620,7 @@ class BaseXYPlot(AbstractPlotRenderer):
             new.on_trait_change(self._either_metadata_changed, "metadata_changed")
         self._either_data_changed()
         return
-    
+
     def _origin_changed(self, old, new):
         # origin switch from left to right or vice versa?
         if old.split()[1] != new.split()[1]:
@@ -634,15 +634,15 @@ class BaseXYPlot(AbstractPlotRenderer):
         self.invalidate_draw()
         self._screen_cache_valid = False
         return
-    
+
     def _index_mapper_changed(self, old, new):
         self._either_mapper_changed(self, "index_mapper", old, new)
         if self.orientation == "h":
             self.trait_property_changed("x_mapper", old, new)
         else:
             self.trait_property_changed("y_mapper", old, new)
-        return 
-    
+        return
+
     def _value_mapper_changed(self, old, new):
         self._either_mapper_changed(self, "value_mapper", old, new)
         if self.orientation == "h":
@@ -659,7 +659,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         self.invalidate_draw()
         self._screen_cache_valid = False
         return
-    
+
     def _mapper_updated_handler(self):
         self._cache_valid = False
         self._screen_cache_valid = False
@@ -673,19 +673,19 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def _bgcolor_changed(self):
         self.invalidate_draw()
-    
+
     def _use_subdivision_changed(self, old, new):
         if new:
             self._set_up_subdivision()
         return
-    
+
     #------------------------------------------------------------------------
     # Persistence
     #------------------------------------------------------------------------
 
     def __getstate__(self):
         state = super(BaseXYPlot,self).__getstate__()
-        for key in ['_cache_valid', '_cached_data_pts', '_screen_cache_valid', 
+        for key in ['_cache_valid', '_cached_data_pts', '_screen_cache_valid',
                     '_cached_screen_pts']:
             if state.has_key(key):
                 del state[key]

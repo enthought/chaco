@@ -1,5 +1,5 @@
 """ Needed Tests
-                        
+
     Component.draw_border() tests
     --------------------
         DONE *. draw_border output should match a similar draw_rect output
@@ -26,14 +26,14 @@ class DrawBorderTestCase(unittest.TestCase):
         container.outer_bounds = list(size)
         gc = PlotGraphicsContext(size)
         gc.render_component(container)
-        
+
         desired = array(((255, 255, 255, 255, 255, 255),
                          (255, 255, 255, 255, 255, 255),
                          (255,   0,   0,   0, 255, 255),
                          (255,   0, 255,   0, 255, 255),
                          (255,   0,   0,   0, 255, 255),
                          (255, 255, 255, 255, 255, 255)))
-            
+
         actual = gc.bmp_array[:,:,0]
         self.assertRavelEqual(actual, desired)
 

@@ -18,20 +18,20 @@ class ContainerOverlay(Container, PlotComponent):
     """
     # XXX this works, but I'm not sure that it's quite right.
 
-    # The component that this object overlays. This can be None. By default, if 
+    # The component that this object overlays. This can be None. By default, if
     # this object is called to draw(), it tries to render onto this component.
     component = Instance(Component)
 
     draw_layer = "overlay"
 
-    # The background color (overrides PlotComponent). 
+    # The background color (overrides PlotComponent).
     # Typically, an overlay does not render a background.
     bgcolor = "transparent"
-    
+
     unified_draw = True
-    
+
     auto_size = True
-    
+
     def overlay(self, other, gc, view_bounds, mode):
         self.draw(gc, view_bounds, mode)
 

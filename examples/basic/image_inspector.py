@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-""" 
+"""
 Demonstrates the ImageInspectorTool and overlay on a colormapped image
 plot.  The underlying plot is similar to the one in cmap_image_plot.py.
 
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 
  - Pressing "p" will toggle the display of the image inspector overlay.
@@ -46,7 +46,7 @@ def _create_plot_component():# Create a scalar field to colormap
 
     # Create the plot
     plot = Plot(pd)
-    img_plot = plot.img_plot("imagedata", 
+    img_plot = plot.img_plot("imagedata",
                              xbounds = xbounds[:2],
                              ybounds = ybounds[:2],
                              colormap=jet)[0]
@@ -71,24 +71,24 @@ def _create_plot_component():# Create a scalar field to colormap
 # Attributes to use for the plot view.
 size = (800, 600)
 title="Inspecting a Colormapped Image Plot"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -99,7 +99,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

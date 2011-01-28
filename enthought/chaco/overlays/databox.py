@@ -29,10 +29,10 @@ class DataBox(AbstractOverlay):
     #-------------------------------------------------------------------------
     # Appearance properties (for Box mode)
     #-------------------------------------------------------------------------
-    
+
     # The color of the selection box.
     color = ColorTrait("lightskyblue")
-    
+
     # The alpha value to apply to **color** when filling in the selection
     # region.  Because it is almost certainly useless to have an opaque zoom
     # rectangle, but it's also extremely useful to be able to use the normal
@@ -40,10 +40,10 @@ class DataBox(AbstractOverlay):
     # separate alpha value that replaces the alpha value of **color** at draw
     # time.
     alpha = Trait(0.3, None, Float)
-    
+
     # The color of the outside selection rectangle.
     border_color = ColorTrait("dodgerblue")
-    
+
     # The thickness of selection rectangle border.
     border_size = Int(1)
 

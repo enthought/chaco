@@ -394,7 +394,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     def _do_zoom(self):
         """ Does the zoom operation.
-        
+
         This method does not handle zooms triggered by scrolling the mouse wheel.
         Those are handled by `normal_mouse_wheel()`.
         """
@@ -533,7 +533,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             for ndx, (mapper, newlow, newhigh) in enumerate(todo_list):
                 if newlow > newhigh:
                     # This happens when the orientation of the axis is reversed.
-                    newlow, newhigh = newhigh, newlow                    
+                    newlow, newhigh = newhigh, newlow
                 domain_min, domain_max = getattr(mapper, "domain_limits", (None,None))
                 if domain_min is not None and newlow < domain_min:
                     newlow = domain_min

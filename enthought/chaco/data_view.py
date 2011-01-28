@@ -84,16 +84,16 @@ GridProperty = Property(get_grid, set_grid)
 
 class DataView(OverlayPlotContainer):
     """ Represents a mapping from 2-D data space into 2-D screen space.
-    
+
     It can house renderers and other plot components, and otherwise behaves
     just like a normal PlotContainer.
     """
-    
+
     # The orientation of the index axis.
     orientation = Enum("h", "v")
 
     # The default location of the origin  for new plots
-    default_origin = Enum("bottom left", "top left", 
+    default_origin = Enum("bottom left", "top left",
                           "bottom right", "top right")
 
     # The origin reported to axes, etc
@@ -121,15 +121,15 @@ class DataView(OverlayPlotContainer):
     # The range used for the value data.
     value_range = Property
 
-    # The 2-D data range whose x- and y-ranges are exposed as the 
-    # **index_range** and **value_range** property traits. This allows 
+    # The 2-D data range whose x- and y-ranges are exposed as the
+    # **index_range** and **value_range** property traits. This allows
     # supporting both XY plots and 2-D (image) plots.
     range2d = Instance(DataRange2D)
-    
+
     # Convenience property that offers access to whatever mapper corresponds
     # to the X-axis.
     x_mapper = OrientedMapperProperty
-    
+
     # Convenience property that offers access to whatever mapper corresponds
     # to the Y-axis
     y_mapper = OrientedMapperProperty
@@ -144,7 +144,7 @@ class DataView(OverlayPlotContainer):
     #
     # TODO: For now, this is an instance of AbstractOverlay instead of PlotAxis
     # because scales_axis.PlotAxis doesn't inherit from PlotAxis, but instead is a
-    # semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis 
+    # semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis
     # inherit a concrete class, I chose to loosen this trait by specifying
     # a more general base class of PlotAxis.  This incurs lower risk of subtle
     # and difficult-to-catch bugs being introduced by changes to the
@@ -152,7 +152,7 @@ class DataView(OverlayPlotContainer):
     # below.  --pwang
     #x_axis = Instance(PlotAxis)
     x_axis = Instance(AbstractOverlay)
-    
+
     # The vertical axis.  Its position relative to the plot
     # area can be "left", "right", or "float".  The default position for a new
     # y-axis is "left".
@@ -161,7 +161,7 @@ class DataView(OverlayPlotContainer):
 
     # The grid that intersects the x-axis, i.e., a set of vertical lines.
     x_grid = Instance(PlotGrid)
-    
+
     # The grid that intersects the y-axis, i.e., a set of horizontal lines.
     y_grid = Instance(PlotGrid)
 
@@ -251,16 +251,16 @@ class DataView(OverlayPlotContainer):
             else:
                 imap = LogMapper(range=self.range2d.x_range)
             self.index_mapper = imap
-        
+
         if not self.value_mapper:
             if self.value_scale == "linear":
                 vmap = LinearMapper(range=self.range2d.y_range)
             else:
                 vmap = LogMapper(range=self.range2d.y_range)
             self.value_mapper = vmap
-            
+
         # make sure the grid and bgcolor are not the same color
-            
+
         grid_color = 'lightgray'
         if color_table[self.bgcolor] == color_table[grid_color]:
             grid_color = 'white'
@@ -300,7 +300,7 @@ class DataView(OverlayPlotContainer):
             else:
                 self.x_mapper.low_pos = x2
                 self.x_mapper.high_pos = x
-        
+
         if self.y_mapper is not None:
             if "bottom" in self.origin:
                 self.y_mapper.low_pos = y
@@ -308,7 +308,7 @@ class DataView(OverlayPlotContainer):
             else:
                 self.y_mapper.low_pos = y2
                 self.y_mapper.high_pos = y
-        
+
         self.invalidate_draw()
         return
 
@@ -361,7 +361,7 @@ class DataView(OverlayPlotContainer):
             self.index_axis.mapper = new
         if self.index_grid:
             self.index_grid.mapper = new
-    
+
     def _value_mapper_changed(self, old, new):
         if new is not None:
             if new.range is not None:
@@ -416,7 +416,7 @@ class DataView(OverlayPlotContainer):
                 if new is not None:
                     new.add(datasource)
         for renderer in self.components:
-            if hasattr(renderer, 'range2d'): 
+            if hasattr(renderer, 'range2d'):
                 renderer.range2d = new
             elif isinstance(renderer, Base2DPlot):
                 renderer.index_range = new
@@ -465,7 +465,7 @@ class DataView(OverlayPlotContainer):
                 setattr(renderer, range_name, new)
 
     def _get_origin(self):
-        # FIXME: 
+        # FIXME:
         return self.default_origin
 
 

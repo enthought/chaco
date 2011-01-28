@@ -19,7 +19,7 @@ class CMapImagePlot(ImagePlot):
     #------------------------------------------------------------------------
     # Data-related traits
     #------------------------------------------------------------------------
-    
+
     # Maps from scalar data values in self.data.value to color tuples
     value_mapper = Instance(ColorMapper)
 
@@ -29,7 +29,7 @@ class CMapImagePlot(ImagePlot):
     # Convenience property for accessing the data range of the mapper.
     value_range = Property
 
-    # alpha value to use to fade out unselected data points when there is an 
+    # alpha value to use to fade out unselected data points when there is an
     # active selection
     fade_alpha = Float(0.3)
 
@@ -54,10 +54,10 @@ class CMapImagePlot(ImagePlot):
     def __init__(self, **kwargs):
         super(CMapImagePlot, self).__init__(**kwargs)
         if self.value_mapper:
-            self.value_mapper.on_trait_change(self._update_value_mapper, 
+            self.value_mapper.on_trait_change(self._update_value_mapper,
                                               "updated")
         if self.value:
-            self.value.on_trait_change(self._update_selections, 
+            self.value.on_trait_change(self._update_selections,
                                        "metadata_changed")
 
     def set_value_selection(self, val):
@@ -79,7 +79,7 @@ class CMapImagePlot(ImagePlot):
 
     def _render(self, gc):
         """ Ensures that the cached image is valid.
-        
+
         Called before _render() is called. Implements the Base2DPlot interface.
         """
         if not self._mapped_image_cache_valid:
@@ -104,7 +104,7 @@ class CMapImagePlot(ImagePlot):
                 # construct a composite mask
                 mask = zeros(cached_mapped_image.shape[:2], dtype=bool)
                 for m in selection_masks:
-                    mask = mask | m 
+                    mask = mask | m
                 invmask = invert(mask)
                 # do a cheap alpha blend with our specified color
                 cached_mapped_image[invmask,0:3] = \
@@ -118,11 +118,11 @@ class CMapImagePlot(ImagePlot):
 
     def _update_value_mapper(self):
         self._mapped_image_cache_valid = False
-        self.invalidate_draw() 
+        self.invalidate_draw()
 
     def _update_selections(self):
         self._mapped_image_cache_valid = False
-        self.invalidate_draw() 
+        self.invalidate_draw()
 
     #------------------------------------------------------------------------
     # Properties
@@ -130,10 +130,10 @@ class CMapImagePlot(ImagePlot):
 
     def _get_value_range(self):
         return self.value_mapper.range
-    
+
     def _set_value_range(self, val):
         self.value_mapper.range = val
-    
+
     def _get_color_mapper(self):
         return self.value_mapper
 
@@ -146,7 +146,7 @@ class CMapImagePlot(ImagePlot):
 
     def _value_mapper_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._update_value_mapper, 
+            old.on_trait_change(self._update_value_mapper,
                                 "updated", remove=True)
         if new is not None:
             new.on_trait_change(self._update_value_mapper, "updated")
@@ -155,7 +155,7 @@ class CMapImagePlot(ImagePlot):
             if new.range is None and old.range is not None:
                 new.range = old.range
         self._update_value_mapper()
-        
+
     def _value_data_changed_fired(self):
         super(CMapImagePlot, self)._value_data_changed_fired()
         self._mapped_image_cache_valid = False

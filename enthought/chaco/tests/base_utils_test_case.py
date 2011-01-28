@@ -25,7 +25,7 @@ class BinSearchTestCase(unittest.TestCase):
         self.assert_(bin_search(ary, 5.1, 1) == 5)
         self.assert_(bin_search(ary, 4.9, 1) == 4)
         return
-    
+
     def test_descending_data(self):
         ary = arange(10.0, 0.0, -1.0)
         # inside bounds
@@ -41,7 +41,7 @@ class BinSearchTestCase(unittest.TestCase):
         return
 
 class ReverseMap1DTestCase(unittest.TestCase):
-    
+
     def test_ascending(self):
         ary = arange(10.0)
         rmap = lambda x: reverse_map_1d(ary, x, 'ascending')
@@ -105,15 +105,15 @@ class FindRunsTestCase(unittest.TestCase):
     def test_find_runs_middle(self):
         x = array([0,8,7,8,9,2,3,4,10])
         assert_equal(find_runs(x) , [[0], [8], [7,8,9], [2,3,4], [10]])
-    
+
     def test_find_runs_start(self):
         x = array([3,4,5,12,9,17])
         assert_equal(find_runs(x) , [[3,4,5],[12],[9],[17]])
-    
+
     def test_find_runs_end(self):
         x = array([18,23,24,25])
         assert_equal(find_runs(x) , [[18],[23,24,25]])
-    
+
     def test_find_runs_offset(self):
         # because of the nature of the find_runs algorithm, there may be
         # fencepost errors with runs that start at x[1] or x[-2]
@@ -121,13 +121,13 @@ class FindRunsTestCase(unittest.TestCase):
         assert_equal(find_runs(x) , [[10],[12,13,14],[28],[16]])
         x = array([10,15,16,17,34])
         assert_equal(find_runs(x) , [[10],[15,16,17],[34]])
-    
+
     def test_find_runs_none(self):
         x = array([])
         assert_equal(find_runs(x) , [])
         x = array([12,15,27])
         assert_equal(find_runs(x) , [[12],[15],[27]])
-    
+
     def test_find_runs_descending(self):
         x = array([30,41,40,39,38,37,12])
         assert_equal(find_runs(x, order='descending') , \
@@ -163,7 +163,7 @@ class PointLineDistanceTestCase(unittest.TestCase):
         test = (3.0, -3.0)
         dist = point_line_distance(test, p1, p2)
         assert_almost_equal(dist, 0.0)
-    
+
 
 if __name__ == '__main__':
     import nose

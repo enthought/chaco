@@ -36,7 +36,7 @@ from enthought.chaco.tools.api import RangeSelection, RangeSelectionOverlay, Zoo
 use_downsampling = False
 
 def _create_plot_component(use_downsampling=False):
-    
+
     container = OverlayPlotContainer(padding=40, bgcolor="lightgray",
                                      use_backbuffer = True,
                                      border_visible = True,
@@ -47,14 +47,14 @@ def _create_plot_component(use_downsampling=False):
     high = 15.0
     x = arange(low, high+0.001, (high-low)/numpoints)
 
-    # Plot some bessel functionsless ../en    
+    # Plot some bessel functionsless ../en
     value_mapper = None
     index_mapper = None
     for i in range(10):
         y = jn(i, x)
         plot = create_line_plot((x,y), color=tuple(COLOR_PALETTE[i]), width=2.0)
         plot.use_downsampling = use_downsampling
-        
+
         if value_mapper is None:
             index_mapper = plot.index_mapper
             value_mapper = plot.value_mapper
@@ -75,39 +75,39 @@ def _create_plot_component(use_downsampling=False):
     zoom = ZoomTool(plot, tool_mode="box", always_on=False)
     plot.overlays.append(selection_overlay)
     plot.overlays.append(zoom)
-    
+
     return container
 
 #===============================================================================
 # Attributes to use for the plot view.
 size = (600, 500)
 title = "Million Point Plot"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
-    # FIXME: I am putting this in here just for consistency: however the plots 
+
+    # FIXME: I am putting this in here just for consistency: however the plots
     # in Chaco don't have an implementation for downsampling yet, and so, this
     # trait is not exposed in the UI.
     use_downsampling = Bool
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
         return _create_plot_component(self.use_downsampling)
-     
+
     def _use_downsampling_default(self):
         return use_downsampling
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -116,11 +116,11 @@ demo = Demo()
 class PlotFrame(DemoFrame):
 
     def _create_window(self):
-        
+
         # Return a window containing our plots
         container=_create_plot_component(use_downsampling)
         return Window(self, -1, component=container)
-    
+
 if __name__ == "__main__":
     if (len(sys.argv) > 1) and (sys.argv[1] == "fast"):
         use_downsampling = True

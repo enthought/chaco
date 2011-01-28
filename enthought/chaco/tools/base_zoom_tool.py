@@ -13,7 +13,7 @@ class BaseZoomTool(HasTraits):
     """ Defines traits and methods to actually perform the logic of zooming
     onto a plot.
     """
-    
+
     # If the tool only applies to a particular axis, this attribute is used to
     # determine which mapper and range to use.
     axis = Enum("index", "value")
@@ -25,7 +25,7 @@ class BaseZoomTool(HasTraits):
     # The maximum ratio between the zoomed-out data space bounds and the original
     # bounds.  If None, then there is no limit.
     max_zoom_out_factor = Float(1e5, allow_none=True)
-    
+
     def _zoom_limit_reached(self, orig_low, orig_high, new_low, new_high, mapper=None):
         """ Returns True if the new low and high exceed the maximum zoom
         limits
@@ -57,7 +57,7 @@ class BaseZoomTool(HasTraits):
 
     def _get_mapper(self):
         """ Returns the mapper for the component associated with this tool.
-        
+
         The zoom tool really only cares about this, so subclasses can easily
         customize SimpleZoom to work with all sorts of components just by
         overriding this method.
@@ -66,7 +66,7 @@ class BaseZoomTool(HasTraits):
             return getattr(self.component, self.axis + "_mapper")
         else:
             return None
-        
+
 
     def _get_axis_coord(self, event, axis="index"):
         """ Returns the coordinate of the event along the axis of interest
@@ -103,10 +103,10 @@ class BaseZoomTool(HasTraits):
                                    (1, self.component.y_mapper)]:
             low_val = mapper.map_data(start[axis_index])
             high_val = mapper.map_data(end[axis_index])
-            
+
             if low_val > high_val:
                 low_val, high_val = high_val, low_val
             low[axis_index] = low_val
             high[axis_index] = high_val
         return low, high
-    
+

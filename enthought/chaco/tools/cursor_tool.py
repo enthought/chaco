@@ -6,12 +6,12 @@ to either 'ascending' or 'descending'.
 
 TODO:
 
-- add some visual feedback to the user when a cursor is "grabbed" 
+- add some visual feedback to the user when a cursor is "grabbed"
     (e.g. highlight the cursor line)
 
-- update cursor position to the "selections" metadata on the owning 
+- update cursor position to the "selections" metadata on the owning
     plot component
-    
+
 """
 from __future__ import with_statement
 
@@ -47,25 +47,25 @@ class BaseCursorTool(LineInspector, DragTool):
     """
     Abstract base class for CursorTool objects
     """
-    
+
     #if true, draw a small circle at the cursor/line intersection
     show_marker = Bool(True)
-    
+
     #the radius of the marker in pixels
     marker_size = Float(3.0)
-    
+
     #the marker object. this should probably be private
     marker = Instance(CircleMarker, ())
-    
+
     #pick threshold, in screen units (pixels)
     threshold = Float(5.0)
-    
+
     #The current index-value of the cursor. Over-ridden in subclasses
     current_index = Disallow
-    
+
     #The current position of the cursor in data units
     current_position = Property(depends_on=['current_index'])
-    
+
     #Stuff from line_inspector which is not required
     axis = Disallow
     inspect_mode = Disallow
@@ -82,23 +82,23 @@ class BaseCursorTool(LineInspector, DragTool):
         if sx < self.component.x or sx > self.component.x2 or \
             sy < self.component.y or sy > self.component.y2:
             return
-        
+
         marker = self.marker
         marker_size = self.marker_size
         points = [(sx,sy)]
 
         with gc:
             gc.set_fill_color(self.color_)
-        
+
             gc.begin_path()
-        
+
             # This is the fastest method - use one of the kiva built-in markers
             if hasattr(gc, "draw_marker_at_points") \
                 and (gc.draw_marker_at_points(points,
                                               marker_size,
                                               marker.kiva_marker) != 0):
                     pass
-        
+
             # The second fastest method - draw the path into a compiled path, then
             # draw the compiled path at each point
             elif hasattr(gc, 'draw_path_at_points'):
@@ -110,7 +110,7 @@ class BaseCursorTool(LineInspector, DragTool):
                 if not marker.antialias:
                     gc.set_antialias(False)
                 gc.draw_path_at_points(points, path, mode)
-        
+
             # Neither of the fast functions worked, so use the brute-force, manual way
             else:
                 if not marker.antialias:
@@ -120,40 +120,40 @@ class BaseCursorTool(LineInspector, DragTool):
                         gc.translate_ctm(sx, sy)
                         # Kiva GCs have a path-drawing interface
                         marker.add_to_path(gc, marker_size)
-                        gc.draw_path(marker.draw_mode)    
+                        gc.draw_path(marker.draw_mode)
         return
-    
+
     def normal_mouse_move(self, event):
-        """ Handles the mouse being moved. 
+        """ Handles the mouse being moved.
         """
         return
-    
+
     def normal_mouse_leave(self, event):
         """ Handles the mouse leaving the plot.
         """
         return
-        
+
 
 class CursorTool1D(BaseCursorTool):
     """
     This tools provides a draggable cursor bound to a XY plot component instance.
-    
-    Note, be sure to select an drag_button which does not conflict with other tools 
+
+    Note, be sure to select an drag_button which does not conflict with other tools
     (e.g. the PanTool).
-    
+
     """
-    
+
     #The current index-value of the cursor
     current_index = Int(0)
-    
-    
-    #if true, draws a line parallel to the index-axis 
-    #through the cursor intersection point 
+
+
+    #if true, draws a line parallel to the index-axis
+    #through the cursor intersection point
     show_value_line = Bool(True)
-    
+
     def _current_index_changed(self):
         self.component.request_redraw()
-    
+
     @cached_property
     def _get_current_position(self):
         plot = self.component
@@ -161,42 +161,42 @@ class CursorTool1D(BaseCursorTool):
         x = plot.index.get_data()[ndx]
         y = plot.value.get_data()[ndx]
         return x,y
-    
+
     def _set_current_position(self, traitname, args):
         plot = self.component
         ndx = plot.index.reverse_map(args[0])
         if ndx is not None:
             self.current_index = ndx
-    
+
     def draw(self, gc, view_bounds=None):
-        """ Draws this tool on a graphics context.  
-        
+        """ Draws this tool on a graphics context.
+
         Overrides LineInspector, BaseTool.
         """
-        # We draw at different points depending on whether or not we are 
-        # interactive.  If both listener and interactive are true, then the 
+        # We draw at different points depending on whether or not we are
+        # interactive.  If both listener and interactive are true, then the
         # selection metadata on the plot component takes precendence.
         plot = self.component
         if plot is None:
             return
-        
+
         sx, sy = plot.map_screen(self.current_position)
         orientation = plot.orientation
-        
+
         if orientation == "h" and sx is not None:
             self._draw_vertical_line(gc, sx)
         elif sy is not None:
             self._draw_horizontal_line(gc, sy)
-        
+
         if self.show_marker:
             self._draw_marker(gc, sx, sy)
-            
+
         if self.show_value_line:
             if orientation == "h" and sy is not None:
                 self._draw_horizontal_line(gc, sy)
             elif sx is not None:
                 self._draw_vertical_line(gc, sx)
-    
+
     def is_draggable(self, x, y):
         plot = self.component
         if plot is not None:
@@ -207,7 +207,7 @@ class CursorTool1D(BaseCursorTool):
             elif orientation=='v' and numpy.abs(sy-y) <= self.threshold:
                 return True
         return False
-    
+
     def dragging(self, event):
         x,y = event.x, event.y
         plot = self.component
@@ -216,17 +216,17 @@ class CursorTool1D(BaseCursorTool):
             return
         self.current_index = ndx
         plot.request_redraw()
-        
-        
+
+
 class CursorTool2D(BaseCursorTool):
     _dragV = Bool(False)
     _dragH = Bool(False)
-    
+
     current_index = Tuple(0,0)
-    
+
     def _current_index_changed(self):
         self.component.request_redraw()
-    
+
     @cached_property
     def _get_current_position(self):
         plot = self.component
@@ -235,7 +235,7 @@ class CursorTool2D(BaseCursorTool):
         x = xdata.get_data()[ndx]
         y = ydata.get_data()[ndy]
         return x,y
-    
+
     def _set_current_position(self, traitname, args):
         plot = self.component
         xds, yds = plot.index.get_data()
@@ -243,7 +243,7 @@ class CursorTool2D(BaseCursorTool):
         ndy = yds.reverse_map(args[1])
         if ndx is not None and ndy is not None:
             self.current_index = ndx, ndy
-    
+
     def is_draggable(self, x, y):
         plot = self.component
         if plot is not None:
@@ -262,21 +262,21 @@ class CursorTool2D(BaseCursorTool):
                     self._dragH = True
             return self._dragV or self._dragH
         return False
-     
+
     def draw(self, gc, view_bounds=None):
-        """ Draws this tool on a graphics context.  
-        
+        """ Draws this tool on a graphics context.
+
         Overrides LineInspector, BaseTool.
         """
-        # We draw at different points depending on whether or not we are 
-        # interactive.  If both listener and interactive are true, then the 
+        # We draw at different points depending on whether or not we are
+        # interactive.  If both listener and interactive are true, then the
         # selection metadata on the plot component takes precendence.
         plot = self.component
         if plot is None:
             return
         sx, sy = plot.map_screen([self.current_position])[0]
         orientation = plot.orientation
-        
+
         if orientation == "h":
             if sx is not None:
                 self._draw_vertical_line(gc, sx)
@@ -287,10 +287,10 @@ class CursorTool2D(BaseCursorTool):
                 self._draw_horizontal_line(gc, sx)
             if sy is not None:
                 self._draw_vertical_line(gc, sy)
-        
+
         if self.show_marker and sx is not None and sy is not None:
             self._draw_marker(gc, sx, sy)
-                
+
     def dragging(self, event):
         x,y = event.x, event.y
         plot = self.component

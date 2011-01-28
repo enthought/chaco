@@ -65,7 +65,7 @@ class ErrorBarPlot(LinePlot):
 
         if not self.index or not self.value_low or not self.value_high:
             return
-        
+
         index, index_mask = self.index.get_data_mask()
         value_low, value_low_mask = self.value_low.get_data_mask()
         value_high, value_high_mask = self.value_high.get_data_mask()
@@ -133,7 +133,7 @@ class ErrorBarPlot(LinePlot):
 
     def _render_bar_endcap(self, gc, start, end, low, high, axis):
         """ Renders the endcaps for endcap_style == "bar".  start and end are
-        the two endpoints of the bare errorbar.  axis is the column index 
+        the two endpoints of the bare errorbar.  axis is the column index
         corresponding to the index direction, so for orientation of 'h', axis
         is 0.
 

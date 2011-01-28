@@ -1,5 +1,5 @@
 """
-Implementation of a standard financial plot visualization using Chaco 
+Implementation of a standard financial plot visualization using Chaco
 renderers and scales.
 """
 
@@ -85,7 +85,7 @@ class MyApp(HasTraits):
 
         # Set the plot's bottom axis to use the Scales ticking system
         ticker = ScalesTickGenerator(scale=CalendarScaleSystem())
-        bottom_axis = PlotAxis(price_plot, orientation="bottom", 
+        bottom_axis = PlotAxis(price_plot, orientation="bottom",
                                tick_generator = ticker)
         price_plot.overlays.append(bottom_axis)
         price_plot.overlays.append(PlotAxis(price_plot, orientation="left"))
@@ -105,10 +105,10 @@ class MyApp(HasTraits):
         self.plot = None
 
         # Create the data and datasource objects
-        # In order for the date axis to work, the index data points need to 
+        # In order for the date axis to work, the index data points need to
         # be in units of seconds since the epoch.  This is because we are using
         # the CalendarScaleSystem, whose formatters interpret the numerical values
-        # as seconds since the epoch.  
+        # as seconds since the epoch.
         numpoints = 500
         index = create_dates(numpoints)
 
@@ -127,7 +127,7 @@ class MyApp(HasTraits):
         # Create the price plot
         price_plot = self._create_plot(time_ds, price_ds)
         self.plot = price_plot
-        
+
         container = OverlayPlotContainer(padding=35)
         container.add(price_plot)
         return container

@@ -60,7 +60,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
                 if index is not None and len(index) > 0:
                     index = asarray(index)
                     index_data = plot.index.get_data()
-                    
+
                     # Only grab the indices which fall within the data range.
                     index = index[index < len(index_data)]
 
@@ -70,7 +70,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
                     # implicit, though unchecked, already.
                     #value = plot.value.metadata.get(inspect_type, None)
                     value = index
-                    
+
                     if hasattr(plot, "value"):
                         value_data = plot.value.get_data()
                         screen_pts = plot.map_screen(array([index_data[index],

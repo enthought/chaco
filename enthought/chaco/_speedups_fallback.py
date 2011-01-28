@@ -26,51 +26,51 @@ def scatterplot_gather_points(index, index_low, index_high,
                               index_mask=None, index_sel=None, index_sel_mask=None,
                               value_mask=None, value_sel=None, value_sel_mask=None):
     """
-    Takes index and value arrays, masks, and optional selection arrays,  
-    and returns the list of points and corresponding selection mask for  
-    those points.   
-     
-    Parameters 
-    ---------- 
-    index : float array (1D)  
+    Takes index and value arrays, masks, and optional selection arrays,
+    and returns the list of points and corresponding selection mask for
+    those points.
+
+    Parameters
+    ----------
+    index : float array (1D)
        Array of indexes of the points
-    index_low : float or None 
-       The minimum acceptable value in the index array 
-    index_high : float or None  
-       The maximum acceptable value in the index array 
-    value : float array (1D)  
+    index_low : float or None
+       The minimum acceptable value in the index array
+    index_high : float or None
+       The maximum acceptable value in the index array
+    value : float array (1D)
        Array of values of the points
-    value_low : float or None 
-       The minimum acceptable value in the value array 
-    value_high : float or None  
-       The maximum acceptable value in the value array 
-     
-    Optional Parameters 
-    ------------------- 
-    index_mask : bool or int array (1D)  
+    value_low : float or None
+       The minimum acceptable value in the value array
+    value_high : float or None
+       The maximum acceptable value in the value array
+
+    Optional Parameters
+    -------------------
+    index_mask : bool or int array (1D)
       Mask array for the indexes
-    index_sel : sequence of ints  
-       A list/tuple/array of indices of selected positions in the index array  
-    index_sel_mask : array of ints or bools 
-       An mask array with True values indicating which points are selected 
-    value_mask : bool or int array (1D)  
+    index_sel : sequence of ints
+       A list/tuple/array of indices of selected positions in the index array
+    index_sel_mask : array of ints or bools
+       An mask array with True values indicating which points are selected
+    value_mask : bool or int array (1D)
        Mask array for the values
-    value_sel : sequence of ints  
-       A list/tuple/array of indices of selected positions in the value array  
-    value_sel_mask : array of ints or bools 
-       An mask array with True values indicating which points are selected 
-     
-    Returns 
-    ------- 
-    points : float array (Nx2)   
-       The points that match all the masking criteria  
-    sel_mask : bool array (1D)   
-       Mask indicating which indices in **points** are selected  
+    value_sel : sequence of ints
+       A list/tuple/array of indices of selected positions in the value array
+    value_sel_mask : array of ints or bools
+       An mask array with True values indicating which points are selected
+
+    Returns
+    -------
+    points : float array (Nx2)
+       The points that match all the masking criteria
+    sel_mask : bool array (1D)
+       Mask indicating which indices in **points** are selected
     """
 
     index_range_mask = (index_low < index) & (index < index_high)
     value_range_mask = (value_low < value) & (value < value_high)
-    
+
     nan_mask = array_combine(index_mask, value_mask,
                     func = lambda x: invert(isnan(x)) & x)
 

@@ -19,7 +19,7 @@ from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool 
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
 # # Create the Chaco plot.
@@ -69,24 +69,24 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size=(900,500)
 title="Draw order demonstration"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -97,7 +97,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

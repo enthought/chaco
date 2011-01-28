@@ -29,8 +29,8 @@ class PolarLineRenderer(AbstractPlotRenderer):
     origin_axis_visible=True
     # The grid is visible.
     grid_visible= True
-    # The orientation of the plot is horizontal; for any other value, it is 
-    # transposed 
+    # The orientation of the plot is horizontal; for any other value, it is
+    # transposed
     orientation = 'h'
     # The color of the line.
     color = black_color_trait
@@ -88,8 +88,8 @@ class PolarLineRenderer(AbstractPlotRenderer):
 
     def map_screen(self, data_array):
         """ Maps an array of data points into screen space and returns it as
-        an array. 
-        
+        an array.
+
         Implements the AbstractPlotRenderer interface.
         """
 
@@ -112,7 +112,7 @@ class PolarLineRenderer(AbstractPlotRenderer):
 
     def map_data(self, screen_pt):
         """ Maps a screen space point into the "index" space of the plot.
-        
+
         Implements the AbstractPlotRenderer interface.
         """
         if self.orientation == 'h':
@@ -134,7 +134,7 @@ class PolarLineRenderer(AbstractPlotRenderer):
 
 
     def _draw_component(self, gc, view_bounds=None, mode='normal'):
-        """ Renders the component. 
+        """ Renders the component.
         """
         self._gather_points()
         self._render(gc, self._cached_data_pts)

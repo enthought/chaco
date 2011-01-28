@@ -21,7 +21,7 @@ def add_default_axes(plot, orientation="normal", vtitle="", htitle=""):
     else:
         v_mapper = plot.index_mapper
         h_mapper = plot.value_mapper
-    
+
     yticks = ScalesTickGenerator()
     left = PlotAxis(
         orientation='left',
@@ -30,7 +30,7 @@ def add_default_axes(plot, orientation="normal", vtitle="", htitle=""):
         component=plot,
         tick_generator=yticks,
     )
-    
+
     xticks = ScalesTickGenerator()
     bottom = PlotAxis(
         orientation='bottom',
@@ -86,7 +86,7 @@ class ScalyPlot(Plot):
             else:
                 imap = LogMapper(range=self.range2d.x_range)
             self.index_mapper = imap
-        
+
         if self.value_mapper is None:
             if self.value_scale == "linear":
                 vmap = LinearMapper(range=self.range2d.y_range)

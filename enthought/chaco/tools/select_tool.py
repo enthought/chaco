@@ -21,14 +21,14 @@ class SelectTool(BaseTool):
     #     The user clicks on points (while optionally holding down a modifier
     #     key) to select or deselect them. If the point is already selected,
     #     clicking it again deselects it. The modifier key to use is set by
-    #     **multiselect_modifier**. The only way to deselect points is by 
+    #     **multiselect_modifier**. The only way to deselect points is by
     #     clicking on them; clicking on a screen space outside of the plot does
     #     not deselect points.
     # "multi"
     #     Like **toggle** mode, except that the user can deselect all points
     #     at once by clicking on the plot area away from a point.
     # "single"
-    #     The user can only select a single point at a time.  
+    #     The user can only select a single point at a time.
     # "off"
     #     The user cannot select points via clicking.
     selection_mode = Enum("toggle", "multi", "single", "off")
@@ -52,7 +52,7 @@ class SelectTool(BaseTool):
             just been clicked.
             already_selected indicates that the item corresponding to the
             input event is already selected.
-        
+
         """
         raise NotImplementedError
 
@@ -72,11 +72,11 @@ class SelectTool(BaseTool):
         """ Deselects the given token.
         """
         raise NotImplementedError
- 
+
     def normal_left_down(self, event):
         """ Handles the left mouse button being pressed when the tool is in the
         'normal' state.
-        
+
         If selecting is enabled and the cursor is within **threshold** of a
         data point, the method calls the subclass's _select" or _deselect
         methods to perform the appropriate action, given the current

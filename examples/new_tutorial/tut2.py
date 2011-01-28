@@ -38,4 +38,4 @@ if __name__ == "__main__":
     app = wx.PySimpleApp()
     frame = Tut2Frame(None, size=(1000,500))
     app.MainLoop()
-    
+

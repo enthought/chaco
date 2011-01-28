@@ -30,16 +30,16 @@ def _create_plot_component():
     container = GridContainer(padding=20, fill_padding=True,
                               bgcolor="lightgray", use_backbuffer=True,
                               shape=(3,3), spacing=(12,12))
-    
+
     # Create the initial series of data
     x = linspace(-5, 15.0, 100)
     pd = ArrayPlotData(index = x)
-    
+
     # Plot some bessel functions and add the plots to our container
     for i in range(9):
         pd.set_data("y" + str(i), jn(i,x))
         plot = Plot(pd)
-        plot.plot(("index", "y" + str(i)), 
+        plot.plot(("index", "y" + str(i)),
                   color=tuple(COLOR_PALETTE[i]), line_width=2.0,
                   bgcolor = "white", border_visible=True)
 
@@ -63,7 +63,7 @@ def _create_plot_component():
 
 #===============================================================================
 # Attributes to use for the plot view.
-size=(1000,800) 
+size=(1000,800)
 title="Grid Container with Fixed Aspect ratio"
 
 #===============================================================================
@@ -71,17 +71,17 @@ title="Grid Container with Fixed Aspect ratio"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -93,7 +93,7 @@ class PlotFrame(DemoFrame):
 
         # Return a window containing our plot
         return Window(self, -1, component=_create_plot_component())
-        
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

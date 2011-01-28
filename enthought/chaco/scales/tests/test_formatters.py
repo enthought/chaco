@@ -22,7 +22,7 @@ def test_strftimeEx_03():
     t = 0.678910
     fmt = "%(ms)"
     # According to the code, the number that replaces (ms) is *rounded*,
-    # so this formt should give "679".  
+    # so this formt should give "679".
     result = strftimeEx(fmt, t)
     assert result == "679"
 
@@ -31,7 +31,7 @@ def test_strftimeEx_04():
     fmt = "%(ms).%(us)ms"
     # According to the code, the number that replaces (ms) is *rounded*,
     # so this formt should give "679.910ms".  (See the next test case for the
-    # correct way to do this.) 
+    # correct way to do this.)
     result = strftimeEx(fmt, t)
     expected = "679.910ms"
     assert result == expected

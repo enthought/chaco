@@ -1,11 +1,11 @@
 
 import unittest
 
-from enthought.chaco.api import DataRange2D, DataView, GridDataSource 
+from enthought.chaco.api import DataRange2D, DataView, GridDataSource
 
 
 class DataViewTestCase(unittest.TestCase):
-    
+
     def test_empty(self):
         dv = DataView()
         self.assert_(dv.orientation=="h")

@@ -37,7 +37,7 @@ class TabbedPlots(HasTraits):
     def create_plots(self):
         self.plot1 = self.create_plot(("x", "y1"), "sin plot", "red")
         self.plot2 = self.create_plot(("x", "y2"), "tan plot", "blue")
-        
+
         self.plot2.index_range = self.plot1.index_range
 
     def _data_changed(self):

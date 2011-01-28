@@ -9,12 +9,12 @@ from select_tool import SelectTool
 
 
 class ScatterInspector(SelectTool):
-    """ A tool for inspecting scatter plots. 
-    
-    It writes the index of the point under the cursor to the metadata of the 
-    index and value data sources, and allows clicking to select the point. 
+    """ A tool for inspecting scatter plots.
+
+    It writes the index of the point under the cursor to the metadata of the
+    index and value data sources, and allows clicking to select the point.
     Other components can listen for metadata updates on the data sources.
-    
+
     By default, it writes the index of the point under the cursor to the "hover"
     key in metadata, and the index of a clicked point to "selection".
     """
@@ -31,7 +31,7 @@ class ScatterInspector(SelectTool):
     #------------------------------------------------------------------------
     # Override/configure inherited traits
     #------------------------------------------------------------------------
-    
+
     # This tool is not visible
     visible = False
 
@@ -40,8 +40,8 @@ class ScatterInspector(SelectTool):
 
     def normal_mouse_move(self, event):
         """ Handles the mouse moving when the tool is in the 'normal' state.
-        
-        If the cursor is within **threshold** of a data point, the method 
+
+        If the cursor is within **threshold** of a data point, the method
         writes the index to the plot's data sources' "hover" metadata.
         """
         plot = self.component
@@ -61,7 +61,7 @@ class ScatterInspector(SelectTool):
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
         #index_md = plot.index.metadata.get(self.selection_metadata_name, None)
         #value_md = plot.value.metadata.get(self.selection_metadata_name, None)
-        
+
         already_selected = False
         for name in ('index', 'value'):
             if not hasattr(plot, name):
@@ -78,7 +78,7 @@ class ScatterInspector(SelectTool):
         plot = self.component
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
         return index
-   
+
     def _deselect(self, index=None):
         """ Deselects a particular index.  If no index is given, then
         deselects all points.

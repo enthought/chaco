@@ -66,7 +66,7 @@ class MyPlot(HasTraits):
         if self.status_overlay in self.plot.overlays:
             # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
-    
+
 index = numpy.array([1,2,3,4,5])
 data_series = index**2
 

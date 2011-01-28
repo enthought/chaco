@@ -49,7 +49,7 @@ class PlotApp(HasTraits):
 
     traits_view = View(
             HSplit(
-                Item('returns_plot', editor=ComponentEditor(), 
+                Item('returns_plot', editor=ComponentEditor(),
                     show_label = False),
                 VGroup(
                     VGroup(
@@ -89,7 +89,7 @@ class PlotApp(HasTraits):
                 continue
             renderer = plot.plot(("times", name), type="line", name=name,
                                   color=tuple(COLOR_PALETTE[i]))[0]
-        
+
         # Tricky: need to set auto_handle_event on the RangeSelection
         # so that it passes left-clicks to the PanTool
         # FIXME: The range selection is still getting the initial left down
@@ -97,7 +97,7 @@ class PlotApp(HasTraits):
             auto_handle_event = False))
         plot.tools.append(PanTool(plot, drag_button="left", constrain=True,
             constrain_direction="x"))
-        plot.overlays.append(ZoomTool(plot, tool_mode="range", max_zoom_out=1.0)) 
+        plot.overlays.append(ZoomTool(plot, tool_mode="range", max_zoom_out=1.0))
         # Attach the range selection to the last renderer; any one will do
         self._range_selection_overlay = RangeSelectionOverlay(renderer,
                                     metadata_name="selections")
@@ -149,7 +149,7 @@ class PlotApp(HasTraits):
             plot.remove(self.corr_renderer)
             self.corr_renderer = None
 
-        self.corr_renderer = plot.plot((self.sym1, self.sym2), 
+        self.corr_renderer = plot.plot((self.sym1, self.sym2),
                                 type="scatter", color="blue")[0]
         self.corr_renderer.overlays.append(ScatterInspectorOverlay(self.corr_renderer,
                 selection_color = "lightgreen"))

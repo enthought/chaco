@@ -21,27 +21,27 @@ class GridMapper(AbstractMapper):
     """
     Maps a 2-D data space to and from screen space by specifying a 2-tuple in
     data space or by specifying a pair of screen coordinates.
-    
+
     The mapper concerns itself only with metric and not with orientation. So, to
     "flip" a screen space orientation, swap the appropriate screen space
     values for **x_low_pos**, **x_high_pos**, **y_low_pos**, and **y_high_pos**.
     """
 
-    # The data-space bounds of the mapper. 
+    # The data-space bounds of the mapper.
     range = Instance(DataRange2D)
-   
+
     # The screen space position of the lower bound of the horizontal axis.
     x_low_pos = Float(0.0)
-    
-    # The screen space position of the upper bound of the horizontal axis. 
+
+    # The screen space position of the upper bound of the horizontal axis.
     x_high_pos  = Float(1.0)
-   
-    # The screen space position of the lower bound of the vertical axis. 
+
+    # The screen space position of the lower bound of the vertical axis.
     y_low_pos = Float(0.0)
-    
-    # The screen space position of the upper bound of the vertical axis. 
+
+    # The screen space position of the upper bound of the vertical axis.
     y_high_pos  = Float(1.0)
-    
+
     # Convenience property for low and high positions in one structure.
     # Must be a tuple (x_low_pos, x_high_pos, y_low_pos, y_high_pos).
     screen_bounds = Property
@@ -58,10 +58,10 @@ class GridMapper(AbstractMapper):
     #------------------------------------------------------------------------
 
     _updating_submappers = Bool(False)
-    
+
     _xmapper = Instance(Base1DMapper)
     _ymapper = Instance(Base1DMapper)
-    
+
 
     #------------------------------------------------------------------------
     # Public methods
@@ -69,7 +69,7 @@ class GridMapper(AbstractMapper):
 
     def __init__(self, x_type="linear", y_type="linear", range=None, **kwargs):
         # TODO: This is currently an implicit assumption, i.e. that the range
-        # will be passed in to the constructor.  It would be impossible to 
+        # will be passed in to the constructor.  It would be impossible to
         # create the xmapper and ymapper otherwise.  However, this should be
         # changed so that the mappers get created or modified in response to
         # the .range attribute changing, instead of requiring the range to
@@ -100,7 +100,7 @@ class GridMapper(AbstractMapper):
         # constructor, which might set values that depend on us having a valid
         # range and mappers.
         super(GridMapper, self).__init__(**kwargs)
-        
+
 
     def map_screen(self, data_pts):
         """ map_screen(data_pts) -> screen_array
@@ -111,11 +111,11 @@ class GridMapper(AbstractMapper):
         screen_xs = self._xmapper.map_screen(xs)
         screen_ys = self._ymapper.map_screen(ys)
         return zip(screen_xs,screen_ys)
-        
+
     def map_data(self, screen_pts):
         """ map_data(screen_pts) -> data_vals
 
-        Maps values from screen space into data space. 
+        Maps values from screen space into data space.
         """
         screen_xs, screen_ys = transpose(screen_pts)
         xs = self._xmapper.map_data(screen_xs)
@@ -179,13 +179,13 @@ class GridMapper(AbstractMapper):
         self._update_bounds( )
 
     def _get_screen_bounds(self):
-        return (self.x_low_pos, self.x_high_pos, 
+        return (self.x_low_pos, self.x_high_pos,
                 self.y_low_pos, self.y_high_pos)
 
     def _updated_fired_for__xmapper(self):
         if not self._updating_submappers:
             self.updated = True
-    
+
     def _updated_fired_for__ymapper(self):
         if not self._updating_submappers:
             self.updated = True

@@ -12,7 +12,7 @@ class ToolChooserExample(HasTraits):
     plot = Instance(Plot)
     tools = List(editor=CheckListEditor(values = ["PanTool", "ZoomTool", "DragZoom"]))
     traits_view = View(Item("tools", label="Tools", style="custom"),
-                       Item('plot', editor=ComponentEditor(), show_label=False), 
+                       Item('plot', editor=ComponentEditor(), show_label=False),
                        width=800, height=600, resizable=True,
                        title="Tool Chooser")
 
@@ -26,7 +26,7 @@ class ToolChooserExample(HasTraits):
         # Create a line plot in the Plot
         plot.plot(("x", "y"), type="line", color="blue")
         self.plot = plot
-    
+
     def _tools_changed(self):
         classes = [eval(class_name) for class_name in self.tools]
         # Remove all tools that are not in the enabled list in self.tools

@@ -1,6 +1,6 @@
 """ Abstract base class for plot decorators and overlays.
 
-This class is primarily used so that tools can easily distinguish between 
+This class is primarily used so that tools can easily distinguish between
 data-related plot items and the decorators on them.
 """
 
@@ -12,21 +12,21 @@ from plot_component import PlotComponent
 
 class AbstractOverlay(PlotComponent):
     """ The base class for overlays and underlays of the plot area.
-    
+
     The only default additional feature of an overlay is that it implements
     an overlay() drawing method that overlays this component on top of
-    another, without the components necessarily having an object 
+    another, without the components necessarily having an object
     containment-ownership relationship.
     """
 
-    # The component that this object overlays. This can be None. By default, if 
+    # The component that this object overlays. This can be None. By default, if
     # this object is called to draw(), it tries to render onto this component.
     component = Instance(Component)
-    
+
     # The default layer that this component draws into.
     draw_layer = "overlay"
 
-    # The background color (overrides PlotComponent). 
+    # The background color (overrides PlotComponent).
     # Typically, an overlay does not render a background.
     bgcolor = "transparent"
 
@@ -42,9 +42,9 @@ class AbstractOverlay(PlotComponent):
 
     def _draw(self, gc, view_bounds=None, mode="normal"):
         """ Draws the component, paying attention to **draw_order**.  If the
-        overlay has a non-null .component, then renders as an overlay; 
+        overlay has a non-null .component, then renders as an overlay;
         otherwise, default to the standard PlotComponent behavior.
-        
+
         Overrides PlotComponent.
         """
         if self.component is not None:

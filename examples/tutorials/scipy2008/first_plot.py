@@ -10,8 +10,8 @@ class LinePlot(HasTraits):
     plot = Instance(Plot)
 
     traits_view = View(
-            Item('plot', editor=ComponentEditor(), 
-                 show_label=False), 
+            Item('plot', editor=ComponentEditor(),
+                 show_label=False),
             width=500, height=500,
             resizable=True,
             title = "Chaco Plot")

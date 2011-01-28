@@ -34,7 +34,7 @@ from enthought.chaco.tools.api import PanTool, ZoomTool
 
 
 class PointDraggingTool(DragTool):
-    
+
     component = Instance(Component)
 
     # The pixel distance from a point that the cursor is still considered
@@ -57,7 +57,7 @@ class PointDraggingTool(DragTool):
 
     def normal_mouse_move(self, event):
         plot = self.component
-        
+
         ndx = plot.map_index((event.x, event.y), self.threshold)
         if ndx is None:
             if plot.index.metadata.has_key('selections'):
@@ -105,7 +105,7 @@ class PointDraggingTool(DragTool):
 
     def _lookup_point(self, x, y):
         """ Finds the point closest to a screen point if it is within self.threshold
-        
+
         Parameters
         ==========
         x : float
@@ -130,7 +130,7 @@ class PointDraggingTool(DragTool):
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():
-    
+
     container = OverlayPlotContainer(padding = 50, fill_padding = True,
                                      bgcolor = "lightgray", use_backbuffer=True)
 
@@ -153,12 +153,12 @@ def _create_plot_component():
 
     scatter.bgcolor = "white"
     scatter.border_visible = True
-    
+
     add_default_grids(scatter)
     add_default_axes(scatter)
 
     scatter.tools.append(PanTool(scatter, drag_button="right"))
-    
+
     # The ZoomTool tool is stateful and allows drawing a zoom
     # box to select a zoom region.
     zoom = ZoomTool(scatter, tool_mode="box", always_on=False, drag_button=None)
@@ -174,7 +174,7 @@ def _create_plot_component():
                               component=container,
                               font = "swiss 16",
                               overlay_position="top"))
-    
+
     return container
 
 
@@ -187,18 +187,18 @@ title="Simple line plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -209,7 +209,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

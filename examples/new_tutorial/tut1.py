@@ -23,7 +23,7 @@ def main():
 from enthought.enable.wx_backend.api import Window
 
 class PlotFrame(wx.Frame):
-    
+
     # This function creates some data and returns a Plot object.
     def make_plot(self):
         x = linspace(-2*pi, 2*pi, 200)
@@ -40,23 +40,23 @@ class PlotFrame(wx.Frame):
         if "size" not in kw:
             kw["size"] = (600,600)
         wx.Frame.__init__(self, *args, **kw )
-        
+
         # Create the Enable Window object.  The Window requires a WX parent
         # object as its first argument, so we just pass 'self'.
         win = Window(self, component = self.make_plot())
-        
+
         # We'll create a default sizer and add the Window to it.  Since Window
         # is an Enable object, we need to get its corresponding WX control.
         # This is stored in its ".control" attribute.
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(win.control, 1, wx.EXPAND)
-        
+
         # More WX boilerplate.
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
         self.Show(True)
         return
-        
+
 if __name__ == "__main__":
     main()
 

@@ -13,20 +13,20 @@ def Alias(name):
     return Property(lambda obj: getattr(obj, name),
                     lambda obj, val: setattr(obj, name, val))
 
-     
-     
+
+
 class FilledLinePlot(PolygonPlot):
     """ Draws a line plot filled to the axis """
 
     fill_color = Alias("face_color")
-    
+
     # Direction to fill. Down is towards the origin, up is towards the max
     fill_direction = Enum("down", "up")
 
     # The rendering style of the line plot.
     #
     # connectedpoints
-    #     "normal" style (default); each point is connected to subsequent and 
+    #     "normal" style (default); each point is connected to subsequent and
     #     prior points by line segments
     # hold
     #     each point is represented by a line segment parallel to the abscissa
@@ -48,16 +48,16 @@ class FilledLinePlot(PolygonPlot):
                 "connectedpoints": LinePlot._render_normal
                 }
         render_lines = render_method_dict.get(self.render_style, LinePlot._render_normal)
-        
+
         if self.fill_direction == 'down':
             ox, oy = self.map_screen([[0,0]])[0]
         else:
-            ox, oy = self.map_screen([[self.x_mapper.range.high, 
+            ox, oy = self.map_screen([[self.x_mapper.range.high,
                                       self.y_mapper.range.high]])[0]
 
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
-    
+
             # If the fill color is not transparent, then draw the fill polygon first
             face_col = self.face_color_
             if not (len(face_col) == 4 and face_col[-1] == 0):
@@ -77,7 +77,7 @@ class FilledLinePlot(PolygonPlot):
                     points = new_points
 
                 self._render_polys(gc, points, ox, oy)
-    
+
             # If the line color is not transparent, or tha same color
             # as the filled area:
             edge_col = self.edge_color_
@@ -101,7 +101,7 @@ class FilledLinePlot(PolygonPlot):
         else:
             gc.move_to(ox, starty)
             gc.line_to(startx, starty)
-        
+
         gc.lines(points)
 
         endx, endy = points[-1]

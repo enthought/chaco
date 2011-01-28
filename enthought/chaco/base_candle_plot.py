@@ -34,7 +34,7 @@ class BaseCandlePlot(BaseXYPlot):
 
     # The fill color of the bar
     bar_color = Alias("color")
-    
+
     # The color of the rectangular box forming the bar.
     bar_line_color = Alias("outline_color")
 
@@ -61,7 +61,7 @@ class BaseCandlePlot(BaseXYPlot):
     # The thickeness, in pixels, of the line drawn across the bar at the
     # center values.  If None, this defaults to **line_width**.
     center_width = Trait(None, None, Int(1))
-    
+
     # Whether or not to draw bars at the min and max extents of the error bar
     end_cap = Bool(True)
 
@@ -111,7 +111,7 @@ class BaseCandlePlot(BaseXYPlot):
                 else:
                     stem_width = self.stem_width
                 gc.set_line_width(stem_width)
-                
+
                 if min is None:
                     gc.line_set(stack((bar_vert_center, bar_max)), stack((bar_vert_center, max)))
                     if self.end_cap:

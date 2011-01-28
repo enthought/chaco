@@ -26,7 +26,7 @@ class RegressionLasso(LassoSelection):
 
     # The center point of the selected points, in data space.
     centroid = Any
-    
+
     def _selection_changed_fired(self, event):
         indices = self.selection_datasource.metadata["selection"]
         if any(indices):
@@ -42,23 +42,23 @@ class RegressionLasso(LassoSelection):
             self.fit_params = None
             self.centroid = None
         return
-    
+
 
 class RegressionOverlay(LassoOverlay):
 
     line_color = ColorTrait("black")
     line_style = LineStyle("dash")
     line_width = Float(2.0)
-    
+
     _label = Instance(Label, kw=dict(bgcolor="white", border_color="black",
                                  font="modern 14", border_width=1))
-    
+
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
         LassoOverlay._draw_component(self, gc, view_bounds, mode)
         selection = self.lasso_selection
-        
+
         if selection.fit_params is not None:
-            # draw the label overlay 
+            # draw the label overlay
             self._label.component = self.component
             c = self.component
 

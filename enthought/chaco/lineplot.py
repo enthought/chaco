@@ -23,7 +23,7 @@ from base_xy_plot import BaseXYPlot
 
 class LinePlot(BaseXYPlot):
     """ A plot consisting of a line.
-    
+
     This is the most fundamental object to use to create line plots. However,
     it is somewhat low-level and therefore creating one properly to do what
     you want can require some verbose code. The create_line_plot() function
@@ -50,7 +50,7 @@ class LinePlot(BaseXYPlot):
     # The rendering style of the line plot.
     #
     # connectedpoints
-    #     "normal" style (default); each point is connected to subsequent and 
+    #     "normal" style (default); each point is connected to subsequent and
     #     prior points by line segments
     # hold
     #     each point is represented by a line segment parallel to the abscissa
@@ -81,7 +81,7 @@ class LinePlot(BaseXYPlot):
 
     def hittest(self, screen_pt, threshold=7.0):
         """
-        Tests whether the given screen point is within *threshold* pixels of 
+        Tests whether the given screen point is within *threshold* pixels of
         any data points on the line.  If so, then it returns the (x,y) value of
         a data point near the screen point.  If not, then it returns None.
 
@@ -99,10 +99,10 @@ class LinePlot(BaseXYPlot):
                     sy = screen_pt[1]
                 else:
                     sy = screen_pt[0]
-            
+
                 interp_val = self.interpolate(data_x)
                 interp_y = self.value_mapper.map_screen(interp_val)
-                
+
                 if abs(sy - interp_y) <= threshold:
                     return reverse_map_1d(self.index.get_data(), data_x,
                                           self.index.sort_order)
@@ -158,7 +158,7 @@ class LinePlot(BaseXYPlot):
 
     def _gather_points(self):
         """
-        Collects the data points that are within the bounds of the plot and 
+        Collects the data points that are within the bounds of the plot and
         caches them.
         """
         if not self._cache_valid:
@@ -191,9 +191,9 @@ class LinePlot(BaseXYPlot):
                 index_max = len(value)
                 index = index[:index_max]
 
-            # TODO: restore the functionality of rendering highlighted portions 
+            # TODO: restore the functionality of rendering highlighted portions
             # of the line
-            #selection = self.index.metadata.get(self.metadata_name, None) 
+            #selection = self.index.metadata.get(self.metadata_name, None)
             #if selection is not None and type(selection) in (ndarray, list) and \
             #        len(selection) > 0:
 

@@ -13,11 +13,11 @@ from label import Label
 LabelDelegate = DelegatesTo("_label")
 
 class PlotLabel(AbstractOverlay):
-    """ A label used by plots. 
-    
+    """ A label used by plots.
+
     This class wraps a simple Label instance, and delegates some traits to it.
     """
-    
+
     # The text of the label.
     text = LabelDelegate
     # The color of the label text.
@@ -37,15 +37,15 @@ class PlotLabel(AbstractOverlay):
     #------------------------------------------------------------------------
     # Layout-related traits
     #------------------------------------------------------------------------
-    
+
     # Horizontal justification used if the label has more horizontal space
     # than it needs.
     hjustify = Enum("center", "left", "right")
-    
+
     # Vertical justification used if the label has more vertical space than it
     # needs.
     vjustify = Enum("center", "bottom", "top")
-    
+
     # The position of this label relative to the object it is overlaying.
     # Can be "top", "left", "right", "bottom", and optionally can be preceeded
     # by the words "inside" or "outside", separated by a space.  If "inside"
@@ -54,7 +54,7 @@ class PlotLabel(AbstractOverlay):
     #     inside top
     #     outside right
     overlay_position = Trait("outside top", Str, None)
-    
+
     # Should this PlotLabel modify the padding on its underlying component
     # if there is not enough room to lay out the text?
     # FIXME: This could cause cycles in layout, so not implemented for now
@@ -67,7 +67,7 @@ class PlotLabel(AbstractOverlay):
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
-    
+
     # The label has a fixed height and can be resized horizontally. (Overrides
     # PlotComponent.)
     resizable = "h"
@@ -75,15 +75,15 @@ class PlotLabel(AbstractOverlay):
     # The Label instance this plot label is wrapping.
     _label = Instance(Label, args=())
 
-    
+
     def __init__(self, text="", *args, **kw):
         super(PlotLabel, self).__init__(*args, **kw)
         self.text = text
         return
-    
+
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws this label overlaid on another component.
-        
+
         Overrides AbstractOverlay.
         """
         self._draw_overlay(gc, view_bounds, mode)
@@ -91,16 +91,16 @@ class PlotLabel(AbstractOverlay):
 
     def get_preferred_size(self):
         """ Returns the label's preferred size.
-        
+
         Overrides PlotComponent.
         """
         dummy_gc = font_metrics_provider()
         size = self._label.get_bounding_box(dummy_gc)
         return size
-    
+
     def do_layout(self):
         """ Tells this component to do layout.
-        
+
         Overrides PlotComponent.
         """
         if self.component is not None:
@@ -108,10 +108,10 @@ class PlotLabel(AbstractOverlay):
         else:
             self._layout_as_component()
         return
-    
+
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
         """ Draws the overlay layer of a component.
-        
+
         Overrides PlotComponent.
         """
         # Perform justification and compute the correct offsets for
@@ -123,7 +123,7 @@ class PlotLabel(AbstractOverlay):
             x_offset = self.width - width
         elif self.hjustify == "center":
             x_offset = int((self.width - width) / 2)
-        
+
         if self.vjustify == "bottom":
             y_offset = 0
         elif self.vjustify == "top":
@@ -141,7 +141,7 @@ class PlotLabel(AbstractOverlay):
             self._label.draw(gc)
 
         return
-    
+
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         if self.component is None:
             # We are not overlaying anything else, so we should render
@@ -150,7 +150,7 @@ class PlotLabel(AbstractOverlay):
 
     def _layout_as_component(self, size=None, force=False):
         pass
-    
+
     def _layout_as_overlay(self, size=None, force=False):
         """ Lays out the label as an overlay on another component.
         """

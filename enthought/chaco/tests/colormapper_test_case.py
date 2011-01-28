@@ -6,14 +6,14 @@ from enthought.chaco.api import ArrayDataSource, ColorMapper, DataRange1D
 
 
 class LinearSegmentedColormapTestCase(unittest.TestCase):
-    
+
     def setUp(self):
         """ Set up called before each test case. """
 
         _gray_data =  {'red':   [(0., 0, 0), (1., 1.0, 1.0)],
                        'green': [(0., 0, 0), (1., 1.0, 1.0)],
-                       'blue':  [(0., 0, 0), (1., 1.0, 1.0)]}      
-                
+                       'blue':  [(0., 0, 0), (1., 1.0, 1.0)]}
+
         self.colormap = ColorMapper.from_segment_map(_gray_data)
         self.colormap.range = DataRange1D()
 
@@ -69,8 +69,8 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
         close = allclose(ravel(b[:,:1]), expected, atol=0.02)
         self.assert_(close,
             "Changing min value broke map.  Expected %s.  Got %s" % (expected, b[:,:1]))
-        
-        
+
+
         return
 
     def test_array_factory(self):
@@ -91,7 +91,7 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
             "Array factory failed.  Expected %s.  Got %s" % (expected, b[:,:1]))
 
         return
-        
+
     def test_alpha_palette(self):
         """ Create a colormap with a varying alpha channel from a palette array.
         """
@@ -126,7 +126,7 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
 ##         grayscale_colors = array([[0.0,0.0,0.0,1.0], [1.0, 1.0, 1.0, 1.0]])
 ##         grayscale_bins = array([0.0, 1.0])
 ##         grayscale_steps = array([1])
-        
+
 ##         colormap = LinearSegmentedColormap(
 ##             grayscale_colors, grayscale_bins, grayscale_steps
 ##         )
@@ -141,11 +141,11 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
 ##             "Map with no interpolation broken.  Expected %s.  Got %s" % (expected, result))
 
 ##     def test_value_bands(self):
-        
+
 ##         grayscale_colors = array([[0.0,0.0,0.0,1.0], [1.0, 1.0, 1.0, 1.0]])
 ##         grayscale_bins = array([0.0, 1.0])
 ##         grayscale_steps = array([1])
-        
+
 ##         colormap = LinearSegmentedColormap(
 ##             grayscale_colors, grayscale_bins, grayscale_steps
 ##         )

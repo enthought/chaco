@@ -10,11 +10,11 @@ from enthought.chaco.tools.api import ZoomTool
 class PlotFrame2(PlotFrame):
     def _create_plot(self):
         container = super(PlotFrame2, self)._create_plot()
-        
+
         self.right_plot.index_mapper.range = self.left_plot.index_mapper.range
         self.right_plot.value_mapper.range = self.left_plot.value_mapper.range
-        
-        self.left_plot.overlays.append(ZoomTool(self.left_plot, 
+
+        self.left_plot.overlays.append(ZoomTool(self.left_plot,
                 tool_mode="box", always_on=False))
         self.right_plot.overlays.append(ZoomTool(self.right_plot,
                 tool_mode="box", always_on=False))

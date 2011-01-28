@@ -31,7 +31,7 @@ def _create_plot_component():
     left_plot = Plot(plotdata)
     left_plot.x_axis.title = "X"
     left_plot.y_axis.title = "j0(x)"
-    renderer = left_plot.plot(("x", "y1"), type="line", color="blue", 
+    renderer = left_plot.plot(("x", "y1"), type="line", color="blue",
                               width=2.0)[0]
     renderer.overlays.append(LineInspector(renderer, axis='value',
                                             write_metadata=True,
@@ -58,32 +58,32 @@ def _create_plot_component():
     container = HPlotContainer(background="lightgray")
     container.add(left_plot)
     container.add(right_plot)
-    
+
     return container
 
 #===============================================================================
 # Attributes to use for the plot view.
 size=(750,500)
-title="Two Plots"        
+title="Two Plots"
 
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -94,7 +94,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

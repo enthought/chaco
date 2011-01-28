@@ -11,7 +11,7 @@ class ScatterPlot(HasTraits):
 
     traits_view = View(
             Item('plot', editor=ComponentEditor(),
-                 show_label=False), 
+                 show_label=False),
             width=500, height=500,
             resizable=True,
             title="Chaco Plot")

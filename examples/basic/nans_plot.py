@@ -3,9 +3,9 @@
 This plot displays chaco's ability to handle data interlaced with NaNs.
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 """
 
@@ -22,13 +22,13 @@ from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool 
+from enthought.chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():
-    
+
     # Create some x-y data series (with NaNs) to plot
     x = linspace(-5.0, 15.0, 500)
     x[75:125] = nan
@@ -60,24 +60,24 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size = (800, 700)
 title = "Nan Test"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -88,7 +88,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

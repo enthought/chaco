@@ -8,7 +8,7 @@ from enthought.chaco.api import DataRange2D, GridDataSource, PointDataSource
 
 
 class DataRange2DTestCase(unittest.TestCase):
-    
+
     def test_empty_range(self):
         r = DataRange2D()
         assert_ary_(r.low,array([-inf,-inf]))
@@ -22,7 +22,7 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.low,array([5.0,5.0]))
         assert_ary_(r.high, array([10.0,10.0]))
         return
-    
+
     def test_single_source(self):
         r = DataRange2D()
         x = arange(10.)
@@ -38,13 +38,13 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.high_setting, array([6.0,60.0]))
         assert_ary_(r.low, array([3.0,30.0]))
         assert_ary_(r.high, array([6.0,60.0]))
-        
+
         r.refresh()
         assert_ary_(r.low_setting, array([3.0,30.0]))
         assert_ary_(r.high_setting, array([6.0,60.0]))
         assert_ary_(r.low, array([3.0,30.0]))
         assert_ary_(r.high, array([6.0,60.0]))
-        
+
         r.low = ('auto', 'auto')
         self.assert_(r.low_setting == ('auto', 'auto'))
         assert_ary_(r.low, array([0.0,0.0]))
@@ -58,14 +58,14 @@ class DataRange2DTestCase(unittest.TestCase):
         # it to the nearest power of ten above and below
         assert_ary_(r.low, array([1.0,1.0]))
         assert_ary_(r.high, array([10.0,10.0]))
-        
+
         r.remove(ds)
         ds = PointDataSource(array([[31.4,9.7]]))
         r.add(ds)
 
         assert_ary_(r.low, array([10.0,1.0]))
         assert_ary_(r.high, array([100.0,10.0]))
-        
+
         r.remove(ds)
         ds = PointDataSource(array([[0.03,0.03]]))
         r.add(ds)
@@ -78,7 +78,7 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.low, array([-1.0,-1.0]))
         assert_ary_(r.high, array([1.0,1.0]))
         return
-    
+
 
     def test_multi_source(self):
         x = arange(10.)
@@ -101,7 +101,7 @@ class DataRange2DTestCase(unittest.TestCase):
         ds1 = GridDataSource(xdata=test_xd1, ydata=test_yd1,
                             sort_order=test_sort_order1)
         ds2 = GridDataSource(xdata=test_xd2, ydata=test_yd2)
-    
+
         r = DataRange2D()
 
         r.add(ds1)
@@ -154,14 +154,14 @@ class DataRange2DTestCase(unittest.TestCase):
         y= arange(0.,20.,2.)
         ary= transpose(array([x,y]))
         assert_equal(r.clip_data(ary) , array([[3.,6.],[4.,8.]]))
-        
+
         r = DataRange2D(low=[10.,10.], high=[20.,20.])
         x= arange(10.0,30.,2.)
         y= arange(0.,40.,4.)
         ary = transpose(array([x,y]))
         assert_equal(r.clip_data(ary) , array([[16.,12.],[18.,16.],[20.,20.]]))
         assert_equal(r.clip_data(ary[::-1]) , array([[20,20], [18,16], [16,12]]))
-        
+
         return
 
     def test_mask_data(self):
@@ -170,7 +170,7 @@ class DataRange2DTestCase(unittest.TestCase):
         y = array([5, 3, 7, 12, 18, 6])
         ary = transpose(array([x,y]))
         assert_equal(r.mask_data(ary) , array([0,0,1,1,0,0], 'b'))
-        
+
         r = DataRange2D(low=[10.,15.], high=[20.,25.])
         x = array([5, 10, 15, 20, 25, 30])
         y = array([5, 10, 15, 20, 25, 30])
@@ -178,7 +178,7 @@ class DataRange2DTestCase(unittest.TestCase):
         target_mask = array([0,0,1,1,0,0], 'b')
         assert_equal(r.mask_data(ary) , target_mask)
         assert_equal(r.mask_data(ary[::-1]) , target_mask[::-1])
-        
+
         r = DataRange2D(low=[2.0,5.0], high=[2.5,9.0])
         assert_equal(r.mask_data(ary) , zeros(len(ary)))
         return
@@ -190,13 +190,13 @@ def assert_close_(desired,actual):
         if not isinf(d):
             assert alltrue(d <= diff_allowed)
             return
-    
+
 def assert_ary_(desired, actual):
     if (desired == 'auto'):
         assert actual == 'auto'
     for d in range(len(desired)):
         assert desired[d] == actual[d]
-    return    
+    return
 
 
 

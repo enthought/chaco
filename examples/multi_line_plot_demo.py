@@ -1,5 +1,5 @@
 import numpy as np
- 
+
 from enthought.traits.api import Instance, HasTraits, Range, Array
 from enthought.traits.ui.api import View, Item, HGroup, VGroup, Group
 
@@ -15,17 +15,17 @@ class DataModel(HasTraits):
 
     # The x values of the data (1D numpy array).
     x_index = Array()
-    
+
     # The channel numbers (1D numpy array).
     y_index = Array()
-    
+
     # The data.  The shape of this 2D array must be (y_index.size, x_index.size)
     data = Array()
 
 
 class MultiLinePlotDemo(HasTraits):
     """Demonstrates the MultiLinePlot.
-    
+
     This demo assumes that 'model', an instance of DataModel containing the 2D
     data to be plotted, will be given to the constructor, and will not change
     later.
@@ -76,14 +76,14 @@ class MultiLinePlotDemo(HasTraits):
         xs = ArrayDataSource(self.model.x_index, sort_order='ascending')
         xrange = DataRange1D()
         xrange.add(xs)
-        
+
         ys = ArrayDataSource(self.model.y_index, sort_order='ascending')
         yrange = DataRange1D()
         yrange.add(ys)
 
         # The data source for the MultiLinePlot.
         ds = MultiArrayDataSource(data=self.model.data)
-        
+
         multi_line_plot_renderer = \
             MultiLinePlot(
                 index = xs,
@@ -102,7 +102,7 @@ class MultiLinePlotDemo(HasTraits):
         plot = Plot(title="MultiLinePlot Demo")
         plot.add(self.multi_line_plot_renderer)
 
-        x_axis = PlotAxis(component=plot, 
+        x_axis = PlotAxis(component=plot,
                             mapper=self.multi_line_plot_renderer.index_mapper,
                             orientation='bottom',
                             title='t (seconds)')

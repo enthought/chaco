@@ -53,11 +53,11 @@ class CandlePlot(BaseCandlePlot):
     # Are usually mean or median values, and are rendered with a solid line
     # of a different color than the bar fill color.  This can be None.
     center_values = Instance(AbstractDataSource)
-    
+
     # The "upper" extent of the "bar", i.e. the value closest to the
     # corresponding value in max_values at each index.
     bar_max = Instance(AbstractDataSource)
-    
+
     # The maximum value at each index point.  If None, then no stem and no
     # endcap line will be drawn above each bar.
     max_values = Instance(AbstractDataSource)
@@ -66,7 +66,7 @@ class CandlePlot(BaseCandlePlot):
 
     def map_data(self, screen_pt, all_values=True):
         """ Maps a screen space point into the "index" space of the plot.
-        
+
         Overrides the BaseXYPlot implementation, and always returns an
         array of (index, value) tuples.
         """
@@ -143,7 +143,7 @@ class CandlePlot(BaseCandlePlot):
         self._gather_points()
         if len(self._cached_data_pts) == 0:
             return
-        
+
         index = self.index_mapper.map_screen(self._cached_data_pts[0])
         if len(index) == 0:
             return

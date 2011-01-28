@@ -28,20 +28,20 @@ class ColorBar(AbstractPlotRenderer):
 
     # Screen mapper for color data
     color_mapper = Property #Instance(ColorMapper)
-    
+
     # Screen mapper for value data (synonym for color_mapper)
     value_mapper = Property(depends_on='color_mapper')
 
     # Optional index data source for generic tools to attach metadata to.
     index = Property
-    
+
     # Optional color-mapped plot that this color bar references.  If specified,
     # the plot must have a **color_mapper** attribute.
     plot = Any
 
     # Is there a visible grid on the colorbar?
     grid_visible = Bool(True)
-    
+
     # Is there a visible axis on the colorbar?
     axis_visible = Bool(True)
 
@@ -56,7 +56,7 @@ class ColorBar(AbstractPlotRenderer):
     # Override default values of inherited traits
     #------------------------------------------------------------------------
 
-    # The border is visible (overrides enable.Component).    
+    # The border is visible (overrides enable.Component).
     border_visible = True
     # The orientation of the index axis.
     orientation = Enum('v', 'h')
@@ -68,33 +68,33 @@ class ColorBar(AbstractPlotRenderer):
     use_draw_order = True
     # Default width is 40 pixels (overrides enable.CoordinateBox)
     width = 40
-    
+
     # Faux origin for the axis to look at
     origin = Enum('bottom left', 'top left', 'bottom right', 'top right')
 
     #------------------------------------------------------------------------
     # Private attributes
     #------------------------------------------------------------------------
-    
+
     # The grid
     _grid = Instance(PlotGrid)
-    
+
     # The axis
     _axis = Instance(PlotAxis)
-    
+
     # Shadow attribute for color_mapper
     _color_mapper = Any
-    
+
     # Shadow attribute for index
     _index = Instance(ArrayDataSource, args=())
-    
+
     def __init__(self, *args, **kw):
         """ In creating an instance, this method ensures that the grid and the
         axis are created before setting their visibility.
         """
         grid_visible = kw.pop("grid_visible", True)
         axis_visible = kw.pop("axis_visible", True)
-        
+
         super(ColorBar, self).__init__(*args, **kw)
 
         if self.orientation == 'h':
@@ -120,7 +120,7 @@ class ColorBar(AbstractPlotRenderer):
                               component=self)
         self.overlays.append(self._grid)
         self.overlays.append(self._axis)
-        
+
         # Now that we have a grid and an axis, we can safely set the visibility
         self.grid_visible = grid_visible
         self.axis_visible = axis_visible
@@ -137,11 +137,11 @@ class ColorBar(AbstractPlotRenderer):
             else:
                 perpendicular_dim = 0
                 axis_dim = 1
-            
+
             mapper = self.index_mapper
 
             scrn_points = arange(mapper.low_pos, mapper.high_pos+1)
-            
+
             # Get the data values associated with the list of screen points.
             if mapper.range.low == mapper.range.high:
                 # LogMapper.map_data() returns something unexpected if low==high,
@@ -152,34 +152,34 @@ class ColorBar(AbstractPlotRenderer):
 
             if self.direction == 'flipped':
                 data_points = data_points[::-1]
-                
+
             # Get the colors associated with the data points.
             colors = self.color_mapper.map_screen(data_points)
-            
+
             img = self._make_color_image(colors, self.bounds[perpendicular_dim],
                                                     self.orientation, self.direction)
             gc.draw_image(img, (self.x, self.y, self.width, self.height))
-    
+
     def _make_color_image(self, color_values, width, orientation, direction):
         """
-        Returns an image graphics context representing the array of color 
-        values (Nx3 or Nx4). The *width* parameter is the width of the 
+        Returns an image graphics context representing the array of color
+        values (Nx3 or Nx4). The *width* parameter is the width of the
         colorbar, and *orientation* is the orientation of the plot.
         """
         bmparray = ones((width, color_values.shape[0],
                                     color_values.shape[1]))* color_values * 255
-        
+
         if orientation == "v":
             bmparray = transpose(bmparray, axes=(1,0,2))[::-1]
         bmparray = bmparray.astype(uint8)
         img = GraphicsContext(bmparray, "rgba32")
         return img
-        
-    
+
+
     #------------------------------------------------------------------------
     # Trait events
     #------------------------------------------------------------------------
-    
+
     def _update_mappers(self):
         if not self.index_mapper or not self.color_mapper:
             return
@@ -212,7 +212,7 @@ class ColorBar(AbstractPlotRenderer):
     def _position_items_changed(self, event):
         super(ColorBar, self)._position_items_changed(event)
         self._update_mappers()
-        
+
     def _updated_changed_for_index_mapper(self):
         self._update_mappers()
 
@@ -223,7 +223,7 @@ class ColorBar(AbstractPlotRenderer):
     def _either_mapper_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        
+
     def _index_mapper_changed(self):
         # Keep the grid and axis index_mappers the same as our index_mapper.
         if self._grid is not None:
@@ -240,15 +240,15 @@ class ColorBar(AbstractPlotRenderer):
 
     def _plot_changed(self):
         self.request_redraw()
-    
+
     def _grid_visible_changed(self, old, new):
         self._grid.visible = new
         self.request_redraw()
-    
+
     def _axis_visible_changed(self, old, new):
         self._axis.visible = new
         self.request_redraw()
-    
+
     #------------------------------------------------------------------------
     # Property setters and getters
     #------------------------------------------------------------------------
@@ -258,7 +258,7 @@ class ColorBar(AbstractPlotRenderer):
             return self.index_mapper
         else:
             return None
-    
+
     def _get_y_mapper(self):
         if self.orientation == "h":
             return None
@@ -275,11 +275,11 @@ class ColorBar(AbstractPlotRenderer):
 
     def _set_color_mapper(self, val):
         self._color_mapper = val
-    
+
     @cached_property
     def _get_value_mapper(self):
         return self._get_color_mapper()
-    
+
     def _set_value_mapper(self, val):
         self._set_color_mapper(val)
 

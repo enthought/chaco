@@ -37,10 +37,10 @@ class MultiLinePlot(BaseXYPlot):
     ----------------------
     index : instance of an ArrayDataSource
         These are the 'x' or abscissa coordinates.
-        
+
     yindex : instance of ArrayDataSource
         These are the 'y' coordinates.
-    
+
     value : instance of a MultiArrayDataSource
         Note that the `scale`, `offset` and `normalized_amplitude` attributes of the
         MultiArrayDataSource control the projection of the traces into the (x,y)
@@ -70,7 +70,7 @@ class MultiLinePlot(BaseXYPlot):
     fast_clip : bool
         If True, traces whose *base* 'y' coordinate is outside the value axis range
         are not plotted, even if some of the data in the curve extends into the plot
-        region. 
+        region.
         Default: False
 
     line_width : float
@@ -91,7 +91,7 @@ class MultiLinePlot(BaseXYPlot):
     yindex = Instance(ArrayDataSource)
 
     # amplitude = Float(0.0)
-    
+
     # `scale` and `offset` provide a more general transformation, but are currently
     # untested.
     scale = Float(1.0)
@@ -125,7 +125,7 @@ class MultiLinePlot(BaseXYPlot):
     # Minimum value in the `value` data source.  This must be provided
     # in the call to the constructor.
     global_min = Float
-    
+
     # Maximum value in the `value` data source.  This must be provided
     # in the call to the constructor.
     global_max = Float
@@ -209,19 +209,19 @@ class MultiLinePlot(BaseXYPlot):
             coordinates = self.yindex.get_data()
         else:
             coordinates = []
-            
+
         if len(coordinates) > 1:
             dy = coordinates[1] - coordinates[0]
         else:
             # default coordinate spacing if there is only 1 coordinate
             dy = 1.0
-            
+
         if self.use_global_bounds:
             max_abs = max(abs(self.global_min), abs(self.global_max))
         else:
             data = self.value._data
             max_abs = np.max(np.abs(data))
-            
+
         if max_abs == 0:
             amp_scale = 0.5 * dy
         else:
@@ -236,7 +236,7 @@ class MultiLinePlot(BaseXYPlot):
     @cached_property
     def _get__trace_data(self):
         """Compute the transformed data."""
-        
+
         # Get the array from `value`
         data = self.value._data
         coordinates = self.yindex.get_data()
@@ -247,7 +247,7 @@ class MultiLinePlot(BaseXYPlot):
 
     def _gather_points(self):
         """
-        Collects the data points that are within the bounds of the plot and 
+        Collects the data points that are within the bounds of the plot and
         caches them.
         """
 
@@ -264,9 +264,9 @@ class MultiLinePlot(BaseXYPlot):
             self._cached_data_pts = []
             self._cached_valid = True
             return
-        
+
         coordinates = self.yindex.get_data()
-        
+
         if self.fast_clip:
             coord_min = float(coordinates[0])
             coord_max = coordinates[-1]
@@ -281,13 +281,13 @@ class MultiLinePlot(BaseXYPlot):
         low, high = self.index.get_bounds()
         if low > self.index_range.high or high < self.index_range.low:
             outside = True
-            
+
         # Check y coordinates. Use varray because it is nased on the yindex,
         # but has been shifted up or down depending on the values.
         ylow, yhigh = varray.min(), varray.max()
         if ylow > self.value_range.high or yhigh < self.value_range.low:
             outside = True
-            
+
         if outside:
             self._cached_data_pts = []
             self._cached_valid = True

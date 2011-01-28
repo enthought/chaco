@@ -25,7 +25,7 @@ class AspectRatio(BaseFloat):
     "A new Trait for defining aspect ratios"
 
     default_value = 1.0
-    
+
     info_text = "a nonzero floating point number"
 
     def validate(self, object, name, value):
@@ -53,7 +53,7 @@ class MyPlot(HasTraits):
                             Item("fixed_x", label="Data X fixed"),
                             Item("fixed_y", label="Data Y fixed")
                             ),
-                        Item("plot", editor=ComponentEditor(size=(100,100)), 
+                        Item("plot", editor=ComponentEditor(size=(100,100)),
                              show_label=False)
                         ),
                     width=600, height=600, resizable=True,

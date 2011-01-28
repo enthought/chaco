@@ -11,7 +11,7 @@ from tut2 import Tut2Frame
 class Tut3Frame(Tut2Frame):
 
     def make_plot(self):
-        
+
         # Create the plots by calling the parent method:
         container = Tut2Frame.make_plot(self)
 

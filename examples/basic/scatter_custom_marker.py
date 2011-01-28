@@ -33,7 +33,7 @@ def make_custom_marker():
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():
-    
+
     # Create some data
     numpts = 300
     x = sort(random(numpts))
@@ -75,25 +75,25 @@ def _create_plot_component():
 size = (650, 650)
 title = "Scatter plot w/ custom markers"
 bg_color="lightgray"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
                         Item('plot', editor=ComponentEditor(size=size,
-                                                            bgcolor=bg_color), 
+                                                            bgcolor=bg_color),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -105,7 +105,7 @@ class PlotFrame(DemoFrame):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component(),
                       bg_color=bg_color)
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

@@ -3,9 +3,9 @@
 Draws some x-y line and scatter plots. On the left hand plot:
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 """
 
@@ -23,14 +23,14 @@ from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco.tools.api import BroadcasterTool, PanTool, ZoomTool 
+from enthought.chaco.tools.api import BroadcasterTool, PanTool, ZoomTool
 from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids
 
 #===============================================================================
 # # Create the Chaco plot.
 #===============================================================================
 def _create_plot_component():
-    
+
     # Create some x-y data series to plot
     x = linspace(-2.0, 10.0, 100)
     pd = ArrayPlotData(index = x)
@@ -63,9 +63,9 @@ def _create_plot_component():
     for c in (plot1, foreign_plot):
         zoom = ZoomTool(component=c, tool_mode="box", always_on=False)
         broadcaster.tools.append(zoom)
-    
+
     plot1.tools.append(broadcaster)
-    
+
     return plot1
 
 #===============================================================================
@@ -78,19 +78,19 @@ title="Multi-Y plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -101,7 +101,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

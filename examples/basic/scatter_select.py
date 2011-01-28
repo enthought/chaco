@@ -5,7 +5,7 @@ the lasso selector, which allows you to circle a set of points.  Upon
 completion of the lasso operation, the indices of the selected points are
 printed to the console.
 
-Uncomment 'lasso_selection.incremental_select' line to see the selection 
+Uncomment 'lasso_selection.incremental_select' line to see the selection
 compute indices in realtime.
 """
 
@@ -22,7 +22,7 @@ from enthought.traits.ui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import AbstractDataSource, ArrayPlotData, Plot, \
-                                 HPlotContainer, LassoOverlay 
+                                 HPlotContainer, LassoOverlay
 from enthought.chaco.tools.api import LassoSelection, ScatterInspector
 
 #===============================================================================
@@ -56,7 +56,7 @@ def _create_plot_component():
     plot.line_width = 1
     plot.padding = 50
 
-    # Right now, some of the tools are a little invasive, and we need the 
+    # Right now, some of the tools are a little invasive, and we need the
     # actual ScatterPlot object to give to them
     my_plot = plot.plots["my_plot"][0]
 
@@ -86,10 +86,10 @@ bg_color="lightgray"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
@@ -100,21 +100,21 @@ class Demo(HasTraits):
         print "New selection: "
         print compress(mask, arange(len(mask)))
         print
-            
+
     def _plot_default(self):
          plot = _create_plot_component()
-         
+
          # Retrieve the plot hooked to the LassoSelection tool.
          my_plot = plot.plots["my_plot"][0]
          lasso_selection = my_plot.active_tool
-        
+
          # Set up the trait handler for the selection
          self.index_datasource = my_plot.index
-         lasso_selection.on_trait_change(self._selection_changed, 
+         lasso_selection.on_trait_change(self._selection_changed,
                                         'selection_changed')
-         
+
          return plot
-     
+
 demo = Demo()
 
 #===============================================================================
@@ -123,30 +123,30 @@ demo = Demo()
 class PlotFrame(DemoFrame):
 
     index_datasource = Instance(AbstractDataSource)
-    
+
     def _create_window(self):
-        
+
         component = _create_plot_component()
-        
+
         # Retrieve the plot hooked to the LassoSelection tool.
         my_plot = component.plots["my_plot"][0]
         lasso_selection = my_plot.active_tool
-        
+
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        lasso_selection.on_trait_change(self._selection_changed, 
+        lasso_selection.on_trait_change(self._selection_changed,
                                         'selection_changed')
-        
+
         # Return a window containing our plots
         return Window(self, -1, component=component, bg_color=bg_color)
-    
+
     def _selection_changed(self):
         mask = self.index_datasource.metadata['selection']
         print "New selection: "
         print compress(mask, arange(len(mask)))
         print
 
-        
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

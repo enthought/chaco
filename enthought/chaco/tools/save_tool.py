@@ -13,7 +13,7 @@ class SaveTool(BaseTool):
     """ This tool allows the user to press Ctrl+S to save a snapshot image of
     the plot component.
     """
-    
+
     # The file that the image is saved in.  The format will be deduced from
     # the extension.
     filename = Str("saved_plot.png")
@@ -36,10 +36,10 @@ class SaveTool(BaseTool):
 
     # This tool is not visible (overrides BaseTool).
     visible = False
-    
+
     def normal_key_pressed(self, event):
         """ Handles a key-press when the tool is in the 'normal' state.
-        
+
         Saves an image of the plot if the keys pressed are Control and S.
         """
         if self.component is None:
@@ -52,7 +52,7 @@ class SaveTool(BaseTool):
                 self._save_raster()
             event.handled = True
         return
-    
+
     def _save_raster(self):
         """ Saves an image of the component.
         """

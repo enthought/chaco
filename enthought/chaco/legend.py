@@ -140,10 +140,10 @@ class Legend(AbstractOverlay):
 
     # The legend is not resizable (overrides PlotComponent).
     resizable = "hv"
-    
+
     # An optional title string to show on the legend.
     title = Str('')
-    
+
     # If True, title is at top, if False then at bottom.
     title_at_top = Bool(True)
 
@@ -208,7 +208,7 @@ class Legend(AbstractOverlay):
         else:
             x = component.x
         self.outer_position = [x, y]
-        
+
         if self.clip_to_component:
             c = self.component
             with gc:
@@ -216,8 +216,8 @@ class Legend(AbstractOverlay):
                 PlotComponent._draw(self, gc, view_bounds, mode)
         else:
             PlotComponent._draw(self, gc, view_bounds, mode)
-            
-            
+
+
         return
 
     # The following two methods implement the functionality of the Legend
@@ -257,7 +257,7 @@ class Legend(AbstractOverlay):
         # feature.
 
         with gc:
-            gc.clip_to_rect(int(self.x), int(self.y), 
+            gc.clip_to_rect(int(self.x), int(self.y),
                             int(self.width), int(self.height))
             edge_space = self.border_width + self.border_padding
             icon_width, icon_height = self.icon_bounds
@@ -392,7 +392,7 @@ class Legend(AbstractOverlay):
 
         # Create the labels
         labels = [self._create_label(text) for text in label_names]
-        
+
         # For the legend title
         if self.title_at_top:
             labels.insert(0, self._create_label(self.title))
@@ -413,7 +413,7 @@ class Legend(AbstractOverlay):
         else:
             max_label_width = 0
             total_label_height = 0
-        
+
         legend_width = max_label_width + self.icon_spacing + self.icon_bounds[0] \
                         + self.hpadding + 2*self.border_padding
         legend_height = total_label_height + self.vpadding + 2*self.border_padding
@@ -459,9 +459,9 @@ class Legend(AbstractOverlay):
 
     #-- trait handlers --------------------------------------------------------
     def _anytrait_changed(self, name, old, new):
-        if name in ("font", "border_padding", "padding", "line_spacing", 
-                    "icon_bounds", "icon_spacing", "labels", "plots", 
-                    "plots_items", "labels_items", "border_width", "align", 
+        if name in ("font", "border_padding", "padding", "line_spacing",
+                    "icon_bounds", "icon_spacing", "labels", "plots",
+                    "plots_items", "labels_items", "border_width", "align",
                     "position", "position_items", "bounds", "bounds_items",
                     "label_at_top"):
             self._layout_needed = True
@@ -477,10 +477,10 @@ class Legend(AbstractOverlay):
         else:
             indx = -1
         if old != None:
-            self._cached_labels.pop(indx) 
-            self._cached_label_names.pop(indx) 
+            self._cached_labels.pop(indx)
+            self._cached_label_names.pop(indx)
             self._cached_visible_plots.pop(indx)
-      
+
         # For the legend title
         if self.title_at_top:
             self._cached_labels.insert(0, self._create_label(self.title))
@@ -490,6 +490,6 @@ class Legend(AbstractOverlay):
             self._cached_labels.append(self._create_label(self.title))
             self._cached_label_names.append(self.title)
             self._cached_visible_plots.append(None)
-#-- end Legend ---------------------------------------------------------------- 
+#-- end Legend ----------------------------------------------------------------
 
 

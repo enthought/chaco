@@ -139,7 +139,7 @@ def main():
         p.tools.append(MoveTool(p, drag_button="right"))
         p.tools.append(PanTool(p))
         p.tools.append(ZoomTool(p))
-    
+
     spectrogram.tools[-1].set(tool_mode="range", axis="value")
     spectrogram.tools[-2].set(constrain=True, constrain_direction="y")
 
@@ -148,9 +148,9 @@ def main():
     container.add(*plots)
     container.timer_callback = timer_controller.on_timer
 
-    window = EnableVTKWindow(rwi, renderer, 
+    window = EnableVTKWindow(rwi, renderer,
             component = container,
-            istyle_class = tvtk.InteractorStyleTrackballCamera, 
+            istyle_class = tvtk.InteractorStyleTrackballCamera,
             bgcolor = "transparent",
             event_passthrough = True,
             )

@@ -36,7 +36,7 @@ class ToolTip(AbstractOverlay):
     # List of text strings to put in the tooltip.
     lines = List
 
-    # Angle to rotate (counterclockwise) in degrees. NB this will *only* 
+    # Angle to rotate (counterclockwise) in degrees. NB this will *only*
     # currently affect text, so probably only useful if borders and background
     # are disabled
     rotate_angle = Float(0.0)
@@ -68,7 +68,7 @@ class ToolTip(AbstractOverlay):
 
     def draw(self, gc, view_bounds=None, mode='normal'):
         """ Draws the plot component.
-        
+
         Overrides PlotComponent.
         """
         self.overlay(self, gc, view_bounds=view_bounds, mode='normal')
@@ -76,7 +76,7 @@ class ToolTip(AbstractOverlay):
 
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
         """ Draws the tooltip overlaid on another component.
-        
+
         Overrides AbstractOverlay.
         """
         self.do_layout()
@@ -85,7 +85,7 @@ class ToolTip(AbstractOverlay):
 
     def _draw_overlay(self, gc, view_bounds=None, mode='normal'):
         """ Draws the overlay layer of a component.
-        
+
         Overrides PlotComponent.
         """
         with gc:
@@ -105,7 +105,7 @@ class ToolTip(AbstractOverlay):
     def _do_layout(self):
         """Computes the size of the tooltip, and creates the label objects
         for each line.
-        
+
         Overrides PlotComponent.
         """
         if not self._text_props_valid:
@@ -135,7 +135,7 @@ class ToolTip(AbstractOverlay):
                 # above pushes the position negative.
                 if new_pos[dimindex] < c_min:
                     new_pos[dimindex] = c_min
-            
+
             self.outer_position = new_pos
 
         self._layout_needed = False

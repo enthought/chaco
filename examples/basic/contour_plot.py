@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Draws a contour polygon plot with a contour line plot on top 
+Draws a contour polygon plot with a contour line plot on top
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 """
 
@@ -41,23 +41,23 @@ def _create_plot_component():
 
     # Create a contour polygon plot of the data
     plot = Plot(pd, default_origin="top left")
-    plot.contour_plot("imagedata", 
+    plot.contour_plot("imagedata",
                       type="poly",
                       poly_cmap=jet,
-                      xbounds=(xs[0], xs[-1]), 
+                      xbounds=(xs[0], xs[-1]),
                       ybounds=(ys[0], ys[-1]))
 
     # Create a contour line plot for the data, too
-    plot.contour_plot("imagedata", 
+    plot.contour_plot("imagedata",
                       type="line",
-                      xbounds=(xs[0], xs[-1]), 
+                      xbounds=(xs[0], xs[-1]),
                       ybounds=(ys[0], ys[-1]))
 
     # Tweak some of the plot properties
     plot.title = "My First Contour Plot"
     plot.padding = 50
     plot.bg_color = "white"
-    plot.fill_padding = True 
+    plot.fill_padding = True
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot))
@@ -69,24 +69,24 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size = (800, 600)
 title = "Basic Contour Plot"
-        
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -97,9 +97,9 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
-    
+
 #--EOF---
 

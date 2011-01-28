@@ -53,9 +53,9 @@ def create_chaco_plot(parent):
 def main():
     app = QtGui.QApplication(sys.argv)
     main_window = QtGui.QMainWindow(size=QtCore.QSize(500,500))
-    
+
     enable_window = create_chaco_plot(main_window)
-    
+
     # The .control attribute references a QWidget that gives Chaco events
     # and that Chaco paints into.
     main_window.setCentralWidget(enable_window.control)

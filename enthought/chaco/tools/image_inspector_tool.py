@@ -1,4 +1,4 @@
-""" Defines the ImageInspectorTool, ImageInspectorOverlay, and 
+""" Defines the ImageInspectorTool, ImageInspectorOverlay, and
 ImageInspectorColorbarOverlay classes.
 """
 # Enthought library imports
@@ -28,7 +28,7 @@ class ImageInspectorTool(BaseTool):
     # This key will show and hide any ImageInspectorOverlays associated
     # with this tool.
     inspector_key = KeySpec('p')
-   
+
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
     _old_visible = Enum(None, True, False) #Trait(None, Bool(True))
@@ -49,8 +49,8 @@ class ImageInspectorTool(BaseTool):
 
     def normal_mouse_move(self, event):
         """ Handles the mouse being moved.
-        
-        Fires the **new_value** event with the data (if any) from the event's 
+
+        Fires the **new_value** event with the data (if any) from the event's
         position.
         """
         plot = self.component
@@ -68,20 +68,20 @@ class ImageInspectorTool(BaseTool):
                     self.new_value = \
                             dict(indices=ndx,
                                  data_value=image_data.data[y_index, x_index],
-                                 color_value=plot._cached_mapped_image[y_index, 
+                                 color_value=plot._cached_mapped_image[y_index,
                                                                        x_index])
-                    
+
                 else:
                     self.new_value = \
                         dict(indices=ndx,
                              color_value=image_data.data[y_index, x_index])
-                    
+
                 self.last_mouse_position = (event.x, event.y)
         return
-    
+
 
 class ImageInspectorOverlay(TextBoxOverlay):
-    """ An overlay that displays a box containing values from an 
+    """ An overlay that displays a box containing values from an
     ImageInspectorTool instance.
     """
     # An instance of ImageInspectorTool; this overlay listens to the tool
@@ -105,9 +105,9 @@ class ImageInspectorOverlay(TextBoxOverlay):
             old.on_trait_change(self._tool_visible_changed, "visible", remove=True)
         if new:
             new.on_trait_event(self._new_value_updated, 'new_value')
-            new.on_trait_change(self._tool_visible_changed, "visible") 
+            new.on_trait_change(self._tool_visible_changed, "visible")
             self._tool_visible_changed()
-        
+
     def _new_value_updated(self, event):
         if event is None:
             self.text = ""
@@ -121,7 +121,7 @@ class ImageInspectorOverlay(TextBoxOverlay):
             self.alternate_position = self.image_inspector.last_mouse_position
         else:
             self.alternate_position = None
-        
+
         d = event
         newstring = ""
         if 'indices' in d:
@@ -141,7 +141,7 @@ class ImageInspectorOverlay(TextBoxOverlay):
         self.visibility = self.image_inspector.visible
         if self.visibility != "auto":
             self.visible = self.visibility
-    
+
 
 class ImageInspectorColorbarOverlay(AbstractOverlay):
     pass

@@ -160,7 +160,7 @@ class CalendarScaleSystemTestCase(TicksTestCase):
     """ This exercises the ability of multiple TimeScale objects to play well
     within a single ScaleSystem.
     """
-    
+
     def test_hourly_scales(self):
         scales = [TimeScale(seconds=dt) for dt in (1, 5, 15, 30)] + \
                  [TimeScale(minutes=dt) for dt in (1, 5, 15, 30)] + \

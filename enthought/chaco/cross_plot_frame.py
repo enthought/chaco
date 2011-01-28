@@ -19,25 +19,25 @@ from plot_containers import HPlotContainer, OverlayPlotContainer, VPlotContainer
 
 class CrossPlotFrame(BasePlotFrame):
     """ A simple, box-layout based plotframe.
-    
+
     This class supports a central plot area with optional axes on the top, bottom,
     and sides.  The legend can be placed to the bottom, left, right, or
     inside the plot area.  The title can be placed along any of the four
     edges.
-    
+
     NOTE: PlotFrames are deprecated.  There is no need to use them any more.
     This class will be removed sometime in the future.
     """
-    
+
     # Slots or positions on the frame where plot components can place themselves.
     # Overrides PlotFrame.
     slot_names = ("center", "left", "right", "top", "bottom")
 
     # Default width and height. Class attribute.
     default_bounds = (500,500)
-    
+
     # The sizes of the various areas
-    
+
     # Width of the left slot.
     left_width = Float(50.0)
     # Width of the right slot.
@@ -46,7 +46,7 @@ class CrossPlotFrame(BasePlotFrame):
     top_height = Float(50.0)
     # Height of the bottom slot.
     bottom_height = Float(50.0)
-    
+
     # Does the component need to do a layout call?
     _layout_needed = Bool(True)
 
@@ -57,14 +57,14 @@ class CrossPlotFrame(BasePlotFrame):
         else:
             bounds = list(self.default_bounds)
         BasePlotFrame.__init__(self, **kwtraits)
-        
+
         # Create our plot containers
         self.set_slot("center", OverlayPlotContainer(resizable="hv"))
         self.set_slot("left", HPlotContainer(resizable="v"))
         self.set_slot("right", HPlotContainer(resizable="v"))
         self.set_slot("top", VPlotContainer(resizable="h"))
         self.set_slot("bottom", VPlotContainer(resizable="h"))
-        
+
         self.bounds = bounds
         return
 
@@ -80,7 +80,7 @@ class CrossPlotFrame(BasePlotFrame):
                 self.get_slot(slot).visible = False
         return
 
-    
+
     #------------------------------------------------------------------------
     # Protected methods
     #------------------------------------------------------------------------
@@ -98,7 +98,7 @@ class CrossPlotFrame(BasePlotFrame):
                     with gc:
                         self.get_slot(slotname).draw(gc, view_bounds, mode)
         return
-    
+
     def _do_layout(self):
         """
         Performs a layout and sets the size and positions on this frame's
@@ -115,7 +115,7 @@ class CrossPlotFrame(BasePlotFrame):
         # coordinate of the lower-left corner of the center region;
         # center_x2 and center_y2 represent the upper-right corner of the
         # center region.
-        
+
         if self.left.visible:
             center_x = self.left_width
         else:
@@ -132,22 +132,22 @@ class CrossPlotFrame(BasePlotFrame):
             center_y2 = self.height - self.top_height - 1
         else:
             center_y2 = self.height
-        
+
         left.outer_position = [0.0, center_y]
         left.outer_bounds = [self.left_width, center_y2 - center_y + 1]
-        
+
         right.outer_position = [center_x2 + 1, center_y]
         right.outer_bounds = [self.right_width, left.height]
-        
+
         bottom.outer_position = [center_x, 0.0]
         bottom.outer_bounds = [center_x2 - center_x + 1, self.bottom_height]
-        
+
         top.outer_position = [center_x, center_y2 + 1]
         top.outer_bounds = [bottom.width, self.top_height]
-        
+
         center.outer_position = [center_x, center_y]
         center.outer_bounds = [bottom.width, left.height]
-        
+
         for slot in self._frame_slots.values():
             if slot.visible:
                 preferred_size = slot.get_preferred_size()
@@ -163,7 +163,7 @@ class CrossPlotFrame(BasePlotFrame):
     ### Persistence ###########################################################
 
     #_pickles = ("left_width", "right_width", "top_height", "bottom_height")
-    
+
     def __getstate__(self):
         state = super(CrossPlotFrame,self).__getstate__()
         for key in ['_layout_needed']:
@@ -172,5 +172,5 @@ class CrossPlotFrame(BasePlotFrame):
 
         return state
 
-    
+
 # EOF

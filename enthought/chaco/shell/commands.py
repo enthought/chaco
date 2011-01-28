@@ -45,56 +45,56 @@ def chaco_commands():
 
     Plotting
     --------
-    plot 
+    plot
         plots some data
-    imread 
+    imread
         creates an array from an image file on disk
-    imshow 
+    imshow
         creates an image plot from a file on disk
-    pcolor 
+    pcolor
         plots some scalar data as a pseudocolor image
-    contour 
+    contour
         creates a contour line plot of some scalar data
-    contourf 
+    contourf
         creates a contour poly plot of some scalar data
-    loglog 
+    loglog
         plots an x-y line or scatter plot on log-log scale
-    semilogx 
+    semilogx
         plots an x-y line or scatter plot with a log x-scale
-    semilogy 
+    semilogy
         plots an x-y line or scatter plot with a log y-scale
-    hold 
+    hold
         turns "hold" on or off
-    show 
+    show
         shows plot on screen; used when running from script
-    
+
 
     Axes, Annotations, Legends
     --------------------------
-    xaxis 
+    xaxis
         toggles the horizontal axis, sets the interval
-    yaxis 
+    yaxis
         toggles the vertical axis, sets the interval
-    xgrid 
+    xgrid
         toggles the grid running along the X axis
-    ygrid 
+    ygrid
         toggles the grid running along the Y axis
-    xtitle 
+    xtitle
         sets the title of a horizontal axis
-    ytitle 
+    ytitle
         sets the title of a vertical axis
     xscale
         sets the tick scale system of the X axis
     yscale
         sets the tick scale system of the Y axis
-    title 
+    title
         sets the title of the plot
 
 
     Tools
     -----
-    colormap 
-        sets the current colormap    
+    colormap
+        sets the current colormap
 
     IO
     --
@@ -140,10 +140,10 @@ def chaco_commands():
 
 def figure(name=None, title=None):
     """ Creates a new figure window and returns its index.
-    
+
     Parameters
     ----------
-    name : string 
+    name : string
         The name to use for this window. If this parameter is provided, then
         this name can be used instead of the window's integer index in other
         window-related functions.
@@ -159,10 +159,10 @@ def figure(name=None, title=None):
 
 def activate(ident=None):
     """ Activates and raises a figure window.
-    
+
     Parameters
     ----------
-    ident : integer or string 
+    ident : integer or string
         Index or name of the window.  If neither is specified,
         then the function raises the currently active window.
     """
@@ -170,7 +170,7 @@ def activate(ident=None):
         win = session.get_window(ident)
     else:
         win = session.active_window
-    
+
     if win is not None:
         session.active_window = win
         win.raise_window()
@@ -196,7 +196,7 @@ def show():
 
 def close(ident=None):
     """ Closes a figure window
-    
+
     Parameters
     ----------
     ident : integer or string
@@ -210,18 +210,18 @@ def close(ident=None):
         win_list = session.windows
     else:
         win_list.append(session.get_window(ident))
-    
+
     for win in win_list:
         win.close()
     return
 
 def colormap(map):
     """Sets the active colormap.
-    
+
     Parameters
     ----------
-    map : a string, or a callable 
-         The color map to use; if it is a string, it is the name of a default 
+    map : a string, or a callable
+         The color map to use; if it is a string, it is the name of a default
          colormap; if it is a callable, it must return an AbstractColorMap.
     """
     if isinstance(map, basestring):
@@ -233,7 +233,7 @@ def colormap(map):
 def hold(state=None):
     """ Turns "hold" on or off, or toggles the current state if none
     is given.
-    
+
     Parameters
     ----------
     state : Boolean
@@ -259,7 +259,7 @@ def _do_plot_boilerplate(kwargs, image=False):
     """ Used by various plotting functions.  Checks/handles hold state,
     returns a Plot object for the plotting function to use.
     """
-    
+
     if kwargs.has_key("hold"):
         hold(kwargs["hold"])
         del kwargs["hold"]
@@ -271,7 +271,7 @@ def _do_plot_boilerplate(kwargs, image=False):
             activate(win)
         else:
             figure()
-        
+
     cont = session.active_window.get_container()
 
     if not cont:
@@ -295,7 +295,7 @@ def plot(*data, **kwargs):
     X vs Y.  Any additional *kwargs* passed in are broadcast to all plots.
 
     Example::
-        
+
         x = arange(-pi, pi, pi/100.)
         plot(x, sin(x), "b-")
 
@@ -303,7 +303,7 @@ def plot(*data, **kwargs):
     """
 
     cont = _do_plot_boilerplate(kwargs)
-    
+
     plots = plot_maker.do_plot(session.data, cont,
                                *data, **kwargs)
 
@@ -312,57 +312,57 @@ def plot(*data, **kwargs):
 
 
 def semilogx(*data, **kwargs):
-    """ Plots data on a semilog scale in a Matlab-compatible way.  Data is 
-    assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast 
+    """ Plots data on a semilog scale in a Matlab-compatible way.  Data is
+    assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast
     to all plots.
 
     Example::
-        
+
         x = linspace(0.01, 10.0 100)
         semilogx(x, sqrt(x), "b-")
 
     To use previous data, specify names instead of actual data arrays.
 
-    Adding a semilog plot to an active plot with a currently different scale 
-    rescales the plot. 
+    Adding a semilog plot to an active plot with a currently different scale
+    rescales the plot.
     """
     kwargs["index_scale"] = "log"
     plot(*data, **kwargs)
 
 
 def semilogy(*data, **kwargs):
-    """ Plots data on a semilog scale in a Matlab-compatible way.  Data is 
-    assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast 
+    """ Plots data on a semilog scale in a Matlab-compatible way.  Data is
+    assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast
     to all plots.
 
     Example::
-        
+
         x = linspace(0, 10.0, 100)
         semilogy(x, exp(x), "b-")
 
     To use previous data, specify names instead of actual data arrays.
 
-    Adding a semilog plot to an active plot with a currently different scale 
-    rescales the plot. 
+    Adding a semilog plot to an active plot with a currently different scale
+    rescales the plot.
     """
     kwargs["value_scale"] = "log"
     plot(*data, **kwargs)
 
 
 def loglog(*data, **kwargs):
-    """ Plots data on a log-log scale in a Matlab-compatible way.  Data is 
-    assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast 
+    """ Plots data on a log-log scale in a Matlab-compatible way.  Data is
+    assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast
     to all plots.
 
     Example::
-        
+
         x = linspace(0.001, 10.0, 100)
         loglog(x, x**2, "b-")
 
     To use previous data, specify names instead of actual data arrays.
 
-    Adding a log-log plot to an active plot with a currently different scale 
-    rescales the plot. 
+    Adding a log-log plot to an active plot with a currently different scale
+    rescales the plot.
     """
     kwargs["index_scale"] = "log"
     kwargs["value_scale"] = "log"
@@ -381,18 +381,18 @@ def imshow(*data, **kwargs):
     to all plots.
 
     Example 1::
-        
+
         imshow("example.jpg")
 
     Example 2::
-        
+
         image = ImageData.fromfile("example.jpg")
         imshow(image)
 
     To use previous data, specify names instead of filename or data arrays.
 
     """
-    
+
     cont = _do_plot_boilerplate(kwargs, image=True)
 
     if "colormap" not in kwargs:
@@ -404,12 +404,12 @@ def imshow(*data, **kwargs):
 
 
 def pcolor(*data, **kwargs):
-    """ Colormaps scalar data in a roughly Matlab-compatible way. Data are 
-    assumed to be a scalar image.  Any additional *kwargs* passed in are 
+    """ Colormaps scalar data in a roughly Matlab-compatible way. Data are
+    assumed to be a scalar image.  Any additional *kwargs* passed in are
     broadcast to all plots.
 
     Example::
-        
+
         xs = linspace(0,10,100)
         ys = linspace(0,20,200)
         x,y=meshgrid(xs,ys)
@@ -421,7 +421,7 @@ def pcolor(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_pcolor(session.data, session.colormap, cont, 
+    plots = plot_maker.do_pcolor(session.data, session.colormap, cont,
                                  *data, **kwargs)
     cont.request_redraw()
     return
@@ -429,12 +429,12 @@ def pcolor(*data, **kwargs):
 
 
 def contour(*data, **kwargs):
-    """ Contour line plots of scalar data in a roughly Matlab-compatible way.  
-    Data are assumed to be a scalar image.  Any additional *kwargs* passed in 
+    """ Contour line plots of scalar data in a roughly Matlab-compatible way.
+    Data are assumed to be a scalar image.  Any additional *kwargs* passed in
     are broadcast to all plots.
 
     Example::
-        
+
         xs = linspace(0,10,100)
         ys = linspace(0,20,200)
         x,y=meshgrid(xs,ys)
@@ -446,7 +446,7 @@ def contour(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_contour(session.data, session.colormap, cont, 
+    plots = plot_maker.do_contour(session.data, session.colormap, cont,
                                   "line", *data, **kwargs)
     cont.request_redraw()
     return
@@ -454,12 +454,12 @@ def contour(*data, **kwargs):
 
 
 def contourf(*data, **kwargs):
-    """ Contour polygon plots of scalar data in a roughly Matlab-compatible way.  
-    Data are assumed to be a scalar image.  Any additional *kwargs* passed in 
+    """ Contour polygon plots of scalar data in a roughly Matlab-compatible way.
+    Data are assumed to be a scalar image.  Any additional *kwargs* passed in
     are broadcast to all plots.
 
     Example::
-        
+
         xs = linspace(0,10,100)
         ys = linspace(0,20,200)
         x,y=meshgrid(xs,ys)
@@ -471,7 +471,7 @@ def contourf(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs, image=True)
 
-    plots = plot_maker.do_contour(session.data, session.colormap, cont, 
+    plots = plot_maker.do_contour(session.data, session.colormap, cont,
                                   "poly", *data, **kwargs)
     cont.request_redraw()
     return
@@ -481,10 +481,10 @@ def contourf(*data, **kwargs):
 def plotv(*args, **kwargs):
     """ Creates a plot of a particular type, or using a "best guess"
     approach based on the data, using chaco semantics.
-    
+
     The number and shape of data arrays determine how the data is
     interpreted, and how many plots are created.
-    
+
     Single-dimensional arrays (shape = (N,))
     ----------------------------------------
     1. Single array: the data is treated as the value array, and an index
@@ -492,14 +492,14 @@ def plotv(*args, **kwargs):
     2. Multiple arrays: the first array is treated as the index array, and
        each subsequent array is used as the value for a new plot.  All of
        the plots share a common index (first array).
-    
+
     Multi-dimensional arrays (shape = (N,2) or (2,N))
     -------------------------------------------------
     1. Single array (NxM or MxN, N > M): interpreted as M-1 plots of
        N data points each, just like in the multiple 1D array case above.
     2. Multiple arrays: each array is treated as a separate set of inter-
        related plots, with its own index and value data sources
-    
+
     Keyword Arguments
     -----------------
     type
@@ -517,7 +517,7 @@ def plotv(*args, **kwargs):
         boolean specifying whether or not to draw an axis on the plot
     orientation
         "h" for index on the X axis, "v" for index on the Y axis
-    
+
     Scatter plot keywords
     ---------------------
     marker
@@ -527,7 +527,7 @@ def plotv(*args, **kwargs):
         the size (in pixels) of the marker
     outline_color
         the color of the marker outline
-    
+
     Line plot keywords
     ------------------
     width
@@ -535,7 +535,7 @@ def plotv(*args, **kwargs):
     dash
         the dash style to use (solid, dot dash, dash, dot, long dash)
     """
-    
+
     cont = _do_plot_boilerplate(kwargs)
     plots = plot_maker.do_plotv(session, *args, **kwargs)
     cont.add(*plots)
@@ -610,12 +610,12 @@ _axis_params = """Parameters
 
 def xaxis(**kwds):
     """ Configures the x-axis.
-    
+
     Usage
     -----
     * ``xaxis()``: toggles the horizontal axis on or off.
     * ``xaxis(**kwds)``: set parameters of the horizontal axis.
- 
+
     %s
     """ % _axis_params
     p = curplot()
@@ -625,7 +625,7 @@ def xaxis(**kwds):
         else:
             p.x_axis.visible ^= True
         p.request_redraw()
-        
+
 def yaxis(**kwds):
     """ Configures the y-axis.
 
@@ -633,7 +633,7 @@ def yaxis(**kwds):
     -----
     * ``yaxis()``: toggles the vertical axis on or off.
     * ``yaxis(**kwds)``: set parameters of the vertical axis.
- 
+
     %s
     """ % _axis_params
     p = curplot()
@@ -728,7 +728,7 @@ def tool():
     p = curplot()
     if p:
         pass
-    
+
 
 
 #-----------------------------------------------------------------------------
@@ -736,7 +736,7 @@ def tool():
 #-----------------------------------------------------------------------------
 
 def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch"):
-    """ Saves the active plot to an file.  Currently supported file types 
+    """ Saves the active plot to an file.  Currently supported file types
     are: bmp, png, jpg.
     """
     p = curplot()

@@ -84,7 +84,7 @@ def test_tfrac_milliseconds_01():
     (base, frac) = tfrac(t, milliseconds=1)
     assert base == 123.5
     assert frac == 0.0
-    
+
 def test_tfrac_milliseconds_02():
     t = 10.0625
     (base, frac) = tfrac(t, milliseconds=1)
@@ -153,7 +153,7 @@ def test_trange_seconds_01():
 def test_trange_seconds_02():
     r = trange(0, 10, seconds=1)
     assert r == range(11)
-    
+
 def test_trange_seconds_03():
     r = trange(0, 1.5, seconds=1)
     assert r == [0.0, 1.0]
@@ -177,7 +177,7 @@ def test_time_scale_seconds_01():
     ts = TimeScale(seconds=1)
     ticks = ts.ticks(0, 10)
     assert (np.array(ticks) == np.linspace(0.0, 10.0, 11)).all()
-    
+
 def test_time_scale_seconds_02():
     ts = TimeScale(seconds=2)
     ticks = ts.ticks(0, 10)
@@ -207,7 +207,7 @@ def test_calendar_scale_system_01():
 # as in the following, and create appropriate tests:
 #
 # In [145]: css.labels(71010,71021, numlabels=8, char_width=130)
-# Out[145]: 
+# Out[145]:
 # [(71010.0, '30s'),
 #  (71011.0, '31s'),
 #  (71012.0, '32s'),
@@ -222,7 +222,7 @@ def test_calendar_scale_system_01():
 #  (71021.0, '41s')]
 #
 # In [146]: css.labels(71010,71022, numlabels=8, char_width=130)
-# Out[146]: 
+# Out[146]:
 # [(71010.0, ':30'),
 #  (71011.0, ':31'),
 #  (71012.0, ':32'),
@@ -237,4 +237,4 @@ def test_calendar_scale_system_01():
 #  (71021.0, ':41'),
 #  (71022.0, ':42')]
 #
-# In [147]: 
+# In [147]:

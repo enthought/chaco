@@ -9,7 +9,7 @@ class SelectableLegend(Legend, SelectTool):
     # A list of indices into self._cached_labels that indicates which labels
     # should be rendered in the "selected" style
     selections = List
-    
+
     # A cached list of tuples (x,y,w,h) of each label's geometry
     _cached_label_dims = List
 

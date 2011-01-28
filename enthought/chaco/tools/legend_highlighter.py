@@ -13,7 +13,7 @@ def get_hit_plots(legend, event):
         # FIXME: The size of the legend is not being computed correctly, so
         # always look at the front of the label where we know we'll get a hit.
         label = legend.get_label_at(legend.x+20, event.y)
-        
+
     except:
         raise
         label = None
@@ -35,18 +35,18 @@ class LegendHighlighter(LegendTool):
     """
 
     drag_button = "right"
-    
+
     dim_factor = Float(3.0)
 
     # The currently selected renderers
     _selected_renderers = List
-    
+
     def normal_left_down(self, event):
         if not self.component.is_in(event.x, event.y):
             return
 
         plots = get_hit_plots(self.component, event)
-        
+
         if len(plots) > 0:
             plot = plots[0]
 

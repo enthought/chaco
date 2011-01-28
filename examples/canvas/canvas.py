@@ -70,7 +70,7 @@ def do_plot(name, pd):
     yname = name + "_y"
     pd.set_data(xname, range(len(DATA[name])))
     pd.set_data(yname, DATA[name])
-    
+
     plot = Plot(pd, padding = 30,
                 unified_draw = True,
                 border_visible = True,
@@ -82,7 +82,7 @@ def do_plot(name, pd):
 
 def clone_renderer(r):
     """ Returns a clone of plot renderer r """
-    basic_traits = ["orientation", "line_width", "color", "outline_color", 
+    basic_traits = ["orientation", "line_width", "color", "outline_color",
                     "bgcolor", "border_visible", "border_color", "visible",
                     "fill_padding", "resizable", "aspect_ratio",
                     "draw_layer", "draw_order", "border_width", "resizable",
@@ -111,7 +111,7 @@ def clone_plot(clonetool, drop_position):
                     "border_width", "border_visible", "draw_layer", "unified_draw",
                     "fit_components", "fill_padding", "visible", "aspect_ratio",
                     "title"]
-                   
+
     for attr in basic_traits:
         setattr(newplot, attr, getattr(oldplot, attr))
 
@@ -152,7 +152,7 @@ def clone_plot(clonetool, drop_position):
     newplot.value_axis.unified_draw = True
 
     # Add new tools to the new plot
-    newplot.tools.append(AxisTool(component=newplot, 
+    newplot.tools.append(AxisTool(component=newplot,
         range_controller=canvas.range_controller))
 
     # Add tools to the new plot
@@ -213,10 +213,10 @@ def clone_plot(clonetool, drop_position):
     canvas.request_redraw()
     return
 
-    
+
 def make_toolbar(canvas):
     # Create the toolbar
-    toolbar = PlotCanvasToolbar(bounds=[70, 200], 
+    toolbar = PlotCanvasToolbar(bounds=[70, 200],
                                 position=[50,350],
                                 fill_padding=True,
                                 bgcolor="lightgrey",
@@ -244,8 +244,8 @@ def make_toolbar(canvas):
                                    visible = False,  # initially invisible
                                    )
     scatterplot.container = overlay
-    
-    # Create buttons 
+
+    # Create buttons
     controller = ButtonController()
     for name in DATA.keys():
         plot = do_plot(name, pd)
@@ -264,7 +264,7 @@ def make_toolbar(canvas):
                                             visible=False,
                                             )
         plot.container = plot_overlay
-        button = DataSourceButton(label=name, 
+        button = DataSourceButton(label=name,
                                   bounds=[80,46],
                                   padding = 5,
                                   button_controller = controller,
@@ -313,7 +313,7 @@ class PlotFrame(DemoFrame):
         provider = NetworkBlobProvider(host=tconf.Server.host, port=tconf.Server.port)
         provider.start()
         return BlobWindow(self, -1, component=viewport, blob_provider=provider)
-    
+
     def _create_window_simple(self):
         viewport = self._create_viewport()
         return Window(self, -1, component=viewport)
@@ -323,7 +323,7 @@ class PlotFrame(DemoFrame):
             return self._create_window_mt()
         else:
             return self._create_window_simple()
-        
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=(1000,700), title="PlotCanvas")
 

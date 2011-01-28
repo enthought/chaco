@@ -3,9 +3,9 @@
 Draws a colormapped image plot
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
    region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 """
 
@@ -39,7 +39,7 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    img_plot = plot.img_plot("imagedata", 
+    img_plot = plot.img_plot("imagedata",
                              xbounds=(0, 10),
                              ybounds=(0, 5),
                              colormap=jet)[0]
@@ -58,24 +58,24 @@ def _create_plot_component():
 #===============================================================================
 # Attributes to use for the plot view.
 size=(800,600)
-title="Basic Colormapped Image Plot"        
+title="Basic Colormapped Image Plot"
 
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title
                     )
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -87,7 +87,7 @@ class PlotFrame(DemoFrame):
 
         # Return a window containing our plot
         return Window(self, -1, component=_create_plot_component())
-        
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

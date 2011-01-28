@@ -17,7 +17,7 @@
 A collection of pre-defined colormap generator functions.
 
 Each of the functions can be called with *min_value* and *max_value* parameters.
-In that case, they produce a Colormap which linearly maps over the specified 
+In that case, they produce a Colormap which linearly maps over the specified
 range and has the color palette indicated by the function name.
 """
 
@@ -94,7 +94,7 @@ def center(func, center=0.0):
 def fix(func, range):
     """ Apply the given range to a colormap rather than accept the one coming
     from the data.
- 
+
     This is useful for colormaps intrinsically tied to a given scale, like
     bathymetry/elevation colormaps for GIS or for working around Chaco to
     implement custom behavior.
@@ -116,16 +116,16 @@ def fix(func, range):
         # Adapt tuples to DataRange1D for convenience.
         from enthought.chaco.data_range_1d import DataRange1D
         range = DataRange1D(low=range[0], high=range[1])
- 
+
     def cmap(dummy_range, **traits):
         # Use the range given to the fix() function, not the cmap() function.
         return func(range, **traits)
-     
+
     # Look a little like the wrapped function.
     cmap.__name__ = 'fixed_' + func.__name__
     cmap.__doc__ = 'Fixed: ' + func.__doc__
     return cmap
-     
+
 
 # Colormaps.
 
@@ -135,14 +135,14 @@ def autumn(range, **traits):
 
     _data = {'red':   ((0., 1.0, 1.0),(1.0, 1.0, 1.0)),
              'green': ((0., 0., 0.),(1.0, 1.0, 1.0)),
-             'blue':  ((0., 0., 0.),(1.0, 0., 0.))}                  
+             'blue':  ((0., 0., 0.),(1.0, 0., 0.))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
-    
+
 def bone(range, **traits):
     """ Generator function for the 'bone' colormap. """
-    
+
     _data = {'red':   ((0., 0., 0.),(1.0, 1.0, 1.0)),
              'green': ((0., 0., 0.),(1.0, 1.0, 1.0)),
              'blue':  ((0., 0., 0.),(1.0, 1.0, 1.0))}
@@ -151,7 +151,7 @@ def bone(range, **traits):
 
 def cool(range, **traits):
     """ Generator function for the 'cool' colormap. """
-    
+
     _data = {'red':   ((0., 0., 0.), (1.0, 1.0, 1.0)),
               'green': ((0., 1., 1.), (1.0, 0.,  0.)),
               'blue':  ((0., 1., 1.), (1.0, 1.,  1.))}
@@ -160,10 +160,10 @@ def cool(range, **traits):
 
 def copper(range, **traits):
     """ Generator function for the 'copper' colormap. """
-    
+
     _data = {'red':   ((0., 0., 0.),(0.809524, 1.000000, 1.000000),(1.0, 1.0, 1.0)),
              'green': ((0., 0., 0.),(1.0, 0.7812, 0.7812)),
-             'blue':  ((0., 0., 0.),(1.0, 0.4975, 0.4975))}                  
+             'blue':  ((0., 0., 0.),(1.0, 0.4975, 0.4975))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
@@ -258,16 +258,16 @@ def flag(range, **traits):
                        (0.888889, 0.000000, 0.000000),(0.904762, 1.000000, 1.000000),
                        (0.920635, 1.000000, 1.000000),(0.936508, 0.000000, 0.000000),
                        (0.952381, 0.000000, 0.000000),(0.968254, 1.000000, 1.000000),
-                       (0.984127, 1.000000, 1.000000),(1.0, 0., 0.))}  
+                       (0.984127, 1.000000, 1.000000),(1.0, 0., 0.))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
-    
+
 def gray(range, **traits):
     """ Generator function for the 'gray' colormap. """
 
     _data =  {'red':   ((0., 0, 0), (1., 1, 1)),
               'green': ((0., 0, 0), (1., 1, 1)),
-              'blue':  ((0., 0, 0), (1., 1, 1))}      
+              'blue':  ((0., 0, 0), (1., 1, 1))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
@@ -276,7 +276,7 @@ def yarg(range, **traits):
 
     _data =  {'red':   ((0., 1, 1), (1., 0, 0)),
               'green': ((0., 1, 1), (1., 0, 0)),
-              'blue':  ((0., 1, 1), (1., 0, 0))}      
+              'blue':  ((0., 1, 1), (1., 0, 0))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
@@ -289,7 +289,7 @@ def hot(range, **traits):
              'blue':  ((0., 0., 0.),(0.746032, 0.000000, 0.000000),(1.0, 1.0, 1.0))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
-        
+
 def hsv(range, **traits):
     """ Generator function for the 'hsv' colormap. """
 
@@ -305,20 +305,20 @@ def hsv(range, **traits):
              'blue':  ((0., 0., 0.),(0.333333, 0.000000, 0.000000),
                        (0.349206, 0.062500, 0.062500),(0.507937, 1.000000, 1.000000),
                        (0.841270, 1.000000, 1.000000),(0.857143, 0.937500, 0.937500),
-                       (1.0, 0.09375, 0.09375))} 
+                       (1.0, 0.09375, 0.09375))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
 def jet(range, **traits):
     """ Generator function for the 'jet' colormap. """
 
-    _data =   {'red':   ((0., 0, 0), (0.35, 0, 0), (0.66, 1, 1), (0.89,1, 1), 
+    _data =   {'red':   ((0., 0, 0), (0.35, 0, 0), (0.66, 1, 1), (0.89,1, 1),
                          (1, 0.5, 0.5)),
                'green': ((0., 0, 0), (0.125,0, 0), (0.375,1, 1), (0.64,1, 1),
-                         (0.91,0,0), (1, 0, 0)),   
+                         (0.91,0,0), (1, 0, 0)),
                'blue':  ((0., 0.5, 0.5), (0.11, 1, 1), (0.34, 1, 1), (0.65,0, 0),
                          (1, 0, 0))}
-    
+
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
 def pink(range, **traits):
@@ -419,8 +419,8 @@ def pink(range, **traits):
                        (0.888889, 0.883229, 0.883229),(0.904762, 0.900837, 0.900837),
                        (0.920635, 0.918109, 0.918109),(0.936508, 0.935061, 0.935061),
                        (0.952381, 0.951711, 0.951711),(0.968254, 0.968075, 0.968075),
-                       (0.984127, 0.984167, 0.984167),(1.0, 1.0, 1.0))}                  
-    
+                       (0.984127, 0.984167, 0.984167),(1.0, 1.0, 1.0))}
+
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
 def prism(range, **traits):
@@ -449,7 +449,7 @@ def prism(range, **traits):
                        (0.761905, 1.000000, 1.000000),(0.793651, 1.000000, 1.000000),
                        (0.809524, 0.000000, 0.000000),(0.825397, 0.000000, 0.000000),
                        (0.841270, 0.666667, 0.666667),(0.857143, 1.000000, 1.000000),
-                       (0.888889, 1.000000, 1.000000),(0.904762, 0.000000, 0.000000),      
+                       (0.888889, 1.000000, 1.000000),(0.904762, 0.000000, 0.000000),
                        (0.920635, 0.000000, 0.000000),(0.936508, 0.666667, 0.666667),
                        (0.952381, 1.000000, 1.000000),(0.984127, 1.000000, 1.000000),
                        (1.0, 0.0, 0.0)),
@@ -495,8 +495,8 @@ def prism(range, **traits):
                        (0.825397, 1.000000, 1.000000),(0.841270, 1.000000, 1.000000),
                        (0.857143, 0.000000, 0.000000),(0.904762, 0.000000, 0.000000),
                        (0.920635, 1.000000, 1.000000),(0.936508, 1.000000, 1.000000),
-                       (0.952381, 0.000000, 0.000000),(1.0, 0.0, 0.0))}                  
-    
+                       (0.952381, 0.000000, 0.000000),(1.0, 0.0, 0.0))}
+
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
 def spring(range, **traits):
@@ -504,8 +504,8 @@ def spring(range, **traits):
 
     _data = {'red':   ((0., 1., 1.),(1.0, 1.0, 1.0)),
              'green': ((0., 0., 0.),(1.0, 1.0, 1.0)),
-             'blue':  ((0., 1., 1.),(1.0, 0.0, 0.0))}                  
-    
+             'blue':  ((0., 1., 1.),(1.0, 0.0, 0.0))}
+
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
 def summer(range, **traits):
@@ -513,7 +513,7 @@ def summer(range, **traits):
 
     _data = {'red':   ((0., 0., 0.),(1.0, 1.0, 1.0)),
              'green': ((0., 0.5, 0.5),(1.0, 1.0, 1.0)),
-             'blue':  ((0., 0.4, 0.4),(1.0, 0.4, 0.4))}                  
+             'blue':  ((0., 0.4, 0.4),(1.0, 0.4, 0.4))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
@@ -522,8 +522,8 @@ def winter(range, **traits):
 
     _data = {'red':   ((0., 0., 0.),(1.0, 0.0, 0.0)),
              'green': ((0., 0., 0.),(1.0, 1.0, 1.0)),
-             'blue':  ((0., 1., 1.),(1.0, 0.5, 0.5))}                  
-    
+             'blue':  ((0., 1., 1.),(1.0, 0.5, 0.5))}
+
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
 def cw1_004(range, **traits):
@@ -533,7 +533,7 @@ def cw1_004(range, **traits):
                   (0.8000,0.5373,0.7059),
                   (0.2510,0.4588,0.4902),
                   (0.0588,0.3176,0.5137)])
-    
+
     return ColorMapper.from_palette_array(colors, range=range, **traits)
 
 def cw1_005(range, **traits):
@@ -6670,24 +6670,24 @@ color_map_functions = [
     hsv,
     pink,
     prism,
-    spring, 
-    summer, 
-    winter, 
+    spring,
+    summer,
+    winter,
     cw1_004,
     cw1_005,
     cw1_006,
     cw1_028,
-    gmt_drywet, 
+    gmt_drywet,
     Spectral,
     RdBu,
     RdPu,
-    YlGnBu, 
-    RdYlBu, 
+    YlGnBu,
+    RdYlBu,
     GnBu,
     RdYlGn,
     PuBu,
     BuGn,
-    Greens, 
+    Greens,
     PRGn,
     BuPu,
     OrRd,
@@ -6700,17 +6700,17 @@ color_map_functions = [
     PuRd,
     Blues,
     Greys,
-    YlOrRd, 
+    YlOrRd,
     YlOrBr,
     Purples,
     PuOr,
     PuBuGn,
-    gist_earth, 
+    gist_earth,
     gist_gray,
     gist_heat,
     gist_ncar,
     gist_rainbow,
-    gist_stern, 
+    gist_stern,
     gist_yarg,
 ]
 
@@ -6721,7 +6721,7 @@ for func in color_map_functions:
 color_map_name_dict = {}
 for func in color_map_functions:
     color_map_name_dict[func.__name__] = func
-    __all__.append(func.__name__)    
+    __all__.append(func.__name__)
 
 
 #### EOF ######################################################################

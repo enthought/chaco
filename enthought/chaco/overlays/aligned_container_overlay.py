@@ -7,7 +7,7 @@ from container_overlay import ContainerOverlay
 
 class AlignedContainerOverlay(ContainerOverlay):
     """ Container overlay that aligns itself to the plot
-    
+
     This overlay takes an alignment which specifies which corner of its
     container it should align itself with ("ur", "ul", "ll", or "lr").
     For tooltip or customizable behaviour, an alternative_position trait
@@ -16,7 +16,7 @@ class AlignedContainerOverlay(ContainerOverlay):
     """
     # XXX allow 'c' for center as an alignment option?
     # XXX make this alignment stuff a Container subclass?  A generic mixin?
-    
+
     # Alignment of the text in the box:
     #
     # * "ur": upper right

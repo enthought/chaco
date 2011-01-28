@@ -14,22 +14,22 @@ from enthought.chaco.api import AbstractOverlay, arg_find_runs, GridMapper, Abst
 
 class RangeSelectionOverlay(AbstractOverlay):
     """ Highlights the selection region on a component.
-    
-    Looks at a given metadata field of self.component for regions to draw as 
+
+    Looks at a given metadata field of self.component for regions to draw as
     selected.
     """
 
     # The axis to which this tool is perpendicular.
     axis = Enum("index", "value")
-    
-    # Mapping from screen space to data space. By default, it is just 
+
+    # Mapping from screen space to data space. By default, it is just
     # self.component.
     plot = Property(depends_on='component')
-    
+
     # The mapper (and associated range) that drive this RangeSelectionOverlay.
     # By default, this is the mapper on self.plot that corresponds to self.axis.
     mapper = Instance(AbstractMapper)
-    
+
     # The element of an (x,y) tuple that corresponds to the axis index.
     # By default, this is set based on self.asix and self.plot.orientation,
     # but it can be overriden and set to 0 or 1.
@@ -61,13 +61,13 @@ class RangeSelectionOverlay(AbstractOverlay):
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
-        
+
         Overrides AbstractOverlay.
         """
         axis_ndx = self.axis_index
         lower_left = [0,0]
         upper_right = [0,0]
-        
+
         # Draw the selection
         coords = self._get_selection_screencoords()
         for coord in coords:
@@ -76,7 +76,7 @@ class RangeSelectionOverlay(AbstractOverlay):
             lower_left[1-axis_ndx] = component.position[1-axis_ndx]
             upper_right[axis_ndx] = end - start
             upper_right[1-axis_ndx] = component.bounds[1-axis_ndx]
-        
+
             with gc:
                 gc.clip_to_rect(component.x, component.y, component.width, component.height)
                 gc.set_alpha(self.alpha)
@@ -84,18 +84,18 @@ class RangeSelectionOverlay(AbstractOverlay):
                 gc.set_stroke_color(self.border_color_)
                 gc.set_line_width(self.border_width)
                 gc.set_line_dash(self.border_style_)
-                gc.rect(lower_left[0], lower_left[1], 
+                gc.rect(lower_left[0], lower_left[1],
                         upper_right[0], upper_right[1])
                 gc.draw_path()
 
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
-    
+
     def _get_selection_screencoords(self):
         """ Returns a tuple of (x1, x2) screen space coordinates of the start
-        and end selection points.  
-        
+        and end selection points.
+
         If there is no current selection, then returns an empty list.
         """
         ds = getattr(self.plot, self.axis)
@@ -124,7 +124,7 @@ class RangeSelectionOverlay(AbstractOverlay):
     def _determine_axis(self):
         """ Determines which element of an (x,y) coordinate tuple corresponds
         to the tool's axis of interest.
-        
+
         This method is only called if self._axis_index hasn't been set (or is
         None).
         """
@@ -146,17 +146,17 @@ class RangeSelectionOverlay(AbstractOverlay):
     def _component_changed(self, old, new):
         self._attach_metadata_handler(old, new)
         return
-    
+
     def _axis_changed(self, old, new):
         self._attach_metadata_handler(old, new)
         return
-    
+
     def _attach_metadata_handler(self, old, new):
         # This is used to attach a listener to the datasource so that when
         # its metadata has been updated, we catch the event and update properly
         if not self.plot:
             return
-        
+
         datasource = getattr(self.plot, self.axis)
         if old:
             datasource.on_trait_change(self._metadata_change_handler, "metadata_changed",
@@ -164,7 +164,7 @@ class RangeSelectionOverlay(AbstractOverlay):
         if new:
             datasource.on_trait_change(self._metadata_change_handler, "metadata_changed")
         return
-    
+
     def _metadata_change_handler(self, event):
         self.component.request_redraw()
         return
@@ -172,13 +172,13 @@ class RangeSelectionOverlay(AbstractOverlay):
     #------------------------------------------------------------------------
     # Default initializers
     #------------------------------------------------------------------------
-    
+
     def _mapper_default(self):
         # If the plot's mapper is a GridMapper, return either its
         # x mapper or y mapper
-        
+
         mapper = getattr(self.plot, self.axis + "_mapper")
-        
+
         if isinstance(mapper, GridMapper):
             if self.axis == 'index':
                 return mapper._xmapper
@@ -190,10 +190,10 @@ class RangeSelectionOverlay(AbstractOverlay):
     #------------------------------------------------------------------------
     # Property getter/setters
     #------------------------------------------------------------------------
-        
+
     @cached_property
     def _get_plot(self):
-        return self.component    
+        return self.component
 
     @cached_property
     def _get_axis_index(self):

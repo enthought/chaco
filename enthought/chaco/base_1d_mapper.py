@@ -18,10 +18,10 @@ class Base1DMapper(AbstractMapper):
 
     # The screen space position of the lower bound of the data space.
     low_pos = Float(0.0)
-    
+
     # The screen space position of the upper bound of the data space.
     high_pos  = Float(1.0)
-    
+
     # Convenience property to get low and high positions in one structure.
     # Must be a tuple (low_pos, high_pos).
     screen_bounds = Property
@@ -32,7 +32,7 @@ class Base1DMapper(AbstractMapper):
     # the ratio if both screen and data space extents are non-zero.
     stretch_data = Bool(True)
 
-    # If the subclass uses a cache, _cache_valid is maintained to 
+    # If the subclass uses a cache, _cache_valid is maintained to
     # monitor its status
     _cache_valid = Bool(False)
 
@@ -48,7 +48,7 @@ class Base1DMapper(AbstractMapper):
         self._cache_valid = False
         self.updated = True
         return
-    
+
     def _high_pos_changed(self):
         self._cache_valid = False
         self.updated = True
@@ -60,7 +60,7 @@ class Base1DMapper(AbstractMapper):
                                 remove = True)
         if new is not None:
             new.on_trait_change(self._range_change_handler, "updated")
-        
+
         self._cache_valid = False
         self.updated = new
         return

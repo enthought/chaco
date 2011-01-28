@@ -5,7 +5,7 @@ class Serializable(object):
     """
     Mix-in class to help serialization.  Serializes just the attributes in
     **_pickles**.
-    
+
     This mix-in works best when all the classes in a hierarchy subclass
     from it.  It solves the problem of allowing each class to specify
     its own set of attributes to pickle and attributes to ignore, without
@@ -15,7 +15,7 @@ class Serializable(object):
     # The basic list of attributes to save.  These get set without firing
     # any trait events.
     _pickles = None
-    
+
     # A list of the parents of this class that will be searched for their
     # list of _pickles.  Only the parents in this list that inherit from
     # Serialized will be pickled.  The process stops at the first item in
@@ -40,14 +40,14 @@ class Serializable(object):
             else:
                 break
         return bases
-    
+
     def _pre_save(self):
         """
         Called before __getstate__ to give the object a chance to tidy up
         and get ready to be saved.  This usually also calls the superclass.
         """
         return
-    
+
     def _post_load(self):
         """
         Called after __setstate__ finishes restoring the state on the object.
@@ -61,14 +61,14 @@ class Serializable(object):
 
     def _do_setstate(self, state):
         """
-        Called by __setstate__ to allow the subclass to set its state in a 
+        Called by __setstate__ to allow the subclass to set its state in a
         special way.
-        
+
         Subclasses should override this instead of Serializable.__setstate__
         because we need Serializable's implementation to call _post_load() after
         all the _do_setstate() have returned.)
         """
-        # Quietly all the attributes 
+        # Quietly all the attributes
         self.set(trait_change_notify=False, **state)
         return
 
@@ -80,7 +80,7 @@ class Serializable(object):
 #        #idstring = self.__class__.__name__ + " id=" + str(id(self))
 #        # Give the object a chance to tidy up before saving
 #        self._pre_save()
-#        
+#
 #        # Get the attributes that this class needs to serialize.  We do this by
 #        # marching up the list of parent classes in _pickle_parents and getting
 #        # their lists of _pickles.
@@ -88,10 +88,10 @@ class Serializable(object):
 #        pickle_parents = self._get_pickle_parents()
 #        for parent_class in pickle_parents:
 #            all_pickles.update(parent_class._pickles)
-#        
+#
 #        if self._pickles is not None:
 #            all_pickles.update(self._pickles)
-#        
+#
 #        state = {}
 #        for attrib in all_pickles:
 #            state[attrib] = getattr(self, attrib)
@@ -100,7 +100,7 @@ class Serializable(object):
 #        for key,value in state.items():
 #            print key, type(value)
 #        print '>>>>>>>>>>>>>'
-#            
+#
 #        return state
 
     #~ def __setstate__(self, state):

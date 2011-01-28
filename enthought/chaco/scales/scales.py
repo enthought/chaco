@@ -1,5 +1,5 @@
 """
-Functions and classes that compute ticks and labels for graph axes, with 
+Functions and classes that compute ticks and labels for graph axes, with
 special handling of time and calendar axes.
 """
 
@@ -26,8 +26,8 @@ class AbstractScale(object):
 
     def ticks(self, start, end, desired_ticks=None):
         """ Returns the set of "nice" positions on this scale that enclose and
-        fall inside the interval (*start*,*end*). 
-        
+        fall inside the interval (*start*,*end*).
+
         Parameters
         ----------
         start : number
@@ -36,15 +36,15 @@ class AbstractScale(object):
             The end of the scale interval.
         desired_ticks : integer
             Number of ticks that the caller would like to get
-        
+
         """
         raise NotImplementedError
 
     def num_ticks(self, start, end, desired_ticks=None):
-        """ Returns an approximate number of ticks that this scale 
-        produces for the given interval.  
-        
-        This method is used by the scale system to determine whether this is 
+        """ Returns an approximate number of ticks that this scale
+        produces for the given interval.
+
+        This method is used by the scale system to determine whether this is
         the appropriate scale to use for an interval; the returned number of
         ticks does not have to be exactly the same as what ticks() returns.
 
@@ -56,7 +56,7 @@ class AbstractScale(object):
             The end of the scale interval.
         desired_ticks : integer
             Number of ticks that the caller would like to get
-        
+
         Returns
         -------
         A float or an integer.
@@ -74,11 +74,11 @@ class AbstractScale(object):
         end : number
             The end of the scale interval.
         numlabels : number
-            The ideal number of labels to generate on the interval. 
+            The ideal number of labels to generate on the interval.
         char_width : number
-            The total character width available for labelling the interval.  
-            
-        One of *numlabels* or *char_width* must be provided. If both are 
+            The total character width available for labelling the interval.
+
+        One of *numlabels* or *char_width* must be provided. If both are
         provided, then both are considered when picking label density and format.
         """
         ticks = self.ticks(start, end, numlabels)
@@ -89,7 +89,7 @@ class AbstractScale(object):
         """ Returns an estimate of the total number of characters used by the
         the labels that this scale produces for the given set of
         inputs, as well as the number of labels.
-        
+
         Parameters
         ----------
         start : number
@@ -97,9 +97,9 @@ class AbstractScale(object):
         end : number
             The end of the scale interval.
         numlabels : number
-            The ideal number of labels to generate on the interval. 
+            The ideal number of labels to generate on the interval.
         char_width : number
-            The total character width available for labelling the interval.  
+            The total character width available for labelling the interval.
 
         Returns
         -------
@@ -108,7 +108,7 @@ class AbstractScale(object):
         return self.formatter.estimate_width(start, end, numlabels, char_width,
                                              ticker=self)
 
-        
+
 class FixedScale(AbstractScale):
     """ A scale with fixed resolution, and "nice" points that line up at
     multiples of the resolution.  An optional zero value can be defined
@@ -120,10 +120,10 @@ class FixedScale(AbstractScale):
         if formatter is None:
             formatter = BasicFormatter()
         self.formatter = formatter
-        
+
     def ticks(self, start, end, desired_ticks=None):
-        """ For FixedScale, *desired_ticks* is ignored. 
-        
+        """ For FixedScale, *desired_ticks* is ignored.
+
         Overrides AbstractScale.
         """
         if start == end or isnan(start) or isnan(end):
@@ -137,8 +137,8 @@ class FixedScale(AbstractScale):
         return ticks
 
     def num_ticks(self, start, end, desired_ticks=None):
-        """ For FixedScale, *desired_ticks* is ignored. 
-        
+        """ For FixedScale, *desired_ticks* is ignored.
+
         Overrides AbstractScale.
         """
         if self.resolution is None or self.resolution == 0.0:
@@ -149,7 +149,7 @@ class FixedScale(AbstractScale):
 def _nice(x, round=False):
     """ Returns a bracketing interval around interval *x*, whose endpoints fall
     on "nice" values.  If *round* is False, then it uses ceil(range)
-    
+
     This function is adapted from the original in Graphics Gems; the boundaries
     have been changed to use (1, 2.5, 5, 10) as the nice values instead of
     (1, 2, 5, 10).
@@ -214,11 +214,11 @@ class DefaultScale(AbstractScale):
         if formatter is None:
             formatter = BasicFormatter()
         self.formatter = formatter
-        
+
     def ticks(self, start, end, desired_ticks=8):
         """ Returns the set of "nice" positions on this scale that enclose and
-        fall inside the interval (*start*,*end*). 
-        
+        fall inside the interval (*start*,*end*).
+
         Implements AbstractScale.
         """
         if start == end or isnan(start) or isnan(end):
@@ -227,16 +227,16 @@ class DefaultScale(AbstractScale):
         return frange(min, max, delta)
 
     def num_ticks(self, start, end, desired_ticks=8):
-        """ Returns an approximate number of ticks that this scale 
-        produces for the given interval.  
-        
+        """ Returns an approximate number of ticks that this scale
+        produces for the given interval.
+
         Implements AbstractScale.
         """
         return len(self.ticks(start, end, desired_ticks))
 
 
 class Pow10Scale(AbstractScale):
-    """ A dynamic scale that shows only whole multiples of powers of 10 
+    """ A dynamic scale that shows only whole multiples of powers of 10
     (including powers < 1).
     """
 
@@ -247,7 +247,7 @@ class Pow10Scale(AbstractScale):
 
     def ticks(self, start, end, desired_ticks=8):
         """ Returns the set of "nice" positions on this scale that enclose and
-        fall inside the interval (*start*,*end*). 
+        fall inside the interval (*start*,*end*).
 
         Implements AbstractScale.
         """
@@ -257,11 +257,11 @@ class Pow10Scale(AbstractScale):
                                             nicefunc=self._nice_pow10,
                                             enclose = True)
         return frange(min, max, delta)
-    
+
     def num_ticks(self, start, end, desired_ticks=8):
-        """ Returns an approximate number of ticks that this scale 
-        produces for the given interval.  
-        
+        """ Returns an approximate number of ticks that this scale
+        produces for the given interval.
+
         Implements AbstractScale.
         """
         return len(self.ticks(start, end, desired_ticks))
@@ -316,7 +316,7 @@ class LogScale(AbstractScale):
     def _logtickceil_as_irep(self,x,i):
         """ For a given "magic number" i (i.e. spacing of the evenly spaced ticks
         in the decade [1,10]), compute the integer representation of the smallest
-        tick not less than x.""" 
+        tick not less than x."""
         j,b = self._power_and_interval(x,i)
         k = int(ceil(float(x)/b))
         n = self._power_and_index_to_irep(j,k,i)
@@ -325,7 +325,7 @@ class LogScale(AbstractScale):
     def _logtickfloor_as_irep(self,x,i):
         """ For a given "magic number" i (i.e. spacing of the evenly spaced ticks
         in the decade [1,10]), compute the integer representation of the largest
-        tick not greater than x.""" 
+        tick not greater than x."""
         j,b = self._power_and_interval(x,i)
         k = int(floor(float(x)/b))
         n = self._power_and_index_to_irep(j,k,i)
@@ -364,7 +364,7 @@ class LogScale(AbstractScale):
                 if len(ticks) < desired_ticks * 1.5:
                     return ticks
             return ticks
-        
+
         else:
             # Put lines at every power of ten
             startlog = ceil(log_start)
@@ -373,9 +373,9 @@ class LogScale(AbstractScale):
             return 10**expticks
 
     def num_ticks(self, start, end, desired_ticks=8):
-        """ Returns an approximate number of ticks that this scale 
-        produces for the given interval.  
-        
+        """ Returns an approximate number of ticks that this scale
+        produces for the given interval.
+
         Implements AbstractScale.
         """
         return len(self.ticks(start, end, desired_ticks))
@@ -387,9 +387,9 @@ class LogScale(AbstractScale):
 ##############################################################################
 
 class ScaleSystem(object):
-    """ Represents a collection of scales over some range of resolutions.  
-    
-    This class has settings for a default scale that is used when ticking an 
+    """ Represents a collection of scales over some range of resolutions.
+
+    This class has settings for a default scale that is used when ticking an
     interval that is smaller than the finest resolution scale or larger than
     the coarsest resolution scale.
     """
@@ -398,7 +398,7 @@ class ScaleSystem(object):
         """ Creates a ScaleSystem
 
         Usage::
-            
+
             ScaleSystem(scale1, .., scaleN, default_scale = DefaultScale())
 
         If *default_scale* is not specified, then an instance of DefaultScale()
@@ -422,9 +422,9 @@ class ScaleSystem(object):
             The start and end values of the data.
         numticks : number
             The desired number of ticks to produce.
-        scales : a list of tuples of (min_interval, Scale) 
-            Scales to use, in order from fine resolution to coarse.  
-            If the end-start interval is less than a particular scale's 
+        scales : a list of tuples of (min_interval, Scale)
+            Scales to use, in order from fine resolution to coarse.
+            If the end-start interval is less than a particular scale's
             *min_interval*, then the previous scale is used.
 
         Returns
@@ -453,10 +453,10 @@ class ScaleSystem(object):
         end : number
             The end of the scale interval.
         numlabels : number
-            The ideal number of labels to generate on the interval. 
+            The ideal number of labels to generate on the interval.
         char_width : number
-            The total character width available for labelling the interval.  
-        
+            The total character width available for labelling the interval.
+
         One of *numlabels* or *char_width* must be provided.  If both are
         provided, then both are considered when picking label density and format.
 
@@ -516,7 +516,7 @@ class ScaleSystem(object):
                                             char_width=char_width)
 
         return labels
-            
+
 
     def _get_scale(self, start, end, numticks):
         if len(self.scales) == 0:

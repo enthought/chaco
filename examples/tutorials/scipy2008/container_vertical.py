@@ -10,7 +10,7 @@ class ContainerExample2(HasTraits):
 
     plot = Instance(VPlotContainer)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
+    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
                        width=600, height=800, resizable=True)
 
     def __init__(self):

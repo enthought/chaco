@@ -17,7 +17,7 @@ from scatterplot import render_markers
 
 
 class JitterPlot(AbstractPlotRenderer):
-    """A renderer for a jitter plot, a 1D plot with some width in the 
+    """A renderer for a jitter plot, a 1D plot with some width in the
     dimension perpendicular to the primary axis.  Useful for understanding
     dense collections of points.
     """
@@ -103,7 +103,7 @@ class JitterPlot(AbstractPlotRenderer):
     _cached_data_pts = Any()
     _cached_data_pts_sorted = Any()
     _cached_data_argsort = Any()
-    
+
     _screen_cache_valid = Bool(False)
     _cached_screen_pts = Any()
     _cached_screen_map = Any()  # dict mapping index to value points
@@ -111,7 +111,7 @@ class JitterPlot(AbstractPlotRenderer):
     # The random number seed used to generate the jitter.  We store this
     # so that the jittering is stable as the data is replotted.
     _jitter_seed = Trait(None, None, Int)
-    
+
     #------------------------------------------------------------------------
     # Component/AbstractPlotRenderer interface
     #------------------------------------------------------------------------
@@ -134,7 +134,7 @@ class JitterPlot(AbstractPlotRenderer):
                 sm.update(dict((new_x[i], new_y[i]) for i in range(len(new_x))))
             xs = self.mapper.map_screen(data_array)
             ys = [sm[x] for x in xs]
-        
+
         else:
             if self._jitter_seed is None:
                 self._set_seed(data_array)
@@ -206,13 +206,13 @@ class JitterPlot(AbstractPlotRenderer):
             return orig_ndx
         else:
             return None
-        
+
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         pts = self.get_screen_points()
         self._render(gc, pts)
 
-    
+
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
@@ -294,7 +294,7 @@ class JitterPlot(AbstractPlotRenderer):
             seed = np.random.seed(map(int, data_array[:100]))
 
         self._jitter_seed = seed
-        
+
     @on_trait_change("index.data_changed")
     def _invalidate(self):
         self._cache_valid = False
@@ -336,7 +336,7 @@ class JitterPlot(AbstractPlotRenderer):
         mapper = self.mapper
         if mapper is None:
             return
-        
+
         x = self.x
         x2 = self.x2
         y = self.y
@@ -350,7 +350,7 @@ class JitterPlot(AbstractPlotRenderer):
             mapper.screen_bounds = (y, y2)
         elif "top" in self.origin:
             mapper.screen_bounds = (y2, y)
-        
+
         self.invalidate_draw()
         self._cache_valid = False
         self._screen_cache_valid = False

@@ -30,19 +30,19 @@ def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
 
     Parameters
     ==========
-    gc : graphics context 
+    gc : graphics context
         where to render the arrow
     pt1 : point
         the origin of the arrow
-    pt2 : point 
+    pt2 : point
         where the arrow is pointing
-    color : a 3- or 4-tuple of color value 
+    color : a 3- or 4-tuple of color value
         the color to use for the arrow stem and head
-    arrowhead_size : number 
+    arrowhead_size : number
         screen units corresponding to the length of the arrowhead
     offset1 : number
         the amount of space from the start of the arrow to pt1
-    offset2 : number 
+    offset2 : number
         the amount of space from the tip of the arrow to pt2
     arrow : object
         an opaque object returned by previous calls to draw_arrow.  If this
@@ -87,12 +87,12 @@ def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
         arrow = (pt1, pt2, arrowhead_l, arrowhead_r)
     else:
         pt1, pt2, arrowhead_l, arrowhead_r = arrow
-    
+
     arrowlen = norm(pt2 - pt1)
     if arrowlen < minlen or arrowlen > maxlen:
         # This is the easiest way to circumvent the actual drawing
         gc = None
-        
+
     if gc is not None:
         gc.set_stroke_color(color)
         gc.set_fill_color(color)
@@ -108,13 +108,13 @@ def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
 
 
 class DataLabel(ToolTip):
-    """ A label on a point in data space, optionally with an arrow to the point. 
+    """ A label on a point in data space, optionally with an arrow to the point.
     """
 
     # The symbol to use if **marker** is set to "custom". This attribute must
     # be a compiled path for the given Kiva context.
     custom_symbol = Any
-    
+
     # The point in data space where this label should anchor itself.
     data_point = Trait(None, None, Tuple, List, Array)
 
@@ -140,10 +140,10 @@ class DataLabel(ToolTip):
     # The type of marker to use.  This is a mapped trait using strings as the
     # keys.
     marker = MarkerTrait
-    
+
     # The pixel size of the marker (doesn't include the thickness of the outline).
     marker_size = Int(4)
-    
+
     # The thickness, in pixels, of the outline to draw around the marker.  If
     # this is 0, no outline will be drawn.
     marker_line_width = Float(1.0)
@@ -157,7 +157,7 @@ class DataLabel(ToolTip):
     #----------------------------------------------------------------------
     # Arrow traits
     #----------------------------------------------------------------------
-    
+
     # Draw an arrow from the label to the data point?  Only
     # used if **data_point** is not None.
     arrow_visible = Bool(True)   # FIXME: replace with some sort of ArrowStyle
@@ -211,7 +211,7 @@ class DataLabel(ToolTip):
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws the tooltip overlaid on another component.
-        
+
         Overrides and extends ToolTip.overlay()
         """
         if self.clip_to_plot:
@@ -220,7 +220,7 @@ class DataLabel(ToolTip):
             gc.clip_to_rect(c.x, c.y, c.width, c.height)
 
         self.do_layout()
-        
+
         # draw the arrow if necessary
         if self.arrow_visible:
             if self._cached_arrow is None:
@@ -235,7 +235,7 @@ class DataLabel(ToolTip):
                                  self._position_root_map.get(arrow_root, "DUMMY"),
                                  (self.x+self.width/2, self.y+self.height/2)
                                  )
-                    
+
                 if type(ox) == str:
                     ox = getattr(self, ox)
                     oy = getattr(self, oy)
@@ -247,9 +247,9 @@ class DataLabel(ToolTip):
                                                 minlen=self.arrow_min_length,
                                                 maxlen=self.arrow_max_length)
             else:
-                draw_arrow(gc, None, None, self.arrow_color_, 
+                draw_arrow(gc, None, None, self.arrow_color_,
                            arrow=self._cached_arrow,
-                           minlen=self.arrow_min_length, 
+                           minlen=self.arrow_min_length,
                            maxlen=self.arrow_max_length)
 
         # layout and render the label itself
@@ -266,13 +266,13 @@ class DataLabel(ToolTip):
 
     def _do_layout(self, size=None):
         """Computes the size and position of the label and arrow.
-        
+
         Overrides and extends ToolTip._do_layout()
         """
         if not self.component or not hasattr(self.component, "map_screen"):
             return
 
-        # Call the parent class layout.  This computes all the label 
+        # Call the parent class layout.  This computes all the label
         ToolTip._do_layout(self)
 
         self._screen_coords = self.component.map_screen([self.data_point])[0]

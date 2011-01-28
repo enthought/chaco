@@ -10,13 +10,13 @@ class ImagePlot(HasTraits):
 
     plot = Instance(Plot)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False), 
-                       width=600, height=600, 
+    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
+                       width=600, height=600,
                        resizable=True,
                        title="Chaco Plot")
 
     def __init__(self):
-        # Create the data and the PlotData object.  For a 2D plot, we need to 
+        # Create the data and the PlotData object.  For a 2D plot, we need to
         # take the row of X points and Y points and create a grid from them
         # using meshgrid().
         x = linspace(0, 10, 50)

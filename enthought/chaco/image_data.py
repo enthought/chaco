@@ -12,25 +12,25 @@ from abstract_data_source import AbstractDataSource
 
 class ImageData(AbstractDataSource):
     """
-    Represents a grid of data to be plotted using a Numpy 2-D grid. 
-    
+    Represents a grid of data to be plotted using a Numpy 2-D grid.
+
     The data array has dimensions NxM, but it may have more than just 2
     dimensions.  The appropriate dimensionality of the value array depends
-    on the context in which the ImageData instance will be used. 
+    on the context in which the ImageData instance will be used.
     """
     # The dimensionality of the data.
     dimension = ReadOnly(DimensionTrait('image'))
-    
+
     # Depth of the values at each i,j. Values that are used include:
     #
     # * 3: color images, without alpha channel
     # * 4: color images, with alpha channel
     value_depth = Int(1) # TODO: Modify ImageData to explicitly support scalar
                          # value arrays, as needed by CMapImagePlot
-    
+
     # Holds the grid data that forms the image.  The shape of the array is
     # (N, M, D) where:
-    # 
+    #
     # * D is 1, 3, or 4.
     # * N is the length of the y-axis.
     # * M is the length of the x-axis.
@@ -60,7 +60,7 @@ class ImageData(AbstractDataSource):
     # A read-only attribute that exposes the underlying array.
     raw_value = Property(ImageTrait)
 
-    
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -84,18 +84,18 @@ class ImageData(AbstractDataSource):
         """ Alternate constructor to create an ImageData from an image file
         on disk. 'filename' may be a file path or a file object.
         """
-        
+
         from enthought.kiva.image import Image
         img = Image(filename)
         imgdata = cls(data=img.bmp_array, transposed=False)
         fmt = img.format()
-        
+
         if fmt == "rgb24":
             imgdata.value_depth = 3
         elif fmt == "rgba32":
             imgdata.value_depth = 4
         else:
-            raise ValueError("Unknown image format in file %s: %s" % 
+            raise ValueError("Unknown image format in file %s: %s" %
                              (filename, fmt))
         return imgdata
 
@@ -106,7 +106,7 @@ class ImageData(AbstractDataSource):
             return self._data.shape[0]
         else:
             return self._data.shape[1]
-    
+
     def get_height(self):
         """ Returns the shape of the y-axis.
         """
@@ -130,35 +130,35 @@ class ImageData(AbstractDataSource):
 
     def get_data(self):
         """ Returns the data for this data source.
-        
+
         Implements AbstractDataSource.
         """
         return self.data
 
     def is_masked(self):
         """is_masked() -> False
-        
+
         Implements AbstractDataSource.
         """
         return False
 
     def get_bounds(self):
         """ Returns the minimum and maximum values of the data source's data.
-        
+
         Implements AbstractDataSource.
         """
         if not self._bounds_cache_valid:
-            if self.raw_value.size == 0: 
-                self._cached_bounds = (0,0) 
-            else: 
-                self._cached_bounds = (nanmin(self.raw_value), 
+            if self.raw_value.size == 0:
+                self._cached_bounds = (0,0)
+            else:
+                self._cached_bounds = (nanmin(self.raw_value),
                                        nanmax(self.raw_value))
             self._bounds_cache_valid = True
         return self._cached_bounds
-    
+
     def get_size(self):
         """get_size() -> int
-        
+
         Implements AbstractDataSource.
         """
         if self._data is not None and self._data.shape[0] != 0:
@@ -168,7 +168,7 @@ class ImageData(AbstractDataSource):
 
     def set_data(self, data):
         """ Sets the data for this data source.
-        
+
         Parameters
         ----------
         data : array
@@ -179,13 +179,13 @@ class ImageData(AbstractDataSource):
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
-    
+
     def _get_data(self):
         if self.transposed:
             return swapaxes(self._data, 0, 1)
         else:
             return self._data
-    
+
     def _set_data(self, newdata):
         self._data = newdata
         self._bounds_cache_valid = False

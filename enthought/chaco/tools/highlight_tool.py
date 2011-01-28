@@ -31,13 +31,13 @@ class HighlightTool(BaseTool):
 
     # This tool is not drawn. Overrides BaseTool.
     draw_mode = "none"
-    
+
     # This tool is not visible. Overrides BaseTool.
     visible = False
 
     def normal_left_down(self, event):
         """ Handles the left mouse button being pressed.
-        
+
         If the left mouse button initiates the selection, this method does so.
         """
         if self.drag_button == "left":
@@ -46,7 +46,7 @@ class HighlightTool(BaseTool):
 
     def normal_right_down(self, event):
         """ Handles the right mouse button being pressed.
-        
+
         If the right mouse button initiates the selection, this method does so.
         """
         if self.drag_button == "right":
@@ -79,7 +79,7 @@ class HighlightTool(BaseTool):
             elif self.metadata_name in index.metadata:
                 del index.metadata[self.metadata_name]
                 self.component.request_redraw()
- 
+
         event.handled = True
         return
 
@@ -91,5 +91,5 @@ class HighlightTool(BaseTool):
             if cpoint:
                 return p
         return None
-        
+
 #EOF

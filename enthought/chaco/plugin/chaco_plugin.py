@@ -20,7 +20,7 @@ class ChacoPlugin(Plugin):
 
     # Extension point Ids.
     COMMANDS = 'enthought.plugins.python_shell.commands'
-    
+
 
     contributed_commands = List(contributes_to=COMMANDS)
 

@@ -22,13 +22,13 @@ class ArrayDataTestCase(unittest.TestCase):
         sd = ArrayDataSource(myarray, sort_order="ascending")
         bounds = sd.get_bounds()
         self.assert_(bounds == (0,9))
-        
+
         # descending
         myarray = arange(10)[::-1]
         sd = ArrayDataSource(myarray, sort_order="descending")
         bounds = sd.get_bounds()
         self.assert_(bounds == (0,9))
-        
+
         # no order
         myarray = array([12,3,0,9,2,18,3])
         sd = ArrayDataSource(myarray, sort_order="none")
@@ -48,7 +48,7 @@ class PointDataTestCase(unittest.TestCase):
     # test are functionality that use _compute_bounds() and reverse_map().
     def create_array(self):
         return array(zip(range(10), range(0, 100, 10)))
-    
+
     def test_basic_set_get(self):
         myarray = self.create_array()
         pd = PointDataSource(myarray)
@@ -61,7 +61,7 @@ class PointDataTestCase(unittest.TestCase):
         pd = PointDataSource(myarray)
         self.assertEqual(pd.get_bounds(),((0,0), (9,90)))
         return
-        
+
 if __name__ == '__main__':
     import nose
     nose.run()

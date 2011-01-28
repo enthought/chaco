@@ -8,7 +8,7 @@ class RangeController(HasTraits):
 
     # The list of active plots and which of their ranges was set
     plots_ranges = List
-    
+
     # Stores the old ranges
     _ranges = Dict
 
@@ -63,7 +63,7 @@ class AxisTool(BaseTool):
     _cached_border_visible = Bool(True)
     _cached_border_color = ColorTrait
 
-    attr_list = ("tick_color", "axis_line_color", "tick_label_color", "bgcolor", 
+    attr_list = ("tick_color", "axis_line_color", "tick_label_color", "bgcolor",
                  "border_visible", "border_color")
 
     def normal_left_down(self, event):
@@ -92,7 +92,7 @@ class AxisTool(BaseTool):
             setattr(self, cached, getattr(axis, attr))
             if getattr(self, down) is not None:
                 setattr(axis, attr, getattr(self, down))
-        
+
         axis.request_redraw()
         plot._debug = True
         event.handled = True
@@ -110,7 +110,7 @@ class AxisTool(BaseTool):
             rangename = "value_range"
         else:
             return
-        
+
         if self.range_controller is not None:
             should_handle = self.range_controller.notify(self, rangename, "up", event)
             if not should_handle:
@@ -138,7 +138,7 @@ class MPAxisTool(AxisTool):
                                           event.net_transform())
             self.normal_left_down(event)
             self._last_blob_pos = (event.x, event.y)
-    
+
     def normal_blob_up(self, event):
         print "Axis blob up"
         if event.bid == self.cur_bid:

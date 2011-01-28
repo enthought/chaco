@@ -18,7 +18,7 @@ from enthought.traits.ui.api import Item, Group, HGroup, View
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot, \
         LinearMapper, ScatterPlot, DataView, LinePlot
-from enthought.chaco.tools.api import PanTool, ZoomTool 
+from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.chaco.function_data_source import FunctionDataSource
 
 #===============================================================================
@@ -38,7 +38,7 @@ def yfunc(low, high):
     return sin(1.0/x)
 
 def _create_plot_component():
-    
+
     container = DataView()
 
     xds = FunctionDataSource(func = xfunc)
@@ -63,7 +63,7 @@ def _create_plot_component():
     plot2 = LinePlot(index = xds, value = yds, index_mapper = xmapper,
                     value_mapper = ymapper,
                     color = "lightgray")
-    
+
     container.add(plot2, plot)
     plot.tools.append(PanTool(plot, constrain_direction="x", constrain=True))
     plot.tools.append(ZoomTool(plot, axis="index", tool_mode="range"))
@@ -80,10 +80,10 @@ title="Function Plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-    
+
     traits_view = View(
                     Group(
-                        Item('plot', editor=ComponentEditor(size=size), 
+                        Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         HGroup(
                             Item('object.plot.x_mapper.range.high_setting',
@@ -98,13 +98,13 @@ class Demo(HasTraits):
                                  label='Low'),
                                  label='Y', show_border=True),
                         orientation = "vertical"),
-                    resizable=True, title=title, 
+                    resizable=True, title=title,
                     width=size[0], height=size[1]
                     )
-    
+
     def _plot_default(self):
          return _create_plot_component()
-    
+
 demo = Demo()
 
 #===============================================================================
@@ -115,7 +115,7 @@ class PlotFrame(DemoFrame):
     def _create_window(self):
         # Return a window containing our plots
         return Window(self, -1, component=_create_plot_component())
-    
+
 if __name__ == "__main__":
     demo_main(PlotFrame, size=size, title=title)
 

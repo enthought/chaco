@@ -75,12 +75,12 @@ Views can be hooked up to an axis.  Since an axis represents a measure of the da
 
 Frames and Layout
 --------------------------------
-A particular type of layout makes assumptions about how its component pieces fit together.  
+A particular type of layout makes assumptions about how its component pieces fit together.
 
 Questions:
 - Should layouts be nestable?
 - Should layouts be manifest as instances (frames), or should they be functional classes that act on existing hierarchical information?  Grouping concepts like PlotGroup etc. seem related to layout functions, but multiple layouts might be able to apply to a given hierarchy of visual elements.
-- Visual elements might have metadata associated with them that describe what role or slot they fill in a given layout.  E.g. a plotframe may have spots for "main plot area", "legend area", two horizontal axis regions and two vertical axis regions.  Visual elements, then can identify themselves as fulfilling some of these roles.  
+- Visual elements might have metadata associated with them that describe what role or slot they fill in a given layout.  E.g. a plotframe may have spots for "main plot area", "legend area", two horizontal axis regions and two vertical axis regions.  Visual elements, then can identify themselves as fulfilling some of these roles.
 - Are Layout and Frame the same concepts?  Is frame more stateful, and layout more functional?
 
 

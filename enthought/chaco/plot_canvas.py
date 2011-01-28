@@ -15,7 +15,7 @@ class PlotCanvas(Canvas):
     #-------------------------------------------------------------------------
     # Public traits
     #-------------------------------------------------------------------------
-    
+
     # Default size to use for resizable components placed onto us.
     default_component_size = Tuple(200, 200)
 

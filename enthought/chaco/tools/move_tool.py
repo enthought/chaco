@@ -13,17 +13,17 @@ class MoveTool(DragTool):
     _offset = Tuple((0,0))
 
     def drag_start(self, event):
-        """ Called when the drag operation starts.  
-        
+        """ Called when the drag operation starts.
+
         Implements DragTool.
         """
         self._offset = (event.x - self.component.x, event.y - self.component.y)
         event.handled = True
-    
+
     def dragging(self, event):
-        """ This method is called for every mouse_move event that the tool 
-        receives while the user is dragging the mouse. 
-        
+        """ This method is called for every mouse_move event that the tool
+        receives while the user is dragging the mouse.
+
         Implements DragTool. Moves the component.
         """
         c = self.component
