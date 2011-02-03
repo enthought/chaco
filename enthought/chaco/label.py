@@ -9,6 +9,7 @@ from numpy import array, dot
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, transparent_color_trait
+from enthought.kiva.constants import FILL
 from enthought.kiva.traits.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Int, \
                                  List, Str, on_trait_change
@@ -187,8 +188,7 @@ class Label(HasTraits):
             # Draw border and fill background
             if self.bgcolor != "transparent":
                 gc.set_fill_color(self.bgcolor_)
-                gc.rect(0, 0, width, height)
-                gc.fill_path()
+                gc.draw_rect((0, 0, width, height), FILL)
             if self.border_visible and self.border_width > 0:
                 gc.set_stroke_color(self.border_color_)
                 gc.set_line_width(self.border_width)
