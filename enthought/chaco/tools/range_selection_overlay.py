@@ -84,9 +84,8 @@ class RangeSelectionOverlay(AbstractOverlay):
                 gc.set_stroke_color(self.border_color_)
                 gc.set_line_width(self.border_width)
                 gc.set_line_dash(self.border_style_)
-                gc.rect(lower_left[0], lower_left[1],
-                        upper_right[0], upper_right[1])
-                gc.draw_path()
+                gc.draw_rect((lower_left[0], lower_left[1],
+                             upper_right[0], upper_right[1]))
 
     #------------------------------------------------------------------------
     # Private methods

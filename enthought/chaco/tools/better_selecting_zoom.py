@@ -340,8 +340,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                     else:
                         color = self.color_
                     gc.set_fill_color(color)
-                    gc.rect(*rect)
-                    gc.draw_path()
+                    gc.draw_rect(rect)
                 else:
                     gc.rect(*rect)
                     gc.stroke_path()
@@ -364,8 +363,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             gc.set_fill_color(self.color_)
             gc.set_stroke_color(self.border_color_)
             gc.clip_to_rect(component.x, component.y, component.width, component.height)
-            gc.rect(lower_left[0], lower_left[1], upper_right[0], upper_right[1])
-            gc.draw_path()
+            gc.draw_rect((lower_left[0], lower_left[1], upper_right[0], upper_right[1]))
 
         return
 
