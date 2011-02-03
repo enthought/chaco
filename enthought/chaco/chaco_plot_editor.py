@@ -406,7 +406,7 @@ class ChacoPlotEditor ( Editor ):
             htitle = plotitem.index
 
         if plotitem.y_label_trait is not None:
-            htitle = getattr(self.object, plotitem.y_label_trait)
+            vtitle = getattr(self.object, plotitem.y_label_trait)
         elif plotitem.y_label is not None:
             vtitle = plotitem.y_label
         else:
