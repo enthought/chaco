@@ -64,7 +64,7 @@ def do_plotv(session, *args, **kw):
     """
 
     sort = kw.get("sort", "none")
-    sources_list = make_data_sources(session, index_sort=sort, *args)
+    sources_list = make_data_sources(session, sort, *args)
 
     plot_type = kw.get("type", "line")
     if plot_type == "scatter":
