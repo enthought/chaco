@@ -86,7 +86,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     border_size = Int(1)
 
     # The possible event states of this zoom tool.
-    event_state = Enum("normal", "selecting")
+    event_state = Enum("normal", "selecting", "pre_selecting")
 
     # The (x,y) screen point where the mouse went down.
     _screen_start = Trait(None, None, Tuple)
@@ -120,9 +120,13 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         state.
         """
         if self.enter_zoom_key.match(event) and not self._enabled:
-            self._start_select(event)
+            self.event_state = 'pre_selecting'
+            event.window.set_pointer(self.pointer)
+            event.window.set_mouse_owner(self, event.net_transform())
+            self._enabled = True
             event.handled = True
-        if self.exit_zoom_key.match(event) and self._enabled:
+        elif self.exit_zoom_key.match(event) and self._enabled:
+            self.state = 'normal'
             self._end_select(event)
             event.handled = True
 
@@ -152,6 +156,25 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             event.handled = True
 
         return
+    
+    def pre_selecting_left_down(self, event):
+        """ the use pressed the key to turn on the zoom mode,
+            now handle the click to start the select mode
+        """
+        self._start_select(event)
+        event.handled = True
+        
+    def pre_selecting_key_pressed(self, event):
+        """ Handle key presses, specifically the exit zoom key
+        """
+        if self.exit_zoom_key.match(event) and self._enabled:
+            self._end_selecting(event)
+        
+    def selecting_key_pressed(self, event):
+        """ Handle key presses, specifically the exit zoom key
+        """
+        if self.exit_zoom_key.match(event) and self._enabled:
+            self._end_selecting(event)
 
     def selecting_mouse_move(self, event):
         """ Handles the mouse moving when the tool is in the 'selecting' state.
