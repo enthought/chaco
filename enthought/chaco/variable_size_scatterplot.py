@@ -1,3 +1,5 @@
+from __future__ import with_statement
+
 from enthought.chaco.api import ScatterPlot, render_markers
 from enthought.enable.api import MarkerNameDict, CustomMarker, AbstractMarker
 from enthought.kiva.constants import STROKE
