@@ -16,7 +16,6 @@ from base import arg_find_runs
 from base_data_range import BaseDataRange
 from ticks import heckbert_interval
 
-
 class DataRange1D(BaseDataRange):
     """ Represents a 1-D data range.
     """
