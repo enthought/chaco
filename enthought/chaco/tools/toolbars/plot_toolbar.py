@@ -182,7 +182,7 @@ class PlotToolbar(Container, AbstractOverlay):
     def _do_layout(self, component=None):
         if component is None:
             component = self.component
-
+            
         if self.location in ['top', 'bottom']:
             if self.hiding:
                 self.height = height = 10
@@ -197,18 +197,21 @@ class PlotToolbar(Container, AbstractOverlay):
                 self.width = width = widest_button + self.horizontal_padding*2
 
         if component is not None:
+            # Overlay positions are not relative to the component's position,
+            # so we have to add in the component's position
+            cx, cy = component.outer_position
             if self.location is 'top':
-                self.x = (component.width - self.width)/2 + component.padding_left
-                self.y = component.height + component.padding_bottom - height - 2
+                self.x = cx + (component.width - self.width)/2 + component.padding_left
+                self.y = cy + component.height + component.padding_bottom - height - 2
             elif self.location is 'bottom':
-                self.x = (component.width - self.width)/2 + component.padding_left
-                self.y = component.padding_bottom + 2
+                self.x = cx + (component.width - self.width)/2 + component.padding_left
+                self.y = cy + component.padding_bottom + 2
             elif self.location is 'left':
-                self.x = component.padding_left + 2
-                self.y = (component.height - self.height)/2 + component.padding_bottom
+                self.x = cx + component.padding_left + 2
+                self.y = cY + (component.height - self.height)/2 + component.padding_bottom
             else:  # 'right'
-                self.x = component.width + component.padding_left - width - 2
-                self.y = (component.height - self.height)/2 + component.padding_bottom
+                self.x = cx + component.width + component.padding_left - width - 2
+                self.y = cy + (component.height - self.height)/2 + component.padding_bottom
 
         if self.location in ['top', 'bottom']:
             v_position = self.y + self.vertical_padding*2
