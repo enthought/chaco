@@ -16,6 +16,7 @@ from abstract_plot_data import AbstractPlotData
 from array_data_source import ArrayDataSource
 from array_plot_data import ArrayPlotData
 from base_xy_plot import BaseXYPlot
+from barplot import BarPlot
 from candle_plot import CandlePlot
 from colormapped_scatterplot import ColormappedScatterPlot
 from contour_line_plot import ContourLinePlot
@@ -104,6 +105,7 @@ class Plot(DataView):
     # This can be overriden to customize what renderer type the Plot
     # will instantiate for its various plotting methods.
     renderer_map = Dict(dict(line = LinePlot,
+                             bar = BarPlot,
                              scatter = ScatterPlot,
                              polygon = PolygonPlot,
                              cmap_scatter = ColormappedScatterPlot,
@@ -294,7 +296,7 @@ class Plot(DataView):
             name = self._make_new_plot_name()
         if origin is None:
             origin = self.default_origin
-        if plot_type in ("line", "scatter", "polygon"):
+        if plot_type in ("line", "scatter", "polygon", "bar"):
             if len(data) == 1:
                 if self.default_index is None:
                     # Create the default index based on the length of the first
@@ -334,6 +336,35 @@ class Plot(DataView):
                         self._auto_face_color_idx = \
                             (self._auto_face_color_idx + 1) % len(self.auto_colors)
                         styles["face_color"] = self.auto_colors[self._auto_face_color_idx]
+                elif plot_type == 'bar':
+                    cls = self.renderer_map[plot_type]
+                    # handle auto-coloring request
+                    if styles.get("color") == "auto":
+                        self._auto_color_idx = \
+                            (self._auto_color_idx + 1) % len(self.auto_colors)
+                        styles["fill_color"] = self.auto_colors[self._auto_color_idx]
+                        
+                    bar_width = styles.get('bar_width', cls().bar_width)
+                    index_min = min([source.get_data().min() \
+                                     for source in self.index_range.sources])
+                    index_max = max([source.get_data().max() \
+                                     for source in self.index_range.sources])
+                    self.index_range.low = index_min - bar_width
+                    self.index_range.high = index_max + bar_width
+
+                    
+                    value_min = min([source.get_data().min() \
+                                     for source in self.value_range.sources])
+                    value_max = max([source.get_data().max() \
+                                     for source in self.value_range.sources])
+                
+                    self.value_range.low = value_min - (value_max-value_min)*0.1
+                    self.value_range.high = value_max + (value_max-value_min)*0.1
+                    
+                    self.index_range.tight_bounds = False
+                    self.value_range.tight_bounds = False
+                    
+                   
                 else:
                     raise ValueError("Unhandled plot type: " + plot_type)
 
