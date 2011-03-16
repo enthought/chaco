@@ -148,6 +148,8 @@ class Plot(DataView):
     #------------------------------------------------------------------------
 
     def __init__(self, data=None, **kwtraits):
+        if 'origin' in kwtraits:
+            self.default_origin = kwtraits.pop('origin')
         if "title" in kwtraits:
             title = kwtraits.pop("title")
         else:
