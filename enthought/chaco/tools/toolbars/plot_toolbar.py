@@ -182,7 +182,7 @@ class PlotToolbar(Container, AbstractOverlay):
     def _do_layout(self, component=None):
         if component is None:
             component = self.component
-            
+
         if self.location in ['top', 'bottom']:
             if self.hiding:
                 self.height = height = 10

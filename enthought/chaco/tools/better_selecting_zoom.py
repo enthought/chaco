@@ -156,20 +156,20 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             event.handled = True
 
         return
-    
+
     def pre_selecting_left_down(self, event):
         """ the use pressed the key to turn on the zoom mode,
             now handle the click to start the select mode
         """
         self._start_select(event)
         event.handled = True
-        
+
     def pre_selecting_key_pressed(self, event):
         """ Handle key presses, specifically the exit zoom key
         """
         if self.exit_zoom_key.match(event) and self._enabled:
             self._end_selecting(event)
-        
+
     def selecting_key_pressed(self, event):
         """ Handle key presses, specifically the exit zoom key
         """

@@ -11,7 +11,7 @@ class MyPlot(HasTraits):
     """
     plot = Instance(ToolbarPlot)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), 
+    traits_view = View(Item('plot', editor=ComponentEditor(),
                             width=600, height=600, show_label=False))
 
     def __init__(self, depth, data_series, **kw):
@@ -21,12 +21,12 @@ class MyPlot(HasTraits):
         plot_data.set_data('data_series', data_series)
         self.plot = ToolbarPlot(plot_data, orientation='v', origin='top left')
         line = self.plot.plot(('index', 'data_series'))[0]
-        
+
         line_inspector = LineInspector(component=line, write_metadata=True)
         line.tools.append(line_inspector)
         line.overlays.append(line_inspector)
-        
-        
+
+
 depth = numpy.arange(1.0, 100.0, 0.1)
 data_series = numpy.sin(depth) + depth/10.0
 

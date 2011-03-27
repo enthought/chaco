@@ -345,7 +345,7 @@ class Plot(DataView):
                         self._auto_color_idx = \
                             (self._auto_color_idx + 1) % len(self.auto_colors)
                         styles["fill_color"] = self.auto_colors[self._auto_color_idx]
-                        
+
                     bar_width = styles.get('bar_width', cls().bar_width)
                     index_min = min([source.get_data().min() \
                                      for source in self.index_range.sources])
@@ -354,19 +354,19 @@ class Plot(DataView):
                     self.index_range.low = index_min - bar_width
                     self.index_range.high = index_max + bar_width
 
-                    
+
                     value_min = min([source.get_data().min() \
                                      for source in self.value_range.sources])
                     value_max = max([source.get_data().max() \
                                      for source in self.value_range.sources])
-                
+
                     self.value_range.low = value_min - (value_max-value_min)*0.1
                     self.value_range.high = value_max + (value_max-value_min)*0.1
-                    
+
                     self.index_range.tight_bounds = False
                     self.value_range.tight_bounds = False
-                    
-                   
+
+
                 else:
                     raise ValueError("Unhandled plot type: " + plot_type)
 
