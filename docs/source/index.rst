@@ -12,8 +12,8 @@ Chaco is built on three other Enthought packages:
 
   * `Traits <http://code.enthought.com/projects/traits>`_, as an event 
     notification framework
-  * Kiva, for rendering 2-D graphics to a variety of backends across platforms
-  * Enable, as a framework for writing interactive visual components, and for 
+  * `Kiva <https://svn.enthought.com/enthought/wiki/Kiva>`_, for rendering 2-D graphics to a variety of backends across platforms
+  * `Enable <http://code.enthought.com/projects/enable/>`_, as a framework for writing interactive visual components, and for 
     abstracting away GUI-toolkit-specific details of mouse and keyboard
     handling
 
