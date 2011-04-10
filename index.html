@@ -48,9 +48,13 @@
   <div class="section" id="chaco-documentation">
 <h1>Chaco Documentation<a class="headerlink" href="#chaco-documentation" title="Permalink to this headline">¶</a></h1>
 <p>Chaco is a Python package for building interactive and custom 2-D plots and
-visualizations. It has been optimized for displaying efficiently large
-datasets.</p>
-<p>It includes renderers for many popular plot types, built-in implementations of
+visualizations. It is part of the <a class="reference external" href="http://code.enthought.com/">Enthought Tool Suite</a>.</p>
+<p>It is meant to facilitate writing plotting applications of all levels of complexity,
+from simple scripts with hard-coded data to integrated plotting within large programs
+with large datasets and a multitude of interactive tools.
+While Chaco generates nice static plots for publication and presentation purposes, its
+components are all designed to be work well for interactive data visualization.</p>
+<p>Chaco includes renderers for many popular plot types, built-in implementations of
 common interactions with those plots, and a framework for extending and
 customizing plots and interactions.  Chaco can also render graphics in a
 non-interactive fashion to images, in either raster or vector formats, and it
@@ -68,19 +72,10 @@ has a subpackage for doing command-line plotting or simple scripting.</p>
 </tr>
 </tbody>
 </table>
-<p>Chaco is built on three other Enthought packages:</p>
-<blockquote>
-<ul class="simple">
-<li><a class="reference external" href="http://code.enthought.com/projects/traits">Traits</a>, as an event notification framework,</li>
-<li><a class="reference external" href="https://svn.enthought.com/enthought/wiki/Kiva">Kiva</a>, for rendering 2-D graphics to a variety of backends across platforms,</li>
-<li><a class="reference external" href="http://code.enthought.com/projects/enable/">Enable</a>, as a framework for writing interactive visual components, and for abstracting away GUI-toolkit-specific details of mouse and keyboard handling.</li>
-</ul>
-</blockquote>
-<p>To deal efficiently with large datasets, it also relies on <a class="reference external" href="http://numpy.scipy.org/">Numpy</a>.
-Finally, Chaco currently requires either wxPython or PyQt to display interactive plots, but a cross-platform OpenGL backend (using Pyglet) is in the works, and it will not require WX or Qt.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#licencing">Licencing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation-overview">Installation Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#running-some-examples">Running Some Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#creating-a-plot">Creating a Plot</a></li>
@@ -171,7 +166,7 @@ Finally, Chaco currently requires either wxPython or PyQt to display interactive
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Apr 09, 2011.
+      Last updated on Apr 10, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
     </div>
   </body>
