@@ -49,28 +49,35 @@
 <h1>Chaco Documentation<a class="headerlink" href="#chaco-documentation" title="Permalink to this headline">¶</a></h1>
 <p>Chaco is a Python package for building interactive and custom 2-D plots and
 visualizations. It has been optimized for displaying efficiently large
-datasets.
-It includes renderers for many popular plot types, built-in implementations of
+datasets.</p>
+<p>It includes renderers for many popular plot types, built-in implementations of
 common interactions with those plots, and a framework for extending and
 customizing plots and interactions.  Chaco can also render graphics in a
 non-interactive fashion to images, in either raster or vector formats, and it
 has a subpackage for doing command-line plotting or simple scripting.</p>
-<img alt="images/scalar_function.png" src="images/scalar_function.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><img alt="_images/simple_line.png" class="first last align-center" src="_images/simple_line.png" style="width: 400px;" />
+</td>
+<td><img alt="_images/scalar_function.png" class="first last align-center" src="_images/scalar_function.png" style="width: 400px;" />
+</td>
+</tr>
+</tbody>
+</table>
 <p>Chaco is built on three other Enthought packages:</p>
 <blockquote>
 <ul class="simple">
-<li><a class="reference external" href="http://code.enthought.com/projects/traits">Traits</a>, as an event
-notification framework</li>
-<li><a class="reference external" href="https://svn.enthought.com/enthought/wiki/Kiva">Kiva</a>, for rendering 2-D graphics to a variety of backends across platforms</li>
-<li><a class="reference external" href="http://code.enthought.com/projects/enable/">Enable</a>, as a framework for writing interactive visual components, and for
-abstracting away GUI-toolkit-specific details of mouse and keyboard
-handling</li>
+<li><a class="reference external" href="http://code.enthought.com/projects/traits">Traits</a>, as an event notification framework,</li>
+<li><a class="reference external" href="https://svn.enthought.com/enthought/wiki/Kiva">Kiva</a>, for rendering 2-D graphics to a variety of backends across platforms,</li>
+<li><a class="reference external" href="http://code.enthought.com/projects/enable/">Enable</a>, as a framework for writing interactive visual components, and for abstracting away GUI-toolkit-specific details of mouse and keyboard handling.</li>
 </ul>
 </blockquote>
 <p>To deal efficiently with large datasets, it also relies on <a class="reference external" href="http://numpy.scipy.org/">Numpy</a>.
-Finally, Chaco currently requires either wxPython or PyQt to display
-interactive plots, but a cross-platform OpenGL backend (using Pyglet) is in
-the works, and it will not require WX or Qt.</p>
+Finally, Chaco currently requires either wxPython or PyQt to display interactive plots, but a cross-platform OpenGL backend (using Pyglet) is in the works, and it will not require WX or Qt.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
