@@ -21,8 +21,7 @@ Chaco is built on three other Enthought packages:
     abstracting away GUI-toolkit-specific details of mouse and keyboard
     handling
 
-To deal efficiently with large datasets, it also requires on `Numpy 
-<http://numpy.scipy.org/>`_ to be installed.
+To deal efficiently with large datasets, it also relies on `Numpy <http://numpy.scipy.org/>`_.
 Finally, Chaco currently requires either wxPython or PyQt to display 
 interactive plots, but a cross-platform OpenGL backend (using Pyglet) is in 
 the works, and it will not require WX or Qt.
