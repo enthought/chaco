@@ -27,8 +27,6 @@ Chaco is built on three other Enthought packages:
 To deal efficiently with large datasets, it also relies on `Numpy <http://numpy.scipy.org/>`_.
 Finally, Chaco currently requires either wxPython or PyQt to display interactive plots, but a cross-platform OpenGL backend (using Pyglet) is in the works, and it will not require WX or Qt.
 
-To install Chaco and learn how to use it, please refer to the Quick start and the tutorials below. 
-
 .. toctree::
   :maxdepth: 2
 

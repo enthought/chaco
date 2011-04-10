@@ -20,16 +20,9 @@ There are several different ways to get Chaco:
   <http://www.enthought.com/epd>`_ web site and download the appropriate
   version for your platform.  After running the installer, you will have a
   working version of Chaco.
-  
-  *Available platforms:* 
-  
-  * Windows 32-bit
-  * Mac OS X 10.4 and 10.5
-  * RedHat Enterprise Linux 3 (32-bit and 64-bit)
 
   .. note::
-     Enthought Python Distribution is free for academic and personal
-     use, and fee-based for commercial and government use.
+     Enthought Python Distribution is free for academic users.
 
 * *(Windows, Mac)* Install from PyPI using easy_install (part of setuptools)
   from the command line:
