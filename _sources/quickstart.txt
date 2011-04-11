@@ -3,16 +3,15 @@ Quickstart
 ##########
 
 This section is meant to help users on well-supported platforms and common
-Python environments get started using Chaco as quickly as possible.  If your
-platform is not listed here, or your Python installation has some quirks, then
-some of the following instructions might not work for you.  If you encounter
-any problems in the steps below, please refer to the :ref:`installation`
-section for more detailed instructions.
+Python environments get started using Chaco as quickly as possible. As part of the 
+`Enthought Tool Suite <http://code.enthought.com/>`_, Chaco users can subscribe 
+to the `enthought-dev <https://mail.enthought.com/mailman/listinfo/enthought-dev>`_  
+**mailing list** to post questions, consult archives and share tips.
 
 Licencing
 =========
 
-Chaco as part of the `Enthought Tool Suite <http://code.enthought.com/>`_ is free 
+As part of the `Enthought Tool Suite <http://code.enthought.com/>`_, Chaco is free 
 and open source under the BSD licence.
 
 Installation Overview
@@ -33,8 +32,9 @@ It also relies on two external packages:
   * `Numpy <http://numpy.scipy.org/>`_, to deal efficiently with large datasets,
   * Either `wxPython <http://www.wxpython.org/>`_ or `PyQt <http://www.riverbankcomputing.co.uk/software/pyqt/intro>`_ to display interactive plots.
 
-  .. note::
-  In addition to wxPython or PyQt a cross-platform OpenGL backend (using Pyglet) is in the works, and it will not require WX or Qt.
+  .. note
+  .. ::
+  .. In addition to wxPython or PyQt a cross-platform OpenGL backend (using Pyglet) is in the works, and it will not require WX or Qt.
 
 Installation
 ------------
@@ -42,38 +42,48 @@ Installation
 There are several different ways to get Chaco. You can either download and install the 
 `Enthought Python Distribution (EPD) <http://www.enthought.com/epd>`_ or build Chaco 
 on your machine. Because of the number of packages required to build Chaco and its 
-dependencies we highly recommend to install EPD.
+dependencies **we highly recommend to install EPD**. If you encounter
+any problems in the steps below, please refer to the :ref:`installation`
+section for more detailed instructions or to the 
+`enthought-dev <https://mail.enthought.com/mailman/listinfo/enthought-dev>`_  
+**mailing list** to post questions, consult archives and share tips.
 
-* Install the Enthought Python Distribution.
-  Chaco, the rest of the Enthought Tool Suite and a lot more are bundled in it. 
-  This allows for the installation of Chaco and all its dependencies to be 
-  installed at once. These packages will be linked to a new instance of python.
-  Go to the main `EPD <http://www.enthought.com/epd>`_ 
-  web site and download the appropriate version for your platform (Windows, MAC, Linux, 
-  Solaris).  After running the installer, you will have a working version of Chaco and 
-  several examples.
+
+  1. Install the Enthought Python Distribution.
+     Chaco, the rest of the Enthought Tool Suite and a lot more are bundled in it. 
+     This allows for the installation of Chaco and all its dependencies to be 
+     installed at once. **These packages will be linked to a new instance of python**.
+     Go to the main `EPD <http://www.enthought.com/epd>`_ 
+     web site and download the appropriate version for your platform (Windows, MAC, Linux, 
+     Solaris are available).  After running the installer, you will have a working version of Chaco and 
+     several examples.
 
   .. note::
      Enthought Python Distribution is free for academic users and a free version of EPD
      containing Chaco will be released soon.
 
-* *(Linux)* Install via the distribution's packaging mechanism.  Enthought provide .debs 
-installers for Debian and Ubuntu and .rpm installers for Redhat.
+Building Chaco on your machine requires to build Chaco and each of its dependencies. It 
+has the advantage of installing it on top of the python instance of your OS.
+But the building process might be challenging and will require SWIG, Cython and several 
+development libraries to be installed. 
 
-Building Chaco on your machine requires to build Chaco and each of its dependencies. 
-This might be challenging and will require SWIG and Cython to be installed.
 
-* Download sources as a project from the `Chaco github repository <https://github.com/enthought/chaco>`_ or alternatively as a part of the ETS (for details see http://code.enthought.com/source/). Please refer to the :ref:`installation` section for more detailed instructions.
+  2. *(Linux only)* Install via the distribution's packaging mechanism.  Enthought provide .debs 
+  installers for Debian and Ubuntu and .rpm installers for Redhat. 
 
-* Install Chaco and its :ref:`dependencies` from `PyPI <http://pypi.python.org/pypi>`_ using 
+
+  3. Download sources as a project from the 
+  `Chaco github repository <https://github.com/enthought/chaco>`_ or alternatively as a part 
+  of the ETS (for details see http://code.enthought.com/source/). Please refer to the 
+  :ref:`installation` section for more detailed instructions.
+
+
+  4. Install Chaco and its :ref:`dependencies` from `PyPI <http://pypi.python.org/pypi>`_ using 
   `easy_install <http://packages.python.org/distribute/easy_install.html>`_ (part of setuptools) 
   or using `pip <http://www.pip-installer.org/en/latest/>`_. For example using easy_install, 
   simply type
 
   :command:`easy_install Chaco`
-  
-  .. note::
-     Though this might be simpler for some users, this is not the supported way to install Chaco. 
 
 
 Running Some Examples
