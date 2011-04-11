@@ -143,6 +143,9 @@ class ArrayPlotData(AbstractPlotData):
         else:
             event['added'] = [name]
 
+        if isinstance(new_data, list) or isinstance(new_data, tuple):
+            new_data = array(new_data)
+
         self.arrays[name] = new_data
         self.data_changed = event
         return name
