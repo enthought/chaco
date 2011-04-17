@@ -768,6 +768,9 @@ def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch
         gc.save(filename)
         del gc
         print "Saved to", filename
+    else:
+        print "Format not yet supported:", ext
+        print "Currently supported formats are: bmp, png, jpg."
     return
 
 
