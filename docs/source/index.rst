@@ -2,29 +2,26 @@ Chaco Documentation
 ===================
 
 Chaco is a Python package for building interactive and custom 2-D plots and
-visualizations. It has been optimized for displaying efficiently large 
-datasets. 
-It includes renderers for many popular plot types, built-in implementations of
+visualizations. It is part of the `Enthought Tool Suite <http://code.enthought.com/>`_. 
+
+It is meant to facilitate writing plotting applications of all levels of complexity, 
+from simple scripts with hard-coded data to integrated plotting within large programs 
+with large datasets and a multitude of interactive tools. 
+While Chaco generates nice static plots for publication and presentation purposes, its 
+components are all designed to be work well for interactive data visualization.
+
+Chaco includes renderers for many popular plot types, built-in implementations of
 common interactions with those plots, and a framework for extending and
 customizing plots and interactions.  Chaco can also render graphics in a
 non-interactive fashion to images, in either raster or vector formats, and it
 has a subpackage for doing command-line plotting or simple scripting.
 
-.. image:: images/scalar_function.png
 
-Chaco is built on three other Enthought packages:
-
-  * `Traits <http://code.enthought.com/projects/traits>`_, as an event 
-    notification framework
-  * `Kiva <https://svn.enthought.com/enthought/wiki/Kiva>`_, for rendering 2-D graphics to a variety of backends across platforms
-  * `Enable <http://code.enthought.com/projects/enable/>`_, as a framework for writing interactive visual components, and for 
-    abstracting away GUI-toolkit-specific details of mouse and keyboard
-    handling
-
-To deal efficiently with large datasets, it also relies on `Numpy <http://numpy.scipy.org/>`_.
-Finally, Chaco currently requires either wxPython or PyQt to display 
-interactive plots, but a cross-platform OpenGL backend (using Pyglet) is in 
-the works, and it will not require WX or Qt.
++----------------------------------------+--------------------------------------+
+|.. image:: _images/simple_line.png      |.. image:: _images/scalar_function.png|
+|   :width: 400 px                       |   :width: 400 px                     |
+|   :align: center                       |   :align: center                     |
++----------------------------------------+--------------------------------------+
 
 .. toctree::
   :maxdepth: 2
