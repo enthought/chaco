@@ -8,7 +8,7 @@ from enthought.etsconfig.api import ETSConfig
 from enthought.enable.api import black_color_trait, LineStyle, ColorTrait,\
     white_color_trait, MarkerTrait, Window
 from enthought.enable.traits.ui.api import RGBAColorEditor
-from enthought.kiva.traits.kiva_font_trait import KivaFont
+from enthought.kiva.trait_defs.kiva_font_trait import KivaFont
 from enthought.traits.api import Enum, Str, Range, Tuple, \
                                  Bool, Trait, Int, Any, Property
 from enthought.traits.ui.api import Item

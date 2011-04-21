@@ -10,7 +10,7 @@ from numpy import array, dot
 # Enthought library imports
 from enthought.enable.api import black_color_trait, transparent_color_trait
 from enthought.kiva.constants import FILL
-from enthought.kiva.traits.kiva_font_trait import KivaFont
+from enthought.kiva.trait_defs.kiva_font_trait import KivaFont
 from enthought.traits.api import Any, Bool, Enum, Float, HasTraits, Int, \
                                  List, Str, on_trait_change
 
