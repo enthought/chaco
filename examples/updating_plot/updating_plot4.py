@@ -16,7 +16,7 @@ from scipy.special import jn
 # Enthought library imports
 from enthought.enable.api import Window
 from enthought.enable.example_support import DemoFrame, demo_main
-from enthought.traits.api import false, HasTraits
+from traits.api import false, HasTraits
 
 # Chaco imports
 from enthought.chaco.api import *

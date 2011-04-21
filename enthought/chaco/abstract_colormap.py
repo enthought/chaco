@@ -1,6 +1,6 @@
 """ Defines the base class for color maps
 """
-from enthought.traits.api import Enum, HasTraits, Instance
+from traits.api import Enum, HasTraits, Instance
 
 from data_range_1d import DataRange1D
 

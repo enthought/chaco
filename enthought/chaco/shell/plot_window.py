@@ -4,7 +4,7 @@
 from enthought.enable.api import Window
 from enthought.chaco.shell.scaly_plot import ScalyPlot
 
-from enthought.etsconfig.api import ETSConfig
+from traits.etsconfig.api import ETSConfig
 
 if ETSConfig.toolkit == "wx":
 

@@ -1,7 +1,7 @@
 """ Defines the DataPrinter tool class.
 """
 # Enthought library imports
-from enthought.traits.api import Str
+from traits.api import Str
 from enthought.enable.api import BaseTool
 
 # Chaco imports

@@ -4,8 +4,8 @@ import numpy
 
 # Enthought library imports
 from enthought.enable.api import ComponentEditor
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import Item, View
+from traits.api import HasTraits, Instance
+from traitsui.api import Item, View
 
 # Chaco imports
 from enthought.chaco.api import LabelAxis, Plot, ArrayPlotData

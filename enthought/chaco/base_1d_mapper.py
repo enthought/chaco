@@ -1,7 +1,7 @@
 """ Defines the Base1DMapper class.
 """
 # Enthought library imports
-from enthought.traits.api import Bool, Instance, Float, Property
+from traits.api import Bool, Instance, Float, Property
 
 # Local relative imports
 from abstract_mapper import AbstractMapper

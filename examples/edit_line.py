@@ -23,8 +23,8 @@ from enthought.chaco.example_support import COLOR_PALETTE
 # Enthought library imports
 from enthought.enable.tools.api import DragTool
 from enthought.enable.api import Component, ComponentEditor, Window
-from enthought.traits.api import HasTraits, Instance, Int, Tuple
-from enthought.traits.ui.api import Item, Group, View
+from traits.api import HasTraits, Instance, Int, Tuple
+from traitsui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import add_default_axes, add_default_grids, \

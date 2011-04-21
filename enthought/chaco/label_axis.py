@@ -5,7 +5,7 @@ from traceback import print_exc
 from numpy import array, float64, inf, searchsorted, take, unique
 
 # Enthought library imports
-from enthought.traits.api import Any, Str, List, Float
+from traits.api import Any, Str, List, Float
 
 # Local, relative imports
 from axis import PlotAxis

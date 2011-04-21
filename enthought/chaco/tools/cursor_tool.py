@@ -20,7 +20,7 @@ import numpy
 
 # Enthought library imports
 from enthought.enable.tools.drag_tool import DragTool
-from enthought.traits.api import Int, Property, cached_property, Float,\
+from traits.api import Int, Property, cached_property, Float,\
                                 Bool, Instance, Tuple, Disallow
 
 # Chaco imports

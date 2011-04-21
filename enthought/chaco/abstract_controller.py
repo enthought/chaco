@@ -2,7 +2,7 @@
 """
 # Enthought library imports
 from enthought.enable.api import Component, Interactor
-from enthought.traits.api import Instance
+from traits.api import Instance
 
 
 class AbstractController(Interactor):

@@ -4,8 +4,8 @@ from enthought.chaco.api import LinearMapper, Plot, ArrayDataSource, DataRange1D
 from enthought.chaco.multi_array_data_source import MultiArrayDataSource
 from enthought.chaco.multi_line_plot import MultiLinePlot
 from enthought.enable.api import ComponentEditor
-from enthought.traits.api import Instance, HasTraits
-from enthought.traits.ui.api import View, Item
+from traits.api import Instance, HasTraits
+from traitsui.api import View, Item
 
 class MyPlot(HasTraits):
     """ Displays a plot with a few buttons to control which overlay

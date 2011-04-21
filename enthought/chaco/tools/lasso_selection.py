@@ -5,7 +5,7 @@ import numpy
 from numpy import array, empty, sometrue, transpose, vstack, zeros
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Enum, Event, Bool, Instance, \
+from traits.api import Any, Array, Enum, Event, Bool, Instance, \
                                  Property, Trait, List
 from enthought.kiva.agg import points_in_polygon
 

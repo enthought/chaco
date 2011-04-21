@@ -4,9 +4,9 @@ import time
 
 # ETS imports (non-chaco)
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance, Int, List, Str, Enum, \
+from traits.api import HasTraits, Instance, Int, List, Str, Enum, \
         on_trait_change, Any, DelegatesTo
-from enthought.traits.ui.api import Item, View, HSplit, VGroup, EnumEditor
+from traitsui.api import Item, View, HSplit, VGroup, EnumEditor
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot, PlotAxis, \

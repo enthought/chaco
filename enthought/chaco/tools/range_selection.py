@@ -4,7 +4,7 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, List, \
+from traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, List, \
                              Property, Str, Trait, Tuple
 from enthought.enable.api import KeySpec
 

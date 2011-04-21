@@ -1,6 +1,6 @@
 
 
-from enthought.traits.api import Bool, HasTraits, Str, Float, Enum, List, Int
+from traits.api import Bool, HasTraits, Str, Float, Enum, List, Int
 from enthought.chaco.serializable import Serializable
 
 class Root(HasTraits):

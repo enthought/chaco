@@ -4,7 +4,7 @@
 from numpy import array, isfinite, ones, nanargmin, nanargmax, ndarray
 
 # Enthought library imports
-from enthought.traits.api import Any, Constant, Int, Tuple
+from traits.api import Any, Constant, Int, Tuple
 
 # Chaco imports
 from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait

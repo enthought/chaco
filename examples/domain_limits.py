@@ -4,8 +4,8 @@ from enthought.chaco.plot import Plot, ArrayPlotData
 from enthought.chaco.api import ToolbarPlot
 from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.enable.api import ComponentEditor
-from enthought.traits.api import Instance, HasTraits
-from enthought.traits.ui.api import View, Item
+from traits.api import Instance, HasTraits
+from traitsui.api import View, Item
 
 
 class ExamplePlotApp(HasTraits):

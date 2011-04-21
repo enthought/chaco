@@ -3,7 +3,7 @@
 from numpy import logical_and
 
 # Enthought library imports
-from enthought.traits.api import Any, Bool, Float, Instance, Property, Enum
+from traits.api import Any, Bool, Float, Instance, Property, Enum
 
 # Local imports
 from abstract_overlay import AbstractOverlay

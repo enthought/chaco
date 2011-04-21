@@ -3,8 +3,8 @@ from numpy import linspace, meshgrid, exp
 
 from enthought.chaco.api import ArrayPlotData, Plot, jet
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import Enum, HasTraits, Instance
-from enthought.traits.ui.api import Group, Item, View
+from traits.api import Enum, HasTraits, Instance
+from traitsui.api import Group, Item, View
 
 class ImagePlotTraits(HasTraits):
 

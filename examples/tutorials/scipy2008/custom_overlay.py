@@ -5,8 +5,8 @@ from enthought.chaco.api import ArrayPlotData, Plot, AbstractOverlay
 from enthought.chaco.tools.api import PanTool
 from enthought.enable.component_editor import ComponentEditor
 from enthought.enable.api import ColorTrait
-from enthought.traits.api import Button, Float, Range, HasTraits, Instance
-from enthought.traits.ui.api import Item, View, Group, HGroup, RangeEditor, \
+from traits.api import Button, Float, Range, HasTraits, Instance
+from traitsui.api import Item, View, Group, HGroup, RangeEditor, \
                                     spring, Handler
 
 class CustomOverlay(AbstractOverlay):

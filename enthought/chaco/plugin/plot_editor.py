@@ -1,8 +1,8 @@
 from enthought.chaco.shell.scaly_plot import ScalyPlot
 from enthought.enable.component_editor import ComponentEditor
-from enthought.pyface.workbench.api import TraitsUIEditor
-from enthought.traits.api import Any, Enum, HasTraits, Property, Str
-from enthought.traits.ui import api as tui
+from pyface.workbench.api import TraitsUIEditor
+from traits.api import Any, Enum, HasTraits, Property, Str
+from traitsui import api as tui
 
 
 class PlotUI(HasTraits):

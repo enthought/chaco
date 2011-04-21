@@ -13,7 +13,7 @@ and functions.
 from numpy import array, concatenate, take, argsort, argmin, \
                   argmax, transpose, newaxis, sort
 
-from enthought.traits.api import HasStrictTraits, Bool, Enum, Tuple, \
+from traits.api import HasStrictTraits, Bool, Enum, Tuple, \
                              Property, Any, Float
 
 

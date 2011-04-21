@@ -8,7 +8,7 @@ from numpy import array, cos, pi, sin, transpose
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, LineStyle
-from enthought.traits.api import Float
+from traits.api import Float
 
 # Local, relative imports
 from abstract_plot_renderer import AbstractPlotRenderer

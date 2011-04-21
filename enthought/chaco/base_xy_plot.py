@@ -8,7 +8,7 @@ from numpy import around, array, isnan, transpose
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait
-from enthought.traits.api import Any, Array, Bool, Enum, Float, Instance, \
+from traits.api import Any, Array, Bool, Enum, Float, Instance, \
                              Property, Range
 
 

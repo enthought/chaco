@@ -5,7 +5,7 @@
 from numpy import array
 
 # Enthougth library imports
-from enthought.traits.api import Constant, Instance, Tuple
+from traits.api import Constant, Instance, Tuple
 
 # Chaco imports
 from abstract_data_source import AbstractDataSource

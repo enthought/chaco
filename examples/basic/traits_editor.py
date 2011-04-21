@@ -15,8 +15,8 @@ text box.
 from numpy import linspace, pi
 
 # Enthought library imports
-from enthought.traits.api import Array, Dict, Enum, HasTraits, Str
-from enthought.traits.ui.api import Item, View
+from traits.api import Array, Dict, Enum, HasTraits, Str
+from traitsui.api import Item, View
 
 # Chaco imports
 from enthought.chaco.chaco_plot_editor import ChacoPlotEditor, \

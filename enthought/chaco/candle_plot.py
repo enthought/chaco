@@ -5,7 +5,7 @@ from __future__ import with_statement
 from numpy import array, compress, concatenate, searchsorted
 
 # Enthought library imports
-from enthought.traits.api import Instance, Property
+from traits.api import Instance, Property
 
 # Chaco imports
 from abstract_data_source import AbstractDataSource

@@ -1,8 +1,8 @@
 
 from numpy import linspace, pi, sin, tan
 
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import Item, Tabbed, View
+from traits.api import HasTraits, Instance
+from traitsui.api import Item, Tabbed, View
 
 from enthought.chaco.api import Plot, AbstractPlotData, ArrayPlotData
 from enthought.chaco.tools.api import PanTool, ZoomTool

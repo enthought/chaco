@@ -11,7 +11,7 @@
 from __future__ import with_statement
 
 # Enthought library imports
-from enthought.traits.api import Bool
+from traits.api import Bool
 
 # Local, relative imports
 from base_plot_frame import BasePlotFrame

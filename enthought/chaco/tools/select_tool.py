@@ -2,7 +2,7 @@
 
 # Enthought library imports
 from enthought.enable.api import BaseTool, KeySpec
-from enthought.traits.api import Enum, Float, Instance
+from traits.api import Enum, Float, Instance
 
 
 class SelectTool(BaseTool):

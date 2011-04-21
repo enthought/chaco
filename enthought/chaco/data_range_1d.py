@@ -8,7 +8,7 @@ from math import ceil, floor, log
 from numpy import compress, inf, isinf, isnan, ndarray
 
 # Enthought library imports
-from enthought.traits.api import Bool, CFloat, Enum, Float, Property, Trait, \
+from traits.api import Bool, CFloat, Enum, Float, Property, Trait, \
                                  Callable
 
 # Local relative imports

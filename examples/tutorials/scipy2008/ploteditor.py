@@ -4,8 +4,8 @@ from numpy import linspace, sin
 from enthought.chaco.api import ArrayPlotData, Plot
 from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import Enum, HasTraits, Instance
-from enthought.traits.ui.api import Item, Group, View
+from traits.api import Enum, HasTraits, Instance
+from traitsui.api import Item, Group, View
 
 class PlotEditor(HasTraits):
 

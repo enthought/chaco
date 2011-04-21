@@ -1,6 +1,6 @@
 
 from enthought.chaco.tools.api import SelectTool
-from enthought.traits.api import List
+from traits.api import List
 
 from legend import Legend
 

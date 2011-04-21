@@ -5,7 +5,7 @@ from __future__ import with_statement
 # Enthought library imports
 from enthought.enable.api import ColorTrait
 from enthought.kiva.trait_defs.kiva_font_trait import KivaFont
-from enthought.traits.api import Any, Enum, Int, Str, Float, Trait
+from traits.api import Any, Enum, Int, Str, Float, Trait
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay

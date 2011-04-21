@@ -1,7 +1,7 @@
 """ Defines the MoveTool class.
 """
 # Enthought library imports
-from enthought.traits.api import Tuple
+from traits.api import Tuple
 from enthought.enable.tools.drag_tool import DragTool
 
 

@@ -3,7 +3,7 @@ function.
 """
 # Enthought library imports
 from enthought.enable.api import BaseTool, Container
-from enthought.traits.api import List, Dict, Str
+from traits.api import List, Dict, Str
 
 # Chaco imports
 from enthought.chaco.api import PlotAxis, ColorBar

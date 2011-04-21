@@ -6,7 +6,7 @@ import wave
 import numpy
 
 # Enthought library imports
-from enthought.util.resource import find_resource
+from traits.util.resource import find_resource
 
 def wav_to_numeric( fname, max_frames=-1 ):
   f = wave.open( fname, 'rb' )

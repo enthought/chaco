@@ -1,13 +1,13 @@
 # Enthought library imports
-from enthought.traits.api import Instance, HasTraits, List
-from enthought.traits.ui.api import View, Item
+from traits.api import Instance, HasTraits, List
+from traitsui.api import View, Item
 from enthought.enable.api import Container
 from enthought.enable.component_editor import ComponentEditor
 from enthought.chaco.api import VPlotContainer
 from enthought.chaco.plot import Plot
 from enthought.chaco.tools.api import PanTool, ZoomTool
 
-from enthought.traits.ui.wx.constants import WindowColor
+from traitsui.wx.constants import WindowColor
 
 class PlotWindow(HasTraits):
     plot = Instance(Container)

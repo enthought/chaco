@@ -6,7 +6,7 @@ from numpy import array, asarray
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait, MarkerTrait
-from enthought.traits.api import Float, Int, Str, Trait
+from traits.api import Float, Int, Str, Trait
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay

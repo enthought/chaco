@@ -2,7 +2,7 @@
 from numpy import invert, zeros
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Float, Instance, Property, Tuple
+from traits.api import Any, Bool, Float, Instance, Property, Tuple
 
 # Local relative imports
 from image_plot import ImagePlot

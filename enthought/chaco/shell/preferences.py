@@ -2,7 +2,7 @@
 """
 
 from enthought.enable.api import white_color_trait
-from enthought.traits.api import Enum, HasTraits, Int, Str
+from traits.api import Enum, HasTraits, Int, Str
 
 
 class Preferences(HasTraits):

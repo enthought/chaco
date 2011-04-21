@@ -13,9 +13,9 @@ from numpy import argsort, array, invert, isnan, take, transpose
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, ColorTrait, LineStyle
-from enthought.traits.api import Float, List, Str, Trait, \
+from traits.api import Float, List, Str, Trait, \
             Bool, Callable, Property, cached_property, Instance, Array
-from enthought.traits.ui.api import Item, View, ScrubberEditor, HGroup
+from traitsui.api import Item, View, ScrubberEditor, HGroup
 
 from array_data_source import ArrayDataSource
 from base import arg_find_runs, bin_search

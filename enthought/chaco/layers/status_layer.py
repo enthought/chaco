@@ -5,8 +5,8 @@ import os.path
 import xml.etree.cElementTree as etree
 
 from enthought.chaco.api import AbstractOverlay
-from enthought.pyface.timer.timer import Timer
-from enthought.traits.api import Instance, Str, Enum, Float, Int
+from pyface.timer.timer import Timer
+from traits.api import Instance, Str, Enum, Float, Int
 from enthought.savage.svg.document import SVGDocument
 from enthought.savage.svg.backends.kiva.renderer import Renderer as KivaRenderer
 

@@ -1,7 +1,7 @@
 import numpy as np
 
-from enthought.traits.api import Instance, HasTraits, Range, Array
-from enthought.traits.ui.api import View, Item, HGroup, VGroup, Group
+from traits.api import Instance, HasTraits, Range, Array
+from traitsui.api import View, Item, HGroup, VGroup, Group
 
 from enthought.enable.api import ComponentEditor
 

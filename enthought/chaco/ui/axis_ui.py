@@ -6,7 +6,7 @@
 """
 
 # Enthought Imports
-from enthought.traits.ui.api import View, Group, VGroup, HGroup, Item, TextEditor
+from traitsui.api import View, Group, VGroup, HGroup, Item, TextEditor
 
 title_group = Group(
                     Item("title", label="Text", editor=TextEditor()),

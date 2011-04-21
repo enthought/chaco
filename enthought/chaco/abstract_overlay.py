@@ -5,7 +5,7 @@ data-related plot items and the decorators on them.
 """
 
 from enthought.enable.api import Component
-from enthought.traits.api import Instance
+from traits.api import Instance
 
 from plot_component import PlotComponent
 

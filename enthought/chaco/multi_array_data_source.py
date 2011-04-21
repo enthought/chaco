@@ -5,7 +5,7 @@ from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
 import types
 
 # Enthought library imports
-from enthought.traits.api import Any, Int, Tuple
+from traits.api import Any, Int, Tuple
 
 # Chaco imports
 from base import NumericalSequenceTrait, SortOrderTrait

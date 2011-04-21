@@ -6,7 +6,7 @@ The main app for the PlotCanvas application
 from __future__ import with_statement
 
 # Enthought library imports
-from enthought.traits.api import Float
+from traits.api import Float
 from enthought.enable.api import Window, Container, Component, Pointer
 from enthought.enable.tools.api import MoveTool
 from enthought.enable.example_support import DemoFrame, demo_main

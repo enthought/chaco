@@ -6,7 +6,7 @@ Defines the PointDataSource class.
 from numpy import array, transpose
 
 # Enthought library imports
-from enthought.traits.api import Enum, Property, ReadOnly, Tuple
+from traits.api import Enum, Property, ReadOnly, Tuple
 
 # Local, relative imports
 from base import PointTrait, reverse_map_1d, SortOrderTrait

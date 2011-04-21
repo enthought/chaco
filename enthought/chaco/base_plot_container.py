@@ -4,7 +4,7 @@ import warnings
 
 # Enthought library imports
 from enthought.enable.api import Container
-from enthought.traits.api import Bool, Instance, Property, Str, Tuple
+from traits.api import Bool, Instance, Property, Str, Tuple
 
 # Local, relative imports
 from plot_component import DEFAULT_DRAWING_ORDER, PlotComponent

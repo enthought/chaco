@@ -7,7 +7,7 @@ from numpy import concatenate, newaxis
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait, LineStyle
-from enthought.traits.api import Float, Instance
+from traits.api import Float, Instance
 
 # Local imports
 from abstract_overlay import AbstractOverlay

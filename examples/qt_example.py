@@ -3,13 +3,13 @@ Example of how to directly embed Chaco into Qt widgets.
 
 The actual plot being created is drawn from the basic/line_plot1.py code.
 """
-from enthought.etsconfig.etsconfig import ETSConfig
+from traits.etsconfig.etsconfig import ETSConfig
 ETSConfig.toolkit = "qt4"
 
 import sys
 from numpy import linspace
 from scipy.special import jn
-from enthought.qt import QtGui, QtCore
+from traits.qt import QtGui, QtCore
 
 from enthought.enable.api import Window
 

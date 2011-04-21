@@ -4,8 +4,8 @@ import numpy
 from enthought.chaco.api import Plot, ArrayPlotData
 from enthought.chaco.layers.api import ErrorLayer, WarningLayer, StatusLayer
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance, Button
-from enthought.traits.ui.api import Item, View, HGroup
+from traits.api import HasTraits, Instance, Button
+from traitsui.api import Item, View, HGroup
 
 class MyPlot(HasTraits):
     """ Displays a plot with a few buttons to control which overlay

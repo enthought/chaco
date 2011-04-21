@@ -138,8 +138,8 @@ lack of a better term. There is definitely a bit more code, and the plot
 initially doesn't look much different, but it sets us up to do more interesting
 things, as you'll see later on::
 
-    from enthought.traits.api import HasTraits, Instance
-    from enthought.traits.ui.api import View, Item
+    from traits.api import HasTraits, Instance
+    from traitsui.api import View, Item
     from enthought.chaco.api import Plot, ArrayPlotData
     from enthought.enable.component_editor import ComponentEditor
     from numpy import linspace, sin
@@ -289,8 +289,8 @@ Scatter Plots
 
 We can use the same pattern to build a scatter plot::
 
-    from enthought.traits.api import HasTraits, Instance
-    from enthought.traits.ui.api import View, Item
+    from traits.api import HasTraits, Instance
+    from traitsui.api import View, Item
     from enthought.chaco.api import Plot, ArrayPlotData
     from enthought.enable.component_editor import ComponentEditor
     from numpy import linspace, sin
@@ -325,8 +325,8 @@ Image Plot
 
 Image plots can be created in a similar fashion::
 
-    from enthought.traits.api import HasTraits, Instance
-    from enthought.traits.ui.api import View, Item
+    from traits.api import HasTraits, Instance
+    from traitsui.api import View, Item
     from enthought.chaco.api import Plot, ArrayPlotData, jet
     from enthought.enable.component_editor import ComponentEditor
     from numpy import exp, linspace, meshgrid
@@ -371,8 +371,8 @@ its :meth:`plot()` method twice. Each call creates a new renderer and adds it to
 the Plot object's list of renderers. Also notice that we are reusing the *x*
 array from the ArrayPlotData::
 
-    from enthought.traits.api import HasTraits, Instance
-    from enthought.traits.ui.api import View, Item
+    from traits.api import HasTraits, Instance
+    from traitsui.api import View, Item
     from enthought.chaco.api import Plot, ArrayPlotData
     from enthought.enable.component_editor import ComponentEditor
     from numpy import cos, linspace, sin
@@ -436,8 +436,8 @@ Containers can have any Chaco component added to them.  The following code
 creates a separate Plot instance for the scatter plot and the line
 plot, and adds them both to the HPlotContainer object::
 
-    from enthought.traits.api import HasTraits, Instance
-    from enthought.traits.ui.api import View, Item
+    from traits.api import HasTraits, Instance
+    from traitsui.api import View, Item
     from enthought.chaco.api import HPlotContainer, ArrayPlotData, Plot
     from enthought.enable.component_editor import ComponentEditor
     from numpy import linspace, sin
@@ -501,8 +501,8 @@ traits, generating events, and capable of responding to events.
 We're going to modify our previous ScatterPlot example to demonstrate some
 of these capabilities.  Here is the full listing of the modified code::
 
-    from enthought.traits.api import HasTraits, Instance, Int
-    from enthought.traits.ui.api import View, Group, Item
+    from traits.api import HasTraits, Instance, Int
+    from traitsui.api import View, Group, Item
     from enthought.enable.api import ColorTrait
     from enthought.enable.component_editor import ComponentEditor
     from enthought.chaco.api import marker_trait, Plot, ArrayPlotData

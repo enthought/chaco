@@ -16,7 +16,7 @@ Also defines the convenience function::
 """
 
 
-from enthought.traits.api import Bool, Dict, HasTraits, Instance, Str
+from traits.api import Bool, Dict, HasTraits, Instance, Str
 
 
 

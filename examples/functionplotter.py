@@ -12,8 +12,8 @@ from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable.api import Window, Component, ComponentEditor
-from enthought.traits.api import HasTraits, Instance, Callable, on_trait_change
-from enthought.traits.ui.api import Item, Group, HGroup, View
+from traits.api import HasTraits, Instance, Callable, on_trait_change
+from traitsui.api import Item, Group, HGroup, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot, \

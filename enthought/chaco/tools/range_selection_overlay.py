@@ -7,7 +7,7 @@ from numpy import arange, array
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait, LineStyle
-from enthought.traits.api import Enum, Float, Property, Str, Instance, \
+from traits.api import Enum, Float, Property, Str, Instance, \
         cached_property
 from enthought.chaco.api import AbstractOverlay, arg_find_runs, GridMapper, AbstractMapper
 

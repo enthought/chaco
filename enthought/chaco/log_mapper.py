@@ -5,7 +5,7 @@ from numpy import array, isnan, log, log10, exp, zeros, sometrue,\
     floor, ceil, ndarray
 
 # Enthought library imports
-from enthought.traits.api import Bool, Float
+from traits.api import Bool, Float
 
 #Local relative imports
 from base_1d_mapper import Base1DMapper

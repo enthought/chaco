@@ -7,7 +7,7 @@ from numpy import array, take, transpose
 
 # Enthought library imports
 from enthought.enable.api import BaseTool, ColorTrait
-from enthought.traits.api import Enum, Float
+from traits.api import Enum, Float
 
 
 class PointMarker(BaseTool):

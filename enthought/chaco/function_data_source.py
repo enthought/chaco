@@ -2,7 +2,7 @@
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Callable, Instance, on_trait_change
+from traits.api import Callable, Instance, on_trait_change
 
 # Local, relative imports
 from abstract_data_source import AbstractDataSource

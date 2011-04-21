@@ -1,7 +1,7 @@
 """ Defines the Traits UI view for a PlotAxis """
 
-from enthought.traits.api import TraitError
-from enthought.traits.ui.api import View, HGroup, Group, VGroup, Item, TextEditor
+from traits.api import TraitError
+from traitsui.api import View, HGroup, Group, VGroup, Item, TextEditor
 
 def float_or_auto(val):
     """

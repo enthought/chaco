@@ -2,7 +2,7 @@
 Defines the AbstractDataSource class.
 """
 
-from enthought.traits.api import Bool, Dict, Event, HasTraits
+from traits.api import Bool, Dict, Event, HasTraits
 
 # Local relative imports
 from base import DimensionTrait

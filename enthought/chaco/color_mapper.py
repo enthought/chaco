@@ -8,7 +8,7 @@ from numpy import arange, array, asarray, clip, \
                   sometrue, sort, take, where, zeros, linspace, ones_like
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
+from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
                                  Int, Property, Str, Trait
 
 # Relative imports

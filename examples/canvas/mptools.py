@@ -3,7 +3,7 @@
 from numpy import asarray, dot, sqrt
 
 # Enthought library imports
-from enthought.traits.api import Delegate, Dict, Enum, Instance, Int, Property, Trait, Tuple, CArray
+from traits.api import Delegate, Dict, Enum, Instance, Int, Property, Trait, Tuple, CArray
 
 # Chaco imports
 from enthought.chaco.api import BaseTool

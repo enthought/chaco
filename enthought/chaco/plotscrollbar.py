@@ -1,5 +1,5 @@
 
-from enthought.traits.api import Any, Enum, Int, Property, Trait
+from traits.api import Any, Enum, Int, Property, Trait
 
 from enthought.enable.api import NativeScrollBar
 

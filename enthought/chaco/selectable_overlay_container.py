@@ -6,7 +6,7 @@ from __future__ import with_statement
 from numpy import array, float64
 
 # Enthought library imports
-from enthought.traits.api import Bool, Float, Enum
+from traits.api import Bool, Float, Enum
 from enthought.enable.api import ColorTrait
 
 # Local imports

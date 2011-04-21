@@ -7,7 +7,7 @@ from __future__ import with_statement
 from numpy import array, linspace, meshgrid, transpose
 
 # Enthought library imports
-from enthought.traits.api import Bool, Dict
+from traits.api import Bool, Dict
 
 # Local relative imports
 from base_contour_plot import BaseContourPlot

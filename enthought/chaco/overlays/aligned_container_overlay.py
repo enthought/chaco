@@ -1,7 +1,7 @@
 """An overlay that aligns itself to the plot
 """
 
-from enthought.traits.api import Enum, Any
+from traits.api import Enum, Any
 
 from container_overlay import ContainerOverlay
 

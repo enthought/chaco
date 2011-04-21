@@ -4,7 +4,7 @@
 from numpy import asarray, isnan
 
 # Enthought library imports.
-from enthought.traits.api import Enum, Event, Instance, Property, Range, Trait
+from traits.api import Enum, Event, Instance, Property, Range, Trait
 
 # Local relative imports
 from abstract_plot_renderer import AbstractPlotRenderer

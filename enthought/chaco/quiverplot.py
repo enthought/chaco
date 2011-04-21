@@ -5,7 +5,7 @@ from numpy import array, compress, matrix, newaxis, sqrt, zeros
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait
-from enthought.traits.api import Array, Enum, Float, Instance, Int
+from traits.api import Array, Enum, Float, Instance, Int
 
 # Chaco relative imports
 from abstract_data_source import AbstractDataSource

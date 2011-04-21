@@ -4,8 +4,8 @@ from numpy import linspace, sin
 from enthought.enable.api import ColorTrait
 from enthought.chaco.api import ArrayPlotData, Plot, marker_trait
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance, Int
-from enthought.traits.ui.api import Group, Item, View
+from traits.api import HasTraits, Instance, Int
+from traitsui.api import Group, Item, View
 
 class ScatterPlotTraits(HasTraits):
 

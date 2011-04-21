@@ -3,7 +3,7 @@
 # Enthought library imports
 from enthought.enable.api import Component
 from enthought.enable.kiva_graphics_context import GraphicsContext
-from enthought.traits.api import Bool, Instance, Str
+from traits.api import Bool, Instance, Str
 
 
 DEFAULT_DRAWING_ORDER = ["background", "image", "underlay",      "plot",

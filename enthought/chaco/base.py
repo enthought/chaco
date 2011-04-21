@@ -10,7 +10,7 @@ from numpy import (array, argsort, concatenate, cos, dot, empty, nonzero,
     pi, sin, take, ndarray)
 
 # Enthought library imports
-from enthought.traits.api import CArray, Enum, Trait
+from traits.api import CArray, Enum, Trait
 
 
 

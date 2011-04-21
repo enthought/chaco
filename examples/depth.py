@@ -2,8 +2,8 @@ import numpy
 from enthought.chaco.api import ToolbarPlot, ArrayPlotData
 from enthought.chaco.tools.api import LineInspector
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import Item, View
+from traits.api import HasTraits, Instance
+from traitsui.api import Item, View
 
 class MyPlot(HasTraits):
     """ Plot where depth is the index such that the plot is vertical

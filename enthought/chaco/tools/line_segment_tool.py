@@ -7,7 +7,7 @@ from numpy import array
 
 # Enthought library imports
 from enthought.enable.api import Component, Pointer, Line
-from enthought.traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
+from traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
 
 # Chaco imports
 from enthought.chaco.api import AbstractOverlay

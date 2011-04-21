@@ -5,7 +5,7 @@ from numpy import inf
 
 # Enthought library imports
 from enthought.enable.api import BaseTool, Pointer
-from enthought.traits.api import Bool, Enum, Float, Tuple
+from traits.api import Bool, Enum, Float, Tuple
 
 
 class PanTool(BaseTool):

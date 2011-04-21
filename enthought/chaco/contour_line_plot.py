@@ -9,7 +9,7 @@ from numpy import array, linspace, meshgrid, transpose
 # Enthought library imports
 from enthought.enable.api import LineStyle
 from enthought.kiva import constants
-from enthought.traits.api import Bool, Dict, Float, List, Str, Trait
+from traits.api import Bool, Dict, Float, List, Str, Trait
 
 # Local relative imports
 from base_contour_plot import BaseContourPlot

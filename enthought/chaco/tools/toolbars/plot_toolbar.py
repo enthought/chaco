@@ -8,7 +8,7 @@ from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
         CopyToClipboardButton, ZoomResetButton, ExportDataToClipboardButton
 from enthought.enable.api import Container
 from enthought.enable.tools.api import HoverTool
-from enthought.traits.api import Bool, Float, on_trait_change, List, \
+from traits.api import Bool, Float, on_trait_change, List, \
         Tuple, Type, Enum
 
 class PlotToolbarHover(HoverTool):

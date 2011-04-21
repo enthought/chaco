@@ -10,7 +10,7 @@ formatters for dictionary values.
 
 from numpy import array
 
-from enthought.traits.api import Any, List, Callable, Enum, Bool
+from traits.api import Any, List, Callable, Enum, Bool
 
 from text_grid_overlay import TextGridOverlay
 

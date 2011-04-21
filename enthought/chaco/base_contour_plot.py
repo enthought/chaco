@@ -3,7 +3,7 @@ from numpy import array, isscalar, issubsctype, linspace, number
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait
-from enthought.traits.api import Bool, Instance, Int, List, Property, \
+from traits.api import Bool, Instance, Int, List, Property, \
         Range, Str, Trait, Tuple
 
 # Local relative imports

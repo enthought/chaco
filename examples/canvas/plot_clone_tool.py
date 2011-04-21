@@ -4,7 +4,7 @@
 from __future__ import with_statement
 
 # Enthought library imports
-from enthought.traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
+from traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
 from enthought.enable.api import Container
 
 # Chaco imports

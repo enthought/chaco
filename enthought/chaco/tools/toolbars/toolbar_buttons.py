@@ -1,13 +1,13 @@
 import numpy
 
-from enthought.etsconfig.api import ETSConfig
+from traits.etsconfig.api import ETSConfig
 from enthought.enable.tools.toolbars.toolbar_buttons import Button
 from enthought.chaco.tools.zoom_tool import ZoomTool
 from enthought.chaco.plot_graphics_context import PlotGraphicsContext
 from enthought.kiva.image import Image
-from enthought.pyface.image_resource import ImageResource
-from enthought.pyface.api import FileDialog, OK, error
-from enthought.traits.api import Instance, Str, Property, cached_property, \
+from pyface.image_resource import ImageResource
+from pyface.api import FileDialog, OK, error
+from traits.api import Instance, Str, Property, cached_property, \
     List, Int, Enum
 
 

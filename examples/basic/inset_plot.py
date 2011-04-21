@@ -13,8 +13,8 @@ from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable.api import Component, ComponentEditor, Window
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import Item, Group, View
+from traits.api import HasTraits, Instance
+from traitsui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, OverlayPlotContainer, Plot

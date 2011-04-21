@@ -6,7 +6,7 @@ from __future__ import with_statement
 import logging
 
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
-from enthought.traits.api import Any, Bool, Enum, Float, Instance, Property, \
+from traits.api import Any, Bool, Enum, Float, Instance, Property, \
         Range
 from enthought.enable.api import black_color_trait
 from enthought.kiva.constants import FILL_STROKE

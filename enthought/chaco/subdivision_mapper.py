@@ -7,7 +7,7 @@ from numpy import array, arange, concatenate, searchsorted, nonzero, transpose, 
 import numpy
 
 # Enthought library imports
-from enthought.traits.api import List, Array, Tuple, Int, Float
+from traits.api import List, Array, Tuple, Int, Float
 
 # Local, relative imports
 from datamapper import AbstractDataMapper, right_shift, left_shift, \

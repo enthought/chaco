@@ -9,7 +9,7 @@ from numpy import array
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait, KeySpec
-from enthought.traits.api \
+from traits.api \
     import Bool, Enum, Float, Instance, Int, Str, Trait, Tuple
 
 # Chaco imports

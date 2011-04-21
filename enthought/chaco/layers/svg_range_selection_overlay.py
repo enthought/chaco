@@ -5,7 +5,7 @@ import os
 import numpy
 
 from enthought.chaco.api import GridMapper
-from enthought.traits.api import Property, Enum, Str, cached_property
+from traits.api import Property, Enum, Str, cached_property
 
 from status_layer import StatusLayer
 

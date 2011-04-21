@@ -50,9 +50,9 @@ list, since it is defined as an Enum.
 ::
 
     # We'll also import a few things to be used later.
-    from enthought.traits.api \
+    from traits.api \
         import HasTraits, Array, Range, Float, Enum, on_trait_change, Property
-    from enthought.traits.ui.api import View, Item 
+    from traitsui.api import View, Item 
     from enthought.chaco.chaco_plot_editor import ChacoPlotItem
     from numpy import arange
     
@@ -76,7 +76,7 @@ This View contains all of the GUI elements, including the plot.  To
 link a variable with a widget element on the GUI, we create a Traits
 :class:`Item` instance with the same name as the variable and pass it as an
 argument of the Traits View instance declaration.  The 
-`Traits UI User Guide <https://svn.enthought.com/svn/enthought/Traits/tags/enthought.traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf>`_
+`Traits UI User Guide <https://svn.enthought.com/svn/enthought/Traits/tags/traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf>`_
 discusses the View and Item objects in depth. In order to
 embed a Chaco plot into a Traits View, you need to import the
 :class:`ChacoPlotItem` class, which can be passed as a parameter to View just
@@ -261,9 +261,9 @@ Source Code
 
 The final version on the program, `vanderwaals.py` ::
 
-    from enthought.traits.api \
+    from traits.api \
         import HasTraits, Array, Range, Float, Enum, on_trait_change, Property
-    from enthought.traits.ui.api import View, Item
+    from traitsui.api import View, Item
     from enthought.chaco.chaco_plot_editor import ChacoPlotItem
     from numpy import arange
     

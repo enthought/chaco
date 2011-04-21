@@ -5,7 +5,7 @@ import nose
 
 from enthought.chaco.api import HPlotContainer, OverlayPlotContainer, \
                                 PlotComponent, VPlotContainer, GridContainer
-from enthought.traits.api import Any, Tuple
+from traits.api import Any, Tuple
 
 SizePrefs = GridContainer.SizePrefs
 

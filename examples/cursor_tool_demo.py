@@ -14,8 +14,8 @@ from enthought.chaco.api import create_line_plot, OverlayPlotContainer, \
 from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.chaco.tools.cursor_tool import CursorTool, BaseCursorTool
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance, DelegatesTo
-from enthought.traits.ui.api import View, Item, HGroup, VGroup
+from traits.api import HasTraits, Instance, DelegatesTo
+from traitsui.api import View, Item, HGroup, VGroup
 
 
 class CursorTest(HasTraits):

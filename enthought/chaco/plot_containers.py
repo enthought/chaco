@@ -4,7 +4,7 @@
 from numpy import amax, any, arange, array, cumsum, hstack, sum, zeros, zeros_like
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Either, Enum, Float, Instance, \
+from traits.api import Any, Array, Either, Enum, Float, Instance, \
     List, Property, Trait, Tuple, Int
 from enthought.enable.simple_layout import simple_container_get_preferred_size, \
                                             simple_container_do_layout

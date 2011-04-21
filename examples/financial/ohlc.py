@@ -9,8 +9,8 @@ import time
 
 # Enthought library imports
 from enthought.enable.api import Component, ComponentEditor
-from enthought.traits.api import HasTraits, Instance, Enum
-from enthought.traits.ui.api import View, VGroup, Item, EnumEditor
+from traits.api import HasTraits, Instance, Enum
+from traitsui.api import View, VGroup, Item, EnumEditor
 
 # Chaco imports
 from enthought.chaco.api import ArrayDataSource, DataRange1D, \

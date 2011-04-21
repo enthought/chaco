@@ -7,7 +7,7 @@ from __future__ import with_statement
 from math import ceil, floor, pi
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Either, Enum, Instance, \
+from traits.api import Bool, Either, Enum, Instance, \
                                  List, Range, Trait, Tuple
 from enthought.kiva.agg import GraphicsContextArray
 

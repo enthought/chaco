@@ -4,7 +4,7 @@
 from numpy import ones
 
 # Enthought library imports
-from enthought.traits.api import Enum, Float, Str
+from traits.api import Enum, Float, Str
 from enthought.enable.api import BaseTool
 
 # Chaco imports

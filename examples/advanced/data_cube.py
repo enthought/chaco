@@ -26,7 +26,7 @@ from enthought.chaco.default_colormaps import *
 from enthought.chaco.tools.api import LineInspector, ZoomTool
 from enthought.enable.example_support import DemoFrame, demo_main
 from enthought.enable.api import Window
-from enthought.traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
+from traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
         Event, Float, HasTraits, Int, Trait, on_trait_change
 
 # Will hold the path that the user chooses to download to. Will be an empty

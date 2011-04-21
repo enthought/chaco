@@ -5,7 +5,7 @@ Defines the DataRange2D class.
 from numpy import compress, inf, transpose
 
 # Enthought library imports
-from enthought.traits.api import Any, Bool, CFloat, Instance, Property, Trait, \
+from traits.api import Any, Bool, CFloat, Instance, Property, Trait, \
     Tuple, on_trait_change
 
 # Local relative imports

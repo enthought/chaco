@@ -3,7 +3,7 @@
 
 # Enthought library imports
 from enthought.enable.tools.drag_tool import DragTool
-from enthought.traits.api import Bool, Enum, Float, Tuple
+from traits.api import Bool, Enum, Float, Tuple
 
 # Chaco imports
 from better_zoom import BetterZoom

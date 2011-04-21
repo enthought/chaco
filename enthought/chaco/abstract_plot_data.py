@@ -1,6 +1,6 @@
 """ Defines the base class for plot data.
 """
-from enthought.traits.api import Bool, Event, HasTraits
+from traits.api import Bool, Event, HasTraits
 
 
 class AbstractPlotData(HasTraits):

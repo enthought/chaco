@@ -18,7 +18,7 @@ from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
     putmask, shape
 
 # Enthought library imports
-from enthought.traits.api import HasTraits, Any
+from traits.api import HasTraits, Any
 
 class AbstractTickGenerator(HasTraits):
     """ Abstract class for tick generators.

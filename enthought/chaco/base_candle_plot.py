@@ -6,7 +6,7 @@ from numpy import array, column_stack
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait
-from enthought.traits.api import Bool, Float, Int, List, Property, Trait
+from traits.api import Bool, Float, Int, List, Property, Trait
 
 # Chaco imports
 from base_xy_plot import BaseXYPlot

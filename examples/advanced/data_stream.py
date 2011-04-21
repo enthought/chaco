@@ -15,10 +15,10 @@ import wx
 from numpy import arange, array, hstack, random
 
 # Enthought imports
-from enthought.traits.api import Array, Bool, Callable, Enum, Float, HasTraits, \
+from traits.api import Array, Bool, Callable, Enum, Float, HasTraits, \
                                  Instance, Int, Trait
-from enthought.traits.ui.api import Group, HGroup, Item, View, spring, Handler
-from enthought.pyface.timer.api import Timer
+from traitsui.api import Group, HGroup, Item, View, spring, Handler
+from pyface.timer.api import Timer
 
 # Chaco imports
 from enthought.chaco.chaco_plot_editor import ChacoPlotItem

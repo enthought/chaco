@@ -2,7 +2,7 @@ import operator
 
 # ETS imports
 from enthought.chaco.tools.api import LegendTool
-from enthought.traits.api import List, Float
+from traits.api import List, Float
 
 
 def get_hit_plots(legend, event):

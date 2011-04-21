@@ -1,5 +1,5 @@
 
-from enthought.traits.api import Int, Tuple
+from traits.api import Int, Tuple
 from enthought.enable.tools.api import ViewportPanTool
 
 class MPViewportPanTool(ViewportPanTool):

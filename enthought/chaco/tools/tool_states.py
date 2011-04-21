@@ -1,5 +1,5 @@
 from enthought.chaco.grid_mapper import GridMapper
-from enthought.traits.api import HasTraits
+from traits.api import HasTraits
 
 class ToolState(HasTraits):
 

@@ -12,7 +12,7 @@ from scipy import fft
 
 # Enthought library imports
 from enthought.chaco.default_colormaps import jet
-from enthought.traits.api import HasTraits, Instance, Any
+from traits.api import HasTraits, Instance, Any
 
 # Chaco imports
 from enthought.chaco.api import Plot, ArrayPlotData, HPlotContainer, \

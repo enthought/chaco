@@ -10,7 +10,7 @@ import numpy as np
 from enthought.enable.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
 from enthought.kiva.agg import points_in_polygon
-from enthought.traits.api import Enum, Float
+from traits.api import Enum, Float
 
 # Local imports.
 from base_xy_plot import BaseXYPlot

@@ -7,7 +7,7 @@ into a 1-D output space.
 from numpy import array
 
 # Enthought library imports
-from enthought.traits.api import Bool, Float
+from traits.api import Bool, Float
 
 # Local relative imports
 from abstract_mapper import AbstractMapper

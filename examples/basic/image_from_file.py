@@ -15,10 +15,10 @@ import os, sys
 # Major library imports
 
 # Enthought library imports
-from enthought.util.resource import find_resource
-from enthought.traits.api import File, HasTraits, Instance
-from enthought.traits.ui.api import Handler, Item, View
-from enthought.traits.ui.menu \
+from traits.util.resource import find_resource
+from traits.api import File, HasTraits, Instance
+from traitsui.api import Handler, Item, View
+from traitsui.menu \
     import Action, CloseAction, Menu, MenuBar, OKCancelButtons, Separator
 
 # Chaco imports

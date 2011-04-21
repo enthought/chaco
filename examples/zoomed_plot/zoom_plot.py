@@ -15,9 +15,9 @@ from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought imports
 from enthought.enable.api import Component, ComponentEditor, Window
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import Item, Group, View
-from enthought.util.resource import find_resource
+from traits.api import HasTraits, Instance
+from traitsui.api import Item, Group, View
+from traits.util.resource import find_resource
 
 # Chaco imports
 from enthought.chaco.api import SimplePlotFrame, VPlotContainer

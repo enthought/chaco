@@ -7,7 +7,7 @@ warnings.warn("BaseZoomTool has been deprecated, use BetterZoomTool", Deprecatio
 from numpy import allclose, inf
 
 # Enthought library imports
-from enthought.traits.api import Enum, Float, HasTraits
+from traits.api import Enum, Float, HasTraits
 
 class BaseZoomTool(HasTraits):
     """ Defines traits and methods to actually perform the logic of zooming

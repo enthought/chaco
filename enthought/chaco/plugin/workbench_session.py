@@ -2,7 +2,7 @@
 free-standing windows.
 """
 
-from enthought.traits.api import Any, Dict, List, Str
+from traits.api import Any, Dict, List, Str
 from enthought.chaco.shell.session import PlotSession
 
 from plot_editor import PlotEditor

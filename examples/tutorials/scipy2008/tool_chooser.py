@@ -4,8 +4,8 @@ from numpy import linspace, sin
 from enthought.chaco.api import ArrayPlotData, Plot
 from enthought.chaco.tools.api import PanTool, ZoomTool, DragZoom
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance, List
-from enthought.traits.ui.api import Item, View, CheckListEditor
+from traits.api import HasTraits, Instance, List
+from traitsui.api import Item, View, CheckListEditor
 
 class ToolChooserExample(HasTraits):
 

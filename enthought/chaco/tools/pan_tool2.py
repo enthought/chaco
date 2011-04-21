@@ -3,7 +3,7 @@ from numpy import inf
 
 from enthought.enable.api import Pointer
 from enthought.enable.tools.drag_tool import DragTool
-from enthought.traits.api import Bool, Enum, Float, Tuple
+from traits.api import Bool, Enum, Float, Tuple
 
 
 class PanTool(DragTool):

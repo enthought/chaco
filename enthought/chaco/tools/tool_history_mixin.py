@@ -1,6 +1,6 @@
 """ Defines the ToolHistoryMixin class.
 """
-from enthought.traits.api import HasTraits, Instance, Int, List
+from traits.api import HasTraits, Instance, Int, List
 from enthought.enable.api import KeySpec
 
 

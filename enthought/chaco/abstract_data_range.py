@@ -3,7 +3,7 @@ Defines the base class for data ranges.
 """
 
 # Enthought library imports
-from enthought.traits.api import Event, Float, HasTraits, Instance, List, Trait
+from traits.api import Event, Float, HasTraits, Instance, List, Trait
 
 # Local relative imports
 from abstract_data_source import AbstractDataSource

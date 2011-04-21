@@ -6,7 +6,7 @@ from math import sqrt
 import numpy as np
 
 from enthought.enable.api import black_color_trait, MarkerTrait
-from enthought.traits.api import (Any, Bool, Callable, Enum, Float,
+from traits.api import (Any, Bool, Callable, Enum, Float,
         Instance, Int, Property, Str, Trait, on_trait_change)
 
 from abstract_plot_renderer import AbstractPlotRenderer

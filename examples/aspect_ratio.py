@@ -14,8 +14,8 @@ from numpy.random import random
 
 # Enthought library imports
 from enthought.enable.api import ComponentEditor
-from enthought.traits.api import Any, Bool, BaseFloat, HasTraits
-from enthought.traits.ui.api import Item, HGroup, VGroup, View
+from traits.api import Any, Bool, BaseFloat, HasTraits
+from traitsui.api import Item, HGroup, VGroup, View
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot

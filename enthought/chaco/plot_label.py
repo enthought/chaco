@@ -4,7 +4,7 @@
 from __future__ import with_statement
 
 from enthought.enable.font_metrics_provider import font_metrics_provider
-from enthought.traits.api import DelegatesTo, Enum, Instance, Str, Trait
+from traits.api import DelegatesTo, Enum, Instance, Str, Trait
 
 from abstract_overlay import AbstractOverlay
 from label import Label

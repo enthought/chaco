@@ -23,7 +23,7 @@ from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable.api import Window
-from enthought.traits.api import false
+from traits.api import false
 
 # Chaco imports
 from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids

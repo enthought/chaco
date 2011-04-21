@@ -10,7 +10,7 @@ the programs in in tutorials/.
 
 from numpy import array
 
-from enthought.etsconfig.api import ETSConfig
+from traits.etsconfig.api import ETSConfig
 
 
 # Set up the debug logger for all chaco examples.
@@ -82,7 +82,7 @@ if ETSConfig.toolkit == 'wx':
         app.MainLoop()
 
 elif ETSConfig.toolkit == 'qt4':
-    from enthought.qt import QtGui
+    from traits.qt import QtGui
 
     _app = QtGui.QApplication.instance()
 

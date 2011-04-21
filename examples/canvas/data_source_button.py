@@ -1,6 +1,6 @@
 
 from random import choice
-from enthought.traits.api import Any, Enum, HasTraits, Instance, Int, List, Str
+from traits.api import Any, Enum, HasTraits, Instance, Int, List, Str
 from enthought.chaco.example_support import COLOR_PALETTE
 from enthought.chaco.api import Plot
 from enthought.chaco.plot_canvas_toolbar import PlotToolbarButton

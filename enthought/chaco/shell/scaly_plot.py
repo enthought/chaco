@@ -1,7 +1,7 @@
 """ A Plot which uses ScaleSystems for its ticks.
 """
 
-from enthought.traits.api import Any
+from traits.api import Any
 
 from enthought.chaco.api import (DataRange2D, LinearMapper, LogMapper,
     PlotGrid, Plot, PlotAxis)

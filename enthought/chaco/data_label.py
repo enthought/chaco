@@ -5,7 +5,7 @@ from numpy import array, asarray, inf
 from numpy.linalg import norm
 
 # Enthought library imports
-from enthought.traits.api import Any, Array, Bool, Enum, Float, Int, List, \
+from traits.api import Any, Array, Bool, Enum, Float, Int, List, \
      Str, Tuple, Trait, on_trait_change
 from enthought.enable.api import ColorTrait, MarkerTrait
 

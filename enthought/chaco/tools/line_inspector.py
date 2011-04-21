@@ -4,7 +4,7 @@ from __future__ import with_statement
 
 # Enthought library imports
 from enthought.enable.api import BaseTool, ColorTrait, LineStyle
-from enthought.traits.api import Any, Bool, Enum, Float, Str, Trait
+from traits.api import Any, Bool, Enum, Float, Str, Trait
 
 # Chaco imports
 from enthought.chaco.api import BaseXYPlot, Base2DPlot

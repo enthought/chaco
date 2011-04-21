@@ -20,8 +20,8 @@ from enthought.enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enthought.enable.api import Window, Component, ComponentEditor
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import Item, Group, View
+from traits.api import HasTraits, Instance
+from traitsui.api import Item, Group, View
 
 # Chaco imports
 from enthought.chaco.api import create_line_plot, add_default_axes, \

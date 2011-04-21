@@ -21,8 +21,8 @@ import numpy
 from enthought.chaco.api import Plot, ArrayPlotData, ImageData
 from enthought.chaco.tools.api import ZoomTool
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance, Str
-from enthought.traits.ui.api import Item, View
+from traits.api import HasTraits, Instance, Str
+from traitsui.api import Item, View
 
 class WorldMapPlot(HasTraits):
 

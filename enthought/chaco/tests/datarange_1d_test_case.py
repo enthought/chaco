@@ -4,7 +4,7 @@ import unittest
 from numpy import arange, array, zeros, inf
 from numpy.testing import assert_equal
 
-from enthought.traits.api import HasTraits, Instance, Bool, on_trait_change
+from traits.api import HasTraits, Instance, Bool, on_trait_change
 
 from enthought.chaco.api import DataRange1D, ArrayDataSource
 

@@ -2,7 +2,7 @@
 """
 
 from enthought.envisage.api import Plugin
-from enthought.traits.api import List
+from traits.api import List
 
 
 ID = 'enthought.chaco'

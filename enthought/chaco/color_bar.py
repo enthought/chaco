@@ -7,7 +7,7 @@ from __future__ import with_statement
 from numpy import array, arange, ones, transpose, uint8
 
 # Enthought library imports
-from enthought.traits.api import Any, Bool, Enum, Instance, Property, \
+from traits.api import Any, Bool, Enum, Instance, Property, \
                                  cached_property, on_trait_change
 from enthought.kiva.image import GraphicsContext
 

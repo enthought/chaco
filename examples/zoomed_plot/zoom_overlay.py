@@ -4,7 +4,7 @@ from __future__ import with_statement
 from numpy import array, amax, amin
 
 from enthought.enable.api import ColorTrait, Component
-from enthought.traits.api import Float, Instance, Int
+from traits.api import Float, Instance, Int
 from enthought.chaco.api import AbstractOverlay, BaseXYPlot
 
 

@@ -4,7 +4,7 @@
 from numpy import array, asarray, argmin, sqrt
 
 # Enthought library imports
-from enthought.traits.api import Any, Bool, Enum
+from traits.api import Any, Bool, Enum
 from enthought.enable.tools.drag_tool import DragTool
 
 

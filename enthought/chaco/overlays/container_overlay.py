@@ -5,7 +5,7 @@ into the overlay of a plot.  This allows the easy use of standard Enable
 components in plot overlays.
 """
 
-from enthought.traits.api import Instance
+from traits.api import Instance
 from enthought.enable.api import Container, Component
 from enthought.chaco.api import PlotComponent
 

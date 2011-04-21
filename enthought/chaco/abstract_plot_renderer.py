@@ -1,7 +1,7 @@
 """ Defines a base class for plot renderers.
 """
 # Enthought library imports.
-from enthought.traits.api import Enum
+from traits.api import Enum
 
 # Local relative imports
 from plot_component import PlotComponent

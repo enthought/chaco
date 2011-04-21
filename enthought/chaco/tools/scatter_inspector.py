@@ -2,7 +2,7 @@
 """
 
 # Enthought library imports
-from enthought.traits.api import Bool, Str
+from traits.api import Bool, Str
 
 # Local, relative imports
 from select_tool import SelectTool

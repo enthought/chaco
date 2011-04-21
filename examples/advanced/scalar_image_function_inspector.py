@@ -22,10 +22,10 @@ from enthought.enable.component_editor import ComponentEditor
 from enthought.chaco.tools.api import LineInspector, PanTool, RangeSelection, \
                                    RangeSelectionOverlay, ZoomTool
 from enthought.enable.api import Window
-from enthought.traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
+from traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
                              Int, Instance, Str, Trait, on_trait_change
-from enthought.traits.ui.api import Group, Handler, HGroup, Item, View
-from enthought.traits.ui.menu import Action, CloseAction, Menu, \
+from traitsui.api import Group, Handler, HGroup, Item, View
+from traitsui.menu import Action, CloseAction, Menu, \
                                      MenuBar, NoButtons, Separator
 
 

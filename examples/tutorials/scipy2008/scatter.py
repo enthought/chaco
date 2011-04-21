@@ -2,8 +2,8 @@
 from numpy import linspace, sin
 from enthought.chaco.api import ArrayPlotData, Plot
 from enthought.enable.component_editor import ComponentEditor
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import Item, View
+from traits.api import HasTraits, Instance
+from traitsui.api import Item, View
 
 class ScatterPlot(HasTraits):
 

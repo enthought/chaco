@@ -4,18 +4,18 @@ traits.ui.wx.plot_editor.
 """
 
 # Enthought library imports
-from enthought.etsconfig.api import ETSConfig
+from traits.etsconfig.api import ETSConfig
 from enthought.enable.api import black_color_trait, LineStyle, ColorTrait,\
     white_color_trait, MarkerTrait, Window
 from enthought.enable.traits.ui.api import RGBAColorEditor
 from enthought.kiva.trait_defs.kiva_font_trait import KivaFont
-from enthought.traits.api import Enum, Str, Range, Tuple, \
+from traits.api import Enum, Str, Range, Tuple, \
                                  Bool, Trait, Int, Any, Property
-from enthought.traits.ui.api import Item
-from enthought.traits.ui.editor_factory import EditorFactory
+from traitsui.api import Item
+from traitsui.editor_factory import EditorFactory
 
 # Toolkit dependent imports
-from enthought.traits.ui.toolkit import toolkit_object
+from traitsui.toolkit import toolkit_object
 Editor = toolkit_object('editor:Editor')
 
 # Local relative imports

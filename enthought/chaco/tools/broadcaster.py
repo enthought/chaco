@@ -1,7 +1,7 @@
 """ Defines the BroadcasterTool class.
 """
 from enthought.enable.api import BaseTool
-from enthought.traits.api import Dict, List
+from traits.api import Dict, List
 
 class BroadcasterTool(BaseTool):
     """ A simple tool that keeps a list of other tools, and broadcasts events it

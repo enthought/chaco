@@ -7,7 +7,7 @@ into a structured (gridded) 1-D output space.
 from numpy import transpose
 
 # Enthought library imports
-from enthought.traits.api import Bool, DelegatesTo, Instance, Float, Property
+from traits.api import Bool, DelegatesTo, Instance, Float, Property
 
 # Local relative imports
 from abstract_mapper import AbstractMapper

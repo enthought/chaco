@@ -1,7 +1,7 @@
 """ An overlay containing a TextGrid
 """
 
-from enthought.traits.api import Instance
+from traits.api import Instance
 from enthought.enable.text_grid import TextGrid
 
 from aligned_container_overlay import AlignedContainerOverlay

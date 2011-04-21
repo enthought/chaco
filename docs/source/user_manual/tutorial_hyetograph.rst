@@ -59,9 +59,9 @@ In calling your function you want to specify where the function is and
 then import it.  The following code snippet imports all the names that
 will be used for our application. ::
 
-    from enthought.traits.api \
+    from traits.api \
         import HasTraits, Int, Range, Array, Enum, on_trait_change
-    from enthought.traits.ui.api import View, Item
+    from traitsui.api import View, Item
     from enthought.chaco.chaco_plot_editor import ChacoPlotItem
 
 
@@ -112,7 +112,7 @@ The above code snippet shows a number of Traits features,
 
 The Traits API Reference contains more information about the standard
 Trait types; see the :mod:`trait_types` module in the `Traits API Reference 
-<http://code.enthought.com/projects/files/ETS3_API/enthought.traits.trait_types.html>`_.
+<http://code.enthought.com/projects/files/ETS3_API/traits.trait_types.html>`_.
 
 
 Setting up the User Interface (UI)
@@ -314,9 +314,9 @@ Source Code
 
 The final version of the program, `hyetograph.py`. ::
 
-    from enthought.traits.api \
+    from traits.api \
         import HasTraits, Int, Range, Array, Enum, on_trait_change
-    from enthought.traits.ui.api import View, Item
+    from traitsui.api import View, Item
     from enthought.chaco.chaco_plot_editor import ChacoPlotItem
     
     

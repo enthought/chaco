@@ -3,7 +3,7 @@ import os.path
 import sys
 
 # Enthought library imports
-from enthought.util.resource import find_resource
+from traits.util.resource import find_resource
 from enthought.chaco.shell import imread, imshow, title, show
 
 # Get the image file using the find_resource module

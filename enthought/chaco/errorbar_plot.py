@@ -6,7 +6,7 @@ from numpy import column_stack, compress, invert, isnan, transpose
 import logging
 
 # Enthought library imports
-from enthought.traits.api import Any, Enum, Float, Instance
+from traits.api import Any, Enum, Float, Instance
 
 # Chaco imports
 from lineplot import LinePlot

@@ -1,7 +1,7 @@
 
 # Enthought library imports
 from enthought.enable.api import Canvas
-from enthought.traits.api import Instance, Tuple
+from traits.api import Instance, Tuple
 
 # Local, relative chaco imports
 from plot_containers import DEFAULT_DRAWING_ORDER

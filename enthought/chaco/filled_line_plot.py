@@ -2,7 +2,7 @@
 from __future__ import with_statement
 
 from numpy import empty
-from enthought.traits.api import Property, Enum
+from traits.api import Property, Enum
 
 # Local imports
 from lineplot import LinePlot

@@ -8,9 +8,9 @@ from numpy import around, array, asarray, column_stack, float64, inf, zeros, zer
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, LineStyle
-from enthought.traits.api import Any, Bool, Callable, Enum, Float, Instance, \
+from traits.api import Any, Bool, Callable, Enum, Float, Instance, \
         CInt, Trait, Property, TraitError, Tuple, on_trait_change
-from enthought.traits.ui.api import HGroup, Item, VGroup, View, TextEditor
+from traitsui.api import HGroup, Item, VGroup, View, TextEditor
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay

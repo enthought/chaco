@@ -7,7 +7,7 @@ from numpy import arange, array, ndarray, linspace
 from types import FunctionType
 
 # Enthought library imports
-from enthought.traits.api import Delegate, Dict, Instance, Int, List, Property, Str
+from traits.api import Delegate, Dict, Instance, Int, List, Property, Str
 
 # Local, relative imports
 from abstract_colormap import AbstractColormap

@@ -10,8 +10,8 @@ from enthought.chaco.api import DataView, ArrayDataSource, ScatterPlot, \
 from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.enable.example_support import DemoFrame, demo_main
 from enthought.enable.api import Component, ComponentEditor, Window
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import Item, Group, View
+from traits.api import HasTraits, Instance
+from traitsui.api import Item, Group, View
 
 #===============================================================================
 # # Create the Chaco plot.

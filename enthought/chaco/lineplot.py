@@ -12,8 +12,8 @@ from numpy import argsort, array, concatenate, inf, invert, isnan, \
 
 # Enthought library imports
 from enthought.enable.api import black_color_trait, ColorTrait, LineStyle
-from enthought.traits.api import Enum, Float, List, Str
-from enthought.traits.ui.api import Item, View
+from traits.api import Enum, Float, List, Str
+from traitsui.api import Item, View
 
 # Local relative imports
 from base import arg_find_runs, bin_search, reverse_map_1d

@@ -12,7 +12,7 @@ from __future__ import with_statement
 
 # Enthought library imports
 from enthought.enable.api import Container
-from enthought.traits.api import Enum
+from traits.api import Enum
 
 # Local, relative imports
 from plot_component import PlotComponent, DEFAULT_DRAWING_ORDER

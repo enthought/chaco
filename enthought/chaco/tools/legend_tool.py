@@ -2,7 +2,7 @@
 """
 
 # Enthought library imports
-from enthought.traits.api import Bool, Enum
+from traits.api import Bool, Enum
 from enthought.enable.tools.drag_tool import DragTool
 
 

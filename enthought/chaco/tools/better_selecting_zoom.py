@@ -4,9 +4,9 @@ import numpy
 
 from enthought.chaco.abstract_overlay import AbstractOverlay
 from enthought.enable.api import ColorTrait, KeySpec
-from enthought.traits.api import Bool, Enum, Trait, Int, Float, Tuple, \
+from traits.api import Bool, Enum, Trait, Int, Float, Tuple, \
         Instance, DelegatesTo, Property
-from enthought.util.deprecated import deprecated
+from traits.util.deprecated import deprecated
 
 from better_zoom import BetterZoom, ZoomState
 from tool_states import SelectedZoomState

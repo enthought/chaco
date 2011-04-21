@@ -6,11 +6,11 @@ interval.
 from __future__ import with_statement
 
 # Force WX
-from enthought.etsconfig.api import ETSConfig
+from traits.etsconfig.api import ETSConfig
 ETSConfig.toolkit = 'wx'
 
-from enthought.traits.ui.editor_factory import EditorFactory
-from enthought.traits.ui.wx.editor import Editor
+from traitsui.editor_factory import EditorFactory
+from traitsui.wx.editor import Editor
 
 from enthought.enable.window import Window
 from enthought.enable.api import ColorTrait
@@ -19,7 +19,7 @@ from enthought.chaco.api import OverlayPlotContainer, create_line_plot, \
      LinePlot
 from enthought.chaco.tools.api import RangeSelection, RangeSelectionOverlay
 
-from enthought.traits.api import Int, TraitType, Instance, Float
+from traits.api import Int, TraitType, Instance, Float
 
 from math import pi
 
@@ -163,8 +163,8 @@ IntervalEditor = IntervalEditorFactory
 # --- Demonstration ---
 
 if __name__ == "__main__":
-    from enthought.traits.api import HasTraits
-    from enthought.traits.ui.api import View, Item
+    from traits.api import HasTraits
+    from traitsui.api import View, Item
     class IntervalTest(HasTraits):
         interval = Interval(low=0, high=1)
 

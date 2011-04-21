@@ -2,7 +2,7 @@
 """
 from numpy import array
 
-from enthought.traits.api import Any
+from traits.api import Any
 from enthought.enable.font_metrics_provider import font_metrics_provider
 from ticks import AbstractTickGenerator
 

@@ -6,8 +6,8 @@ from __future__ import with_statement
 
 import numpy
 
-from enthought.traits.api import HasTraits, Instance, Enum
-from enthought.traits.ui.api import View, Item
+from traits.api import HasTraits, Instance, Enum
+from traitsui.api import View, Item
 from enthought.enable.api import ComponentEditor
 from enthought.chaco.api import Plot, ArrayPlotData, AbstractOverlay
 from enthought.enable.api import BaseTool

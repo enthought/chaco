@@ -12,10 +12,10 @@ from scipy import fft
 # Enthought library imports
 from enthought.chaco.default_colormaps import jet
 from enthought.enable.api import Window, Component, ComponentEditor
-from enthought.traits.api import HasTraits, Instance, List, Range
-from enthought.traits.ui.api import Item, Group, View, Handler
+from traits.api import HasTraits, Instance, List, Range
+from traitsui.api import Item, Group, View, Handler
 from enthought.enable.example_support import DemoFrame, demo_main
-from enthought.pyface.timer.api import Timer
+from pyface.timer.api import Timer
 
 # Chaco imports
 from enthought.chaco.api import (Plot, ArrayPlotData, HPlotContainer, VPlotContainer,
@@ -225,7 +225,7 @@ popup = Demo()
 # Stand-alone frame to display the plot.
 #============================================================================
 
-from enthought.etsconfig.api import ETSConfig
+from traits.etsconfig.api import ETSConfig
 
 if ETSConfig.toolkit == "wx":
 
@@ -258,7 +258,7 @@ if ETSConfig.toolkit == "wx":
 
 elif ETSConfig.toolkit == "qt4":
 
-    from enthought.qt import QtGui, QtCore
+    from traits.qt import QtGui, QtCore
 
     class PlotFrame(DemoFrame):
         def _create_window(self):

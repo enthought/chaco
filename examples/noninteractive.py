@@ -11,8 +11,8 @@ from numpy import fabs, linspace, pi, sin
 from scipy.special import jn
 
 # Enthought library imports
-from enthought.traits.api import false
-from enthought.etsconfig.api import ETSConfig
+from traits.api import false
+from traits.etsconfig.api import ETSConfig
 
 # Chaco imports
 from enthought.chaco.api import ArrayPlotData, Plot, PlotGraphicsContext

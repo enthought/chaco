@@ -8,7 +8,7 @@ from math import fabs
 
 # Enthought library imports
 from enthought.enable.api import ColorTrait, LineStyle
-from enthought.traits.api import Any, Float, Instance
+from traits.api import Any, Float, Instance
 
 # Chaco imports
 from enthought.chaco.api import LassoOverlay, Label

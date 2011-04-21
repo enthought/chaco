@@ -597,8 +597,8 @@ def main(embedded=False):
 # execute main instead of displaying a UI for Demo: so we hack this by
 # overriding configure_traits and edit_traits to return a blank UI.
 
-from enthought.traits.api import HasTraits
-from enthought.traits.ui.api import UI, Handler
+from traits.api import HasTraits
+from traitsui.api import UI, Handler
 
 class Demo(HasTraits):
 
