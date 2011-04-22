@@ -9,7 +9,7 @@ from tutorial2 import myplot, PlotFrame, main
 
 
 # The PanTool allows left-clicking and dragging to move the plot around.
-from enthought.chaco.tools.api import PanTool
+from chaco.tools.api import PanTool
 
 
 # In general, there are two things that need to happen in order to hook up a

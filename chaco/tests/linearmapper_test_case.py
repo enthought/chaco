@@ -4,7 +4,7 @@ from numpy import array
 from numpy.testing import assert_equal
 
 
-from enthought.chaco.api import ArrayDataSource, DataRange1D, LinearMapper
+from chaco.api import ArrayDataSource, DataRange1D, LinearMapper
 
 class LinearMapperTestCase(unittest.TestCase):
 

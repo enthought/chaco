@@ -53,7 +53,7 @@ list, since it is defined as an Enum.
     from traits.api \
         import HasTraits, Array, Range, Float, Enum, on_trait_change, Property
     from traitsui.api import View, Item 
-    from enthought.chaco.chaco_plot_editor import ChacoPlotItem
+    from chaco.chaco_plot_editor import ChacoPlotItem
     from numpy import arange
     
     class Data(HasTraits):
@@ -264,7 +264,7 @@ The final version on the program, `vanderwaals.py` ::
     from traits.api \
         import HasTraits, Array, Range, Float, Enum, on_trait_change, Property
     from traitsui.api import View, Item
-    from enthought.chaco.chaco_plot_editor import ChacoPlotItem
+    from chaco.chaco_plot_editor import ChacoPlotItem
     from numpy import arange
     
     class Data(HasTraits):

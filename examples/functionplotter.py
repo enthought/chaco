@@ -16,10 +16,10 @@ from traits.api import HasTraits, Instance, Callable, on_trait_change
 from traitsui.api import Item, Group, HGroup, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot, \
+from chaco.api import ArrayPlotData, HPlotContainer, Plot, \
         LinearMapper, ScatterPlot, DataView, LinePlot
-from enthought.chaco.tools.api import PanTool, ZoomTool
-from enthought.chaco.function_data_source import FunctionDataSource
+from chaco.tools.api import PanTool, ZoomTool
+from chaco.function_data_source import FunctionDataSource
 
 #===============================================================================
 # # Create the Chaco plot.

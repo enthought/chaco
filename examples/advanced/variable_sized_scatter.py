@@ -21,9 +21,9 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, Plot, VariableSizeScatterPlot, \
+from chaco.api import ArrayPlotData, Plot, VariableSizeScatterPlot, \
         LinearMapper, ArrayDataSource
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
 # # Create the Chaco plot.

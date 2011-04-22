@@ -4,7 +4,7 @@ from __future__ import with_statement
 from enable.api import Component
 from traits.api import Enum, Float, Instance, Trait, Tuple
 
-from enthought.chaco.api import AbstractOverlay, BasePlotContainer
+from chaco.api import AbstractOverlay, BasePlotContainer
 
 
 class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):

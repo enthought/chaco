@@ -9,7 +9,7 @@ import numpy
 from traits.api import HasTraits, Instance, Enum
 from traitsui.api import View, Item
 from enable.api import ComponentEditor
-from enthought.chaco.api import Plot, ArrayPlotData, AbstractOverlay
+from chaco.api import Plot, ArrayPlotData, AbstractOverlay
 from enable.api import BaseTool
 from enable.markers import DOT_MARKER, DotMarker
 

@@ -120,7 +120,7 @@ described in the following sections.
     :class:`VPlotContainer`, :class:`GridPlotContainer`
 
 The listed subclasses are defined in the module 
-:mod:`enthought.chaco.plot_containers`.
+:mod:`chaco.plot_containers`.
 
 
 Renderers
@@ -163,10 +163,10 @@ Plot renderers are the classes that actually draw a type of plot.
         
 You can use these classes to compose more interesting plots.
 
-The module :mod:`enthought.chaco.plot_factory` contains various convenience
+The module :mod:`chaco.plot_factory` contains various convenience
 functions for creating plots, which simplify the set-up.
 
-The :class:`enthought.chaco.plot.Plot` class (called "capital P Plot" when
+The :class:`chaco.plot.Plot` class (called "capital P Plot" when
 speaking) represents what the user usually thinks of as a "plot": a set of data,
 renderers, and axes in a single screen region. It is a subclass of
 :class:`DataView`.
@@ -197,7 +197,7 @@ first in Chaco, and then moved into Enable.
           * :class:`ResizeTool`
           * :class:`ViewportPanTool`
           
-        * :class:`enthought.chaco.tools.api.DragTool`: Chaco base class
+        * :class:`chaco.tools.api.DragTool`: Chaco base class
           for tools that do dragging.
           
           * :class:`BaseCursorTool`
@@ -227,7 +227,7 @@ first in Chaco, and then moved into Enable.
           * :class:`SelectableLegend`
         
         * :class:`enable.tools.api.TraitsTool`
-        * :class:`enthought.chaco.tools.api.TraitsTool`
+        * :class:`chaco.tools.api.TraitsTool`
             
           
 

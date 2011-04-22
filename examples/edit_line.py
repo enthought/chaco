@@ -18,7 +18,7 @@ from numpy import linspace
 from scipy.special import jn
 
 from enable.example_support import DemoFrame, demo_main
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 
 # Enthought library imports
 from enable.tools.api import DragTool
@@ -27,9 +27,9 @@ from traits.api import HasTraits, Instance, Int, Tuple
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import add_default_axes, add_default_grids, \
+from chaco.api import add_default_axes, add_default_grids, \
         OverlayPlotContainer, PlotLabel, ScatterPlot, create_line_plot
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 
 

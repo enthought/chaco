@@ -21,7 +21,7 @@ Double-clicking on line or scatter plots brings up a traits editor for the plot.
 from numpy import arange
 from scipy.special import jn
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
@@ -30,10 +30,10 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import create_line_plot, add_default_axes, \
+from chaco.api import create_line_plot, add_default_axes, \
         add_default_grids, OverlayPlotContainer, PlotLabel, \
         create_scatter_plot, Legend
-from enthought.chaco.tools.api import PanTool, ZoomTool, LegendTool, \
+from chaco.tools.api import PanTool, ZoomTool, LegendTool, \
         TraitsTool, DragZoom
 
 #===============================================================================

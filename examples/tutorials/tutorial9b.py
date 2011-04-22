@@ -5,7 +5,7 @@
 
 
 from tutorial8 import PlotFrame
-from enthought.chaco.tools.api import ZoomTool
+from chaco.tools.api import ZoomTool
 
 class PlotFrame2(PlotFrame):
     def _create_plot(self):

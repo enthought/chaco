@@ -6,7 +6,7 @@ from numpy import array, cos, invert, isnan, nan, pi, sin, vstack
 from traits.api import Array, Enum, Float, Range
 from traitsui.api import Group, Item, View
 from enable.api import ColorTrait
-from enthought.chaco.api import arg_find_runs, AbstractOverlay
+from chaco.api import arg_find_runs, AbstractOverlay
 
 
 class Turtle(AbstractOverlay):

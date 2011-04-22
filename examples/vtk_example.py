@@ -5,8 +5,8 @@ from scipy.special import jn
 from enthought.tvtk.api import tvtk
 from enthought.mayavi import mlab
 from enable.vtk_backend.vtk_window import EnableVTKWindow
-from enthought.chaco.api import ArrayPlotData, Plot, OverlayPlotContainer
-from enthought.chaco.tools.api import PanTool, ZoomTool, MoveTool
+from chaco.api import ArrayPlotData, Plot, OverlayPlotContainer
+from chaco.tools.api import PanTool, ZoomTool, MoveTool
 
 def main():
     # Create some x-y data series to plot

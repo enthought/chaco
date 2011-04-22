@@ -2,7 +2,7 @@ import unittest
 
 from numpy import allclose, array, ravel
 
-from enthought.chaco.api import ArrayDataSource, ColorMapper, DataRange1D
+from chaco.api import ArrayDataSource, ColorMapper, DataRange1D
 
 
 class LinearSegmentedColormapTestCase(unittest.TestCase):

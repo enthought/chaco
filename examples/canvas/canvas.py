@@ -22,13 +22,13 @@ from traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
 
 
 # Chaco imports
-from enthought.chaco.api import AbstractOverlay, ArrayPlotData, \
+from chaco.api import AbstractOverlay, ArrayPlotData, \
         Plot, jet, ScatterPlot, LinePlot, LinearMapper
-from enthought.chaco.tools.api import PanTool, ZoomTool , LegendTool
+from chaco.tools.api import PanTool, ZoomTool , LegendTool
 
 # Canvas imports
-from enthought.chaco.plot_canvas import PlotCanvas
-from enthought.chaco.plot_canvas_toolbar import PlotCanvasToolbar, PlotToolbarButton
+from chaco.plot_canvas import PlotCanvas
+from chaco.plot_canvas_toolbar import PlotCanvasToolbar, PlotToolbarButton
 from transient_plot_overlay import TransientPlotOverlay
 from axis_tool import AxisTool, RangeController, MPAxisTool
 from plot_clone_tool import PlotCloneTool, MPPlotCloneTool

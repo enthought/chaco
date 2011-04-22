@@ -14,21 +14,21 @@ edges.
 from numpy import abs, arange, cumprod, linspace, random
 import time
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enable.api import Window
 
 # Chaco imports
-from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
+from chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
         LinePlot, LinearMapper, VPlotContainer, PlotAxis, PlotLabel, \
         FilledLinePlot, add_default_grids
-from enthought.chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
+from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
         RangeSelectionOverlay
 
-from enthought.chaco.scales.api import CalendarScaleSystem
-from enthought.chaco.scales_tick_generator import ScalesTickGenerator
+from chaco.scales.api import CalendarScaleSystem
+from chaco.scales_tick_generator import ScalesTickGenerator
 
 
 def create_dates(numpoints, units="days"):

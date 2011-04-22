@@ -20,10 +20,10 @@ from enable.vtk_backend.vtk_window import EnableVTKWindow
 
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, ColorBar, \
+from chaco.api import ArrayPlotData, ColorBar, \
     ColormappedSelectionOverlay, OverlayPlotContainer, \
     jet, LinearMapper, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
+from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
     RangeSelectionOverlay, MoveTool
 
 #===============================================================================

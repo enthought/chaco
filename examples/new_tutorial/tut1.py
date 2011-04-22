@@ -4,7 +4,7 @@
 
 import wx
 from numpy import *
-from enthought.chaco.api import *
+from chaco.api import *
 
 # This is a little boilerplate main() function that runs the wx main event
 # loop.  Note that we're using "PlotFrame" as the top-level frame for our

@@ -2,8 +2,8 @@ from __future__ import with_statement
 
 import numpy
 
-from enthought.chaco.abstract_overlay import AbstractOverlay
-from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
+from chaco.abstract_overlay import AbstractOverlay
+from chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
         IndexAxisLogButton, ValueAxisLogButton, SaveAsButton, \
         CopyToClipboardButton, ZoomResetButton, ExportDataToClipboardButton
 from enable.api import Container

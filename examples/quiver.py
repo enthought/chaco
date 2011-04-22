@@ -20,10 +20,10 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayDataSource, MultiArrayDataSource, \
+from chaco.api import ArrayDataSource, MultiArrayDataSource, \
         DataRange1D, LinearMapper, QuiverPlot, OverlayPlotContainer, \
         add_default_grids, add_default_axes
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
 # # Create the Chaco plot.

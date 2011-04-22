@@ -21,7 +21,7 @@ from traitsui.api import Group, HGroup, Item, View, spring, Handler
 from pyface.timer.api import Timer
 
 # Chaco imports
-from enthought.chaco.chaco_plot_editor import ChacoPlotItem
+from chaco.chaco_plot_editor import ChacoPlotItem
 
 
 class Viewer(HasTraits):

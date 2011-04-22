@@ -7,7 +7,7 @@ components in plot overlays.
 
 from traits.api import Instance
 from enable.api import Container, Component
-from enthought.chaco.api import PlotComponent
+from chaco.api import PlotComponent
 
 
 class ContainerOverlay(Container, PlotComponent):

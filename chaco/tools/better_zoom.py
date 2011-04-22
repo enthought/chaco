@@ -1,6 +1,6 @@
 import numpy
 
-from enthought.chaco.grid_mapper import GridMapper
+from chaco.grid_mapper import GridMapper
 from enable.api import BaseTool, KeySpec
 from traits.api import Enum, Float, Instance, Bool, HasTraits, List
 

@@ -61,9 +61,9 @@ issues that have been fixed are:
 
 One final note is that the "chaco2" legacy backwards compatibility package will
 be removed by the next release.  If you have any code that imports from
-"enthought.chaco2" and the DeprecationWarnings haven't been sufficiently
+"chaco2" and the DeprecationWarnings haven't been sufficiently
 motivating thus far, please heed them and change your imports to use
-"enthought.chaco"!
+"chaco"!
 
 
 Chaco 3.2.0 (July 15, 2009)

@@ -220,7 +220,7 @@ package to interact with the plot.
 
 * Import the shell commands::
 
-    In [2]: from enthought.chaco.shell import *
+    In [2]: from chaco.shell import *
 
 * Set the X-axis title::
 
@@ -290,7 +290,7 @@ API Docs
 --------
 
 The API docs for Chaco 3.0 (in ETS 3.0) are at:
-http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html
+http://code.enthought.com/projects/files/ETS3_API/chaco.html
 
 The API docs for Chaco2 (in ETS 2.7.1) are at:
-http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html
+http://code.enthought.com/projects/files/ets_api/chaco2.html

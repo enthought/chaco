@@ -4,7 +4,7 @@ from numpy import linspace, meshgrid, sin
 from scipy.special import jn
 
 # Enthought library imports
-from enthought.chaco.shell import show, title, contour
+from chaco.shell import show, title, contour
 
 
 # Crate some scalar data

@@ -34,9 +34,9 @@ from numpy import arange, searchsorted, where, array, vstack, linspace
 from scipy.special import jn
 
 # Chaco imports
-from enthought.chaco.api \
+from chaco.api \
     import ArrayPlotData, Plot, PlotGraphicsContext, LinePlot
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 
 
 #-- Constants -----------------------------------------------------------------

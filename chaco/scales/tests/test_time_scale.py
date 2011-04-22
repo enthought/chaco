@@ -4,7 +4,7 @@ import time
 
 import numpy as np
 
-from enthought.chaco.scales.time_scale import tfrac, trange, \
+from chaco.scales.time_scale import tfrac, trange, \
         TimeScale, CalendarScaleSystem
 
 #----------------------------------------------------------------

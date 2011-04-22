@@ -3,7 +3,7 @@ import unittest
 
 from numpy import alltrue, array, ravel, isinf
 
-from enthought.chaco.api import GridDataSource
+from chaco.api import GridDataSource
 
 
 class GridDataSourceTestCase(unittest.TestCase):

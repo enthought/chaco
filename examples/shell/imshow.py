@@ -4,7 +4,7 @@ import sys
 
 # Enthought library imports
 from traits.util.resource import find_resource
-from enthought.chaco.shell import imread, imshow, title, show
+from chaco.shell import imread, imshow, title, show
 
 # Get the image file using the find_resource module
 image_path = os.path.join('examples','basic','capitol.jpg')

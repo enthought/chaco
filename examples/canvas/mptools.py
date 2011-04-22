@@ -6,8 +6,8 @@ from numpy import asarray, dot, sqrt
 from traits.api import Delegate, Dict, Enum, Instance, Int, Property, Trait, Tuple, CArray
 
 # Chaco imports
-from enthought.chaco.api import BaseTool
-from enthought.chaco.tools.api import PanTool, DragZoom, LegendTool, RangeSelection
+from chaco.api import BaseTool
+from chaco.tools.api import PanTool, DragZoom, LegendTool, RangeSelection
 
 
 BOGUS_BLOB_ID = -1

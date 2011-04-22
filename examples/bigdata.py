@@ -15,7 +15,7 @@ import sys
 from scipy.special import jn
 from numpy import arange
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
@@ -24,9 +24,9 @@ from traits.api import Bool, HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import OverlayPlotContainer, create_line_plot, add_default_axes, \
+from chaco.api import OverlayPlotContainer, create_line_plot, add_default_axes, \
                                  add_default_grids
-from enthought.chaco.tools.api import RangeSelection, RangeSelectionOverlay, ZoomTool
+from chaco.tools.api import RangeSelection, RangeSelectionOverlay, ZoomTool
 
 #===============================================================================
 # # Create the Chaco plot.

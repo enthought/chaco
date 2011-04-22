@@ -5,9 +5,9 @@ Example of how to use a DataView and bare renderers to create plots
 from numpy import linspace, sin, cos
 
 # Enthought library imports.
-from enthought.chaco.api import DataView, ArrayDataSource, ScatterPlot, \
+from chaco.api import DataView, ArrayDataSource, ScatterPlot, \
                                 LinePlot, LinearMapper
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 from enable.example_support import DemoFrame, demo_main
 from enable.api import Component, ComponentEditor, Window
 from traits.api import HasTraits, Instance

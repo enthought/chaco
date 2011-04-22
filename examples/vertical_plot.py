@@ -10,14 +10,14 @@ or different orientations on the plots (comment out line 41 and uncomment 42).
 from numpy import arange, fabs, pi, sin
 from scipy.special import jn
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance, false
 from traitsui.api import Item, Group, View
-from enthought.chaco.api import PlotComponent, OverlayPlotContainer, \
+from chaco.api import PlotComponent, OverlayPlotContainer, \
                                 PlotLabel, HPlotContainer, VPlotContainer, \
                                 create_line_plot
 

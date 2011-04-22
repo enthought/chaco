@@ -2,7 +2,7 @@
 from numpy import linspace
 from scipy.special import jn
 
-from enthought.chaco.api import ArrayPlotData, Plot
+from chaco.api import ArrayPlotData, Plot
 from enable.component_editor import ComponentEditor
 from traits.api import Dict, Enum, HasTraits, Instance
 from traitsui.api import Item, View

@@ -6,7 +6,7 @@ re-assigned in any order.
 import unittest
 
 from numpy import array
-from enthought.chaco.api import ArrayDataSource, DataRange1D, \
+from chaco.api import ArrayDataSource, DataRange1D, \
                                  LinearMapper
 
 class DataPipelineTestCase(unittest.TestCase):

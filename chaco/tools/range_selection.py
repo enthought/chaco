@@ -9,7 +9,7 @@ from traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, List
 from enable.api import KeySpec
 
 # Chaco imports
-from enthought.chaco.api import AbstractController
+from chaco.api import AbstractController
 
 
 class RangeSelection(AbstractController):

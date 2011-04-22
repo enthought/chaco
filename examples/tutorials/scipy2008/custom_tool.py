@@ -1,7 +1,7 @@
 
 from numpy import linspace, sin
 
-from enthought.chaco.api import ArrayPlotData, Plot
+from chaco.api import ArrayPlotData, Plot
 from enable.api import BaseTool
 from enable.component_editor import ComponentEditor
 from traits.api import Enum, HasTraits, Instance

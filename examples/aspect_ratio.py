@@ -18,8 +18,8 @@ from traits.api import Any, Bool, BaseFloat, HasTraits
 from traitsui.api import Item, HGroup, VGroup, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import ArrayPlotData, Plot
+from chaco.tools.api import PanTool, ZoomTool
 
 class AspectRatio(BaseFloat):
     "A new Trait for defining aspect ratios"

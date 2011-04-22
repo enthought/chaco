@@ -5,7 +5,7 @@ object-oriented core of Chaco.
 """
 
 from numpy import linspace, pi, sin, cos
-from enthought.chaco.shell import plot, hold, title, show
+from chaco.shell import plot, hold, title, show
 
 # Create some data
 x = linspace(-2*pi, 2*pi, 100)

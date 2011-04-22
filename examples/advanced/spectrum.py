@@ -10,7 +10,7 @@ from numpy import zeros, linspace, short, fromstring, hstack, transpose
 from scipy import fft
 
 # Enthought library imports
-from enthought.chaco.default_colormaps import jet
+from chaco.default_colormaps import jet
 from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View, Handler
@@ -18,7 +18,7 @@ from enable.example_support import DemoFrame, demo_main
 from pyface.timer.api import Timer
 
 # Chaco imports
-from enthought.chaco.api import Plot, ArrayPlotData, HPlotContainer
+from chaco.api import Plot, ArrayPlotData, HPlotContainer
 
 NUM_SAMPLES = 1024
 SAMPLING_RATE = 11025

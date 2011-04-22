@@ -2,8 +2,8 @@ import numpy
 
 from traits.etsconfig.api import ETSConfig
 from enable.tools.toolbars.toolbar_buttons import Button
-from enthought.chaco.tools.zoom_tool import ZoomTool
-from enthought.chaco.plot_graphics_context import PlotGraphicsContext
+from chaco.tools.zoom_tool import ZoomTool
+from chaco.plot_graphics_context import PlotGraphicsContext
 from enable.kiva.image import Image
 from pyface.image_resource import ImageResource
 from pyface.api import FileDialog, OK, error

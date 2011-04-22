@@ -14,10 +14,10 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
+from chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
         LinearMapper, VPlotContainer, PlotAxis, FilledLinePlot, \
         add_default_grids, PlotLabel
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
 # # Create the Chaco plot.

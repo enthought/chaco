@@ -3,7 +3,7 @@ import unittest
 
 import nose
 
-from enthought.chaco.api import HPlotContainer, OverlayPlotContainer, \
+from chaco.api import HPlotContainer, OverlayPlotContainer, \
                                 PlotComponent, VPlotContainer, GridContainer
 from traits.api import Any, Tuple
 

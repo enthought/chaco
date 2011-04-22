@@ -105,7 +105,7 @@ a static plot.  This is probably familiar to anyone who has used Gnuplot,
 MATLAB, or Matplotlib::
 
     from numpy import *
-    from enthought.chaco.shell import *
+    from chaco.shell import *
 
     x = linspace(-2*pi, 2*pi, 100)
     y = sin(x)
@@ -140,7 +140,7 @@ things, as you'll see later on::
 
     from traits.api import HasTraits, Instance
     from traitsui.api import View, Item
-    from enthought.chaco.api import Plot, ArrayPlotData
+    from chaco.api import Plot, ArrayPlotData
     from enable.component_editor import ComponentEditor
     from numpy import linspace, sin
 
@@ -291,7 +291,7 @@ We can use the same pattern to build a scatter plot::
 
     from traits.api import HasTraits, Instance
     from traitsui.api import View, Item
-    from enthought.chaco.api import Plot, ArrayPlotData
+    from chaco.api import Plot, ArrayPlotData
     from enable.component_editor import ComponentEditor
     from numpy import linspace, sin
     
@@ -327,7 +327,7 @@ Image plots can be created in a similar fashion::
 
     from traits.api import HasTraits, Instance
     from traitsui.api import View, Item
-    from enthought.chaco.api import Plot, ArrayPlotData, jet
+    from chaco.api import Plot, ArrayPlotData, jet
     from enable.component_editor import ComponentEditor
     from numpy import exp, linspace, meshgrid
     
@@ -373,7 +373,7 @@ array from the ArrayPlotData::
 
     from traits.api import HasTraits, Instance
     from traitsui.api import View, Item
-    from enthought.chaco.api import Plot, ArrayPlotData
+    from chaco.api import Plot, ArrayPlotData
     from enable.component_editor import ComponentEditor
     from numpy import cos, linspace, sin
 
@@ -438,7 +438,7 @@ plot, and adds them both to the HPlotContainer object::
 
     from traits.api import HasTraits, Instance
     from traitsui.api import View, Item
-    from enthought.chaco.api import HPlotContainer, ArrayPlotData, Plot
+    from chaco.api import HPlotContainer, ArrayPlotData, Plot
     from enable.component_editor import ComponentEditor
     from numpy import linspace, sin
     
@@ -505,7 +505,7 @@ of these capabilities.  Here is the full listing of the modified code::
     from traitsui.api import View, Group, Item
     from enable.api import ColorTrait
     from enable.component_editor import ComponentEditor
-    from enthought.chaco.api import marker_trait, Plot, ArrayPlotData
+    from chaco.api import marker_trait, Plot, ArrayPlotData
     from numpy import linspace, sin
 
     class ScatterPlotTraits(HasTraits):

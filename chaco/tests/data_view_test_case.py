@@ -1,7 +1,7 @@
 
 import unittest
 
-from enthought.chaco.api import DataRange2D, DataView, GridDataSource
+from chaco.api import DataRange2D, DataView, GridDataSource
 
 
 class DataViewTestCase(unittest.TestCase):

@@ -3,7 +3,7 @@ free-standing windows.
 """
 
 from traits.api import Any, Dict, List, Str
-from enthought.chaco.shell.session import PlotSession
+from chaco.shell.session import PlotSession
 
 from plot_editor import PlotEditor
 

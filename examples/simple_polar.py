@@ -13,7 +13,7 @@ from traits.api import HasTraits, Instance, false
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import create_polar_plot
+from chaco.api import create_polar_plot
 
 #===============================================================================
 # # Create the Chaco plot.

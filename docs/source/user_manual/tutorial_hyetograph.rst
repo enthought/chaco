@@ -62,7 +62,7 @@ will be used for our application. ::
     from traits.api \
         import HasTraits, Int, Range, Array, Enum, on_trait_change
     from traitsui.api import View, Item
-    from enthought.chaco.chaco_plot_editor import ChacoPlotItem
+    from chaco.chaco_plot_editor import ChacoPlotItem
 
 
 Trait Definitions
@@ -317,7 +317,7 @@ The final version of the program, `hyetograph.py`. ::
     from traits.api \
         import HasTraits, Int, Range, Array, Enum, on_trait_change
     from traitsui.api import View, Item
-    from enthought.chaco.chaco_plot_editor import ChacoPlotItem
+    from chaco.chaco_plot_editor import ChacoPlotItem
     
     
     class Hyetograph(HasTraits):

@@ -26,8 +26,8 @@ from enable.api import Window
 from traits.api import false
 
 # Chaco imports
-from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import create_line_plot, add_default_axes, add_default_grids
+from chaco.tools.api import PanTool, ZoomTool
 
 class PlotFrame(DemoFrame):
 

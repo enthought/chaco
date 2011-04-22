@@ -5,7 +5,7 @@ from traits.api import Str
 from enable.api import BaseTool
 
 # Chaco imports
-from enthought.chaco.api import BaseXYPlot
+from chaco.api import BaseXYPlot
 
 
 class DataPrinter(BaseTool):

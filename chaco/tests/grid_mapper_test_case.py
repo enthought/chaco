@@ -3,7 +3,7 @@ import unittest
 from numpy import array, transpose
 from numpy.testing import assert_equal
 
-from enthought.chaco.api import GridDataSource, DataRange2D, GridMapper
+from chaco.api import GridDataSource, DataRange2D, GridMapper
 
 class GridMapperTestCase(unittest.TestCase):
 

@@ -1,8 +1,8 @@
 
 import numpy
 
-from enthought.chaco.api import Plot, ArrayPlotData
-from enthought.chaco.layers.api import ErrorLayer, WarningLayer, StatusLayer
+from chaco.api import Plot, ArrayPlotData
+from chaco.layers.api import ErrorLayer, WarningLayer, StatusLayer
 from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance, Button
 from traitsui.api import Item, View, HGroup

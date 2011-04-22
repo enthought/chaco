@@ -7,7 +7,7 @@ from enable.api import BaseTool, ColorTrait, LineStyle
 from traits.api import Any, Bool, Enum, Float, Str, Trait
 
 # Chaco imports
-from enthought.chaco.api import BaseXYPlot, Base2DPlot
+from chaco.api import BaseXYPlot, Base2DPlot
 
 
 class LineInspector(BaseTool):

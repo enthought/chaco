@@ -2,7 +2,7 @@
 """
 
 from enable.api import Window
-from enthought.chaco.shell.scaly_plot import ScalyPlot
+from chaco.shell.scaly_plot import ScalyPlot
 
 from traits.etsconfig.api import ETSConfig
 

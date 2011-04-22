@@ -10,10 +10,10 @@ import re
 from numpy import all, array, arange, asarray, reshape, shape, transpose
 
 # Chaco imports
-from enthought.chaco.api import (create_line_plot, create_scatter_plot,
+from chaco.api import (create_line_plot, create_scatter_plot,
     ArrayDataSource, ImageData)
 
-from enthought.chaco.tools.api import HighlightTool
+from chaco.tools.api import HighlightTool
 
 
 

@@ -20,8 +20,8 @@ from traitsui.api import Item, Group, View
 from traits.util.resource import find_resource
 
 # Chaco imports
-from enthought.chaco.api import SimplePlotFrame, VPlotContainer
-from enthought.chaco.tools.api import RangeSelection
+from chaco.api import SimplePlotFrame, VPlotContainer
+from chaco.tools.api import RangeSelection
 
 # Relative imports
 from grid_plot_factory import create_gridded_line_plot

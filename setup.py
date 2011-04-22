@@ -59,7 +59,7 @@ DOCLINES = __doc__.split("\n")
 
 # Register Python extensions
 contour = Extension(
-    'enthought.chaco.contour.contour',
+    'chaco.contour.contour',
     sources=['enthought/chaco/contour/cntr.c'],
     include_dirs=[get_include()],
     define_macros=[('NUMPY', None)]
@@ -67,7 +67,7 @@ contour = Extension(
 
 # Commenting this out for now, until we get the module fully tested and working
 #speedups = Extension(
-#    'enthought.chaco._speedups',
+#    'chaco._speedups',
 #    sources = ['enthought/chaco/_speedups.cpp'],
 #    include_dirs = [get_include()],
 #    define_macros=[('NUMPY', None)]

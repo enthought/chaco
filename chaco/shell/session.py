@@ -2,8 +2,8 @@
 """
 
 # Enthoght library imports
-from enthought.chaco.array_plot_data import ArrayPlotData
-from enthought.chaco.default_colormaps import *
+from chaco.array_plot_data import ArrayPlotData
+from chaco.default_colormaps import *
 from traits.api import Any, Bool, Dict, HasTraits, Instance, Int, \
                                  List, Property, Trait, Str
 

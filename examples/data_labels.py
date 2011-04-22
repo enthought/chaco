@@ -17,7 +17,7 @@ from numpy import arange
 from scipy.special import jn
 
 from enable.example_support import DemoFrame, demo_main
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor, Window
@@ -25,10 +25,10 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import create_line_plot, add_default_axes, \
+from chaco.api import create_line_plot, add_default_axes, \
                                 add_default_grids, \
                                 OverlayPlotContainer, DataLabel
-from enthought.chaco.tools.api import PanTool, ZoomTool, DataLabelTool
+from chaco.tools.api import PanTool, ZoomTool, DataLabelTool
 
 
 #===============================================================================

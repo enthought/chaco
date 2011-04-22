@@ -3,8 +3,8 @@ import unittest
 
 from numpy import alltrue, array, ravel, zeros, isinf, linspace
 
-#from enthought.chaco import _speedups as speedups
-#from enthought.chaco import _speedups_fallback as fallback
+#from chaco import _speedups as speedups
+#from chaco import _speedups_fallback as fallback
 
 
 def assert_close(desired,actual):

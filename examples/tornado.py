@@ -3,7 +3,7 @@
 # Major library imports
 from numpy import arange, cos, linspace, pi, sin, ones
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
@@ -12,7 +12,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
+from chaco.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
                                 LinearMapper, OverlayPlotContainer, PlotAxis, PlotGrid, \
                                 DataLabel
 

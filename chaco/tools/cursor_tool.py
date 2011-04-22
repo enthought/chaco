@@ -24,9 +24,9 @@ from traits.api import Int, Property, cached_property, Float,\
                                 Bool, Instance, Tuple, Disallow
 
 # Chaco imports
-from enthought.chaco.scatter_markers import CircleMarker
-from enthought.chaco.base_xy_plot import BaseXYPlot
-from enthought.chaco.base_2d_plot import Base2DPlot
+from chaco.scatter_markers import CircleMarker
+from chaco.base_xy_plot import BaseXYPlot
+from chaco.base_2d_plot import Base2DPlot
 from line_inspector import LineInspector
 
 

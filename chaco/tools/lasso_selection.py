@@ -10,7 +10,7 @@ from traits.api import Any, Array, Enum, Event, Bool, Instance, \
 from enable.kiva.agg import points_in_polygon
 
 # Chaco imports
-from enthought.chaco.api import AbstractController, AbstractDataSource, \
+from chaco.api import AbstractController, AbstractDataSource, \
         BaseXYPlot, Base2DPlot
 
 

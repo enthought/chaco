@@ -5,7 +5,7 @@ from numpy import array, amax, amin
 
 from enable.api import ColorTrait, Component
 from traits.api import Float, Instance, Int
-from enthought.chaco.api import AbstractOverlay, BaseXYPlot
+from chaco.api import AbstractOverlay, BaseXYPlot
 
 
 class ZoomOverlay(AbstractOverlay):

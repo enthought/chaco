@@ -19,7 +19,7 @@ class LassoOverlay(AbstractOverlay):
     """
 
     # The LassoSelection that provides the data for this overlay.
-    lasso_selection = Instance('enthought.chaco.tools.lasso_selection.LassoSelection')
+    lasso_selection = Instance('chaco.tools.lasso_selection.LassoSelection')
     # The fill color for the selection region.
     selection_fill_color = ColorTrait('lightskyblue')
     # The border color for the selection region.

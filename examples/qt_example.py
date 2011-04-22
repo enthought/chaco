@@ -13,8 +13,8 @@ from traits.qt import QtGui, QtCore
 
 from enable.api import Window
 
-from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import ArrayPlotData, Plot
+from chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotFrame(QtGui.QWidget):

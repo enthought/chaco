@@ -22,10 +22,10 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, ColorBar, \
+from chaco.api import ArrayPlotData, ColorBar, \
                                  ColormappedSelectionOverlay, HPlotContainer, \
                                  jet, LinearMapper, Plot, gist_earth
-from enthought.chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
+from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
                                        RangeSelectionOverlay
 
 #===============================================================================

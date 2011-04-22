@@ -2,8 +2,8 @@
 
 import numpy
 
-from enthought.chaco.plot import Plot, ArrayPlotData
-from enthought.chaco.api import ToolbarPlot
+from chaco.plot import Plot, ArrayPlotData
+from chaco.api import ToolbarPlot
 from enable.api import ComponentEditor
 from traits.api import Instance, HasTraits
 from traitsui.api import View, Item

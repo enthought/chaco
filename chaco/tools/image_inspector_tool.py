@@ -6,7 +6,7 @@ from enable.api import BaseTool, KeySpec
 from traits.api import Any, Bool, Enum, Event, Tuple
 
 # Chaco imports
-from enthought.chaco.api import AbstractOverlay, ImagePlot, TextBoxOverlay
+from chaco.api import AbstractOverlay, ImagePlot, TextBoxOverlay
 
 
 class ImageInspectorTool(BaseTool):

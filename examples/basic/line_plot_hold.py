@@ -15,8 +15,8 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import ArrayPlotData, HPlotContainer, Plot
+from chaco.tools.api import PanTool, ZoomTool
 
 def attach_tools(plot):
     plot.tools.append(PanTool(plot))

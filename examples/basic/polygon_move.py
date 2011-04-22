@@ -16,9 +16,9 @@ from traits.api import HasTraits, Instance, Enum, CArray, Dict
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco.base import n_gon
-from enthought.chaco.tools.api import PanTool, ZoomTool, DragTool
+from chaco.api import ArrayPlotData, HPlotContainer, Plot
+from chaco.base import n_gon
+from chaco.tools.api import PanTool, ZoomTool, DragTool
 
 class DataspaceMoveTool(DragTool):
     """

@@ -18,7 +18,7 @@ y = sin(x)
 # plot types (line, scatter, etc.).  In later tutorials we'll see what the
 # factories are actually doing, and how to manually assemble plotting
 # primitives in more powerful ways.  For now, factories suit our needs.
-from enthought.chaco import api as chaco
+from chaco import api as chaco
 myplot = chaco.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
 
 # We now need to set the plot's size, and add a little padding for the axes.

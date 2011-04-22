@@ -3,9 +3,9 @@ from traits.api import Instance, HasTraits, List
 from traitsui.api import View, Item
 from enable.api import Container
 from enable.component_editor import ComponentEditor
-from enthought.chaco.api import VPlotContainer
-from enthought.chaco.plot import Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import VPlotContainer
+from chaco.plot import Plot
+from chaco.tools.api import PanTool, ZoomTool
 
 from traitsui.wx.constants import WindowColor
 

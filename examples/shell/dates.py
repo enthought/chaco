@@ -3,8 +3,8 @@
 from numpy import linspace, pi, sin
 
 # Enthought library imports
-from enthought.chaco.shell import show, plot, title, curplot
-from enthought.chaco.scales.api import CalendarScaleSystem
+from chaco.shell import show, plot, title, curplot
+from chaco.scales.api import CalendarScaleSystem
 
 # Create some data
 numpoints = 100

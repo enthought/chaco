@@ -6,14 +6,14 @@ try:
 except ImportError:
     GetApp = lambda: None
 
-from enthought.chaco.api import Plot, color_map_name_dict
-from enthought.chaco.scales.api import ScaleSystem
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import Plot, color_map_name_dict
+from chaco.scales.api import ScaleSystem
+from chaco.tools.api import PanTool, ZoomTool
 
 # Note: these are imported to be exposed in the namespace.
-from enthought.chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
+from chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
     CalendarScaleSystem)
-from enthought.chaco.default_colormaps import *
+from chaco.default_colormaps import *
 
 import plot_maker
 from session import PlotSession
@@ -748,7 +748,7 @@ def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch
     ext = os.path.splitext(filename)[-1]
     if ext == ".pdf":
         print "Warning: the PDF backend is still a little buggy."
-        from enthought.chaco.pdf_graphics_context import PdfPlotGraphicsContext
+        from chaco.pdf_graphics_context import PdfPlotGraphicsContext
         # Set some default PDF options if none are provided
         if dest_box is None:
             dest_box = (0.5, 0.5, -0.5, -0.5)
@@ -762,7 +762,7 @@ def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch
         print "Saved to", filename
 
     elif ext in [".bmp", ".png", ".jpg"]:
-        from enthought.chaco.api import PlotGraphicsContext
+        from chaco.api import PlotGraphicsContext
         gc = PlotGraphicsContext((int(p.outer_width), int(p.outer_height)))
         p.draw(gc, mode="normal")
         gc.save(filename)

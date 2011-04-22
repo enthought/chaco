@@ -4,7 +4,7 @@ import unittest
 from numpy import alltrue, arange, array, ravel, transpose, zeros, inf, isinf
 from numpy.testing import assert_equal
 
-from enthought.chaco.api import DataRange2D, GridDataSource, PointDataSource
+from chaco.api import DataRange2D, GridDataSource, PointDataSource
 
 
 class DataRange2DTestCase(unittest.TestCase):

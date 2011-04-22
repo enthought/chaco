@@ -56,14 +56,14 @@ class SaveTool(BaseTool):
     def _save_raster(self):
         """ Saves an image of the component.
         """
-        from enthought.chaco.api import PlotGraphicsContext
+        from chaco.api import PlotGraphicsContext
         gc = PlotGraphicsContext((int(self.component.outer_width), int(self.component.outer_height)))
         self.component.draw(gc, mode="normal")
         gc.save(self.filename)
         return
 
     def _save_pdf(self):
-        from enthought.chaco.pdf_graphics_context import PdfPlotGraphicsContext
+        from chaco.pdf_graphics_context import PdfPlotGraphicsContext
         gc = PdfPlotGraphicsContext(filename=self.filename,
                 pagesize = self.pagesize,
                 dest_box = self.dest_box,

@@ -5,7 +5,7 @@
 
 from tutorial2 import myplot, PlotFrame, main
 
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 # The ZoomTool tool has a visual component, so it needs to be added to the
 # list of overlays instead of the list of bare tools.

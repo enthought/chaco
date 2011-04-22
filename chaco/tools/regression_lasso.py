@@ -11,8 +11,8 @@ from enable.api import ColorTrait, LineStyle
 from traits.api import Any, Float, Instance
 
 # Chaco imports
-from enthought.chaco.api import LassoOverlay, Label
-from enthought.chaco.tools.api import LassoSelection
+from chaco.api import LassoOverlay, Label
+from chaco.tools.api import LassoSelection
 
 
 class RegressionLasso(LassoSelection):

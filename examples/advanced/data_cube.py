@@ -20,10 +20,10 @@ import os, sys, shutil
 from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
 
 # Enthought library imports
-from enthought.chaco.api import ArrayPlotData, Plot, GridPlotContainer, \
+from chaco.api import ArrayPlotData, Plot, GridPlotContainer, \
                                  BaseTool, DataRange1D
-from enthought.chaco.default_colormaps import *
-from enthought.chaco.tools.api import LineInspector, ZoomTool
+from chaco.default_colormaps import *
+from chaco.tools.api import LineInspector, ZoomTool
 from enable.example_support import DemoFrame, demo_main
 from enable.api import Window
 from traits.api import Any, Array, Bool, Callable, CFloat, CInt, \

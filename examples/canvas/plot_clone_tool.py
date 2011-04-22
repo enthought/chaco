@@ -8,7 +8,7 @@ from traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
 from enable.api import Container
 
 # Chaco imports
-from enthought.chaco.api import AbstractOverlay
+from chaco.api import AbstractOverlay
 from enable.tools.api import DragTool
 
 

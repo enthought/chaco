@@ -4,7 +4,7 @@ from __future__ import with_statement
 import os
 import numpy
 
-from enthought.chaco.api import GridMapper
+from chaco.api import GridMapper
 from traits.api import Property, Enum, Str, cached_property
 
 from status_layer import StatusLayer

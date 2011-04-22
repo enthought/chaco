@@ -18,8 +18,8 @@ import urllib
 import numpy
 
 # ETS imports
-from enthought.chaco.api import Plot, ArrayPlotData, ImageData
-from enthought.chaco.tools.api import ZoomTool
+from chaco.api import Plot, ArrayPlotData, ImageData
+from chaco.tools.api import ZoomTool
 from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance, Str
 from traitsui.api import Item, View

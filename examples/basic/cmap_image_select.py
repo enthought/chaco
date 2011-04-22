@@ -21,9 +21,9 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, ColorBar, HPlotContainer, jet, \
+from chaco.api import ArrayPlotData, ColorBar, HPlotContainer, jet, \
                                  LinearMapper, Plot
-from enthought.chaco.tools.api import PanTool, RangeSelection, \
+from chaco.tools.api import PanTool, RangeSelection, \
                                        RangeSelectionOverlay, ZoomTool
 
 #===============================================================================

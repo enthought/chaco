@@ -3,7 +3,7 @@ import unittest
 
 import numpy as np
 from numpy.testing.utils import assert_almost_equal
-from enthought.chaco.shell.plot_maker import make_data_sources
+from chaco.shell.plot_maker import make_data_sources
 
 class MakeDataSourcesTestCase(unittest.TestCase):
 

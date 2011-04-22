@@ -4,7 +4,7 @@
 Mappers
 -------
 
-.. currentmodule:: enthought.chaco.api
+.. currentmodule:: chaco.api
 
 :class:`AbstractMapper`
 =======================

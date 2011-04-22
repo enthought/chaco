@@ -21,9 +21,9 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import AbstractDataSource, ArrayPlotData, Plot, \
+from chaco.api import AbstractDataSource, ArrayPlotData, Plot, \
                                  HPlotContainer, LassoOverlay
-from enthought.chaco.tools.api import LassoSelection, ScatterInspector
+from chaco.tools.api import LassoSelection, ScatterInspector
 
 #===============================================================================
 # # Create the Chaco plot.

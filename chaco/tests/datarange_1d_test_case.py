@@ -6,7 +6,7 @@ from numpy.testing import assert_equal
 
 from traits.api import HasTraits, Instance, Bool, on_trait_change
 
-from enthought.chaco.api import DataRange1D, ArrayDataSource
+from chaco.api import DataRange1D, ArrayDataSource
 
 
 class Foo(HasTraits):

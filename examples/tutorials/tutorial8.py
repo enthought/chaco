@@ -10,8 +10,8 @@
 import wx
 from scipy import arange
 from scipy.special import jn
-from enthought.chaco.api import *
-from enthought.chaco.tools.api import *
+from chaco.api import *
+from chaco.tools.api import *
 from enable.wx_backend.api import Window
 
 

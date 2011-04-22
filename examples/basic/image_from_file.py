@@ -22,10 +22,10 @@ from traitsui.menu \
     import Action, CloseAction, Menu, MenuBar, OKCancelButtons, Separator
 
 # Chaco imports
-from enthought.chaco.api \
+from chaco.api \
     import ArrayPlotData, ImageData, Plot, PlotGraphicsContext
 from enable.component_editor import ComponentEditor
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 
 #-------------------------------------------------------------------------------

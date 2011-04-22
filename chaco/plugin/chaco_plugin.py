@@ -5,7 +5,7 @@ from enthought.envisage.api import Plugin
 from traits.api import List
 
 
-ID = 'enthought.chaco'
+ID = 'chaco'
 ICHACO_SESSION = ID + '.plugin.session_service.SessionService'
 
 
@@ -26,7 +26,7 @@ class ChacoPlugin(Plugin):
 
     def _contributed_commands_default(self):
         commands = [
-            "from enthought.chaco.shell.commands import *",
+            "from chaco.shell.commands import *",
         ]
         return commands
 
@@ -35,9 +35,9 @@ class ChacoPlugin(Plugin):
     def start(self):
         """ Monkeypatch the Chaco shell subsystem.
         """
-        from enthought.chaco import shell
-        from enthought.chaco.shell import commands
-        from enthought.chaco.plugin.workbench_session import WorkbenchSession
+        from chaco import shell
+        from chaco.shell import commands
+        from chaco.plugin.workbench_session import WorkbenchSession
 
         commands.session = shell.session = WorkbenchSession(
             application=self.application)

@@ -8,7 +8,7 @@ a fixed screen space aspect ratio for plot components.
 from numpy import linspace
 from scipy.special import jn
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
@@ -18,8 +18,8 @@ from traitsui.api import Item, Group, View
 
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, GridContainer, Plot, PlotLabel
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import ArrayPlotData, GridContainer, Plot, PlotLabel
+from chaco.tools.api import PanTool, ZoomTool
 
 
 #===============================================================================

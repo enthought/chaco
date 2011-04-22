@@ -4,7 +4,7 @@ from __future__ import with_statement
 import os.path
 import xml.etree.cElementTree as etree
 
-from enthought.chaco.api import AbstractOverlay
+from chaco.api import AbstractOverlay
 from pyface.timer.timer import Timer
 from traits.api import Instance, Str, Enum, Float, Int
 from enable.savage.svg.document import SVGDocument

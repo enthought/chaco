@@ -117,7 +117,7 @@ class CodeMetadata(HasTraits):
     version = "1.0"
 
     # The name of the Chaco package.
-    pkg_name = "enthought.chaco"
+    pkg_name = "chaco"
 
     # A dict with the template variable names as keys.  If the template is
     # unbound, the values are string representations of the types of objects

@@ -3,7 +3,7 @@ import unittest
 from numpy import array, nan
 from numpy.testing import assert_array_almost_equal, assert_equal
 
-from enthought.chaco.api import ArrayDataSource, DataRange1D, LogMapper
+from chaco.api import ArrayDataSource, DataRange1D, LogMapper
 
 class LogMapperTestCase(unittest.TestCase):
 

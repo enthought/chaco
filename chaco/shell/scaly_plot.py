@@ -3,10 +3,10 @@
 
 from traits.api import Any
 
-from enthought.chaco.api import (DataRange2D, LinearMapper, LogMapper,
+from chaco.api import (DataRange2D, LinearMapper, LogMapper,
     PlotGrid, Plot, PlotAxis)
-from enthought.chaco.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco.scales.api import DefaultScale, LogScale, ScaleSystem
+from chaco.scales_tick_generator import ScalesTickGenerator
+from chaco.scales.api import DefaultScale, LogScale, ScaleSystem
 
 
 def add_default_axes(plot, orientation="normal", vtitle="", htitle=""):

@@ -4,7 +4,7 @@
 # from enable.
 
 import warnings
-warnings.warn("enthought.chaco.tools.DragTool has been removed."
+warnings.warn("chaco.tools.DragTool has been removed."
               "Use enable.tools.DragTool instead.", DeprecationWarning)
 
 from enable.tools.drag_tool import DragTool

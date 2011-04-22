@@ -15,9 +15,9 @@ from traitsui.wx.editor import Editor
 from enable.window import Window
 from enable.api import ColorTrait
 
-from enthought.chaco.api import OverlayPlotContainer, create_line_plot, \
+from chaco.api import OverlayPlotContainer, create_line_plot, \
      LinePlot
-from enthought.chaco.tools.api import RangeSelection, RangeSelectionOverlay
+from chaco.tools.api import RangeSelection, RangeSelectionOverlay
 
 from traits.api import Int, TraitType, Instance, Float
 

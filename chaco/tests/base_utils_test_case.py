@@ -7,7 +7,7 @@ from math import sqrt
 from numpy import arange, array
 from numpy.testing import assert_equal, assert_almost_equal
 
-from enthought.chaco.api import bin_search, find_runs, reverse_map_1d, point_line_distance
+from chaco.api import bin_search, find_runs, reverse_map_1d, point_line_distance
 
 class BinSearchTestCase(unittest.TestCase):
     def test_ascending_data(self):

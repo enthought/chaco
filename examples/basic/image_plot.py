@@ -20,9 +20,9 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool
-from enthought.chaco.tools.image_inspector_tool import ImageInspectorTool, \
+from chaco.api import ArrayPlotData, Plot
+from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.image_inspector_tool import ImageInspectorTool, \
      ImageInspectorOverlay
 
 #===============================================================================

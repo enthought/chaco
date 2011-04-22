@@ -1,8 +1,8 @@
 
 from numpy import linspace, sin
 
-from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import ArrayPlotData, Plot
+from chaco.tools.api import PanTool, ZoomTool
 from enable.component_editor import ComponentEditor
 from traits.api import Enum, HasTraits, Instance
 from traitsui.api import Item, View

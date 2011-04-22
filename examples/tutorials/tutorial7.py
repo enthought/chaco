@@ -3,7 +3,7 @@
 #
 # Tutorial 7. Writing a tool (cont.) - Looking at data space
 
-from enthought.chaco.api import AbstractController
+from chaco.api import AbstractController
 
 class DataPrinter(AbstractController):
     def dispatch(self, event, suffix):

@@ -5,7 +5,7 @@ Test of basic dataseries behavior.
 import unittest
 
 from numpy import arange, array, allclose
-from enthought.chaco.api import ArrayDataSource, PointDataSource
+from chaco.api import ArrayDataSource, PointDataSource
 
 
 class ArrayDataTestCase(unittest.TestCase):

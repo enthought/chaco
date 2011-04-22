@@ -6,7 +6,7 @@ Example of using tooltips on Chaco plots
 # Major library imports
 from numpy import random
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
@@ -15,8 +15,8 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, Plot, ScatterInspectorOverlay
-from enthought.chaco.tools.api import PanTool, ZoomTool, LegendTool, ScatterInspector
+from chaco.api import ArrayPlotData, Plot, ScatterInspectorOverlay
+from chaco.tools.api import PanTool, ZoomTool, LegendTool, ScatterInspector
 
 #===============================================================================
 # # Create the Chaco plot.

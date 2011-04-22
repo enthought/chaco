@@ -20,7 +20,7 @@ from numpy import linspace
 from scipy.special import jn
 from time import time
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
@@ -29,14 +29,14 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import create_line_plot, OverlayPlotContainer, PlotLabel, \
+from chaco.api import create_line_plot, OverlayPlotContainer, PlotLabel, \
                                  create_scatter_plot, Legend, PlotGrid
-from enthought.chaco.tools.api import PanTool, ZoomTool, \
+from chaco.tools.api import PanTool, ZoomTool, \
                                        LegendTool, TraitsTool
 
-from enthought.chaco.scales.api import CalendarScaleSystem
-from enthought.chaco.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco.axis import PlotAxis
+from chaco.scales.api import CalendarScaleSystem
+from chaco.scales_tick_generator import ScalesTickGenerator
+from chaco.axis import PlotAxis
 
 #===============================================================================
 # # Create the Chaco plot.

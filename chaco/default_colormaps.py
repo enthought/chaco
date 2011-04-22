@@ -114,7 +114,7 @@ def fix(func, range):
     """
     if isinstance(range, tuple):
         # Adapt tuples to DataRange1D for convenience.
-        from enthought.chaco.data_range_1d import DataRange1D
+        from chaco.data_range_1d import DataRange1D
         range = DataRange1D(low=range[0], high=range[1])
 
     def cmap(dummy_range, **traits):

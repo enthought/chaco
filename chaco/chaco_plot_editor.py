@@ -26,7 +26,7 @@ from plot_factory import create_line_plot, create_scatter_plot, \
 from plot_label import PlotLabel
 
 # Somewhat unorthodox...
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.api import PanTool, ZoomTool
 
 #-------------------------------------------------------------------------------
 #  Trait definitions:

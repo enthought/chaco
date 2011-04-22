@@ -13,7 +13,7 @@ Draws some x-y line and scatter plots. On the left hand plot:
 from numpy import linspace
 from scipy.special import jn
 
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
@@ -22,9 +22,9 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, HPlotContainer, Plot
-from enthought.chaco.tools.api import BroadcasterTool, PanTool, ZoomTool
-from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids
+from chaco.api import ArrayPlotData, HPlotContainer, Plot
+from chaco.tools.api import BroadcasterTool, PanTool, ZoomTool
+from chaco.api import create_line_plot, add_default_axes, add_default_grids
 
 #===============================================================================
 # # Create the Chaco plot.

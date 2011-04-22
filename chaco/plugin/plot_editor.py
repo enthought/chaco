@@ -1,4 +1,4 @@
-from enthought.chaco.shell.scaly_plot import ScalyPlot
+from chaco.shell.scaly_plot import ScalyPlot
 from enable.component_editor import ComponentEditor
 from pyface.workbench.api import TraitsUIEditor
 from traits.api import Any, Enum, HasTraits, Property, Str

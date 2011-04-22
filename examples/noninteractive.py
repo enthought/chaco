@@ -15,8 +15,8 @@ from traits.api import false
 from traits.etsconfig.api import ETSConfig
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, Plot, PlotGraphicsContext
-from enthought.chaco.example_support import COLOR_PALETTE
+from chaco.api import ArrayPlotData, Plot, PlotGraphicsContext
+from chaco.example_support import COLOR_PALETTE
 
 DPI = 72.0
 
@@ -52,7 +52,7 @@ def draw_plot(filename, size=(800,600)):
     return
 
 def draw_svg(filename, size=(800,600)):
-    from enthought.chaco.svg_graphics_context import SVGGraphicsContext
+    from chaco.svg_graphics_context import SVGGraphicsContext
     container = create_plot()
     container.bounds = list(size)
     container.do_layout(force=True)
@@ -61,7 +61,7 @@ def draw_svg(filename, size=(800,600)):
     gc.save(filename)
 
 def draw_pdf(filename, size=(800,600)):
-    from enthought.chaco.pdf_graphics_context import PdfPlotGraphicsContext
+    from chaco.pdf_graphics_context import PdfPlotGraphicsContext
     container = create_plot()
     container.bounds = list(size)
     container.do_layout(force=True)

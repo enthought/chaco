@@ -8,7 +8,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 
 # Chaco imports
-from enthought.chaco.api import LabelAxis, Plot, ArrayPlotData
+from chaco.api import LabelAxis, Plot, ArrayPlotData
 
 class DemoPlot(HasTraits):
     plot = Instance(Plot)

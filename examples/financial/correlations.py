@@ -9,12 +9,12 @@ from traits.api import HasTraits, Instance, Int, List, Str, Enum, \
 from traitsui.api import Item, View, HSplit, VGroup, EnumEditor
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, Plot, PlotAxis, \
+from chaco.api import ArrayPlotData, Plot, PlotAxis, \
         ScatterInspectorOverlay
-from enthought.chaco.scales.api import CalendarScaleSystem
-from enthought.chaco.scales_tick_generator import ScalesTickGenerator
-from enthought.chaco.example_support import COLOR_PALETTE
-from enthought.chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
+from chaco.scales.api import CalendarScaleSystem
+from chaco.scales_tick_generator import ScalesTickGenerator
+from chaco.example_support import COLOR_PALETTE
+from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
         RangeSelectionOverlay, LegendTool
 
 

@@ -1,5 +1,5 @@
 
-from enthought.chaco.scales.formatters import strftimeEx, TimeFormatter
+from chaco.scales.formatters import strftimeEx, TimeFormatter
 
 
 #----------------------------------------------------------------

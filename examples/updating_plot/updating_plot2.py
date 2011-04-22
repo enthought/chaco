@@ -20,8 +20,8 @@ from enable.example_support import DemoFrame, demo_main
 from traits.api import false, HasTraits
 
 # Chaco imports
-from enthought.chaco.api import *
-from enthought.chaco.tools.api import MoveTool, PanTool, ZoomTool
+from chaco.api import *
+from chaco.tools.api import MoveTool, PanTool, ZoomTool
 
 COLOR_PALETTE = ("mediumslateblue", "maroon", "darkgreen", "goldenrod",
                  "purple", "indianred")

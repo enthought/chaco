@@ -21,10 +21,10 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import ArrayPlotData, VPlotContainer, \
+from chaco.api import ArrayPlotData, VPlotContainer, \
     Plot
-from enthought.chaco.plotscrollbar import PlotScrollBar
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.plotscrollbar import PlotScrollBar
+from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
 # # Create the Chaco plot.

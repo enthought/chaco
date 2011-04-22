@@ -10,7 +10,7 @@ from enable.api import Component, Pointer, Line
 from traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
 
 # Chaco imports
-from enthought.chaco.api import AbstractOverlay
+from chaco.api import AbstractOverlay
 
 
 

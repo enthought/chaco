@@ -1,5 +1,5 @@
-from enthought.chaco.api import Plot
-from enthought.chaco.tools.toolbars.plot_toolbar import PlotToolbar
+from chaco.api import Plot
+from chaco.tools.toolbars.plot_toolbar import PlotToolbar
 from traits.api import Type, DelegatesTo, Instance, Enum, \
         on_trait_change
 

@@ -4,8 +4,8 @@ from numpy import linspace, pi, sin, tan
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Tabbed, View
 
-from enthought.chaco.api import Plot, AbstractPlotData, ArrayPlotData
-from enthought.chaco.tools.api import PanTool, ZoomTool
+from chaco.api import Plot, AbstractPlotData, ArrayPlotData
+from chaco.tools.api import PanTool, ZoomTool
 from enable.component_editor import ComponentEditor
 
 

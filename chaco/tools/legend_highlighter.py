@@ -1,7 +1,7 @@
 import operator
 
 # ETS imports
-from enthought.chaco.tools.api import LegendTool
+from chaco.tools.api import LegendTool
 from traits.api import List, Float
 
 

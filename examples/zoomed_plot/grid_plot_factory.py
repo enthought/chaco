@@ -1,6 +1,6 @@
 
 # Local relative imports
-from enthought.chaco.api import ArrayDataSource, DataRange1D, LinearMapper, LinePlot, \
+from chaco.api import ArrayDataSource, DataRange1D, LinearMapper, LinePlot, \
                                  ScatterPlot, PlotAxis, PlotGrid
 
 

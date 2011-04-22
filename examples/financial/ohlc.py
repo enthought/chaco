@@ -13,14 +13,14 @@ from traits.api import HasTraits, Instance, Enum
 from traitsui.api import View, VGroup, Item, EnumEditor
 
 # Chaco imports
-from enthought.chaco.api import ArrayDataSource, DataRange1D, \
+from chaco.api import ArrayDataSource, DataRange1D, \
         LinearMapper, PlotAxis, add_default_grids, OverlayPlotContainer
-from enthought.chaco.tools.api import PanTool, ZoomTool
-from enthought.chaco.scales.api import CalendarScaleSystem
-from enthought.chaco.scales_tick_generator import ScalesTickGenerator
+from chaco.tools.api import PanTool, ZoomTool
+from chaco.scales.api import CalendarScaleSystem
+from chaco.scales_tick_generator import ScalesTickGenerator
 
 try:
-    from enthought.chaco.hloc_renderer import OHLCPlot, PriceDataSource, \
+    from chaco.hloc_renderer import OHLCPlot, PriceDataSource, \
             CandleOHLCPlot, HeikinAshiPlot
 except ImportError:
     try:

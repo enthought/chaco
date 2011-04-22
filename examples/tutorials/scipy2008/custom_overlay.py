@@ -1,8 +1,8 @@
 
 from numpy import linspace, sin
 
-from enthought.chaco.api import ArrayPlotData, Plot, AbstractOverlay
-from enthought.chaco.tools.api import PanTool
+from chaco.api import ArrayPlotData, Plot, AbstractOverlay
+from chaco.tools.api import PanTool
 from enable.component_editor import ComponentEditor
 from enable.api import ColorTrait
 from traits.api import Button, Float, Range, HasTraits, Instance

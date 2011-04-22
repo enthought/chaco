@@ -2,7 +2,7 @@ from __future__ import with_statement
 
 import numpy
 
-from enthought.chaco.abstract_overlay import AbstractOverlay
+from chaco.abstract_overlay import AbstractOverlay
 from enable.api import ColorTrait, KeySpec
 from traits.api import Bool, Enum, Trait, Int, Float, Tuple, \
         Instance, DelegatesTo, Property

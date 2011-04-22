@@ -11,7 +11,7 @@ import unittest
 from numpy import array, alltrue, ravel
 
 # Chaco imports
-from enthought.chaco.api import Plot, PlotGraphicsContext
+from chaco.api import Plot, PlotGraphicsContext
 
 
 class DrawBorderTestCase(unittest.TestCase):

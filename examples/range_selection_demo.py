@@ -17,8 +17,8 @@ from traits.api import HasTraits, Instance, false
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from enthought.chaco.api import create_line_plot, add_default_axes, add_default_grids
-from enthought.chaco.tools.api import LineInspector, RangeSelection, RangeSelectionOverlay
+from chaco.api import create_line_plot, add_default_axes, add_default_grids
+from chaco.tools.api import LineInspector, RangeSelection, RangeSelectionOverlay
 
 
 

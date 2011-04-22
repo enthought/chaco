@@ -8,7 +8,7 @@ from traits.api import Enum, Float, Str
 from enable.api import BaseTool
 
 # Chaco imports
-from enthought.chaco.api import BasePlotContainer
+from chaco.api import BasePlotContainer
 
 
 class HighlightTool(BaseTool):
