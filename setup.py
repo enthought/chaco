@@ -60,7 +60,7 @@ DOCLINES = __doc__.split("\n")
 # Register Python extensions
 contour = Extension(
     'chaco.contour.contour',
-    sources=['enthought/chaco/contour/cntr.c'],
+    sources=['chaco/contour/cntr.c'],
     include_dirs=[get_include()],
     define_macros=[('NUMPY', None)]
     )
@@ -68,7 +68,7 @@ contour = Extension(
 # Commenting this out for now, until we get the module fully tested and working
 #speedups = Extension(
 #    'chaco._speedups',
-#    sources = ['enthought/chaco/_speedups.cpp'],
+#    sources = ['chaco/_speedups.cpp'],
 #    include_dirs = [get_include()],
 #    define_macros=[('NUMPY', None)]
 #    )
@@ -94,13 +94,13 @@ setup(
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.strip()) > 0],
-    data_files=[('enthought/chaco/layers/data',
-        ['enthought/chaco/layers/data/Dialog-error.svg',
-         'enthought/chaco/layers/data/Dialog-warning.svg',
-         'enthought/chaco/layers/data/range_selection.svg'])],
-    package_data={'enthought': ['chaco/tools/toolbars/images/*.png']},
+    data_files=[('chaco/layers/data',
+        ['chaco/layers/data/Dialog-error.svg',
+         'chaco/layers/data/Dialog-warning.svg',
+         'chaco/layers/data/range_selection.svg'])],
+    package_data={'chaco': ['tools/toolbars/images/*.png']},
     description = DOCLINES[1],
-    download_url = ('http://www.enthought.com/repo/ETS/Chaco-%s.tar.gz' %
+    download_url = ('http://www.enthought.com/repo/ets/chaco-%s.tar.gz' %
                     INFO['version']),
     ext_modules = [contour],
     html_doc_repo = 'https://svn.enthought.com/svn/cec/trunk/projects/chaco/docs/',
@@ -111,9 +111,6 @@ setup(
     maintainer = 'ETS Developers',
     maintainer_email = 'enthought-dev@enthought.com',
     name = INFO["name"],
-    namespace_packages = [
-        "enthought",
-        ],
     packages = find_packages(exclude=[
         'docs',
         'examples',
