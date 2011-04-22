@@ -13,10 +13,10 @@ Draws a colormapped image plot
 from numpy import linspace, meshgrid, pi
 from scipy.special import jn
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Component, ComponentEditor, Window
+from enable.api import Component, ComponentEditor, Window
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 

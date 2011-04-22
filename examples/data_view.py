@@ -8,8 +8,8 @@ from numpy import linspace, sin, cos
 from enthought.chaco.api import DataView, ArrayDataSource, ScatterPlot, \
                                 LinePlot, LinearMapper
 from enthought.chaco.tools.api import PanTool, ZoomTool
-from enthought.enable.example_support import DemoFrame, demo_main
-from enthought.enable.api import Component, ComponentEditor, Window
+from enable.example_support import DemoFrame, demo_main
+from enable.api import Component, ComponentEditor, Window
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 

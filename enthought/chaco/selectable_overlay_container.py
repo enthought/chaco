@@ -7,7 +7,7 @@ from numpy import array, float64
 
 # Enthought library imports
 from traits.api import Bool, Float, Enum
-from enthought.enable.api import ColorTrait
+from enable.api import ColorTrait
 
 # Local imports
 from plot_containers import OverlayPlotContainer

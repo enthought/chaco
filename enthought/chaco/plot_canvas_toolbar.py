@@ -1,6 +1,6 @@
 
 from traits.api import Any, Enum, Int
-from enthought.enable.drawing.api import ToolbarButton
+from enable.drawing.api import ToolbarButton
 
 # Local, relative imports
 from plot_containers import VPlotContainer

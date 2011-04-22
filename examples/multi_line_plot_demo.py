@@ -3,7 +3,7 @@ import numpy as np
 from traits.api import Instance, HasTraits, Range, Array
 from traitsui.api import View, Item, HGroup, VGroup, Group
 
-from enthought.enable.api import ComponentEditor
+from enable.api import ComponentEditor
 
 from enthought.chaco.api import LinearMapper, Plot, ArrayDataSource, DataRange1D, PlotAxis
 from enthought.chaco.multi_array_data_source import MultiArrayDataSource

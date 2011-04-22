@@ -18,10 +18,10 @@ from enthought.chaco.api import ArrayDataSource, ArrayPlotData, ColorBar, Contou
                                  HPlotContainer, ImageData, LinearMapper, \
                                  LinePlot, OverlayPlotContainer, Plot, PlotAxis
 from enthought.chaco.default_colormaps import *
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 from enthought.chaco.tools.api import LineInspector, PanTool, RangeSelection, \
                                    RangeSelectionOverlay, ZoomTool
-from enthought.enable.api import Window
+from enable.api import Window
 from traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
                              Int, Instance, Str, Trait, on_trait_change
 from traitsui.api import Group, Handler, HGroup, Item, View

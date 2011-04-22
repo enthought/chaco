@@ -12,7 +12,7 @@ from scipy import arange
 from scipy.special import jn
 from enthought.chaco.api import *
 from enthought.chaco.tools.api import *
-from enthought.enable.wx_backend.api import Window
+from enable.wx_backend.api import Window
 
 
 class PlotFrame(wx.Frame):

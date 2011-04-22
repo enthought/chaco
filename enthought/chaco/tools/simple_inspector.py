@@ -6,7 +6,7 @@ SimpleInspectorOverlay, but other objects can potentially hook into its API.
 """
 
 from enthought.chaco.image_plot import ImagePlot
-from enthought.enable.api import BaseTool, KeySpec
+from enable.api import BaseTool, KeySpec
 from traits.api import Bool, Event, Tuple, Enum, Callable
 
 class SimpleInspectorTool(BaseTool):

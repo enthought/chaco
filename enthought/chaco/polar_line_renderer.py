@@ -7,7 +7,7 @@ from __future__ import with_statement
 from numpy import array, cos, pi, sin, transpose
 
 # Enthought library imports
-from enthought.enable.api import black_color_trait, LineStyle
+from enable.api import black_color_trait, LineStyle
 from traits.api import Float
 
 # Local, relative imports

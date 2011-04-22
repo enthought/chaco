@@ -1,7 +1,7 @@
 import numpy
 from enthought.chaco.api import ToolbarPlot, ArrayPlotData
 from enthought.chaco.tools.api import LineInspector
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 

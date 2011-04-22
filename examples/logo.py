@@ -5,7 +5,7 @@ from __future__ import with_statement
 from numpy import array, cos, invert, isnan, nan, pi, sin, vstack
 from traits.api import Array, Enum, Float, Range
 from traitsui.api import Group, Item, View
-from enthought.enable.api import ColorTrait
+from enable.api import ColorTrait
 from enthought.chaco.api import arg_find_runs, AbstractOverlay
 
 

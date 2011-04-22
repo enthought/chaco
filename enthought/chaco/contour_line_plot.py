@@ -7,8 +7,8 @@ from __future__ import with_statement
 from numpy import array, linspace, meshgrid, transpose
 
 # Enthought library imports
-from enthought.enable.api import LineStyle
-from enthought.kiva import constants
+from enable.api import LineStyle
+from enable.kiva import constants
 from traits.api import Bool, Dict, Float, List, Str, Trait
 
 # Local relative imports

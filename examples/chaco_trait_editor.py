@@ -12,8 +12,8 @@ ETSConfig.toolkit = 'wx'
 from traitsui.editor_factory import EditorFactory
 from traitsui.wx.editor import Editor
 
-from enthought.enable.window import Window
-from enthought.enable.api import ColorTrait
+from enable.window import Window
+from enable.api import ColorTrait
 
 from enthought.chaco.api import OverlayPlotContainer, create_line_plot, \
      LinePlot

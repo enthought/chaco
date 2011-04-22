@@ -1,7 +1,7 @@
 
 from __future__ import with_statement
 
-from enthought.enable.api import Component
+from enable.api import Component
 from traits.api import Enum, Float, Instance, Trait, Tuple
 
 from enthought.chaco.api import AbstractOverlay, BasePlotContainer

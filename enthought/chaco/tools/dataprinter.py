@@ -2,7 +2,7 @@
 """
 # Enthought library imports
 from traits.api import Str
-from enthought.enable.api import BaseTool
+from enable.api import BaseTool
 
 # Chaco imports
 from enthought.chaco.api import BaseXYPlot

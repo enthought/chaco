@@ -7,7 +7,7 @@ from numpy import compress, polyfit
 from math import fabs
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait, LineStyle
+from enable.api import ColorTrait, LineStyle
 from traits.api import Any, Float, Instance
 
 # Chaco imports

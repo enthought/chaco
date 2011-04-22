@@ -7,9 +7,9 @@ from __future__ import with_statement
 import numpy as np
 
 # Enthought library imports.
-from enthought.enable.api import LineStyle, black_color_trait, \
+from enable.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
-from enthought.kiva.agg import points_in_polygon
+from enable.kiva.agg import points_in_polygon
 from traits.api import Enum, Float
 
 # Local imports.

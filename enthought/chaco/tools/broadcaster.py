@@ -1,6 +1,6 @@
 """ Defines the BroadcasterTool class.
 """
-from enthought.enable.api import BaseTool
+from enable.api import BaseTool
 from traits.api import Dict, List
 
 class BroadcasterTool(BaseTool):

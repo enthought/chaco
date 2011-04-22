@@ -1,7 +1,7 @@
 
 from traits.api import Any, Enum, Int, Property, Trait
 
-from enthought.enable.api import NativeScrollBar
+from enable.api import NativeScrollBar
 
 class PlotScrollBar(NativeScrollBar):
     """

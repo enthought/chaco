@@ -5,7 +5,7 @@ from __future__ import with_statement
 from numpy import array, asarray
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait, MarkerTrait
+from enable.api import ColorTrait, MarkerTrait
 from traits.api import Float, Int, Str, Trait
 
 # Local, relative imports

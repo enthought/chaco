@@ -6,7 +6,7 @@ from __future__ import with_statement
 from numpy import array, take, transpose
 
 # Enthought library imports
-from enthought.enable.api import BaseTool, ColorTrait
+from enable.api import BaseTool, ColorTrait
 from traits.api import Enum, Float
 
 

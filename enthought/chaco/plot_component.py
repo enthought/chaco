@@ -1,8 +1,8 @@
 """ Defines the PlotComponent class.
 """
 # Enthought library imports
-from enthought.enable.api import Component
-from enthought.enable.kiva_graphics_context import GraphicsContext
+from enable.api import Component
+from enable.kiva_graphics_context import GraphicsContext
 from traits.api import Bool, Instance, Str
 
 

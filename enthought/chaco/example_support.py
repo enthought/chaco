@@ -36,7 +36,7 @@ from default_colors import cbrewer as COLOR_PALETTE
 # PyQt/traits problem (see below) we can't because it would drag in traits too
 # early.  Until it is fixed we just assume wx if we can import it.
 # Force the selection of a valid toolkit.
-#import enthought.enable.toolkit
+#import enable.toolkit
 if not ETSConfig.toolkit:
     for toolkit, toolkit_module in (('wx', 'wx'), ('qt4', 'PyQt4')):
         try:
@@ -122,7 +122,7 @@ elif ETSConfig.toolkit == 'qt4':
         _app.exec_()
 
 elif ETSConfig.toolkit == 'pyglet':
-    from enthought.enable.pyglet_backend.pyglet_app import get_app, PygletApp
+    from enable.pyglet_backend.pyglet_app import get_app, PygletApp
 
     class DemoFrame(object):
         def __init__(self):

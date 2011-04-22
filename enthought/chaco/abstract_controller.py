@@ -1,7 +1,7 @@
 """ Defines the base class for controllers.
 """
 # Enthought library imports
-from enthought.enable.api import Component, Interactor
+from enable.api import Component, Interactor
 from traits.api import Instance
 
 

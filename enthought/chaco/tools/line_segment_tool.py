@@ -6,7 +6,7 @@ from __future__ import with_statement
 from numpy import array
 
 # Enthought library imports
-from enthought.enable.api import Component, Pointer, Line
+from enable.api import Component, Pointer, Line
 from traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
 
 # Chaco imports

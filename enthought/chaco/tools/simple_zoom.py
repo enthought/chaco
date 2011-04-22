@@ -8,7 +8,7 @@ warnings.warn("SimpleZoom has been deprecated, use ZoomTool", DeprecationWarning
 from numpy import array
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait, KeySpec
+from enable.api import ColorTrait, KeySpec
 from traits.api \
     import Bool, Enum, Float, Instance, Int, Str, Trait, Tuple
 

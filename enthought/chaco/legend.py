@@ -6,9 +6,9 @@ from __future__ import with_statement
 
 from numpy import array, zeros_like
 
-from enthought.enable.api import black_color_trait, white_color_trait
-from enthought.enable.font_metrics_provider import font_metrics_provider
-from enthought.kiva.trait_defs.kiva_font_trait import KivaFont
+from enable.api import black_color_trait, white_color_trait
+from enable.font_metrics_provider import font_metrics_provider
+from enable.kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
                                  Instance, List, CList, Float, Str
 

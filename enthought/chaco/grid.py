@@ -7,7 +7,7 @@ from __future__ import with_statement
 from numpy import around, array, asarray, column_stack, float64, inf, zeros, zeros_like
 
 # Enthought library imports
-from enthought.enable.api import black_color_trait, LineStyle
+from enable.api import black_color_trait, LineStyle
 from traits.api import Any, Bool, Callable, Enum, Float, Instance, \
         CInt, Trait, Property, TraitError, Tuple, on_trait_change
 from traitsui.api import HGroup, Item, VGroup, View, TextEditor

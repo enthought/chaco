@@ -2,7 +2,7 @@
 function.
 """
 # Enthought library imports
-from enthought.enable.api import BaseTool, Container
+from enable.api import BaseTool, Container
 from traits.api import List, Dict, Str
 
 # Chaco imports

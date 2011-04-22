@@ -3,7 +3,7 @@ import numpy
 from enthought.chaco.api import LinearMapper, Plot, ArrayDataSource, DataRange1D
 from enthought.chaco.multi_array_data_source import MultiArrayDataSource
 from enthought.chaco.multi_line_plot import MultiLinePlot
-from enthought.enable.api import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import Instance, HasTraits
 from traitsui.api import View, Item
 

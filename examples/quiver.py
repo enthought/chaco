@@ -12,10 +12,10 @@ Draws a vector or "quiver" plot of a set of random points.
 from numpy import array, hypot, sort, transpose
 from numpy.random import random
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window, Component, ComponentEditor
+from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 

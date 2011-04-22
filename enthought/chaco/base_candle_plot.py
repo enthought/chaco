@@ -5,7 +5,7 @@ from __future__ import with_statement
 from numpy import array, column_stack
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait
+from enable.api import ColorTrait
 from traits.api import Bool, Float, Int, List, Property, Trait
 
 # Chaco imports

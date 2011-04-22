@@ -6,10 +6,10 @@ renderers and scales.
 # Major library imports
 from numpy import abs, arange, cumprod, random
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window, Component, ComponentEditor
+from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 

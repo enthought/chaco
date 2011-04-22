@@ -1,4 +1,4 @@
-from enthought.enable.api import Component
+from enable.api import Component
 
 
 def test_padding_init():

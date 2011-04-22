@@ -6,7 +6,7 @@ components in plot overlays.
 """
 
 from traits.api import Instance
-from enthought.enable.api import Container, Component
+from enable.api import Container, Component
 from enthought.chaco.api import PlotComponent
 
 

@@ -16,10 +16,10 @@ from scipy.special import jn
 from numpy import arange
 
 from enthought.chaco.example_support import COLOR_PALETTE
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Component, ComponentEditor, Window
+from enable.api import Component, ComponentEditor, Window
 from traits.api import Bool, HasTraits, Instance
 from traitsui.api import Item, Group, View
 

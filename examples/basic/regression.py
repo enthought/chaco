@@ -17,8 +17,8 @@ from numpy import linspace
 from numpy.random import random
 
 # Enthought library imports
-from enthought.enable.api import Component, ComponentEditor, Window
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.api import Component, ComponentEditor, Window
+from enable.example_support import DemoFrame, demo_main
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 

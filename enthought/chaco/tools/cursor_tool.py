@@ -19,7 +19,7 @@ from __future__ import with_statement
 import numpy
 
 # Enthought library imports
-from enthought.enable.tools.drag_tool import DragTool
+from enable.tools.drag_tool import DragTool
 from traits.api import Int, Property, cached_property, Float,\
                                 Bool, Instance, Tuple, Disallow
 

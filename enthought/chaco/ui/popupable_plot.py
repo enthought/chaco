@@ -1,8 +1,8 @@
 # Enthought library imports
 from traits.api import Instance, HasTraits, List
 from traitsui.api import View, Item
-from enthought.enable.api import Container
-from enthought.enable.component_editor import ComponentEditor
+from enable.api import Container
+from enable.component_editor import ComponentEditor
 from enthought.chaco.api import VPlotContainer
 from enthought.chaco.plot import Plot
 from enthought.chaco.tools.api import PanTool, ZoomTool

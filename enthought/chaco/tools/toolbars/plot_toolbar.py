@@ -6,8 +6,8 @@ from enthought.chaco.abstract_overlay import AbstractOverlay
 from enthought.chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
         IndexAxisLogButton, ValueAxisLogButton, SaveAsButton, \
         CopyToClipboardButton, ZoomResetButton, ExportDataToClipboardButton
-from enthought.enable.api import Container
-from enthought.enable.tools.api import HoverTool
+from enable.api import Container
+from enable.tools.api import HoverTool
 from traits.api import Bool, Float, on_trait_change, List, \
         Tuple, Type, Enum
 

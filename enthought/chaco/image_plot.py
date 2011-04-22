@@ -9,7 +9,7 @@ from math import ceil, floor, pi
 # Enthought library imports.
 from traits.api import Bool, Either, Enum, Instance, \
                                  List, Range, Trait, Tuple
-from enthought.kiva.agg import GraphicsContextArray
+from enable.kiva.agg import GraphicsContextArray
 
 # Local relative imports
 from base_2d_plot import Base2DPlot
@@ -79,7 +79,7 @@ class ImagePlot(Base2DPlot):
             # destination GC.
             old_interp = self._cached_image.get_image_interpolation()
             if hasattr(gc, "set_interpolation_quality"):
-                from enthought.kiva.quartz.ABCGI import InterpolationQuality
+                from enable.kiva.quartz.ABCGI import InterpolationQuality
                 interp_quality_dict = {"nearest": InterpolationQuality.none,
                         "bilinear": InterpolationQuality.low,
                         "bicubic": InterpolationQuality.high}

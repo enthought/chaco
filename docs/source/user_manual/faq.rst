@@ -27,7 +27,7 @@ back to residing in the :mod:`enthought.chaco` namespace.  We still have
 compatibility modules in :mod:`enthought.chaco2`, but they just proxy for the
 real code in :mod:`enthought.chaco`.
 
-The same applies to the :mod:`enthought.enable` and :mod:`enthought.enable2`
+The same applies to the :mod:`enable` and :mod:`enable2`
 packages.
 
 

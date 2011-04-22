@@ -17,12 +17,12 @@ alt-right-arrow moves you forwards and backwards through the "zoom history".
 from numpy import linspace
 from scipy.special import jn
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 from enthought.chaco.example_support import COLOR_PALETTE
 
 # Enthought library imports
-from enthought.enable.tools.api import DragTool
-from enthought.enable.api import Component, ComponentEditor, Window
+from enable.tools.api import DragTool
+from enable.api import Component, ComponentEditor, Window
 from traits.api import HasTraits, Instance, Int, Tuple
 from traitsui.api import Item, Group, View
 

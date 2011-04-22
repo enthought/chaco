@@ -9,10 +9,10 @@ from numpy import abs, arange, cumprod, linspace, random
 import time
 
 from enthought.chaco.example_support import COLOR_PALETTE
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window, Component, ComponentEditor
+from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 

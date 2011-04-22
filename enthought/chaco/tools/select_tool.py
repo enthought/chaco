@@ -1,7 +1,7 @@
 
 
 # Enthought library imports
-from enthought.enable.api import BaseTool, KeySpec
+from enable.api import BaseTool, KeySpec
 from traits.api import Enum, Float, Instance
 
 

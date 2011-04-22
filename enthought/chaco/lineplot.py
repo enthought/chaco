@@ -11,7 +11,7 @@ from numpy import argsort, array, concatenate, inf, invert, isnan, \
                   take, transpose, zeros
 
 # Enthought library imports
-from enthought.enable.api import black_color_trait, ColorTrait, LineStyle
+from enable.api import black_color_trait, ColorTrait, LineStyle
 from traits.api import Enum, Float, List, Str
 from traitsui.api import Item, View
 

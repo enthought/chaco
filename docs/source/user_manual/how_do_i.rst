@@ -30,7 +30,7 @@ Basics
     from scipy import arange
     from scipy.special import jn
     from enthought.chaco.api import HPlotContainer, create_line_plot
-    from enthought.enable.wx_backend.api import Window
+    from enable.wx_backend.api import Window
 
     class PlotFrame(wx.Frame):
 	def __init__(self, *args, **kw):
@@ -65,7 +65,7 @@ Basics
 
     import numpy
     from enthought.chaco.api import Plot, ArrayPlotData
-    from enthought.enable.component_editor import ComponentEditor
+    from enable.component_editor import ComponentEditor
     from traits.api import HasTraits, Instance
     from traitsui.api import Item, View
 

@@ -1,6 +1,6 @@
 
 # Enthought library imports
-from enthought.enable.api import Canvas
+from enable.api import Canvas
 from traits.api import Instance, Tuple
 
 # Local, relative chaco imports

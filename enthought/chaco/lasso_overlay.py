@@ -6,7 +6,7 @@ from __future__ import with_statement
 from numpy import concatenate, newaxis
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait, LineStyle
+from enable.api import ColorTrait, LineStyle
 from traits.api import Float, Instance
 
 # Local imports

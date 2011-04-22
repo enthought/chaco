@@ -2,7 +2,7 @@
 ImageInspectorColorbarOverlay classes.
 """
 # Enthought library imports
-from enthought.enable.api import BaseTool, KeySpec
+from enable.api import BaseTool, KeySpec
 from traits.api import Any, Bool, Enum, Event, Tuple
 
 # Chaco imports

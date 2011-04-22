@@ -11,10 +11,10 @@ import os
 # Major library imports
 from numpy import amin, amax, arange, searchsorted, sin, pi, linspace
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought imports
-from enthought.enable.api import Component, ComponentEditor, Window
+from enable.api import Component, ComponentEditor, Window
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 from traits.util.resource import find_resource

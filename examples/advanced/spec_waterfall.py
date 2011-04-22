@@ -11,10 +11,10 @@ from scipy import fft
 
 # Enthought library imports
 from enthought.chaco.default_colormaps import jet
-from enthought.enable.api import Window, Component, ComponentEditor
+from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance, List, Range
 from traitsui.api import Item, Group, View, Handler
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 from pyface.timer.api import Timer
 
 # Chaco imports

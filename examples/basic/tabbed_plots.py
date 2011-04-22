@@ -6,7 +6,7 @@ from traitsui.api import Item, Tabbed, View
 
 from enthought.chaco.api import Plot, AbstractPlotData, ArrayPlotData
 from enthought.chaco.tools.api import PanTool, ZoomTool
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 
 
 class TabbedPlots(HasTraits):

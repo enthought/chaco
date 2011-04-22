@@ -5,7 +5,7 @@ from itertools import izip
 from math import sqrt
 import numpy as np
 
-from enthought.enable.api import black_color_trait, MarkerTrait
+from enable.api import black_color_trait, MarkerTrait
 from traits.api import (Any, Bool, Callable, Enum, Float,
         Instance, Int, Property, Str, Trait, on_trait_change)
 
@@ -54,7 +54,7 @@ class JitterPlot(AbstractPlotRenderer):
 
     # The CompiledPath to use if **marker** is set to "custom". This attribute
     # must be a compiled path for the Kiva context onto which this plot will
-    # be rendered.  Usually, importing enthought.kiva.GraphicsContext will do
+    # be rendered.  Usually, importing enable.kiva.GraphicsContext will do
     # the right thing.
     custom_symbol = Any
 

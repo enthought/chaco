@@ -7,10 +7,10 @@ Draws some x-y log plots. (No Tools)
 from numpy import exp, linspace, sqrt
 from scipy.special import gamma
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Component, ComponentEditor, Window
+from enable.api import Component, ComponentEditor, Window
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 

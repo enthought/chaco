@@ -7,7 +7,7 @@ from math import sqrt
 from numpy import around, array, isnan, transpose
 
 # Enthought library imports
-from enthought.enable.api import black_color_trait
+from enable.api import black_color_trait
 from traits.api import Any, Array, Bool, Enum, Float, Instance, \
                              Property, Range
 

@@ -8,9 +8,9 @@ from math import cos, sin, pi
 from numpy import array, dot
 
 # Enthought library imports
-from enthought.enable.api import black_color_trait, transparent_color_trait
-from enthought.kiva.constants import FILL
-from enthought.kiva.trait_defs.kiva_font_trait import KivaFont
+from enable.api import black_color_trait, transparent_color_trait
+from enable.kiva.constants import FILL
+from enable.kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Any, Bool, Enum, Float, HasTraits, Int, \
                                  List, Str, on_trait_change
 

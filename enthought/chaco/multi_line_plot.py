@@ -12,7 +12,7 @@ import numpy as np
 from numpy import argsort, array, invert, isnan, take, transpose
 
 # Enthought library imports
-from enthought.enable.api import black_color_trait, ColorTrait, LineStyle
+from enable.api import black_color_trait, ColorTrait, LineStyle
 from traits.api import Float, List, Str, Trait, \
             Bool, Callable, Property, cached_property, Instance, Array
 from traitsui.api import Item, View, ScrubberEditor, HGroup

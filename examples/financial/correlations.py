@@ -3,7 +3,7 @@ from numpy import linspace, random, zeros, arange, cumprod
 import time
 
 # ETS imports (non-chaco)
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance, Int, List, Str, Enum, \
         on_trait_change, Any, DelegatesTo
 from traitsui.api import Item, View, HSplit, VGroup, EnumEditor

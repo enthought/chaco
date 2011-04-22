@@ -2,7 +2,7 @@
 from numpy import linspace, meshgrid, exp
 
 from enthought.chaco.api import ArrayPlotData, Plot, jet
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 

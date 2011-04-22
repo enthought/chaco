@@ -6,7 +6,7 @@ from __future__ import with_statement
 from numpy import arange, array
 
 # Enthought library imports
-from enthought.enable.api import ColorTrait, LineStyle
+from enable.api import ColorTrait, LineStyle
 from traits.api import Enum, Float, Property, Str, Instance, \
         cached_property
 from enthought.chaco.api import AbstractOverlay, arg_find_runs, GridMapper, AbstractMapper

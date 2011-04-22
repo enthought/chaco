@@ -1,8 +1,8 @@
 
 from numpy import inf
 
-from enthought.enable.api import Pointer
-from enthought.enable.tools.drag_tool import DragTool
+from enable.api import Pointer
+from enable.tools.drag_tool import DragTool
 from traits.api import Bool, Enum, Float, Tuple
 
 

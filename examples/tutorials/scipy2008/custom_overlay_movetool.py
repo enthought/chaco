@@ -3,8 +3,8 @@ from numpy import linspace, sin
 
 from enthought.chaco.api import ArrayPlotData, Plot, AbstractOverlay
 from enthought.chaco.tools.api import PanTool, MoveTool
-from enthought.enable.component_editor import ComponentEditor
-from enthought.enable.api import ColorTrait
+from enable.component_editor import ComponentEditor
+from enable.api import ColorTrait
 from traits.api import Button, CArray, Bool, Float, Range, \
                                  HasTraits, Instance, Property
 from traitsui.api import Item, View, Group, RangeEditor, \

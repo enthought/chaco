@@ -19,10 +19,10 @@ import wx
 from numpy import arange, fabs, pi, sin
 from scipy.special import jn
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window
+from enable.api import Window
 from traits.api import false
 
 # Chaco imports

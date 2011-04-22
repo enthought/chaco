@@ -13,7 +13,7 @@ from enthought.chaco.api import create_line_plot, OverlayPlotContainer, \
              HPlotContainer, Plot, ArrayPlotData, jet
 from enthought.chaco.tools.api import PanTool, ZoomTool
 from enthought.chaco.tools.cursor_tool import CursorTool, BaseCursorTool
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance, DelegatesTo
 from traitsui.api import View, Item, HGroup, VGroup
 

@@ -8,7 +8,7 @@ from numpy import abs, arange, cumprod, linspace, random, argmin, choose, vstack
 import time
 
 # Enthought library imports
-from enthought.enable.api import Component, ComponentEditor
+from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance, Enum
 from traitsui.api import View, VGroup, Item, EnumEditor
 

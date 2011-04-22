@@ -11,7 +11,7 @@
 from __future__ import with_statement
 
 # Enthought library imports
-from enthought.enable.api import Container
+from enable.api import Container
 from traits.api import Enum
 
 # Local, relative imports

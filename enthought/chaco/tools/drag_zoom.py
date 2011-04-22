@@ -2,7 +2,7 @@
 """
 
 # Enthought library imports
-from enthought.enable.tools.drag_tool import DragTool
+from enable.tools.drag_tool import DragTool
 from traits.api import Bool, Enum, Float, Tuple
 
 # Chaco imports

@@ -14,9 +14,9 @@ from scipy.special import jn
 
 
 # Enthought library imports
-from enthought.enable.api import Viewport, Window
-from enthought.enable.tools.api import MoveTool, ResizeTool, ViewportPanTool
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.api import Viewport, Window
+from enable.tools.api import MoveTool, ResizeTool, ViewportPanTool
+from enable.example_support import DemoFrame, demo_main
 from traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
                                  List, Str
 

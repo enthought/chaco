@@ -6,7 +6,7 @@ import os.path
 
 # Enthought library imports
 from traits.api import Enum, Str, Tuple
-from enthought.enable.api import BaseTool
+from enable.api import BaseTool
 
 
 class SaveTool(BaseTool):

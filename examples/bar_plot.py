@@ -3,7 +3,7 @@
 import numpy
 
 # Enthought library imports
-from enthought.enable.api import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 

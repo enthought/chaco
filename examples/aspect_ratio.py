@@ -13,7 +13,7 @@ from numpy.random import random
 
 
 # Enthought library imports
-from enthought.enable.api import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import Any, Bool, BaseFloat, HasTraits
 from traitsui.api import Item, HGroup, VGroup, View
 

@@ -1,9 +1,9 @@
 
 from numpy import linspace, sin
 
-from enthought.enable.api import ColorTrait
+from enable.api import ColorTrait
 from enthought.chaco.api import ArrayPlotData, Plot, marker_trait
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance, Int
 from traitsui.api import Group, Item, View
 

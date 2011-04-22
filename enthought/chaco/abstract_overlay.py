@@ -4,7 +4,7 @@ This class is primarily used so that tools can easily distinguish between
 data-related plot items and the decorators on them.
 """
 
-from enthought.enable.api import Component
+from enable.api import Component
 from traits.api import Instance
 
 from plot_component import PlotComponent

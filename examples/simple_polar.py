@@ -5,10 +5,10 @@ Draws a static polar plot.
 # Major library imports
 from numpy import arange, pi, sin, cos
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window, Component, ComponentEditor
+from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance, false
 from traitsui.api import Item, Group, View
 

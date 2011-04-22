@@ -2,8 +2,8 @@
 from numpy import linspace, sin
 
 from enthought.chaco.api import ArrayPlotData, Plot
-from enthought.enable.api import BaseTool
-from enthought.enable.component_editor import ComponentEditor
+from enable.api import BaseTool
+from enable.component_editor import ComponentEditor
 from traits.api import Enum, HasTraits, Instance
 from traitsui.api import Item, View
 

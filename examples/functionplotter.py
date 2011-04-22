@@ -8,10 +8,10 @@ and returns different data depending on that range.
 from numpy import array, linspace, sin, ceil
 from scipy.special import jn
 
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window, Component, ComponentEditor
+from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance, Callable, on_trait_change
 from traitsui.api import Item, Group, HGroup, View
 

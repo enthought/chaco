@@ -3,7 +3,7 @@
 import warnings
 
 # Enthought library imports
-from enthought.enable.api import Container
+from enable.api import Container
 from traits.api import Bool, Instance, Property, Str, Tuple
 
 # Local, relative imports

@@ -3,7 +3,7 @@ from __future__ import with_statement
 import numpy
 
 from enthought.chaco.abstract_overlay import AbstractOverlay
-from enthought.enable.api import ColorTrait, KeySpec
+from enable.api import ColorTrait, KeySpec
 from traits.api import Bool, Enum, Trait, Int, Float, Tuple, \
         Instance, DelegatesTo, Property
 from traits.util.deprecated import deprecated

@@ -8,8 +8,8 @@ import logging
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
 from traits.api import Any, Bool, Enum, Float, Instance, Property, \
         Range
-from enthought.enable.api import black_color_trait
-from enthought.kiva.constants import FILL_STROKE
+from enable.api import black_color_trait
+from enable.kiva.constants import FILL_STROKE
 
 # Local relative imports
 from enthought.chaco.abstract_plot_renderer import AbstractPlotRenderer

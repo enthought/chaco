@@ -4,10 +4,10 @@
 from numpy import arange, cos, linspace, pi, sin, ones
 
 from enthought.chaco.example_support import COLOR_PALETTE
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
-from enthought.enable.api import Window, Component, ComponentEditor
+from enable.api import Window, Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 

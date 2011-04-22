@@ -11,17 +11,17 @@ from numpy import linspace
 from scipy.special import jn
 from traits.qt import QtGui, QtCore
 
-from enthought.enable.api import Window
+from enable.api import Window
 
 from enthought.chaco.api import ArrayPlotData, Plot
 from enthought.chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotFrame(QtGui.QWidget):
-    """ This widget simply hosts an opaque enthought.enable.qt4_backend.Window
+    """ This widget simply hosts an opaque enable.qt4_backend.Window
     object, which provides the bridge between Enable/Chaco and the underlying
     UI toolkit (qt4).  This code is basically a duplicate of what's in
-    enthought.enable.example_support.DemoFrame, but is reproduced here to
+    enable.example_support.DemoFrame, but is reproduced here to
     make this example more stand-alone.
     """
     def __init__(self, parent, **kw):

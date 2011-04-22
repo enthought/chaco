@@ -4,7 +4,7 @@ from scipy.special import jn
 
 from enthought.tvtk.api import tvtk
 from enthought.mayavi import mlab
-from enthought.enable.vtk_backend.vtk_window import EnableVTKWindow
+from enable.vtk_backend.vtk_window import EnableVTKWindow
 from enthought.chaco.api import ArrayPlotData, Plot, OverlayPlotContainer
 from enthought.chaco.tools.api import PanTool, ZoomTool, MoveTool
 

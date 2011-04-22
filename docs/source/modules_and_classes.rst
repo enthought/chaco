@@ -190,7 +190,7 @@ first in Chaco, and then moved into Enable.
           events it receives to all those tools.
         * :class:`DataPrinter`: Prints the data-space position of the point
           under the cursor.
-        * :class:`enthought.enable.tools.api.DragTool`: Enable base class
+        * :class:`enable.tools.api.DragTool`: Enable base class
           for tools that do dragging.
           
           * :class:`MoveTool`
@@ -226,7 +226,7 @@ first in Chaco, and then moved into Enable.
           * :class:`ScatterInspector`
           * :class:`SelectableLegend`
         
-        * :class:`enthought.enable.tools.api.TraitsTool`
+        * :class:`enable.tools.api.TraitsTool`
         * :class:`enthought.chaco.tools.api.TraitsTool`
             
           

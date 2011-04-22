@@ -7,7 +7,7 @@ from numpy import array, empty, sometrue, transpose, vstack, zeros
 # Enthought library imports
 from traits.api import Any, Array, Enum, Event, Bool, Instance, \
                                  Property, Trait, List
-from enthought.kiva.agg import points_in_polygon
+from enable.kiva.agg import points_in_polygon
 
 # Chaco imports
 from enthought.chaco.api import AbstractController, AbstractDataSource, \

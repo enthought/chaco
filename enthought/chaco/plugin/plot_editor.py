@@ -1,5 +1,5 @@
 from enthought.chaco.shell.scaly_plot import ScalyPlot
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 from pyface.workbench.api import TraitsUIEditor
 from traits.api import Any, Enum, HasTraits, Property, Str
 from traitsui import api as tui

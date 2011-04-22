@@ -1,7 +1,7 @@
 """ Defines the Preferences class for the Chaco shell.
 """
 
-from enthought.enable.api import white_color_trait
+from enable.api import white_color_trait
 from traits.api import Enum, HasTraits, Int, Str
 
 

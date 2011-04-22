@@ -4,7 +4,7 @@
 from numpy import inf
 
 # Enthought library imports
-from enthought.enable.api import BaseTool, Pointer
+from enable.api import BaseTool, Pointer
 from traits.api import Bool, Enum, Float, Tuple
 
 

@@ -5,7 +5,7 @@ from numpy import array, float64, hstack
 
 # Enthought library imports
 from traits.api import Instance, Bool
-from enthought.enable.api import BaseTool
+from enable.api import BaseTool
 
 # Chaco import
 from enthought.chaco.api import ArrayDataSource

@@ -3,7 +3,7 @@
 from __future__ import with_statement
 
 # Enthought library imports
-from enthought.enable.api import BaseTool, ColorTrait, LineStyle
+from enable.api import BaseTool, ColorTrait, LineStyle
 from traits.api import Any, Bool, Enum, Float, Str, Trait
 
 # Chaco imports

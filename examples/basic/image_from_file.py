@@ -24,7 +24,7 @@ from traitsui.menu \
 # Chaco imports
 from enthought.chaco.api \
     import ArrayPlotData, ImageData, Plot, PlotGraphicsContext
-from enthought.enable.component_editor import ComponentEditor
+from enable.component_editor import ComponentEditor
 from enthought.chaco.tools.api import PanTool, ZoomTool
 
 

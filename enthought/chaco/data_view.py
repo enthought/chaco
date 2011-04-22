@@ -4,7 +4,7 @@ functions.
 from numpy import array, transpose
 
 from traits.api import Enum, Instance, Property
-from enthought.enable.colors import color_table
+from enable.colors import color_table
 
 from abstract_overlay import AbstractOverlay
 from axis import PlotAxis

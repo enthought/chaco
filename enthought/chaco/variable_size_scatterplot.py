@@ -1,8 +1,8 @@
 from __future__ import with_statement
 
 from enthought.chaco.api import ScatterPlot, render_markers
-from enthought.enable.api import MarkerNameDict, CustomMarker, AbstractMarker
-from enthought.kiva.constants import STROKE
+from enable.api import MarkerNameDict, CustomMarker, AbstractMarker
+from enable.kiva.constants import STROKE
 from traits.api import Array
 
 class VariableSizeScatterPlot(ScatterPlot):

@@ -7,8 +7,8 @@ import xml.etree.cElementTree as etree
 from enthought.chaco.api import AbstractOverlay
 from pyface.timer.timer import Timer
 from traits.api import Instance, Str, Enum, Float, Int
-from enthought.savage.svg.document import SVGDocument
-from enthought.savage.svg.backends.kiva.renderer import Renderer as KivaRenderer
+from enable.savage.svg.document import SVGDocument
+from enable.savage.svg.backends.kiva.renderer import Renderer as KivaRenderer
 
 class StatusLayer(AbstractOverlay):
 

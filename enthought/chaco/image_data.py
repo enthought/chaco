@@ -85,7 +85,7 @@ class ImageData(AbstractDataSource):
         on disk. 'filename' may be a file path or a file object.
         """
 
-        from enthought.kiva.image import Image
+        from enable.kiva.image import Image
         img = Image(filename)
         imgdata = cls(data=img.bmp_array, transposed=False)
         fmt = img.format()

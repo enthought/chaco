@@ -6,7 +6,7 @@ from numpy import array
 # Enthought library imports
 from traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, List, \
                              Property, Str, Trait, Tuple
-from enthought.enable.api import KeySpec
+from enable.api import KeySpec
 
 # Chaco imports
 from enthought.chaco.api import AbstractController

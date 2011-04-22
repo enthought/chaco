@@ -8,10 +8,10 @@ import numpy
 
 from traits.api import HasTraits, Instance, Enum
 from traitsui.api import View, Item
-from enthought.enable.api import ComponentEditor
+from enable.api import ComponentEditor
 from enthought.chaco.api import Plot, ArrayPlotData, AbstractOverlay
-from enthought.enable.api import BaseTool
-from enthought.enable.markers import DOT_MARKER, DotMarker
+from enable.api import BaseTool
+from enable.markers import DOT_MARKER, DotMarker
 
 class BoxSelectTool(BaseTool):
     """ Tool for selecting all points within a box

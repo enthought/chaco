@@ -2,7 +2,7 @@
 """
 # Enthought library imports
 from traits.api import Tuple
-from enthought.enable.tools.drag_tool import DragTool
+from enable.tools.drag_tool import DragTool
 
 
 class MoveTool(DragTool):

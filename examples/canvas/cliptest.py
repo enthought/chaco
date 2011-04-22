@@ -7,9 +7,9 @@ from __future__ import with_statement
 
 # Enthought library imports
 from traits.api import Float
-from enthought.enable.api import Window, Container, Component, Pointer
-from enthought.enable.tools.api import MoveTool
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.api import Window, Container, Component, Pointer
+from enable.tools.api import MoveTool
+from enable.example_support import DemoFrame, demo_main
 
 
 class Box(Component):

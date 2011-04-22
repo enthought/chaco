@@ -5,11 +5,11 @@ from __future__ import with_statement
 
 # Enthought library imports
 from traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
-from enthought.enable.api import Container
+from enable.api import Container
 
 # Chaco imports
 from enthought.chaco.api import AbstractOverlay
-from enthought.enable.tools.api import DragTool
+from enable.tools.api import DragTool
 
 
 class PlotCloneTool(AbstractOverlay, DragTool):

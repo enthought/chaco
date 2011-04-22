@@ -11,8 +11,8 @@ from numpy import arange, fabs, pi, sin
 from scipy.special import jn
 
 # Enthought library imports
-from enthought.enable.api import Window
-from enthought.enable.example_support import DemoFrame, demo_main
+from enable.api import Window
+from enable.example_support import DemoFrame, demo_main
 from traits.api import false, HasTraits
 
 # Chaco imports
