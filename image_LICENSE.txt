@@ -13,6 +13,7 @@ Files and original authors:
 examples/basic:
                         capitol.jpg | Peter Wang
                             cat.jpg | Peter Wang
-enthought/overlays/data:
+
+chaco/layers/data:
                    Dialog-error.svg | Tango, CC 2.5, modified to remove gadients
                  Dialog-warning.svg | Tango, CC 2.5, modified to remove gadients
