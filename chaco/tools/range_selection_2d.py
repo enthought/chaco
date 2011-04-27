@@ -178,6 +178,7 @@ class RangeSelection2D(RangeSelection):
         """
         x_pos = self._get_axis_coord(event, "index")
         y_pos = self._get_axis_coord(event, "value")
+        self._down_point = numpy.array([x_pos, y_pos])
         mapped_pos = self._map_data([(x_pos,y_pos)])[0][self.axis_index]
 
         self.selection = (mapped_pos, mapped_pos)
