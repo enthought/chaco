@@ -667,6 +667,8 @@ def _set_scale(axis, system):
         else:
             log_linear_trait = 'value_scale'
             ticks = p.y_ticks
+        if system == 'time':
+            system = CalendarScaleSystem()
         if isinstance(system, basestring):
             setattr(p, log_linear_trait, system)
         else:
@@ -682,10 +684,10 @@ def xscale(system=None):
     Usage
     -----
     * ``xscale()``: revert the scale system to the default.
-    * ``xscale(CalendarScaleSystem())``: use the calendar scale system for time
-      series.
+    * ``xscale('time')``: use the calendar scale system for time series.
     * ``xscale('log')``: use a generic log-scale.
     * ``xscale('linear')``: use a generic linear-scale.
+    * ``xscale(some_scale_system)``: use an arbitrary ScaleSystem object.
     """
     _set_scale('x', system)
 
@@ -695,10 +697,10 @@ def yscale(system=None):
     Usage
     -----
     * ``yscale()``: revert the scale system to the default.
-    * ``yscale(CalendarScaleSystem())``: use the calendar scale system for time
-      series.
+    * ``yscale('time')``: use the calendar scale system for time series.
     * ``yscale('log')``: use a generic log-scale.
     * ``yscale('linear')``: use a generic linear-scale.
+    * ``yscale(some_scale_system)``: use an arbitrary ScaleSystem object.
     """
     _set_scale('y', system)
 
