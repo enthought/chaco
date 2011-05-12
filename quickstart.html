@@ -70,12 +70,12 @@ and open source under the BSD licence.</p>
 <p>Chaco requires Python version 2.5 or later to be installed. Chaco is built on three other
 Enthought packages:</p>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li><a class="reference external" href="http://code.enthought.com/projects/traits">Traits</a>, as an event notification framework,</li>
 <li><a class="reference external" href="https://svn.enthought.com/enthought/wiki/Kiva">Kiva</a>, for rendering 2-D graphics to a variety of backends across platforms,</li>
 <li><a class="reference external" href="http://code.enthought.com/projects/enable/">Enable</a>, as a framework for writing interactive visual components, and for abstracting away GUI-toolkit-specific details of mouse and keyboard handling.</li>
 </ul>
-</blockquote>
+</div></blockquote>
 <dl class="docutils">
 <dt>It also relies on two external packages:</dt>
 <dd><ul class="first last simple">
@@ -96,7 +96,7 @@ section for more detailed instructions or to the
 <a class="reference external" href="https://mail.enthought.com/mailman/listinfo/enthought-dev">enthought-dev</a>
 <strong>mailing list</strong> to post questions, consult archives and share tips.</p>
 <blockquote>
-<ol class="arabic simple">
+<div><ol class="arabic simple">
 <li>Install the Enthought Python Distribution.
 Chaco, the rest of the Enthought Tool Suite and a lot more are bundled in it.
 This allows for the installation of Chaco and all its dependencies to be
@@ -108,16 +108,15 @@ several examples.</li>
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Enthought Python Distribution is free for academic users and a free version of EPD
-containing Chaco will be released soon.</p>
+<p class="last">Enthought Python Distribution is free for academic users.</p>
 </div>
-</blockquote>
+</div></blockquote>
 <p>Building Chaco on your machine requires to build Chaco and each of its dependencies. It
 has the advantage of installing it on top of the python instance of your OS.
 But the building process might be challenging and will require SWIG, Cython and several
 development libraries to be installed.</p>
 <blockquote>
-<p>2. <em>(Linux only)</em> Install via the distribution&#8217;s packaging mechanism.  Enthought provide .debs
+<div><p>2. <em>(Linux only)</em> Install via the distribution&#8217;s packaging mechanism.  Enthought provide .debs
 installers for Debian and Ubuntu and .rpm installers for Redhat.</p>
 <p>3. Download sources as a project from the
 <a class="reference external" href="https://github.com/enthought/chaco">Chaco github repository</a> or alternatively as a part
@@ -128,7 +127,7 @@ of the ETS (for details see <a class="reference external" href="http://code.enth
 or using <a class="reference external" href="http://www.pip-installer.org/en/latest/">pip</a>. For example using easy_install,
 simply type</p>
 <p><strong class="command">easy_install Chaco</strong></p>
-</blockquote>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="running-some-examples">
@@ -157,7 +156,7 @@ you are in the same directory as the examples.</p>
 <h3>Command line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
 <p>Run the <tt class="docutils literal"><span class="pre">simple_line</span></tt> example:</p>
 <blockquote>
-<strong class="command">python simple_line.py</strong></blockquote>
+<div><strong class="command">python simple_line.py</strong></div></blockquote>
 <p>This opens a plot of several Bessel functions and a legend.</p>
 <img alt="_images/simple_line.png" src="_images/simple_line.png" />
 <p>You can interact with the plot in several ways:</p>
@@ -167,7 +166,7 @@ you are in the same directory as the examples.</p>
 </li>
 <li><p class="first">To zoom the plot:</p>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>Mouse wheel: scroll up to zoom in, and scroll down to zoom out.</li>
 <li>Zoom box: Press &#8220;z&#8221;, and then draw a box region to zoom in on. (There
 is no box-based zoom out.) Press Ctrl-Left and Ctrl-Right to go
@@ -177,7 +176,7 @@ or down. Up zooms in, and down zooms out.</li>
 <li>For any of the above, press Escape to resets the zoom to the
 original view.</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </li>
 <li><p class="first">To move the legend, hold down the right mouse button inside the
 legend and drag it around. Note that you can move the legend
@@ -215,18 +214,18 @@ amenable to exploration with IPython.</p>
 <p>The first example we&#8217;ll look at is the <tt class="file docutils literal"><span class="pre">lines.py</span></tt> example.  First, we&#8217;ll
 run it using the standard Python interpreter:</p>
 <blockquote>
-<strong class="command">python lines.py</strong></blockquote>
+<div><strong class="command">python lines.py</strong></div></blockquote>
 <p>This shows two overlapping line plots.</p>
 <img alt="_images/lines.png" src="_images/lines.png" />
 <p>You can interact with the plot in the following ways:</p>
 <blockquote>
-<ul>
+<div><ul>
 <li><p class="first">To pan the plot, hold down the left mouse button inside the plot area
 and dragging the mouse.</p>
 </li>
 <li><p class="first">To zoom the plot:</p>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>Mouse wheel: scroll up zooms in, and scroll down zooms out.</li>
 <li>Zoom box: hold down the right mouse button, and then draw a box region
 to zoom in on.  (There is no box-based zoom out.)  Press Ctrl-Left and
@@ -234,13 +233,13 @@ Ctrl-Right to go back and forward in your zoom box history.</li>
 <li>For either of the above, press Escape to reset the zoom to the
 original view.</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </li>
 </ul>
-</blockquote>
+</div></blockquote>
 <p>Now exit the plot, and start IPython with the -wthread option:</p>
 <blockquote>
-<strong class="command">ipython -wthread</strong></blockquote>
+<div><strong class="command">ipython -wthread</strong></div></blockquote>
 <p>This tells IPython to start a wxPython mainloop in a background thread.  Now
 run the previous example again:</p>
 <div class="highlight-python"><pre>In [1]: run lines.py</pre>
@@ -250,7 +249,7 @@ IPython prompt.  You can now use various commands from the <tt class="xref py py
 package to interact with the plot.</p>
 <ul>
 <li><p class="first">Import the shell commands:</p>
-<div class="highlight-python"><pre>In [2]: from enthought.chaco.shell import *</pre>
+<div class="highlight-python"><pre>In [2]: from chaco.shell import *</pre>
 </div>
 </li>
 <li><p class="first">Set the X-axis title:</p>
@@ -306,9 +305,9 @@ at:
 <div class="section" id="api-docs">
 <span id="id5"></span><h3>API Docs<a class="headerlink" href="#api-docs" title="Permalink to this headline">¶</a></h3>
 <p>The API docs for Chaco 3.0 (in ETS 3.0) are at:
-<a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html">http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html</a></p>
+<a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/chaco.html">http://code.enthought.com/projects/files/ETS3_API/chaco.html</a></p>
 <p>The API docs for Chaco2 (in ETS 2.7.1) are at:
-<a class="reference external" href="http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html">http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html</a></p>
+<a class="reference external" href="http://code.enthought.com/projects/files/ets_api/chaco2.html">http://code.enthought.com/projects/files/ets_api/chaco2.html</a></p>
 </div>
 </div>
 </div>
@@ -387,8 +386,8 @@ at:
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Apr 10, 2011.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+      Last updated on May 12, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
 </html>

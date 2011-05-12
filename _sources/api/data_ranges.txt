@@ -4,7 +4,7 @@
 Data Ranges
 -----------
 
-.. currentmodule:: enthought.chaco.api
+.. currentmodule:: chaco.api
 
 :class:`AbstractDataRange`
 ==========================

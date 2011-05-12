@@ -4,7 +4,7 @@
 Containers
 ----------
 
-.. currentmodule:: enthought.chaco.api
+.. currentmodule:: chaco.api
 
 :class:`BasePlotContainer`
 ==========================

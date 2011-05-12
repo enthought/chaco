@@ -79,8 +79,8 @@
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wx</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">arange</span>
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">jn</span>
-<span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">HPlotContainer</span><span class="p">,</span> <span class="n">create_line_plot</span>
-<span class="kn">from</span> <span class="nn">enthought.enable.wx_backend.api</span> <span class="kn">import</span> <span class="n">Window</span>
+<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">HPlotContainer</span><span class="p">,</span> <span class="n">create_line_plot</span>
+<span class="kn">from</span> <span class="nn">enable.wx_backend.api</span> <span class="kn">import</span> <span class="n">Window</span>
 
 <span class="k">class</span> <span class="nc">PlotFrame</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
@@ -114,10 +114,10 @@
 <li>integrate a Chaco plot into my Traits UI?</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
-<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
-<span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
-<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
+<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
+<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 
 <span class="k">class</span> <span class="nc">MyPlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
@@ -303,8 +303,8 @@
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Apr 10, 2011.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+      Last updated on May 12, 2011.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
 </html>
