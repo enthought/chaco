@@ -59,8 +59,7 @@ section for more detailed instructions or to the
      several examples.
 
   .. note::
-     Enthought Python Distribution is free for academic users and a free version of EPD
-     containing Chaco will be released soon.
+     Enthought Python Distribution is free for academic users.
 
 Building Chaco on your machine requires to build Chaco and each of its dependencies. It 
 has the advantage of installing it on top of the python instance of your OS.
