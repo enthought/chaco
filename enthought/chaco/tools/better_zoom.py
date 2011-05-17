@@ -11,7 +11,7 @@ from tool_states import ZoomState, PanState, GroupedToolState, ToolState
 class BetterZoom(BaseTool, ToolHistoryMixin):
 
     # Keys to zoom in/out
-    zoom_in_key = Instance(KeySpec, args=("+",))
+    zoom_in_key = Instance(KeySpec, args=("+", "shift"))
     zoom_out_key = Instance(KeySpec, args=("-",))
 
     # Keys to zoom in/out in x direction only
