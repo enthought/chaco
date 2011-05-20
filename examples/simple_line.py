@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Draws several overlapping line plots.
 
@@ -118,9 +117,9 @@ size=(800,700)
 title="Simple Line Plot"
 
 #===============================================================================
-# # Demo class that is used by the demo.py application.
+# # PlotExamplen class that is used by the demo.py application.
 #===============================================================================
-class Demo(HasTraits):
+class PlotExamplen(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
@@ -135,7 +134,7 @@ class Demo(HasTraits):
     def _plot_default(self):
          return _create_plot_component()
 
-demo = Demo()
+demo = PlotExamplen()
 
 #===============================================================================
 # Stand-alone frame to display the plot.
