@@ -45,6 +45,7 @@ class PlotExample(HasTraits):
 
 
 index = numpy.array([1,2,3,4,5])
+demo = PlotExample(index, index*10, index*5, index*2)
 
-example = PlotExample(index, index*10, index*5, index*2)
-example.configure_traits()
+if __name__ == "__main__":
+    demo.configure_traits()
