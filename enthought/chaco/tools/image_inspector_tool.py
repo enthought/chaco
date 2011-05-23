@@ -36,6 +36,7 @@ class ImageInspectorTool(BaseTool):
     def normal_key_pressed(self, event):
         if self.inspector_key.match(event):
             self.visible = not self.visible
+            event.handled = True
 
     def normal_mouse_leave(self, event):
         if self._old_visible is None:
