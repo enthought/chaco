@@ -7,7 +7,7 @@ traits.ui.wx.plot_editor.
 from traits.etsconfig.api import ETSConfig
 from enable.api import black_color_trait, LineStyle, ColorTrait,\
     white_color_trait, MarkerTrait, Window
-from enable.traits.ui.api import RGBAColorEditor
+from enable.trait_defs.ui.api import RGBAColorEditor
 from enable.kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Enum, Str, Range, Tuple, \
                                  Bool, Trait, Int, Any, Property
