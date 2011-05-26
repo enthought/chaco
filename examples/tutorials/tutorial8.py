@@ -1,33 +1,28 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 8. Putting two plots on the screen
-#
-# This tutorial sets up for showing how Chaco allows easily opening multiple
-# views into a single dataspace, which is demonstrated in later tutorials.
+"""Tutorial 8. Putting two plots on the screen
 
+This tutorial sets up for showing how Chaco allows easily opening multiple
+views into a single dataspace, which is demonstrated in later tutorials.
+"""
 
-import wx
 from scipy import arange
 from scipy.special import jn
-from enthought.chaco.api import *
-from enthought.chaco.tools.api import *
-from enthought.enable.wx_backend.api import Window
+
+from enthought.enable.api import ComponentEditor
+from enthought.traits.api import HasTraits, Instance
+from enthought.traits.ui.api import Item, View
+
+from enthought.chaco.api import create_line_plot, HPlotContainer
+from enthought.chaco.tools.api import PanTool
 
 
-class PlotFrame(wx.Frame):
-    def __init__(self, *args, **kw):
-        kw["size"] = (850, 550)
-        wx.Frame.__init__( *(self,) + args, **kw )
-        self.plot_window = Window(self, component=self._create_plot())
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(self.plot_window.control, 1, wx.EXPAND)
-        self.SetSizer(sizer)
-        self.SetAutoLayout(True)
-        self.Show(True)
-        return
+class PlotExample(HasTraits):
+    container = Instance(HPlotContainer)
 
-    def _create_plot(self):
+    traits_view = View(Item('container', editor=ComponentEditor(),
+                            show_label=False, width=800, height=600),
+                       title="Chaco Tutorial")
+
+    def _container_default(self):
         x = arange(-5.0, 15.0, 20.0/100)
 
         y = jn(0, x)
@@ -54,7 +49,7 @@ class PlotFrame(wx.Frame):
         container.add(right_plot)
         return container
 
+demo = PlotExample()
+
 if __name__ == "__main__":
-    app = wx.PySimpleApp()
-    frame = PlotFrame(None)
-    app.MainLoop()
+    demo.configure_traits()

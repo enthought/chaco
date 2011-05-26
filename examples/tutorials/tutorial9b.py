@@ -1,28 +1,25 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 9b. Synchronize the Y data space as well,and add some tools.
+"""Tutorial 9b. Synchronize the Y data space as well,and add some tools."""
 
 
-from tutorial8 import PlotFrame
 from enthought.chaco.tools.api import ZoomTool
 
-class PlotFrame2(PlotFrame):
-    def _create_plot(self):
-        container = super(PlotFrame2, self)._create_plot()
+from tutorial8 import PlotExample
 
-        self.right_plot.index_mapper.range = self.left_plot.index_mapper.range
-        self.right_plot.value_mapper.range = self.left_plot.value_mapper.range
 
-        self.left_plot.overlays.append(ZoomTool(self.left_plot,
-                tool_mode="box", always_on=False))
-        self.right_plot.overlays.append(ZoomTool(self.right_plot,
-                tool_mode="box", always_on=False))
+class PlotExample2(PlotExample):
+    def _container_default(self):
+        container = super(PlotExample2, self)._container_default()
+
+        rplot, lplot = self.right_plot, self.left_plot
+        rplot.index_mapper.range = lplot.index_mapper.range
+        rplot.value_mapper.range = lplot.value_mapper.range
+
+        lplot.overlays.append(ZoomTool(lplot, tool_mode="box",always_on=False))
+        rplot.overlays.append(ZoomTool(rplot, tool_mode="box",always_on=False))
 
         return container
 
+demo = PlotExample2()
+
 if __name__ == "__main__":
-    import wx
-    app = wx.PySimpleApp()
-    frame = PlotFrame2(None)
-    app.MainLoop()
+    demo.configure_traits()
