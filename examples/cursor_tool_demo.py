@@ -110,7 +110,7 @@ class CursorTest(HasTraits):
                         title="Cursor Tool Demo",
                         resizable=True,
                         width=800,
-                        height=400)
+                        height=420)
 
 #===============================================================================
 # # demo object that is used by the demo.py application.
