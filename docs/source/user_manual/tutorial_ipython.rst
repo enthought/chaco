@@ -111,4 +111,141 @@ the centers::
 
 .. image:: images/ipython_kde.png
 
+Other related plotting commands which are available include ``imshow()``, ``contourf()``
+and ``pshow()``.  For example::
+
+    In [33]: pshow(xedges, yedges, z)
+
+will plot a pseudo-color image of our sampling of the KDE.
+
+Making Things Pretty
+====================
+
+You can add plot and axis titles to your plot easily::
+
+    In [34]: title('The Kernel Density Estimator')
+    In [35]: xtitle('x')
+    In [36]: ytitle('y')
+
+and you can toggle whether or not grids are drawn by::
+
+    In [37]: xgrid()
+    In [38]: ygrid()
+
+and similarly::
+
+    In [39]: legend()
+
+toggles the display of the legend.  These toggling commands can optionally take a
+boolean value which instead of toggling the display will either always show or hide
+the grid or legend.  For example::
+
+    In [40]: legend(False)
+
+will ensure that the legend is hidden.  You can toggle the axes completely with::
+
+    In [41]: xaxis()
+    In [42]: yaxis()
+
+but you can additionally gain quite fine-grained control over display of the axes
+by passing keyword arguments to these commands.  For example, to display the y-axis
+on the right instead of the left, you would do::
+
+    In [43]: yaxis(orientation='right')
+
+You can see the complete set of available keyword arguments via ipython's help::
+
+    In [44]: yaxis?
+    Base Class:       <type 'function'>
+    String Form:   <function yaxis at 0x1e4e25f0>
+    Namespace:        Interactive
+    File:             /Users/cwebster/src/ets/chaco/enthought/chaco/shell/commands.py
+    Definition:       yaxis(**kwds)
+    Docstring:
+        Configures the y-axis.
     
+        Usage
+        -----
+        * ``yaxis()``: toggles the vertical axis on or off.
+        * ``yaxis(**kwds)``: set parameters of the vertical axis.
+    
+        Parameters
+        ----------
+        title : str
+            The text of the title
+        title_font : KivaFont('modern 12')
+            The font in which to render the title
+        title_color : color ('color_name' or (red, green, blue, [alpha]) tuple)
+            The color in which to render the title
+        tick_weight : float
+    ...
+
+
+If you have a plot in a state that you are happy with, you can save the current
+image with the ``save()`` command::
+
+    In [45]: save('my_plot.png')
+
+Log Plots and Time-Series
+=========================
+
+The Chaco ipython shell can create plots with logarithmic axes.  If you know at the time
+that you create the plot that you want log axes, you can use one of the commands
+``semilogx()``, ``semilogy()`` or ``loglog()`` as you would the usual ``plot()`` command::
+
+    In [46]: x = linspace(0, 10, 101)
+    In [47]: y = exp(x**2)
+    In [48]: semilogy(x, y)
+
+If you have already created a plot, and you decide that it would be clearer with a
+logarithmic scale on an axis, you can set this with the `xscale()` and `yscale()`
+commands::
+
+    In [49]: xscale('log')
+
+You can set it back to a linear scale in the same way::
+
+    In [50]: xscale('linear')
+
+Time axes are handled in a similar way.  Chaco expects times to be represented as
+floating point numbers giving seconds since the epoch, the same as ``time.time()``.
+Given a plot with a set of index values expressed as times in this fashion, you
+can specify the scale as ``'time'`` and Chaco will display tick marks on the axis
+appropriately::
+
+    In [51]: x = linspace(time.time(), time.time()+7*24*60*60, 360)
+    In [52]: y = random.uniform(size=360)
+    In [53]: plot(x, y)
+    In [54]: xscale('time')
+
+Plot Management
+===============
+
+In addition to the ``hold()`` command discussed earlier, there are several commands
+that you can use to control the creation of new Chaco windows for plotting in to,
+and determining which one is currently active::
+
+    In [55]: figure('fig2', 'My Second Plot')
+
+creates a new window with the identifier ``'fig2'`` which will have "My Second Plot"
+displayed as the title of the window.  Any new plots after this command will appear
+in this window.  You can switch to an existing window using the ``activate()`` command,
+referring to the window either by index or name::
+
+    In [56]: activate(0)
+
+will make the original plot window the current window, while::
+
+    In [57]: activate('fig2')
+
+will switch back to our second window.
+
+For advanced users, you can get a reference to the current Chaco plot object using the
+``curplot()`` command.  When you have this, you then have full access to the programatic
+Chaco plot API described elsewhere.
+
+Finally, you can use the ``chaco.shell`` API from Python scripts instead of interactively
+if you prefer.  In this case, because you do not have ipython around to set up the GUI
+mainloop with the ``-wthread`` or ``-q4thread`` options, you need to use the ``show()``
+command to start the GUI mainloop and display the windows that you have created.
+
