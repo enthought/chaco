@@ -626,6 +626,16 @@ def xaxis(**kwds):
             p.x_axis.visible ^= True
         p.request_redraw()
 
+xaxis.__doc__ = """ Configures the x-axis.
+
+    Usage
+    -----
+    * ``xaxis()``: toggles the horizontal axis on or off.
+    * ``xaxis(**kwds)``: set parameters of the horizontal axis.
+
+    %s
+    """ % _axis_params
+
 def yaxis(**kwds):
     """ Configures the y-axis.
 
@@ -643,6 +653,17 @@ def yaxis(**kwds):
         else:
             p.y_axis.visible ^= True
         p.request_redraw()
+
+yaxis.__doc__ =     """ Configures the y-axis.
+
+    Usage
+    -----
+    * ``yaxis()``: toggles the vertical axis on or off.
+    * ``yaxis(**kwds)``: set parameters of the vertical axis.
+
+    %s
+    """ % _axis_params
+
 
 def xgrid():
     """ Toggles the grid perpendicular to the X axis. """
