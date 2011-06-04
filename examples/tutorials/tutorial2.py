@@ -24,7 +24,9 @@ from tutorial1 import myplot
 # only new thing is that we're going to import a Window from the Enable
 # library, and embed our plot in that.  This Window object just allows our
 # plot to look like a generic Panel to WX.
-from enable.wx_backend.api import Window
+
+from enable.api import Window
+
 class PlotFrame(wx.Frame):
     def __init__(self, *args, **kw):
         kw["size"] = (600,600)

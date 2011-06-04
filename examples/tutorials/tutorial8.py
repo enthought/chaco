@@ -12,8 +12,7 @@ from scipy import arange
 from scipy.special import jn
 from chaco.api import *
 from chaco.tools.api import *
-from enable.wx_backend.api import Window
-
+from enable.api import Window
 
 class PlotFrame(wx.Frame):
     def __init__(self, *args, **kw):
