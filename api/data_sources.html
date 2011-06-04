@@ -56,11 +56,11 @@
   <div class="section" id="data-sources">
 <span id="id1"></span><h1>Data Sources<a class="headerlink" href="#data-sources" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="abstractdatasource">
-<h2><a class="reference internal" href="#chaco.api.AbstractDataSource" title="chaco.api.AbstractDataSource"><tt class="xref py py-class docutils literal"><span class="pre">AbstractDataSource</span></tt></a><a class="headerlink" href="#abstractdatasource" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.AbstractDataSource" title="enthought.chaco.api.AbstractDataSource"><tt class="xref py py-class docutils literal"><span class="pre">AbstractDataSource</span></tt></a><a class="headerlink" href="#abstractdatasource" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.AbstractDataSource">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">AbstractDataSource</tt><a class="headerlink" href="#chaco.api.AbstractDataSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<dt id="enthought.chaco.api.AbstractDataSource">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">AbstractDataSource</tt><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.traits.has_traits.HasTraits</span></tt></p>
 <p>This abstract interface must be implemented by any class supplying data
 to Chaco.</p>
 <p>Chaco does not have a notion of a &#8220;data format&#8221;. For the most part, a data
@@ -87,8 +87,8 @@ possible, domain classes (or an adapter) must implement AbstractDataSource.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="chaco.api.AbstractDataSource.get_bounds">
-<tt class="descname">get_bounds</tt><big>(</big><em>) -&gt; tuple(min</em>, <em>max</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataSource.get_bounds">
+<tt class="descname">get_bounds</tt><big>(</big><em>) -&gt; tuple(min</em>, <em>max</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a tuple (min, max) of the bounding values for the data source.
 In the case of 2-D data, min and max are 2-D points that represent the
 bounding corners of a rectangle enclosing the data set.  Note that
@@ -98,8 +98,8 @@ of the data source.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.AbstractDataSource.get_data">
-<tt class="descname">get_data</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataSource.get_data">
+<tt class="descname">get_data</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>get_data() -&gt; data_array</p>
 <p>Returns a data array of the dimensions of the data source. This data
 array must not be altered in-place, and the caller must assume it is
@@ -109,8 +109,8 @@ two 1-D ArrayDataSources as an optimization.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.AbstractDataSource.get_data_mask">
-<tt class="descname">get_data_mask</tt><big>(</big><em>) -&gt; (data_array</em>, <em>mask_array</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataSource.get_data_mask">
+<tt class="descname">get_data_mask</tt><big>(</big><em>) -&gt; (data_array</em>, <em>mask_array</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the full, raw, source data array and a corresponding binary
 mask array.  Treat both arrays as read-only.</p>
 <p>The mask is a superposition of the masks of all upstream data sources.
@@ -120,8 +120,8 @@ get_size() returns.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.AbstractDataSource.get_size">
-<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataSource.get_size" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataSource.get_size">
+<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource.get_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>get_size() -&gt; int</p>
 <p>Returns an integer estimate or the exact size of the dataset that
 get_data() returns for this object.  This method is useful for
@@ -129,8 +129,8 @@ down-sampling.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.AbstractDataSource.is_masked">
-<tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataSource.is_masked">
+<tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
 <dd><p>is_masked() -&gt; bool</p>
 <p>Returns True if this data source&#8217;s data uses a mask. In this case,
 to retrieve the data, call get_data_mask() instead of get_data().
@@ -142,11 +142,11 @@ data might not be the expected data.</p>
 
 </div>
 <div class="section" id="arraydatasource">
-<h2><a class="reference internal" href="#chaco.api.ArrayDataSource" title="chaco.api.ArrayDataSource"><tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt></a><a class="headerlink" href="#arraydatasource" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.ArrayDataSource" title="enthought.chaco.api.ArrayDataSource"><tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt></a><a class="headerlink" href="#arraydatasource" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.ArrayDataSource">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ArrayDataSource</tt><big>(</big><em>data=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>sort_order='none'</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></tt></p>
+<dt id="enthought.chaco.api.ArrayDataSource">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">ArrayDataSource</tt><big>(</big><em>data=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>sort_order='none'</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.abstract_data_source.AbstractDataSource</span></tt></p>
 <p>A data source representing a single, continuous array of numerical data.</p>
 <p>This class does not listen to the array for value changes; if you need that
 behavior, create a subclass that hooks up the appropriate listeners.</p>
@@ -162,48 +162,48 @@ behavior, create a subclass that hooks up the appropriate listeners.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.get_bounds">
-<tt class="descname">get_bounds</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.get_bounds">
+<tt class="descname">get_bounds</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the minimum and maximum values of the data source&#8217;s data.</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.get_data">
-<tt class="descname">get_data</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.get_data">
+<tt class="descname">get_data</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the data for this data source, or 0.0 if it has no data.</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.get_data_mask">
-<tt class="descname">get_data_mask</tt><big>(</big><em>) -&gt; (data_array</em>, <em>mask_array</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.get_data_mask">
+<tt class="descname">get_data_mask</tt><big>(</big><em>) -&gt; (data_array</em>, <em>mask_array</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.get_size">
-<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.get_size" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.get_size">
+<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.get_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>get_size() -&gt; int</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.is_masked">
-<tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.is_masked">
+<tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
 <dd><p>is_masked() -&gt; bool</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.remove_mask">
-<tt class="descname">remove_mask</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.remove_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.remove_mask">
+<tt class="descname">remove_mask</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.remove_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes the mask on this data source.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.reverse_map">
-<tt class="descname">reverse_map</tt><big>(</big><em>pt</em>, <em>index=0</em>, <em>outside_returns_none=True</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.reverse_map" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.reverse_map">
+<tt class="descname">reverse_map</tt><big>(</big><em>pt</em>, <em>index=0</em>, <em>outside_returns_none=True</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.reverse_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the index of <em>pt</em> in the data source.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -230,8 +230,8 @@ bound that <em>pt</em> is outside of.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.set_data">
-<tt class="descname">set_data</tt><big>(</big><em>newdata</em>, <em>sort_order=None</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.set_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.set_data">
+<tt class="descname">set_data</tt><big>(</big><em>newdata</em>, <em>sort_order=None</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the data, and optionally the sort order, for this data source.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -252,8 +252,8 @@ bound that <em>pt</em> is outside of.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ArrayDataSource.set_mask">
-<tt class="descname">set_mask</tt><big>(</big><em>mask</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayDataSource.set_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ArrayDataSource.set_mask">
+<tt class="descname">set_mask</tt><big>(</big><em>mask</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.ArrayDataSource.set_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the mask for this data source.</p>
 </dd></dl>
 
@@ -261,11 +261,11 @@ bound that <em>pt</em> is outside of.</p>
 
 </div>
 <div class="section" id="multiarraydatasource">
-<h2><a class="reference internal" href="#chaco.api.MultiArrayDataSource" title="chaco.api.MultiArrayDataSource"><tt class="xref py py-class docutils literal"><span class="pre">MultiArrayDataSource</span></tt></a><a class="headerlink" href="#multiarraydatasource" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.MultiArrayDataSource" title="enthought.chaco.api.MultiArrayDataSource"><tt class="xref py py-class docutils literal"><span class="pre">MultiArrayDataSource</span></tt></a><a class="headerlink" href="#multiarraydatasource" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.MultiArrayDataSource">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">MultiArrayDataSource</tt><big>(</big><em>data=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>sort_order='ascending'</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></tt></p>
+<dt id="enthought.chaco.api.MultiArrayDataSource">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">MultiArrayDataSource</tt><big>(</big><em>data=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>sort_order='ascending'</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.abstract_data_source.AbstractDataSource</span></tt></p>
 <p>A data source representing a single, continuous array of numerical data
 of potentially more than one dimension.</p>
 <p>This class does not listen to the array for value changes;  To implement
@@ -282,8 +282,8 @@ such behavior, define a subclass that hooks up the appropriate listeners.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="chaco.api.MultiArrayDataSource.get_bounds">
-<tt class="descname">get_bounds</tt><big>(</big><em>) -&gt; tuple(min</em>, <em>max</em><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.MultiArrayDataSource.get_bounds">
+<tt class="descname">get_bounds</tt><big>(</big><em>) -&gt; tuple(min</em>, <em>max</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a tuple (min, max) of the bounding values for the data source.
 In the case of 2-D data, min and max are 2-D points that represent the
 bounding corners of a rectangle enclosing the data set.  Note that
@@ -299,8 +299,8 @@ maximum along the <em>index</em> slice in the <strong>index_direction</strong>.<
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.MultiArrayDataSource.get_data">
-<tt class="descname">get_data</tt><big>(</big><em>axes=None</em>, <em>remove_nans=False</em><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.MultiArrayDataSource.get_data">
+<tt class="descname">get_data</tt><big>(</big><em>axes=None</em>, <em>remove_nans=False</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>get_data() -&gt; data_array</p>
 <p>If called with no arguments, this method returns a data array.
 Treat this data array as read-only, and do not alter it in-place.
@@ -310,20 +310,20 @@ sliced along the <strong>index_dimension</strong>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.MultiArrayDataSource.get_data_mask">
-<tt class="descname">get_data_mask</tt><big>(</big><em>) -&gt; (data_array</em>, <em>mask_array</em><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.MultiArrayDataSource.get_data_mask">
+<tt class="descname">get_data_mask</tt><big>(</big><em>) -&gt; (data_array</em>, <em>mask_array</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.MultiArrayDataSource.get_shape">
-<tt class="descname">get_shape</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_shape" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.MultiArrayDataSource.get_shape">
+<tt class="descname">get_shape</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource.get_shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the shape of the multi-dimensional data source.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.MultiArrayDataSource.get_size">
-<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_size" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.MultiArrayDataSource.get_size">
+<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource.get_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>get_size() -&gt; int</p>
 <p>Implements AbstractDataSource. Returns an integer estimate, or the
 exact size, of the dataset that get_data() returns. This method is
@@ -331,15 +331,15 @@ useful for downsampling.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.MultiArrayDataSource.get_value_size">
-<tt class="descname">get_value_size</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_value_size" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.MultiArrayDataSource.get_value_size">
+<tt class="descname">get_value_size</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource.get_value_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>get_value_size() -&gt; size</p>
 <p>Returns the size along the value dimension.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.MultiArrayDataSource.is_masked">
-<tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.MultiArrayDataSource.is_masked">
+<tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
 <dd><p>is_masked() -&gt; bool</p>
 <p>Returns True if this data source&#8217;s data uses a mask. In this case,
 retrieve the data using get_data_mask() instead of get_data().
@@ -348,8 +348,8 @@ data may not be the expected data.)</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.MultiArrayDataSource.set_data">
-<tt class="descname">set_data</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource.set_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.MultiArrayDataSource.set_data">
+<tt class="descname">set_data</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.MultiArrayDataSource.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the data for this data source.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -369,11 +369,11 @@ data may not be the expected data.)</p>
 
 </div>
 <div class="section" id="pointdatasource">
-<h2><a class="reference internal" href="#chaco.api.PointDataSource" title="chaco.api.PointDataSource"><tt class="xref py py-class docutils literal"><span class="pre">PointDataSource</span></tt></a><a class="headerlink" href="#pointdatasource" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.PointDataSource" title="enthought.chaco.api.PointDataSource"><tt class="xref py py-class docutils literal"><span class="pre">PointDataSource</span></tt></a><a class="headerlink" href="#pointdatasource" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.PointDataSource">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">PointDataSource</tt><big>(</big><em>data=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>shape=(0</em>, <em>2)</em>, <em>dtype=float64)</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chaco.api.PointDataSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.array_data_source.ArrayDataSource</span></tt></p>
+<dt id="enthought.chaco.api.PointDataSource">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">PointDataSource</tt><big>(</big><em>data=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>shape=(0</em>, <em>2)</em>, <em>dtype=float64)</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.PointDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.array_data_source.ArrayDataSource</span></tt></p>
 <p>A data source representing a (possibly unordered) set of (X,Y) points.</p>
 <p>This is internally always represented by an Nx2 array, so that data[i]
 refers to a single point (represented as a length-2 array).</p>
@@ -393,16 +393,16 @@ overrides only the methods and traits that are different.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="chaco.api.PointDataSource.get_data">
-<tt class="descname">get_data</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.PointDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.PointDataSource.get_data">
+<tt class="descname">get_data</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.PointDataSource.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the data for this data source, or (0.0, 0.0) if it has no
 data.</p>
 <p>Overrides ArryDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.PointDataSource.reverse_map">
-<tt class="descname">reverse_map</tt><big>(</big><em>pt</em>, <em>index=0</em>, <em>outside_returns_none=True</em><big>)</big><a class="headerlink" href="#chaco.api.PointDataSource.reverse_map" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.PointDataSource.reverse_map">
+<tt class="descname">reverse_map</tt><big>(</big><em>pt</em>, <em>index=0</em>, <em>outside_returns_none=True</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.PointDataSource.reverse_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the index of <em>pt</em> in the data source.</p>
 <p>Overrides ArrayDataSource.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -433,11 +433,11 @@ bound that <em>pt</em> is outside of, in the <em>index</em> dimension.</p>
 
 </div>
 <div class="section" id="griddatasource">
-<h2><a class="reference internal" href="#chaco.api.GridDataSource" title="chaco.api.GridDataSource"><tt class="xref py py-class docutils literal"><span class="pre">GridDataSource</span></tt></a><a class="headerlink" href="#griddatasource" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.GridDataSource" title="enthought.chaco.api.GridDataSource"><tt class="xref py py-class docutils literal"><span class="pre">GridDataSource</span></tt></a><a class="headerlink" href="#griddatasource" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.GridDataSource">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">GridDataSource</tt><big>(</big><em>xdata=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>ydata=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>sort_order=('none'</em>, <em>'none')</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.GridDataSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></tt></p>
+<dt id="enthought.chaco.api.GridDataSource">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">GridDataSource</tt><big>(</big><em>xdata=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>ydata=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>sort_order=('none'</em>, <em>'none')</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.abstract_data_source.AbstractDataSource</span></tt></p>
 <p>Implements a structured gridded 2-D data source (suitable as an index
 for an image, for example).</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -452,8 +452,8 @@ for an image, for example).</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="chaco.api.GridDataSource.get_bounds">
-<tt class="descname">get_bounds</tt><big>(</big><em>) -&gt; ((LLx</em>, <em>LLy)</em>, <em>(URx</em>, <em>URy)</em><big>)</big><a class="headerlink" href="#chaco.api.GridDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.GridDataSource.get_bounds">
+<tt class="descname">get_bounds</tt><big>(</big><em>) -&gt; ((LLx</em>, <em>LLy)</em>, <em>(URx</em>, <em>URy)</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements AbstractDataSource. Returns two 2-D points, min and max, that
 represent the bounding corners of a rectangle enclosing the data set.
 Note that these values are not view-dependent, but represent intrinsic
@@ -462,8 +462,8 @@ properties of the DataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.GridDataSource.get_data">
-<tt class="descname">get_data</tt><big>(</big><em>) -&gt; (xdata</em>, <em>ydata</em><big>)</big><a class="headerlink" href="#chaco.api.GridDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.GridDataSource.get_data">
+<tt class="descname">get_data</tt><big>(</big><em>) -&gt; (xdata</em>, <em>ydata</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridDataSource.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements AbstractDataSource. Because this class uses structured
 (gridded) data, this method returns the pair of data axes, instead of,
 for example, a full mesh-grid. This behavious differs from
@@ -471,8 +471,8 @@ other data sources.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.GridDataSource.set_data">
-<tt class="descname">set_data</tt><big>(</big><em>xdata</em>, <em>ydata</em>, <em>sort_order=None</em><big>)</big><a class="headerlink" href="#chaco.api.GridDataSource.set_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.GridDataSource.set_data">
+<tt class="descname">set_data</tt><big>(</big><em>xdata</em>, <em>ydata</em>, <em>sort_order=None</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridDataSource.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the data, and optionally the sort order, for this data source.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -496,11 +496,11 @@ other data sources.</p>
 
 </div>
 <div class="section" id="imagedata">
-<h2><a class="reference internal" href="#chaco.api.ImageData" title="chaco.api.ImageData"><tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt></a><a class="headerlink" href="#imagedata" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.ImageData" title="enthought.chaco.api.ImageData"><tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt></a><a class="headerlink" href="#imagedata" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.ImageData">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ImageData</tt><a class="headerlink" href="#chaco.api.ImageData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></tt></p>
+<dt id="enthought.chaco.api.ImageData">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">ImageData</tt><a class="headerlink" href="#enthought.chaco.api.ImageData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.abstract_data_source.AbstractDataSource</span></tt></p>
 <p>Represents a grid of data to be plotted using a Numpy 2-D grid.</p>
 <p>The data array has dimensions NxM, but it may have more than just 2
 dimensions.  The appropriate dimensionality of the value array depends
@@ -519,61 +519,61 @@ on the context in which the ImageData instance will be used.</p>
 </tbody>
 </table>
 <dl class="classmethod">
-<dt id="chaco.api.ImageData.fromfile">
-<em class="property">classmethod </em><tt class="descname">fromfile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#chaco.api.ImageData.fromfile" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.fromfile">
+<em class="property">classmethod </em><tt class="descname">fromfile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.fromfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alternate constructor to create an ImageData from an image file
 on disk. &#8216;filename&#8217; may be a file path or a file object.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ImageData.get_array_bounds">
-<tt class="descname">get_array_bounds</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ImageData.get_array_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.get_array_bounds">
+<tt class="descname">get_array_bounds</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.get_array_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Always returns ((0, width), (0, height)) for x-bounds and y-bounds.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ImageData.get_bounds">
-<tt class="descname">get_bounds</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ImageData.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.get_bounds">
+<tt class="descname">get_bounds</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.get_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the minimum and maximum values of the data source&#8217;s data.</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ImageData.get_data">
-<tt class="descname">get_data</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ImageData.get_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.get_data">
+<tt class="descname">get_data</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the data for this data source.</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ImageData.get_height">
-<tt class="descname">get_height</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ImageData.get_height" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.get_height">
+<tt class="descname">get_height</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.get_height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the shape of the y-axis.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ImageData.get_size">
-<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ImageData.get_size" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.get_size">
+<tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.get_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>get_size() -&gt; int</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ImageData.get_width">
-<tt class="descname">get_width</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ImageData.get_width" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.get_width">
+<tt class="descname">get_width</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.get_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the shape of the x-axis.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ImageData.is_masked">
-<tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ImageData.is_masked" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.is_masked">
+<tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.is_masked" title="Permalink to this definition">¶</a></dt>
 <dd><p>is_masked() -&gt; False</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.ImageData.set_data">
-<tt class="descname">set_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.ImageData.set_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.ImageData.set_data">
+<tt class="descname">set_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.ImageData.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the data for this data source.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -657,7 +657,7 @@ on disk. &#8216;filename&#8217; may be a file path or a file object.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on May 12, 2011.
+      Last updated on Jun 04, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

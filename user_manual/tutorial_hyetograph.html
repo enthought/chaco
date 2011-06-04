@@ -102,10 +102,10 @@ view without needing any additional programming.</li>
 In calling your function you want to specify where the function is and
 then import it.  The following code snippet imports all the names that
 will be used for our application.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> \
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> \
     <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
 </pre></div>
 </div>
 </div>
@@ -150,7 +150,7 @@ each instance of the class will have a unique copy of the traits.</li>
 </ol>
 </div></blockquote>
 <p>The Traits API Reference contains more information about the standard
-Trait types; see the <tt class="xref py py-mod docutils literal"><span class="pre">trait_types</span></tt> module in the <a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/traits.trait_types.html">Traits API Reference</a>.</p>
+Trait types; see the <tt class="xref py py-mod docutils literal"><span class="pre">trait_types</span></tt> module in the <a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/enthought.traits.trait_types.html">Traits API Reference</a>.</p>
 </div>
 <div class="section" id="setting-up-the-user-interface-ui">
 <h2>Setting up the User Interface (UI)<a class="headerlink" href="#setting-up-the-user-interface-ui" title="Permalink to this headline">¶</a></h2>
@@ -332,10 +332,10 @@ the following image,</p>
 <div class="section" id="source-code">
 <h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>The final version of the program, <cite>hyetograph.py</cite>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> \
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> \
     <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
 
 
 <span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -517,7 +517,7 @@ the following image,</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on May 12, 2011.
+      Last updated on Jun 04, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

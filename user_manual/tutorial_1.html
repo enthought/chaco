@@ -159,7 +159,7 @@ MATLAB, or Matplotlib:</p>
  8
  9
 10</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">chaco.shell</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.shell</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -211,10 +211,10 @@ things, as you&#8217;ll see later on:</p>
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
-<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
+<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 
 <span class="k">class</span> <span class="nc">LinePlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -261,7 +261,7 @@ from <tt class="xref py py-class docutils literal"><span class="pre">HasTraits</
 </div>
 <p>Inside this view, we are placing a reference to the <tt class="xref py py-attr docutils literal"><span class="pre">plot</span></tt> trait and
 telling Traits UI to use the <tt class="xref py py-class docutils literal"><span class="pre">ComponentEditor</span></tt> (imported from
-<tt class="xref py py-mod docutils literal"><span class="pre">enable.component_editor</span></tt>) to display it. If the
+<tt class="xref py py-mod docutils literal"><span class="pre">enthought.enable.component_editor</span></tt>) to display it. If the
 trait were an Int or Str or Float, Traits could automatically pick an
 appropriate GUI element to display it. Since Traits UI doesn&#8217;t natively know
 how to display Chaco components, we explicitly tell it what kind of editor to
@@ -371,10 +371,10 @@ ComponentEditor.</p>
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
-<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
+<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 
 <span class="k">class</span> <span class="nc">ScatterPlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -429,10 +429,10 @@ produces the following:</p>
 22
 23
 24
-25</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">jet</span>
-<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+25</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">jet</span>
+<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span><span class="p">,</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">meshgrid</span>
 
 <span class="k">class</span> <span class="nc">ImagePlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -493,10 +493,10 @@ array from the ArrayPlotData:</p>
 20
 21
 22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
-<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
+<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 
 <span class="k">class</span> <span class="nc">OverlappingPlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -568,10 +568,10 @@ plot, and adds them both to the HPlotContainer object:</p>
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">HPlotContainer</span><span class="p">,</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
-<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">HPlotContainer</span><span class="p">,</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
+<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 
 <span class="k">class</span> <span class="nc">ContainerExample</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -667,11 +667,11 @@ of these capabilities.  Here is the full listing of the modified code:</p>
 40
 41
 42
-43</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">Int</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Group</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">enable.api</span> <span class="kn">import</span> <span class="n">ColorTrait</span>
-<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
-<span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">marker_trait</span><span class="p">,</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
+43</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">Int</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Group</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.enable.api</span> <span class="kn">import</span> <span class="n">ColorTrait</span>
+<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">marker_trait</span><span class="p">,</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 
 <span class="k">class</span> <span class="nc">ScatterPlotTraits</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -850,7 +850,7 @@ modify them, the plot updates.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on May 12, 2011.
+      Last updated on Jun 04, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

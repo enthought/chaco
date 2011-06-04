@@ -29,8 +29,8 @@ Basics
     import wx
     from scipy import arange
     from scipy.special import jn
-    from chaco.api import HPlotContainer, create_line_plot
-    from enable.wx_backend.api import Window
+    from enthought.chaco.api import HPlotContainer, create_line_plot
+    from enthought.enable.wx_backend.api import Window
 
     class PlotFrame(wx.Frame):
 	def __init__(self, *args, **kw):
@@ -64,10 +64,10 @@ Basics
 ::
 
     import numpy
-    from chaco.api import Plot, ArrayPlotData
-    from enable.component_editor import ComponentEditor
-    from traits.api import HasTraits, Instance
-    from traitsui.api import Item, View
+    from enthought.chaco.api import Plot, ArrayPlotData
+    from enthought.enable.component_editor import ComponentEditor
+    from enthought.traits.api import HasTraits, Instance
+    from enthought.traits.ui.api import Item, View
 
     class MyPlot(HasTraits):
         plot = Instance(Plot)

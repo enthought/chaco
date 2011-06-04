@@ -56,11 +56,11 @@
   <div class="section" id="data-ranges">
 <span id="id1"></span><h1>Data Ranges<a class="headerlink" href="#data-ranges" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="abstractdatarange">
-<h2><a class="reference internal" href="#chaco.api.AbstractDataRange" title="chaco.api.AbstractDataRange"><tt class="xref py py-class docutils literal"><span class="pre">AbstractDataRange</span></tt></a><a class="headerlink" href="#abstractdatarange" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.AbstractDataRange" title="enthought.chaco.api.AbstractDataRange"><tt class="xref py py-class docutils literal"><span class="pre">AbstractDataRange</span></tt></a><a class="headerlink" href="#abstractdatarange" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.AbstractDataRange">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">AbstractDataRange</tt><big>(</big><em>*sources</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataRange" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<dt id="enthought.chaco.api.AbstractDataRange">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">AbstractDataRange</tt><big>(</big><em>*sources</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.traits.has_traits.HasTraits</span></tt></p>
 <p>Abstract class for ranges that represent sub-regions of data space.</p>
 <p>They support &#8220;autoscaling&#8221; by querying their associated data sources.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -78,8 +78,8 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="chaco.api.AbstractDataRange.bound_data">
-<tt class="descname">bound_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataRange.bound_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataRange.bound_data">
+<tt class="descname">bound_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataRange.bound_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a tuple of indices for the start and end of the first run
 of data that falls within the range.</p>
 <p>Given an array of data values of the same dimensionality as the range,
@@ -92,16 +92,16 @@ elements of the first &#8220;chunk&#8221; of data that falls within the range.</
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.AbstractDataRange.clip_data">
-<tt class="descname">clip_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataRange.clip_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataRange.clip_data">
+<tt class="descname">clip_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataRange.clip_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of data values that are within the range.</p>
 <p>Given an array of data values of the same dimensionality as the range,
 returns a list of data values that are inside the range.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.AbstractDataRange.mask_data">
-<tt class="descname">mask_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataRange.mask_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataRange.mask_data">
+<tt class="descname">mask_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataRange.mask_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a mask array, indicating whether values in the given array
 are inside the range.</p>
 <p>Given an array of data values of the same dimensionality as the range,
@@ -111,8 +111,8 @@ is inside or outside the range.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.AbstractDataRange.set_bounds">
-<tt class="descname">set_bounds</tt><big>(</big><em>*new_bounds</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractDataRange.set_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.AbstractDataRange.set_bounds">
+<tt class="descname">set_bounds</tt><big>(</big><em>*new_bounds</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataRange.set_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets all the bounds of the range simultaneously.</p>
 <p>Because each bounds change probably fires an event, this method allows
 tools to set all range elements in a single, atomic step.</p>
@@ -139,22 +139,22 @@ depend on the specific subclass.</p>
 
 </div>
 <div class="section" id="basedatarange">
-<h2><a class="reference internal" href="#chaco.api.BaseDataRange" title="chaco.api.BaseDataRange"><tt class="xref py py-class docutils literal"><span class="pre">BaseDataRange</span></tt></a><a class="headerlink" href="#basedatarange" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.BaseDataRange" title="enthought.chaco.api.BaseDataRange"><tt class="xref py py-class docutils literal"><span class="pre">BaseDataRange</span></tt></a><a class="headerlink" href="#basedatarange" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.BaseDataRange">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">BaseDataRange</tt><big>(</big><em>*datasources</em>, <em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.BaseDataRange" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_data_range.AbstractDataRange</span></tt></p>
+<dt id="enthought.chaco.api.BaseDataRange">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">BaseDataRange</tt><big>(</big><em>*datasources</em>, <em>**kwtraits</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.BaseDataRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.abstract_data_range.AbstractDataRange</span></tt></p>
 <p>Ranges represent sub-regions of data space.</p>
 <p>They support &#8220;autoscaling&#8221; by querying their associated data sources.</p>
 <dl class="method">
-<dt id="chaco.api.BaseDataRange.add">
-<tt class="descname">add</tt><big>(</big><em>*datasources</em><big>)</big><a class="headerlink" href="#chaco.api.BaseDataRange.add" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.BaseDataRange.add">
+<tt class="descname">add</tt><big>(</big><em>*datasources</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.BaseDataRange.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to add a data source.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.BaseDataRange.remove">
-<tt class="descname">remove</tt><big>(</big><em>*datasources</em><big>)</big><a class="headerlink" href="#chaco.api.BaseDataRange.remove" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.BaseDataRange.remove">
+<tt class="descname">remove</tt><big>(</big><em>*datasources</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.BaseDataRange.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to remove a data source.</p>
 </dd></dl>
 
@@ -162,11 +162,11 @@ depend on the specific subclass.</p>
 
 </div>
 <div class="section" id="datarange1d">
-<h2><a class="reference internal" href="#chaco.api.DataRange1D" title="chaco.api.DataRange1D"><tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt></a><a class="headerlink" href="#datarange1d" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.DataRange1D" title="enthought.chaco.api.DataRange1D"><tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt></a><a class="headerlink" href="#datarange1d" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.DataRange1D">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">DataRange1D</tt><big>(</big><em>*datasources</em>, <em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_data_range.BaseDataRange</span></tt></p>
+<dt id="enthought.chaco.api.DataRange1D">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">DataRange1D</tt><big>(</big><em>*datasources</em>, <em>**kwtraits</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.base_data_range.BaseDataRange</span></tt></p>
 <p>Represents a 1-D data range.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -189,63 +189,63 @@ depend on the specific subclass.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="chaco.api.DataRange1D.bound_data">
-<tt class="descname">bound_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.bound_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.bound_data">
+<tt class="descname">bound_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.bound_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a tuple of indices for the start and end of the first run
 of <em>data</em> that falls within the range.</p>
 <p>Implements AbstractDataRange.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange1D.clip_data">
-<tt class="descname">clip_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.clip_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.clip_data">
+<tt class="descname">clip_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.clip_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of data values that are within the range.</p>
 <p>Implements AbstractDataRange.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange1D.mask_data">
-<tt class="descname">mask_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.mask_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.mask_data">
+<tt class="descname">mask_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.mask_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a mask array, indicating whether values in the given array
 are inside the range.</p>
 <p>Implements AbstractDataRange.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange1D.refresh">
-<tt class="descname">refresh</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.refresh" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.refresh">
+<tt class="descname">refresh</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.refresh" title="Permalink to this definition">¶</a></dt>
 <dd><p>If any of the bounds is &#8216;auto&#8217;, this method refreshes the actual
 low and high values from the set of the view filters&#8217; data sources.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange1D.reset">
-<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.reset" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the bounds of this range, based on <strong>default_state</strong>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange1D.scale_tracking_amount">
-<tt class="descname">scale_tracking_amount</tt><big>(</big><em>multiplier</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.scale_tracking_amount" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.scale_tracking_amount">
+<tt class="descname">scale_tracking_amount</tt><big>(</big><em>multiplier</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.scale_tracking_amount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the <strong>tracking_amount</strong> to a new value, scaled by <em>multiplier</em>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange1D.set_bounds">
-<tt class="descname">set_bounds</tt><big>(</big><em>low</em>, <em>high</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.set_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.set_bounds">
+<tt class="descname">set_bounds</tt><big>(</big><em>low</em>, <em>high</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.set_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets all the bounds of the range simultaneously.</p>
 <p>Implements AbstractDataRange.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange1D.set_default_tracking_amount">
-<tt class="descname">set_default_tracking_amount</tt><big>(</big><em>amount</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.set_default_tracking_amount" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.set_default_tracking_amount">
+<tt class="descname">set_default_tracking_amount</tt><big>(</big><em>amount</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.set_default_tracking_amount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the <strong>default_tracking_amount</strong> to a new value, <em>amount</em>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange1D.set_tracking_amount">
-<tt class="descname">set_tracking_amount</tt><big>(</big><em>amount</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange1D.set_tracking_amount" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange1D.set_tracking_amount">
+<tt class="descname">set_tracking_amount</tt><big>(</big><em>amount</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange1D.set_tracking_amount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the <strong>tracking_amount</strong> to a new value, <em>amount</em>.</p>
 </dd></dl>
 
@@ -253,11 +253,11 @@ low and high values from the set of the view filters&#8217; data sources.</p>
 
 </div>
 <div class="section" id="datarange2d">
-<h2><a class="reference internal" href="#chaco.api.DataRange2D" title="chaco.api.DataRange2D"><tt class="xref py py-class docutils literal"><span class="pre">DataRange2D</span></tt></a><a class="headerlink" href="#datarange2d" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#enthought.chaco.api.DataRange2D" title="enthought.chaco.api.DataRange2D"><tt class="xref py py-class docutils literal"><span class="pre">DataRange2D</span></tt></a><a class="headerlink" href="#datarange2d" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="chaco.api.DataRange2D">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">DataRange2D</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange2D" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_data_range.BaseDataRange</span></tt></p>
+<dt id="enthought.chaco.api.DataRange2D">
+<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">DataRange2D</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.base_data_range.BaseDataRange</span></tt></p>
 <p>A range on (2-D) image data.</p>
 <p>In a mathematically general sense, a 2-D range is an arbitrary region in
 the plane.  Arbitrary regions are difficult to implement well, so this
@@ -279,42 +279,42 @@ class supports only rectangular regions for now.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="chaco.api.DataRange2D.bound_data">
-<tt class="descname">bound_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange2D.bound_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange2D.bound_data">
+<tt class="descname">bound_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D.bound_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Not implemented for this class.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange2D.clip_data">
-<tt class="descname">clip_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange2D.clip_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange2D.clip_data">
+<tt class="descname">clip_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D.clip_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of data values that are within the range.</p>
 <p>Implements AbstractDataRange.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange2D.mask_data">
-<tt class="descname">mask_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange2D.mask_data" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange2D.mask_data">
+<tt class="descname">mask_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D.mask_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a mask array, indicating whether values in the given array
 are inside the range.</p>
 <p>Implements AbstractDataRange.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange2D.refresh">
-<tt class="descname">refresh</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.DataRange2D.refresh" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange2D.refresh">
+<tt class="descname">refresh</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D.refresh" title="Permalink to this definition">¶</a></dt>
 <dd><p>If any of the bounds is &#8216;auto&#8217;, this method refreshes the actual low
 and high values from the set of the view filters&#8217; data sources.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange2D.reset">
-<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.DataRange2D.reset" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange2D.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the bounds of this range.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.DataRange2D.set_bounds">
-<tt class="descname">set_bounds</tt><big>(</big><em>low</em>, <em>high</em><big>)</big><a class="headerlink" href="#chaco.api.DataRange2D.set_bounds" title="Permalink to this definition">¶</a></dt>
+<dt id="enthought.chaco.api.DataRange2D.set_bounds">
+<tt class="descname">set_bounds</tt><big>(</big><em>low</em>, <em>high</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D.set_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets all the bounds of the range simultaneously.</p>
 <p>Implements AbstractDataRange.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -401,7 +401,7 @@ and high values from the set of the view filters&#8217; data sources.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on May 12, 2011.
+      Last updated on Jun 04, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

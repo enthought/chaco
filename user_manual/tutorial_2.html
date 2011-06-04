@@ -91,10 +91,10 @@ example, <tt class="xref py py-attr docutils literal"><span class="pre">attracti
 show up as slider bars.  Likewise, <tt class="xref py py-attr docutils literal"><span class="pre">plot_type</span></tt> is shown as a drop-down
 list, since it is defined as an Enum.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># We&#39;ll also import a few things to be used later.</span>
-<span class="kn">from</span> <span class="nn">traits.api</span> \
+<span class="kn">from</span> <span class="nn">enthought.traits.api</span> \
     <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span><span class="p">,</span> <span class="n">Property</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span>
 
 <span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -117,7 +117,7 @@ This View contains all of the GUI elements, including the plot.  To
 link a variable with a widget element on the GUI, we create a Traits
 <tt class="xref py py-class docutils literal"><span class="pre">Item</span></tt> instance with the same name as the variable and pass it as an
 argument of the Traits View instance declaration.  The
-<a class="reference external" href="https://svn.enthought.com/svn/enthought/Traits/tags/traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf">Traits UI User Guide</a>
+<a class="reference external" href="https://svn.enthought.com/svn/enthought/Traits/tags/enthought.traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf">Traits UI User Guide</a>
 discusses the View and Item objects in depth. In order to
 embed a Chaco plot into a Traits View, you need to import the
 <tt class="xref py py-class docutils literal"><span class="pre">ChacoPlotItem</span></tt> class, which can be passed as a parameter to View just
@@ -285,10 +285,10 @@ before the first call to <tt class="xref py py-meth docutils literal"><span clas
 <div class="section" id="source-code">
 <h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>The final version on the program, <cite>vanderwaals.py</cite></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> \
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> \
     <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span><span class="p">,</span> <span class="n">Property</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">enthought.chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span>
 
 <span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -411,7 +411,7 @@ before the first call to <tt class="xref py py-meth docutils literal"><span clas
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on May 12, 2011.
+      Last updated on Jun 04, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
