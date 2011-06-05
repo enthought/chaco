@@ -27,7 +27,7 @@ class WorkbenchSession(PlotSession):
         for the new window.
         """
         workbench = self.application.get_service(
-            'enthought.envisage.ui.workbench.workbench.Workbench')
+            'envisage.ui.workbench.workbench.Workbench')
         new_win = PlotEditor(
             is_image=is_image,
             size=(self.prefs.window_width, self.prefs.window_height),

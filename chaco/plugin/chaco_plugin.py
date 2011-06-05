@@ -1,7 +1,7 @@
 """ Envisage 3 plugin for Chaco functionality.
 """
 
-from enthought.envisage.api import Plugin
+from envisage.api import Plugin
 from traits.api import List
 
 
@@ -19,7 +19,7 @@ class ChacoPlugin(Plugin):
     #### Contributions to extension points made by this plugin #################
 
     # Extension point Ids.
-    COMMANDS = 'enthought.plugins.python_shell.commands'
+    COMMANDS = 'envisage.plugins.python_shell.commands'
 
 
     contributed_commands = List(contributes_to=COMMANDS)
