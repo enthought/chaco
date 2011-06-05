@@ -64,12 +64,12 @@
 <p>This abstract interface must be implemented by any class supplying data
 to Chaco.</p>
 <p>Chaco does not have a notion of a &#8220;data format&#8221;. For the most part, a data
-source looks like an array of values with an optional mask and metadata.
+source looks like an array of values with an optional mask and metadata. 
 If you implement this interface, you are responsible for adapting your
 domain-specific or application-specific data to meet this interface.</p>
 <p>Chaco provides some basic data source implementations. In most cases, the
-easiest strategy is to create one of these basic data source with the
-numeric data from a domain model. In cases when this strategy is not
+easiest strategy is to create one of these basic data source with the 
+numeric data from a domain model. In cases when this strategy is not 
 possible, domain classes (or an adapter) must implement AbstractDataSource.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -91,7 +91,7 @@ possible, domain classes (or an adapter) must implement AbstractDataSource.</p>
 <tt class="descname">get_bounds</tt><big>(</big><em>) -&gt; tuple(min</em>, <em>max</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a tuple (min, max) of the bounding values for the data source.
 In the case of 2-D data, min and max are 2-D points that represent the
-bounding corners of a rectangle enclosing the data set.  Note that
+bounding corners of a rectangle enclosing the data set.  Note that 
 these values are not view-dependent, but represent intrinsic properties
 of the data source.</p>
 <p>If data is the empty set, then the min and max vals are 0.0.</p>
@@ -104,7 +104,7 @@ of the data source.</p>
 <p>Returns a data array of the dimensions of the data source. This data
 array must not be altered in-place, and the caller must assume it is
 read-only.  This data is contiguous and not masked.</p>
-<p>In the case of structured (gridded) 2-D data, this method may return
+<p>In the case of structured (gridded) 2-D data, this method may return 
 two 1-D ArrayDataSources as an optimization.</p>
 </dd></dl>
 
@@ -124,7 +124,7 @@ get_size() returns.</p>
 <tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource.get_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>get_size() -&gt; int</p>
 <p>Returns an integer estimate or the exact size of the dataset that
-get_data() returns for this object.  This method is useful for
+get_data() returns for this object.  This method is useful for 
 down-sampling.</p>
 </dd></dl>
 
@@ -132,8 +132,8 @@ down-sampling.</p>
 <dt id="enthought.chaco.api.AbstractDataSource.is_masked">
 <tt class="descname">is_masked</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
 <dd><p>is_masked() -&gt; bool</p>
-<p>Returns True if this data source&#8217;s data uses a mask. In this case,
-to retrieve the data, call get_data_mask() instead of get_data().
+<p>Returns True if this data source&#8217;s data uses a mask. In this case, 
+to retrieve the data, call get_data_mask() instead of get_data().  
 If you call get_data() for this data source, it returns data, but that
 data might not be the expected data.</p>
 </dd></dl>
@@ -454,8 +454,8 @@ for an image, for example).</p>
 <dl class="method">
 <dt id="enthought.chaco.api.GridDataSource.get_bounds">
 <tt class="descname">get_bounds</tt><big>(</big><em>) -&gt; ((LLx</em>, <em>LLy)</em>, <em>(URx</em>, <em>URy)</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements AbstractDataSource. Returns two 2-D points, min and max, that
-represent the bounding corners of a rectangle enclosing the data set.
+<dd><p>Implements AbstractDataSource. Returns two 2-D points, min and max, that 
+represent the bounding corners of a rectangle enclosing the data set. 
 Note that these values are not view-dependent, but represent intrinsic
 properties of the DataSource.</p>
 <p>If data axis is the empty set, then the min and max valuess are 0.0.</p>
@@ -466,7 +466,7 @@ properties of the DataSource.</p>
 <tt class="descname">get_data</tt><big>(</big><em>) -&gt; (xdata</em>, <em>ydata</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridDataSource.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements AbstractDataSource. Because this class uses structured
 (gridded) data, this method returns the pair of data axes, instead of,
-for example, a full mesh-grid. This behavious differs from
+for example, a full mesh-grid. This behavious differs from 
 other data sources.</p>
 </dd></dl>
 
@@ -657,7 +657,7 @@ on disk. &#8216;filename&#8217; may be a file path or a file object.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Jun 04, 2011.
+      Last updated on Jun 05, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

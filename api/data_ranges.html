@@ -86,7 +86,7 @@ of data that falls within the range.</p>
 returns a tuple of indices (start, end) corresponding to the first and
 last elements of the first run of data that falls within the range.
 For monotonic data, this basically returns the first and last elements
-that fall within the range. Using this method is not advised for
+that fall within the range. Using this method is not advised for 
 non-monotonic data; in that case, it returns the first and last
 elements of the first &#8220;chunk&#8221; of data that falls within the range.</p>
 </dd></dl>
@@ -105,8 +105,8 @@ returns a list of data values that are inside the range.</p>
 <dd><p>Returns a mask array, indicating whether values in the given array
 are inside the range.</p>
 <p>Given an array of data values of the same dimensionality as the range,
-this method returns a mask array of the same length as data, filled
-with 1s and 0s corresponding to whether the data value at that index
+this method returns a mask array of the same length as data, filled 
+with 1s and 0s corresponding to whether the data value at that index 
 is inside or outside the range.</p>
 </dd></dl>
 
@@ -114,7 +114,7 @@ is inside or outside the range.</p>
 <dt id="enthought.chaco.api.AbstractDataRange.set_bounds">
 <tt class="descname">set_bounds</tt><big>(</big><em>*new_bounds</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractDataRange.set_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets all the bounds of the range simultaneously.</p>
-<p>Because each bounds change probably fires an event, this method allows
+<p>Because each bounds change probably fires an event, this method allows 
 tools to set all range elements in a single, atomic step.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -179,7 +179,7 @@ depend on the specific subclass.</p>
 <p><strong>tight_bounds</strong> : Bool(True)</p>
 <p><strong>bounds_func</strong> : Callable</p>
 <p><strong>margin</strong> : Float(0.05)</p>
-<p><strong>epsilon</strong> : CFloat(1e-10)</p>
+<p><strong>epsilon</strong> : CFloat(1e-20)</p>
 <p><strong>default_tracking_amount</strong> : CFloat(20.0)</p>
 <p><strong>tracking_amount</strong> : default_tracking_amount</p>
 <p><strong>default_state</strong> : Enum(&#8216;auto&#8217;, &#8216;high_track&#8217;, &#8216;low_track&#8217;)</p>
@@ -259,8 +259,8 @@ low and high values from the set of the view filters&#8217; data sources.</p>
 <em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">DataRange2D</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.base_data_range.BaseDataRange</span></tt></p>
 <p>A range on (2-D) image data.</p>
-<p>In a mathematically general sense, a 2-D range is an arbitrary region in
-the plane.  Arbitrary regions are difficult to implement well, so this
+<p>In a mathematically general sense, a 2-D range is an arbitrary region in 
+the plane.  Arbitrary regions are difficult to implement well, so this 
 class supports only rectangular regions for now.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -302,7 +302,7 @@ are inside the range.</p>
 <dl class="method">
 <dt id="enthought.chaco.api.DataRange2D.refresh">
 <tt class="descname">refresh</tt><big>(</big><big>)</big><a class="headerlink" href="#enthought.chaco.api.DataRange2D.refresh" title="Permalink to this definition">¶</a></dt>
-<dd><p>If any of the bounds is &#8216;auto&#8217;, this method refreshes the actual low
+<dd><p>If any of the bounds is &#8216;auto&#8217;, this method refreshes the actual low 
 and high values from the set of the view filters&#8217; data sources.</p>
 </dd></dl>
 
@@ -401,7 +401,7 @@ and high values from the set of the view filters&#8217; data sources.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Jun 04, 2011.
+      Last updated on Jun 05, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

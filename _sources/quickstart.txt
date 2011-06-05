@@ -30,11 +30,13 @@ Enthought packages:
   * `Enable <http://code.enthought.com/projects/enable/>`_, as a framework for writing interactive visual components, and for abstracting away GUI-toolkit-specific details of mouse and keyboard handling.
 
 It also relies on two external packages:
-  * `Numpy <http://numpy.scipy.org/>`_, to deal efficiently with large datasets,
-  * Either `wxPython <http://www.wxpython.org/>`_ or `PyQt <http://www.riverbankcomputing.co.uk/software/pyqt/intro>`_ to display interactive plots.
+  * `Numpy <http://numpy.scipy.org/>`_, to deal efficiently with large datasets.
+  * Either `wxPython <http://www.wxpython.org/>`_ or  `PyQt <http://www.riverbankcomputing.co.uk/software/pyqt/intro>`_ to display interactive plots. As an alternative to PyQt, Chaco is being more and more tested using the `PySide <http://www.pyside.org/>`_ toolkit (LGPL license).
 
-  .. note::
-  In addition to wxPython or PyQt a cross-platform OpenGL backend (using Pyglet) is in the works, and it will not require WX or Qt.
+  .. .. 
+  .. note
+  .. ::
+  .. In addition to wxPython or PyQt a cross-platform OpenGL backend (using Pyglet) is in the works, and it will not require WX or Qt.
 
 Installation
 ------------
