@@ -836,6 +836,12 @@ class Plot(DataView):
             renderer.visible = True
         return
 
+    def new_window(self):
+        """Convenience function that creates a window containing the Plot
+        """
+        from enthought.chaco.ui.plot_window import PlotWindow
+        return PlotWindow(plot=self)
+        
 
     #------------------------------------------------------------------------
     # Private methods
