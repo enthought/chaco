@@ -268,10 +268,67 @@ that comprise the actual plot. See the :ref:`tutorial_ipython` section
 for information on all you can do with Chaco from within IPython.
 
 
-Creating a Plot
-===============
+Chaco Plot integrated in a Traits application
+=============================================
+Let's create from scratch the simplest possible Chaco plot embedded inside 
+a `Traits <http://github.enthought.com/traits/>`_ application.
 
-(TODO)
+First, some imports will bring in the necessary components::
+
+  from enthought.chaco.api import ArrayPlotData, Plot
+  from enthought.enable.component_editor import ComponentEditor
+
+  from enthought.traits.api import HasTraits, Instance
+  from enthought.traits.ui.api import View, Item
+
+The imports from chaco and enable will support the creation of the plot. The 
+imports from traits bring in the components to embed the plot inside a trait 
+application. (Refer to the `traits documentation <http://github.enthought.com/traits/>`_ 
+for more details about building an interactive application using Traits.)
+Now let's create a trait class with a view that contains only 1 element: a Chaco 
+plot::
+
+  class MyPlot(HasTraits):
+      plot = Instance(Plot)
+      traits_view = View(Item('plot', editor = ComponentEditor()),
+                         width = 500, height = 500,
+                         resizable = True, title = "My line plot")
+
+A few options have been set to control the window containing the plot.
+Now, at creation, we would like to pass our data. Let's assume that 
+they are in the form of a set of points with coordinates contains in 2 
+numpy arrays x and y. Then, the Plot object must be created::
+
+  def __init__(self, x, y, *args, **kw):
+      super(MyPlot, self).__init__(*args, **kw)
+      plotdata = ArrayPlotData(x=x,y=y)
+      plot = Plot(plotdata)
+      plot.plot(("x","y"), type = "line", color = "blue")
+      plot.title = "sin(x)*x**3"
+      self.plot = plot
+
+Deriving from HasTraits the new class can use all the power
+of Traits and the call to super() in its constructor makes sure this
+object possesses the attributes and methods of its parent class.
+Now let's use our trait object: simply generate some data, pass 
+it to an instance of MyPlot and call configure_traits to create the UI::
+
+  import numpy as np
+  x = np.linspace(-14,14,100)
+  y = np.sin(x)*x**3
+  lineplot = MyPlot(x,y)
+  lineplot.configure_traits()
+
+This might look like a lot of code to visualize a function. But this 
+represents a relatively simple basis to build full featured applications 
+with a custom UI and custom tools on top of the plotting functionality 
+such as those illustrated in the examples. For example, the trait object 
+allows you to create controls for your plot at a very high level, add 
+these controls to the UI with very little work, add listeners to update 
+the plot when the data changes. Exploring the capabilities of Chaco can 
+allows you to create tools to interact with the plot, and overlays for 
+example allow you to make these tools intuitive to use and visually 
+appealling.
 
 .. _going_further:
 
