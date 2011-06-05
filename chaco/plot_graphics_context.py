@@ -3,7 +3,7 @@
 
 from __future__ import with_statement
 
-from enable.kiva.image import GraphicsContext
+from kiva.image import GraphicsContext
 
 class PlotGraphicsContextMixin(object):
 

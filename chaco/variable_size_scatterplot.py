@@ -2,7 +2,7 @@ from __future__ import with_statement
 
 from chaco.api import ScatterPlot, render_markers
 from enable.api import MarkerNameDict, CustomMarker, AbstractMarker
-from enable.kiva.constants import STROKE
+from kiva.constants import STROKE
 from traits.api import Array
 
 class VariableSizeScatterPlot(ScatterPlot):

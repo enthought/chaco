@@ -7,7 +7,7 @@ from enable.markers import AbstractMarker, SquareMarker, \
     CrossMarker, DiamondMarker, DotMarker, PixelMarker, CustomMarker, \
     marker_trait, MarkerNameDict, marker_names
 
-from enable.kiva.constants import STROKE, FILL_STROKE, \
+from kiva.constants import STROKE, FILL_STROKE, \
             SQUARE_MARKER, DIAMOND_MARKER, CIRCLE_MARKER, \
             CROSS_MARKER, TRIANGLE_MARKER, \
             INVERTED_TRIANGLE_MARKER, PLUS_MARKER, DOT_MARKER, \

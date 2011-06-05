@@ -54,7 +54,7 @@ class JitterPlot(AbstractPlotRenderer):
 
     # The CompiledPath to use if **marker** is set to "custom". This attribute
     # must be a compiled path for the Kiva context onto which this plot will
-    # be rendered.  Usually, importing enable.kiva.GraphicsContext will do
+    # be rendered.  Usually, importing kiva.GraphicsContext will do
     # the right thing.
     custom_symbol = Any
 

@@ -9,7 +9,7 @@ from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
 
 # Enthought Library imports
 from enable.api import ColorTrait, LineStyle
-from enable.kiva.trait_defs.kiva_font_trait import KivaFont
+from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Any, Float, Int, Str, Trait, Unicode, \
      Bool, Event, List, Array, Instance, Enum, Callable
 

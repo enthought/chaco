@@ -10,7 +10,7 @@ from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
         CustomMarker, MarkerNameDict, MarkerTrait
-from enable.kiva.constants import STROKE
+from kiva.constants import STROKE
 from traits.api import Any, Array, Bool, Float, Int, Trait, Callable
 from traitsui.api import View, VGroup, Item
 
@@ -153,7 +153,7 @@ class ScatterPlot(BaseXYPlot):
 
     # The CompiledPath to use if **marker** is set to "custom". This attribute
     # must be a compiled path for the Kiva context onto which this plot will
-    # be rendered.  Usually, importing enable.kiva.GraphicsContext will do
+    # be rendered.  Usually, importing kiva.GraphicsContext will do
     # the right thing.
     custom_symbol = Any
 

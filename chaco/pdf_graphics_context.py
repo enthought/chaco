@@ -13,7 +13,7 @@ except ImportError:
     Canvas = None
     PdfPlotGraphicsContext = None
 
-from enable.kiva.pdf import GraphicsContext
+from kiva.pdf import GraphicsContext
 
 PAGE_SIZE_MAP = {
         "letter": letter,

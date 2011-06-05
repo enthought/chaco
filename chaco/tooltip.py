@@ -8,7 +8,7 @@ from numpy import array
 # Enthought library imports
 from enable.api import black_color_trait, white_color_trait
 from enable.font_metrics_provider import font_metrics_provider
-from enable.kiva.trait_defs.kiva_font_trait import KivaFont
+from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Any, Bool, List, Int, Float, on_trait_change
 
 

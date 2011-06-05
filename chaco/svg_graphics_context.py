@@ -2,7 +2,7 @@
 """
 from __future__ import with_statement
 
-from enable.kiva.svg import GraphicsContext
+from kiva.svg import GraphicsContext
 
 class SVGGraphicsContext(GraphicsContext):
     """ A Kiva graphics context, which facilitates rendering plots and plot

@@ -9,7 +9,7 @@ from numpy import array, arange, ones, transpose, uint8
 # Enthought library imports
 from traits.api import Any, Bool, Enum, Instance, Property, \
                                  cached_property, on_trait_change
-from enable.kiva.image import GraphicsContext
+from kiva.image import GraphicsContext
 
 # Local imports
 from base_xy_plot import BaseXYPlot

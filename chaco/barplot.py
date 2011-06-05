@@ -9,7 +9,7 @@ from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
 from traits.api import Any, Bool, Enum, Float, Instance, Property, \
         Range
 from enable.api import black_color_trait
-from enable.kiva.constants import FILL_STROKE
+from kiva.constants import FILL_STROKE
 
 # Local relative imports
 from chaco.abstract_plot_renderer import AbstractPlotRenderer

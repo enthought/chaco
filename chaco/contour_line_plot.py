@@ -8,7 +8,7 @@ from numpy import array, linspace, meshgrid, transpose
 
 # Enthought library imports
 from enable.api import LineStyle
-from enable.kiva import constants
+from kiva import constants
 from traits.api import Bool, Dict, Float, List, Str, Trait
 
 # Local relative imports
