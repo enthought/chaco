@@ -100,10 +100,12 @@ Depending on how you installed Chaco, you may or may not have the examples alrea
    * On Mac OS X, they are in the :file:`/Applications/Enthought/Examples/Chaco-<version>`
      directory.
 
+
 2. If you downloaded and installed Chaco from source (from Github or via the PyPI tar.gz file), 
    the examples are located in the :file:`examples/` subdirectory
    inside the root of the Chaco source tree, next to :file:`docs/` and the :file:`enthought/`
    directories.
+
 
 3. If you happen to be on a machine with Chaco installed, but you don't know the exact
    installation mechanism, then you might need to download the examples separately
@@ -124,7 +126,7 @@ Depending on how you installed Chaco, you may or may not have the examples alrea
 
    * ETS 2.8 or Chaco 2.0.x:
   
-      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
+     :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
 
 Chaco examples can be found in the :file:`examples/demo/` and :file:`examples/tutorials/` 
 directories. Some examples are classified by themes and located in separate directories. 
@@ -175,8 +177,8 @@ You can interact with the plot in several ways:
   Mac).  Alternatively, can you press Ctrl-C in the terminal.
 
 You can run most of the examples in the top-level :file:`examples`
-directory, the :file:`examples/basic/` directory, and the :file:`examples/shell/`
-directory.  The :file:`examples/advanced/` directory has some examples that
+directory, the :file:`examples/demo/basic/` directory, and the :file:`examples/demo/shell/`
+directory.  The :file:`examples/demo/advanced/` directory has some examples that
 require additional data or packages. In particular, 
 
 * :file:`spectrum.py` requires that you have PyAudio installed and a working
@@ -201,7 +203,7 @@ them in a more interactive fashion.
 
 Chaco provides a subpackage, currently named the "Chaco Shell", for doing
 command-line plotting like Matlab or Matplotlib.  The examples in the
-:file:`examples/shell/` directory use this subpackage, and they are particularly
+:file:`examples/demo/shell/` directory use this subpackage, and they are particularly
 amenable to exploration with IPython.
 
 The first example we'll look at is the :file:`lines.py` example.  First, we'll
