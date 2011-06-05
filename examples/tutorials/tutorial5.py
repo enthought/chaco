@@ -1,17 +1,15 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 5. Coordinating different tools
+"""Tutorial 5. Coordinating different tools
 
-from tutorial2 import myplot, PlotFrame, main
+We can add multiple tools on the sample plot
+"""
+
+from tutorial2 import demo
 
 from enthought.chaco.tools.api import PanTool, ZoomTool
 
-# The ZoomTool tool has a visual component, so it needs to be added to the
-# list of overlays instead of the list of bare tools.
-myplot.tools.append(PanTool(myplot))
-myplot.overlays.append(ZoomTool(myplot, tool_mode="box", always_on=False))
+plot = demo.plot
+plot.tools.append(PanTool(plot))
+plot.overlays.append(ZoomTool(plot, tool_mode="box", always_on=False))
 
-# And now we just run it.
 if __name__ == "__main__":
-    main()
+    demo.configure_traits()
