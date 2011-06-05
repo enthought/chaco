@@ -108,18 +108,18 @@ this tutorial, we use Traits UI to make things easier.</p>
 <p>Chaco is a <em>plotting application toolkit</em>. This means that it can build
 both static plots and dynamic data visualizations that let you
 interactively explore your data. Here are four basic examples of Chaco plots:</p>
-<img alt="../_images/tornado5.png" src="../_images/tornado5.png" />
+<img alt="../_images/tornado7.png" src="../_images/tornado7.png" />
 <p>This plot shows a static &#8220;tornado plot&#8221; with a categorical Y axis and continuous
 X axis.  The plot is resizable, but the user cannot interact or explore the data
 in any way.</p>
-<img alt="../_images/simple_line8.png" src="../_images/simple_line8.png" />
+<img alt="../_images/simple_line11.png" src="../_images/simple_line11.png" />
 <p>This is an overlaid composition of line and scatter plots with a legend. Unlike
 the previous plot, the user can pan and zoom this plot, exploring the
 relationship between data curves in areas that appear densely overlapping.
 Furthermore, the user can move the legend to an arbitrary position on the plot,
 and as they resize the plot, the legend maintains the same screen-space
 separation relative to its closest corner.</p>
-<img alt="../_images/regression5.png" src="../_images/regression5.png" />
+<img alt="../_images/regression7.png" src="../_images/regression7.png" />
 <p>This example starts to demonstrate interacting with the dataset in an
 exploratory way. Whereas interactivity in the previous example was limited to
 basic pan and zoom (which are fairly common in most plotting libraries), this is
@@ -131,7 +131,7 @@ then displayed in a text label.</p>
 <p>The lasso selection tool and regression overlay are both built in to Chaco,
 but they serve an additional purpose of demonstrating how one can build complex
 data-centric interactions and displays on top of the Chaco framework.</p>
-<img alt="../_images/scalar_function2.png" src="../_images/scalar_function2.png" />
+<img alt="../_images/scalar_function3.png" src="../_images/scalar_function3.png" />
 <p>This is a much more complex demonstration of Chaco&#8217;s capabilities.  The user
 can view the cross sections of a 2-D scalar-valued function.  The cross sections
 update in real time as the user moves the mouse, and the &#8220;bubble&#8221; on each line
@@ -170,7 +170,7 @@ MATLAB, or Matplotlib:</p>
 <span class="n">show</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<img alt="../_images/script_oriented2.png" src="../_images/script_oriented2.png" />
+<img alt="../_images/script_oriented3.png" src="../_images/script_oriented3.png" />
 <p>The basic structure of this example is that we generate some data, then we call
 functions to plot the data and configure the plot. There is a global concept of
 &#8220;the active plot&#8221;, and the functions do high-level manipulations on it. The
@@ -238,7 +238,7 @@ things, as you&#8217;ll see later on:</p>
 </pre></div>
 </td></tr></table></div>
 <p>This produces a plot similar to the previous script-oriented code snippet:</p>
-<img alt="../_images/first_plot2.png" src="../_images/first_plot2.png" />
+<img alt="../_images/first_plot3.png" src="../_images/first_plot3.png" />
 <p>So, this is our first &#8220;real&#8221; Chaco plot. We&#8217;ll walk through this code and
 look at what each bit does.  This example serves as the basis for many of the
 later examples.</p>
@@ -400,7 +400,7 @@ ComponentEditor.</p>
 <p>Note that we have only changed the <em>type</em> argument to the <tt class="xref py py-meth docutils literal"><span class="pre">plot.plot()</span></tt> call
 and the name of the class from LinePlot to <tt class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></tt>.  This
 produces the following:</p>
-<img alt="../_images/scatter5.png" src="../_images/scatter5.png" />
+<img alt="../_images/scatter7.png" src="../_images/scatter7.png" />
 </div>
 <div class="section" id="image-plot">
 <h2><a class="toc-backref" href="#id9">Image Plot</a><a class="headerlink" href="#image-plot" title="Permalink to this headline">¶</a></h2>
@@ -461,7 +461,7 @@ different method on the Plot object &#8212; <tt class="xref py py-meth docutils 
 <tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt>.  The details of the method parameters are not that important
 right now; this is just to demonstrate how we can apply the same basic pattern
 from the &#8220;first plot&#8221; example above to do other kinds of plots.</p>
-<img alt="../_images/image_plot5.png" src="../_images/image_plot5.png" />
+<img alt="../_images/image_plot7.png" src="../_images/image_plot7.png" />
 </div>
 <div class="section" id="a-slight-modification">
 <h2><a class="toc-backref" href="#id10">A Slight Modification</a><a class="headerlink" href="#a-slight-modification" title="Permalink to this headline">¶</a></h2>
@@ -518,27 +518,27 @@ array from the ArrayPlotData:</p>
     <span class="n">OverlappingPlot</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<img alt="../_images/overlapping_plot2.png" src="../_images/overlapping_plot2.png" />
+<img alt="../_images/overlapping_plot3.png" src="../_images/overlapping_plot3.png" />
 </div>
 <div class="section" id="container-overview">
 <h2><a class="toc-backref" href="#id11">Container Overview</a><a class="headerlink" href="#container-overview" title="Permalink to this headline">¶</a></h2>
 <p>So far we&#8217;ve only seen single plots, but frequently we need to plot data side
 by side.  Chaco uses various subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Container</span></tt> to do layout.
 Horizontal containers (<tt class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></tt>) place components horizontally:</p>
-<img alt="../_images/hplotcontainer2.png" src="../_images/hplotcontainer2.png" />
+<img alt="../_images/hplotcontainer3.png" src="../_images/hplotcontainer3.png" />
 <p>Vertical containers (<tt class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></tt>) array component vertically:</p>
-<img alt="../_images/vplotcontainer2.png" src="../_images/vplotcontainer2.png" />
+<img alt="../_images/vplotcontainer3.png" src="../_images/vplotcontainer3.png" />
 <p>Grid container (<tt class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></tt>) lays plots out in a grid:</p>
-<img alt="../_images/gridcontainer2.png" src="../_images/gridcontainer2.png" />
+<img alt="../_images/gridcontainer3.png" src="../_images/gridcontainer3.png" />
 <p>Overlay containers (<tt class="xref py py-class docutils literal"><span class="pre">OverlayPlotContainer</span></tt>) just overlay plots on top of
 each other:</p>
-<img alt="../_images/simple_line8.png" src="../_images/simple_line8.png" />
+<img alt="../_images/simple_line11.png" src="../_images/simple_line11.png" />
 <p>You&#8217;ve actually already seen OverlayPlotContainer &#8212; the Plot
 class is actually a special subclass of OverlayPlotContainer.  All of
 the plots inside this container appear to share the same X- and Y-axis, but this
 is not a requirement of the container.  For instance, the following plot shows
 plots sharing only the X-axis:</p>
-<img alt="../_images/multiyaxis2.png" src="../_images/multiyaxis2.png" />
+<img alt="../_images/multiyaxis3.png" src="../_images/multiyaxis3.png" />
 </div>
 <div class="section" id="using-a-container">
 <h2><a class="toc-backref" href="#id12">Using a Container</a><a class="headerlink" href="#using-a-container" title="Permalink to this headline">¶</a></h2>
@@ -595,7 +595,7 @@ plot, and adds them both to the HPlotContainer object:</p>
 </pre></div>
 </td></tr></table></div>
 <p>This produces the following plot:</p>
-<img alt="../_images/container_example2.png" src="../_images/container_example2.png" />
+<img alt="../_images/container_example3.png" src="../_images/container_example3.png" />
 <p>There are many parameters you can configure on a container, like background
 color, border thickness, spacing, and padding.  We insert some more
 lines between lines 20 and 21 of the previous example to make the two plots
@@ -613,7 +613,7 @@ padding (or margin).  In order to make our plots touch, we need to zero out the
 padding on the appropriate side of each plot.  We also move the Y-axis for the
 line plot (which is on the right hand side) to the right side.</p>
 <p>This produces the following:</p>
-<img alt="../_images/container_nospace2.png" src="../_images/container_nospace2.png" />
+<img alt="../_images/container_nospace3.png" src="../_images/container_nospace3.png" />
 </div>
 <div class="section" id="editing-plot-traits">
 <h2><a class="toc-backref" href="#id13">Editing Plot Traits</a><a class="headerlink" href="#editing-plot-traits" title="Permalink to this headline">¶</a></h2>
@@ -774,7 +774,7 @@ You can see why we needed to hold on to the renderer in the constructor.</p>
 </pre></div>
 </div>
 <p>Running the code produces an app that looks like this:</p>
-<img alt="../_images/traits2.png" src="../_images/traits2.png" />
+<img alt="../_images/traits3.png" src="../_images/traits3.png" />
 <p>Depending on your platform, the color editor/swatch at the top may look different.
 This is how it looks on Mac OS X.  All of the controls here are &#8220;live&#8221;.  If you
 modify them, the plot updates.</p>

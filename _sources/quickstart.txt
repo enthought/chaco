@@ -130,7 +130,6 @@ Depending on how you installed Chaco, you may or may not have the examples alrea
 
 Chaco examples can be found in the :file:`examples/demo/` and :file:`examples/tutorials/` 
 directories. Some examples are classified by themes and located in separate directories. 
-In particular the :file:`examples/demo/shell` directory
 Almost all of the Chaco examples are stand-alone files that can be run individually. They 
 can be from command line and we will illustrate this first as Chaco's main goal is to 
 provide a package for building integrated applications. We will then show how to run Chaco 
