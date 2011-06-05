@@ -2,8 +2,8 @@
 from numpy import linspace
 from scipy.special import jn
 
-from enthought.tvtk.api import tvtk
-from enthought.mayavi import mlab
+from tvtk.api import tvtk
+from mayavi import mlab
 from enable.vtk_backend.vtk_window import EnableVTKWindow
 from chaco.api import ArrayPlotData, Plot, OverlayPlotContainer
 from chaco.tools.api import PanTool, ZoomTool, MoveTool

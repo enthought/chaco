@@ -116,8 +116,8 @@ class TimerController(HasTraits):
         return
 
 def main():
-    from enthought.tvtk.api import tvtk
-    from enthought.mayavi import mlab
+    from tvtk.api import tvtk
+    from mayavi import mlab
     from enable.vtk_backend.vtk_window import EnableVTKWindow
     f = mlab.figure(size=(900,850))
     m = mlab.test_mesh()

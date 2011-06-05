@@ -14,8 +14,8 @@ from numpy import exp, sort
 from numpy.random import random
 
 # VTK-related stuff
-from enthought.tvtk.api import tvtk
-from enthought.mayavi import mlab
+from tvtk.api import tvtk
+from mayavi import mlab
 from enable.vtk_backend.vtk_window import EnableVTKWindow
 
 
