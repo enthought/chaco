@@ -164,9 +164,7 @@ using Git (or Subversion for older versions of Chaco):</p>
 <p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples</strong></p>
 </li>
 <li><p class="first">ETS 2.8 or Chaco 2.0.x:</p>
-<blockquote>
-<div><p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples</strong></p>
-</div></blockquote>
+<p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples</strong></p>
 </li>
 </ul>
 </li>
@@ -187,7 +185,7 @@ Matlab users.</p>
 <div><strong class="command">python simple_line.py</strong></div></blockquote>
 <p>This opens a plot of several Bessel functions and a legend.</p>
 <blockquote>
-<div><img alt="_images/simple_line3.png" src="_images/simple_line3.png" />
+<div><img alt="_images/simple_line6.png" src="_images/simple_line6.png" />
 </div></blockquote>
 <p>You can interact with the plot in several ways:</p>
 <ul>
@@ -218,8 +216,8 @@ Mac).  Alternatively, can you press Ctrl-C in the terminal.</p>
 </li>
 </ul>
 <p>You can run most of the examples in the top-level <tt class="file docutils literal"><span class="pre">examples</span></tt>
-directory, the <tt class="file docutils literal"><span class="pre">examples/basic/</span></tt> directory, and the <tt class="file docutils literal"><span class="pre">examples/shell/</span></tt>
-directory.  The <tt class="file docutils literal"><span class="pre">examples/advanced/</span></tt> directory has some examples that
+directory, the <tt class="file docutils literal"><span class="pre">examples/demo/basic/</span></tt> directory, and the <tt class="file docutils literal"><span class="pre">examples/demo/shell/</span></tt>
+directory.  The <tt class="file docutils literal"><span class="pre">examples/demo/advanced/</span></tt> directory has some examples that
 require additional data or packages. In particular,</p>
 <ul class="simple">
 <li><tt class="file docutils literal"><span class="pre">spectrum.py</span></tt> requires that you have PyAudio installed and a working
@@ -239,14 +237,14 @@ standard Python interpreter, if you have IPython installed, you can poke around
 them in a more interactive fashion.</p>
 <p>Chaco provides a subpackage, currently named the &#8220;Chaco Shell&#8221;, for doing
 command-line plotting like Matlab or Matplotlib.  The examples in the
-<tt class="file docutils literal"><span class="pre">examples/shell/</span></tt> directory use this subpackage, and they are particularly
+<tt class="file docutils literal"><span class="pre">examples/demo/shell/</span></tt> directory use this subpackage, and they are particularly
 amenable to exploration with IPython.</p>
 <p>The first example we&#8217;ll look at is the <tt class="file docutils literal"><span class="pre">lines.py</span></tt> example.  First, we&#8217;ll
 run it using the standard Python interpreter:</p>
 <blockquote>
 <div><strong class="command">python lines.py</strong></div></blockquote>
 <p>This shows two overlapping line plots.</p>
-<img alt="_images/lines1.png" src="_images/lines1.png" />
+<img alt="_images/lines2.png" src="_images/lines2.png" />
 <p>You can interact with the plot in the following ways:</p>
 <blockquote>
 <div><ul>
@@ -292,7 +290,7 @@ package to interact with the plot.</p>
 </li>
 </ul>
 <p>After running these commands, your plot looks like this:</p>
-<img alt="_images/lines_final1.png" src="_images/lines_final1.png" />
+<img alt="_images/lines_final2.png" src="_images/lines_final2.png" />
 <p>The <tt class="xref py py-func docutils literal"><span class="pre">chaco_commands()</span></tt> function display a list of commands with brief
 descriptions.</p>
 <p>You can explore the Chaco object hierarchy, as well. The <tt class="xref py py-mod docutils literal"><span class="pre">chaco.shell</span></tt>
@@ -307,7 +305,7 @@ for information on all you can do with Chaco from within IPython.</p>
 </div>
 <div class="section" id="further-reading-and-ressources">
 <span id="going-further"></span><h2>Further Reading and ressources<a class="headerlink" href="#further-reading-and-ressources" title="Permalink to this headline">¶</a></h2>
-<p>You can also learn more about Chaco :</p>
+<p>You can also learn more about Chaco:</p>
 <ul class="simple">
 <li>following some tutorials that come with the Chaco package,</li>
 <li>following demos of Chaco given during webinars Enthought to EPD subscribers,</li>
