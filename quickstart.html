@@ -184,7 +184,7 @@ Matlab users.</p>
 <div><strong class="command">python simple_line.py</strong></div></blockquote>
 <p>This opens a plot of several Bessel functions and a legend.</p>
 <blockquote>
-<div><img alt="_images/simple_line9.png" src="_images/simple_line9.png" />
+<div><img alt="_images/simple_line12.png" src="_images/simple_line12.png" />
 </div></blockquote>
 <p>You can interact with the plot in several ways:</p>
 <ul>
@@ -243,7 +243,7 @@ run it using the standard Python interpreter:</p>
 <blockquote>
 <div><strong class="command">python lines.py</strong></div></blockquote>
 <p>This shows two overlapping line plots.</p>
-<img alt="_images/lines3.png" src="_images/lines3.png" />
+<img alt="_images/lines4.png" src="_images/lines4.png" />
 <p>You can interact with the plot in the following ways:</p>
 <blockquote>
 <div><ul>
@@ -289,7 +289,7 @@ package to interact with the plot.</p>
 </li>
 </ul>
 <p>After running these commands, your plot looks like this:</p>
-<img alt="_images/lines_final3.png" src="_images/lines_final3.png" />
+<img alt="_images/lines_final4.png" src="_images/lines_final4.png" />
 <p>The <tt class="xref py py-func docutils literal"><span class="pre">chaco_commands()</span></tt> function display a list of commands with brief
 descriptions.</p>
 <p>You can explore the Chaco object hierarchy, as well. The <tt class="xref py py-mod docutils literal"><span class="pre">chaco.shell</span></tt>
@@ -298,9 +298,66 @@ that comprise the actual plot. See the <a class="reference internal" href="user_
 for information on all you can do with Chaco from within IPython.</p>
 </div>
 </div>
-<div class="section" id="creating-a-plot">
-<h2>Creating a Plot<a class="headerlink" href="#creating-a-plot" title="Permalink to this headline">¶</a></h2>
-<p>(TODO)</p>
+<div class="section" id="chaco-plot-integrated-in-a-traits-application">
+<h2>Chaco Plot integrated in a Traits application<a class="headerlink" href="#chaco-plot-integrated-in-a-traits-application" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s create from scratch the simplest possible Chaco plot embedded inside
+a <a class="reference external" href="http://github.enthought.com/traits/">Traits</a> application.</p>
+<p>First, some imports will bring in the necessary components:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
+<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+
+<span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+</pre></div>
+</div>
+<p>The imports from chaco and enable will support the creation of the plot. The
+imports from traits bring in the components to embed the plot inside a trait
+application. (Refer to the <a class="reference external" href="http://github.enthought.com/traits/">traits documentation</a>
+for more details about building an interactive application using Traits.)
+Now let&#8217;s create a trait class with a view that contains only 1 element: a Chaco
+plot:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyPlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span> <span class="o">=</span> <span class="n">ComponentEditor</span><span class="p">()),</span>
+                       <span class="n">width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+                       <span class="n">resizable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;My line plot&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A few options have been set to control the window containing the plot.
+Now, at creation, we would like to pass our data. Let&#8217;s assume that
+they are in the form of a set of points with coordinates contains in 2
+numpy arrays x and y. Then, the Plot object must be created:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">MyPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span> <span class="o">=</span> <span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&quot;blue&quot;</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;sin(x)*x**3&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">plot</span> <span class="o">=</span> <span class="n">plot</span>
+</pre></div>
+</div>
+<p>Deriving from HasTraits the new class can use all the power
+of Traits and the call to super() in its constructor makes sure this
+object possesses the attributes and methods of its parent class.
+Now let&#8217;s use our trait object: simply generate some data, pass
+it to an instance of MyPlot and call configure_traits to create the UI:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">lineplot</span> <span class="o">=</span> <span class="n">MyPlot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">lineplot</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This might look like a lot of code to visualize a function. But this
+represents a relatively simple basis to build full featured applications
+with a custom UI and custom tools on top of the plotting functionality
+such as those illustrated in the examples. For example, the trait object
+allows you to create controls for your plot at a very high level, add
+these controls to the UI with very little work, add listeners to update
+the plot when the data changes. Exploring the capabilities of Chaco can
+allows you to create tools to interact with the plot, and overlays for
+example allow you to make these tools intuitive to use and visually
+appealling.</p>
 </div>
 <div class="section" id="further-reading-and-ressources">
 <span id="going-further"></span><h2>Further Reading and ressources<a class="headerlink" href="#further-reading-and-ressources" title="Permalink to this headline">¶</a></h2>
@@ -383,7 +440,7 @@ for Chaco2 (in ETS 2.7.1).</p>
 <li><a class="reference internal" href="#first-plots-from-ipython">First plots from IPython</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#creating-a-plot">Creating a Plot</a></li>
+<li><a class="reference internal" href="#chaco-plot-integrated-in-a-traits-application">Chaco Plot integrated in a Traits application</a></li>
 <li><a class="reference internal" href="#further-reading-and-ressources">Further Reading and ressources</a><ul>
 <li><a class="reference internal" href="#tutorials">Tutorials</a></li>
 <li><a class="reference internal" href="#enthought-webinars">Enthought webinars</a></li>
