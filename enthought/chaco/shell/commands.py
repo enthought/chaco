@@ -469,7 +469,7 @@ def contourf(*data, **kwargs):
     To use previous data, specify names instead of actual data arrays.
     """
 
-    cont = _do_plot_boilerplate(kwargs, image=True)
+    cont = _do_plot_boilerplate(kwargs)
 
     plots = plot_maker.do_contour(session.data, session.colormap, cont,
                                   "poly", *data, **kwargs)
