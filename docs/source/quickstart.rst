@@ -321,7 +321,7 @@ it to an instance of MyPlot and call configure_traits to create the UI::
 
 The result should look like
 
- :image: images/mylineplot.png
+.. image:: images/mylineplot.png
 
 This might look like a lot of code to visualize a function. But this 
 represents a relatively simple basis to build full featured applications 
