@@ -87,9 +87,10 @@ class HighlightTool(BaseTool):
     def _find_curve(self, plots, event):
         # need to change to use distance - not just return first plot within threshold
         for p in plots:
-            cpoint = p.hittest((event.x,event.y), self.threshold)
-            if cpoint:
-                return p
+            if hasattr(p, "hittest"):
+                cpoint = p.hittest((event.x,event.y), self.threshold)
+                if cpoint:
+                    return p
         return None
 
 #EOF
