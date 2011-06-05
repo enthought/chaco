@@ -758,7 +758,7 @@ def tool():
 # Saving and IO
 #-----------------------------------------------------------------------------
 
-def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch"):
+def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, units="inch"):
     """ Saves the active plot to an file.  Currently supported file types
     are: bmp, png, jpg.
     """
@@ -779,15 +779,27 @@ def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch
                                     pagesize = pagesize,
                                     dest_box = dest_box,
                                     dest_box_units = units)
+
+        # temporarily turn off the backbuffer for offscreen rendering
+        use_backbuffer = p.use_backbuffer
+        p.use_backbuffer = False        
         gc.render_component(p)
+        p.use_backbuffer = use_backbuffer
+        
         gc.save()
         del gc
         print "Saved to", filename
 
     elif ext in [".bmp", ".png", ".jpg"]:
         from enthought.chaco.api import PlotGraphicsContext
-        gc = PlotGraphicsContext((int(p.outer_width), int(p.outer_height)))
-        p.draw(gc, mode="normal")
+        gc = PlotGraphicsContext(p.outer_bounds, dpi=dpi)
+
+        # temporarily turn off the backbuffer for offscreen rendering
+        use_backbuffer = p.use_backbuffer
+        p.use_backbuffer = False        
+        gc.render_component(p)
+        p.use_backbuffer = use_backbuffer
+
         gc.save(filename)
         del gc
         print "Saved to", filename

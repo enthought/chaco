@@ -1,21 +1,22 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 9. Link the horizontal ranges of the two plots.
+"""Tutorial 9. Link the horizontal ranges of the two plots."""
 
 
-from tutorial8 import PlotFrame
+from tutorial8 import PlotExample
 
-class PlotFrame2(PlotFrame):
-    def _create_plot(self):
-        container = super(PlotFrame2, self)._create_plot()
 
-        self.right_plot.index_mapper.range = self.left_plot.index_mapper.range
+class PlotExample2(PlotExample):
+    def _container_default(self):
+        container = super(PlotExample2, self)._container_default()
+
+        rplot, lplot = self.right_plot, self.left_plot
+        rplot.index_mapper.range = lplot.index_mapper.range
+        lplot.value_mapper.range.low = min(rplot.value_mapper.range.low,
+                                           lplot.value_mapper.range.low,)
+        rplot.value_mapper.range = lplot.value_mapper.range
 
         return container
 
+demo = PlotExample2()
+
 if __name__ == "__main__":
-    import wx
-    app = wx.PySimpleApp()
-    frame = PlotFrame2(None)
-    app.MainLoop()
+    demo.configure_traits()
