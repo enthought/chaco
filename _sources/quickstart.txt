@@ -319,6 +319,10 @@ it to an instance of MyPlot and call configure_traits to create the UI::
   lineplot = MyPlot(x,y)
   lineplot.configure_traits()
 
+The result should look like
+
+ :image: images/mylineplot.png
+
 This might look like a lot of code to visualize a function. But this 
 represents a relatively simple basis to build full featured applications 
 with a custom UI and custom tools on top of the plotting functionality 
