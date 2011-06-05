@@ -277,7 +277,7 @@ Creating a Plot
 Further Reading and ressources
 ==============================
 
-You can also learn more about Chaco :
+You can also learn more about Chaco:
 
 * following some tutorials that come with the Chaco package,
 
