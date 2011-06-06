@@ -392,11 +392,11 @@ series cover building interactive plotting using Chaco. If you are an
 EPD user, you can find the video, the slides, and the demo code for 
 each webinar covering Chaco. 
 
-The first one (April 2010) demoes how to use Chaco as your plotting 
-tool (https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/ ). 
+* The first one (April 2010) demoes how to use Chaco as your plotting 
+  tool (https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/ ). 
 
-The seconds (October 2010) illustrates how to building interactive 2D visualization (see 
-https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/ ).
+* The seconds (October 2010) illustrates how to building interactive 2D visualization (see 
+  https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/ ).
 
 
 .. _chaco_presentations:
@@ -406,13 +406,16 @@ Presentations
 -------------
 
 There have been several presentations on Chaco at previous PyCon and 
-SciPy conferences.  Slides and demos from these are described below.
+SciPy conferences:
 
-Currently, the examples and the scipy 2006 tutorial are the best ways
-to get going quickly (see 
-http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html ).
-Chaco was also presented at PyCon 2007 and Scipy 2011 and the slides 
-are available from http://code.enthought.com/projects/files/chaco_pycon07/
+.. * Follow the latest Chaco presentation at SciPy 2011 at
+
+* Follow the tutorial from the Scipy 2006 conference at
+  http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html ,
+
+* Follow the presentation of Chaco at the PyCon 2007 at 
+  http://code.enthought.com/projects/files/chaco_pycon07/ .
+
 
 
 .. _api_docs:
@@ -420,9 +423,15 @@ are available from http://code.enthought.com/projects/files/chaco_pycon07/
 Developers references and API Docs
 -----------------------------------
 
-For developers, more details about the architecture, and the API can be found in 
-the :ref:`programmers_reference`. The API for older versions of Chaco can be found at 
-http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html for Chaco 3.0 
-(in ETS 3.0) and at http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html 
-for Chaco2 (in ETS 2.7.1).
+For developers and architects, 
+
+* more details about the **current architecture and API** can be found in 
+  the :ref:`programmers_reference`, 
+
+* the API for Chaco 3.0 (in ETS 3.0) can be found at 
+  http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html ,
+
+* the API for Chaco2 (in ETS 2.7.1) can be found at 
+  http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html .
+
 
