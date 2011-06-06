@@ -51,7 +51,20 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="quickstart">
+  <table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><img alt="_images/simple_line.png" class="first last align-center" src="_images/simple_line.png" style="width: 400px;" />
+</td>
+<td><img alt="_images/scalar_function.png" class="first last align-center" src="_images/scalar_function.png" style="width: 400px;" />
+</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
 <p>This section is meant to help users on well-supported platforms and common
 Python environments get started using Chaco as quickly as possible.  If your
@@ -125,6 +138,10 @@ simply type</p>
 </ul>
 </div>
 </div>
+<div class="section" id="chaco-gallery">
+<h2>Chaco Gallery<a class="headerlink" href="#chaco-gallery" title="Permalink to this headline">¶</a></h2>
+<p>Examples of what can be done with Chaco is available in our <a class="reference external" href="http://code.enthought.com/projects/chaco/gallery.php">Chaco gallery</a>.</p>
+</div>
 <div class="section" id="running-some-examples">
 <h2>Running Some Examples<a class="headerlink" href="#running-some-examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="location">
@@ -176,6 +193,11 @@ can be from command line and we will illustrate this first as Chaco&#8217;s main
 provide a package for building integrated applications. We will then show how to run Chaco
 in an interactive way from IPython. This &#8220;shell&#8221; mode is more common to Matplotlib or
 Matlab users.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some of these examples can be visualized in our
+<a class="reference external" href="http://code.enthought.com/projects/chaco/gallery.php">Chaco gallery</a>.</p>
+</div>
 </div>
 <div class="section" id="first-plots-from-command-line">
 <h3>First plots from command line<a class="headerlink" href="#first-plots-from-command-line" title="Permalink to this headline">¶</a></h3>
@@ -184,7 +206,7 @@ Matlab users.</p>
 <div><strong class="command">python simple_line.py</strong></div></blockquote>
 <p>This opens a plot of several Bessel functions and a legend.</p>
 <blockquote>
-<div><img alt="_images/simple_line18.png" src="_images/simple_line18.png" />
+<div><img alt="_images/simple_line21.png" src="_images/simple_line21.png" />
 </div></blockquote>
 <p>You can interact with the plot in several ways:</p>
 <ul>
@@ -243,7 +265,7 @@ run it using the standard Python interpreter:</p>
 <blockquote>
 <div><strong class="command">python lines.py</strong></div></blockquote>
 <p>This shows two overlapping line plots.</p>
-<img alt="_images/lines6.png" src="_images/lines6.png" />
+<img alt="_images/lines7.png" src="_images/lines7.png" />
 <p>You can interact with the plot in the following ways:</p>
 <blockquote>
 <div><ul>
@@ -289,7 +311,7 @@ package to interact with the plot.</p>
 </li>
 </ul>
 <p>After running these commands, your plot looks like this:</p>
-<img alt="_images/lines_final6.png" src="_images/lines_final6.png" />
+<img alt="_images/lines_final7.png" src="_images/lines_final7.png" />
 <p>The <tt class="xref py py-func docutils literal"><span class="pre">chaco_commands()</span></tt> function display a list of commands with brief
 descriptions.</p>
 <p>You can explore the Chaco object hierarchy, as well. The <tt class="xref py py-mod docutils literal"><span class="pre">chaco.shell</span></tt>
@@ -349,7 +371,7 @@ it to an instance of MyPlot and call configure_traits to create the UI:</p>
 </pre></div>
 </div>
 <p>The result should look like</p>
-<img alt="_images/mylineplot.png" src="_images/mylineplot.png" />
+<img alt="_images/mylineplot1.png" src="_images/mylineplot1.png" />
 <p>This might look like a lot of code to visualize a function. But this
 represents a relatively simple basis to build full featured applications
 with a custom UI and custom tools on top of the plotting functionality
@@ -366,6 +388,7 @@ appealling.</p>
 <p>You can also learn more about Chaco:</p>
 <ul class="simple">
 <li>following some tutorials that come with the Chaco package,</li>
+<li>Exploring our <a class="reference external" href="http://code.enthought.com/projects/chaco/gallery.php">Chaco gallery</a> with examples,</li>
 <li>following demos of Chaco given during webinars Enthought to EPD subscribers,</li>
 <li>reading seminar slides posted on conference websites,</li>
 <li>reading about the API from the developer guide.</li>
@@ -436,6 +459,7 @@ for Chaco2 (in ETS 2.7.1).</p>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#chaco-gallery">Chaco Gallery</a></li>
 <li><a class="reference internal" href="#running-some-examples">Running Some Examples</a><ul>
 <li><a class="reference internal" href="#location">Location</a></li>
 <li><a class="reference internal" href="#first-plots-from-command-line">First plots from command line</a></li>
@@ -494,7 +518,7 @@ for Chaco2 (in ETS 2.7.1).</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Jun 05, 2011.
+      Last updated on Jun 06, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
