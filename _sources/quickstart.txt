@@ -299,11 +299,11 @@ imports from traits bring in the components to embed the plot inside a trait
 application. (Refer to the `traits documentation <http://github.enthought.com/traits/>`_ 
 for more details about building an interactive application using Traits.)
 Now let's create a trait class with a view that contains only 1 element: a Chaco 
-plot::
+plot inside a slightly customized window::
 
   class MyPlot(HasTraits):
       plot = Instance(Plot)
-      traits_view = View(Item('plot', editor = ComponentEditor()),
+      traits_view = View(Item('plot', editor = ComponentEditor(), show_label = False),
                          width = 500, height = 500,
                          resizable = True, title = "My line plot")
 

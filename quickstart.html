@@ -206,7 +206,7 @@ Matlab users.</p>
 <div><strong class="command">python simple_line.py</strong></div></blockquote>
 <p>This opens a plot of several Bessel functions and a legend.</p>
 <blockquote>
-<div><img alt="_images/simple_line27.png" src="_images/simple_line27.png" />
+<div><img alt="_images/simple_line30.png" src="_images/simple_line30.png" />
 </div></blockquote>
 <p>You can interact with the plot in several ways:</p>
 <ul>
@@ -265,7 +265,7 @@ run it using the standard Python interpreter:</p>
 <blockquote>
 <div><strong class="command">python lines.py</strong></div></blockquote>
 <p>This shows two overlapping line plots.</p>
-<img alt="_images/lines9.png" src="_images/lines9.png" />
+<img alt="_images/lines10.png" src="_images/lines10.png" />
 <p>You can interact with the plot in the following ways:</p>
 <blockquote>
 <div><ul>
@@ -311,7 +311,7 @@ package to interact with the plot.</p>
 </li>
 </ul>
 <p>After running these commands, your plot looks like this:</p>
-<img alt="_images/lines_final9.png" src="_images/lines_final9.png" />
+<img alt="_images/lines_final10.png" src="_images/lines_final10.png" />
 <p>The <tt class="xref py py-func docutils literal"><span class="pre">chaco_commands()</span></tt> function display a list of commands with brief
 descriptions.</p>
 <p>You can explore the Chaco object hierarchy, as well. The <tt class="xref py py-mod docutils literal"><span class="pre">chaco.shell</span></tt>
@@ -337,10 +337,10 @@ imports from traits bring in the components to embed the plot inside a trait
 application. (Refer to the <a class="reference external" href="http://github.enthought.com/traits/">traits documentation</a>
 for more details about building an interactive application using Traits.)
 Now let&#8217;s create a trait class with a view that contains only 1 element: a Chaco
-plot:</p>
+plot inside a slightly customized window:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyPlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
-    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span> <span class="o">=</span> <span class="n">ComponentEditor</span><span class="p">()),</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span> <span class="o">=</span> <span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span> <span class="o">=</span> <span class="bp">False</span><span class="p">),</span>
                        <span class="n">width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
                        <span class="n">resizable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;My line plot&quot;</span><span class="p">)</span>
 </pre></div>
@@ -371,7 +371,7 @@ it to an instance of MyPlot and call configure_traits to create the UI:</p>
 </pre></div>
 </div>
 <p>The result should look like</p>
-<img alt="_images/mylineplot3.png" src="_images/mylineplot3.png" />
+<img alt="_images/mylineplot4.png" src="_images/mylineplot4.png" />
 <p>This might look like a lot of code to visualize a function. But this
 represents a relatively simple basis to build full featured applications
 with a custom UI and custom tools on top of the plotting functionality
