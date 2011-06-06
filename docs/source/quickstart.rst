@@ -1,15 +1,15 @@
 
 .. last updated on Jun 5th 2011 by Jonathan Rocher
 
+
+##########
+Quickstart
+##########
 +----------------------------------------+--------------------------------------+
 |.. image:: _images/simple_line.png      |.. image:: _images/scalar_function.png|
 |   :width: 400 px                       |   :width: 400 px                     |
 |   :align: center                       |   :align: center                     |
 +----------------------------------------+--------------------------------------+
-
-##########
-Quickstart
-##########
 
 This section is meant to help users on well-supported platforms and common
 Python environments get started using Chaco as quickly as possible.  If your
