@@ -206,7 +206,7 @@ Matlab users.</p>
 <div><strong class="command">python simple_line.py</strong></div></blockquote>
 <p>This opens a plot of several Bessel functions and a legend.</p>
 <blockquote>
-<div><img alt="_images/simple_line24.png" src="_images/simple_line24.png" />
+<div><img alt="_images/simple_line27.png" src="_images/simple_line27.png" />
 </div></blockquote>
 <p>You can interact with the plot in several ways:</p>
 <ul>
@@ -265,7 +265,7 @@ run it using the standard Python interpreter:</p>
 <blockquote>
 <div><strong class="command">python lines.py</strong></div></blockquote>
 <p>This shows two overlapping line plots.</p>
-<img alt="_images/lines8.png" src="_images/lines8.png" />
+<img alt="_images/lines9.png" src="_images/lines9.png" />
 <p>You can interact with the plot in the following ways:</p>
 <blockquote>
 <div><ul>
@@ -311,7 +311,7 @@ package to interact with the plot.</p>
 </li>
 </ul>
 <p>After running these commands, your plot looks like this:</p>
-<img alt="_images/lines_final8.png" src="_images/lines_final8.png" />
+<img alt="_images/lines_final9.png" src="_images/lines_final9.png" />
 <p>The <tt class="xref py py-func docutils literal"><span class="pre">chaco_commands()</span></tt> function display a list of commands with brief
 descriptions.</p>
 <p>You can explore the Chaco object hierarchy, as well. The <tt class="xref py py-mod docutils literal"><span class="pre">chaco.shell</span></tt>
@@ -371,7 +371,7 @@ it to an instance of MyPlot and call configure_traits to create the UI:</p>
 </pre></div>
 </div>
 <p>The result should look like</p>
-<img alt="_images/mylineplot2.png" src="_images/mylineplot2.png" />
+<img alt="_images/mylineplot3.png" src="_images/mylineplot3.png" />
 <p>This might look like a lot of code to visualize a function. But this
 represents a relatively simple basis to build full featured applications
 with a custom UI and custom tools on top of the plotting functionality
@@ -415,28 +415,35 @@ changes and recommended ways to use Chaco.</p>
 series cover building interactive plotting using Chaco. If you are an
 EPD user, you can find the video, the slides, and the demo code for
 each webinar covering Chaco.</p>
-<p>The first one (April 2010) demoes how to use Chaco as your plotting
-tool (<a class="reference external" href="https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/">https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/</a> ).</p>
-<p>The seconds (October 2010) illustrates how to building interactive 2D visualization (see
-<a class="reference external" href="https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/">https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/</a> ).</p>
+<ul class="simple">
+<li>The first one (April 2010) demoes how to use Chaco as your plotting
+tool (<a class="reference external" href="https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/">https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/</a> ).</li>
+<li>The seconds (October 2010) illustrates how to building interactive 2D visualization (see
+<a class="reference external" href="https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/">https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/</a> ).</li>
+</ul>
 </div>
 <div class="section" id="presentations">
 <span id="chaco-presentations"></span><h3>Presentations<a class="headerlink" href="#presentations" title="Permalink to this headline">¶</a></h3>
 <p>There have been several presentations on Chaco at previous PyCon and
-SciPy conferences.  Slides and demos from these are described below.</p>
-<p>Currently, the examples and the scipy 2006 tutorial are the best ways
-to get going quickly (see
-<a class="reference external" href="http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html">http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html</a> ).
-Chaco was also presented at PyCon 2007 and Scipy 2011 and the slides
-are available from <a class="reference external" href="http://code.enthought.com/projects/files/chaco_pycon07/">http://code.enthought.com/projects/files/chaco_pycon07/</a></p>
+SciPy conferences:</p>
+<ul class="simple">
+<li>Follow the tutorial from the Scipy 2006 conference at
+<a class="reference external" href="http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html">http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html</a> ,</li>
+<li>Follow the presentation of Chaco at the PyCon 2007 at
+<a class="reference external" href="http://code.enthought.com/projects/files/chaco_pycon07/">http://code.enthought.com/projects/files/chaco_pycon07/</a> .</li>
+</ul>
 </div>
 <div class="section" id="developers-references-and-api-docs">
 <span id="api-docs"></span><h3>Developers references and API Docs<a class="headerlink" href="#developers-references-and-api-docs" title="Permalink to this headline">¶</a></h3>
-<p>For developers, more details about the architecture, and the API can be found in
-the <a class="reference internal" href="programmers_reference.html#programmers-reference"><em>Programmer&#8217;s Reference</em></a>. The API for older versions of Chaco can be found at
-<a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html">http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html</a> for Chaco 3.0
-(in ETS 3.0) and at <a class="reference external" href="http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html">http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html</a>
-for Chaco2 (in ETS 2.7.1).</p>
+<p>For developers and architects,</p>
+<ul class="simple">
+<li>more details about the <strong>current architecture and API</strong> can be found in
+the <a class="reference internal" href="programmers_reference.html#programmers-reference"><em>Programmer&#8217;s Reference</em></a>,</li>
+<li>the API for Chaco 3.0 (in ETS 3.0) can be found at
+<a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html">http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html</a> ,</li>
+<li>the API for Chaco2 (in ETS 2.7.1) can be found at
+<a class="reference external" href="http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html">http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html</a> .</li>
+</ul>
 </div>
 </div>
 </div>
