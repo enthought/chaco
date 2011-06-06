@@ -1,6 +1,11 @@
 
 .. last updated on Jun 5th 2011 by Jonathan Rocher
 
++----------------------------------------+--------------------------------------+
+|.. image:: _images/simple_line.png      |.. image:: _images/scalar_function.png|
+|   :width: 400 px                       |   :width: 400 px                     |
+|   :align: center                       |   :align: center                     |
++----------------------------------------+--------------------------------------+
 
 ##########
 Quickstart
@@ -78,6 +83,10 @@ This might be challenging and will require SWIG and Cython to be installed.
   :command:`easy_install Chaco`
   
 
+Chaco Gallery
+=============
+Examples of what can be done with Chaco is available in our `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
+
 Running Some Examples
 =====================
 
@@ -134,7 +143,11 @@ Almost all of the Chaco examples are stand-alone files that can be run individua
 can be from command line and we will illustrate this first as Chaco's main goal is to 
 provide a package for building integrated applications. We will then show how to run Chaco 
 in an interactive way from IPython. This "shell" mode is more common to Matplotlib or 
-Matlab users. 
+Matlab users.
+
+.. note::
+   Some of these examples can be visualized in our 
+   `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
 
 
 First plots from command line
@@ -342,6 +355,8 @@ Further Reading and ressources
 You can also learn more about Chaco:
 
 * following some tutorials that come with the Chaco package,
+
+* Exploring our `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_ with examples,
 
 * following demos of Chaco given during webinars Enthought to EPD subscribers,
 
