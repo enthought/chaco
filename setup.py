@@ -35,7 +35,7 @@ Prerequisites
 You must have the following libraries installed before building or installing
 Chaco:
 
-* `Numpy <http://pypi.python.org/pypi/numpy/1.1.1>`_ version 1.1.1
+* `Numpy <http://pypi.python.org/pypi/numpy>`_
 * `distribute <http://pypi.python.org/pypi/distribute>`_
 """
 
