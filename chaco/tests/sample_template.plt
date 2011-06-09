@@ -9,7 +9,7 @@
 # TemplateMetadata.
 
 
-from enthought.chaco.api import TemplateMetadata
+from chaco.api import TemplateMetadata
 
 __plot_metadata__ = TemplateMetadata(version = "1.0",
     pkg_name = "enthought.chaco",
