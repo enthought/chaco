@@ -82,7 +82,7 @@ if ETSConfig.toolkit == 'wx':
         app.MainLoop()
 
 elif ETSConfig.toolkit == 'qt4':
-    from traits.qt import QtGui
+    from pyface.qt import QtGui
 
     _app = QtGui.QApplication.instance()
 

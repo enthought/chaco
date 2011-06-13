@@ -9,7 +9,7 @@ ETSConfig.toolkit = "qt4"
 import sys
 from numpy import linspace
 from scipy.special import jn
-from traits.qt import QtGui, QtCore
+from pyface.qt import QtGui, QtCore
 
 from enable.api import Window
 

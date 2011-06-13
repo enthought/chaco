@@ -258,7 +258,7 @@ if ETSConfig.toolkit == "wx":
 
 elif ETSConfig.toolkit == "qt4":
 
-    from traits.qt import QtGui, QtCore
+    from pyface.qt import QtGui, QtCore
 
     class PlotFrame(DemoFrame):
         def _create_window(self):
