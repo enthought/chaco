@@ -1,12 +1,13 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 1. Creating a plot and saving it as an image to disk.
+"""Tutorial 1. Creating a plot and saving it as an image to disk."""
 
+import os
+import sys
+from scipy import arange, pi, sin
+
+from chaco import api as chaco
 
 # First, we create two arrays of data, x and y.  'x' will be a sequence of
 # 100 points spanning the range -2pi to 2pi, and 'y' will be sin(x).
-from scipy import arange, pi, sin
 numpoints = 100
 step = 4*pi / numpoints
 x = arange(-2*pi, 2*pi+step/2, step)
@@ -18,7 +19,6 @@ y = sin(x)
 # plot types (line, scatter, etc.).  In later tutorials we'll see what the
 # factories are actually doing, and how to manually assemble plotting
 # primitives in more powerful ways.  For now, factories suit our needs.
-from chaco import api as chaco
 myplot = chaco.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
 
 # We now need to set the plot's size, and add a little padding for the axes.
@@ -26,6 +26,7 @@ myplot = chaco.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=
 # set automatically by the window.)
 myplot.padding = 50
 myplot.bounds = [400,400]
+
 
 def main():
     # Now we create a canvas of the appropriate size and ask it to render
@@ -36,7 +37,6 @@ def main():
     plot_gc.render_component(myplot)
 
     # Get the directory to save the image in
-    import os, sys
     print 'Please enter a path in which to place generated plots.'
     print 'Press <ENTER> to generate in the current directory.'
     path = raw_input('Path: ').strip()

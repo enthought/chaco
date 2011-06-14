@@ -1,6 +1,15 @@
+
+.. last updated on Jun 5th 2011 by Jonathan Rocher
+
+
 ##########
 Quickstart
 ##########
++----------------------------------------+--------------------------------------+
+|.. image:: _images/simple_line.png      |.. image:: _images/scalar_function.png|
+|   :width: 400 px                       |   :width: 400 px                     |
+|   :align: center                       |   :align: center                     |
++----------------------------------------+--------------------------------------+
 
 This section is meant to help users on well-supported platforms and common
 Python environments get started using Chaco as quickly as possible. As part of the 
@@ -29,10 +38,10 @@ Enthought packages:
   * `Enable <http://code.enthought.com/projects/enable/>`_, as a framework for writing interactive visual components, and for abstracting away GUI-toolkit-specific details of mouse and keyboard handling.
 
 It also relies on two external packages:
-  * `Numpy <http://numpy.scipy.org/>`_, to deal efficiently with large datasets,
-  * Either `wxPython <http://www.wxpython.org/>`_ or `PyQt <http://www.riverbankcomputing.co.uk/software/pyqt/intro>`_ to display interactive plots.
+  * `Numpy <http://numpy.scipy.org/>`_, to deal efficiently with large datasets.
+  * Either `wxPython <http://www.wxpython.org/>`_ or  `PyQt <http://www.riverbankcomputing.co.uk/software/pyqt/intro>`_ to display interactive plots. As an alternative to PyQt, Chaco is being more and more tested using the `PySide <http://www.pyside.org/>`_ toolkit (LGPL license).
 
-  .. note 
+  .. .. note
   .. ::
   .. In addition to wxPython or PyQt a cross-platform OpenGL backend (using Pyglet) is in the works, and it will not require WX or Qt.
 
@@ -84,6 +93,10 @@ development libraries to be installed.
   :command:`easy_install Chaco`
 
 
+Chaco Gallery
+=============
+Examples of what can be done with Chaco is available in our `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
+
 Running Some Examples
 =====================
 
@@ -92,37 +105,74 @@ example files. Almost all of the Chaco examples are stand-alone files that can b
 individually, from any location. Depending on how you installed Chaco, you may or may not 
 have the examples already.
 
-If you installed Chaco as part of EPD, the location of the examples depends on 
-your platform:
 
-* On Windows, they are in the :file:`Examples\\` subdirectory of your installation
-  location.  This is typically :file:`C:\\Python25\\Examples`.
+Location
+--------
 
-* On Linux, they are in the :file:`Examples/` subdirectory of your installation
-  location.
+1. If you installed Chaco as part of EPD, the location of the examples depends on 
+   your platform:
 
-* On Mac OS X, they are in the :file:`/Applications/<EPD Version>/Examples/`
-  directory.
+   * On Windows, they are in the Examples\\ subdirectory of your installation
+     location.  This is typically :file:`C:\\Python27\\Examples\\Chaco-<version>`. 
+     On MS Windows these examples can be browsed from the start menu, by clicking 
+     :command:`Applications > Enthought > Examples`.
 
-If you downloaded and installed Chaco from source from the 
-`Chaco github repository <https://github.com/enthought/chaco>`_, the examples are located in the 
-:file:`examples/` subdirectory inside the root of the Chaco source tree, next to 
-:file:`docs/` and the :file:`enthought/` directories.
+   * On Linux, they are in the :file:`Examples/Chaco-<version>` subdirectory of your installation
+     location.
+
+   * On Mac OS X, they are in the :file:`/Applications/Enthought/Examples/Chaco-<version>`
+     directory.
 
 
-All of the following instructions that involve the command line assume that 
-you are in the same directory as the examples.
+2. If you downloaded and installed Chaco from source (from Github or via the PyPI tar.gz file), 
+   the examples are located in the :file:`examples/` subdirectory
+   inside the root of the Chaco source tree, next to :file:`docs/` and the :file:`enthought/`
+   directories.
 
-Command line
-------------
 
-Run the ``simple_line`` example:
+3. If you happen to be on a machine with Chaco installed, but you don't know the exact
+   installation mechanism, then you might need to download the examples separately
+   using Git (or Subversion for older versions of Chaco):
 
-    :command:`python simple_line.py`
+   * For the most up-to-date version of the examples:
+
+     :command:`git clone https://github.com/enthought/chaco/tree/master/examples`
+
+   * For the most up-to-date version of the examples using the old version of the namespace 
+     (importing chaco using <i>from enthought.chaco</i>):
+  
+     :command:`git clone https://github.com/enthought/chaco/tree/old-namespace/examples`
+
+   * ETS 3.0 or Chaco 3.0:
+  
+     :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples`
+
+   * ETS 2.8 or Chaco 2.0.x:
+  
+     :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
+
+Chaco examples can be found in the :file:`examples/demo/` and :file:`examples/tutorials/` 
+directories. Some examples are classified by themes and located in separate directories. 
+Almost all of the Chaco examples are stand-alone files that can be run individually. They 
+can be executed from command line and we will illustrate this first. 
+We will then show how to run Chaco in an interactive way from IPython. This "shell" mode 
+is more common to Matplotlib or Matlab users.
+
+.. note::
+   Some of these examples can be visualized in our 
+   `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
+
+
+First plots from command line
+-----------------------------
+
+From the examples directory, run the ``simple_line`` example:
+
+  :command:`python simple_line.py`
 
 This opens a plot of several Bessel functions and a legend.
 
-.. image:: images/simple_line.png
+  .. image:: images/simple_line.png
 
 You can interact with the plot in several ways:
 
@@ -152,9 +202,9 @@ You can interact with the plot in several ways:
   Mac).  Alternatively, can you press Ctrl-C in the terminal.
 
 You can run most of the examples in the top-level :file:`examples`
-directory, the :file:`examples/basic/` directory, and the :file:`examples/shell/`
-directory.  The :file:`examples/advanced/` directory has some examples that
-may or may not work on your system:
+directory, the :file:`examples/demo/basic/` directory, and the :file:`examples/demo/shell/`
+directory.  The :file:`examples/demo/advanced/` directory has some examples that
+require additional data or packages. In particular, 
 
 * :file:`spectrum.py` requires that you have PyAudio installed and a working
   microphone.  
@@ -167,8 +217,10 @@ may or may not work on your system:
 For detailed information about each built-in example, see the :ref:`examples`
 section.
 
-IPython
--------
+
+
+First plots from IPython
+------------------------
 
 While all of the Chaco examples can be launched from the command line using the
 standard Python interpreter, if you have IPython installed, you can poke around
@@ -176,7 +228,7 @@ them in a more interactive fashion.
 
 Chaco provides a subpackage, currently named the "Chaco Shell", for doing
 command-line plotting like Matlab or Matplotlib.  The examples in the
-:file:`examples/shell/` directory use this subpackage, and they are particularly
+:file:`examples/demo/shell/` directory use this subpackage, and they are particularly
 amenable to exploration with IPython.
 
 The first example we'll look at is the :file:`lines.py` example.  First, we'll
@@ -239,57 +291,159 @@ descriptions.
 You can explore the Chaco object hierarchy, as well. The :mod:`chaco.shell` 
 commands are just convenience functions that wrap a rich object hierarchy
 that comprise the actual plot. See the :ref:`tutorial_ipython` section
-for information on more complex and interesting things you can do with Chaco
-from within IPython.
+for information on all you can do with Chaco from within IPython.
 
 
-Start Menu (MS Windows)
------------------------
+Chaco Plot integrated in a Traits application
+=============================================
+Let's create from scratch the simplest possible Chaco plot embedded inside 
+a `Traits <http://github.enthought.com/traits/>`_ application.
 
-If you installed the Enthought Python Distribution (EPD), you have
-shortcuts installed in your Start Menu for many of the Chaco examples.  You can
-run them by just clicking the shortcut.  (This just invokes python.exe on the
-example file itself.)
+First, some imports will bring in the necessary components::
+
+  from enthought.chaco.api import ArrayPlotData, Plot
+  from enthought.enable.component_editor import ComponentEditor
+
+  from enthought.traits.api import HasTraits, Instance
+  from enthought.traits.ui.api import View, Item
+
+The imports from chaco and enable will support the creation of the plot. The 
+imports from traits bring in the components to embed the plot inside a trait 
+application. (Refer to the `traits documentation <http://github.enthought.com/traits/>`_ 
+for more details about building an interactive application using Traits.)
+Now let's create a trait class with a view that contains only 1 element: a Chaco 
+plot inside a slightly customized window::
+
+  class MyPlot(HasTraits):
+      plot = Instance(Plot)
+      traits_view = View(Item('plot', editor = ComponentEditor(), show_label = False),
+                         width = 500, height = 500,
+                         resizable = True, title = "My line plot")
+
+A few options have been set to control the window containing the plot.
+Now, at creation, we would like to pass our data. Let's assume that 
+they are in the form of a set of points with coordinates contains in 2 
+numpy arrays x and y. Then, the Plot object must be created::
+
+  def __init__(self, x, y, *args, **kw):
+      super(MyPlot, self).__init__(*args, **kw)
+      plotdata = ArrayPlotData(x=x,y=y)
+      plot = Plot(plotdata)
+      plot.plot(("x","y"), type = "line", color = "blue")
+      plot.title = "sin(x)*x**3"
+      self.plot = plot
+
+Deriving from HasTraits the new class can use all the power
+of Traits and the call to super() in its constructor makes sure this
+object possesses the attributes and methods of its parent class.
+Now let's use our trait object: simply generate some data, pass 
+it to an instance of MyPlot and call configure_traits to create the UI::
+
+  import numpy as np
+  x = np.linspace(-14,14,100)
+  y = np.sin(x)*x**3
+  lineplot = MyPlot(x,y)
+  lineplot.configure_traits()
+
+The result should look like
+
+.. image:: images/mylineplot.png
+
+This might look like a lot of code to visualize a function. But this 
+represents a relatively simple basis to build full featured applications 
+with a custom UI and custom tools on top of the plotting functionality 
+such as those illustrated in the examples. For example, the trait object 
+allows you to create controls for your plot at a very high level, add 
+these controls to the UI with very little work, add listeners to update 
+the plot when the data changes. Exploring the capabilities of Chaco can 
+allows you to create tools to interact with the plot, and overlays for 
+example allow you to make these tools intuitive to use and visually 
+appealling.
+
+.. _going_further:
+
+Further Reading and ressources
+==============================
+
+You can also learn more about Chaco:
+
+* following some tutorials that come with the Chaco package,
+
+* Exploring our `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_ with examples,
+
+* following demos of Chaco given during webinars Enthought to EPD subscribers,
+
+* reading seminar slides posted on conference websites, 
+
+* reading about the API from the developer guide.
 
 
-Creating a Plot
-===============
+Tutorials
+---------
 
-(TODO)
+For more details on how to use Chaco to embed powerful plotting 
+functionality inside applications, refer to the :ref:`tutorials`. 
+In particular some tutorial examples were recently added into the 
+:file:`examples/tutorials/scipy2008/` directory.  These examples are 
+numbered and introduce  
+concepts one at a time, going from a simple line plot to building a  
+custom overlay with its own trait editor and reusing an existing tool  
+from the built-in set of tools.  You can browse them on our SVN server  
+at:
+https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008
+Finally, it is recommended to explore the examples 
+(:ref:`examples` section) as they are regularly updated to reflect the most recent 
+changes and recommended ways to use Chaco. 
 
 
-Further Reading
-===============
+.. _chaco_webinars:
 
-Once you have Chaco installed, you can either visit the :ref:`tutorials`
-to learn how to use the package, or you can run the examples (see the
-:ref:`examples` section).
+Enthought webinars
+------------------
+The video webinars given in  as part of the Enthought webinar 
+series cover building interactive plotting using Chaco. If you are an 
+EPD user, you can find the video, the slides, and the demo code for 
+each webinar covering Chaco. 
+
+* The first one (April 2010) demoes how to use Chaco as your plotting 
+  tool (https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/ ). 
+
+* The seconds (October 2010) illustrates how to building interactive 2D visualization (see 
+  https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/ ).
+
+
+.. _chaco_presentations:
 
 
 Presentations
 -------------
 
 There have been several presentations on Chaco at previous PyCon and 
-SciPy conferences.  Slides and demos from these are described below.
+SciPy conferences:
 
-Currently, the examples and the scipy 2006 tutorial are the best ways  
-to get going quickly. (See http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html)
+.. * Follow the latest Chaco presentation at SciPy 2011 at
 
-Some tutorial examples were recently added into the examples/tutorials/scipy2008/  
-directory on the trunk.  These examples are numbered and introduce  
-concepts one at a time, going from a simple line plot to building a  
-custom overlay with its own trait editor and reusing an existing tool  
-from the built-in set of tools.  You can browse them on our SVN server  
-at:
-https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008
+* Follow the tutorial from the Scipy 2006 conference at
+  http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html ,
+
+* Follow the presentation of Chaco at the PyCon 2007 at 
+  http://code.enthought.com/projects/files/chaco_pycon07/ .
+
+
 
 .. _api_docs:
 
-API Docs
---------
+Developers references and API Docs
+-----------------------------------
 
-The API docs for Chaco 3.0 (in ETS 3.0) are at:
-http://code.enthought.com/projects/files/ETS3_API/chaco.html
+For developers and architects, 
 
-The API docs for Chaco2 (in ETS 2.7.1) are at:
-http://code.enthought.com/projects/files/ets_api/chaco2.html
+* more details about the **current architecture and API** can be found in 
+  the :ref:`programmers_reference`, 
+
+* the API for Chaco 3.0 (in ETS 3.0) can be found at 
+  http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html ,
+
+* the API for Chaco2 (in ETS 2.7.1) can be found at 
+  http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html .
+

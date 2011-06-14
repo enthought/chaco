@@ -1,26 +1,24 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 10. Demonstration that the views are linked, but the
-#              data is not.
+"""Tutorial 10. Demonstration that the views are linked, but the data is not."""
 
 
-from tutorial9b import PlotFrame2
 from chaco.tools.api import LineInspector
 
-class PlotFrame3(PlotFrame2):
-    def _create_plot(self):
-        container = super(PlotFrame3, self)._create_plot()
+from tutorial9b import PlotExample2
 
-        self.left_plot.overlays.append(LineInspector(component=self.left_plot,
+
+class PlotExample3(PlotExample2):
+    def _container_default(self):
+        container = super(PlotExample3, self)._container_default()
+
+        rplot, lplot = self.right_plot, self.left_plot
+        lplot.overlays.append(LineInspector(component=lplot,
+                write_metadata=True, is_listener=True))
+        rplot.overlays.append(LineInspector(component=rplot,
                 write_metadata=True, is_listener=True))
 
-        self.right_plot.overlays.append(LineInspector(component=self.right_plot,
-                write_metadata=True, is_listener=True))
         return container
 
+demo = PlotExample3()
+
 if __name__ == "__main__":
-    import wx
-    app = wx.PySimpleApp()
-    frame = PlotFrame3(None)
-    app.MainLoop()
+    demo.configure_traits()

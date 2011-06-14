@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from chaco.api import LinearMapper, Plot, ArrayDataSource, DataRange1D
 from chaco.multi_array_data_source import MultiArrayDataSource
@@ -36,17 +36,19 @@ class MyPlot(HasTraits):
                         index_mapper = LinearMapper(range=xrange),
                         value_mapper = LinearMapper(range=yrange),
                         value=ds,
-                        global_max = data.max(),
-                        global_min = data.min(),
+                        global_max = np.nanmax(data),
+                        global_min = np.nanmin(data),
                         **kw)
 
         self.plot = Plot()
         self.plot.add(mlp)
 
 
-x_index = numpy.arange(0,100, 1)
-y_index = numpy.arange(0,1000, 10)
-data = numpy.sin(numpy.arange(0,x_index.size*y_index.size))
+x_index = np.arange(0,100, 1)
+y_index = np.arange(0,1000, 10)
+data = np.sin(np.arange(0,x_index.size*y_index.size))
+# add a random chunk of nan values
+data[1532:1588] = np.nan
 data = data.reshape(x_index.size, y_index.size)
 
 my_plot = MyPlot(x_index, y_index, data)

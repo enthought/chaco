@@ -1,9 +1,10 @@
 """ Defines ArrayPlotData.
 """
 
+from numpy import array
+
 # Enthought library imports
 from traits.api import Dict
-
 
 # Local, relative imports
 from abstract_plot_data import AbstractPlotData

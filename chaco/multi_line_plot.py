@@ -190,7 +190,8 @@ class MultiLinePlot(BaseXYPlot):
 
     def get_screen_points(self):
         self._gather_points()
-        scrn_pts_list = [self.map_screen(ary) for ary in self._cached_data_pts]
+        scrn_pts_list = [[self.map_screen(ary) for ary in line]
+                                for line in self._cached_data_pts]
         return scrn_pts_list
 
     #------------------------------------------------------------------------

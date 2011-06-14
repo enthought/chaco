@@ -469,7 +469,7 @@ def contourf(*data, **kwargs):
     To use previous data, specify names instead of actual data arrays.
     """
 
-    cont = _do_plot_boilerplate(kwargs, image=True)
+    cont = _do_plot_boilerplate(kwargs)
 
     plots = plot_maker.do_contour(session.data, session.colormap, cont,
                                   "poly", *data, **kwargs)
@@ -626,6 +626,16 @@ def xaxis(**kwds):
             p.x_axis.visible ^= True
         p.request_redraw()
 
+xaxis.__doc__ = """ Configures the x-axis.
+
+    Usage
+    -----
+    * ``xaxis()``: toggles the horizontal axis on or off.
+    * ``xaxis(**kwds)``: set parameters of the horizontal axis.
+
+    %s
+    """ % _axis_params
+
 def yaxis(**kwds):
     """ Configures the y-axis.
 
@@ -643,6 +653,17 @@ def yaxis(**kwds):
         else:
             p.y_axis.visible ^= True
         p.request_redraw()
+
+yaxis.__doc__ =     """ Configures the y-axis.
+
+    Usage
+    -----
+    * ``yaxis()``: toggles the vertical axis on or off.
+    * ``yaxis(**kwds)``: set parameters of the vertical axis.
+
+    %s
+    """ % _axis_params
+
 
 def xgrid():
     """ Toggles the grid perpendicular to the X axis. """
@@ -667,6 +688,8 @@ def _set_scale(axis, system):
         else:
             log_linear_trait = 'value_scale'
             ticks = p.y_ticks
+        if system == 'time':
+            system = CalendarScaleSystem()
         if isinstance(system, basestring):
             setattr(p, log_linear_trait, system)
         else:
@@ -682,10 +705,10 @@ def xscale(system=None):
     Usage
     -----
     * ``xscale()``: revert the scale system to the default.
-    * ``xscale(CalendarScaleSystem())``: use the calendar scale system for time
-      series.
+    * ``xscale('time')``: use the calendar scale system for time series.
     * ``xscale('log')``: use a generic log-scale.
     * ``xscale('linear')``: use a generic linear-scale.
+    * ``xscale(some_scale_system)``: use an arbitrary ScaleSystem object.
     """
     _set_scale('x', system)
 
@@ -695,10 +718,10 @@ def yscale(system=None):
     Usage
     -----
     * ``yscale()``: revert the scale system to the default.
-    * ``yscale(CalendarScaleSystem())``: use the calendar scale system for time
-      series.
+    * ``yscale('time')``: use the calendar scale system for time series.
     * ``yscale('log')``: use a generic log-scale.
     * ``yscale('linear')``: use a generic linear-scale.
+    * ``yscale(some_scale_system)``: use an arbitrary ScaleSystem object.
     """
     _set_scale('y', system)
 
@@ -735,7 +758,7 @@ def tool():
 # Saving and IO
 #-----------------------------------------------------------------------------
 
-def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch"):
+def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, units="inch"):
     """ Saves the active plot to an file.  Currently supported file types
     are: bmp, png, jpg.
     """
@@ -756,15 +779,26 @@ def save(filename="chacoplot.png", pagesize="letter", dest_box=None, units="inch
                                     pagesize = pagesize,
                                     dest_box = dest_box,
                                     dest_box_units = units)
+
+        # temporarily turn off the backbuffer for offscreen rendering
+        use_backbuffer = p.use_backbuffer
+        p.use_backbuffer = False        
         gc.render_component(p)
+        p.use_backbuffer = use_backbuffer
+        
         gc.save()
         del gc
         print "Saved to", filename
 
     elif ext in [".bmp", ".png", ".jpg"]:
         from chaco.api import PlotGraphicsContext
-        gc = PlotGraphicsContext((int(p.outer_width), int(p.outer_height)))
-        p.draw(gc, mode="normal")
+
+        # temporarily turn off the backbuffer for offscreen rendering
+        use_backbuffer = p.use_backbuffer
+        p.use_backbuffer = False        
+        gc.render_component(p)
+        p.use_backbuffer = use_backbuffer
+
         gc.save(filename)
         del gc
         print "Saved to", filename

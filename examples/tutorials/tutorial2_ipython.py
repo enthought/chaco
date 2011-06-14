@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-
-"""
-Tutorial 2 (IPython) - Getting at our first plot using IPython
-
+"""Tutorial 2 (IPython) - Getting at our first plot using IPython
 
 This addendum to Tutorial 2 demonstrates the dynamic nature of the various
 components in Chaco.
@@ -18,19 +14,15 @@ Then just run this tutorial:
 
 Once this executes, you will have a Chaco plot window open, and all of the
 functions defined in this file will be available at the IPython prompt.
-(The "frame" and "plot" variables will also be defined.)
+(The "plot" variables will also be defined.)
 
 You can configure some aspects of your plot by using the functions.
 """
 
-from tutorial2 import PlotFrame
+from tutorial2 import demo
 
-# Create the frame with no parent and a default size
-frame = PlotFrame(None)
-
-# Grab a reference to the plot object and expose it as a module-wide global.
-plot = frame.plot_window.component
-
+demo.configure_traits()
+plot = demo.plot
 
 def xtitle(text):
     plot.x_axis.title = text
@@ -43,11 +35,9 @@ def ytitle(text):
 def xrange(low, high):
     plot.x_mapper.range.low = low
     plot.x_mapper.range.high = high
-    plot.request_redraw()
 
 def yrange(low, high):
     plot.y_mapper.range.low = low
     plot.y_mapper.range.high = high
-    plot.request_redraw()
 
 

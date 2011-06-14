@@ -1,17 +1,15 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 4. Adding a zoom tool
+"""Tutorial 4. Adding a zoom tool
 
-from tutorial2 import myplot, PlotFrame, main
+The ZoomTool tool has a visual component, so it needs to be added to the
+list of overlays instead of the list of bare tools.
+"""
 
 from chaco.tools.api import ZoomTool
 
-# The ZoomTool tool has a visual component, so it needs to be added to the
-# list of overlays instead of the list of bare tools.
-myplot.overlays.append(ZoomTool(myplot, tool_mode="box", always_on=True))
+from tutorial2 import demo
 
-# And now we just run it.
+plot = demo.plot
+plot.overlays.append(ZoomTool(plot, tool_mode="box", always_on=True))
+
 if __name__ == "__main__":
-    main()
-
+    demo.configure_traits()

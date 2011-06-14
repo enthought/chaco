@@ -1,26 +1,11 @@
 # Enthought library imports
-from traits.api import Instance, HasTraits, List
-from traitsui.api import View, Item
-from enable.api import Container
-from enable.component_editor import ComponentEditor
+from traits.api import List
 from chaco.api import VPlotContainer
 from chaco.plot import Plot
 from chaco.tools.api import PanTool, ZoomTool
+from chaco.ui.plot_window import PlotWindow
 
 from traitsui.wx.constants import WindowColor
-
-class PlotWindow(HasTraits):
-    plot = Instance(Container)
-
-    traits_view = View(Item('plot',
-                            editor=ComponentEditor(),
-                            height=300,
-                            width=500,
-                            show_label=False,
-                            ),
-                       title='Popup Chaco Plot',
-                       resizable=True
-                       )
 
 class PopupablePlot(Plot):
     """A Plot class that pops up in a new window on double click"""

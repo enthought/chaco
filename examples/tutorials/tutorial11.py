@@ -1,37 +1,42 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 11.  Demonstration of why it's good to work with .index and
-#               .value instead of hardcoding to X and Y.
-#
-# We are going to change the orientation of the right_plot,
-# but all of our dataspace linking will still work.  We'll also
-# add another LineInspector to each plot to form a full crosshair.
+"""Tutorial 11: Demonstration of index and value.
 
+We are going to change the orientation of the right_plot, but all of our
+dataspace linking will still work. This is why it's good to work with index and
+value instead of hardcoding to X and Y. We'll also add another LineInspector to
+each plot to form a full crosshair.
+"""
 
-from tutorial10b import PlotFrame3
 from chaco.tools.api import LineInspector
 
-class PlotFrame4(PlotFrame3):
-    def _create_plot(self):
-        container = super(PlotFrame4, self)._create_plot()
+from tutorial10b import PlotExample3
 
-        plot = self.right_plot
-        plot.orientation = "v"
-        plot.hgrid.mapper = plot.index_mapper
-        plot.vgrid.mapper = plot.value_mapper
-        plot.y_axis.mapper = plot.index_mapper
-        plot.x_axis.mapper = plot.value_mapper
 
-        self.left_plot.overlays.append(LineInspector(component=self.left_plot,
-                axis="value", write_metadata=True, is_listener=True, color="blue"))
+class PlotExample4(PlotExample3):
+    def _container_default(self):
+        container = super(PlotExample4, self)._container_default()
 
-        self.right_plot.overlays.append(LineInspector(component=self.right_plot,
-                axis="value", write_metadata=True, is_listener=True, color="blue"))
+        rplot, lplot = self.right_plot, self.left_plot
+        rplot.orientation = "v"
+        rplot.hgrid.mapper = rplot.index_mapper
+        rplot.vgrid.mapper = rplot.value_mapper
+        rplot.y_axis.mapper = rplot.index_mapper
+        rplot.x_axis.mapper = rplot.value_mapper
+
+
+        lplot.overlays.append(LineInspector(component=lplot,
+             axis="value", write_metadata=True, is_listener=True, color="blue"))
+        lplot.overlays.append(LineInspector(component=lplot,
+             axis="value", write_metadata=True, is_listener=True, color="blue"))
+
+        rplot.overlays.append(LineInspector(component=rplot,
+             axis="value", write_metadata=True, is_listener=True, color="blue"))
+        rplot.overlays.append(LineInspector(component=rplot,
+             axis="value", write_metadata=True, is_listener=True, color="blue"))
+
         return container
 
+
+demo = PlotExample4()
+
 if __name__ == "__main__":
-    import wx
-    app = wx.PySimpleApp()
-    frame = PlotFrame4(None)
-    app.MainLoop()
+    demo.configure_traits()

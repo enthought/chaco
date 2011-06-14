@@ -1,3 +1,6 @@
+"""
+Simple bar chart example.
+"""
 
 # Major library imports
 import numpy
@@ -10,12 +13,12 @@ from traitsui.api import Item, View
 # Chaco imports
 from chaco.api import LabelAxis, Plot, ArrayPlotData
 
-class DemoPlot(HasTraits):
+class PlotExample(HasTraits):
     plot = Instance(Plot)
     traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False))
 
     def __init__(self, index, series_a, series_b, series_c, **kw):
-        super(DemoPlot, self).__init__(**kw)
+        super(PlotExample, self).__init__(**kw)
 
         plot_data = ArrayPlotData(index=index)
         plot_data.set_data('series_a', series_a)
@@ -42,6 +45,7 @@ class DemoPlot(HasTraits):
 
 
 index = numpy.array([1,2,3,4,5])
+demo = PlotExample(index, index*10, index*5, index*2)
 
-demo_plot = DemoPlot(index, index*10, index*5, index*2)
-demo_plot.configure_traits()
+if __name__ == "__main__":
+    demo.configure_traits()

@@ -93,21 +93,19 @@ def render_variable_size_markers(gc, points, marker, marker_size,
         if not isinstance(marker, CustomMarker):
             for pt,size in zip(points, marker_size):
                 sx, sy = pt
-                gc.save_state()
-                gc.translate_ctm(sx, sy)
-                # Kiva GCs have a path-drawing interface
-                marker.add_to_path(gc, size)
-                gc.draw_path(marker.draw_mode)
-                gc.restore_state()
+                with gc:
+                    gc.translate_ctm(sx, sy)
+                    # Kiva GCs have a path-drawing interface
+                    marker.add_to_path(gc, size)
+                    gc.draw_path(marker.draw_mode)
         else:
             path = custom_symbol
             for pt,size in zip(points, marker_size):
                 sx, sy = pt
-                gc.save_state()
-                gc.translate_ctm(sx, sy)
-                gc.scale_ctm(size, size)
-                gc.add_path(path)
-                gc.draw_path(STROKE)
-                gc.restore_state()
+                with gc:
+                    gc.translate_ctm(sx, sy)
+                    gc.scale_ctm(size, size)
+                    gc.add_path(path)
+                    gc.draw_path(STROKE)
 
     return

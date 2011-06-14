@@ -421,10 +421,14 @@ def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
     else:
         raise ValueError("do_contour takes one or three data sources")
 
-    # TODO: find a better way to handle colormaps here, for now just pass
-    # both ways
-    plot_list = [active_plot.contour_plot(z, type, xbounds=x, ybounds=y,
+    # we have to do slightly different calls here because of the different
+    # handling of colourmaps
+    if type is 'poly':
+        plot_list = [active_plot.contour_plot(z, type, xbounds=x, ybounds=y,
                                     poly_cmap=colormap,
+                                    **kwargs)]
+    else:
+        plot_list = [active_plot.contour_plot(z, type, xbounds=x, ybounds=y,
                                     colors=colormap,
                                     **kwargs)]
 

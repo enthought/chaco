@@ -1,25 +1,22 @@
-#!/usr/bin/env python
-#
-#
-# Tutorial 3. Adding an interactor
+"""Tutorial 3. Adding an interactor
 
-# We can reuse the plot, frame, and even the mainloop from tutorial 2.  All we need
-# to do is to create a new tool and attach it to the plot object.
-from tutorial2 import myplot, PlotFrame, main
+In general, there are two things that need to happen in order to hook up a
+tool or interactor.  The component needs to have the interactor added to
+its list of tools (so that it can forward events to the interactor), and
+the interactor also needs a reference to the component or plot that it
+will be attached to.
 
+Here we add a PanTool to the demo from tutorial 2.  All we need to do is to
+create a new tool and attach it to the plot object. We add thePanTool wich
+allows left-clicking and dragging to move the plot around.
+"""
 
-# The PanTool allows left-clicking and dragging to move the plot around.
 from chaco.tools.api import PanTool
 
+from tutorial2 import demo
 
-# In general, there are two things that need to happen in order to hook up a
-# tool or interactor.  The component needs to have the interactor added to
-# its list of tools (so that it can forward events to the interactor), and
-# the interactor also needs a reference to the component or plot that it
-# will be attached to.
-myplot.tools.append(PanTool(myplot))
+plot = demo.plot
+plot.tools.append(PanTool(plot))
 
-
-# And now we just run it.
 if __name__ == "__main__":
-    main()
+    demo.configure_traits()

@@ -173,6 +173,10 @@ class Plot(DataView):
         if not self.legend:
             self.legend = Legend(visible=False, align="ur", error_icon="blank",
                                  padding=10, component=self)
+        
+        # ensure that we only get displayed once by new_window()
+        self._plot_ui_info = None
+        
         return
 
     def add_xy_plot(self, index_name, value_name, renderer_factory, name=None,
@@ -836,6 +840,18 @@ class Plot(DataView):
             renderer.visible = True
         return
 
+    def new_window(self, configure=False):
+        """Convenience function that creates a window containing the Plot
+        
+        Don't call this if the plot is already displayed in a window.
+        """
+        from enthought.chaco.ui.plot_window import PlotWindow
+        if self._plot_ui_info is None:
+            if configure:
+                self._plot_ui_info = PlotWindow(plot=self).configure_traits()
+            else:
+                self._plot_ui_info = PlotWindow(plot=self).edit_traits()
+        return self._plot_ui_info
 
     #------------------------------------------------------------------------
     # Private methods
