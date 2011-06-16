@@ -10,7 +10,7 @@ import warnings
 
 
 __all__ = ['NullFormatter', 'BasicFormatter', 'IntegerFormatter',
-    'OffsetFormatter', 'TimeFormatter']
+           'OffsetFormatter', 'TimeFormatter', 'strftimeEx']
 
 class NullFormatter(object):
     """ Formatter for empty labels.
