@@ -4,8 +4,14 @@ This plot displays the audio spectrum from the microphone.
 
 Based on updating_plot.py
 """
+import sys
+
 # Major library imports
-import pyaudio
+try:
+    import pyaudio
+except ImportError:
+    sys.exit('You need to install pyaudio to installed to run this demo.')
+    
 from numpy import zeros, linspace, short, fromstring, hstack, transpose
 from scipy import fft
 
