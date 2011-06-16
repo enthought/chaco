@@ -6,21 +6,23 @@ from math import floor
 
 from scales import AbstractScale, ScaleSystem, frange, heckbert_interval
 from formatters import TimeFormatter
-from safetime import (mktime, safe_fromtimestamp, datetime, timedelta, EPOCH,
-    MINYEAR, MAXYEAR)
+from safetime import (safe_fromtimestamp, datetime, timedelta, EPOCH,
+                      MINYEAR, MAXYEAR)
 
 # Labels for date and time units.
-datetime_scale = ["microsecond", "second", "minute", "hour", "day", "month", "year"]
+datetime_scale = ["microsecond", "second", "minute", "hour",
+                  "day", "month", "year"]
 datetime_zeros = zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1])
 
 
 __all__ = ["TimeScale", "CalendarScaleSystem", "HMSScales", "MDYScales",
-           "trange", "tfrac", "dt_to_sec"]
+           "trange", "tfrac", "td_to_sec", "dt_to_sec"]
+
 
 def td_to_sec(td):
     """ Returns the floating point number of seconds in a timedelta object.
     """
-    return td.days*24*3600 + td.seconds + td.microseconds*1e-6
+    return td.days * 24 * 3600 + td.seconds + td.microseconds * 1e-6
 
 
 def dt_to_sec(t):
@@ -271,7 +273,8 @@ class TimeScale(AbstractScale):
             if desired_ticks is None:
                 min, max, delta = heckbert_interval(start, end, enclose=True)
             else:
-                min, max, delta = heckbert_interval(start, end, desired_ticks, enclose=True)
+                min, max, delta = heckbert_interval(start, end, desired_ticks,
+                                                    enclose=True)
             min *= secs_per_unit
             max *= secs_per_unit
             delta *= secs_per_unit
@@ -297,19 +300,24 @@ class TimeScale(AbstractScale):
             num_months = int(round((e - s) * 12)) + 1   # add 1 for fencepost
             start_year = start.year
             start_month = start.month
-            ym = [divmod(i, 12) for i in range(start_month-1, start_month-1+num_months)]
-            months = [start.replace(year=start_year+y, month=m+1, day=1) for (y,m) in ym]
+            ym = [divmod(i, 12)
+                  for i in range(start_month-1, start_month-1+num_months)]
+            months = [start.replace(year=start_year+y, month=m+1, day=1)
+                      for (y,m) in ym]
             ticks = [dt.replace(day=i) for dt in months for i in self.vals]
 
         elif self.unit == "month_of_year":
-            years = [start.replace(year=newyear, day=1) for newyear in range(start.year, end.year+1)]
-            ticks = [dt.replace(month=i, day=1) for dt in years for i in self.vals]
+            years = [start.replace(year=newyear, day=1)
+                     for newyear in range(start.year, end.year+1)]
+            ticks = [dt.replace(month=i, day=1)
+                     for dt in years for i in self.vals]
 
         else:
             raise ValueError("Unknown calendar unit '%s'" % self.unit)
 
         if len(ticks) > 0:
-            # Find the first and last index in all_ticks that falls within (start,end)
+            # Find the first and last index in all_ticks that falls
+            # within (start,end)
             for start_ndx in range(len(ticks)):
                 if ticks[start_ndx] >= start:
                     break
@@ -380,11 +388,11 @@ class CalendarScaleSystem(ScaleSystem):
             if self.default_scale is not None:
                 closest_scale = self.default_scale
             else:
-                raise ValueError("CalendarScaleSystem has not be configured with any scales.")
+                raise ValueError("CalendarScaleSystem has not be configured "
+                                 "with any scales.")
         elif end - start < 1e-6 or end - start > 1e5 * 365 * 24 * 3600:
             closest_scale = self.default_scale
         else:
             closest_scale = self._get_scale_np(start, end, numticks)
-
 
         return closest_scale
