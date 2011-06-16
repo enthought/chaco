@@ -35,4 +35,4 @@ Chaco:
 
 * `Numpy <http://pypi.python.org/pypi/numpy>`_
 * `distribute <http://pypi.python.org/pypi/distribute>`_
-* `enable <https://github.com/enthought/enable>`_.
+* `enable <https://github.com/enthought/enable>`_
