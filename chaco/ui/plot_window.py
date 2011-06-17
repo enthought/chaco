@@ -1,8 +1,8 @@
 # Enthought library imports
-from enthought.traits.api import Instance, HasTraits
-from enthought.traits.ui.api import View, Item
-from enthought.enable.api import Container
-from enthought.enable.component_editor import ComponentEditor
+from traits.api import Instance, HasTraits
+from traitsui.api import View, Item
+from enable.api import Container
+from enable.component_editor import ComponentEditor
 
 class PlotWindow(HasTraits):
     plot = Instance(Container)

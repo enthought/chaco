@@ -845,7 +845,7 @@ class Plot(DataView):
         
         Don't call this if the plot is already displayed in a window.
         """
-        from enthought.chaco.ui.plot_window import PlotWindow
+        from chaco.ui.plot_window import PlotWindow
         if self._plot_ui_info is None:
             if configure:
                 self._plot_ui_info = PlotWindow(plot=self).configure_traits()

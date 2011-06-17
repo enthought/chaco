@@ -18,7 +18,7 @@
 """ Run the Chaco demo.
 """
 
-from enthought.traits.ui.extras.demo import demo
+from traitsui.extras.demo import demo
 
 # Uncomment the config_filename portion to see a tree editor based on the
 # examples.cfg file.
