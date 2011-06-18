@@ -13,7 +13,6 @@ from base_data_range import BaseDataRange
 from data_range_1d import DataRange1D
 
 
-
 class DataRange2D(BaseDataRange):
     """ A range on (2-D) image data.
 
@@ -45,10 +44,11 @@ class DataRange2D(BaseDataRange):
     y_range = Property
 
     # Do "auto" bounds imply an exact fit to the data? (One Boolean per
-    # dimension) If False, the bounds pad a little bit of margin on either side.
+    # dimension) If False, the bounds pad a little bit of margin on either
+    # side.
     tight_bounds = Tuple(Bool(True), Bool(True))
-    # The minimum percentage difference between low and high for each dimension.
-    # That is, (high-low) >= epsilon * low.
+    # The minimum percentage difference between low and high for each
+    # dimension. That is, (high-low) >= epsilon * low.
     epsilon = Tuple(CFloat(1.0e-4), CFloat(1.0e-4))
 
     #------------------------------------------------------------------------
@@ -60,13 +60,13 @@ class DataRange2D(BaseDataRange):
     # setting.
 
     # The user-specified low settings.
-    _low_setting = Trait(('auto','auto'), Any)
+    _low_setting = Trait(('auto', 'auto'), Any)
     # The actual numerical values for the low setting.
-    _low_value = Trait((-inf,-inf), Tuple(CFloat, CFloat))
+    _low_value = Trait((-inf, -inf), Tuple(CFloat, CFloat))
     # The user-specified high settings.
     _high_setting = Trait(('auto', 'auto'), Any)
     # The actual numerical value for the high setting.
-    _high_value = Trait((inf,inf), Tuple(CFloat, CFloat))
+    _high_value = Trait((inf, inf), Tuple(CFloat, CFloat))
 
     # DataRange1D for the x-dimension.
     _xrange = Instance(DataRange1D, args=())
@@ -98,7 +98,8 @@ class DataRange2D(BaseDataRange):
     def bound_data(self, data):
         """ Not implemented for this class.
         """
-        raise NotImplementedError, "bound_data() has not been implemented for 2d pointsets."
+        raise NotImplementedError("bound_data() has not been implemented "
+                                  "for 2d pointsets.")
 
     def set_bounds(self, low, high):
         """ Sets all the bounds of the range simultaneously.
@@ -115,14 +116,12 @@ class DataRange2D(BaseDataRange):
         self._do_set_low_setting(low, fire_event=False)
         self._do_set_high_setting(high)
 
-
     #------------------------------------------------------------------------
     # Public methods
     #------------------------------------------------------------------------
 
     def __init__(self, *args, **kwargs):
         super(DataRange2D, self).__init__(*args, **kwargs)
-
 
     def reset(self):
         """ Resets the bounds of this range.
@@ -132,8 +131,8 @@ class DataRange2D(BaseDataRange):
         self._refresh_bounds()
 
     def refresh(self):
-        """ If any of the bounds is 'auto', this method refreshes the actual low
-        and high values from the set of the view filters' data sources.
+        """ If any of the bounds is 'auto', this method refreshes the actual
+        low and high values from the set of the view filters' data sources.
         """
         if 'auto' not in self._low_setting and \
            'auto' not in self._high_setting:
@@ -142,8 +141,6 @@ class DataRange2D(BaseDataRange):
             return
         else:
             self._refresh_bounds()
-
-
 
     #------------------------------------------------------------------------
     # Public methods
@@ -156,7 +153,6 @@ class DataRange2D(BaseDataRange):
     def _refresh_bounds(self):
         self._xrange.refresh()
         self._yrange.refresh()
-
 
     #------------------------------------------------------------------------
     # Property getters and setters
@@ -247,5 +243,3 @@ class DataRange2D(BaseDataRange):
     @on_trait_change("_xrange.updated,_yrange.updated")
     def _subranges_updated(self):
         self.updated = True
-
-

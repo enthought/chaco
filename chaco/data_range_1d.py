@@ -16,6 +16,7 @@ from base import arg_find_runs
 from base_data_range import BaseDataRange
 from ticks import heckbert_interval
 
+
 class DataRange1D(BaseDataRange):
     """ Represents a 1-D data range.
     """
@@ -73,7 +74,7 @@ class DataRange1D(BaseDataRange):
     #   resets to 'auto'.
     # * 'low_track': The low bound resets to 'track', and the high bound
     #   resets to 'auto'.
-    default_state = Enum('auto','high_track', 'low_track')
+    default_state = Enum('auto', 'high_track', 'low_track')
 
     # Is this range dependent upon another range?
     fit_to_subset = Bool(False)
@@ -98,7 +99,6 @@ class DataRange1D(BaseDataRange):
     # A list of attributes to persist
     # _pickle_attribs = ("_low_setting", "_high_setting")
 
-
     #------------------------------------------------------------------------
     # AbstractRange interface
     #------------------------------------------------------------------------
@@ -116,7 +116,8 @@ class DataRange1D(BaseDataRange):
 
         Implements AbstractDataRange.
         """
-        return (data.view(ndarray)>=self._low_value) & (data.view(ndarray)<=self._high_value)
+        return ((data.view(ndarray) >= self._low_value) &
+                (data.view(ndarray) <= self._high_value))
 
     def bound_data(self, data):
         """ Returns a tuple of indices for the start and end of the first run
@@ -130,8 +131,9 @@ class DataRange1D(BaseDataRange):
         # until we find the first run of "1"s.
         for run in runs:
             if mask[run[0]] == 1:
-                return run[0],run[1]-1  # arg_find_runs returns 1 past the end
-        return (0,0)
+                # arg_find_runs returns 1 past the end
+                return run[0], run[1] - 1
+        return (0, 0)
 
     def set_bounds(self, low, high):
         """ Sets all the bounds of the range simultaneously.
@@ -168,7 +170,6 @@ class DataRange1D(BaseDataRange):
         """
         self.default_tracking_amount = amount
 
-
     #------------------------------------------------------------------------
     # Public methods
     #------------------------------------------------------------------------
@@ -176,7 +177,7 @@ class DataRange1D(BaseDataRange):
     def reset(self):
         """ Resets the bounds of this range, based on **default_state**.
         """
-        #need to maintain 'track' setting
+        # need to maintain 'track' setting
         if self.default_state == 'auto':
             self._high_setting = 'auto'
             self._low_setting = 'auto'
@@ -228,10 +229,12 @@ class DataRange1D(BaseDataRange):
             # Save the new setting.
             self._low_setting = val
 
-            # If val is 'auto' or 'track', get the corresponding numerical value.
+            # If val is 'auto' or 'track', get the corresponding numerical
+            # value.
             if val == 'auto':
                 if len(self.sources) > 0:
-                    val = min([source.get_bounds()[0] for source in self.sources])
+                    val = min([source.get_bounds()[0]
+                               for source in self.sources])
                 else:
                     val = -inf
             elif val == 'track':
@@ -279,10 +282,12 @@ class DataRange1D(BaseDataRange):
             # Save the new setting.
             self._high_setting = val
 
-            # If val is 'auto' or 'track', get the corresponding numerical value.
+            # If val is 'auto' or 'track', get the corresponding numerical
+            # value.
             if val == 'auto':
                 if len(self.sources) > 0:
-                    val = max([source.get_bounds()[1] for source in self.sources])
+                    val = max([source.get_bounds()[1]
+                               for source in self.sources])
                 else:
                     val = inf
             elif val == 'track':
@@ -334,13 +339,12 @@ class DataRange1D(BaseDataRange):
         else:
             mins, maxes = zip(*bounds_list)
 
-            low_start, high_start = calc_bounds(self._low_setting, self._high_setting,
-                                                mins, maxes, self.epsilon,
-                                                self.tight_bounds,
-                                                margin = self.margin,
-                                                track_amount = self.tracking_amount,
-                                                bounds_func=self.bounds_func)
-
+            low_start, high_start = \
+                     calc_bounds(self._low_setting, self._high_setting,
+                                 mins, maxes, self.epsilon,
+                                 self.tight_bounds, margin=self.margin,
+                                 track_amount=self.tracking_amount,
+                                 bounds_func=self.bounds_func)
 
         if (self._low_value != low_start) or (self._high_value != high_start):
             self._low_value = low_start
@@ -381,14 +385,12 @@ class DataRange1D(BaseDataRange):
         for source in new:
             source.on_trait_change(self.refresh, "data_changed")
 
-
     #------------------------------------------------------------------------
     # Serialization interface
     #------------------------------------------------------------------------
 
     def _post_load(self):
         self._sources_changed(None, self.sources)
-
 
 
 ###### method to calculate bounds for a given 1-dimensional set of data
@@ -436,7 +438,7 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
     if low_set == 'auto':
         real_min = min(mins)
     elif low_set == 'track':
-        #real_max hasn't been set yet
+        # real_max hasn't been set yet
         pass
     else:
         real_min = low_set
@@ -444,19 +446,18 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
     if high_set == 'auto':
         real_max = max(maxes)
     elif high_set == 'track':
-        #real_min has been set now
+        # real_min has been set now
         real_max = real_min + track_amount
     else:
         real_max = high_set
 
-    #Go back and set real_min if we need to
+    # Go back and set real_min if we need to
     if low_set == 'track':
         real_min = real_max - track_amount
 
-
     # If we're all NaNs, just return a 0,1 range
     if isnan(real_max) or isnan(real_min):
-        return 0,0
+        return 0, 0
 
     if not isinf(real_min) and not isinf(real_max) and \
             (abs(real_max - real_min) <= abs(epsilon * real_min)):
@@ -478,31 +479,32 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
             # If the user has a constant value less than 1, then these
             # are the bounds we use.
             if real_min > 0.0:
-                real_max = 2*real_min
+                real_max = 2 * real_min
                 real_min = 0.0
             elif real_min == 0.0:
                 real_min = -1.0
                 real_max = 1.0
             else:
-                real_min = 2*real_min
+                real_min = 2 * real_min
                 real_max = 0.0
 
-    # Now test if the bounds leave some room around the data, unless tight_bounds==True
-    # or unless another function to compute the bound is provided.
+    # Now test if the bounds leave some room around the data, unless
+    # tight_bounds==True or unless another function to compute the bound
+    # is provided.
     if bounds_func is not None:
         return bounds_func(real_min, real_max, margin, tight_bounds)
     elif not tight_bounds:
         low, high, d = heckbert_interval(real_min, real_max)
-        # 2nd run of heckbert_interval necessary? Will be if bounds are too tights (ie
-        # within the margin).
+        # 2nd run of heckbert_interval necessary? Will be if bounds are
+        # too tights (ie within the margin).
         rerun = False
-        if abs(low - real_min) / (high-low) < margin:
-            modified_min = real_min - (high-low) * margin
+        if abs(low - real_min) / (high - low) < margin:
+            modified_min = real_min - (high - low) * margin
             rerun = True
         else:
             modified_min = real_min
-        if abs(high - real_max) / (high-low) < margin:
-            modified_max = real_max + (high-low) * margin
+        if abs(high - real_max) / (high - low) < margin:
+            modified_max = real_max + (high - low) * margin
             rerun = True
         else:
             modified_max = real_max
@@ -511,4 +513,3 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
         return low, high
     else:
         return real_min, real_max
-
