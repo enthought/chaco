@@ -173,10 +173,10 @@ class Plot(DataView):
         if not self.legend:
             self.legend = Legend(visible=False, align="ur", error_icon="blank",
                                  padding=10, component=self)
-        
+
         # ensure that we only get displayed once by new_window()
         self._plot_ui_info = None
-        
+
         return
 
     def add_xy_plot(self, index_name, value_name, renderer_factory, name=None,
@@ -842,7 +842,7 @@ class Plot(DataView):
 
     def new_window(self, configure=False):
         """Convenience function that creates a window containing the Plot
-        
+
         Don't call this if the plot is already displayed in a window.
         """
         from chaco.ui.plot_window import PlotWindow

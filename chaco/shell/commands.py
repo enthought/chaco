@@ -782,10 +782,10 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
         # temporarily turn off the backbuffer for offscreen rendering
         use_backbuffer = p.use_backbuffer
-        p.use_backbuffer = False        
+        p.use_backbuffer = False
         gc.render_component(p)
         p.use_backbuffer = use_backbuffer
-        
+
         gc.save()
         del gc
         print "Saved to", filename
@@ -795,7 +795,7 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
         # temporarily turn off the backbuffer for offscreen rendering
         use_backbuffer = p.use_backbuffer
-        p.use_backbuffer = False        
+        p.use_backbuffer = False
         gc.render_component(p)
         p.use_backbuffer = use_backbuffer
 

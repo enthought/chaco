@@ -11,7 +11,7 @@ try:
     import pyaudio
 except ImportError:
     sys.exit('You need to install pyaudio to installed to run this demo.')
-    
+
 from numpy import zeros, linspace, short, fromstring, hstack, transpose
 from scipy import fft
 
