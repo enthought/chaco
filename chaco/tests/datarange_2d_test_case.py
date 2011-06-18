@@ -2,7 +2,7 @@
 import unittest
 
 from numpy import alltrue, arange, array, ravel, transpose, zeros, inf, isinf
-from numpy.testing import assert_equal
+from numpy.testing import assert_equal, assert_
 
 from chaco.api import DataRange2D, GridDataSource, PointDataSource
 
@@ -67,16 +67,16 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.high, array([100.0,10.0]))
 
         r.remove(ds)
-        ds = PointDataSource(array([[0.03,0.03]]))
+        ds = PointDataSource(array([[0.125,0.125]]))
         r.add(ds)
-        assert_ary_(r.low, array([-1.0,-1.0]))
-        assert_ary_(r.high, array([1.0,1.0]))
+        assert_ary_(r.low, array([0.0, 0.0]))
+        assert_ary_(r.high, array([0.25, 0.25]))
 
         r.remove(ds)
-        ds = PointDataSource(array([[-0.03,-0.03]]))
+        ds = PointDataSource(array([[-0.125, -0.125]]))
         r.add(ds)
-        assert_ary_(r.low, array([-1.0,-1.0]))
-        assert_ary_(r.high, array([1.0,1.0]))
+        assert_ary_(r.low, array([-0.25, -0.25]))
+        assert_ary_(r.high, array([0.0, 0.0]))
         return
 
 
@@ -188,14 +188,14 @@ def assert_close_(desired,actual):
     diff = abs(ravel(actual) - ravel(desired))
     for d in diff:
         if not isinf(d):
-            assert alltrue(d <= diff_allowed)
+            assert_(alltrue(d <= diff_allowed))
             return
 
 def assert_ary_(desired, actual):
     if (desired == 'auto'):
-        assert actual == 'auto'
+        assert_equal(actual, 'auto')
     for d in range(len(desired)):
-        assert desired[d] == actual[d]
+        assert_equal(desired[d], actual[d])
     return
 
 

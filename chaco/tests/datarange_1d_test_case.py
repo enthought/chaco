@@ -27,30 +27,30 @@ class DataRangeTestCase(unittest.TestCase):
 
     def test_empty_range(self):
         r = DataRange1D()
-        self.assert_(r.low == -inf)
-        self.assert_(r.high == inf)
-        self.assert_(r.low_setting == "auto")
-        self.assert_(r.high_setting == "auto")
+        self.assertEqual(r.low, -inf)
+        self.assertEqual(r.high, inf)
+        self.assertEqual(r.low_setting, "auto")
+        self.assertEqual(r.high_setting, "auto")
         r.low = 5.0
         r.high = 10.0
-        self.assert_(r.low_setting == 5.0)
-        self.assert_(r.high_setting == 10.0)
-        self.assert_(r.low == 5.0)
-        self.assert_(r.high == 10.0)
+        self.assertEqual(r.low_setting, 5.0)
+        self.assertEqual(r.high_setting, 10.0)
+        self.assertEqual(r.low, 5.0)
+        self.assertEqual(r.high, 10.0)
         return
 
     def test_set_bounds1(self):
         """Change both low and high with set_bounds()."""
         foo = Foo(range=DataRange1D(low=0.0, high=1.0))
         # Paranoid check first (not the main point of this test):
-        self.assert_(foo.range.low == 0.0)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.0)
+        self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(-1.0, 2.0)
         # Verify the values.
-        self.assert_(foo.range.low == -1.0)
-        self.assert_(foo.range.high == 2.0)
+        self.assertEqual(foo.range.low, -1.0)
+        self.assertEqual(foo.range.high, 2.0)
         # Verify that the `updated` event fired.
         self.assert_(foo.range_updated)
 
@@ -58,14 +58,14 @@ class DataRangeTestCase(unittest.TestCase):
         """Change only the high value with set_bounds()."""
         foo = Foo(range=DataRange1D(low=0.0, high=1.0))
         # Paranoid check first (not the main point of this test):
-        self.assert_(foo.range.low == 0.0)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.0)
+        self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(0.0, 2.0)
         # Verify the values.
-        self.assert_(foo.range.low == 0.0)
-        self.assert_(foo.range.high == 2.0)
+        self.assertEqual(foo.range.low, 0.0)
+        self.assertEqual(foo.range.high, 2.0)
         # Verify that the `updated` event fired.
         self.assert_(foo.range_updated)
 
@@ -73,14 +73,14 @@ class DataRangeTestCase(unittest.TestCase):
         """Change only the low value with set_bounds()."""
         foo = Foo(range=DataRange1D(low=0.0, high=1.0))
         # Paranoid check first (not the main point of this test):
-        self.assert_(foo.range.low == 0.0)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.0)
+        self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(0.5, 1.0)
         # Verify the values.
-        self.assert_(foo.range.low == 0.5)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.5)
+        self.assertEqual(foo.range.high, 1.0)
         # Verify that the `updated` event fired.
         self.assert_(foo.range_updated)
 
@@ -90,15 +90,15 @@ class DataRangeTestCase(unittest.TestCase):
         foo.range.low_setting = 0.0
         foo.range.high_setting = 'track'
         # Paranoid check first (not the main point of this test):
-        self.assert_(foo.range.low == 0.0)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.0)
+        self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(100.0, 'track')
         print foo.range.low, foo.range.high
         # Verify the values.
-        self.assert_(foo.range.low == 100.0)
-        self.assert_(foo.range.high == 101.0)
+        self.assertEqual(foo.range.low, 100.0)
+        self.assertEqual(foo.range.high, 101.0)
         # Verify that the `updated` event fired.
         self.assert_(foo.range_updated)
 
@@ -108,14 +108,14 @@ class DataRangeTestCase(unittest.TestCase):
         foo.range.low_setting = 'track'
         foo.range.high_setting = 1.0
         # Paranoid check first (not the main point of this test):
-        self.assert_(foo.range.low == 0.0)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.0)
+        self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds('track', 100.0)
         # Verify the values.
-        self.assert_(foo.range.low == 99.0)
-        self.assert_(foo.range.high == 100.0)
+        self.assertEqual(foo.range.low, 99.0)
+        self.assertEqual(foo.range.high, 100.0)
         # Verify that the `updated` event fired.
         self.assert_(foo.range_updated)
 
@@ -125,14 +125,14 @@ class DataRangeTestCase(unittest.TestCase):
         foo.range.low_setting = 'track'
         foo.range.high_setting = 1.0
         # Paranoid check first (not the main point of this test):
-        self.assert_(foo.range.low == 0.0)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.0)
+        self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and change the tracking amount.
         foo.range_updated = False
         foo.range.set_tracking_amount(2.0)
         # Verify the values.
-        self.assert_(foo.range.low == -1.0)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, -1.0)
+        self.assertEqual(foo.range.high, 1.0)
         # Verify that the `updated` event fired.
         self.assert_(foo.range_updated)
 
@@ -142,14 +142,14 @@ class DataRangeTestCase(unittest.TestCase):
         foo.range.low_setting = 'track'
         foo.range.high_setting = 1.0
         # Paranoid check first (not the main point of this test):
-        self.assert_(foo.range.low == 0.0)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.0)
+        self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and change the tracking amount.
         foo.range_updated = False
         foo.range.scale_tracking_amount(0.5)
         # Verify the values.
-        self.assert_(foo.range.low ==  0.5)
-        self.assert_(foo.range.high == 1.0)
+        self.assertEqual(foo.range.low, 0.5)
+        self.assertEqual(foo.range.high, 1.0)
         # Verify that the `updated` event fired.
         self.assert_(foo.range_updated)
 
@@ -158,25 +158,25 @@ class DataRangeTestCase(unittest.TestCase):
         ary = arange(10.0)
         ds = ArrayDataSource(ary)
         r.sources.append(ds)
-        self.assert_(r.low == 0.0)
-        self.assert_(r.high == 9.0)
+        self.assertEqual(r.low, 0.0)
+        self.assertEqual(r.high, 9.0)
 
         r.low = 3.0
         r.high = 6.0
-        self.assert_(r.low_setting == 3.0)
-        self.assert_(r.high_setting == 6.0)
-        self.assert_(r.low == 3.0)
-        self.assert_(r.high == 6.0)
+        self.assertEqual(r.low_setting, 3.0)
+        self.assertEqual(r.high_setting, 6.0)
+        self.assertEqual(r.low, 3.0)
+        self.assertEqual(r.high, 6.0)
 
         r.refresh()
-        self.assert_(r.low_setting == 3.0)
-        self.assert_(r.high_setting == 6.0)
-        self.assert_(r.low == 3.0)
-        self.assert_(r.high == 6.0)
+        self.assertEqual(r.low_setting, 3.0)
+        self.assertEqual(r.high_setting, 6.0)
+        self.assertEqual(r.low, 3.0)
+        self.assertEqual(r.high, 6.0)
 
         r.low = "auto"
-        self.assert_(r.low_setting == "auto")
-        self.assert_(r.low == 0.0)
+        self.assertEqual(r.low_setting, "auto")
+        self.assertEqual(r.low, 0.0)
         return
 
     def test_constant_value(self):
@@ -186,26 +186,26 @@ class DataRangeTestCase(unittest.TestCase):
         r.add(ds)
         # A constant value > 1.0, by default, gets a range that brackets
         # it to the nearest power of ten above and below
-        self.assert_(r.low == 1.0)
-        self.assert_(r.high == 10.0)
+        self.assertEqual(r.low, 1.0)
+        self.assertEqual(r.high, 10.0)
 
         r.remove(ds)
         ds = ArrayDataSource(array([31.4]))
         r.add(ds)
-        self.assert_(r.low == 10.0)
-        self.assert_(r.high == 100.0)
+        self.assertEqual(r.low, 10.0)
+        self.assertEqual(r.high, 100.0)
 
         r.remove(ds)
-        ds = ArrayDataSource(array([0.03]))
+        ds = ArrayDataSource(array([0.125]))
         r.add(ds)
-        self.assert_(r.low == -1.0)
-        self.assert_(r.high == 1.0)
+        self.assertEqual(r.low, 0.0)
+        self.assertEqual(r.high, 0.25)
 
         r.remove(ds)
-        ds = ArrayDataSource(array([-0.03]))
+        ds = ArrayDataSource(array([-0.125]))
         r.add(ds)
-        self.assert_(r.low == -1.0)
-        self.assert_(r.high == 1.0)
+        self.assertEqual(r.low, -0.25)
+        self.assertEqual(r.high, 0.0)
         return
 
 
@@ -213,8 +213,8 @@ class DataRangeTestCase(unittest.TestCase):
         ds1 = ArrayDataSource(array([3, 4, 5, 6, 7]))
         ds2 = ArrayDataSource(array([5, 10, 15, 20]))
         r = DataRange1D(ds1, ds2)
-        self.assert_(r.low == 3.0)
-        self.assert_(r.high == 20.0)
+        self.assertEqual(r.low, 3.0)
+        self.assertEqual(r.high, 20.0)
         return
 
     def test_clip_data(self):
@@ -259,26 +259,26 @@ class DataRangeTestCase(unittest.TestCase):
 
     def test_custom_bounds_func(self):
         def custom_func(low, high, margin, tight_bounds):
-            assert low==0.0
-            assert high==9.0
-            assert tight_bounds==False
-            assert margin==1.0
+            assert_equal(low, 0.0)
+            assert_equal(high, 9.0)
+            assert_equal(tight_bounds, False)
+            assert_equal(margin, 1.0)
             return -999., 999.
 
         r = DataRange1D(tight_bounds=False, margin=1.0, bounds_func=custom_func)
         ary = arange(10.0)
         ds = ArrayDataSource(ary)
         r.sources.append(ds)
-        assert r.low==-999.
-        assert r.high==999.
+        assert_equal(r.low, -999.)
+        assert_equal(r.high, 999.)
 
     def test_inf_in_source(self):
         r = DataRange1D()
         ary1 = array([1.0, inf])
         ds1 = ArrayDataSource(ary1)
         r.sources.append(ds1)
-        self.assert_(r.low == 1.0)
-        self.assert_(r.high == inf)
+        self.assertEqual(r.low, 1.0)
+        self.assertEqual(r.high, inf)
         data = array([-100.0, 0.0, 100.0])
         assert_equal(r.clip_data(data) , array([100.0]))
 
@@ -286,12 +286,12 @@ class DataRangeTestCase(unittest.TestCase):
         ary2 = array([-inf, 1.0])
         ds2 = ArrayDataSource(ary2)
         r.sources.append(ds2)
-        self.assert_(r.low == -inf)
-        self.assert_(r.high == 1.0)
+        self.assertEqual(r.low, -inf)
+        self.assertEqual(r.high, 1.0)
 
         r.sources.append(ds1)
-        self.assert_(r.low == -inf)
-        self.assert_(r.high == inf)
+        self.assertEqual(r.low, -inf)
+        self.assertEqual(r.high, inf)
 
 
 if __name__ == '__main__':
