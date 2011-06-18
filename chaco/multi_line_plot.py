@@ -21,10 +21,6 @@ from array_data_source import ArrayDataSource
 from base import arg_find_runs, bin_search
 from base_xy_plot import BaseXYPlot
 
-def time_ms(t):
-    s = "%5.1f ms" % (t * 1000)
-    return s
-
 
 class MultiLinePlot(BaseXYPlot):
     """ A plot consisting of multiple lines.
