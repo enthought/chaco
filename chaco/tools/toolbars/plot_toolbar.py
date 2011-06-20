@@ -208,7 +208,7 @@ class PlotToolbar(Container, AbstractOverlay):
                 self.y = cy + component.padding_bottom + 2
             elif self.location is 'left':
                 self.x = cx + component.padding_left + 2
-                self.y = cY + (component.height - self.height)/2 + component.padding_bottom
+                self.y = cy + (component.height - self.height)/2 + component.padding_bottom
             else:  # 'right'
                 self.x = cx + component.width + component.padding_left - width - 2
                 self.y = cy + (component.height - self.height)/2 + component.padding_bottom
