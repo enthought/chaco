@@ -20,9 +20,7 @@ from chaco.tools.api import PanTool, ZoomTool
 class PlotFrame(QtGui.QWidget):
     """ This widget simply hosts an opaque enable.qt4_backend.Window
     object, which provides the bridge between Enable/Chaco and the underlying
-    UI toolkit (qt4).  This code is basically a duplicate of what's in
-    enable.example_support.DemoFrame, but is reproduced here to
-    make this example more stand-alone.
+    UI toolkit (qt4).  
     """
     def __init__(self, parent, **kw):
         QtGui.QWidget.__init__(self)

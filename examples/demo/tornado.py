@@ -13,7 +13,6 @@ from chaco.api import ArrayDataSource, BarPlot, DataRange1D, LabelAxis, \
                       LinearMapper, OverlayPlotContainer, PlotAxis
 from chaco.example_support import COLOR_PALETTE
 
-
 class PlotExample(HasTraits):
     plot = Instance(Component)
 

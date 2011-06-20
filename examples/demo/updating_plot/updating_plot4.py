@@ -10,13 +10,13 @@ versa.
 
 # Major library imports
 import wx
-from numpy import arange, fabs, pi, sin
+from numpy import arange
 from scipy.special import jn
 
 # Enthought library imports
 from enable.api import Window
 from enable.example_support import DemoFrame, demo_main
-from traits.api import false, HasTraits
+from traits.api import HasTraits
 
 # Chaco imports
 from chaco.api import *

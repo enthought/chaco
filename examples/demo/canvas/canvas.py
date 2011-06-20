@@ -3,6 +3,8 @@
 The main app for the PlotCanvas application
 """
 
+# FIXME - this is broken
+
 MULTITOUCH = False
 DEBUG = False
 

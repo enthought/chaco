@@ -7,19 +7,17 @@ toggle it.
 """
 
 # Major library imports
-from numpy import arange, sort, compress, arange
+from numpy import sort
 from numpy.random import random
 
-from enable.example_support import DemoFrame, demo_main
-
 # Enthought library imports
-from enable.api import Component, ComponentEditor, Window
+from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import AbstractDataSource, ArrayPlotData, Plot, \
-    HPlotContainer, ScatterInspectorOverlay
+    ScatterInspectorOverlay
 from chaco.tools.api import ScatterInspector, PanTool, ZoomTool
 
 #===============================================================================
@@ -118,36 +116,7 @@ class Demo(HasTraits):
 
 demo = Demo()
 
-#===============================================================================
-# Stand-alone frame to display the plot.
-#===============================================================================
-class PlotFrame(DemoFrame):
-
-    index_datasource = Instance(AbstractDataSource)
-
-    def _create_window(self):
-
-        component = _create_plot_component()
-
-        # Retrieve the plot hooked to the tool.
-        my_plot = component.plots["my_plot"][0]
-
-        # Set up the trait handler for the selection
-        self.index_datasource = my_plot.index
-        self.index_datasource.on_trait_change(self._metadata_handler,
-                                              "metadata_changed")
-
-        # Return a window containing our plot container
-        return Window(self, -1, component=component, bg_color=bg_color)
-
-    def _metadata_handler(self):
-        sel_indices = self.index_datasource.metadata.get('selections', [])
-        print "Selection indices:", sel_indices
-
-        hover_indices = self.index_datasource.metadata.get('hover', [])
-        print "Hover indices:", hover_indices
-
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=size, title=title)
+    demo.configure_traits()
 
 # EOF

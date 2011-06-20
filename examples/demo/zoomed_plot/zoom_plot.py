@@ -9,18 +9,16 @@ or resized by clicking on one of its edges and dragging.
 import os
 
 # Major library imports
-from numpy import amin, amax, arange, searchsorted, sin, pi, linspace
-
-from enable.example_support import DemoFrame, demo_main
+from numpy import sin, pi, linspace
 
 # Enthought imports
-from enable.api import Component, ComponentEditor, Window
+from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 from traits.util.resource import find_resource
 
 # Chaco imports
-from chaco.api import SimplePlotFrame, VPlotContainer
+from chaco.api import VPlotContainer
 from chaco.tools.api import RangeSelection
 
 # Relative imports
@@ -90,16 +88,7 @@ class Demo(HasTraits):
 
 demo = Demo()
 
-#===============================================================================
-# Stand-alone frame to display the plot.
-#===============================================================================
-class PlotFrame(DemoFrame):
-
-    def _create_window(self):
-        # Return a window containing our plots
-        return Window(self, -1, component=create_zoomed_plot())
-
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=size, title=title)
+    demo.configure_traits()
 
 #--EOF---

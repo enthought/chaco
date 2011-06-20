@@ -3,13 +3,11 @@ Draws a static polar plot.
 """
 
 # Major library imports
-from numpy import arange, pi, sin, cos
-
-from enable.example_support import DemoFrame, demo_main
+from numpy import arange, pi, cos
 
 # Enthought library imports
-from enable.api import Window, Component, ComponentEditor
-from traits.api import HasTraits, Instance, false
+from enable.api import Component, ComponentEditor
+from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
@@ -59,16 +57,7 @@ class Demo(HasTraits):
 
 demo = Demo()
 
-#===============================================================================
-# Stand-alone frame to display the plot.
-#===============================================================================
-class PlotFrame(DemoFrame):
-
-    def _create_window(self):
-        # Return a window containing our plots
-        return Window(self, -1, component=_create_plot_component())
-
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=size, title=title)
+    demo.configure_traits()
 
 # EOF#######################

@@ -9,13 +9,11 @@ Draws a simple scatterplot of a set of random points.
 """
 
 # Major library imports
-from numpy import arange, sort
+from numpy import sort
 from numpy.random import random
 
-from enable.example_support import DemoFrame, demo_main
-
 # Enthought library imports
-from enable.api import Component, ComponentEditor, Window
+from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
@@ -86,17 +84,7 @@ class Demo(HasTraits):
 
 demo = Demo()
 
-#===============================================================================
-# Stand-alone frame to display the plot.
-#===============================================================================
-class PlotFrame(DemoFrame):
-
-    def _create_window(self):
-        # Return a window containing our plots
-        return Window(self, -1, component=_create_plot_component(),
-                      bg_color=bg_color)
-
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=size, title=title)
+    demo.configure_traits()
 
 #--EOF---

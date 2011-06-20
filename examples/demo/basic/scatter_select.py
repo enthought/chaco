@@ -10,19 +10,16 @@ compute indices in realtime.
 """
 
 # Major library imports
-from numpy import arange, sort, compress, arange
+from numpy import sort, compress, arange
 from numpy.random import random
 
-from enable.example_support import DemoFrame, demo_main
-
 # Enthought library imports
-from enable.api import Component, ComponentEditor, Window
+from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import AbstractDataSource, ArrayPlotData, Plot, \
-                                 HPlotContainer, LassoOverlay
+from chaco.api import ArrayPlotData, Plot, LassoOverlay
 from chaco.tools.api import LassoSelection, ScatterInspector
 
 #===============================================================================
@@ -117,37 +114,7 @@ class Demo(HasTraits):
 
 demo = Demo()
 
-#===============================================================================
-# Stand-alone frame to display the plot.
-#===============================================================================
-class PlotFrame(DemoFrame):
-
-    index_datasource = Instance(AbstractDataSource)
-
-    def _create_window(self):
-
-        component = _create_plot_component()
-
-        # Retrieve the plot hooked to the LassoSelection tool.
-        my_plot = component.plots["my_plot"][0]
-        lasso_selection = my_plot.active_tool
-
-        # Set up the trait handler for the selection
-        self.index_datasource = my_plot.index
-        lasso_selection.on_trait_change(self._selection_changed,
-                                        'selection_changed')
-
-        # Return a window containing our plots
-        return Window(self, -1, component=component, bg_color=bg_color)
-
-    def _selection_changed(self):
-        mask = self.index_datasource.metadata['selection']
-        print "New selection: "
-        print compress(mask, arange(len(mask)))
-        print
-
-
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=size, title=title)
+    demo.configure_traits()
 
 #--EOF---

@@ -11,10 +11,9 @@ edges.
 """
 
 # Major library imports
-from numpy import abs, arange, cumprod, linspace, random
+from numpy import abs, cumprod, linspace, random
 import time
 
-from chaco.example_support import COLOR_PALETTE
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
@@ -22,7 +21,7 @@ from enable.api import Window
 
 # Chaco imports
 from chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
-        LinePlot, LinearMapper, VPlotContainer, PlotAxis, PlotLabel, \
+        LinePlot, LinearMapper, VPlotContainer, PlotAxis, \
         FilledLinePlot, add_default_grids
 from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
         RangeSelectionOverlay

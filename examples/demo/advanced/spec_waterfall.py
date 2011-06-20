@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 This plot displays the audio spectrum from the microphone.
 
@@ -6,20 +5,18 @@ Based on updating_plot.py
 """
 # Major library imports
 import pyaudio
-from numpy import zeros, linspace, short, fromstring, hstack, transpose, array
+from numpy import zeros, linspace, short, fromstring, transpose, array
 from scipy import fft
 
 # Enthought library imports
-from chaco.default_colormaps import jet
 from enable.api import Window, Component, ComponentEditor
-from traits.api import HasTraits, Instance, List, Range
+from traits.api import HasTraits, Instance, List
 from traitsui.api import Item, Group, View, Handler
-from enable.example_support import DemoFrame, demo_main
 from pyface.timer.api import Timer
 
 # Chaco imports
 from chaco.api import (Plot, ArrayPlotData, HPlotContainer, VPlotContainer,
-    AbstractMapper, LinePlot, LinearMapper, DataRange1D, OverlayPlotContainer)
+    AbstractMapper, LinePlot, LinearMapper, DataRange1D)
 
 NUM_SAMPLES = 1024
 SAMPLING_RATE = 11025
@@ -221,62 +218,5 @@ class Demo(HasTraits):
 
 popup = Demo()
 
-#============================================================================
-# Stand-alone frame to display the plot.
-#============================================================================
-
-from traits.etsconfig.api import ETSConfig
-
-if ETSConfig.toolkit == "wx":
-
-    import wx
-    class PlotFrame(DemoFrame):
-
-        def _create_window(self):
-
-            self.controller = TimerController()
-            container = _create_plot_component(self.controller)
-            # Bind the exit event to the onClose function which will force the
-            # example to close. The PyAudio package causes problems that normally
-            # prevent the user from closing the example using the 'X' button.
-            # NOTE: I believe it is sufficient to just stop the timer-Vibha.
-            self.Bind(wx.EVT_CLOSE, self.onClose)
-
-            # Set the timer to generate events to us
-            timerId = wx.NewId()
-            self.timer = wx.Timer(self, timerId)
-            self.Bind(wx.EVT_TIMER, self.controller.onTimer, id=timerId)
-            self.timer.Start(20.0, wx.TIMER_CONTINUOUS)
-
-            # Return a window containing our plots
-            return Window(self, -1, component=container)
-
-        def onClose(self, event):
-            #sys.exit()
-            self.timer.Stop()
-            event.Skip()
-
-elif ETSConfig.toolkit == "qt4":
-
-    from pyface.qt import QtGui, QtCore
-
-    class PlotFrame(DemoFrame):
-        def _create_window(self):
-            self.controller = TimerController()
-            container = _create_plot_component(self.controller)
-
-            # start a continuous timer
-            self.timer = QtCore.QTimer()
-            self.timer.timeout.connect(self.controller.onTimer)
-            self.timer.start(20)
-
-            return Window(self, -1, component=container)
-
-        def closeEvent(self, event):
-            # stop the timer
-            if getattr(self, "timer", None):
-                self.timer.stop()
-            return super(PlotFrame, self).closeEvent(event)
-
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=size, title=title)
+    popup.configure_traits()

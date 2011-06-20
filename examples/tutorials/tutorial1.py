@@ -40,6 +40,7 @@ def main():
     print 'Please enter a path in which to place generated plots.'
     print 'Press <ENTER> to generate in the current directory.'
     path = raw_input('Path: ').strip()
+    path = os.path.expanduser(path)
 
     if len(path) > 0 and not os.path.exists(path):
         print 'The given path does not exist.'

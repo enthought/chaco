@@ -3,8 +3,6 @@
 The main app for the PlotCanvas application
 """
 
-from __future__ import with_statement
-
 # Enthought library imports
 from traits.api import Float
 from enable.api import Window, Container, Component, Pointer

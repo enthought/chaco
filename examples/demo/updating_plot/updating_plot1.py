@@ -16,14 +16,13 @@ Original inspiration for this demo from Bas van Dijk.
 
 # Major library imports
 import wx
-from numpy import arange, fabs, pi, sin
+from numpy import arange
 from scipy.special import jn
 
 from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enable.api import Window
-from traits.api import false
 
 # Chaco imports
 from chaco.api import create_line_plot, add_default_axes, add_default_grids
