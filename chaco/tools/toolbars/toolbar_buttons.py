@@ -31,14 +31,14 @@ class ToolbarButton(Button):
 
     @cached_property
     def _get_width(self):
-        gc = PlotGraphicsContext((100,100), dpi=72)
+        gc = PlotGraphicsContext((100, 100), dpi=72)
         gc.set_font(self.label_font)
         (w, h, descent, leading) = gc.get_full_text_extent(self.label)
         return max(self._image.width(), w)
 
     @cached_property
     def _get_height(self):
-        gc = PlotGraphicsContext((100,100), dpi=72)
+        gc = PlotGraphicsContext((100, 100), dpi=72)
         gc.set_font(self.label_font)
         (w, h, descent, leading) = gc.get_full_text_extent(self.label)
         return self._image.height() + h
@@ -48,21 +48,23 @@ class ToolbarButton(Button):
         return [self.width, self.height]
 
     def _draw_actual_button(self, gc):
-        x_offset = self.x + (self.width - self._image.width())/2
+        x_offset = self.x + (self.width - self._image.width()) / 2
         gc.draw_image(self._image,
-                      (x_offset, self.y+2, self._image.width(), self._image.height()))
+                      (x_offset, self.y + 2, self._image.width(),
+                       self._image.height()))
 
         if self.label is not None and len(self.label) > 0:
             gc.set_font(self.label_font)
 
             (w, h, descent, leading) = gc.get_full_text_extent(self.label)
             if w < self.width:
-                x_offset = self.x + (self.width - w)/2
+                x_offset = self.x + (self.width - w) / 2
             else:
                 x_offset = self.x
 
-            gc.set_text_position(x_offset, self.y-8)
+            gc.set_text_position(x_offset, self.y - 8)
             gc.show_text(self.label)
+
 
 class IndexAxisLogButton(ToolbarButton):
     label = 'X Log Scale'
@@ -77,6 +79,7 @@ class IndexAxisLogButton(ToolbarButton):
         self.container.request_redraw()
         return
 
+
 class ValueAxisLogButton(ToolbarButton):
     label = 'Y Log Scale'
     tooltip = 'Change value axis scale'
@@ -89,6 +92,7 @@ class ValueAxisLogButton(ToolbarButton):
             self.container.component.value_scale = 'linear'
         self.container.request_redraw()
         return
+
 
 class ZoomResetButton(ToolbarButton):
     label = 'Zoom Reset'
@@ -103,7 +107,6 @@ class ZoomResetButton(ToolbarButton):
                 overlay._reset_state_pressed()
 
         self.container.request_redraw()
-
 
 
 class SaveAsButton(ToolbarButton):
@@ -134,16 +137,16 @@ class SaveAsButton(ToolbarButton):
         try:
             gc.save(filename)
         except KeyError, e:
-            errmsg = "The filename must have an extension that matches a graphics"
-            errmsg = errmsg + " format, such as '.png' or '.tiff'."
+            errmsg = ("The filename must have an extension that matches "
+                      "a graphics format, such as '.png' or '.tiff'.")
             if str(e.message) != '':
-                errmsg = ("Unknown filename extension: '%s'\n" % str(e.message)) + errmsg
+                errmsg = ("Unknown filename extension: '%s'\n" %
+                          str(e.message)) + errmsg
 
             error(None, errmsg, title="Invalid Filename Extension")
 
         # Restore the toolbar.
         plot_component.add_toolbar()
-
 
 
 class CopyToClipboardButton(ToolbarButton):
@@ -171,11 +174,11 @@ class CopyToClipboardButton(ToolbarButton):
         # Restore the toolbar.
         plot_component.add_toolbar()
 
-
     def _perform_wx(self, width, height, gc):
         import wx
 
-        bitmap = wx.BitmapFromBufferRGBA(width+1, height+1, gc.bmp_array.flatten())
+        bitmap = wx.BitmapFromBufferRGBA(width + 1, height + 1,
+                                         gc.bmp_array.flatten())
         data = wx.BitmapDataObject()
         data.SetBitmap(bitmap)
         if wx.TheClipboard.Open():
@@ -183,6 +186,7 @@ class CopyToClipboardButton(ToolbarButton):
             wx.TheClipboard.Close()
         else:
             wx.MessageBox("Unable to open the clipboard.", "Error")
+
 
 class ExportDataToClipboardButton(ToolbarButton):
     label = "Copy Data"
@@ -196,7 +200,6 @@ class ExportDataToClipboardButton(ToolbarButton):
             self._perform_wx()
         else:
             pass
-
 
     def _get_data_from_plots(self):
         values = []
@@ -238,5 +241,3 @@ class ExportDataToClipboardButton(ToolbarButton):
             wx.TheClipboard.Close()
         else:
             wx.MessageBox("Unable to open the clipboard.", "Error")
-
-
