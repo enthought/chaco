@@ -11,6 +11,7 @@ from enable.tools.api import HoverTool
 from traits.api import Bool, Float, on_trait_change, List, \
         Tuple, Type, Enum
 
+
 class PlotToolbarHover(HoverTool):
     _last_xy = Tuple()
 
@@ -20,7 +21,6 @@ class PlotToolbarHover(HoverTool):
     def normal_mouse_move(self, event):
         self._last_xy = (event.x, event.y)
         super(PlotToolbarHover, self).normal_mouse_move(event)
-
 
     def on_hover(self):
         """ This gets called when all the conditions of the hover action have
@@ -77,7 +77,7 @@ class PlotToolbar(Container, AbstractOverlay):
         super(PlotToolbar, self).__init__(*args, **kw)
         self.component = component
 
-        if component is not None and hasattr(component,'toolbar_location'):
+        if component is not None and hasattr(component, 'toolbar_location'):
             self.location = component.toolbar_location
 
         for buttontype in self.buttons:
@@ -91,11 +91,10 @@ class PlotToolbar(Container, AbstractOverlay):
         else:
             self._calculate_height()
 
-
     def _buttons_default(self):
-        return [ IndexAxisLogButton, ValueAxisLogButton,
-                 SaveAsButton, CopyToClipboardButton,
-                 ExportDataToClipboardButton, ZoomResetButton ]
+        return [IndexAxisLogButton, ValueAxisLogButton,
+                SaveAsButton, CopyToClipboardButton,
+                ExportDataToClipboardButton, ZoomResetButton]
 
     def add_button(self, button):
         """ adds a button to the toolbar
@@ -159,12 +158,12 @@ class PlotToolbar(Container, AbstractOverlay):
                     x + self.end_radius, y,
                     self.end_radius)
 
-            if self.location in ['top','bottom']:
-                gc.linear_gradient(x, y, x, y+100,
+            if self.location in ['top', 'bottom']:
+                gc.linear_gradient(x, y, x, y + 100,
                         numpy.array([starting_color, ending_color]),
                         "pad")
             else:
-                gc.linear_gradient(x, y, x+100, y,
+                gc.linear_gradient(x, y, x + 100, y,
                         numpy.array([starting_color, ending_color]),
                         "pad")
 
@@ -187,51 +186,62 @@ class PlotToolbar(Container, AbstractOverlay):
             if self.hiding:
                 self.height = height = 10
             else:
-                tallest_button = max([button.height for button in self.components])
-                self.height = height = tallest_button + self.vertical_padding*2
+                tallest_button = max([button.height
+                                      for button in self.components])
+                self.height = height = (tallest_button +
+                                        self.vertical_padding * 2)
         else:
             if self.hiding:
                 self.width = width = 10
             else:
-                widest_button = max([button.width for button in self.components])
-                self.width = width = widest_button + self.horizontal_padding*2
+                widest_button = max([button.width
+                                     for button in self.components])
+                self.width = width = (widest_button +
+                                      self.horizontal_padding * 2)
 
         if component is not None:
             # Overlay positions are not relative to the component's position,
             # so we have to add in the component's position
             cx, cy = component.outer_position
             if self.location is 'top':
-                self.x = cx + (component.width - self.width)/2 + component.padding_left
-                self.y = cy + component.height + component.padding_bottom - height - 2
+                self.x = (cx + (component.width - self.width) / 2
+                          + component.padding_left)
+                self.y = (cy + component.height + component.padding_bottom
+                          - height - 2)
             elif self.location is 'bottom':
-                self.x = cx + (component.width - self.width)/2 + component.padding_left
+                self.x = (cx + (component.width - self.width) / 2
+                          + component.padding_left)
                 self.y = cy + component.padding_bottom + 2
             elif self.location is 'left':
                 self.x = cx + component.padding_left + 2
-                self.y = cY + (component.height - self.height)/2 + component.padding_bottom
+                self.y = (cy + (component.height - self.height) / 2
+                          + component.padding_bottom)
             else:  # 'right'
-                self.x = cx + component.width + component.padding_left - width - 2
-                self.y = cy + (component.height - self.height)/2 + component.padding_bottom
+                self.x = (cx + component.width + component.padding_left
+                          - width - 2)
+                self.y = (cy + (component.height - self.height) / 2
+                          + component.padding_bottom)
 
         if self.location in ['top', 'bottom']:
-            v_position = self.y + self.vertical_padding*2
+            v_position = self.y + self.vertical_padding * 2
 
-            last_button_position = self.x + self.horizontal_padding + self.button_spacing
+            last_button_position = (self.x + self.horizontal_padding
+                                    + self.button_spacing)
             for button in self.components:
                 button.x = last_button_position
                 button.y = v_position
-                last_button_position += button.width + self.button_spacing*2
+                last_button_position += button.width + self.button_spacing * 2
         else:
             # location is 'left' or 'right'
             h_position = self.x + self.horizontal_padding
 
-            last_button_position = self.y + self.vertical_padding + self.button_spacing
+            last_button_position = (self.y + self.vertical_padding
+                                    + self.button_spacing)
             for button in reversed(self.components):
-                h_offset = (self.width - button.width)/2
+                h_offset = (self.width - button.width) / 2
                 button.y = last_button_position
                 button.x = h_position + h_offset
-                last_button_position += button.height + self.button_spacing*2
-
+                last_button_position += button.height + self.button_spacing * 2
 
     def _dispatch_stateful_event(self, event, suffix):
         if self.is_in(event.x, event.y):
@@ -253,9 +263,9 @@ class PlotToolbar(Container, AbstractOverlay):
     @on_trait_change('components, location')
     def _calculate_width(self):
         if self.location in ['top', 'bottom']:
-            width = self.horizontal_padding*2
+            width = self.horizontal_padding * 2
             for button in self.components:
-                width += button.width + self.button_spacing*2
+                width += button.width + self.button_spacing * 2
 
             self.width = max(10, width)
             self._layout_needed = True
@@ -264,9 +274,9 @@ class PlotToolbar(Container, AbstractOverlay):
     @on_trait_change('components, location')
     def _calculate_height(self):
         if self.location in ['left', 'right']:
-            height = self.vertical_padding*2
+            height = self.vertical_padding * 2
             for button in self.components:
-                height += button.height + self.button_spacing*2
+                height += button.height + self.button_spacing * 2
 
             self.height = max(10, height)
             self._layout_needed = True
