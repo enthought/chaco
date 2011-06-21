@@ -4,8 +4,8 @@
 from numpy import array
 
 # Enthought library imports
-from traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, List, \
-                             Property, Str, Trait, Tuple
+from traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, \
+                         List, Property, Str, Trait, Tuple
 from enable.api import KeySpec
 
 # Chaco imports
@@ -33,10 +33,12 @@ class RangeSelection(AbstractController):
     # space range.
     selection_completed = Event
 
-    # The name of the metadata on the datasource that we will write self.selection to
+    # The name of the metadata on the datasource that we will write
+    # self.selection to
     metadata_name = Str("selections")
 
-    # Either "set" or "append", depending on whether self.append_key was held down
+    # Either "set" or "append", depending on whether self.append_key was
+    # held down
     selection_mode_metadata_name = Str("selection_mode")
 
     # The name of the metadata on the datasource that we will set to a numpy
@@ -65,12 +67,13 @@ class RangeSelection(AbstractController):
     #
     # By default, the RangeSelection assumes that self.component is a plot
     # and looks for the mapper and the axis_index on it.  If this is not the
-    # case, then any (or all) three of these can be overriden by directly assigning
-    # values to them.  To unset them and have them revert to default behavior,
-    # assign "None" to them.
+    # case, then any (or all) three of these can be overriden by directly
+    # assigning values to them.  To unset them and have them revert to default
+    # behavior, assign "None" to them.
     #------------------------------------------------------------------------
 
-    # The plot associated with this tool By default, this is just self.component.
+    # The plot associated with this tool By default, this is just
+    # self.component.
     plot = Property
 
     # The mapper for associated with this tool. By default, this is the mapper
@@ -83,7 +86,6 @@ class RangeSelection(AbstractController):
 
     # List of listeners that listen to selection events.
     listeners = List
-
 
     #------------------------------------------------------------------------
     # Configuring interaction control
@@ -129,8 +131,8 @@ class RangeSelection(AbstractController):
     # Shadow trait for the **axis_index** property.
     _axis_index = Trait(None, None, Int)
 
-    # The data space start and end coordinates of the selected region, expressed
-    # as a list.
+    # The data space start and end coordinates of the selected region,
+    # expressed as a list.
     _selection = Trait(None, None, Tuple, List, Array)
 
     # The selection in mask form.
@@ -152,7 +154,6 @@ class RangeSelection(AbstractController):
 
     # The original selection when the mouse went down to move the selection.
     _original_selection = Any
-
 
     #------------------------------------------------------------------------
     # Public methods
@@ -185,8 +186,8 @@ class RangeSelection(AbstractController):
         within the resize margin of an endpoint, then the tool switches to the
         'selecting' state so that the user can resize the selection.
 
-        If the event is within the bounds of the selection region, then the tool
-        switches to the 'moving' states.
+        If the event is within the bounds of the selection region, then the
+        tool switches to the 'moving' states.
 
         Otherwise, the selection becomes deselected.
         """
@@ -211,7 +212,8 @@ class RangeSelection(AbstractController):
         if tmp[self.axis_index] >= low and tmp[self.axis_index] <= high:
             self.event_state = "moving"
             self._down_point = array([event.x, event.y])
-            self._down_data_coord = self.mapper.map_data(self._down_point)[self.axis_index]
+            self._down_data_coord = \
+                self.mapper.map_data(self._down_point)[self.axis_index]
             self._original_selection = array(self.selection)
         elif self.allow_deselection:
             self.deselect(event)
@@ -275,7 +277,8 @@ class RangeSelection(AbstractController):
         Otherwise, the cursor is set to an arrow.
         """
         if self.enable_resize:
-            # Change the mouse cursor when the user moves within the resize margin
+            # Change the mouse cursor when the user moves within the
+            # resize margin
             coords = self._get_selection_screencoords()
             if coords is not None:
                 start, end = coords
@@ -283,7 +286,7 @@ class RangeSelection(AbstractController):
                 ndx = self._determine_axis()
                 mouse_coord = tmp[ndx]
                 if abs(mouse_coord - end) <= self.resize_margin or \
-                                    abs(mouse_coord - start) <= self.resize_margin:
+                        abs(mouse_coord - start) <= self.resize_margin:
                     self._set_sizing_cursor(event)
                     return
         event.window.set_pointer("arrow")
@@ -328,7 +331,8 @@ class RangeSelection(AbstractController):
         cur_point = array([event.x, event.y])
         cur_data_point = self.mapper.map_data(cur_point)[self.axis_index]
         original_selection = self._original_selection
-        new_selection = original_selection + (cur_data_point - self._down_data_coord)
+        new_selection = original_selection + (cur_data_point -
+                                              self._down_data_coord)
         selection_data_width = original_selection[1] - original_selection[0]
 
         range = self.mapper.range
@@ -344,8 +348,8 @@ class RangeSelection(AbstractController):
         return
 
     def moving_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot while the tool is in the 'moving'
-        state.
+        """ Handles the mouse leaving the plot while the tool is in the
+        'moving' state.
 
         If the mouse was within the selection region when it left, the method
         does nothing.
@@ -359,7 +363,8 @@ class RangeSelection(AbstractController):
 
         pos = self._get_axis_coord(event)
         if pos >= low and pos <= high:
-            # the mouse left but was within the mapping range, so don't do anything
+            # the mouse left but was within the mapping range, so don't do
+            # anything
             return
         else:
             # the mouse left and exceeds the mapping range, so we need to slam
@@ -523,7 +528,6 @@ class RangeSelection(AbstractController):
             self._set_sizing_cursor(event)
         return
 
-
     #------------------------------------------------------------------------
     # Property getter/setters
     #------------------------------------------------------------------------
@@ -585,12 +589,13 @@ class RangeSelection(AbstractController):
                     break
 
             # Set the selection mode on the datasource
-            datasource.metadata[self.selection_mode_metadata_name] = self.selection_mode
+            datasource.metadata[self.selection_mode_metadata_name] = \
+                      self.selection_mode
 
             if val is not None:
                 low, high = val
                 data_pts = datasource.get_data()
-                new_mask = (data_pts>=low) & (data_pts<=high)
+                new_mask = (data_pts >= low) & (data_pts <= high)
                 selection_masks.append(new_mask)
                 self._selection_mask = new_mask
             datasource.metadata_changed = {self.mask_metadata_name: val}
@@ -637,9 +642,9 @@ class RangeSelection(AbstractController):
         """
         event_pos = (event.x, event.y)
         if axis == "index":
-            return event_pos[ self.axis_index ]
+            return event_pos[self.axis_index]
         else:
-            return event_pos[ 1 - self.axis_index ]
+            return event_pos[1 - self.axis_index]
 
     def _determine_axis(self):
         """ Determines whether the index of the coordinate along this tool's
@@ -666,9 +671,11 @@ class RangeSelection(AbstractController):
 
     def _axis_changed(self, old, new):
         if old is not None:
-            self.plot.on_trait_change(self.__mapper_changed, old + "_mapper", remove=True)
+            self.plot.on_trait_change(self.__mapper_changed,
+                                      old + "_mapper", remove=True)
         if new is not None:
-            self.plot.on_trait_change(self.__mapper_changed, old + "_mapper", remove=True)
+            self.plot.on_trait_change(self.__mapper_changed,
+                                      old + "_mapper", remove=True)
         return
 
 
