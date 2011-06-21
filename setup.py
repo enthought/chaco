@@ -50,11 +50,8 @@ setup(
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.strip()) > 0],
-    data_files=[('chaco/layers/data',
-        ['chaco/layers/data/Dialog-error.svg',
-         'chaco/layers/data/Dialog-warning.svg',
-         'chaco/layers/data/range_selection.svg'])],
-    package_data={'chaco': ['tools/toolbars/images/*.png']},
+    package_data={'chaco': ['tools/toolbars/images/*.png',
+                            'layers/data/*.svg']},
     description = 'interactive 2-dimensional plotting',
     long_description = open('README.rst').read(),
     download_url = ('http://www.enthought.com/repo/ets/chaco-%s.tar.gz' %
