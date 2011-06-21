@@ -32,7 +32,7 @@ class WorldMapPlot(HasTraits):
     plot = Instance(Plot)
 
     # The URL which points to the world map image to be downloaded
-    image_url = Str("http://veimages.gsfc.nasa.gov/2433/land_shallow_topo_2048.jpg")
+    image_url = Str("http://eoimages.gsfc.nasa.gov/ve//2433/land_shallow_topo_2048.jpg")
 
 
     ### Private Traits #########################################################
