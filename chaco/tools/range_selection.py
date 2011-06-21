@@ -401,7 +401,6 @@ class RangeSelection(AbstractController):
         self._down_point = array([event.x, event.y])
         self.event_state = "selecting"
         if self.append_key is not None and self.append_key.match(event):
-            print "append key matched"
             self.selection_mode = "append"
         else:
             self.selection_mode = "set"
