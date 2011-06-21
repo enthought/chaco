@@ -615,7 +615,6 @@ class RangeSelection(AbstractController):
         """
         selection = self.selection
         if selection is not None and len(selection) == 2:
-            mapper = self.mapper
             return self.mapper.map_screen(array(selection))
         else:
             return None
