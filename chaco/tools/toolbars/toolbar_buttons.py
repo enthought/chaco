@@ -198,6 +198,8 @@ class ExportDataToClipboardButton(ToolbarButton):
     def perform(self, event):
         if ETSConfig.toolkit == 'wx':
             self._perform_wx()
+        elif ETSConfig.toolkit == 'qt4':
+            self._perform_qt()
         else:
             pass
 
@@ -241,3 +243,11 @@ class ExportDataToClipboardButton(ToolbarButton):
             wx.TheClipboard.Close()
         else:
             wx.MessageBox("Unable to open the clipboard.", "Error")
+
+    def _perform_qt(self):
+        from pyface.qt import QtGui
+
+        indices, values = self._get_data_from_plots()
+        data_str = self._serialize_data(indices, values)
+
+        QtGui.QApplication.clipboard().setText(data_str)
