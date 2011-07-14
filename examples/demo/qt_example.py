@@ -49,8 +49,10 @@ def create_chaco_plot(parent):
     return Window(parent, -1, component = plot)
 
 def main():
-    app = QtGui.QApplication(sys.argv)
-    main_window = QtGui.QMainWindow(size=QtCore.QSize(500,500))
+    app = QtGui.QApplication.instance()
+    main_window = QtGui.QMainWindow()
+    main_window.resize(500,500)
+    
 
     enable_window = create_chaco_plot(main_window)
 
