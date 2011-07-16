@@ -4,6 +4,7 @@ Reads river basin polygons from tx_major_river_basins shapefile and
 plots each river basin in a different color. Plots Lat/Lon directly
 without conducting coordinate conversions
 """
+import itertools
 
 # Major library imports
 from numpy import array
@@ -37,10 +38,9 @@ def _create_plot_component():
     polyplot = Plot(pd)
 
     #get polygons from shapefile
-    sf = shapefile.Reader('tx_major_river_basins/basins_dd')
+    basins = shapefile.Reader('tx_major_river_basins/basins_dd')
     #cycle through polygons in shapefile
-    i = 0
-    for shp in sf.shapes():
+    for i, shp in enumerate(basins.shapes()):
         points = array(shp.points)
         pd.set_data("x" + str(i), points[:,0])
         pd.set_data("y" + str(i), points[:,1])
@@ -48,9 +48,25 @@ def _create_plot_component():
         # Store path data for each polygon, and plot
         plot = polyplot.plot(("x" + str(i), "y" + str(i)),
                              type="polygon",
-                             face_color='auto',
+                             face_color='oldlace',
                              hittest_type="poly")[0]
-        i = i + 1
+        plot.edge_color = (0, 0, 0, 0.5)
+
+    #get polygons from shapefile
+    rivers = shapefile.Reader('tx_major_rivers/MajorRivers_dd83')
+    #cycle through polygons in shapefile
+    for i, shape_record in enumerate(rivers.shapeRecords()):
+        if i > 400:
+            break
+        points = array(shape_record.shape.points)
+        pd.set_data("river_x" + str(i), points[:,0])
+        pd.set_data("river_y" + str(i), points[:,1])
+
+        # Store path data for each polygon, and plot
+        plot = polyplot.plot(("river_x" + str(i), "river_y" + str(i)),
+                             type="line",
+                             hittest_type="line")[0]
+        plot.color = (0.392, 0.584, 0.929, 0.75)
 
     # Tweak some of the plot properties
     polyplot.padding = 50
@@ -81,7 +97,8 @@ class Demo(HasTraits):
                         Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
                         orientation = "vertical"),
-                    resizable=True, title=title
+                    width=size[0], height=size[1],
+                    title=title
                     )
 
     def _plot_default(self):
