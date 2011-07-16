@@ -414,6 +414,9 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         high = [0,0]
         for axis_index, mapper in [(0, self.component.x_mapper), \
                                    (1, self.component.y_mapper)]:
+            # Ignore missing axis mappers (ColorBar instances only have one).
+            if not mapper:
+                continue
             low_val = mapper.map_data(start[axis_index])
             high_val = mapper.map_data(end[axis_index])
 
