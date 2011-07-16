@@ -3,7 +3,7 @@
 
 from __future__ import with_statement
 
-from kiva.image import GraphicsContext
+from enable.kiva_graphics_context import GraphicsContext
 
 class PlotGraphicsContextMixin(object):
 
@@ -19,8 +19,8 @@ class PlotGraphicsContextMixin(object):
     # FIXME: Right now this does not resize correctly.  (But you shouldn't
     # resize your GC, anyway!)
 
-    def __init__(self, size_or_ary, dpi=72.0, *args, **kw):
-        scale = dpi / 72.0
+    def __init__(self, size_or_ary, *args, **kw):
+        scale = kw.pop('dpi', 72.0) / 72.0
         if type(size_or_ary) in (list, tuple) and len(size_or_ary) == 2:
             size_or_ary = (size_or_ary[0]*scale + 1, size_or_ary[1]*scale + 1)
 
