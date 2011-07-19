@@ -17,10 +17,10 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import HPlotContainer, \
-    OverlayPlotContainer, PlotAxis, PlotGrid
-from chaco.tools.api import BroadcasterTool, PanTool
-from chaco.api import create_line_plot
+from chaco.api import ArrayPlotData, Plot, MultiAxisPlotContainer, \
+                      MultiAxisPlotAxis
+from chaco.tools.api import PanTool
+
 
 #===============================================================================
 # # Create the Chaco plot.
@@ -28,55 +28,42 @@ from chaco.api import create_line_plot
 def _create_plot_component():
 
     # Create some x-y data series to plot
-    plot_area = OverlayPlotContainer(border_visible=True)
-    container = HPlotContainer(padding=50, bgcolor="transparent")
-    #container.spacing = 15
-
     x = linspace(-2.0, 10.0, 100)
+    pd = ArrayPlotData(x=x)
+    plot = Plot(pd,
+                border_visible=True,
+                padding=[50,0,50,50],
+                # uncomment to test horizontal resizing of left and right axes
+                #fixed_preferred_size=[300,200],
+                title="Bessel Functions")
+    container = MultiAxisPlotContainer(bgcolor="transparent", plot=plot)
+
     for i in range(5):
         color = tuple(COLOR_PALETTE[i])
-        y = jn(i, x)
-        renderer = create_line_plot((x, y), color=color)
-        plot_area.add(renderer)
-        #plot_area.padding_left = 20
-
-        axis = PlotAxis(orientation="left", resizable="v",
-                    mapper = renderer.y_mapper,
-                    axis_line_color=color,
-                    tick_color=color,
-                    tick_label_color=color,
-                    title_color=color,
-                    bgcolor="transparent",
-                    title = "jn_%d" % i,
-                    border_visible = True,)
-        axis.bounds = [60,0]
-        axis.padding_left = 10
-        axis.padding_right = 10
-
-        container.add(axis)
-
-        if i == 4:
-            # Use the last plot's X mapper to create an X axis and a
-            # vertical grid
-            x_axis = PlotAxis(orientation="bottom", component=renderer,
-                        mapper=renderer.x_mapper)
-            renderer.overlays.append(x_axis)
-            grid = PlotGrid(mapper=renderer.x_mapper, orientation="vertical",
-                    line_color="lightgray", line_style="dot")
-            renderer.underlays.append(grid)
-
-    # Add the plot_area to the horizontal container
-    container.add(plot_area)
-
+        name = "jn_%d" % i
+        pd.set_data(name, jn(i, x))
+        renderer = plot.plot(('x', name), name=name, color=color)[0]
+        
+        if i==0:
+            plot.value_axis.title = name
+            continue
+        
+        axis = MultiAxisPlotAxis(orientation=("left" if i < 2 else "right"),
+                                resizable="v",
+                                mapper = renderer.y_mapper,
+                                axis_line_color=color,
+                                tick_color=color,
+                                tick_label_color=color,
+                                title_color=color,
+                                bgcolor="transparent",
+                                title=name,
+                                #border_visible=True,
+                                bounds=[50,100],
+                                padding=0)
+        container.axes.append(axis)
+    
     # Attach some tools to the plot
-    broadcaster = BroadcasterTool()
-    for plot in plot_area.components:
-        broadcaster.tools.append(PanTool(plot))
-
-    # Attach the broadcaster to one of the plots.  The choice of which
-    # plot doesn't really matter, as long as one of them has a reference
-    # to the tool and will hand events to it.
-    plot.tools.append(broadcaster)
+    plot.tools.append(PanTool(plot))
 
     return container
 
