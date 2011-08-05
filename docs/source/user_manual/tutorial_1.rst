@@ -82,7 +82,7 @@ The lasso selection tool and regression overlay are both built in to Chaco,
 but they serve an additional purpose of demonstrating how one can build complex
 data-centric interactions and displays on top of the Chaco framework.
 
-.. image:: images/scalar_function.png
+.. image:: ../images/scalar_function.png
 
 This is a much more complex demonstration of Chaco's capabilities.  The user
 can view the cross sections of a 2-D scalar-valued function.  The cross sections
