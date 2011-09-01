@@ -31,7 +31,6 @@ class AbstractCompositeIconRenderer(HasTraits):
         raise NotImplementedError
 
 
-
 class CompositeIconRenderer(AbstractCompositeIconRenderer):
     """ Renderer for composite icons.
     """
@@ -372,22 +371,25 @@ class Legend(AbstractOverlay):
         if self.hide_invisible_plots:
             visible_labels = []
             visible_plots = []
-            for i, name in enumerate(label_names):
-                val = self.plots[plot_names[i]]
-                # Rather than checking for a list/TraitListObject/etc., we just check
-                # for the attribute first
-                if hasattr(val, 'visible'):
-                    if val.visible:
-                        visible_labels.append(name)
-                        visible_plots.append(val)
-                else:
-                    # If we have a list of renderers, add the name if any of them are
-                    # visible
-                    for renderer in val:
-                        if renderer.visible:
+            for name in label_names:
+                # If the user set self.labels, there might be a bad value,
+                # so ensure that each name is actually in the plots dict.
+                if name in self.plots:
+                    val = self.plots[name]
+                    # Rather than checking for a list/TraitListObject/etc., we just check
+                    # for the attribute first
+                    if hasattr(val, 'visible'):
+                        if val.visible:
                             visible_labels.append(name)
                             visible_plots.append(val)
-                            break
+                    else:
+                        # If we have a list of renderers, add the name if any of them are
+                        # visible
+                        for renderer in val:
+                            if renderer.visible:
+                                visible_labels.append(name)
+                                visible_plots.append(val)
+                                break
             label_names = visible_labels
 
         # Create the labels
