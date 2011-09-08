@@ -27,7 +27,7 @@ class DataLabelTool(DragTool):
 
     # This is used in the auto_arrow_root = 'corners' case.
     _corner_names = ("bottom left", "bottom right", "top right", "top left",
-                     "center", "center", "center", "center")
+                     "top center", "bottom center", "left center", "right center")
 
     def is_draggable(self, x, y):
         """ Returns whether the (x,y) position is in a region that is OK to
