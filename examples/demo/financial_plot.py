@@ -42,6 +42,7 @@ def _create_plot_component():
                                 value_mapper = price_mapper,
                                 edge_color = "blue",
                                 face_color = "paleturquoise",
+                                alpha = 0.5,
                                 bgcolor = "white",
                                 border_visible = True)
     add_default_grids(price_plot)
