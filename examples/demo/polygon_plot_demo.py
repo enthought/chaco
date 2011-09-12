@@ -1,7 +1,7 @@
 
 import numpy as np
 
-from traits.api import HasTraits, Instance, Enum, Range
+from traits.api import HasTraits, Instance, Range
 from traitsui.api import View, UItem, Item, Group, VGroup
 from chaco.api import Plot, ArrayPlotData, PolygonPlot
 from enable.api import ComponentEditor, LineStyle
