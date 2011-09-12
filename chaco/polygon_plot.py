@@ -10,7 +10,8 @@ import numpy as np
 from enable.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
 from kiva.agg import points_in_polygon
-from traits.api import Enum, Float
+from traits.api import Enum, Float, Tuple, Property, cached_property, \
+                        on_trait_change
 
 # Local imports.
 from base_xy_plot import BaseXYPlot
@@ -50,17 +51,20 @@ class PolygonPlot(BaseXYPlot):
 
     # Override the hittest_type trait inherited from BaseXYPlot
     hittest_type = Enum("poly", "point", "line")
+    
+    # The RGBA tuple for rendering edges.  It is always a tuple of length 4.
+    # It has the same RGB values as edge_color_, and its alpha value is the
+    # alpha value of self.edge_color multiplied by self.alpha. 
+    effective_edge_color = Property(Tuple, depends_on=['edge_color', 'alpha'])
+    
+    # The RGBA tuple for rendering the face.  It is always a tuple of length 4.
+    # It has the same RGB values as face_color_, and its alpha value is the
+    # alpha value of self.face_color multiplied by self.alpha.   
+    effective_face_color = Property(Tuple, depends_on=['face_color', 'alpha'])
 
-    #### Private 'BaseXYPlot' interface ########################################
-
-    def __init__(self, *args, **kw):
-        super(PolygonPlot, self).__init__(*args, **kw)
-
-        # update colors to use the correct alpha channel
-        self.edge_color_ = self.edge_color_[0:3] + (self.alpha,)
-        self.face_color_ = self.face_color_[0:3] + (self.alpha,)
-
-
+    #----------------------------------------------------------------------
+    # Private 'BaseXYPlot' interface
+    #----------------------------------------------------------------------
 
     def _gather_points(self):
         """ Collects the data points that are within the bounds of the plot and
@@ -91,10 +95,10 @@ class PolygonPlot(BaseXYPlot):
         """
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
-            gc.set_stroke_color(self.edge_color_)
+            gc.set_stroke_color(self.effective_edge_color)
             gc.set_line_width(self.edge_width)
             gc.set_line_dash(self.edge_style_)
-            gc.set_fill_color(self.face_color_)
+            gc.set_fill_color(self.effective_face_color)
 
             gc.lines(points)
             gc.close_path()
@@ -108,9 +112,9 @@ class PolygonPlot(BaseXYPlot):
         Used by the legend.
         """
         with gc:
-            gc.set_stroke_color(self.edge_color_)
+            gc.set_stroke_color(self.effective_edge_color)
             gc.set_line_width(self.line_width)
-            gc.set_fill_color(self.face_color_)
+            gc.set_fill_color(self.effective_face_color)
             if hasattr(self, 'line_style_'):
                 gc.set_line_dash(self.line_style_)
             gc.draw_rect((x,y,width,height))
@@ -140,11 +144,29 @@ class PolygonPlot(BaseXYPlot):
     # Event handlers
     #------------------------------------------------------------------------
 
-    def _alpha_changed(self):
-        self.edge_color_ = self.edge_color_[0:3] + (self.alpha,)
-        self.face_color_ = self.face_color_[0:3] + (self.alpha,)
+    @on_trait_change('edge_color, edge_width, edge_style, face_color, alpha')
+    def _attributes_changed(self):
         self.invalidate_draw()
         self.request_redraw()
 
+    #------------------------------------------------------------------------
+    # Property getters
+    #------------------------------------------------------------------------
 
-#### EOF #######################################################################
+    @cached_property
+    def _get_effective_edge_color(self):
+        if len(self.edge_color_) == 4:
+            edge_alpha = self.edge_color_[-1]
+        else:
+            edge_alpha = 1.0
+        c = self.edge_color_[:3] + (edge_alpha * self.alpha,)
+        return c
+
+    @cached_property
+    def _get_effective_face_color(self):
+        if len(self.face_color_) == 4:
+            face_alpha = self.face_color_[-1]
+        else:
+            face_alpha = 1.0
+        c = self.face_color_[:3] + (face_alpha * self.alpha,)
+        return c
