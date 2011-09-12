@@ -1,8 +1,11 @@
+"""Demonstrate a simple polygon plot.  The UI allows you to change
+some of the attributes of the plot.
+"""
 
 import numpy as np
 
 from traits.api import HasTraits, Instance, Range
-from traitsui.api import View, UItem, Item, Group, VGroup
+from traitsui.api import View, UItem, Item, Group, HGroup, VGroup, spring
 from chaco.api import Plot, ArrayPlotData, PolygonPlot
 from enable.api import ComponentEditor, LineStyle
 
@@ -32,7 +35,10 @@ class PolygonPlotDemo(HasTraits):
                     UItem('plot', editor=ComponentEditor(), style='custom'),
                 ),
                 VGroup(
-                    Item('edge_style'),
+                    HGroup(
+                        Item('edge_style'),
+                        spring,
+                    ),
                     Item('edge_width'),
                     Item('edge_alpha'),
                     Item('face_alpha'),
@@ -88,8 +94,10 @@ class PolygonPlotDemo(HasTraits):
         self.polygon_plot.alpha = self.alpha
 
 
+demo = PolygonPlotDemo()
+# Hack to force initial rendering of the plot.
+demo.face_alpha = 0.5
+
+
 if __name__ == "__main__":
-    demo = PolygonPlotDemo()
-    # Hack to force initial rendering of the plot.
-    demo.face_alpha = 0.5
     demo.configure_traits()
