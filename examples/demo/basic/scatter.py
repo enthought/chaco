@@ -1,11 +1,17 @@
 """
-Draws a simple scatterplot of a set of random points.
- - Left-drag pans the plot.
- - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
-   region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom
-   history".
+Scatter plot with panning and zooming
+
+Shows a scatter plot of a set of random points, 
+with basic Chaco panning and zooming.
+
+Interacting with the plot:
+
+  - Left-mouse-drag pans the plot.
+  - Mouse wheel up and down zooms the plot in and out.
+  - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
+    region to zoom. If you use a sequence of zoom boxes, pressing alt-left-arrow
+    and alt-right-arrow moves you forwards and backwards through the "zoom
+    history".
 """
 
 # Major library imports
