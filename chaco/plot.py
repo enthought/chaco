@@ -3,7 +3,7 @@
 # Major library imports
 import itertools
 import warnings
-from numpy import arange, array, ndarray, linspace
+from numpy import arange, array, ndarray, linspace, sum, zeros_like
 from types import FunctionType
 
 # Enthought library imports
@@ -36,6 +36,7 @@ from log_mapper import LogMapper
 from plot_label import PlotLabel
 from polygon_plot import PolygonPlot
 from scatterplot import ScatterPlot
+from stacked_bar_plot import StackedBarPlot
 
 
 
@@ -113,7 +114,8 @@ class Plot(DataView):
                              cmap_img_plot = CMapImagePlot,
                              contour_line_plot = ContourLinePlot,
                              contour_poly_plot = ContourPolyPlot,
-                             candle = CandlePlot))
+                             candle = CandlePlot,
+                             stacked_bar = StackedBarPlot))
 
     #------------------------------------------------------------------------
     # Annotations and decorations
@@ -662,6 +664,93 @@ class Plot(DataView):
         self.add(plot)
         self.plots[name] = [plot]
         return self.plots[name]
+
+    def stacked_bar_plot(self, data, name=None, value_scale="linear", origin=None,
+                    **styles):
+        """ Adds a new sub-plot using the given data and plot style.
+
+        Parameters
+        ==========
+        data : list(string), tuple(string)
+            The names of the data to be plotted in the ArrayDataSource.  The
+            number of arguments determines how they are interpreted:
+
+            (index, bar_max)
+                filled or outline-only bar extending from index-axis to
+                **bar_max**
+
+            (index, bar_max1, bar_max2, bar_max3, ...)
+                filled or outline-only bar extending first from index-axis to
+                **bar_max1**, then another bar extending from **bar_max1**
+                to **bar_max2**, etc.
+
+        name : string
+            The name of the plot.  If None, then a default one is created.
+
+        value_scale : string
+            The type of scale to use for the value axis.  If not "linear",
+            then a log scale is used.
+
+        Styles
+        ======
+        These are all optional keyword arguments.
+
+        color : List of strings, 3- or 4-tuples
+            The fill color of the bars; defaults to "auto".
+        outline_color : List of strings, 3- or 4-tuples
+            The color of the rectangular box forming the bars.
+
+        Returns
+        =======
+        [renderers] -> list of renderers created in response to this call.
+        """
+        if len(data) == 0:
+            return
+        self.value_scale = value_scale
+
+        if name is None:
+            name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
+
+        # Create the datasources
+        if len(data) == 2:
+
+            index, bar_maxes = map(self._get_or_create_datasource, data)
+            self.index_range.add(index)
+            bar_maxes_data = bar_maxes.get_data()
+            # Accumulate data totals for stacking
+            prev = zeros_like(bar_maxes_data[0])
+            for i in range(len(bar_maxes_data)):
+                bar_maxes_data[i] = prev + bar_maxes_data[i]
+                prev = bar_maxes_data[i]
+
+            self.value_range.add(bar_maxes)
+
+        if self.index_scale == "linear":
+            imap = LinearMapper(range=self.index_range,
+                        stretch_data=self.index_mapper.stretch_data)
+        else:
+            imap = LogMapper(range=self.index_range,
+                        stretch_data=self.index_mapper.stretch_data)
+        if self.value_scale == "linear":
+            vmap = LinearMapper(range=self.value_range,
+                        stretch_data=self.value_mapper.stretch_data)
+        else:
+            vmap = LogMapper(range=self.value_range,
+                        stretch_data=self.value_mapper.stretch_data)
+
+        cls = self.renderer_map["stacked_bar"]
+        plot = cls(index = index,
+                          bar_maxes = bar_maxes,
+                          index_mapper = imap,
+                          value_mapper = vmap,
+                          orientation = self.orientation,
+                          origin = self.origin,
+                          **styles)
+        self.add(plot)
+        self.plots[name] = [plot]
+        return [plot]
 
     def candle_plot(self, data, name=None, value_scale="linear", origin=None,
                     **styles):
