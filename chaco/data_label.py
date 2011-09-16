@@ -6,7 +6,7 @@ from numpy.linalg import norm
 
 # Enthought library imports
 from traits.api import Any, Array, Bool, Enum, Float, Int, List, \
-     Str, Tuple, Trait, on_trait_change
+     Str, Tuple, Trait, on_trait_change, Property
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
@@ -137,6 +137,12 @@ class DataLabel(ToolTip):
     # the label draws into the padding area (where axes typically reside).
     clip_to_plot = Bool(True)
 
+    # The center x position (average of x and x2)
+    xmid = Property(Float, depends_on=['x', 'x2'])
+    
+    # The center y position (average of y and y2)
+    ymid = Property(Float, depends_on=['y', 'y2'])
+
     #----------------------------------------------------------------------
     # Marker traits
     #----------------------------------------------------------------------
@@ -218,10 +224,10 @@ class DataLabel(ToolTip):
         "bottom left": ("x", "y"),
         "top right": ("x2", "y2"),
         "top left": ("x", "y2"),
-        "top center": ("x", "y"),
-        "bottom center": ("x", "y2"),
-        "left center": ("x", "y"),
-        "right center": ("x2", "y2"),
+        "top center": ("xmid", "y2"),
+        "bottom center": ("xmid", "y"),
+        "left center": ("x", "ymid"),
+        "right center": ("x2", "ymid"),
         }
 
 
@@ -372,3 +378,9 @@ class DataLabel(ToolTip):
     def _invalidate_layout(self):
         self._layout_needed = True
 
+
+    def _get_xmid(self):
+        return 0.5 * (self.x + self.x2)
+    
+    def _get_ymid(self):
+        return 0.5 * (self.y + self.y2)
