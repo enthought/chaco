@@ -80,9 +80,9 @@ class DataLabelTool(DragTool):
                 xmid = (x+x2)/2
                 ymid = (y+y2)/2
                 anchors = array(((x, y), (x2, y), (x2, y2), (x, y2),
-                                (xmid, y), (xmid, y2), (x, ymid), (x2, ymid)))
+                                (xmid, y2), (xmid, y), (x, ymid), (x2, ymid)))
                 diff = anchors - p
-                closest = argmin(sqrt(map(sum, diff * diff)))
+                closest = argmin((diff ** 2).sum(axis=-1))
                 label.arrow_root = self._corner_names[closest]
 
             event.handled = True
