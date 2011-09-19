@@ -25,12 +25,18 @@ from chaco import default_colormaps
 from enable.component_editor import ComponentEditor
 from chaco.tools.api import LineInspector, PanTool, ZoomTool
 from traits.api import Array, Callable, CFloat, CInt, Enum, Event, Float, \
-    HasTraits, Int, Instance, Str, Trait, on_trait_change, Button, Bool
+    HasTraits, Int, Instance, Str, Trait, on_trait_change, Button, Bool, \
+    DelegatesTo
 from traitsui.api import Group, HGroup, Item, View, UItem, spring
 
 from pyface.timer.api import Timer
 
 # FIXME: disable (rare) NumPy divide by zero warnings.
+
+# Remove the most boring colormaps from consideration:
+colormaps = default_colormaps.color_map_name_dict.keys()
+for boring in 'bone gray yarg gist_gray gist_yarg Greys'.split():
+    colormaps.remove(boring)
 
 class Model(HasTraits):
 
@@ -117,7 +123,7 @@ class PlotUI(HasTraits):
 
     # view options
     num_levels = Int(15)
-    colormap = Enum(default_colormaps.color_map_name_dict.keys())
+    colormap = Enum(colormaps)
     
     #Traits view definitions:
     traits_view = View(
@@ -358,20 +364,58 @@ class TimerController(HasTraits):
     # The plot view which will be affected by timed animation
     view = Instance(PlotUI)
     
-    # Whether the view is animated
-    animated = Bool
+    # The ModelView instance that contains the animation options:
+    model_view = Instance('ModelView')
+    
+    # Whether the view is animated:
+    animated = DelegatesTo('model_view')
+    
+    # whether color change is animated on each boundary:
+    animate_left = DelegatesTo('model_view')
+    animate_right = DelegatesTo('model_view')
+    animate_top = DelegatesTo('model_view')
+    animate_bottom = DelegatesTo('model_view')
     
     # current increments of selected point, for animation
     x_delta = Int
     y_delta = Int
     
-    # possible unsigned directions for 2D animated motion:
+    # Possible directions for 2D animated motion.
+    # One tuple will be selected randomly from these on each bounce.
+    # In each tuple, the first integer is the absolute value of
+    # the new delta of the component that reached a boundary.
+    # The second integer is the new delta of the other component.
     motions = ((1,1), (1,2), (1,3), (2,1), (3,1), (3,2), (2,3),
                (1,-1),(1,-2),(1,-3),(2,-1),(3,-1),(3,-2),(2,-2)
               )
 
-    # Callback function which responds to each timer tick
     def onTimer(self, *args):
+        """ 
+        Callback function which responds to each timer tick
+        and animates the moving selection point and colors.
+        """
+
+        def randomize(new_direction=1, color_change=False):
+            """
+            Randomize 2D motion, and colors if desired.
+            Parameters:
+            
+              * new_direction is the sign of the new motion delta for
+                the component that reached the boundary (the primary bounce 
+                direction.)
+                
+              * color_change is whether to change the colormap if allowed.
+              
+            Returns a pair of integers, which are the new motion deltas,
+            respectively, for primary bounce direction and the other.
+            
+            """
+            if color_change:
+                self.view.colormap = random.choice(colormaps)
+            result0, result1 = random.choice(self.motions)
+            return result0 * new_direction, result1
+        
+        
         if self.animated:
             metadata = self.view._image_index.metadata
             indices = metadata.get("selections", ())
@@ -381,27 +425,23 @@ class TimerController(HasTraits):
                 ylim, xlim = self.view._image_value.data.shape
                 y += self.y_delta
                 if y < 0:
-                    yrand, xrand = random.choice(self.motions)
                     y = 0
-                    self.y_delta = yrand
-                    self.x_delta = xrand
+                    self.y_delta, self.x_delta = randomize(1, 
+                                                           self.animate_bottom)
                 elif y >= ylim:
-                    yrand, xrand = random.choice(self.motions)
                     y = ylim-1
-                    self.y_delta = -yrand
-                    self.x_delta = xrand
+                    self.y_delta, self.x_delta = randomize(-1, 
+                                                           self.animate_top)
                 else:
                     x += self.x_delta
                     if x < 0:
-                        xrand, yrand = random.choice(self.motions)
                         x = 0
-                        self.x_delta = xrand
-                        self.y_delta = yrand
+                        self.x_delta, self.y_delta = randomize(1, 
+                                                            self.animate_left)
                     elif x >= xlim:
-                        xrand, yrand = random.choice(self.motions)
                         x = xlim-1
-                        self.x_delta = -xrand
-                        self.y_delta = yrand
+                        self.x_delta, self.y_delta = randomize(-1, 
+                                                            self.animate_right)
                 
             else:
                 x,y = 0,0
@@ -421,10 +461,24 @@ class ModelView(HasTraits):
     edit_view = Button
     animated = Bool(False)
     
+    # Whether to animate colors on a bounce of each side:
+    animate_left = Bool(False)
+    animate_right = Bool(False)
+    animate_top = Bool(False)
+    animate_bottom = Bool(False)
+    
     traits_view = View(UItem('@view'),
                        HGroup(UItem('edit_model', enabled_when='not animated'),
                               UItem('edit_view'),
                               Item('animated'),
+                              Item('animate_left', enabled_when='animated',
+                                   label='Change colors at:  Left'),
+                              Item('animate_right', enabled_when='animated',
+                                   label='Right'),
+                              Item('animate_top', enabled_when='animated',
+                                   label='Top'),
+                              Item('animate_bottom', enabled_when='animated',
+                                   label='Bottom'),
                               spring),
                        title = "Function Inspector",
                        resizable=True)
@@ -440,9 +494,6 @@ class ModelView(HasTraits):
     def _edit_view_fired(self):
         self.view.configure_traits(view="plot_edit_view")
 
-    def _animated_changed(self, new):
-        self.timer_controller.animated = new
-        
     def _model_changed(self):
         if self.view is not None:
             self.view.update(self.model)
@@ -453,7 +504,7 @@ class ModelView(HasTraits):
         # starts and not when the demo object is created.
         # FIXME: close timer on exit.
         self.timer_controller.view = self.view
-        self.timer_controller.animated = self.animated
+        self.timer_controller.model_view = self
         self.timer = Timer(40, self.timer_controller.onTimer)
         
     def edit_traits(self, *args, **kws):
