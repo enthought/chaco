@@ -25,7 +25,7 @@ from chaco import default_colormaps
 from enable.component_editor import ComponentEditor
 from chaco.tools.api import LineInspector, PanTool, ZoomTool
 from traits.api import Array, Callable, CFloat, CInt, Enum, Event, Float, \
-    HasTraits, Int, Instance, Str, Trait, on_trait_change, Either, Button, Bool
+    HasTraits, Int, Instance, Str, Trait, on_trait_change, Button, Bool
 from traitsui.api import Group, HGroup, Item, View, UItem, spring
 
 from pyface.timer.api import Timer
@@ -103,21 +103,22 @@ class Model(HasTraits):
 class PlotUI(HasTraits):
     
     # container for all plots
-    container = HPlotContainer
+    container = Instance(HPlotContainer)
     
     # Plot components within this container:
-    polyplot = Either(None, ContourPolyPlot)
-    lineplot = ContourLinePlot
-    cross_plot = Plot
-    cross_plot2 = Plot
-    colorbar=ColorBar
+    polyplot = Instance(ContourPolyPlot)
+    lineplot = Instance(ContourLinePlot)
+    cross_plot = Instance(Plot)
+    cross_plot2 = Instance(Plot)
+    colorbar = Instance(ColorBar)
     
-    # plot data and mapper-related traits:
-    pd = ArrayPlotData
-    _image_index = GridDataSource
-    _image_value = ImageData
-    
+    # plot data
+    pd = Instance(ArrayPlotData)
 
+    # view options
+    num_levels = Int(15)
+    colormap = Enum(default_colormaps.color_map_name_dict.keys())
+    
     #Traits view definitions:
     traits_view = View(
         Group(UItem('container', editor=ComponentEditor(size=(800,600)))),
@@ -128,10 +129,7 @@ class PlotUI(HasTraits):
               Item('colormap')),
               buttons=["OK","Cancel"])
 
-
-    num_levels = Int(15)
-    colormap = Enum(default_colormaps.color_map_name_dict.keys())
-
+    
     #---------------------------------------------------------------------------
     # Private Traits
     #---------------------------------------------------------------------------
