@@ -1,33 +1,36 @@
 """
+Colormap of a scalar value field with cross sections that can be animated
+
 Renders a colormapped image of a scalar value field, and a cross section
 chosen by a line interactor.
+
+Animation must be disabled (unchecked) before the model can be edited.
 """
 
 # Standard library imports
 from optparse import OptionParser
 import sys
+import random
 
 # Major library imports
-from numpy import array, linspace, meshgrid, nanmin, nanmax,  pi, zeros
+from numpy import array, linspace, meshgrid, nanmin, nanmax,  pi
 
 # Enthought library imports
-from chaco.api import ArrayDataSource, ArrayPlotData, ColorBar, ContourLinePlot, \
-                                 ColormappedScatterPlot, CMapImagePlot, \
+from chaco.api import ArrayPlotData, ColorBar, ContourLinePlot, \
                                  ContourPolyPlot, DataRange1D, VPlotContainer, \
                                  DataRange2D, GridMapper, GridDataSource, \
                                  HPlotContainer, ImageData, LinearMapper, \
-                                 LinePlot, OverlayPlotContainer, Plot, PlotAxis
-from chaco.default_colormaps import *
+                                 OverlayPlotContainer, Plot, PlotAxis
+from chaco import default_colormaps
 from enable.component_editor import ComponentEditor
-from chaco.tools.api import LineInspector, PanTool, RangeSelection, \
-                                   RangeSelectionOverlay, ZoomTool
-from enable.api import Window
-from traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
-                             Int, Instance, Str, Trait, on_trait_change
-from traitsui.api import Group, Handler, HGroup, Item, View
-from traitsui.menu import Action, CloseAction, Menu, \
-                                     MenuBar, NoButtons, Separator
+from chaco.tools.api import LineInspector, PanTool, ZoomTool
+from traits.api import Array, Callable, CFloat, CInt, Enum, Event, Float, \
+    HasTraits, Int, Instance, Str, Trait, on_trait_change, Either, Button, Bool
+from traitsui.api import Group, HGroup, Item, View, UItem, spring
 
+from pyface.timer.api import Timer
+
+# FIXME: disable (rare) NumPy divide by zero warnings.
 
 class Model(HasTraits):
 
@@ -75,7 +78,7 @@ class Model(HasTraits):
         # is located at cell centers, so use halfsteps from the
         # min/max values (which are edges)
         xstep = (self.max_x - self.min_x) / self.npts_x
-        ystep = (self.max_y - self.min_y) / self.npts_y
+        #ystep = (self.max_y - self.min_y) / self.npts_y
         gridx = linspace(self.min_x+xstep/2, self.max_x-xstep/2, self.npts_x)
         gridy = linspace(self.min_y+xstep/2, self.max_y-xstep/2, self.npts_y)
         x, y = meshgrid(gridx, gridy)
@@ -98,13 +101,26 @@ class Model(HasTraits):
 
 
 class PlotUI(HasTraits):
+    
+    # container for all plots
+    container = HPlotContainer
+    
+    # Plot components within this container:
+    polyplot = Either(None, ContourPolyPlot)
+    lineplot = ContourLinePlot
+    cross_plot = Plot
+    cross_plot2 = Plot
+    colorbar=ColorBar
+    
+    # plot data and mapper-related traits:
+    pd = ArrayPlotData
+    _image_index = GridDataSource
+    _image_value = ImageData
+    
 
     #Traits view definitions:
     traits_view = View(
-        Group(Item('container',
-                   editor=ComponentEditor(size=(800,600)),
-                   show_label=False)),
-        buttons=NoButtons,
+        Group(UItem('container', editor=ComponentEditor(size=(800,600)))),
         resizable=True)
 
     plot_edit_view = View(
@@ -114,7 +130,7 @@ class PlotUI(HasTraits):
 
 
     num_levels = Int(15)
-    colormap = Enum(color_map_name_dict.keys())
+    colormap = Enum(default_colormaps.color_map_name_dict.keys())
 
     #---------------------------------------------------------------------------
     # Private Traits
@@ -123,7 +139,7 @@ class PlotUI(HasTraits):
     _image_index = Instance(GridDataSource)
     _image_value = Instance(ImageData)
 
-    _cmap = Trait(jet, Callable)
+    _cmap = Trait(default_colormaps.jet, Callable)
 
     #---------------------------------------------------------------------------
     # Public View interface
@@ -188,14 +204,14 @@ class PlotUI(HasTraits):
                                                axis='index_x',
                                                inspect_mode="indexed",
                                                write_metadata=True,
-                                               is_listener=False,
+                                               is_listener=True,
                                                color="white"))
         self.polyplot.overlays.append(LineInspector(component=self.polyplot,
                                                axis='index_y',
                                                inspect_mode="indexed",
                                                write_metadata=True,
                                                color="white",
-                                               is_listener=False))
+                                               is_listener=True))
 
         # Add these two plots to one container
         contour_container = OverlayPlotContainer(padding=20,
@@ -318,8 +334,8 @@ class PlotUI(HasTraits):
             self.pd.set_data("line_value2", array([]))
 
     def _colormap_changed(self):
-        self._cmap = color_map_name_dict[self.colormap]
-        if hasattr(self, "polyplot"):
+        self._cmap = default_colormaps.color_map_name_dict[self.colormap]
+        if self.polyplot is not None:
             value_range = self.polyplot.color_mapper.range
             self.polyplot.color_mapper = self._cmap(value_range)
             value_range = self.cross_plot.color_mapper.range
@@ -337,57 +353,81 @@ class PlotUI(HasTraits):
 
 
 
-class Controller(Handler):
+            
+# HasTraits class that supplies the callable for the timer event.
+class TimerController(HasTraits):
 
-    #---------------------------------------------------------------------------
-    # State traits
-    #---------------------------------------------------------------------------
-
-    model = Instance(Model)
+    # The plot view which will be affected by timed animation
     view = Instance(PlotUI)
+    
+    # Whether the view is animated
+    animated = Bool
+    
+    # current increments of selected point, for animation
+    x_delta = Int
+    y_delta = Int
+    
+    # possible unsigned directions for 2D animated motion:
+    motions = ((1,1), (1,2), (1,3), (2,1), (3,1), (3,2), (2,3),
+               (1,-1),(1,-2),(1,-3),(2,-1),(3,-1),(3,-2),(2,-2)
+              )
 
-    #---------------------------------------------------------------------------
-    # Handler interface
-    #---------------------------------------------------------------------------
-
-    def init(self, info):
-        self.model = info.object.model
-        self.view = info.object.view
-        self.model.on_trait_change(self._model_changed, "model_changed")
-
-
-    #---------------------------------------------------------------------------
-    # Public Controller interface
-    #---------------------------------------------------------------------------
-
-    def edit_model(self, ui_info):
-        self.model.configure_traits()
-
-    def edit_plot(self, ui_info):
-        self.view.configure_traits(view="plot_edit_view")
-
-
-    #---------------------------------------------------------------------------
-    # Private Controller interface
-    #---------------------------------------------------------------------------
-
-    def _model_changed(self):
-        if self.view is not None:
-            self.view.update(self.model)
+    # Callback function which responds to each timer tick
+    def onTimer(self, *args):
+        if self.animated:
+            metadata = self.view._image_index.metadata
+            indices = metadata.get("selections", ())
+            if len(indices) == 2:
+                # Indices are (x,y) but limits are (y,x)
+                x, y = indices
+                ylim, xlim = self.view._image_value.data.shape
+                y += self.y_delta
+                if y < 0:
+                    yrand, xrand = random.choice(self.motions)
+                    y = 0
+                    self.y_delta = yrand
+                    self.x_delta = xrand
+                elif y >= ylim:
+                    yrand, xrand = random.choice(self.motions)
+                    y = ylim-1
+                    self.y_delta = -yrand
+                    self.x_delta = xrand
+                else:
+                    x += self.x_delta
+                    if x < 0:
+                        xrand, yrand = random.choice(self.motions)
+                        x = 0
+                        self.x_delta = xrand
+                        self.y_delta = yrand
+                    elif x >= xlim:
+                        xrand, yrand = random.choice(self.motions)
+                        x = xlim-1
+                        self.x_delta = -xrand
+                        self.y_delta = yrand
+                
+            else:
+                x,y = 0,0
+                self.x_delta, self.y_delta = random.choice(self.motions)
+                self.y_delta = 1
+            metadata['selections'] = x,y
+            
 
 class ModelView(HasTraits):
 
     model = Instance(Model)
     view = Instance(PlotUI)
-    traits_view = View(Item('@view',
-                            show_label=False),
-                       menubar=MenuBar(Menu(Action(name="Edit Model",
-                                                   action="edit_model"),
-                                            Action(name="Edit Plot",
-                                                   action="edit_plot"),
-                                            CloseAction,
-                                            name="File")),
-                       handler = Controller,
+    timer = Instance(Timer)
+    timer_controller = Instance(TimerController, ())
+    
+    edit_model = Button
+    edit_view = Button
+    animated = Bool(False)
+    
+    traits_view = View(UItem('@view'),
+                       HGroup(UItem('edit_model', enabled_when='not animated'),
+                              UItem('edit_view'),
+                              Item('animated'),
+                              spring),
                        title = "Function Inspector",
                        resizable=True)
 
@@ -395,6 +435,37 @@ class ModelView(HasTraits):
     def update_view(self):
         if self.model is not None and self.view is not None:
             self.view.update(self.model)
+            
+    def _edit_model_fired(self):
+        self.model.configure_traits()
+        
+    def _edit_view_fired(self):
+        self.view.configure_traits(view="plot_edit_view")
+
+    def _animated_changed(self, new):
+        self.timer_controller.animated = new
+        
+    def _model_changed(self):
+        if self.view is not None:
+            self.view.update(self.model)
+
+            
+    def _start_timer(self):
+        # Start up the timer! We should do this only when the demo actually
+        # starts and not when the demo object is created.
+        # FIXME: close timer on exit.
+        self.timer_controller.view = self.view
+        self.timer_controller.animated = self.animated
+        self.timer = Timer(40, self.timer_controller.onTimer)
+        
+    def edit_traits(self, *args, **kws):
+        self._start_timer()
+        return super(ModelView, self).edit_traits(*args, **kws)
+
+    def configure_traits(self, *args, **kws):
+        self._start_timer()
+        return super(ModelView, self).configure_traits(*args, **kws)
+            
 
 options_dict = {'colormap' : "jet",
                 'num_levels' : 15,
