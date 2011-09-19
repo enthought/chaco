@@ -18,7 +18,7 @@ has a subpackage for doing command-line plotting or simple scripting.
 
 
 +----------------------------------------+--------------------------------------+
-|.. image:: _images/simple_line.png      |.. image:: _images/scalar_function.png|
+|.. image::  images/simple_line.png      |.. image::  images/scalar_function.png|
 |   :width: 400 px                       |   :width: 400 px                     |
 |   :align: center                       |   :align: center                     |
 +----------------------------------------+--------------------------------------+

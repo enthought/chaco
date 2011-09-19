@@ -1,10 +1,16 @@
 #!/usr/bin/env python
 """
-Draws a simple scatterplot of random data.  The user can pan and zoom
-with the mouse, but left-clicking on a point in the scatter plot will
-toggle it.
+Scatter plot with point selection
 
+Draws a simple scatter plot of random data. The user can click on points to
+select or unselect them.
+
+    - Left-click on a point to select or unselect it.
+    - Left-drag to pan.
+    - Mouse wheel to zoom
+    
 """
+# FIXME: the 'z' zoom interaction is ill-behaved.
 
 # Major library imports
 from numpy import sort
@@ -13,7 +19,7 @@ from numpy.random import random
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
-from traitsui.api import Item, Group, View
+from traitsui.api import Item, VGroup, View, Label, HGroup, spring
 
 # Chaco imports
 from chaco.api import AbstractDataSource, ArrayPlotData, Plot, \
@@ -86,7 +92,9 @@ class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
+                    VGroup(
+                        HGroup(spring, Label('Click point to select/unselect'), 
+                            spring),
                         Item('plot', editor=ComponentEditor(size=size,
                                                             bgcolor=bg_color),
                              show_label=False),

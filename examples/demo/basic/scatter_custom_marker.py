@@ -1,6 +1,16 @@
 """
-Demonstrates making a scatterplot with custom markers.
-Interactions are the same as in scatter.py.
+Scatter plot with custom markers
+
+Chaco supports a wide range of custom markers.
+
+Interacting with the plot:
+
+  - Left-mouse-drag pans the plot.
+  - Mouse wheel up and down zooms the plot in and out.
+  - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
+    region to zoom. If you use a sequence of zoom boxes, pressing alt-left-arrow
+    and alt-right-arrow moves you forwards and backwards through the "zoom
+    history".
 """
 
 # Major library imports

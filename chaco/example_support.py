@@ -38,9 +38,9 @@ from default_colors import cbrewer as COLOR_PALETTE
 # Force the selection of a valid toolkit.
 #import enable.toolkit
 if not ETSConfig.toolkit:
-    for toolkit, toolkit_module in (('wx', 'wx'), ('qt4', 'PyQt4')):
+    for toolkit, toolkit_module in (('wx', 'wx'), ('qt4', 'pyface.qt')):
         try:
-            exec "import " + toolkit_module
+            __import__(toolkit_module)
             ETSConfig.toolkit = toolkit
             break
         except ImportError:

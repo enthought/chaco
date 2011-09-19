@@ -6,7 +6,7 @@ from numpy.linalg import norm
 
 # Enthought library imports
 from traits.api import Any, Array, Bool, Enum, Float, Int, List, \
-     Str, Tuple, Trait, on_trait_change
+     Str, Tuple, Trait, on_trait_change, Property
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
@@ -126,9 +126,22 @@ class DataLabel(ToolTip):
     # data space values.
     label_format = Str("(%(x)f, %(y)f)")
 
+    # The text to show on the label, or above the coordinates for the label, if
+    # show_label_coords is True
+    label_text = Str
+
+    # Flag whether to show coordinates with the label or not.
+    show_label_coords = Bool(True)
+
     # Does the label clip itself against the main plot area?  If not, then
     # the label draws into the padding area (where axes typically reside).
     clip_to_plot = Bool(True)
+
+    # The center x position (average of x and x2)
+    xmid = Property(Float, depends_on=['x', 'x2'])
+    
+    # The center y position (average of y and y2)
+    ymid = Property(Float, depends_on=['y', 'y2'])
 
     #----------------------------------------------------------------------
     # Marker traits
@@ -172,7 +185,8 @@ class DataLabel(ToolTip):
     # is 'auto', then the label uses **label_position**.  Otherwise, it treats
     # the label as if it were at the label position indicated by this attribute.
     arrow_root = Trait("auto", "auto", "top left", "top right", "bottom left",
-                       "bottom right", "center")
+                       "bottom right", "top center", "bottom center",
+                       "left center", "right center")
 
     # The minimum length of the arrow before it will be drawn.  By default,
     # the arrow will be drawn regardless of how short it is.
@@ -199,6 +213,10 @@ class DataLabel(ToolTip):
         "top right": "bottom left",
         "bottom left": "top right",
         "bottom right": "top left",
+        "top center": "bottom center",
+        "bottom center": "top center",
+        "left center": "right center",
+        "right center": "left center"
         }
 
     _root_positions = {
@@ -206,6 +224,10 @@ class DataLabel(ToolTip):
         "bottom left": ("x", "y"),
         "top right": ("x2", "y2"),
         "top left": ("x", "y2"),
+        "top center": ("xmid", "y2"),
+        "bottom center": ("xmid", "y"),
+        "left center": ("x", "ymid"),
+        "right center": ("x2", "ymid"),
         }
 
 
@@ -294,9 +316,13 @@ class DataLabel(ToolTip):
                     self.outer_y = sy - self.outer_height - 1
                 elif "top" in orientation:
                     self.outer_y = sy
-            if orientation == "center":
-                self.x = sx - (self.width/2)
-                self.y = sy - (self.height/2)
+            if "center" in orientation:
+                if " " not in orientation:
+                    self.x = sx - (self.width/2)
+                    self.y = sy - (self.height/2)
+                else:
+                    self.x = sx - (self.outer_width/2) - 1
+                    self.y = sy - (self.outer_height/2) - 1
         else:
             self.x = sx + self.label_position[0]
             self.y = sy + self.label_position[1]
@@ -311,10 +337,19 @@ class DataLabel(ToolTip):
     def _label_format_changed(self, old, new):
         self._create_new_labels()
 
+    def _label_text_changed(self, old, new):
+        self._create_new_labels()
+
+    def _show_label_coords_changed(self, old, new):
+        self._create_new_labels()
+
     def _create_new_labels(self):
         pt = self.data_point
         if pt is not None:
-            self.lines = [self.label_format % {"x": pt[0], "y": pt[1]}]
+            if self.show_label_coords:
+                self.lines = [self.label_text, self.label_format % {"x": pt[0], "y": pt[1]}]
+            else:
+                self.lines = [self.label_text]
 
     def _component_changed(self, old, new):
         for comp, attach in ((old, False), (new, True)):
@@ -343,3 +378,9 @@ class DataLabel(ToolTip):
     def _invalidate_layout(self):
         self._layout_needed = True
 
+
+    def _get_xmid(self):
+        return 0.5 * (self.x + self.x2)
+    
+    def _get_ymid(self):
+        return 0.5 * (self.y + self.y2)
