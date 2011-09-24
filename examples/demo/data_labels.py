@@ -91,6 +91,38 @@ class PlotExample(HasTraits):
                            marker="circle",
                            arrow_visible=False)
         plot.overlays.append(label3)
+
+        label4 = DataLabel(component=plot, data_point=(x[60], y[60]),
+                           border_padding=10,
+                           marker_color="red",
+                           marker_size=3,
+                           #marker="circle",
+                           label_position=(20, 50),
+                           label_style='bubble',
+                           label_text="Something interesting",
+                           label_format="at x=%(x).2f, y=%(y).2f",
+                           font='modern 18',
+                           bgcolor=(1, 1, 0.75, 1),
+                          )
+        plot.overlays.append(label4)
+        tool4 = DataLabelTool(label4, drag_button="right", auto_arrow_root=True)
+        label4.tools.append(tool4)
+
+        label5 = DataLabel(component=plot, data_point=(x[65], y[65]),
+                           border_padding=10,
+                           marker_color="green",
+                           marker_size=4,
+                           show_label_coords=False,
+                           label_style='bubble',
+                           label_position=(25, 5),
+                           label_text="Something\nboring",
+                           font='modern 14',
+                           bgcolor=(0.75, 0.75, 0.75, 1),
+                          )
+        plot.overlays.append(label5)
+        tool5 = DataLabelTool(label5, drag_button="right", auto_arrow_root=True)
+        label5.tools.append(tool5)
+
         container.add(plot)
 
         return container

@@ -107,6 +107,40 @@ def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
     return arrow
 
 
+def find_region(px, py, x, y, x2, y2):
+    #    \     top      /
+    #     \            /
+    #      +----------+
+    # left |  inside  | right
+    #      +----------+
+    #     /            \
+    #    /    bottom    \
+    if px < x:
+        dx = x - px
+        if py > y2 + dx:
+            region = 'top'
+        elif py < y - dx:
+            region = 'bottom'
+        else:
+            region = 'left'
+    elif px > x2:
+        dx = px - x2
+        if py > y2 + dx:
+            region = 'top'
+        elif py < y - dx:
+            region = 'bottom'
+        else:
+            region = 'right'
+    else:  # x <= px <= x2
+        if py > y2:
+            region = 'top'
+        elif py < y:
+            region = 'bottom'
+        else:
+            region = 'inside'
+    return region
+
+
 class DataLabel(ToolTip):
     """ A label on a point in data space, optionally with an arrow to the point.
     """
@@ -142,6 +176,8 @@ class DataLabel(ToolTip):
     
     # The center y position (average of y and y2)
     ymid = Property(Float, depends_on=['y', 'y2'])
+
+    label_style = Enum('box', 'bubble')
 
     #----------------------------------------------------------------------
     # Marker traits
@@ -195,6 +231,14 @@ class DataLabel(ToolTip):
     # The maximum length of the arrow before it will be drawn.  By default,
     # the arrow will be drawn regardless of how long it is.
     arrow_max_length = Float(inf)
+    
+    #----------------------------------------------------------------------
+    # Bubble traits
+    #----------------------------------------------------------------------
+
+    border_width = Float(1)
+    border_color = ColorTrait('black')
+    radius = Float(10)
 
     #-------------------------------------------------------------------------
     # Private traits
@@ -243,6 +287,21 @@ class DataLabel(ToolTip):
 
         self.do_layout()
 
+        if self.label_style == 'box':
+            self._render_box(component, gc, view_bounds=view_bounds, mode=mode)
+        else:
+            self._render_bubble(component, gc, view_bounds=view_bounds, mode=mode)
+
+        # draw the marker
+        if self.marker_visible:
+            render_markers(gc, [self._screen_coords], self.marker, self.marker_size,
+                           self.marker_color_, self.marker_line_width,
+                           self.marker_line_color_, self.custom_symbol)
+
+        if self.clip_to_plot:
+            gc.restore_state()
+
+    def _render_box(self, component, gc, view_bounds=None, mode='normal'):
         # draw the arrow if necessary
         if self.arrow_visible:
             if self._cached_arrow is None:
@@ -277,14 +336,77 @@ class DataLabel(ToolTip):
         # layout and render the label itself
         ToolTip.overlay(self, component, gc, view_bounds, mode)
 
-        # draw the marker
-        if self.marker_visible:
-            render_markers(gc, [self._screen_coords], self.marker, self.marker_size,
-                           self.marker_color_, self.marker_line_width,
-                           self.marker_line_color_, self.custom_symbol)
+    def _render_bubble(self, component, gc, view_bounds=None, mode='normal'):
+        # (px, py) is the data point in screen space.
+        px, py = self._screen_coords
+        
+        # (x, y) is the lower left corner of the label.
+        x = self.x
+        y = self.y
+        # (x2, y2) is the upper right corner of the label.
+        x2 = self.x2
+        y2 = self.y2
 
-        if self.clip_to_plot:
-            gc.restore_state()
+        r = self.radius
+
+        gap_width = 10
+        region = find_region(px, py, x, y, x2, y2)
+
+        if region == 'left' or region == 'right':
+            gap_start = py - gap_width / 2
+            if gap_start < y + r:
+                gap_start = y + r
+            elif gap_start > y2 - r - gap_width:
+                gap_start = y2 - r - gap_width
+        else:
+            gap_start = px - gap_width / 2
+            if gap_start < x + r:
+                gap_start = x + r
+            elif gap_start > x2 - r - gap_width:
+                gap_start = x2 - r - gap_width
+
+        with gc:
+            gc.set_line_width(self.border_width)
+            gc.set_stroke_color(self.border_color_)
+            gc.set_fill_color(self.bgcolor_)
+
+            # Start at the lower left, on the left edge where the curved
+            # part of the box ends.
+            gc.move_to(x , y + r)
+
+            # Draw the left side and the upper left curved corner.
+            if region == 'left':
+                gc.line_to(x, gap_start)
+                gc.line_to(px, py)
+                gc.line_to(x, gap_start + gap_width)
+            gc.arc_to(x, y2, x + r, y2, r)
+
+            # Draw the top and the upper right curved corner.
+            if region == 'top':
+                gc.line_to(gap_start, y2)
+                gc.line_to(px, py)
+                gc.line_to(gap_start + gap_width, y2)
+            gc.arc_to(x2, y2, x2, y2 - r, r)
+
+            # Draw the right side and the lower right curved corner.
+            if region == 'right':
+                gc.line_to(x2, gap_start + gap_width)
+                gc.line_to(px, py)
+                gc.line_to(x2, gap_start)
+            gc.arc_to(x2, y, x2 - r, y, r)
+
+            # Draw the bottom and the lower left curved corner.
+            if region == 'bottom':
+                gc.line_to(gap_start + gap_width, y)
+                gc.line_to(px, py)
+                gc.line_to(gap_start, y)
+            gc.arc_to(x, y, x, y + r, r)
+            
+            # Finish up the drawing.
+            #gc.stroke_path()
+            gc.draw_path()
+
+            self._draw_overlay(gc)
 
     def _do_layout(self, size=None):
         """Computes the size and position of the label and arrow.
