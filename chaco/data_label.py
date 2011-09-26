@@ -1,6 +1,7 @@
 """ Defines the DataLabel class and related trait and function.
 """
 # Major library imports
+from math import sqrt
 from numpy import array, asarray, inf
 from numpy.linalg import norm
 
@@ -108,13 +109,21 @@ def draw_arrow(gc, pt1, pt2, color, arrowhead_size=10.0, offset1=0,
 
 
 def find_region(px, py, x, y, x2, y2):
-    #    \     top      /
-    #     \            /
-    #      +----------+
-    # left |  inside  | right
-    #      +----------+
-    #     /            \
-    #    /    bottom    \
+    """Classify the location of the point (px, py) relative to a rectangle.
+    
+    (x, y) and (x2, y2) are the lower-left and upper-right corners of the
+    rectangle, respectively.  (px, py) is classified as "left", "right",
+    "top", "bottom" or "inside", according to the following diagram:
+
+            \     top      /
+             \            /
+              +----------+
+         left |  inside  | right
+              +----------+
+             /            \
+            /    bottom    \
+
+    """
     if px < x:
         dx = x - px
         if py > y2 + dx:
@@ -177,6 +186,12 @@ class DataLabel(ToolTip):
     # The center y position (average of y and y2)
     ymid = Property(Float, depends_on=['y', 'y2'])
 
+    # 'box' is a simple rectangular box, with an arrow that is a single line
+    # with an arrowhead at the data point.
+    # 'bubble' can be given rounded corners (by setting `radius`), and the
+    # 'arrow' is a thin triangular wedge with its point at the data point.
+    # When label_style is 'bubble', the following traits are ignored:
+    #    arrow_size, arrow_color, arrow_root, and arrow_max_length.
     label_style = Enum('box', 'bubble')
 
     #----------------------------------------------------------------------
@@ -235,9 +250,8 @@ class DataLabel(ToolTip):
     #----------------------------------------------------------------------
     # Bubble traits
     #----------------------------------------------------------------------
-
-    border_width = Float(1)
-    border_color = ColorTrait('black')
+    
+    # The radius (in screen coordinates) of the curved corners of the "bubble".
     radius = Float(10)
 
     #-------------------------------------------------------------------------
@@ -337,6 +351,11 @@ class DataLabel(ToolTip):
         ToolTip.overlay(self, component, gc, view_bounds, mode)
 
     def _render_bubble(self, component, gc, view_bounds=None, mode='normal'):
+        # FIXME: arrow_min_length would be fairly easy to handle.
+        #        arrow_max_length requires a little more work, to figure out
+        #        the point where the arrow ends (currently it ends at the
+        #        data point).
+
         # (px, py) is the data point in screen space.
         px, py = self._screen_coords
         
@@ -346,28 +365,50 @@ class DataLabel(ToolTip):
         # (x2, y2) is the upper right corner of the label.
         x2 = self.x2
         y2 = self.y2
-
+        # r is the corner radius.
         r = self.radius
 
-        gap_width = 10
-        region = find_region(px, py, x, y, x2, y2)
+        if self.arrow_visible:
+            # FIXME: Make 'gap_width' a configurable trait (and give it a
+            #        better name).
+            max_gap_width = 10
+            gap_width = min(max_gap_width, abs(x2 - x - 2*r), abs(y2 - y - 2*r))
+            region = find_region(px, py, x, y, x2, y2)
 
-        if region == 'left' or region == 'right':
-            gap_start = py - gap_width / 2
-            if gap_start < y + r:
-                gap_start = y + r
-            elif gap_start > y2 - r - gap_width:
-                gap_start = y2 - r - gap_width
-        else:
-            gap_start = px - gap_width / 2
-            if gap_start < x + r:
-                gap_start = x + r
-            elif gap_start > x2 - r - gap_width:
-                gap_start = x2 - r - gap_width
+            # Figure out where the "arrow" connects to the "bubble".
+            if region == 'left' or region == 'right':
+                gap_start = py - gap_width / 2
+                if gap_start < y + r:
+                    gap_start = y + r
+                elif gap_start > y2 - r - gap_width:
+                    gap_start = y2 - r - gap_width
+                by = gap_start + 0.5*gap_width
+                if region == 'left':
+                    bx = x
+                else:
+                    bx = x2
+            else:
+                gap_start = px - gap_width / 2
+                if gap_start < x + r:
+                    gap_start = x + r
+                elif gap_start > x2 - r - gap_width:
+                    gap_start = x2 - r - gap_width
+                bx = gap_start + 0.5*gap_width
+                if region == 'top':
+                    by = y2
+                else:
+                    by = y
+
+        arrow_len = sqrt((px - bx)**2 + (py - by)**2)
+        arrow_visible = self.arrow_visible and (arrow_len >= self.arrow_min_length)
 
         with gc:
-            gc.set_line_width(self.border_width)
-            gc.set_stroke_color(self.border_color_)
+            if self.border_visible:
+                gc.set_line_width(self.border_width)
+                gc.set_stroke_color(self.border_color_)
+            else:
+                gc.set_line_width(0)
+                gc.set_stroke_color((0,0,0,0))
             gc.set_fill_color(self.bgcolor_)
 
             # Start at the lower left, on the left edge where the curved
@@ -375,35 +416,34 @@ class DataLabel(ToolTip):
             gc.move_to(x , y + r)
 
             # Draw the left side and the upper left curved corner.
-            if region == 'left':
+            if arrow_visible and region == 'left':
                 gc.line_to(x, gap_start)
                 gc.line_to(px, py)
                 gc.line_to(x, gap_start + gap_width)
             gc.arc_to(x, y2, x + r, y2, r)
 
             # Draw the top and the upper right curved corner.
-            if region == 'top':
+            if arrow_visible and region == 'top':
                 gc.line_to(gap_start, y2)
                 gc.line_to(px, py)
                 gc.line_to(gap_start + gap_width, y2)
             gc.arc_to(x2, y2, x2, y2 - r, r)
 
             # Draw the right side and the lower right curved corner.
-            if region == 'right':
+            if arrow_visible and region == 'right':
                 gc.line_to(x2, gap_start + gap_width)
                 gc.line_to(px, py)
                 gc.line_to(x2, gap_start)
             gc.arc_to(x2, y, x2 - r, y, r)
 
             # Draw the bottom and the lower left curved corner.
-            if region == 'bottom':
+            if arrow_visible and region == 'bottom':
                 gc.line_to(gap_start + gap_width, y)
                 gc.line_to(px, py)
                 gc.line_to(gap_start, y)
             gc.arc_to(x, y, x, y + r, r)
             
-            # Finish up the drawing.
-            #gc.stroke_path()
+            # Finish the "bubble".
             gc.draw_path()
 
             self._draw_overlay(gc)
