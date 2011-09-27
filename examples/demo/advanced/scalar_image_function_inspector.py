@@ -16,7 +16,7 @@ import sys
 import random
 
 # Major library imports
-from numpy import array, linspace, meshgrid, nanmin, nanmax,  pi
+from numpy import array, linspace, meshgrid, nanmin, nanmax,  pi, errstate
 
 # Enthought library imports
 from chaco.api import ArrayPlotData, ColorBar, ContourLinePlot, \
@@ -33,8 +33,6 @@ from traits.api import Array, Callable, CFloat, CInt, Enum, Event, Float, \
 from traitsui.api import Group, HGroup, Item, View, UItem, spring
 
 from pyface.timer.api import Timer
-
-# FIXME: disable (rare) NumPy divide by zero warnings.
 
 # Remove the most boring colormaps from consideration:
 colormaps = default_colormaps.color_map_name_dict.keys()
@@ -154,7 +152,11 @@ class PlotUI(HasTraits):
 
     def __init__(self, *args, **kwargs):
         super(PlotUI, self).__init__(*args, **kwargs)
-        self.create_plot()
+        # FIXME: 'with' wrapping is temporary fix for infinite range in initial 
+        # color map, which can cause a distracting warning print. This 'with'
+        # wrapping should be unnecessary after fix in color_mapper.py.
+        with errstate(invalid='ignore'):
+            self.create_plot()
 
     def create_plot(self):
 
