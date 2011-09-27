@@ -1,6 +1,9 @@
 """
 Colormap of a scalar value field with cross sections that can be animated
 
+A complex example showing interaction between a Traits-based interactive model,
+interactive plot parameters, and multiple Chaco components.
+
 Renders a colormapped image of a scalar value field, and a cross section
 chosen by a line interactor.
 
