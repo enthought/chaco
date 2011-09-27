@@ -4,7 +4,7 @@
 # Major library imports
 from types import IntType, FloatType
 from numpy import arange, array, asarray, clip, \
-                  divide, isnan, ones, searchsorted, \
+                  divide, errstate, isnan, ones, searchsorted, \
                   sometrue, sort, take, where, zeros, linspace, ones_like
 
 # Enthought library imports
@@ -249,11 +249,12 @@ class ColorMapper(AbstractColormap):
         high = self.range.high
         low = self.range.low
 
-        # Handle null ranges
-        if high == low:
-            norm_data = 0.5*ones_like(data_array)
-        else:
-            norm_data = clip((data_array - low) / (high - low), 0.0, 1.0)
+        # handle null and infinite ranges:
+        with errstate(invalid='raise', divide='raise', over='raise', under='raise'):
+            try:
+                norm_data = clip((data_array - low) / (high - low), 0.0, 1.0)
+            except FloatingPointError:
+                norm_data = 0.5 * ones_like(data_array)
 
         return self._map(norm_data)
 
