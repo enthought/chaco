@@ -1,5 +1,7 @@
 """
-This demo shows how Chaco and Traits can be used to easily build a data
+Sample visualization of simulated live data stream
+
+Shows how Chaco and Traits can be used to easily build a data
 acquisition and visualization system.
 
 Two frames are opened: one has the plot and allows configuration of
@@ -51,6 +53,7 @@ class Viewer(HasTraits):
                                padding_bg_color="lightgray",
                                width=800,
                                height=380,
+                               marker_size=2,
                                show_label=False),
                 HGroup(spring, Item("plot_type", style='custom'), spring),
                 resizable = True,
