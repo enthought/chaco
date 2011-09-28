@@ -1,4 +1,4 @@
-from numpy import clip, ones_like
+from numpy import clip, isinf, ones_like
 
 from chaco.api import ColorMapper
 from traits.api import Trait, Callable, Tuple, Float, on_trait_change
@@ -147,13 +147,16 @@ class TransformColorMapper(ColorMapper):
             low, high = self.transformed_bounds
         else:
             low, high = self.range.low, self.range.high
+        range_diff = high - low
 
         # Linearly transform the values to the unit interval.        
-        if high == low:
-            # Handle null range.
+
+        if range_diff == 0.0 or isinf(range_diff):
+            # Handle null range, or infinite range (which can happen during 
+            # initialization before range is connected to a data source).
             norm_data = 0.5*ones_like(data_array)
         else:
-            norm_data = clip((data_array - low) / (high - low), 0.0, 1.0)
+            norm_data = clip((data_array - low) / range_diff, 0.0, 1.0)
 
         if self.unit_func is not None:
             norm_data = self.unit_func(norm_data)
