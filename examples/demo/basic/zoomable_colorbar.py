@@ -1,11 +1,13 @@
-#!/usr/bin/env python
 """
-Draws a colormapped scatterplot of some random data.
+Scatterplot with zoomable/pannable colormap
 
-Interactions on the plot are the same as simple_line, and additionally,
-pan and zoom are available on the colorbar.
+Draws a colormapped scatterplot of random data. The colormap is dynamically
+adjustable.
 
-Left click will pan the colorbar's data region.  Right-click-drag will
+In addition to normal zooming and panning on the plot, the user can also
+pan and zoom the colorbar to change the color mapping of the data values.
+
+Left click will pan the colorbar's data region.  Right-drag will
 select a zoom range.  Mousewheel up and down will zoom in and out on
 the data bounds of the color bar.
 """
@@ -116,5 +118,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-# EOF

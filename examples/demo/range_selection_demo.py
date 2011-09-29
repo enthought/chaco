@@ -1,7 +1,10 @@
-#!/usr/bin/env python
 """
-Demo of the RangeSelection Tool on a line plot.  Left-click and drag will
-create a horizontal range selection; this selection can then be dragged
+Range Selection tool
+
+Displays a line plot, on which you can select an arbitrary range of x-values.
+
+Left-drag will create a horizontal range selection; 
+this selection can then be dragged
 around, or resized by dragging its edges.
 """
 
@@ -71,5 +74,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-#--EOF---

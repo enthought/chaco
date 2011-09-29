@@ -1,9 +1,11 @@
-#!/usr/bin/env python
 """
-This example demonstrates the various ways that Chaco can maintain aspect ratios
-in plots.
+Controlling aspect ratio
 
-The interactions in the plots are all the same as in simple_line.py.
+Demonstrates various ways that Chaco can control aspect ratios in plots.
+
+Left-drag pans the plot.
+
+Mousewheel up and down zooms the plot in and out.
 """
 
 # Major library imports
@@ -102,5 +104,3 @@ demo = myplot = MyPlot()
 
 if __name__ == "__main__":
     myplot.configure_traits()
-
-# EOF

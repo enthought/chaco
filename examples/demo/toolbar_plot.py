@@ -1,4 +1,14 @@
-"""An example of a ToolbarPlot."""
+"""Toolbar Plot
+
+A toolbar plot is the same as a regular Plot, but also provides a 
+usually hidden drop-down toolbar with configurable buttons.
+
+The toolbar appears when the mouse hovers over the top of the plot area.
+
+This toolbar provides buttons for X log scale, Y log scale, Save as,
+Copy image, Copy data, and Zoom reset.
+
+"""
 
 import numpy
 
