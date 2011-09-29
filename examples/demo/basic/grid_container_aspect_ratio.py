@@ -1,7 +1,8 @@
-#!/usr/bin/env python
 """
-Similar to grid_container.py, but demonstrates Chaco's capability to used
-a fixed screen space aspect ratio for plot components.
+Grid containing plots with fixed aspect ratios
+
+Each plot in this example has a specified aspect ratio which will not
+change no matter how the window is resized.
 """
 
 # Major library imports
@@ -14,7 +15,6 @@ from chaco.example_support import COLOR_PALETTE
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
-
 
 # Chaco imports
 from chaco.api import ArrayPlotData, GridContainer, Plot
@@ -63,7 +63,7 @@ def _create_plot_component():
 #===============================================================================
 # Attributes to use for the plot view.
 size=(1000,800)
-title="Grid Container with Fixed Aspect ratio"
+title="Grid Container with Fixed Aspect ratios"
 
 #===============================================================================
 # # Demo class that is used by the demo.py application.
@@ -85,5 +85,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-# EOF
