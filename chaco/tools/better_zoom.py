@@ -33,7 +33,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
 
     # if the mouse pointer should be used to control the center
     # of the zoom action
-    zoom_to_mouse = Bool(False)
+    zoom_to_mouse = Bool(True)
 
     # The axis to which the selection made by this tool is perpendicular. This
     # only applies in 'range' mode.
