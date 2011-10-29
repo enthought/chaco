@@ -35,6 +35,10 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     # of the zoom action
     zoom_to_mouse = Bool(True)
 
+    # if the mouse pointer should be used to control the center
+    # of the zoom action even for key events based zoom
+    keys_zoom_to_mouse = Bool(True)
+
     # The axis to which the selection made by this tool is perpendicular. This
     # only applies in 'range' mode.
     axis = Enum("both", "index", "value")
@@ -224,28 +228,24 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         """ Handles a key being pressed when the tool is in the 'normal'
         state.
         """
-        if self.zoom_in_key.match(event):
+        if not self.keys_zoom_to_mouse:
             self.position = self._center_screen()
+        if self.zoom_in_key.match(event):
             self.zoom_in()
             event.handled = True
         elif self.zoom_out_key.match(event):
-            self.position = self._center_screen()
             self.zoom_out()
             event.handled = True
         elif self.zoom_in_x_key.match(event):
-            self.position = self._center_screen()
             self.zoom_in_x(self.zoom_factor)
             event.handled = True
         elif self.zoom_out_x_key.match(event):
-            self.position = self._center_screen()
             self.zoom_out_x(self.zoom_factor)
             event.handled = True
         elif self.zoom_in_y_key.match(event):
-            self.position = self._center_screen()
             self.zoom_in_y(self.zoom_factor)
             event.handled = True
         elif self.zoom_out_y_key.match(event):
-            self.position = self._center_screen()
             self.zoom_out_y(self.zoom_factor)
             event.handled = True
 
