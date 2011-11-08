@@ -1,4 +1,4 @@
-"""Demonstrate a simple polygon plot.  The UI allows you to change
+"""Demonstrate a simple bar plot.  The UI allows you to change
 some of the attributes of the plot.
 """
 
