@@ -569,7 +569,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         return False
 
     def _component_changed(self):
-        if self._get_mapper() is not None:
+        if self.traits_inited() and self._get_mapper() is not None:
             self._reset_state_to_current()
         return
 
