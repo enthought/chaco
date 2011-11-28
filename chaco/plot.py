@@ -483,8 +483,12 @@ class Plot(DataView):
             The name of the data array in self.plot_data
         name : string
             The name of the plot; if omitted, then a name is generated.
-        xbounds, ybounds : tuples of (low, high)
-            Bounds in data space where this image resides.
+        xbounds, ybounds : string, tuple, or ndarray
+            Bounds where this image resides. Bound may be: a) names of
+            data in the plot data; b) tuples of (low, high) in data space,
+            c) 1D arrays of values representing the pixel boundaries (must
+            be 1 element larger than underlying data), or
+            d) 2D arrays as obtained from a meshgrid operation
         origin : string
             Which corner the origin of this plot should occupy:
                 "bottom left", "top left", "bottom right", "top right"
@@ -543,8 +547,12 @@ class Plot(DataView):
             The name of the color-map function to call (in
             chaco.default_colormaps) or an AbstractColormap instance
             to use for contour poly plots (ignored for contour line plots)
-        xbounds, ybounds : tuples of (low, high) in data space
-            Bounds where this image resides.
+        xbounds, ybounds : string, tuple, or ndarray
+            Bounds where this image resides. Bound may be: a) names of
+            data in the plot data; b) tuples of (low, high) in data space,
+            c) 1D arrays of values representing the pixel boundaries (must
+            be 1 element larger than underlying data), or
+            d) 2D arrays as obtained from a meshgrid operation
         origin : string
             Which corner the origin of this plot should occupy:
                 "bottom left", "top left", "bottom right", "top right"
