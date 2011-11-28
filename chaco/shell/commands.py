@@ -178,10 +178,20 @@ def activate(ident=None):
 
 def show():
     """ Shows all the figure windows that have been created thus far, and
-    creates a GUI main loop.  This function is useful in scripts to show plots and
-    keep their windows open, and has no effect when used from the interpreter
-    prompt.
+    creates a GUI main loop. This function is useful in scripts to show plots
+    and keep their windows open, and has no effect when used from the
+    interpreter prompt.
     """
+
+    # if we are in IPython, and the GUI mainloop is already running, show()
+    # is not necessary and blocks the shell until the window is open
+    # (see http://tinyurl.com/cjf5l62)
+    try:
+        from IPython.lib.guisupport import is_event_loop_running_wx
+        if is_event_loop_running_wx():
+            return
+    except IOError:
+        pass
 
     app = GetApp()
     if not app:
