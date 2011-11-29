@@ -338,7 +338,9 @@ class BaseXYPlot(AbstractPlotRenderer):
         # data_array is Nx2 array
         if len(data_array) == 0:
             return []
+
         x_ary, y_ary = transpose(data_array)
+
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
         if self.orientation == "h":
@@ -422,7 +424,12 @@ class BaseXYPlot(AbstractPlotRenderer):
         if isnan(x) or isnan(y):
             return None
 
-        sx, sy = self.map_screen([x,y])
+        # transform x,y in a 1x2 array, which is the preferred format of
+        # map_screen. this makes it robust against differences in
+        # the map_screen methods of logmapper and linearmapper
+        # when passed a scalar
+        xy = np.array([[x,y]])
+        sx, sy = self.map_screen(xy).T
         if index_only and (threshold == 0.0 or screen_pt[0]-sx < threshold):
             return ndx
         elif ((screen_pt[0]-sx)**2 + (screen_pt[1]-sy)**2
