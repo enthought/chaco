@@ -428,7 +428,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         # map_screen. this makes it robust against differences in
         # the map_screen methods of logmapper and linearmapper
         # when passed a scalar
-        xy = np.array([[x,y]])
+        xy = array([[x,y]])
         sx, sy = self.map_screen(xy).T
         if index_only and (threshold == 0.0 or screen_pt[0]-sx < threshold):
             return ndx
