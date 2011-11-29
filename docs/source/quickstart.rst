@@ -256,9 +256,9 @@ You can interact with the plot in the following ways:
         * For either of the above, press Escape to reset the zoom to the
           original view.
 
-Now exit the plot, and start IPython with the -wthread option:
+Now exit the plot, and start IPython with the ``--gui=wx`` option: ::
 
-    :command:`ipython -wthread`
+    ipython --gui=wx
 
 This tells IPython to start a wxPython mainloop in a background thread.  Now
 run the previous example again::
