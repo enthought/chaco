@@ -139,7 +139,7 @@ Location
      :command:`git clone https://github.com/enthought/chaco/tree/master/examples`
 
    * For the most up-to-date version of the examples using the old version of the namespace 
-     (importing chaco using <i>from enthought.chaco</i>):
+     (importing chaco using ``from enthought.chaco``):
   
      :command:`git clone https://github.com/enthought/chaco/tree/old-namespace/examples`
 
@@ -156,7 +156,7 @@ directories. Some examples are classified by themes and located in separate dire
 Almost all of the Chaco examples are stand-alone files that can be run individually. They 
 can be executed from command line and we will illustrate this first. 
 We will then show how to run Chaco in an interactive way from IPython. This "shell" mode 
-is more common to Matplotlib or Matlab users.
+is more familiar to Matplotlib or Matlab users.
 
 .. note::
    Some of these examples can be visualized in our 
@@ -301,14 +301,14 @@ a `Traits <http://github.enthought.com/traits/>`_ application.
 
 First, some imports will bring in the necessary components::
 
-  from enthought.chaco.api import ArrayPlotData, Plot
-  from enthought.enable.component_editor import ComponentEditor
+  from chaco.api import ArrayPlotData, Plot
+  from enable.component_editor import ComponentEditor
 
-  from enthought.traits.api import HasTraits, Instance
-  from enthought.traits.ui.api import View, Item
+  from traits.api import HasTraits, Instance
+  from traitsui.api import View, Item
 
-The imports from chaco and enable will support the creation of the plot. The 
-imports from traits bring in the components to embed the plot inside a trait 
+The imports from `chaco` and `enable` will support the creation of the plot. The
+imports from `traits` bring in the components to embed the plot inside a trait
 application. (Refer to the `traits documentation <http://github.enthought.com/traits/>`_ 
 for more details about building an interactive application using Traits.)
 Now let's create a trait class with a view that contains only 1 element: a Chaco 
@@ -355,21 +355,21 @@ with a custom UI and custom tools on top of the plotting functionality
 such as those illustrated in the examples. For example, the trait object 
 allows you to create controls for your plot at a very high level, add 
 these controls to the UI with very little work, add listeners to update 
-the plot when the data changes. Exploring the capabilities of Chaco can 
+the plot when the data changes. Exploring the capabilities of Chaco
 allows you to create tools to interact with the plot, and overlays for 
 example allow you to make these tools intuitive to use and visually 
-appealling.
+appealing.
 
 .. _going_further:
 
-Further Reading and ressources
-==============================
+Further Reading and resources
+=============================
 
 You can also learn more about Chaco:
 
 * following some tutorials that come with the Chaco package,
 
-* Exploring our `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_ with examples,
+* exploring our `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_ with examples,
 
 * following demos of Chaco given during webinars Enthought to EPD subscribers,
 
@@ -382,15 +382,15 @@ Tutorials
 ---------
 
 For more details on how to use Chaco to embed powerful plotting 
-functionality inside applications, refer to the :ref:`tutorials`. 
-In particular some tutorial examples were recently added into the 
+functionality inside applications, refer to the :ref:`tutorials` page.
+In particular, some tutorial examples were added into the
 :file:`examples/tutorials/scipy2008/` directory.  These examples are 
 numbered and introduce  
 concepts one at a time, going from a simple line plot to building a  
 custom overlay with its own trait editor and reusing an existing tool  
-from the built-in set of tools.  You can browse them on our SVN server  
+from the built-in set of tools.  You can browse them on the GitHub repository
 at:
-https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008
+https://github.com/enthought/chaco/tree/master/examples/tutorials .
 Finally, it is recommended to explore the examples 
 (:ref:`examples` section) as they are regularly updated to reflect the most recent 
 changes and recommended ways to use Chaco. 
