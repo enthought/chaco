@@ -6,7 +6,7 @@ components in Chaco.
 To run this tutorial, change to the directory where this file is located,
 then invoke IPython:
 
-  ipython -wthread
+  ipython --gui=wx
 
 Then just run this tutorial:
 
