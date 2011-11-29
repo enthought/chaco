@@ -363,15 +363,34 @@ class BaseXYPlot(AbstractPlotRenderer):
         else:
             return self.index_mapper.map_data(x)
 
-    def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True, \
+    def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True,
                   index_only=False):
         """ Maps a screen space point to an index into the plot's index array(s).
 
         Implements the AbstractPlotRenderer interface.
+
+        Parameters
+        ----------
+        screen_pt :
+            Screen space point
+
+        threshold : float
+            Maximum distance from screen space point to plot data point.
+            A value of 0.0 means no threshold (any distance will do).
+
+        outside_returns_none : bool
+            If True, a screen space point outside the data range returns None.
+            Otherwise, it returns either 0 (outside the lower range) or
+            the last index (outside the upper range)
+
+        index_only : bool
+            If True, the threshold is measured on the distance between the
+            index values, otherwise as Euclidean distance between the (x,y)
+            coordinates.
         """
 
         data_pt = self.map_data(screen_pt)
-        if ((data_pt < self.index_mapper.range.low) or \
+        if ((data_pt < self.index_mapper.range.low) or
             (data_pt > self.index_mapper.range.high)) and outside_returns_none:
             return None
         index_data = self.index.get_data()
@@ -381,8 +400,9 @@ class BaseXYPlot(AbstractPlotRenderer):
             return None
 
         try:
+            # find the closest point to data_pt in index_data
             ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
-        except IndexError, e:
+        except IndexError:
             # if reverse_map raises this exception, it means that data_pt is
             # outside the range of values in index_data.
             if outside_returns_none:
@@ -401,10 +421,12 @@ class BaseXYPlot(AbstractPlotRenderer):
         y = value_data[ndx]
         if isnan(x) or isnan(y):
             return None
+
         sx, sy = self.map_screen([x,y])
-        if index_only and ((threshold == 0.0) or (screen_pt[0]-sx) < threshold):
+        if index_only and (threshold == 0.0 or screen_pt[0]-sx < threshold):
             return ndx
-        elif ((screen_pt[0]-sx)**2 + (screen_pt[1]-sy)**2 < threshold*threshold):
+        elif ((screen_pt[0]-sx)**2 + (screen_pt[1]-sy)**2
+              < threshold*threshold):
             return ndx
         else:
             return None
