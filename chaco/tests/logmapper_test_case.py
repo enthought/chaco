@@ -1,6 +1,6 @@
 
 import unittest
-from numpy import array, nan
+from numpy import array, nan, ndarray
 from numpy.testing import assert_array_almost_equal, assert_equal
 
 from chaco.api import ArrayDataSource, DataRange1D, LogMapper
@@ -73,6 +73,19 @@ class LogMapperTestCase(unittest.TestCase):
         assert_array_almost_equal(result, [0, 20, 10, 20, 20, 30])
         return
 
+    def test_scalar(self):
+        # test for bug: when passed a scalar, LinearMapper.map_screen returns
+        # a scalar instead of an array with 1 element. This is inconsistent
+        # with the behavior of LogMapper, and causes the code that relies
+        # on it to raise exceptions (e.g., the example demo/shell/loglog.py
+        # raises an exception when left-clicking)
+        ary = array([1.0, 10.0, 100.0, 1000.0, 10000.0])
+        ds = ArrayDataSource(ary)
+        r = DataRange1D(ds)
+        mapper = LogMapper(range=r, low_pos=50, high_pos=90)
+        result = mapper.map_screen(10.)
+        self.assertEqual(type(result), ndarray)
+        assert_equal(result, array([60]))
 
 if __name__ == '__main__':
     import nose
