@@ -1,5 +1,7 @@
+"""This example shows how to createa log-log plot using the chaco
+`shell` subpackage."""
 
-# Mayor Library imports
+# Major library imports
 from numpy import linspace, exp
 
 # Enthought library imports

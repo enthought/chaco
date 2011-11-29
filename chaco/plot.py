@@ -483,8 +483,12 @@ class Plot(DataView):
             The name of the data array in self.plot_data
         name : string
             The name of the plot; if omitted, then a name is generated.
-        xbounds, ybounds : tuples of (low, high)
-            Bounds in data space where this image resides.
+        xbounds, ybounds : string, tuple, or ndarray
+            Bounds where this image resides. Bound may be: a) names of
+            data in the plot data; b) tuples of (low, high) in data space,
+            c) 1D arrays of values representing the pixel boundaries (must
+            be 1 element larger than underlying data), or
+            d) 2D arrays as obtained from a meshgrid operation
         origin : string
             Which corner the origin of this plot should occupy:
                 "bottom left", "top left", "bottom right", "top right"
@@ -543,8 +547,12 @@ class Plot(DataView):
             The name of the color-map function to call (in
             chaco.default_colormaps) or an AbstractColormap instance
             to use for contour poly plots (ignored for contour line plots)
-        xbounds, ybounds : tuples of (low, high) in data space
-            Bounds where this image resides.
+        xbounds, ybounds : string, tuple, or ndarray
+            Bounds where this image resides. Bound may be: a) names of
+            data in the plot data; b) tuples of (low, high) in data space,
+            c) 1D arrays of values representing the pixel boundaries (must
+            be 1 element larger than underlying data), or
+            d) 2D arrays as obtained from a meshgrid operation
         origin : string
             Which corner the origin of this plot should occupy:
                 "bottom left", "top left", "bottom right", "top right"
@@ -588,6 +596,67 @@ class Plot(DataView):
         return self._create_2d_plot(cls, name, origin, xbounds, ybounds, value,
                                     hide_grids, **kwargs)
 
+
+    def _process_2d_bounds(self, bounds, array_data, axis):
+        """Transform an arbitrary bounds definition into a linspace.
+
+        Process all the ways the user could have defined the x- or y-bounds
+        of a 2d plot and return a linspace between the lower and upper
+        range of the bounds.
+
+        Parameters
+        ----------
+        bounds : any
+            User bounds definition
+
+        array_data : 2D array
+            The 2D plot data
+
+        axis : int
+            The axis along which the bounds are tyo be set
+        """
+
+        num_ticks = array_data.shape[axis] + 1
+
+        if bounds is None:
+            return arange(num_ticks)
+
+        if type(bounds) is tuple:
+            # create a linspace with the bounds limits
+            return linspace(bounds[0], bounds[1], num_ticks)
+
+        if type(bounds) is ndarray and len(bounds.shape) == 1:
+            # bounds is 1D, but of the wrong size
+
+            if len(bounds) != num_ticks:
+                msg = ("1D bounds of an image plot needs to have 1 more "
+                       "element than its corresponding data shape, because "
+                       "they represent the locations of pixel boundaries.")
+                raise ValueError(msg)
+            else:
+                return linspace(bounds[0], bounds[-1], num_ticks)
+
+        if type(bounds) is ndarray and len(bounds.shape) == 2:
+            # bounds is 2D, assumed to be a meshgrid
+            # This is triggered when doing something like
+            # >>> xbounds, ybounds = meshgrid(...)
+            # >>> z = f(xbounds, ybounds)
+
+            if bounds.shape != array_data.shape:
+                msg = ("2D bounds of an image plot needs to have the same "
+                       "shape as the underlying data, because "
+                       "they are assumed to be generated from meshgrids.")
+                raise ValueError(msg)
+            else:
+                if axis == 0: bounds = bounds[:,0]
+                else: bounds = bounds[0,:]
+                interval = bounds[1] - bounds[0]
+                return linspace(bounds[0], bounds[-1]+interval, num_ticks)
+
+        raise ValueError("bounds must be None, a tuple, an array, "
+                         "or a PlotData name")
+
+
     def _create_2d_plot(self, cls, name, origin, xbounds, ybounds, value_ds,
                         hide_grids, **kwargs):
         if name is None:
@@ -597,49 +666,16 @@ class Plot(DataView):
 
         array_data = value_ds.get_data()
 
-        # process xbounds to get a linspace
+        # process bounds to get linspaces
         if isinstance(xbounds, basestring):
             xbounds = self._get_or_create_datasource(xbounds).get_data()
-        num_x_ticks = array_data.shape[1] + 1
-        if xbounds is None:
-            xs = arange(num_x_ticks)
-        elif isinstance(xbounds, tuple):
-            xs = linspace(xbounds[0], xbounds[1], num_x_ticks)
-        elif isinstance(xbounds, ndarray):
-            if len(xbounds.shape) == 1 and len(xbounds) == num_x_ticks:
-                xs = linspace(xbounds[0], xbounds[-1], num_x_ticks)
-            elif len(xbounds.shape) == 1 and len(xbounds) == num_x_ticks-1:
-                # Explicitly treat this as an error
-                raise ValueError("The xbounds array of an image plot needs to have 1 more element that its corresponding data shape, because it represents the locations of pixel boundaries.")
-            elif xbounds.shape == array_data.shape:
-                # FIXME: When would this case ever be triggered?
-                xs = xbounds[0,:]
-            else:
-                raise ValueError("xbounds shape not commensurate with data")
-        else:
-            raise ValueError("xbounds must be None, a tuple, an array, or a PlotData name")
 
-        # process ybounds to get a linspace
+        xs = self._process_2d_bounds(xbounds, array_data, 1)
+
         if isinstance(ybounds, basestring):
             ybounds = self._get_or_create_datasource(ybounds).get_data()
-        num_y_ticks = array_data.shape[0] + 1
-        if ybounds is None:
-            ys = arange(num_y_ticks)
-        elif isinstance(ybounds, tuple):
-            ys = linspace(ybounds[0], ybounds[1], num_y_ticks)
-        elif isinstance(ybounds, ndarray):
-            if len(ybounds.shape) == 1 and len(ybounds) == num_y_ticks:
-                ys = linspace(ybounds[0], ybounds[-1], num_y_ticks)
-            elif len(ybounds.shape) == 1 and len(ybounds) == num_y_ticks-1:
-                # Explicitly treat this as an error
-                raise ValueError("The ybounds array of an image plot needs to have 1 more element that its corresponding data shape, because it represents the locations of pixel boundaries.")
-            elif ybounds.shape == array_data.shape:
-                # FIXME: When would this case ever be triggered?
-                ys = ybounds[:,0]
-            else:
-                raise ValueError("ybounds shape not commensurate with data")
-        else:
-            raise ValueError("ybounds must be None, a tuple, an array, or a PlotData name")
+
+        ys = self._process_2d_bounds(ybounds, array_data, 0)
 
         # Create the index and add its datasources to the appropriate ranges
         index = GridDataSource(xs, ys, sort_order=('ascending', 'ascending'))
@@ -662,6 +698,7 @@ class Plot(DataView):
         self.add(plot)
         self.plots[name] = [plot]
         return self.plots[name]
+
 
     def candle_plot(self, data, name=None, value_scale="linear", origin=None,
                     **styles):

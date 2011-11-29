@@ -1,5 +1,11 @@
+"""This example demonstrates using dates as labels for the axis ticks using
+the chaco shell subpackage.
 
-# Mayor Library imports
+Try zooming in and out using the mouse wheel and see the resolution of
+the dates gradually changing from days to years.
+"""
+
+# Major library imports
 from numpy import linspace, pi, sin
 
 # Enthought library imports
