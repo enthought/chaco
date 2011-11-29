@@ -18,7 +18,7 @@ def store_exceptions_on_all_threads():
         exceptions.append(value)
         message = 'Uncaught exception:\n'
         message += ''.join(traceback.format_exception(type, value, tb))
-        print message
+        sys.stderr.write(message)
 
     try:
         sys.excepthook = excepthook
