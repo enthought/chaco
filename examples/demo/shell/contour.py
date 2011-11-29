@@ -1,5 +1,8 @@
+"""This example demonstrates creating a contour plot using the chaco
+shell subpackage.
+"""
 
-# Mayor Library imports
+# Major library imports
 from numpy import linspace, meshgrid, sin
 from scipy.special import jn
 

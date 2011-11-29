@@ -1,5 +1,8 @@
+"""This example demonstrates creating a filled contour plot using the chaco
+shell subpackage.
+"""
 
-# Mayor Library Imports
+# Major library Imports
 from numpy import linspace, meshgrid, tanh
 
 # Enthought Library Imports
