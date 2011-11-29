@@ -183,24 +183,15 @@ def show():
     interpreter prompt.
     """
 
-    # if we are in IPython, and the GUI mainloop is already running, show()
-    # is not necessary and blocks the shell until the window is open
-    # (see http://tinyurl.com/cjf5l62)
-    try:
-        from IPython.lib.guisupport import is_event_loop_running_wx
-        if is_event_loop_running_wx():
-            return
-    except IOError:
-        pass
+    from traits.etsconfig.api import ETSConfig
+    from pyface.util import guisupport
+    is_event_loop_running = getattr(guisupport, 'is_event_loop_running_' + ETSConfig.toolkit)
+    start_event_loop = getattr(guisupport, 'start_event_loop_' + ETSConfig.toolkit)
 
-    app = GetApp()
-    if not app:
-        return
-
-    if not(app.IsMainLoopRunning()):
+    if not is_event_loop_running():
         frame = session.active_window
-        app.SetTopWindow(frame)
-        app.MainLoop()
+        frame.raise_window()
+        start_event_loop()
     return
 
 
