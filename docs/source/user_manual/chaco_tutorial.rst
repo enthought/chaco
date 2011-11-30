@@ -24,7 +24,7 @@ This tutorial demonstrates using Chaco with Traits UI, so knowledge of the
 Traits framework is also helpful. We don't use very many sophisticated aspects
 of Traits or Traits UI, and it is entirely possible to pick it up as you go
 through the tutorial. This tutorial applies to Enthought Tool Suite
-version 4.x.
+version 3.x.
 
 It's also worth pointing out that you don't *have* to use Traits UI in order to
 use Chaco --- you can integrate Chaco directly with Qt or wxPython --- but for
@@ -1234,3 +1234,7 @@ Final words
 
 This concludes this tutorial. For further information, please refer
 to the :ref:`Resources` page, or visit the :ref:`User guide`.
+
+
+*This tutorial is based on the "Interactive plotting with Chaco" tutorial
+that was presented by Peter Wang at Scipy 2008*
