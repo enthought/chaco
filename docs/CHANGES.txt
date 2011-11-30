@@ -1,3 +1,10 @@
+Chaco 4.1.0
+===========
+
+ * chaco.shell package updated to work with IPython >= 0.11
+ * chaco.shell supports the Qt backend (works with IPython >= 0.12)
+
+
 Chaco 3.3.2 (Oct 15, 2010)
 ==========================
 
