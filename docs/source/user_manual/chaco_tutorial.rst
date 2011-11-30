@@ -2,7 +2,7 @@
 .. highlight:: python
    :linenothreshold: 10
    
-.. _tutorial_1:
+.. _tutorial:
 
 ###############################
 Interactive plotting with Chaco

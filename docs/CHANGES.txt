@@ -1,9 +1,15 @@
 Chaco 4.1.0
 ===========
 
- * chaco.shell package updated to work with IPython >= 0.11
+Enhancements
+------------
+
  * chaco.shell supports the Qt backend (works with IPython >= 0.12)
 
+Fixes
+-----
+
+ * chaco.shell package updated to work with IPython >= 0.11
 
 Chaco 3.3.2 (Oct 15, 2010)
 ==========================
@@ -20,6 +26,7 @@ Enhancements
 
 Fixes
 -----
+
  * Fixing some commented-out position traits handlers in BaseXYPlot
  * Fixing MultiLinePlot's data listener
 
