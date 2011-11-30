@@ -1,5 +1,5 @@
 
-.. _tutorial_2:
+.. _tutorial_van_der_waal:
 
 ######################################################
 Modeling Van der Waal's Equation With Chaco and Traits

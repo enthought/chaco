@@ -5,9 +5,10 @@
 ##########
 Quickstart
 ##########
+
 +----------------------------------------+--------------------------------------+
 |.. image::  images/simple_line.png      |.. image::  images/scalar_function.png|
-|   :width: 400 px                       |   :width: 400 px                     |
+|   :height: 300 px                      |   :height: 300 px                    |
 |   :align: center                       |   :align: center                     |
 +----------------------------------------+--------------------------------------+
 
@@ -15,9 +16,9 @@ This section is meant to help users on well-supported platforms and common
 Python environments get started using Chaco as quickly as possible. As part of the 
 `Enthought Tool Suite <http://code.enthought.com/>`_, Chaco users can subscribe 
 to the `enthought-dev <https://mail.enthought.com/mailman/listinfo/enthought-dev>`_  
-**mailing list** to post questions, consult archives and share tips.
+mailing list to post questions, consult archives and share tips.
 
-Licencing
+Licensing
 =========
 
 As part of the `Enthought Tool Suite <http://code.enthought.com/>`_, Chaco is free 
@@ -51,26 +52,25 @@ Installation
 There are several different ways to get Chaco. You can either download and install the 
 `Enthought Python Distribution (EPD) <http://www.enthought.com/epd>`_ or build Chaco 
 on your machine. Because of the number of packages required to build Chaco and its 
-dependencies **we highly recommend to install EPD**. If you encounter
-any problems in the steps below, please refer to the :ref:`installation`
-section for more detailed instructions or to the 
-`enthought-dev <https://mail.enthought.com/mailman/listinfo/enthought-dev>`_  
-**mailing list** to post questions, consult archives and share tips.
+dependencies **we highly recommend to install EPD**.
 
 
   1. Install the Enthought Python Distribution.
      Chaco, the rest of the Enthought Tool Suite and a lot more are bundled in it. 
      This allows for the installation of Chaco and all its dependencies to be 
      installed at once. **These packages will be linked to a new instance of python**.
-     Go to the main `EPD <http://www.enthought.com/epd>`_ 
-     web site and download the appropriate version for your platform (Windows, MAC, Linux, 
-     Solaris are available).  After running the installer, you will have a working version of Chaco and 
+
+     Go to the `EDP download page <http://www.enthought.com/products/getepd.php>`_
+     and get the appropriate version for your platform (Windows, Mac, Linux,
+     Solaris are available).
+     After running the installer, you will have a working version of Chaco and
      several examples.
 
-  .. note::
-     Enthought Python Distribution is free for academic users.
+     The EPD Free distribution is **free for all users** and contains all that
+     you need to use Chaco.
 
-Building Chaco on your machine requires to build Chaco and each of its dependencies. It 
+
+Building Chaco on your machine requires to build Chaco and each of its dependencies. It
 has the advantage of installing it on top of the python instance of your OS.
 But the building process might be challenging and will require SWIG, Cython and several 
 development libraries to be installed. 
@@ -81,24 +81,19 @@ development libraries to be installed.
 
 
   3. Download sources as a project from the 
-  `Chaco github repository <https://github.com/enthought/chaco>`_ or alternatively as a part 
-  of the ETS (for details see http://code.enthought.com/source/). Please refer to the 
-  :ref:`installation` section for more detailed instructions.
+    `Chaco github repository <https://github.com/enthought/chaco>`_ or alternatively as a part
+    of the ETS (for details see http://code.enthought.com/source/). Please refer to the
+    :ref:`installation` section for more detailed instructions.
 
   4. Install Chaco and its :ref:`dependencies` from `PyPI <http://pypi.python.org/pypi>`_ using 
-  `easy_install <http://packages.python.org/distribute/easy_install.html>`_ (part of setuptools) 
-  or using `pip <http://www.pip-installer.org/en/latest/>`_. For example using easy_install, 
-  simply type
+    `easy_install <http://packages.python.org/distribute/easy_install.html>`_ (part of setuptools)
+    or using `pip <http://www.pip-installer.org/en/latest/>`_. For example using easy_install,
+    simply type ::
 
-  :command:`easy_install Chaco`
+        easy_install Chaco
 
-
-Chaco Gallery
-=============
-Examples of what can be done with Chaco is available in our `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
-
-Running Some Examples
-=====================
+Chaco built-in Examples
+=======================
 
 To test installation and find examples of what can be done with Chaco, Chaco is shipped with 
 example files. Almost all of the Chaco examples are stand-alone files that can be run 
@@ -139,7 +134,7 @@ Location
      :command:`git clone https://github.com/enthought/chaco/tree/master/examples`
 
    * For the most up-to-date version of the examples using the old version of the namespace 
-     (importing chaco using <i>from enthought.chaco</i>):
+     (importing chaco using ``from enthought.chaco``):
   
      :command:`git clone https://github.com/enthought/chaco/tree/old-namespace/examples`
 
@@ -156,7 +151,7 @@ directories. Some examples are classified by themes and located in separate dire
 Almost all of the Chaco examples are stand-alone files that can be run individually. They 
 can be executed from command line and we will illustrate this first. 
 We will then show how to run Chaco in an interactive way from IPython. This "shell" mode 
-is more common to Matplotlib or Matlab users.
+is more familiar to Matplotlib or Matlab users.
 
 .. note::
    Some of these examples can be visualized in our 
@@ -256,9 +251,9 @@ You can interact with the plot in the following ways:
         * For either of the above, press Escape to reset the zoom to the
           original view.
 
-Now exit the plot, and start IPython with the -wthread option:
+Now exit the plot, and start IPython with the ``--gui=wx`` option [#guiqt]_: ::
 
-    :command:`ipython -wthread`
+    ipython --gui=wx
 
 This tells IPython to start a wxPython mainloop in a background thread.  Now
 run the previous example again::
@@ -301,14 +296,14 @@ a `Traits <http://github.enthought.com/traits/>`_ application.
 
 First, some imports will bring in the necessary components::
 
-  from enthought.chaco.api import ArrayPlotData, Plot
-  from enthought.enable.component_editor import ComponentEditor
+  from chaco.api import ArrayPlotData, Plot
+  from enable.component_editor import ComponentEditor
 
-  from enthought.traits.api import HasTraits, Instance
-  from enthought.traits.ui.api import View, Item
+  from traits.api import HasTraits, Instance
+  from traitsui.api import View, Item
 
-The imports from chaco and enable will support the creation of the plot. The 
-imports from traits bring in the components to embed the plot inside a trait 
+The imports from `chaco` and `enable` will support the creation of the plot. The
+imports from `traits` bring in the components to embed the plot inside a trait
 application. (Refer to the `traits documentation <http://github.enthought.com/traits/>`_ 
 for more details about building an interactive application using Traits.)
 Now let's create a trait class with a view that contains only 1 element: a Chaco 
@@ -355,95 +350,15 @@ with a custom UI and custom tools on top of the plotting functionality
 such as those illustrated in the examples. For example, the trait object 
 allows you to create controls for your plot at a very high level, add 
 these controls to the UI with very little work, add listeners to update 
-the plot when the data changes. Exploring the capabilities of Chaco can 
+the plot when the data changes. Exploring the capabilities of Chaco
 allows you to create tools to interact with the plot, and overlays for 
 example allow you to make these tools intuitive to use and visually 
-appealling.
-
-.. _going_further:
-
-Further Reading and ressources
-==============================
-
-You can also learn more about Chaco:
-
-* following some tutorials that come with the Chaco package,
-
-* Exploring our `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_ with examples,
-
-* following demos of Chaco given during webinars Enthought to EPD subscribers,
-
-* reading seminar slides posted on conference websites, 
-
-* reading about the API from the developer guide.
+appealing.
 
 
-Tutorials
----------
+.. rubric:: Footnotes
 
-For more details on how to use Chaco to embed powerful plotting 
-functionality inside applications, refer to the :ref:`tutorials`. 
-In particular some tutorial examples were recently added into the 
-:file:`examples/tutorials/scipy2008/` directory.  These examples are 
-numbered and introduce  
-concepts one at a time, going from a simple line plot to building a  
-custom overlay with its own trait editor and reusing an existing tool  
-from the built-in set of tools.  You can browse them on our SVN server  
-at:
-https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008
-Finally, it is recommended to explore the examples 
-(:ref:`examples` section) as they are regularly updated to reflect the most recent 
-changes and recommended ways to use Chaco. 
-
-
-.. _chaco_webinars:
-
-Enthought webinars
-------------------
-The video webinars given in  as part of the Enthought webinar 
-series cover building interactive plotting using Chaco. If you are an 
-EPD user, you can find the video, the slides, and the demo code for 
-each webinar covering Chaco. 
-
-* The first one (April 2010) demoes how to use Chaco as your plotting 
-  tool (https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/ ). 
-
-* The seconds (October 2010) illustrates how to building interactive 2D visualization (see 
-  https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/ ).
-
-
-.. _chaco_presentations:
-
-
-Presentations
--------------
-
-There have been several presentations on Chaco at previous PyCon and 
-SciPy conferences:
-
-.. * Follow the latest Chaco presentation at SciPy 2011 at
-
-* Follow the tutorial from the Scipy 2006 conference at
-  http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html ,
-
-* Follow the presentation of Chaco at the PyCon 2007 at 
-  http://code.enthought.com/projects/files/chaco_pycon07/ .
-
-
-
-.. _api_docs:
-
-Developers references and API Docs
------------------------------------
-
-For developers and architects, 
-
-* more details about the **current architecture and API** can be found in 
-  the :ref:`programmers_reference`, 
-
-* the API for Chaco 3.0 (in ETS 3.0) can be found at 
-  http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html ,
-
-* the API for Chaco2 (in ETS 2.7.1) can be found at 
-  http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html .
-
+.. [#guiqt] Starting from IPython 0.12, it is possible to use the Qt backend
+    with ``--gui=qt``. Make sure that the environment variable ``QT_API``
+    is set correctly, as described `here
+    <http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside>`_
