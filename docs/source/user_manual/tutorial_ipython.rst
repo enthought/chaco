@@ -14,7 +14,7 @@ Basic Usage
 ===========
 
 To get started, you need to run iPython with the ``--gui=wx`` option enabled,
-so that the iPython and wx event loops interact correctly::
+so that the iPython and wx event loops interact correctly [#guiqt]_ ::
 
     ipython --gui=wx
 
@@ -248,3 +248,11 @@ Finally, you can use the ``chaco.shell`` API from Python scripts instead of inte
 if you prefer.  In this case, because you do not have ipython around to set up the GUI
 mainloop with the ``--gui=wx`` option, you need to use the ``show()``
 command to start the GUI mainloop and display the windows that you have created.
+
+
+.. rubric:: Footnotes
+
+.. [#guiqt] Starting from IPython 0.12, it is possible to use the Qt backend
+    with ``--gui=qt``. Make sure that the environment variable ``QT_API``
+    is set correctly, as described `here
+    <http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside>`_
