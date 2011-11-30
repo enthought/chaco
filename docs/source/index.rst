@@ -4,11 +4,12 @@ Chaco Documentation
 Chaco is a Python package for building interactive and custom 2-D plots and
 visualizations. It is part of the `Enthought Tool Suite <http://code.enthought.com/>`_. 
 
-It is meant to facilitate writing plotting applications of all levels of complexity, 
-from simple scripts with hard-coded data to integrated plotting within large programs 
-with large datasets and a multitude of interactive tools. 
-While Chaco generates nice static plots for publication and presentation purposes, its 
-components are all designed to be work well for interactive data visualization.
+Chaco is a Python plotting application toolkit that facilitates writing
+plotting applications at all levels of complexity, from simple scripts with
+hard-coded data to large plotting programs with complex data interrelationships
+and a multitude of interactive tools. While Chaco generates attractive static
+plots for publication and presentation, it also works well for interactive
+data visualization and exploration.
 
 Chaco includes renderers for many popular plot types, built-in implementations of
 common interactions with those plots, and a framework for extending and
