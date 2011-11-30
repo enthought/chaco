@@ -256,7 +256,7 @@ You can interact with the plot in the following ways:
         * For either of the above, press Escape to reset the zoom to the
           original view.
 
-Now exit the plot, and start IPython with the ``--gui=wx`` option: ::
+Now exit the plot, and start IPython with the ``--gui=wx`` option [#guiqt]_: ::
 
     ipython --gui=wx
 
@@ -377,6 +377,7 @@ You can also learn more about Chaco:
 
 * reading about the API from the developer guide.
 
+* following the Chaco mailing list: chaco-users@enthought.com
 
 Tutorials
 ---------
@@ -447,3 +448,10 @@ For developers and architects,
 * the API for Chaco2 (in ETS 2.7.1) can be found at 
   http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html .
 
+
+.. rubric:: Footnotes
+
+.. [#guiqt] Starting from IPython 0.12, it is possible to use the Qt backend
+    with ``--gui=qt``. Make sure that the environment variable ``QT_API``
+    is set correctly, as described `here
+    <http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside>`_
