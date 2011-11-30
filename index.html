@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Chaco Documentation &mdash; Chaco v3.4.1 documentation</title>
+    <title>Chaco 4.1.0 &mdash; chaco v4.1.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '3.4.1',
+        VERSION:     '4.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/et.ico"/>
-    <link rel="top" title="Chaco v3.4.1 documentation" href="#" />
+    <link rel="top" title="chaco v4.1.0 documentation" href="#" />
     <link rel="next" title="Quickstart" href="quickstart.html" /> 
   </head>
   <body>
@@ -34,7 +34,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="quickstart.html" title="Quickstart"
              accesskey="N">next</a></li>
-        <li><a href="#">Chaco v3.4.1 documentation</a> &raquo;</li>
+        <li><a href="#">chaco v4.1.0 documentation</a> &raquo;</li>
   
 
       </ul>
@@ -45,82 +45,44 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="chaco-documentation">
-<h1>Chaco Documentation<a class="headerlink" href="#chaco-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="chaco-4-1-0">
+<h1>Chaco 4.1.0<a class="headerlink" href="#chaco-4-1-0" title="Permalink to this headline">¶</a></h1>
 <p>Chaco is a Python package for building interactive and custom 2-D plots and
-visualizations. It is part of the <a class="reference external" href="http://code.enthought.com/">Enthought Tool Suite</a>.</p>
-<p>It is meant to facilitate writing plotting applications of all levels of complexity,
-from simple scripts with hard-coded data to integrated plotting within large programs
-with large datasets and a multitude of interactive tools.
-While Chaco generates nice static plots for publication and presentation purposes, its
-components are all designed to be work well for interactive data visualization.</p>
+visualizations.
+Chaco facilitates writing
+plotting applications at all levels of complexity, from simple scripts with
+hard-coded data to large plotting programs with complex data interrelationships
+and a multitude of interactive tools. While Chaco generates attractive static
+plots for publication and presentation, it also works well for interactive
+data visualization and exploration.
+Chaco is part of the <a class="reference external" href="http://code.enthought.com/">Enthought Tool Suite</a>.</p>
 <p>Chaco includes renderers for many popular plot types, built-in implementations of
 common interactions with those plots, and a framework for extending and
 customizing plots and interactions.  Chaco can also render graphics in a
 non-interactive fashion to images, in either raster or vector formats, and it
 has a subpackage for doing command-line plotting or simple scripting.</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="51%" />
-<col width="49%" />
-</colgroup>
-<tbody valign="top">
-<tr><td><img alt="_images/simple_line.png" class="first last align-center" src="_images/simple_line.png" style="width: 400px;" />
-</td>
-<td><img alt="_images/scalar_function.png" class="first last align-center" src="_images/scalar_function.png" style="width: 400px;" />
-</td>
-</tr>
-</tbody>
-</table>
+<p>For a quick sample of Chaco&#8217;s features, see the
+<a class="reference external" href="http://code.enthought.com/projects/chaco/gallery.php">gallery</a>, the
+<a class="reference internal" href="user_manual/annotated_examples.html#examples"><em>annotated examples</em></a> page, the
+<a class="reference internal" href="user_manual/tutorials_and_examples.html#tutorials"><em>tutorial and examples</em></a>
+and the <a class="reference internal" href="user_manual/resources.html#resources"><em>resources</em></a> page.</p>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#licencing">Licencing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation-overview">Installation Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#chaco-gallery">Chaco Gallery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#running-some-examples">Running Some Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#chaco-plot-integrated-in-a-traits-application">Chaco Plot integrated in a Traits application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#further-reading-and-ressources">Further Reading and ressources</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="user_manual/tutorial.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_1.html">Interactive Plotting with Chaco</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_2.html">Modeling Van der Waal&#8217;s Equation With Chaco and Traits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_hyetograph.html">Creating an interactive Hyetograph with Chaco and Traits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_wx.html">WX-based Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/tutorial_ipython.html">Exploring Chaco with IPython</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="user_manual/index.html">User Manual</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/installation.html">Installing and Building Chaco</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/introduction.html">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/plot_types.html">Plot Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/containers.html">Containers and Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/tools.html">Tools and Overlays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/common_patterns.html">Common Usages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/how_do_i.html">How Do I...?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/faq.html">Frequently Asked Questions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user_manual/annotated_examples.html">Annotated Examples</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="programmers_reference.html">Programmer&#8217;s Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="architecture_overview.html">Architecture Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html">Commonly Used Modules and Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/data_sources.html">Data Sources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/data_ranges.html">Data Ranges</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/mappers.html">Mappers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/containers.html">Containers</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tech_notes.html">Tech Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="scales.html">About the Chaco Scales package</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Installation and quickstart guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_manual/tutorials_and_examples.html">Tutorials and examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_manual/index.html">User Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programmers_reference.html">Programmer&#8217;s Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tech_notes.html">Tech Notes</a></li>
 </ul>
 </div>
+<hr class="docutils" />
+<img alt="_images/chaco_show.png" class="align-center" src="_images/chaco_show.png" style="width: 800px;" />
 <ul class="simple">
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
+</div>
 </div>
 
 
@@ -132,6 +94,16 @@ has a subpackage for doing command-line plotting or simple scripting.</p>
             <p class="logo"><a href="#">
               <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
             </a></p>
+<h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Chaco 4.1.0</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -160,14 +132,14 @@ has a subpackage for doing command-line plotting or simple scripting.</p>
         <li class="right" style="margin-right: 10px">
           <a href="quickstart.html" title="Quickstart"
              >next</a></li>
-        <li><a href="#">Chaco v3.4.1 documentation</a> &raquo;</li>
+        <li><a href="#">chaco v4.1.0 documentation</a> &raquo;</li>
   
 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Jun 06, 2011.
+        &copy; Copyright 2008-2011, Enthought, Inc..
+      Last updated on Nov 30, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

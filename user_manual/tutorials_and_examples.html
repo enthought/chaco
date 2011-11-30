@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Containers and Layout &mdash; chaco v4.1.0 documentation</title>
+    <title>Tutorials and examples &mdash; chaco v4.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -25,24 +25,22 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
     <link rel="top" title="chaco v4.1.0 documentation" href="../index.html" />
-    <link rel="up" title="User Manual" href="index.html" />
-    <link rel="next" title="Tools and Overlays" href="tools.html" />
-    <link rel="prev" title="Plot Types" href="plot_types.html" /> 
+    <link rel="next" title="User Manual" href="index.html" />
+    <link rel="prev" title="Quickstart" href="../quickstart.html" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="tools.html" title="Tools and Overlays"
+          <a href="index.html" title="User Manual"
              accesskey="N">next</a></li>
         <li class="right" >
-          <a href="plot_types.html" title="Plot Types"
+          <a href="../quickstart.html" title="Quickstart"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.0 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">User Manual</a> &raquo;</li>
   
-    <li><a href="#">Containers and Layout</a></li>
+    <li><a href="#">Tutorials and examples</a></li>
   
 
       </ul>
@@ -53,26 +51,33 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="containers-and-layout">
-<h1>Containers and Layout<a class="headerlink" href="#containers-and-layout" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li>Rendering order</li>
-<li>Event dispatch</li>
-<li>Layout and sizing</li>
+  <div class="section" id="tutorials-and-examples">
+<span id="tutorials"></span><h1>Tutorials and examples<a class="headerlink" href="#tutorials-and-examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Tutorials<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="chaco_tutorial.html#tutorial"><em>Tutorial: Interactive plotting with Chaco</em></a> This is
+the main Chaco tutorial and introduces the basic concepts of
+how to use Chaco and Traits UI to do basic plots, customize
+layout, and add interactivity.</li>
+<li><a class="reference internal" href="tutorial_ipython.html#tutorial-ipython"><em>Tutorial: Using Chaco from IPython</em></a> This tutorial
+explains how to use Chaco from IPython using the Chaco <a href="#id2"><span class="problematic" id="id3">``</span></a>shellzz
+command-line plotting interface to build plots, in
+a Matlab or gnuplot-like style.</li>
 </ul>
-</div></blockquote>
 </div>
-<div class="section" id="overlayplotcontainer">
-<h2>OverlayPlotContainer<a class="headerlink" href="#overlayplotcontainer" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="hplotcontainer-and-vplotcontainer">
-<h2>HPlotContainer and VPlotContainer<a class="headerlink" href="#hplotcontainer-and-vplotcontainer" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="gridplotcontainer">
-<h2>GridPlotContainer<a class="headerlink" href="#gridplotcontainer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="tutorial_van_der_waal.html#tutorial-van-der-waal"><em>Modeling Van del Waal&#8217;s Equations</em></a>
+is a complete example of creating a data
+model and then using Traits and Chaco to rapidly create interactive
+plot GUIs.</li>
+<li><a class="reference internal" href="tutorial_hyetograph.html#tutorial-hyetograph"><em>Creating an interactive Hyetograph</em></a>
+is an example of a hyetograph (a plot of rainfall intensity in relation
+to time) application. This example introduces the <tt class="docutils literal"><span class="pre">on_trait_listener</span></tt>
+decorator and uses Chaco, simple Traits views, and live GUI interaction.</li>
+</ul>
 </div>
 </div>
 
@@ -87,18 +92,16 @@
             </a></p>
 <h3>Page Contents</h3>
 <ul>
-<li><a class="reference internal" href="#">Containers and Layout</a><ul>
-<li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#overlayplotcontainer">OverlayPlotContainer</a></li>
-<li><a class="reference internal" href="#hplotcontainer-and-vplotcontainer">HPlotContainer and VPlotContainer</a></li>
-<li><a class="reference internal" href="#gridplotcontainer">GridPlotContainer</a></li>
+<li><a class="reference internal" href="#">Tutorials and examples</a><ul>
+<li><a class="reference internal" href="#id1">Tutorials</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
 </ul>
 
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/user_manual/containers.txt"
+    <li><a href="../_sources/user_manual/tutorials_and_examples.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -122,15 +125,14 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="tools.html" title="Tools and Overlays"
+          <a href="index.html" title="User Manual"
              >next</a></li>
         <li class="right" >
-          <a href="plot_types.html" title="Plot Types"
+          <a href="../quickstart.html" title="Quickstart"
              >previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.0 documentation</a> &raquo;</li>
-          <li><a href="index.html" >User Manual</a> &raquo;</li>
   
-    <li><a href="#">Containers and Layout</a></li>
+    <li><a href="#">Tutorials and examples</a></li>
   
 
       </ul>

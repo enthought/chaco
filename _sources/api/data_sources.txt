@@ -4,7 +4,7 @@
 Data Sources
 ------------
 
-.. currentmodule:: enthought.chaco.api
+.. currentmodule:: chaco.api
 
 :class:`AbstractDataSource`
 ===========================

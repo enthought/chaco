@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating an interactive Hyetograph with Chaco and Traits &mdash; Chaco v3.4.1 documentation</title>
+    <title>Creating an interactive Hyetograph with Chaco and Traits &mdash; chaco v4.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.4.1',
+        VERSION:     '4.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,23 +24,13 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="Chaco v3.4.1 documentation" href="../index.html" />
-    <link rel="up" title="Tutorials" href="tutorial.html" />
-    <link rel="next" title="WX-based Tutorial" href="tutorial_wx.html" />
-    <link rel="prev" title="Modeling Van der Waal’s Equation With Chaco and Traits" href="tutorial_2.html" /> 
+    <link rel="top" title="chaco v4.1.0 documentation" href="../index.html" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="tutorial_wx.html" title="WX-based Tutorial"
-             accesskey="N">next</a></li>
-        <li class="right" >
-          <a href="tutorial_2.html" title="Modeling Van der Waal’s Equation With Chaco and Traits"
-             accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
-          <li><a href="tutorial.html" accesskey="U">Tutorials</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.1.0 documentation</a> &raquo;</li>
   
     <li><a href="#">Creating an interactive Hyetograph with Chaco and Traits</a></li>
   
@@ -102,10 +92,10 @@ view without needing any additional programming.</li>
 In calling your function you want to specify where the function is and
 then import it.  The following code snippet imports all the names that
 will be used for our application.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> \
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> \
     <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span>
-<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">enthought.chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
 </pre></div>
 </div>
 </div>
@@ -150,7 +140,7 @@ each instance of the class will have a unique copy of the traits.</li>
 </ol>
 </div></blockquote>
 <p>The Traits API Reference contains more information about the standard
-Trait types; see the <tt class="xref py py-mod docutils literal"><span class="pre">trait_types</span></tt> module in the <a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/enthought.traits.trait_types.html">Traits API Reference</a>.</p>
+Trait types; see the <tt class="xref py py-mod docutils literal"><span class="pre">trait_types</span></tt> module in the <a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/traits.trait_types.html">Traits API Reference</a>.</p>
 </div>
 <div class="section" id="setting-up-the-user-interface-ui">
 <h2>Setting up the User Interface (UI)<a class="headerlink" href="#setting-up-the-user-interface-ui" title="Permalink to this headline">¶</a></h2>
@@ -212,7 +202,7 @@ change the size of the window.  And third, the traits are split up so
 below the second.  Here is a snapshot of what our application will
 display.  The plots are empty because we have yet to populate the data
 traits</p>
-<img alt="../_images/tutorial_hyetograph_nodata10.png" src="../_images/tutorial_hyetograph_nodata10.png" />
+<img alt="../_images/tutorial_hyetograph_nodata.png" src="../_images/tutorial_hyetograph_nodata.png" />
 </div>
 <div class="section" id="performing-the-hyetograph-calculations">
 <h2>Performing the Hyetograph Calculations<a class="headerlink" href="#performing-the-hyetograph-calculations" title="Permalink to this headline">¶</a></h2>
@@ -326,16 +316,16 @@ f.start()</pre>
 and then triggers the UI.  The application is complete, and if you now
 run the program, you should get a running application that resembles
 the following image,</p>
-<img alt="../_images/tutorial_hyetograph_final10.png" src="../_images/tutorial_hyetograph_final10.png" />
+<img alt="../_images/tutorial_hyetograph_final.png" src="../_images/tutorial_hyetograph_final.png" />
 <p>Congratulations!</p>
 </div>
 <div class="section" id="source-code">
 <h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>The final version of the program, <cite>hyetograph.py</cite>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.traits.api</span> \
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> \
     <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span>
-<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">enthought.chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
 
 
 <span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -501,14 +491,7 @@ the following image,</p>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="tutorial_wx.html" title="WX-based Tutorial"
-             >next</a></li>
-        <li class="right" >
-          <a href="tutorial_2.html" title="Modeling Van der Waal’s Equation With Chaco and Traits"
-             >previous</a> |</li>
-        <li><a href="../index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
-          <li><a href="tutorial.html" >Tutorials</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.1.0 documentation</a> &raquo;</li>
   
     <li><a href="#">Creating an interactive Hyetograph with Chaco and Traits</a></li>
   
@@ -516,8 +499,8 @@ the following image,</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Jun 06, 2011.
+        &copy; Copyright 2008-2011, Enthought, Inc..
+      Last updated on Nov 30, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

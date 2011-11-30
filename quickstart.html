@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Quickstart &mdash; Chaco v3.4.1 documentation</title>
+    <title>Quickstart &mdash; chaco v4.1.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '3.4.1',
+        VERSION:     '4.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,21 +24,21 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/et.ico"/>
-    <link rel="top" title="Chaco v3.4.1 documentation" href="index.html" />
-    <link rel="next" title="Tutorials" href="user_manual/tutorial.html" />
-    <link rel="prev" title="Chaco Documentation" href="index.html" /> 
+    <link rel="top" title="chaco v4.1.0 documentation" href="index.html" />
+    <link rel="next" title="Tutorials and examples" href="user_manual/tutorials_and_examples.html" />
+    <link rel="prev" title="Chaco 4.1.0" href="index.html" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="user_manual/tutorial.html" title="Tutorials"
+          <a href="user_manual/tutorials_and_examples.html" title="Tutorials and examples"
              accesskey="N">next</a></li>
         <li class="right" >
-          <a href="index.html" title="Chaco Documentation"
+          <a href="index.html" title="Chaco 4.1.0"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+        <li><a href="index.html">chaco v4.1.0 documentation</a> &raquo;</li>
   
     <li><a href="#">Quickstart</a></li>
   
@@ -59,28 +59,27 @@
 <col width="49%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><img alt="_images/simple_line.png" class="first last align-center" src="_images/simple_line.png" style="width: 400px;" />
+<tr><td><img alt="_images/simple_line.png" class="first last align-center" src="_images/simple_line.png" style="height: 300px;" />
 </td>
-<td><img alt="_images/scalar_function.png" class="first last align-center" src="_images/scalar_function.png" style="width: 400px;" />
+<td><img alt="_images/scalar_function.png" class="first last align-center" src="_images/scalar_function.png" style="height: 300px;" />
 </td>
 </tr>
 </tbody>
 </table>
 <p>This section is meant to help users on well-supported platforms and common
-Python environments get started using Chaco as quickly as possible.  If your
-platform is not listed here, or your Python installation has some quirks, then
-some of the following instructions might not work for you.  If you encounter
-any problems in the steps below, please refer to the <a class="reference internal" href="user_manual/installation.html#installation"><em>Installing and Building Chaco</em></a>
-section for more detailed instructions.</p>
-<div class="section" id="licencing">
-<h2>Licencing<a class="headerlink" href="#licencing" title="Permalink to this headline">¶</a></h2>
-<p>Chaco as part of the <a class="reference external" href="http://code.enthought.com/">Enthought Tool Suite</a> is free
+Python environments get started using Chaco as quickly as possible. As part of the
+<a class="reference external" href="http://code.enthought.com/">Enthought Tool Suite</a>, Chaco users can subscribe
+to the <a class="reference external" href="https://mail.enthought.com/mailman/listinfo/enthought-dev">enthought-dev</a>
+mailing list to post questions, consult archives and share tips.</p>
+<div class="section" id="licensing">
+<h2>Licensing<a class="headerlink" href="#licensing" title="Permalink to this headline">¶</a></h2>
+<p>As part of the <a class="reference external" href="http://code.enthought.com/">Enthought Tool Suite</a>, Chaco is free
 and open source under the BSD licence.</p>
 </div>
 <div class="section" id="installation-overview">
 <h2>Installation Overview<a class="headerlink" href="#installation-overview" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="dependencies">
-<span id="id1"></span><h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<span id="id2"></span><h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
 <p>Chaco requires Python version 2.5 or later to be installed. Chaco is built on three other
 Enthought packages:</p>
 <blockquote>
@@ -104,49 +103,58 @@ Enthought packages:</p>
 <p>There are several different ways to get Chaco. You can either download and install the
 <a class="reference external" href="http://www.enthought.com/epd">Enthought Python Distribution (EPD)</a> or build Chaco
 on your machine. Because of the number of packages required to build Chaco and its
-dependencies we highly recommend to install EPD.</p>
-<ul>
+dependencies <strong>we highly recommend to install EPD</strong>.</p>
+<blockquote>
+<div><ol class="arabic">
 <li><p class="first">Install the Enthought Python Distribution.
 Chaco, the rest of the Enthought Tool Suite and a lot more are bundled in it.
 This allows for the installation of Chaco and all its dependencies to be
-installed at once. These packages will be linked to a new instance of python.
-Go to the main <a class="reference external" href="http://www.enthought.com/epd">EPD</a>
-web site and download the appropriate version for your platform (Windows, MAC, Linux,
-Solaris).  After running the installer, you will have a working version of Chaco and
+installed at once. <strong>These packages will be linked to a new instance of python</strong>.</p>
+<p>Go to the <a class="reference external" href="http://www.enthought.com/products/getepd.php">EDP download page</a>
+and get the appropriate version for your platform (Windows, Mac, Linux,
+Solaris are available).
+After running the installer, you will have a working version of Chaco and
 several examples.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Enthought Python Distribution is free for academic users and a free version of EPD
-containing Chaco will be released soon.</p>
-</div>
+<p>The EPD Free distribution is <strong>free for all users</strong> and contains all that
+you need to use Chaco.</p>
 </li>
-<li><p class="first"><em>(Linux)</em> Install via the distribution&#8217;s packaging mechanism.  Enthought provide .debs</p>
-</li>
-</ul>
-<p>installers for Debian and Ubuntu and .rpm installers for Redhat.</p>
-<p>Building Chaco on your machine requires to build Chaco and each of its dependencies.
-This might be challenging and will require SWIG and Cython to be installed.</p>
-<ul>
-<li><p class="first">Download sources as a project from the <a class="reference external" href="https://github.com/enthought/chaco">Chaco github repository</a> or alternatively as a part of the ETS (for details see <a class="reference external" href="http://code.enthought.com/source/">http://code.enthought.com/source/</a>). Please refer to the <a class="reference internal" href="user_manual/installation.html#installation"><em>Installing and Building Chaco</em></a> section for more detailed instructions.</p>
-</li>
-<li><p class="first">Install Chaco and its <a class="reference internal" href="#dependencies"><em>Dependencies</em></a> from <a class="reference external" href="http://pypi.python.org/pypi">PyPI</a> using
-<a class="reference external" href="http://packages.python.org/distribute/easy_install.html">easy_install</a> (part of setuptools)
+</ol>
+</div></blockquote>
+<p>Building Chaco on your machine requires to build Chaco and each of its dependencies. It
+has the advantage of installing it on top of the python instance of your OS.
+But the building process might be challenging and will require SWIG, Cython and several
+development libraries to be installed.</p>
+<blockquote>
+<div><p>2. <em>(Linux only)</em> Install via the distribution&#8217;s packaging mechanism.  Enthought provide .debs
+installers for Debian and Ubuntu and .rpm installers for Redhat.</p>
+<ol class="arabic simple" start="3">
+<li>Download sources as a project from the</li>
+</ol>
+<blockquote>
+<div><a class="reference external" href="https://github.com/enthought/chaco">Chaco github repository</a> or alternatively as a part
+of the ETS (for details see <a class="reference external" href="http://code.enthought.com/source/">http://code.enthought.com/source/</a>). Please refer to the
+<a class="reference internal" href="user_manual/installation.html#installation"><em>Installing and Building Chaco</em></a> section for more detailed instructions.</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>Install Chaco and its <a class="reference internal" href="#dependencies"><em>Dependencies</em></a> from <a class="reference external" href="http://pypi.python.org/pypi">PyPI</a> using</li>
+</ol>
+<blockquote>
+<div><p><a class="reference external" href="http://packages.python.org/distribute/easy_install.html">easy_install</a> (part of setuptools)
 or using <a class="reference external" href="http://www.pip-installer.org/en/latest/">pip</a>. For example using easy_install,
 simply type</p>
-<p><strong class="command">easy_install Chaco</strong></p>
-</li>
-</ul>
+<div class="highlight-python"><pre>easy_install Chaco</pre>
+</div>
+</div></blockquote>
+</div></blockquote>
 </div>
 </div>
-<div class="section" id="chaco-gallery">
-<h2>Chaco Gallery<a class="headerlink" href="#chaco-gallery" title="Permalink to this headline">¶</a></h2>
-<p>Examples of what can be done with Chaco is available in our <a class="reference external" href="http://code.enthought.com/projects/chaco/gallery.php">Chaco gallery</a>.</p>
-</div>
-<div class="section" id="running-some-examples">
-<h2>Running Some Examples<a class="headerlink" href="#running-some-examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="chaco-built-in-examples">
+<h2>Chaco built-in Examples<a class="headerlink" href="#chaco-built-in-examples" title="Permalink to this headline">¶</a></h2>
+<p>To test installation and find examples of what can be done with Chaco, Chaco is shipped with
+example files. Almost all of the Chaco examples are stand-alone files that can be run
+individually, from any location. Depending on how you installed Chaco, you may or may not
+have the examples already.</p>
 <div class="section" id="location">
 <h3>Location<a class="headerlink" href="#location" title="Permalink to this headline">¶</a></h3>
-<p>Depending on how you installed Chaco, you may or may not have the examples already.</p>
 <ol class="arabic">
 <li><p class="first">If you installed Chaco as part of EPD, the location of the examples depends on
 your platform:</p>
@@ -174,7 +182,7 @@ using Git (or Subversion for older versions of Chaco):</p>
 <p><strong class="command">git clone https://github.com/enthought/chaco/tree/master/examples</strong></p>
 </li>
 <li><p class="first">For the most up-to-date version of the examples using the old version of the namespace
-(importing chaco using &lt;i&gt;from enthought.chaco&lt;/i&gt;):</p>
+(importing chaco using <tt class="docutils literal"><span class="pre">from</span> <span class="pre">enthought.chaco</span></tt>):</p>
 <p><strong class="command">git clone https://github.com/enthought/chaco/tree/old-namespace/examples</strong></p>
 </li>
 <li><p class="first">ETS 3.0 or Chaco 3.0:</p>
@@ -189,10 +197,9 @@ using Git (or Subversion for older versions of Chaco):</p>
 <p>Chaco examples can be found in the <tt class="file docutils literal"><span class="pre">examples/demo/</span></tt> and <tt class="file docutils literal"><span class="pre">examples/tutorials/</span></tt>
 directories. Some examples are classified by themes and located in separate directories.
 Almost all of the Chaco examples are stand-alone files that can be run individually. They
-can be from command line and we will illustrate this first as Chaco&#8217;s main goal is to
-provide a package for building integrated applications. We will then show how to run Chaco
-in an interactive way from IPython. This &#8220;shell&#8221; mode is more common to Matplotlib or
-Matlab users.</p>
+can be executed from command line and we will illustrate this first.
+We will then show how to run Chaco in an interactive way from IPython. This &#8220;shell&#8221; mode
+is more familiar to Matplotlib or Matlab users.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Some of these examples can be visualized in our
@@ -206,7 +213,7 @@ Matlab users.</p>
 <div><strong class="command">python simple_line.py</strong></div></blockquote>
 <p>This opens a plot of several Bessel functions and a legend.</p>
 <blockquote>
-<div><img alt="_images/simple_line30.png" src="_images/simple_line30.png" />
+<div><img alt="_images/simple_line.png" src="_images/simple_line.png" />
 </div></blockquote>
 <p>You can interact with the plot in several ways:</p>
 <ul>
@@ -265,7 +272,7 @@ run it using the standard Python interpreter:</p>
 <blockquote>
 <div><strong class="command">python lines.py</strong></div></blockquote>
 <p>This shows two overlapping line plots.</p>
-<img alt="_images/lines10.png" src="_images/lines10.png" />
+<img alt="_images/lines.png" src="_images/lines.png" />
 <p>You can interact with the plot in the following ways:</p>
 <blockquote>
 <div><ul>
@@ -286,9 +293,10 @@ original view.</li>
 </li>
 </ul>
 </div></blockquote>
-<p>Now exit the plot, and start IPython with the -wthread option:</p>
-<blockquote>
-<div><strong class="command">ipython -wthread</strong></div></blockquote>
+<p>Now exit the plot, and start IPython with the <tt class="docutils literal"><span class="pre">--gui=wx</span></tt> option <a class="footnote-reference" href="#guiqt" id="id3">[1]</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ipython</span> <span class="o">--</span><span class="n">gui</span><span class="o">=</span><span class="n">wx</span>
+</pre></div>
+</div>
 <p>This tells IPython to start a wxPython mainloop in a background thread.  Now
 run the previous example again:</p>
 <div class="highlight-python"><pre>In [1]: run lines.py</pre>
@@ -298,7 +306,7 @@ IPython prompt.  You can now use various commands from the <tt class="xref py py
 package to interact with the plot.</p>
 <ul>
 <li><p class="first">Import the shell commands:</p>
-<div class="highlight-python"><pre>In [2]: from enthought.chaco.shell import *</pre>
+<div class="highlight-python"><pre>In [2]: from chaco.shell import *</pre>
 </div>
 </li>
 <li><p class="first">Set the X-axis title:</p>
@@ -311,7 +319,7 @@ package to interact with the plot.</p>
 </li>
 </ul>
 <p>After running these commands, your plot looks like this:</p>
-<img alt="_images/lines_final10.png" src="_images/lines_final10.png" />
+<img alt="_images/lines_final.png" src="_images/lines_final.png" />
 <p>The <tt class="xref py py-func docutils literal"><span class="pre">chaco_commands()</span></tt> function display a list of commands with brief
 descriptions.</p>
 <p>You can explore the Chaco object hierarchy, as well. The <tt class="xref py py-mod docutils literal"><span class="pre">chaco.shell</span></tt>
@@ -325,15 +333,15 @@ for information on all you can do with Chaco from within IPython.</p>
 <p>Let&#8217;s create from scratch the simplest possible Chaco plot embedded inside
 a <a class="reference external" href="http://github.enthought.com/traits/">Traits</a> application.</p>
 <p>First, some imports will bring in the necessary components:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enthought.chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
-<span class="kn">from</span> <span class="nn">enthought.enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
+<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="kn">import</span> <span class="n">ComponentEditor</span>
 
-<span class="kn">from</span> <span class="nn">enthought.traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
-<span class="kn">from</span> <span class="nn">enthought.traits.ui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
 </pre></div>
 </div>
-<p>The imports from chaco and enable will support the creation of the plot. The
-imports from traits bring in the components to embed the plot inside a trait
+<p>The imports from <cite>chaco</cite> and <cite>enable</cite> will support the creation of the plot. The
+imports from <cite>traits</cite> bring in the components to embed the plot inside a trait
 application. (Refer to the <a class="reference external" href="http://github.enthought.com/traits/">traits documentation</a>
 for more details about building an interactive application using Traits.)
 Now let&#8217;s create a trait class with a view that contains only 1 element: a Chaco
@@ -371,80 +379,26 @@ it to an instance of MyPlot and call configure_traits to create the UI:</p>
 </pre></div>
 </div>
 <p>The result should look like</p>
-<img alt="_images/mylineplot4.png" src="_images/mylineplot4.png" />
+<img alt="_images/mylineplot.png" src="_images/mylineplot.png" />
 <p>This might look like a lot of code to visualize a function. But this
 represents a relatively simple basis to build full featured applications
 with a custom UI and custom tools on top of the plotting functionality
 such as those illustrated in the examples. For example, the trait object
 allows you to create controls for your plot at a very high level, add
 these controls to the UI with very little work, add listeners to update
-the plot when the data changes. Exploring the capabilities of Chaco can
+the plot when the data changes. Exploring the capabilities of Chaco
 allows you to create tools to interact with the plot, and overlays for
 example allow you to make these tools intuitive to use and visually
-appealling.</p>
-</div>
-<div class="section" id="further-reading-and-ressources">
-<span id="going-further"></span><h2>Further Reading and ressources<a class="headerlink" href="#further-reading-and-ressources" title="Permalink to this headline">¶</a></h2>
-<p>You can also learn more about Chaco:</p>
-<ul class="simple">
-<li>following some tutorials that come with the Chaco package,</li>
-<li>Exploring our <a class="reference external" href="http://code.enthought.com/projects/chaco/gallery.php">Chaco gallery</a> with examples,</li>
-<li>following demos of Chaco given during webinars Enthought to EPD subscribers,</li>
-<li>reading seminar slides posted on conference websites,</li>
-<li>reading about the API from the developer guide.</li>
-</ul>
-<div class="section" id="tutorials">
-<h3>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h3>
-<p>For more details on how to use Chaco to embed powerful plotting
-functionality inside applications, refer to the <a class="reference internal" href="user_manual/tutorial.html#tutorials"><em>Tutorials</em></a>.
-In particular some tutorial examples were recently added into the
-<tt class="file docutils literal"><span class="pre">examples/tutorials/scipy2008/</span></tt> directory.  These examples are
-numbered and introduce
-concepts one at a time, going from a simple line plot to building a
-custom overlay with its own trait editor and reusing an existing tool
-from the built-in set of tools.  You can browse them on our SVN server
-at:
-<a class="reference external" href="https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008">https://svn.enthought.com/enthought/browser/Chaco/trunk/examples/tutorials/scipy2008</a>
-Finally, it is recommended to explore the examples
-(<a class="reference internal" href="user_manual/annotated_examples.html#examples"><em>Annotated Examples</em></a> section) as they are regularly updated to reflect the most recent
-changes and recommended ways to use Chaco.</p>
-</div>
-<div class="section" id="enthought-webinars">
-<span id="chaco-webinars"></span><h3>Enthought webinars<a class="headerlink" href="#enthought-webinars" title="Permalink to this headline">¶</a></h3>
-<p>The video webinars given in  as part of the Enthought webinar
-series cover building interactive plotting using Chaco. If you are an
-EPD user, you can find the video, the slides, and the demo code for
-each webinar covering Chaco.</p>
-<ul class="simple">
-<li>The first one (April 2010) demoes how to use Chaco as your plotting
-tool (<a class="reference external" href="https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/">https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/</a> ).</li>
-<li>The seconds (October 2010) illustrates how to building interactive 2D visualization (see
-<a class="reference external" href="https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/">https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/</a> ).</li>
-</ul>
-</div>
-<div class="section" id="presentations">
-<span id="chaco-presentations"></span><h3>Presentations<a class="headerlink" href="#presentations" title="Permalink to this headline">¶</a></h3>
-<p>There have been several presentations on Chaco at previous PyCon and
-SciPy conferences:</p>
-<ul class="simple">
-<li>Follow the tutorial from the Scipy 2006 conference at
-<a class="reference external" href="http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html">http://code.enthought.com/projects/files/chaco_scipy06/chaco_talk.html</a> ,</li>
-<li>Follow the presentation of Chaco at the PyCon 2007 at
-<a class="reference external" href="http://code.enthought.com/projects/files/chaco_pycon07/">http://code.enthought.com/projects/files/chaco_pycon07/</a> .</li>
-</ul>
-</div>
-<div class="section" id="developers-references-and-api-docs">
-<span id="api-docs"></span><h3>Developers references and API Docs<a class="headerlink" href="#developers-references-and-api-docs" title="Permalink to this headline">¶</a></h3>
-<p>For developers and architects,</p>
-<ul class="simple">
-<li>more details about the <strong>current architecture and API</strong> can be found in
-the <a class="reference internal" href="programmers_reference.html#programmers-reference"><em>Programmer&#8217;s Reference</em></a>,</li>
-<li>the API for Chaco 3.0 (in ETS 3.0) can be found at
-<a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html">http://code.enthought.com/projects/files/ETS3_API/enthought.chaco.html</a> ,</li>
-<li>the API for Chaco2 (in ETS 2.7.1) can be found at
-<a class="reference external" href="http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html">http://code.enthought.com/projects/files/ets_api/enthought.chaco2.html</a> .</li>
-</ul>
-</div>
+appealing.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="guiqt" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>Starting from IPython 0.12, it is possible to use the Qt backend
+with <tt class="docutils literal"><span class="pre">--gui=qt</span></tt>. Make sure that the environment variable <tt class="docutils literal"><span class="pre">QT_API</span></tt>
+is set correctly, as described <a class="reference external" href="http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside">here</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -460,27 +414,19 @@ the <a class="reference internal" href="programmers_reference.html#programmers-r
 <h3>Page Contents</h3>
 <ul>
 <li><a class="reference internal" href="#">Quickstart</a><ul>
-<li><a class="reference internal" href="#licencing">Licencing</a></li>
+<li><a class="reference internal" href="#licensing">Licensing</a></li>
 <li><a class="reference internal" href="#installation-overview">Installation Overview</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#chaco-gallery">Chaco Gallery</a></li>
-<li><a class="reference internal" href="#running-some-examples">Running Some Examples</a><ul>
+<li><a class="reference internal" href="#chaco-built-in-examples">Chaco built-in Examples</a><ul>
 <li><a class="reference internal" href="#location">Location</a></li>
 <li><a class="reference internal" href="#first-plots-from-command-line">First plots from command line</a></li>
 <li><a class="reference internal" href="#first-plots-from-ipython">First plots from IPython</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#chaco-plot-integrated-in-a-traits-application">Chaco Plot integrated in a Traits application</a></li>
-<li><a class="reference internal" href="#further-reading-and-ressources">Further Reading and ressources</a><ul>
-<li><a class="reference internal" href="#tutorials">Tutorials</a></li>
-<li><a class="reference internal" href="#enthought-webinars">Enthought webinars</a></li>
-<li><a class="reference internal" href="#presentations">Presentations</a></li>
-<li><a class="reference internal" href="#developers-references-and-api-docs">Developers references and API Docs</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -511,12 +457,12 @@ the <a class="reference internal" href="programmers_reference.html#programmers-r
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="user_manual/tutorial.html" title="Tutorials"
+          <a href="user_manual/tutorials_and_examples.html" title="Tutorials and examples"
              >next</a></li>
         <li class="right" >
-          <a href="index.html" title="Chaco Documentation"
+          <a href="index.html" title="Chaco 4.1.0"
              >previous</a> |</li>
-        <li><a href="index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+        <li><a href="index.html">chaco v4.1.0 documentation</a> &raquo;</li>
   
     <li><a href="#">Quickstart</a></li>
   
@@ -524,8 +470,8 @@ the <a class="reference internal" href="programmers_reference.html#programmers-r
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Jun 06, 2011.
+        &copy; Copyright 2008-2011, Enthought, Inc..
+      Last updated on Nov 30, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

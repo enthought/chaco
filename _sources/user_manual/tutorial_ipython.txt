@@ -13,17 +13,17 @@ Envisage-based Python prompt.
 Basic Usage
 ===========
 
-To get started, you need to run iPython with the ``-wthread`` option enabled,
-so that the iPython and wx event loops interact correctly::
+To get started, you need to run iPython with the ``--gui=wx`` option enabled,
+so that the iPython and wx event loops interact correctly [#guiqt]_ ::
 
-    ipython -wthread
+    ipython --gui=wx
 
 You could instead start in ``-pylab`` mode if you prefer, which has the advantage of
 pre-loading numpy and some other useful libraries.
 Once you have the iPython prompt, you can accesss the Chaco shell mode commands
 via::
 
-    In [1]: from enthought.chaco.shell import *
+    In [1]: from chaco.shell import *
 
 We'll start by creating some data that we want to plot::
 
@@ -246,6 +246,13 @@ Chaco plot API described elsewhere.
 
 Finally, you can use the ``chaco.shell`` API from Python scripts instead of interactively
 if you prefer.  In this case, because you do not have ipython around to set up the GUI
-mainloop with the ``-wthread`` or ``-q4thread`` options, you need to use the ``show()``
+mainloop with the ``--gui=wx`` option, you need to use the ``show()``
 command to start the GUI mainloop and display the windows that you have created.
 
+
+.. rubric:: Footnotes
+
+.. [#guiqt] Starting from IPython 0.12, it is possible to use the Qt backend
+    with ``--gui=qt``. Make sure that the environment variable ``QT_API``
+    is set correctly, as described `here
+    <http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside>`_

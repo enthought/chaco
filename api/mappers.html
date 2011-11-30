@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Mappers &mdash; Chaco v3.4.1 documentation</title>
+    <title>Mappers &mdash; chaco v4.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.4.1',
+        VERSION:     '4.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="Chaco v3.4.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco v4.1.0 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Containers" href="containers.html" />
     <link rel="prev" title="Data Ranges" href="data_ranges.html" /> 
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="data_ranges.html" title="Data Ranges"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.1.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Mappers</a></li>
@@ -56,11 +56,11 @@
   <div class="section" id="mappers">
 <span id="id1"></span><h1>Mappers<a class="headerlink" href="#mappers" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="abstractmapper">
-<h2><a class="reference internal" href="#enthought.chaco.api.AbstractMapper" title="enthought.chaco.api.AbstractMapper"><tt class="xref py py-class docutils literal"><span class="pre">AbstractMapper</span></tt></a><a class="headerlink" href="#abstractmapper" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.AbstractMapper" title="chaco.api.AbstractMapper"><tt class="xref py py-class docutils literal"><span class="pre">AbstractMapper</span></tt></a><a class="headerlink" href="#abstractmapper" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="enthought.chaco.api.AbstractMapper">
-<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">AbstractMapper</tt><a class="headerlink" href="#enthought.chaco.api.AbstractMapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.traits.has_traits.HasTraits</span></tt></p>
+<dt id="chaco.api.AbstractMapper">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">AbstractMapper</tt><a class="headerlink" href="#chaco.api.AbstractMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
 <p>Defines an abstract mapping from a region in input space to a
 region in output space.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -74,15 +74,15 @@ region in output space.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="enthought.chaco.api.AbstractMapper.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.AbstractMapper.map_data">
+<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractMapper.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data(screen_val) -&gt; data_val</p>
 <p>Maps values from screen space into data space.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="enthought.chaco.api.AbstractMapper.map_data_array">
-<tt class="descname">map_data_array</tt><big>(</big><em>screen_vals</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.AbstractMapper.map_data_array">
+<tt class="descname">map_data_array</tt><big>(</big><em>screen_vals</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data_array(screen_vals) -&gt; data_vals</p>
 <p>Maps an array of values from screen space into data space.
 By default, this method just loops over the points, calling map_data()
@@ -91,8 +91,8 @@ implmentation with a faster one.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="enthought.chaco.api.AbstractMapper.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.AbstractMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.AbstractMapper.map_screen">
+<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractMapper.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_screen(data_array) -&gt; screen_array</p>
 <p>Maps values from data space into screen space.</p>
 </dd></dl>
@@ -101,11 +101,11 @@ implmentation with a faster one.</p>
 
 </div>
 <div class="section" id="base1dmapper">
-<h2><a class="reference internal" href="#enthought.chaco.api.Base1DMapper" title="enthought.chaco.api.Base1DMapper"><tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt></a><a class="headerlink" href="#base1dmapper" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.Base1DMapper" title="chaco.api.Base1DMapper"><tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt></a><a class="headerlink" href="#base1dmapper" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="enthought.chaco.api.Base1DMapper">
-<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">Base1DMapper</tt><a class="headerlink" href="#enthought.chaco.api.Base1DMapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.abstract_mapper.AbstractMapper</span></tt></p>
+<dt id="chaco.api.Base1DMapper">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">Base1DMapper</tt><a class="headerlink" href="#chaco.api.Base1DMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_mapper.AbstractMapper</span></tt></p>
 <p>Defines an abstract mapping from a 1-D region in input space to a 1-D
 region in output space.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -125,34 +125,34 @@ region in output space.</p>
 
 </div>
 <div class="section" id="linearmapper">
-<h2><a class="reference internal" href="#enthought.chaco.api.LinearMapper" title="enthought.chaco.api.LinearMapper"><tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt></a><a class="headerlink" href="#linearmapper" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.LinearMapper" title="chaco.api.LinearMapper"><tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt></a><a class="headerlink" href="#linearmapper" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="enthought.chaco.api.LinearMapper">
-<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">LinearMapper</tt><a class="headerlink" href="#enthought.chaco.api.LinearMapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.base_1d_mapper.Base1DMapper</span></tt></p>
+<dt id="chaco.api.LinearMapper">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">LinearMapper</tt><a class="headerlink" href="#chaco.api.LinearMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_1d_mapper.Base1DMapper</span></tt></p>
 <p>Maps a 1-D data space to and from screen space by specifying a range in
 data space and a corresponding fixed line in screen space.</p>
 <p>This class concerns itself only with metric and not with orientation. So, to
 &#8220;flip&#8221; the screen space orientation, simply swap the values for <strong>low_pos</strong>
 and <strong>high_pos</strong>.</p>
 <dl class="method">
-<dt id="enthought.chaco.api.LinearMapper.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.LinearMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.LinearMapper.map_data">
+<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#chaco.api.LinearMapper.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data(screen_val) -&gt; data_val</p>
 <p>Overrides AbstractMapper. Maps values from screen space into data space.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="enthought.chaco.api.LinearMapper.map_data_array">
-<tt class="descname">map_data_array</tt><big>(</big><em>screen_vals</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.LinearMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.LinearMapper.map_data_array">
+<tt class="descname">map_data_array</tt><big>(</big><em>screen_vals</em><big>)</big><a class="headerlink" href="#chaco.api.LinearMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data_array(screen_vals) -&gt; data_vals</p>
 <p>Overrides AbstractMapper. Maps an array of values from screen space
 into data space.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="enthought.chaco.api.LinearMapper.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.LinearMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.LinearMapper.map_screen">
+<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.LinearMapper.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_screen(data_array) -&gt; screen_array</p>
 <p>Overrides AbstractMapper. Maps values from data space into screen space.</p>
 </dd></dl>
@@ -161,11 +161,11 @@ into data space.</p>
 
 </div>
 <div class="section" id="logmapper">
-<h2><a class="reference internal" href="#enthought.chaco.api.LogMapper" title="enthought.chaco.api.LogMapper"><tt class="xref py py-class docutils literal"><span class="pre">LogMapper</span></tt></a><a class="headerlink" href="#logmapper" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.LogMapper" title="chaco.api.LogMapper"><tt class="xref py py-class docutils literal"><span class="pre">LogMapper</span></tt></a><a class="headerlink" href="#logmapper" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="enthought.chaco.api.LogMapper">
-<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">LogMapper</tt><a class="headerlink" href="#enthought.chaco.api.LogMapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.base_1d_mapper.Base1DMapper</span></tt></p>
+<dt id="chaco.api.LogMapper">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">LogMapper</tt><a class="headerlink" href="#chaco.api.LogMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_1d_mapper.Base1DMapper</span></tt></p>
 <p>Defines a 1-D logarithmic scale mapping from a 1-D region in input
 space to a 1-D region in output space.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -177,15 +177,15 @@ space to a 1-D region in output space.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="enthought.chaco.api.LogMapper.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.LogMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.LogMapper.map_data">
+<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#chaco.api.LogMapper.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data(screen_val) -&gt; data_val</p>
 <p>Overrides Abstract Mapper. Maps values from screen space into data space.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="enthought.chaco.api.LogMapper.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.LogMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.LogMapper.map_screen">
+<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.LogMapper.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_screen(data_array) -&gt; screen_array</p>
 <p>Overrides AbstractMapper. Maps values from data space to screen space.</p>
 </dd></dl>
@@ -194,11 +194,11 @@ space to a 1-D region in output space.</p>
 
 </div>
 <div class="section" id="gridmapper">
-<h2><a class="reference internal" href="#enthought.chaco.api.GridMapper" title="enthought.chaco.api.GridMapper"><tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt></a><a class="headerlink" href="#gridmapper" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.GridMapper" title="chaco.api.GridMapper"><tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt></a><a class="headerlink" href="#gridmapper" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="enthought.chaco.api.GridMapper">
-<em class="property">class </em><tt class="descclassname">enthought.chaco.api.</tt><tt class="descname">GridMapper</tt><big>(</big><em>x_type='linear'</em>, <em>y_type='linear'</em>, <em>range=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridMapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">enthought.chaco.abstract_mapper.AbstractMapper</span></tt></p>
+<dt id="chaco.api.GridMapper">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">GridMapper</tt><big>(</big><em>x_type='linear'</em>, <em>y_type='linear'</em>, <em>range=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.GridMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_mapper.AbstractMapper</span></tt></p>
 <p>Maps a 2-D data space to and from screen space by specifying a 2-tuple in
 data space or by specifying a pair of screen coordinates.</p>
 <p>The mapper concerns itself only with metric and not with orientation. So, to
@@ -221,15 +221,15 @@ values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_lo
 </tbody>
 </table>
 <dl class="method">
-<dt id="enthought.chaco.api.GridMapper.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_pts</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.GridMapper.map_data">
+<tt class="descname">map_data</tt><big>(</big><em>screen_pts</em><big>)</big><a class="headerlink" href="#chaco.api.GridMapper.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data(screen_pts) -&gt; data_vals</p>
 <p>Maps values from screen space into data space.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="enthought.chaco.api.GridMapper.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_pts</em><big>)</big><a class="headerlink" href="#enthought.chaco.api.GridMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.GridMapper.map_screen">
+<tt class="descname">map_screen</tt><big>(</big><em>data_pts</em><big>)</big><a class="headerlink" href="#chaco.api.GridMapper.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_screen(data_pts) -&gt; screen_array</p>
 <p>Maps values from data space into screen space.</p>
 </dd></dl>
@@ -291,7 +291,7 @@ values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_lo
         <li class="right" >
           <a href="data_ranges.html" title="Data Ranges"
              >previous</a> |</li>
-        <li><a href="../index.html">Chaco v3.4.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.1.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Mappers</a></li>
@@ -300,8 +300,8 @@ values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_lo
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008, Enthought, Inc..
-      Last updated on Jun 06, 2011.
+        &copy; Copyright 2008-2011, Enthought, Inc..
+      Last updated on Nov 30, 2011.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
