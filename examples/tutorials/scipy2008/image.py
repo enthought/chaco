@@ -26,7 +26,7 @@ class ImagePlot(HasTraits):
         plotdata = ArrayPlotData(imagedata = z)
         # Create a Plot and associate it with the PlotData
         plot = Plot(plotdata)
-        # Create a line plot in the Plot
+        # Create an image plot in the Plot
         plot.img_plot("imagedata", colormap=jet)
         self.plot = plot
 
