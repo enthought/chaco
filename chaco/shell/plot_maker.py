@@ -324,19 +324,13 @@ def do_imshow(plotdata, active_plot, *data, **kwargs):
     if len(data) != 1:
         raise ValueError("do_imshow takes one data source")
 
-    valid_names = plotdata.list_data()
-
     x = None
     y = None
-    if not isinstance(data[0], basestring):
-        #an array was passed in
-        z = plotdata.set_data("", data[0], generate_name=True)
-    elif data[0] in valid_names:
-        #the name of an existing plotdata item was passed in
-        z = data[0]
-    else:
-        #the name of the file was passed in
-        #create plot data
+    try:
+        z = _get_or_create_plot_data(data[0])
+    except ValueError:
+        # z is the name of the file
+        # create plot data
         image = do_imread(data[0], *data, **kwargs)
         z = plotdata.set_data("", image, generate_name=True)
 
@@ -350,33 +344,17 @@ def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
     scalar data and a colormap.
     """
 
-    valid_names = plotdata.list_data()
-
     # if we get just one data source, it is assumed to be the scalar field
     if len(data) == 1:
         x = None
         y = None
-        if not isinstance(data[0], basestring):
-            # an array was passed in
-            z = plotdata.set_data("", data[0], generate_name=True)
-        elif data[0] in valid_names:
-            # the name of an existing plotdata item was passed in
-            z = data[0]
+        z = _get_or_create_plot_data(data[0])
 
     # three data sources means we got x-y grid data of some sort, too
     elif len(data) == 3:
-        if not isinstance(data[0], basestring):
-            x = plotdata.set_data("", data[0], generate_name=True)
-        elif data[0] in valid_names:
-            x = data[0]
-        if not isinstance(data[0], basestring):
-            y = plotdata.set_data("", data[1], generate_name=True)
-        elif data[0] in valid_names:
-            y = data[1]
-        if not isinstance(data[0], basestring):
-            z = plotdata.set_data("", data[2], generate_name=True)
-        elif data[0] in valid_names:
-            z = data[2]
+        x = _get_or_create_plot_data(data[0], plotdata)
+        y = _get_or_create_plot_data(data[1], plotdata)
+        z = _get_or_create_plot_data(data[2], plotdata)
     else:
         raise ValueError("do_pcolor takes one or three data sources")
 
@@ -385,44 +363,28 @@ def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
     return plot_list
 
 
-
 def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
     """ Creates a contour plot on the active plot, given a 2-D
     scalar data and a colormap.
     """
 
-    valid_names = plotdata.list_data()
-
     # if we get just one data source, it is assumed to be the scalar field
     if len(data) == 1:
         x = None
         y = None
-        if not isinstance(data[0], basestring):
-            # an array was passed in
-            z = plotdata.set_data("", data[0], generate_name=True)
-        elif data[0] in valid_names:
-            # the name of an existing plotdata item was passed in
-            z = data[0]
+        z = _get_or_create_plot_data(data[0])
 
     # three data sources means we got x-y grid data of some sort, too
     elif len(data) == 3:
-        if not isinstance(data[0], basestring):
-            x = plotdata.set_data("", data[0], generate_name=True)
-        elif data[0] in valid_names:
-            x = data[0]
-        if not isinstance(data[0], basestring):
-            y = plotdata.set_data("", data[1], generate_name=True)
-        elif data[0] in valid_names:
-            y = data[1]
-        if not isinstance(data[0], basestring):
-            z = plotdata.set_data("", data[2], generate_name=True)
-        elif data[0] in valid_names:
-            z = data[2]
+        x = _get_or_create_plot_data(data[0], plotdata)
+        y = _get_or_create_plot_data(data[1], plotdata)
+        z = _get_or_create_plot_data(data[2], plotdata)
+
     else:
         raise ValueError("do_contour takes one or three data sources")
 
     # we have to do slightly different calls here because of the different
-    # handling of colourmaps
+    # handling of colormaps
     if type is 'poly':
         plot_list = [active_plot.contour_plot(z, type, xbounds=x, ybounds=y,
                                     poly_cmap=colormap,
@@ -434,6 +396,22 @@ def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
 
     return plot_list
 
+
+def _get_or_create_plot_data(data, plotdata):
+    """Create a new name for `data` if necessary, or check it is a valid name.
+    """
+    valid_names = plotdata.list_data()
+
+    if not isinstance(data, basestring):
+        name = plotdata.set_data("", data, generate_name=True)
+    else:
+        if data not in valid_names:
+            msg = '{} is not an existing name for plot data'
+            raise ValueError(msg.format(data))
+
+        name = data
+
+    return name
 
 
 # EOF

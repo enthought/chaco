@@ -1,11 +1,10 @@
-#!/usr/bin/env python
 """
-Demonstrates the Regression Selection tool.
+Regression Selection tool
 
 Hold down the left mouse button to use the mouse to draw a selection region
 around some points, and a line fit is drawn through the center of the points.
 The parameters of the line are displayed at the bottom of the plot region.  You
-can do this repeatedly to draw different regions.1
+can do this repeatedly to draw different regions.
 
 Hold the right mouse button down and drag to pan.
 
@@ -80,5 +79,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-#--EOF---

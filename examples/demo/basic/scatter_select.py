@@ -1,13 +1,17 @@
-#!/usr/bin/env python
 """
-Draws a simple scatterplot of random data.  The only interaction available is
-the lasso selector, which allows you to circle a set of points.  Upon
-completion of the lasso operation, the indices of the selected points are
+Lasso selection of data points
+
+Draws a simple scatterplot of random data.  Drag the mouse to use the lasso
+selector, which allows you to circle all the points in a region.
+
+Upon completion of the lasso operation, the indices of the selected points are
 printed to the console.
 
-Uncomment 'lasso_selection.incremental_select' line to see the selection
-compute indices in realtime.
+Uncomment 'lasso_selection.incremental_select' line (line 74) to see the
+indices of the selected points computed in real time.
 """
+
+import sys
 
 # Major library imports
 from numpy import sort, compress, arange
@@ -49,7 +53,7 @@ def _create_plot_component():
               bgcolor="white")
 
     # Tweak some of the plot properties
-    plot.title = "Scatter Plot With Selection"
+    plot.title = "Scatter Plot With Lasso Selection"
     plot.line_width = 1
     plot.padding = 50
 
@@ -96,7 +100,9 @@ class Demo(HasTraits):
         mask = self.index_datasource.metadata['selection']
         print "New selection: "
         print compress(mask, arange(len(mask)))
-        print
+        # Ensure that the points are printed immediately:
+        sys.stdout.flush()
+        
 
     def _plot_default(self):
          plot = _create_plot_component()
@@ -116,5 +122,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-#--EOF---

@@ -1,9 +1,10 @@
-#!/usr/bin/env python
 """
+Draw multiple side-by-side plots
+
 Draws a static plot of bessel functions, oriented vertically, side-by-side.
 
-You can experiment with using different containers (uncomment lines 30-31)
-or different orientations on the plots (comment out line 41 and uncomment 42).
+You can experiment with using different orientations of containers or plots
+by modifying lines 26 and 27.
 """
 
 # Major library imports
@@ -16,7 +17,15 @@ from chaco.example_support import COLOR_PALETTE
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
-from chaco.api import PlotLabel, HPlotContainer, create_line_plot
+from chaco.api import PlotLabel, VPlotContainer, HPlotContainer, \
+    create_line_plot
+
+# ======================================================================
+# Change one or both of these to experiment with different orientations
+# of the plot containers and the lines within each plot:
+container_class = HPlotContainer # HPlotContainer or VPlotContainer
+plot_orientation = 'v' # 'v' or 'h'
+# ======================================================================
 
 #===============================================================================
 # # Create the Chaco plot.
@@ -26,20 +35,15 @@ def _create_plot_component():
     low = -5
     high = 15.0
     x = arange(low, high, (high-low)/numpoints)
-
-    container = HPlotContainer(resizable = "hv", bgcolor="lightgray",
-                               fill_padding=True, padding = 10)
-    # container = VPlotContainer(resizable = "hv", bgcolor="lightgray",
-    #                            fill_padding=True, padding = 10)
-
+    container = container_class(resizable = "hv", bgcolor="lightgray",
+                                fill_padding=True, padding = 10)
 
     # Plot some bessel functions
     value_range = None
     for i in range(10):
         y = jn(i, x)
         plot = create_line_plot((x,y), color=tuple(COLOR_PALETTE[i]), width=2.0,
-                                orientation="v")
-                               # orientation="h")
+                                orientation=plot_orientation)
         plot.origin_axis_visible = True
         plot.origin = "top left"
         plot.padding_left = 10
@@ -56,7 +60,7 @@ def _create_plot_component():
         container.add(plot)
 
     container.padding_top = 50
-    container.overlays.append(PlotLabel("More Bessels",
+    container.overlays.append(PlotLabel("Bessel Functions in a Strip Plot",
                                         component=container,
                                         font = "swiss 16",
                                         overlay_position = "top"))
@@ -90,5 +94,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-# EOF

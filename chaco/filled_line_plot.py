@@ -14,7 +14,6 @@ def Alias(name):
                     lambda obj, val: setattr(obj, name, val))
 
 
-
 class FilledLinePlot(PolygonPlot):
     """ Draws a line plot filled to the axis """
 
@@ -59,7 +58,7 @@ class FilledLinePlot(PolygonPlot):
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
             # If the fill color is not transparent, then draw the fill polygon first
-            face_col = self.face_color_
+            face_col = self.effective_face_color
             if not (len(face_col) == 4 and face_col[-1] == 0):
                 if self.render_style in ("hold","connectedhold"):
                     # Modify the points array before passing it in to render_polys:
@@ -80,7 +79,7 @@ class FilledLinePlot(PolygonPlot):
 
             # If the line color is not transparent, or tha same color
             # as the filled area:
-            edge_col = self.edge_color_
+            edge_col = self.effective_edge_color
             if (not (len(edge_col) == 4 and edge_col[-1] == 0)) and edge_col != face_col:
                 gc.set_stroke_color(edge_col)
                 gc.set_line_width(self.edge_width)
@@ -91,7 +90,7 @@ class FilledLinePlot(PolygonPlot):
 
 
     def _render_polys(self, gc, points, ox, oy):
-        face_col = self.face_color_
+        face_col = self.effective_face_color
         gc.set_fill_color(face_col)
         gc.begin_path()
         startx, starty = points[0]
@@ -114,6 +113,3 @@ class FilledLinePlot(PolygonPlot):
 
         gc.close_path()
         gc.fill_path()
-
-
-

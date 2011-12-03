@@ -29,16 +29,16 @@ class ToolChooserExample(HasTraits):
 
     def _tools_changed(self):
         classes = [eval(class_name) for class_name in self.tools]
-        # Remove all tools that are not in the enabled list in self.tools
-        for tool in self.plot.tools:
-            if tool.__class__ not in classes:
-                self.plot.tools.remove(tool)
-            else:
-                classes.remove(tool.__class__)
-        # Create new instances of tools for the remaining tool classes
+
+        # Remove all tools from the plot
+        plot_tools = self.plot.tools
+        for tool in plot_tools:
+            plot_tools.remove(tool)
+
+        # Create new instances for the selected tool classes
         for cls in classes:
             self.plot.tools.append(cls(self.plot))
-        return
+
 
 #===============================================================================
 # demo object that is used by the demo.py application.

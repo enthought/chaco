@@ -1,4 +1,6 @@
 """
+Line drawing tool
+
 Demonstrates using a line segment drawing tool on top of the
 scatter plot from simple_scatter.py.
 
@@ -108,5 +110,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-#--EOF---

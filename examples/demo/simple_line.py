@@ -1,5 +1,8 @@
 """
-Draws several overlapping line plots.
+Draw overlapping line plots (Bessel functions)
+
+Draws overlapping line plots with legends. Some are drawn as lines, 
+some as points only.
 
 Left-drag pans the plot.
 
@@ -8,12 +11,9 @@ Right-drag (in the Y direction) zooms the plot in and out.
 Mousewheel up and down zooms the plot in and out.
 
 Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
-region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-and alt-right-arrow moves you forwards and backwards through the "zoom history".
+region to zoom. 
 
-Right-click and dragging on the legend allows you to reposition the legend.
-
-Double-clicking on line or scatter plots brings up a traits editor for the plot.
+Right-drag on the legend allows you to reposition it.
 """
 
 # Major library imports

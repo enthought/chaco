@@ -1,5 +1,7 @@
+"""This example shows how to create a scatter plot using the `shell` package.
+"""
 
-# Mayor Library imports
+# Major library imports
 from numpy import linspace, random, pi
 
 # Enthought library imports
@@ -13,7 +15,7 @@ y2 = random.random(100)
 
 # Create some scatter plots
 plot(x, y1, "b.")
-hold()
+hold(True)
 plot(x, y2, "g+", marker_size=2)
 
 # Add some titles
@@ -21,4 +23,3 @@ title("simple scatter plots")
 
 # This command is only necessary if running from command line
 show()
-
