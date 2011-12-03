@@ -32,9 +32,9 @@ class ImagePlotTraits(HasTraits):
         # Create a Plot and associate it with the PlotData
         plot = Plot(plotdata)
         # Create an image plot in the Plot
-        self.renderer = plot.img_plot("imagedata", name="plot1", colormap=jet)[0]
+        self.renderer = plot.img_plot("imagedata", name="plot1",
+                                      xbounds=xgrid, ybounds=ygrid, colormap=jet)[0]
         self.plot = plot
-        return
 
     def _origin_changed(self):
         self.renderer.origin = self.origin
