@@ -13,7 +13,7 @@ Tutorials
   layout, and add interactivity.
 
 * :ref:`Tutorial: Using Chaco from IPython <tutorial_ipython>` This tutorial
-  explains how to use Chaco from IPython using the Chaco ``shellzz
+  explains how to use Chaco from IPython using the Chaco ``shell``
   command-line plotting interface to build plots, in
   a Matlab or gnuplot-like style.
 
