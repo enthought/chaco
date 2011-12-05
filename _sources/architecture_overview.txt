@@ -196,7 +196,7 @@ At the highest level, Chaco consists of:
   :class:`ScatterInspector`)
 
 Every Chaco plot is composed of these elements.  One can think of them
-as comprising a "display pipepline", although the components form more
+as comprising a "display pipeline", although the components form more
 of a graph.
 
 For example, a simple scatter plot will have:
@@ -223,7 +223,7 @@ components: axes are drawn by the :class:`PlotAxis` component, and grids are
 drawn by the :class:`PlotGrid` component.  Both of these overlays require a
 mapper in order to know where on the screen they should draw.
 
-So, the pipline looks like:
+.. So, the pipeline looks like:
 
 
 
