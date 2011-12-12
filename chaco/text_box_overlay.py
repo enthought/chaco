@@ -2,6 +2,8 @@
 """
 from __future__ import with_statement
 
+from math import pi, cos, sin, radians
+
 # Enthought library imports
 from enable.api import ColorTrait
 from kiva.trait_defs.kiva_font_trait import KivaFont
@@ -20,6 +22,9 @@ class TextBoxOverlay(AbstractOverlay):
 
     # The text to display in the box.
     text = Str
+
+    # The angle of rotation of the box and the text
+    rotate_angle = Float(0)
 
     # The font to use for the text.
     font = KivaFont("modern 12")
@@ -66,40 +71,45 @@ class TextBoxOverlay(AbstractOverlay):
         # different shapes and put the text inside it without the label
         # filling a rectangle on top of it
         label = Label(text=self.text, font=self.font, bgcolor="transparent",
-                      margin=5)
+                      margin=5, rotate_angle=self.rotate_angle)
+
+        # A better management of the bounding box would prevent from drawing
+        # outside of the component
         width, height = label.get_width_height(gc)
 
         valign, halign = self.align
 
+        # (x_0, y_0) is the starting point for drawing
         if self.alternate_position:
-            x, y = self.alternate_position
+            x_0, y_0 = self.alternate_position
             if valign == "u":
-                y += self.padding
+                y_0 += self.padding
             else:
-                y -= self.padding + height
+                y_0 -= self.padding + height
 
             if halign == "r":
-                x += self.padding
+                x_0 += self.padding
             else:
-                x -= self.padding + width
+                x_0 -= self.padding + width
         else:
             if valign == "u":
-                y = component.y2 - self.padding - height
+                y_0 = component.y2 - self.padding - height
             else:
-                y = component.y + self.padding
+                y_0 = component.y + self.padding
 
             if halign == "r":
-                x = component.x2 - self.padding - width
+                x_0 = component.x2 - self.padding - width
             else:
-                x = component.x + self.padding
+                x_0 = component.x + self.padding
+
 
         # attempt to get the box entirely within the component
-        if x + width > component.width:
-            x = max(0, component.width-width)
-        if y + height > component.height:
-            y = max(0, component.height - height)
-        elif y < 0:
-            y = 0
+        if x_0 + width > component.width:
+            x_0 = max(0, component.width-width)
+        if y_0 + height > component.height:
+            y_0 = max(0, component.height - height)
+        elif y_0 < 0:
+            y_0 = 0
 
         # apply the alpha channel
         color = self.bgcolor_
@@ -112,8 +122,12 @@ class TextBoxOverlay(AbstractOverlay):
                     color += [self.alpha]
 
         with gc:
-            gc.translate_ctm(x, y)
 
+            # set the referential
+            gc.translate_ctm(x_0, y_0)
+            gc.rotate_ctm(radians(self.rotate_angle))
+
+            # styling
             gc.set_line_width(self.border_size)
             gc.set_stroke_color(self.border_color_)
             gc.set_fill_color(color)
@@ -138,4 +152,7 @@ class TextBoxOverlay(AbstractOverlay):
                     y, end_radius)
             gc.draw_path()
 
+
+        with gc:
+            gc.translate_ctm(x_0, y_0)
             label.draw(gc)
