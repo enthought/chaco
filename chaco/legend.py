@@ -471,6 +471,14 @@ class Legend(AbstractOverlay):
             self.get_preferred_size()
         return
 
+    def _plots_changed(self):
+        """ Invalidate the caches.
+        """
+        self._cached_labels = []
+        self._cached_label_sizes = None
+        self._cached_label_names = []
+        self._cached_visible_plots = []
+        self._cached_label_positions = None
 
     def _title_at_top_changed(self, old, new):
         """ Trait handler for when self.title_at_top changes. """

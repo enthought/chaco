@@ -252,7 +252,7 @@ class ArrayDataSource(AbstractDataSource):
                     # the subclasses, such as different operator behaviors
                     self._min_index = bounded_nanargmin(data.view(ndarray))
                     self._max_index = bounded_nanargmax(data.view(ndarray))
-                except (TypeError, IndexError):
+                except (TypeError, IndexError, NotImplementedError):
                     # For strings and objects, we punt...  These show up in
                     # label-ish data sources.
                     self._cached_bounds = (0.0, 0.0)

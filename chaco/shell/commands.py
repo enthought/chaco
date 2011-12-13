@@ -178,19 +178,20 @@ def activate(ident=None):
 
 def show():
     """ Shows all the figure windows that have been created thus far, and
-    creates a GUI main loop.  This function is useful in scripts to show plots and
-    keep their windows open, and has no effect when used from the interpreter
-    prompt.
+    creates a GUI main loop. This function is useful in scripts to show plots
+    and keep their windows open, and has no effect when used from the
+    interpreter prompt.
     """
 
-    app = GetApp()
-    if not app:
-        return
+    from traits.etsconfig.api import ETSConfig
+    from pyface.util import guisupport
+    is_event_loop_running = getattr(guisupport, 'is_event_loop_running_' + ETSConfig.toolkit)
+    start_event_loop = getattr(guisupport, 'start_event_loop_' + ETSConfig.toolkit)
 
-    if not(app.IsMainLoopRunning()):
+    if not is_event_loop_running():
         frame = session.active_window
-        app.SetTopWindow(frame)
-        app.MainLoop()
+        frame.raise_window()
+        start_event_loop()
     return
 
 

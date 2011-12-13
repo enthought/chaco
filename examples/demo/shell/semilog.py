@@ -1,5 +1,7 @@
+"""This example shows how to create a semi-log plot using the `shell` package.
+"""
 
-# Mayor Library imports
+# Major library imports
 from numpy import linspace, exp
 
 # Enthought library imports

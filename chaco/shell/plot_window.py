@@ -125,8 +125,115 @@ if ETSConfig.toolkit == "wx":
 
 elif ETSConfig.toolkit == "qt4":
 
-    class PlotWindow():
-        pass
+    from pyface.qt import QtGui
+
+    class PlotWindow(QtGui.QFrame):
+        """ A window for holding top-level plot containers.
+
+        Contains many utility methods for controlling the appearance of the
+        window, which mostly pass through to underlying Qt calls.
+        """
+
+        def __init__(self, is_image=False, bgcolor="white",
+                     image_default_origin="top left", *args, **kw):
+
+            super(PlotWindow, self).__init__(None, *args, **kw )
+
+            # Some defaults which should be overridden by preferences.
+            self.bgcolor = bgcolor
+            self.image_default_origin = image_default_origin
+
+            # Create an empty top-level container
+            if is_image:
+                top_container = self._create_top_img_container()
+            else:
+                top_container = self._create_top_container()
+
+            # The PlotSession of which we are a part.  We need to know this in order
+            # to notify it of our being closed, etc.
+            self.session = None
+
+            # Create the Enable Window object, and store a reference to it.
+            # (This will be handy later.)  The Window requires a parent object
+            # as its first argument, so we just pass 'self'.
+            self.plot_window = Window(self, component=top_container)
+
+            layout = QtGui.QVBoxLayout()
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.addWidget(self.plot_window.control)
+            self.setLayout(layout)
+
+            size = kw.setdefault("size", (600,600))
+            self.set_size(*size)
+
+            self.show()
+
+        def get_container(self):
+            return self.plot_window.component
+
+        def set_container(self, container):
+            self.plot_window.component = container
+
+        def iconize(self, iconize):
+            """Iconizes the window if *iconize* is True.
+            """
+            if iconize:
+                self.showMinimized()
+            else:
+                self.showNormal()
+
+        def maximize(self, maximize):
+            """ If *maximize* is True, maximizes the window size; restores if False.
+            """
+            if maximize:
+                self.showMaximized()
+            else:
+                self.showNormal()
+
+        def set_size(self, width, height):
+            self.resize(width, height)
+
+        def set_title(self, title):
+            self.setWindowTitle(title)
+
+        def raise_window(self):
+            """Raises this window to the top of the window hierarchy.
+            """
+            self.raise_()
+
+        # This is a Python property because this is not a HasTraits subclass.
+        container = property(get_container, set_container)
+
+        #------------------------------------------------------------------------
+        # Private methods
+        #------------------------------------------------------------------------
+
+        def _create_top_container(self):
+            plot = ScalyPlot(
+                padding=50,
+                fill_padding=True,
+                bgcolor=self.bgcolor,
+                use_backbuffer=True,
+            )
+            return plot
+
+        def _create_top_img_container(self):
+            plot = ScalyPlot(
+                padding=50,
+                fill_padding=True,
+                bgcolor=self.bgcolor,
+                use_backbuffer=True,
+                default_origin=self.image_default_origin,
+            )
+            return plot
+
+        def closeEvent(self, event):
+            if self.session:
+                try:
+                    ndx = self.session.windows.index(self)
+                    self.session.del_window(ndx)
+                except ValueError:
+                    pass
 
 else:
     pass
