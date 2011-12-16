@@ -416,7 +416,7 @@ array from the ArrayPlotData::
             width=500, height=500, resizable=True, title="Chaco Plot") 
 
         def __init__(self):
-            super(OverlappingPlot).__init__()
+            super(OverlappingPlot, self).__init__()
 
             x = linspace(-14, 14, 100)
             y = x/2 * sin(x) 
@@ -1190,7 +1190,7 @@ Our next tool is going to have two states, "normal" and "mousedown".
 We are going to enter the "mousedown" state when we detect a "left down"
 event, and we will exit that state when we detect a "left up" event: ::
 
-    CustomTool(BaseTool):
+    class CustomTool(BaseTool):
 
         event_state = Enum("normal", "mousedown")
 
