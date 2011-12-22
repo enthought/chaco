@@ -4,7 +4,7 @@
 from __future__ import with_statement
 
 # Major library imports
-from math import cos, sin, pi
+from math import cos, sin, pi, radians
 from numpy import array, dot
 
 # Enthought library imports
@@ -133,14 +133,7 @@ class Label(HasTraits):
         """ Returns a rectangular bounding box for the Label as (width,height).
         """
         width, height = self.get_width_height(gc)
-        if self.rotate_angle in (90.0, 270.0):
-            return (height, width)
-        elif self.rotate_angle in (0.0, 180.0):
-            return (width, height)
-        else:
-            angle = self.rotate_angle
-            return (abs(width*cos(angle))+abs(height*sin(angle)),
-                    abs(height*sin(angle))+abs(width*cos(angle)))
+        return dot(self.get_rotation_matrix(), array([width, height])).T
 
     def get_bounding_poly(self, gc):
         """
@@ -163,8 +156,13 @@ class Label(HasTraits):
         return points
 
     def get_rotation_matrix(self):
-        return array([[cos(self.rotate_angle), -sin(self.rotate_angle)],
-            [sin(self.rotate_angle), cos(self.rotate_angle)]])
+        angle = radians(self.rotate_angle)
+        return array(
+            [
+                [cos(angle), -sin(angle)],
+                [sin(angle), cos(angle)]
+            ]
+        )
 
     def draw(self, gc):
         """ Draws the label.
