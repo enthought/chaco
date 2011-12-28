@@ -12,7 +12,7 @@ from numpy import argsort, array, concatenate, inf, invert, isnan, \
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, LineStyle
-from traits.api import Enum, Float, List, Str
+from traits.api import Enum, Float, List, Str, Property, Tuple, cached_property
 from traitsui.api import Item, View
 
 # Local relative imports
@@ -31,6 +31,11 @@ class LinePlot(BaseXYPlot):
     """
     # The color of the line.
     color = black_color_trait
+
+    # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+    # It has the same RGB values as color_, and its alpha value is the alpha
+    # value of self.color multiplied by self.alpha. 
+    effective_color = Property(Tuple, depends_on=['line_color', 'alpha'])
 
     # The color to use to highlight the line when selected.
     selected_color = ColorTrait("lightyellow")
@@ -310,7 +315,7 @@ class LinePlot(BaseXYPlot):
                 render(gc, selected_points, self.orientation)
 
             # Render using the normal style
-            gc.set_stroke_color(self.color_)
+            gc.set_stroke_color(self.effective_color)
             gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
             render(gc, points, self.orientation)
@@ -356,7 +361,7 @@ class LinePlot(BaseXYPlot):
 
     def _render_icon(self, gc, x, y, width, height):
         with gc:
-            gc.set_stroke_color(self.color_)
+            gc.set_stroke_color(self.effective_color)
             gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
             gc.set_antialias(0)
@@ -384,7 +389,6 @@ class LinePlot(BaseXYPlot):
         return
 
     def _alpha_changed(self):
-        self.color_ = self.color_[0:3] + (self.alpha,)
         self.invalidate_draw()
         self.request_redraw()
         return
@@ -412,5 +416,10 @@ class LinePlot(BaseXYPlot):
 
         return state
 
+    @cached_property
+    def _get_effective_color(self):
+        alpha = self.color_[-1] if len(self.color_) == 4 else 1
+        c = self.color_[:3] + (alpha * self.alpha,)
+        return c
 
 # EOF
