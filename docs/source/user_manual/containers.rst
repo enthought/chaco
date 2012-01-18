@@ -6,19 +6,13 @@
 Containers and Layout
 *********************
 
-Overview
-========
-
-It is quite common to need to display data side by side. In order to arrange
-multiple plots and other components (e.g., colorbars) in a single panel,
-Chaco uses *containers* to organize the layout.
-
- * Rendering order
- * Event dispatch
- * Layout and sizing
-
 Chaco containers
 ================
+
+It is quite common to need to display multiple data side by side.
+In order to arrange  plots and other components (e.g., colorbars, legends)
+in a single panel,
+Chaco uses *containers* to organize the layout.
 
 Chaco implements 4 different containers:
 :ref:`hv-plot-container`,
@@ -367,3 +361,208 @@ The code above generates this plot:
     in the Chaco examples directory. To learn more about sharing
     axes on overlapping plots, see ``demo/multiaxis.py`` and
     ``demo/multiaxis_with_Plot.py``.
+
+
+Sizing, rendering, events
+=========================
+
+Containers are responsible for a handling communication with the
+components it contains, including
+defining the rendering order, dispatching events, and
+determining sizes.
+
+Sizing
+------
+
+Containers are the elements that set sizes and do layout. Components within
+containers declare their preferences, which are taken into account by
+their container to set their final aspect.
+
+The basic traits that control the layout preferences of a component are:
+
+* :attr:`resizable`, a string indicating in which directions the component
+  can be resized. Its value is one of ``''`` (not resizable), ``'h'``
+  (resizable in the horizontal direction), ``'v'`` (resizable in the
+  vertical direction), ``'hv'`` (resizable in both, default).
+* :attr:`aspect_ratio`, the ratio of the component's width to its height.
+  This is used by the component itself to maintain bounds when the bounds
+  are changed independently. Default is ``None``, meaning that the aspect
+  ratio is not enforced.
+* :attr:`padding_left`, :attr:`padding_right`,
+  :attr:`padding_top`, :attr:`padding_bottom` set the amount of padding space
+  to leave around the component (default is 0). The property :attr:`padding`
+  allows to set all of them as a tuple (left, right, top, bottom).
+* :attr:`auto_center`, controls the behavior when the component's bounds are
+  set to a value that does not conform its aspect ratio. If ``True``
+  (default), the component centers itself in the free space.
+* :attr:`fixed_preferred_size`: If the component is resizable, this attribute
+  specifies the amount of space that the component would like to get in each
+  dimension, as a tuple (width, height). This attribute can be used to
+  establish
+  relative sizes between resizable components in a container: if one
+  component specifies, say, a fixed preferred width of 50 and another one
+  specifies a fixed preferred width of 100, then the latter component will
+  always be twice as wide as the former.
+
+You can get access to the actual bounds of the component, (including
+padding and border) using the
+``outer`` properties:
+
+* :attr:`outer_position`, the x,y point of the lower left corner of the
+  padding outer box around
+  the component. Use :meth:``set_outer_position`` to change these values.
+* :attr:`outer_bounds`,
+  the number of horizontal and vertical pixels in the padding outer box.
+   Use :meth:``set_outer_bounds`` to change these values.
+* :attr:`outer_x`, :attr:`outer_y`, :attr:`outer_x2`, :attr:`outer_y2:,
+  :attr:`outer_width`, :attr:`outer_height`:
+  coordinates of lower-left pixel of the box,
+  coordinates of the upper-right pixel of the box,
+  width and height of the outer box in pixels
+
+See also the documentation of the class :class:`enable.component.Component`
+for more details about the internal parameters of Chaco components.
+
+The container can set the attribute :attr:`fit_components` to control if
+it should resize itself to fit its components. Allowed values are
+``''`` (do not resize, default), ``'h'``
+(resize in the horizontal direction), ``'v'`` (resize in the
+vertical direction), ``'hv'`` (resize in both).
+
+
+Rendering order
+---------------
+
+Every plot component has several layers:
+
+1. :attr:`background`: Background image, shading, and borders
+2. :attr:`underlay`: Axes and grids
+3. :attr:`image`: A special layer for plots that render as images.  This is in
+    a separate layer since these plots must all render before non-image
+    plots.
+4. :attr:`plot`: The main plot area
+5. :attr:`annotation`: Lines and text that are conceptually part of the "plot" but
+   need to be rendered on top of everything else in the plot.
+6. :attr:`overlay`: Legends, selection regions, and other tool-drawn visual
+    elements
+
+These are defined by :attr:`~chaco.plot_component.DEFAULT_DRAWING_ORDER`,
+and stored in the :attr:`drawing_order` trait.
+
+Complexity arises when you have multiple components in a container: How do
+their layers affect each other? Do you want the "overlay" layer of a component
+to draw on top of all components? Do you want the "background" elements
+to be behind everything else?
+
+This is resolved by the :attr:`unified_draw` trait. The container will
+draw all layers in succession. If a component sets :attr:`unified_draw`
+to ``False`` (default), the container will ask it to draw the corresponding
+layer as it is reached in the loop. If :attr:`unified_draw` is ``True``,
+the whole component will draw in one go when the container reaches
+the layer specified in the attribute ``component.draw_layer``,
+which by default is 'plot'.
+
+For example, if you want a plot to act as an overlay, you could set
+``unified_draw = True`` and ``draw_layer = 'overlay'``. These values tell the
+container to render the component when it gets to the 'overlay' layer.
+
+Set :attr:`overlay_border` to True if you want the border to draw as part of
+the overlay; otherwise it draws as part of the background. By default,
+the border is drawn just inside the plot area; set :attr:`inset_border` to
+False to draw it just outside the plot area.
+
+Backbuffer
+^^^^^^^^^^
+
+A backbuffer provides the ability to render into an offscreen buffer, which is
+blitted on every draw, until it is invalidated. Various traits such as
+:attr:`use_backbuffer` and :attr:`backbuffer_padding` control the behavior of
+the backbuffer. A backbuffer is used for non-OpenGL backends, such as `agg`
+and on OS X. If :attr:`use_backbuffer` is False, a backbuffer is never used,
+even if a backbuffer is referenced by a component.
+
+
+Dispatching events
+------------------
+
+The logic of event dispatching is defined in the 'enable' library, which
+defines the superclasses for Chaco's containers and components.
+In summary, when a component gets an event, it dispatches it to:
+
+1. its overlays, in reverse order that they were added and are drawn
+2. itself, so that any event handler methods on itself get called
+3. its underlays, in reverse order that they were added and are drawn
+4. its listener tools
+
+On each of these elements, Chaco looks for a method of the form
+``{component_state}_{event_name}``. For example,
+in response to the user pressing the left mouse button
+on a tool in state ``normal`` (the default state, see :ref:`Tool states`),
+Chaco would look for a method called ``normal_left_down``.
+
+If this exists, the event is
+dispatched and the component decides whether to handle the element
+and set ``event.handled = True``, in which case the dispatch chain is
+interrupted.
+
+.. note::
+
+    If the attribute :attr:`auto_handle_event` of the
+    component is set to ``True``, calling the event
+    method automatically sets ``event.handled = True``.
+
+
+Possible event names are:
+
+.. hlist::
+  :columns: 4
+
+  * left_down
+  * left_up
+  * left_dclick
+  * right_down
+  * right_up
+  * right_dclick
+  * middle_down
+  * middle_up
+  * middle_dclick
+  * mouse_move
+  * mouse_wheel
+  * mouse_enter
+  * mouse_leave
+  * key_pressed
+  * key_released
+  * character
+  * dropped_on
+  * drag_over
+  * drag_enter
+  * drag_leave
+
+Most objects default to having just a single event
+state, which is the "normal" event state. To make a component that
+handled a left-click, you could subclass
+:class:`~chaco.plot_component.PlotComponent`, and implement
+:meth:`normal_left_down` or :meth:`normal_left_up`. The signature for handler
+methods is just one parameter, which is an event object that is an instance of
+(a subclass of) :class:`~enable.events.BasicEvent`.
+Subclasses of :class:`~enable.events.BasicEvent`
+are :class:`~enable.events.MouseEvent`, :class:`~enable.events.DragEvent`,
+:class:`~enable.events.KeyEvent`, and
+:class:`~enable.events.BlobEvent` and :class:`~enable.events.BlobFrameEvent`
+(for multitouch). It's fairly easy to extend this event
+system with new kinds of events and new suffixes (as was done for multitouch).
+
+Events contain a reference to the GUI toolkit window that generated them
+as :attr:`event.window`.
+A common pattern is for component to call methods on the window
+to do things like set a tooltip or create a context menu.
+A draw or update of the window does not
+actually happen until the next :meth:`paint`.
+By that time, the
+component no longer has a reference to the event or the event's window,
+but uses instead
+its own reference to the window, :attr:`self.window`.
+
+See also the `documentation of the enable library
+<http://github.enthought.com/enable/enable_concepts.html>`_, which gives
+more details about the event dispatching happening at that level.
