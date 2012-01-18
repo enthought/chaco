@@ -47,7 +47,7 @@ simpler command to install Chaco:
 Because eggs do not distinguish between various distributions of Linux,
 Enthought hosts its own egg repository for Linux eggs.  See the `ETS wiki
 page on our egg repo 
-<https://svn.enthought.com/enthought/wiki/Install#UsingEnthoughtsEggRepo>`_ for
+<http://code.enthought.com/source/>`_ for
 instructions for installing pre-built binary eggs for your specific
 distribution of Linux.
 

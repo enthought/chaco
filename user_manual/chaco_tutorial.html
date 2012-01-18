@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Interactive plotting with Chaco &mdash; chaco v4.1.0 documentation</title>
+    <title>Interactive plotting with Chaco &mdash; chaco v4.1.1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.1.0',
+        VERSION:     '4.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,13 +24,13 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.1.0 documentation" href="../index.html" /> 
+    <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
-        <li><a href="../index.html">chaco v4.1.0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
   
     <li><a href="#">Interactive plotting with Chaco</a></li>
   
@@ -79,18 +79,18 @@ this tutorial, we use Traits UI to make things easier.</p>
 <p>Chaco is a <em>plotting application toolkit</em>. This means that it can build
 both static plots and dynamic data visualizations that let you
 interactively explore your data. Here are four basic examples of Chaco plots:</p>
-<img alt="../_images/tornado1.png" src="../_images/tornado1.png" style="height: 300pt;" />
+<img alt="../_images/tornado3.png" src="../_images/tornado3.png" style="height: 300pt;" />
 <p>This plot shows a static &#8220;tornado plot&#8221; with a categorical Y axis and continuous
 X axis.  The plot is resizable, but the user cannot interact or explore the data
 in any way.</p>
-<img alt="../_images/simple_line2.png" src="../_images/simple_line2.png" style="height: 300pt;" />
+<img alt="../_images/simple_line5.png" src="../_images/simple_line5.png" style="height: 300pt;" />
 <p>This is an overlaid composition of line and scatter plots with a legend. Unlike
 the previous plot, the user can pan and zoom this plot, exploring the
 relationship between data curves in areas that appear densely overlapping.
 Furthermore, the user can move the legend to an arbitrary position on the plot,
 and as they resize the plot, the legend maintains the same screen-space
 separation relative to its closest corner.</p>
-<img alt="../_images/regression1.png" src="../_images/regression1.png" style="height: 300pt;" />
+<img alt="../_images/regression3.png" src="../_images/regression3.png" style="height: 300pt;" />
 <p>This example starts to demonstrate interacting with the data set in an
 exploratory way. Whereas interactivity in the previous example was limited to
 basic pan and zoom (which are fairly common in most plotting libraries), this is
@@ -142,7 +142,7 @@ MATLAB, or Matplotlib:</p>
 </pre></div>
 </td></tr></table></div>
 <p>This creates this plot:</p>
-<img alt="../_images/script_oriented.png" src="../_images/script_oriented.png" style="height: 300pt;" />
+<img alt="../_images/script_oriented1.png" src="../_images/script_oriented1.png" style="height: 300pt;" />
 <p>The basic structure of this example is that we generate some data, then we call
 functions to plot the data and configure the plot. There is a global concept of
 &#8220;the active plot&#8221;, and the functions do high-level manipulations on it. The
@@ -218,7 +218,7 @@ things, as you will see later on:</p>
 </pre></div>
 </td></tr></table></div>
 <p>This produces a plot similar to the previous script-oriented code snippet:</p>
-<img alt="../_images/first_plot.png" src="../_images/first_plot.png" style="height: 300pt;" />
+<img alt="../_images/first_plot1.png" src="../_images/first_plot1.png" style="height: 300pt;" />
 <p>So, this is our first &#8220;real&#8221; Chaco plot. We will walk through this code and
 look at what each bit does.  This example serves as the basis for many of the
 later examples.</p>
@@ -388,7 +388,7 @@ ComponentEditor.</p>
 <p>Note that we have only changed the <em>type</em> argument to the <tt class="xref py py-meth docutils literal"><span class="pre">plot.plot()</span></tt> call
 and the name of the class from <tt class="xref py py-class docutils literal"><span class="pre">LinePlot</span></tt> to <tt class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></tt>. This
 produces the following:</p>
-<img alt="../_images/scatter1.png" src="../_images/scatter1.png" style="height: 300pt;" />
+<img alt="../_images/scatter3.png" src="../_images/scatter3.png" style="height: 300pt;" />
 </div>
 <div class="section" id="image-plots">
 <h2>Image plots<a class="headerlink" href="#image-plots" title="Permalink to this headline">¶</a></h2>
@@ -457,7 +457,7 @@ different method on the Plot object &#8212; <tt class="xref py py-meth docutils 
 <tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt>.  The details of the method parameters are not that important
 right now; this is just to demonstrate how we can apply the same basic pattern
 from the &#8220;first plot&#8221; example above to do other kinds of plots.</p>
-<img alt="../_images/image_plot1.png" src="../_images/image_plot1.png" style="height: 300pt;" />
+<img alt="../_images/image_plot3.png" src="../_images/image_plot3.png" style="height: 300pt;" />
 </div>
 <div class="section" id="multiple-plots">
 <h2>Multiple plots<a class="headerlink" href="#multiple-plots" title="Permalink to this headline">¶</a></h2>
@@ -511,7 +511,7 @@ array from the ArrayPlotData:</p>
         <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">OverlappingPlot</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OverlappingPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -529,27 +529,27 @@ array from the ArrayPlotData:</p>
 </pre></div>
 </td></tr></table></div>
 <p>This code generates the following plot:</p>
-<img alt="../_images/overlapping_plot.png" src="../_images/overlapping_plot.png" style="height: 300pt;" />
+<img alt="../_images/overlapping_plot1.png" src="../_images/overlapping_plot1.png" style="height: 300pt;" />
 </div>
 <div class="section" id="containers">
 <h2>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h2>
 <p>So far we&#8217;ve only seen single plots, but frequently we need to plot data side
 by side.  Chaco uses various subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Container</span></tt> to do layout.
 Horizontal containers (<tt class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></tt>) place components horizontally:</p>
-<img alt="../_images/hplotcontainer.png" src="../_images/hplotcontainer.png" style="height: 350pt;" />
+<img alt="../_images/hplotcontainer1.png" src="../_images/hplotcontainer1.png" style="height: 350pt;" />
 <p>Vertical containers (<tt class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></tt>) array component vertically:</p>
-<img alt="../_images/vplotcontainer.png" src="../_images/vplotcontainer.png" style="height: 350pt;" />
+<img alt="../_images/vplotcontainer1.png" src="../_images/vplotcontainer1.png" style="height: 350pt;" />
 <p>Grid container (<tt class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></tt>) lays plots out in a grid:</p>
-<img alt="../_images/gridcontainer.png" src="../_images/gridcontainer.png" style="height: 350pt;" />
+<img alt="../_images/gridcontainer1.png" src="../_images/gridcontainer1.png" style="height: 350pt;" />
 <p>Overlay containers (<tt class="xref py py-class docutils literal"><span class="pre">OverlayPlotContainer</span></tt>) just overlay plots on top of
 each other:</p>
-<img alt="../_images/simple_line2.png" src="../_images/simple_line2.png" style="height: 350pt;" />
+<img alt="../_images/simple_line5.png" src="../_images/simple_line5.png" style="height: 350pt;" />
 <p>You&#8217;ve actually already seen OverlayPlotContainer &#8212; the Plot
 class is actually a special subclass of OverlayPlotContainer.  All of
 the plots inside this container appear to share the same X- and Y-axis, but this
 is not a requirement of the container.  For instance, the following plot shows
 plots sharing only the X-axis:</p>
-<img alt="../_images/multiyaxis.png" src="../_images/multiyaxis.png" style="height: 350pt;" />
+<img alt="../_images/multiyaxis1.png" src="../_images/multiyaxis1.png" style="height: 350pt;" />
 </div>
 <div class="section" id="using-a-container">
 <h2>Using a container<a class="headerlink" href="#using-a-container" title="Permalink to this headline">¶</a></h2>
@@ -620,7 +620,7 @@ plot, and adds them both to the HPlotContainer object:</p>
 </pre></div>
 </td></tr></table></div>
 <p>This produces the following plot:</p>
-<img alt="../_images/container_example.png" src="../_images/container_example.png" style="height: 300pt;" />
+<img alt="../_images/container_example1.png" src="../_images/container_example1.png" style="height: 300pt;" />
 <p>There are many parameters you can configure on a container, like background
 color, border thickness, spacing, and padding.  We insert some more
 lines between lines 20 and 21 of the previous example to make the two plots
@@ -641,7 +641,7 @@ padding (or margin).  In order to make our plots touch, we need to zero out the
 padding on the appropriate side of each plot.  We also move the Y-axis for the
 line plot (which is on the right hand side) to the right side.</p>
 <p>This produces the following:</p>
-<img alt="../_images/container_nospace.png" src="../_images/container_nospace.png" style="height: 300pt;" />
+<img alt="../_images/container_nospace1.png" src="../_images/container_nospace1.png" style="height: 300pt;" />
 </div>
 <div class="section" id="dynamically-changing-plots">
 <h2>Dynamically changing plots<a class="headerlink" href="#dynamically-changing-plots" title="Permalink to this headline">¶</a></h2>
@@ -806,7 +806,7 @@ You can see why we needed to hold on to the renderer in the constructor.</p>
 </pre></div>
 </div>
 <p>Running the code produces an app that looks like this:</p>
-<img alt="../_images/traits.png" src="../_images/traits.png" style="height: 350pt;" />
+<img alt="../_images/traits1.png" src="../_images/traits1.png" style="height: 350pt;" />
 <p>Depending on your platform, the color editor/swatch at the top may look different.
 This is how it looks on Mac OS X.  All of the controls here are &#8220;live&#8221;.  If you
 modify them, the plot updates.</p>
@@ -910,7 +910,7 @@ dictionary, and push that value into the <tt class="docutils literal"><span clas
 <p>Note that there is no actual copying of data here, we’re just passing around
 numpy references.</p>
 <p>The final plot looks like this:</p>
-<img alt="../_images/data_chooser_example.png" src="../_images/data_chooser_example.png" style="height: 300pt;" />
+<img alt="../_images/data_chooser_example1.png" src="../_images/data_chooser_example1.png" style="height: 300pt;" />
 </div>
 <div class="section" id="connected-plots">
 <span id="connected-plots-example"></span><h2>Connected plots<a class="headerlink" href="#connected-plots" title="Permalink to this headline">¶</a></h2>
@@ -1005,7 +1005,7 @@ range object, <strong>and will change together in response to
 changes to the data space bounds</strong>. For example, panning
 or zooming one of the plots
 will result in the same transformation in the other:</p>
-<img alt="../_images/connected_range_example.png" src="../_images/connected_range_example.png" style="height: 300pt;" />
+<img alt="../_images/connected_range_example1.png" src="../_images/connected_range_example1.png" style="height: 300pt;" />
 </div>
 <div class="section" id="plot-orientation-index-and-value">
 <h2>Plot orientation, index and value<a class="headerlink" href="#plot-orientation-index-and-value" title="Permalink to this headline">¶</a></h2>
@@ -1043,7 +1043,7 @@ of the line plot by substituting</p>
 downwards. As a result of these changes, now changes to the
 scatter plot index axis (the <em>x</em> axis) produces equivalent changes in the
 line plot index axis (the <em>y</em> axis):</p>
-<img alt="../_images/connected_index_example.png" src="../_images/connected_index_example.png" style="height: 300pt;" />
+<img alt="../_images/connected_index_example1.png" src="../_images/connected_index_example1.png" style="height: 300pt;" />
 </div>
 <div class="section" id="multiple-windows">
 <h2>Multiple windows<a class="headerlink" href="#multiple-windows" title="Permalink to this headline">¶</a></h2>
@@ -1189,7 +1189,7 @@ window is closed), whereas <tt class="xref py py-meth docutils literal"><span cl
 opening multiple windows, we would call <tt class="xref py py-meth docutils literal"><span class="pre">edit_traits()</span></tt>
 on all but the last one.</p>
 <p>Here is a screenshot of the two windows in action:</p>
-<img alt="../_images/connected_windows_example.png" src="../_images/connected_windows_example.png" style="height: 350pt;" />
+<img alt="../_images/connected_windows_example1.png" src="../_images/connected_windows_example1.png" style="height: 350pt;" />
 </div>
 <div class="section" id="plot-tools-adding-interactions">
 <h2>Plot tools: adding interactions<a class="headerlink" href="#plot-tools-adding-interactions" title="Permalink to this headline">¶</a></h2>
@@ -1358,7 +1358,7 @@ of the method, we remove all the existing tools from the plot</p>
 </pre></div>
 </div>
 <p>Here is a screenshot of the final result:</p>
-<img alt="../_images/tool_chooser_example.png" src="../_images/tool_chooser_example.png" style="width: 350pt;" />
+<img alt="../_images/tool_chooser_example1.png" src="../_images/tool_chooser_example1.png" style="width: 350pt;" />
 </div>
 <div class="section" id="writing-a-custom-tool">
 <h2>Writing a custom tool<a class="headerlink" href="#writing-a-custom-tool" title="Permalink to this headline">¶</a></h2>
@@ -1383,7 +1383,7 @@ for the <tt class="docutils literal"><span class="pre">mouse_move</span></tt> ev
 state of the tool, which we will cover next.</p>
 <p>All events have an <tt class="docutils literal"><span class="pre">x</span></tt> and a <tt class="docutils literal"><span class="pre">y</span></tt> position, and our custom tools is
 just going to print it out.</p>
-<img alt="../_images/custom_tool_example.png" src="../_images/custom_tool_example.png" style="height: 250pt;" />
+<img alt="../_images/custom_tool_example1.png" src="../_images/custom_tool_example1.png" style="height: 250pt;" />
 <p>Other event callbacks correspond to mouse gestures (<tt class="docutils literal"><span class="pre">mouse_enter</span></tt>,
 <tt class="docutils literal"><span class="pre">mouse_leave</span></tt>, <tt class="docutils literal"><span class="pre">mouse_wheel</span></tt>), mouse clicks (<tt class="docutils literal"><span class="pre">left_down</span></tt>, <tt class="docutils literal"><span class="pre">left_up</span></tt>,
 <tt class="docutils literal"><span class="pre">right_down</span></tt>, <tt class="docutils literal"><span class="pre">right_up</span></tt>), and key presses (<tt class="docutils literal"><span class="pre">key_pressed</span></tt>).</p>
@@ -1397,21 +1397,35 @@ example began with the prefix <tt class="docutils literal"><span class="pre">nor
 <p>Our next tool is going to have two states, &#8220;normal&#8221; and &#8220;mousedown&#8221;.
 We are going to enter the &#8220;mousedown&#8221; state when we detect a &#8220;left down&#8221;
 event, and we will exit that state when we detect a &#8220;left up&#8221; event:</p>
-<div class="highlight-python"><pre>CustomTool(BaseTool):
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">CustomTool</span><span class="p">(</span><span class="n">BaseTool</span><span class="p">):</span>
 
-    event_state = Enum("normal", "mousedown")
+    <span class="n">event_state</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;normal&quot;</span><span class="p">,</span> <span class="s">&quot;mousedown&quot;</span><span class="p">)</span>
 
-    def normal_mouse_move(self, event):
-        print "Screen:", event.x, event.y
+    <span class="k">def</span> <span class="nf">normal_mouse_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Screen:&quot;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span>
 
-    def normal_left_down(self, event):
-        self.event_state = "mousedown"
-        event.handled = True
+    <span class="k">def</span> <span class="nf">normal_left_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_state</span> <span class="o">=</span> <span class="s">&quot;mousedown&quot;</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">handled</span> <span class="o">=</span> <span class="bp">True</span>
 
-    def mousedown_left_up(self, event):
-        self.event_state = "normal"
-        event.handled = True</pre>
-</div>
+    <span class="k">def</span> <span class="nf">mousedown_left_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_state</span> <span class="o">=</span> <span class="s">&quot;normal&quot;</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">handled</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</td></tr></table></div>
 <p>Every event has a <tt class="docutils literal"><span class="pre">handled</span></tt> boolean attribute that can be set to announce
 that it has been taken care of. Handled events are not propagated further.</p>
 <p>So far, the custom tool would stop printing to screen while the left mouse
@@ -1427,7 +1441,7 @@ data space:</p>
 plot. This is why tools need to be given a reference to a plot when
 they are constructed: almost all tools need to use some capabilities
 (like <tt class="docutils literal"><span class="pre">map_data</span></tt>) of the components for which they are receiving events.</p>
-<img alt="../_images/custom_tool_stateful_example.png" src="../_images/custom_tool_stateful_example.png" style="height: 250pt;" />
+<img alt="../_images/custom_tool_stateful_example1.png" src="../_images/custom_tool_stateful_example1.png" style="height: 250pt;" />
 </div>
 <div class="section" id="final-words">
 <h2>Final words<a class="headerlink" href="#final-words" title="Permalink to this headline">¶</a></h2>
@@ -1500,7 +1514,7 @@ that was presented by Peter Wang at Scipy 2008</em></p>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
-        <li><a href="../index.html">chaco v4.1.0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
   
     <li><a href="#">Interactive plotting with Chaco</a></li>
   
@@ -1509,7 +1523,7 @@ that was presented by Peter Wang at Scipy 2008</em></p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Nov 30, 2011.
+      Last updated on Jan 16, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
