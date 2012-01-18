@@ -22,6 +22,9 @@ Tutorials
 Examples
 --------
 
+* The :ref:`annotated examples <examples>` is a useful visual resource
+  presenting a set of Chaco plots together with their source code.
+
 * :ref:`Modeling Van del Waal's Equations <tutorial_van_der_waal>`
   is a complete example of creating a data
   model and then using Traits and Chaco to rapidly create interactive
