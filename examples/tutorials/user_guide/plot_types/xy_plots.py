@@ -2,22 +2,32 @@
 
 Relies on sklearn for the datasets.
 """
+
 from functools import partial
+
 from chaco.array_data_source import ArrayDataSource
+from chaco.array_plot_data import ArrayPlotData
 from chaco.axis import PlotAxis
 from chaco.data_range_1d import DataRange1D
+from chaco.data_range_2d import DataRange2D
 from chaco.jitterplot import JitterPlot
 from chaco.lineplot import LinePlot
 from chaco.plot_graphics_context import PlotGraphicsContext
 from chaco.scatterplot import ScatterPlot
+from chaco.linear_mapper import LinearMapper
+from chaco.candle_plot import CandlePlot
+from chaco.colormapped_scatterplot import ColormappedScatterPlot
+import chaco.default_colormaps as dc
 
 import scipy.stats
 import numpy as np
 import sklearn.datasets as datasets
-
-from chaco.linear_mapper import LinearMapper
-from chaco.candle_plot import CandlePlot
-from chaco.colormapped_scatterplot import ColormappedScatterPlot
+from chaco.errorbar_plot import ErrorBarPlot
+from chaco.filled_line_plot import FilledLinePlot
+from chaco.image_plot import ImagePlot
+from chaco.grid_data_source import GridDataSource
+from chaco.grid_mapper import GridMapper
+from chaco.image_data import ImageData
 
 from plot_window import PlotWindow
 
@@ -141,8 +151,6 @@ def get_cmap_scatter_plot():
     lower_status = boston['data'][:,-1]
     tax = boston['data'][:,9]
 
-    import chaco.default_colormaps as dc
-
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
 
@@ -228,6 +236,83 @@ def get_candle_plot():
     return candle_plot
 
 
+def get_errorbar_plot():
+    x = np.linspace(1., 5., 10)
+    y = 3.2 * x**2 + 4.0
+    y_with_noise = (y[None,:]
+                    + scipy.stats.norm(loc=0, scale=2.8).rvs((10, 1)))
+
+    means = y_with_noise.mean(0)
+    stds = y_with_noise.std(0)
+
+    x, y = get_data_sources(x=x, y=means)
+
+    low = ArrayDataSource(means - stds)
+    high = ArrayDataSource(means + stds)
+
+    x_range = DataRange1D(low=0, high=6)
+    y_range = DataRange1D(tight_bounds=False)
+    y_range.add(y, low, high)
+
+    errorbar_plot = ErrorBarPlot(
+        index=x, value=y,
+        index_mapper=LinearMapper(range=x_range),
+        value_mapper=LinearMapper(range=y_range),
+        value_low=low,
+        value_high=high,
+        endcap_size=11.,
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(errorbar_plot, x_label='Test values', y_label='Measured')
+
+    return errorbar_plot
+
+
+def get_filled_line_plot():
+    prices = datasets.fetch_mldata('regression-datasets stock')
+
+    x, y = get_data_sources(y=prices['data'][:70,0])
+    x_mapper, y_mapper = get_mappers(x, y)
+
+    line_plot = FilledLinePlot(
+        index=x, value=y,
+        index_mapper=x_mapper, value_mapper=y_mapper,
+        fill_color='lightgreen',
+        edge_width=3.0,
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(line_plot, x_label='Days', y_label='Stock price')
+
+    return line_plot
+
+
+def get_image_plot():
+    # Create some RGBA image data
+    image = np.zeros((200,400,4), dtype=np.uint8)
+    image[:,0:40,0] += 255     # Vertical red stripe
+    image[0:25,:,1] += 255     # Horizontal green stripe; also yellow square
+    image[-80:,-160:,2] += 255 # Blue square
+    image[:,:,3] = 255
+
+    colormap = dc.Spectral(DataRange1D(low=image.min(), high=image.max()))
+
+    index = GridDataSource(np.arange(400), np.arange(200))
+    index_mapper = GridMapper(range=DataRange2D(low=(0,0), high=(400-1,200-1)))
+
+    image_source = ImageData(data=image, value_depth=4)
+
+    image_plot = ImagePlot(
+        index=index,
+        value=image_source,
+        index_mapper=index_mapper,
+        value_mapper=colormap
+    )
+
+    add_axes(image_plot, x_label='x', y_label='y')
+
+    return image_plot
 
 all_examples = {
     'line': get_line_plot_connected,
@@ -237,11 +322,14 @@ all_examples = {
     'cmap_scatter': get_cmap_scatter_plot,
     'jitter': get_jitter_plot,
     'candle': get_candle_plot,
+    'errorbar': get_errorbar_plot,
+    'filled_line': get_filled_line_plot,
+    'image': get_image_plot
 }
 
 
 if __name__ == '__main__':
-    name = 'cmap_scatter'
+    name = 'image'
 
     factory_func = all_examples[name]
     plot = factory_func()

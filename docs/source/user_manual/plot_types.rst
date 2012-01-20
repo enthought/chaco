@@ -2,19 +2,34 @@
 Plot Types
 **********
 
-The code to generate the examples in this section can be found in
+This section gives an overview of individual plot classes in Chaco.
+
+The code to generate the figures in this section can be found in
 the directory ``tutorials/user_guide/plot_types/`` in the examples
 directory.
+
+For more complete examples, see also the :ref:`annotated examples <examples>`
+page.
 
 ================================================================
 X-Y Plot Types
 ================================================================
+
+These plots display information in a two-axis coordinate system.
+Unless otherwise stated, they are subclasses of
+:class:`~chaco.base_xy_plot.BaseXYPlot`.
+
+
+explain that you need to provide index, value, and mappers
 
 grids
 
 hittest
 
 selected
+
+
+.. _line_plot:
 
 Line Plot
 =========
@@ -38,17 +53,20 @@ These images illustrate the differences in rendering style:
 * ``renderstyle='connectedpoints'``
 
     .. image:: images/user_guide/line_plot.png
-      :width: 350px
+      :width: 500px
 
 * ``renderstyle='hold'``
 
     .. image:: images/user_guide/line_hold_plot.png
-      :width: 350px
+      :width: 500px
 
 * ``renderstyle='connectedhold'``
 
     .. image:: images/user_guide/line_connectedhold_plot.png
-      :width: 350px
+      :width: 500px
+
+
+.. _scatter_plot:
 
 Scatter Plot
 ============
@@ -81,9 +99,43 @@ by the parameters
   :width: 500px
 
 
-Pseudocolor Scatter Plot
+Colormapped Scatter Plot
 ========================
 
+Colormapped scatter plot. Additional information can be added to each point
+by setting a different color.
+
+The color information is controlled by the
+:attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.color_data`
+data source, and the
+:attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.color_mapper`
+mapper. A large number of ready-to-use color maps are defined in the
+module :mod:`chaco.default_colormaps`.
+
+In addition to the parameters supported by a
+:ref:`scatter plot <scatter_plot>`, a colormapped scatter plot defines
+these attributes:
+
+:attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.fill_alpha`
+  Set the alpha value of the points.
+
+:attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.render_method`
+  Set the sequence in which the points are drawn. It is one of
+
+  'banded'
+    draw points by color band; this is more efficient but some colors
+    will appear more prominently if there are a lot of overlapping points
+
+  'bruteforce'
+    set the stroke color before drawing each marker
+
+  'auto' (default)
+    the approach is selected based on the number of points
+
+  In practice, there is not much performance difference between the two
+  methods.
+
+In this example plot, color represents property-tax rate:
 
 .. image:: images/user_guide/cmap_scatter_plot.png
   :width: 500px
@@ -147,10 +199,57 @@ and end caps.
 Errorbar Plot
 =============
 
+A plot with error bars. Note that :class:`~chacho.errorbar_plot.ErrorBarPlot`
+only plots the error bars, and needs to be combined with a
+:class:`~chacho.errorbar_plot.LinePlot` if one would like to have
+a line connecting the central values.
+
+The positions of the exterma of the bars are set by the data sources
+:attr:`~chaco.errorbar_plot.value_low` and
+:attr:`~chaco.errorbar_plot.value_high`.
+
+In addition to the parameters supported by a
+:ref:`line plot <line_plot>`, an errorbar plot defines
+these attributes:
+
+:attr:`~chaco.errorbar_plot.endcap_size`
+  The width of the endcap bars in pixels.
+
+:attr:`~chaco.errorbar_plot.endcap_style`
+  Either 'bar' (default) or 'none', in which case no endcap bars are plotted.
+
+.. image:: images/user_guide/errorbar_plot.png
+  :width: 500px
+
 
 Filled Line Plot
 ================
 
+A line plot filled with color to the axis.
+
+The following parameters are defined:
+
+:attr:`~chaco.filled_line_plot.FilledLinePlot.fill_color`
+  The color used to fill the plot.
+
+:attr:`~chaco.filled_line_plot.FilledLinePlot.fill_direction`
+  Fill the plot toward the origin ('down', default) ot towards the axis
+  maximum ('up').
+
+:attr:`~chaco.lineplot.LinePlot.render_style`
+  The rendering style of the line plot, one of
+  'connectedpoints' (default), 'hold', or 'connectedhold' (see
+  :ref:`line plot <line_plot>` for a description of the different
+  rendering styles).
+
+:attr:`~chaco.filled_line_plot.FilledLinePlot` is a subclass of
+:attr:`~chaco.filled_line_plot.PolygonPlot`, so to set the thickness of the
+plot line one should use the parameter
+:attr:`~chaco.filled_line_plot.PolygonPlot.edge_width` instead of
+:attr:`line_width`.
+
+.. image:: images/user_guide/filled_line_plot.png
+  :width: 500px
 
 
 ================================================================
@@ -158,12 +257,29 @@ Image and 2D Plots
 ================================================================
 
 
+These plots display information as a two-dimensional image.
+Unless otherwise stated, they are subclasses of
+:class:`~chaco.base_2d_plot.Base2DPlot`.
 
-Image Plots (from file)
+explain index, value, mappers
+
+
+Image Plots
 =======================
 
+Plot image data, provided as RGB or RGBA color information. If you need to
+plot a scalar 2D array as an image, use a :ref:`colormapped scalar plot
+<colormapped_scalar_plot>`
 
-Pseudocolor Scalar Plot
+loading from file
+
+.. image:: images/user_guide/image_plot.png
+  :width: 500px
+
+
+.. _colormapped_scalar_plot:
+
+Colormapped Scalar Plot
 =======================
 
 
