@@ -27,7 +27,7 @@
     <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
     <link rel="up" title="User Manual" href="index.html" />
     <link rel="next" title="Plot Types" href="plot_types.html" />
-    <link rel="prev" title="Installing and Building Chaco" href="installation.html" /> 
+    <link rel="prev" title="User Manual" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,7 +37,7 @@
           <a href="plot_types.html" title="Plot Types"
              accesskey="N">next</a></li>
         <li class="right" >
-          <a href="installation.html" title="Installing and Building Chaco"
+          <a href="index.html" title="User Manual"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">User Manual</a> &raquo;</li>
@@ -57,17 +57,39 @@
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="types-of-plotting">
 <h2>Types of Plotting<a class="headerlink" href="#types-of-plotting" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="script-driven-plotting">
-<h3>Script-driven plotting<a class="headerlink" href="#script-driven-plotting" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="interactive-plotting">
+<h3>Interactive plotting<a class="headerlink" href="#interactive-plotting" title="Permalink to this headline">¶</a></h3>
+<p>Use the shell module</p>
 </div>
 <div class="section" id="application-oriented-plotting">
 <h3>Application-oriented plotting<a class="headerlink" href="#application-oriented-plotting" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>create instances of PlotRenderer and add them to a Container.
+There are factory functions in
+plot_factory that make it simpler</li>
+<li>Create a Plot instance, use methods to create new plots of different kinds.
+This automatizes 1) with an OverlayPlotContainer, i.e., it
+plots multiple curves on the same element</li>
+</ol>
+<p>Plots can be rendered in a traitsui, wx, or qt window</p>
 </div>
 </div>
-<div class="section" id="a-basic-chaco-plot">
-<h2>A Basic Chaco Plot<a class="headerlink" href="#a-basic-chaco-plot" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="chaco-plots">
+<h2>Chaco Plots<a class="headerlink" href="#chaco-plots" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="common-properties">
 <h3>Common Properties<a class="headerlink" href="#common-properties" title="Permalink to this headline">¶</a></h3>
+<p>data sources</p>
+<p>mappers</p>
+<p>index, value
+index_mapper
+value_mapper</p>
+<p>origin</p>
+<p>bgcolor</p>
+<p>resizable</p>
+<p>index_range
+value_range</p>
+<p>axes
+orientation</p>
 </div>
 <div class="section" id="traits-ui">
 <h3>Traits UI<a class="headerlink" href="#traits-ui" title="Permalink to this headline">¶</a></h3>
@@ -94,11 +116,11 @@
 <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#types-of-plotting">Types of Plotting</a><ul>
-<li><a class="reference internal" href="#script-driven-plotting">Script-driven plotting</a></li>
+<li><a class="reference internal" href="#interactive-plotting">Interactive plotting</a></li>
 <li><a class="reference internal" href="#application-oriented-plotting">Application-oriented plotting</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#a-basic-chaco-plot">A Basic Chaco Plot</a><ul>
+<li><a class="reference internal" href="#chaco-plots">Chaco Plots</a><ul>
 <li><a class="reference internal" href="#common-properties">Common Properties</a></li>
 <li><a class="reference internal" href="#traits-ui">Traits UI</a></li>
 <li><a class="reference internal" href="#wxpython">WxPython</a></li>
@@ -138,7 +160,7 @@
           <a href="plot_types.html" title="Plot Types"
              >next</a></li>
         <li class="right" >
-          <a href="installation.html" title="Installing and Building Chaco"
+          <a href="index.html" title="User Manual"
              >previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
           <li><a href="index.html" >User Manual</a> &raquo;</li>
@@ -150,7 +172,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jan 16, 2012.
+      Last updated on Jan 19, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

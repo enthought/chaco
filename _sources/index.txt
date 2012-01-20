@@ -34,6 +34,7 @@ Documentation
   Installation and quickstart guide <quickstart.rst>
   user_manual/tutorials_and_examples.rst
   user_manual/index.rst
+  user_manual/resources.rst
   programmers_reference.rst
   tech_notes.rst
 
