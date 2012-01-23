@@ -18,6 +18,7 @@ from chaco.linear_mapper import LinearMapper
 from chaco.candle_plot import CandlePlot
 from chaco.colormapped_scatterplot import ColormappedScatterPlot
 import chaco.default_colormaps as dc
+from kiva.agg.agg import Image
 
 import scipy.stats
 import numpy as np
@@ -28,6 +29,7 @@ from chaco.image_plot import ImagePlot
 from chaco.grid_data_source import GridDataSource
 from chaco.grid_mapper import GridMapper
 from chaco.image_data import ImageData
+from traits.util.resource import find_resource
 
 from plot_window import PlotWindow
 
@@ -296,10 +298,8 @@ def get_image_plot():
     image[-80:,-160:,2] += 255 # Blue square
     image[:,:,3] = 255
 
-    colormap = dc.Spectral(DataRange1D(low=image.min(), high=image.max()))
-
-    index = GridDataSource(np.arange(400), np.arange(200))
-    index_mapper = GridMapper(range=DataRange2D(low=(0,0), high=(400-1,200-1)))
+    index = GridDataSource(np.linspace(0, 4., 400), np.linspace(-1, 1., 200))
+    index_mapper = GridMapper(range=DataRange2D(low=(0,-1), high=(4.,1.)))
 
     image_source = ImageData(data=image, value_depth=4)
 
@@ -307,12 +307,36 @@ def get_image_plot():
         index=index,
         value=image_source,
         index_mapper=index_mapper,
-        value_mapper=colormap
+        **PLOT_DEFAULTS
     )
 
     add_axes(image_plot, x_label='x', y_label='y')
 
     return image_plot
+
+def get_image_from_file():
+    import os.path
+    filename = os.path.join('..', '..', '..',
+                            'demo','basic','capitol.jpg')
+    image_source = ImageData.fromfile(filename)
+
+    w, h = image_source.get_width(), image_source.get_height()
+    index = GridDataSource(np.arange(w), np.arange(h))
+    index_mapper = GridMapper(range=DataRange2D(low=(0, 0),
+                                                high=(w-1, h-1)))
+
+    image_plot = ImagePlot(
+        index=index,
+        value=image_source,
+        index_mapper=index_mapper,
+        origin='top left',
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(image_plot, x_label='x', y_label='y')
+
+    return image_plot
+
 
 all_examples = {
     'line': get_line_plot_connected,
@@ -324,12 +348,13 @@ all_examples = {
     'candle': get_candle_plot,
     'errorbar': get_errorbar_plot,
     'filled_line': get_filled_line_plot,
-    'image': get_image_plot
+    'image': get_image_plot,
+    'image_from_file': get_image_from_file,
 }
 
 
 if __name__ == '__main__':
-    name = 'image'
+    name = 'image_from_file'
 
     factory_func = all_examples[name]
     plot = factory_func()

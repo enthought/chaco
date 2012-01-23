@@ -268,14 +268,48 @@ Image Plots
 =======================
 
 Plot image data, provided as RGB or RGBA color information. If you need to
-plot a scalar 2D array as an image, use a :ref:`colormapped scalar plot
+plot a 2D array as an image, use a :ref:`colormapped scalar plot
 <colormapped_scalar_plot>`
 
-loading from file
+In an :class:`~chaco.base_2d_plot.ImagePlot`, the :attr:`index` attribute
+corresponds to the the data coordinates of the pixels, often a
+:class:`~chaco.grid_data_source.GridDataSource`). The
+:attr:`index_mapper` maps the data coordinates to
+screen coordinates (typically using
+a :class:`~chaco.grid_mapper.GridMapper`). The `value` is the image itself,
+wrapped into the data source class :class:`~chaco.image_data.ImageData`.
 
 .. image:: images/user_guide/image_plot.png
   :width: 500px
 
+A typical use case is to display an image loaded from a file.
+The preferred way to do this is using the factory method
+:meth:`~chaco.image_data.ImageData.from_file` of the class
+:class:`~chaco.image_data.ImageData`. For example: ::
+
+    image_source = ImageData.fromfile('capitol.jpg')
+
+    w, h = image_source.get_width(), image_source.get_height()
+    index = GridDataSource(np.arange(w), np.arange(h))
+    index_mapper = GridMapper(range=DataRange2D(low=(0, 0),
+                                                high=(w-1, h-1)))
+
+    image_plot = ImagePlot(
+        index=index,
+        value=image_source,
+        index_mapper=index_mapper,
+        origin='top left',
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(image_plot, x_label='x', y_label='y')
+
+    return image_plot
+
+The code above displays this plot:
+
+.. image:: images/user_guide/image_from_file_plot.png
+  :width: 500px
 
 .. _colormapped_scalar_plot:
 
