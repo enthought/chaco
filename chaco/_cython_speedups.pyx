@@ -3,6 +3,9 @@ cimport numpy as np
 
 cimport cython
 
+cdef extern from "math.h":
+    int isnan(float)
+
 @cython.wraparound(False)
 @cython.boundscheck(False)
 def map_colors(
@@ -62,11 +65,9 @@ def map_colors(
     # part of the rgba array for this to save memory.
     cdef np.ndarray[np.float32_t] norm_data = rgba[:,0]
     norm_data[:] = data_array.flat
-    cdef np.ndarray[np.float32_t] nanmask = rgba[:,1]
-    np.isnan(norm_data, nanmask)
 
     for i in range(N):
-        if nanmask[i]:
+        if isnan(norm_data[i]):
             rgba[i,0] = 0
             rgba[i,1] = 0
             rgba[i,2] = 0
