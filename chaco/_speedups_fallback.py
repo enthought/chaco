@@ -150,6 +150,8 @@ def map_colors(data_array, steps, low, high, red_lut, green_lut, blue_lut,
     ----------
     data_array : ndarray
         The data array
+    steps: int
+        The number of steps in the color map (depth)
     low : float
         The low end of the data range
     high : float
@@ -165,8 +167,9 @@ def map_colors(data_array, steps, low, high, red_lut, green_lut, blue_lut,
     
     Returns
     -------
-    rgba: ndarray of float32, shape (N,4)
-        The rgba values of data_array according to the lookup tables
+    rgba: ndarray of float32
+        The rgba values of data_array according to the lookup tables. The shape
+        of this array is equal to data_array.shape + (,4).
 
     '''
     range_diff = high - low
