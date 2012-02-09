@@ -5,7 +5,7 @@ from chaco.api import Plot, ArrayPlotData
 from chaco.layers.api import ErrorLayer, WarningLayer, StatusLayer
 from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance, Button
-from traitsui.api import Item, View, HGroup
+from traitsui.api import UItem, View, HGroup
 
 class MyPlot(HasTraits):
     """ Displays a plot with a few buttons to control which overlay
@@ -18,11 +18,12 @@ class MyPlot(HasTraits):
     warn_button = Button('Warning')
     no_problem_button = Button('No problem')
 
-    traits_view = View( HGroup(Item('error_button', show_label=False),
-                               Item('warn_button', show_label=False),
-                               Item('no_problem_button', show_label=False)),
-                        Item('plot', editor=ComponentEditor(), show_label=False),
-                        resizable=True)
+    traits_view = View( HGroup(UItem('error_button'),
+                               UItem('warn_button'),
+                               UItem('no_problem_button')),
+                        UItem('plot', editor=ComponentEditor()),
+                        width=700, height=600, resizable=True,        
+                        )
 
     def __init__(self, index, data_series, **kw):
         super(MyPlot, self).__init__(**kw)

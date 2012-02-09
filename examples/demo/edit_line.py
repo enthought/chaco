@@ -23,7 +23,7 @@ from chaco.example_support import COLOR_PALETTE
 from enable.tools.api import DragTool
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance, Int, Tuple
-from traitsui.api import Item, Group, View
+from traitsui.api import UItem, View
 
 # Chaco imports
 from chaco.api import add_default_axes, add_default_grids, \
@@ -181,19 +181,17 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size=(800,700)
 title="Simple line plot"
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
-    traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+    traits_view = View(UItem('plot', editor=ComponentEditor()),
+                       width=size[0], height=size[1], resizable=True,
+                       title=title
+                       )
 
     def _plot_default(self):
          return _create_plot_component()
