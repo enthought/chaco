@@ -5,7 +5,7 @@ from chaco.multi_array_data_source import MultiArrayDataSource
 from chaco.multi_line_plot import MultiLinePlot
 from enable.api import ComponentEditor
 from traits.api import Instance, HasTraits
-from traitsui.api import View, Item
+from traitsui.api import View, UItem
 
 class MyPlot(HasTraits):
     """ Displays a plot with a few buttons to control which overlay
@@ -13,8 +13,9 @@ class MyPlot(HasTraits):
     """
     plot = Instance(Plot)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
-                        resizable=True)
+    traits_view = View(UItem('plot', editor=ComponentEditor()),
+                       width=700, height=600, resizable=True
+                       )
 
     def __init__(self, x_index, y_index, data, **kw):
         super(MyPlot, self).__init__(**kw)

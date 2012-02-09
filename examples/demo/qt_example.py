@@ -3,6 +3,9 @@ Example of how to directly embed Chaco into Qt widgets.
 
 The actual plot being created is drawn from the basic/line_plot1.py code.
 """
+
+# FIXME: does not run from ipython-qtconsole (ok under python).
+
 from traits.etsconfig.etsconfig import ETSConfig
 ETSConfig.toolkit = "qt4"
 
