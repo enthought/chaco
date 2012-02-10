@@ -8,6 +8,7 @@ from functools import partial
 from chaco.array_data_source import ArrayDataSource
 from chaco.array_plot_data import ArrayPlotData
 from chaco.axis import PlotAxis
+from chaco.cmap_image_plot import CMapImagePlot
 from chaco.data_range_1d import DataRange1D
 from chaco.data_range_2d import DataRange2D
 from chaco.jitterplot import JitterPlot
@@ -17,9 +18,10 @@ from chaco.scatterplot import ScatterPlot
 from chaco.linear_mapper import LinearMapper
 from chaco.candle_plot import CandlePlot
 from chaco.colormapped_scatterplot import ColormappedScatterPlot
+from chaco.variable_size_scatterplot import VariableSizeScatterPlot
 import chaco.default_colormaps as dc
-from kiva.agg.agg import Image
 
+import scipy.stats
 import scipy.stats
 import numpy as np
 import sklearn.datasets as datasets
@@ -29,9 +31,9 @@ from chaco.image_plot import ImagePlot
 from chaco.grid_data_source import GridDataSource
 from chaco.grid_mapper import GridMapper
 from chaco.image_data import ImageData
-from traits.util.resource import find_resource
-
+from chaco.plot import Plot
 from plot_window import PlotWindow
+
 
 AXIS_WIDTH = 2
 
@@ -169,6 +171,38 @@ def get_cmap_scatter_plot():
         render_method='bruteforce',
         **PLOT_DEFAULTS
     )
+
+    add_axes(scatter_plot, x_label='Percent lower status in the population',
+             y_label='Median house prices')
+
+    return scatter_plot
+
+
+def get_variable_size_scatter_plot():
+    boston = datasets.load_boston()
+    prices = boston['target']
+    lower_status = boston['data'][:,-1]
+    tax = boston['data'][:,9]
+
+    x, y = get_data_sources(x=lower_status, y=prices)
+    x_mapper, y_mapper = get_mappers(x, y)
+
+    # normalize between 0 and 30
+    marker_size = tax / tax.max() * 10.
+
+    print zip(lower_status, tax)
+
+    scatter_plot = VariableSizeScatterPlot(
+        index=x, value=y,
+        index_mapper=x_mapper, value_mapper=y_mapper,
+        marker_size=marker_size,
+        marker='circle',
+        title='Colors represent property-tax rate',
+        render_method='bruteforce',
+        **PLOT_DEFAULTS
+    )
+    scatter_plot.color = (0.0, 1.0, 0.3, 0.4)
+
 
     add_axes(scatter_plot, x_label='Percent lower status in the population',
              y_label='Median house prices')
@@ -314,6 +348,7 @@ def get_image_plot():
 
     return image_plot
 
+
 def get_image_from_file():
     import os.path
     filename = os.path.join('..', '..', '..',
@@ -338,23 +373,53 @@ def get_image_from_file():
     return image_plot
 
 
+def get_cmap_image_plot():
+    # Create a scalar field to colormap
+    NPOINTS = 200
+
+    xs = np.linspace(-2 * np.pi, +2 * np.pi, NPOINTS)
+    ys = np.linspace(-1.5*np.pi, +1.5*np.pi, NPOINTS)
+    x, y = np.meshgrid(xs, ys)
+    z = scipy.special.jn(2, x)*y*x
+
+    index = GridDataSource(xdata=xs, ydata=ys)
+    index_mapper = GridMapper(range=DataRange2D(index))
+
+    color_source = ImageData(data=z, value_depth=1)
+    color_mapper = dc.Spectral(DataRange1D(color_source))
+
+    cmap_plot = CMapImagePlot(
+        index=index,
+        index_mapper=index_mapper,
+        value=color_source,
+        value_mapper=color_mapper,
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(cmap_plot, x_label='x', y_label='y')
+
+    return cmap_plot
+
+
 all_examples = {
     'line': get_line_plot_connected,
     'line_hold': get_line_plot_hold,
     'line_connectedhold': get_line_plot_connectedhold,
     'scatter': get_scatter_plot,
     'cmap_scatter': get_cmap_scatter_plot,
+    'vsize_scatter': get_variable_size_scatter_plot,
     'jitter': get_jitter_plot,
     'candle': get_candle_plot,
     'errorbar': get_errorbar_plot,
     'filled_line': get_filled_line_plot,
     'image': get_image_plot,
     'image_from_file': get_image_from_file,
+    'cmap_image': get_cmap_image_plot
 }
 
 
 if __name__ == '__main__':
-    name = 'image_from_file'
+    name = 'cmap_image'
 
     factory_func = all_examples[name]
     plot = factory_func()

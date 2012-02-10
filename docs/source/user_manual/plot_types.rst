@@ -135,10 +135,30 @@ these attributes:
   In practice, there is not much performance difference between the two
   methods.
 
-In this example plot, color represents property-tax rate:
+In this example plot, color represents property-tax rate (red is low,
+green is high):
 
 .. image:: images/user_guide/cmap_scatter_plot.png
   :width: 500px
+
+Variable Size Scatter Plot
+==========================
+
+Alternatively, one can display additional information in a scatter plot by
+setting different sizes for the markers.
+
+The size information is controlled by the
+:attr:`~chaco.variable_size_scatterplot.VariableSizeScatterPlot.marker_size`
+attribute, that accepts an array where each element represents the size
+of the corresponding marker. Other attributes are inherited from
+the :ref:`scatter plot <scatter_plot>` class.
+
+This is the same plot as above, with the radius od the circles representing
+property-tax rate:
+
+.. image:: images/user_guide/vsize_scatter_plot.png
+  :width: 500px
+
 
 
 Candle Plot
@@ -264,6 +284,8 @@ Unless otherwise stated, they are subclasses of
 explain index, value, mappers
 
 
+.. _image_plot:
+
 Image Plots
 =======================
 
@@ -272,7 +294,7 @@ plot a 2D array as an image, use a :ref:`colormapped scalar plot
 <colormapped_scalar_plot>`
 
 In an :class:`~chaco.base_2d_plot.ImagePlot`, the :attr:`index` attribute
-corresponds to the the data coordinates of the pixels, often a
+corresponds to the the data coordinates of the pixels (often a
 :class:`~chaco.grid_data_source.GridDataSource`). The
 :attr:`index_mapper` maps the data coordinates to
 screen coordinates (typically using
@@ -302,9 +324,6 @@ The preferred way to do this is using the factory method
         **PLOT_DEFAULTS
     )
 
-    add_axes(image_plot, x_label='x', y_label='y')
-
-    return image_plot
 
 The code above displays this plot:
 
@@ -315,6 +334,51 @@ The code above displays this plot:
 
 Colormapped Scalar Plot
 =======================
+
+Plot a scalar field as an image. The image information is given as a 2D
+array; the scalar values in the 2D array are mapped to colors using a color
+map.
+
+The basic class for colormapped scalar plots is
+:class:`~chaco.cmap_image_plot.CMapImagePlot`.
+As in :ref:`image plots <image_plot>`, the :attr:`index` attribute
+corresponds to the the data coordinates of the pixels (a
+:class:`~chaco.grid_data_source.GridDataSource`), and the
+:attr:`index_mapper` maps the data coordinates to
+screen coordinates (a :class:`~chaco.grid_mapper.GridMapper`). The scalar
+data is passed through the :attr:`value` attribute as an
+:class:`~chaco.image_data.ImageData` source. Finally,
+a color mapper maps the scalar data to colors. The module
+:mod:`chaco.default_colormaps` defines many ready-to-use colormaps.
+
+For example: ::
+
+    NPOINTS = 200
+
+    xs = np.linspace(-2 * np.pi, +2 * np.pi, NPOINTS)
+    ys = np.linspace(-1.5*np.pi, +1.5*np.pi, NPOINTS)
+    x, y = np.meshgrid(xs, ys)
+    z = scipy.special.jn(2, x)*y*x
+
+    index = GridDataSource(xdata=xs, ydata=ys)
+    index_mapper = GridMapper(range=DataRange2D(index))
+
+    color_source = ImageData(data=z, value_depth=1)
+    color_mapper = dc.Spectral(DataRange1D(color_source))
+
+    cmap_plot = CMapImagePlot(
+        index=index,
+        index_mapper=index_mapper,
+        value=color_source,
+        value_mapper=color_mapper,
+        **PLOT_DEFAULTS
+    )
+
+
+This creates the plot:
+
+.. image:: images/user_guide/cmap_image_plot.png
+  :width: 500px
 
 
 Contour Plot
