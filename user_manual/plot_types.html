@@ -66,6 +66,7 @@ page.</p>
 <p>These plots display information in a two-axis coordinate system.
 Unless otherwise stated, they are subclasses of
 <tt class="xref py py-class docutils literal"><span class="pre">BaseXYPlot</span></tt>.</p>
+<p>explain that you need to provide index, value, and mappers</p>
 <p>grids</p>
 <p>hittest</p>
 <p>selected</p>
@@ -87,17 +88,17 @@ or &#8216;long dash&#8217;.</dd>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='connectedpoints'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_plot30.png" src="../_images/line_plot30.png" style="width: 500px;" />
+<div><img alt="../_images/line_plot40.png" src="../_images/line_plot40.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='hold'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_hold_plot29.png" src="../_images/line_hold_plot29.png" style="width: 500px;" />
+<div><img alt="../_images/line_hold_plot39.png" src="../_images/line_hold_plot39.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='connectedhold'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_connectedhold_plot28.png" src="../_images/line_connectedhold_plot28.png" style="width: 500px;" />
+<div><img alt="../_images/line_connectedhold_plot38.png" src="../_images/line_connectedhold_plot38.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 </ul>
@@ -124,7 +125,7 @@ no outline is drawn.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">outline_color</span></tt></dt>
 <dd>The color of the outline to draw around the marker (default is black).</dd>
 </dl>
-<img alt="../_images/scatter_plot22.png" src="../_images/scatter_plot22.png" style="width: 500px;" />
+<img alt="../_images/scatter_plot32.png" src="../_images/scatter_plot32.png" style="width: 500px;" />
 </div>
 <div class="section" id="colormapped-scatter-plot">
 <h3>Colormapped Scatter Plot<a class="headerlink" href="#colormapped-scatter-plot" title="Permalink to this headline">¶</a></h3>
@@ -157,8 +158,22 @@ will appear more prominently if there are a lot of overlapping points</dd>
 methods.</p>
 </dd>
 </dl>
-<p>In this example plot, color represents property-tax rate:</p>
-<img alt="../_images/cmap_scatter_plot13.png" src="../_images/cmap_scatter_plot13.png" style="width: 500px;" />
+<p>In this example plot, color represents property-tax rate (red is low,
+green is high):</p>
+<img alt="../_images/cmap_scatter_plot23.png" src="../_images/cmap_scatter_plot23.png" style="width: 500px;" />
+</div>
+<div class="section" id="variable-size-scatter-plot">
+<h3>Variable Size Scatter Plot<a class="headerlink" href="#variable-size-scatter-plot" title="Permalink to this headline">¶</a></h3>
+<p>Alternatively, one can display additional information in a scatter plot by
+setting different sizes for the markers.</p>
+<p>The size information is controlled by the
+<tt class="xref py py-attr docutils literal"><span class="pre">marker_size</span></tt>
+attribute, that accepts an array where each element represents the size
+of the corresponding marker. Other attributes are inherited from
+the <a class="reference internal" href="#scatter-plot"><em>scatter plot</em></a> class.</p>
+<p>This is the same plot as above, with the radius od the circles representing
+property-tax rate:</p>
+<img alt="../_images/vsize_scatter_plot4.png" src="../_images/vsize_scatter_plot4.png" style="width: 500px;" />
 </div>
 <div class="section" id="candle-plot">
 <h3>Candle Plot<a class="headerlink" href="#candle-plot" title="Permalink to this headline">¶</a></h3>
@@ -200,7 +215,7 @@ If <tt class="xref docutils literal"><span class="pre">None</span></tt>, they de
 </dl>
 <p>At the moment, it is not possible to control the width of the central bar
 and end caps.</p>
-<img alt="../_images/candle_plot16.png" src="../_images/candle_plot16.png" style="width: 500px;" />
+<img alt="../_images/candle_plot26.png" src="../_images/candle_plot26.png" style="width: 500px;" />
 </div>
 <div class="section" id="errorbar-plot">
 <h3>Errorbar Plot<a class="headerlink" href="#errorbar-plot" title="Permalink to this headline">¶</a></h3>
@@ -220,7 +235,7 @@ these attributes:</p>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">endcap_style</span></tt></dt>
 <dd>Either &#8216;bar&#8217; (default) or &#8216;none&#8217;, in which case no endcap bars are plotted.</dd>
 </dl>
-<img alt="../_images/errorbar_plot5.png" src="../_images/errorbar_plot5.png" style="width: 500px;" />
+<img alt="../_images/errorbar_plot15.png" src="../_images/errorbar_plot15.png" style="width: 500px;" />
 </div>
 <div class="section" id="filled-line-plot">
 <h3>Filled Line Plot<a class="headerlink" href="#filled-line-plot" title="Permalink to this headline">¶</a></h3>
@@ -243,7 +258,7 @@ rendering styles).</dd>
 plot line one should use the parameter
 <tt class="xref py py-attr docutils literal"><span class="pre">edge_width</span></tt> instead of
 <tt class="xref py py-attr docutils literal"><span class="pre">line_width</span></tt>.</p>
-<img alt="../_images/filled_line_plot5.png" src="../_images/filled_line_plot5.png" style="width: 500px;" />
+<img alt="../_images/filled_line_plot15.png" src="../_images/filled_line_plot15.png" style="width: 500px;" />
 </div>
 </div>
 <div class="section" id="image-and-2d-plots">
@@ -251,15 +266,83 @@ plot line one should use the parameter
 <p>These plots display information as a two-dimensional image.
 Unless otherwise stated, they are subclasses of
 <tt class="xref py py-class docutils literal"><span class="pre">Base2DPlot</span></tt>.</p>
+<p>explain index, value, mappers</p>
 <div class="section" id="image-plots">
-<h3>Image Plots<a class="headerlink" href="#image-plots" title="Permalink to this headline">¶</a></h3>
+<span id="image-plot"></span><h3>Image Plots<a class="headerlink" href="#image-plots" title="Permalink to this headline">¶</a></h3>
 <p>Plot image data, provided as RGB or RGBA color information. If you need to
-plot a scalar 2D array as an image, use a <a class="reference internal" href="#colormapped-scalar-plot"><em>colormapped scalar plot</em></a></p>
-<p>loading from file</p>
-<img alt="../_images/image_plot4.png" src="../_images/image_plot4.png" style="width: 500px;" />
+plot a 2D array as an image, use a <a class="reference internal" href="#colormapped-scalar-plot"><em>colormapped scalar plot</em></a></p>
+<p>In an <tt class="xref py py-class docutils literal"><span class="pre">ImagePlot</span></tt>, the <tt class="xref py py-attr docutils literal"><span class="pre">index</span></tt> attribute
+corresponds to the the data coordinates of the pixels (often a
+<tt class="xref py py-class docutils literal"><span class="pre">GridDataSource</span></tt>). The
+<tt class="xref py py-attr docutils literal"><span class="pre">index_mapper</span></tt> maps the data coordinates to
+screen coordinates (typically using
+a <tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt>). The <cite>value</cite> is the image itself,
+wrapped into the data source class <tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt>.</p>
+<img alt="../_images/image_plot14.png" src="../_images/image_plot14.png" style="width: 500px;" />
+<p>A typical use case is to display an image loaded from a file.
+The preferred way to do this is using the factory method
+<tt class="xref py py-meth docutils literal"><span class="pre">from_file()</span></tt> of the class
+<tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt>. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">image_source</span> <span class="o">=</span> <span class="n">ImageData</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="s">&#39;capitol.jpg&#39;</span><span class="p">)</span>
+
+<span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">image_source</span><span class="o">.</span><span class="n">get_width</span><span class="p">(),</span> <span class="n">image_source</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">GridDataSource</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+<span class="n">index_mapper</span> <span class="o">=</span> <span class="n">GridMapper</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="n">DataRange2D</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                            <span class="n">high</span><span class="o">=</span><span class="p">(</span><span class="n">w</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">h</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+
+<span class="n">image_plot</span> <span class="o">=</span> <span class="n">ImagePlot</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="n">image_source</span><span class="p">,</span>
+    <span class="n">index_mapper</span><span class="o">=</span><span class="n">index_mapper</span><span class="p">,</span>
+    <span class="n">origin</span><span class="o">=</span><span class="s">&#39;top left&#39;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">PLOT_DEFAULTS</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The code above displays this plot:</p>
+<img alt="../_images/image_from_file_plot7.png" src="../_images/image_from_file_plot7.png" style="width: 500px;" />
 </div>
 <div class="section" id="colormapped-scalar-plot">
 <span id="id3"></span><h3>Colormapped Scalar Plot<a class="headerlink" href="#colormapped-scalar-plot" title="Permalink to this headline">¶</a></h3>
+<p>Plot a scalar field as an image. The image information is given as a 2D
+array; the scalar values in the 2D array are mapped to colors using a color
+map.</p>
+<p>The basic class for colormapped scalar plots is
+<tt class="xref py py-class docutils literal"><span class="pre">CMapImagePlot</span></tt>.
+As in <a class="reference internal" href="#image-plot"><em>image plots</em></a>, the <tt class="xref py py-attr docutils literal"><span class="pre">index</span></tt> attribute
+corresponds to the the data coordinates of the pixels (a
+<tt class="xref py py-class docutils literal"><span class="pre">GridDataSource</span></tt>), and the
+<tt class="xref py py-attr docutils literal"><span class="pre">index_mapper</span></tt> maps the data coordinates to
+screen coordinates (a <tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt>). The scalar
+data is passed through the <tt class="xref py py-attr docutils literal"><span class="pre">value</span></tt> attribute as an
+<tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt> source. Finally,
+a color mapper maps the scalar data to colors. The module
+<tt class="xref py py-mod docutils literal"><span class="pre">chaco.default_colormaps</span></tt> defines many ready-to-use colormaps.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NPOINTS</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="o">+</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">NPOINTS</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="o">+</span><span class="mf">1.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">NPOINTS</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">jn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">x</span>
+
+<span class="n">index</span> <span class="o">=</span> <span class="n">GridDataSource</span><span class="p">(</span><span class="n">xdata</span><span class="o">=</span><span class="n">xs</span><span class="p">,</span> <span class="n">ydata</span><span class="o">=</span><span class="n">ys</span><span class="p">)</span>
+<span class="n">index_mapper</span> <span class="o">=</span> <span class="n">GridMapper</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="n">DataRange2D</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+
+<span class="n">color_source</span> <span class="o">=</span> <span class="n">ImageData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">value_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">color_mapper</span> <span class="o">=</span> <span class="n">dc</span><span class="o">.</span><span class="n">Spectral</span><span class="p">(</span><span class="n">DataRange1D</span><span class="p">(</span><span class="n">color_source</span><span class="p">))</span>
+
+<span class="n">cmap_plot</span> <span class="o">=</span> <span class="n">CMapImagePlot</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">index_mapper</span><span class="o">=</span><span class="n">index_mapper</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="n">color_source</span><span class="p">,</span>
+    <span class="n">value_mapper</span><span class="o">=</span><span class="n">color_mapper</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">PLOT_DEFAULTS</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This creates the plot:</p>
+<img alt="../_images/cmap_image_plot4.png" src="../_images/cmap_image_plot4.png" style="width: 500px;" />
 </div>
 <div class="section" id="contour-plot">
 <h3>Contour Plot<a class="headerlink" href="#contour-plot" title="Permalink to this headline">¶</a></h3>
@@ -306,7 +389,7 @@ no outline is drawn.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">outline_color</span></tt></dt>
 <dd>The color of the outline to draw around the marker (default is black).</dd>
 </dl>
-<img alt="../_images/jitter_plot19.png" src="../_images/jitter_plot19.png" style="width: 500px;" />
+<img alt="../_images/jitter_plot29.png" src="../_images/jitter_plot29.png" style="width: 500px;" />
 </div>
 </div>
 </div>
@@ -327,6 +410,7 @@ no outline is drawn.</dd>
 <li><a class="reference internal" href="#line-plot">Line Plot</a></li>
 <li><a class="reference internal" href="#scatter-plot">Scatter Plot</a></li>
 <li><a class="reference internal" href="#colormapped-scatter-plot">Colormapped Scatter Plot</a></li>
+<li><a class="reference internal" href="#variable-size-scatter-plot">Variable Size Scatter Plot</a></li>
 <li><a class="reference internal" href="#candle-plot">Candle Plot</a></li>
 <li><a class="reference internal" href="#errorbar-plot">Errorbar Plot</a></li>
 <li><a class="reference internal" href="#filled-line-plot">Filled Line Plot</a></li>
@@ -391,7 +475,7 @@ no outline is drawn.</dd>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jan 20, 2012.
+      Last updated on Feb 10, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
