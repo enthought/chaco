@@ -28,6 +28,10 @@ class ContourLinePlot(BaseContourPlot):
     #------------------------------------------------------------------------
 
     # The thickness(es) of the contour lines.
+    # It can be either a scalar value, valid for all contour lines, or a list
+    # of widths. If the list is too short with respect to then number of
+    # contour lines, the values are repeated from the beginning of the list.
+    # Widths are associated with levels of increasing value.
     widths = Trait(1.0, Float, List)
 
     # The line dash style(s).
@@ -61,7 +65,7 @@ class ContourLinePlot(BaseContourPlot):
     # Cached list of line styles
     _styles = List
 
-    # Mapped trait used to convert user-suppied line style values to
+    # Mapped trait used to convert user-supplied line style values to
     # AGG-acceptable ones. (Mapped traits in lists are not supported, must be
     # converted one at a time.)
     _style_map_trait = LineStyle
@@ -108,8 +112,8 @@ class ContourLinePlot(BaseContourPlot):
 
     def _update_contours(self):
         """ Updates the cache of contour lines """
-        # x and ydata are "fenceposts" so ignore the last value
-        # XXX: this truncaton is causing errors in Cntr() as of r13735
+        # x and y data are "fenceposts" so ignore the last value
+        # XXX: this truncation is causing errors in Cntr() as of r13735
         xdata = self.index._xdata.get_data()
         ydata = self.index._ydata.get_data()
         xs = linspace(xdata[0], xdata[-1], len(xdata)-1)

@@ -6,9 +6,10 @@ Relies on sklearn for the datasets.
 from functools import partial
 
 from chaco.array_data_source import ArrayDataSource
-from chaco.array_plot_data import ArrayPlotData
 from chaco.axis import PlotAxis
 from chaco.cmap_image_plot import CMapImagePlot
+from chaco.contour_line_plot import ContourLinePlot
+from chaco.contour_poly_plot import ContourPolyPlot
 from chaco.data_range_1d import DataRange1D
 from chaco.data_range_2d import DataRange2D
 from chaco.jitterplot import JitterPlot
@@ -31,7 +32,6 @@ from chaco.image_plot import ImagePlot
 from chaco.grid_data_source import GridDataSource
 from chaco.grid_mapper import GridMapper
 from chaco.image_data import ImageData
-from chaco.plot import Plot
 from plot_window import PlotWindow
 
 
@@ -401,6 +401,73 @@ def get_cmap_image_plot():
     return cmap_plot
 
 
+def get_contour_line_plot():
+    NPOINTS_X, NPOINTS_Y = 600, 300
+
+    # Create a scalar field to contour
+    xs = np.linspace(-2 * np.pi, +2 * np.pi, NPOINTS_X)
+    ys = np.linspace(-1.5*np.pi, +1.5*np.pi, NPOINTS_Y)
+    x, y = np.meshgrid(xs, ys)
+    z = scipy.special.jn(2, x)*y*x
+
+    # FIXME: we have set the xbounds and ybounds manually to work around
+    # a bug in CountourLinePlot, see comment in contour_line_plot.py at
+    # line 112 (the workaround is the +1 at the end)
+    xs_bounds = np.linspace(xs[0], xs[-1], z.shape[1]+1)
+    ys_bounds = np.linspace(ys[0], ys[-1], z.shape[0]+1)
+    index = GridDataSource(xdata=xs_bounds, ydata=ys_bounds)
+    index_mapper = GridMapper(range=DataRange2D(index))
+
+    value = ImageData(data=z, value_depth=1)
+    color_mapper = dc.Blues(DataRange1D(value))
+
+    contour_plot = ContourLinePlot(
+        index = index,
+        index_mapper = index_mapper,
+        value = value,
+        colors = color_mapper,
+        widths = range(1, 11),
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(contour_plot, x_label='x', y_label='y')
+
+    return contour_plot
+
+
+def get_contour_poly_plot():
+    NPOINTS_X, NPOINTS_Y = 600, 300
+
+    # Create a scalar field to contour
+    xs = np.linspace(-2 * np.pi, +2 * np.pi, NPOINTS_X)
+    ys = np.linspace(-1.5*np.pi, +1.5*np.pi, NPOINTS_Y)
+    x, y = np.meshgrid(xs, ys)
+    z = scipy.special.jn(2, x)*y*x
+
+    # FIXME: we have set the xbounds and ybounds manually to work around
+    # a bug in CountourLinePlot, see comment in contour_line_plot.py at
+    # line 112 (the workaround is the +1 at the end)
+    xs_bounds = np.linspace(xs[0], xs[-1], z.shape[1]+1)
+    ys_bounds = np.linspace(ys[0], ys[-1], z.shape[0]+1)
+    index = GridDataSource(xdata=xs_bounds, ydata=ys_bounds)
+    index_mapper = GridMapper(range=DataRange2D(index))
+
+    value = ImageData(data=z, value_depth=1)
+    color_mapper = dc.Blues(DataRange1D(value))
+
+    contour_plot = ContourPolyPlot(
+        index = index,
+        index_mapper = index_mapper,
+        value = value,
+        colors = color_mapper,
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(contour_plot, x_label='x', y_label='y')
+
+    return contour_plot
+
+
 all_examples = {
     'line': get_line_plot_connected,
     'line_hold': get_line_plot_hold,
@@ -414,12 +481,14 @@ all_examples = {
     'filled_line': get_filled_line_plot,
     'image': get_image_plot,
     'image_from_file': get_image_from_file,
-    'cmap_image': get_cmap_image_plot
+    'cmap_image': get_cmap_image_plot,
+    'contour_line': get_contour_line_plot,
+    'contour_poly': get_contour_poly_plot
 }
 
 
 if __name__ == '__main__':
-    name = 'cmap_image'
+    name = 'contour_poly'
 
     factory_func = all_examples[name]
     plot = factory_func()

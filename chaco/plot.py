@@ -613,7 +613,7 @@ class Plot(DataView):
             The 2D plot data
 
         axis : int
-            The axis along which the bounds are tyo be set
+            The axis along which the bounds are to be set
         """
 
         num_ticks = array_data.shape[axis] + 1

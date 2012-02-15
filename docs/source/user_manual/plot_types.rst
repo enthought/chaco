@@ -11,6 +11,8 @@ directory.
 For more complete examples, see also the :ref:`annotated examples <examples>`
 page.
 
+TODO: the Plot class
+
 ================================================================
 X-Y Plot Types
 ================================================================
@@ -20,13 +22,13 @@ Unless otherwise stated, they are subclasses of
 :class:`~chaco.base_xy_plot.BaseXYPlot`.
 
 
-explain that you need to provide index, value, and mappers
+TODO: explain that you need to provide index, value, and mappers
 
-grids
+TODO: grids
 
-hittest
+TODO: hittest
 
-selected
+TODO: selected
 
 
 .. _line_plot:
@@ -281,7 +283,7 @@ These plots display information as a two-dimensional image.
 Unless otherwise stated, they are subclasses of
 :class:`~chaco.base_2d_plot.Base2DPlot`.
 
-explain index, value, mappers
+TODO: explain index, value, mappers
 
 
 .. _image_plot:
@@ -353,8 +355,6 @@ a color mapper maps the scalar data to colors. The module
 
 For example: ::
 
-    NPOINTS = 200
-
     xs = np.linspace(-2 * np.pi, +2 * np.pi, NPOINTS)
     ys = np.linspace(-1.5*np.pi, +1.5*np.pi, NPOINTS)
     x, y = np.meshgrid(xs, ys)
@@ -381,8 +381,83 @@ This creates the plot:
   :width: 500px
 
 
-Contour Plot
-============
+Contour Plots
+=============
+
+Contour plots represent a scalar-valued 2D function, z = f(x, y),
+as a set of contours connecting points of equal value.
+
+Contour plots
+in Chaco are derived from the base class
+:class:`~chaco.base_countour_plot.BaseContourPlot`, which defines these
+common attributes:
+
+:attr:`~chaco.base_countour_plot.BaseContourPlot.levels`
+  :attr:`levels` is used to define the values for which to draw a contour.
+  It can be either a list of values (floating point numbers);
+  a positive integer, in which
+  case the range of the value is divided in the given number of equally
+  spaced levels; or "auto" (default), which divides the total range in
+  10 equally spaced levels
+
+:attr:`~chaco.base_countour_plot.BaseContourPlot.colors`
+  This attribute is used to define the color of the contours. :attr:`colors`
+  can be given as a color name, in which case all contours have the same
+  color, as a list of colors, or as a colormap. If the list of colors is
+  shorter than the number of levels, the values are repeated from the beginning
+  of the list.
+  If left unspecified, the contours are plot in black.
+  Colors are associated with levels of increasing value.
+
+:attr:`~chaco.base_countour_plot.BaseContourPlot.color_mapper`
+  If present, the color mapper for the colorbar.
+  TODO: not sure how it works
+
+:attr:`~chaco.base_countour_plot.BaseContourPlot.alhpa`
+  Global alpha level for all contours.
+
+
+Contour Line Plot
+-----------------
+
+Draw a contour plots as a set of lines. In addition to the attributes
+in :class:`~chaco.base_countour_plot.BaseContourPlot`,
+:class:`~chaco.base_countour_plot.ContourLinePlot` defines the following
+parameters:
+
+:attr:`~chaco.base_countour_plot.ContourLinePlot.widths`
+  The thickness of the contour lines.
+  It can be either a scalar value, valid for all contour lines, or a list
+  of widths. If the list is too short with respect to then number of
+  contour lines, the values are repeated from the beginning of the list.
+  Widths are associated with levels of increasing value.
+
+:attr:`~chaco.base_countour_plot.ContourLinePlot.styles`
+  The style of the lines. It can either be a string that specifies the
+  style for all lines (allowed styles are 'solid', 'dot dash', 'dash', 'dot',
+  or 'long dash'), or a list of styles, one for each line.
+  If the list is too short with respect to then number of
+  contour lines, the values are repeated from the beginning of the list.
+  The default, 'signed', sets all lines corresponding to positive values to the
+  style given by the attribute
+  :attr:`~chaco.base_countour_plot.ContourLinePlot.positive_style` (default
+  is 'solid'), and all lines corresponding to negative values to
+  the style given by
+  :attr:`~chaco.base_countour_plot.ContourLinePlot.negative_style`
+  (default is 'dash').
+
+.. image:: images/user_guide/contour_line_plot.png
+  :width: 500px
+
+Filled contour Plot
+------------------
+
+Draw a contour plot as a 2D image divided in regions of the same color.
+The class :class:`~chaco.base_countour_plot.ContourPolyPlot` inherits
+all attributes from :class:`~chaco.base_countour_plot.BaseContourPlot`.
+
+.. image:: images/user_guide/contour_poly_plot.png
+  :width: 500px
 
 
 Polygon Plot
