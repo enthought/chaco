@@ -15,6 +15,7 @@ from chaco.data_range_2d import DataRange2D
 from chaco.jitterplot import JitterPlot
 from chaco.lineplot import LinePlot
 from chaco.plot_graphics_context import PlotGraphicsContext
+from chaco.polygon_plot import PolygonPlot
 from chaco.scatterplot import ScatterPlot
 from chaco.linear_mapper import LinearMapper
 from chaco.candle_plot import CandlePlot
@@ -468,6 +469,28 @@ def get_contour_poly_plot():
     return contour_plot
 
 
+def get_polygon_plot():
+    xs = np.array([0.5, 2.0, 4.0, 5.5, 4.0, 1.5, 0.5, 0.0])
+    ys = np.array([0.0, 0.8, 0.5, 3.0, 3.5, 2.0, 3.0, 0.5])
+
+    x, y = get_data_sources(xs, ys)
+    x_mapper, y_mapper = get_mappers(x, y)
+
+    polygon_plot = PolygonPlot(
+        index = x,
+        value = y,
+        index_mapper = x_mapper,
+        value_mapper = y_mapper,
+        edge_width = 4.0,
+        face_color = 'orange',
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(polygon_plot, x_label='x', y_label='y')
+
+    return polygon_plot
+
+
 all_examples = {
     'line': get_line_plot_connected,
     'line_hold': get_line_plot_hold,
@@ -483,12 +506,13 @@ all_examples = {
     'image_from_file': get_image_from_file,
     'cmap_image': get_cmap_image_plot,
     'contour_line': get_contour_line_plot,
-    'contour_poly': get_contour_poly_plot
+    'contour_poly': get_contour_poly_plot,
+    'polygon': get_polygon_plot
 }
 
 
 if __name__ == '__main__':
-    name = 'contour_poly'
+    name = 'polygon'
 
     factory_func = all_examples[name]
     plot = factory_func()

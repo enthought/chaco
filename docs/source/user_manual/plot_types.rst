@@ -226,7 +226,7 @@ only plots the error bars, and needs to be combined with a
 :class:`~chacho.errorbar_plot.LinePlot` if one would like to have
 a line connecting the central values.
 
-The positions of the exterma of the bars are set by the data sources
+The positions of the extrema of the bars are set by the data sources
 :attr:`~chaco.errorbar_plot.value_low` and
 :attr:`~chaco.errorbar_plot.value_high`.
 
@@ -463,6 +463,31 @@ all attributes from :class:`~chaco.base_countour_plot.BaseContourPlot`.
 Polygon Plot
 ============
 
+Draws a polygon given the coordinates of its corners.
+
+The x-coordinate of the corners is given as the :attr:`index` data source,
+and the y-coordinate as the :attr:`value` data source. As usual, their values
+are mapped to screen coordinates by :attr:`index_mapper` and
+:attr:`value_mapper`.
+
+In addition, the class :class:`~chaco.base_countour_plot.PolygonPlot` defines
+these parameters:
+
+:attr:`~chaco.base_countour_plot.PolygonPlot.edge_color`
+    The color of the line on the edge of the polygon (default is black).
+
+:attr:`~chaco.base_countour_plot.PolygonPlot.edge_width`
+    The thickness of the edge of the polygon (default is 1.0).
+
+:attr:`~chaco.base_countour_plot.PolygonPlot.edge_style`
+    The line dash style for the edge of the polygon, one of 'solid'
+    (default), 'dot dash', 'dash', 'dot', or 'long dash'.
+
+:attr:`~chaco.base_countour_plot.PolygonPlot.face_color`
+    The color of the face of the polygon (default is transparent).
+
+.. image:: images/user_guide/polygon_plot.png
+  :width: 500px
 
 
 ================================================================
