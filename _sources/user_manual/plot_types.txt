@@ -450,7 +450,7 @@ parameters:
   :width: 500px
 
 Filled contour Plot
-------------------
+-------------------
 
 Draw a contour plot as a 2D image divided in regions of the same color.
 The class :class:`~chaco.base_countour_plot.ContourPolyPlot` inherits
@@ -497,13 +497,105 @@ Other Plot Types
 Bar Plot
 ========
 
+Draws a set of rectangular bars, mostly used to plot histograms.
+
+The class :class:`~chaco.barplot.BarPlot` defines the attributes of
+regular X-Y plots, plus the following parameters:
+
+:attr:`~chaco.barplot.BarPlot.sorting_value`
+  While :attr:`~chaco.barplot.BarPlot.value` is a data source defining
+  the upper limit of the bars, :attr:`~chaco.barplot.BarPlot.sorting_value`
+  can be used to define their bottom limit. Default is 0.
+  (Note: "upper" and "bottom" assume a horizontal for the plot.)
+
+:attr:`~chaco.barplot.BarPlot.bar_width_type`
+  Determines how to interpret the :attr:`bar_width` parameter.
+  If 'data' (default', the width is given in the units along the index
+  dimension of the data space. If 'screen', the width is given in pixels.
+
+:attr:`~chaco.barplot.BarPlot.bar_width`
+  The width of the bars (see :attr:`bar_width_type`).
+
+:attr:`~chaco.barplot.BarPlot.fill_color`
+  The color of the bars.
+
+.. image:: images/user_guide/bar_plot.png
+  :width: 500px
+
+
 
 Quiver Plot
 ===========
 
+This is a kind of :ref:`scatter plot <scatter_plot>` which draws
+an arrow at every point. It can be used to visualize 2D vector fields.
+
+The information about the vector sizes is given through the data source
+:attr:`~chaco.quiverplot.QuiverPlot.vectors`, which returns an Nx2 array.
+Usually, :attr:`vectors` is an instance of
+:class:`~chaco.multi_array_data_source.MultiArrayDataSource`.
+
+:class:`~chaco.quiverplot.QuiverPlot` defines these parameters:
+
+
+:attr:`~chaco.quiverplot.QuiverPlot.line_width`
+  Width of the lines that trace the arrows (default is 1.0).
+
+:attr:`~chaco.quiverplot.QuiverPlot.line_color`
+  The color of the arrows (default is black).
+
+:attr:`~chaco.quiverplot.QuiverPlot.arrow_size`
+  The length of the arrowheads in pixels.
+
+
+.. image:: images/user_guide/quiver_plot.png
+  :width: 350px
+
 
 Polar Plot
 ==========
+
+Display a line plot in polar coordinates.
+
+The implementation at the moment is at a proof-of-concept stage.
+The class :class:`~chaco.polar_line_renderer.PolarLineRenderer` relies
+on :class:`~chaco.polar_mapper.PolarMapper` to map polar to cartesian
+coordinates, and adds circular polar coordinate axes.
+
+.. warning::
+
+  At the moment, :class:`~chaco.polar_mapper.PolarMapper` does not do
+  a polar to cartesian mapping, but just a linear mapping. One needs to
+  do the transformation by hand.
+
+The aspect of the polar plot can be controlled with these parameters:
+
+:attr:`~chaco.polar_line_renderer.PolarLineRenderer.line_width`
+  Width of the polar plot line (default is 1.0).
+
+:attr:`~chaco.polar_line_renderer.PolarLineRenderer.line_style`
+  The style of the line, one of 'solid' (default), 'dot dash', 'dash', 'dot',
+  or 'long dash'.
+
+:attr:`~chaco.polar_line_renderer.PolarLineRenderer.color`
+  The color of the line.
+
+:attr:`~chaco.polar_line_renderer.PolarLineRenderer.grid_style`
+  The style of the lines composing the axis, one of 'solid','dot dash',
+  'dash', 'dot' (default), or 'long dash'.
+
+:attr:`~chaco.polar_line_renderer.PolarLineRenderer.grid_visible`
+  If True (default), the circular part of the axes is drawn.
+
+:attr:`~chaco.polar_line_renderer.PolarLineRenderer.origin_axis_visible`
+  If True (default), the radial part of the axes is drawn.
+
+:attr:`~chaco.polar_line_renderer.PolarLineRenderer.origin_axis_width`
+  Width of the radial axis in pixels (default is 2.0).
+
+.. image:: images/user_guide/polar_plot.png
+  :width: 350px
+
 
 Jitter Plot
 ===========
