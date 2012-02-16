@@ -14,8 +14,12 @@ from chaco.data_range_1d import DataRange1D
 from chaco.data_range_2d import DataRange2D
 from chaco.jitterplot import JitterPlot
 from chaco.lineplot import LinePlot
+from chaco.multi_array_data_source import MultiArrayDataSource
 from chaco.plot_graphics_context import PlotGraphicsContext
+from chaco.polar_line_renderer import PolarLineRenderer
+from chaco.polar_mapper import PolarMapper
 from chaco.polygon_plot import PolygonPlot
+from chaco.quiverplot import QuiverPlot
 from chaco.scatterplot import ScatterPlot
 from chaco.linear_mapper import LinearMapper
 from chaco.candle_plot import CandlePlot
@@ -33,6 +37,7 @@ from chaco.image_plot import ImagePlot
 from chaco.grid_data_source import GridDataSource
 from chaco.grid_mapper import GridMapper
 from chaco.image_data import ImageData
+from chaco.barplot import BarPlot
 from plot_window import PlotWindow
 
 
@@ -491,6 +496,102 @@ def get_polygon_plot():
     return polygon_plot
 
 
+def get_bar_plot():
+    boston = datasets.load_boston()
+    prices = boston['target']
+
+    ys, bin_edges = np.histogram(prices, bins=10)
+    ys = ys.astype('d') / ys.sum()
+    xs = (bin_edges[:-1] + bin_edges[1:]) / 2.0
+
+    x, y = get_data_sources(x=xs, y=ys)
+    x_mapper, y_mapper = get_mappers(x, y)
+
+    # we need to make the range of the x coordinate a bit larger, otherwise
+    # half of the first and last bar are cut
+    delta = bin_edges[1] - bin_edges[0]
+    x_mapper.range.low = xs[0] - delta / 2.
+    x_mapper.range.high = xs[-1] + delta / 2.
+
+    y_mapper.range.high += 0.02
+
+    bar_plot = BarPlot(
+        index = x,
+        value = y,
+        index_mapper = x_mapper,
+        value_mapper = y_mapper,
+        fill_color = 'blue',
+        bar_width = 3.0,
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(bar_plot, x_label='Median house prices', y_label='Frequency')
+
+    return bar_plot
+
+
+def get_quiver_plot():
+    NPOINTS = 250
+
+    # points are distributed uniformly between -1 and 1
+    xs = np.random.uniform(low=-1.0, high=1.0, size=(NPOINTS,))
+    ys = np.random.uniform(low=-1.0, high=1.0, size=(NPOINTS,))
+
+    x, y = get_data_sources(x=xs, y=ys)
+    x_mapper, y_mapper = get_mappers(x, y)
+
+    # vectors are tangent to a circle centered in (0, 0) and the size depends
+    # on the radius
+    r = np.sqrt(xs*xs + ys*ys) * 20.0
+    v = r * np.array([-np.sin(np.arctan2(ys, xs)),
+                      np.cos(np.arctan2(ys, xs))])
+    v_source = MultiArrayDataSource(v.T)
+
+    quiver_plot = QuiverPlot(
+        index = x,
+        value = y,
+        vectors = v_source,
+        index_mapper = x_mapper,
+        value_mapper = y_mapper,
+        aspect_ratio = 1.0
+    )
+
+
+    add_axes(quiver_plot, x_label='x', y_label='y')
+
+    return quiver_plot
+
+
+def get_polar_plot():
+    # Create theta
+    N_POINTS = 5000
+    low, high = 0, np.pi
+    theta = np.arange(low, high, (high-low) / N_POINTS)
+
+    # Create the radius data
+    radius = np.cos(3*theta)
+
+    # FIXME: at the moment PolarMapper does not actually do anything, so
+    # we need to transform to Cartesian coordinates by hand
+    xs = radius * np.cos(theta)
+    ys = radius * np.sin(theta)
+
+    x, y = get_data_sources(xs, ys)
+    index_mapper = PolarMapper(range=DataRange1D(x))
+    value_mapper = PolarMapper(range=DataRange1D(y))
+
+    polar_plot = PolarLineRenderer(
+        index=x, value=y,
+        index_mapper = index_mapper,
+        value_mapper = value_mapper,
+        aspect_ratio = 1.0,
+        **PLOT_DEFAULTS
+    )
+    polar_plot.border_visible = False
+
+    return polar_plot
+
+
 all_examples = {
     'line': get_line_plot_connected,
     'line_hold': get_line_plot_hold,
@@ -507,12 +608,15 @@ all_examples = {
     'cmap_image': get_cmap_image_plot,
     'contour_line': get_contour_line_plot,
     'contour_poly': get_contour_poly_plot,
-    'polygon': get_polygon_plot
+    'polygon': get_polygon_plot,
+    'bar': get_bar_plot,
+    'quiver': get_quiver_plot,
+    'polar': get_polar_plot
 }
 
 
 if __name__ == '__main__':
-    name = 'polygon'
+    name = 'polar'
 
     factory_func = all_examples[name]
     plot = factory_func()

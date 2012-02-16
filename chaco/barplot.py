@@ -21,6 +21,8 @@ from base import reverse_map_1d
 logger = logging.getLogger(__name__)
 
 
+# TODO: make child of BaseXYPlot
+
 class BarPlot(AbstractPlotRenderer):
     """
     A renderer for bar charts.
@@ -32,6 +34,9 @@ class BarPlot(AbstractPlotRenderer):
     value = Instance(ArrayDataSource)
 
     # The data source to use as "starting" values for the bars.
+    # For instance, if the values are [10, 20] and starting_value
+    # is [3, 7], BarPlot will plot two bars, one  between 3 and 10, and
+    # one between 7 and 20
     starting_value = Instance(ArrayDataSource)
 
     # Labels for the indices.
