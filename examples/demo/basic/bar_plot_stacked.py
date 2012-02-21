@@ -8,14 +8,16 @@ import numpy
 # Enthought library imports
 from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance
-from traitsui.api import Item, View
+from traitsui.api import UItem, View
 
 # Chaco imports
 from chaco.api import LabelAxis, Plot, ArrayPlotData
 
 class PlotExample(HasTraits):
     plot = Instance(Plot)
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False))
+    traits_view = View(UItem('plot', editor=ComponentEditor()),
+                       width=400, height=400, resizable=True, 
+                      )
 
     def __init__(self, index, series_a, series_b, series_c, **kw):
         super(PlotExample, self).__init__(**kw)

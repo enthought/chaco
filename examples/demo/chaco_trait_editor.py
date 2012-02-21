@@ -3,6 +3,8 @@ This particular editor allows the user to set two endpoints of an
 interval.
 """
 
+# FIXME: WX-only, and broken even there.
+
 from __future__ import with_statement
 
 # Force WX

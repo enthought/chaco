@@ -3,7 +3,7 @@ from chaco.api import ToolbarPlot, ArrayPlotData
 from chaco.tools.api import LineInspector
 from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance
-from traitsui.api import Item, View
+from traitsui.api import UItem, View
 
 class MyPlot(HasTraits):
     """ Plot where depth is the index such that the plot is vertical
@@ -11,8 +11,9 @@ class MyPlot(HasTraits):
     """
     plot = Instance(ToolbarPlot)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(),
-                            width=600, height=600, show_label=False))
+    traits_view = View(UItem('plot', editor=ComponentEditor()),
+                       width=600, height=600, resizable=True
+                      )
 
     def __init__(self, depth, data_series, **kw):
         super(MyPlot, self).__init__(**kw)
