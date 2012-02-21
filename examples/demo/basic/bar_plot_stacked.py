@@ -1,5 +1,5 @@
 """
-Simple bar chart example.
+Simple example of a stacked bar chart
 """
 
 # Major library imports
