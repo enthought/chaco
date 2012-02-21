@@ -721,7 +721,8 @@ th {
 }
 
 pre {
-    padding: 5px;
+    max-height: 300px;
+    padding: 10px;
     background-color: #e6f3ff;
     color: #333;
     border: 1px solid #24326e;
@@ -731,6 +732,7 @@ pre {
 }
 
 td.linenos pre {
+    max-height: none;
     padding: 5px 0px;
     border: 0;
     background-color: transparent;
