@@ -266,8 +266,11 @@ bound that <em>pt</em> is outside of.</p>
 <dt id="chaco.api.MultiArrayDataSource">
 <em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">MultiArrayDataSource</tt><big>(</big><em>data=array(</em><span class="optional">[</span><span class="optional">]</span>, <em>dtype=float64)</em>, <em>sort_order='ascending'</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.MultiArrayDataSource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></tt></p>
-<p>A data source representing a single, continuous array of numerical data
-of potentially more than one dimension.</p>
+<p>A data source representing a single, continuous array of
+multidimensional numerical data.</p>
+<p>It is useful, for example, to define 2D vector data at each point of
+a scatter plot (as in QuiverPlot), or to represent multiple values
+for each index (as in MultiLinePlot).</p>
 <p>This class does not listen to the array for value changes;  To implement
 such behavior, define a subclass that hooks up the appropriate listeners.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -657,7 +660,7 @@ on disk. &#8216;filename&#8217; may be a file path or a file object.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jan 16, 2012.
+      Last updated on Feb 28, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

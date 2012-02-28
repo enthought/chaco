@@ -26,7 +26,7 @@
     <link rel="shortcut icon" href="../_static/et.ico"/>
     <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
     <link rel="up" title="User Manual" href="index.html" />
-    <link rel="next" title="Plot Types" href="plot_types.html" />
+    <link rel="next" title="Data sources" href="basic_elements/data_sources.html" />
     <link rel="prev" title="User Manual" href="index.html" /> 
   </head>
   <body>
@@ -34,7 +34,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="plot_types.html" title="Plot Types"
+          <a href="basic_elements/data_sources.html" title="Data sources"
              accesskey="N">next</a></li>
         <li class="right" >
           <a href="index.html" title="User Manual"
@@ -55,14 +55,132 @@
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="types-of-plotting">
-<h2>Types of Plotting<a class="headerlink" href="#types-of-plotting" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="interactive-plotting">
-<h3>Interactive plotting<a class="headerlink" href="#interactive-plotting" title="Permalink to this headline">¶</a></h3>
-<p>Use the shell module</p>
+<div class="section" id="what-is-chaco">
+<h2>What is Chaco?<a class="headerlink" href="#what-is-chaco" title="Permalink to this headline">¶</a></h2>
+<p>Chaco is a 2D plotting library that is part of and integrates with
+the Enthought Tools Suite.</p>
+<p>The strong points of Chaco are</p>
+<ol class="arabic simple">
+<li>it can be <a class="reference internal" href="#embedding"><em>embedded</em></a> in any wx, Qt, or TraitsUI application</li>
+<li>it is designed for building interactive plotting applications, rather than
+static 2D plots</li>
+<li>Chaco classes can be easily extended to create new plot types,
+interactive tools, and plot containers</li>
+</ol>
+<p>At the lowest level, Chaco is a hierarchy of classes that defines
+2D plotting elements: plots, containers, interactive tools, color bars, etc.
+In principle, applications can create instances of these elements and lay them
+out in a container to define components that can be <a class="reference internal" href="#embedding"><em>embedded in one
+of several of graphical back ends</em></a>. Working at this level allows the
+maximum flexibility, but requires understanding
+<a class="reference internal" href="#basic-elements"><em>Chaco&#8217;s basic elements</em></a>.</p>
+<p>Chaco defines two abstraction layers that allow a more high-level
+(albeit less flexible) plotting experience. First, Chaco contains a
+<tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt>
+class that defines several methods that create a complete plot given one or
+more data sets. In other words, <tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt> knows how to
+package data for the most common kinds of plots. Second, Chaco has a
+<tt class="xref py py-mod docutils literal"><span class="pre">shell</span></tt> module that defines high-level plotting functions. This module
+allows using Chaco as an interactive plotting tool that will be familiar
+to users of matplotlib.</p>
 </div>
-<div class="section" id="application-oriented-plotting">
-<h3>Application-oriented plotting<a class="headerlink" href="#application-oriented-plotting" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="basic-elements">
+<span id="id1"></span><h2>Basic elements<a class="headerlink" href="#basic-elements" title="Permalink to this headline">¶</a></h2>
+<p>To venture deeper in Chaco&#8217;s architecture it is useful to understand a few
+basic ideas on which Chaco is based:</p>
+<ul>
+<li><p class="first"><strong>Plots are compositions of visual components</strong></p>
+<p>Each plot is composed by a number of graphical widgets:
+the plot graphics, axes, labels, legend, colorbar, etc.
+Everything you see in a plot is an individual component
+with position, shape, and appearance attributes, and with an
+opportunity to respond to events.</p>
+</li>
+<li><p class="first"><strong>Data and screen space are separated</strong></p>
+<p>Although everything in a plot eventually ends up rendering into a common
+visual area, there are aspects of the plot which are intrinsically
+screen-space, and some which are fundamentally data-space. For example,
+data about the height of college students lives in data space (meters),
+but needs to be rendered in screen space (pixels). Chaco uses the
+concept of <em>mapper</em> to translate one into the other.
+Preserving the distinction between these two domains allows us to think about
+visualizations in a structured way.</p>
+</li>
+<li><p class="first"><strong>Layers</strong></p>
+<p>Plot components are split into several layers, which are usually plotted
+in sequence. For example, axes and labels are usually plotted on the
+&#8220;underlay&#8221; layer, plot data on the &#8220;plot&#8221; layer, and legends and other
+plot annotations on the &#8220;overlay&#8221; layer. In this way one can define
+interactive tools that add graphical elements to a plot without
+having to modify the drawing logic.</p>
+</li>
+</ul>
+<p>The classes that define these basic concept are decribes in the next sections:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/data_sources.html">Data sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#subclasses">Subclasses</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="data-ranges">
+<h3>Data ranges<a class="headerlink" href="#data-ranges" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="mappers">
+<h3>Mappers<a class="headerlink" href="#mappers" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>mappers</div></blockquote>
+</div>
+<div class="section" id="plots">
+<h3>Plots<a class="headerlink" href="#plots" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>plots (plot types)</div></blockquote>
+<p>basic plot properties:</p>
+<p>index, value
+index_mapper
+value_mapper</p>
+<p>origin</p>
+<p>bgcolor</p>
+<p>resizable</p>
+<p>index_range
+value_range</p>
+<p>orientation</p>
+<p>Plot types described on separate page.</p>
+</div>
+<div class="section" id="layers">
+<h3>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>underlays and overlays</div></blockquote>
+<dl class="docutils">
+<dt>DEFAULT_DRAWING_ORDER = [&#8220;background&#8221;, &#8220;image&#8221;, &#8220;underlay&#8221;, &#8220;plot&#8221;,</dt>
+<dd>&#8220;selection&#8221;, &#8220;border&#8221;, &#8220;annotation&#8221;, &#8220;overlay&#8221;]</dd>
+</dl>
+</div>
+<div class="section" id="axes">
+<h3>Axes<a class="headerlink" href="#axes" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>axes</div></blockquote>
+</div>
+<div class="section" id="tools">
+<h3>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>tools</div></blockquote>
+</div>
+</div>
+<div class="section" id="plotting-with-chaco">
+<h2>Plotting with Chaco<a class="headerlink" href="#plotting-with-chaco" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-plot-class">
+<h3>The Plot class<a class="headerlink" href="#the-plot-class" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="chaco-shell">
+<h3>chaco.shell<a class="headerlink" href="#chaco-shell" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="low-level-chaco-plotting">
+<h2>Low-level Chaco plotting<a class="headerlink" href="#low-level-chaco-plotting" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>create instances of PlotRenderer and add them to a Container.
 There are factory functions in
@@ -73,24 +191,8 @@ plots multiple curves on the same element</li>
 </ol>
 <p>Plots can be rendered in a traitsui, wx, or qt window</p>
 </div>
-</div>
-<div class="section" id="chaco-plots">
-<h2>Chaco Plots<a class="headerlink" href="#chaco-plots" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="common-properties">
-<h3>Common Properties<a class="headerlink" href="#common-properties" title="Permalink to this headline">¶</a></h3>
-<p>data sources</p>
-<p>mappers</p>
-<p>index, value
-index_mapper
-value_mapper</p>
-<p>origin</p>
-<p>bgcolor</p>
-<p>resizable</p>
-<p>index_range
-value_range</p>
-<p>axes
-orientation</p>
-</div>
+<div class="section" id="embedding-chaco-plots">
+<span id="embedding"></span><h2>Embedding Chaco plots<a class="headerlink" href="#embedding-chaco-plots" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="traits-ui">
 <h3>Traits UI<a class="headerlink" href="#traits-ui" title="Permalink to this headline">¶</a></h3>
 </div>
@@ -115,13 +217,23 @@ orientation</p>
 <h3>Page Contents</h3>
 <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
-<li><a class="reference internal" href="#types-of-plotting">Types of Plotting</a><ul>
-<li><a class="reference internal" href="#interactive-plotting">Interactive plotting</a></li>
-<li><a class="reference internal" href="#application-oriented-plotting">Application-oriented plotting</a></li>
+<li><a class="reference internal" href="#what-is-chaco">What is Chaco?</a></li>
+<li><a class="reference internal" href="#basic-elements">Basic elements</a><ul>
+<li><a class="reference internal" href="#data-ranges">Data ranges</a></li>
+<li><a class="reference internal" href="#mappers">Mappers</a></li>
+<li><a class="reference internal" href="#plots">Plots</a></li>
+<li><a class="reference internal" href="#layers">Layers</a></li>
+<li><a class="reference internal" href="#axes">Axes</a></li>
+<li><a class="reference internal" href="#tools">Tools</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#chaco-plots">Chaco Plots</a><ul>
-<li><a class="reference internal" href="#common-properties">Common Properties</a></li>
+<li><a class="reference internal" href="#plotting-with-chaco">Plotting with Chaco</a><ul>
+<li><a class="reference internal" href="#the-plot-class">The Plot class</a></li>
+<li><a class="reference internal" href="#chaco-shell">chaco.shell</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#low-level-chaco-plotting">Low-level Chaco plotting</a></li>
+<li><a class="reference internal" href="#embedding-chaco-plots">Embedding Chaco plots</a><ul>
 <li><a class="reference internal" href="#traits-ui">Traits UI</a></li>
 <li><a class="reference internal" href="#wxpython">WxPython</a></li>
 <li><a class="reference internal" href="#qt-pyqt">Qt/PyQt</a></li>
@@ -157,7 +269,7 @@ orientation</p>
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="plot_types.html" title="Plot Types"
+          <a href="basic_elements/data_sources.html" title="Data sources"
              >next</a></li>
         <li class="right" >
           <a href="index.html" title="User Manual"
@@ -172,7 +284,7 @@ orientation</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Feb 15, 2012.
+      Last updated on Feb 28, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

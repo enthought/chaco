@@ -27,7 +27,7 @@
     <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
     <link rel="up" title="User Manual" href="index.html" />
     <link rel="next" title="Containers and Layout" href="containers.html" />
-    <link rel="prev" title="Introduction" href="introduction.html" /> 
+    <link rel="prev" title="Data sources" href="basic_elements/data_sources.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,7 +37,7 @@
           <a href="containers.html" title="Containers and Layout"
              accesskey="N">next</a></li>
         <li class="right" >
-          <a href="introduction.html" title="Introduction"
+          <a href="basic_elements/data_sources.html" title="Data sources"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">User Manual</a> &raquo;</li>
@@ -61,7 +61,6 @@ the directory <tt class="docutils literal"><span class="pre">tutorials/user_guid
 directory.</p>
 <p>For more complete examples, see also the <a class="reference internal" href="annotated_examples.html#examples"><em>annotated examples</em></a>
 page.</p>
-<p>TODO: the Plot class</p>
 <div class="section" id="x-y-plot-types">
 <h2>X-Y Plot Types<a class="headerlink" href="#x-y-plot-types" title="Permalink to this headline">¶</a></h2>
 <p>These plots display information in a two-axis coordinate system.
@@ -75,7 +74,8 @@ Unless otherwise stated, they are subclasses of
 <span id="id1"></span><h3>Line Plot<a class="headerlink" href="#line-plot" title="Permalink to this headline">¶</a></h3>
 <p>Standard line plot implementation. The aspect of the line is controlled by the
 parameters</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">line_width</span></tt></dt>
 <dd>The width of the line (default is 1.0)</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">line_style</span></tt></dt>
@@ -85,21 +85,22 @@ or &#8216;long dash&#8217;.</dd>
 <dd>The rendering style of the line plot, one of
 &#8216;connectedpoints&#8217; (default), &#8216;hold&#8217;, or &#8216;connectedhold&#8217;</dd>
 </dl>
+</div></blockquote>
 <p>These images illustrate the differences in rendering style:</p>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='connectedpoints'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_plot52.png" src="../_images/line_plot52.png" style="width: 500px;" />
+<div><img alt="../_images/line_plot62.png" src="../_images/line_plot62.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='hold'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_hold_plot51.png" src="../_images/line_hold_plot51.png" style="width: 500px;" />
+<div><img alt="../_images/line_hold_plot61.png" src="../_images/line_hold_plot61.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='connectedhold'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_connectedhold_plot50.png" src="../_images/line_connectedhold_plot50.png" style="width: 500px;" />
+<div><img alt="../_images/line_connectedhold_plot60.png" src="../_images/line_connectedhold_plot60.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 </ul>
@@ -108,7 +109,8 @@ or &#8216;long dash&#8217;.</dd>
 <span id="id2"></span><h3>Scatter Plot<a class="headerlink" href="#scatter-plot" title="Permalink to this headline">¶</a></h3>
 <p>Standard scatter plot implementation. The aspect of the markers is controlled
 by the parameters</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">marker</span></tt></dt>
 <dd>The marker type, one of &#8216;square&#8217;(default), &#8216;circle&#8217;, &#8216;triangle&#8217;,
 &#8216;inverted_triangle&#8217;, &#8216;plus&#8217;, &#8216;cross&#8217;, &#8216;diamond&#8217;, &#8216;dot&#8217;, or &#8216;pixel&#8217;.
@@ -126,7 +128,8 @@ no outline is drawn.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">outline_color</span></tt></dt>
 <dd>The color of the outline to draw around the marker (default is black).</dd>
 </dl>
-<img alt="../_images/scatter_plot44.png" src="../_images/scatter_plot44.png" style="width: 500px;" />
+</div></blockquote>
+<img alt="../_images/scatter_plot54.png" src="../_images/scatter_plot54.png" style="width: 500px;" />
 </div>
 <div class="section" id="colormapped-scatter-plot">
 <h3>Colormapped Scatter Plot<a class="headerlink" href="#colormapped-scatter-plot" title="Permalink to this headline">¶</a></h3>
@@ -141,7 +144,8 @@ module <tt class="xref py py-mod docutils literal"><span class="pre">chaco.defau
 <p>In addition to the parameters supported by a
 <a class="reference internal" href="#scatter-plot"><em>scatter plot</em></a>, a colormapped scatter plot defines
 these attributes:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">fill_alpha</span></tt></dt>
 <dd>Set the alpha value of the points.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">render_method</span></tt></dt>
@@ -159,9 +163,10 @@ will appear more prominently if there are a lot of overlapping points</dd>
 methods.</p>
 </dd>
 </dl>
+</div></blockquote>
 <p>In this example plot, color represents property-tax rate (red is low,
 green is high):</p>
-<img alt="../_images/cmap_scatter_plot35.png" src="../_images/cmap_scatter_plot35.png" style="width: 500px;" />
+<img alt="../_images/cmap_scatter_plot45.png" src="../_images/cmap_scatter_plot45.png" style="width: 500px;" />
 </div>
 <div class="section" id="variable-size-scatter-plot">
 <h3>Variable Size Scatter Plot<a class="headerlink" href="#variable-size-scatter-plot" title="Permalink to this headline">¶</a></h3>
@@ -174,7 +179,7 @@ of the corresponding marker. Other attributes are inherited from
 the <a class="reference internal" href="#scatter-plot"><em>scatter plot</em></a> class.</p>
 <p>This is the same plot as above, with the radius od the circles representing
 property-tax rate:</p>
-<img alt="../_images/vsize_scatter_plot16.png" src="../_images/vsize_scatter_plot16.png" style="width: 500px;" />
+<img alt="../_images/vsize_scatter_plot26.png" src="../_images/vsize_scatter_plot26.png" style="width: 500px;" />
 </div>
 <div class="section" id="candle-plot">
 <h3>Candle Plot<a class="headerlink" href="#candle-plot" title="Permalink to this headline">¶</a></h3>
@@ -185,7 +190,8 @@ one standard deviation around the mean or the 10th and 90th percentile),
 and two stems (usually indicating the maximum and minimum values).</p>
 <p>The positions of the centers, and of the extrema of the bar and stems are
 set with the following data sources</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">center_values</span></tt></dt>
 <dd>Value of the centers. It can be set to <tt class="xref docutils literal"><span class="pre">None</span></tt>, in which case the center is
 not plotted.</dd>
@@ -195,9 +201,11 @@ not plotted.</dd>
 <dd>Lower and upper values of the stem. They can be set to <tt class="xref docutils literal"><span class="pre">None</span></tt>, in
 which case the stems are not plotted.</dd>
 </dl>
+</div></blockquote>
 <p>It is possible to customize the appearance of the candle plot with
 these parameters</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">bar_color</span></tt> (alias of <tt class="xref py py-attr docutils literal"><span class="pre">color</span></tt>)</dt>
 <dd>Fill color of the bar (default is black).</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">bar_line_color</span></tt> (alias of <tt class="xref py py-attr docutils literal"><span class="pre">outline_color</span></tt>)</dt>
@@ -214,9 +222,10 @@ If <tt class="xref docutils literal"><span class="pre">None</span></tt>, they de
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">end_cap</span></tt></dt>
 <dd>If <tt class="xref docutils literal"><span class="pre">False</span></tt>, the end caps are not plotted (default is <tt class="xref docutils literal"><span class="pre">True</span></tt>).</dd>
 </dl>
+</div></blockquote>
 <p>At the moment, it is not possible to control the width of the central bar
 and end caps.</p>
-<img alt="../_images/candle_plot38.png" src="../_images/candle_plot38.png" style="width: 500px;" />
+<img alt="../_images/candle_plot48.png" src="../_images/candle_plot48.png" style="width: 500px;" />
 </div>
 <div class="section" id="errorbar-plot">
 <h3>Errorbar Plot<a class="headerlink" href="#errorbar-plot" title="Permalink to this headline">¶</a></h3>
@@ -230,19 +239,23 @@ a line connecting the central values.</p>
 <p>In addition to the parameters supported by a
 <a class="reference internal" href="#line-plot"><em>line plot</em></a>, an errorbar plot defines
 these attributes:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">endcap_size</span></tt></dt>
 <dd>The width of the endcap bars in pixels.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">endcap_style</span></tt></dt>
 <dd>Either &#8216;bar&#8217; (default) or &#8216;none&#8217;, in which case no endcap bars are plotted.</dd>
 </dl>
-<img alt="../_images/errorbar_plot27.png" src="../_images/errorbar_plot27.png" style="width: 500px;" />
+</div></blockquote>
+<img alt="../_images/errorbar_plot37.png" src="../_images/errorbar_plot37.png" style="width: 500px;" />
 </div>
 <div class="section" id="filled-line-plot">
 <h3>Filled Line Plot<a class="headerlink" href="#filled-line-plot" title="Permalink to this headline">¶</a></h3>
 <p>A line plot filled with color to the axis.</p>
-<p>The following parameters are defined:</p>
-<dl class="docutils">
+<p><tt class="xref py py-class docutils literal"><span class="pre">FilledLinePlot</span></tt> defines
+the following parameters:</p>
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">fill_color</span></tt></dt>
 <dd>The color used to fill the plot.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">fill_direction</span></tt></dt>
@@ -254,12 +267,81 @@ maximum (&#8216;up&#8217;).</dd>
 <a class="reference internal" href="#line-plot"><em>line plot</em></a> for a description of the different
 rendering styles).</dd>
 </dl>
+</div></blockquote>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">FilledLinePlot</span></tt> is a subclass of
 <tt class="xref py py-attr docutils literal"><span class="pre">PolygonPlot</span></tt>, so to set the thickness of the
 plot line one should use the parameter
 <tt class="xref py py-attr docutils literal"><span class="pre">edge_width</span></tt> instead of
 <tt class="xref py py-attr docutils literal"><span class="pre">line_width</span></tt>.</p>
-<img alt="../_images/filled_line_plot27.png" src="../_images/filled_line_plot27.png" style="width: 500px;" />
+<img alt="../_images/filled_line_plot37.png" src="../_images/filled_line_plot37.png" style="width: 500px;" />
+</div>
+<div class="section" id="multi-line-plot">
+<h3>Multi-line Plot<a class="headerlink" href="#multi-line-plot" title="Permalink to this headline">¶</a></h3>
+<p>A line plot showing multiple lines simultaneously. The lines</p>
+<p>The values of the lines are given by an instance of
+<tt class="xref py py-class docutils literal"><span class="pre">MultiArrayDataSource</span></tt>, but the
+lines are rescaled
+and displaced vertically so that they can be compared without
+crossing each other.</p>
+<p>The relative displacement and rescaling of the lines is controlled
+by these attributes of <tt class="xref py py-class docutils literal"><span class="pre">MultiLinePlot</span></tt>:</p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">index</span></tt></p>
+<blockquote>
+<div>The usual array data source for the index data.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">yindex</span></tt></p>
+<blockquote>
+<div>Array data source for the starting point of each line. Typically, this
+is set to <tt class="docutils literal"><span class="pre">numpy.arange(n_lines)</span></tt>, so that each lines is displaced
+by one unit from the the others (the other default parameters are set to
+work well with this arrangement).</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">use_global_bounds</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">global_min</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">global_max</span></tt>,</p>
+<blockquote>
+<div><p>These attributes are used to compute an &#8220;amplitude scale&#8221; which that
+the largest trace deviation from its base y-coordinate will be equal
+to the y-coordinate spacing.</p>
+<p>If <tt class="xref py py-attr docutils literal"><span class="pre">use_global_bounds</span></tt> is set to False, the maximum of the
+absolute value of the full data is used as the largest trace deviation.
+Otherwise, the largest between the absolute value of <tt class="xref py py-attr docutils literal"><span class="pre">global_min</span></tt>
+and <tt class="xref py py-attr docutils literal"><span class="pre">global_max</span></tt> is used instead.</p>
+<p>By default, <tt class="xref py py-attr docutils literal"><span class="pre">use_global_bounds</span></tt> is set to False and
+<tt class="xref py py-attr docutils literal"><span class="pre">global_min</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">global_max</span></tt> to 0.0, which means that one
+of these value has to be set to create a meaningful plot.</p>
+</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">scale</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">normalized_amplitude</span></tt></p>
+<blockquote>
+<div>In addition to the rescaling done using the global bounds (see above),
+each line is individually scaled by <tt class="xref py py-attr docutils literal"><span class="pre">normalized_amplitude</span></tt>
+(by default this is -0.5, but is normally it should be something like 1.0).
+Finally, all the lines are moved by <tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt> and multiplied by
+<tt class="xref py py-attr docutils literal"><span class="pre">scale</span></tt> (default are 0.0 and 1.0, respectively).</div></blockquote>
+</div></blockquote>
+<p><tt class="xref py py-class docutils literal"><span class="pre">MultiLinePlot</span></tt> also defines the following
+parameters:</p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">line_width</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">line_style</span></tt></p>
+<blockquote>
+<div>Control the thickness and style of the lines, as for
+<a class="reference internal" href="#line-plot"><em>line plots</em></a>.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">color</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">color_func</span></tt></p>
+<blockquote>
+<div>If <tt class="xref py py-attr docutils literal"><span class="pre">color_func</span></tt> is None, all lines have the color defined
+in <tt class="xref py py-attr docutils literal"><span class="pre">color</span></tt>. Otherwise, <tt class="xref py py-attr docutils literal"><span class="pre">color_func</span></tt> is a function
+(or, more in general, a callable) that accept a single argument corresponding
+to the index of the line and returns a RGBA 4-tuple.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">fast_clip</span></tt></p>
+<blockquote>
+<div>If True, traces whose <em>base</em> y-coordinate is outside the value axis range
+are not plotted, even if some of the data in the curve extends into the plot
+region. (Default is False)</div></blockquote>
+</div></blockquote>
+<img alt="../_images/multiline_plot6.png" src="../_images/multiline_plot6.png" style="width: 500px;" />
 </div>
 </div>
 <div class="section" id="image-and-2d-plots">
@@ -279,7 +361,7 @@ corresponds to the the data coordinates of the pixels (often a
 screen coordinates (typically using
 a <tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt>). The <cite>value</cite> is the image itself,
 wrapped into the data source class <tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt>.</p>
-<img alt="../_images/image_plot26.png" src="../_images/image_plot26.png" style="width: 500px;" />
+<img alt="../_images/image_plot36.png" src="../_images/image_plot36.png" style="width: 500px;" />
 <p>A typical use case is to display an image loaded from a file.
 The preferred way to do this is using the factory method
 <tt class="xref py py-meth docutils literal"><span class="pre">from_file()</span></tt> of the class
@@ -301,7 +383,7 @@ The preferred way to do this is using the factory method
 </pre></div>
 </div>
 <p>The code above displays this plot:</p>
-<img alt="../_images/image_from_file_plot19.png" src="../_images/image_from_file_plot19.png" style="width: 500px;" />
+<img alt="../_images/image_from_file_plot29.png" src="../_images/image_from_file_plot29.png" style="width: 500px;" />
 </div>
 <div class="section" id="colormapped-scalar-plot">
 <span id="id3"></span><h3>Colormapped Scalar Plot<a class="headerlink" href="#colormapped-scalar-plot" title="Permalink to this headline">¶</a></h3>
@@ -341,7 +423,7 @@ a color mapper maps the scalar data to colors. The module
 </pre></div>
 </div>
 <p>This creates the plot:</p>
-<img alt="../_images/cmap_image_plot16.png" src="../_images/cmap_image_plot16.png" style="width: 500px;" />
+<img alt="../_images/cmap_image_plot26.png" src="../_images/cmap_image_plot26.png" style="width: 500px;" />
 </div>
 <div class="section" id="contour-plots">
 <h3>Contour Plots<a class="headerlink" href="#contour-plots" title="Permalink to this headline">¶</a></h3>
@@ -351,7 +433,8 @@ as a set of contours connecting points of equal value.</p>
 in Chaco are derived from the base class
 <tt class="xref py py-class docutils literal"><span class="pre">BaseContourPlot</span></tt>, which defines these
 common attributes:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">levels</span></tt></dt>
 <dd><tt class="xref py py-attr docutils literal"><span class="pre">levels</span></tt> is used to define the values for which to draw a contour.
 It can be either a list of values (floating point numbers);
@@ -373,13 +456,15 @@ TODO: not sure how it works</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">alhpa</span></tt></dt>
 <dd>Global alpha level for all contours.</dd>
 </dl>
+</div></blockquote>
 <div class="section" id="contour-line-plot">
 <h4>Contour Line Plot<a class="headerlink" href="#contour-line-plot" title="Permalink to this headline">¶</a></h4>
 <p>Draw a contour plots as a set of lines. In addition to the attributes
 in <tt class="xref py py-class docutils literal"><span class="pre">BaseContourPlot</span></tt>,
 <tt class="xref py py-class docutils literal"><span class="pre">ContourLinePlot</span></tt> defines the following
 parameters:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">widths</span></tt></dt>
 <dd>The thickness of the contour lines.
 It can be either a scalar value, valid for all contour lines, or a list
@@ -400,14 +485,15 @@ the style given by
 <tt class="xref py py-attr docutils literal"><span class="pre">negative_style</span></tt>
 (default is &#8216;dash&#8217;).</dd>
 </dl>
-<img alt="../_images/contour_line_plot10.png" src="../_images/contour_line_plot10.png" style="width: 500px;" />
+</div></blockquote>
+<img alt="../_images/contour_line_plot20.png" src="../_images/contour_line_plot20.png" style="width: 500px;" />
 </div>
 <div class="section" id="filled-contour-plot">
 <h4>Filled contour Plot<a class="headerlink" href="#filled-contour-plot" title="Permalink to this headline">¶</a></h4>
 <p>Draw a contour plot as a 2D image divided in regions of the same color.
 The class <tt class="xref py py-class docutils literal"><span class="pre">ContourPolyPlot</span></tt> inherits
 all attributes from <tt class="xref py py-class docutils literal"><span class="pre">BaseContourPlot</span></tt>.</p>
-<img alt="../_images/contour_poly_plot7.png" src="../_images/contour_poly_plot7.png" style="width: 500px;" />
+<img alt="../_images/contour_poly_plot17.png" src="../_images/contour_poly_plot17.png" style="width: 500px;" />
 </div>
 </div>
 <div class="section" id="polygon-plot">
@@ -419,7 +505,8 @@ are mapped to screen coordinates by <tt class="xref py py-attr docutils literal"
 <tt class="xref py py-attr docutils literal"><span class="pre">value_mapper</span></tt>.</p>
 <p>In addition, the class <tt class="xref py py-class docutils literal"><span class="pre">PolygonPlot</span></tt> defines
 these parameters:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">edge_color</span></tt></dt>
 <dd>The color of the line on the edge of the polygon (default is black).</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">edge_width</span></tt></dt>
@@ -430,7 +517,8 @@ these parameters:</p>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">face_color</span></tt></dt>
 <dd>The color of the face of the polygon (default is transparent).</dd>
 </dl>
-<img alt="../_images/polygon_plot8.png" src="../_images/polygon_plot8.png" style="width: 500px;" />
+</div></blockquote>
+<img alt="../_images/polygon_plot18.png" src="../_images/polygon_plot18.png" style="width: 500px;" />
 </div>
 </div>
 <div class="section" id="other-plot-types">
@@ -440,7 +528,8 @@ these parameters:</p>
 <p>Draws a set of rectangular bars, mostly used to plot histograms.</p>
 <p>The class <tt class="xref py py-class docutils literal"><span class="pre">BarPlot</span></tt> defines the attributes of
 regular X-Y plots, plus the following parameters:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">sorting_value</span></tt></dt>
 <dd>While <tt class="xref py py-attr docutils literal"><span class="pre">value</span></tt> is a data source defining
 the upper limit of the bars, <tt class="xref py py-attr docutils literal"><span class="pre">sorting_value</span></tt>
@@ -455,7 +544,8 @@ dimension of the data space. If &#8216;screen&#8217;, the width is given in pixe
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">fill_color</span></tt></dt>
 <dd>The color of the bars.</dd>
 </dl>
-<img alt="../_images/bar_plot7.png" src="../_images/bar_plot7.png" style="width: 500px;" />
+</div></blockquote>
+<img alt="../_images/bar_plot17.png" src="../_images/bar_plot17.png" style="width: 500px;" />
 </div>
 <div class="section" id="quiver-plot">
 <h3>Quiver Plot<a class="headerlink" href="#quiver-plot" title="Permalink to this headline">¶</a></h3>
@@ -466,7 +556,8 @@ an arrow at every point. It can be used to visualize 2D vector fields.</p>
 Usually, <tt class="xref py py-attr docutils literal"><span class="pre">vectors</span></tt> is an instance of
 <tt class="xref py py-class docutils literal"><span class="pre">MultiArrayDataSource</span></tt>.</p>
 <p><tt class="xref py py-class docutils literal"><span class="pre">QuiverPlot</span></tt> defines these parameters:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">line_width</span></tt></dt>
 <dd>Width of the lines that trace the arrows (default is 1.0).</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">line_color</span></tt></dt>
@@ -474,7 +565,8 @@ Usually, <tt class="xref py py-attr docutils literal"><span class="pre">vectors<
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">arrow_size</span></tt></dt>
 <dd>The length of the arrowheads in pixels.</dd>
 </dl>
-<img alt="../_images/quiver_plot4.png" src="../_images/quiver_plot4.png" style="width: 350px;" />
+</div></blockquote>
+<img alt="../_images/quiver_plot14.png" src="../_images/quiver_plot14.png" style="width: 350px;" />
 </div>
 <div class="section" id="polar-plot">
 <h3>Polar Plot<a class="headerlink" href="#polar-plot" title="Permalink to this headline">¶</a></h3>
@@ -490,7 +582,8 @@ a polar to cartesian mapping, but just a linear mapping. One needs to
 do the transformation by hand.</p>
 </div>
 <p>The aspect of the polar plot can be controlled with these parameters:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">line_width</span></tt></dt>
 <dd>Width of the polar plot line (default is 1.0).</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">line_style</span></tt></dt>
@@ -508,7 +601,8 @@ or &#8216;long dash&#8217;.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">origin_axis_width</span></tt></dt>
 <dd>Width of the radial axis in pixels (default is 2.0).</dd>
 </dl>
-<img alt="../_images/polar_plot4.png" src="../_images/polar_plot4.png" style="width: 350px;" />
+</div></blockquote>
+<img alt="../_images/polar_plot14.png" src="../_images/polar_plot14.png" style="width: 350px;" />
 </div>
 <div class="section" id="jitter-plot">
 <h3>Jitter Plot<a class="headerlink" href="#jitter-plot" title="Permalink to this headline">¶</a></h3>
@@ -517,7 +611,8 @@ It can be useful for visualize dense collections of points.
 This plot has got a single mapper,
 called <tt class="xref py py-class docutils literal"><span class="pre">mapper</span></tt>.</p>
 <p>Useful parameters are:</p>
-<dl class="docutils">
+<blockquote>
+<div><dl class="docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">jitter_width</span></tt></dt>
 <dd>The size, in pixels, of the random jitter around the axis.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">marker</span></tt></dt>
@@ -537,7 +632,8 @@ no outline is drawn.</dd>
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">outline_color</span></tt></dt>
 <dd>The color of the outline to draw around the marker (default is black).</dd>
 </dl>
-<img alt="../_images/jitter_plot41.png" src="../_images/jitter_plot41.png" style="width: 500px;" />
+</div></blockquote>
+<img alt="../_images/jitter_plot51.png" src="../_images/jitter_plot51.png" style="width: 500px;" />
 </div>
 </div>
 </div>
@@ -562,6 +658,7 @@ no outline is drawn.</dd>
 <li><a class="reference internal" href="#candle-plot">Candle Plot</a></li>
 <li><a class="reference internal" href="#errorbar-plot">Errorbar Plot</a></li>
 <li><a class="reference internal" href="#filled-line-plot">Filled Line Plot</a></li>
+<li><a class="reference internal" href="#multi-line-plot">Multi-line Plot</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#image-and-2d-plots">Image and 2D Plots</a><ul>
@@ -615,7 +712,7 @@ no outline is drawn.</dd>
           <a href="containers.html" title="Containers and Layout"
              >next</a></li>
         <li class="right" >
-          <a href="introduction.html" title="Introduction"
+          <a href="basic_elements/data_sources.html" title="Data sources"
              >previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
           <li><a href="index.html" >User Manual</a> &raquo;</li>
@@ -627,7 +724,7 @@ no outline is drawn.</dd>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Feb 16, 2012.
+      Last updated on Feb 28, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
