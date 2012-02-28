@@ -12,6 +12,7 @@ from chaco.contour_line_plot import ContourLinePlot
 from chaco.contour_poly_plot import ContourPolyPlot
 from chaco.data_range_1d import DataRange1D
 from chaco.data_range_2d import DataRange2D
+from chaco.grid import PlotGrid
 from chaco.jitterplot import JitterPlot
 from chaco.lineplot import LinePlot
 from chaco.multi_array_data_source import MultiArrayDataSource
@@ -26,6 +27,7 @@ from chaco.candle_plot import CandlePlot
 from chaco.colormapped_scatterplot import ColormappedScatterPlot
 from chaco.variable_size_scatterplot import VariableSizeScatterPlot
 import chaco.default_colormaps as dc
+from enable.colors import color_table
 
 import scipy.stats
 import scipy.stats
@@ -38,6 +40,7 @@ from chaco.grid_data_source import GridDataSource
 from chaco.grid_mapper import GridMapper
 from chaco.image_data import ImageData
 from chaco.barplot import BarPlot
+from chaco.multi_line_plot import MultiLinePlot
 from plot_window import PlotWindow
 
 
@@ -592,6 +595,48 @@ def get_polar_plot():
     return polar_plot
 
 
+def get_multiline_plot():
+    prices = datasets.fetch_mldata('regression-datasets stock')
+
+    T, N_LINES = 70, 5
+
+    prices_data = prices['data'][:T,:N_LINES]
+    prices_data -= prices_data[0,:]
+
+    # data sources for the two axes
+    xs = ArrayDataSource(np.arange(T))
+    ys = ArrayDataSource(np.arange(N_LINES))
+    y_range = DataRange1D(low=-0.5, high=N_LINES - 0.5)
+    y_mapper = LinearMapper(range=y_range)
+
+    # data source for the multiple lines
+    lines_source = MultiArrayDataSource(data=prices_data.T)
+
+    colors = ['blue', 'green', 'yellow', 'orange', 'red']
+    def color_generator(color_idx):
+        return color_table[colors[color_idx]]
+
+    multiline_plot = MultiLinePlot(
+        index = xs,
+        yindex = ys,
+        index_mapper = LinearMapper(range=DataRange1D(xs)),
+        value_mapper = y_mapper,
+        value = lines_source,
+        normalized_amplitude = 1.0,
+        use_global_bounds = False,
+        color_func = color_generator,
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(multiline_plot, x_label='Days', y_label='Stock price changes')
+
+    y_grid = PlotGrid(mapper=y_mapper, orientation="horizontal",
+                      line_style="dot", component=multiline_plot)
+    multiline_plot.overlays.append(y_grid)
+
+    return multiline_plot
+
+
 all_examples = {
     'line': get_line_plot_connected,
     'line_hold': get_line_plot_hold,
@@ -611,12 +656,13 @@ all_examples = {
     'polygon': get_polygon_plot,
     'bar': get_bar_plot,
     'quiver': get_quiver_plot,
-    'polar': get_polar_plot
+    'polar': get_polar_plot,
+    'multiline': get_multiline_plot,
 }
 
 
 if __name__ == '__main__':
-    name = 'polar'
+    name = 'multiline'
 
     factory_func = all_examples[name]
     plot = factory_func()
