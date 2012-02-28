@@ -75,115 +75,20 @@ basic ideas on which Chaco is based:
   interactive tools that add graphical elements to a plot without
   having to modify the drawing logic.
 
-The classes that define these basic concept are decribes in the next sections.
-
-Data sources
-============
-
-A data source is a wrapper object for the actual data that the plot will be
-handling.
-It provides methods for retrieving data, estimating a size of the dataset,
-indications about the dimensionality of the data, a place for metadata
-(such as selections and annotations), and events that fire when the data gets
-changed.
-
-There are two primary reasons for a data source class:
-
-* It provides a way for different plotting objects to reference the same data.
-
-* It defines the interface to expose data from existing applications to Chaco.
-
-In most cases, the standard :class:`~chaco.array_data_source.ArrayDataSource`
-will suffice.
-
-Interface
----------
-
-The basic interface for data sources is defined in
-:class:`~chaco.abstract_data_source.AbstractDataSource`.
-Here is a summary of the most important attributes and methods:
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.value_dimension`
-
-  The dimensionality of the data value at each point. It is defined
-  as a :class:`DimensionTrait`, i.e., one of
-  "scalar", "point", "image", or "cube". For example,
-  a :class:`GridDataSource` represents data in a 2D array and thus its
-  :attr:`value_dimension` is "scalar".
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.index_dimension`
-
-  The dimensionality of the data value at each point. It is defined
-  as a :class:`DimensionTrait`, i.e., one of
-  "scalar", "point", "image", or "cube". For example,
-  a :class:`GridDataSource` represents data in a 2D array and thus its
-  :attr:`index_dimension` is "image".
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.metadata`
-
-  A dictionary that maps strings to arbitrary data. Usually, the mapped
-  data is a set of indices, as in the case of selections and annotations.
-  By default, :attr:`metadata` contains the keys "selections" (representing
-  indices that are currently selected by some tool)
-  and "annotations", both mapping to an empty list.
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.persist_data`
-
-  If True (default), the data that this data source refers to is serialized
-  when the data source is.
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.get_data()`
-
-  Returns a data array containing the data referred to by the data source.
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.`
-:attr:`~chaco.abstract_data_source.AbstractDataSource.`
-
-Events
-------
-
-:class:`~chaco.abstract_data_source.AbstractDataSource` defines three events
-that can be used in Traits applications to react to changes in the data source:
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.data_changes`
-
-  Fired when the data values change.
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.bounds_changes`
-
-  Fired when the data bounds change.
-
-:attr:`~chaco.abstract_data_source.AbstractDataSource.metadata_changed`
-  Fired when the content of :attr:`metadata` changes (both the
-  :attr:`metadata` dictionary object or any of its items).
+The classes that define these basic concept are decribes in the next sections:
 
 
-Subclasses
-----------
+.. toctree::
+  :maxdepth: 2
 
-chaco.array_data_source.ArrayDataSource
+  basic_elements/data_sources.rst
 
-  A data source representing a single, continuous array of numerical data.
 
-chaco.function_data_source.FunctionDataSource
 
-chaco.grid_data_source.GridDataSource
 
-chaco.multi_array_data_source.MultiArrayDataSource
 
-  A data source representing a single, continuous array of numerical data
-  of potentially more than one dimension.
-
-chaco.point_data_source.PointDataSource
-
-  A data source representing a (possibly unordered) set of (X,Y) points.
-
-chaco.image_data.ImageData
-
-  Represents a grid of data to be plotted.
-
-Data range
-==========
+Data ranges
+===========
 
 Mappers
 =======
