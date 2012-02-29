@@ -75,20 +75,19 @@ basic ideas on which Chaco is based:
   interactive tools that add graphical elements to a plot without
   having to modify the drawing logic.
 
-The classes that define these basic concept are decribes in the next sections:
 
+The next sections describe in detail the basic building blocks of
+Chaco plots, and the classes that implement them:
 
 .. toctree::
-  :maxdepth: 2
+  :maxdepth: 1
 
   basic_elements/data_sources.rst
+  basic_elements/data_ranges.rst
 
 
 
 
-
-Data ranges
-===========
 
 Mappers
 =======

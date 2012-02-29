@@ -410,10 +410,10 @@ padding and border) using the
 
 * :attr:`outer_position`, the x,y point of the lower left corner of the
   padding outer box around
-  the component. Use :meth:``set_outer_position`` to change these values.
+  the component. Use :meth:`set_outer_position` to change these values.
 * :attr:`outer_bounds`,
   the number of horizontal and vertical pixels in the padding outer box.
-   Use :meth:``set_outer_bounds`` to change these values.
+   Use :meth:`set_outer_bounds` to change these values.
 * :attr:`outer_x`, :attr:`outer_y`, :attr:`outer_x2`, :attr:`outer_y2:,
   :attr:`outer_width`, :attr:`outer_height`:
   coordinates of lower-left pixel of the box,
