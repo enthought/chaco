@@ -94,7 +94,7 @@ Events
 
 The basic data range interface defines a single event,
 :attr:`~chaco.abstract_data_range.AbstractDataRange.updated`,
-which is fired when the bounds values change.
+which is fired when the bound values change.
 The value of the event is a tuple ``(low_bound, high_bound)``.
 
 List of Chaco data ranges

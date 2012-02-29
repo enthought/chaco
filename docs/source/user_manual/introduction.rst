@@ -84,18 +84,17 @@ Chaco plots, and the classes that implement them:
 
   basic_elements/data_sources.rst
   basic_elements/data_ranges.rst
+  basic_elements/mappers.rst
+
+
+TODO: to see how these elements collaborate to build an interactive plot,
+give complete low-level example of line plot with simple tool and
+describe the exchange of information
 
 
 
-
-
-Mappers
-=======
-
- mappers
-
-Plots
-=====
+Plots and layers
+================
 
  plots (plot types)
 
@@ -119,7 +118,7 @@ orientation
 Plot types described on separate page.
 
 Layers
-======
+------
 
  underlays and overlays
 
