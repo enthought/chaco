@@ -24,13 +24,24 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../../_static/et.ico"/>
-    <link rel="top" title="chaco v4.1.1 documentation" href="../../index.html" /> 
+    <link rel="top" title="chaco v4.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="Introduction" href="../introduction.html" />
+    <link rel="next" title="Plot Types" href="../plot_types.html" />
+    <link rel="prev" title="Introduction" href="../introduction.html" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../plot_types.html" title="Plot Types"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
         <li><a href="../../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >User Manual</a> &raquo;</li>
+          <li><a href="../introduction.html" accesskey="U">Introduction</a> &raquo;</li>
   
     <li><a href="#">Data sources</a></li>
   
@@ -46,8 +57,11 @@
   <div class="section" id="data-sources">
 <h1>Data sources<a class="headerlink" href="#data-sources" title="Permalink to this headline">¶</a></h1>
 <p>A data source is a wrapper object for the actual data that the plot will be
-handling.
-It provides methods for retrieving data, estimating a size of the dataset,
+handling. For the most part, a data source looks like an array of values,
+with an optional mask and metadata.</p>
+<p>The <a class="reference internal" href="#data-source-interface"><em>data source interface</em></a>
+provides methods for retrieving data,
+estimating a size of the dataset,
 indications about the dimensionality of the data, a place for metadata
 (such as selections and annotations), and events that fire when the data gets
 changed.</p>
@@ -59,12 +73,13 @@ changed.</p>
 <p>In most cases, the standard <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt>
 will suffice.</p>
 <div class="section" id="interface">
-<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<span id="data-source-interface"></span><h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
 <p>The basic interface for data sources is defined in
 <tt class="xref py py-class docutils literal"><span class="pre">AbstractDataSource</span></tt>.
 Here is a summary of the most important attributes and methods
 (see the docstrings of this class for more details):</p>
-<p><tt class="xref py py-attr docutils literal"><span class="pre">value_dimension</span></tt></p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">value_dimension</span></tt></p>
 <blockquote>
 <div>The dimensionality of the data value at each point. It is defined
 as a <tt class="xref py py-class docutils literal"><span class="pre">DimensionTrait</span></tt>, i.e., one of
@@ -110,12 +125,14 @@ mask array.  Treat both arrays as read-only.</div></blockquote>
 In the case of 2-D data, min and max are 2-D points that represent the
 bounding corners of a rectangle enclosing the data set.
 If data is the empty set, then the min and max vals are 0.0.</div></blockquote>
+</div></blockquote>
 </div>
 <div class="section" id="events">
 <h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
 <p><tt class="xref py py-class docutils literal"><span class="pre">AbstractDataSource</span></tt> defines three events
 that can be used in Traits applications to react to changes in the data source:</p>
-<p><tt class="xref py py-attr docutils literal"><span class="pre">data_changed</span></tt></p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">data_changed</span></tt></p>
 <blockquote>
 <div><p>Fired when the data values change.</p>
 <div class="admonition note">
@@ -134,9 +151,10 @@ notes below).</p>
 <dd>Fired when the content of <tt class="xref py py-attr docutils literal"><span class="pre">metadata</span></tt> changes (both the
 <tt class="xref py py-attr docutils literal"><span class="pre">metadata</span></tt> dictionary object or any of its items).</dd>
 </dl>
+</div></blockquote>
 </div>
-<div class="section" id="subclasses">
-<h2>Subclasses<a class="headerlink" href="#subclasses" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="list-of-chaco-data-sources">
+<h2>List of Chaco data sources<a class="headerlink" href="#list-of-chaco-data-sources" title="Permalink to this headline">¶</a></h2>
 <p>This is a list of all concrete implementations of data sources in Chaco:</p>
 <p><tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt></p>
 <blockquote>
@@ -306,7 +324,7 @@ evaluated on a 2D data range (defined in
 <li><a class="reference internal" href="#">Data sources</a><ul>
 <li><a class="reference internal" href="#interface">Interface</a></li>
 <li><a class="reference internal" href="#events">Events</a></li>
-<li><a class="reference internal" href="#subclasses">Subclasses</a></li>
+<li><a class="reference internal" href="#list-of-chaco-data-sources">List of Chaco data sources</a></li>
 </ul>
 </li>
 </ul>
@@ -336,7 +354,15 @@ evaluated on a 2D data range (defined in
     <div class="related">
       <h3>Navigation</h3>
       <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../plot_types.html" title="Plot Types"
+             >next</a></li>
+        <li class="right" >
+          <a href="../introduction.html" title="Introduction"
+             >previous</a> |</li>
         <li><a href="../../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >User Manual</a> &raquo;</li>
+          <li><a href="../introduction.html" >Introduction</a> &raquo;</li>
   
     <li><a href="#">Data sources</a></li>
   
@@ -345,7 +371,7 @@ evaluated on a 2D data range (defined in
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Feb 28, 2012.
+      Last updated on Feb 29, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

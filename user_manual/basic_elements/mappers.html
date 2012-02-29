@@ -1,0 +1,246 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mappers &mdash; chaco v4.1.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/et.ico"/>
+    <link rel="top" title="chaco v4.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="Introduction" href="../introduction.html" />
+    <link rel="next" title="Plot Types" href="../plot_types.html" />
+    <link rel="prev" title="Data ranges" href="data_ranges.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../plot_types.html" title="Plot Types"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="data_ranges.html" title="Data ranges"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >User Manual</a> &raquo;</li>
+          <li><a href="../introduction.html" accesskey="U">Introduction</a> &raquo;</li>
+  
+    <li><a href="#">Mappers</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mappers">
+<h1>Mappers<a class="headerlink" href="#mappers" title="Permalink to this headline">¶</a></h1>
+<p>Mappers perform the job of mapping a data space region to screen space,
+and vice versa. They are used by plots to transform their data sources
+to pixel coordinates on the screen. While most of the time this is
+a relatively simple rescaling operation, mapper can also be used
+for non-linear transformations, most notably to map a data source
+to logarithmic coordinates on screen.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<p>The general interface for mappers is defined in
+<tt class="xref py py-class docutils literal"><span class="pre">AbstractMapper</span></tt> and defines only a few
+methods:</p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">map_screen(data_value)</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">map_data(screen_value)</span></tt></p>
+<blockquote>
+<div>Maps a vector of data coordinates to screen coordinates, and vice versa.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">map_data_array(screen_value_array)</span></tt></p>
+<blockquote>
+<div>Maps an array of points in data coordinates to screen coordinates.
+By default, this method just loops over the points, calling <tt class="xref py py-attr docutils literal"><span class="pre">map_data()</span></tt>
+on each one.  For vectorizable mapping functions, this
+implementation is overridden with a faster one.</div></blockquote>
+</div></blockquote>
+<p>Mappers for 1D data have a slightly larger interface, defined in
+<tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt>. These mappers rely
+on a <tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> object to find the
+bounds on the data domain.</p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">range</span></tt></p>
+<blockquote>
+<div>A <tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> instance to define the
+data-space bounds of the mapper. The mapper listens to the
+<tt class="xref py py-attr docutils literal"><span class="pre">updated</span></tt> event of the range and re-fires it as its
+own <tt class="xref py py-attr docutils literal"><span class="pre">updated</span></tt> event (see below).</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">low_pos</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">high_pos</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">screen_bounds</span></tt>,</p>
+<blockquote>
+<div>The screen space position of the lower/upper bound of the data space.
+<tt class="xref py py-attr docutils literal"><span class="pre">screen_bounds</span></tt> is a convenience property to set/get the screen
+bounds with a single attribute.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">stretch_data</span></tt></p>
+<blockquote>
+<div>When the screen bounds change (in response, for instance, to the
+window resizing) one could either fit more data space on the screen, or
+stretch the data space to the new bounds.
+If <tt class="xref py py-attr docutils literal"><span class="pre">stretch_data</span></tt> is True (default), the data is stretched;
+if it is False, the mapper preserves the screen-to-data ratio.</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">AbstractMapper</span></tt> interface defines a single
+generic event,
+<tt class="xref py py-attr docutils literal"><span class="pre">updated</span></tt>,
+which is fired when the bound values change.</p>
+<p>For subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt>, the
+<tt class="xref py py-attr docutils literal"><span class="pre">updated</span></tt> event is also fired in response to an <tt class="xref py py-attr docutils literal"><span class="pre">updated</span></tt> event
+fired by the underlying data range.
+The value of the new event is the tuple <tt class="docutils literal"><span class="pre">(low_bound,</span> <span class="pre">high_bound)</span></tt> contained
+in the triggering event.</p>
+</div>
+<div class="section" id="list-of-chaco-data-mappers">
+<h2>List of Chaco data mappers<a class="headerlink" href="#list-of-chaco-data-mappers" title="Permalink to this headline">¶</a></h2>
+<p><tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt> (subclass of <tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt>)</p>
+<blockquote>
+<div>This mapper transforms a 1D data space range linearly to a fixed 1D range
+in screen space.</div></blockquote>
+<p><tt class="xref py py-class docutils literal"><span class="pre">LogMapper</span></tt> (subclass of <tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt>)</p>
+<blockquote>
+<div>Maps a 1D data space range to a 1D range in screen space through a
+logarithmic transform. Data values
+smaller than or equal to 0.0 are
+substituted by <tt class="xref py py-attr docutils literal"><span class="pre">fill_value</span></tt>
+(default is 1.0) before the logarithmic transformation.</div></blockquote>
+<p><tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt></p>
+<blockquote>
+<div><p>Same as <tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt> for 2D ranges. This class
+replaces the <tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt> attributes with analogous ones:</p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">range</span></tt></p>
+<blockquote>
+<div>A <tt class="xref py py-class docutils literal"><span class="pre">DataRange2D</span></tt> instance to define the
+data-space bounds of the mapper.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">x_low_pos</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">y_low_pos</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">x_high_pos</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">y_high_pos</span></tt></p>
+<blockquote>
+<div>Screen space positions for the lower and upper bounds of the x and
+y axes.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">screen_bounds</span></tt></p>
+<blockquote>
+<div>Convenience property to set/get the screen bounds with a single attribute.
+The value of this attribute a 4-elements tuple
+<tt class="docutils literal"><span class="pre">(x_low_pos,</span> <span class="pre">x_high_pos,</span> <span class="pre">y_low_pos,</span> <span class="pre">y_high_pos)</span></tt>.</div></blockquote>
+</div></blockquote>
+<p><tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt> uses two
+<tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt> instances to define mappers for
+the two axes (accessible from the two private attributes
+<tt class="xref py py-attr docutils literal"><span class="pre">_xmapper</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">_ymapper</span></tt>.
+It thus possible to set them to be linear or
+logarithmic mappers. This is best made using the class constructor, which has
+this signature:</p>
+<blockquote>
+<div><tt class="xref py py-class docutils literal"><span class="pre">GridMapper(x_type=&quot;linear&quot;,</span> <span class="pre">y_type=&quot;linear&quot;,</span> <span class="pre">range=None,</span> <span class="pre">**kwargs)</span></tt></div></blockquote>
+<p><tt class="docutils literal"><span class="pre">x_type</span></tt> and <tt class="docutils literal"><span class="pre">y_type</span></tt> can be either &#8216;linear&#8217; or &#8216;log&#8217;, which will
+create a corresponding <tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">LogMapper</span></tt> classes.</p>
+</div></blockquote>
+<p><tt class="xref py py-class docutils literal"><span class="pre">PolarMapper</span></tt></p>
+<blockquote>
+<div><p>This class should map data polar coordinates to screen cartesian coordinates,
+to use for example with a <tt class="xref py py-class docutils literal"><span class="pre">PolarLineRenderer</span></tt>,
+but at the moment it is a copy of <tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The implementation of this mapper is broken.</p>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+<h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Mappers</a><ul>
+<li><a class="reference internal" href="#interface">Interface</a></li>
+<li><a class="reference internal" href="#events">Events</a></li>
+<li><a class="reference internal" href="#list-of-chaco-data-mappers">List of Chaco data mappers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/user_manual/basic_elements/mappers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../plot_types.html" title="Plot Types"
+             >next</a></li>
+        <li class="right" >
+          <a href="data_ranges.html" title="Data ranges"
+             >previous</a> |</li>
+        <li><a href="../../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >User Manual</a> &raquo;</li>
+          <li><a href="../introduction.html" >Introduction</a> &raquo;</li>
+  
+    <li><a href="#">Mappers</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, Enthought, Inc..
+      Last updated on Feb 29, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

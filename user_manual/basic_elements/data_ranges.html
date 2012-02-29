@@ -1,0 +1,252 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data ranges &mdash; chaco v4.1.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/et.ico"/>
+    <link rel="top" title="chaco v4.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="Introduction" href="../introduction.html" />
+    <link rel="next" title="Mappers" href="mappers.html" />
+    <link rel="prev" title="Data sources" href="data_sources.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="mappers.html" title="Mappers"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="data_sources.html" title="Data sources"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >User Manual</a> &raquo;</li>
+          <li><a href="../introduction.html" accesskey="U">Introduction</a> &raquo;</li>
+  
+    <li><a href="#">Data ranges</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="data-ranges">
+<h1>Data ranges<a class="headerlink" href="#data-ranges" title="Permalink to this headline">¶</a></h1>
+<p>A data range expresses bounds on <em>data space</em> of some dimensionality.
+For example, the simplest
+data range is just a set of two scalars representing (low, high) bounds in 1-D.
+Data ranges are commonly used in plots to determine the range of plot axes.</p>
+<p>Data ranges are typically associated to a data source, with their bounds set
+to <tt class="docutils literal"><span class="pre">auto</span></tt>, which means that they automatically scale to fit the
+data source bounds. Each data source can be associated with multiple ranges,
+and each data range can be associated with multiple data sources.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<p>The basic interface for data sources is defined in
+<tt class="xref py py-class docutils literal"><span class="pre">AbstractDataRange</span></tt>
+and
+<tt class="xref py py-class docutils literal"><span class="pre">BaseDataRange</span></tt>.</p>
+<p>This is a summary of the most important attributes and methods
+(see the docstrings of this class for more details):</p>
+<p><strong>Attributes</strong></p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">sources</span></tt></p>
+<blockquote>
+<div>A list of data sources associated to the data range. Concrete implementation
+of data range listen to the event
+<tt class="xref py py-attr docutils literal"><span class="pre">data_changed</span></tt>
+and refresh their bounds as appropriate (e.g., when the bounds are
+set to <tt class="docutils literal"><span class="pre">auto</span></tt>).</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">low</span></tt></p>
+<blockquote>
+<div>The actual value of the lower bounds of the range. The correct way
+to set it is to use the <tt class="xref py py-attr docutils literal"><span class="pre">low_setting</span></tt> attribute.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">high</span></tt></p>
+<blockquote>
+<div>The actual value of the upper bounds of the range. The correct way
+to set it is to use the <tt class="xref py py-attr docutils literal"><span class="pre">high_setting</span></tt> attribute.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">low_setting</span></tt></p>
+<blockquote>
+<div>Setting for the lower bound of the range. This can either be a valid
+lower bound value, or <tt class="docutils literal"><span class="pre">auto</span></tt> (default), in which case the
+lower bound is set automatically from the associated data sources.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">high_setting</span></tt></p>
+<blockquote>
+<div>Setting for the upper bound of the range. This can either be a valid
+upper bound value, or <tt class="docutils literal"><span class="pre">auto</span></tt> (default), in which case the
+upper bound is set automatically from the associated data sources.</div></blockquote>
+</div></blockquote>
+<p><strong>Methods</strong></p>
+<blockquote>
+<div><p><tt class="xref py py-attr docutils literal"><span class="pre">add(*datasources)</span></tt></p>
+<blockquote>
+<div>Convenience method to associate one ore more data sources to the range.
+The method avoids adding the same data source twice.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">remove(*datasources)</span></tt></p>
+<blockquote>
+<div>Convenience method to remove one ore more data sources from the range.
+If one of the data sources is not associated with the range,
+it is ignored.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">clip_data(data)</span></tt></p>
+<blockquote>
+<div>Given an array of data values of the same dimensionality as the range,
+return a list of data values that are inside the range.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">mask_data(data)</span></tt></p>
+<blockquote>
+<div>Given an array of data values of the same dimensionality as the range,
+this method returns a mask array of the same length as data, filled
+with 1s and 0s corresponding to whether the data value at that index
+is inside or outside the range.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">bound_data(data)</span></tt></p>
+<blockquote>
+<div>Given an array of <em>monotonic</em> data values of the same dimensionality
+as the range,
+returns a tuple of indices (start, end) corresponding to the first and
+last elements that fall within the range.</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>The basic data range interface defines a single event,
+<tt class="xref py py-attr docutils literal"><span class="pre">updated</span></tt>,
+which is fired when the bound values change.
+The value of the event is a tuple <tt class="docutils literal"><span class="pre">(low_bound,</span> <span class="pre">high_bound)</span></tt>.</p>
+</div>
+<div class="section" id="list-of-chaco-data-ranges">
+<h2>List of Chaco data ranges<a class="headerlink" href="#list-of-chaco-data-ranges" title="Permalink to this headline">¶</a></h2>
+<p>There are two data range implementations in Chaco, one for 1D and one
+for 2D ranges:</p>
+<p><tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt></p>
+<blockquote>
+<div><p><tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> represents a 1D data range. This
+subclass adds several more ways to control the bound of the range given
+the associated data sources.</p>
+<p>First of all, a new parameter,
+<tt class="xref py py-attr docutils literal"><span class="pre">tight_bounds</span></tt>, controls whether
+the bounds should fit exactly the range of the associated data sources
+(the default is True). If it is False, the range adds some padding
+on either side of the data, controlled by
+<tt class="xref py py-attr docutils literal"><span class="pre">margin</span></tt>, which is expressed
+as a precentage of the full data width.</p>
+<p>Second, <tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt>
+defines a new setting, <tt class="docutils literal"><span class="pre">track</span></tt> for <tt class="xref py py-attr docutils literal"><span class="pre">low_setting</span></tt> and
+<tt class="xref py py-attr docutils literal"><span class="pre">high_setting</span></tt>. When one of the bounds is set to <tt class="docutils literal"><span class="pre">track</span></tt>, it
+follows the other bound by the amount set in
+<tt class="xref py py-attr docutils literal"><span class="pre">tracking_amount</span></tt>.</p>
+<p>Third, bounds can be computed using a user-supplied function specified
+in <tt class="xref py py-attr docutils literal"><span class="pre">bounds_func</span></tt>. The function
+takes the arguments
+<tt class="docutils literal"><span class="pre">(data_low,</span> <span class="pre">data_high,</span> <span class="pre">margin,</span> <span class="pre">tight_bounds)</span></tt>, where <tt class="docutils literal"><span class="pre">data_low</span></tt>
+and <tt class="docutils literal"><span class="pre">data_high</span></tt> are the bounds computed <em>after</em> taking into
+account the <tt class="docutils literal"><span class="pre">auto</span></tt> or <tt class="docutils literal"><span class="pre">track</span></tt> settings, and
+<tt class="xref py py-attr docutils literal"><span class="pre">margin</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">tight_bounds</span></tt> are defined as above.</p>
+<p>The logic of computing the bounds is implemented in the
+function <tt class="xref py py-func docutils literal"><span class="pre">calc_bounds()</span></tt> in <tt class="xref py py-mod docutils literal"><span class="pre">chaco.data_range_1d</span></tt>.</p>
+</div></blockquote>
+<p><tt class="xref py py-class docutils literal"><span class="pre">DataRange2D</span></tt></p>
+<blockquote>
+<div><p><tt class="xref py py-class docutils literal"><span class="pre">DataRange2D</span></tt> represents a 2D data range.
+Under the hood, it is implemented using two
+<tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> objects,
+one for each dimension,
+which are stored in the
+<tt class="xref py py-attr docutils literal"><span class="pre">x_range</span></tt> and
+<tt class="xref py py-attr docutils literal"><span class="pre">y_range</span></tt> attributes. These
+can be accessed directly if one wants to use the full flexibility
+of the <tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> class.</p>
+<p>The data range bounds, <tt class="xref py py-attr docutils literal"><span class="pre">low</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">high</span></tt>,
+return 2-elements tuples containing the bounds for  for the two dimensions.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+<h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Data ranges</a><ul>
+<li><a class="reference internal" href="#interface">Interface</a></li>
+<li><a class="reference internal" href="#events">Events</a></li>
+<li><a class="reference internal" href="#list-of-chaco-data-ranges">List of Chaco data ranges</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/user_manual/basic_elements/data_ranges.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="mappers.html" title="Mappers"
+             >next</a></li>
+        <li class="right" >
+          <a href="data_sources.html" title="Data sources"
+             >previous</a> |</li>
+        <li><a href="../../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >User Manual</a> &raquo;</li>
+          <li><a href="../introduction.html" >Introduction</a> &raquo;</li>
+  
+    <li><a href="#">Data ranges</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, Enthought, Inc..
+      Last updated on Feb 29, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

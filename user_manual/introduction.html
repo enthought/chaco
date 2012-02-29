@@ -115,27 +115,20 @@ interactive tools that add graphical elements to a plot without
 having to modify the drawing logic.</p>
 </li>
 </ul>
-<p>The classes that define these basic concept are decribes in the next sections:</p>
+<p>The next sections describe in detail the basic building blocks of
+Chaco plots, and the classes that implement them:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="basic_elements/data_sources.html">Data sources</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#events">Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic_elements/data_sources.html#subclasses">Subclasses</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/data_sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/data_ranges.html">Data ranges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_elements/mappers.html">Mappers</a></li>
 </ul>
 </div>
-<div class="section" id="data-ranges">
-<h3>Data ranges<a class="headerlink" href="#data-ranges" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="mappers">
-<h3>Mappers<a class="headerlink" href="#mappers" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div>mappers</div></blockquote>
-</div>
-<div class="section" id="plots">
-<h3>Plots<a class="headerlink" href="#plots" title="Permalink to this headline">¶</a></h3>
+<p>TODO: to see how these elements collaborate to build an interactive plot,
+give complete low-level example of line plot with simple tool and
+describe the exchange of information</p>
+<div class="section" id="plots-and-layers">
+<h3>Plots and layers<a class="headerlink" href="#plots-and-layers" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>plots (plot types)</div></blockquote>
 <p>basic plot properties:</p>
@@ -149,15 +142,15 @@ value_mapper</p>
 value_range</p>
 <p>orientation</p>
 <p>Plot types described on separate page.</p>
-</div>
 <div class="section" id="layers">
-<h3>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h3>
+<h4>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div>underlays and overlays</div></blockquote>
 <dl class="docutils">
 <dt>DEFAULT_DRAWING_ORDER = [&#8220;background&#8221;, &#8220;image&#8221;, &#8220;underlay&#8221;, &#8220;plot&#8221;,</dt>
 <dd>&#8220;selection&#8221;, &#8220;border&#8221;, &#8220;annotation&#8221;, &#8220;overlay&#8221;]</dd>
 </dl>
+</div>
 </div>
 <div class="section" id="axes">
 <h3>Axes<a class="headerlink" href="#axes" title="Permalink to this headline">¶</a></h3>
@@ -219,10 +212,10 @@ plots multiple curves on the same element</li>
 <li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#what-is-chaco">What is Chaco?</a></li>
 <li><a class="reference internal" href="#basic-elements">Basic elements</a><ul>
-<li><a class="reference internal" href="#data-ranges">Data ranges</a></li>
-<li><a class="reference internal" href="#mappers">Mappers</a></li>
-<li><a class="reference internal" href="#plots">Plots</a></li>
+<li><a class="reference internal" href="#plots-and-layers">Plots and layers</a><ul>
 <li><a class="reference internal" href="#layers">Layers</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#axes">Axes</a></li>
 <li><a class="reference internal" href="#tools">Tools</a></li>
 </ul>
@@ -284,7 +277,7 @@ plots multiple curves on the same element</li>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Feb 28, 2012.
+      Last updated on Feb 29, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

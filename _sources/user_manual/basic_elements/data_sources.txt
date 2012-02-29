@@ -2,8 +2,12 @@ Data sources
 ============
 
 A data source is a wrapper object for the actual data that the plot will be
-handling.
-It provides methods for retrieving data, estimating a size of the dataset,
+handling. For the most part, a data source looks like an array of values,
+with an optional mask and metadata.
+
+The :ref:`data source interface <data_source_interface>`
+provides methods for retrieving data,
+estimating a size of the dataset,
 indications about the dimensionality of the data, a place for metadata
 (such as selections and annotations), and events that fire when the data gets
 changed.
@@ -17,6 +21,8 @@ There are two primary reasons for a data source class:
 In most cases, the standard :class:`~chaco.array_data_source.ArrayDataSource`
 will suffice.
 
+.. _data_source_interface:
+
 Interface
 ---------
 
@@ -25,60 +31,60 @@ The basic interface for data sources is defined in
 Here is a summary of the most important attributes and methods
 (see the docstrings of this class for more details):
 
-:attr:`~chaco.abstract_data_source.AbstractDataSource.value_dimension`
+    :attr:`~chaco.abstract_data_source.AbstractDataSource.value_dimension`
 
-  The dimensionality of the data value at each point. It is defined
-  as a :class:`DimensionTrait`, i.e., one of
-  "scalar", "point", "image", or "cube". For example,
-  a :class:`GridDataSource` represents data in a 2D array and thus its
-  :attr:`value_dimension` is "scalar".
+      The dimensionality of the data value at each point. It is defined
+      as a :class:`DimensionTrait`, i.e., one of
+      "scalar", "point", "image", or "cube". For example,
+      a :class:`GridDataSource` represents data in a 2D array and thus its
+      :attr:`value_dimension` is "scalar".
 
-:attr:`~chaco.abstract_data_source.AbstractDataSource.index_dimension`
+    :attr:`~chaco.abstract_data_source.AbstractDataSource.index_dimension`
 
-  The dimensionality of the data value at each point. It is defined
-  as a :class:`DimensionTrait`, i.e., one of
-  "scalar", "point", "image", or "cube". For example,
-  a :class:`GridDataSource` represents data in a 2D array and thus its
-  :attr:`index_dimension` is "image".
+      The dimensionality of the data value at each point. It is defined
+      as a :class:`DimensionTrait`, i.e., one of
+      "scalar", "point", "image", or "cube". For example,
+      a :class:`GridDataSource` represents data in a 2D array and thus its
+      :attr:`index_dimension` is "image".
 
-:attr:`~chaco.abstract_data_source.AbstractDataSource.metadata`
+    :attr:`~chaco.abstract_data_source.AbstractDataSource.metadata`
 
-  A dictionary that maps strings to arbitrary data. Usually, the mapped
-  data is a set of indices, as in the case of selections and annotations.
-  By default, :attr:`metadata` contains the keys *"selections"* (representing
-  indices that are currently selected by some tool)
-  and *"annotations"*, both initialized to an empty list.
+      A dictionary that maps strings to arbitrary data. Usually, the mapped
+      data is a set of indices, as in the case of selections and annotations.
+      By default, :attr:`metadata` contains the keys *"selections"* (representing
+      indices that are currently selected by some tool)
+      and *"annotations"*, both initialized to an empty list.
 
-:attr:`~chaco.abstract_data_source.AbstractDataSource.persist_data`
+    :attr:`~chaco.abstract_data_source.AbstractDataSource.persist_data`
 
-  If True (default), the data that this data source refers to is serialized
-  when the data source is.
+      If True (default), the data that this data source refers to is serialized
+      when the data source is.
 
-:meth:`~chaco.abstract_data_source.AbstractDataSource.get_data()`
+    :meth:`~chaco.abstract_data_source.AbstractDataSource.get_data()`
 
-  Returns a data array containing the data referred to by the data source.
-  Treat the returned array as read-only.
+      Returns a data array containing the data referred to by the data source.
+      Treat the returned array as read-only.
 
-:meth:`~chaco.abstract_data_source.AbstractDataSource.is_masked()`
+    :meth:`~chaco.abstract_data_source.AbstractDataSource.is_masked()`
 
-  Returns True if this data source's data uses a mask. In this case,
-  to retrieve the data, call ``get_data_mask()`` instead of ``get_data()``.
+      Returns True if this data source's data uses a mask. In this case,
+      to retrieve the data, call ``get_data_mask()`` instead of ``get_data()``.
 
-:meth:`~chaco.abstract_data_source.AbstractDataSource.get_data_mask()`
+    :meth:`~chaco.abstract_data_source.AbstractDataSource.get_data_mask()`
 
-  Returns the full, raw, source data array and a corresponding binary
-  mask array.  Treat both arrays as read-only.
+      Returns the full, raw, source data array and a corresponding binary
+      mask array.  Treat both arrays as read-only.
 
-:meth:`~chaco.abstract_data_source.AbstractDataSource.get_size()`
+    :meth:`~chaco.abstract_data_source.AbstractDataSource.get_size()`
 
-  Returns the size of the data.
+      Returns the size of the data.
 
-:meth:`~chaco.abstract_data_source.AbstractDataSource.get_bounds()`
+    :meth:`~chaco.abstract_data_source.AbstractDataSource.get_bounds()`
 
-  Returns a tuple (min, max) of the bounding values for the data source.
-  In the case of 2-D data, min and max are 2-D points that represent the
-  bounding corners of a rectangle enclosing the data set.
-  If data is the empty set, then the min and max vals are 0.0.
+      Returns a tuple (min, max) of the bounding values for the data source.
+      In the case of 2-D data, min and max are 2-D points that represent the
+      bounding corners of a rectangle enclosing the data set.
+      If data is the empty set, then the min and max vals are 0.0.
 
 Events
 ------
@@ -86,28 +92,28 @@ Events
 :class:`~chaco.abstract_data_source.AbstractDataSource` defines three events
 that can be used in Traits applications to react to changes in the data source:
 
-:attr:`~chaco.abstract_data_source.AbstractDataSource.data_changed`
+    :attr:`~chaco.abstract_data_source.AbstractDataSource.data_changed`
 
-  Fired when the data values change.
+      Fired when the data values change.
 
-  .. note::
+      .. note::
 
-     This majority of concrete data sources do not fire this event when
-     the data values change. Rather, the event is usually fired when new
-     data or a new mask is assigned through setter methods (see
-     notes below).
+         This majority of concrete data sources do not fire this event when
+         the data values change. Rather, the event is usually fired when new
+         data or a new mask is assigned through setter methods (see
+         notes below).
 
-:attr:`~chaco.abstract_data_source.AbstractDataSource.bounds_changed`
+    :attr:`~chaco.abstract_data_source.AbstractDataSource.bounds_changed`
 
-  Fired when the data bounds change.
+      Fired when the data bounds change.
 
-:attr:`~chaco.abstract_data_source.AbstractDataSource.metadata_changed`
-  Fired when the content of :attr:`metadata` changes (both the
-  :attr:`metadata` dictionary object or any of its items).
+    :attr:`~chaco.abstract_data_source.AbstractDataSource.metadata_changed`
+      Fired when the content of :attr:`metadata` changes (both the
+      :attr:`metadata` dictionary object or any of its items).
 
 
-Subclasses
-----------
+List of Chaco data sources
+--------------------------
 
 This is a list of all concrete implementations of data sources in Chaco:
 
