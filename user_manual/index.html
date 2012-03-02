@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>User Manual &mdash; chaco v4.1.1 documentation</title>
+    <title>User guide &mdash; chaco v4.1.1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -40,7 +40,7 @@
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
   
-    <li><a href="#">User Manual</a></li>
+    <li><a href="#">User guide</a></li>
   
 
       </ul>
@@ -51,37 +51,130 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="user-manual">
-<h1>User Manual<a class="headerlink" href="#user-manual" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="user-guide">
+<h1>User guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="introduction.html#what-is-chaco">What is Chaco?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#basic-elements">Basic elements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#plotting-with-chaco">Plotting with Chaco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#basic-elements">Basic elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_elements/data_sources.html">Data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_elements/data_ranges.html">Data ranges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_elements/mappers.html">Mappers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_elements/plot_renderers.html">Plot renderers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#axes">Axes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#tools">Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#plotting-with-chaco">Plotting with Chaco</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#the-plot-class">The Plot class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#chaco-shell">chaco.shell</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="introduction.html#low-level-chaco-plotting">Low-level Chaco plotting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#embedding-chaco-plots">Embedding Chaco plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#embedding-chaco-plots">Embedding Chaco plots</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#traits-ui">Traits UI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#wxpython">WxPython</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#qt-pyqt">Qt/PyQt</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="plot_types.html">Plot Types</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="plot_types.html#x-y-plot-types">X-Y Plot Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_types.html#image-and-2d-plots">Image and 2D Plots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_types.html#other-plot-types">Other Plot Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#x-y-plot-types">X-Y Plot Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#line-plot">Line Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#scatter-plot">Scatter Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#colormapped-scatter-plot">Colormapped Scatter Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#variable-size-scatter-plot">Variable Size Scatter Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#candle-plot">Candle Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#errorbar-plot">Errorbar Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#filled-line-plot">Filled Line Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#multi-line-plot">Multi-line Plot</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#image-and-2d-plots">Image and 2D Plots</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#image-plots">Image Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#colormapped-scalar-plot">Colormapped Scalar Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#contour-plots">Contour Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#polygon-plot">Polygon Plot</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="plot_types.html#other-plot-types">Other Plot Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#bar-plot">Bar Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#quiver-plot">Quiver Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#polar-plot">Polar Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_types.html#jitter-plot">Jitter Plot</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="containers.html">Containers and Layout</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="containers.html#chaco-containers">Chaco containers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="containers.html#sizing-rendering-events">Sizing, rendering, events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="containers.html#chaco-containers">Chaco containers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="containers.html#hplotcontainer-and-vplotcontainer">HPlotContainer and VPlotContainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="containers.html#gridplotcontainer">GridPlotContainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="containers.html#overlayplotcontainer">OverlayPlotContainer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="containers.html#sizing-rendering-events">Sizing, rendering, events</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="containers.html#sizing">Sizing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="containers.html#rendering-order">Rendering order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="containers.html#dispatching-events">Dispatching events</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools and Overlays</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#interaction-tools">Interaction Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#inspector-type-tools">Inspector-type Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#selection-tools">Selection Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#drawing-tools">Drawing Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#core-overlays">Core Overlays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#annotation-overlays">Annotation Overlays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#chaco-enable-and-event-dispatch">Chaco, Enable, and Event Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#a-basic-tool">A Basic Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#a-basic-overlay">A Basic Overlay</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#interaction-tools">Interaction Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#pantool">PanTool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#zoomtool">ZoomTool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#rectzoom">RectZoom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#dragzoom">DragZoom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#legendtool">LegendTool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#datalabeltool">DataLabelTool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#movetool">MoveTool</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#inspector-type-tools">Inspector-type Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#dataprinter">DataPrinter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#lineinspector">LineInspector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#scatterinspector">ScatterInspector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cursortool">CursorTool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#highlighttool">HighlightTool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#imageinspectortool">ImageInspectorTool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#traitstool">TraitsTool</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#selection-tools">Selection Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#rangeselection">RangeSelection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#lassoselection">LassoSelection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#selecttool">SelectTool</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#drawing-tools">Drawing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#drawpointstool">DrawPointsTool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#linesegmenttool">LineSegmentTool</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#core-overlays">Core Overlays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#axis">Axis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#grid">Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#legend">Legend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#annotation-overlays">Annotation Overlays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#pointmarker">PointMarker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#databox">DataBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#textboxoverlay">TextBoxOverlay</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#tooltip">ToolTip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#plotlabel">PlotLabel</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="common_patterns.html">Common Usages</a><ul>
@@ -201,14 +294,14 @@
              >previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
   
-    <li><a href="#">User Manual</a></li>
+    <li><a href="#">User guide</a></li>
   
 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Feb 29, 2012.
+      Last updated on Mar 02, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

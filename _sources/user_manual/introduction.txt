@@ -85,45 +85,14 @@ Chaco plots, and the classes that implement them:
   basic_elements/data_sources.rst
   basic_elements/data_ranges.rst
   basic_elements/mappers.rst
+  basic_elements/plot_renderers.rst
+
 
 
 TODO: to see how these elements collaborate to build an interactive plot,
 give complete low-level example of line plot with simple tool and
 describe the exchange of information
 
-
-
-Plots and layers
-================
-
- plots (plot types)
-
-basic plot properties:
-
-index, value
-index_mapper
-value_mapper
-
-origin
-
-bgcolor
-
-resizable
-
-index_range
-value_range
-
-orientation
-
-Plot types described on separate page.
-
-Layers
-------
-
- underlays and overlays
-
-DEFAULT_DRAWING_ORDER = ["background", "image", "underlay", "plot",
- "selection", "border", "annotation", "overlay"]
 
 Axes
 ====
@@ -133,7 +102,7 @@ Axes
 Tools
 =====
 
- tools
+ tools, overlays
 
 
 ===================
@@ -142,6 +111,8 @@ Plotting with Chaco
 
 The Plot class
 ==============
+
+Plot and PlotData
 
 chaco.shell
 ===========

@@ -133,5 +133,5 @@ List of Chaco data mappers
 
   .. warning::
 
-    The implementation of this mapper is broken.
+    The implementation of this mapper is under construction.
 

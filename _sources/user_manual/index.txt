@@ -1,9 +1,9 @@
 ===========
-User Manual
+User guide
 ===========
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
     introduction.rst
     plot_types.rst

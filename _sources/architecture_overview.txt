@@ -45,6 +45,8 @@ The Chaco toolkit is defined by a few core architectural ideas:
   behavior.
 
 
+.. _chaco_enable_kiva:
+
 The Relationship Between Chaco, Enable, and Kiva
 ================================================
 
