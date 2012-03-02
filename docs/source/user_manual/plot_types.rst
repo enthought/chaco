@@ -1,3 +1,5 @@
+.. _plot_types:
+
 **********
 Plot Types
 **********
@@ -11,6 +13,8 @@ directory.
 For more complete examples, see also the :ref:`annotated examples <examples>`
 page.
 
+.. _xy_plots:
+
 ================================================================
 X-Y Plot Types
 ================================================================
@@ -18,15 +22,6 @@ X-Y Plot Types
 These plots display information in a two-axis coordinate system.
 Unless otherwise stated, they are subclasses of
 :class:`~chaco.base_xy_plot.BaseXYPlot`.
-
-
-TODO: explain that you need to provide index, value, and mappers
-
-TODO: grids
-
-TODO: hittest
-
-TODO: selected
 
 
 .. _line_plot:
@@ -351,6 +346,8 @@ parameters:
   :width: 500px
 
 
+.. _2d_plots
+
 ================================================================
 Image and 2D Plots
 ================================================================
@@ -457,6 +454,8 @@ This creates the plot:
 .. image:: images/user_guide/cmap_image_plot.png
   :width: 500px
 
+
+.. _contour_plot:
 
 Contour Plots
 =============
@@ -710,3 +709,6 @@ Useful parameters are:
 
 .. image:: images/user_guide/jitter_plot.png
   :width: 500px
+
+
+TODO: add description of color bar class
