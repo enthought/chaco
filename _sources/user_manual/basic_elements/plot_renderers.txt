@@ -25,18 +25,19 @@ for :ref:`X-vs-Y plots <xy_plots>`, and
 :ref:`contour plots <contour_plot>`).
 
 The base interface inherits from a deep hierarchy of classes generating
-from the ``enable`` package, starting with
+from the :mod:`enable` package, starting with
 :class:`enable.coordinate_box.CoordinateBox` (representing a box in screen
 space) and :class:`enable.interactor.Interactor` (which allows plot
 components to react to mouse and keyboard events), and down through
 :class:`enable.component.Component` and :class:`chaco.plot_component.PlotComponent`
-(follow :ref:`this link for a description of the relationship between Chaco and enable) <chaco_enable_kiva>`).
+(follow :ref:`this link for a description of the relationship between Chaco and enable <chaco_enable_kiva>`).
 The class were most of the functionality is defined is
 :class:`enable.component.Component`.
 
 Here we give a summary of all the important properties exposed in
 :class:`~chaco.abstract_plot_renderer.AbstractPlotRenderer`, without
-worrying too much about their origin. Also, to avoid unnecessary cluttering
+worrying too much about their origin in the hierarchy.
+Also, to avoid unnecessary cluttering
 of the page, attributes and methods that are of secondary importance are not
 listed.
 Please refer to the API documentation for more details.
@@ -45,7 +46,7 @@ Please refer to the API documentation for more details.
 Box properties
 --------------
 
-All plot renderers are ``enable`` graphical components, and thus correspond
+All plot renderers are :mod:`enable` graphical components, and thus correspond
 to a rectangular area in screen space. The renderer keeps track of two
 area: an inner box that only contains the plot, and an outer box
 that includes the padding and border area.
@@ -136,7 +137,7 @@ these attributes:
 Aspect properties
 -----------------
 
-These attributes control the aspect (e.g. color) of padding, backroung,
+These attributes control the aspect (e.g. color) of padding, background,
 and borders:
 
     :attr:`bgcolor`
@@ -167,6 +168,8 @@ and borders:
       Color of the border.
       The color can be specified as a string or as and RGB or RGBa tuple.
 
+
+.. _plot_layers:
 
 Layers
 ------
@@ -256,6 +259,115 @@ Others
 X-Y Plots interface
 ===================
 
+The class :class:`chaco.base_xy_plot.BaseXYPlot` defines a more concrete
+interface for X-vs-Y plots. First of all, it handles data sources and
+data mappers to convert real data into screen coordinates. Second,
+it allows specifying axes, labels and background grids for the plot.
+
+Data-related traits
+-------------------
+
+X-Y plots need two sources of data for the X and Y coordinates, and
+two mappers to map the data coordinates to screen space. The
+data sources are stored in the attributes
+:attr:`~chaco.base_xy_plot.BaseXYPlot.index` and
+:attr:`~chaco.base_xy_plot.BaseXYPlot.value`, and the
+corresponding mappers in
+:attr:`~chaco.base_xy_plot.BaseXYPlot.index_mapper` and
+:attr:`~chaco.base_xy_plot.BaseXYPlot.value_mapper`.
+
+'Index' and 'value' correspond to either the horizontal 'X' coordinates
+or the vertical 'Y' coordinates depending on the orientation of the
+plot: for :attr:`~chaco.base_xy_plot.BaseXYPlot.orientation` equal to
+'h' (for horizontal, default), indices are on the X-axis, and values
+on the Y-axis. The opposite is true when
+:attr:`~chaco.base_xy_plot.BaseXYPlot.orientation` is 'v'. The
+convenience properties :attr:`~chaco.base_xy_plot.BaseXYPlot.x_mapper`
+and :attr:`~chaco.base_xy_plot.BaseXYPlot.y_mapper` allow accessing
+the mappers for the two axes in an orientation-independent way.
+
+Finally, the properties
+:attr:`~chaco.base_xy_plot.BaseXYPlot.index_range` and
+:attr:`~chaco.base_xy_plot.BaseXYPlot.value_range` give direct access to
+the data ranges stored in the index and value mappers.
+
+Axis, labels, and grids
+-----------------------
+
+:class:`~chaco.base_xy_plot.BaseXYPlot` defines a few properties that are
+shortcuts to find axis and grid objects in the
+:def:`underlays and overlays layers <plot_layers>` of the plot:
+
+    :attr:`~chaco.base_xy_plot.BaseXYPlot.hgrid`,
+    :attr:`~chaco.base_xy_plot.BaseXYPlot.vgrid`
+
+      Look into the underlays and overlays layers (in this order) for a
+      :class:`PlotGrid` object of horizontals / vertical orientation and return
+      it. Return None if none is found.
+
+    :attr:`~chaco.base_xy_plot.BaseXYPlot.x_axis`,
+    :attr:`~chaco.base_xy_plot.BaseXYPlot.y_axis`
+
+      Look into the underlays and overlays layers (in this order) for a
+      :class:`PlotAxis` object positioned to the bottom or top, or to the
+      left or right of plot, respectively. Return the axis, or None if
+      none is found.
+
+    :attr:`~chaco.base_xy_plot.BaseXYPlot.labels`
+
+      Return a list of all :class:`PlotLabel` objects in the
+      overlays and underlays layers.
+
+TODO: add links to axis and grid documentation
+
+Hittest
+-------
+
+:class:`~chaco.base_xy_plot.BaseXYPlot` also provides support for "hit tests",
+i.e., for finding the data point or plot line closest to a given screen
+coordinate. This is typically used to implement interactive tools, for example
+to select a plot point with a mouse click.
+
+The main functionality is implemented in the method
+:attr:`~chaco.base_xy_plot.BaseXYPlot.hittest(screen_pt, threshold=7.0, return_distance=False)`,
+which accepts screen coordinates ``(x,y)`` as input argument
+:attr:`screen_pt` and returns either 1)
+screen coordinates of the closest point on the plot, or 2) the start
+and end coordinates of the closest plot line segment, as
+a tuple ``((x1,y1), (x2,y2))``. Which of the two behaviors is active
+is controlled
+by the attribute :attr:`~chaco.base_xy_plot.BaseXYPlot.hittest_type`,
+which is one of 'point' (default), or 'line'.
+If the closest point or line is further than :attr:`threshold` pixels
+away, the methods returns None.
+
+Alternatively, users may call the methods :attr:`get_closest_point`
+and :attr:`get_closest_line`.
+
+Others
+------
+
+Two more attributes are worth mentioning:
+
+:attr:`~chaco.base_xy_plot.BaseXYPlot.bgcolor`
+
+  This is inherited from the AbstractPlotRenderer interface, but is now
+  set to 'transparent` by default.
+
+:attr:`~chaco.base_xy_plot.BaseXYPlot.use_downsampling`
+
+  If this attribute is True, the plot use downsampling for faster display
+  (default is False). In other words, the number of display points depends
+  on the plot size and range, and not on the total number of data points
+  available.
+
+  .. note::
+
+    At the moment, only :class:`LinePlot` defines a downsampling function,
+    while other plots raise a :class:`NotImplementedError` when this
+    feature is activated.
+
+
 2D Plots interface
 ==================
 
@@ -276,10 +388,6 @@ index_mapper
 value_mapper
 
 origin
-
-bgcolor
-
-resizable
 
 index_range
 value_range
