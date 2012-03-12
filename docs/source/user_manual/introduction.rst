@@ -88,6 +88,8 @@ Chaco plots, and the classes that implement them:
   basic_elements/plot_renderers.rst
 
 
+TODO: find out how the selection features are organized
+
 
 TODO: to see how these elements collaborate to build an interactive plot,
 give complete low-level example of line plot with simple tool and

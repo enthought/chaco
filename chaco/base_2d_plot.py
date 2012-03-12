@@ -31,7 +31,7 @@ class Base2DPlot(AbstractPlotRenderer):
     # Screen mapper for 2-D structured (gridded) index data.
     index_mapper = Instance(GridMapper)
 
-    # Convenience property for accessing the datarange of the mapper.
+    # Convenience property for accessing the data range of the mapper.
     index_range = Property
 
     # Convenience property for accessing the plots labels.

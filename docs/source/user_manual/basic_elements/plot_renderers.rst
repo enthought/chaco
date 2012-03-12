@@ -256,13 +256,15 @@ Others
       ipython shell.
 
 
+.. _xy_plots:
+
 X-Y Plots interface
 ===================
 
 The class :class:`chaco.base_xy_plot.BaseXYPlot` defines a more concrete
 interface for X-vs-Y plots. First of all, it handles data sources and
 data mappers to convert real data into screen coordinates. Second,
-it allows specifying axes, labels and background grids for the plot.
+it defines shortcuts for plot axes, labels and background grids.
 
 Data-related traits
 -------------------
@@ -329,7 +331,7 @@ coordinate. This is typically used to implement interactive tools, for example
 to select a plot point with a mouse click.
 
 The main functionality is implemented in the method
-:attr:`~chaco.base_xy_plot.BaseXYPlot.hittest(screen_pt, threshold=7.0, return_distance=False)`,
+:attr:`hittest(screen_pt, threshold=7.0, return_distance=False)`,
 which accepts screen coordinates ``(x,y)`` as input argument
 :attr:`screen_pt` and returns either 1)
 screen coordinates of the closest point on the plot, or 2) the start
@@ -371,25 +373,46 @@ Two more attributes are worth mentioning:
 2D Plots interface
 ==================
 
-TODO: explain that you need to provide index, value, and mappers
+The class :class:`chaco.base_2d_plot.Base2DPlot` is the interface for
+plots that display data defined on a 2D grid, like for example
+image and contour plots. Just like its
+companion interface, :ref:`BaseXYPlot <xy_plots>`,
+it handles data sources and
+data mappers, along with convenient shortcuts to find axes, labels and grids.
 
-TODO: grids
+Unlike other plot rendered, 2D plots draw on the
+:ref:`'image' layer <plot_layers>`, i.e., above any underlay element.
 
-TODO: hittest
+Data-related traits
+-------------------
 
-TODO: selected
+2D plots need two sources of data: one for the coordinates of the 2D grid
+on which data is displayed, stored in the attribute
+:attr:`~chaco.base_2d_plot.Base2DPlot.index` (a subclass
+of :class:`~chaco.grid_data_source.GridDataSource`); and one for the
+values of the data at each point of the grid,
+:attr:`~chaco.base_2d_plot.Base2DPlot.value` (a subclass
+of :class:`~chaco.image_data.ImageData`).
+The index data source also needs a 2D mapper,
+:attr:`~chaco.base_2d_plot.Base2DPlot.index_mapper`,
+to map data coordinates to the screen.
 
- plots (plot types)
+The orientation on screen is set by
+:attr:`~chaco.base_2d_plot.Base2DPlot.orientation` (either 'h' -- the
+default -- or 'v'), which controls which of the two coordinates
+defined in :attr:`~chaco.base_2d_plot.Base2DPlot.index` is mapped to the
+X axis. It is possible to access a mapper for the coordinates corresponding
+to the individual screen coordinates independently of orientation
+using the properties
+:attr:`~chaco.base_2d_plot.Base2DPlot.x_mapper`
+and :attr:`~chaco.base_2d_plot.Base2DPlot.y_mapper`.
 
-basic plot properties:
+Finally, :attr:`~chaco.base_2d_plot.Base2DPlot.index_range` is a shortcut
+to the 2D range of the grid data.
 
-index, value
-index_mapper
-value_mapper
+Others
+------
 
-origin
-
-index_range
-value_range
-
-orientation
+The attribute :attr:`~chaco.base_2d_plot.Base2DPlot.alpha` defines the
+global transparency value for the whole plot.
+It ranges from 0.0 for transparent to 1.0 (default) for full intensity.
