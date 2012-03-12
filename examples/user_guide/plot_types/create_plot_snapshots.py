@@ -662,7 +662,7 @@ all_examples = {
 
 
 if __name__ == '__main__':
-    name = 'multiline'
+    name = 'line'
 
     factory_func = all_examples[name]
     plot = factory_func()
