@@ -76,7 +76,7 @@ basic ideas on which Chaco is based:
   having to modify the drawing logic.
 
 
-The next sections describe in detail the basic building blocks of
+These pages describe in detail the basic building blocks of
 Chaco plots, and the classes that implement them:
 
 .. toctree::
@@ -87,24 +87,20 @@ Chaco plots, and the classes that implement them:
   basic_elements/mappers.rst
   basic_elements/plot_renderers.rst
   plot_types.rst
+  basic_elements/overlays.rst
 
 
 TODO: find out how the selection features are organized
-
 
 TODO: to see how these elements collaborate to build an interactive plot,
 give complete low-level example of line plot with simple tool and
 describe the exchange of information
 
 
-Axes
-====
-
- axes
-
 Tools
 =====
 
+ before axes (axes are overlays)
  tools, overlays
 
 
