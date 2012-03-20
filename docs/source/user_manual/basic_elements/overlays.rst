@@ -75,15 +75,19 @@ This attributes control the appearance of the axis:
   Finally, :attr:`title_spacing` is the space between the axis line and the
   title (either the number of pixels or 'auto', default).
 
-:attr:`~chaco.axis.PlotAxis.tick_interval`,
-:attr:`~chaco.axis.PlotAxis.tick_generator`,
-
 
 :attr:`~chaco.axis.PlotAxis.tick_weight`,
 :attr:`~chaco.axis.PlotAxis.tick_color`,
 :attr:`~chaco.axis.PlotAxis.tick_in`,
 :attr:`~chaco.axis.PlotAxis.tick_out`,
 :attr:`~chaco.axis.PlotAxis.tick_visible`,
+
+  These attributes allow to fine-tune the aspect of the ticks on the axis.
+  If :attr:`tick_visible` is True, ticks are represented as lines of
+  color :attr:`tick_color` (default is black) and thickness
+  :attr:`tick_weight` (in pixels, default is 1). Each line extends into the
+  plot area by :attr:`tick_in` pixels and into the label area by
+  :attr:`tick_out` pixels (default is 5).
 
 
 :attr:`~chaco.axis.PlotAxis.tick_label_font`
@@ -94,6 +98,12 @@ This attributes control the appearance of the axis:
 :attr:`~chaco.axis.PlotAxis.tick_label_offset`
 :attr:`~chaco.axis.PlotAxis.tick_label_position`
 :attr:`~chaco.axis.PlotAxis.tick_label_formatter`
+
+
+:attr:`~chaco.axis.PlotAxis.tick_interval`,
+:attr:`~chaco.axis.PlotAxis.tick_generator`,
+
+
 
 :attr:`~chaco.axis.PlotAxis.`
 :attr:`~chaco.axis.PlotAxis.`
