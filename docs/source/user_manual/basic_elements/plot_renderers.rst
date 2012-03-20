@@ -1,3 +1,5 @@
+.. _plot_renderers:
+
 ==============
 Plot renderers
 ==============
@@ -369,6 +371,7 @@ Two more attributes are worth mentioning:
     while other plots raise a :class:`NotImplementedError` when this
     feature is activated.
 
+.. _twod_plots:
 
 2D Plots interface
 ==================

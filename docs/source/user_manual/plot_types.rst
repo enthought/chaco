@@ -1,13 +1,20 @@
 .. _plot_types:
 
 **********
-Plot Types
+Plot types
 **********
 
-This section gives an overview of individual plot classes in Chaco.
+This section gives an overview of individual plot classes in Chaco. It
+is divided in three parts: the first part lists all plot classes
+implementing the :ref:`X-Y plots <xy_plots>` interface, the second
+all plot classes implementing the :ref:`2D plots <twod_plots>`
+interface, and finally a part collecting all plot types that do not
+fall in either category. See the
+:ref:`section on plot renderers <plot_renderers>` for a detailed description
+of the methods and attributes that are common to all plots.
 
 The code to generate the figures in this section can be found in
-the directory ``tutorials/user_guide/plot_types/`` in the examples
+the path ``tutorials/user_guide/plot_types/`` in the examples
 directory.
 
 For more complete examples, see also the :ref:`annotated examples <examples>`
@@ -19,9 +26,11 @@ page.
 X-Y Plot Types
 ================================================================
 
-These plots display information in a two-axis coordinate system.
-Unless otherwise stated, they are subclasses of
+These plots display information in a two-axis coordinate system
+and are subclasses of
 :class:`~chaco.base_xy_plot.BaseXYPlot`.
+
+The common interface for X-Y plots is described in :ref:`xy_plots`.
 
 
 .. _line_plot:
@@ -355,9 +364,9 @@ Image and 2D Plots
 
 These plots display information as a two-dimensional image.
 Unless otherwise stated, they are subclasses of
-:class:`~chaco.base_2d_plot.Base2DPlot`.
+:ref:`:class:`~chaco.base_2d_plot.Base2DPlot`.
 
-TODO: explain index, value, mappers
+The common interface for 2D plots is described in :ref:`twod_plots`.
 
 
 .. _image_plot:
@@ -569,6 +578,10 @@ these parameters:
 ================================================================
 Other Plot Types
 ================================================================
+
+This section collects all plots that do not fall in the previous
+two categories.
+
 
 Bar Plot
 ========
