@@ -6,7 +6,7 @@ from traits.api import Any, Bool, Float, Instance, Property, Tuple
 
 # Local relative imports
 from image_plot import ImagePlot
-from color_mapper import ColorMapper
+from abstract_colormap import AbstractColormap
 
 
 class CMapImagePlot(ImagePlot):
@@ -21,7 +21,7 @@ class CMapImagePlot(ImagePlot):
     #------------------------------------------------------------------------
 
     # Maps from scalar data values in self.data.value to color tuples
-    value_mapper = Instance(ColorMapper)
+    value_mapper = Instance(AbstractColormap)
 
     # Convenience property for value_mapper as color_mapper
     color_mapper = Property
@@ -36,6 +36,9 @@ class CMapImagePlot(ImagePlot):
     #fade_background = Tuple((255,255,255))
     # RGB color to use to fade out unselected points.
     fade_background = Tuple((0,0,0))
+    
+    # whether to pre-compute the full colormapped image
+    cache_full_map = Bool(True)
 
     #------------------------------------------------------------------------
     # Private Traits
@@ -93,32 +96,44 @@ class CMapImagePlot(ImagePlot):
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
+    
+    def _cmap_values(self, data, selection_masks=None):
+        """ Maps the data to RGB(A) with optional selection masks overlayed
+        
+        """
+        mapped_image = self.value_mapper.map_screen(data) * 255
+        if selection_masks is not None:
+            # construct a composite mask
+            mask = zeros(mapped_image.shape[:2], dtype=bool)
+            for m in selection_masks:
+                mask = mask | m
+            invmask = invert(mask)
+            # do a cheap alpha blend with our specified color
+            mapped_image[invmask,0:3] = \
+                self.fade_alpha*(mapped_image[invmask,0:3] -
+                                    self.fade_background) + self.fade_background
+        return mapped_image.astype("UInt8")
+        
 
     def _compute_cached_image(self, selection_masks=None):
         """ Updates the cached image.
         """
-        if not self._mapped_image_cache_valid:
-            cached_mapped_image = \
-                self.value_mapper.map_screen(self.value.data) * 255
-            if selection_masks is not None:
-                # construct a composite mask
-                mask = zeros(cached_mapped_image.shape[:2], dtype=bool)
-                for m in selection_masks:
-                    mask = mask | m
-                invmask = invert(mask)
-                # do a cheap alpha blend with our specified color
-                cached_mapped_image[invmask,0:3] = \
-                    self.fade_alpha*(cached_mapped_image[invmask,0:3] -
-                                     self.fade_background) + self.fade_background
-            self._cached_mapped_image = cached_mapped_image
-            self._mapped_image_cache_valid = True
+        if self.cache_full_map:
+            if not self._mapped_image_cache_valid:
+                self._cached_mapped_image = self._cmap_values(self.value.data,
+                    selection_masks)
+                self._mapped_image_cache_valid = True
 
-        mapped_value = self._cached_mapped_image
-        ImagePlot._compute_cached_image(self, mapped_value.astype("UInt8"))
+            mapped_value = self._cached_mapped_image
+            ImagePlot._compute_cached_image(self, mapped_value)
+        else:
+            ImagePlot._compute_cached_image(self, self.value.data, mapper=lambda data:
+                self._cmap_values(data))
+            
 
     def _update_value_mapper(self):
         self._mapped_image_cache_valid = False
-        self.invalidate_draw()
+        self.request_redraw()
 
     def _update_selections(self):
         self._mapped_image_cache_valid = False
@@ -165,4 +180,8 @@ class CMapImagePlot(ImagePlot):
         super(CMapImagePlot, self)._index_data_changed_fired()
         self._mapped_image_cache_valid = False
         return
+    
+    def _cache_full_map_changed(self):
+        self._mapped_image_cache_valid = False
+        
 

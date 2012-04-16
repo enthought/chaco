@@ -7,7 +7,7 @@ from __future__ import with_statement
 from math import ceil, floor, pi
 
 # Enthought library imports.
-from traits.api import Bool, Either, Enum, Instance, \
+from traits.api import Bool, Either, Enum, Instance, Callable, \
                                  List, Range, Trait, Tuple
 from kiva.agg import GraphicsContextArray
 
@@ -28,6 +28,11 @@ class ImagePlot(Base2DPlot):
 
     # The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
+    
+    # An optional downsampling function applied to data before caching.
+    # The callable should expect an array and the screen bounds of image plot
+    # as arguments
+    downsample = Either(Callable, None)
 
     #------------------------------------------------------------------------
     # Private traits
@@ -115,12 +120,17 @@ class ImagePlot(Base2DPlot):
     # Private methods
     #------------------------------------------------------------------------
 
-    def _compute_cached_image(self, data=None):
+    def _compute_cached_image(self, data=None, mapper=None):
         """ Computes the correct sub-image coordinates and renders an image
         into self._cached_image.
 
         The parameter *data* is for subclasses that might not store an RGB(A)
         image as the value, but need to compute one to display (colormaps, etc.).
+        
+        The parameter *mapper* is also for subclasses that might not store an
+        RGB(A) image as their value, and gives an opportunity to produce the
+        values only for the visible region, rather than for the whole plot,
+        at the expense of more frequent computation.
         """
 
         if data == None:
@@ -159,6 +169,12 @@ class ImagePlot(Base2DPlot):
 
             # Since data is row-major, j1 and j2 go first
             data = data[j1:j2, i1:i2]
+        
+        if self.downsample is not None:
+            data = self.downsample(data, self.bounds)
+        
+        if mapper is not None:
+            data = mapper(data)
 
         # Furthermore, the data presented to the GraphicsContextArray needs to
         # be contiguous.  If it is not, we need to make a copy.
@@ -310,3 +326,8 @@ class ImagePlot(Base2DPlot):
     def _value_data_changed_fired(self):
         self._image_cache_valid = False
         self.request_redraw()
+    
+    def _downsample_changed(self):
+        self._image_cache_valid = False
+        self.request_redraw()
+        
