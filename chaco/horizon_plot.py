@@ -28,7 +28,11 @@ class HorizonPlot(BaseXYPlot):
     bands = DelegatesTo('value_mapper')
     color_mapper = Instance(ColorMapper)
 
-    mirror = Bool(True)
+    mirror = Bool(False)
+
+    # FIXME There should be a way to automatically detect whether the data has
+    # negative bands
+    negative_bands = Bool(True)
 
     # Override parent traits
 
@@ -36,7 +40,10 @@ class HorizonPlot(BaseXYPlot):
 
     def _color_mapper_changed(self, new):
         # change the number of steps to match the number of bands
-        new.steps = self.bands*2+1
+        if not self.negative_bands:
+            new.steps = self.bands 
+        else:
+            new.steps = self.bands*2+1
 
     def _gather_points(self):
         """ Collects the data points that are within the bounds of the plot and
@@ -77,19 +84,29 @@ class HorizonPlot(BaseXYPlot):
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             # draw positive bands
             inc = -1 * array([0, y_plus_height])
-            for i, col in enumerate(bands[self.bands+1:]):
+            if self.negative_bands: render_bands = bands[self.bands+1:]
+            else: render_bands = bands
+            for i, col in enumerate(render_bands):
                 self._render_fill(gc, col, points+i*inc, ox, oy)
 
             # draw negative bands
-            if self.mirror: 
-                points[:,1] = oy - points[:,1]
-                zeroy = oy
-            else: 
-                points[:,1] += y_plus_height
-                inc *= -1
-                zeroy = int(yhigh) + 2
-            for i, col in enumerate(bands[self.bands-1::-1]):
-                self._render_fill(gc, col, points+i*inc, ox, zeroy)
+            if self.negative_bands:
+                if self.mirror: 
+                    points[:,1] = oy - points[:,1]
+                    zeroy = oy
+                else: 
+                    points[:,1] += y_plus_height
+                    inc *= -1
+                    zeroy = int(yhigh) + 2
+                for i, col in enumerate(bands[self.bands-1::-1]):
+                    self._render_fill(gc, col, points+i*inc, ox, zeroy)
+
+            gc.set_stroke_color((.75, .75, .75))
+            gc.set_line_width(2)
+            gc.begin_path()
+            gc.move_to(self.x, self.y)
+            gc.line_to(self.x+self.width, self.y)
+            gc.stroke_path()
 
     def _render_fill(self, gc, face_col, points, ox, oy):
         gc.set_fill_color(face_col)
