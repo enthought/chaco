@@ -41,7 +41,7 @@ class HorizonPlot(BaseXYPlot):
     def _color_mapper_changed(self, new):
         # change the number of steps to match the number of bands
         if not self.negative_bands:
-            new.steps = self.bands 
+            new.steps = self.bands+1
         else:
             new.steps = self.bands*2+1
 
@@ -85,7 +85,7 @@ class HorizonPlot(BaseXYPlot):
             # draw positive bands
             inc = -1 * array([0, y_plus_height])
             if self.negative_bands: render_bands = bands[self.bands+1:]
-            else: render_bands = bands
+            else: render_bands = bands[1:]
             for i, col in enumerate(render_bands):
                 self._render_fill(gc, col, points+i*inc, ox, oy)
 
