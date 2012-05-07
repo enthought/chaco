@@ -257,8 +257,8 @@ class ArrayDataSource(AbstractDataSource):
                     # label-ish data sources.
                     self._cached_bounds = (0.0, 0.0)
 
-            self._cached_bounds = (data[self._min_index],
-                               data[self._max_index])
+            self._cached_bounds = (data.view(ndarray)[self._min_index],
+                               data.view(ndarray)[self._max_index])
         return
 
     #------------------------------------------------------------------------
