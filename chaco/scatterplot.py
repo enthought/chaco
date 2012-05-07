@@ -11,7 +11,8 @@ from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, 
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
         CustomMarker, MarkerNameDict, MarkerTrait
 from kiva.constants import STROKE
-from traits.api import Any, Array, Bool, Float, Int, Trait, Callable
+from traits.api import Any, Array, Bool, Float, Trait, Callable, Property, \
+        Tuple, cached_property
 from traitsui.api import View, VGroup, Item
 
 # Local relative imports
@@ -180,6 +181,17 @@ class ScatterPlot(BaseXYPlot):
 
     # The color of the outline to draw around the marker.
     outline_color = black_color_trait
+
+    # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+    # It has the same RGB values as color_, and its alpha value is the alpha
+    # value of self.color multiplied by self.alpha. 
+    effective_color = Property(Tuple, depends_on=['color', 'alpha'])
+    
+    # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
+    # It has the same RGB values as outline_color_, and its alpha value is the
+    # alpha value of self.outline_color multiplied by self.alpha.   
+    effective_outline_color = Property(Tuple, depends_on=['outline_color', 'alpha'])
+
 
     # Traits UI View for customizing the plot.
     traits_view = ScatterPlotView()
@@ -457,8 +469,9 @@ class ScatterPlot(BaseXYPlot):
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
         self.render_markers_func(gc, points, self.marker, self.marker_size,
-                       self.color_, self.line_width, self.outline_color_,
-                       self.custom_symbol)
+                                 self.effective_color, self.line_width,
+                                 self.effective_outline_color,
+                                 self.custom_symbol)
 
         if self.show_selection and self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
             sel_pts = self.map_screen(self._cached_selected_pts)
@@ -483,8 +496,6 @@ class ScatterPlot(BaseXYPlot):
     #------------------------------------------------------------------------
 
     def _alpha_changed(self):
-        self.color_ = self.color_[0:3] + (self.alpha,)
-        self.outline_color_ = self.outline_color_[0:3] + (self.alpha,)
         self.invalidate_draw()
         self.request_redraw()
 
@@ -513,5 +524,26 @@ class ScatterPlot(BaseXYPlot):
         self.invalidate_draw()
         self.request_redraw()
 
+    #------------------------------------------------------------------------
+    # Properties
+    #------------------------------------------------------------------------
+
+    @cached_property
+    def _get_effective_color(self):
+        if len(self.color_) == 4:
+            edge_alpha = self.color_[-1]
+        else:
+            edge_alpha = 1.0
+        c = self.color_[:3] + (edge_alpha * self.alpha,)
+        return c
+
+    @cached_property
+    def _get_effective_outline_color(self):
+        if len(self.outline_color_) == 4:
+            edge_alpha = self.outline_color_[-1]
+        else:
+            edge_alpha = 1.0
+        c = self.outline_color_[:3] + (edge_alpha * self.alpha,)
+        return c
 
 # EOF
