@@ -209,6 +209,8 @@ class MultiLinePlot(BaseXYPlot):
 
         if len(coordinates) > 1:
             dy = coordinates[1] - coordinates[0]
+            if dy == 0:
+                dy = 1.0
         else:
             # default coordinate spacing if there is only 1 coordinate
             dy = 1.0
