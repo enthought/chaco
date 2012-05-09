@@ -169,7 +169,7 @@ def map_colors(data_array, steps, low, high, red_lut, green_lut, blue_lut,
     -------
     rgba: ndarray of float32
         The rgba values of data_array according to the lookup tables. The shape
-        of this array is equal to data_array.shape + (,4).
+        of this array is equal to data_array.shape + (4,).
 
     '''
     range_diff = high - low
