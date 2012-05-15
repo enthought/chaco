@@ -61,7 +61,7 @@ class PlotAxis(AbstractOverlay):
     # The color of the tick labels.
     tick_label_color = ColorTrait("black")
 
-    # The rotation of the tick labels.  (Only multiples of 90 are supported)
+    # The rotation of the tick labels.
     tick_label_rotate_angle = Float(0)
 
     # Whether to align to corners or edges (corner is better for 45 degree rotation)

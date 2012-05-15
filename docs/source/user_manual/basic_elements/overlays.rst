@@ -69,7 +69,7 @@ This attributes control the appearance of the axis:
 
   Define the axis label. :attr:`title` is a string or unicode object
   that is rendered using the given font and color. :attr:`title_font` is
-  a string describing a font (e.g. '12 pt bold italic"
+  a string describing a font (e.g. '12 pt bold italic',
   'swiss family Arial' or 'default 12'; see
   :class:`~kiva.kiva_font_trait.TraitKivaFont` for details).
   Finally, :attr:`title_spacing` is the space between the axis line and the
@@ -82,7 +82,7 @@ This attributes control the appearance of the axis:
 :attr:`~chaco.axis.PlotAxis.tick_out`,
 :attr:`~chaco.axis.PlotAxis.tick_visible`,
 
-  These attributes allow to fine-tune the aspect of the ticks on the axis.
+  These attributes control the aspect of the ticks on the axis.
   If :attr:`tick_visible` is True, ticks are represented as lines of
   color :attr:`tick_color` (default is black) and thickness
   :attr:`tick_weight` (in pixels, default is 1). Each line extends into the
@@ -90,20 +90,46 @@ This attributes control the appearance of the axis:
   :attr:`tick_out` pixels (default is 5).
 
 
-:attr:`~chaco.axis.PlotAxis.tick_label_font`
-:attr:`~chaco.axis.PlotAxis.tick_label_color`
-:attr:`~chaco.axis.PlotAxis.tick_label_rotate_angle`
-:attr:`~chaco.axis.PlotAxis.tick_label_alignment`
-:attr:`~chaco.axis.PlotAxis.tick_label_margin`
-:attr:`~chaco.axis.PlotAxis.tick_label_offset`
-:attr:`~chaco.axis.PlotAxis.tick_label_position`
+:attr:`~chaco.axis.PlotAxis.tick_label_font`,
+:attr:`~chaco.axis.PlotAxis.tick_label_color`,
+:attr:`~chaco.axis.PlotAxis.tick_label_rotate_angle`,
+:attr:`~chaco.axis.PlotAxis.tick_label_alignment`,
+:attr:`~chaco.axis.PlotAxis.tick_label_margin`,
+:attr:`~chaco.axis.PlotAxis.tick_label_offset`,
+:attr:`~chaco.axis.PlotAxis.tick_label_position`,
+
+  The attributes allow to fine-tune the aspect of the tick labels:
+  first of all, the font (e.g. '12 pt bold italic') and color of the
+  labels. The position and orientation of the label can be also be
+  closely controlled: :attr:`tick_label_rotate_angle` give the rotation
+  angle (only multiples of 90 degrees are supported);
+  :attr:`tick_label_alignment` selects whether the corner ('corner') or center
+  ('edge', default) of the label are aligned to the corresponding tick
+  ('corner' is better for 45 degrees rotation); :attr:`tick_label_margin`
+  and :attr:`tick_label_offset` control the margin around the
+  tick labels, and their distance from the axis; finally,
+  :attr:`tick_label_position` can be set to either 'outside' (default)
+  or 'inside' depending on whether the labels should be displayed inside
+  or outside the plot area.
+
+
 :attr:`~chaco.axis.PlotAxis.tick_label_formatter`
+
+  By default, tick labels are assumed to be floating point numbers, and are
+  displayed as such after removing trailing zeros and the decimal dot if
+  necessary (e.g., '10.000' will be displayed as '10', and '21.10' as '21.1').
+  The default behavior can be changed by setting :attr:`tick_label_formatter`
+  to a callable that takes the value of the tick label and returns a
+  formatted string.
 
 
 :attr:`~chaco.axis.PlotAxis.tick_interval`,
 :attr:`~chaco.axis.PlotAxis.tick_generator`,
 
+  Locations and distances of ticks are controlled by the attribute
+  :attr:`tick_generator`
 
+  Default is chaco.ticks.auto_ticks or chaco.ticks.log_auto_ticks
 
 :attr:`~chaco.axis.PlotAxis.`
 :attr:`~chaco.axis.PlotAxis.`
