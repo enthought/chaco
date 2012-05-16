@@ -101,7 +101,7 @@ class PlotExample(HasTraits):
                     index_data=self.x1,
                     value_data=self.y1,
                     color=(0.75, 0.25, 0.25, 0.75),
-                    style='dash', width=1)
+                    line_style='dash', line_width=1)
         time_plot.underlays.append(lines1)
         self.line_overlay1 = lines1
 
@@ -109,7 +109,7 @@ class PlotExample(HasTraits):
                     index_data=self.x2,
                     value_data=self.y2,
                     color=(0.2, 0.5, 1.0, 0.75),
-                    width=3)
+                    line_width=3)
         time_plot.underlays.append(lines2)
         self.line_overlay2 = lines2
 
