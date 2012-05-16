@@ -20,13 +20,13 @@ class CoordinateLineOverlay(AbstractOverlay):
     value_data = Array
 
     # Width of the lines.
-    width = Float(1.0)
+    line_width = Float(1.0)
 
     # Color of the lines.
     color = black_color_trait
 
     # Style of the lines ('solid', 'dash' or 'dot').
-    style = LineStyle
+    line_style = LineStyle
 
     # The component that this tool overlays.  This must be a Component with
     # the following attributes:
@@ -57,8 +57,8 @@ class CoordinateLineOverlay(AbstractOverlay):
         with gc:
             # Set the line color and style parameters.
             gc.set_stroke_color(self.color_)
-            gc.set_line_width(self.width)
-            gc.set_line_dash(self.style_)
+            gc.set_line_width(self.line_width)
+            gc.set_line_dash(self.line_style_)
 
             # Draw the vertical lines.
             for screen_x in x_pts:
