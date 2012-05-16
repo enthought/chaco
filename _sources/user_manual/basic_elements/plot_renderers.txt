@@ -1,3 +1,5 @@
+.. _plot_renderers:
+
 ==============
 Plot renderers
 ==============
@@ -369,6 +371,7 @@ Two more attributes are worth mentioning:
     while other plots raise a :class:`NotImplementedError` when this
     feature is activated.
 
+.. _twod_plots:
 
 2D Plots interface
 ==================
@@ -393,7 +396,6 @@ of :class:`~chaco.grid_data_source.GridDataSource`); and one for the
 values of the data at each point of the grid,
 :attr:`~chaco.base_2d_plot.Base2DPlot.value` (a subclass
 of :class:`~chaco.image_data.ImageData`).
-
 The index data source also needs a 2D mapper,
 :attr:`~chaco.base_2d_plot.Base2DPlot.index_mapper`,
 to map data coordinates to the screen.

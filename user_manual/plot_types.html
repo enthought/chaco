@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plot Types &mdash; chaco v4.1.1 documentation</title>
+    <title>Plot types &mdash; chaco v4.1.1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -27,7 +27,7 @@
     <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
     <link rel="up" title="User guide" href="index.html" />
     <link rel="next" title="Containers and Layout" href="containers.html" />
-    <link rel="prev" title="Plot renderers" href="basic_elements/plot_renderers.html" /> 
+    <link rel="prev" title="Overlays: axis, legend, grid, etc." href="basic_elements/overlays.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,12 +37,12 @@
           <a href="containers.html" title="Containers and Layout"
              accesskey="N">next</a></li>
         <li class="right" >
-          <a href="basic_elements/plot_renderers.html" title="Plot renderers"
+          <a href="basic_elements/overlays.html" title="Overlays: axis, legend, grid, etc."
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">User guide</a> &raquo;</li>
   
-    <li><a href="#">Plot Types</a></li>
+    <li><a href="#">Plot types</a></li>
   
 
       </ul>
@@ -54,18 +54,26 @@
           <div class="body">
             
   <div class="section" id="plot-types">
-<span id="id1"></span><h1>Plot Types<a class="headerlink" href="#plot-types" title="Permalink to this headline">¶</a></h1>
-<p>This section gives an overview of individual plot classes in Chaco.</p>
+<span id="id1"></span><h1>Plot types<a class="headerlink" href="#plot-types" title="Permalink to this headline">¶</a></h1>
+<p>This section gives an overview of individual plot classes in Chaco. It
+is divided in three parts: the first part lists all plot classes
+implementing the <a class="reference internal" href="#xy-plots"><em>X-Y plots</em></a> interface, the second
+all plot classes implementing the <a class="reference internal" href="basic_elements/plot_renderers.html#twod-plots"><em>2D plots</em></a>
+interface, and finally a part collecting all plot types that do not
+fall in either category. See the
+<a class="reference internal" href="basic_elements/plot_renderers.html#plot-renderers"><em>section on plot renderers</em></a> for a detailed description
+of the methods and attributes that are common to all plots.</p>
 <p>The code to generate the figures in this section can be found in
-the directory <tt class="docutils literal"><span class="pre">tutorials/user_guide/plot_types/</span></tt> in the examples
+the path <tt class="docutils literal"><span class="pre">tutorials/user_guide/plot_types/</span></tt> in the examples
 directory.</p>
 <p>For more complete examples, see also the <a class="reference internal" href="annotated_examples.html#examples"><em>annotated examples</em></a>
 page.</p>
 <div class="section" id="x-y-plot-types">
 <span id="xy-plots"></span><h2>X-Y Plot Types<a class="headerlink" href="#x-y-plot-types" title="Permalink to this headline">¶</a></h2>
-<p>These plots display information in a two-axis coordinate system.
-Unless otherwise stated, they are subclasses of
+<p>These plots display information in a two-axis coordinate system
+and are subclasses of
 <tt class="xref py py-class docutils literal"><span class="pre">BaseXYPlot</span></tt>.</p>
+<p>The common interface for X-Y plots is described in <a class="reference internal" href="#xy-plots"><em>X-Y Plot Types</em></a>.</p>
 <div class="section" id="line-plot">
 <span id="id2"></span><h3>Line Plot<a class="headerlink" href="#line-plot" title="Permalink to this headline">¶</a></h3>
 <p>Standard line plot implementation. The aspect of the line is controlled by the
@@ -86,17 +94,17 @@ or &#8216;long dash&#8217;.</dd>
 <ul>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='connectedpoints'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_plot64.png" src="../_images/line_plot64.png" style="width: 500px;" />
+<div><img alt="../_images/line_plot67.png" src="../_images/line_plot67.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='hold'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_hold_plot63.png" src="../_images/line_hold_plot63.png" style="width: 500px;" />
+<div><img alt="../_images/line_hold_plot66.png" src="../_images/line_hold_plot66.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">renderstyle='connectedhold'</span></tt></p>
 <blockquote>
-<div><img alt="../_images/line_connectedhold_plot62.png" src="../_images/line_connectedhold_plot62.png" style="width: 500px;" />
+<div><img alt="../_images/line_connectedhold_plot65.png" src="../_images/line_connectedhold_plot65.png" style="width: 500px;" />
 </div></blockquote>
 </li>
 </ul>
@@ -125,7 +133,7 @@ no outline is drawn.</dd>
 <dd>The color of the outline to draw around the marker (default is black).</dd>
 </dl>
 </div></blockquote>
-<img alt="../_images/scatter_plot56.png" src="../_images/scatter_plot56.png" style="width: 500px;" />
+<img alt="../_images/scatter_plot59.png" src="../_images/scatter_plot59.png" style="width: 500px;" />
 </div>
 <div class="section" id="colormapped-scatter-plot">
 <h3>Colormapped Scatter Plot<a class="headerlink" href="#colormapped-scatter-plot" title="Permalink to this headline">¶</a></h3>
@@ -162,7 +170,7 @@ methods.</p>
 </div></blockquote>
 <p>In this example plot, color represents property-tax rate (red is low,
 green is high):</p>
-<img alt="../_images/cmap_scatter_plot47.png" src="../_images/cmap_scatter_plot47.png" style="width: 500px;" />
+<img alt="../_images/cmap_scatter_plot50.png" src="../_images/cmap_scatter_plot50.png" style="width: 500px;" />
 </div>
 <div class="section" id="variable-size-scatter-plot">
 <h3>Variable Size Scatter Plot<a class="headerlink" href="#variable-size-scatter-plot" title="Permalink to this headline">¶</a></h3>
@@ -175,7 +183,7 @@ of the corresponding marker. Other attributes are inherited from
 the <a class="reference internal" href="#scatter-plot"><em>scatter plot</em></a> class.</p>
 <p>This is the same plot as above, with the radius od the circles representing
 property-tax rate:</p>
-<img alt="../_images/vsize_scatter_plot28.png" src="../_images/vsize_scatter_plot28.png" style="width: 500px;" />
+<img alt="../_images/vsize_scatter_plot31.png" src="../_images/vsize_scatter_plot31.png" style="width: 500px;" />
 </div>
 <div class="section" id="candle-plot">
 <h3>Candle Plot<a class="headerlink" href="#candle-plot" title="Permalink to this headline">¶</a></h3>
@@ -221,7 +229,7 @@ If <tt class="xref docutils literal"><span class="pre">None</span></tt>, they de
 </div></blockquote>
 <p>At the moment, it is not possible to control the width of the central bar
 and end caps.</p>
-<img alt="../_images/candle_plot50.png" src="../_images/candle_plot50.png" style="width: 500px;" />
+<img alt="../_images/candle_plot53.png" src="../_images/candle_plot53.png" style="width: 500px;" />
 </div>
 <div class="section" id="errorbar-plot">
 <h3>Errorbar Plot<a class="headerlink" href="#errorbar-plot" title="Permalink to this headline">¶</a></h3>
@@ -243,7 +251,7 @@ these attributes:</p>
 <dd>Either &#8216;bar&#8217; (default) or &#8216;none&#8217;, in which case no endcap bars are plotted.</dd>
 </dl>
 </div></blockquote>
-<img alt="../_images/errorbar_plot39.png" src="../_images/errorbar_plot39.png" style="width: 500px;" />
+<img alt="../_images/errorbar_plot42.png" src="../_images/errorbar_plot42.png" style="width: 500px;" />
 </div>
 <div class="section" id="filled-line-plot">
 <h3>Filled Line Plot<a class="headerlink" href="#filled-line-plot" title="Permalink to this headline">¶</a></h3>
@@ -269,7 +277,7 @@ rendering styles).</dd>
 plot line one should use the parameter
 <tt class="xref py py-attr docutils literal"><span class="pre">edge_width</span></tt> instead of
 <tt class="xref py py-attr docutils literal"><span class="pre">line_width</span></tt>.</p>
-<img alt="../_images/filled_line_plot39.png" src="../_images/filled_line_plot39.png" style="width: 500px;" />
+<img alt="../_images/filled_line_plot42.png" src="../_images/filled_line_plot42.png" style="width: 500px;" />
 </div>
 <div class="section" id="multi-line-plot">
 <h3>Multi-line Plot<a class="headerlink" href="#multi-line-plot" title="Permalink to this headline">¶</a></h3>
@@ -337,15 +345,15 @@ to the index of the line and returns a RGBA 4-tuple.</div></blockquote>
 are not plotted, even if some of the data in the curve extends into the plot
 region. (Default is False)</div></blockquote>
 </div></blockquote>
-<img alt="../_images/multiline_plot8.png" src="../_images/multiline_plot8.png" style="width: 500px;" />
+<img alt="../_images/multiline_plot11.png" src="../_images/multiline_plot11.png" style="width: 500px;" />
 </div>
 </div>
 <div class="section" id="image-and-2d-plots">
 <h2>Image and 2D Plots<a class="headerlink" href="#image-and-2d-plots" title="Permalink to this headline">¶</a></h2>
 <p>These plots display information as a two-dimensional image.
 Unless otherwise stated, they are subclasses of
-<tt class="xref py py-class docutils literal"><span class="pre">Base2DPlot</span></tt>.</p>
-<p>TODO: explain index, value, mappers</p>
+<em class="xref std std-ref">:class:`~chaco.base_2d_plot.Base2DPlot</em>.</p>
+<p>The common interface for 2D plots is described in <a class="reference internal" href="basic_elements/plot_renderers.html#twod-plots"><em>2D Plots interface</em></a>.</p>
 <div class="section" id="image-plots">
 <span id="image-plot"></span><h3>Image Plots<a class="headerlink" href="#image-plots" title="Permalink to this headline">¶</a></h3>
 <p>Plot image data, provided as RGB or RGBA color information. If you need to
@@ -357,7 +365,7 @@ corresponds to the the data coordinates of the pixels (often a
 screen coordinates (typically using
 a <tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt>). The <cite>value</cite> is the image itself,
 wrapped into the data source class <tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt>.</p>
-<img alt="../_images/image_plot38.png" src="../_images/image_plot38.png" style="width: 500px;" />
+<img alt="../_images/image_plot41.png" src="../_images/image_plot41.png" style="width: 500px;" />
 <p>A typical use case is to display an image loaded from a file.
 The preferred way to do this is using the factory method
 <tt class="xref py py-meth docutils literal"><span class="pre">from_file()</span></tt> of the class
@@ -379,7 +387,7 @@ The preferred way to do this is using the factory method
 </pre></div>
 </div>
 <p>The code above displays this plot:</p>
-<img alt="../_images/image_from_file_plot31.png" src="../_images/image_from_file_plot31.png" style="width: 500px;" />
+<img alt="../_images/image_from_file_plot34.png" src="../_images/image_from_file_plot34.png" style="width: 500px;" />
 </div>
 <div class="section" id="colormapped-scalar-plot">
 <span id="id4"></span><h3>Colormapped Scalar Plot<a class="headerlink" href="#colormapped-scalar-plot" title="Permalink to this headline">¶</a></h3>
@@ -419,7 +427,7 @@ a color mapper maps the scalar data to colors. The module
 </pre></div>
 </div>
 <p>This creates the plot:</p>
-<img alt="../_images/cmap_image_plot28.png" src="../_images/cmap_image_plot28.png" style="width: 500px;" />
+<img alt="../_images/cmap_image_plot31.png" src="../_images/cmap_image_plot31.png" style="width: 500px;" />
 </div>
 <div class="section" id="contour-plots">
 <span id="contour-plot"></span><h3>Contour Plots<a class="headerlink" href="#contour-plots" title="Permalink to this headline">¶</a></h3>
@@ -482,14 +490,14 @@ the style given by
 (default is &#8216;dash&#8217;).</dd>
 </dl>
 </div></blockquote>
-<img alt="../_images/contour_line_plot22.png" src="../_images/contour_line_plot22.png" style="width: 500px;" />
+<img alt="../_images/contour_line_plot25.png" src="../_images/contour_line_plot25.png" style="width: 500px;" />
 </div>
 <div class="section" id="filled-contour-plot">
 <h4>Filled contour Plot<a class="headerlink" href="#filled-contour-plot" title="Permalink to this headline">¶</a></h4>
 <p>Draw a contour plot as a 2D image divided in regions of the same color.
 The class <tt class="xref py py-class docutils literal"><span class="pre">ContourPolyPlot</span></tt> inherits
 all attributes from <tt class="xref py py-class docutils literal"><span class="pre">BaseContourPlot</span></tt>.</p>
-<img alt="../_images/contour_poly_plot19.png" src="../_images/contour_poly_plot19.png" style="width: 500px;" />
+<img alt="../_images/contour_poly_plot22.png" src="../_images/contour_poly_plot22.png" style="width: 500px;" />
 </div>
 </div>
 <div class="section" id="polygon-plot">
@@ -514,11 +522,13 @@ these parameters:</p>
 <dd>The color of the face of the polygon (default is transparent).</dd>
 </dl>
 </div></blockquote>
-<img alt="../_images/polygon_plot20.png" src="../_images/polygon_plot20.png" style="width: 500px;" />
+<img alt="../_images/polygon_plot23.png" src="../_images/polygon_plot23.png" style="width: 500px;" />
 </div>
 </div>
 <div class="section" id="other-plot-types">
 <h2>Other Plot Types<a class="headerlink" href="#other-plot-types" title="Permalink to this headline">¶</a></h2>
+<p>This section collects all plots that do not fall in the previous
+two categories.</p>
 <div class="section" id="bar-plot">
 <h3>Bar Plot<a class="headerlink" href="#bar-plot" title="Permalink to this headline">¶</a></h3>
 <p>Draws a set of rectangular bars, mostly used to plot histograms.</p>
@@ -541,7 +551,7 @@ dimension of the data space. If &#8216;screen&#8217;, the width is given in pixe
 <dd>The color of the bars.</dd>
 </dl>
 </div></blockquote>
-<img alt="../_images/bar_plot19.png" src="../_images/bar_plot19.png" style="width: 500px;" />
+<img alt="../_images/bar_plot22.png" src="../_images/bar_plot22.png" style="width: 500px;" />
 </div>
 <div class="section" id="quiver-plot">
 <h3>Quiver Plot<a class="headerlink" href="#quiver-plot" title="Permalink to this headline">¶</a></h3>
@@ -562,7 +572,7 @@ Usually, <tt class="xref py py-attr docutils literal"><span class="pre">vectors<
 <dd>The length of the arrowheads in pixels.</dd>
 </dl>
 </div></blockquote>
-<img alt="../_images/quiver_plot16.png" src="../_images/quiver_plot16.png" style="width: 350px;" />
+<img alt="../_images/quiver_plot19.png" src="../_images/quiver_plot19.png" style="width: 350px;" />
 </div>
 <div class="section" id="polar-plot">
 <h3>Polar Plot<a class="headerlink" href="#polar-plot" title="Permalink to this headline">¶</a></h3>
@@ -598,7 +608,7 @@ or &#8216;long dash&#8217;.</dd>
 <dd>Width of the radial axis in pixels (default is 2.0).</dd>
 </dl>
 </div></blockquote>
-<img alt="../_images/polar_plot16.png" src="../_images/polar_plot16.png" style="width: 350px;" />
+<img alt="../_images/polar_plot19.png" src="../_images/polar_plot19.png" style="width: 350px;" />
 </div>
 <div class="section" id="jitter-plot">
 <h3>Jitter Plot<a class="headerlink" href="#jitter-plot" title="Permalink to this headline">¶</a></h3>
@@ -629,7 +639,7 @@ no outline is drawn.</dd>
 <dd>The color of the outline to draw around the marker (default is black).</dd>
 </dl>
 </div></blockquote>
-<img alt="../_images/jitter_plot53.png" src="../_images/jitter_plot53.png" style="width: 500px;" />
+<img alt="../_images/jitter_plot56.png" src="../_images/jitter_plot56.png" style="width: 500px;" />
 <p>TODO: add description of color bar class</p>
 </div>
 </div>
@@ -646,7 +656,7 @@ no outline is drawn.</dd>
             </a></p>
 <h3>Page Contents</h3>
 <ul>
-<li><a class="reference internal" href="#">Plot Types</a><ul>
+<li><a class="reference internal" href="#">Plot types</a><ul>
 <li><a class="reference internal" href="#x-y-plot-types">X-Y Plot Types</a><ul>
 <li><a class="reference internal" href="#line-plot">Line Plot</a></li>
 <li><a class="reference internal" href="#scatter-plot">Scatter Plot</a></li>
@@ -709,19 +719,19 @@ no outline is drawn.</dd>
           <a href="containers.html" title="Containers and Layout"
              >next</a></li>
         <li class="right" >
-          <a href="basic_elements/plot_renderers.html" title="Plot renderers"
+          <a href="basic_elements/overlays.html" title="Overlays: axis, legend, grid, etc."
              >previous</a> |</li>
         <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
           <li><a href="index.html" >User guide</a> &raquo;</li>
   
-    <li><a href="#">Plot Types</a></li>
+    <li><a href="#">Plot types</a></li>
   
 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Mar 02, 2012.
+      Last updated on May 16, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

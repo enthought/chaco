@@ -1,0 +1,252 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overlays: axis, legend, grid, etc. &mdash; chaco v4.1.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/et.ico"/>
+    <link rel="top" title="chaco v4.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="Introduction" href="../introduction.html" />
+    <link rel="next" title="Plot types" href="../plot_types.html" />
+    <link rel="prev" title="Plot types" href="../plot_types.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../plot_types.html" title="Plot types"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../plot_types.html" title="Plot types"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >User guide</a> &raquo;</li>
+          <li><a href="../introduction.html" accesskey="U">Introduction</a> &raquo;</li>
+  
+    <li><a href="#">Overlays: axis, legend, grid, etc.</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="overlays-axis-legend-grid-etc">
+<h1>Overlays: axis, legend, grid, etc.<a class="headerlink" href="#overlays-axis-legend-grid-etc" title="Permalink to this headline">¶</a></h1>
+<p>Overlays are elements that decorate plots, like for example
+axes, legends, grids, etc.</p>
+<p>Overlays are very similar to regular plot elements, and share most
+of their interface with <a class="reference internal" href="plot_renderers.html#plot-renderers"><em>plot renderers</em></a>
+(both are subclasses of <tt class="xref py py-class docutils literal"><span class="pre">chaco.plot_component.PlotComponent</span></tt>).</p>
+<p>In addition, they have a lightweight interface defined in
+<tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></tt>: the additional
+features are that 1) they keep a reference to the plot they are decorating in
+<tt class="xref py py-attr docutils literal"><span class="pre">component</span></tt>;
+2) the background color
+<tt class="xref py py-attr docutils literal"><span class="pre">bgcolor</span></tt>
+is &#8216;trasparent&#8217; by default;
+3) they plot <a class="reference internal" href="plot_renderers.html#plot-layers"><em>on the &#8216;overlay&#8217; layer</em></a> by default.</p>
+<p>TODO: explain how to attach an overlay to an existing plot renderer</p>
+<p>There are three important classes of overlays defined in Chaco:
+<a class="reference internal" href="#axis"><em>axes</em></a>, <a class="reference internal" href="#legend"><em>legends</em></a>, and <a class="reference internal" href="#grid"><em>grids</em></a>.</p>
+<div class="section" id="axes">
+<span id="axis"></span><h2>Axes<a class="headerlink" href="#axes" title="Permalink to this headline">¶</a></h2>
+<p>The Chaco overlay representing a plot axis is defined in the class
+<tt class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></tt>.</p>
+<p>A new axis is created by passing a
+mapper, usually the mapper defined for the corresponding plot data coordinate.
+<tt class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></tt> also defines a range of attributes to customize
+the appearance of labels, ticks, and other axis elements. For example,
+given an X-Y plot renderer, <tt class="docutils literal"><span class="pre">plot</span></tt>, we can define a new x-axis as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">AXIS_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;axis_line_weight&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s">&#39;tick_weight&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s">&#39;tick_label_font&#39;</span><span class="p">:</span> <span class="s">&#39;modern 16&#39;</span><span class="p">,</span>
+    <span class="s">&#39;title_font&#39;</span><span class="p">:</span> <span class="s">&#39;modern 20&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">x_axis</span> <span class="o">=</span> <span class="n">PlotAxis</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s">&#39;bottom&#39;</span><span class="p">,</span>
+                  <span class="n">title</span><span class="o">=</span><span class="s">&#39;My x axis&#39;</span><span class="p">,</span>
+                  <span class="n">mapper</span><span class="o">=</span><span class="n">plot</span><span class="o">.</span><span class="n">x_mapper</span><span class="p">,</span>
+                  <span class="n">component</span><span class="o">=</span><span class="n">plot</span><span class="p">,</span>
+                  <span class="o">**</span><span class="n">AXIS_DEFAULTS</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The newly created axis can then be attached to the plot renderer by
+appending it to its underlays layer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="o">.</span><span class="n">underlays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<p>This attributes control the appearance of the axis:</p>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">title</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">title_font</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">title_color</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">title_spacing</span></tt></p>
+<blockquote>
+<div>Define the axis label. <tt class="xref py py-attr docutils literal"><span class="pre">title</span></tt> is a string or unicode object
+that is rendered using the given font and color. <tt class="xref py py-attr docutils literal"><span class="pre">title_font</span></tt> is
+a string describing a font (e.g. &#8216;12 pt bold italic&#8217;,
+&#8216;swiss family Arial&#8217; or &#8216;default 12&#8217;; see
+<tt class="xref py py-class docutils literal"><span class="pre">TraitKivaFont</span></tt> for details).
+Finally, <tt class="xref py py-attr docutils literal"><span class="pre">title_spacing</span></tt> is the space between the axis line and the
+title (either the number of pixels or &#8216;auto&#8217;, default).</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">tick_weight</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_color</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_in</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_out</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_visible</span></tt>,</p>
+<blockquote>
+<div>These attributes control the aspect of the ticks on the axis.
+If <tt class="xref py py-attr docutils literal"><span class="pre">tick_visible</span></tt> is True, ticks are represented as lines of
+color <tt class="xref py py-attr docutils literal"><span class="pre">tick_color</span></tt> (default is black) and thickness
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_weight</span></tt> (in pixels, default is 1). Each line extends into the
+plot area by <tt class="xref py py-attr docutils literal"><span class="pre">tick_in</span></tt> pixels and into the label area by
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_out</span></tt> pixels (default is 5).</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">tick_label_font</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_label_color</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_label_rotate_angle</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_label_alignment</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_label_margin</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_label_offset</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_label_position</span></tt>,</p>
+<blockquote>
+<div>The attributes allow to fine-tune the aspect of the tick labels:
+first of all, the font (e.g. &#8216;12 pt bold italic&#8217;) and color of the
+labels. The position and orientation of the label can be also be
+closely controlled: <tt class="xref py py-attr docutils literal"><span class="pre">tick_label_rotate_angle</span></tt> give the rotation
+angle (only multiples of 90 degrees are supported);
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_label_alignment</span></tt> selects whether the corner (&#8216;corner&#8217;) or center
+(&#8216;edge&#8217;, default) of the label are aligned to the corresponding tick
+(&#8216;corner&#8217; is better for 45 degrees rotation); <tt class="xref py py-attr docutils literal"><span class="pre">tick_label_margin</span></tt>
+and <tt class="xref py py-attr docutils literal"><span class="pre">tick_label_offset</span></tt> control the margin around the
+tick labels, and their distance from the axis; finally,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_label_position</span></tt> can be set to either &#8216;outside&#8217; (default)
+or &#8216;inside&#8217; depending on whether the labels should be displayed inside
+or outside the plot area.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">tick_label_formatter</span></tt></p>
+<blockquote>
+<div>By default, tick labels are assumed to be floating point numbers, and are
+displayed as such after removing trailing zeros and the decimal dot if
+necessary (e.g., &#8216;10.000&#8217; will be displayed as &#8216;10&#8217;, and &#8216;21.10&#8217; as &#8216;21.1&#8217;).
+The default behavior can be changed by setting <tt class="xref py py-attr docutils literal"><span class="pre">tick_label_formatter</span></tt>
+to a callable that takes the value of the tick label and returns a
+formatted string.</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"><span class="pre">tick_interval</span></tt>,
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_generator</span></tt>,</p>
+<blockquote>
+<div><p>Locations and distances of ticks are controlled by the attribute
+<tt class="xref py py-attr docutils literal"><span class="pre">tick_generator</span></tt></p>
+<p>Default is chaco.ticks.auto_ticks or chaco.ticks.log_auto_ticks</p>
+</div></blockquote>
+<p><tt class="xref py py-attr docutils literal"></tt>
+<tt class="xref py py-attr docutils literal"></tt></p>
+</div>
+<div class="section" id="events">
+<h3>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h3>
+<p>updated</p>
+<p>Fired when the axis&#8217;s range bounds change.</p>
+</div>
+</div>
+<div class="section" id="legend">
+<span id="id1"></span><h2>Legend<a class="headerlink" href="#legend" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="grid">
+<span id="id2"></span><h2>Grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+<h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Overlays: axis, legend, grid, etc.</a><ul>
+<li><a class="reference internal" href="#axes">Axes</a><ul>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#events">Events</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#legend">Legend</a></li>
+<li><a class="reference internal" href="#grid">Grid</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/user_manual/basic_elements/overlays.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../plot_types.html" title="Plot types"
+             >next</a></li>
+        <li class="right" >
+          <a href="../plot_types.html" title="Plot types"
+             >previous</a> |</li>
+        <li><a href="../../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >User guide</a> &raquo;</li>
+          <li><a href="../introduction.html" >Introduction</a> &raquo;</li>
+  
+    <li><a href="#">Overlays: axis, legend, grid, etc.</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, Enthought, Inc..
+      Last updated on May 16, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

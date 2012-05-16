@@ -26,7 +26,7 @@
     <link rel="shortcut icon" href="../../_static/et.ico"/>
     <link rel="top" title="chaco v4.1.1 documentation" href="../../index.html" />
     <link rel="up" title="Introduction" href="../introduction.html" />
-    <link rel="next" title="Plot Types" href="../plot_types.html" />
+    <link rel="next" title="Plot types" href="../plot_types.html" />
     <link rel="prev" title="Mappers" href="mappers.html" /> 
   </head>
   <body>
@@ -34,7 +34,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../plot_types.html" title="Plot Types"
+          <a href="../plot_types.html" title="Plot types"
              accesskey="N">next</a></li>
         <li class="right" >
           <a href="mappers.html" title="Mappers"
@@ -55,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="plot-renderers">
-<h1>Plot renderers<a class="headerlink" href="#plot-renderers" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Plot renderers<a class="headerlink" href="#plot-renderers" title="Permalink to this headline">¶</a></h1>
 <p>Plot renderers are the classes that actually draw the different kinds of plots,
 or plot-like elements as for instance color bars.</p>
 <p>This section describes the concepts that are common to all kind of plots.
@@ -69,7 +69,7 @@ attributes and methods to set size, position, and aspect of the
 plotting area.</p>
 <p>Two more specialized interface are used by most concrete implementations,
 namely <tt class="xref py py-class docutils literal"><span class="pre">BaseXYPlot</span></tt>, which is the interface
-for <a class="reference internal" href="#xy-plots"><em>X-vs-Y plots</em></a>, and
+for <a class="reference internal" href="../plot_types.html#xy-plots"><em>X-vs-Y plots</em></a>, and
 <tt class="xref py py-class docutils literal"><span class="pre">Base2DPlot</span></tt>, which is the interface for
 <em class="xref std std-ref">2D plots</em> (e.g., <a class="reference internal" href="../plot_types.html#image-plot"><em>image plots</em></a> or
 <a class="reference internal" href="../plot_types.html#contour-plot"><em>contour plots</em></a>).</p>
@@ -340,7 +340,7 @@ the data ranges stored in the index and value mappers.</p>
 <h3>Axis, labels, and grids<a class="headerlink" href="#axis-labels-and-grids" title="Permalink to this headline">¶</a></h3>
 <p><tt class="xref py py-class docutils literal"><span class="pre">BaseXYPlot</span></tt> defines a few properties that are
 shortcuts to find axis and grid objects in the
-<a href="#id1"><span class="problematic" id="id2">:def:`underlays and overlays layers &lt;plot_layers&gt;`</span></a> of the plot:</p>
+<a href="#id2"><span class="problematic" id="id3">:def:`underlays and overlays layers &lt;plot_layers&gt;`</span></a> of the plot:</p>
 <blockquote>
 <div><p><tt class="xref py py-attr docutils literal"><span class="pre">hgrid</span></tt>,
 <tt class="xref py py-attr docutils literal"><span class="pre">vgrid</span></tt></p>
@@ -383,8 +383,8 @@ away, the methods returns None.</p>
 <p>Alternatively, users may call the methods <tt class="xref py py-attr docutils literal"><span class="pre">get_closest_point</span></tt>
 and <tt class="xref py py-attr docutils literal"><span class="pre">get_closest_line</span></tt>.</p>
 </div>
-<div class="section" id="id3">
-<h3>Others<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Others<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>Two more attributes are worth mentioning:</p>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">bgcolor</span></tt></p>
 <blockquote>
@@ -406,25 +406,25 @@ feature is activated.</p>
 </div>
 </div>
 <div class="section" id="d-plots-interface">
-<h2>2D Plots interface<a class="headerlink" href="#d-plots-interface" title="Permalink to this headline">¶</a></h2>
+<span id="twod-plots"></span><h2>2D Plots interface<a class="headerlink" href="#d-plots-interface" title="Permalink to this headline">¶</a></h2>
 <p>The class <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_2d_plot.Base2DPlot</span></tt> is the interface for
 plots that display data defined on a 2D grid, like for example
 image and contour plots. Just like its
-companion interface, <a class="reference internal" href="#xy-plots"><em>BaseXYPlot</em></a>,
+companion interface, <a class="reference internal" href="../plot_types.html#xy-plots"><em>BaseXYPlot</em></a>,
 it handles data sources and
 data mappers, along with convenient shortcuts to find axes, labels and grids.</p>
 <p>Unlike other plot rendered, 2D plots draw on the
 <a class="reference internal" href="#plot-layers"><em>&#8216;image&#8217; layer</em></a>, i.e., above any underlay element.</p>
-<div class="section" id="id4">
-<h3>Data-related traits<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Data-related traits<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>2D plots need two sources of data: one for the coordinates of the 2D grid
 on which data is displayed, stored in the attribute
 <tt class="xref py py-attr docutils literal"><span class="pre">index</span></tt> (a subclass
 of <tt class="xref py py-class docutils literal"><span class="pre">GridDataSource</span></tt>); and one for the
 values of the data at each point of the grid,
 <tt class="xref py py-attr docutils literal"><span class="pre">value</span></tt> (a subclass
-of <tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt>).</p>
-<p>The index data source also needs a 2D mapper,
+of <tt class="xref py py-class docutils literal"><span class="pre">ImageData</span></tt>).
+The index data source also needs a 2D mapper,
 <tt class="xref py py-attr docutils literal"><span class="pre">index_mapper</span></tt>,
 to map data coordinates to the screen.</p>
 <p>The orientation on screen is set by
@@ -439,8 +439,8 @@ and <tt class="xref py py-attr docutils literal"><span class="pre">y_mapper</spa
 <p>Finally, <tt class="xref py py-attr docutils literal"><span class="pre">index_range</span></tt> is a shortcut
 to the 2D range of the grid data.</p>
 </div>
-<div class="section" id="id5">
-<h3>Others<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>Others<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>The attribute <tt class="xref py py-attr docutils literal"><span class="pre">alpha</span></tt> defines the
 global transparency value for the whole plot.
 It ranges from 0.0 for transparent to 1.0 (default) for full intensity.</p>
@@ -473,12 +473,12 @@ It ranges from 0.0 for transparent to 1.0 (default) for full intensity.</p>
 <li><a class="reference internal" href="#data-related-traits">Data-related traits</a></li>
 <li><a class="reference internal" href="#axis-labels-and-grids">Axis, labels, and grids</a></li>
 <li><a class="reference internal" href="#hittest">Hittest</a></li>
-<li><a class="reference internal" href="#id3">Others</a></li>
+<li><a class="reference internal" href="#id4">Others</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#d-plots-interface">2D Plots interface</a><ul>
-<li><a class="reference internal" href="#id4">Data-related traits</a></li>
-<li><a class="reference internal" href="#id5">Others</a></li>
+<li><a class="reference internal" href="#id5">Data-related traits</a></li>
+<li><a class="reference internal" href="#id6">Others</a></li>
 </ul>
 </li>
 </ul>
@@ -511,7 +511,7 @@ It ranges from 0.0 for transparent to 1.0 (default) for full intensity.</p>
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../plot_types.html" title="Plot Types"
+          <a href="../plot_types.html" title="Plot types"
              >next</a></li>
         <li class="right" >
           <a href="mappers.html" title="Mappers"
@@ -527,7 +527,7 @@ It ranges from 0.0 for transparent to 1.0 (default) for full intensity.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Mar 12, 2012.
+      Last updated on May 16, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
