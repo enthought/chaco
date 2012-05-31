@@ -53,8 +53,8 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
         for inspect_type in (self.hover_metadata_name, self.selection_metadata_name):
             if inspect_type in plot.index.metadata:
-                if hasattr(plot,"value") and not inspect_type in plot.value.metadata:
-                    continue
+                #if hasattr(plot,"value") and not inspect_type in plot.value.metadata:
+                #    continue
                 index = plot.index.metadata.get(inspect_type, None)
 
                 if index is not None and len(index) > 0:
