@@ -74,7 +74,7 @@ class LassoOverlay(AbstractOverlay):
                 if len(points) == 0:
                     return
                 points = concatenate((points, points[0, newaxis]), axis=0)
-                gc.set_line_width(self.border_width)
+                gc.set_line_width(self.selection_border_width)
                 gc.set_line_dash(self.selection_border_dash_)
                 gc.set_fill_color(self.selection_fill_color_)
                 gc.set_stroke_color(self.selection_border_color_)
