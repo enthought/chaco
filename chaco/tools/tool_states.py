@@ -36,20 +36,21 @@ class PanState(ToolState):
         else:
             index_mapper = tool.component.index_mapper
             value_mapper = tool.component.value_mapper
+        if self.next[0] != self.prev[0]:
+            high = index_mapper.range.high
+            low = index_mapper.range.low
+            range = high-low
 
-        high = index_mapper.range.high
-        low = index_mapper.range.low
-        range = high-low
+            index_mapper.range.high = self.next[0] + range/2
+            index_mapper.range.low = self.next[0] - range/2
 
-        index_mapper.range.high = self.next[0] + range/2
-        index_mapper.range.low = self.next[0] - range/2
+        if self.next[1] != self.prev[1]:
+            high = value_mapper.range.high
+            low = value_mapper.range.low
+            range = high-low
 
-        high = value_mapper.range.high
-        low = value_mapper.range.low
-        range = high-low
-
-        value_mapper.range.high = self.next[1] + range/2
-        value_mapper.range.low = self.next[1] - range/2
+            value_mapper.range.high = self.next[1] + range/2
+            value_mapper.range.low = self.next[1] - range/2
 
     def revert(self, tool):
         if isinstance(tool.component.index_mapper, GridMapper):
@@ -59,19 +60,21 @@ class PanState(ToolState):
             index_mapper = tool.component.index_mapper
             value_mapper = tool.component.value_mapper
 
-        high = index_mapper.range.high
-        low = index_mapper.range.low
-        range = high-low
+        if self.next[0] != self.prev[0]:
+            high = index_mapper.range.high
+            low = index_mapper.range.low
+            range = high-low
 
-        index_mapper.range.high = self.prev[0] + range/2
-        index_mapper.range.low = self.prev[0] - range/2
+            index_mapper.range.high = self.prev[0] + range/2
+            index_mapper.range.low = self.prev[0] - range/2
 
-        high = value_mapper.range.high
-        low = value_mapper.range.low
-        range = high-low
+        if self.next[1] != self.prev[1]:
+            high = value_mapper.range.high
+            low = value_mapper.range.low
+            range = high-low
 
-        value_mapper.range.high = self.prev[1] + range/2
-        value_mapper.range.low = self.prev[1] - range/2
+            value_mapper.range.high = self.prev[1] + range/2
+            value_mapper.range.low = self.prev[1] - range/2
 
 class ZoomState(ToolState):
     """ A zoom state which can be applied and reverted.
