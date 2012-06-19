@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""
+""" Overlaid inset plots.
+
 A modification of line_plot1.py that shows the second plot as a subwindow
 of the first.  You can pan and zoom the second plot just like the first,
 and you can move it around my right-click and dragging in the smaller plot.
