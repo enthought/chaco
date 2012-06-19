@@ -1,10 +1,18 @@
+import sys
 import numpy as np
 cimport numpy as np
 
 cimport cython
 
-cdef extern from "math.h":
-    int isnan(float)
+if sys.platform == 'win32':
+    cdef extern from "float.h":
+        int _isnan(float)
+    isnan = _isnan
+else:
+    cdef extern from "math.h":
+        int isnan(float)
+
+
 
 # Inline max and min functions used below
 cdef inline float float_max(float a, float b): 
