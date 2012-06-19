@@ -1,6 +1,8 @@
 #!/usr/bin/env python
-"""
+""" Basic x-y log plots.
+
 Draws some x-y log plots. (No Tools)
+
 """
 
 # Major library imports

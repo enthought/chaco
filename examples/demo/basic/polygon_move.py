@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""
+""" Polygon plot with drag-move.
+
 Shares same basic interactions as polygon_plot.py, but adds a new one:
  - Right click and drag to move a polygon around.
 """
