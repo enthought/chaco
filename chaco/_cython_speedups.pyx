@@ -4,14 +4,12 @@ cimport numpy as np
 
 cimport cython
 
-if sys.platform == 'win32':
-    cdef extern from "float.h":
-        int _isnan(float)
-    isnan = _isnan
-else:
-    cdef extern from "math.h":
-        int isnan(float)
 
+cdef extern from *:
+    void ifdef_win32 "#ifdef _WIN32"()
+
+cdef extern from "_isnan.h":
+    int isnan (float)
 
 
 # Inline max and min functions used below
