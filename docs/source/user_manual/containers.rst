@@ -1,4 +1,3 @@
-
 .. highlight:: python
    :linenothreshold: 10
 
@@ -61,7 +60,7 @@ a common interface:
             outer_container = VPlotContainer(h_container1, h_container2,
                                              stack_order="top_to_bottom")
 
-            # Add the two plots to the first container
+            # Add the three plots to the first container
             h_container1.add(scatter_plot, line_plot1, line_plot2)
 
             # Now add the first line plot to the second container => it is removed
