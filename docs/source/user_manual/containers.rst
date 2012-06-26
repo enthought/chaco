@@ -150,18 +150,18 @@ This is a list of parameters that are specific to
 :class:`~chaco.plot_containers.HPlotContainer`
 
 * ``stack_order``:
-  Components added to the container are laid out left-to-right by default.
-  This parameters control this behavior: ::
+  The order in which components in the plot container are laid out. The
+  default behavior is left-to-right. ::
 
       stack_order = Enum("left_to_right", "right_to_left")
 
 * ``spacing``:
-  The amount of space to put between components.::
+  The amount of space to put between components. ::
 
       spacing = Float(0.0)
 
 * ``valign``:
-  The vertical alignment of objects that don't span the full height.
+  The vertical alignment of objects that don't span the full height. ::
 
       valign = Enum("bottom", "top", "center")
 
