@@ -1,3 +1,5 @@
+from __future__ import with_statement
+
 from numpy import array, transpose, ndarray, empty
 from traits.api import Instance, DelegatesTo, Bool, Int
 
