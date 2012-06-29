@@ -1,3 +1,5 @@
+from __future__ import with_statement
+
 from chaco.api import Plot, ArrayPlotData
 
 from traits.api import HasTraits, Instance
