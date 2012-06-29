@@ -10,6 +10,8 @@ chosen by a line interactor.
 Animation must be disabled (unchecked) before the model can be edited.
 """
 
+from __future__ import with_statement
+
 # Standard library imports
 from optparse import OptionParser
 import sys
