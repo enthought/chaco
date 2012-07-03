@@ -109,8 +109,10 @@ class LinePlot(BaseXYPlot):
                 interp_y = self.value_mapper.map_screen(interp_val)
 
                 if abs(sy - interp_y) <= threshold:
-                    return reverse_map_1d(self.index.get_data(), data_x,
+                    ndx = reverse_map_1d(self.index.get_data(), data_x,
                                           self.index.sort_order)
+                    return ( self.index.get_data()[ndx], 
+                              self.value.get_data()[ndx] )
             return None
 
     def interpolate(self, index_value):
