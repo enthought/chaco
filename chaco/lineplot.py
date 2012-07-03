@@ -99,6 +99,9 @@ class LinePlot(BaseXYPlot):
         else:
             screen_pt = self.map_screen(pt)
 
+        if self.orientation != "h":
+            screen_pt[0], screen_pt[1] = screen_pt[1], screen_pt[0]
+
         ndx = self.map_index(screen_pt, threshold)
         if ndx is not None:
             return (self.index.get_data()[ndx], self.value.get_data()[ndx])
@@ -133,7 +136,6 @@ class LinePlot(BaseXYPlot):
             best_pt = None
             best_dist = threshold
             for ndx in range(start_ndx+1, end_ndx+1):
-                # TODO: orientation-independence
                 pt1 = (self.index.get_data()[ndx-1],
                         self.value.get_data()[ndx-1])
                 pt2 = (self.index.get_data()[ndx],
