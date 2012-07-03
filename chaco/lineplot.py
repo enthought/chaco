@@ -2,6 +2,7 @@
 """
 
 from __future__ import with_statement
+from math import sqrt
 
 # Standard library imports
 import warnings
@@ -84,7 +85,7 @@ class LinePlot(BaseXYPlot):
     _cached_screen_pts = List
 
 
-    def hittest(self, screen_pt, threshold=7.0):
+    def hittest(self, pt, threshold=7.0, is_in_screen = True):
         """
         Tests whether the given screen point is within *threshold* pixels of
         any data points on the line.  If so, then it returns the (x,y) value of
@@ -93,27 +94,61 @@ class LinePlot(BaseXYPlot):
         Note: This only checks data points and *not* the actual line segments
         connecting them.
         """
+        if is_in_screen:
+            screen_pt = pt
+        else:
+            screen_pt = self.map_screen(pt)
+
         ndx = self.map_index(screen_pt, threshold)
         if ndx is not None:
             return (self.index.get_data()[ndx], self.value.get_data()[ndx])
         else:
-            data_x = self.map_data(screen_pt)
+            if self.orientation == "h":
+                dmax = self.map_data( (screen_pt[0]+threshold, screen_pt[1]) )
+                dmin = self.map_data( (screen_pt[0]-threshold, screen_pt[1]) )
+            else:
+                dmax = self.map_data( (screen_pt[0], screen_pt[1]+threshold) )
+                dmin = self.map_data( (screen_pt[0], screen_pt[1]-threshold) )
+
             xmin, xmax = self.index.get_bounds()
-            if xmin <= data_x <= xmax:
-                if self.orientation == "h":
-                    sy = screen_pt[1]
-                else:
-                    sy = screen_pt[0]
 
-                interp_val = self.interpolate(data_x)
-                interp_y = self.value_mapper.map_screen(interp_val)
+            if dmin < xmin:
+                ndx1 = 0
+            elif dmin > xmax:
+                ndx1 = len(self.value.get_data())-1
+            else:
+                ndx1 = reverse_map_1d(self.index.get_data(), dmin, 
+                                            self.index.sort_order)
+            if dmax < xmin:
+                ndx2 = 0
+            elif dmax > xmax:
+                ndx2 = len(self.value.get_data())-1
+            else:
+                ndx2 = reverse_map_1d(self.index.get_data(), dmax,
+                                        self.index.sort_order)
 
-                if abs(sy - interp_y) <= threshold:
-                    ndx = reverse_map_1d(self.index.get_data(), data_x,
-                                          self.index.sort_order)
-                    return ( self.index.get_data()[ndx], 
-                              self.value.get_data()[ndx] )
-            return None
+            start_ndx = max( 0, min(ndx1-1, ndx2-1, ) )
+            end_ndx = min( len(self.value.get_data())-1, max(ndx1, ndx2) )
+
+            best_pt = None
+            best_dist = threshold
+            for ndx in range(start_ndx+1, end_ndx+1):
+                # TODO: orientation-independence
+                pt1 = (self.index.get_data()[ndx-1],
+                        self.value.get_data()[ndx-1])
+                pt2 = (self.index.get_data()[ndx],
+                        self.value.get_data()[ndx])
+                spt1 = self.map_screen(pt1)
+                spt2 = self.map_screen(pt2)
+                t = _closest_point(screen_pt, spt1, spt2)
+                if 0 <= t <= 1:
+                    s_pt = _t_to_point(t, spt1, spt2)
+                    dist = sqrt( (s_pt[0] - screen_pt[0])**2 
+                                + (s_pt[1] - screen_pt[1])**2 )
+                    if dist <= best_dist:
+                        best_pt = self.map_data(s_pt, all_values=True)
+                        best_dist = dist
+            return best_pt
 
     def interpolate(self, index_value):
         """
@@ -423,5 +458,29 @@ class LinePlot(BaseXYPlot):
         alpha = self.color_[-1] if len(self.color_) == 4 else 1
         c = self.color_[:3] + (alpha * self.alpha,)
         return c
+
+def _closest_point(target, p1, p2):
+    '''Utility function for hittest:
+    finds the point on the line between p1 and p2 to
+    the target. Returns the 't' value of that point
+    where the line is parametrized as
+        t -> p1*(1-t) + p2*t
+    Notably, if t=0 is p1, t=2 is p2 and anything outside
+    that range is a point outisde p1, p2 on the line
+    Note: can divide by zero, so user should check for that'''
+
+    t = ((p1[0] - target[0])*(p1[0]-p2[0]) \
+            + (p1[1] - target[1])*(p1[1]-p2[1]))\
+        / ((p1[0] - p2[0])*(p1[0] - p2[0]) + (p1[1] - p2[1])*(p1[1] - p2[1]))
+    #print target, t, _t_to_point(t, p1, p2)
+    return t
+
+def _t_to_point(t, p1, p2):
+    '''utility function for hittest for use with _closest_point
+    returns the point corresponding to the parameter t
+    on the line going between p1 and p2'''
+    return ( p1[0]*(1-t) + p2[0]*t,
+             p1[1]*(1-t) + p2[1]*t )
+
 
 # EOF
