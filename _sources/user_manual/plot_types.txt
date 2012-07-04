@@ -279,7 +279,7 @@ plot line one should use the parameter
 Multi-line Plot
 ===============
 
-A line plot showing multiple lines simultaneously. The lines
+A line plot showing multiple lines simultaneously.
 
 The values of the lines are given by an instance of
 :class:`~chaco.multi_array_data_source.MultiArrayDataSource`, but the

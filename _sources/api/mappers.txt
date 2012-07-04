@@ -35,3 +35,22 @@ Mappers
 .. autoclass:: GridMapper
     :members:
     :show-inheritance:
+
+:class:`ColorMapper`
+===================
+.. autoclass:: ColorMapper
+    :members:
+    :show-inheritance:
+
+:class:`ColorMapTemplate`
+=========================
+.. autoclass:: ColorMapTemplate
+    :members:
+    :show-inheritance:
+
+:class:`TransformColorMapper`
+=============================
+.. autoclass:: TransformColorMapper
+    :members:
+    :show-inheritance:
+

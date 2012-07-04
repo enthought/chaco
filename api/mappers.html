@@ -237,6 +237,205 @@ values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_lo
 </dd></dl>
 
 </div>
+<div class="section" id="colormapper">
+<h2><a class="reference internal" href="#chaco.api.ColorMapper" title="chaco.api.ColorMapper"><tt class="xref py py-class docutils literal"><span class="pre">ColorMapper</span></tt></a><a class="headerlink" href="#colormapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ColorMapper">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ColorMapper</tt><big>(</big><em>segmentdata</em>, <em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_colormap.AbstractColormap</span></tt></p>
+<p>Represents a simple band-of-colors style of color map.</p>
+<p>The look-up transfer function is a simple linear function between defined
+intensities.  There is no limit to the number of steps that can be
+defined. If the segment intervals contain very few array
+locations, quantization errors will occur.</p>
+<p>Construction of a ColorMapper can be done through the factory methods
+from_palette_array() and from_segment_map(). Do not make direct calls to the
+ColorMapper constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color_bands</strong> : Property(Array)</p>
+<p><strong>steps</strong> : Int(256)</p>
+<p><strong>name</strong> : Str</p>
+<p><strong>low_pos</strong> : None</p>
+<p><strong>high_pos</strong> : None</p>
+<p class="last"><strong>updated</strong> : Event</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="chaco.api.ColorMapper.from_file">
+<em class="property">classmethod </em><tt class="descname">from_file</tt><big>(</big><em>filename</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper.from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a ColorMapper from a file.</p>
+<p>The <em>filename</em> parameter is the name of a file whose lines each contain
+4 or 5 float values between 0.0 and 1.0. The first value is an offset in
+the range [0..1], and the remaining 3 or 4 values are red, green, blue,
+and optionally alpha values for the color corresponding to that offset.</p>
+<p>The first line is assumed to contain the name of the colormap.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chaco.api.ColorMapper.from_palette_array">
+<em class="property">classmethod </em><tt class="descname">from_palette_array</tt><big>(</big><em>palette</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper.from_palette_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a ColorMapper from a palette array.</p>
+<p>The palette colors are linearly interpolated across the range of
+mapped values.</p>
+<p>The <em>palette</em> parameter is a Nx3 or Nx4 array of intensity values, where
+N &gt; 1:</p>
+<div class="highlight-python"><pre>[[R0, G0, B0], ... [R(N-1), G(N-1), B(N-1)]]
+
+[[R0, G0, B0, A0], ... [R(N-1), G(N-1), B(N-1), A(N-1]]</pre>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chaco.api.ColorMapper.from_segment_map">
+<em class="property">classmethod </em><tt class="descname">from_segment_map</tt><big>(</big><em>segment_map</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper.from_segment_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Colormapper from a segment map.</p>
+<p>The <em>segment_map</em> parameter is a dictionary with &#8216;red&#8217;, &#8216;green&#8217;, and
+&#8216;blue&#8217; (and optionally &#8216;alpha&#8217;) entries.  Each entry is a list of
+(x, y0, y1) tuples:</p>
+<ul class="simple">
+<li>x: an offset in [0..1] (offsets within the list must be in ascending order)</li>
+<li>y0: value for the color channel for values less than or equal to x</li>
+<li>y1: value for the color channel for values greater than x</li>
+</ul>
+<p>When a data value gets mapped to a color, it will be normalized to be
+within [0..1]. For each RGB(A) component, the two adjacent values will
+be found in the segment_map. The mapped component value will be found by
+linearly interpolating the two values.</p>
+<p>Generally, y0==y1. Colormaps with sharp transitions will have y0!=y1 at
+the transitions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.map_index">
+<tt class="descname">map_index</tt><big>(</big><em>ary</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of values to their corresponding color band index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.map_screen">
+<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data values to an array of colors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.reverse_colormap">
+<tt class="descname">reverse_colormap</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper.reverse_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reverses the color bands of this colormap.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="colormaptemplate">
+<h2><a class="reference internal" href="#chaco.api.ColorMapTemplate" title="chaco.api.ColorMapTemplate"><tt class="xref py py-class docutils literal"><span class="pre">ColorMapTemplate</span></tt></a><a class="headerlink" href="#colormaptemplate" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ColorMapTemplate">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ColorMapTemplate</tt><big>(</big><em>colormap=None</em>, <em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>A class representing the state of a ColorMapper, for use when persisting
+plots.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>segment_map</strong> : Any</p>
+<p><strong>steps</strong> : Int(256)</p>
+<p><strong>range_low_setting</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, Float)</p>
+<p class="last"><strong>range_high_setting</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, Float)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="chaco.api.ColorMapTemplate.from_colormap">
+<tt class="descname">from_colormap</tt><big>(</big><em>colormap</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapTemplate.from_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates this template from a color map.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapTemplate.to_colormap">
+<tt class="descname">to_colormap</tt><big>(</big><em>range=None</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapTemplate.to_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ColorMapper instance from this template.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="transformcolormapper">
+<h2><a class="reference internal" href="#chaco.api.TransformColorMapper" title="chaco.api.TransformColorMapper"><tt class="xref py py-class docutils literal"><span class="pre">TransformColorMapper</span></tt></a><a class="headerlink" href="#transformcolormapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.TransformColorMapper">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">TransformColorMapper</tt><big>(</big><em>segmentdata</em>, <em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.TransformColorMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.color_mapper.ColorMapper</span></tt></p>
+<p>This class adds arbitrary data transformations to a ColorMapper.</p>
+<p>The default ColorMapper is basically a linear mapper from data space to
+color space.  A TransformColorMapper allows a nonlinear mapper to be
+created.</p>
+<p>A ColorMapper works by linearly transforming the data from data space to the
+unit interval [0,1], and then linearly mapping that interval to the color
+space.</p>
+<p>A TransformColorMapper allows an arbitrary transform to be inserted at two
+places in this process.  First, an initial transformation, <cite>data_func</cite> can
+be applied to the data <em>before</em> is it mapped to [0,1].  Then another
+function, <cite>unit_func</cite>, can be applied to the transformed data on [0,1]
+before it is mapped to color space.  Normally, a <cite>unit_func</cite> is map of the
+unit interval [0,1] to itself (e.g. x^2 or sin(pi*x/2)).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_func</strong> : Trait(None, None, Callable)</p>
+<p><strong>unit_func</strong> : Trait(None, None, Callable)</p>
+<p class="last"><strong>transformed_bounds</strong> : Tuple(Trait(None, None, Float), Trait(None, None, Float))</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="chaco.api.TransformColorMapper.factory_from_color_map">
+<em class="property">classmethod </em><tt class="descname">factory_from_color_map</tt><big>(</big><em>color_map</em>, <em>data_func=None</em>, <em>unit_func=None</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.TransformColorMapper.factory_from_color_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TransformColorMapper factory function from a standard colormap
+factory function.</p>
+<p>WARNING: This function is untested; I realized I didn&#8217;t need it shortly
+after writing it, so I haven&#8217;t tried it yet. &#8211;WW</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chaco.api.TransformColorMapper.from_color_map">
+<em class="property">classmethod </em><tt class="descname">from_color_map</tt><big>(</big><em>color_map</em>, <em>data_func=None</em>, <em>unit_func=None</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.TransformColorMapper.from_color_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TransformColorMapper from a colormap generator function.</p>
+<p>The return value is an instance of TransformColorMapper, <em>not</em> a factory
+function, so this does not provide a direct replacement for a standard
+colormap factory function.  For that, use the class method
+TransoformColorMapper.factory_from_color_map().</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="chaco.api.TransformColorMapper.from_color_mapper">
+<em class="property">classmethod </em><tt class="descname">from_color_mapper</tt><big>(</big><em>color_mapper</em>, <em>data_func=None</em>, <em>unit_func=None</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.TransformColorMapper.from_color_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TransformColorMapper from an existing ColorMapper instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.map_index">
+<tt class="descname">map_index</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.TransformColorMapper.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of values to their corresponding color band index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.map_screen">
+<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.TransformColorMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data values to an array of colors.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -256,6 +455,9 @@ values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_lo
 <li><a class="reference internal" href="#linearmapper"><tt class="docutils literal"><span class="pre">LinearMapper</span></tt></a></li>
 <li><a class="reference internal" href="#logmapper"><tt class="docutils literal"><span class="pre">LogMapper</span></tt></a></li>
 <li><a class="reference internal" href="#gridmapper"><tt class="docutils literal"><span class="pre">GridMapper</span></tt></a></li>
+<li><a class="reference internal" href="#colormapper"><tt class="docutils literal"><span class="pre">ColorMapper</span></tt></a></li>
+<li><a class="reference internal" href="#colormaptemplate"><tt class="docutils literal"><span class="pre">ColorMapTemplate</span></tt></a></li>
+<li><a class="reference internal" href="#transformcolormapper"><tt class="docutils literal"><span class="pre">TransformColorMapper</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -301,7 +503,7 @@ values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_lo
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on May 16, 2012.
+      Last updated on Jul 04, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

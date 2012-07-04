@@ -26,7 +26,7 @@
     <link rel="shortcut icon" href="../_static/et.ico"/>
     <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
-    <link rel="next" title="Tech Notes" href="../tech_notes.html" />
+    <link rel="next" title="Visual Components" href="visual_components.html" />
     <link rel="prev" title="Mappers" href="mappers.html" /> 
   </head>
   <body>
@@ -34,7 +34,7 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../tech_notes.html" title="Tech Notes"
+          <a href="visual_components.html" title="Visual Components"
              accesskey="N">next</a></li>
         <li class="right" >
           <a href="mappers.html" title="Mappers"
@@ -238,6 +238,31 @@ into self.fixed_lengths and self.resizable_lengths.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="selectableoverlayplotcontainer">
+<h2><a class="reference internal" href="#chaco.api.SelectableOverlayPlotContainer" title="chaco.api.SelectableOverlayPlotContainer"><tt class="xref py py-class docutils literal"><span class="pre">SelectableOverlayPlotContainer</span></tt></a><a class="headerlink" href="#selectableoverlayplotcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.SelectableOverlayPlotContainer">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">SelectableOverlayPlotContainer</tt><big>(</big><em>*components</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.plot_containers.OverlayPlotContainer</span></tt></p>
+<p>An OverlayPlotContainer that can show a selection region on top of it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>selection_screen_start</strong> : Float(0.0)</p>
+<p><strong>selection_screen_end</strong> : Float(0.0)</p>
+<p><strong>selection_active</strong> : Bool(False)</p>
+<p><strong>selection_direction</strong> : Enum(&#8216;v&#8217;, &#8216;h&#8217;)</p>
+<p><strong>selection_fill_color</strong> : ColorTrait(&#8216;lightskyblue&#8217;)</p>
+<p><strong>selection_border_color</strong> : ColorTrait(&#8216;dodgerblue&#8217;)</p>
+<p class="last"><strong>selection_alpha</strong> : Float(0.3)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -257,6 +282,7 @@ into self.fixed_lengths and self.resizable_lengths.</p>
 <li><a class="reference internal" href="#hplotcontainer"><tt class="docutils literal"><span class="pre">HPlotContainer</span></tt></a></li>
 <li><a class="reference internal" href="#vplotcontainer"><tt class="docutils literal"><span class="pre">VPlotContainer</span></tt></a></li>
 <li><a class="reference internal" href="#gridplotcontainer"><tt class="docutils literal"><span class="pre">GridPlotContainer</span></tt></a></li>
+<li><a class="reference internal" href="#selectableoverlayplotcontainer"><tt class="docutils literal"><span class="pre">SelectableOverlayPlotContainer</span></tt></a></li>
 </ul>
 </li>
 </ul>
@@ -287,7 +313,7 @@ into self.fixed_lengths and self.resizable_lengths.</p>
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../tech_notes.html" title="Tech Notes"
+          <a href="visual_components.html" title="Visual Components"
              >next</a></li>
         <li class="right" >
           <a href="mappers.html" title="Mappers"
@@ -302,7 +328,7 @@ into self.fixed_lengths and self.resizable_lengths.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on May 16, 2012.
+      Last updated on Jul 04, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
