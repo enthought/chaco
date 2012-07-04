@@ -13,5 +13,9 @@ Programmer's Reference
   api/data_ranges.rst
   api/mappers.rst
   api/containers.rst
-
-
+  api/visual_components.rst
+  api/renderers.rst
+  api/plot_factories.rst
+  api/axis.rst
+  api/tools.rst
+  
