@@ -13,11 +13,11 @@ difficult to find in other plotting packages.
 Extensibility is a core design goal of Chaco, and many people have used the
 examples as starting points for their own applications.
 
-``bar_plot.py``
+``bar_plot_stacked.py``
 ---------------
 An example showing Chaco's BarPlot class.
 
-source: `bar_plot.py <https://github.com/enthought/chaco/tree/master/examples/demo/bar_plot.py>`_
+source: `bar_plot_stacked.py <https://github.com/enthought/chaco/tree/master/examples/demo/basic/bar_plot_stacked.py>`_
 
 .. image:: example_images/bar_plot.png
 
@@ -369,11 +369,11 @@ source: `nans_plot.py <https://github.com/enthought/chaco/tree/master/examples/d
 
 .. image:: example_images/nans_plot.png
 
-``polygon_plot.py``
+``polygon_plot_demo.py``
 -------------------
 Draws some different polygons.
 
-source: `polygon_plot.py <https://github.com/enthought/chaco/tree/master/examples/demo/basic/polygon_plot.py>`_
+source: `polygon_plot_demo.py <https://github.com/enthought/chaco/tree/master/examples/demo/basic/polygon_plot_demo.py>`_
 
 .. image:: example_images/polygon_plot.png
 
