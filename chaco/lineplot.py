@@ -90,9 +90,6 @@ class LinePlot(BaseXYPlot):
         Tests whether the given screen point is within *threshold* pixels of
         any data points on the line.  If so, then it returns the (x,y) value of
         a data point near the screen point.  If not, then it returns None.
-
-        Note: This only checks data points and *not* the actual line segments
-        connecting them.
         """
         if is_in_screen:
             screen_pt = pt
@@ -102,10 +99,15 @@ class LinePlot(BaseXYPlot):
         if self.orientation != "h":
             screen_pt[0], screen_pt[1] = screen_pt[1], screen_pt[0]
 
+        # First, check pt is directly on a point in the lineplot
         ndx = self.map_index(screen_pt, threshold)
         if ndx is not None:
             return (self.index.get_data()[ndx], self.value.get_data()[ndx])
         else:
+            # We now must check the lines themselves
+
+            # Must check all lines within threshold along the major axis,
+            # so determine the bounds of the region of interest in dataspace
             if self.orientation == "h":
                 dmax = self.map_data( (screen_pt[0]+threshold, screen_pt[1]) )
                 dmin = self.map_data( (screen_pt[0]-threshold, screen_pt[1]) )
@@ -115,6 +117,7 @@ class LinePlot(BaseXYPlot):
 
             xmin, xmax = self.index.get_bounds()
 
+            # Now compute the bounds of the region of interest as indexes
             if dmin < xmin:
                 ndx1 = 0
             elif dmin > xmax:
@@ -131,8 +134,9 @@ class LinePlot(BaseXYPlot):
                                         self.index.sort_order)
 
             start_ndx = max( 0, min(ndx1-1, ndx2-1, ) )
-            end_ndx = min( len(self.value.get_data())-1, max(ndx1, ndx2) )
+            end_ndx = min( len(self.value.get_data())-1, max(ndx1+1, ndx2+1) )
 
+            #Now iterate through all adjacent pairs of indecies
             best_pt = None
             best_dist = threshold
             for ndx in range(start_ndx+1, end_ndx+1):
@@ -140,16 +144,25 @@ class LinePlot(BaseXYPlot):
                         self.value.get_data()[ndx-1])
                 pt2 = (self.index.get_data()[ndx],
                         self.value.get_data()[ndx])
+                # Find the points in screenspace
                 spt1 = self.map_screen(pt1)
                 spt2 = self.map_screen(pt2)
+                # and determine the closest to our point on the line between pt1, pt2
+                # 't' is the parameter of the point on the line
                 t = _closest_point(screen_pt, spt1, spt2)
+                # check if the point lies between pt1 and pt2
                 if 0 <= t <= 1:
                     s_pt = _t_to_point(t, spt1, spt2)
                     dist = sqrt( (s_pt[0] - screen_pt[0])**2 
                                 + (s_pt[1] - screen_pt[1])**2 )
+                    # check if the point on line is within threshold and
+                    # is better than other previous points
                     if dist <= best_dist:
+                        # update our current best point
                         best_pt = self.map_data(s_pt, all_values=True)
                         best_dist = dist
+
+            # return best point, or None if we didn't find any
             return best_pt
 
     def interpolate(self, index_value):
