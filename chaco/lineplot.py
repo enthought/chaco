@@ -91,13 +91,11 @@ class LinePlot(BaseXYPlot):
         any data points on the line.  If so, then it returns the (x,y) value of
         a data point near the screen point.  If not, then it returns None.
         """
+
         if is_in_screen:
             screen_pt = pt
         else:
             screen_pt = self.map_screen(pt)
-
-        if self.orientation != "h":
-            screen_pt[0], screen_pt[1] = screen_pt[1], screen_pt[0]
 
         # First, check pt is directly on a point in the lineplot
         ndx = self.map_index(screen_pt, threshold)
@@ -487,7 +485,6 @@ def _closest_point(target, p1, p2):
     t = ((p1[0] - target[0])*(p1[0]-p2[0]) \
             + (p1[1] - target[1])*(p1[1]-p2[1]))\
         / ((p1[0] - p2[0])*(p1[0] - p2[0]) + (p1[1] - p2[1])*(p1[1] - p2[1]))
-    #print target, t, _t_to_point(t, p1, p2)
     return t
 
 def _t_to_point(t, p1, p2):

@@ -40,7 +40,10 @@ class HittestTool(BaseTool, AbstractOverlay):
     def normal_mouse_move(self, event):
         # Compute the nearest point and draw it whenever the mouse moves
         x,y = event.x, event.y
-        x,y = self.component.map_data((x,y))
+        if self.line_plot.orientation == "h":
+            x,y = self.component.map_data((x,y))
+        else:
+            x,y = self.component.map_data((y,x))
         self.pt = self.line_plot.hittest((x,y), 
                                             threshold=self.threshold, 
                                             is_in_screen=False)
