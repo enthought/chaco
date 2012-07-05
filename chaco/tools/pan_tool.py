@@ -4,8 +4,8 @@
 from numpy import inf
 
 # Enthought library imports
-from enable.api import BaseTool, Pointer
-from traits.api import Bool, Enum, Float, Tuple
+from enable.api import BaseTool, Pointer, KeySpec
+from traits.api import Bool, Enum, Float, Tuple, Instance
 
 
 class PanTool(BaseTool):
@@ -28,6 +28,16 @@ class PanTool(BaseTool):
     # direction.  To do so, set constrain=True, constrain_key=None, and
     # constrain_direction to the desired direction.
     constrain_key = Enum(None, "shift", "control", "alt")
+
+    # Keys to Pan via keyboard
+    pan_right_key = Instance(KeySpec, args=("Right",))
+    pan_left_key = Instance(KeySpec, args=("Left",))
+    pan_up_key = Instance(KeySpec, args=("Up",))
+    pan_down_key = Instance(KeySpec, args=("Down",))
+
+    # number of pixels the keys should pan
+    # disabled if 0.0
+    pan_keys_step = Float(0.0)
 
     # Constrain the panning to one direction?
     constrain = Bool(False)
@@ -67,7 +77,32 @@ class PanTool(BaseTool):
     # The possible event states of this tool (overrides enable.Interactor).
     event_state = Enum("normal", "panning")
 
-
+    def normal_key_pressed(self, event):
+        """ Handles a key being pressed when the tool is in the 'normal'
+        state.
+        """
+        if self.pan_keys_step == 0.0:
+            return
+        src = self.component.bounds[0]/2, self.component.bounds[1]/2
+        dest = src
+        if self.pan_left_key.match(event):
+            dest = (src[0] - self.pan_keys_step,
+                    src[1])
+        elif self.pan_right_key.match(event):
+            dest = (src[0] + self.pan_keys_step,
+                    src[1])
+        elif self.pan_down_key.match(event):
+            dest = (src[0],
+                    src[1] - self.pan_keys_step)
+        elif self.pan_up_key.match(event):
+            dest = (src[0],
+                    src[1] + self.pan_keys_step)
+        if src != dest:
+            self._original_xy = src
+            event.x = dest[0]
+            event.y = dest[1]
+            self.panning_mouse_move(event)
+        return
     def normal_left_down(self, event):
         """ Handles the left mouse button being pressed when the tool is in
         the 'normal' state.

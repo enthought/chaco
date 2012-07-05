@@ -3,7 +3,10 @@ Module that implements pure-python equivalents of the functions in the
 _speedups extension module.
 """
 
-from numpy import invert, isnan, array, transpose, zeros, compress
+from numpy import clip, invert, isnan, isinf, array, transpose, zeros, \
+    compress, where, take, float32, ones_like
+import numpy as np
+
 import operator
 
 def array_combine(a, b, op=operator.and_, func=lambda x: x):
@@ -107,4 +110,85 @@ def scatterplot_gather_points(index, index_low, index_high,
     else:
         selections = None
     return points, selections
+
+
+
+def apply_selection_fade(mapped_image, mask, fade_alpha, fade_background):
+    '''Apply a selection fade to a colormapped image.
+
+    Parameters
+    ----------
+    mapped_image : ndarray of uint8, shape (N,M,4)
+        The digitized rgba values
+    mask : ndarray of bool, shape (N,M,4)
+        The array of masked pixels
+    fade_alpha : float
+        The alpha value for the fade
+    fade_background : rgb888 tuple
+        The fade background
+
+    '''
+    imask = invert(mask)
+    if fade_alpha == 0:
+        mapped_image[imask,0:3] = fade_background
+    else:
+        ialpha = (1.0 - fade_alpha)
+        background = tuple(ialpha * x for x in fade_background)
+        image_region = mapped_image[imask,0:3]
+        image_region *= fade_alpha
+        image_region += background
+        mapped_image[imask,0:3] = image_region
+
+
+def map_colors(data_array, steps, low, high, red_lut, green_lut, blue_lut,
+        alpha_lut):
+    '''Map colors from color lookup tables to a data array.
+
+    This is used in ColorMapper.map_screen
+
+    Parameters
+    ----------
+    data_array : ndarray
+        The data array
+    steps: int
+        The number of steps in the color map (depth)
+    low : float
+        The low end of the data range
+    high : float
+        The high end of the data range
+    red_lut : ndarray of float32
+        The red channel lookup table
+    green_lut : ndarray of float32
+        The green channel lookup table
+    blue_lut : ndarray of float32
+        The blue channel lookup table
+    alpha_lut : ndarray of float32
+        The alpha channel lookup table
+    
+    Returns
+    -------
+    rgba: ndarray of float32
+        The rgba values of data_array according to the lookup tables. The shape
+        of this array is equal to data_array.shape + (4,).
+
+    '''
+    range_diff = high - low
+
+    if range_diff == 0.0 or isinf(range_diff):
+        # Handle null range, or infinite range (which can happen during 
+        # initialization before range is connected to a data source).
+        norm_data = 0.5*ones_like(data_array)
+    else:
+        norm_data = clip((data_array - low) / range_diff, 0.0, 1.0)
+
+
+    nanmask = isnan(norm_data)
+    norm_data = where(nanmask, 0, (norm_data * (steps-1)).astype(int))
+    rgba = zeros(norm_data.shape+(4,), float32)
+    rgba[...,0] = where(nanmask, 0, take(red_lut, norm_data))
+    rgba[...,1] = where(nanmask, 0, take(green_lut, norm_data))
+    rgba[...,2] = where(nanmask, 0, take(blue_lut, norm_data))
+    rgba[...,3] = where(nanmask, 0, take(alpha_lut, norm_data))
+
+    return rgba
 

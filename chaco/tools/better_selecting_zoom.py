@@ -4,11 +4,10 @@ import numpy
 
 from chaco.abstract_overlay import AbstractOverlay
 from enable.api import ColorTrait, KeySpec
-from traits.api import Bool, Enum, Trait, Int, Float, Tuple, \
-        Instance, DelegatesTo, Property
+from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance, Property
 from traits.util.deprecated import deprecated
 
-from better_zoom import BetterZoom, ZoomState
+from better_zoom import BetterZoom 
 from tool_states import SelectedZoomState
 
 class BetterSelectingZoom(AbstractOverlay, BetterZoom):
@@ -98,11 +97,24 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     # is currently enabled.
     _enabled = Bool(False)
 
+    #-------------------------------------------------------------------------
+    # Private traits
+    #-------------------------------------------------------------------------
+
+    # the original numerical screen ranges
+    _orig_low_setting = Tuple
+    _orig_high_setting = Tuple
+
     def __init__(self, component=None, *args, **kw):
         # Since this class uses multiple inheritance (eek!), lets be
         # explicit about the order of the parent class constructors
         AbstractOverlay.__init__(self, component, *args, **kw)
         BetterZoom.__init__(self, component, *args, **kw)
+        # Store the original range settings
+        x_range = self._get_x_mapper().range
+        y_range = self._get_y_mapper().range
+        self._orig_low_setting = (x_range.low_setting, y_range.low_setting)
+        self._orig_high_setting = (x_range.high_setting, y_range.high_setting)
 
     def reset(self, event=None):
         """ Resets the tool to normal state, with no start or end position.
@@ -426,3 +438,24 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             high[axis_index] = high_val
         return low, high
 
+    def _reset_range_settings(self):
+        """ Reset the range settings to their original values """
+        x_range = self._get_x_mapper().range
+        y_range = self._get_y_mapper().range
+        x_range.low_setting, y_range.low_setting = self._orig_low_setting
+        x_range.high_setting, y_range.high_setting = self._orig_high_setting
+
+    #--------------------------------------------------------------------------
+    #  overloaded
+    #--------------------------------------------------------------------------
+
+    def _prev_state_pressed(self):
+        super(BetterSelectingZoom, self)._prev_state_pressed()
+        # Reset the range settings
+        if self._history_index == 0:
+            self._reset_range_settings()
+
+    def _reset_state_pressed(self):
+        super(BetterSelectingZoom, self)._reset_state_pressed()
+        # Reset the range settings
+        self._reset_range_settings()

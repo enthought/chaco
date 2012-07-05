@@ -123,7 +123,7 @@ class ImagePlot(Base2DPlot):
         image as the value, but need to compute one to display (colormaps, etc.).
         """
 
-        if data == None:
+        if data is None:
             data = self.value.data
 
         (lpt, upt) = self.index.get_bounds()
@@ -172,6 +172,7 @@ class ImagePlot(Base2DPlot):
         else:
             raise RuntimeError, "Unknown colormap depth value: %i" \
                                 % data.value_depth
+
 
         self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)
         if gc_rect is not None:

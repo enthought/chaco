@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""
+""" Plot data with NaNs.
+
 This plot displays chaco's ability to handle data interlaced with NaNs.
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
