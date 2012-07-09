@@ -143,8 +143,8 @@ class LinePlot(BaseXYPlot):
                 pt2 = (self.index.get_data()[ndx],
                         self.value.get_data()[ndx])
                 # Find the points in screenspace
-                spt1 = self.map_screen(pt1)
-                spt2 = self.map_screen(pt2)
+                spt1 = self.map_screen(pt1).flatten()
+                spt2 = self.map_screen(pt2).flatten()
                 # and determine the closest to our point on the line between pt1, pt2
                 # 't' is the parameter of the point on the line
                 t = _closest_point(screen_pt, spt1, spt2)
@@ -481,7 +481,6 @@ def _closest_point(target, p1, p2):
     Notably, if t=0 is p1, t=2 is p2 and anything outside
     that range is a point outisde p1, p2 on the line
     Note: can divide by zero, so user should check for that'''
-
     t = ((p1[0] - target[0])*(p1[0]-p2[0]) \
             + (p1[1] - target[1])*(p1[1]-p2[1]))\
         / ((p1[0] - p2[0])*(p1[0] - p2[0]) + (p1[1] - p2[1])*(p1[1] - p2[1]))

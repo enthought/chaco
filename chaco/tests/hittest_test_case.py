@@ -40,12 +40,11 @@ class HittestTestCase(unittest.TestCase):
 
     def test_vertical(self):
         plot, line_plot = self.make_plot("v")
+
         self._test_plot(plot, line_plot, point=[0.5,1])
         self._test_plot(plot, line_plot, point=[1,0])
 
-
     def _test_plot(self, plot, line_plot, point):
-
         threshold = 2 # In pixels
 
         screen_pt = plot.map_screen(point).flatten()
