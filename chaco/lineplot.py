@@ -85,22 +85,23 @@ class LinePlot(BaseXYPlot):
     _cached_screen_pts = List
 
 
-    def hittest(self, pt, threshold=7.0, is_in_screen = True):
+    def hittest(self, screen_pt, threshold=7.0, return_distance = False):
         """
         Tests whether the given screen point is within *threshold* pixels of
         any data points on the line.  If so, then it returns the (x,y) value of
         a data point near the screen point.  If not, then it returns None.
         """
 
-        if is_in_screen:
-            screen_pt = pt
-        else:
-            screen_pt = self.map_screen(pt)
-
         # First, check pt is directly on a point in the lineplot
         ndx = self.map_index(screen_pt, threshold)
         if ndx is not None:
-            return (self.index.get_data()[ndx], self.value.get_data()[ndx])
+            if return_distance:
+                pt = (self.index.get_data()[ndx], self.value.get_data()[ndx])
+                scrn_pt = self.map_screen(pt)
+                dist = sqrt( (screen_pt[0] - scrn_pt[0])**2 + (screen_pt[1] - scrn_pt[1])**2)
+                return (pt[0], pt[1], dist)
+            else:
+                return (self.index.get_data()[ndx], self.value.get_data()[ndx])
         else:
             # We now must check the lines themselves
 
@@ -161,7 +162,13 @@ class LinePlot(BaseXYPlot):
                         best_dist = dist
 
             # return best point, or None if we didn't find any
-            return best_pt
+            if best_pt is not None:
+                if return_distance:
+                    return [best_pt[0], best_pt[1], best_dist]
+                else:
+                    return best_pt
+            else:
+                return None
 
     def interpolate(self, index_value):
         """

@@ -3,7 +3,7 @@ Test cases for the LinePlot's hittest() function
 """
 
 import unittest
-from numpy import arange, array, linalg
+from numpy import arange, array, linalg, ndarray
 from chaco.api import ArrayDataSource, ArrayPlotData, Plot, LinearMapper, DataRange1D
 
 class HittestTestCase(unittest.TestCase):
@@ -56,6 +56,11 @@ class HittestTestCase(unittest.TestCase):
         screen_result = plot.map_screen(result)
 
         self.assert_( linalg.norm(screen_pt - screen_result) < threshold )
+
+        # check the return_distance = True case:
+        x,y, d = line_plot.hittest(screen_pt, threshold=threshold, return_distance=True)
+        self.assert_( (x,y) == (result[0], result[1]) )
+        self.assert_( d < threshold )
 
 if __name__ == '__main__':
     import nose
