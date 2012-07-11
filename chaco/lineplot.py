@@ -98,7 +98,8 @@ class LinePlot(BaseXYPlot):
             if return_distance:
                 pt = (self.index.get_data()[ndx], self.value.get_data()[ndx])
                 scrn_pt = self.map_screen(pt)
-                dist = sqrt( (screen_pt[0] - scrn_pt[0])**2 + (screen_pt[1] - scrn_pt[1])**2)
+                dist = sqrt((screen_pt[0] - scrn_pt[0])**2
+                            + (screen_pt[1] - scrn_pt[1])**2)
                 return (pt[0], pt[1], dist)
             else:
                 return (self.index.get_data()[ndx], self.value.get_data()[ndx])
@@ -108,11 +109,11 @@ class LinePlot(BaseXYPlot):
             # Must check all lines within threshold along the major axis,
             # so determine the bounds of the region of interest in dataspace
             if self.orientation == "h":
-                dmax = self.map_data( (screen_pt[0]+threshold, screen_pt[1]) )
-                dmin = self.map_data( (screen_pt[0]-threshold, screen_pt[1]) )
+                dmax = self.map_data((screen_pt[0]+threshold, screen_pt[1]))
+                dmin = self.map_data((screen_pt[0]-threshold, screen_pt[1]))
             else:
-                dmax = self.map_data( (screen_pt[0], screen_pt[1]+threshold) )
-                dmin = self.map_data( (screen_pt[0], screen_pt[1]-threshold) )
+                dmax = self.map_data((screen_pt[0], screen_pt[1]+threshold))
+                dmin = self.map_data((screen_pt[0], screen_pt[1]-threshold))
 
             xmin, xmax = self.index.get_bounds()
 
@@ -122,20 +123,20 @@ class LinePlot(BaseXYPlot):
             elif dmin > xmax:
                 ndx1 = len(self.value.get_data())-1
             else:
-                ndx1 = reverse_map_1d(self.index.get_data(), dmin, 
-                                            self.index.sort_order)
+                ndx1 = reverse_map_1d(self.index.get_data(), dmin,
+                                      self.index.sort_order)
             if dmax < xmin:
                 ndx2 = 0
             elif dmax > xmax:
                 ndx2 = len(self.value.get_data())-1
             else:
                 ndx2 = reverse_map_1d(self.index.get_data(), dmax,
-                                        self.index.sort_order)
+                                      self.index.sort_order)
 
-            start_ndx = max( 0, min(ndx1-1, ndx2-1, ) )
-            end_ndx = min( len(self.value.get_data())-1, max(ndx1+1, ndx2+1) )
+            start_ndx = max(0, min(ndx1-1, ndx2-1,))
+            end_ndx = min(len(self.value.get_data())-1, max(ndx1+1, ndx2+1))
 
-            #Now iterate through all adjacent pairs of indecies
+            #Now iterate through all adjacent pairs of indices
             best_pt = None
             best_dist = threshold
             for ndx in range(start_ndx+1, end_ndx+1):
@@ -146,14 +147,14 @@ class LinePlot(BaseXYPlot):
                 # Find the points in screenspace
                 spt1 = self.map_screen(pt1).flatten()
                 spt2 = self.map_screen(pt2).flatten()
-                # and determine the closest to our point on the line between pt1, pt2
+                # Determine the closest point on the line between pt1, pt2
                 # 't' is the parameter of the point on the line
                 t = _closest_point(screen_pt, spt1, spt2)
                 # check if the point lies between pt1 and pt2
                 if 0 <= t <= 1:
                     s_pt = _t_to_point(t, spt1, spt2)
-                    dist = sqrt( (s_pt[0] - screen_pt[0])**2 
-                                + (s_pt[1] - screen_pt[1])**2 )
+                    dist = sqrt((s_pt[0] - screen_pt[0])**2
+                                + (s_pt[1] - screen_pt[1])**2)
                     # check if the point on line is within threshold and
                     # is better than other previous points
                     if dist <= best_dist:
