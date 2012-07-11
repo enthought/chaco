@@ -19,7 +19,6 @@ from chaco.api import Plot, ArrayPlotData, AbstractOverlay, ArrayDataSource
 #===============================================================================
 # # Create the Chaco custom tool
 #===============================================================================
-
 class HittestTool(BaseTool, AbstractOverlay):
     '''This tool uses LinePlot.hittest() to get the closest point
     on the line to the mouse position and to draw it to the screen.
@@ -40,13 +39,14 @@ class HittestTool(BaseTool, AbstractOverlay):
     def normal_mouse_move(self, event):
         # Compute the nearest point and draw it whenever the mouse moves
         x,y = event.x, event.y
+
         if self.line_plot.orientation == "h":
             x,y = self.component.map_data((x,y))
         else:
             x,y = self.component.map_data((y,x))
-        self.pt = self.line_plot.hittest((x,y), 
-                                            threshold=self.threshold, 
-                                            is_in_screen=False)
+
+        x,y = self.component.map_screen((x,y))
+        self.pt = self.line_plot.hittest((x,y), threshold=self.threshold)
         self.request_redraw()
 
     def overlay(self, plot, gc, view_bounds=None, mode="normal"):
@@ -73,7 +73,7 @@ def _create_plot_component():
     line_plot = plot.plot(("x", "y"))[0]
 
     # Add the tool to the plot both as a tool and as an overlay
-    tool = HittestTool(component=plot, line_plot = line_plot)
+    tool = HittestTool(component=plot, line_plot=line_plot)
     plot.tools.append(tool)
     plot.overlays.append(tool)
 
@@ -92,10 +92,10 @@ class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    UItem("plot", editor=ComponentEditor(size=size)),
-                    resizable=True, 
-                    title=title
-                    )
+        UItem("plot", editor=ComponentEditor(size=size)),
+        resizable=True,
+        title=title
+    )
 
     def _plot_default(self):
         return _create_plot_component()
