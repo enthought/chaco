@@ -141,7 +141,6 @@ class LinePlot(BaseXYPlot):
             end = array([ self.index.get_data()[start_ndx+1:end_ndx+1],
                             self.value.get_data()[start_ndx+1:end_ndx+1] ])
 
-            # TODO: need a 'flatten'-like thing here for Log scales
             # Convert to screen points
             s_start = transpose(self.map_screen(transpose(start)))
             s_end = transpose(self.map_screen(transpose(end)))
