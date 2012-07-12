@@ -45,7 +45,7 @@ class HittestTool(BaseTool, AbstractOverlay):
         else:
             x,y = self.component.map_data((y,x))
 
-        x,y = self.component.map_screen((x,y))
+        x,y = self.line_plot.map_screen((x,y))
         self.pt = self.line_plot.hittest((x,y), threshold=self.threshold)
         self.request_redraw()
 
