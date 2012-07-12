@@ -2,14 +2,13 @@
 """
 
 from __future__ import with_statement
-from math import sqrt
 
 # Standard library imports
 import warnings
 
 # Major library imports
 from numpy import argsort, array, concatenate, inf, invert, isnan, \
-                  take, transpose, zeros
+                  take, transpose, zeros, sqrt, argmin, clip
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, LineStyle
@@ -136,40 +135,43 @@ class LinePlot(BaseXYPlot):
             start_ndx = max(0, min(ndx1-1, ndx2-1,))
             end_ndx = min(len(self.value.get_data())-1, max(ndx1+1, ndx2+1))
 
-            #Now iterate through all adjacent pairs of indices
-            best_pt = None
-            best_dist = threshold
-            for ndx in range(start_ndx+1, end_ndx+1):
-                pt1 = (self.index.get_data()[ndx-1],
-                        self.value.get_data()[ndx-1])
-                pt2 = (self.index.get_data()[ndx],
-                        self.value.get_data()[ndx])
-                # Find the points in screenspace
-                spt1 = self.map_screen(pt1).flatten()
-                spt2 = self.map_screen(pt2).flatten()
-                # Determine the closest point on the line between pt1, pt2
-                # 't' is the parameter of the point on the line
-                t = _closest_point(screen_pt, spt1, spt2)
-                # check if the point lies between pt1 and pt2
-                if 0 <= t <= 1:
-                    s_pt = _t_to_point(t, spt1, spt2)
-                    dist = sqrt((s_pt[0] - screen_pt[0])**2
-                                + (s_pt[1] - screen_pt[1])**2)
-                    # check if the point on line is within threshold and
-                    # is better than other previous points
-                    if dist <= best_dist:
-                        # update our current best point
-                        best_pt = self.map_data(s_pt, all_values=True)
-                        best_dist = dist
+            # Compute the distances to all points in the range of interest
+            start = array([ self.index.get_data()[start_ndx:end_ndx],
+                            self.value.get_data()[start_ndx:end_ndx] ])
+            end = array([ self.index.get_data()[start_ndx+1:end_ndx+1],
+                            self.value.get_data()[start_ndx+1:end_ndx+1] ])
 
-            # return best point, or None if we didn't find any
-            if best_pt is not None:
+            # TODO: need a 'flatten'-like thing here for Log scales
+            # Convert to screen points
+            s_start = transpose(self.map_screen(transpose(start)))
+            s_end = transpose(self.map_screen(transpose(end)))
+
+            # t gives the parameter of the closest point to screen_pt
+            # on the line going from s_start to s_end
+            t = _closest_point(screen_pt, s_start, s_end)
+
+            # Restrict to points on the line segment s_start->s_end
+            t = clip(t, 0, 1)
+
+            # Gives the corresponding point on the line
+            px, py = _t_to_point(t, s_start, s_end)
+
+            # Calculate distances
+            dist =  sqrt((px - screen_pt[0])**2 +
+                                  (py - screen_pt[1])**2)
+
+            # Find the minimum
+            n = argmin(dist)
+            # And return if it is good
+            if dist[n] <= threshold:
+                best_pt = self.map_data((px[n], py[n]), all_values=True)
+                
                 if return_distance:
-                    return [best_pt[0], best_pt[1], best_dist]
+                    return [best_pt[0], best_pt[1], dist[n]]
                 else:
                     return best_pt
-            else:
-                return None
+
+            return None
 
     def interpolate(self, index_value):
         """
