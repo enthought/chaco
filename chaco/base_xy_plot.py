@@ -214,7 +214,7 @@ class BaseXYPlot(AbstractPlotRenderer):
             Optional maximum screen space distance (pixels) between
             *screen_pt* and the plot.
         return_distance : Boolean
-            If True, returns the distance.
+            If True, also return the distance.
 
         Returns
         =======
@@ -227,6 +227,10 @@ class BaseXYPlot(AbstractPlotRenderer):
 
         If *screen_pt* does not fall within *threshold* of the plot, then this
         method returns None.
+
+        If return_distance is True, return the (x, y, d), where d is the
+        distance between the distance between the input point and
+        the closest point (x, y), in screen coordinates.
         """
         if self.hittest_type == "point":
             tmp = self.get_closest_point(screen_pt, threshold)
@@ -361,7 +365,7 @@ class BaseXYPlot(AbstractPlotRenderer):
                 x, y = y, x
         if all_values:
             return array((self.index_mapper.map_data(x),
-                      self.value_mapper.map_data(y)))
+                          self.value_mapper.map_data(y)))
         else:
             return self.index_mapper.map_data(x)
 
