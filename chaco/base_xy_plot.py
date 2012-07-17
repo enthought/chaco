@@ -230,7 +230,7 @@ class BaseXYPlot(AbstractPlotRenderer):
 
         If return_distance is True, return the (x, y, d), where d is the
         distance between the distance between the input point and
-        the closest point (x, y).
+        the closest point (x, y), in screen coordinates.
         """
         if self.hittest_type == "point":
             tmp = self.get_closest_point(screen_pt, threshold)
