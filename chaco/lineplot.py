@@ -8,7 +8,7 @@ import warnings
 
 # Major library imports
 from numpy import argsort, array, concatenate, inf, invert, isnan, \
-                  take, transpose, zeros, sqrt, argmin, clip
+                  take, transpose, zeros, sqrt, argmin, clip, column_stack
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, LineStyle
@@ -313,8 +313,11 @@ class LinePlot(BaseXYPlot):
                         if end != data_end:
                             end += 1
 
-                        run_data = transpose(array((block_index[start:end],
-                                                    block_value[start:end])))
+                        run_data = ( block_index[start:end],
+                                     block_value[start:end] )
+                        run_data = column_stack(run_data)
+                        run_data = array(run_data)
+
                         points.append(run_data)
 
             self._cached_data_pts = points
