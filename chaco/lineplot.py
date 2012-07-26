@@ -316,7 +316,6 @@ class LinePlot(BaseXYPlot):
                         run_data = ( block_index[start:end],
                                      block_value[start:end] )
                         run_data = column_stack(run_data)
-                        run_data = array(run_data)
 
                         points.append(run_data)
 
