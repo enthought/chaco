@@ -34,9 +34,9 @@ Dependencies
 Chaco requires Python version 2.5 or later to be installed. Chaco is built on three other 
 Enthought packages:
 
-  * `Traits <http://code.enthought.com/projects/traits>`_, as an event notification framework,
-  * `Kiva <https://svn.enthought.com/enthought/wiki/Kiva>`_, for rendering 2-D graphics to a variety of backends across platforms,
-  * `Enable <http://code.enthought.com/projects/enable/>`_, as a framework for writing interactive visual components, and for abstracting away GUI-toolkit-specific details of mouse and keyboard handling.
+  * `Traits <https://github.com/enthought/traits>`_, as an event notification framework,
+  * `Kiva <https://github.com/enthought/enable>`_, part of the enable project, for rendering 2-D graphics to a variety of backends across platforms,
+  * `Enable <https://github.com/enthought/enable/>`_, as a framework for writing interactive visual components and for abstracting away GUI-toolkit-specific details of mouse and keyboard handling.
 
 It also relies on two external packages:
   * `Numpy <http://numpy.scipy.org/>`_, to deal efficiently with large datasets.
