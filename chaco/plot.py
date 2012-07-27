@@ -239,7 +239,7 @@ class Plot(DataView):
         """ Adds a new sub-plot using the given data and plot style.
 
         Parameters
-        ==========
+        ----------
         data : string, tuple(string), list(string)
             The data to be plotted. The type of plot and the number of
             arguments determines how the arguments are interpreted:
@@ -275,7 +275,7 @@ class Plot(DataView):
             plot types requested, e.g.,'line_color' or 'line_width'.
 
         Examples
-        ========
+        --------
         ::
 
             plot("my_data", type="line", name="myplot", color=lightblue)
@@ -285,7 +285,7 @@ class Plot(DataView):
             plot(("x", "y1", "y2", "y3"))
 
         Returns
-        =======
+        -------
         [renderers] -> list of renderers created in response to this call to plot()
         """
 
@@ -480,7 +480,7 @@ class Plot(DataView):
         *data*'s second axis, and ybounds corresponds to the first axis.
 
         Parameters
-        ==========
+        ----------
         data : string
             The name of the data array in self.plot_data
         name : string
@@ -535,7 +535,7 @@ class Plot(DataView):
         """ Adds contour plots to this Plot object.
 
         Parameters
-        ==========
+        ----------
         data : string
             The name of the data array in self.plot_data, which must be
             floating point data.
@@ -707,7 +707,7 @@ class Plot(DataView):
         """ Adds a new sub-plot using the given data and plot style.
 
         Parameters
-        ==========
+        ----------
         data : list(string), tuple(string)
             The names of the data to be plotted in the ArrayDataSource.  The
             number of arguments determines how they are interpreted:
@@ -736,7 +736,7 @@ class Plot(DataView):
             then a log scale is used.
 
         Styles
-        ======
+        ------
         These are all optional keyword arguments.
 
         bar_color : string, 3- or 4-tuple
@@ -760,7 +760,7 @@ class Plot(DataView):
             error bar.
 
         Returns
-        =======
+        -------
         [renderers] -> list of renderers created in response to this call.
         """
         if len(data) == 0:
