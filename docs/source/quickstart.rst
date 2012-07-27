@@ -1,7 +1,3 @@
-
-.. last updated on Jun 5th 2011 by Jonathan Rocher
-
-
 ##########
 Quickstart
 ##########
