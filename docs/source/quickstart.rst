@@ -288,7 +288,7 @@ Chaco plot embedded in a Traits application
 ===========================================
 
 Let's create, from scratch, the simplest possible Chaco plot (embedded inside a
-`Traits <http://github.enthought.com/traits/>`_ application).
+`Traits`_ application).
 
 First, some imports to bring in necessary components::
 
@@ -298,9 +298,9 @@ First, some imports to bring in necessary components::
   from traits.api import HasTraits, Instance
   from traitsui.api import View, Item
 
-The imports from `chaco` and `enable` support the creation of the plot.  The
-imports from `traits` bring in components to embed the plot inside a Traits
-application. (Refer to the `Traits documentation
+The imports from :mod:`chaco` and :mod:`enable` support the creation of the
+plot.  The imports from :mod:`traits` bring in components to embed the plot
+inside a Traits application. (Refer to the `Traits documentation
 <http://github.enthought.com/traits/>`_ for more details about building an
 interactive application using Traits.) Now let's create a Traits class with a
 view that contains only one element: a Chaco plot inside a slightly customized
@@ -314,8 +314,8 @@ window::
 
 A few options have been set to control the window containing the plot.  Now,
 when the plot is created, we would like to pass in our data. Let's assume the
-data is a set of points with coordinates contained in two NumPy arrays `x` and
-`y`.  So, adding an `__init__` method to create the Plot object looks as
+data is a set of points with coordinates contained in two NumPy arrays ``x``
+and `y`.  So, adding an ``__init__`` method to create the Plot object looks as
 follows::
 
   class MyPlot(HasTraits):
@@ -333,10 +333,10 @@ follows::
           self.plot = plot
 
 Since it inherits from HasTraits, the new class can use all the power of
-Traits, and the call to super() in its `__init__` method makes sure this object
-possesses the attributes and methods of its parent class.  Now let's use our
-Traits object. Below, we generate some data, pass it to an instance of MyPlot
-and call configure_traits to create the UI::
+Traits, and the call to super() in its ``__init__`` method makes sure this
+object possesses the attributes and methods of its parent class.  Now let's use
+our Traits object. Below, we generate some data, pass it to an instance of
+MyPlot and call configure_traits to create the UI::
 
   import numpy as np
   x = np.linspace(-14,14,100)
