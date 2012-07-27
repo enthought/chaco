@@ -25,7 +25,7 @@ TODO: explain how to attach an overlay to an existing plot renderer
 There are three important classes of overlays defined in Chaco:
 :ref:`axes <axis>`, :ref:`legends <legend>`, and :ref:`grids <grid>`.
 
-.. _axis:
+.. _axes:
 
 Axes
 ====
