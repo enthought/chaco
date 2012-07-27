@@ -2,6 +2,7 @@
 Quickstart
 ##########
 
+
 +----------------------------------------+--------------------------------------+
 |.. image::  images/simple_line.png      |.. image::  images/scalar_function.png|
 |   :height: 300 px                      |   :height: 300 px                    |
@@ -9,99 +10,100 @@ Quickstart
 +----------------------------------------+--------------------------------------+
 
 This section is meant to help users on well-supported platforms and common
-Python environments get started using Chaco as quickly as possible. As part of
-the `Enthought Tool Suite <http://code.enthought.com/>`_, Chaco users can
-subscribe to the `enthought-dev
+Python environments get started using Chaco as quickly as possible. Chaco users
+can subscribe to the `enthought-dev
 <https://mail.enthought.com/mailman/listinfo/enthought-dev>`_  mailing list to
-post questions, consult archives and share tips.
+post questions, consult archives, and share tips.
 
-Licensing
-=========
 
-As part of the `Enthought Tool Suite <http://code.enthought.com/>`_, Chaco is
-free and open source under the BSD licence.
+Installation
+============
 
-Installation Overview
-=====================
+There are several ways to get Chaco. The easiest way is through the `Enthought
+Python Distribution (EPD) <http://www.enthought.com/epd>`_, which also provides
+many other useful packages and is available for several platforms.  Chaco may
+also be available through a package manager on your platform, such as apt on
+Ubuntu or `MacPorts <http://www.macports.org/>`_ on OS X.  You can also build
+Chaco yourself, but because of the number of packages required, we highly
+recommend you install EPD.
 
 .. _dependencies:
 
 Dependencies
 ------------
-Chaco requires Python version 2.5 or later to be installed. Chaco is built on
-three other Enthought packages:
 
-  * `Traits <https://github.com/enthought/traits>`_, as an event notification
-    framework,
-  * `Kiva <https://github.com/enthought/enable>`_, part of the enable project,
-    for rendering 2-D graphics to a variety of backends across platforms,
-  * `Enable <https://github.com/enthought/enable/>`_, as a framework for
-    writing interactive visual components and for abstracting away
-    GUI-toolkit-specific details of mouse and keyboard handling.
+* `Python <https://www.python.org>`_ 2.5 or later
 
-It also relies on two external packages:
-  * `Numpy <http://numpy.scipy.org/>`_, to deal efficiently with large
-    datasets.
-  * Either `wxPython <http://www.wxpython.org/>`_ or  `PyQt
-    <http://www.riverbankcomputing.co.uk/software/pyqt/intro>`_ to display
-    interactive plots. As an alternative to PyQt, Chaco is being more and more
-    tested using the `PySide <http://www.pyside.org/>`_ toolkit (LGPL license).
+* `Traits <https://github.com/enthought/traits>`_, an event notification
+  framework
 
-  .. .. note
-  .. ::
-  .. In addition to wxPython or PyQt a cross-platform OpenGL backend (using
-  .. Pyglet) is in the works, and it will not require WX or Qt.
+* `Kiva <https://github.com/enthought/enable>`_, part of the enable project,
+  for rendering 2-D graphics to a variety of backends across platforms
 
-Installation
-------------
+* `Enable <https://github.com/enthought/enable/>`_, a framework for writing
+  interactive visual components, and for abstracting away GUI-toolkit-specific
+  details of mouse and keyboard handling
 
-There are several different ways to get Chaco. You can either download and
-install the `Enthought Python Distribution (EPD)
-<http://www.enthought.com/epd>`_ or build Chaco on your machine. Because of the
-number of packages required to build Chaco and its dependencies **we highly
-recommend to install EPD**.
+* `Numpy <http://numpy.scipy.org/>`_, for dealing efficiently with large
+  datasets
+
+* Either `wxPython <http://www.wxpython.org/>`_ or  `PyQt
+  <http://www.riverbankcomputing.co.uk/software/pyqt/intro>`_ to display
+  interactive plots. As an alternative to PyQt, Chaco is being tested more and
+  more with the `PySide <http://www.pyside.org/>`_ toolkit (LGPL license).
+
+.. .. note
+.. ::
+.. In addition to wxPython or PyQt a cross-platform OpenGL backend (using
+.. Pyglet) is in the works, and it will not require WX or Qt.
+
+Installing Chaco with EPD
+-------------------------
+
+Chaco, the rest of the `Enthought Tool Suite <http://code.enthought.com/>`_,
+and a lot more are bundled with EPD.  Getting EPD allows you to install Chaco
+and all its dependencies at once; however, these packages will be linked to a
+new instance of Python.  The EPD Free distribution is free for all users and
+contains all that you need to use Chaco.
+
+To get EPD, go to the `EPD download page
+<http://www.enthought.com/products/getepd.php>`_ and get the appropriate
+version for your platform.  After running the installer, you will have a
+working version of Chaco and several examples.
+
+Building Chaco
+--------------
+
+Building Chaco on your machine requires you to build Chaco and each of its
+dependencies, but it has the advantage of installing Chaco on top of the Python
+instance you already have installed.  The build process may be challenging and
+will require you to have SWIG, Cython and several development libraries
+installed.
+
+To do this, you can either
+
+1. Install Chaco and its :ref:`dependencies` from `PyPI
+   <http://pypi.python.org/pypi>`_ using `easy_install
+   <http://packages.python.org/distribute/easy_install.html>`_ (part of
+   setuptools) or using `pip <http://www.pip-installer.org/en/latest/>`_. For
+   example::
+
+        easy_install chaco
+
+   or::
+
+        pip install chaco
+
+2. Or, download the source from the `Chaco github repository
+   <https://github.com/enthought/chaco>`_ or alternatively as a part of `ETS
+   <http://code.enthought.com/source/>`_.
+
+.. Please refer to the :ref:`installation` section for more detailed
+.. instructions.
+.. TODO This 'installation' section does not currently exist
 
 
-  1. Install the Enthought Python Distribution.  Chaco, the rest of the
-     Enthought Tool Suite and a lot more are bundled in it.  This allows for
-     the installation of Chaco and all its dependencies to be installed at
-     once. **These packages will be linked to a new instance of python**.
-
-     Go to the `EDP download page
-     <http://www.enthought.com/products/getepd.php>`_ and get the appropriate
-     version for your platform (Windows, Mac, Linux, Solaris are available).
-     After running the installer, you will have a working version of Chaco and
-     several examples.
-
-     The EPD Free distribution is **free for all users** and contains all that
-     you need to use Chaco.
-
-
-Building Chaco on your machine requires to build Chaco and each of its
-dependencies. It has the advantage of installing it on top of the python
-instance of your OS.  But the building process might be challenging and will
-require SWIG, Cython and several development libraries to be installed. 
-
-
-  2. *(Linux only)* Install via the distribution's packaging mechanism.
-     Enthought provide .debs installers for Debian and Ubuntu and .rpm
-     installers for Redhat. 
-
-
-  3. Download sources as a project from the `Chaco github repository
-     <https://github.com/enthought/chaco>`_ or alternatively as a part of the
-     ETS (for details see http://code.enthought.com/source/). Please refer to
-     the :ref:`installation` section for more detailed instructions.
-
-  4. Install Chaco and its :ref:`dependencies` from `PyPI
-     <http://pypi.python.org/pypi>`_ using `easy_install
-     <http://packages.python.org/distribute/easy_install.html>`_ (part of
-     setuptools) or using `pip <http://www.pip-installer.org/en/latest/>`_. For
-     example using easy_install, simply type ::
-
-        easy_install Chaco
-
-Chaco built-in Examples
+Chaco Built-in Examples
 =======================
 
 To test installation and find examples of what can be done with Chaco, Chaco is
@@ -374,3 +376,10 @@ visually appealing.
     with ``--gui=qt``. Make sure that the environment variable ``QT_API``
     is set correctly, as described `here
     <http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside>`_
+
+
+License
+=======
+
+As part of the `Enthought Tool Suite <http://code.enthought.com/>`_, Chaco is
+free and open source under the BSD license.
