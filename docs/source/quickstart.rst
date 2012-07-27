@@ -147,15 +147,15 @@ Location
 
    * For the most up-to-date version of the examples using the old version of
      the namespace (importing chaco using ``from enthought.chaco``):
-  
+
      :command:`git clone https://github.com/enthought/chaco/tree/old-namespace/examples`
 
    * ETS 3.0 or Chaco 3.0:
-  
+
      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples`
 
    * ETS 2.8 or Chaco 2.0.x:
-  
+
      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
 
 Chaco examples can be found in the :file:`examples/demo/` and
@@ -167,7 +167,7 @@ Chaco in an interactive way from IPython. This "shell" mode is more familiar to
 Matplotlib or Matlab users.
 
 .. note::
-   Some of these examples can be visualized in our 
+   Some of these examples can be visualized in our
    `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
 
 
@@ -190,14 +190,14 @@ You can interact with the plot in several ways:
 * To zoom the plot:
 
     * Mouse wheel: scroll up to zoom in, and scroll down to zoom out.
-    
+
     * Zoom box: Press "z", and then draw a box region to zoom in on. (There is
       no box-based zoom out.) Press Ctrl-Left and Ctrl-Right to go back and
       forward in your zoom box history.
-    
+
     * Drag: hold down the right mouse button and drag the mouse up or down. Up
       zooms in, and down zooms out.
-    
+
     * For any of the above, press Escape to resets the zoom to the original
       view.
 
@@ -215,7 +215,7 @@ directory has some examples that require additional data or packages. In
 particular,
 
 * :file:`spectrum.py` requires that you have PyAudio installed and a working
-  microphone.  
+  microphone.
 
 * :file:`data_cube.py` needs to download about 7.3mb of data from the Internet
   the first time it is executed, so you must have a working Internet
@@ -261,7 +261,7 @@ You can interact with the plot in the following ways:
           region to zoom in on.  (There is no box-based zoom out.)  Press
           Ctrl-Left and Ctrl-Right to go back and forward in your zoom box
           history.
-        
+
         * For either of the above, press Escape to reset the zoom to the
           original view.
 
@@ -276,7 +276,7 @@ run the previous example again::
 
 This displays the plot window, but gives you another IPython prompt.  You can
 now use various commands from the :mod:`chaco.shell` package to interact with
-the plot.  
+the plot.
 
 * Import the shell commands::
 
