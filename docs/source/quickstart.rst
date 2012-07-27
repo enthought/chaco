@@ -20,8 +20,8 @@ Installation
 ============
 
 There are several ways to get Chaco. The easiest way is through the `Enthought
-Python Distribution (EPD) <http://www.enthought.com/epd>`_, which also provides
-many other useful packages and is available for several platforms.  Chaco may
+Python Distribution (EPD) <http://www.enthought.com/epd>`_, which is available
+for several platforms and also provides many other useful packages.  Chaco may
 also be available through a package manager on your platform, such as apt on
 Ubuntu or `MacPorts <http://www.macports.org/>`_ on OS X.  You can also build
 Chaco yourself, but because of the number of packages required, we highly
@@ -44,7 +44,7 @@ Dependencies
   interactive visual components, and for abstracting away GUI-toolkit-specific
   details of mouse and keyboard handling
 
-* `Numpy <http://numpy.scipy.org/>`_, for dealing efficiently with large
+* `NumPy <http://numpy.scipy.org/>`_, for dealing efficiently with large
   datasets
 
 * Either `wxPython <http://www.wxpython.org/>`_ or  `PyQt
@@ -86,15 +86,15 @@ To do this, you can either
    <http://pypi.python.org/pypi>`_ using `easy_install
    <http://packages.python.org/distribute/easy_install.html>`_ (part of
    setuptools) or using `pip <http://www.pip-installer.org/en/latest/>`_. For
-   example::
+   example
 
-        easy_install chaco
+   :command:`easy_install chaco`
 
-   or::
+   or
 
-        pip install chaco
+   :command:`pip install chaco`
 
-2. Or, download the source from the `Chaco github repository
+2. Or, download the source from the `Chaco GitHub repository
    <https://github.com/enthought/chaco>`_ or alternatively as a part of `ETS
    <http://code.enthought.com/source/>`_.
 
@@ -103,14 +103,13 @@ To do this, you can either
 .. TODO This 'installation' section does not currently exist
 
 
-Chaco Built-in Examples
-=======================
+Built-in Examples
+=================
 
-To test installation and find examples of what can be done with Chaco, Chaco is
-shipped with example files. Almost all of the Chaco examples are stand-alone
-files that can be run individually, from any location. Depending on how you
-installed Chaco, you may or may not have the examples already.
-
+Chaco ships with several examples for testing your installation and to show you
+what Chaco can do. Almost all of the examples are stand-alone files that you
+can run individually, from any location. Depending on how you installed Chaco,
+you may or may not have the examples already.
 
 Location
 --------
@@ -122,7 +121,7 @@ Location
      location.  This is typically
      :file:`C:\\Python27\\Examples\\Chaco-<version>`.  On MS Windows these
      examples can be browsed from the start menu, by clicking
-     :command:`Applications > Enthought > Examples`.
+     :menuselection:`Start --> Applications --> Enthought --> Examples`.
 
    * On Linux, they are in the :file:`Examples/Chaco-<version>` subdirectory of
      your installation location.
@@ -130,15 +129,12 @@ Location
    * On Mac OS X, they are in the
      :file:`/Applications/Enthought/Examples/Chaco-<version>` directory.
 
-
-2. If you downloaded and installed Chaco from source (from Github or via the
+2. If you downloaded and installed Chaco from source (from GitHub or via the
    PyPI tar.gz file), the examples are located in the :file:`examples/`
    subdirectory inside the root of the Chaco source tree, next to :file:`docs/`
    and the :file:`enthought/` directories.
 
-
-3. If you happen to be on a machine with Chaco installed, but you don't know
-   the exact installation mechanism, then you might need to download the
+3. If you don't know how Chaco was installed, then you can download the
    examples separately using Git (or Subversion for older versions of Chaco):
 
    * For the most up-to-date version of the examples:
@@ -159,11 +155,11 @@ Location
      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
 
 Chaco examples can be found in the :file:`examples/demo/` and
-:file:`examples/tutorials/` directories. Some examples are classified by themes
-and located in separate directories.  Almost all of the Chaco examples are
-stand-alone files that can be run individually. They can be executed from
-command line and we will illustrate this first.  We will then show how to run
-Chaco in an interactive way from IPython. This "shell" mode is more familiar to
+:file:`examples/tutorials/` directories. Some are classified by themes and
+located in separate directories.  Almost all of the Chaco examples are
+standalone files that can be run individually. We will first show how to
+execute them from the command line, and then we will show how to run Chaco in
+an interactive way from IPython. This "shell" mode will be more familiar to
 Matplotlib or Matlab users.
 
 .. note::
@@ -171,48 +167,49 @@ Matplotlib or Matlab users.
    `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
 
 
-First plots from command line
------------------------------
+First plots from the command line
+---------------------------------
 
-From the examples directory, run the ``simple_line`` example:
+From the :file:`examples/demo` directory, run the ``simple_line`` example:
 
   :command:`python simple_line.py`
 
-This opens a plot of several Bessel functions and a legend.
+This opens a plot of several Bessel functions with a legend.
 
   .. image:: images/simple_line.png
 
 You can interact with the plot in several ways:
+.. Ctrl-Left and Ctrl-Right don't work in OS X?
 
 * To pan the plot, hold down the left mouse button inside the plot area (but
   not on the legend) and drag the mouse.
 
 * To zoom the plot:
 
-    * Mouse wheel: scroll up to zoom in, and scroll down to zoom out.
+    * Mouse wheel: scroll up to zoom in, and scroll down to zoom out (or the
+      reverse you're on a version of OS X with 'natural scrolling').
 
-    * Zoom box: Press "z", and then draw a box region to zoom in on. (There is
-      no box-based zoom out.) Press Ctrl-Left and Ctrl-Right to go back and
-      forward in your zoom box history.
+    * Zoom box: Press :kbd:`z`, and then draw a box region to zoom in on.
+      (There is no box-based zoom out.) Press :kbd:`Ctrl-Left` and
+      :kbd:`Ctrl-Right` to go back and forward in your zoom box history.
 
     * Drag: hold down the right mouse button and drag the mouse up or down. Up
       zooms in, and down zooms out.
 
-    * For any of the above, press Escape to resets the zoom to the original
-      view.
+    * For any of the above, press :kbd:`Escape` to reset the zoom to the
+      original view.
 
 * To move the legend, hold down the right mouse button inside the legend and
   drag it around. Note that you can move the legend outside of the plot area.
 
-* To exit the plot, click the "close window" button on the window frame
-  (Windows, Linux) or choose the Quit option on the Python menu (on Mac).
-  Alternatively, can you press Ctrl-C in the terminal.
+* To exit the plot, click the "close window" button on the window frame or (on
+  Mac) choose the Quit option on the Python menu.  Alternatively, can you press
+  :kbd:`Ctrl-C` in the terminal.
 
-You can run most of the examples in the top-level :file:`examples` directory,
-the :file:`examples/demo/basic/` directory, and the
-:file:`examples/demo/shell/` directory.  The :file:`examples/demo/advanced/`
-directory has some examples that require additional data or packages. In
-particular,
+You can run most of the examples in the the :file:`examples/demo/basic/`
+directory and the :file:`examples/demo/shell/` directory.  The
+:file:`examples/demo/advanced/` directory has some examples that require
+additional data or packages. In particular,
 
 * :file:`spectrum.py` requires that you have PyAudio installed and a working
   microphone.
@@ -224,7 +221,6 @@ particular,
 
 For detailed information about each built-in example, see the :ref:`examples`
 section.
-
 
 
 First plots from IPython
@@ -248,26 +244,11 @@ This shows two overlapping line plots.
 
 .. image:: images/lines.png
 
-You can interact with the plot in the following ways:
+You can interact with this plot just as in the previous section.
 
-    * To pan the plot, hold down the left mouse button inside the plot area and
-      dragging the mouse.
+Now exit the plot, and start IPython with the ``--gui=wx`` option [#guiqt]_:
 
-    * To zoom the plot:
-
-        * Mouse wheel: scroll up zooms in, and scroll down zooms out.
-
-        * Zoom box: hold down the right mouse button, and then draw a box
-          region to zoom in on.  (There is no box-based zoom out.)  Press
-          Ctrl-Left and Ctrl-Right to go back and forward in your zoom box
-          history.
-
-        * For either of the above, press Escape to reset the zoom to the
-          original view.
-
-Now exit the plot, and start IPython with the ``--gui=wx`` option [#guiqt]_: ::
-
-    ipython --gui=wx
+    :command:`ipython --gui=wx`
 
 This tells IPython to start a wxPython mainloop in a background thread.  Now
 run the previous example again::
@@ -278,15 +259,15 @@ This displays the plot window, but gives you another IPython prompt.  You can
 now use various commands from the :mod:`chaco.shell` package to interact with
 the plot.
 
-* Import the shell commands::
+Import the shell commands::
 
     In [2]: from chaco.shell import *
 
-* Set the X-axis title::
+Set the X-axis title::
 
     In [3]: xtitle("X data")
 
-* Toggle the legend::
+Toggle the legend::
 
     In [4]: legend()
 
@@ -303,12 +284,13 @@ comprise the actual plot. See the :ref:`tutorial_ipython` section for
 information on all you can do with Chaco from within IPython.
 
 
-Chaco Plot integrated in a Traits application
-=============================================
-Let's create from scratch the simplest possible Chaco plot embedded inside a
-`Traits <http://github.enthought.com/traits/>`_ application.
+Chaco plot embedded in a Traits application
+===========================================
 
-First, some imports will bring in the necessary components::
+Let's create, from scratch, the simplest possible Chaco plot (embedded inside a
+`Traits <http://github.enthought.com/traits/>`_ application).
+
+First, some imports to bring in necessary components::
 
   from chaco.api import ArrayPlotData, Plot
   from enable.component_editor import ComponentEditor
@@ -316,12 +298,12 @@ First, some imports will bring in the necessary components::
   from traits.api import HasTraits, Instance
   from traitsui.api import View, Item
 
-The imports from `chaco` and `enable` will support the creation of the plot.
-The imports from `traits` bring in the components to embed the plot inside a
-trait application. (Refer to the `traits documentation
+The imports from `chaco` and `enable` support the creation of the plot.  The
+imports from `traits` bring in components to embed the plot inside a Traits
+application. (Refer to the `Traits documentation
 <http://github.enthought.com/traits/>`_ for more details about building an
-interactive application using Traits.) Now let's create a trait class with a
-view that contains only 1 element: a Chaco plot inside a slightly customized
+interactive application using Traits.) Now let's create a Traits class with a
+view that contains only one element: a Chaco plot inside a slightly customized
 window::
 
   class MyPlot(HasTraits):
@@ -330,24 +312,31 @@ window::
                          width = 500, height = 500,
                          resizable = True, title = "My line plot")
 
-A few options have been set to control the window containing the plot.  Now, at
-creation, we would like to pass our data. Let's assume that they are in the
-form of a set of points with coordinates contains in 2 numpy arrays x and y.
-Then, the Plot object must be created::
+A few options have been set to control the window containing the plot.  Now,
+when the plot is created, we would like to pass in our data. Let's assume the
+data is a set of points with coordinates contained in two NumPy arrays `x` and
+`y`.  So, adding an `__init__` method to create the Plot object looks as
+follows::
 
-  def __init__(self, x, y, *args, **kw):
-      super(MyPlot, self).__init__(*args, **kw)
-      plotdata = ArrayPlotData(x=x,y=y)
-      plot = Plot(plotdata)
-      plot.plot(("x","y"), type = "line", color = "blue")
-      plot.title = "sin(x)*x**3"
-      self.plot = plot
+  class MyPlot(HasTraits):
+      plot = Instance(Plot)
+      traits_view = View(Item('plot', editor = ComponentEditor(), show_label = False),
+                         width = 500, height = 500,
+                         resizable = True, title = "My line plot")
 
-Deriving from HasTraits the new class can use all the power of Traits and the
-call to super() in its constructor makes sure this object possesses the
-attributes and methods of its parent class.  Now let's use our trait object:
-simply generate some data, pass it to an instance of MyPlot and call
-configure_traits to create the UI::
+      def __init__(self, x, y, *args, **kw):
+          super(MyPlot, self).__init__(*args, **kw)
+          plotdata = ArrayPlotData(x=x,y=y)
+          plot = Plot(plotdata)
+          plot.plot(("x","y"), type = "line", color = "blue")
+          plot.title = "sin(x)*x**3"
+          self.plot = plot
+
+Since it inherits from HasTraits, the new class can use all the power of
+Traits, and the call to super() in its `__init__` method makes sure this object
+possesses the attributes and methods of its parent class.  Now let's use our
+Traits object. Below, we generate some data, pass it to an instance of MyPlot
+and call configure_traits to create the UI::
 
   import numpy as np
   x = np.linspace(-14,14,100)
@@ -359,15 +348,13 @@ The result should look like
 
 .. image:: images/mylineplot.png
 
-This might look like a lot of code to visualize a function. But this represents
-a relatively simple basis to build full featured applications with a custom UI
-and custom tools on top of the plotting functionality such as those illustrated
-in the examples. For example, the trait object allows you to create controls
-for your plot at a very high level, add these controls to the UI with very
-little work, add listeners to update the plot when the data changes. Exploring
-the capabilities of Chaco allows you to create tools to interact with the plot,
-and overlays for example allow you to make these tools intuitive to use and
-visually appealing.
+This might look like a lot of code to visualize a function, but this is a
+relatively simple basis on top of which we can build full-featured applications
+with custom UIs and custom tools. For example, the Traits object allows you to
+create controls for your plot at a very high level, add these controls to the
+UI with very little work, and add listeners to update the plot when the data
+changes.  Chaco also allows you to create tools to interact with the plot and
+overlays that make these tools intuitive and visually appealing.
 
 
 .. rubric:: Footnotes
