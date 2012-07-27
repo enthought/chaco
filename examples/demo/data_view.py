@@ -10,13 +10,14 @@ from chaco.api import DataView, ArrayDataSource, ScatterPlot, \
 from chaco.tools.api import PanTool, ZoomTool
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
-from traitsui.api import Item, View
+from traitsui.api import UItem, View
 
 class PlotExample(HasTraits):
     plot = Instance(Component)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(size=(800, 700))),
-                       resizable=True, title="Dataview + renderer example"
+    traits_view = View(UItem('plot', editor=ComponentEditor()),
+                       width=700, height=600, resizable=True,
+                       title="Dataview + renderer example"
                        )
 
     def _plot_default(self):

@@ -11,12 +11,12 @@ from numpy import linspace, meshgrid, pi, cos, sin, log10
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance, Property, Float, \
             Enum, Array, Tuple, Int, Callable, cached_property
-from traitsui.api import Item, Group, HGroup, VGroup, View, RangeEditor
+from traitsui.api import Item, UItem, HGroup, View, RangeEditor
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, ColorBar, HPlotContainer, \
-                      LinearMapper, LogMapper, CMapImagePlot, Spectral, \
-                      TransformColorMapper, jet, hot
+                      LinearMapper, LogMapper, CMapImagePlot, \
+                      TransformColorMapper, jet
 from chaco.tools.api import PanTool, ZoomTool
 
 
@@ -162,23 +162,19 @@ class DataGridView(HasTraits):
 
 
     traits_view = View(
-                    VGroup(
-                        HGroup(
-                            Item('colormap_scale'),
-                            Item('power',
-                                 editor=RangeEditor(low=0.1,
-                                                    high=3.0,
-                                                    format="%4.2f"),
-                                 visible_when='colormap_scale.startswith("power")',
-                                 springy=True),
-                            Item('colorbar_scale'),
-                            springy=True),
-                        Group(
-                            Item('plot',
-                                 editor=ComponentEditor(size=(750,500)), 
-                            show_label=False)),
-                        ),
-                    resizable=True, title="TransformColorMapper Demo",
+                    HGroup(
+                        Item('colormap_scale'),
+                        Item('power',
+                                editor=RangeEditor(low=0.1,
+                                                high=3.0,
+                                                format="%4.2f"),
+                                visible_when='colormap_scale.startswith("power")',
+                                springy=True),
+                        Item('colorbar_scale'),
+                        springy=True),
+                    UItem('plot',editor=ComponentEditor()),
+                    width=750, height=500, resizable=True,        
+                    title="TransformColorMapper Demo",
                     )
 
 

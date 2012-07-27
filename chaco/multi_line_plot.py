@@ -209,6 +209,8 @@ class MultiLinePlot(BaseXYPlot):
 
         if len(coordinates) > 1:
             dy = coordinates[1] - coordinates[0]
+            if dy == 0:
+                dy = 1.0
         else:
             # default coordinate spacing if there is only 1 coordinate
             dy = 1.0
@@ -407,6 +409,9 @@ class MultiLinePlot(BaseXYPlot):
             # Note: the list is reversed for testing with _render_filled.
             for k, points in reversed(tmp):
                 color = color_func(k)
+                # Apply the alpha
+                alpha = color[-1] if len(color) == 4 else 1
+                color = color[:3] + (alpha * self.alpha,)
                 gc.set_stroke_color(color)
                 gc.set_line_width(self.line_width)
                 gc.set_line_dash(self.line_style_)
@@ -436,13 +441,9 @@ class MultiLinePlot(BaseXYPlot):
 
 
     def _alpha_changed(self):
-        self.color_ = self.color_[0:3] + (self.alpha,)
         self.invalidate_draw()
         self.request_redraw()
         return
-
-    def _default_color(self):
-        return black_color_trait
 
     def _color_changed(self):
         self.invalidate_draw()

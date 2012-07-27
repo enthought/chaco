@@ -11,7 +11,6 @@ is also available, but panning is not.
 """
 
 # Major library imports
-import sys
 from scipy.special import jn
 from numpy import arange
 
@@ -19,7 +18,7 @@ from chaco.example_support import COLOR_PALETTE
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import Bool, HasTraits, Instance
-from traitsui.api import Item, Group, View
+from traitsui.api import UItem, View
 
 # Chaco imports
 from chaco.api import OverlayPlotContainer, create_line_plot, add_default_axes, \
@@ -92,13 +91,10 @@ class Demo(HasTraits):
     # trait is not exposed in the UI.
     use_downsampling = Bool
 
-    traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+    traits_view = View(UItem('plot', editor=ComponentEditor()),
+                       width=size[0], height=size[1], resizable=True,
+                       title=title
+                       )
 
     def _plot_default(self):
         return _create_plot_component(self.use_downsampling)

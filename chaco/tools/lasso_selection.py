@@ -121,10 +121,10 @@ class LassoSelection(AbstractController):
         """
         # We may want to generalize this for the n-dimensional case...
 
-        self._active_selection = empty((0,2))
+        self._active_selection = empty((0,2), dtype=numpy.bool)
 
         if self.selection_datasource is not None:
-            self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()))
+            self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()), dtype=numpy.bool)
         self.selection_mode = "include"
         self.event_state = 'selecting'
         self.selecting_mouse_move(event)
@@ -149,7 +149,7 @@ class LassoSelection(AbstractController):
         self._update_selection()
 
         self._previous_selections.append(self._active_selection)
-        self._active_selection = empty((0,2))
+        self._active_selection = empty((0,2), dtype=numpy.bool)
         return
 
     def selecting_mouse_move(self, event):
@@ -175,7 +175,8 @@ class LassoSelection(AbstractController):
 
         Ends the selection operation.
         """
-        self.selecting_left_up(event)
+        print event
+        #self.selecting_left_up(event)
         return
 
     def normal_key_pressed(self, event):
@@ -199,13 +200,13 @@ class LassoSelection(AbstractController):
     #----------------------------------------------------------------------
 
     def _dataspace_points_default(self):
-        return empty((0,2))
+        return empty((0,2), dtype=numpy.bool)
 
     def _reset(self):
         """ Resets the selection
         """
         self.event_state='normal'
-        self._active_selection = empty((0,2))
+        self._active_selection = empty((0,2), dtype=numpy.bool)
         self._previous_selections = []
         self._update_selection()
 
@@ -231,7 +232,7 @@ class LassoSelection(AbstractController):
         if self.selection_datasource is None:
             return
 
-        selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.int32)
+        selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.bool)
         data = self._get_data()
 
         # Compose the selection mask from the cached selections first, then

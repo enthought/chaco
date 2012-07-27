@@ -4,8 +4,7 @@ Classes for formatting labels for values or times.
 
 from math import ceil, floor, fmod, log10
 from numpy import abs, all, array, asarray, amax, amin
-from safetime import strftime, time, safe_fromtimestamp
-from time import localtime
+from safetime import strftime, time, safe_fromtimestamp, localtime
 import warnings
 
 
