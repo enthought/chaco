@@ -10,6 +10,8 @@ chosen by a line interactor.
 Animation must be disabled (unchecked) before the model can be edited.
 """
 
+from __future__ import with_statement
+
 # Standard library imports
 from optparse import OptionParser
 import sys
@@ -266,10 +268,13 @@ class PlotUI(HasTraits):
         self.pd.set_data("scatter_value2", array([]))
         self.pd.set_data("scatter_color2", array([]))
 
-        self.cross_plot2 = Plot(self.pd, width = 140, orientation="v", resizable="v", padding=20, padding_bottom=160)
+        self.cross_plot2 = Plot(self.pd, width = 140, orientation="v", 
+                                resizable="v", padding=20, padding_bottom=160)
         self.cross_plot2.plot(("line_index2", "line_value2"),
                              line_style="dot")
-        self.cross_plot2.plot(("scatter_index2","scatter_value2","scatter_color2"),
+        self.cross_plot2.plot(("scatter_index2",
+                               "scatter_value2",
+                               "scatter_color2"),
                              type="cmap_scatter",
                              name="dot",
                              color_mapper=self._cmap(image_value_range),
@@ -351,8 +356,10 @@ class PlotUI(HasTraits):
             self.cross_plot.color_mapper = self._cmap(value_range)
             # FIXME: change when we decide how best to update plots using
             # the shared colormap in plot object
-            self.cross_plot.plots["dot"][0].color_mapper = self._cmap(value_range)
-            self.cross_plot2.plots["dot"][0].color_mapper = self._cmap(value_range)
+            self.cross_plot.plots["dot"
+                                  ][0].color_mapper = self._cmap(value_range)
+            self.cross_plot2.plots["dot"
+                                   ][0].color_mapper = self._cmap(value_range)
             self.container.request_redraw()
 
     def _num_levels_changed(self):

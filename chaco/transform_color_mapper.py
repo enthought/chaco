@@ -1,8 +1,9 @@
-from numpy import clip, isinf, ones_like
+from numpy import clip, isinf, ones_like, empty
 
 from chaco.api import ColorMapper
 from traits.api import Trait, Callable, Tuple, Float, on_trait_change
 
+from speedups import map_colors
 
 class TransformColorMapper(ColorMapper):
     """This class adds arbitrary data transformations to a ColorMapper.
@@ -116,13 +117,15 @@ class TransformColorMapper(ColorMapper):
         """
 
         norm_data = self._compute_normalized_data(data_array)
-        return self._map(norm_data)
+        # The data are normalized, so we can pass low = 0, high = 1
+        rgba = map_colors(norm_data, self.steps, 0, 1, self._red_lut,
+                self._green_lut, self._blue_lut, self._alpha_lut)
+        return rgba
 
 
     def map_index(self, data_array):
         """ Maps an array of values to their corresponding color band index. 
         """
-
         norm_data = self._compute_normalized_data(data_array)
         indices = (norm_data * (self.steps-1)).astype(int)
         return indices
@@ -156,7 +159,11 @@ class TransformColorMapper(ColorMapper):
             # initialization before range is connected to a data source).
             norm_data = 0.5*ones_like(data_array)
         else:
-            norm_data = clip((data_array - low) / range_diff, 0.0, 1.0)
+            norm_data = empty(data_array.shape, dtype='float32')
+            norm_data[:] = data_array
+            norm_data -= low
+            norm_data /= range_diff
+            clip(norm_data, 0.0, 1.0, norm_data)
 
         if self.unit_func is not None:
             norm_data = self.unit_func(norm_data)

@@ -143,9 +143,9 @@ def autumn(range, **traits):
 def bone(range, **traits):
     """ Generator function for the 'bone' colormap. """
 
-    _data = {'red':   ((0., 0., 0.),(1.0, 1.0, 1.0)),
-             'green': ((0., 0., 0.),(1.0, 1.0, 1.0)),
-             'blue':  ((0., 0., 0.),(1.0, 1.0, 1.0))}
+    _data = {'red':   ((0., 0., 0.), (0.746032, 0.652778, 0.652778), (1.0, 1.0, 1.0)),
+             'green': ((0., 0., 0.), (0.365079, 0.319444, 0.319444), (0.746032, 0.777778, 0.777778), (1.0, 1.0, 1.0)),
+             'blue':  ((0., 0., 0.), (0.365079, 0.444444, 0.444444), (1.0, 1.0, 1.0))}
 
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 

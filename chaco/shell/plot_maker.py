@@ -327,7 +327,7 @@ def do_imshow(plotdata, active_plot, *data, **kwargs):
     x = None
     y = None
     try:
-        z = _get_or_create_plot_data(data[0])
+        z = _get_or_create_plot_data(data[0], plotdata)
     except ValueError:
         # z is the name of the file
         # create plot data
@@ -348,7 +348,7 @@ def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
     if len(data) == 1:
         x = None
         y = None
-        z = _get_or_create_plot_data(data[0])
+        z = _get_or_create_plot_data(data[0], plotdata)
 
     # three data sources means we got x-y grid data of some sort, too
     elif len(data) == 3:
@@ -372,7 +372,7 @@ def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
     if len(data) == 1:
         x = None
         y = None
-        z = _get_or_create_plot_data(data[0])
+        z = _get_or_create_plot_data(data[0], plotdata)
 
     # three data sources means we got x-y grid data of some sort, too
     elif len(data) == 3:

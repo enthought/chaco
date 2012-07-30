@@ -49,13 +49,7 @@ class PlotFrame(DemoFrame):
         x = self.x_values[:self.current_index]
         y = self.y_values[:self.current_index]
 
-        value_range = None
-        index_range = None
         plot = create_line_plot((x,y), color="red", width=2.0)
-        value_range = plot.value_mapper.range
-        index_range = plot.index_mapper.range
-        index_range.low = -5
-        index_range.high = 15
         plot.padding = 50
         plot.fill_padding = True
         plot.bgcolor = "white"

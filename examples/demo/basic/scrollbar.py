@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""
+""" Plot with pan-zoom interaction.
+
 Draws some x-y line and scatter plots. On the left hand plot:
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.

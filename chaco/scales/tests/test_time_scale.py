@@ -6,6 +6,8 @@ import numpy as np
 
 from chaco.scales.time_scale import tfrac, trange, \
         TimeScale, CalendarScaleSystem
+from chaco.scales.api import TimeFormatter
+
 
 #----------------------------------------------------------------
 # tfrac tests
@@ -188,6 +190,17 @@ def test_time_scale_milliseconds_01():
     ticks = ts.ticks(0, 0.1)
     assert len(ticks) == 11
     assert (np.array(ticks) == np.linspace(0.0, 0.1, 11)).all()
+
+def test_time_scale_with_formatter():
+    """ Regression test for TimeScale() with formatter keyword.
+
+    Using the formatter keyword in the constructor of TimeScale
+    could raise a KeyError.  This test passes if no exception is
+    raised.
+    """
+    ts = TimeScale(seconds=1, formatter=TimeFormatter())
+    ts = TimeScale(minutes=1, formatter=TimeFormatter())
+
 
 #----------------------------------------------------------------
 # CalendarScaleSystem tests

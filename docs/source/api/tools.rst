@@ -12,7 +12,7 @@ Tools
     :show-inheritance:
 
 :class:`BetterSelectingZoom`
-==========================
+============================
 .. autoclass:: BetterSelectingZoom
     :members:
     :show-inheritance:
@@ -60,13 +60,13 @@ Tools
     :show-inheritance:
 
 :class:`ImageInspectorTool`
-==========================
+===========================
 .. autoclass:: ImageInspectorTool
     :members:
     :show-inheritance:
 
 :class:`ImageInspectorOverlay`
-==========================
+==============================
 .. autoclass:: ImageInspectorOverlay
     :members:
     :show-inheritance:
@@ -132,7 +132,7 @@ Tools
     :show-inheritance:
 
 :class:`RangeSelectionOverlay`
-==========================
+==============================
 .. autoclass:: RangeSelectionOverlay
     :members:
     :show-inheritance:

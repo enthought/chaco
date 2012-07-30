@@ -2,7 +2,7 @@
 .. _tutorials:
 
 Tutorials, webinars, and examples
-================================
+=================================
 
 Tutorials
 ---------

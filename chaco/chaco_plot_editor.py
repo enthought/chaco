@@ -140,7 +140,7 @@ class ChacoPlotItem(Item):
         self.index = index
         self.value = value
         self.type = type
-        self.name = "Plot"
+        self.name = index
         super(ChacoPlotItem, self).__init__(**traits)
 
         self.editor = ChacoEditorFactory()
