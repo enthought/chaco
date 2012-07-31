@@ -1,11 +1,13 @@
 from __future__ import with_statement
 
-from chaco.api import ScatterPlot, render_markers
+from chaco.scatterplot import ScatterPlot, render_markers
 from enable.api import MarkerNameDict, CustomMarker, AbstractMarker
 from kiva.constants import STROKE
 from traits.api import Array
 
 class VariableSizeScatterPlot(ScatterPlot):
+
+    # TODO: for consistency, there should be a size data source and a mapper
     marker_size = Array
 
     def _render(self, gc, points, icon_mode=False):
@@ -34,6 +36,7 @@ class VariableSizeScatterPlot(ScatterPlot):
             # Draw the default axes, if necessary
             self._draw_default_axes(gc)
             gc.restore_state()
+
 
 def render_variable_size_markers(gc, points, marker, marker_size,
                    color, line_width, outline_color,

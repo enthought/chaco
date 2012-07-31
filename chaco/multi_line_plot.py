@@ -39,7 +39,7 @@ class MultiLinePlot(BaseXYPlot):
 
     value : instance of a MultiArrayDataSource
         Note that the `scale`, `offset` and `normalized_amplitude` attributes of the
-        MultiArrayDataSource control the projection of the traces into the (x,y)
+        MultiLinePlot control the projection of the traces into the (x,y)
         plot.  In simplest case, `scale=1` and `offset=0`, and `normalized_amplitude`
         controls the scaling of the traces relative to their base y value.
 

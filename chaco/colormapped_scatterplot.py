@@ -52,7 +52,7 @@ class ColormappedScatterPlot(ScatterPlot):
 
     # Determines what drawing approach to use:
     #
-    # bands:
+    # banded:
     #     Draw the points color-band by color-band, thus reducing the number of
     #     set_stroke_color() calls. Disadvantage is that some colors will
     #     appear more prominently than others if there are a lot of
@@ -66,7 +66,7 @@ class ColormappedScatterPlot(ScatterPlot):
     #
     # TODO: Based on preliminary results, "banded" isn't significantly
     # more expensive than "bruteforce" for small datasets (<1000),
-    # so perhaps bruteforce should be removed.
+    # so perhaps banded should be removed.
     render_method = Enum("auto", "banded", "bruteforce")
 
     # A dict mapping color-map indices to arrays of indices into self.data.

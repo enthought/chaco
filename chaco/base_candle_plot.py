@@ -11,6 +11,8 @@ from traits.api import Bool, Float, Int, List, Property, Trait
 # Chaco imports
 from base_xy_plot import BaseXYPlot
 
+# TODO: allow to set the width of the bar
+
 def Alias(name):
     return Property(lambda obj: getattr(obj, name),
                     lambda obj, val: setattr(obj, name, val))

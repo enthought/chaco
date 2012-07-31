@@ -31,15 +31,18 @@ class PlotComponent(Component):
     # each of its contained components for each rendering pass.
     # Typically, the definitions of the layers are:
     #
-    # 1. 'background': Background image, shading, and borders
-    # 2. 'underlay': Axes and grids
-    # 3. 'image': A special layer for plots that render as images.  This is in
-    #    a separate layer since these plots must all render before non-image
-    #    plots.
+    # 1. 'background': Background image, shading
+    # 2. 'image': A special layer for plots that render as images.  This is in
+    #     a separate layer since these plots must all render before non-image
+    #     plots.
+    # 3. 'underlay': Axes and grids
     # 4. 'plot': The main plot area itself
-    # 5. 'annotation': Lines and text that are conceptually part of the "plot" but
-    #    need to be rendered on top of everything else in the plot.
-    # 6. 'overlay': Legends, selection regions, and other tool-drawn visual
+    # 5. 'selection': Selected content are rendered above normal plot elements
+    #                 to make them stand out
+    # 6. 'border': Plot borders
+    # 7. 'annotation': Lines and text that are conceptually part of the "plot"
+    #    but need to be rendered on top of everything else in the plot
+    # 8. 'overlay': Legends, selection regions, and other tool-drawn visual
     #    elements
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 

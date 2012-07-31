@@ -207,7 +207,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         plot.
 
         Parameters
-        ==========
+        ----------
         screen_pt : (x,y)
             A point to test.
         threshold : integer
@@ -217,7 +217,7 @@ class BaseXYPlot(AbstractPlotRenderer):
             If True, also return the distance.
 
         Returns
-        =======
+        -------
         If self.hittest_type is 'point', then this method returns the screen
         coordinates of the closest point on the plot as a tuple (x,y)
 
@@ -254,7 +254,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         them; to do the latter use get_closest_line() instead.
 
         Parameters
-        ==========
+        ----------
         screen_pt : (x,y)
             A point to test.
         threshold : integer
@@ -263,7 +263,7 @@ class BaseXYPlot(AbstractPlotRenderer):
             are performed, and the nearest point is returned.
 
         Returns
-        =======
+        -------
         (x, y, distance) of a datapoint nearest to *screen_pt*.
         If no data points are within *threshold* of *screen_pt*, returns None.
         """
@@ -280,7 +280,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         points in this plot's dataset.
 
         Parameters
-        ==========
+        ----------
         screen_pt : (x,y)
             A point to test.
         threshold : integer
@@ -289,7 +289,7 @@ class BaseXYPlot(AbstractPlotRenderer):
             line regardless of distance from the plot.
 
         Returns
-        =======
+        -------
         (x1, y1, x2, y2, dist) of the endpoints of the line segment
         closest to *screen_pt*.  The *dist* element is the perpendicular
         distance from *screen_pt* to the line.  If there is only a single point

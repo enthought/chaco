@@ -127,7 +127,6 @@ class StackedPlotContainer(BasePlotContainer):
         """ Helper method that does the actual work of layout.
         """
 
-
         size = list(self.bounds)
         if self.fit_components != "":
             self.get_preferred_size()
@@ -315,7 +314,6 @@ class VPlotContainer(StackedPlotContainer):
         else:
             align = "max"
 
-        #import pdb; pdb.set_trace()
         return self._do_stack_layout(components, align)
 
 
