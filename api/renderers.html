@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Renderers &mdash; chaco v4.1.1 documentation</title>
+    <title>Renderers &mdash; chaco v4.2.1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.1.1',
+        VERSION:     '4.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Plot Factories" href="plot_factories.html" />
     <link rel="prev" title="Visual Components" href="visual_components.html" /> 
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="visual_components.html" title="Visual Components"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Renderers</a></li>
@@ -80,6 +80,8 @@
 <p><strong>line_width</strong> : Float(1.0)</p>
 <p><strong>line_color</strong> : black_color_trait</p>
 <p><strong>fill_color</strong> : black_color_trait</p>
+<p><strong>effective_line_color</strong> : Property(Tuple, depends_on=[&#8216;line_color&#8217;, &#8216;alpha&#8217;])</p>
+<p><strong>effective_fill_color</strong> : Property(Tuple, depends_on=[&#8216;fill_color&#8217;, &#8216;alpha&#8217;])</p>
 <p><strong>alpha</strong> : Range(0.0, 1.0, 1.0)</p>
 <p><strong>x_mapper</strong> : Property</p>
 <p><strong>y_mapper</strong> : Property</p>
@@ -217,19 +219,31 @@ space changes, etc.</p>
 <tt class="descname">get_closest_line</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.get_closest_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests for proximity in screen-space against lines connecting the
 points in this plot&#8217;s dataset.</p>
-<dl class="docutils">
-<dt>screen_pt <span class="classifier-delimiter">:</span> <span class="classifier">(x,y)</span></dt>
-<dd>A point to test.</dd>
-<dt>threshold <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
-<dd>Optional maximum screen space distance (pixels) between
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<blockquote>
+<div><p>A point to test.</p>
+</div></blockquote>
+<p><strong>threshold</strong> : integer</p>
+<blockquote>
+<div><p>Optional maximum screen space distance (pixels) between
 the line and the plot.  If 0.0, then the method returns the closest
-line regardless of distance from the plot.</dd>
-</dl>
-<p>(x1, y1, x2, y2, dist) of the endpoints of the line segment
-closest to <em>screen_pt</em>.  The <em>dist</em> element is the perpendicular
-distance from <em>screen_pt</em> to the line.  If there is only a single point
-in the renderer&#8217;s data, then the method returns the same point twice.</p>
-<p>If no data points are within <em>threshold</em> of <em>screen_pt</em>, returns None.</p>
+line regardless of distance from the plot.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>(x1, y1, x2, y2, dist) of the endpoints of the line segment</strong> :</p>
+<p><strong>closest to *screen_pt*.  The *dist* element is the perpendicular</strong> :</p>
+<p><strong>distance from *screen_pt* to the line.  If there is only a single point</strong> :</p>
+<p><strong>in the renderer&#8217;s data, then the method returns the same point twice.</strong> :</p>
+<p class="last"><strong>If no data points are within *threshold* of *screen_pt*, returns None.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -238,16 +252,28 @@ in the renderer&#8217;s data, then the method returns the same point twice.</p>
 <dd><p>Tests for proximity in screen-space.</p>
 <p>This method checks only data points, not the line segments connecting
 them; to do the latter use get_closest_line() instead.</p>
-<dl class="docutils">
-<dt>screen_pt <span class="classifier-delimiter">:</span> <span class="classifier">(x,y)</span></dt>
-<dd>A point to test.</dd>
-<dt>threshold <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
-<dd>Optional maximum screen space distance (pixels) between
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<blockquote>
+<div><p>A point to test.</p>
+</div></blockquote>
+<p><strong>threshold</strong> : integer</p>
+<blockquote>
+<div><p>Optional maximum screen space distance (pixels) between
 <em>screen_pt</em> and the plot.  If 0.0, then no threshold tests
-are performed, and the nearest point is returned.</dd>
-</dl>
-<p>(x, y, distance) of a datapoint nearest to <em>screen_pt</em>.
-If no data points are within <em>threshold</em> of <em>screen_pt</em>, returns None.</p>
+are performed, and the nearest point is returned.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>(x, y, distance) of a datapoint nearest to *screen_pt*.</strong> :</p>
+<p class="last"><strong>If no data points are within *threshold* of *screen_pt*, returns None.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -262,22 +288,39 @@ If no data points are within <em>threshold</em> of <em>screen_pt</em>, returns N
 <tt class="descname">hittest</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em>, <em>return_distance=False</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.hittest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs proximity testing between a given screen point and the
 plot.</p>
-<dl class="docutils">
-<dt>screen_pt <span class="classifier-delimiter">:</span> <span class="classifier">(x,y)</span></dt>
-<dd>A point to test.</dd>
-<dt>threshold <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
-<dd>Optional maximum screen space distance (pixels) between
-<em>screen_pt</em> and the plot.</dd>
-<dt>return_distance <span class="classifier-delimiter">:</span> <span class="classifier">Boolean</span></dt>
-<dd>If True, returns the distance.</dd>
-</dl>
-<p>If self.hittest_type is &#8216;point&#8217;, then this method returns the screen
-coordinates of the closest point on the plot as a tuple (x,y)</p>
-<p>If self.hittest_type is &#8216;line&#8217;, then this method returns the screen
-endpoints of the line segment closest to <em>screen_pt</em>, as
-((x1,y1), (x2,y2))</p>
-<p>If <em>screen_pt</em> does not fall within <em>threshold</em> of the plot, then this
-method returns None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<blockquote>
+<div><p>A point to test.</p>
+</div></blockquote>
+<p><strong>threshold</strong> : integer</p>
+<blockquote>
+<div><p>Optional maximum screen space distance (pixels) between
+<em>screen_pt</em> and the plot.</p>
+</div></blockquote>
+<p><strong>return_distance</strong> : Boolean</p>
+<blockquote>
+<div><p>If True, also return the distance.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>If self.hittest_type is &#8216;point&#8217;, then this method returns the screen</strong> :</p>
+<p><strong>coordinates of the closest point on the plot as a tuple (x,y)</strong> :</p>
+<p><strong>If self.hittest_type is &#8216;line&#8217;, then this method returns the screen</strong> :</p>
+<p><strong>endpoints of the line segment closest to *screen_pt*, as</strong> :</p>
+<p><strong>((x1,y1), (x2,y2))</strong> :</p>
+<p><strong>If *screen_pt* does not fall within *threshold* of the plot, then this</strong> :</p>
+<p><strong>method returns None.</strong> :</p>
+<p><strong>If return_distance is True, return the (x, y, d), where d is the</strong> :</p>
+<p><strong>distance between the distance between the input point and</strong> :</p>
+<p class="last"><strong>the closest point (x, y), in screen coordinates.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -354,6 +397,8 @@ an array.</p>
 <p><strong>line_width</strong> : Float(1.0)</p>
 <p><strong>color</strong> : black_color_trait</p>
 <p><strong>outline_color</strong> : black_color_trait</p>
+<p><strong>effective_color</strong> : Property(Tuple, depends_on=[&#8216;color&#8217;, &#8216;alpha&#8217;])</p>
+<p><strong>effective_outline_color</strong> : Property(Tuple, depends_on=[&#8216;outline_color&#8217;, &#8216;alpha&#8217;])</p>
 <p><strong>traits_view</strong> : ScatterPlotView()</p>
 <p><strong>show_selection</strong> : Bool(True)</p>
 <p><strong>selection_marker</strong> : MarkerTrait</p>
@@ -488,6 +533,7 @@ in plot_factory.py can hide some of this verbosity for common cases.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color</strong> : black_color_trait</p>
+<p><strong>effective_color</strong> : Property(Tuple, depends_on=[&#8216;color&#8217;, &#8216;alpha&#8217;])</p>
 <p><strong>selected_color</strong> : ColorTrait(&#8216;lightyellow&#8217;)</p>
 <p><strong>selected_line_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
 <p><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
@@ -501,12 +547,10 @@ in plot_factory.py can hide some of this verbosity for common cases.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.LinePlot.hittest">
-<tt class="descname">hittest</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em><big>)</big><a class="headerlink" href="#chaco.api.LinePlot.hittest" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">hittest</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em>, <em>return_distance=False</em><big>)</big><a class="headerlink" href="#chaco.api.LinePlot.hittest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the given screen point is within <em>threshold</em> pixels of
 any data points on the line.  If so, then it returns the (x,y) value of
 a data point near the screen point.  If not, then it returns None.</p>
-<p>Note: This only checks data points and <em>not</em> the actual line segments
-connecting them.</p>
 </dd></dl>
 
 <dl class="method">
@@ -813,7 +857,26 @@ and N is the number of points in each line.</p>
 
 </div>
 <div class="section" id="horizonplot">
-<h2><tt class="xref py py-class docutils literal"><span class="pre">HorizonPlot</span></tt><a class="headerlink" href="#horizonplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.HorizonPlot" title="chaco.api.HorizonPlot"><tt class="xref py py-class docutils literal"><span class="pre">HorizonPlot</span></tt></a><a class="headerlink" href="#horizonplot" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.HorizonPlot">
+<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">HorizonPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.HorizonPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></tt></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>bands</strong> : DelegatesTo(&#8216;value_mapper&#8217;)</p>
+<p><strong>color_mapper</strong> : Instance(ColorMapper)</p>
+<p><strong>mirror</strong> : Bool(False)</p>
+<p><strong>negative_bands</strong> : Bool(True)</p>
+<p class="last"><strong>orientation</strong> : &#8216;h&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 
@@ -882,7 +945,7 @@ and N is the number of points in each line.</p>
         <li class="right" >
           <a href="visual_components.html" title="Visual Components"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Renderers</a></li>
@@ -892,7 +955,7 @@ and N is the number of points in each line.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 04, 2012.
+      Last updated on Jul 31, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

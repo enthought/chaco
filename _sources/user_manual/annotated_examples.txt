@@ -14,7 +14,7 @@ Extensibility is a core design goal of Chaco, and many people have used the
 examples as starting points for their own applications.
 
 ``bar_plot_stacked.py``
----------------
+-----------------------
 An example showing Chaco's BarPlot class.
 
 source: `bar_plot_stacked.py <https://github.com/enthought/chaco/tree/master/examples/demo/basic/bar_plot_stacked.py>`_
@@ -370,7 +370,7 @@ source: `nans_plot.py <https://github.com/enthought/chaco/tree/master/examples/d
 .. image:: example_images/nans_plot.png
 
 ``polygon_plot_demo.py``
--------------------
+------------------------
 Draws some different polygons.
 
 source: `polygon_plot_demo.py <https://github.com/enthought/chaco/tree/master/examples/demo/basic/polygon_plot_demo.py>`_

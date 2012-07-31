@@ -20,7 +20,7 @@ directory.
 For more complete examples, see also the :ref:`annotated examples <examples>`
 page.
 
-.. _xy_plots:
+.. _xy_plot_types:
 
 ================================================================
 X-Y Plot Types
@@ -355,7 +355,7 @@ parameters:
   :width: 500px
 
 
-.. _2d_plots
+.. _2d_plots:
 
 ================================================================
 Image and 2D Plots
@@ -364,7 +364,7 @@ Image and 2D Plots
 
 These plots display information as a two-dimensional image.
 Unless otherwise stated, they are subclasses of
-:ref:`:class:`~chaco.base_2d_plot.Base2DPlot`.
+:class:`~chaco.base_2d_plot.Base2DPlot`.
 
 The common interface for 2D plots is described in :ref:`twod_plots`.
 

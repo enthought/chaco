@@ -185,21 +185,28 @@ The default drawing order is defined in
 of the names of the layers. The definition of the layers is as follows:
 
   1. 'background': Background image, shading, and borders
-  2. 'image': A special layer for plots that render as images.  This is in
-        a separate layer since these plots must all render before non-image
-        plots
+
+  2. 'image': A special layer for plots that render as images.  This is in a
+     separate layer since these plots must all render before non-image plots
+
   3. 'underlay': Axes and grids
+
   4. 'plot': The main plot area itself
+
   5. 'annotation': Lines and text that are conceptually part of the "plot" but
-        need to be rendered on top of everything else in the plot.
-  5. 'selection': Selected content are rendered above normal plot elements
-        to make them stand out. This can be disabled by setting
-        :attr:`use_selection` to False (default).
-  6. 'border': Plot borders
-  7. 'annotation': Lines and text that are conceptually part of the "plot"
-        but need to be rendered on top of everything else in the plot
-  8. 'overlay': Legends, selection regions, and other tool-drawn visual
-        elements
+     need to be rendered on top of everything else in the plot.
+
+  6. 'selection': Selected content are rendered above normal plot elements to
+     make them stand out. This can be disabled by setting :attr:`use_selection`
+     to False (default).
+
+  7. 'border': Plot borders
+
+  8. 'annotation': Lines and text that are conceptually part of the "plot" but
+     need to be rendered on top of everything else in the plot
+
+  9. 'overlay': Legends, selection regions, and other tool-drawn visual
+     elements
 
 Concrete plot renderers set their default draw layer in
 :attr:`~chaco.plot_component.PlotComponent.draw_layer` (default is 'plot').
@@ -300,7 +307,7 @@ Axis, labels, and grids
 
 :class:`~chaco.base_xy_plot.BaseXYPlot` defines a few properties that are
 shortcuts to find axis and grid objects in the
-:def:`underlays and overlays layers <plot_layers>` of the plot:
+:ref:`underlays and overlays layers <plot_layers>` of the plot:
 
     :attr:`~chaco.base_xy_plot.BaseXYPlot.hgrid`,
     :attr:`~chaco.base_xy_plot.BaseXYPlot.vgrid`

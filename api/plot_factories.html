@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plot Factories &mdash; chaco v4.1.1 documentation</title>
+    <title>Plot Factories &mdash; chaco v4.2.1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.1.1',
+        VERSION:     '4.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Axis and Grid" href="axis.html" />
     <link rel="prev" title="Renderers" href="renderers.html" /> 
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="renderers.html" title="Renderers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Plot Factories</a></li>
@@ -303,7 +303,7 @@ data sources, create those data sources before handing them to the Plot.</p>
 <p><strong>default_index</strong> : Instance(AbstractDataSource)</p>
 <p><strong>color_mapper</strong> : Instance(AbstractColormap)</p>
 <p><strong>auto_colors</strong> : List([&#8216;green&#8217;, &#8216;lightgreen&#8217;, &#8216;blue&#8217;, &#8216;lightblue&#8217;, &#8216;red&#8217;, &#8216;pink&#8217;, &#8216;darkgray&#8217;, &#8216;silver&#8217;])</p>
-<p><strong>renderer_map</strong> : Dict(dict(line=LinePlot, bar=BarPlot, scatter=ScatterPlot, polygon=PolygonPlot, cmap_scatter=ColormappedScatterPlot, img_plot=ImagePlot, cmap_img_plot=CMapImagePlot, contour_line_plot=ContourLinePlot, contour_poly_plot=ContourPolyPlot, candle=CandlePlot))</p>
+<p><strong>renderer_map</strong> : Dict(dict(line=LinePlot, bar=BarPlot, scatter=ScatterPlot, polygon=PolygonPlot, filled_line=FilledLinePlot, cmap_scatter=ColormappedScatterPlot, img_plot=ImagePlot, cmap_img_plot=CMapImagePlot, contour_line_plot=ContourLinePlot, contour_poly_plot=ContourPolyPlot, candle=CandlePlot))</p>
 <p><strong>title</strong> : Property()</p>
 <p><strong>title_font</strong> : Property()</p>
 <p><strong>title_position</strong> : Property()</p>
@@ -360,92 +360,100 @@ data sources, create those data sources before handing them to the Plot.</p>
 <dt id="chaco.api.Plot.candle_plot">
 <tt class="descname">candle_plot</tt><big>(</big><em>data</em>, <em>name=None</em>, <em>value_scale='linear'</em>, <em>origin=None</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.candle_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new sub-plot using the given data and plot style.</p>
-<dl class="docutils">
-<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">list(string), tuple(string)</span></dt>
-<dd><p class="first">The names of the data to be plotted in the ArrayDataSource.  The
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : list(string), tuple(string)</p>
+<blockquote>
+<div><p>The names of the data to be plotted in the ArrayDataSource.  The
 number of arguments determines how they are interpreted:</p>
-<dl class="last docutils">
-<dt>(index, bar_min, bar_max)</dt>
-<dd>filled or outline-only bar extending from <strong>bar_min</strong> to
-<strong>bar_max</strong></dd>
-<dt>(index, bar_min, center, bar_max)</dt>
-<dd>above, plus a center line of a different color at <strong>center</strong></dd>
-<dt>(index, min, bar_min, bar_max, max)</dt>
-<dd>bar extending from <strong>bar_min</strong> to <strong>bar_max</strong>, with thin
+<p>(index, bar_min, bar_max)
+filled or outline-only bar extending from <strong>bar_min</strong> to
+<strong>bar_max</strong></p>
+<p>(index, bar_min, center, bar_max)
+above, plus a center line of a different color at <strong>center</strong></p>
+<p>(index, min, bar_min, bar_max, max)
+bar extending from <strong>bar_min</strong> to <strong>bar_max</strong>, with thin
 bars at <strong>min</strong> and <strong>max</strong> connected to the bar by a long
-stem</dd>
-<dt>(index, min, bar_min, center, bar_max, max)</dt>
-<dd>like above, plus a center line of a different color and
-configurable thickness at <strong>center</strong></dd>
-</dl>
-</dd>
-<dt>name <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The name of the plot.  If None, then a default one is created.</dd>
-<dt>value_scale <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The type of scale to use for the value axis.  If not &#8220;linear&#8221;,
-then a log scale is used.</dd>
-</dl>
-<p>These are all optional keyword arguments.</p>
-<dl class="docutils">
-<dt>bar_color <span class="classifier-delimiter">:</span> <span class="classifier">string, 3- or 4-tuple</span></dt>
-<dd>The fill color of the bar; defaults to &#8220;auto&#8221;.</dd>
-<dt>bar_line_color <span class="classifier-delimiter">:</span> <span class="classifier">string, 3- or 4-tuple</span></dt>
-<dd>The color of the rectangular box forming the bar.</dd>
-<dt>stem_color <span class="classifier-delimiter">:</span> <span class="classifier">string, 3- or 4-tuple (default = bar_line_color)</span></dt>
-<dd>The color of the stems reaching from the bar to the min and
-max values.</dd>
-<dt>center_color <span class="classifier-delimiter">:</span> <span class="classifier">string, 3- or 4-tuple (default = bar_line_color)</span></dt>
-<dd>The color of the line drawn across the bar at the center values.</dd>
-<dt>line_width <span class="classifier-delimiter">:</span> <span class="classifier">int (default = 1)</span></dt>
-<dd>The thickness, in pixels, of the outline around the bar.</dd>
-<dt>stem_width <span class="classifier-delimiter">:</span> <span class="classifier">int (default = line_width)</span></dt>
-<dd>The thickness, in pixels, of the stem lines</dd>
-<dt>center_width <span class="classifier-delimiter">:</span> <span class="classifier">int (default = line_width)</span></dt>
-<dd>The width, in pixels, of the line drawn across the bar at the
-center values.</dd>
-<dt>end_cap <span class="classifier-delimiter">:</span> <span class="classifier">bool (default = True)</span></dt>
-<dd>Whether or not to draw bars at the min and max extents of the
-error bar.</dd>
-</dl>
-<p>[renderers] -&gt; list of renderers created in response to this call.</p>
+stem</p>
+<p>(index, min, bar_min, center, bar_max, max)
+like above, plus a center line of a different color and
+configurable thickness at <strong>center</strong></p>
+</div></blockquote>
+<p><strong>name</strong> : string</p>
+<blockquote>
+<div><p>The name of the plot.  If None, then a default one is created.</p>
+</div></blockquote>
+<p><strong>value_scale</strong> : string</p>
+<blockquote>
+<div><p>The type of scale to use for the value axis.  If not &#8220;linear&#8221;,
+then a log scale is used.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.Plot.contour_plot">
 <tt class="descname">contour_plot</tt><big>(</big><em>data</em>, <em>type='line'</em>, <em>name=None</em>, <em>poly_cmap=None</em>, <em>xbounds=None</em>, <em>ybounds=None</em>, <em>origin=None</em>, <em>hide_grids=True</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.contour_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds contour plots to this Plot object.</p>
-<dl class="docutils">
-<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The name of the data array in self.plot_data, which must be
-floating point data.</dd>
-<dt>type <span class="classifier-delimiter">:</span> <span class="classifier">comma-delimited string of &#8220;line&#8221;, &#8220;poly&#8221;</span></dt>
-<dd>The type of contour plot to add. If the value is &#8220;poly&#8221;
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
+<blockquote>
+<div><p>The name of the data array in self.plot_data, which must be
+floating point data.</p>
+</div></blockquote>
+<p><strong>type</strong> : comma-delimited string of &#8220;line&#8221;, &#8220;poly&#8221;</p>
+<blockquote>
+<div><p>The type of contour plot to add. If the value is &#8220;poly&#8221;
 and no colormap is provided via the <em>poly_cmap</em> argument, then
-a default colormap of &#8216;Spectral&#8217; is used.</dd>
-<dt>name <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The name of the plot; if omitted, then a name is generated.</dd>
-<dt>poly_cmap <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The name of the color-map function to call (in
+a default colormap of &#8216;Spectral&#8217; is used.</p>
+</div></blockquote>
+<p><strong>name</strong> : string</p>
+<blockquote>
+<div><p>The name of the plot; if omitted, then a name is generated.</p>
+</div></blockquote>
+<p><strong>poly_cmap</strong> : string</p>
+<blockquote>
+<div><p>The name of the color-map function to call (in
 chaco.default_colormaps) or an AbstractColormap instance
-to use for contour poly plots (ignored for contour line plots)</dd>
-<dt>xbounds, ybounds <span class="classifier-delimiter">:</span> <span class="classifier">string, tuple, or ndarray</span></dt>
-<dd>Bounds where this image resides. Bound may be: a) names of
+to use for contour poly plots (ignored for contour line plots)</p>
+</div></blockquote>
+<p><strong>xbounds, ybounds</strong> : string, tuple, or ndarray</p>
+<blockquote>
+<div><p>Bounds where this image resides. Bound may be: a) names of
 data in the plot data; b) tuples of (low, high) in data space,
 c) 1D arrays of values representing the pixel boundaries (must
 be 1 element larger than underlying data), or
-d) 2D arrays as obtained from a meshgrid operation</dd>
-<dt>origin <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd><dl class="first last docutils">
-<dt>Which corner the origin of this plot should occupy:</dt>
-<dd>&#8220;bottom left&#8221;, &#8220;top left&#8221;, &#8220;bottom right&#8221;, &#8220;top right&#8221;</dd>
-</dl>
-</dd>
-<dt>hide_grids <span class="classifier-delimiter">:</span> <span class="classifier">bool, default True</span></dt>
-<dd>Whether or not to automatically hide the grid lines on the plot</dd>
-<dt>styles <span class="classifier-delimiter">:</span> <span class="classifier">series of keyword arguments</span></dt>
-<dd>Attributes and values that apply to one or more of the
-plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.</dd>
-</dl>
+d) 2D arrays as obtained from a meshgrid operation</p>
+</div></blockquote>
+<p><strong>origin</strong> : string</p>
+<blockquote>
+<div><p>Which corner the origin of this plot should occupy:
+&#8220;bottom left&#8221;, &#8220;top left&#8221;, &#8220;bottom right&#8221;, &#8220;top right&#8221;</p>
+</div></blockquote>
+<p><strong>hide_grids</strong> : bool, default True</p>
+<blockquote>
+<div><p>Whether or not to automatically hide the grid lines on the plot</p>
+</div></blockquote>
+<p><strong>styles</strong> : series of keyword arguments</p>
+<blockquote class="last">
+<div><p>Attributes and values that apply to one or more of the
+plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -472,29 +480,44 @@ be provided via the <em>colormap</em> argument, or the default of &#8216;Spectra
 will be used.</p>
 <p><em>Data</em> should be in row-major order, so that xbounds corresponds to
 <em>data</em>&#8216;s second axis, and ybounds corresponds to the first axis.</p>
-<dl class="docutils">
-<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The name of the data array in self.plot_data</dd>
-<dt>name <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The name of the plot; if omitted, then a name is generated.</dd>
-<dt>xbounds, ybounds <span class="classifier-delimiter">:</span> <span class="classifier">string, tuple, or ndarray</span></dt>
-<dd>Bounds where this image resides. Bound may be: a) names of
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
+<blockquote>
+<div><p>The name of the data array in self.plot_data</p>
+</div></blockquote>
+<p><strong>name</strong> : string</p>
+<blockquote>
+<div><p>The name of the plot; if omitted, then a name is generated.</p>
+</div></blockquote>
+<p><strong>xbounds, ybounds</strong> : string, tuple, or ndarray</p>
+<blockquote>
+<div><p>Bounds where this image resides. Bound may be: a) names of
 data in the plot data; b) tuples of (low, high) in data space,
 c) 1D arrays of values representing the pixel boundaries (must
 be 1 element larger than underlying data), or
-d) 2D arrays as obtained from a meshgrid operation</dd>
-<dt>origin <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd><dl class="first last docutils">
-<dt>Which corner the origin of this plot should occupy:</dt>
-<dd>&#8220;bottom left&#8221;, &#8220;top left&#8221;, &#8220;bottom right&#8221;, &#8220;top right&#8221;</dd>
-</dl>
-</dd>
-<dt>hide_grids <span class="classifier-delimiter">:</span> <span class="classifier">bool, default True</span></dt>
-<dd>Whether or not to automatically hide the grid lines on the plot</dd>
-<dt>styles <span class="classifier-delimiter">:</span> <span class="classifier">series of keyword arguments</span></dt>
-<dd>Attributes and values that apply to one or more of the
-plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.</dd>
-</dl>
+d) 2D arrays as obtained from a meshgrid operation</p>
+</div></blockquote>
+<p><strong>origin</strong> : string</p>
+<blockquote>
+<div><p>Which corner the origin of this plot should occupy:
+&#8220;bottom left&#8221;, &#8220;top left&#8221;, &#8220;bottom right&#8221;, &#8220;top right&#8221;</p>
+</div></blockquote>
+<p><strong>hide_grids</strong> : bool, default True</p>
+<blockquote>
+<div><p>Whether or not to automatically hide the grid lines on the plot</p>
+</div></blockquote>
+<p><strong>styles</strong> : series of keyword arguments</p>
+<blockquote class="last">
+<div><p>Attributes and values that apply to one or more of the
+plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -508,45 +531,63 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 <dt id="chaco.api.Plot.plot">
 <tt class="descname">plot</tt><big>(</big><em>data</em>, <em>type='line'</em>, <em>name=None</em>, <em>index_scale='linear'</em>, <em>value_scale='linear'</em>, <em>origin=None</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new sub-plot using the given data and plot style.</p>
-<dl class="docutils">
-<dt>data <span class="classifier-delimiter">:</span> <span class="classifier">string, tuple(string), list(string)</span></dt>
-<dd><p class="first">The data to be plotted. The type of plot and the number of
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string, tuple(string), list(string)</p>
+<blockquote>
+<div><p>The data to be plotted. The type of plot and the number of
 arguments determines how the arguments are interpreted:</p>
-<dl class="last docutils">
-<dt>one item: (line/scatter)</dt>
-<dd>The data is treated as the value and self.default_index is
+<p>one item: (line/scatter)
+The data is treated as the value and self.default_index is
 used as the index.  If <strong>default_index</strong> does not exist, one is
-created from arange(len(<em>data</em>))</dd>
-<dt>two or more items: (line/scatter)</dt>
-<dd>Interpreted as (index, value1, value2, ...).  Each index,value
-pair forms a new plot of the type specified.</dd>
-<dt>two items: (cmap_scatter)</dt>
-<dd>Interpreted as (value, color_values).  Uses <strong>default_index</strong>.</dd>
-<dt>three or more items: (cmap_scatter)</dt>
-<dd>Interpreted as (index, val1, color_val1, val2, color_val2, ...)</dd>
-</dl>
-</dd>
-<dt>type <span class="classifier-delimiter">:</span> <span class="classifier">comma-delimited string of &#8220;line&#8221;, &#8220;scatter&#8221;, &#8220;cmap_scatter&#8221;</span></dt>
-<dd>The types of plots to add.</dd>
-<dt>name <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The name of the plot.  If None, then a default one is created
-(usually &#8220;plotNNN&#8221;).</dd>
-<dt>index_scale <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The type of scale to use for the index axis. If not &#8220;linear&#8221;, then
-a log scale is used.</dd>
-<dt>value_scale <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>The type of scale to use for the value axis. If not &#8220;linear&#8221;, then
-a log scale is used.</dd>
-<dt>origin <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd><dl class="first last docutils">
-<dt>Which corner the origin of this plot should occupy:</dt>
-<dd>&#8220;bottom left&#8221;, &#8220;top left&#8221;, &#8220;bottom right&#8221;, &#8220;top right&#8221;</dd>
-</dl>
-</dd>
-<dt>styles <span class="classifier-delimiter">:</span> <span class="classifier">series of keyword arguments</span></dt>
-<dd>attributes and values that apply to one or more of the
-plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.</dd>
-</dl>
+created from arange(len(<em>data</em>))
+two or more items: (line/scatter)
+Interpreted as (index, value1, value2, ...).  Each index,value
+pair forms a new plot of the type specified.
+two items: (cmap_scatter)
+Interpreted as (value, color_values).  Uses <strong>default_index</strong>.
+three or more items: (cmap_scatter)
+Interpreted as (index, val1, color_val1, val2, color_val2, ...)</p>
+</div></blockquote>
+<p><strong>type</strong> : comma-delimited string of &#8220;line&#8221;, &#8220;scatter&#8221;, &#8220;cmap_scatter&#8221;</p>
+<blockquote>
+<div><p>The types of plots to add.</p>
+</div></blockquote>
+<p><strong>name</strong> : string</p>
+<blockquote>
+<div><p>The name of the plot.  If None, then a default one is created
+(usually &#8220;plotNNN&#8221;).</p>
+</div></blockquote>
+<p><strong>index_scale</strong> : string</p>
+<blockquote>
+<div><p>The type of scale to use for the index axis. If not &#8220;linear&#8221;, then
+a log scale is used.</p>
+</div></blockquote>
+<p><strong>value_scale</strong> : string</p>
+<blockquote>
+<div><p>The type of scale to use for the value axis. If not &#8220;linear&#8221;, then
+a log scale is used.</p>
+</div></blockquote>
+<p><strong>origin</strong> : string</p>
+<blockquote>
+<div><p>Which corner the origin of this plot should occupy:
+&#8220;bottom left&#8221;, &#8220;top left&#8221;, &#8220;bottom right&#8221;, &#8220;top right&#8221;</p>
+</div></blockquote>
+<p><strong>styles</strong> : series of keyword arguments</p>
+<blockquote>
+<div><p>attributes and values that apply to one or more of the
+plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call to plot()</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="p">(</span><span class="s">&quot;my_data&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;myplot&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">lightblue</span><span class="p">)</span>
 
 <span class="n">plot</span><span class="p">((</span><span class="s">&quot;x-data&quot;</span><span class="p">,</span> <span class="s">&quot;y-data&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">)</span>
@@ -554,7 +595,6 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 <span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y1&quot;</span><span class="p">,</span> <span class="s">&quot;y2&quot;</span><span class="p">,</span> <span class="s">&quot;y3&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>[renderers] -&gt; list of renderers created in response to this call to plot()</p>
 </dd></dl>
 
 <dl class="method">
@@ -647,7 +687,7 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
         <li class="right" >
           <a href="renderers.html" title="Renderers"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Plot Factories</a></li>
@@ -657,7 +697,7 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 04, 2012.
+      Last updated on Jul 31, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

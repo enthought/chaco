@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tools &mdash; chaco v4.1.1 documentation</title>
+    <title>Tools &mdash; chaco v4.2.1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.1.1',
+        VERSION:     '4.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Tech Notes" href="../tech_notes.html" />
     <link rel="prev" title="Axis and Grid" href="axis.html" /> 
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="axis.html" title="Axis and Grid"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Tools</a></li>
@@ -74,7 +74,8 @@
 <p><strong>prev_state_key</strong> : Instance(KeySpec, args=(&#8216;z&#8217;, &#8216;control&#8217;))</p>
 <p><strong>next_state_key</strong> : Instance(KeySpec, args=(&#8216;y&#8217;, &#8216;control&#8217;))</p>
 <p><strong>enable_wheel</strong> : Bool(True)</p>
-<p><strong>zoom_to_mouse</strong> : Bool(False)</p>
+<p><strong>zoom_to_mouse</strong> : Bool(True)</p>
+<p><strong>keys_zoom_to_mouse</strong> : Bool(True)</p>
 <p><strong>axis</strong> : Enum(&#8216;both&#8217;, &#8216;index&#8217;, &#8216;value&#8217;)</p>
 <p><strong>x_max_zoom_factor</strong> : Float(100000.0)</p>
 <p><strong>y_max_zoom_factor</strong> : Float(100000.0)</p>
@@ -947,6 +948,11 @@ button and dragging.</p>
 <p><strong>drag_pointer</strong> : Pointer(&#8216;hand&#8217;)</p>
 <p><strong>speed</strong> : Float(1.0)</p>
 <p><strong>constrain_key</strong> : Enum(None, &#8216;shift&#8217;, &#8216;control&#8217;, &#8216;alt&#8217;)</p>
+<p><strong>pan_right_key</strong> : Instance(KeySpec, args=(&#8216;Right&#8217;))</p>
+<p><strong>pan_left_key</strong> : Instance(KeySpec, args=(&#8216;Left&#8217;))</p>
+<p><strong>pan_up_key</strong> : Instance(KeySpec, args=(&#8216;Up&#8217;))</p>
+<p><strong>pan_down_key</strong> : Instance(KeySpec, args=(&#8216;Down&#8217;))</p>
+<p><strong>pan_keys_step</strong> : Float(0.0)</p>
 <p><strong>constrain</strong> : Bool(False)</p>
 <p><strong>constrain_direction</strong> : Enum(None, &#8216;x&#8217;, &#8216;y&#8217;)</p>
 <p><strong>restrict_to_data</strong> : Bool(False)</p>
@@ -957,6 +963,13 @@ button and dragging.</p>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.normal_key_pressed">
+<tt class="descname">normal_key_pressed</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#chaco.tools.api.PanTool.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a key being pressed when the tool is in the &#8216;normal&#8217;
+state.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="chaco.tools.api.PanTool.normal_left_down">
 <tt class="descname">normal_left_down</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#chaco.tools.api.PanTool.normal_left_down" title="Permalink to this definition">¶</a></dt>
@@ -1761,7 +1774,7 @@ state.</p>
         <li class="right" >
           <a href="axis.html" title="Axis and Grid"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Tools</a></li>
@@ -1771,7 +1784,7 @@ state.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 04, 2012.
+      Last updated on Jul 31, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

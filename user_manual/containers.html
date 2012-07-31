@@ -8,13 +8,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Containers and Layout &mdash; chaco v4.1.1 documentation</title>
+    <title>Containers and Layout &mdash; chaco v4.2.1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.1.1',
+        VERSION:     '4.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.1.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
     <link rel="up" title="User guide" href="index.html" />
     <link rel="next" title="Tools and Overlays" href="tools.html" />
     <link rel="prev" title="Plot types" href="plot_types.html" /> 
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="plot_types.html" title="Plot types"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">User guide</a> &raquo;</li>
   
     <li><a href="#">Containers and Layout</a></li>
@@ -128,7 +128,7 @@ copies. Instead, one should create multiple plots objects.</p>
 </td></tr></table></div>
 <p>results in this layout:</p>
 <blockquote class="last">
-<div><img alt="../_images/one_container_per_plot40.png" src="../_images/one_container_per_plot40.png" style="height: 200pt;" />
+<div><img alt="../_images/one_container_per_plot42.png" src="../_images/one_container_per_plot42.png" style="height: 200pt;" />
 </div></blockquote>
 </div>
 <div class="section" id="hplotcontainer-and-vplotcontainer">
@@ -178,7 +178,7 @@ examples:</p>
 <p><tt class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></tt> is also used often to
 display a colorbar or legend to the side of a plot. For example, this
 plot</p>
-<img alt="../_images/h_container_colorbar35.png" src="../_images/h_container_colorbar35.png" style="height: 200pt;" />
+<img alt="../_images/h_container_colorbar37.png" src="../_images/h_container_colorbar37.png" style="height: 200pt;" />
 <p>was created using a color-mapped scatter plot and a colorbar inside a
 horizontal container:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -289,7 +289,7 @@ of rows and columns in the plot. Plots with different sizes and/or
 aspect ratios are aligned according to the parameters <tt class="docutils literal"><span class="pre">halign</span></tt> and
 <tt class="docutils literal"><span class="pre">valign</span></tt>.</p>
 <p>For example, to generate this plot</p>
-<img alt="../_images/grid_container24.png" src="../_images/grid_container24.png" style="height: 250pt;" />
+<img alt="../_images/grid_container31.png" src="../_images/grid_container31.png" style="height: 250pt;" />
 <p>one needs to create six plots of fixed height and add them successively
 (left-to-right, top-to-bottom) to the
 <tt class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></tt>. Plots are aligned to
@@ -492,7 +492,7 @@ full data:</p>
 </pre></div>
 </td></tr></table></div>
 <p>The code above generates this plot:</p>
-<img alt="../_images/overlay_container_inset18.png" src="../_images/overlay_container_inset18.png" style="height: 250pt;" />
+<img alt="../_images/overlay_container_inset20.png" src="../_images/overlay_container_inset20.png" style="height: 250pt;" />
 <div class="admonition-see-also admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><strong>GridPlotContainer in action.</strong> See <tt class="docutils literal"><span class="pre">demo/basic/inset_plot.py</span></tt>
@@ -544,23 +544,18 @@ always be twice as wide as the former.</li>
 <p>You can get access to the actual bounds of the component, (including
 padding and border) using the
 <tt class="docutils literal"><span class="pre">outer</span></tt> properties:</p>
-<ul>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">outer_position</span></tt>, the x,y point of the lower left corner of the
+<ul class="simple">
+<li><tt class="xref py py-attr docutils literal"><span class="pre">outer_position</span></tt>, the x,y point of the lower left corner of the
 padding outer box around
-the component. Use <tt class="xref py py-meth docutils literal"><span class="pre">set_outer_position()</span></tt> to change these values.</p>
-</li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">outer_bounds</span></tt>,
-the number of horizontal and vertical pixels in the padding outer box.</p>
-<blockquote>
-<div><p>Use <tt class="xref py py-meth docutils literal"><span class="pre">set_outer_bounds()</span></tt> to change these values.</p>
-</div></blockquote>
-</li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">outer_x</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_y</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_x2</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_y2:,</span>
+the component. Use <tt class="xref py py-meth docutils literal"><span class="pre">set_outer_position()</span></tt> to change these values.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">outer_bounds</span></tt>,
+the number of horizontal and vertical pixels in the padding outer box.
+Use <tt class="xref py py-meth docutils literal"><span class="pre">set_outer_bounds()</span></tt> to change these values.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">outer_x</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_y</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_x2</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_y2:,</span>
 <span class="pre">:attr:`outer_width</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_height</span></tt>:
 coordinates of lower-left pixel of the box,
 coordinates of the upper-right pixel of the box,
-width and height of the outer box in pixels</p>
-</li>
+width and height of the outer box in pixels</li>
 </ul>
 <p>See also the documentation of the class <tt class="xref py py-class docutils literal"><span class="pre">enable.component.Component</span></tt>
 for more details about the internal parameters of Chaco components.</p>
@@ -781,7 +776,7 @@ more details about the event dispatching happening at that level.</p>
         <li class="right" >
           <a href="plot_types.html" title="Plot types"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
           <li><a href="index.html" >User guide</a> &raquo;</li>
   
     <li><a href="#">Containers and Layout</a></li>
@@ -791,7 +786,7 @@ more details about the event dispatching happening at that level.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 04, 2012.
+      Last updated on Jul 31, 2012.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -1,5 +1,5 @@
-Chaco 4.1.0
-===========
+Chaco |release|
+===============
 
 Chaco is a Python package for building interactive and custom 2-D plots and
 visualizations.
