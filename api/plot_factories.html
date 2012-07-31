@@ -125,8 +125,20 @@ something other than &#8220;normal&#8221; if they are flipped.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_changed</strong> : Event</p>
+<blockquote>
+<div><p>Indicates that some of the data has changed.  The event object must
+be a dict with keys &#8220;added&#8221;, &#8220;removed&#8221;, &#8220;changed&#8221; and values that are
+lists of strings. This event is used by consumers of this data.</p>
+</div></blockquote>
 <p><strong>writable</strong> : Bool(True)</p>
-<p class="last"><strong>selectable</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Can consumers (Plots) write data back through this interface using
+set_data()?</p>
+</div></blockquote>
+<p><strong>selectable</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>Can consumers (Plots) set selections?</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -203,7 +215,17 @@ Chaco components or interactors.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>arrays</strong> : Dict</p>
-<p class="last"><strong>writable</strong> : True</p>
+<blockquote>
+<div><p>Map of names to arrays.  Although there is no restriction on the array
+dimensions, each array must correspond to a single plot item; that
+is, a single name must not map to a multi-dimensional array unless
+the array is being used for an image plot or for something that can handle
+multi-dimensional input data.</p>
+</div></blockquote>
+<p><strong>writable</strong> : True</p>
+<blockquote class="last">
+<div><p>Consumers can write data to this object (overrides AbstractPlotData).</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -298,20 +320,65 @@ data sources, create those data sources before handing them to the Plot.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data</strong> : Instance(AbstractPlotData)</p>
+<blockquote>
+<div><p>The PlotData instance that drives this plot.</p>
+</div></blockquote>
 <p><strong>datasources</strong> : Dict(Str, Instance(AbstractDataSource))</p>
+<blockquote>
+<div><p>Mapping of data names from self.data to their respective datasources.</p>
+</div></blockquote>
 <p><strong>plots</strong> : Dict(Str, List)</p>
+<blockquote>
+<div><p>Mapping of plot names to <em>lists</em> of plot renderers.</p>
+</div></blockquote>
 <p><strong>default_index</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The default index to use when adding new subplots.</p>
+</div></blockquote>
 <p><strong>color_mapper</strong> : Instance(AbstractColormap)</p>
+<blockquote>
+<div><p>Optional mapper for the color axis.  Not instantiated until first use;
+destroyed if no color plots are on the plot.</p>
+</div></blockquote>
 <p><strong>auto_colors</strong> : List([&#8216;green&#8217;, &#8216;lightgreen&#8217;, &#8216;blue&#8217;, &#8216;lightblue&#8217;, &#8216;red&#8217;, &#8216;pink&#8217;, &#8216;darkgray&#8217;, &#8216;silver&#8217;])</p>
+<blockquote>
+<div><p>List of colors to cycle through when auto-coloring is requested. Picked
+and ordered to be red-green color-blind friendly, though should not
+be an issue for blue-yellow.</p>
+</div></blockquote>
 <p><strong>renderer_map</strong> : Dict(dict(line=LinePlot, bar=BarPlot, scatter=ScatterPlot, polygon=PolygonPlot, filled_line=FilledLinePlot, cmap_scatter=ColormappedScatterPlot, img_plot=ImagePlot, cmap_img_plot=CMapImagePlot, contour_line_plot=ContourLinePlot, contour_poly_plot=ContourPolyPlot, candle=CandlePlot))</p>
+<blockquote>
+<div><p>Mapping of renderer type string to renderer class
+This can be overriden to customize what renderer type the Plot
+will instantiate for its various plotting methods.</p>
+</div></blockquote>
 <p><strong>title</strong> : Property()</p>
+<blockquote>
+<div><p>The title of the plot.</p>
+</div></blockquote>
 <p><strong>title_font</strong> : Property()</p>
+<blockquote>
+<div><p>The font to use for the title.</p>
+</div></blockquote>
 <p><strong>title_position</strong> : Property()</p>
+<blockquote>
+<div><p>Convenience attribute for title.overlay_position; can be &#8220;top&#8221;,
+&#8220;bottom&#8221;, &#8220;left&#8221;, or &#8220;right&#8221;.</p>
+</div></blockquote>
 <p><strong>title_text</strong> : Delegate(&#8216;_title&#8217;, prefix=&#8217;text&#8217;, modify=True)</p>
+<blockquote>
+<div><p>Use delegates to expose the other PlotLabel attributes of the plot title</p>
+</div></blockquote>
 <p><strong>title_color</strong> : Delegate(&#8216;_title&#8217;, prefix=&#8217;color&#8217;, modify=True)</p>
 <p><strong>title_angle</strong> : Delegate(&#8216;_title&#8217;, prefix=&#8217;angle&#8217;, modify=True)</p>
 <p><strong>legend</strong> : Instance(Legend)</p>
-<p class="last"><strong>legend_alignment</strong> : Property</p>
+<blockquote>
+<div><p>The legend on the plot.</p>
+</div></blockquote>
+<p><strong>legend_alignment</strong> : Property</p>
+<blockquote class="last">
+<div><p>Convenience attribute for legend.align; can be &#8220;ur&#8221;, &#8220;ul&#8221;, &#8220;ll&#8221;, &#8220;lr&#8221;.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -617,10 +684,20 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>auto_hide</strong> : DelegatesTo(&#8216;toolbar&#8217;)</p>
+<blockquote>
+<div><p>Should we turn on the auto-hide feature on the toolbar?</p>
+</div></blockquote>
 <p><strong>toolbar</strong> : Instance(PlotToolbar)</p>
 <p><strong>toolbar_class</strong> : Type(PlotToolbar)</p>
 <p><strong>toolbar_added</strong> : False</p>
-<p class="last"><strong>toolbar_location</strong> : Enum(&#8216;top&#8217;, &#8216;right&#8217;, &#8216;bottom&#8217;, &#8216;left&#8217;)</p>
+<p><strong>toolbar_location</strong> : Enum(&#8216;top&#8217;, &#8216;right&#8217;, &#8216;bottom&#8217;, &#8216;left&#8217;)</p>
+<blockquote class="last">
+<div><p>Location of the default toolbar that is created if a toolbar
+is not specified with the <cite>toolbar</cite> attribute.  Changing this
+attribute after the ToolbarPlot instance is created has no effect;
+use obj.toolbar.location to dynamically change the location of the
+instance <a href="#id2"><span class="problematic" id="id3">`</span></a>obj`s toolbar.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>

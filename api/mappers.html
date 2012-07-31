@@ -68,7 +68,17 @@ region in output space.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>updated</strong> : Event</p>
-<p class="last"><strong>domain_limits</strong> : Tuple(None, None)</p>
+<blockquote>
+<div><p>A generic &#8220;update&#8221; event that generally means that anything that relies
+on this mapper for visual output should do a redraw or repaint.</p>
+</div></blockquote>
+<p><strong>domain_limits</strong> : Tuple(None, None)</p>
+<blockquote class="last">
+<div><p>A tuple representing the minimum and maximum values of the domain (data
+space).  The dimensionality of each value varies depending on the
+dimensions of the mapper, so for 1D mappers these will be scalars, for
+image and 2D mappers these will be tuples.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -113,10 +123,29 @@ region in output space.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>range</strong> : Instance(DataRange1D)</p>
+<blockquote>
+<div><p>The data-space bounds of the mapper.</p>
+</div></blockquote>
 <p><strong>low_pos</strong> : Float(0.0)</p>
+<blockquote>
+<div><p>The screen space position of the lower bound of the data space.</p>
+</div></blockquote>
 <p><strong>high_pos</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The screen space position of the upper bound of the data space.</p>
+</div></blockquote>
 <p><strong>screen_bounds</strong> : Property</p>
-<p class="last"><strong>stretch_data</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Convenience property to get low and high positions in one structure.
+Must be a tuple (low_pos, high_pos).</p>
+</div></blockquote>
+<p><strong>stretch_data</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>Should the mapper stretch the dataspace when its screen space bounds are
+modified (default), or should it preserve the screen-to-data ratio and
+resize the data bounds?  If the latter, it will only try to preserve
+the ratio if both screen and data space extents are non-zero.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -172,7 +201,11 @@ space to a 1-D region in output space.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><strong>fill_value</strong> : Float(1.0)</td>
+<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>fill_value</strong> : Float(1.0)</p>
+<blockquote class="last">
+<div><p>The value to map when asked to map values &lt;= LOG_MINIMUM to screen space.</p>
+</div></blockquote>
+</td>
 </tr>
 </tbody>
 </table>
@@ -209,12 +242,37 @@ values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_lo
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>range</strong> : Instance(DataRange2D)</p>
+<blockquote>
+<div><p>The data-space bounds of the mapper.</p>
+</div></blockquote>
 <p><strong>x_low_pos</strong> : Float(0.0)</p>
+<blockquote>
+<div><p>The screen space position of the lower bound of the horizontal axis.</p>
+</div></blockquote>
 <p><strong>x_high_pos</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The screen space position of the upper bound of the horizontal axis.</p>
+</div></blockquote>
 <p><strong>y_low_pos</strong> : Float(0.0)</p>
+<blockquote>
+<div><p>The screen space position of the lower bound of the vertical axis.</p>
+</div></blockquote>
 <p><strong>y_high_pos</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The screen space position of the upper bound of the vertical axis.</p>
+</div></blockquote>
 <p><strong>screen_bounds</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for low and high positions in one structure.
+Must be a tuple (x_low_pos, x_high_pos, y_low_pos, y_high_pos).</p>
+</div></blockquote>
 <p><strong>stretch_data_x</strong> : DelegatesTo(&#8216;_xmapper&#8217;, prefix=&#8217;stretch_data&#8217;)</p>
+<blockquote>
+<div><p>Should the mapper stretch the dataspace when its screen space bounds are
+modified (default), or should it preserve the screen-to-data ratio and
+resize the data bounds?  If the latter, it will only try to preserve
+the ratio if both screen and data space extents are non-zero.</p>
+</div></blockquote>
 <p class="last"><strong>stretch_data_y</strong> : DelegatesTo(&#8216;_ymapper&#8217;, prefix=&#8217;stretch_data&#8217;)</p>
 </td>
 </tr>
@@ -256,11 +314,30 @@ ColorMapper constructor.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color_bands</strong> : Property(Array)</p>
+<blockquote>
+<div><p>The color table.</p>
+</div></blockquote>
 <p><strong>steps</strong> : Int(256)</p>
+<blockquote>
+<div><p>The total number of color steps in the map.</p>
+</div></blockquote>
 <p><strong>name</strong> : Str</p>
+<blockquote>
+<div><p>The name of this color map.</p>
+</div></blockquote>
 <p><strong>low_pos</strong> : None</p>
+<blockquote>
+<div><p>Not used.</p>
+</div></blockquote>
 <p><strong>high_pos</strong> : None</p>
-<p class="last"><strong>updated</strong> : Event</p>
+<blockquote>
+<div><p>Not used.</p>
+</div></blockquote>
+<p><strong>updated</strong> : Event</p>
+<blockquote class="last">
+<div><p>A generic &#8220;update&#8221; event that generally means that anything that relies
+on this mapper for visual output should do a redraw or repaint.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -344,9 +421,21 @@ plots.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>segment_map</strong> : Any</p>
+<blockquote>
+<div><p>The segment data of the color map.</p>
+</div></blockquote>
 <p><strong>steps</strong> : Int(256)</p>
+<blockquote>
+<div><p>The number of steps in the color map.</p>
+</div></blockquote>
 <p><strong>range_low_setting</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, Float)</p>
-<p class="last"><strong>range_high_setting</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, Float)</p>
+<blockquote>
+<div><p>Low end of the color map range.</p>
+</div></blockquote>
+<p><strong>range_high_setting</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, Float)</p>
+<blockquote class="last">
+<div><p>High end of the color map range.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>

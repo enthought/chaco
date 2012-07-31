@@ -72,7 +72,13 @@ interactors and plot tools.</p>
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>origin</strong> : Enum(&#8216;bottom left&#8217;, &#8216;top left&#8217;, &#8216;bottom right&#8217;, &#8216;top right&#8217;)</p>
 <p><strong>bgcolor</strong> : &#8216;transparent&#8217;</p>
-<p class="last"><strong>resizable</strong> : &#8216;hv&#8217;</p>
+<blockquote>
+<div><p>Overrides the default value inherited from PlotComponent.</p>
+</div></blockquote>
+<p><strong>resizable</strong> : &#8216;hv&#8217;</p>
+<blockquote class="last">
+<div><p>Overrides the default value inherited from PlotComponent.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -154,8 +160,19 @@ containment-ownership relationship.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>component</strong> : Instance(Component)</p>
+<blockquote>
+<div><p>The component that this object overlays. This can be None. By default, if
+this object is called to draw(), it tries to render onto this component.</p>
+</div></blockquote>
 <p><strong>draw_layer</strong> : &#8216;overlay&#8217;</p>
-<p class="last"><strong>bgcolor</strong> : &#8216;transparent&#8217;</p>
+<blockquote>
+<div><p>The default layer that this component draws into.</p>
+</div></blockquote>
+<p><strong>bgcolor</strong> : &#8216;transparent&#8217;</p>
+<blockquote class="last">
+<div><p>The background color (overrides PlotComponent).
+Typically, an overlay does not render a background.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -184,8 +201,24 @@ This class will be removed some time in the near future.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : ()</p>
+<blockquote>
+<div><p>A named list of places/positions/&#8221;slots&#8221; on the frame where PlotComponents
+can place themselves.  Subclasses must redefine this trait with the
+appropriate values.  Note that by default, __getattr__ treats these
+slot names as attributes on the class so they can be directly accessed.
+This is a class attribute.</p>
+</div></blockquote>
 <p><strong>fit_components</strong> : Enum(&#8216;&#8217;, &#8216;h&#8217;, &#8216;v&#8217;, &#8216;hv&#8217;)</p>
+<blockquote>
+<div><p>Dimensions in which this frame can resize to fit its components.
+This is similar to the <strong>resizable</strong> trait on PlotComponent. Chaco
+plot frames use this attribute in preference to the Enable
+<strong>auto_size</strong> attribute (which is overridden to be False by default).</p>
+</div></blockquote>
 <p><strong>auto_size</strong> : False</p>
+<blockquote>
+<div><p>Overrides the Enable auto_size trait (which will be deprecated in the future)</p>
+</div></blockquote>
 <p class="last"><strong>draw_order</strong> : DEFAULT_DRAWING_ORDER</p>
 </td>
 </tr>
@@ -250,11 +283,30 @@ This class will be removed sometime in the future.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : (&#8216;center&#8217;, &#8216;left&#8217;, &#8216;right&#8217;, &#8216;top&#8217;, &#8216;bottom&#8217;)</p>
+<blockquote>
+<div><p>Slots or positions on the frame where plot components can place themselves.
+Overrides PlotFrame.</p>
+</div></blockquote>
 <p><strong>default_bounds</strong> : (500, 500)</p>
+<blockquote>
+<div><p>Default width and height. Class attribute.</p>
+</div></blockquote>
 <p><strong>left_width</strong> : Float(50.0)</p>
+<blockquote>
+<div><p>Width of the left slot.</p>
+</div></blockquote>
 <p><strong>right_width</strong> : Float(50.0)</p>
+<blockquote>
+<div><p>Width of the right slot.</p>
+</div></blockquote>
 <p><strong>top_height</strong> : Float(50.0)</p>
-<p class="last"><strong>bottom_height</strong> : Float(50.0)</p>
+<blockquote>
+<div><p>Height of the top slot.</p>
+</div></blockquote>
+<p><strong>bottom_height</strong> : Float(50.0)</p>
+<blockquote class="last">
+<div><p>Height of the bottom slot.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -283,29 +335,129 @@ just like a normal PlotContainer.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>orientation</strong> : Enum(&#8216;h&#8217;, &#8216;v&#8217;)</p>
+<blockquote>
+<div><p>The orientation of the index axis.</p>
+</div></blockquote>
 <p><strong>default_origin</strong> : Enum(&#8216;bottom left&#8217;, &#8216;top left&#8217;, &#8216;bottom right&#8217;, &#8216;top right&#8217;)</p>
+<blockquote>
+<div><p>The default location of the origin  for new plots</p>
+</div></blockquote>
 <p><strong>origin</strong> : Property(depends_on=&#8217;default_origin&#8217;)</p>
+<blockquote>
+<div><p>The origin reported to axes, etc</p>
+</div></blockquote>
 <p><strong>index_mapper</strong> : Instance(Base1DMapper)</p>
+<blockquote>
+<div><p>The mapper to use for the index data.</p>
+</div></blockquote>
 <p><strong>value_mapper</strong> : Instance(Base1DMapper)</p>
+<blockquote>
+<div><p>The mapper to use for value data.</p>
+</div></blockquote>
 <p><strong>index_scale</strong> : Enum(&#8216;linear&#8217;, &#8216;log&#8217;)</p>
+<blockquote>
+<div><p>For x-y plots, the scale of the index axis.</p>
+</div></blockquote>
 <p><strong>value_scale</strong> : Enum(&#8216;linear&#8217;, &#8216;log&#8217;)</p>
+<blockquote>
+<div><p>For x-y plots, the scale of the index axis.</p>
+</div></blockquote>
 <p><strong>index_range</strong> : Property</p>
+<blockquote>
+<div><p>The range used for the index data.</p>
+</div></blockquote>
 <p><strong>value_range</strong> : Property</p>
+<blockquote>
+<div><p>The range used for the value data.</p>
+</div></blockquote>
 <p><strong>range2d</strong> : Instance(DataRange2D)</p>
+<blockquote>
+<div><p>The 2-D data range whose x- and y-ranges are exposed as the
+<strong>index_range</strong> and <strong>value_range</strong> property traits. This allows
+supporting both XY plots and 2-D (image) plots.</p>
+</div></blockquote>
 <p><strong>x_mapper</strong> : OrientedMapperProperty</p>
+<blockquote>
+<div><p>Convenience property that offers access to whatever mapper corresponds
+to the X-axis.</p>
+</div></blockquote>
 <p><strong>y_mapper</strong> : OrientedMapperProperty</p>
+<blockquote>
+<div><p>Convenience property that offers access to whatever mapper corresponds
+to the Y-axis</p>
+</div></blockquote>
 <p><strong>x_axis</strong> : Instance(AbstractOverlay)</p>
+<blockquote>
+<div><blockquote>
+<div><p>The horizontal axis.  Its position relative to the plot
+area can be &#8220;top&#8221;, &#8220;bottom&#8221;, or &#8220;float&#8221;.  The default position for a new
+x-axis is &#8220;bottom&#8221;.</p>
+<p>TODO: For now, this is an instance of AbstractOverlay instead of PlotAxis
+because scales_axis.PlotAxis doesn&#8217;t inherit from PlotAxis, but instead is a
+semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis
+inherit a concrete class, I chose to loosen this trait by specifying
+a more general base class of PlotAxis.  This incurs lower risk of subtle
+and difficult-to-catch bugs being introduced by changes to the
+axis.PlotAxis class.  This same comment applies to the y_axis trait
+below.  &#8211;pwang</p>
+</div></blockquote>
+<p>x_axis = Instance(PlotAxis)</p>
+</div></blockquote>
 <p><strong>y_axis</strong> : Instance(AbstractOverlay)</p>
+<blockquote>
+<div><blockquote>
+<div><p>The vertical axis.  Its position relative to the plot
+area can be &#8220;left&#8221;, &#8220;right&#8221;, or &#8220;float&#8221;.  The default position for a new
+y-axis is &#8220;left&#8221;.</p>
+</div></blockquote>
+<p>y_axis = Instance(PlotAxis)</p>
+</div></blockquote>
 <p><strong>x_grid</strong> : Instance(PlotGrid)</p>
+<blockquote>
+<div><p>The grid that intersects the x-axis, i.e., a set of vertical lines.</p>
+</div></blockquote>
 <p><strong>y_grid</strong> : Instance(PlotGrid)</p>
+<blockquote>
+<div><p>The grid that intersects the y-axis, i.e., a set of horizontal lines.</p>
+</div></blockquote>
 <p><strong>auto_axis</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Whether to automatically create the x_axis and y_axis if they were not
+already set by the caller.</p>
+</div></blockquote>
 <p><strong>auto_grid</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Whether to automatically create the x_grid and y_grid if they were not
+already set by the caller.</p>
+</div></blockquote>
 <p><strong>index_axis</strong> : AxisProperty</p>
+<blockquote>
+<div><p>Convenience property for accessing the index axis, which can be X or Y,
+depending on <strong>orientation</strong>.</p>
+</div></blockquote>
 <p><strong>value_axis</strong> : AxisProperty</p>
+<blockquote>
+<div><p>Convenience property for accessing the value axis, which can be Y or X,
+depending on <strong>orientation</strong>.</p>
+</div></blockquote>
 <p><strong>index_grid</strong> : GridProperty</p>
+<blockquote>
+<div><p>Convenience property for accessing the index grid, which can be horizontal
+or vertical, depending on <strong>orientation</strong>.</p>
+</div></blockquote>
 <p><strong>value_grid</strong> : GridProperty</p>
+<blockquote>
+<div><p>Convenience property for accessing the value grid, which can be vertical
+or horizontal, depending on <strong>orientation</strong>.</p>
+</div></blockquote>
 <p><strong>bgcolor</strong> : &#8216;white&#8217;</p>
+<blockquote>
+<div><p>Background color (overrides Enable Component)</p>
+</div></blockquote>
 <p><strong>padding_top</strong> : 50</p>
+<blockquote>
+<div><p>Padding defaults.</p>
+</div></blockquote>
 <p><strong>padding_bottom</strong> : 50</p>
 <p><strong>padding_left</strong> : 50</p>
 <p><strong>padding_right</strong> : 50</p>
@@ -347,9 +499,23 @@ This class will be removed sometime in the future.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : &#8216;center&#8217;</p>
+<blockquote>
+<div><p>This frame has only one position for plot components. Overrides
+PlotFrame.</p>
+</div></blockquote>
 <p><strong>default_bounds</strong> : (500, 500)</p>
+<blockquote>
+<div><p>Default width and height. Class attribute.</p>
+</div></blockquote>
 <p><strong>fit_components</strong> : &#8216;&#8217;</p>
-<p class="last"><strong>fit_window</strong> : True</p>
+<blockquote>
+<div><p>This frame does not resize to fit components. Overrides PlotFrame.</p>
+</div></blockquote>
+<p><strong>fit_window</strong> : True</p>
+<blockquote class="last">
+<div><p>This frame maximizes itself within the window, if it is a top-level
+component. Overrides Enable Container.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -381,8 +547,51 @@ protected stub methods.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
+<blockquote>
+<div><p>The order in which various rendering classes on this component are drawn.
+Note that if this component is placed in a container, in most cases
+the container&#8217;s draw order is used, since the container calls
+each of its contained components for each rendering pass.
+Typically, the definitions of the layers are:</p>
+<ol class="arabic">
+<li><p class="first">&#8216;background&#8217;: Background image, shading</p>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;image&#8217;: A special layer for plots that render as images.  This is in</dt>
+<dd><p class="first last">a separate layer since these plots must all render before non-image
+plots.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">&#8216;underlay&#8217;: Axes and grids</p>
+</li>
+<li><p class="first">&#8216;plot&#8217;: The main plot area itself</p>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;selection&#8217;: Selected content are rendered above normal plot elements</dt>
+<dd><p class="first last">to make them stand out</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">&#8216;border&#8217;: Plot borders</p>
+</li>
+<li><p class="first">&#8216;annotation&#8217;: Lines and text that are conceptually part of the &#8220;plot&#8221;
+but need to be rendered on top of everything else in the plot</p>
+</li>
+<li><p class="first">&#8216;overlay&#8217;: Legends, selection regions, and other tool-drawn visual
+elements</p>
+</li>
+</ol>
+</div></blockquote>
 <p><strong>draw_layer</strong> : Str(&#8216;plot&#8217;)</p>
-<p class="last"><strong>use_draw_order</strong> : Bool(True)</p>
+<blockquote>
+<div><p>The default draw layer for Chaco plot components is the &#8220;plot&#8221; layer</p>
+</div></blockquote>
+<p><strong>use_draw_order</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>Draw layers in <strong>draw_order</strong>? If False, use _do_draw() (for backwards
+compatibility).</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -414,15 +623,46 @@ labels to store state, perform layout, and render the text.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : Str</p>
+<blockquote>
+<div><p>The label text.  Carriage returns (n) are always connverted into
+line breaks.</p>
+</div></blockquote>
 <p><strong>rotate_angle</strong> : Float(0)</p>
+<blockquote>
+<div><p>The angle of rotation of the label.</p>
+</div></blockquote>
 <p><strong>color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the label text.</p>
+</div></blockquote>
 <p><strong>bgcolor</strong> : transparent_color_trait</p>
+<blockquote>
+<div><p>The background color of the label.</p>
+</div></blockquote>
 <p><strong>border_width</strong> : Int(0)</p>
+<blockquote>
+<div><p>The width of the label border. If it is 0, then it is not shown.</p>
+</div></blockquote>
 <p><strong>border_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the border.</p>
+</div></blockquote>
 <p><strong>border_visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Whether or not the border is visible</p>
+</div></blockquote>
 <p><strong>font</strong> : KivaFont(&#8216;modern 10&#8217;)</p>
+<blockquote>
+<div><p>The font of the label text.</p>
+</div></blockquote>
 <p><strong>margin</strong> : Int(2)</p>
-<p class="last"><strong>line_spacing</strong> : Int(5)</p>
+<blockquote>
+<div><p>Number of pixels of margin around the label, for both X and Y dimensions.</p>
+</div></blockquote>
+<p><strong>line_spacing</strong> : Int(5)</p>
+<blockquote class="last">
+<div><p>Number of pixels of spacing between lines of text.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -472,9 +712,21 @@ reference.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : LabelDelegate</p>
+<blockquote>
+<div><p>The text of the label.</p>
+</div></blockquote>
 <p><strong>color</strong> : DelegatesTo(&#8216;_label&#8217;)</p>
+<blockquote>
+<div><p>The color of the label text.</p>
+</div></blockquote>
 <p><strong>font</strong> : LabelDelegate</p>
+<blockquote>
+<div><p>The font for the label text.</p>
+</div></blockquote>
 <p><strong>angle</strong> : DelegatesTo(&#8216;_label&#8217;, &#8216;rotate_angle&#8217;)</p>
+<blockquote>
+<div><p>The angle of rotation of the label.</p>
+</div></blockquote>
 <p><strong>bgcolor</strong> : LabelDelegate</p>
 <p><strong>border_width</strong> : LabelDelegate</p>
 <p><strong>border_color</strong> : LabelDelegate</p>
@@ -482,10 +734,37 @@ reference.</p>
 <p><strong>margin</strong> : LabelDelegate</p>
 <p><strong>line_spacing</strong> : LabelDelegate</p>
 <p><strong>hjustify</strong> : Enum(&#8216;center&#8217;, &#8216;left&#8217;, &#8216;right&#8217;)</p>
+<blockquote>
+<div><p>Horizontal justification used if the label has more horizontal space
+than it needs.</p>
+</div></blockquote>
 <p><strong>vjustify</strong> : Enum(&#8216;center&#8217;, &#8216;bottom&#8217;, &#8216;top&#8217;)</p>
+<blockquote>
+<div><p>Vertical justification used if the label has more vertical space than it
+needs.</p>
+</div></blockquote>
 <p><strong>overlay_position</strong> : Trait(&#8216;outside top&#8217;, Str, None)</p>
+<blockquote>
+<div><p>The position of this label relative to the object it is overlaying.
+Can be &#8220;top&#8221;, &#8220;left&#8221;, &#8220;right&#8221;, &#8220;bottom&#8221;, and optionally can be preceeded
+by the words &#8220;inside&#8221; or &#8220;outside&#8221;, separated by a space.  If &#8220;inside&#8221;
+and &#8220;outside&#8221; are not provided, then defaults to &#8220;outside&#8221;.
+Examples:</p>
+<blockquote>
+<div><p>inside top
+outside right</p>
+</div></blockquote>
+</div></blockquote>
 <p><strong>draw_layer</strong> : &#8216;plot&#8217;</p>
-<p class="last"><strong>resizable</strong> : &#8216;h&#8217;</p>
+<blockquote>
+<div><p>By default, this acts like a component and will render on the main
+&#8220;plot&#8221; layer unless its <strong>component</strong> attribute gets set.</p>
+</div></blockquote>
+<p><strong>resizable</strong> : &#8216;h&#8217;</p>
+<blockquote class="last">
+<div><p>The label has a fixed height and can be resized horizontally. (Overrides
+PlotComponent.)</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -526,26 +805,114 @@ reference.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>font</strong> : KivaFont(&#8216;modern 12&#8217;)</p>
+<blockquote>
+<div><p>The font to use for the legend text.</p>
+</div></blockquote>
 <p><strong>border_padding</strong> : Int(10)</p>
+<blockquote>
+<div><p>The amount of space between the content of the legend and the border.</p>
+</div></blockquote>
 <p><strong>border_visible</strong> : True</p>
+<blockquote>
+<div><p>The border is visible (overrides Enable Component).</p>
+</div></blockquote>
 <p><strong>color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the text labels</p>
+</div></blockquote>
 <p><strong>bgcolor</strong> : white_color_trait</p>
+<blockquote>
+<div><p>The background color of the legend (overrides AbstractOverlay).</p>
+</div></blockquote>
 <p><strong>align</strong> : Enum(&#8216;ur&#8217;, &#8216;ul&#8217;, &#8216;ll&#8217;, &#8216;lr&#8217;)</p>
+<blockquote>
+<div><p>The position of the legend with respect to its overlaid component.  (This
+attribute applies only if the legend is used as an overlay.)</p>
+<ul class="simple">
+<li>ur = Upper Right</li>
+<li>ul = Upper Left</li>
+<li>ll = Lower Left</li>
+<li>lr = Lower Right</li>
+</ul>
+</div></blockquote>
 <p><strong>line_spacing</strong> : Int(3)</p>
+<blockquote>
+<div><p>The amount of space between legend items.</p>
+</div></blockquote>
 <p><strong>icon_bounds</strong> : List([24, 24])</p>
+<blockquote>
+<div><p>The size of the icon or marker area drawn next to the label.</p>
+</div></blockquote>
 <p><strong>icon_spacing</strong> : Int(5)</p>
+<blockquote>
+<div><p>Amount of spacing between each label and its icon.</p>
+</div></blockquote>
 <p><strong>plots</strong> : Dict</p>
+<blockquote>
+<div><p>Map of labels (strings) to plot instances or lists of plot instances.  The
+Legend determines the appropriate rendering of each plot&#8217;s marker/line.</p>
+</div></blockquote>
 <p><strong>labels</strong> : List</p>
+<blockquote>
+<div><p>The list of labels to show and the order to show them in.  If this
+list is blank, then the keys of self.plots is used and displayed in
+alphabetical order.  Otherwise, only the items in the <strong>labels</strong>
+list are drawn in the legend.  Labels are ordered from top to bottom.</p>
+</div></blockquote>
 <p><strong>hide_invisible_plots</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Whether or not to hide plots that are not visible.  (This is checked during
+layout.)  This option <em>will</em> filter out the items in <strong>labels</strong> above, so
+if you absolutely, positively want to set the items that will always
+display in the legend, regardless of anything else, then you should turn
+this option off.  Otherwise, it usually makes sense that a plot renderer
+that is not visible will also not be in the legend.</p>
+</div></blockquote>
 <p><strong>invisible_plot_alpha</strong> : Float(0.33)</p>
+<blockquote>
+<div><p>If hide_invisible_plots is False, we can still choose to render the names
+of invisible plots with an alpha.</p>
+</div></blockquote>
 <p><strong>composite_icon_renderer</strong> : Instance(AbstractCompositeIconRenderer)</p>
+<blockquote>
+<div><p>The renderer that draws the icons for the legend.</p>
+</div></blockquote>
 <p><strong>error_icon</strong> : Enum(&#8216;skip&#8217;, &#8216;blank&#8217;, &#8216;questionmark&#8217;)</p>
+<blockquote>
+<div><p>Action that the legend takes when it encounters a plot whose icon it
+cannot render:</p>
+<ul class="simple">
+<li>&#8216;skip&#8217;: skip it altogether and don&#8217;t render its name</li>
+<li>&#8216;blank&#8217;: render the name but leave the icon blank (color=self.bgcolor)</li>
+<li>&#8216;questionmark&#8217;: render a &#8220;question mark&#8221; icon</li>
+</ul>
+</div></blockquote>
 <p><strong>clip_to_component</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Should the legend clip to the bounds it needs, or to its parent?</p>
+</div></blockquote>
 <p><strong>resizable</strong> : &#8216;hv&#8217;</p>
+<blockquote>
+<div><p>The legend is not resizable (overrides PlotComponent).</p>
+</div></blockquote>
 <p><strong>title</strong> : Str(&#8216;&#8217;)</p>
+<blockquote>
+<div><p>An optional title string to show on the legend.</p>
+</div></blockquote>
 <p><strong>title_at_top</strong> : Bool(True)</p>
+<blockquote>
+<div><p>If True, title is at top, if False then at bottom.</p>
+</div></blockquote>
 <p><strong>unified_draw</strong> : True</p>
-<p class="last"><strong>draw_layer</strong> : &#8216;overlay&#8217;</p>
+<blockquote>
+<div><p>The legend draws itself as in one pass when its parent is drawing
+the <strong>draw_layer</strong> (overrides PlotComponent).</p>
+</div></blockquote>
+<p><strong>draw_layer</strong> : &#8216;overlay&#8217;</p>
+<blockquote class="last">
+<div><p>The legend is drawn on the overlay layer of its parent (overrides
+PlotComponent).</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -596,15 +963,48 @@ includes the padding</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>font</strong> : KivaFont(&#8216;modern 10&#8217;)</p>
+<blockquote>
+<div><p>The font to render the tooltip.</p>
+</div></blockquote>
 <p><strong>text_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the text in the tooltip</p>
+</div></blockquote>
 <p><strong>border_padding</strong> : Int(4)</p>
+<blockquote>
+<div><p>The ammount of space between the border and the text.</p>
+</div></blockquote>
 <p><strong>line_spacing</strong> : Int(4)</p>
+<blockquote>
+<div><p>The number of pixels between lines.</p>
+</div></blockquote>
 <p><strong>lines</strong> : List</p>
+<blockquote>
+<div><p>List of text strings to put in the tooltip.</p>
+</div></blockquote>
 <p><strong>rotate_angle</strong> : Float(0.0)</p>
+<blockquote>
+<div><p>Angle to rotate (counterclockwise) in degrees. NB this will <em>only</em>
+currently affect text, so probably only useful if borders and background
+are disabled</p>
+</div></blockquote>
 <p><strong>auto_adjust</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Should the tooltip automatically reposition itself to remain visible
+and unclipped on its overlaid component?</p>
+</div></blockquote>
 <p><strong>resizable</strong> : &#8216;&#8217;</p>
+<blockquote>
+<div><p>The tooltip is a fixed size. (Overrides PlotComponent.)</p>
+</div></blockquote>
 <p><strong>border_visible</strong> : True</p>
-<p class="last"><strong>bgcolor</strong> : white_color_trait</p>
+<blockquote>
+<div><p>Use a visible border. (Overrides Enable Component.)</p>
+</div></blockquote>
+<p><strong>bgcolor</strong> : white_color_trait</p>
+<blockquote class="last">
+<div><p>Use a white background color (overrides AbstractOverlay).</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -638,26 +1038,101 @@ includes the padding</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
+<blockquote>
+<div><p>The symbol to use if <strong>marker</strong> is set to &#8220;custom&#8221;. This attribute must
+be a compiled path for the given Kiva context.</p>
+</div></blockquote>
 <p><strong>data_point</strong> : Trait(None, None, Tuple, List, Array)</p>
+<blockquote>
+<div><p>The point in data space where this label should anchor itself.</p>
+</div></blockquote>
 <p><strong>label_position</strong> : LabelPositionTrait</p>
+<blockquote>
+<div><p>The location of the data label relative to the data point.</p>
+</div></blockquote>
 <p><strong>label_format</strong> : Str(&#8216;(%(x)f, %(y)f)&#8217;)</p>
+<blockquote>
+<div><p>The format string that determines the label&#8217;s text.  This string is
+formatted using a dict containing the keys &#8216;x&#8217; and &#8216;y&#8217;, corresponding to
+data space values.</p>
+</div></blockquote>
 <p><strong>label_text</strong> : Str</p>
+<blockquote>
+<div><p>The text to show on the label, or above the coordinates for the label, if
+show_label_coords is True</p>
+</div></blockquote>
 <p><strong>show_label_coords</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Flag whether to show coordinates with the label or not.</p>
+</div></blockquote>
 <p><strong>clip_to_plot</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Does the label clip itself against the main plot area?  If not, then
+the label draws into the padding area (where axes typically reside).</p>
+</div></blockquote>
 <p><strong>xmid</strong> : Property(Float, depends_on=[&#8216;x&#8217;, &#8216;x2&#8217;])</p>
+<blockquote>
+<div><p>The center x position (average of x and x2)</p>
+</div></blockquote>
 <p><strong>ymid</strong> : Property(Float, depends_on=[&#8216;y&#8217;, &#8216;y2&#8217;])</p>
+<blockquote>
+<div><p>The center y position (average of y and y2)</p>
+</div></blockquote>
 <p><strong>marker_visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Mark the point on the data that this label refers to?</p>
+</div></blockquote>
 <p><strong>marker</strong> : MarkerTrait</p>
+<blockquote>
+<div><p>The type of marker to use.  This is a mapped trait using strings as the
+keys.</p>
+</div></blockquote>
 <p><strong>marker_size</strong> : Int(4)</p>
+<blockquote>
+<div><p>The pixel size of the marker (doesn&#8217;t include the thickness of the outline).</p>
+</div></blockquote>
 <p><strong>marker_line_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The thickness, in pixels, of the outline to draw around the marker.  If
+this is 0, no outline will be drawn.</p>
+</div></blockquote>
 <p><strong>marker_color</strong> : ColorTrait(&#8216;red&#8217;)</p>
+<blockquote>
+<div><p>The color of the inside of the marker.</p>
+</div></blockquote>
 <p><strong>marker_line_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>The color out of the border drawn around the marker.</p>
+</div></blockquote>
 <p><strong>arrow_visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Draw an arrow from the label to the data point?  Only
+used if <strong>data_point</strong> is not None.</p>
+</div></blockquote>
 <p><strong>arrow_size</strong> : Float(10)</p>
+<blockquote>
+<div><p>The length of the arrowhead, in screen points (e.g., pixels).</p>
+</div></blockquote>
 <p><strong>arrow_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>The color of the arrow.</p>
+</div></blockquote>
 <p><strong>arrow_root</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, &#8216;top left&#8217;, &#8216;top right&#8217;, &#8216;bottom left&#8217;, &#8216;bottom right&#8217;, &#8216;top center&#8217;, &#8216;bottom center&#8217;, &#8216;left center&#8217;, &#8216;right center&#8217;)</p>
+<blockquote>
+<div><p>The position of the base of the arrow on the label.  If this
+is &#8216;auto&#8217;, then the label uses <strong>label_position</strong>.  Otherwise, it treats
+the label as if it were at the label position indicated by this attribute.</p>
+</div></blockquote>
 <p><strong>arrow_min_length</strong> : Float(0)</p>
-<p class="last"><strong>arrow_max_length</strong> : Float(inf)</p>
+<blockquote>
+<div><p>The minimum length of the arrow before it will be drawn.  By default,
+the arrow will be drawn regardless of how short it is.</p>
+</div></blockquote>
+<p><strong>arrow_max_length</strong> : Float(inf)</p>
+<blockquote class="last">
+<div><p>The maximum length of the arrow before it will be drawn.  By default,
+the arrow will be drawn regardless of how long it is.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -685,12 +1160,33 @@ includes the padding</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>lasso_selection</strong> : Instance(&#8216;chaco.tools.lasso_selection.LassoSelection&#8217;)</p>
+<blockquote>
+<div><p>The LassoSelection that provides the data for this overlay.</p>
+</div></blockquote>
 <p><strong>selection_fill_color</strong> : ColorTrait(&#8216;lightskyblue&#8217;)</p>
+<blockquote>
+<div><p>The fill color for the selection region.</p>
+</div></blockquote>
 <p><strong>selection_border_color</strong> : ColorTrait(&#8216;dodgerblue&#8217;)</p>
+<blockquote>
+<div><p>The border color for the selection region.</p>
+</div></blockquote>
 <p><strong>selection_alpha</strong> : Float(0.8)</p>
+<blockquote>
+<div><p>The transparency level for the selection fill color.</p>
+</div></blockquote>
 <p><strong>selection_border_width</strong> : Float(2.0)</p>
+<blockquote>
+<div><p>The width of the selection border.</p>
+</div></blockquote>
 <p><strong>selection_border_dash</strong> : LineStyle</p>
-<p class="last"><strong>bgcolor</strong> : &#8216;clear&#8217;</p>
+<blockquote>
+<div><p>The line style of the selection border.</p>
+</div></blockquote>
+<p><strong>bgcolor</strong> : &#8216;clear&#8217;</p>
+<blockquote class="last">
+<div><p>The background color (overrides AbstractOverlay).</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -717,21 +1213,72 @@ includes the padding</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index_mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>Screen mapper for index data.</p>
+</div></blockquote>
 <p><strong>color_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Screen mapper for color data</p>
+</div></blockquote>
 <p><strong>value_mapper</strong> : Property(depends_on=&#8217;color_mapper&#8217;)</p>
+<blockquote>
+<div><p>Screen mapper for value data (synonym for color_mapper)</p>
+</div></blockquote>
 <p><strong>index</strong> : Property</p>
+<blockquote>
+<div><p>Optional index data source for generic tools to attach metadata to.</p>
+</div></blockquote>
 <p><strong>plot</strong> : Any</p>
+<blockquote>
+<div><p>Optional color-mapped plot that this color bar references.  If specified,
+the plot must have a <strong>color_mapper</strong> attribute.</p>
+</div></blockquote>
 <p><strong>grid_visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Is there a visible grid on the colorbar?</p>
+</div></blockquote>
 <p><strong>axis_visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Is there a visible axis on the colorbar?</p>
+</div></blockquote>
 <p><strong>x_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Corresponds to either <strong>index_mapper</strong> or None, depending on
+the orientation of the plot.</p>
+</div></blockquote>
 <p><strong>y_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Corresponds to either <strong>index_mapper</strong> or None, depending on
+the orientation of the plot.</p>
+</div></blockquote>
 <p><strong>border_visible</strong> : True</p>
+<blockquote>
+<div><p>The border is visible (overrides enable.Component).</p>
+</div></blockquote>
 <p><strong>orientation</strong> : Enum(&#8216;v&#8217;, &#8216;h&#8217;)</p>
+<blockquote>
+<div><p>The orientation of the index axis.</p>
+</div></blockquote>
 <p><strong>direction</strong> : Enum(&#8216;normal&#8217;, &#8216;flipped&#8217;)</p>
+<blockquote>
+<div><p>Should the bar go left-to-right or bottom-to-top (normal) or the reverse?</p>
+</div></blockquote>
 <p><strong>bgcolor</strong> : &#8216;transparent&#8217;</p>
+<blockquote>
+<div><p>Overrides the default background color trait in PlotComponent.</p>
+</div></blockquote>
 <p><strong>use_draw_order</strong> : True</p>
+<blockquote>
+<div><p>Draw layers in &#8220;draw order&#8221;</p>
+</div></blockquote>
 <p><strong>width</strong> : 40</p>
-<p class="last"><strong>origin</strong> : Enum(&#8216;bottom left&#8217;, &#8216;top left&#8217;, &#8216;bottom right&#8217;, &#8216;top right&#8217;)</p>
+<blockquote>
+<div><p>Default width is 40 pixels (overrides enable.CoordinateBox)</p>
+</div></blockquote>
+<p><strong>origin</strong> : Enum(&#8216;bottom left&#8217;, &#8216;top left&#8217;, &#8216;bottom right&#8217;, &#8216;top right&#8217;)</p>
+<blockquote class="last">
+<div><p>Faux origin for the axis to look at</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -751,14 +1298,48 @@ includes the padding</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : Str</p>
+<blockquote>
+<div><p>The text to display in the box.</p>
+</div></blockquote>
 <p><strong>font</strong> : KivaFont(&#8216;modern 12&#8217;)</p>
+<blockquote>
+<div><p>The font to use for the text.</p>
+</div></blockquote>
 <p><strong>bgcolor</strong> : ColorTrait(&#8216;transparent&#8217;)</p>
+<blockquote>
+<div><p>The background color for the box (overrides AbstractOverlay).</p>
+</div></blockquote>
 <p><strong>alpha</strong> : Trait(1.0, None, Float)</p>
+<blockquote>
+<div><p>The alpha value to apply to <strong>bgcolor</strong></p>
+</div></blockquote>
 <p><strong>border_color</strong> : ColorTrait(&#8216;dodgerblue&#8217;)</p>
+<blockquote>
+<div><p>The color of the outside box.</p>
+</div></blockquote>
 <p><strong>border_size</strong> : Int(1)</p>
+<blockquote>
+<div><p>The thickness of box border.</p>
+</div></blockquote>
 <p><strong>padding</strong> : Int(5)</p>
+<blockquote>
+<div><p>Number of pixels of padding around the text within the box.</p>
+</div></blockquote>
 <p><strong>align</strong> : Enum(&#8216;ur&#8217;, &#8216;ul&#8217;, &#8216;ll&#8217;, &#8216;lr&#8217;)</p>
-<p class="last"><strong>alternate_position</strong> : Any</p>
+<blockquote>
+<div><p>Alignment of the text in the box:</p>
+<ul class="simple">
+<li>&#8220;ur&#8221;: upper right</li>
+<li>&#8220;ul&#8221;: upper left</li>
+<li>&#8220;ll&#8221;: lower left</li>
+<li>&#8220;lr&#8221;: lower right</li>
+</ul>
+</div></blockquote>
+<p><strong>alternate_position</strong> : Any</p>
+<blockquote class="last">
+<div><p>This allows subclasses to specify an alternate position for the root
+of the text box.  Must be a sequence of length 2.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -788,12 +1369,18 @@ DataLabel.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>hover_metadata_name</strong> : Str(&#8216;hover&#8217;)</p>
+<blockquote>
+<div><p>The style to use when a point is hovered over</p>
+</div></blockquote>
 <p><strong>hover_marker</strong> : Trait(None, None, MarkerTrait)</p>
 <p><strong>hover_marker_size</strong> : Trait(None, None, Int)</p>
 <p><strong>hover_line_width</strong> : Trait(None, None, Float)</p>
 <p><strong>hover_color</strong> : Trait(None, None, ColorTrait)</p>
 <p><strong>hover_outline_color</strong> : Trait(None, None, ColorTrait)</p>
 <p><strong>selection_metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
+<blockquote>
+<div><p>The style to use when a point has been selected by a click</p>
+</div></blockquote>
 <p><strong>selection_marker</strong> : Trait(None, None, MarkerTrait)</p>
 <p><strong>selection_marker_size</strong> : Trait(None, None, Int)</p>
 <p><strong>selection_line_width</strong> : Trait(None, None, Float)</p>

@@ -76,12 +76,42 @@ possible, domain classes (or an adapter) must implement AbstractDataSource.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_dimension</strong> : DimensionTrait</p>
+<blockquote>
+<div><p>The dimensionality of the value at each index point.
+Subclasses re-declare this trait as a read-only trait with
+the right default value.</p>
+</div></blockquote>
 <p><strong>index_dimension</strong> : DimensionTrait</p>
+<blockquote>
+<div><p>The dimensionality of the indices into this data source.
+Subclasses re-declare this trait as a read-only trait with
+the right default value.</p>
+</div></blockquote>
 <p><strong>metadata</strong> : Dict</p>
+<blockquote>
+<div><p>A dictionary keyed on strings.  In general, it maps to indices (or tuples
+of indices, depending on <strong>value_dimension</strong>), as in the case of
+selections and annotations.  Applications and renderers can add their own
+custom metadata, but must avoid using keys that might result in name
+collision.</p>
+</div></blockquote>
 <p><strong>data_changed</strong> : Event</p>
+<blockquote>
+<div><p>Event that fires when the data values change.</p>
+</div></blockquote>
 <p><strong>bounds_changed</strong> : Event</p>
+<blockquote>
+<div><p>Event that fires when just the bounds change.</p>
+</div></blockquote>
 <p><strong>metadata_changed</strong> : Event</p>
-<p class="last"><strong>persist_data</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Event that fires when metadata structure is changed.</p>
+</div></blockquote>
+<p><strong>persist_data</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>Should the data that this datasource refers to be serialized when
+the datasource is serialized?</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -155,8 +185,21 @@ behavior, create a subclass that hooks up the appropriate listeners.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index_dimension</strong> : Constant(&#8216;scalar&#8217;)</p>
+<blockquote>
+<div><p>The dimensionality of the indices into this data source (overrides
+AbstractDataSource).</p>
+</div></blockquote>
 <p><strong>value_dimension</strong> : Constant(&#8216;scalar&#8217;)</p>
-<p class="last"><strong>sort_order</strong> : SortOrderTrait</p>
+<blockquote>
+<div><p>The dimensionality of the value at each index point (overrides
+AbstractDataSource).</p>
+</div></blockquote>
+<p><strong>sort_order</strong> : SortOrderTrait</p>
+<blockquote class="last">
+<div><p>The sort order of the data.
+This is a specialized optimization for 1-D arrays, but it&#8217;s an important
+one that&#8217;s used everywhere.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -278,8 +321,21 @@ such behavior, define a subclass that hooks up the appropriate listeners.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index_dimension</strong> : Int(0)</p>
+<blockquote>
+<div><p>The dimensionality of the indices into this data source (overrides
+AbstractDataSource).</p>
+</div></blockquote>
 <p><strong>value_dimension</strong> : Int(1)</p>
-<p class="last"><strong>sort_order</strong> : SortOrderTrait</p>
+<blockquote>
+<div><p>The dimensionality of the value at each index point (overrides
+AbstractDataSource).</p>
+</div></blockquote>
+<p><strong>sort_order</strong> : SortOrderTrait</p>
+<blockquote class="last">
+<div><p>The sort order of the data.
+This is a specialized optimization for 1-D arrays, but it&#8217;s an important
+one that&#8217;s used everywhere.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -388,9 +444,30 @@ overrides only the methods and traits that are different.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index_dimension</strong> : ReadOnly(&#8216;scalar&#8217;)</p>
+<blockquote>
+<div><p>The dimensionality of the indices into this data source (overrides
+ArrayDataSource).</p>
+</div></blockquote>
 <p><strong>value_dimension</strong> : ReadOnly(&#8216;point&#8217;)</p>
+<blockquote>
+<div><p>The dimensionality of the value at each index point (overrides
+ArrayDataSource).</p>
+</div></blockquote>
 <p><strong>sort_order</strong> : SortOrderTrait</p>
-<p class="last"><strong>sort_index</strong> : Enum(0, 1)</p>
+<blockquote>
+<div><p>The sort order of the data. Although sort order is less common with point
+data, it can be useful in case where the value data is sorted along some
+axis.  Note that <strong>sort_index</strong> is used only if <strong>sort_order</strong> is not
+&#8216;none&#8217;.</p>
+</div></blockquote>
+<p><strong>sort_index</strong> : Enum(0, 1)</p>
+<blockquote class="last">
+<div><p>Which of the value axes the <strong>sort_order</strong> refers to.
+If <strong>sort_order</strong> is &#8216;none&#8217;, this attribute is ignored.
+In the unlikely event that the value data is sorted along both
+X and Y (i.e., monotonic in both axes), then set <strong>sort_index</strong> to
+whichever one has the best binary-search performance for hit-testing.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -448,8 +525,21 @@ for an image, for example).</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index_dimension</strong> : Constant(&#8216;image&#8217;)</p>
+<blockquote>
+<div><p>The dimensionality of the indices into this data source (overrides
+AbstractDataSource).</p>
+</div></blockquote>
 <p><strong>value_dimension</strong> : Constant(&#8216;scalar&#8217;)</p>
-<p class="last"><strong>sort_order</strong> : Tuple(SortOrderTrait, SortOrderTrait)</p>
+<blockquote>
+<div><p>The dimensionality of the value at each index point (overrides
+AbstractDataSource).</p>
+</div></blockquote>
+<p><strong>sort_order</strong> : Tuple(SortOrderTrait, SortOrderTrait)</p>
+<blockquote class="last">
+<div><p>The sort order of the data (overrides AbstractDataSource). There is no
+overall sort order on 2-D data, but for gridded 2-D data, each axis can
+have a sort order.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -513,10 +603,50 @@ on the context in which the ImageData instance will be used.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>dimension</strong> : ReadOnly(DimensionTrait(&#8216;image&#8217;))</p>
+<blockquote>
+<div><p>The dimensionality of the data.</p>
+</div></blockquote>
 <p><strong>value_depth</strong> : Int(1)</p>
+<blockquote>
+<div><p>Depth of the values at each i,j. Values that are used include:</p>
+<ul class="simple">
+<li>3: color images, without alpha channel</li>
+<li>4: color images, with alpha channel</li>
+</ul>
+</div></blockquote>
 <p><strong>data</strong> : Property(ImageTrait)</p>
+<blockquote>
+<div><p>Holds the grid data that forms the image.  The shape of the array is
+(N, M, D) where:</p>
+<ul class="simple">
+<li>D is 1, 3, or 4.</li>
+<li>N is the length of the y-axis.</li>
+<li>M is the length of the x-axis.</li>
+</ul>
+<p>Thus, data[0,:,:] must be the first row of data.  If D is 1, then
+the array must be of type float; if D is 3 or 4, then the array
+must be of type uint8.</p>
+<p>NOTE: If this ImageData was constructed with a transposed data array,
+then internally it is still transposed (i.e., the x-axis is the first axis
+and the y-axis is the second), and the <strong>data</strong> array property might not be
+contiguous.  If contiguousness is required and calling copy() is too
+expensive, use the <strong>raw_value</strong> attribute. Also note that setting this
+trait does not change the value of <strong>transposed</strong>,
+so be sure to set it to its proper value when using the same ImageData
+instance interchangeably to store transposed and non-transposed data.</p>
+</div></blockquote>
 <p><strong>transposed</strong> : Bool(False)</p>
-<p class="last"><strong>raw_value</strong> : Property(ImageTrait)</p>
+<blockquote>
+<div><p>Is <strong>raw_value</strong>, the actual underlying image data
+array, transposed from <strong>data</strong>? (I.e., does the first axis correspond to
+the x-direction and the second axis correspond to the y-direction?)</p>
+<p>Rather than transposing or swapping axes on the data and destroying
+continuity, this class exposes the data as both <strong>data</strong> and <strong>raw_value</strong>.</p>
+</div></blockquote>
+<p><strong>raw_value</strong> : Property(ImageTrait)</p>
+<blockquote class="last">
+<div><p>A read-only attribute that exposes the underlying array.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>

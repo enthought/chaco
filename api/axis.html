@@ -71,36 +71,136 @@ the component.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>The mapper that drives this axis.</p>
+</div></blockquote>
 <p><strong>title</strong> : Trait(&#8216;&#8217;, Str, Unicode)</p>
+<blockquote>
+<div><p>The text of the axis title.</p>
+</div></blockquote>
 <p><strong>title_font</strong> : KivaFont(&#8216;modern 12&#8217;)</p>
+<blockquote>
+<div><p>The font of the title.</p>
+</div></blockquote>
 <p><strong>title_spacing</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, Float)</p>
+<blockquote>
+<div><p>The spacing between the axis line and the title</p>
+</div></blockquote>
 <p><strong>title_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>The color of the title.</p>
+</div></blockquote>
 <p><strong>tick_weight</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The thickness (in pixels) of each tick.</p>
+</div></blockquote>
 <p><strong>tick_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>The color of the ticks.</p>
+</div></blockquote>
 <p><strong>tick_label_font</strong> : KivaFont(&#8216;modern 10&#8217;)</p>
+<blockquote>
+<div><p>The font of the tick labels.</p>
+</div></blockquote>
 <p><strong>tick_label_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>The color of the tick labels.</p>
+</div></blockquote>
 <p><strong>tick_label_rotate_angle</strong> : Float(0)</p>
+<blockquote>
+<div><p>The rotation of the tick labels.</p>
+</div></blockquote>
 <p><strong>tick_label_alignment</strong> : Enum(&#8216;edge&#8217;, &#8216;corner&#8217;)</p>
+<blockquote>
+<div><p>Whether to align to corners or edges (corner is better for 45 degree rotation)</p>
+</div></blockquote>
 <p><strong>tick_label_margin</strong> : Int(2)</p>
+<blockquote>
+<div><p>The margin around the tick labels.</p>
+</div></blockquote>
 <p><strong>tick_label_offset</strong> : Float(8.0)</p>
+<blockquote>
+<div><p>The distance of the tick label from the axis.</p>
+</div></blockquote>
 <p><strong>tick_label_position</strong> : Enum(&#8216;outside&#8217;, &#8216;inside&#8217;)</p>
+<blockquote>
+<div><p>Whether the tick labels appear to the inside or the outside of the plot area</p>
+</div></blockquote>
 <p><strong>tick_label_formatter</strong> : Callable(DEFAULT_TICK_FORMATTER)</p>
+<blockquote>
+<div><p>A callable that is passed the numerical value of each tick label and
+that returns a string.</p>
+</div></blockquote>
 <p><strong>tick_in</strong> : Int(5)</p>
+<blockquote>
+<div><p>The number of pixels by which the ticks extend into the plot area.</p>
+</div></blockquote>
 <p><strong>tick_out</strong> : Int(5)</p>
+<blockquote>
+<div><p>The number of pixels by which the ticks extend into the label area.</p>
+</div></blockquote>
 <p><strong>tick_visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Are ticks visible at all?</p>
+</div></blockquote>
 <p><strong>tick_interval</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, Float)</p>
+<blockquote>
+<div><p>The dataspace interval between ticks.</p>
+</div></blockquote>
 <p><strong>tick_generator</strong> : Instance(AbstractTickGenerator)</p>
+<blockquote>
+<div><p>A callable that implements the AbstractTickGenerator interface.</p>
+</div></blockquote>
 <p><strong>orientation</strong> : Enum(&#8216;top&#8217;, &#8216;bottom&#8217;, &#8216;left&#8217;, &#8216;right&#8217;)</p>
+<blockquote>
+<div><p>The location of the axis relative to the plot.  This determines where
+the axis title is located relative to the axis line.</p>
+</div></blockquote>
 <p><strong>axis_line_visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Is the axis line visible?</p>
+</div></blockquote>
 <p><strong>axis_line_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>The color of the axis line.</p>
+</div></blockquote>
 <p><strong>axis_line_weight</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The line thickness (in pixels) of the axis line.</p>
+</div></blockquote>
 <p><strong>axis_line_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
+<blockquote>
+<div><p>The dash style of the axis line.</p>
+</div></blockquote>
 <p><strong>small_haxis_style</strong> : Bool(False)</p>
+<blockquote>
+<div><p>A special version of the axis line that is more useful for geophysical
+plots.</p>
+</div></blockquote>
 <p><strong>ensure_labels_bounded</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Does the axis ensure that its end labels fall within its bounding area?</p>
+</div></blockquote>
 <p><strong>ensure_ticks_bounded</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Does the axis prevent the ticks from being rendered outside its bounds?
+This flag is off by default because the standard axis <em>does</em> render ticks
+that encroach on the plot area.</p>
+</div></blockquote>
 <p><strong>updated</strong> : Event</p>
+<blockquote>
+<div><p>Fired when the axis&#8217;s range bounds change.</p>
+</div></blockquote>
 <p><strong>bgcolor</strong> : ColorTrait(&#8216;transparent&#8217;)</p>
+<blockquote>
+<div><p>Background color (overrides AbstractOverlay). Axes usually let the color of
+the container show through.</p>
+</div></blockquote>
 <p><strong>resizable</strong> : &#8216;hv&#8217;</p>
+<blockquote>
+<div><p>Dimensions that the axis is resizable in (overrides PlotComponent).
+Typically, axes are resizable in both dimensions.</p>
+</div></blockquote>
 <p class="last"><strong>ticklabel_cache</strong> : List</p>
 </td>
 </tr>
@@ -148,8 +248,17 @@ invoked.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>labels</strong> : List(Str)</p>
+<blockquote>
+<div><p>List of labels to use on tick marks.</p>
+</div></blockquote>
 <p><strong>label_rotation</strong> : Float(0)</p>
-<p class="last"><strong>positions</strong> : Any</p>
+<blockquote>
+<div><p>The angle of rotation of the label. Only multiples of 90 are supported.</p>
+</div></blockquote>
+<p><strong>positions</strong> : Any</p>
+<blockquote class="last">
+<div><p>List of indices of ticks</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -172,20 +281,83 @@ lines in a plot.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>The mapper (and associated range) that drive this PlotGrid.</p>
+</div></blockquote>
 <p><strong>grid_interval</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, Float)</p>
+<blockquote>
+<div><p>The dataspace interval between grid lines.</p>
+</div></blockquote>
 <p><strong>data_min</strong> : Trait(None, None, Float)</p>
+<blockquote>
+<div><p>The dataspace value at which to start this grid.  If None, then
+uses the mapper.range.low.</p>
+</div></blockquote>
 <p><strong>data_max</strong> : Trait(None, None, Float)</p>
+<blockquote>
+<div><p>The dataspace value at which to end this grid.  If None, then uses
+the mapper.range.high.</p>
+</div></blockquote>
 <p><strong>tick_generator</strong> : Instance(AbstractTickGenerator)</p>
+<blockquote>
+<div><p>A callable that implements the AbstractTickGenerator Interface.</p>
+</div></blockquote>
 <p><strong>orientation</strong> : Enum(&#8216;horizontal&#8217;, &#8216;vertical&#8217;)</p>
+<blockquote>
+<div><p>The orientation of the grid lines.  &#8220;horizontal&#8221; means that the grid
+lines are parallel to the X axis and the ticker and grid interval
+refer to the Y axis.</p>
+</div></blockquote>
 <p><strong>flip_axis</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Draw the ticks starting at the end of the mapper range? If False, the
+ticks are drawn starting at 0. This setting can be useful to keep the
+grid from from &#8220;flashing&#8221; as the user resizes the plot area.</p>
+</div></blockquote>
 <p><strong>transverse_bounds</strong> : Trait(None, Tuple, Callable)</p>
+<blockquote>
+<div><p>Optional specification of the grid bounds in the dimension transverse
+to the ticking/gridding dimension, i.e. along the direction specified
+by self.orientation.  If this is specified but transverse_mapper is
+not specified, then there is no effect.</p>
+<blockquote>
+<div><p>None : use self.bounds or self.component.bounds (if overlay)
+Tuple : (low, high) extents, used for every grid line
+Callable : Function that takes an array of dataspace grid ticks</p>
+<blockquote>
+<div><p>and returns either an array of shape (N,2) of (starts,ends)
+for each grid point or a single tuple (low, high)</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
 <p><strong>transverse_mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>Mapper in the direction corresponding to self.orientation, i.e. transverse
+to the direction of self.mapper.  This is used to compute the screen
+position of transverse_bounds.  If this is not specified, then
+transverse_bounds has no effect, and vice versa.</p>
+</div></blockquote>
 <p><strong>resizable</strong> : &#8216;hv&#8217;</p>
+<blockquote>
+<div><p>Dimensions that the grid is resizable in (overrides PlotComponent).</p>
+</div></blockquote>
 <p><strong>line_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the grid lines.</p>
+</div></blockquote>
 <p><strong>line_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
+<blockquote>
+<div><p>The style (i.e., dash pattern) of the grid lines.</p>
+</div></blockquote>
 <p><strong>line_width</strong> : CInt(1)</p>
+<blockquote>
+<div><p>The thickness, in pixels, of the grid lines.</p>
+</div></blockquote>
 <p><strong>line_weight</strong> : Alias(&#8216;line_width&#8217;)</p>
-<p class="last"><strong>traits_view</strong> : GridView</p>
+<p><strong>traits_view</strong> : GridView</p>
+<blockquote class="last">
+<div><p>Default Traits UI View for modifying grid attributes.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>

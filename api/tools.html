@@ -66,22 +66,63 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>zoom_in_key</strong> : Instance(KeySpec, args=(&#8216;+&#8217;), kw={&#8216;ignore&#8217;: [&#8216;shift&#8217;]})</p>
+<blockquote>
+<div><p>Keys to zoom in/out</p>
+</div></blockquote>
 <p><strong>zoom_out_key</strong> : Instance(KeySpec, args=(&#8216;-&#8216;))</p>
 <p><strong>zoom_in_x_key</strong> : Instance(KeySpec, args=(&#8216;Right&#8217;, &#8216;shift&#8217;))</p>
+<blockquote>
+<div><p>Keys to zoom in/out in x direction only</p>
+</div></blockquote>
 <p><strong>zoom_out_x_key</strong> : Instance(KeySpec, args=(&#8216;Left&#8217;, &#8216;shift&#8217;))</p>
 <p><strong>zoom_in_y_key</strong> : Instance(KeySpec, args=(&#8216;Up&#8217;, &#8216;shift&#8217;))</p>
+<blockquote>
+<div><p>Keys to zoom in/out in y direction only</p>
+</div></blockquote>
 <p><strong>zoom_out_y_key</strong> : Instance(KeySpec, args=(&#8216;Down&#8217;, &#8216;shift&#8217;))</p>
 <p><strong>prev_state_key</strong> : Instance(KeySpec, args=(&#8216;z&#8217;, &#8216;control&#8217;))</p>
+<blockquote>
+<div><p>Key to go to the previous state in the history.</p>
+</div></blockquote>
 <p><strong>next_state_key</strong> : Instance(KeySpec, args=(&#8216;y&#8217;, &#8216;control&#8217;))</p>
+<blockquote>
+<div><p>Key to go to the next state in the history.</p>
+</div></blockquote>
 <p><strong>enable_wheel</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Enable the mousewheel for zooming?</p>
+</div></blockquote>
 <p><strong>zoom_to_mouse</strong> : Bool(True)</p>
+<blockquote>
+<div><p>if the mouse pointer should be used to control the center
+of the zoom action</p>
+</div></blockquote>
 <p><strong>keys_zoom_to_mouse</strong> : Bool(True)</p>
+<blockquote>
+<div><p>if the mouse pointer should be used to control the center
+of the zoom action even for key events based zoom</p>
+</div></blockquote>
 <p><strong>axis</strong> : Enum(&#8216;both&#8217;, &#8216;index&#8217;, &#8216;value&#8217;)</p>
+<blockquote>
+<div><p>The axis to which the selection made by this tool is perpendicular. This
+only applies in &#8216;range&#8217; mode.</p>
+</div></blockquote>
 <p><strong>x_max_zoom_factor</strong> : Float(100000.0)</p>
+<blockquote>
+<div><p>The maximum ratio between the original data space bounds and the zoomed-in
+data space bounds.  If No limit is desired, set to inf</p>
+</div></blockquote>
 <p><strong>y_max_zoom_factor</strong> : Float(100000.0)</p>
 <p><strong>x_min_zoom_factor</strong> : Float(1e-05)</p>
+<blockquote>
+<div><p>The maximum ratio between the zoomed-out data space bounds and the original
+bounds.  If No limit is desired, set to -inf</p>
+</div></blockquote>
 <p><strong>y_min_zoom_factor</strong> : Float(1e-05)</p>
-<p class="last"><strong>zoom_factor</strong> : Float(2.0)</p>
+<p><strong>zoom_factor</strong> : Float(2.0)</p>
+<blockquote class="last">
+<div><p>The amount to zoom in by. The zoom out will be inversely proportional</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -116,20 +157,84 @@ desired region to zoom in to</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>tool_mode</strong> : Enum(&#8216;box&#8217;, &#8216;range&#8217;)</p>
+<blockquote>
+<div><p>The selection mode:</p>
+<dl class="docutils">
+<dt>range:</dt>
+<dd><p class="first last">Select a range across a single index or value axis.</p>
+</dd>
+<dt>box:</dt>
+<dd><p class="first last">Perform a &#8220;box&#8221; selection on two axes.</p>
+</dd>
+</dl>
+</div></blockquote>
 <p><strong>always_on</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Is the tool always &#8220;on&#8221;? If True, left-clicking always initiates
+a zoom operation; if False, the user must press a key to enter zoom mode.</p>
+</div></blockquote>
 <p><strong>always_on_modifier</strong> : Enum(&#8216;control&#8217;, &#8216;shift&#8217;, &#8216;control&#8217;, &#8216;alt&#8217;)</p>
+<blockquote>
+<div><p>Defines a meta-key, that works with always_on to set the zoom mode. This
+is useful when the zoom tool is used in conjunction with the pan tool.</p>
+</div></blockquote>
 <p><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;, None)</p>
+<blockquote>
+<div><p>The mouse button that initiates the drag.  If &#8220;None&#8221;, then the tool
+will not respond to drag.  (It can still respond to mousewheel events.)</p>
+</div></blockquote>
 <p><strong>minimum_screen_delta</strong> : Int(10)</p>
+<blockquote>
+<div><p>The minimum amount of screen space the user must select in order for
+the tool to actually take effect.</p>
+</div></blockquote>
 <p><strong>wheel_zoom_step</strong> : Property(Float, depends_on=&#8217;zoom_factor&#8217;)</p>
+<blockquote>
+<div><p>Conversion ratio from wheel steps to zoom factors.</p>
+</div></blockquote>
 <p><strong>enter_zoom_key</strong> : Instance(KeySpec, args=(&#8216;z&#8217;))</p>
+<blockquote>
+<div><p>The key press to enter zoom mode, if <strong>always_on</strong> is False.  Has no effect
+if <strong>always_on</strong> is True.</p>
+</div></blockquote>
 <p><strong>exit_zoom_key</strong> : Instance(KeySpec, args=(&#8216;z&#8217;))</p>
+<blockquote>
+<div><p>The key press to leave zoom mode, if <strong>always_on</strong> is False.  Has no effect
+if <strong>always_on</strong> is True.</p>
+</div></blockquote>
 <p><strong>disable_on_complete</strong> : Property()</p>
+<blockquote>
+<div><p>Disable the tool after the zoom is completed?</p>
+</div></blockquote>
 <p><strong>pointer</strong> : &#8216;magnifier&#8217;</p>
+<blockquote>
+<div><p>The pointer to use when drawing a zoom box.</p>
+</div></blockquote>
 <p><strong>color</strong> : ColorTrait(&#8216;lightskyblue&#8217;)</p>
+<blockquote>
+<div><p>The color of the selection box.</p>
+</div></blockquote>
 <p><strong>alpha</strong> : Trait(0.4, None, Float)</p>
+<blockquote>
+<div><p>The alpha value to apply to <strong>color</strong> when filling in the selection
+region.  Because it is almost certainly useless to have an opaque zoom
+rectangle, but it&#8217;s also extremely useful to be able to use the normal
+named colors from Enable, this attribute allows the specification of a
+separate alpha value that replaces the alpha value of <strong>color</strong> at draw
+time.</p>
+</div></blockquote>
 <p><strong>border_color</strong> : ColorTrait(&#8216;dodgerblue&#8217;)</p>
+<blockquote>
+<div><p>The color of the outside selection rectangle.</p>
+</div></blockquote>
 <p><strong>border_size</strong> : Int(1)</p>
-<p class="last"><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;selecting&#8217;, &#8216;pre_selecting&#8217;)</p>
+<blockquote>
+<div><p>The thickness of selection rectangle border.</p>
+</div></blockquote>
+<p><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;selecting&#8217;, &#8216;pre_selecting&#8217;)</p>
+<blockquote class="last">
+<div><p>The possible event states of this zoom tool.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -236,7 +341,14 @@ receives to all of the tools.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>tools</strong> : List</p>
-<p class="last"><strong>mouse_owners</strong> : Dict</p>
+<blockquote>
+<div><p>The tools to which this tool broadcasts events.</p>
+</div></blockquote>
+<p><strong>mouse_owners</strong> : Dict</p>
+<blockquote class="last">
+<div><p>Mapping from tools to transforms, for tools that can be mouse owners.
+(See enable.AbstractWindow.)</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -264,8 +376,17 @@ point under the cursor.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>visible</strong> : False</p>
+<blockquote>
+<div><p>This tool is a listener, and does not display anything (overrides BaseTool).</p>
+</div></blockquote>
 <p><strong>draw_mode</strong> : &#8216;none&#8217;</p>
-<p class="last"><strong>format</strong> : Str(&#8216;(%.3f, %.3f)&#8217;)</p>
+<blockquote>
+<div><p>Turn off drawing, because the tool prints to stdout.</p>
+</div></blockquote>
+<p><strong>format</strong> : Str(&#8216;(%.3f, %.3f)&#8217;)</p>
+<blockquote class="last">
+<div><p>The string to format the (x,y) value in data space.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -294,7 +415,14 @@ to the DataLabel.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
-<p class="last"><strong>auto_arrow_root</strong> : Bool(True)</p>
+<blockquote>
+<div><p>The mouse button that initiates the drag.</p>
+</div></blockquote>
+<p><strong>auto_arrow_root</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>Use the root of the label&#8217;s arrow (if any) as the closest corner of the
+label?</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -346,11 +474,32 @@ gracefully manages the transition into and out of drag mode.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
+<blockquote>
+<div><p>The mouse button used for this drag operation.</p>
+</div></blockquote>
 <p><strong>end_drag_on_leave</strong> : Bool(True)</p>
+<blockquote>
+<div><p>End the drag operation if the mouse leaves the associated component?</p>
+</div></blockquote>
 <p><strong>cancel_keys</strong> : Tuple(&#8216;Esc&#8217;)</p>
+<blockquote>
+<div><p>These keys, if pressed during drag, cause the drag operation to reset.</p>
+</div></blockquote>
 <p><strong>mouse_down_position</strong> : Tuple(0.0, 0.0)</p>
+<blockquote>
+<div><p>The position of the initial mouse click that started the drag.
+Typically, tools that move things around use this
+position to do hit-testing to determine what object to &#8220;pick up&#8221;.</p>
+</div></blockquote>
 <p><strong>modifier_key</strong> : Enum(&#8216;none&#8217;, &#8216;shift&#8217;, &#8216;alt&#8217;, &#8216;control&#8217;)</p>
-<p class="last"><strong>capture_mouse</strong> : Bool(True)</p>
+<blockquote>
+<div><p>The modifier key that must be used to activate the tool.</p>
+</div></blockquote>
+<p><strong>capture_mouse</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>Whether or not to capture the mouse during the drag operation.  In
+general this is a good idea.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -411,8 +560,17 @@ drag.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>xdata</strong> : Instance(ArrayDataSource)</p>
+<blockquote>
+<div><p>A data source for the x-dimension of the drawn points.</p>
+</div></blockquote>
 <p><strong>ydata</strong> : Instance(ArrayDataSource)</p>
-<p class="last"><strong>activated</strong> : Bool(True)</p>
+<blockquote>
+<div><p>A data source for the y-dimension of the drawn points.</p>
+</div></blockquote>
+<p><strong>activated</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>Is this the active tool?</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -452,11 +610,31 @@ of the axis mappers.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;, &#8216;middle&#8217;)</p>
+<blockquote>
+<div><p>The mouse button that initiates the drag</p>
+</div></blockquote>
 <p><strong>speed</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>Scaling factor on the zoom &#8220;speed&#8221;.  A speed of 1.0 implies a zoom rate of
+5% for every 10 pixels.</p>
+</div></blockquote>
 <p><strong>maintain_aspect_ratio</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Whether or not to preserve the aspect ratio of X to Y while zooming in.
+(See class docstring for more info.)</p>
+</div></blockquote>
 <p><strong>drag_pointer</strong> : &#8216;magnifier&#8217;</p>
+<blockquote>
+<div><p>The pointer to use when we&#8217;re in the act of zooming</p>
+</div></blockquote>
 <p><strong>single_axis</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Whether or not to zoom in one axis only</p>
+</div></blockquote>
 <p><strong>restrict_domain</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Whether to restrict zoom to the domain of the mappers</p>
+</div></blockquote>
 <p class="last"><strong>zoom_to_mouse</strong> : Bool(False)</p>
 </td>
 </tr>
@@ -478,10 +656,25 @@ graph by clicking on it.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
+<blockquote>
+<div><p>The name of the data source metadata which controls selections.</p>
+</div></blockquote>
 <p><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
+<blockquote>
+<div><p>The mouse button that initiates the selection.</p>
+</div></blockquote>
 <p><strong>threshold</strong> : Float(20.0)</p>
+<blockquote>
+<div><p>Threshold distance for hit-testing.</p>
+</div></blockquote>
 <p><strong>draw_mode</strong> : &#8216;none&#8217;</p>
-<p class="last"><strong>visible</strong> : False</p>
+<blockquote>
+<div><p>This tool is not drawn. Overrides BaseTool.</p>
+</div></blockquote>
+<p><strong>visible</strong> : False</p>
+<blockquote class="last">
+<div><p>This tool is not visible. Overrides BaseTool.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -515,9 +708,25 @@ graph by clicking on it.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>new_value</strong> : Event</p>
+<blockquote>
+<div><p>This event fires whenever the mouse moves over a new image point.
+Its value is a dict with a key &#8220;color_value&#8221;, and possibly a key
+&#8220;data_value&#8221; if the plot is a color-mapped image plot.</p>
+</div></blockquote>
 <p><strong>visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Indicates whether overlays listening to this tool should be visible.</p>
+</div></blockquote>
 <p><strong>last_mouse_position</strong> : Tuple</p>
-<p class="last"><strong>inspector_key</strong> : KeySpec(&#8216;p&#8217;)</p>
+<blockquote>
+<div><p>Stores the last mouse position.  This can be used by overlays to
+position themselves around the mouse.</p>
+</div></blockquote>
+<p><strong>inspector_key</strong> : KeySpec(&#8216;p&#8217;)</p>
+<blockquote class="last">
+<div><p>This key will show and hide any ImageInspectorOverlays associated
+with this tool.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -546,9 +755,24 @@ ImageInspectorTool instance.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>image_inspector</strong> : Any</p>
+<blockquote>
+<div><p>An instance of ImageInspectorTool; this overlay listens to the tool
+for changes, and updates its displayed text accordingly.</p>
+</div></blockquote>
 <p><strong>tooltip_mode</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Anchor the text to the mouse?  (If False, then the text is in one of the
+corners.)  Use the <strong>align</strong> trait to determine which corner.</p>
+</div></blockquote>
 <p><strong>visible</strong> : False</p>
-<p class="last"><strong>visibility</strong> : Enum(&#8216;auto&#8217;, True, False)</p>
+<blockquote>
+<div><p>The default state of the overlay is invisible (overrides PlotComponent).</p>
+</div></blockquote>
+<p><strong>visibility</strong> : Enum(&#8216;auto&#8217;, True, False)</p>
+<blockquote class="last">
+<div><p>Whether the overlay should auto-hide and auto-show based on the
+tool&#8217;s location, or whether it should be forced to be hidden or visible.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -571,15 +795,65 @@ by dragging the mouse along the outline of the region.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>dataspace_points</strong> : Property(Array)</p>
+<blockquote>
+<div><p>An Nx2 array of points in data space representing all selected points.</p>
+</div></blockquote>
 <p><strong>disjoint_selections</strong> : Property(List)</p>
+<blockquote>
+<div><p>A list of all the selection polygons.</p>
+</div></blockquote>
 <p><strong>updated</strong> : Event</p>
+<blockquote>
+<div><p>Fires whenever <strong>dataspace_points</strong> changes, necessitating a redraw of the
+selection region.</p>
+</div></blockquote>
 <p><strong>selection_changed</strong> : Event</p>
+<blockquote>
+<div><p>Fires when the selection mask changes.</p>
+</div></blockquote>
 <p><strong>selection_completed</strong> : Event</p>
+<blockquote>
+<div><p>Fires when the user release the mouse button and finalizes the selection.</p>
+</div></blockquote>
 <p><strong>incremental_select</strong> : Bool(False)</p>
+<blockquote>
+<div><p>If True, the selection mask is updated as the mouse moves, rather
+than only at the beginning and end of the selection operation.</p>
+</div></blockquote>
 <p><strong>selection_mode</strong> : Enum(&#8216;include&#8217;, &#8216;exclude&#8217;, &#8216;invert&#8217;)</p>
+<blockquote>
+<div><p>The selection mode of the lasso pointer: &#8220;include&#8221;, &#8220;exclude&#8221; or
+&#8220;invert&#8221; points from the selection. The &#8220;include&#8221; and &#8220;exclude&#8221;
+settings essentially invert the selection mask. The &#8220;invert&#8221; setting
+differs from &#8220;exclude&#8221; in that &#8220;invert&#8221; inverses the selection of all
+points the the lasso&#8217;ed polygon, while &#8220;exclude&#8221; operates only on
+points included in a previous selection.</p>
+</div></blockquote>
 <p><strong>selection_datasource</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The data source that the mask of selected points is attached to.  Note
+that the indices in this data source must match the indices of the data
+in the plot.</p>
+</div></blockquote>
 <p><strong>plot</strong> : Property</p>
-<p class="last"><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;selecting&#8217;)</p>
+<blockquote>
+<div><p>Mapping from screen space to data space. By default, it is just
+self.component.</p>
+</div></blockquote>
+<p><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;selecting&#8217;)</p>
+<blockquote class="last">
+<div><p>The possible event states of this selection tool (overrides
+enable.Interactor).</p>
+<dl class="docutils">
+<dt>normal:</dt>
+<dd><p class="first last">Nothing has been selected, and the user is not dragging the mouse.</p>
+</dd>
+<dt>selecting:</dt>
+<dd><p class="first last">The user is dragging the mouse and is actively changing the
+selection region.</p>
+</dd>
+</dl>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -638,7 +912,14 @@ to the legend.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
-<p class="last"><strong>auto_align</strong> : Bool(True)</p>
+<blockquote>
+<div><p>The mouse button that initiates the drag.</p>
+</div></blockquote>
+<p><strong>auto_align</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>Whether to change the legend&#8217;s <strong>align</strong> property in accord with
+the quadrant into which it is dropped.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -712,16 +993,59 @@ an X-Y plot.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;, &#8216;index_x&#8217;, &#8216;index_y&#8217;)</p>
+<blockquote>
+<div><p>The axis that this tool is parallel to.</p>
+</div></blockquote>
 <p><strong>inspect_mode</strong> : Enum(&#8216;space&#8217;, &#8216;indexed&#8217;)</p>
+<blockquote>
+<div><p>The possible inspection modes of the tool.</p>
+<dl class="docutils">
+<dt>space:</dt>
+<dd><p class="first last">The tool maps from screen space into the data space of the plot.</p>
+</dd>
+<dt>indexed:</dt>
+<dd><p class="first last">The tool maps from screen space to an index into the plot&#8217;s index array.</p>
+</dd>
+</dl>
+</div></blockquote>
 <p><strong>is_interactive</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Respond to user mouse events?</p>
+</div></blockquote>
 <p><strong>is_listener</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Does the tool respond to updates in the metadata on the data source
+and update its own position?</p>
+</div></blockquote>
 <p><strong>write_metadata</strong> : Bool(False)</p>
+<blockquote>
+<div><p>If interactive, does the line inspector write the current data space point
+to the appropriate data source&#8217;s metadata?</p>
+</div></blockquote>
 <p><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
+<blockquote>
+<div><p>The name of the metadata field to listen or write to.</p>
+</div></blockquote>
 <p><strong>visible</strong> : True</p>
+<blockquote>
+<div><p>This tool is visible (overrides BaseTool).</p>
+</div></blockquote>
 <p><strong>draw_mode</strong> : &#8216;overlay&#8217;</p>
+<blockquote>
+<div><p>This tool is drawn as an overlay (overrides BaseTool).</p>
+</div></blockquote>
 <p><strong>color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>Color of the line.</p>
+</div></blockquote>
 <p><strong>line_width</strong> : Float(1.0)</p>
-<p class="last"><strong>line_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
+<blockquote>
+<div><p>Width in pixels of the line.</p>
+</div></blockquote>
+<p><strong>line_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
+<blockquote class="last">
+<div><p>Dash style of the line.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -767,16 +1091,64 @@ series of points connected by lines.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>component</strong> : Instance(Component)</p>
+<blockquote>
+<div><p>The component that this tool overlays</p>
+</div></blockquote>
 <p><strong>line</strong> : Instance(Line, args=())</p>
+<blockquote>
+<div><p>The current line segment being drawn.</p>
+</div></blockquote>
 <p><strong>points</strong> : List</p>
+<blockquote>
+<div><p>A list of the points in data space as (index,value)</p>
+</div></blockquote>
 <p><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;selecting&#8217;, &#8216;dragging&#8217;)</p>
+<blockquote>
+<div><p>The event states are:</p>
+<dl class="docutils">
+<dt>normal:</dt>
+<dd><p class="first last">The user may have selected points, and is moving the cursor around.</p>
+</dd>
+<dt>selecting:</dt>
+<dd><p class="first last">The user has clicked down but hasn&#8217;t let go of the button yet,
+and can still drag the point around.</p>
+</dd>
+<dt>dragging:</dt>
+<dd><p class="first last">The user has clicked on an existing point and is dragging it
+around.  When the user releases the mouse button, the tool returns
+to the &#8220;normal&#8221; state</p>
+</dd>
+</dl>
+</div></blockquote>
 <p><strong>proximity_distance</strong> : Int(4)</p>
+<blockquote>
+<div><p>The pixel distance from a vertex that is considered &#8216;on&#8217; the vertex.</p>
+</div></blockquote>
 <p><strong>mouse_position</strong> : Trait(None, None, Tuple)</p>
+<blockquote>
+<div><p>The data (index, value) position of the mouse cursor; this is used by various
+draw() routines.</p>
+</div></blockquote>
 <p><strong>original_cursor</strong> : Pointer(&#8216;arrow&#8217;)</p>
+<blockquote>
+<div><p>Cursor shape for non-tool use.</p>
+</div></blockquote>
 <p><strong>normal_cursor</strong> : Pointer(&#8216;pencil&#8217;)</p>
+<blockquote>
+<div><p>Cursor shape for drawing.</p>
+</div></blockquote>
 <p><strong>delete_cursor</strong> : Pointer(&#8216;bullseye&#8217;)</p>
+<blockquote>
+<div><p>Cursor shape for deleting points.</p>
+</div></blockquote>
 <p><strong>move_cursor</strong> : Pointer(&#8216;sizing&#8217;)</p>
-<p class="last"><strong>visible</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Cursor shape for moving points.</p>
+</div></blockquote>
+<p><strong>visible</strong> : Bool(False)</p>
+<blockquote class="last">
+<div><p>The tool is initially invisible, because there is nothing to draw.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -945,20 +1317,65 @@ button and dragging.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;middle&#8217;, &#8216;right&#8217;)</p>
+<blockquote>
+<div><p>The mouse button that initiates the drag operation.</p>
+</div></blockquote>
 <p><strong>drag_pointer</strong> : Pointer(&#8216;hand&#8217;)</p>
+<blockquote>
+<div><p>The cursor to use when panning.</p>
+</div></blockquote>
 <p><strong>speed</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>Scaling factor on the panning &#8220;speed&#8221;.</p>
+</div></blockquote>
 <p><strong>constrain_key</strong> : Enum(None, &#8216;shift&#8217;, &#8216;control&#8217;, &#8216;alt&#8217;)</p>
+<blockquote>
+<div><p>The modifier key that, if depressed when the drag is initiated, constrains
+the panning to happen in the only direction of largest initial motion.
+It is possible to permanently restrict this tool to always drag along one
+direction.  To do so, set constrain=True, constrain_key=None, and
+constrain_direction to the desired direction.</p>
+</div></blockquote>
 <p><strong>pan_right_key</strong> : Instance(KeySpec, args=(&#8216;Right&#8217;))</p>
+<blockquote>
+<div><p>Keys to Pan via keyboard</p>
+</div></blockquote>
 <p><strong>pan_left_key</strong> : Instance(KeySpec, args=(&#8216;Left&#8217;))</p>
 <p><strong>pan_up_key</strong> : Instance(KeySpec, args=(&#8216;Up&#8217;))</p>
 <p><strong>pan_down_key</strong> : Instance(KeySpec, args=(&#8216;Down&#8217;))</p>
 <p><strong>pan_keys_step</strong> : Float(0.0)</p>
+<blockquote>
+<div><p>number of pixels the keys should pan
+disabled if 0.0</p>
+</div></blockquote>
 <p><strong>constrain</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Constrain the panning to one direction?</p>
+</div></blockquote>
 <p><strong>constrain_direction</strong> : Enum(None, &#8216;x&#8217;, &#8216;y&#8217;)</p>
+<blockquote>
+<div><p>The direction of constrained draw. A value of None means that the user
+has initiated the drag and pressed the constrain_key, but hasn&#8217;t moved
+the mouse yet; the magnitude of the components of the next mouse_move
+event will determine the constrain_direction.</p>
+</div></blockquote>
 <p><strong>restrict_to_data</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Restrict to the bounds of the plot data</p>
+</div></blockquote>
 <p><strong>draw_mode</strong> : &#8216;none&#8217;</p>
+<blockquote>
+<div><p>The tool does not have a visual representation (overrides
+BaseTool).</p>
+</div></blockquote>
 <p><strong>visible</strong> : False</p>
-<p class="last"><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;panning&#8217;)</p>
+<blockquote>
+<div><p>The tool is not visible (overrides BaseTool).</p>
+</div></blockquote>
+<p><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;panning&#8217;)</p>
+<blockquote class="last">
+<div><p>The possible event states of this tool (overrides enable.Interactor).</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1049,10 +1466,25 @@ line corresponding to the index indicated by the &#8220;selections&#8221; metada
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
+<blockquote>
+<div><p>The axis that this tool is parallel to.</p>
+</div></blockquote>
 <p><strong>visible</strong> : True</p>
+<blockquote>
+<div><p>This tool is visible (overrides BaseTool).</p>
+</div></blockquote>
 <p><strong>draw_mode</strong> : &#8216;overlay&#8217;</p>
+<blockquote>
+<div><p>This tool is drawn as an overlay (overrides BaseTool).</p>
+</div></blockquote>
 <p><strong>color</strong> : ColorTrait(&#8216;red&#8217;)</p>
-<p class="last"><strong>line_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The color of the line.</p>
+</div></blockquote>
+<p><strong>line_width</strong> : Float(1.0)</p>
+<blockquote class="last">
+<div><p>The width of the line, in pixels.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1081,24 +1513,110 @@ the user left-clicks to deselect.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
+<blockquote>
+<div><p>The axis to which this tool is perpendicular.</p>
+</div></blockquote>
 <p><strong>selection</strong> : Property</p>
+<blockquote>
+<div><p>The selected region, expressed as a tuple in data space.  This updates
+and fires change-events as the user is dragging.</p>
+</div></blockquote>
 <p><strong>selection_mode</strong> : Enum(&#8216;set&#8217;, &#8216;append&#8217;)</p>
 <p><strong>selection_completed</strong> : Event</p>
+<blockquote>
+<div><p>This event is fired whenever the user completes the selection, or when a
+finalized selection gets modified.  The value of the event is the data
+space range.</p>
+</div></blockquote>
 <p><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
+<blockquote>
+<div><p>The name of the metadata on the datasource that we will write
+self.selection to</p>
+</div></blockquote>
 <p><strong>selection_mode_metadata_name</strong> : Str(&#8216;selection_mode&#8217;)</p>
+<blockquote>
+<div><p>Either &#8220;set&#8221; or &#8220;append&#8221;, depending on whether self.append_key was
+held down</p>
+</div></blockquote>
 <p><strong>mask_metadata_name</strong> : Str(&#8216;selection_masks&#8217;)</p>
+<blockquote>
+<div><p>The name of the metadata on the datasource that we will set to a numpy
+boolean array for masking the datasource&#8217;s data</p>
+</div></blockquote>
 <p><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;selecting&#8217;, &#8216;selected&#8217;, &#8216;moving&#8217;)</p>
+<blockquote>
+<div><p>The possible event states of this selection tool (overrides
+enable.Interactor).</p>
+<dl class="docutils">
+<dt>normal:</dt>
+<dd><p class="first last">Nothing has been selected, and the user is not dragging the mouse.</p>
+</dd>
+<dt>selecting:</dt>
+<dd><p class="first last">The user is dragging the mouse and actively changing the
+selection region; resizing of an existing selection also
+uses this mode.</p>
+</dd>
+<dt>selected:</dt>
+<dd><p class="first last">The user has released the mouse and a selection has been
+finalized.  The selection remains until the user left-clicks
+or self.deselect() is called.</p>
+</dd>
+<dt>moving:</dt>
+<dd><p class="first last">The user moving (not resizing) the selection range.</p>
+</dd>
+</dl>
+</div></blockquote>
 <p><strong>plot</strong> : Property</p>
+<blockquote>
+<div><p>The plot associated with this tool By default, this is just
+self.component.</p>
+</div></blockquote>
 <p><strong>mapper</strong> : Property</p>
+<blockquote>
+<div><p>The mapper for associated with this tool. By default, this is the mapper
+on <strong>plot</strong> that corresponds to <strong>axis</strong>.</p>
+</div></blockquote>
 <p><strong>axis_index</strong> : Property</p>
+<blockquote>
+<div><p>The index to use for <strong>axis</strong>. By default, this is self.plot.orientation,
+but it can be overriden and set to 0 or 1.</p>
+</div></blockquote>
 <p><strong>listeners</strong> : List</p>
+<blockquote>
+<div><p>List of listeners that listen to selection events.</p>
+</div></blockquote>
 <p><strong>enable_resize</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Can the user resize the selection once it has been drawn?</p>
+</div></blockquote>
 <p><strong>resize_margin</strong> : Int(7)</p>
+<blockquote>
+<div><p>The pixel distance between the mouse event and a selection endpoint at
+which the user action will be construed as a resize operation.</p>
+</div></blockquote>
 <p><strong>left_button_selects</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Allow the left button begin a selection?</p>
+</div></blockquote>
 <p><strong>disable_left_mouse</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Disable all left-mouse button interactions?</p>
+</div></blockquote>
 <p><strong>allow_deselection</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Allow the tool to be put into the deselected state via mouse clicks</p>
+</div></blockquote>
 <p><strong>minimum_selection</strong> : Int(5)</p>
-<p class="last"><strong>append_key</strong> : Instance(KeySpec, args=(None, &#8216;control&#8217;))</p>
+<blockquote>
+<div><p>The minimum span, in pixels, of a selection region.  Any attempt to
+select a region smaller than this will be treated as a deselection.</p>
+</div></blockquote>
+<p><strong>append_key</strong> : Instance(KeySpec, args=(None, &#8216;control&#8217;))</p>
+<blockquote class="last">
+<div><p>The key which, if held down while the mouse is being dragged, will
+indicate that the selection should be appended to an existing selection
+as opposed to overwriting it.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1349,15 +1867,51 @@ selected.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
+<blockquote>
+<div><p>The axis to which this tool is perpendicular.</p>
+</div></blockquote>
 <p><strong>plot</strong> : Property(depends_on=&#8217;component&#8217;)</p>
+<blockquote>
+<div><p>Mapping from screen space to data space. By default, it is just
+self.component.</p>
+</div></blockquote>
 <p><strong>mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>The mapper (and associated range) that drive this RangeSelectionOverlay.
+By default, this is the mapper on self.plot that corresponds to self.axis.</p>
+</div></blockquote>
 <p><strong>axis_index</strong> : Property</p>
+<blockquote>
+<div><p>The element of an (x,y) tuple that corresponds to the axis index.
+By default, this is set based on self.asix and self.plot.orientation,
+but it can be overriden and set to 0 or 1.</p>
+</div></blockquote>
 <p><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
+<blockquote>
+<div><p>The name of the metadata to look at for dataspace bounds. The metadata
+can be either a tuple (dataspace_start, dataspace_end) in &#8220;selections&#8221; or
+a boolean array mask of seleted dataspace points with any other name</p>
+</div></blockquote>
 <p><strong>border_color</strong> : ColorTrait(&#8216;dodgerblue&#8217;)</p>
+<blockquote>
+<div><p>The color of the selection border line.</p>
+</div></blockquote>
 <p><strong>border_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The width, in pixels, of the selection border line.</p>
+</div></blockquote>
 <p><strong>border_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
+<blockquote>
+<div><p>The line style of the selection border line.</p>
+</div></blockquote>
 <p><strong>fill_color</strong> : ColorTrait(&#8216;lightskyblue&#8217;)</p>
-<p class="last"><strong>alpha</strong> : Float(0.3)</p>
+<blockquote>
+<div><p>The color to fill the selection region.</p>
+</div></blockquote>
+<p><strong>alpha</strong> : Float(0.3)</p>
+<blockquote class="last">
+<div><p>The transparency of the fill color.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1384,8 +1938,17 @@ selected.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>incremental_select</strong> : True</p>
+<blockquote>
+<div><p>The regression updates as more points are added (overrides LassoSelection).</p>
+</div></blockquote>
 <p><strong>fit_params</strong> : Any</p>
-<p class="last"><strong>centroid</strong> : Any</p>
+<blockquote>
+<div><p>Tuple (slope, intercept) of the line that fits the data.</p>
+</div></blockquote>
+<p><strong>centroid</strong> : Any</p>
+<blockquote class="last">
+<div><p>The center point of the selected points, in data space.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1426,11 +1989,28 @@ the plot component.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>filename</strong> : Str(&#8216;saved_plot.png&#8217;)</p>
+<blockquote>
+<div><p>The file that the image is saved in.  The format will be deduced from
+the extension.</p>
+</div></blockquote>
 <p><strong>pagesize</strong> : Enum(&#8216;letter&#8217;, &#8216;A4&#8217;)</p>
+<blockquote>
+<div><blockquote>
+<div><p>PDF format options
+This mirror the traits in PdfPlotGraphicsContext.</p>
+</div></blockquote>
+<p>pagesize</p>
+</div></blockquote>
 <p><strong>dest_box</strong> : Tuple((0.5, 0.5, -0.5, -0.5))</p>
 <p><strong>dest_box_units</strong> : Enum(&#8216;inch&#8217;, &#8216;cm&#8217;, &#8216;mm&#8217;, &#8216;pica&#8217;)</p>
 <p><strong>draw_mode</strong> : &#8216;none&#8217;</p>
-<p class="last"><strong>visible</strong> : False</p>
+<blockquote>
+<div><p>This tool does not have a visual representation (overrides BaseTool).</p>
+</div></blockquote>
+<p><strong>visible</strong> : False</p>
+<blockquote class="last">
+<div><p>This tool is not visible (overrides BaseTool).</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1462,10 +2042,24 @@ key in metadata, and the index of a clicked point to &#8220;selection&#8221;.</p
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>persistent_hover</strong> : Bool(False)</p>
+<blockquote>
+<div><p>If persistent_hover is False, then a point will be de-hovered as soon as
+the mouse leaves its hittesting area.  If persistent_hover is True, then
+a point does no de-hover until another point get hover focus.</p>
+</div></blockquote>
 <p><strong>hover_metadata_name</strong> : Str(&#8216;hover&#8217;)</p>
+<blockquote>
+<div><p>The names of the data source metadata for hover and selection.</p>
+</div></blockquote>
 <p><strong>selection_metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
 <p><strong>visible</strong> : False</p>
-<p class="last"><strong>draw_mode</strong> : &#8216;none&#8217;</p>
+<blockquote>
+<div><p>This tool is not visible</p>
+</div></blockquote>
+<p><strong>draw_mode</strong> : &#8216;none&#8217;</p>
+<blockquote class="last">
+<div><p>This tool does not have a visual reprentation</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1496,8 +2090,38 @@ to handle actual selection/deselection.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>threshold</strong> : Float(5.0)</p>
+<blockquote>
+<div><p>The threshold, in pixels, around the cursor location to search for points.</p>
+</div></blockquote>
 <p><strong>selection_mode</strong> : Enum(&#8216;toggle&#8217;, &#8216;multi&#8217;, &#8216;single&#8217;, &#8216;off&#8217;)</p>
-<p class="last"><strong>multiselect_modifier</strong> : Instance(KeySpec, args=(None, &#8216;control&#8217;), allow_none=True)</p>
+<blockquote>
+<div><p>How selections are handled:</p>
+<dl class="docutils">
+<dt>&#8220;toggle&#8221;</dt>
+<dd><p class="first last">The user clicks on points (while optionally holding down a modifier
+key) to select or deselect them. If the point is already selected,
+clicking it again deselects it. The modifier key to use is set by
+<strong>multiselect_modifier</strong>. The only way to deselect points is by
+clicking on them; clicking on a screen space outside of the plot does
+not deselect points.</p>
+</dd>
+<dt>&#8220;multi&#8221;</dt>
+<dd><p class="first last">Like <strong>toggle</strong> mode, except that the user can deselect all points
+at once by clicking on the plot area away from a point.</p>
+</dd>
+<dt>&#8220;single&#8221;</dt>
+<dd><p class="first last">The user can only select a single point at a time.</p>
+</dd>
+<dt>&#8220;off&#8221;</dt>
+<dd><p class="first last">The user cannot select points via clicking.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>multiselect_modifier</strong> : Instance(KeySpec, args=(None, &#8216;control&#8217;), allow_none=True)</p>
+<blockquote class="last">
+<div><p>The modifier key to use to multi-select points.  Only used in <strong>toggle</strong>
+and <strong>multi</strong> selection modes.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1540,10 +2164,28 @@ effect.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>new_value</strong> : Event</p>
+<blockquote>
+<div><p>This event fires whenever the mouse moves over a new image point.
+Its value is a dict with default keys &#8220;x&#8221;, &#8220;y&#8221;, &#8220;index&#8221; and &#8220;value&#8221;.</p>
+</div></blockquote>
 <p><strong>visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Indicates whether overlays listening to this tool should be visible.</p>
+</div></blockquote>
 <p><strong>last_mouse_position</strong> : Tuple</p>
+<blockquote>
+<div><p>Stores the last mouse position.  This can be used by overlays to
+position themselves around the mouse.</p>
+</div></blockquote>
 <p><strong>inspector_key</strong> : KeySpec(&#8216;p&#8217;)</p>
-<p class="last"><strong>value_generator</strong> : Callable</p>
+<blockquote>
+<div><p>This key will show and hide any overlays listening to this tool.</p>
+</div></blockquote>
+<p><strong>value_generator</strong> : Callable</p>
+<blockquote class="last">
+<div><p>A callable that computes other values for the new_value event
+this takes a dictionary as an argument, and returns a dictionary</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -1669,10 +2311,25 @@ state.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_mode</strong> : &#8216;none&#8217;</p>
+<blockquote>
+<div><p>This tool does not have a visual representation (overrides BaseTool).</p>
+</div></blockquote>
 <p><strong>visible</strong> : False</p>
+<blockquote>
+<div><p>This tool is not visible (overrides BaseTool).</p>
+</div></blockquote>
 <p><strong>classes</strong> : List([PlotAxis, ColorBar])</p>
+<blockquote>
+<div><p>The classes of components that should trigger a traits view</p>
+</div></blockquote>
 <p><strong>views</strong> : Dict</p>
-<p class="last"><strong>event</strong> : Str(&#8216;left_dclick&#8217;)</p>
+<blockquote>
+<div><p>A dict of Class : View providing alternate views for a particular component</p>
+</div></blockquote>
+<p><strong>event</strong> : Str(&#8216;left_dclick&#8217;)</p>
+<blockquote class="last">
+<div><p>The event to trigger the edit on</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>

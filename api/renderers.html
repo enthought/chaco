@@ -67,28 +67,120 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
+<blockquote>
+<div><p>The data source to use for the index coordinate.</p>
+</div></blockquote>
 <p><strong>value</strong> : Instance(ArrayDataSource)</p>
+<blockquote>
+<div><p>The data source to use as value points.</p>
+</div></blockquote>
 <p><strong>starting_value</strong> : Instance(ArrayDataSource)</p>
+<blockquote>
+<div><p>The data source to use as &#8220;starting&#8221; values for the bars.
+For instance, if the values are [10, 20] and starting_value
+is [3, 7], BarPlot will plot two bars, one  between 3 and 10, and
+one between 7 and 20</p>
+</div></blockquote>
 <p><strong>index_mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>Labels for the indices.</p>
+</div></blockquote>
 <p><strong>value_mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>Labels for the values.</p>
+</div></blockquote>
 <p><strong>orientation</strong> : Enum(&#8216;h&#8217;, &#8216;v&#8217;)</p>
+<blockquote>
+<div><p>The orientation of the index axis.</p>
+</div></blockquote>
 <p><strong>index_direction</strong> : Enum(&#8216;normal&#8217;, &#8216;flipped&#8217;)</p>
+<blockquote>
+<div><p>The direction of the index axis with respect to the graphics context&#8217;s
+direction.</p>
+</div></blockquote>
 <p><strong>value_direction</strong> : Enum(&#8216;normal&#8217;, &#8216;flipped&#8217;)</p>
+<blockquote>
+<div><p>The direction of the value axis with respect to the graphics context&#8217;s
+direction.</p>
+</div></blockquote>
 <p><strong>bar_width_type</strong> : Enum(&#8216;data&#8217;, &#8216;screen&#8217;)</p>
+<blockquote>
+<div><p>Type of width used for bars:</p>
+<dl class="docutils">
+<dt>&#8216;data&#8217;</dt>
+<dd><p class="first last">The width is in the units along the x-dimension of the data space.</p>
+</dd>
+<dt>&#8216;screen&#8217;</dt>
+<dd><p class="first last">The width uses a fixed width of pixels.</p>
+</dd>
+</dl>
+</div></blockquote>
 <p><strong>bar_width</strong> : Float(10)</p>
+<blockquote>
+<div><p>Width of the bars, in data or screen space (determined by
+<strong>bar_width_type</strong>).</p>
+</div></blockquote>
 <p><strong>antialias</strong> : Bool(True)</p>
+<blockquote>
+<div><p>Round on rectangle dimensions? This is not strictly an &#8220;antialias&#8221;, but
+it has the same effect through exact pixel drawing.</p>
+</div></blockquote>
 <p><strong>line_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>Width of the border of the bars.</p>
+</div></blockquote>
 <p><strong>line_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>Color of the border of the bars.</p>
+</div></blockquote>
 <p><strong>fill_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>Color to fill the bars.</p>
+</div></blockquote>
 <p><strong>effective_line_color</strong> : Property(Tuple, depends_on=[&#8216;line_color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote>
+<div><p>The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id2"><span class="problematic" id="id3">line_color_</span></a>, and its alpha value is the
+alpha value of self.line_color multiplied by self.alpha.</p>
+</div></blockquote>
 <p><strong>effective_fill_color</strong> : Property(Tuple, depends_on=[&#8216;fill_color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote>
+<div><p>The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id4"><span class="problematic" id="id5">fill_color_</span></a>, and its alpha value is the
+alpha value of self.fill_color multiplied by self.alpha.</p>
+</div></blockquote>
 <p><strong>alpha</strong> : Range(0.0, 1.0, 1.0)</p>
+<blockquote>
+<div><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0</p>
+</div></blockquote>
 <p><strong>x_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Corresponds to either <strong>index_mapper</strong> or <strong>value_mapper</strong>, depending on
+the orientation of the plot.</p>
+</div></blockquote>
 <p><strong>y_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Corresponds to either <strong>value_mapper</strong> or <strong>index_mapper</strong>, depending on
+the orientation of the plot.</p>
+</div></blockquote>
 <p><strong>x_direction</strong> : Property</p>
+<blockquote>
+<div><p>Corresponds to either <strong>index_direction</strong> or <strong>value_direction</strong>,
+depending on the orientation of the plot.</p>
+</div></blockquote>
 <p><strong>y_direction</strong> : Property</p>
+<blockquote>
+<div><p>Corresponds to either <strong>value_direction</strong> or <strong>index_direction</strong>,
+depending on the orientation of the plot</p>
+</div></blockquote>
 <p><strong>index_range</strong> : Property</p>
-<p class="last"><strong>value_range</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for accessing the index data range.</p>
+</div></blockquote>
+<p><strong>value_range</strong> : Property</p>
+<blockquote class="last">
+<div><p>Convenience property for accessing the value data range.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -130,18 +222,73 @@ an array.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(GridDataSource)</p>
+<blockquote>
+<div><p>The data source to use for the index coordinate.</p>
+</div></blockquote>
 <p><strong>value</strong> : Instance(ImageData)</p>
+<blockquote>
+<div><p>The data source to use as value points.</p>
+</div></blockquote>
 <p><strong>index_mapper</strong> : Instance(GridMapper)</p>
+<blockquote>
+<div><p>Screen mapper for 2-D structured (gridded) index data.</p>
+</div></blockquote>
 <p><strong>index_range</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for accessing the data range of the mapper.</p>
+</div></blockquote>
 <p><strong>labels</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for accessing the plots labels.</p>
+</div></blockquote>
 <p><strong>orientation</strong> : Enum(&#8216;h&#8217;, &#8216;v&#8217;)</p>
+<blockquote>
+<div><p>The direction that the first array returned by self.index.get_data()
+maps to.</p>
+<ul class="simple">
+<li>&#8216;h&#8217;: index maps to x-direction</li>
+<li>&#8216;v&#8217;: index maps to y-direction</li>
+</ul>
+</div></blockquote>
 <p><strong>draw_layer</strong> : &#8216;image&#8217;</p>
+<blockquote>
+<div><p>Overrides PlotComponent; 2-D plots draw on the &#8216;image&#8217; layer,
+underneath all decorations and annotations, and above only the background
+fill color.</p>
+</div></blockquote>
 <p><strong>x_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for accessing the x-direction mappers regardless
+of orientation.  This provides compatibility with a number of tools.</p>
+</div></blockquote>
 <p><strong>y_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for accessing the y-direction mappers regardless
+of orientation.  This provides compatibility with a number of tools.</p>
+</div></blockquote>
 <p><strong>alpha</strong> : Trait(1.0, Range(0.0, 1.0))</p>
+<blockquote>
+<div><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+for full intensity.</p>
+</div></blockquote>
 <p><strong>index_data_changed</strong> : Event</p>
+<blockquote>
+<div><p>Event fired when the index data changes. Subclasses can listen for this
+event and take appropriate steps (except for requesting a redraw, which
+is done in this class).</p>
+</div></blockquote>
 <p><strong>index_mapper_changed</strong> : Event</p>
-<p class="last"><strong>value_data_changed</strong> : Event</p>
+<blockquote>
+<div><p>Event fired when the index mapper changes. Subclasses can listen for this
+event and take appropriate steps (except for requesting a redraw, which
+is done in this class).</p>
+</div></blockquote>
+<p><strong>value_data_changed</strong> : Event</p>
+<blockquote class="last">
+<div><p>Event fired when the value data changes. Subclasses can listen for this
+event and take appropriate steps (except for requesting a redraw, which
+is done in this class).</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -189,27 +336,103 @@ space changes, etc.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
+<blockquote>
+<div><p>The data source to use for the index coordinate.</p>
+</div></blockquote>
 <p><strong>value</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The data source to use as value points.</p>
+</div></blockquote>
 <p><strong>index_mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>Screen mapper for index data.</p>
+</div></blockquote>
 <p><strong>value_mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>Screen mapper for value data</p>
+</div></blockquote>
 <p><strong>x_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Corresponds to either <strong>index_mapper</strong> or <strong>value_mapper</strong>, depending on
+the orientation of the plot.</p>
+</div></blockquote>
 <p><strong>y_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Corresponds to either <strong>value_mapper</strong> or <strong>index_mapper</strong>, depending on
+the orientation of the plot.</p>
+</div></blockquote>
 <p><strong>index_range</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for accessing the index data range.</p>
+</div></blockquote>
 <p><strong>value_range</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for accessing the value data range.</p>
+</div></blockquote>
 <p><strong>hittest_type</strong> : Enum(&#8216;point&#8217;, &#8216;line&#8217;)</p>
+<blockquote>
+<div><p>The type of hit-testing that is appropriate for this renderer.</p>
+<ul class="simple">
+<li>&#8216;line&#8217;: Computes Euclidean distance to the line between the
+nearest adjacent points.</li>
+<li>&#8216;point&#8217;: Checks for adjacency to a marker or point.</li>
+</ul>
+</div></blockquote>
 <p><strong>orientation</strong> : Enum(&#8216;h&#8217;, &#8216;v&#8217;)</p>
+<blockquote>
+<div><p>The orientation of the index axis.</p>
+</div></blockquote>
 <p><strong>alpha</strong> : Range(0.0, 1.0, 1.0)</p>
+<blockquote>
+<div><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0</p>
+</div></blockquote>
 <p><strong>hgrid</strong> : Property</p>
+<blockquote>
+<div><p>Read-only property for horizontal grid.</p>
+</div></blockquote>
 <p><strong>vgrid</strong> : Property</p>
+<blockquote>
+<div><p>Read-only property for vertical grid.</p>
+</div></blockquote>
 <p><strong>x_axis</strong> : Property</p>
+<blockquote>
+<div><p>Read-only property for x-axis.</p>
+</div></blockquote>
 <p><strong>y_axis</strong> : Property</p>
+<blockquote>
+<div><p>Read-only property for y-axis.</p>
+</div></blockquote>
 <p><strong>labels</strong> : Property</p>
+<blockquote>
+<div><p>Read-only property for labels.</p>
+</div></blockquote>
 <p><strong>use_downsampling</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Does the plot use downsampling?
+This is not used right now.  It needs an implementation of robust, fast
+downsampling, which does not exist yet.</p>
+</div></blockquote>
 <p><strong>use_subdivision</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Does the plot use a spatial subdivision structure for fast hit-testing?
+This makes data updates slower, but makes hit-tests extremely fast.</p>
+</div></blockquote>
 <p><strong>bgcolor</strong> : &#8216;transparent&#8217;</p>
+<blockquote>
+<div><p>Overrides the default background color trait in PlotComponent.</p>
+</div></blockquote>
 <p><strong>origin_axis_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>Defines the origin axis color, for testing.</p>
+</div></blockquote>
 <p><strong>origin_axis_width</strong> : Float(1.0)</p>
-<p class="last"><strong>origin_axis_visible</strong> : Bool(False)</p>
+<blockquote>
+<div><p>Defines a the origin axis width, for testing.</p>
+</div></blockquote>
+<p><strong>origin_axis_visible</strong> : Bool(False)</p>
+<blockquote class="last">
+<div><p>Defines the origin axis visibility, for testing.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -391,16 +614,65 @@ an array.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
+<blockquote>
+<div><p>The CompiledPath to use if <strong>marker</strong> is set to &#8220;custom&#8221;. This attribute
+must be a compiled path for the Kiva context onto which this plot will
+be rendered.  Usually, importing kiva.GraphicsContext will do
+the right thing.</p>
+</div></blockquote>
 <p><strong>marker</strong> : MarkerTrait</p>
+<blockquote>
+<div><p>The type of marker to use.  This is a mapped trait using strings as the
+keys.</p>
+</div></blockquote>
 <p><strong>marker_size</strong> : Float(4.0)</p>
+<blockquote>
+<div><p>The pixel size of the marker, not including the thickness of the outline.</p>
+</div></blockquote>
 <p><strong>render_markers_func</strong> : Callable(render_markers)</p>
+<blockquote>
+<div><p>The function which actually renders the markers</p>
+</div></blockquote>
 <p><strong>line_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The thickness, in pixels, of the outline to draw around the marker.  If
+this is 0, no outline is drawn.</p>
+</div></blockquote>
 <p><strong>color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The fill color of the marker.</p>
+</div></blockquote>
 <p><strong>outline_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the outline to draw around the marker.</p>
+</div></blockquote>
 <p><strong>effective_color</strong> : Property(Tuple, depends_on=[&#8216;color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote>
+<div><p>The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id6"><span class="problematic" id="id7">color_</span></a>, and its alpha value is the alpha
+value of self.color multiplied by self.alpha.</p>
+</div></blockquote>
 <p><strong>effective_outline_color</strong> : Property(Tuple, depends_on=[&#8216;outline_color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote>
+<div><p>The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id8"><span class="problematic" id="id9">outline_color_</span></a>, and its alpha value is the
+alpha value of self.outline_color multiplied by self.alpha.</p>
+</div></blockquote>
 <p><strong>traits_view</strong> : ScatterPlotView()</p>
+<blockquote>
+<div><p>Traits UI View for customizing the plot.</p>
+</div></blockquote>
 <p><strong>show_selection</strong> : Bool(True)</p>
+<blockquote>
+<div><blockquote>
+<div><p>Selection and selection rendering
+A selection on the lot is indicated by setting the index or value
+datasource&#8217;s &#8216;selections&#8217; metadata item to a list of indices, or the
+&#8216;selection_mask&#8217; metadata to a boolean array of the same length as the
+datasource.</p>
+</div></blockquote>
+<p>show_selection</p>
+</div></blockquote>
 <p><strong>selection_marker</strong> : MarkerTrait</p>
 <p><strong>selection_marker_size</strong> : Float(4.0)</p>
 <p><strong>selection_line_width</strong> : Float(1.0)</p>
@@ -448,7 +720,14 @@ an array.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>alpha</strong> : Trait(1.0, Range(0.0, 1.0))</p>
-<p class="last"><strong>interpolation</strong> : Enum(&#8216;nearest&#8217;, &#8216;bilinear&#8217;, &#8216;bicubic&#8217;)</p>
+<blockquote>
+<div><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+for full intensity.</p>
+</div></blockquote>
+<p><strong>interpolation</strong> : Enum(&#8216;nearest&#8217;, &#8216;bilinear&#8217;, &#8216;bicubic&#8217;)</p>
+<blockquote class="last">
+<div><p>The interpolation method to use when rendering an image onto the GC.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -477,10 +756,30 @@ scalars, and renders them as a colormapped image.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_mapper</strong> : Instance(ColorMapper)</p>
+<blockquote>
+<div><p>Maps from scalar data values in self.data.value to color tuples</p>
+</div></blockquote>
 <p><strong>color_mapper</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for value_mapper as color_mapper</p>
+</div></blockquote>
 <p><strong>value_range</strong> : Property</p>
+<blockquote>
+<div><p>Convenience property for accessing the data range of the mapper.</p>
+</div></blockquote>
 <p><strong>fade_alpha</strong> : Float(0.3)</p>
-<p class="last"><strong>fade_background</strong> : Tuple((0, 0, 0))</p>
+<blockquote>
+<div><p>alpha value to use to fade out unselected data points when there is an
+active selection</p>
+</div></blockquote>
+<p><strong>fade_background</strong> : Tuple((0, 0, 0))</p>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>fade_background = Tuple((255,255,255))</dt>
+<dd><p class="first last">RGB color to use to fade out unselected points.</p>
+</dd>
+</dl>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -507,9 +806,25 @@ as a contour plot.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>widths</strong> : Trait(1.0, Float, List)</p>
+<blockquote>
+<div><p>The thickness(es) of the contour lines.
+It can be either a scalar value, valid for all contour lines, or a list
+of widths. If the list is too short with respect to then number of
+contour lines, the values are repeated from the beginning of the list.
+Widths are associated with levels of increasing value.</p>
+</div></blockquote>
 <p><strong>styles</strong> : Trait(&#8216;signed&#8217;, Str, List)</p>
+<blockquote>
+<div><p>The line dash style(s).</p>
+</div></blockquote>
 <p><strong>positive_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
-<p class="last"><strong>negative_style</strong> : LineStyle(&#8216;dash&#8217;)</p>
+<blockquote>
+<div><p>Line style for positive levels.</p>
+</div></blockquote>
+<p><strong>negative_style</strong> : LineStyle(&#8216;dash&#8217;)</p>
+<blockquote class="last">
+<div><p>Line style for negative levels.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -533,14 +848,59 @@ in plot_factory.py can hide some of this verbosity for common cases.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the line.</p>
+</div></blockquote>
 <p><strong>effective_color</strong> : Property(Tuple, depends_on=[&#8216;color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote>
+<div><p>The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id10"><span class="problematic" id="id11">color_</span></a>, and its alpha value is the alpha
+value of self.color multiplied by self.alpha.</p>
+</div></blockquote>
 <p><strong>selected_color</strong> : ColorTrait(&#8216;lightyellow&#8217;)</p>
+<blockquote>
+<div><p>The color to use to highlight the line when selected.</p>
+</div></blockquote>
 <p><strong>selected_line_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
+<blockquote>
+<div><p>The style of the selected line.</p>
+</div></blockquote>
 <p><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
+<blockquote>
+<div><p>The name of the key in self.metadata that holds the selection mask</p>
+</div></blockquote>
 <p><strong>line_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The thickness of the line.</p>
+</div></blockquote>
 <p><strong>line_style</strong> : LineStyle</p>
+<blockquote>
+<div><p>The line dash style.</p>
+</div></blockquote>
 <p><strong>render_style</strong> : Enum(&#8216;connectedpoints&#8217;, &#8216;hold&#8217;, &#8216;connectedhold&#8217;)</p>
-<p class="last"><strong>traits_view</strong> : View(Item(&#8216;color&#8217;, style=&#8217;custom&#8217;), &#8216;line_width&#8217;, &#8216;line_style&#8217;, buttons=[&#8216;OK&#8217;, &#8216;Cancel&#8217;])</p>
+<blockquote>
+<div><p>The rendering style of the line plot.</p>
+<dl class="docutils">
+<dt>connectedpoints</dt>
+<dd><p class="first last">&#8220;normal&#8221; style (default); each point is connected to subsequent and
+prior points by line segments</p>
+</dd>
+<dt>hold</dt>
+<dd><p class="first last">each point is represented by a line segment parallel to the abscissa
+(index axis) and spanning the length between the point and its
+subsequent point.</p>
+</dd>
+<dt>connectedhold</dt>
+<dd><p class="first last">like &#8220;hold&#8221; style, but line segments are drawn at each point of the
+plot to connect the hold lines of the prior point and the current
+point.  Also called a &#8220;right angle plot&#8221;.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>traits_view</strong> : View(Item(&#8216;color&#8217;, style=&#8217;custom&#8217;), &#8216;line_width&#8217;, &#8216;line_style&#8217;, buttons=[&#8216;OK&#8217;, &#8216;Cancel&#8217;])</p>
+<blockquote class="last">
+<div><p>Traits UI View for customizing the plot.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -579,10 +939,46 @@ behaves like a normal ScatterPlot.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color_data</strong> : Instance(ArrayDataSource)</p>
+<blockquote>
+<div><p>Source for color data.</p>
+</div></blockquote>
 <p><strong>color_mapper</strong> : Instance(ColorMapper)</p>
+<blockquote>
+<div><p>Mapping for colors.</p>
+</div></blockquote>
 <p><strong>fill_alpha</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The alpha value to apply to the result of the color-mapping process.
+(This makes it easier to create color maps without having to worry
+about alpha.)</p>
+</div></blockquote>
 <p><strong>render_method</strong> : Enum(&#8216;auto&#8217;, &#8216;banded&#8217;, &#8216;bruteforce&#8217;)</p>
-<p class="last"><strong>traits_view</strong> : ColormappedScatterPlotView()</p>
+<blockquote>
+<div><p>Determines what drawing approach to use:</p>
+<dl class="docutils">
+<dt>banded:</dt>
+<dd><p class="first last">Draw the points color-band by color-band, thus reducing the number of
+set_stroke_color() calls. Disadvantage is that some colors will
+appear more prominently than others if there are a lot of
+overlapping points.</p>
+</dd>
+<dt>bruteforce:</dt>
+<dd><p class="first last">Set the stroke color before drawing each marker.  Slower, but doesn&#8217;t
+produce the banding effect that puts some colors on top of others;
+useful if there is a lot of overlap of the data.</p>
+</dd>
+<dt>auto:</dt>
+<dd><p class="first last">Determines which render method to use based on the number of points</p>
+</dd>
+</dl>
+<p>TODO: Based on preliminary results, &#8220;banded&#8221; isn&#8217;t significantly
+more expensive than &#8220;bruteforce&#8221; for small datasets (&lt;1000),
+so perhaps banded should be removed.</p>
+</div></blockquote>
+<p><strong>traits_view</strong> : ColormappedScatterPlotView()</p>
+<blockquote class="last">
+<div><p>Traits UI View for customizing the plot. Overrides the ScatterPlot value.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -613,11 +1009,31 @@ points to a very low alpha.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>plot</strong> : Property</p>
+<blockquote>
+<div><p>The ColormappedScatterPlot that this overlay is listening to.
+By default, it looks at self.component</p>
+</div></blockquote>
 <p><strong>fade_alpha</strong> : Float(0.15)</p>
+<blockquote>
+<div><p>The amount to fade the unselected points.</p>
+</div></blockquote>
 <p><strong>minimum_delta</strong> : Float(0.01)</p>
+<blockquote>
+<div><p>The minimum difference, in float percent, between the starting and ending
+selection values, if range selection mode is enabled</p>
+</div></blockquote>
 <p><strong>selected_outline_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>Outline width for selected points.</p>
+</div></blockquote>
 <p><strong>unselected_outline_width</strong> : Float(0.0)</p>
-<p class="last"><strong>selection_type</strong> : Enum(&#8216;range&#8217;, &#8216;mask&#8217;)</p>
+<blockquote>
+<div><p>Outline width for unselected points.</p>
+</div></blockquote>
+<p><strong>selection_type</strong> : Enum(&#8216;range&#8217;, &#8216;mask&#8217;)</p>
+<blockquote class="last">
+<div><p>The type of selection used by the data source.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -658,12 +1074,37 @@ the line as small as possible while still putting ink on the page.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>edge_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the line on the edge of the polygon.</p>
+</div></blockquote>
 <p><strong>edge_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The thickness of the edge of the polygon.</p>
+</div></blockquote>
 <p><strong>edge_style</strong> : LineStyle</p>
+<blockquote>
+<div><p>The line dash style for the edge of the polygon.</p>
+</div></blockquote>
 <p><strong>face_color</strong> : transparent_color_trait</p>
+<blockquote>
+<div><p>The color of the face of the polygon.</p>
+</div></blockquote>
 <p><strong>hittest_type</strong> : Enum(&#8216;poly&#8217;, &#8216;point&#8217;, &#8216;line&#8217;)</p>
+<blockquote>
+<div><p>Override the hittest_type trait inherited from BaseXYPlot</p>
+</div></blockquote>
 <p><strong>effective_edge_color</strong> : Property(Tuple, depends_on=[&#8216;edge_color&#8217;, &#8216;alpha&#8217;])</p>
-<p class="last"><strong>effective_face_color</strong> : Property(Tuple, depends_on=[&#8216;face_color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote>
+<div><p>The RGBA tuple for rendering edges.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id12"><span class="problematic" id="id13">edge_color_</span></a>, and its alpha value is the
+alpha value of self.edge_color multiplied by self.alpha.</p>
+</div></blockquote>
+<p><strong>effective_face_color</strong> : Property(Tuple, depends_on=[&#8216;face_color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote class="last">
+<div><p>The RGBA tuple for rendering the face.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id14"><span class="problematic" id="id15">face_color_</span></a>, and its alpha value is the
+alpha value of self.face_color multiplied by self.alpha.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -693,9 +1134,21 @@ point is inside the polygon, and False otherwise.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_low</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The datasource containing the low values</p>
+</div></blockquote>
 <p><strong>value_high</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The datasource containing the high values</p>
+</div></blockquote>
 <p><strong>endcap_size</strong> : Float(5.0)</p>
-<p class="last"><strong>endcap_style</strong> : Enum(&#8216;bar&#8217;, &#8216;none&#8217;, None)</p>
+<blockquote>
+<div><p>The screen-space width of the endcap bars</p>
+</div></blockquote>
+<p><strong>endcap_style</strong> : Enum(&#8216;bar&#8217;, &#8216;none&#8217;, None)</p>
+<blockquote class="last">
+<div><p>The kind of encap to render on error bars</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -726,7 +1179,29 @@ or (y, xlow, xhigh) depending on self.orientation.</p>
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>fill_color</strong> : Alias(&#8216;face_color&#8217;)</p>
 <p><strong>fill_direction</strong> : Enum(&#8216;down&#8217;, &#8216;up&#8217;)</p>
-<p class="last"><strong>render_style</strong> : Enum(&#8216;connectedpoints&#8217;, &#8216;hold&#8217;, &#8216;connectedhold&#8217;)</p>
+<blockquote>
+<div><p>Direction to fill. Down is towards the origin, up is towards the max</p>
+</div></blockquote>
+<p><strong>render_style</strong> : Enum(&#8216;connectedpoints&#8217;, &#8216;hold&#8217;, &#8216;connectedhold&#8217;)</p>
+<blockquote class="last">
+<div><p>The rendering style of the line plot.</p>
+<dl class="docutils">
+<dt>connectedpoints</dt>
+<dd><p class="first last">&#8220;normal&#8221; style (default); each point is connected to subsequent and
+prior points by line segments</p>
+</dd>
+<dt>hold</dt>
+<dd><p class="first last">each point is represented by a line segment parallel to the abscissa
+(index axis) and spanning the length between the point and its
+subsequent point.</p>
+</dd>
+<dt>connectedhold</dt>
+<dd><p class="first last">like &#8220;hold&#8221; style, but line segments are drawn at each point of the
+plot to connect the hold lines of the prior point and the current
+point.  Also called a &#8220;right angle plot&#8221;.</p>
+</dd>
+</dl>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -745,10 +1220,33 @@ or (y, xlow, xhigh) depending on self.orientation.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_type</strong> : Enum(&#8216;vector&#8217;, &#8216;radial&#8217;)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Determines how to interpret the data in the <strong>vectors</strong> data source.</dt>
+<dd><p class="first last">&#8220;vector&#8221;: each tuple is a (dx, dy)
+&#8220;radial&#8221;: each tuple is an (r, theta)</p>
+</dd>
+</dl>
+</div></blockquote>
 <p><strong>vectors</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>A datasource that returns an Nx2 array array indicating directions
+of the vectors.  The interpretation of this array is dependent on
+the setting of the <strong>data_type</strong> attribute.</p>
+<p>Usually this will be a MultiArrayDataSource.</p>
+</div></blockquote>
 <p><strong>line_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>The color of the lines</p>
+</div></blockquote>
 <p><strong>line_width</strong> : Float(1.0)</p>
-<p class="last"><strong>arrow_size</strong> : Int(5)</p>
+<blockquote>
+<div><p>The width of the lines</p>
+</div></blockquote>
+<p><strong>arrow_size</strong> : Int(5)</p>
+<blockquote class="last">
+<div><p>The length, in pixels, of the arrowhead</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -775,10 +1273,31 @@ determined by the minimum space between adjacent index values.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>min_values</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The minimum values at each index point.  If None, then no stem and no
+endcap line will be drawn below each bar.</p>
+</div></blockquote>
 <p><strong>bar_min</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The &#8220;lower&#8221; extent of the &#8220;bar&#8221;, i.e. the value closest to the
+corresponding value in min_values at each index.</p>
+</div></blockquote>
 <p><strong>center_values</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>Values that appear inside the bar, between bar_min and bar_max.  These
+Are usually mean or median values, and are rendered with a solid line
+of a different color than the bar fill color.  This can be None.</p>
+</div></blockquote>
 <p><strong>bar_max</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The &#8220;upper&#8221; extent of the &#8220;bar&#8221;, i.e. the value closest to the
+corresponding value in max_values at each index.</p>
+</div></blockquote>
 <p><strong>max_values</strong> : Instance(AbstractDataSource)</p>
+<blockquote>
+<div><p>The maximum value at each index point.  If None, then no stem and no
+endcap line will be drawn above each bar.</p>
+</div></blockquote>
 <p class="last"><strong>value</strong> : Property</p>
 </td>
 </tr>
@@ -810,20 +1329,62 @@ and N is the number of points in each line.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>yindex</strong> : Instance(ArrayDataSource)</p>
+<blockquote>
+<div><blockquote>
+<div><p>M and N appearing in the comments are as defined in the docstring.</p>
+</div></blockquote>
+<p>yindex</p>
+</div></blockquote>
 <p><strong>scale</strong> : Float(1.0)</p>
+<blockquote>
+<div><p><cite>scale</cite> and <cite>offset</cite> provide a more general transformation, but are currently
+untested.</p>
+</div></blockquote>
 <p><strong>offset</strong> : Float(0.0)</p>
 <p><strong>fast_clip</strong> : Bool(False)</p>
 <p><strong>color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the lines.</p>
+</div></blockquote>
 <p><strong>color_func</strong> : Trait(None, None, Callable)</p>
+<blockquote>
+<div><p>A function that returns the color of lines.  Overrides <cite>color</cite> if not None.</p>
+</div></blockquote>
 <p><strong>selected_color</strong> : ColorTrait(&#8216;lightyellow&#8217;)</p>
+<blockquote>
+<div><p>The color to use to highlight the line when selected.</p>
+</div></blockquote>
 <p><strong>selected_line_style</strong> : LineStyle(&#8216;solid&#8217;)</p>
+<blockquote>
+<div><p>The style of the selected line.</p>
+</div></blockquote>
 <p><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
+<blockquote>
+<div><p>The name of the key in self.metadata that holds the selection mask</p>
+</div></blockquote>
 <p><strong>line_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The thickness of the line.</p>
+</div></blockquote>
 <p><strong>line_style</strong> : LineStyle</p>
+<blockquote>
+<div><p>The line dash style.</p>
+</div></blockquote>
 <p><strong>use_global_bounds</strong> : Bool(True)</p>
 <p><strong>global_min</strong> : Float</p>
+<blockquote>
+<div><p>Minimum value in the <cite>value</cite> data source.  This must be provided
+in the call to the constructor.</p>
+</div></blockquote>
 <p><strong>global_max</strong> : Float</p>
+<blockquote>
+<div><p>Maximum value in the <cite>value</cite> data source.  This must be provided
+in the call to the constructor.</p>
+</div></blockquote>
 <p><strong>normalized_amplitude</strong> : Float(-0.5)</p>
+<blockquote>
+<div><p>Normalized amplitude is the value exposed to the user.</p>
+</div></blockquote>
 <p><strong>amplitude_scale</strong> : Property(Float, depends_on=[&#8216;global_min&#8217;, &#8216;global_max&#8217;, &#8216;data&#8217;, &#8216;use_global_bounds&#8217;, &#8216;yindex&#8217;])</p>
 <p class="last"><strong>amplitude</strong> : Property(Float, depends_on=[&#8216;normalized_amplitude&#8217;, &#8216;amplitude_scale&#8217;])</p>
 </td>
@@ -849,7 +1410,11 @@ and N is the number of points in each line.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><strong>marker_size</strong> : Array</td>
+<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>marker_size</strong> : Array</p>
+<blockquote class="last">
+<div><p>TODO: for consistency, there should be a size data source and a mapper</p>
+</div></blockquote>
+</td>
 </tr>
 </tbody>
 </table>
@@ -870,7 +1435,17 @@ and N is the number of points in each line.</p>
 <p><strong>color_mapper</strong> : Instance(ColorMapper)</p>
 <p><strong>mirror</strong> : Bool(False)</p>
 <p><strong>negative_bands</strong> : Bool(True)</p>
-<p class="last"><strong>orientation</strong> : &#8216;h&#8217;</p>
+<blockquote>
+<div><p>FIXME There should be a way to automatically detect whether the data has
+negative bands</p>
+</div></blockquote>
+<p><strong>orientation</strong> : &#8216;h&#8217;</p>
+<blockquote class="last">
+<div><blockquote>
+<div><p>Override parent traits</p>
+</div></blockquote>
+<p>orientation</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
