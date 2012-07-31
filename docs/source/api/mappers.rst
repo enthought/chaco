@@ -37,7 +37,7 @@ Mappers
     :show-inheritance:
 
 :class:`ColorMapper`
-===================
+====================
 .. autoclass:: ColorMapper
     :members:
     :show-inheritance:

@@ -1,5 +1,5 @@
 
-from numpy import invert, zeros
+from numpy import zeros
 
 # Enthought library imports.
 from traits.api import Any, Bool, Float, Instance, Property, Tuple
@@ -7,6 +7,7 @@ from traits.api import Any, Bool, Float, Instance, Property, Tuple
 # Local relative imports
 from image_plot import ImagePlot
 from color_mapper import ColorMapper
+from speedups import apply_selection_fade
 
 
 class CMapImagePlot(ImagePlot):
@@ -97,24 +98,30 @@ class CMapImagePlot(ImagePlot):
     def _compute_cached_image(self, selection_masks=None):
         """ Updates the cached image.
         """
+        self._cached_image = None
         if not self._mapped_image_cache_valid:
-            cached_mapped_image = \
-                self.value_mapper.map_screen(self.value.data) * 255
+            # Clear the old image. We don't need the extra memory lying around
+            # as we compute the new mapped image.
+            self._cached_mapped_image = None
+            self._cached_mapped_image =\
+                self.value_mapper.map_screen(self.value.data)
+            self._cached_mapped_image *= 255
+            self._cached_mapped_image = \
+                    self._cached_mapped_image.astype('uint8')
             if selection_masks is not None:
-                # construct a composite mask
-                mask = zeros(cached_mapped_image.shape[:2], dtype=bool)
-                for m in selection_masks:
-                    mask = mask | m
-                invmask = invert(mask)
-                # do a cheap alpha blend with our specified color
-                cached_mapped_image[invmask,0:3] = \
-                    self.fade_alpha*(cached_mapped_image[invmask,0:3] -
-                                     self.fade_background) + self.fade_background
-            self._cached_mapped_image = cached_mapped_image
+                if len(selection_masks) > 0:
+                    mask = selection_masks[0].copy()
+                    for m in selection_masks[1:]:
+                        mask |= m
+                else:
+                    mask = zeros(self._cached_mapped_image.shape[:2],
+                            dtype=bool)
+                # Apply the selection fade, from speedups.py
+                apply_selection_fade(self._cached_mapped_image, mask,
+                        self.fade_alpha, self.fade_background)
             self._mapped_image_cache_valid = True
 
-        mapped_value = self._cached_mapped_image
-        ImagePlot._compute_cached_image(self, mapped_value.astype("UInt8"))
+        ImagePlot._compute_cached_image(self, self._cached_mapped_image)
 
     def _update_value_mapper(self):
         self._mapped_image_cache_valid = False
