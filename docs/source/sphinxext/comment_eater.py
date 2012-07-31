@@ -18,6 +18,9 @@ class Comment(object):
         self.end_lineno = end_lineno
         # str : The text block including '#' character but not any leading spaces.
         self.text = text
+        # int: NL sentinel to check how many continues newlines we have
+        #      encountered.
+        self.NLs = 0
 
     def add(self, string, start, end, line):
         """ Add a new comment line.
@@ -25,6 +28,11 @@ class Comment(object):
         self.start_lineno = min(self.start_lineno, start[0])
         self.end_lineno = max(self.end_lineno, end[0])
         self.text += string
+
+        if string == '\n':
+            self.NLs += 1
+        else:
+            self.NLs = 0
 
     def __repr__(self):
         return '%s(%r, %r, %r)' % (self.__class__.__name__, self.start_lineno,
@@ -75,16 +83,17 @@ class CommentBlocker(object):
     def process_token(self, kind, string, start, end, line):
         """ Process a single token.
         """
-        if self.current_block.is_comment:
-            if kind == tokenize.COMMENT:
-                self.current_block.add(string, start, end, line)
+        block = self.current_block
+        if (block.is_comment) and block.NLs < 2 :
+            if kind in (tokenize.COMMENT, tokenize.NL):
+                block.add(string, start, end, line)
             else:
                 self.new_noncomment(start[0], end[0])
         else:
             if kind == tokenize.COMMENT:
                 self.new_comment(string, start, end, line)
             else:
-                self.current_block.add(string, start, end, line)
+                block.add(string, start, end, line)
 
     def new_noncomment(self, start_lineno, end_lineno):
         """ We are transitioning from a noncomment to a comment.
