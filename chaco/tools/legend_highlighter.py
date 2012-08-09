@@ -12,7 +12,7 @@ def get_hit_plots(legend, event):
     try:
         # FIXME: The size of the legend is not being computed correctly, so
         # always look at the front of the label where we know we'll get a hit.
-        label = legend.get_label_at(legend.x+20, event.y)
+        label = legend.get_label_at(legend.x + 20, event.y)
 
     except:
         raise
@@ -34,9 +34,14 @@ class LegendHighlighter(LegendTool):
     or hide certain plots.
     """
 
+    #: Which mousebutton to use to move the legend
     drag_button = "right"
 
+    #: What to divide the alpha value by when plot is not selected
     dim_factor = Float(3.0)
+
+    #: How much to scale the line when it is selected or deselected
+    line_scale = Float(2.0)
 
     # The currently selected renderers
     _selected_renderers = List
@@ -60,19 +65,17 @@ class LegendHighlighter(LegendTool):
             else:
                 # User in single-select mode.
                 add_plot = plot not in self._selected_renderers
-                for p in self._selected_renderers:
-                    self._selected_renderers.remove(p)
+                self._selected_renderers = []
                 if add_plot:
                     self._selected_renderers.append(plot)
 
-            if len(self._selected_renderers) > 0:
-                self._set_states(plot.container.plots)
+            if self._selected_renderers:
+                self._set_states(self.component.plots)
             else:
-                self._reset_selects(plot.container.plots)
+                self._reset_selects(self.component.plots)
             plot.request_redraw()
 
         event.handled = True
-
 
     def _reset_selects(self, plots):
         """ Set all renderers to their default values. """
@@ -84,7 +87,6 @@ class LegendHighlighter(LegendTool):
             plot.line_width = plot._orig_line_width
         return
 
-
     def _set_states(self, plots):
         """ Decorates a plot to indicate it is selected """
         for plot in reduce(operator.add, plots.values()):
@@ -93,11 +95,11 @@ class LegendHighlighter(LegendTool):
                 plot._orig_alpha = plot.alpha
                 plot._orig_line_width = plot.line_width
             if plot in self._selected_renderers:
-                plot.line_width = plot._orig_line_width * 2.0
+                plot.line_width = plot._orig_line_width * self.line_scale
                 plot.alpha = plot._orig_alpha
             else:
                 plot.alpha = plot._orig_alpha / self.dim_factor
-                plot.line_width = plot._orig_line_width / 2.0
+                plot.line_width = plot._orig_line_width / self.line_scale
         # Move the selected renderers to the front
         if len(self._selected_renderers) > 0:
             container = self._selected_renderers[0].container
