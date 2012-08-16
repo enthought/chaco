@@ -498,7 +498,7 @@ common attributes:
       If present, the color mapper for the colorbar.
       TODO: not sure how it works
 
-    :attr:`~chaco.base_countour_plot.BaseContourPlot.alhpa`
+    :attr:`~chaco.base_countour_plot.BaseContourPlot.alpha`
       Global alpha level for all contours.
 
 
