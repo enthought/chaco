@@ -157,7 +157,7 @@ attribute, that accepts an array where each element represents the size
 of the corresponding marker. Other attributes are inherited from
 the :ref:`scatter plot <scatter_plot>` class.
 
-This is the same plot as above, with the radius od the circles representing
+This is the same plot as above, with the radius of the circles representing
 property-tax rate:
 
 .. image:: images/user_guide/vsize_scatter_plot.png
@@ -297,8 +297,8 @@ by these attributes of :class:`~chaco.multi_line_plot.MultiLinePlot`:
     :attr:`~chaco.multi_line_plot.MultiLinePlot.yindex`
 
       Array data source for the starting point of each line. Typically, this
-      is set to ``numpy.arange(n_lines)``, so that each lines is displaced
-      by one unit from the the others (the other default parameters are set to
+      is set to ``numpy.arange(n_lines)``, so that each line is displaced
+      by one unit from the others (the other default parameters are set to
       work well with this arrangement).
 
     :attr:`~chaco.multi_line_plot.MultiLinePlot.use_global_bounds`,
@@ -379,7 +379,7 @@ plot a 2D array as an image, use a :ref:`colormapped scalar plot
 <colormapped_scalar_plot>`
 
 In an :class:`~chaco.base_2d_plot.ImagePlot`, the :attr:`index` attribute
-corresponds to the the data coordinates of the pixels (often a
+corresponds to the data coordinates of the pixels (often a
 :class:`~chaco.grid_data_source.GridDataSource`). The
 :attr:`index_mapper` maps the data coordinates to
 screen coordinates (typically using
@@ -427,7 +427,7 @@ map.
 The basic class for colormapped scalar plots is
 :class:`~chaco.cmap_image_plot.CMapImagePlot`.
 As in :ref:`image plots <image_plot>`, the :attr:`index` attribute
-corresponds to the the data coordinates of the pixels (a
+corresponds to the data coordinates of the pixels (a
 :class:`~chaco.grid_data_source.GridDataSource`), and the
 :attr:`index_mapper` maps the data coordinates to
 screen coordinates (a :class:`~chaco.grid_mapper.GridMapper`). The scalar
@@ -513,7 +513,7 @@ parameters:
     :attr:`~chaco.base_countour_plot.ContourLinePlot.widths`
       The thickness of the contour lines.
       It can be either a scalar value, valid for all contour lines, or a list
-      of widths. If the list is too short with respect to then number of
+      of widths. If the list is too short with respect to the number of
       contour lines, the values are repeated from the beginning of the list.
       Widths are associated with levels of increasing value.
 
@@ -521,7 +521,7 @@ parameters:
       The style of the lines. It can either be a string that specifies the
       style for all lines (allowed styles are 'solid', 'dot dash', 'dash', 'dot',
       or 'long dash'), or a list of styles, one for each line.
-      If the list is too short with respect to then number of
+      If the list is too short with respect to the number of
       contour lines, the values are repeated from the beginning of the list.
       The default, 'signed', sets all lines corresponding to positive values to the
       style given by the attribute
@@ -690,7 +690,7 @@ Jitter Plot
 ===========
 
 A plot showing 1D data by adding a random jitter around the main axis.
-It can be useful for visualize dense collections of points.
+It can be useful for visualizing dense collections of points.
 This plot has got a single mapper,
 called :class:`~chaco.jitterplot.JitterPlot.mapper`.
 
