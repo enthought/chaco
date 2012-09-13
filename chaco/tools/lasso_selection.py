@@ -58,6 +58,9 @@ class LassoSelection(AbstractController):
     # self.component.
     plot = Property
 
+    # The button which this tool responds to
+    drag_button = Enum("left", "right")
+
     # The possible event states of this selection tool (overrides
     # enable.Interactor).
     #
@@ -114,6 +117,14 @@ class LassoSelection(AbstractController):
     #----------------------------------------------------------------------
 
     def normal_left_down(self, event):
+        if self.drag_button == "left":
+            return self.normal_mouse_down(event)
+
+    def normal_right_down(self, event):
+        if self.drag_button == "right":
+            return self.normal_mouse_down(event)
+
+    def normal_mouse_down(self, event):
         """ Handles the left mouse button being pressed while the tool is
         in the 'normal' state.
 
@@ -140,7 +151,15 @@ class LassoSelection(AbstractController):
         return
 
     def selecting_left_up(self, event):
-        """ Handles the left mouse coming up in the 'selecting' state.
+        if self.drag_button == "left":
+            return self.selecting_mouse_up(event)
+
+    def selecting_right_up(self, event):
+        if self.drag_button == "right":
+            return self.selecting_mouse_up(event)
+
+    def selecting_mouse_up(self, event):
+        """ Handles the mouse button coming up in the 'selecting' state.
 
         Completes the selection and switches to the 'normal' state.
         """
@@ -176,7 +195,6 @@ class LassoSelection(AbstractController):
         Ends the selection operation.
         """
         print event
-        #self.selecting_left_up(event)
         return
 
     def normal_key_pressed(self, event):
@@ -190,7 +208,7 @@ class LassoSelection(AbstractController):
             self._reset()
             self._select_all()
         elif event.character == 'i' and event.control_down:
-            self.selecting_left_up(None)
+            self.selecting_mouse_up(None)
             self.selection_mode = 'invert'
             self._select_all()
         return
