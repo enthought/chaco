@@ -76,7 +76,6 @@ class Demo(HasTraits):
                              show_label=False),
                         orientation = "vertical"),
                     resizable=True, title=title,
-                    width=size[0], height=size[1]
                     )
 
     def _plot_default(self):
