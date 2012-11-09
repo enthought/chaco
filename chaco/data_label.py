@@ -360,11 +360,7 @@ class DataLabel(ToolTip):
         ToolTip.overlay(self, component, gc, view_bounds, mode)
 
     def _render_bubble(self, component, gc, view_bounds=None, mode='normal'):
-        # FIXME: arrow_min_length would be fairly easy to handle.
-        #        arrow_max_length requires a little more work, to figure out
-        #        the point where the arrow ends (currently it ends at the
-        #        data point).
-
+        """ Render the bubble label in the graphics context. """
         # (px, py) is the data point in screen space.
         px, py = self._screen_coords
 
