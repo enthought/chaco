@@ -11,10 +11,12 @@ Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
 region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
 and alt-right-arrow moves you forwards and backwards through the
 "zoom history".
+
+Right-drag is enabled on some of the labels.
 """
 
 # Major library imports
-from numpy import arange
+from numpy import linspace
 from scipy.special import jn
 
 # Enthought library imports
@@ -50,7 +52,7 @@ class PlotExample(HasTraits):
         numpoints = self.numpoints
         low = self.low
         high = self.high
-        x = arange(low, high + 0.001, (high - low) / numpoints)
+        x = linspace(low, high, numpoints + 1)
         y = jn(0, x)
         plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[0]),
                                 width=2.0)
@@ -96,6 +98,7 @@ class PlotExample(HasTraits):
                            arrow_visible=False)
         plot.overlays.append(label3)
 
+        # This label uses label_style='bubble'.
         label4 = DataLabel(component=plot, data_point=(x[60], y[60]),
                            border_padding=10,
                            marker_color="red",
@@ -112,6 +115,8 @@ class PlotExample(HasTraits):
                               auto_arrow_root=True)
         label4.tools.append(tool4)
 
+        # Another 'bubble' label.  This one sets arrow_min_length=20, so
+        # the arrow is not drawn when the label is close to the data point.
         label5 = DataLabel(component=plot, data_point=(x[65], y[65]),
                            border_padding=10,
                            marker_color="green",
