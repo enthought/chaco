@@ -192,8 +192,8 @@ class DataLabel(ToolTip):
 
     # 'box' is a simple rectangular box, with an arrow that is a single line
     # with an arrowhead at the data point.
-    # 'bubble' can be given rounded corners (by setting `radius`), and the
-    # 'arrow' is a thin triangular wedge with its point at the data point.
+    # 'bubble' can be given rounded corners (by setting `corner_radius`), and
+    # the 'arrow' is a thin triangular wedge with its point at the data point.
     # When label_style is 'bubble', the following traits are ignored:
     #    arrow_size, arrow_color, arrow_root, and arrow_max_length.
     label_style = Enum('box', 'bubble')
@@ -258,7 +258,7 @@ class DataLabel(ToolTip):
     #----------------------------------------------------------------------
 
     # The radius (in screen coordinates) of the curved corners of the "bubble".
-    radius = Float(10)
+    corner_radius = Float(10)
 
     #-------------------------------------------------------------------------
     # Private traits
@@ -371,7 +371,7 @@ class DataLabel(ToolTip):
         x2 = self.x2
         y2 = self.y2
         # r is the corner radius.
-        r = self.radius
+        r = self.corner_radius
 
         if self.arrow_visible:
             # FIXME: Make 'gap_width' a configurable trait (and give it a
