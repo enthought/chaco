@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-This plot displays the audio spectrum from the microphone.
+This plot displays the audio waveform, spectrum, and spectrogram from the 
+microphone.
 
 Based on updating_plot.py
 """
@@ -10,7 +11,7 @@ import sys
 try:
     import pyaudio
 except ImportError:
-    sys.exit('You need to install pyaudio to installed to run this demo.')
+    sys.exit('You need pyaudio installed to run this demo.')
 
 from numpy import zeros, linspace, short, fromstring, hstack, transpose
 from scipy import fft
@@ -48,7 +49,7 @@ def _create_plot_component(obj):
     spec_range = obj.spectrum_plot.plots.values()[0][0].value_mapper.range
     spec_range.low = 0.0
     spec_range.high = 5.0
-    obj.spectrum_plot.index_axis.title = 'Frequency (hz)'
+    obj.spectrum_plot.index_axis.title = 'Frequency (Hz)'
     obj.spectrum_plot.value_axis.title = 'Amplitude'
 
     # Time Series plot
