@@ -135,22 +135,18 @@ Location
    and the :file:`enthought/` directories.
 
 3. If you don't know how Chaco was installed, then you can download the
-   examples separately using Git (or Subversion for older versions of Chaco):
+   examples separately from github (or using Subversion for older versions of
+   Chaco):
 
    * For the most up-to-date version of the examples:
 
-     :command:`git clone https://github.com/enthought/chaco/tree/master/examples`
+     https://github.com/enthought/chaco/tree/master/examples
 
-   * For the most up-to-date version of the examples using the old version of
-     the namespace (importing chaco using ``from enthought.chaco``):
-
-     :command:`git clone https://github.com/enthought/chaco/tree/old-namespace/examples`
-
-   * ETS 3.0 or Chaco 3.0:
+   * For ETS 3.0 or Chaco 3.0:
 
      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples`
 
-   * ETS 2.8 or Chaco 2.0.x:
+   * For ETS 2.8 or Chaco 2.0.x:
 
      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
 
