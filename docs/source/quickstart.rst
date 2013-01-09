@@ -127,7 +127,7 @@ Location
      your installation location.
 
    * On Mac OS X, they are in the
-     :file:`/Applications/Enthought/Examples/Chaco-<version>` directory.
+     :file:`/Applications/Enthought/Examples/chaco-<version>` directory.
 
 2. If you downloaded and installed Chaco from source (from GitHub or via the
    PyPI tar.gz file), the examples are located in the :file:`examples/`
