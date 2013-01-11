@@ -679,7 +679,7 @@ table.footnote td, table.footnote th {
     border-color: whitesmoke;
     border-top: 0;
     border-bottom: 0;
-    min-width: 7em;
+    white-space: nowrap;
 }
 
 .field-list ul {
