@@ -134,19 +134,16 @@ Location
    subdirectory inside the root of the Chaco source tree, next to :file:`docs/`
    and the :file:`enthought/` directories.
 
-3. If you don't know how Chaco was installed, then you can download the
-   examples separately from github (or using Subversion for older versions of
-   Chaco):
-
-   * For the most up-to-date version of the examples:
+3. If you don't know how Chaco was installed, you can download the latest
+   versions of examples individually from github:
 
      https://github.com/enthought/chaco/tree/master/examples
 
-   * For ETS 3.0 or Chaco 3.0:
+   For ETS 3.0 or Chaco 3.0, you can check out the examples with Subversion:
 
      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples`
 
-   * For ETS 2.8 or Chaco 2.0.x:
+   For ETS 2.8 or Chaco 2.0.x:
 
      :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
 
