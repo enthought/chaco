@@ -673,6 +673,15 @@ table.footnote td, table.footnote th {
     border: 0 !important;
 }
 
+.field-name {
+    background-color: whitesmoke;
+    border-style: solid;
+    border-color: whitesmoke;
+    border-top: 0;
+    border-bottom: 0;
+    white-space: nowrap;
+}
+
 .field-list ul {
     margin: 0;
     padding-left: 1em;
