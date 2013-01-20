@@ -37,6 +37,7 @@ from plot_label import PlotLabel
 from polygon_plot import PolygonPlot
 from scatterplot import ScatterPlot
 from filled_line_plot import FilledLinePlot
+from quiverplot import QuiverPlot
 
 
 
@@ -115,7 +116,8 @@ class Plot(DataView):
                              cmap_img_plot = CMapImagePlot,
                              contour_line_plot = ContourLinePlot,
                              contour_poly_plot = ContourPolyPlot,
-                             candle = CandlePlot))
+                             candle = CandlePlot,
+                             quiver = QuiverPlot,))
 
     #------------------------------------------------------------------------
     # Annotations and decorations
@@ -828,6 +830,72 @@ class Plot(DataView):
         self.add(plot)
         self.plots[name] = [plot]
         return [plot]
+
+    def quiverplot(self, data, name=None, origin=None,
+                    **styles):
+        """ Adds a new sub-plot using the given data and plot style.
+
+        Parameters
+        ----------
+        data : list(string), tuple(string)
+            The names of the data to be plotted in the ArrayDataSource.  There
+            is only one combination accepted by this function:
+
+            (index, value, vectors)
+                index and value together determine the start coordinates of
+                each vector.  The vectors are an Nx2
+
+        name : string
+            The name of the plot.  If None, then a default one is created.
+
+        origin : string
+            Which corner the origin of this plot should occupy:
+                "bottom left", "top left", "bottom right", "top right"
+
+        Styles
+        ------
+        These are all optional keyword arguments.
+
+        line_color : string (default = "black")
+            The color of the arrows
+        line_width : float (default = 1.0)
+            The thickness, in pixels, of the arrows.
+        arrow_size : int (default = 5)
+            The length, in pixels, of the arrowhead
+
+        Returns
+        -------
+        [renderers] -> list of renderers created in response to this call.
+        """
+        if name is None:
+            name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
+
+        index, value, vectors = map(self._get_or_create_datasource, data)
+
+        self.index_range.add(index)
+        self.value_range.add(value)
+
+        imap = LinearMapper(range=self.index_range,
+                            stretch_data=self.index_mapper.stretch_data)
+        vmap = LinearMapper(range=self.value_range,
+                            stretch_data=self.value_mapper.stretch_data)
+
+        cls = self.renderer_map["quiver"]
+        plot = cls(index = index,
+                   value = value,
+                   vectors = vectors,
+                   index_mapper = imap,
+                   value_mapper = vmap,
+                   name = name,
+                   origin = origin,
+                   **styles
+                   )
+        self.add(plot)
+        self.plots[name] = [plot]
+        return [plot]        
+        
 
     def delplot(self, *names):
         """ Removes the named sub-plots. """
