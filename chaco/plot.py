@@ -895,7 +895,6 @@ class Plot(DataView):
         self.add(plot)
         self.plots[name] = [plot]
         return [plot]        
-        
 
     def delplot(self, *names):
         """ Removes the named sub-plots. """

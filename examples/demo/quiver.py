@@ -48,9 +48,6 @@ class PlotExample(HasTraits):
         quiverplot = Plot(data)
         quiverplot.quiverplot(('index', 'value', 'vectors'))
 
-        add_default_axes(quiverplot)
-        add_default_grids(quiverplot)
-
         # Attach some tools to the plot
         quiverplot.tools.append(PanTool(quiverplot, constrain_key="shift"))
         zoom = ZoomTool(quiverplot)
