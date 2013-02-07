@@ -194,7 +194,32 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
 
         The selection is extended to the current mouse position.
         """
-        self._screen_end = (event.x, event.y)
+        # Take into account when we update the current endpoint, but only
+        # if we are in box select mode.  The way we handle aspect ratio
+        # is to find the largest rectangle of the specified aspect which
+        # will fit within the rectangle defined by the start coords and
+        # the current mouse position.
+        if self.tool_mode == "box" and self.aspect_ratio is not None:
+            x1, y1 = self._screen_start
+            x2, y2 = event.x, event.y
+            if (y2 - y1) == 0:
+                x2 = x1
+                y2 = y1
+            else:
+                width = abs(x2 - x1)
+                height = abs(y2 - y1)
+                drawn_aspect = width / height
+                if drawn_aspect > self.aspect_ratio:
+                    # Drawn box is wider, so use its height to compute the
+                    # restricted width
+                    x2 = x1 + height * self.aspect_ratio * (1 if x2 > x1 else -1)
+                else:
+                    # Drawn box is taller, so use its width to compute the
+                    # restricted height
+                    y2 = y1 + width / self.aspect_ratio * (1 if y2 > y1 else -1)
+            self._screen_end = (x2, y2)
+        else:
+            self._screen_end = (event.x, event.y)
         self.component.request_redraw()
         event.handled = True
         return
