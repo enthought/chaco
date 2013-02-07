@@ -157,7 +157,7 @@ marker_trans = {
     '+': 'plus',
     's': 'square',
     '^': 'triangle',
-    'v': 'down triangle'
+    'v': 'inverted_triangle'
 }
 
 line_re = re.compile('--|-\.|[-:]')
