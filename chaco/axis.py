@@ -532,10 +532,10 @@ class PlotAxis(AbstractOverlay):
             self._title_orientation = array([0.,1.])
             self.title_angle = 0.0
             if self.orientation == 'top':
-                self._origin_point = array(self.position) + self._major_axis * screenlow
+                self._origin_point = array(self.position)
                 self._inside_vector = array([0.,-1.])
             else: #self.oriention == 'bottom'
-                self._origin_point = array(self.position) + array([0., self.bounds[1]]) + self._major_axis*screenlow
+                self._origin_point = array(self.position) + array([0., self.bounds[1]])
                 self._inside_vector = array([0., 1.])
 
         elif self.orientation in ('left', 'right'):
@@ -544,11 +544,11 @@ class PlotAxis(AbstractOverlay):
             self._major_axis = array([0., 1.])
             self._title_orientation = array([-1., 0])
             if self.orientation == 'left':
-                self._origin_point = array(self.position) + array([self.bounds[0], 0.]) + self._major_axis*screenlow
+                self._origin_point = array(self.position) + array([self.bounds[0], 0.])
                 self._inside_vector = array([1., 0.])
                 self.title_angle = 90.0
             else: #self.orientation == 'right'
-                self._origin_point = array(self.position) + self._major_axis * screenlow
+                self._origin_point = array(self.position)
                 self._inside_vector = array([-1., 0.])
                 self.title_angle = 270.0
 
