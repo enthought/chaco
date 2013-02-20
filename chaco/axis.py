@@ -555,7 +555,7 @@ class PlotAxis(AbstractOverlay):
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
 
-        self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
+        self._end_axis_point = abs(screenhigh-screenlow)*self._major_axis + self._origin_point
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.
         self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
@@ -604,7 +604,7 @@ class PlotAxis(AbstractOverlay):
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
 
-        self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
+        self._end_axis_point = abs(screenhigh-screenlow)*self._major_axis + self._origin_point
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.
         self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
