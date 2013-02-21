@@ -198,8 +198,8 @@ class LassoSelection(AbstractController):
 
         Ends the selection operation.
         """
-        print event
-        return
+        # Treat this as if it were a selecting_mouse_up event
+        return self.selecting_mouse_up(event)
 
     def normal_key_pressed(self, event):
         """ Handles the user pressing a key in the 'normal' state.
