@@ -6,7 +6,7 @@ from numpy import array, empty, sometrue, transpose, vstack, zeros
 
 # Enthought library imports
 from traits.api import Any, Array, Enum, Event, Bool, Instance, \
-                                 Property, Trait, List
+                                 Property, Str, Trait, List
 from kiva.agg import points_in_polygon
 
 # Chaco imports
@@ -53,6 +53,10 @@ class LassoSelection(AbstractController):
     # that the indices in this data source must match the indices of the data
     # in the plot.
     selection_datasource = Instance(AbstractDataSource)
+
+    # The name of the metadata on the datasource that we will write
+    # the selection mask to
+    metadata_name = Str("selection")
 
     # Mapping from screen space to data space. By default, it is just
     # self.component.
@@ -135,7 +139,7 @@ class LassoSelection(AbstractController):
         self._active_selection = empty((0,2), dtype=numpy.bool)
 
         if self.selection_datasource is not None:
-            self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()), dtype=numpy.bool)
+            self.selection_datasource.metadata[self.metadata_name] = zeros(len(self.selection_datasource.get_data()), dtype=numpy.bool)
         self.selection_mode = "include"
         self.event_state = 'selecting'
         self.selecting_mouse_move(event)
@@ -194,8 +198,8 @@ class LassoSelection(AbstractController):
 
         Ends the selection operation.
         """
-        print event
-        return
+        # Treat this as if it were a selecting_mouse_up event
+        return self.selecting_mouse_up(event)
 
     def normal_key_pressed(self, event):
         """ Handles the user pressing a key in the 'normal' state.
@@ -244,8 +248,8 @@ class LassoSelection(AbstractController):
 
 
     def _update_selection(self):
-        """ Sets the selection datasource's 'selection' metadata element
-            to a mask of all the points selected
+        """ Sets the selection datasource's metadata to a mask of all
+        the points selected
         """
         if self.selection_datasource is None:
             return
@@ -269,8 +273,8 @@ class LassoSelection(AbstractController):
         else:
             selected_mask |= (points_in_polygon(data, self._active_selection, False))
 
-        if sometrue(selected_mask != self.selection_datasource.metadata['selection']):
-            self.selection_datasource.metadata['selection'] = selected_mask
+        if sometrue(selected_mask != self.selection_datasource.metadata[self.metadata_name]):
+            self.selection_datasource.metadata[self.metadata_name] = selected_mask
             self.selection_changed = True
         return
 
