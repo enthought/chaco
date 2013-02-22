@@ -6,7 +6,6 @@ the vertical plots are all independent.
 """
 
 # Major library imports
-import wx
 from numpy import arange
 from scipy.special import jn
 
@@ -14,9 +13,10 @@ from scipy.special import jn
 from enable.api import Window
 from enable.example_support import DemoFrame, demo_main
 from traits.api import HasTraits
+from pyface.timer.api import Timer
 
 # Chaco imports
-from chaco.api import *
+from chaco.api import create_line_plot, OverlayPlotContainer, ArrayDataSource
 from chaco.tools.api import MoveTool, PanTool, ZoomTool
 
 
@@ -25,7 +25,9 @@ COLOR_PALETTE = ("mediumslateblue", "maroon", "darkgreen", "goldenrod",
 
 PLOT_SIZE = 250
 
+
 class AnimatedPlot(HasTraits):
+
     def __init__(self, x, y, color="blue", bgcolor="none", orientation="h"):
         self.y_values = y[:]
         if type(x) == ArrayDataSource:
@@ -67,9 +69,6 @@ class AnimatedPlot(HasTraits):
 
 class PlotFrame(DemoFrame):
 
-    def _create_data(self):
-        values = [jn(i, x) for i in range(10)]
-
     def _create_window(self):
         numpoints = 50
         low = -5
@@ -100,21 +99,14 @@ class PlotFrame(DemoFrame):
             container.add(plot)
             self.animated_plots.append(animated_plot)
 
-
         for i, a_plot in enumerate(self.animated_plots):
             a_plot.plot.position = [50 + (i%3)*(PLOT_SIZE+50), 50 + (i//3)*(PLOT_SIZE+50)]
 
-
-        # Set the timer to generate events to us
-        timerId = wx.NewId()
-        self.timer = wx.Timer(self, timerId)
-        self.Bind(wx.EVT_TIMER, self.onTimer, id=timerId)
-        self.timer.Start(100.0, wx.TIMER_CONTINUOUS)
-
+        self.timer = Timer(100.0, self.onTimer)
         self.container = container
         return Window(self, -1, component=container)
 
-    def onTimer(self, event):
+    def onTimer(self, *args):
         for plot in self.animated_plots:
             plot.timer_tick()
         return

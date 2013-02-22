@@ -15,7 +15,6 @@ Original inspiration for this demo from Bas van Dijk.
 """
 
 # Major library imports
-import wx
 from numpy import arange
 from scipy.special import jn
 
@@ -23,10 +22,12 @@ from enable.example_support import DemoFrame, demo_main
 
 # Enthought library imports
 from enable.api import Window
+from pyface.timer.api import Timer
 
 # Chaco imports
 from chaco.api import create_line_plot, add_default_axes, add_default_grids
 from chaco.tools.api import PanTool, ZoomTool
+
 
 class PlotFrame(DemoFrame):
 
@@ -64,14 +65,10 @@ class PlotFrame(DemoFrame):
         plot.overlays.append(ZoomTool(component=plot, tool_mode="box",
                                         always_on=False))
 
-        # Set the timer to generate events to us
-        timerId = wx.NewId()
-        self.timer = wx.Timer(self, timerId)
-        self.Bind(wx.EVT_TIMER, self.onTimer, id=timerId)
-        self.timer.Start(50.0, wx.TIMER_CONTINUOUS)
+        self.timer = Timer(50.0, self.onTimer)
         return Window(self, -1, component=plot)
 
-    def onTimer(self, event):
+    def onTimer(self, *args):
         # adjust the index and increment
         if self.current_index <= self.numpoints/8:
             self.increment = 2
