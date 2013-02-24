@@ -111,7 +111,7 @@ class HorizonPlot(BaseXYPlot):
             gc.stroke_path()
 
     def _render_fill(self, gc, face_col, points, ox, oy):
-        gc.set_fill_color(face_col)
+        gc.set_fill_color(tuple(face_col))
         gc.begin_path()
         startx, starty = points[0]
         gc.move_to(startx, oy) 
