@@ -283,6 +283,7 @@ class ColormappedScatterPlot(ScatterPlot):
 
         marker = self.marker_
         size = self.marker_size
+        assert isinstance(size, float), "Variable size markers not implemented for banded rendering"
 
         # Set up the GC for drawing
         gc.set_line_dash( None )
@@ -346,22 +347,23 @@ class ColormappedScatterPlot(ScatterPlot):
             gc.set_line_width(self.line_width)
 
             marker_cls = self.marker_
-            size = self.marker_size
+            marker_size = self.marker_size
             mode = marker_cls.draw_mode
 
             if marker_cls != "custom":
                 if (hasattr(gc, "draw_marker_at_points") and self.marker not in ('custom', 'circle', 'diamond')):
-                    draw_func = lambda x, y: gc.draw_marker_at_points([[x,y]], size, marker_cls.kiva_marker)
+                    draw_func = lambda x, y, size: gc.draw_marker_at_points([[x,y]], size, marker_cls.kiva_marker)
 
-                elif hasattr(gc, "draw_path_at_points"):
-                    path = gc.get_empty_path()
-                    # turn the class into an instance... we should make add_to_path a
-                    # class method at some point.
-                    marker_cls().add_to_path(path, size)
-                    draw_func = lambda x, y: gc.draw_path_at_points([[x,y]], path, mode)
+                # elif hasattr(gc, "draw_path_at_points"):
+                #     path = gc.get_empty_path()
+                #     # turn the class into an instance... we should make add_to_path a
+                #     # class method at some point.
+                #     # I think this will break for variable marker size:
+                #     marker_cls().add_to_path(path, marker_size)
+                #     draw_func = lambda x, y, size: gc.draw_path_at_points([[x,y]], path, mode)
                 else:
                     m = marker_cls()
-                    def draw_func(x, y):
+                    def draw_func(x, y, size):
                         gc.translate_ctm(x, y)
                         gc.begin_path()
                         m.add_to_path(gc, size)
@@ -369,8 +371,12 @@ class ColormappedScatterPlot(ScatterPlot):
                         gc.translate_ctm(-x, -y)
 
                 for i in range(len(x)):
+                    if isinstance(marker_size, float):
+                        size = marker_size
+                    else:
+                        size = marker_size[i]
                     gc.set_fill_color(colors[i])
-                    draw_func(x[i], y[i])
+                    draw_func(x[i], y[i], size)
 
             else:
                 path = marker_cls.custom_symbol
