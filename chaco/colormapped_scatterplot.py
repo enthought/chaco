@@ -251,7 +251,7 @@ class ColormappedScatterPlot(ScatterPlot):
     def _calc_render_method(self, numpoints):
         """ Returns a string indicating the render method.
         """
-        if numpoints > 1000:
+        if numpoints > 1000 and isinstance(self.marker_size, float):
             return 'banded'
         else:
             return "bruteforce"
