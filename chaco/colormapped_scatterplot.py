@@ -354,13 +354,14 @@ class ColormappedScatterPlot(ScatterPlot):
                 if (hasattr(gc, "draw_marker_at_points") and self.marker not in ('custom', 'circle', 'diamond')):
                     draw_func = lambda x, y, size: gc.draw_marker_at_points([[x,y]], size, marker_cls.kiva_marker)
 
-                # elif hasattr(gc, "draw_path_at_points"):
-                #     path = gc.get_empty_path()
-                #     # turn the class into an instance... we should make add_to_path a
-                #     # class method at some point.
-                #     # I think this will break for variable marker size:
-                #     marker_cls().add_to_path(path, marker_size)
-                #     draw_func = lambda x, y, size: gc.draw_path_at_points([[x,y]], path, mode)
+                elif hasattr(gc, "draw_path_at_points"):
+                    # turn the class into an instance... we should make add_to_path a
+                    # class method at some point.
+                    m = marker_cls()
+                    def draw_func(x, y, size):
+                        path = gc.get_empty_path()
+                        m.add_to_path(path, size)
+                        gc.draw_path_at_points([[x, y]], path, mode)
                 else:
                     m = marker_cls()
                     def draw_func(x, y, size):
