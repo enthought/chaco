@@ -88,7 +88,7 @@ def _create_plot_component():
 #===============================================================================
 # Attributes to use for the plot view.
 size = (650, 650)
-title = "Basic scatter plot"
+title = "Variable size and color scatter plot"
 bg_color="lightgray"
 
 #===============================================================================
