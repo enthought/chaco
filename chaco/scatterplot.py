@@ -43,7 +43,7 @@ class ScatterPlotView(View):
 
 def render_markers(gc, points, marker, marker_size,
                    color, line_width, outline_color,
-                   custom_symbol=None, debug=False):
+                   custom_symbol=None, debug=False, point_mask=None):
     """ Helper function for a PlotComponent instance to render a
     set of (x,y) points onto a graphics context.  Currently, it makes some
     assumptions about the attributes on the plot object; these may be factored
@@ -94,7 +94,10 @@ def render_markers(gc, points, marker, marker_size,
 
         gc.begin_path()
 
-        if not isinstance(marker_size, ndarray):
+        if isinstance(marker_size, ndarray):
+            if point_mask is not None:
+                marker_size = marker_size[point_mask]
+        else:
             marker_size = ones(points.shape[0]) * marker_size
 
             #import pudb; pudb.set_trace()
@@ -450,14 +453,14 @@ class ScatterPlot(BaseXYPlot):
 
         self.render_markers_func(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_,
-                       self.custom_symbol)
+                       self.custom_symbol, point_mask=self._cached_point_mask)
 
         if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
             sel_pts = self.map_screen(self._cached_selected_pts)
             self.render_markers_func(gc, sel_pts, self.selection_marker,
                     self.selection_marker_size, self.selection_color_,
                     self.selection_line_width, self.selection_outline_color_,
-                    self.custom_symbol)
+                    self.custom_symbol, point_mask=self._cached_point_mask)
 
         if not icon_mode:
             # Draw the default axes, if necessary
