@@ -290,7 +290,6 @@ class Plot(DataView):
         -------
         [renderers] -> list of renderers created in response to this call to plot()
         """
-
         if len(data) == 0:
             return
 
@@ -306,7 +305,9 @@ class Plot(DataView):
             name = self._make_new_plot_name()
         if origin is None:
             origin = self.default_origin
+            
         if plot_type in ("line", "scatter", "polygon", "bar", "filled_line"):
+            # Tie data to the index range
             if len(data) == 1:
                 if self.default_index is None:
                     # Create the default index based on the length of the first
@@ -323,6 +324,7 @@ class Plot(DataView):
                 self.index_range.add(index)
                 data = data[1:]
 
+            # Tie data to the value_range and create the renderer for each data
             new_plots = []
             simple_plot_types = ("line", "scatter")
             for value_name in data:
@@ -353,28 +355,6 @@ class Plot(DataView):
                         self._auto_color_idx = \
                             (self._auto_color_idx + 1) % len(self.auto_colors)
                         styles["fill_color"] = self.auto_colors[self._auto_color_idx]
-
-                    bar_width = styles.get('bar_width', cls().bar_width)
-                    index_min = min([source.get_data().min() \
-                                     for source in self.index_range.sources])
-                    index_max = max([source.get_data().max() \
-                                     for source in self.index_range.sources])
-                    self.index_range.low = index_min - bar_width
-                    self.index_range.high = index_max + bar_width
-
-
-                    value_min = min([source.get_data().min() \
-                                     for source in self.value_range.sources])
-                    value_max = max([source.get_data().max() \
-                                     for source in self.value_range.sources])
-
-                    self.value_range.low = value_min - (value_max-value_min)*0.1
-                    self.value_range.high = value_max + (value_max-value_min)*0.1
-
-                    self.index_range.tight_bounds = False
-                    self.value_range.tight_bounds = False
-
-
                 else:
                     raise ValueError("Unhandled plot type: " + plot_type)
 
@@ -398,10 +378,46 @@ class Plot(DataView):
                            orientation=self.orientation,
                            origin = origin,
                            **styles)
+                
                 self.add(plot)
                 new_plots.append(plot)
+            
+            if plot_type == 'bar':
+                # For bar plots, compute the ranges from the data to make the 
+                # plot look clean. This used to be done by setting 
+                # self.index_range.low and self.index_range.high but that 
+                # overwrote the user's settings.
+                
+                def custom_index_func(data_low, data_high, margin, tight_bounds):
+                    """ Compute custom bounds of the plot along index (in 
+                    data space).
+                    """
+                    bar_width = styles.get('bar_width', cls().bar_width)
+                    plot_low = data_low - bar_width
+                    plot_high = data_high + bar_width
+                    return plot_low, plot_high
+                
+                if self.index_range.bounds_func is None:
+                    self.index_range.bounds_func = custom_index_func
+                        
+                def custom_value_func(data_low, data_high, margin, tight_bounds):
+                    """ Compute custom bounds of the plot along value (in 
+                    data space).
+                    """
+                    plot_low = data_low - (data_high-data_low)*0.1
+                    plot_high = data_high + (data_high-data_low)*0.1
+                    return plot_low, plot_high
+                
+                if self.value_range.bounds_func is None:    
+                    self.value_range.bounds_func = custom_value_func
+                
+                self.index_range.tight_bounds = False
+                self.value_range.tight_bounds = False
+                self.index_range.refresh()
+                self.value_range.refresh()
 
             self.plots[name] = new_plots
+            
         elif plot_type == "cmap_scatter":
             if len(data) != 3:
                 raise ValueError("Colormapped scatter plots require (index, value, color) data")
