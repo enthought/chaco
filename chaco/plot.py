@@ -1042,11 +1042,8 @@ class Plot(DataView):
 
         if event.has_key("changed"):
             for name in event["changed"]:
-		try:
+		if self.datasources.has_key(name):
                     source = self.datasources[name]
-		except KeyError:
-		    raise KeyError('Datasource has no event "%s"'%name)
-		else:
                     source.set_data(self.data.get_data(name))
 
     def _plots_items_changed(self, event):
