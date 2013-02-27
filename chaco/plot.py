@@ -384,9 +384,7 @@ class Plot(DataView):
             
             if plot_type == 'bar':
                 # For bar plots, compute the ranges from the data to make the 
-                # plot look clean. This used to be done by setting 
-                # self.index_range.low and self.index_range.high but that 
-                # overwrote the user's settings.
+                # plot look clean. 
                 
                 def custom_index_func(data_low, data_high, margin, tight_bounds):
                     """ Compute custom bounds of the plot along index (in 
