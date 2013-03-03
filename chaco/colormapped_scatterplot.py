@@ -5,7 +5,7 @@ from __future__ import with_statement
 
 # Major library imports
 from numpy import argsort, array, concatenate, nonzero, invert, take, \
-                  isnan, transpose, newaxis, zeros
+                  isnan, transpose, newaxis, zeros, ndarray
 
 # Enthought library imports
 from kiva.constants import STROKE
@@ -160,6 +160,7 @@ class ColormappedScatterPlot(ScatterPlot):
 
 
         self._cached_data_pts = points[point_mask]
+        self._cached_point_mask = point_mask
 
         self._cache_valid = True
         return
@@ -348,6 +349,8 @@ class ColormappedScatterPlot(ScatterPlot):
 
             marker_cls = self.marker_
             marker_size = self.marker_size
+            if isinstance(marker_size, ndarray) and self._cached_point_mask is not None:
+                marker_size = marker_size[self._cached_point_mask]
             mode = marker_cls.draw_mode
 
             if marker_cls != "custom":
