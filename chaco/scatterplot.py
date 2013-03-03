@@ -3,6 +3,9 @@ function.
 """
 from __future__ import with_statement
 
+# Standard library imports
+import itertools
+
 # Major library imports
 from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, \
                 sqrt, sum, transpose, where, ones, ndarray
@@ -98,13 +101,13 @@ def render_markers(gc, points, marker, marker_size,
             if point_mask is not None:
                 marker_size = marker_size[point_mask]
         else:
-            marker_size = ones(points.shape[0]) * marker_size
+            marker_size = itertools.repeat(marker_size)
 
             #import pudb; pudb.set_trace()
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):
-            for pt,size in zip(points, marker_size):
+            for pt,size in itertools.izip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -113,7 +116,7 @@ def render_markers(gc, points, marker, marker_size,
                     gc.draw_path(marker.draw_mode)
         else:
             path = custom_symbol
-            for pt,size in zip(points, marker_size):
+            for pt,size in itertools.izip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
