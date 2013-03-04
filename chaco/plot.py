@@ -166,11 +166,11 @@ class Plot(DataView):
                 self.data = ArrayPlotData(data)
             else:
                 raise ValueError, "Don't know how to create PlotData for data" \
-                                  "of type " + str(type(data))
+                      "of type " + str(type(data))
 
         if not self._title:
             self._title = PlotLabel(font="swiss 16", visible=False,
-                                   overlay_position="top", component=self)
+                                    overlay_position="top", component=self)
         if title is not None:
             self.title = title
 
@@ -184,7 +184,7 @@ class Plot(DataView):
         return
 
     def add_xy_plot(self, index_name, value_name, renderer_factory, name=None,
-        origin=None, **kwds):
+                    origin=None, **kwds):
         """ Add a BaseXYPlot renderer subclass to this Plot.
 
         Parameters
@@ -380,16 +380,16 @@ class Plot(DataView):
 
                 if self.index_scale == "linear":
                     imap = LinearMapper(range=self.index_range,
-                                stretch_data=self.index_mapper.stretch_data)
+                                        stretch_data=self.index_mapper.stretch_data)
                 else:
                     imap = LogMapper(range=self.index_range,
-                                stretch_data=self.index_mapper.stretch_data)
+                                     stretch_data=self.index_mapper.stretch_data)
                 if self.value_scale == "linear":
                     vmap = LinearMapper(range=self.value_range,
-                                stretch_data=self.value_mapper.stretch_data)
+                                        stretch_data=self.value_mapper.stretch_data)
                 else:
                     vmap = LogMapper(range=self.value_range,
-                                stretch_data=self.value_mapper.stretch_data)
+                                     stretch_data=self.value_mapper.stretch_data)
 
                 plot = cls(index=index,
                            value=value,
@@ -437,16 +437,16 @@ class Plot(DataView):
 
                 if self.index_scale == "linear":
                     imap = LinearMapper(range=self.index_range,
-                                stretch_data=self.index_mapper.stretch_data)
+                                        stretch_data=self.index_mapper.stretch_data)
                 else:
                     imap = LogMapper(range=self.index_range,
-                                stretch_data=self.index_mapper.stretch_data)
+                                     stretch_data=self.index_mapper.stretch_data)
                 if self.value_scale == "linear":
                     vmap = LinearMapper(range=self.value_range,
-                                stretch_data=self.value_mapper.stretch_data)
+                                        stretch_data=self.value_mapper.stretch_data)
                 else:
                     vmap = LogMapper(range=self.value_range,
-                                stretch_data=self.value_mapper.stretch_data)
+                                     stretch_data=self.value_mapper.stretch_data)
 
                 cls = self.renderer_map["cmap_scatter"]
                 plot = cls(index=index,
@@ -788,12 +788,12 @@ class Plot(DataView):
             max = None
         elif len(data) == 5:
             index, min, bar_min, bar_max, max = \
-                            map(self._get_or_create_datasource, data)
+                map(self._get_or_create_datasource, data)
             self.value_range.add(min, bar_min, bar_max, max)
             center = None
         elif len(data) == 6:
             index, min, bar_min, center, bar_max, max = \
-                            map(self._get_or_create_datasource, data)
+                map(self._get_or_create_datasource, data)
             self.value_range.add(min, bar_min, center, bar_max, max)
         self.index_range.add(index)
 
@@ -804,35 +804,35 @@ class Plot(DataView):
 
         if self.index_scale == "linear":
             imap = LinearMapper(range=self.index_range,
-                        stretch_data=self.index_mapper.stretch_data)
+                                stretch_data=self.index_mapper.stretch_data)
         else:
             imap = LogMapper(range=self.index_range,
-                        stretch_data=self.index_mapper.stretch_data)
+                             stretch_data=self.index_mapper.stretch_data)
         if self.value_scale == "linear":
             vmap = LinearMapper(range=self.value_range,
-                        stretch_data=self.value_mapper.stretch_data)
+                                stretch_data=self.value_mapper.stretch_data)
         else:
             vmap = LogMapper(range=self.value_range,
-                        stretch_data=self.value_mapper.stretch_data)
+                             stretch_data=self.value_mapper.stretch_data)
 
         cls = self.renderer_map["candle"]
         plot = cls(index = index,
-                          min_values = min,
-                          bar_min = bar_min,
-                          center_values = center,
-                          bar_max = bar_max,
-                          max_values = max,
-                          index_mapper = imap,
-                          value_mapper = vmap,
-                          orientation = self.orientation,
-                          origin = self.origin,
-                          **styles)
+                   min_values = min,
+                   bar_min = bar_min,
+                   center_values = center,
+                   bar_max = bar_max,
+                   max_values = max,
+                   index_mapper = imap,
+                   value_mapper = vmap,
+                   orientation = self.orientation,
+                   origin = self.origin,
+                   **styles)
         self.add(plot)
         self.plots[name] = [plot]
         return [plot]
 
     def quiverplot(self, data, name=None, origin=None,
-                    **styles):
+                   **styles):
         """ Adds a new sub-plot using the given data and plot style.
 
         Parameters
@@ -913,8 +913,8 @@ class Plot(DataView):
         # Cull the candidate list of sources to remove by checking the other plots
         sources_in_use = set()
         for p in itertools.chain(*self.plots.values()):
-                sources_in_use.add(p.index)
-                sources_in_use.add(p.value)
+            sources_in_use.add(p.index)
+            sources_in_use.add(p.value)
 
         unused_sources = deleted_sources - sources_in_use - set([None])
 
@@ -1032,13 +1032,15 @@ class Plot(DataView):
     def _data_update_handler(self, name, event):
         # event should be a dict with keys "added", "removed", and "changed",
         # per the comments in AbstractPlotData.
-        if event.has_key("added"):
-            pass
+        if "removed" in event:
+            for name in event["removed"]:
+                del self.datasources[name]
 
-        if event.has_key("removed"):
-            pass
+        if "added" in event:
+            for name in event["added"]:
+                self._get_or_create_datasource(name)
 
-        if event.has_key("changed"):
+        if "changed" in event:
             for name in event["changed"]:
                 if self.datasources.has_key(name):
                     source = self.datasources[name]
@@ -1067,12 +1069,12 @@ class Plot(DataView):
                     raise ValueError("log scale only supported on XY plots")
                 if self.index_scale == "linear":
                     imap = LinearMapper(range=plot.index_range,
-                                screen_bounds=plot.index_mapper.screen_bounds,
-                                stretch_data=self.index_mapper.stretch_data)
+                                        screen_bounds=plot.index_mapper.screen_bounds,
+                                        stretch_data=self.index_mapper.stretch_data)
                 else:
                     imap = LogMapper(range=plot.index_range,
-                                screen_bounds=plot.index_mapper.screen_bounds,
-                                stretch_data=self.index_mapper.stretch_data)
+                                     screen_bounds=plot.index_mapper.screen_bounds,
+                                     stretch_data=self.index_mapper.stretch_data)
                 plot.index_mapper = imap
 
     def _value_scale_changed(self, old, new):
@@ -1086,7 +1088,7 @@ class Plot(DataView):
         else:
             vmap = LogMapper(range=self.value_range,
                              screen_bounds=self.value_mapper.screen_bounds,
-                                stretch_data=self.value_mapper.stretch_data)
+                             stretch_data=self.value_mapper.stretch_data)
         self.value_mapper = vmap
         for key in self.plots:
             for plot in self.plots[key]:
@@ -1094,12 +1096,12 @@ class Plot(DataView):
                     raise ValueError("log scale only supported on XY plots")
                 if self.value_scale == "linear":
                     vmap = LinearMapper(range=plot.value_range,
-                                screen_bounds=plot.value_mapper.screen_bounds,
-                                stretch_data=self.value_mapper.stretch_data)
+                                        screen_bounds=plot.value_mapper.screen_bounds,
+                                        stretch_data=self.value_mapper.stretch_data)
                 else:
                     vmap = LogMapper(range=plot.value_range,
-                                screen_bounds=plot.value_mapper.screen_bounds,
-                                stretch_data=self.value_mapper.stretch_data)
+                                     screen_bounds=plot.value_mapper.screen_bounds,
+                                     stretch_data=self.value_mapper.stretch_data)
                 plot.value_mapper = vmap
 
     def __title_changed(self, old, new):
@@ -1169,5 +1171,3 @@ class Plot(DataView):
 
     def _get_title_font(self):
         return self._title.font
-
-
