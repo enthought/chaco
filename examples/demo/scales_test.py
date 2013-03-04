@@ -8,7 +8,8 @@ Mousewheel up and down zooms the plot in and out.
 
 Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
 region to zoom. If you use a sequence of zoom boxes, pressing control-y and
-control-z moves you forwards and backwards through the "zoom history".
+control-z (Meta-y and Meta-z on Mac) moves you forwards and backwards
+through the "zoom history".
 
 Right-click and dragging on the legend allows you to reposition the legend.
 
