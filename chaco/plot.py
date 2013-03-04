@@ -1171,4 +1171,3 @@ class Plot(DataView):
 
     def _get_title_font(self):
         return self._title.font
-
