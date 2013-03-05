@@ -4,7 +4,6 @@ A modification of updating_plot4.py, except now all the plots are transparent,
 and the three horizontally oriented plots have linked data views, while
 the vertical plots are all independent.
 """
-
 # Major library imports
 from numpy import arange
 from scipy.special import jn
@@ -33,13 +32,13 @@ class AnimatedPlot(HasTraits):
         if type(x) == ArrayDataSource:
             self.x_values = x.get_data()[:]
             plot = create_line_plot((x, self.y_values), color=color,
-                                    bgcolor=bgcolor, add_grid=True, add_axis=True,
-                                    orientation=orientation)
+                                    bgcolor=bgcolor, add_grid=True,
+                                    add_axis=True, orientation=orientation)
         else:
             self.x_values = x[:]
             plot = create_line_plot((self.x_values,self.y_values), color=color,
-                                    bgcolor=bgcolor, add_grid=True, add_axis=True,
-                                    orientation=orientation)
+                                    bgcolor=bgcolor, add_grid=True,
+                                    add_axis=True, orientation=orientation)
 
         plot.resizable = ""
         plot.bounds = [PLOT_SIZE, PLOT_SIZE]
@@ -100,7 +99,8 @@ class PlotFrame(DemoFrame):
             self.animated_plots.append(animated_plot)
 
         for i, a_plot in enumerate(self.animated_plots):
-            a_plot.plot.position = [50 + (i%3)*(PLOT_SIZE+50), 50 + (i//3)*(PLOT_SIZE+50)]
+            a_plot.plot.position = [50 + (i%3)*(PLOT_SIZE+50),
+                                    50 + (i//3)*(PLOT_SIZE+50)]
 
         self.timer = Timer(100.0, self.onTimer)
         self.container = container
@@ -113,6 +113,4 @@ class PlotFrame(DemoFrame):
 
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(1000,800), title="Updating line plot")
-
-# EOF
+    demo = demo_main(PlotFrame, size=(950, 650), title="Updating line plot")

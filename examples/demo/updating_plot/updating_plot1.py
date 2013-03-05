@@ -13,7 +13,6 @@ function of time.
 
 Original inspiration for this demo from Bas van Dijk.
 """
-
 # Major library imports
 from numpy import arange
 from scipy.special import jn
@@ -86,6 +85,4 @@ class PlotFrame(DemoFrame):
 
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(600,500), title="Simple line plot")
-
-# EOF
+    demo = demo_main(PlotFrame, size=(600, 500), title="Simple line plot")

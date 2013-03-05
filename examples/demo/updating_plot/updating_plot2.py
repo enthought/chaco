@@ -8,7 +8,6 @@ Right-click and drag inside the plots to pan them.
 Mousewheel up and down to zoom.  Zoom box is availble (see
 description in simple_line.py).
 """
-
 # Major library imports
 from numpy import arange
 from scipy.special import jn
@@ -37,8 +36,8 @@ class AnimatedPlot(HasTraits):
         self.y_values = y[:]
         self.numpoints = len(self.x_values)
 
-        plot = create_line_plot((self.x_values,self.y_values), color=color, bgcolor=bgcolor,
-                                add_grid=True, add_axis=True)
+        plot = create_line_plot((self.x_values,self.y_values), color=color,
+                                bgcolor=bgcolor, add_grid=True, add_axis=True)
         plot.resizable = ""
         plot.bounds = [PLOT_SIZE, PLOT_SIZE]
 
@@ -81,7 +80,8 @@ class PlotFrame(DemoFrame):
             self.animated_plots.append(animated_plot)
 
         for i, a_plot in enumerate(self.animated_plots):
-            a_plot.plot.position = [50 + (i%3)*(PLOT_SIZE+50), 50 + (i//3)*(PLOT_SIZE+50)]
+            a_plot.plot.position = [50 + (i%3)*(PLOT_SIZE+50),
+                                    50 + (i//3)*(PLOT_SIZE+50)]
 
         self.timer = Timer(100.0, self.onTimer)
         self.container = container
@@ -94,6 +94,4 @@ class PlotFrame(DemoFrame):
 
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(1000,600), title="Updating line plot")
-
-# EOF
+    demo = demo_main(PlotFrame, size=(950, 650), title="Updating line plot")
