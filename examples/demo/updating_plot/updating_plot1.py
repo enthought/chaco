@@ -85,4 +85,6 @@ class PlotFrame(DemoFrame):
 
 
 if __name__ == "__main__":
+    # Save demo so that it doesn't get garbage collected when run within
+    # existing event loop (i.e. from ipython).
     demo = demo_main(PlotFrame, size=(600, 500), title="Simple line plot")
