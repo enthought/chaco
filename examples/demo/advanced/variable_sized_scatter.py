@@ -11,7 +11,6 @@ Draws a scatterplot of a set of random points of variable size.
 
 # Major library imports
 import numpy
-import numpy.random
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor

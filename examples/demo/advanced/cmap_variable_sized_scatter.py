@@ -4,14 +4,13 @@ Draws a scatterplot of a set of random points of variable size and color.
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
  - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
-   region to zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom
-   history".
+   region to zoom.  If you use a sequence of zoom boxes, pressing control-y and
+   control-z  (Meta-y and Meta-z on Mac) moves you forwards and backwards
+   through the "zoom history".
 """
 
 # Major library imports
 import numpy
-import numpy.random
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor
