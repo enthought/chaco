@@ -1,6 +1,5 @@
 """
 Draws a scatterplot of a set of random points of variable size.
- - This uses the non-standard renderer, VariableSizeScatterPlot
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
  - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
@@ -11,7 +10,6 @@ Draws a scatterplot of a set of random points of variable size.
 
 # Major library imports
 import numpy
-import numpy.random
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor
@@ -19,8 +17,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, Plot, VariableSizeScatterPlot, \
-        LinearMapper, ArrayDataSource
+from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
@@ -39,35 +36,15 @@ def _create_plot_component():
     pd.set_data("index", x)
     pd.set_data("value", y)
 
-    # Because this is a non-standard renderer, we can't call plot.plot, which
-    # sets up the array data sources, mappers and default index/value ranges.
-    # So, its gotta be done manually for now.
-
-    index_ds = ArrayDataSource(x)
-    value_ds = ArrayDataSource(y)
-
     # Create the plot
     plot = Plot(pd)
-    plot.index_range.add(index_ds)
-    plot.value_range.add(value_ds)
-
-    # Create the index and value mappers using the plot data ranges
-    imapper = LinearMapper(range=plot.index_range)
-    vmapper = LinearMapper(range=plot.value_range)
-
-    # Create the scatter renderer
-    scatter = VariableSizeScatterPlot(
-                    index=index_ds,
-                    value=value_ds,
-                    index_mapper = imapper,
-                    value_mapper = vmapper,
-                    marker='circle',
-                    marker_size=marker_size,
-                    color=(1.0,0.0,0.75,0.4))
-
-    # Append the renderer to the list of the plot's plots
-    plot.add(scatter)
-    plot.plots['var_size_scatter'] = [scatter]
+    plot.plot(("index", "value"),
+              type="scatter",
+              marker="circle",
+              index_sort="ascending",
+              color=(1.0, 0.0, 0.74, 0.4),
+              marker_size=marker_size,
+              bgcolor="white")
 
     # Tweak some of the plot properties
     plot.title = "Scatter Plot"
