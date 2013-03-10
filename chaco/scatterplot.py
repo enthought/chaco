@@ -1,14 +1,13 @@
 """ Defines the ScatterPlot class, and associated Traits UI view and helper
 function.
 """
-from __future__ import with_statement
 
 # Standard library imports
 import itertools
 
 # Major library imports
-from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, \
-                sqrt, sum, transpose, where, ones, ndarray
+from numpy import abs, argmin, around, array, asarray, compress, invert, \
+        isnan, sqrt, sum, transpose, where, ndarray
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
@@ -70,6 +69,9 @@ def render_markers(gc, points, marker, marker_size,
         The color of the marker outline
     custom_symbol : CompiledPath
         If the marker style is 'custom', this is the symbol
+    point_mask : array of bools
+        The mask specifying which points need to be rendered. The `points`
+        array is already masked
     """
 
     if len(points) == 0:
@@ -103,7 +105,6 @@ def render_markers(gc, points, marker, marker_size,
         else:
             marker_size = itertools.repeat(marker_size)
 
-            #import pudb; pudb.set_trace()
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):
