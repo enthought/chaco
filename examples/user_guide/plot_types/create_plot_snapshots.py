@@ -25,7 +25,6 @@ from chaco.scatterplot import ScatterPlot
 from chaco.linear_mapper import LinearMapper
 from chaco.candle_plot import CandlePlot
 from chaco.colormapped_scatterplot import ColormappedScatterPlot
-from chaco.variable_size_scatterplot import VariableSizeScatterPlot
 import chaco.default_colormaps as dc
 from enable.colors import color_table
 
@@ -162,13 +161,15 @@ def get_cmap_scatter_plot():
     boston = datasets.load_boston()
     prices = boston['target']
     lower_status = boston['data'][:,-1]
-    tax = boston['data'][:,9]
+    nox = boston['data'][:,4]
 
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
 
-    color_source = ArrayDataSource(tax)
-    color_mapper = dc.RdYlGn(DataRange1D(low=tax.min(), high=tax.max()))
+    color_source = ArrayDataSource(nox)
+    color_mapper = dc.reverse(dc.RdYlGn)(
+        DataRange1D(low=nox.min(), high=nox.max())
+    )
 
     scatter_plot = ColormappedScatterPlot(
         index=x, value=y,
@@ -176,7 +177,45 @@ def get_cmap_scatter_plot():
         color_data=color_source,
         color_mapper=color_mapper,
         marker='circle',
-        title='Colors represent property-tax rate',
+        title='Color represents nitric oxides concentration',
+        render_method='bruteforce',
+        **PLOT_DEFAULTS
+    )
+
+    add_axes(scatter_plot, x_label='Percent lower status in the population',
+             y_label='Median house prices')
+
+    return scatter_plot
+
+
+def get_4d_scatter_plot():
+    boston = datasets.load_boston()
+    prices = boston['target']
+    lower_status = boston['data'][:,-1]
+    tax = boston['data'][:,9]
+    nox = boston['data'][:,4]
+
+    x, y = get_data_sources(x=lower_status, y=prices)
+    x_mapper, y_mapper = get_mappers(x, y)
+
+    color_source = ArrayDataSource(nox)
+    color_mapper = dc.reverse(dc.RdYlGn)(
+        DataRange1D(low=nox.min(), high=nox.max())
+    )
+
+    # normalize between 0 and 10
+    marker_size = tax / tax.max() * 10.
+
+    scatter_plot = ColormappedScatterPlot(
+        index=x, value=y,
+        index_mapper=x_mapper, value_mapper=y_mapper,
+        color_data=color_source,
+        color_mapper=color_mapper,
+        fill_alpha = 0.8,
+        marker='circle',
+        marker_size=marker_size,
+        title='Size represents property-tax rate, '
+              'color nitric oxides concentration',
         render_method='bruteforce',
         **PLOT_DEFAULTS
     )
@@ -196,22 +235,18 @@ def get_variable_size_scatter_plot():
     x, y = get_data_sources(x=lower_status, y=prices)
     x_mapper, y_mapper = get_mappers(x, y)
 
-    # normalize between 0 and 30
+    # normalize between 0 and 10
     marker_size = tax / tax.max() * 10.
 
-    print zip(lower_status, tax)
-
-    scatter_plot = VariableSizeScatterPlot(
+    scatter_plot = ScatterPlot(
         index=x, value=y,
         index_mapper=x_mapper, value_mapper=y_mapper,
-        marker_size=marker_size,
         marker='circle',
-        title='Colors represent property-tax rate',
-        render_method='bruteforce',
+        marker_size=marker_size,
+        title='Size represents property-tax rate',
         **PLOT_DEFAULTS
     )
     scatter_plot.color = (0.0, 1.0, 0.3, 0.4)
-
 
     add_axes(scatter_plot, x_label='Percent lower status in the population',
              y_label='Median house prices')
@@ -643,6 +678,7 @@ all_examples = {
     'line_connectedhold': get_line_plot_connectedhold,
     'scatter': get_scatter_plot,
     'cmap_scatter': get_cmap_scatter_plot,
+    '4d_scatter': get_4d_scatter_plot,
     'vsize_scatter': get_variable_size_scatter_plot,
     'jitter': get_jitter_plot,
     'candle': get_candle_plot,
@@ -662,7 +698,7 @@ all_examples = {
 
 
 if __name__ == '__main__':
-    name = 'line'
+    name = 'vsize_scatter'
 
     factory_func = all_examples[name]
     plot = factory_func()
