@@ -1042,7 +1042,7 @@ class Plot(DataView):
 
         if "changed" in event:
             for name in event["changed"]:
-                if self.datasources.has_key(name):
+                if name in self.datasources:
                     source = self.datasources[name]
                     source.set_data(self.data.get_data(name))
                     
