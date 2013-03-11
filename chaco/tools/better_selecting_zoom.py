@@ -7,7 +7,7 @@ from enable.api import ColorTrait, KeySpec
 from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance, Property
 from traits.util.deprecated import deprecated
 
-from better_zoom import BetterZoom 
+from better_zoom import BetterZoom
 from tool_states import SelectedZoomState
 
 class BetterSelectingZoom(AbstractOverlay, BetterZoom):
@@ -171,7 +171,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         return
 
     def pre_selecting_left_down(self, event):
-        """ the use pressed the key to turn on the zoom mode,
+        """ The user pressed the key to turn on the zoom mode,
             now handle the click to start the select mode
         """
         self._start_select(event)
@@ -230,7 +230,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
 
         Finishes selecting and does the zoom.
         """
-        if self.drag_button == "left":
+        if self.drag_button in ("left", None):
             self._end_select(event)
         return
 
