@@ -87,7 +87,9 @@ by the parameters
       ``demo/basic/scatter_custom_marker.py`` in the Chaco examples directory).
 
     :attr:`~chaco.scatterplot.ScatterPlot.marker_size`
-      Size of the marker in pixels, not including the outline (default is 4.0).
+      Size of the marker in pixels, not including the outline. This can be
+      either a scalar (default is 4.0), or an array with one size per data
+      point.
 
     :attr:`~chaco.scatterplot.ScatterPlot.line_width`
       Width of the outline around the markers (default is 1.0). If this is 0.0,
@@ -99,9 +101,16 @@ by the parameters
     :attr:`~chaco.scatterplot.ScatterPlot.outline_color`
         The color of the outline to draw around the marker (default is black).
 
+This is an example with fixed point size:
+
 .. image:: images/user_guide/scatter_plot.png
   :width: 500px
 
+The same example, using marker size to map property-tax rate
+(larger is higher):
+
+.. image:: images/user_guide/vsize_scatter_plot.png
+  :width: 500px
 
 Colormapped Scatter Plot
 ========================
@@ -139,30 +148,17 @@ these attributes:
       In practice, there is not much performance difference between the two
       methods.
 
-In this example plot, color represents property-tax rate (red is low,
-green is high):
+In this example plot, color represents nitric oxides concentration (green
+is low, red is high):
 
 .. image:: images/user_guide/cmap_scatter_plot.png
   :width: 500px
 
-Variable Size Scatter Plot
-==========================
+Using X,Y, color, and size we can display 4 variables at the time. In this
+example, color is again, and size is nitric oxides concentration:
 
-Alternatively, one can display additional information in a scatter plot by
-setting different sizes for the markers.
-
-The size information is controlled by the
-:attr:`~chaco.variable_size_scatterplot.VariableSizeScatterPlot.marker_size`
-attribute, that accepts an array where each element represents the size
-of the corresponding marker. Other attributes are inherited from
-the :ref:`scatter plot <scatter_plot>` class.
-
-This is the same plot as above, with the radius of the circles representing
-property-tax rate:
-
-.. image:: images/user_guide/vsize_scatter_plot.png
+.. image:: images/user_guide/4d_scatter_plot.png
   :width: 500px
-
 
 
 Candle Plot
