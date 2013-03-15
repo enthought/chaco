@@ -94,12 +94,16 @@ class TextBoxOverlay(AbstractOverlay):
                 x = component.x + self.padding
 
         # attempt to get the box entirely within the component
-        if x + width > component.width:
-            x = max(0, component.width-width)
-        if y + height > component.height:
-            y = max(0, component.height - height)
-        elif y < 0:
-            y = 0
+        x_min, y_min, x_max, y_max = (component.x,
+                                      component.y,
+                                      component.x + component.width,
+                                      component.y + component.height)
+        if x + width > x_max:
+            x = max(x_min, x_max - width)
+        if y + height > y_max:
+            y = max(y_min, y_max - height)
+        elif y < y_min:
+            y = y_min
 
         # apply the alpha channel
         color = self.bgcolor_
