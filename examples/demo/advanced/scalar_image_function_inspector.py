@@ -495,7 +495,7 @@ class ModelView(HasTraits):
                        title = "Function Inspector",
                        resizable=True)
 
-    @on_trait_change('model, view')
+    @on_trait_change('model, model.model_changed, view')
     def update_view(self):
         if self.model is not None and self.view is not None:
             self.view.update(self.model)
@@ -505,11 +505,6 @@ class ModelView(HasTraits):
         
     def _edit_view_fired(self):
         self.view.configure_traits(view="plot_edit_view")
-
-    def _model_changed(self):
-        if self.view is not None:
-            self.view.update(self.model)
-
             
     def _start_timer(self):
         # Start up the timer! We should do this only when the demo actually
@@ -527,14 +522,6 @@ class ModelView(HasTraits):
         self._start_timer()
         return super(ModelView, self).configure_traits(*args, **kws)
             
-
-options_dict = {'colormap' : "jet",
-                'num_levels' : 15,
-                'function' : "tanh(x**2+y)*cos(y)*jn(0,x+y*2)"}
-model=Model(**options_dict)
-view=PlotUI(**options_dict)
-popup = ModelView(model=model, view=view)
-
 def show_plot(**kwargs):
     model = Model(**kwargs)
     view = PlotUI(**kwargs)
