@@ -387,7 +387,9 @@ def cleanup_data():
             pass
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(800,700), title="Cube analyzer")
+    # Save demo so that it doesn't get garbage collected when run within
+    # existing event loop (i.e. from ipython).
+    demo = demo_main(PlotFrame, size=(800,700), title="Cube analyzer")
     if run_cleanup:
         cleanup_data()
 

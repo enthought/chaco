@@ -327,6 +327,8 @@ class PlotFrame(DemoFrame):
             return self._create_window_simple()
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(1000,700), title="PlotCanvas")
+    # Save demo so that it doesn't get garbage collected when run within
+    # existing event loop (i.e. from ipython).
+    demo = demo_main(PlotFrame, size=(1000,700), title="PlotCanvas")
 
 # EOF

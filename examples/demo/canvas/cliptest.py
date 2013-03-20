@@ -90,5 +90,7 @@ class MainFrame(DemoFrame):
 
 
 if __name__ == "__main__":
-    demo_main(MainFrame, size=(800,800), title="ClipTest")
+    # Save demo so that it doesn't get garbage collected when run within
+    # existing event loop (i.e. from ipython).
+    demo = demo_main(MainFrame, size=(800,800), title="ClipTest")
 

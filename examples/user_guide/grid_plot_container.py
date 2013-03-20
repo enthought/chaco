@@ -41,7 +41,7 @@ class GridContainerExample(HasTraits):
                       line_width=3.0)
 
             # Set each plot's aspect based on its position in the grid
-            plot.set(height=((i % 3) + 1)*50,
+            plot.set(height=((i % 3) + 1) * 50.0,
                      resizable='h')
 
             # Add to the grid container
