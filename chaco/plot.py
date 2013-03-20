@@ -1032,18 +1032,20 @@ class Plot(DataView):
     def _data_update_handler(self, name, event):
         # event should be a dict with keys "added", "removed", and "changed",
         # per the comments in AbstractPlotData.
-        if event.has_key("added"):
-            pass
+        if "removed" in event:
+            for name in event["removed"]:
+                del self.datasources[name]
 
-        if event.has_key("removed"):
-            pass
+        if "added" in event:
+            for name in event["added"]:
+                self._get_or_create_datasource(name)
 
-        if event.has_key("changed"):
+        if "changed" in event:
             for name in event["changed"]:
-                if self.datasources.has_key(name):
+                if name in self.datasources:
                     source = self.datasources[name]
                     source.set_data(self.data.get_data(name))
-
+                    
     def _plots_items_changed(self, event):
         if self.legend:
             self.legend.plots = self.plots
