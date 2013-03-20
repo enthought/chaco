@@ -207,10 +207,6 @@ class RangeSelection(AbstractController):
         if self.enable_resize:
             if (abs(mouse_coord - high) <= self.resize_margin) or \
                             (abs(mouse_coord - low) <= self.resize_margin):
-                # HACK: Choose down point that is far enough away from the
-                # boundaries that resizing will never be deselected.
-                x_out = low - self.resize_margin - self.minimum_selection
-                self._down_point = array([x_out, x_out])
                 return self.selected_right_down(event)
 
         if tmp[self.axis_index] >= low and tmp[self.axis_index] <= high:
@@ -321,6 +317,7 @@ class RangeSelection(AbstractController):
 
         self.event_state = "selected"
         self.selection_completed = self.selection
+        self._down_point = []
         event.handled = True
         return
 
@@ -457,9 +454,17 @@ class RangeSelection(AbstractController):
     def selecting_button_up(self, event):
         # Check to see if the selection region is bigger than the minimum
         event.window.set_pointer("arrow")
-        start = self._down_point[self.axis_index]
+
         end = self._get_axis_coord(event)
-        if self.minimum_selection > abs(start - end):
+
+        if len(self._down_point) == 0:
+            cancel_selection = False
+        else:
+            start = self._down_point[self.axis_index]
+            self._down_point = []
+            cancel_selection = self.minimum_selection > abs(start - end)
+
+        if cancel_selection:
             self.deselect(event)
             event.handled = True
         else:
