@@ -2,17 +2,15 @@
 This particular editor allows the user to set two endpoints of an
 interval.
 """
-
-# FIXME: WX-only, and broken even there.
-
 from __future__ import with_statement
 
-# Force WX
 from traits.etsconfig.api import ETSConfig
-ETSConfig.toolkit = 'wx'
+if ETSConfig.toolkit == 'wx':
+    from traitsui.wx.editor import Editor
+else:
+    from traitsui.qt4.editor import Editor
 
 from traitsui.editor_factory import EditorFactory
-from traitsui.wx.editor import Editor
 
 from enable.window import Window
 from enable.api import ColorTrait
@@ -140,7 +138,10 @@ class IntervalEditorImpl(Editor):
 
         # Tell the editor what to display
         self.control = window.control
-        self.control.SetSize((factory.width, factory.height))
+        if ETSConfig.toolkit == 'wx':
+            self.control.SetSize((factory.width, factory.height))
+        else:
+            self.control.setMaximumSize(factory.width, factory.height)
 
     def update_interval(self, value):
         low, high = value
