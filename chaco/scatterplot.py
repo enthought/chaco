@@ -391,7 +391,7 @@ class ScatterPlot(BaseXYPlot):
             self._render(gc, pts)
         return
 
-    def _gather_points_old(self):
+    def _gather_points(self):
         """
         Collects the data points that are within the plot bounds and caches them
         """
@@ -437,50 +437,6 @@ class ScatterPlot(BaseXYPlot):
 
         self._cache_valid = True
         return
-
-    def _gather_points_fast(self):
-        if self._cache_valid and self._selection_cache_valid:
-            return
-
-        if not self.index or not self.value:
-            return
-
-        index, index_mask = self.index.get_data_mask()
-        value, value_mask = self.value.get_data_mask()
-
-        index_range = self.index_mapper.range
-        value_range = self.value_mapper.range
-
-        kw = {}
-        for axis in ("index", "value"):
-            ds = getattr(self, axis)
-            if ds.metadata.get('selections', None) is not None:
-                kw[axis + "_sel"] = ds.metadata['selections']
-            if ds.metadata.get('selection_mask', None) is not None:
-                kw[axis + "_sel_mask"] = ds.metadata['selection_mask']
-
-        points, selections = scatterplot_gather_points(index, index_range.low, index_range.high,
-                                    value, value_range.low, value_range.high,
-                                    index_mask = index_mask,
-                                    value_mask = value_mask,
-                                    **kw)
-
-        if not self._cache_valid:
-            self._cached_data_pts = points
-            self._cache_valid = True
-
-        if not self._selection_cache_valid:
-            if selections is not None and len(selections) > 0:
-                self._cached_selected_pts = points[selections]
-                self._selection_cache_valid = True
-            else:
-                self._cached_selected_pts = None
-                self._selection_cache_valid = True
-
-
-    def _gather_points(self):
-        #self._gather_points_fast()
-        self._gather_points_old()
 
     def _render(self, gc, points):
         """ Actually draws the plot.
