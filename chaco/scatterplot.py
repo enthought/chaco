@@ -7,7 +7,8 @@ import itertools
 
 # Major library imports
 from numpy import abs, argmin, around, array, asarray, concatenate, invert, \
-        isnan, sqrt, sum, transpose, ndarray, newaxis, zeros
+                  take, isnan, sqrt, sum, transpose, ndarray, newaxis, zeros, \
+                  nonzero, argsort
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
@@ -19,7 +20,7 @@ from traitsui.api import View, VGroup, Item
 
 # Local relative imports
 from base_xy_plot import BaseXYPlot
-from base import reverse_map_1d
+from base import reverse_map_1d, left_shift, right_shift
 from array_data_source import ArrayDataSource
 from color_mapper import ColorMapper
 
