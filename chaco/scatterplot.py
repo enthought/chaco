@@ -6,8 +6,8 @@ function.
 import itertools
 
 # Major library imports
-from numpy import abs, argmin, around, array, asarray, compress, concatenate, invert, \
-        isnan, sqrt, sum, transpose, where, ndarray, newaxis, zeros
+from numpy import abs, argmin, around, array, asarray, concatenate, invert, \
+        isnan, sqrt, sum, transpose, ndarray, newaxis, zeros
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
@@ -109,7 +109,7 @@ def render_markers(gc, points, marker, marker_size,
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):
-            for pt,size in itertools.izip(points, marker_size):
+            for pt, size in itertools.izip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -118,7 +118,7 @@ def render_markers(gc, points, marker, marker_size,
                     gc.draw_path(marker.draw_mode)
         else:
             path = custom_symbol
-            for pt,size in itertools.izip(points, marker_size):
+            for pt, size in itertools.izip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -179,7 +179,6 @@ class ScatterPlot(BaseXYPlot):
     # It has the same RGB values as outline_color_, and its alpha value is the
     # alpha value of self.outline_color multiplied by self.alpha.   
     effective_outline_color = Property(Tuple, depends_on=['outline_color', 'alpha'])
-
 
     # Source for color data.
     color_data = Instance(ArrayDataSource)
@@ -301,8 +300,8 @@ class ScatterPlot(BaseXYPlot):
         return array((self.index_mapper.map_data(x),
                       self.value_mapper.map_data(y)))
 
-    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True, \
-                  index_only = False):
+    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
+                  index_only=False):
         """ Maps a screen space point to an index into the plot's index array(s).
 
         Overrides the BaseXYPlot implementation..
@@ -545,7 +544,7 @@ class ScatterPlot(BaseXYPlot):
             # it from the original, and looking for all the nonzero points.
             shifted = right_shift(sorted_color_indices, sorted_color_indices[0])
             start_indices = concatenate([[0], nonzero(sorted_color_indices - shifted)[0]])
-            end_indices = left_shift(start_indices, len(sorted_color_indices))
+	    end_indices = left_shift(start_indices, len(sorted_color_indices))
 
             # Store the shuffled indices in self._index_bands.  We don't store the
             # actual data points because we need to allow the renderer to index into
@@ -567,18 +566,19 @@ class ScatterPlot(BaseXYPlot):
         else:
             return "bruteforce"
 
-    def _set_draw_info(self, gc, mode, color, outline_color=None, outline_weight=None):
+    def _set_draw_info(self, gc, mode, color, outline_color=None,
+		       outline_weight=None):
         """ Sets the stroke color, fill color, and line width on the graphics
         context.
         """
         color = tuple(color[:3]) + (self.fill_alpha,)
         if mode == STROKE:
             if outline_color is not None:
-                gc.set_stroke_color( color )
+                gc.set_stroke_color(color)
         else:
             if outline_color is not None:
-                gc.set_stroke_color( outline_color )
-            gc.set_fill_color( color )
+                gc.set_stroke_color(outline_color)
+            gc.set_fill_color(color)
         if outline_weight is not None:
             gc.set_line_width(outline_weight)
         return
@@ -597,7 +597,7 @@ class ScatterPlot(BaseXYPlot):
         assert isinstance(size, float), "Variable size markers not implemented for banded rendering"
 
         # Set up the GC for drawing
-        gc.set_line_dash( None )
+        gc.set_line_dash(None)
         if marker.draw_mode == STROKE:
             gc.set_line_width(self.line_width)
 
@@ -618,15 +618,15 @@ class ScatterPlot(BaseXYPlot):
                 gc.draw_marker_at_points(xy_points[index_bands[color_index]], size, marker.kiva_marker)
 
 
-        elif hasattr( gc, 'draw_path_at_points' ):
+        elif hasattr(gc, 'draw_path_at_points'):
             point_bands = {}
             for color_index, indices in self._index_bands.items():
                 point_bands[color_index] = xy_points[indices]
             # We have to construct the path for the marker.
             if self.marker != 'custom':
                 path = gc.get_empty_path()
-                # turn the class into an instance... we should make add_to_path a
-                # class method at some point.
+                # turn the class into an instance... we should make
+                # add_to_path a class method at some point.
                 marker().add_to_path(path, size)
                 mode = marker.draw_mode
             else:
