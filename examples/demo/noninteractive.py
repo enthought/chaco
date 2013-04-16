@@ -71,12 +71,14 @@ def draw_pdf(filename, size=(800, 600)):
     container.do_layout(force=True)
     gc = PdfPlotGraphicsContext(filename=filename,
                                 dest_box=(0.5, 0.5, 5.0, 5.0))
-    gc.render_component(container)
 
-    #Start a new page for subsequent draw commands.
-    gc.add_page()
+    for i in range(2):
+        # draw the plot
+        gc.render_component(container)
 
-    gc.render_component(container)
+        #Start a new page for subsequent draw commands.
+        gc.add_page()
+
     gc.save()
 
 

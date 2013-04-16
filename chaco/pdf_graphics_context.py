@@ -81,8 +81,8 @@ if Canvas is not None:
             # Add the new page
             self.gc.showPage()
 
-            # Make sure the origin is set up as before.
-            self._initialize_page(self.gc)
+            # We'll need to call _initialize_page() before drawing
+            self._page_initialized = False
 
         def render_component(self, component, container_coords=False,
                              halign="center", valign="top"):
@@ -112,6 +112,10 @@ if Canvas is not None:
             i.e., it treats (0, 0) of the graphics context as the lower-left
             corner of the container's outer bounds.
             """
+
+            if not self._page_initialized:
+                # Make sure the origin is set up as before.
+                self._initialize_page(self.gc)
 
             x, y = component.outer_position
             if container_coords:
@@ -225,3 +229,5 @@ if Canvas is not None:
             path = gc.beginPath()
             path.rect(0, 0, w, h)
             gc.clipPath(path, stroke=0, fill=0)
+
+            self._page_initialized = True
