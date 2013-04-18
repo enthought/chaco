@@ -127,6 +127,16 @@ a Chaco plot, and output attributes associated with the range of the axes::
 
     tp.myTP.range2d.print_traits()
 
+The reader is encouraged to examine the outputs of the ``print( myPlot.myTP.range2d )``,
+the ``print( myPublics )`` and the the ``tp.myTP.range2d.print_traits()`` calls.
+The outputs are reproduced under Excruciating Detail below.
+
+Excruciating Detail
+-------------------
+
+.. index
+  pair: DataRange2D; print_traits()
+
 The result of the ``print( myPlot.myTP.range2d )`` call is::
 
   <chaco.data_range_2d.DataRange2D object at 0x05BD1FC0>
@@ -215,67 +225,3 @@ Here's the output from the ``tp.myTP.range2d.print_traits()`` call::
   tight_bounds:  (True, True)
   x_range:       <chaco.data_range_1d.DataRange1D object at 0x05BE75D0>
   y_range:       <chaco.data_range_1d.DataRange1D object at 0x05BE7750>
-
-.. index:: Snippet; Range
-.. index:: Snippet; xlim
-.. index:: Snippet; ylim
-
-Snippet
--------
-::
-
-  # The actual value of the lower left/upper right bounds of this range as (x,y)
-  # points. To set them, use low_setting/high_setting.
-  myTP.range2d.low
-  myTP.range2d.high
-
-  # a 2-tuple of lower left/upper right (x,y) bounds. Either can be set to
-  # 'auto', causing the range to autocalculate
-  myTP.range2d.low_setting
-  myTP.range2d.high_setting
-
-  # Sets all the bounds of the range simultaneously. Lower left/upper right
-  # corners of the data range.
-  # Ex. myTP.range2d.set_bounds( (1,2) (3,4) ) sets the lower left to (1,2) and
-  # the upper right to (3,4)
-  myTP.range2d.set_bounds
-
-  # ranges in the x- and y- dimensions. These are DataRange1D objects, one for
-  # the x- axis and one for the y- axis
-  myTP.range2d.x_range
-  myTP.range2d.y_range
-
-  # the low/high values for the x-/y- axes. can be set to
-  #   'auto': The lower bound is automatically set at or below the minimum
-  #     of the data.
-  #   'track': The lower bound tracks the upper bound by tracking_amount.
-  #   CFloat: An explicit value for the lower bound
-  # set with the appropriate _setting method
-  myTP.range2d.x_range.low
-  myTP.range2d.x_range.high
-  myTP.range2d.y_range.low
-  myTP.range2d.y_range.high
-
-  myTP.range2d.x_range.low_setting
-  myTP.range2d.x_range.high_setting
-  myTP.range2d.y_range.low_setting
-  myTP.range2d.y_range.high_setting
-
-  # Do 'auto' bounds imply an exact fit to the data? (One Boolean per dimension)
-  # If False, the bounds pad a little bit of margin on either side. Setting
-  # the range2d.tight_bounds does not work (i.e. myTP.range2d.tight_bounds =
-  # (False,False)) does nothing. Defaults to (True,True) which causes the axes
-  # bounds to exactly correspond to the data
-  myTP.range2d.x_range.tight_bounds
-  myTP.range2d.y_range.tight_bounds
-
-  # The minimum percentage difference between low and high for each dimension.
-  # That is, (high-low) >= epsilon * low.
-  myTP.range2d.epsilon
-
-  # If any of the bounds is 'auto', this method refreshes the actual low and
-  # high values from the set of the view filters' data sources.
-  myTP.range2d.refresh()
-
-  # Resets the bounds of this range.
-  myTP.range2d.reset()

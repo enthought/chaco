@@ -1,5 +1,5 @@
 Elements of a Chaco Line Plot
-==============================
+=============================
 
 .. highlight:: python
   :linenothreshold: 5
@@ -98,6 +98,206 @@ The resulting graphic is
 .. index::
   single: Plot; getmembers
   single: Line Plot; getmembers
+  single: Plot; print_traits()
+  single: Line Plot; print_traits()
+  single: print_traits(); Line Plot
+  single: print_traits(); Plot
+
+
+The reader is encouraged to examine the ``myPublics`` list and the output of
+the ``tp.myTP.print_traits()`` command. This data describes how the
+attributes of a Chaco plot come together. The various outputs are also available
+under the 'Excruciating Detail' heading below
+
+.. index::
+  pair: Line Plot; Data
+
+Plot Data
+---------
+
+Let's first look at the sources of data for the plot. Two likely candidates
+are the ``data`` and ``datasources`` attributes from the ``myPublics`` list::
+
+  ('data', <chaco.array_plot_data.ArrayPlotData object at 0x05F5D6F0>),
+  ('datasources',
+    { 'Y': <chaco.array_data_source.ArrayDataSource object at 0x05F99A50>,
+      'X': <chaco.array_data_source.ArrayDataSource object at 0x05FE7090>}),
+
+.. index::
+  pair: Line Plot; ArrayPlotData
+  pair: ArrayPlotData; print_traits()
+
+ArrayPlotData
+-------------
+
+We first note that the 'data' attribute of the ``myTP`` object is the same as the
+``myTAPD`` object in which we first placed the data::
+
+  tp.myTP.data
+  <chaco.array_plot_data.ArrayPlotData object at 0x05F616F0>
+  tp.myTADP
+  <chaco.array_plot_data.ArrayPlotData object at 0x05F616F0>
+
+The ArrayPlotData object maps plot names to data arrays. It's defined in the
+chaco/array_plot_data.py module. Introspecting into ``tp.myTP.data``
+produces::
+
+  tp.myTP.data
+  <chaco.array_plot_data.ArrayPlotData object at 0x05FDAC00>
+
+  tp.myTP.data.print_traits()
+  arrays:     {'Y': array([  4.57391553e-19,  ...923,  6.15625227,  6.28318531])}
+  selectable: True
+  writable:   True
+
+  tp.myTP.data.__dict__
+  {'arrays':
+    { 'Y': array([
+         4.57391553e-19,   2.68399330e-04,   6.04546385e-04,
+         1.01572218e-03,   1.50856699e-03,   2.08865225e-03,
+         ......
+        -1.01572218e-03,  -6.04546385e-04,  -2.68399330e-04,
+        -4.57391553e-19]),
+      'X': array([
+        -6.28318531, -6.15625227, -6.02931923, -5.9023862 , -5.77545316,
+        -5.64852012, -5.52158709, -5.39465405, -5.26772102, -5.14078798,
+         ......
+         5.14078798,  5.26772102,  5.39465405,  5.52158709,  5.64852012,
+         5.77545316,  5.9023862 ,  6.02931923,  6.15625227,  6.28318531])},
+    'writable': True}
+
+The ``writable`` flag indicates that we're allowed to write to this data. The
+``arrays`` attribute contains the data arrays assocated with this object.
+These are the arrays and names we passed to the original ``myTADP.set_data``
+calls.
+
+.. index::
+  pair: ArrayDataSource; print_traits()
+
+ArrayDataSource
+---------------
+
+The ``datasources`` dictionary contains an entry for both the X and Y
+arrays::
+
+  ('datasources',
+    { 'Y': <chaco.array_data_source.ArrayDataSource object at 0x05F99A50>,
+      'X': <chaco.array_data_source.ArrayDataSource object at 0x05FE7090>}),
+
+The ArrayDataSource objects describes a single, continuous array of
+numerical data. The object contains the raw data (without a useful label)
+along with some descriptors about the array::
+
+  tp.myTP.datasources['X']
+  <chaco.array_data_source.ArrayDataSource object at 0x05FDA360>
+
+  tp.myTP.datasources['X'].print_traits()
+  _cached_bounds:  (-6.2831853071795862, 6.2831853071795862)
+  _cached_mask:    None
+  _data:           array([-6.28318531, -6.1562522...3,  6.15625227,  6.28318531])
+  _max_index:      99
+  _min_index:      0
+  index_dimension: 'scalar'
+  metadata:        {'annotations': [], 'selections': []}
+  persist_data:    True
+  sort_order:      'none'
+  value_dimension: 'scalar'
+
+  tp.myTP.datasources['X'].__dict__
+  {
+  '_max_index': 99,
+  '_cached_bounds': (-6.2831853071795862, 6.2831853071795862),
+  '_data':
+  array([-6.28318531, -6.15625227, -6.02931923, -5.9023862 , -5.77545316,
+         -5.64852012, -5.52158709, -5.39465405, -5.26772102, -5.14078798,
+         ......
+          5.14078798,  5.26772102,  5.39465405,  5.52158709,  5.64852012,
+          5.77545316,  5.9023862 ,  6.02931923,  6.15625227,  6.28318531]),
+  'sort_order': 'none',
+  '_min_index': 0
+  }
+
+Typically, the user passes the Array and the ``sort_order`` flag to the
+ArrayDataSource construct and the method builds the private characteristics
+that describe the array. Such descriptors include ``_min_index``, ``_max_index``,
+``_cached_bounds``, etc.
+
+The ``sort_order`` flag does not tell the method to sort the user's array. The
+flag is meant to inform follow-on processors that the data in the array is sorted.
+Options for ``sort_order`` are 'none','ascending' and 'descending.'
+
+.. index::
+  single: padding
+  single: padding_bottom
+  single: padding_top
+  single: padding_left
+  single: padding_right
+
+Padding
+-------
+
+The padding attributes represent the number of pixels between the plot and the
+window edge. This is the space for axes labels, tick marks, etc. The fundamental
+attributes are::
+
+  [padding_left, padding_right, padding_top, padding_bottom]
+
+Retrive the padding using::
+
+  tp.myTP.padding
+  [50, 50, 50, 50]
+  # returns [padding_left, padding_right, padding_top, padding_bottom]
+
+You can also set equal padding by::
+
+  tp.myTP.padding = 25
+  # results in padding of [25,25,25,25]
+
+.. index::
+  pair: Grids; Plot
+
+Grids
+-----
+
+You can access the characteristics of the plot grid using the following
+commands::
+
+  tp.myTP.x_grid
+  tp.myTP.x_grid.print_traits()
+
+.. index::
+  single: Axis
+  single: Axes
+
+Axes
+----
+
+View the axes characteristics of the plot with::
+
+  tp.myTP.x_axis
+  tp.myTP.x_axis.print_traits()
+
+.. index::
+  pair: Range; Plot
+
+Plotting Ranges
+---------------
+
+The x- and y-ranges of the plot are revealed using::
+
+  tp.myTP.range2d.print_traits()
+
+The ``range2d`` attribute contains both an ``x_range`` and a ``y_range`` object.
+Let's look at the ``x_range`` object::
+
+  tp.myTP.range2d.x_range
+  tp.myTP.range2d.x_range.print_traits()
+
+Excruciating Detail
+-------------------
+
+.. index
+  pair: Plot; print_traits()
 
 The ``myPublics`` list contains the public attributes of the ``tp.myTP``
 object::
@@ -268,12 +468,6 @@ object::
   ('y_grid', <chaco.grid.PlotGrid object at 0x05E7A270>)
   ]
 
-.. index::
-  single: Plot; print_traits()
-  single: Line Plot; print_traits()
-  single: print_traits(); Line Plot
-  single: print_traits(); Plot
-
 The ``tp.myTP.print_traits()`` method produces::
 
   _active_tool:           None
@@ -406,37 +600,10 @@ The ``tp.myTP.print_traits()`` method produces::
   y_grid:                 <chaco.grid.PlotGrid object at 0x05E7A270>
   y_mapper:               <chaco.linear_mapper.LinearMapper object at 0x05E73630>
 
-.. index::
-  pair: Line Plot; Data
+.. index:
+  pair: ArrayPlotData; print_traits()
 
-Plot Data
----------
-
-Let's first look at the sources of data for the plot. Two likely candidates
-are::
-
-  ('data', <chaco.array_plot_data.ArrayPlotData object at 0x05F5D6F0>),
-  ('datasources',
-    { 'Y': <chaco.array_data_source.ArrayDataSource object at 0x05F99A50>,
-      'X': <chaco.array_data_source.ArrayDataSource object at 0x05FE7090>}),
-
-.. index::
-  pair: Line Plot; ArrayPlotData
-
-ArrayPlotData
--------------
-
-We first note that the 'data' element of the ``myTP`` object is the same as the
-``myTAPD`` object in which we first placed the data::
-
-  tp.myTP.data
-  <chaco.array_plot_data.ArrayPlotData object at 0x05F616F0>
-  tp.myTADP
-  <chaco.array_plot_data.ArrayPlotData object at 0x05F616F0>
-
-The ArrayPlotData object maps plot names to data arrays. It's defined in the
-chaco/array_plot_data.py module. Introspecting into ``tp.myTP.data``
-produces::
+Introspecting into ``tp.myTP.data`` produces::
 
   tp.myTP.data
   <chaco.array_plot_data.ArrayPlotData object at 0x05FDAC00>
@@ -506,22 +673,8 @@ produces::
          5.77545316,  5.9023862 ,  6.02931923,  6.15625227,  6.28318531])},
     'writable': True}
 
-The ``writable`` flag indicates that we're allowed to write to this data. The
-``arrays`` attribute contains the data arrays assocated with this object.
-These are the arrays and names we passed to the original ``myTADP.set_data``
-calls.
-
-.. index:: ArrayDataSource
-
-ArrayDataSource
----------------
-
-The ``datasources`` dictionary contains an entry for both the X and Y
-arrays::
-
-  ('datasources',
-    { 'Y': <chaco.array_data_source.ArrayDataSource object at 0x05F99A50>,
-      'X': <chaco.array_data_source.ArrayDataSource object at 0x05FE7090>}),
+.. index:
+  pair: ArrayDataSource; print_traits()
 
 The ArrayDataSource objects describes a single, continuous array of
 numerical data. The object contains the raw data (without a useful label)
@@ -571,47 +724,8 @@ along with some descriptors about the array::
   '_min_index': 0
   }
 
-Typically, the user passes the Array and the ``sort_order`` flag to the
-ArrayDataSource construct and the method builds the private characteristics
-that describe the array. Such descriptors include ``_min_index``, ``_max_index``,
-``_cached_bounds``, etc.
-
-The ``sort_order`` flag does not tell the method to sort the user's array. The
-flag is meant to inform follow-on processors that the data in the array is sorted.
-Options for ``sort_order`` are 'none','ascending' and 'descending.'
-
-.. index::
-  single: padding
-  single: padding_bottom
-  single: padding_top
-  single: padding_left
-  single: padding_right
-
-Padding
--------
-
-The padding attributes represent the number of pixels between the plot and the
-window edge. This is the space for axes labels, tick marks, etc. The fundamental
-attributes are::
-
-  [padding_left, padding_right, padding_top, padding_bottom]
-
-Retrive the padding using::
-
-  tp.myTP.padding
-  [50, 50, 50, 50]
-  # returns [padding_left, padding_right, padding_top, padding_bottom]
-
-You can also set equal padding by::
-
-  tp.myTP.padding = 25
-  # results in padding of [25,25,25,25]
-
-.. index::
-  pair: Grids; Plot
-
-Grids
------
+.. index:
+  pair: PlotGrid; print_traits()
 
 Let's examine the plot grids.
 ::
@@ -712,12 +826,10 @@ Let's examine the plot grids.
   y:                     50
   y2:                    509
 
-.. index::
-  single: Axis
-  single: Axes
+.. index:
+  pair: PlotAxis; print_traits()
 
 Axes
-----
 ::
 
   tp.myTP.x_axis
@@ -845,11 +957,11 @@ Axes
   y:                          0
   y2:                         49
 
-.. index::
-  pair: Range; Plot
+.. index:
+  pair: DataRange2D; print_traits()
+  pair: DataRange1D; print_traits()
 
 Plotting Ranges
----------------
 ::
 
   tp.myTP.range2d.print_traits()

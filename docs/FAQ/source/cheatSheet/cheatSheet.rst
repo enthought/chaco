@@ -21,9 +21,7 @@ Adding data for a plot::
   myTADP.set_data( 'X',phaseA )
   myTADP.set_data( 'Y',amplitudeA )
 
-.. index:: Masking Data
-
-Masking data
+Masking Data
 ------------
 
 You can replace any data with None to not plot the data. Works for the index
@@ -31,12 +29,6 @@ and value entries.
 
 Setting the mask values in the ArrayDataSource to False does not filter the
 plotted data based upon the True/False states of the particular mask value.
-
-.. index:: Padding
-.. index:: padding_bottom
-.. index:: padding_top
-.. index:: padding_left
-.. index:: padding_right
 
 Padding
 -------
@@ -61,7 +53,7 @@ You can also set equal padding by::
   [50, 50, 50, 50]
 
 .. index::
-  pair: Title; Plot
+  pair: Color; Alias
 
 Color Aliases
 -------------
@@ -234,6 +226,7 @@ From enable/colors.py
 
 .. index::
   pair: Styles; Line
+  pair: Alias; Line Styles
   single: Grid; Line Styles
 
 Line Styles
@@ -251,6 +244,7 @@ From enable/enable_traits.py::
 
 .. index::
   pair: Styles; Cursor
+  pair: Alias; Cursor
   single: Cursor; Styles
 
 Cursor Styles
@@ -267,6 +261,9 @@ From enable/enable_traits.py::
      'size top right', 'size bottom left', 'size top left', 'size bottom right',
      'sizing', 'spray can', 'wait', 'watch', 'arrow wait'
   ]
+
+.. index:
+  pair: Fonts; Alias
 
 Fonts
 -----
@@ -341,3 +338,124 @@ From kiva_font_traits.py::
   def info ( self ):
       return ( "a string describing a font (e.g. '12 pt bold italic "
                "swiss family Arial' or 'default 12')" )
+
+.. index:
+  pair: Colormap; Alias
+
+Colormaps
+---------
+::
+
+  # Make the convenient list of all the function names as well as a dictionary
+  # of name->function mappings.  These are useful for UI editors.
+
+  Found in chaco\default_colormaps.py
+
+  color_map_functions = [
+      jet,
+      autumn,
+      bone,
+      cool,
+      copper,
+      flag,
+      gray,
+      yarg,
+      hot,
+      hsv,
+      pink,
+      prism,
+      spring,
+      summer,
+      winter,
+      cw1_004,
+      cw1_005,
+      cw1_006,
+      cw1_028,
+      gmt_drywet,
+      Spectral,
+      RdBu,
+      RdPu,
+      YlGnBu,
+      RdYlBu,
+      GnBu,
+      RdYlGn,
+      PuBu,
+      BuGn,
+      Greens,
+      PRGn,
+      BuPu,
+      OrRd,
+      Oranges,
+      PiYG,
+      YlGn,
+      BrBG,
+      Reds,
+      RdGy,
+      PuRd,
+      Blues,
+      Greys,
+      YlOrRd,
+      YlOrBr,
+      Purples,
+      PuOr,
+      PuBuGn,
+      gist_earth,
+      gist_gray,
+      gist_heat,
+      gist_ncar,
+      gist_rainbow,
+      gist_stern,
+      gist_yarg,
+  ]
+
+from default_colors.py::
+
+  """List of nice color palettes for Chaco"""
+
+  # This is a palette of 10 nice colors to use for mapping/discrete
+  # color differentiation.  From ColorBrewer.
+  cbrewer = [
+      (0.65098039,  0.80784314,  0.89019608, 1.0),
+      (0.12156863,  0.47058824,  0.70588235, 1.0),
+      (0.69803922,  0.8745098 ,  0.54117647, 1.0),
+      (0.2       ,  0.62745098,  0.17254902, 1.0),
+      (0.98431373,  0.60392157,  0.6       , 1.0),
+      (0.89019608,  0.10196078,  0.10980392, 1.0),
+      (0.99215686,  0.74901961,  0.43529412, 1.0),
+      (1.        ,  0.49803922,  0.        , 1.0),
+      (0.79215686,  0.69803922,  0.83921569, 1.0),
+      (0.41568627,  0.23921569,  0.60392157, 1.0),
+      ]
+
+  palette11 = [
+      (0.725490, 0.329412, 0.615686, 1.0),
+      (0.121569, 0.313725, 0.552941, 1.0),
+      (0.376471, 0.525490, 0.082353, 1.0),
+      (0.435294, 0.380392, 0.572549, 1.0),
+      (0.988235, 0.400000, 0.600000, 1.0),
+      (0.133333, 0.588235, 0.976471, 1.0),
+      (0.992157, 0.600000, 0.400000, 1.0),
+      (0.611765, 0.200000, 0.380392, 1.0),
+      (0.388235, 0.647059, 0.537255, 1.0),
+      (0.545098, 0.686275, 0.874510, 1.0),
+      (0.623529, 0.501961, 0.862745, 1.0),
+      ]
+
+  palette14 = [
+      (0.286275, 0.235294, 0.545098, 1.0),
+      (0.976471, 0.709804, 0.313725, 1.0),
+      (0.850980, 0.094118, 0.521569, 1.0),
+      (0.431373, 0.662745, 0.431373, 1.0),
+      (0.803922, 0.345098, 0.345098, 1.0),
+      (0.015686, 0.749020, 0.403922, 1.0),
+      (0.694118, 0.686275, 0.580392, 1.0),
+      (0.376471, 0.298039, 0.788235, 1.0),
+      (0.992157, 0.396078, 0.011765, 1.0),
+      (0.298039, 0.776471, 0.615686, 1.0),
+      (0.988235, 0.407843, 0.686275, 1.0),
+      (0.000000, 0.600000, 0.984314, 1.0),
+      (0.470588, 0.917647, 0.478431, 1.0),
+      (0.627451, 0.250980, 0.815686, 1.0),
+      ]
+
+  PALETTES = [cbrewer, palette11, palette14]

@@ -96,7 +96,7 @@ The resulting plot is
    A simple Chaco image plot without a colorbar
 
 We add a colorbar to this plot by generating a ColorBar instance and attaching
-it to the plot. The ColorBar object has a PlotAxis object, named ``_axis`` that
+it to the plot. The ColorBar object has a PlotAxis object, named ``_axis``, that
 handles the characteristics of the Colarbar labels.
 
 If we like, we can also generate a title for the ColorBar using PlotLabel
@@ -274,5 +274,3 @@ The resulting plot is
    :alt: A single TraitsUI window
 
    A single TraitsUI window
-
-

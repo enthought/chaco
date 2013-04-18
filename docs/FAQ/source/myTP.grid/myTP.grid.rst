@@ -5,7 +5,8 @@ Chaco Plot - Grid Options
   :linenothreshold: 5
 
 .. index::
-  pair: axes; grid
+  pair: Axes; Grid
+  single: Grid
 
 Generate a Chaco plot, and output attributes associated with the
 grid::
@@ -105,6 +106,16 @@ grid::
     print( myPublics )
 
     tp.myTP.x_grid.print_traits()
+
+The outputs of the ``print( myPlot.myTP.x_grid )``, ``print( myPublics )`` and the
+``tp.myTP.x_grid.print_traits()`` provide useful insight into the grid
+characteristics of the plot.
+
+Excruciating Detail
+-------------------
+
+.. index:
+  pair: PlotGrid; print_traits()
 
 Here's the output of the ``print( myPlot.myTP.x_grid )`` call::
 
@@ -302,45 +313,3 @@ Here's the output from the ``tp.myTP.x_grid.print_traits()`` call::
   x2:                    749
   y:                     50
   y2:                    549
-
-.. index:: Snippet; x_grid, y_grid
-.. index:: Snippet; Grid
-
-Snippet
--------
-::
-
-  # The dataspace interval between minor grid lines. options are Trait('auto',
-  # 'auto', Float). If negative, it's a suggestion of how many minor lines to
-  # use but still uses an algorithm to make a "nice" number of grid lines minor
-  # grid lines.
-  myTP.x_grid.grid_interval = 'auto'
-
-  # grid line color. See colorspec. can be e.g. "black" or (0.827, 0.827,
-  # 0.827, 1.0). line_color_ is useful as a read_only tuple containing the
-  # numerical color
-  myTP.x_grid.line_color = 'blue'
-  myTP.x_grid.line_color_
-
-  # The style (i.e., the dash pattern) of the grid lines. See the linestyle spec.
-  # default = LineStyle('solid'). Options are 'dash','dot','solid','dot
-  # dash','long dash'
-  # The line_style_ attribute is an array that describes the line style
-  # in terms of [pixels on, pixels off, ...]. For example, 'dot' corresponds
-  # to array([ 2., 2.])). Attribute line_style_ overrides the line_style
-  # attribute. Should have an even number of elements. Odd lengths will work but
-  # result is non-intuitive.
-  myTP.x_grid.line_style  = 'dot'
-  myTP.x_grid.line_style_
-
-  # the thickness of the grid lines, in pixels. Attribute line_weight is
-  # aliased here.
-  myTP.x_grid.line_width
-
-  # the grid_mapper method that drives this PlotGrid. Defaults to a
-  # <chaco.linear_mapper.LinearMapper object>
-  myTP.x_grid.mapper
-
-  # the tick_generator method (implimenting AbstractTickGenerator) that drives
-  # this plot. Defaults to a <chaco.ticks.DefaultTickGenerator object>,
-  myTP.x_grid.tick_generator

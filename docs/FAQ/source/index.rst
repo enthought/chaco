@@ -13,8 +13,10 @@ as well.
   myTP.range/myTP.range.rst
   myTP.grid/myTP.grid.rst
   myTP.axes/myTP.axes.rst
-  cheatSheet/cheatSheet.rst
+  myTP.plotlabel/myTP.plotlabel.rst
   colorbar/colorbar.rst
+  colormapper/colormapper.rst
+  cheatSheet/cheatSheet.rst
 
 Indices and tables
 ==================

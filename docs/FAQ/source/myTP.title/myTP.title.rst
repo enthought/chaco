@@ -8,7 +8,7 @@ Chaco Plot - Title Options
   pair: Title; Plot
 
 Plot titles are Delegates to a PlotLabel object, which is stored in the Plot
-object in the ``_title`` attribute. This ocde generates a Chaco plot, with
+object in the ``_title`` attribute. This code generates a Chaco plot, with
 explicit plot title options and introspection into the attributes involving
 the plot's title::
 
@@ -90,6 +90,31 @@ the plot's title::
 
     tp.myTP._title.print_traits()
 
+The reader is encouraged to examine the outputs of the
+``print( type(tp.myTP._title) )``, the ``print( publiList )`` and the
+``tp.myTP._title.print_traits()`` lines for insight into the behavior of
+the title attribute.
+
+Found Code
+----------
+
+From plot.py, default title construction::
+
+  if not self._title:
+    self._title = PlotLabel(
+          font = "swiss 16",
+          visible = False,
+          overlay_position = "top",
+          component = self )
+
+   if title is not None:
+    self.title = title
+
+Excruciating Detail
+-------------------
+
+.. index:
+  pair: PlotLabel; print_traits()
 
 The output of the ``print( type(tp.myTP._title) )`` line is::
 
@@ -267,24 +292,3 @@ The output of the ``tp.myTP._title.print_traits()`` line is::
   x2:                    749
   y:                     550
   y2:                    599
-
-.. index::
-  pair: Snippet; Title
-
-Snippet
--------
-::
-
-  myTP.padding = 50               # pixels twixt plot and window edge.
-
-  # most title attributes delegate to the underlying _title attribute, which
-  # is a PlotLabel object.
-  myTP.title = 'My Plot Title'    # title appearing on screen
-  myTP.title_angle = 0            # angle of the title in degrees
-  myTP.title_color = 'blue'       # title color. see colorspec
-  myTP.title_font = "swiss 16"    # title font. see fontspec
-  myTP.title_position = 'top'     # top, bottom, left, right
-  myTP.title_spacing = 'auto'     # spacing between the axis line and the title
-
-  myTP._title.hjustify = 'center' # left, right or cener
-  myTP._title.vjustify = 'center' # top, bottom or center
