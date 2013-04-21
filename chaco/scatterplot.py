@@ -21,6 +21,9 @@ from traitsui.api import View, VGroup, Item
 from base_xy_plot import BaseXYPlot
 from speedups import scatterplot_gather_points
 from base import reverse_map_1d
+from traits.traits import CTrait, Color
+from traits.trait_types import Str
+import numpy as np
 
 #------------------------------------------------------------------------------
 # Traits UI View for customizing a scatter plot.
@@ -62,11 +65,11 @@ def render_markers(gc, points, marker, marker_size,
     marker_size : number
         The size of the markers
     color : RGB(A) color
-        The color of the markers
+        The color of the markers. Can be an array as with marker_size.
     line_width : number
         The width, in pixels, of the marker outline
     outline_color : RGB(A) color
-        The color of the marker outline
+        The color of the marker outline. Can be an array as with marker_size.
     custom_symbol : CompiledPath
         If the marker style is 'custom', this is the symbol
     point_mask : array of bools
@@ -83,6 +86,19 @@ def render_markers(gc, points, marker, marker_size,
     elif issubclass(marker, AbstractMarker):
         marker = marker()
 
+    # Support specifiying color and outline color as with size.
+    if isinstance(color, ndarray):
+        if point_mask is not None:
+            color = color[point_mask]
+    else:
+        color = itertools.repeat(color)
+
+    if isinstance(outline_color, ndarray):
+        if point_mask is not None:
+            outline_color = outline_color[point_mask]
+    else:
+        outline_color = itertools.repeat(outline_color)
+                
     with gc:
         gc.set_line_dash(None)
         if marker.draw_mode == STROKE:
@@ -90,12 +106,12 @@ def render_markers(gc, points, marker, marker_size,
             # if the line width is zero, so set it to 1
             if line_width == 0:
                 line_width = 1.0
-            gc.set_stroke_color(color)
+#            gc.set_stroke_color(color)
             gc.set_line_width(line_width)
         else:
-            gc.set_stroke_color(outline_color)
+#            gc.set_stroke_color(outline_color)
             gc.set_line_width(line_width)
-            gc.set_fill_color(color)
+#            gc.set_fill_color(color)
 
         gc.begin_path()
 
@@ -108,18 +124,25 @@ def render_markers(gc, points, marker, marker_size,
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):
-            for pt,size in itertools.izip(points, marker_size):
+            for pt,size, col, o_col in itertools.izip(points, marker_size, color, outline_color):
                 sx, sy = pt
                 with gc:
+                    if marker.draw_mode != STROKE:
+                        gc.set_fill_color(col)
+                        gc.set_stroke_color(o_col)
+                    else:
+                        gc.set_stroke_color(color)
                     gc.translate_ctm(sx, sy)
                     # Kiva GCs have a path-drawing interface
                     marker.add_to_path(gc, size)
                     gc.draw_path(marker.draw_mode)
         else:
             path = custom_symbol
-            for pt,size in itertools.izip(points, marker_size):
+            for pt,size, col, o_col in itertools.izip(points, marker_size, color, outline_color):
                 sx, sy = pt
                 with gc:
+                    gc.set_stroke_color(col)
+                    gc.set_stroke_color(o_col)
                     gc.translate_ctm(sx, sy)
                     gc.scale_ctm(size, size)
                     gc.add_path(path)
@@ -163,21 +186,24 @@ class ScatterPlot(BaseXYPlot):
     # this is 0, no outline is drawn.
     line_width = Float(1.0)
 
-    # The fill color of the marker.
-    color = black_color_trait
-
-    # The color of the outline to draw around the marker.
-    outline_color = black_color_trait
-
+    # The fill color of the marker or List of color tuples(RGBA).
+    color = Either(ColorTrait, Array)
+    
+    # The color of the outline around marker or List of color tuples(RGBA).
+    outline_color = Either(ColorTrait, Array)
+#    outline_color = black_color_trait
+    
     # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
     # It has the same RGB values as color_, and its alpha value is the alpha
     # value of self.color multiplied by self.alpha. 
-    effective_color = Property(Tuple, depends_on=['color', 'alpha'])
+    effective_color = Either(Property(Array, depends_on=['color', 'alpha']),
+                             Property(Tuple, depends_on=['color', 'alpha']))
     
     # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
     # It has the same RGB values as outline_color_, and its alpha value is the
     # alpha value of self.outline_color multiplied by self.alpha.   
-    effective_outline_color = Property(Tuple, depends_on=['outline_color', 'alpha'])
+    effective_outline_color = Either(Property(Array, depends_on=['outline_color', 'alpha']),
+                                     Property(Tuple, depends_on=['outline_color', 'alpha']))
 
 
     # Traits UI View for customizing the plot.
@@ -450,7 +476,19 @@ class ScatterPlot(BaseXYPlot):
         draw just the iconified version of this plot, with the latter
         simply requiring that a few steps be skipped.
         """
+        
+        # This seems to be required to properly initialize default colors.
+        c=self.color
+        d=self.outline_color
+        
+        # If an array of colors has been given, they are required to be RGBA.
+        if isinstance(self.color, ndarray):
+            self.color_ = self.color
 
+        # If an array of colors has been given, they are required to be RGBA.
+        if isinstance(self.outline_color, ndarray):
+            self.outline_color_ = self.outline_color
+            
         if not icon_mode:
             gc.save_state()
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
@@ -516,26 +554,35 @@ class ScatterPlot(BaseXYPlot):
     def _marker_size_default(self):
         return 4.0
 
+    def _color_default(self):
+        self.color_ = (0,0,0,1)
+        return 'black'
+
+    
+    def _outline_color_default(self):
+        self.outline_color_ = (0,0,0,1)
+        return 'black'    
+
     #------------------------------------------------------------------------
     # Properties
     #------------------------------------------------------------------------
-
-    @cached_property
-    def _get_effective_color(self):
-        if len(self.color_) == 4:
-            edge_alpha = self.color_[-1]
-        else:
-            edge_alpha = 1.0
-        c = self.color_[:3] + (edge_alpha * self.alpha,)
-        return c
-
-    @cached_property
-    def _get_effective_outline_color(self):
-        if len(self.outline_color_) == 4:
-            edge_alpha = self.outline_color_[-1]
-        else:
-            edge_alpha = 1.0
-        c = self.outline_color_[:3] + (edge_alpha * self.alpha,)
-        return c
+#
+#    @cached_property
+#    def _get_effective_color(self):
+#        if len(self.color_) == 4:
+#            edge_alpha = self.color_[-1]
+#        else:
+#            edge_alpha = 1.0
+#        c = self.color_[:3] + (edge_alpha * self.alpha,)
+#        return c
+#
+#    @cached_property
+#    def _get_effective_outline_color(self):
+#        if len(self.outline_color_) == 4:
+#            edge_alpha = self.outline_color_[-1]
+#        else:
+#            edge_alpha = 1.0
+#        c = self.outline_color_[:3] + (edge_alpha * self.alpha,)
+#        return c
 
 # EOF
