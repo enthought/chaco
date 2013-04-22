@@ -1079,7 +1079,7 @@ strings, and not the tool classes themselves.
 .. code-block:: python
     :linenos:
 
-    from enthought.traits.ui.api import CheckListEditor
+    from traitsui.api import CheckListEditor
 
     class ToolsExample(HasTraits):
 
