@@ -49,8 +49,8 @@ def _create_plot_component():
     
     # Generate Random marker and outline colors
     # The arrays must be RGBA color tuples. Create the appropriate arrays.
-    col_array=np.zeros(len(x),dtype=('f8,f8,f8,f8'))
-    outline_col_array=np.zeros(len(x),dtype=('f8,f8,f8,f8'))
+    col_array=np.zeros(len(x),dtype=(np.float64,4))
+    outline_col_array=np.zeros(len(x),dtype=(np.float64,4))
     colors=[]
     for i in range(len(x)):
         colors.append(random.choice(enable.colors.color_table.keys()))
