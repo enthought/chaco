@@ -136,6 +136,26 @@ class ArrayDataSource(AbstractDataSource):
             return self._data, ones(len(self._data), dtype=bool)
         else:
             return self._data, self._cached_mask
+    
+    def get_data_bounded(self, bounds, resolution):
+        if self._data is None:
+            return 0.0, None
+        N = self._data.shape[0]
+        # note that we over-sample to get points just outside bounds
+        # XXX use resolution to downsample
+        if self.sort_order == 'ascending':
+            start, end = self._data.searchsorted(bounds)
+            start = max(start-1, 0)
+            end = min(end+1, N)
+            return slice(start, end)
+        elif self.sort_order == 'descending':
+            end, start = self._data[::-1].searchsorted(bounds)
+            start = max(N-start-1, 0)
+            end = min(N-end+1, N)
+            return slice(start, end)
+        else:
+            return self.get_data(), None
+            
 
     def is_masked(self):
         """is_masked() -> bool

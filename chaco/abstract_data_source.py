@@ -89,9 +89,11 @@ class AbstractDataSource(HasTraits):
         returns a tuple of objects which can be used in slicing operations
         which indicate how the returned values relate to the original values
         in the underlying data set.  The latter values may be None if no
-        slicing or downsampling is required
+        slicing or downsampling is required.
+        
+        Returned indices and slices should always be positive.
         """
-        return self.get_data(), None, None
+        return self.get_data(), None
 
     def get_data_indexed(self, indices):
         """get_data_indexed(indices) -> data_array
