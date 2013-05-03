@@ -80,6 +80,34 @@ class AbstractDataSource(HasTraits):
         get_size() returns.
         """
         raise NotImplementedError
+    
+    def get_data_bounded(self, bounds, resolution=None):
+        """get_data_bounded(bounds, resolution) -> (values, indexable)
+        
+        Return data values given bounds and optional resolution (pixels per
+        value unit).  May return values outside the requested range.  Also
+        returns a tuple of objects which can be used in slicing operations
+        which indicate how the returned values relate to the original values
+        in the underlying data set.  The latter values may be None if no
+        slicing or downsampling is required
+        """
+        return self.get_data(), None, None
+
+    def get_data_indexed(self, indices):
+        """get_data_indexed(indices) -> data_array
+        
+        Return the data array with the specified indices. The indices may be
+        specified either as slice objects, indices or a boolean mask, and
+        implementers should accept all three types of index.  The returned
+        value must match the shape implied by these values.  Subclasses may
+        introspect the indices to do more specialized things.
+        
+        For implementors, if the indices are not None, then the indices should
+        be able to be used as-is to index a numpy array.
+        """
+        if indices is None:
+            return self.get_data()
+        return self.get_data()[indices]
 
     def is_masked(self):
         """is_masked() -> bool
