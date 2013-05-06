@@ -230,10 +230,7 @@ class LinePlot(BaseXYPlot):
 
             if not self.index or not self.value:
                 return
-
-            index = self.index.get_data()
-            value = self.value.get_data()
-
+            
             # Check to see if the data is completely outside the view region
             for ds, rng in ((self.index, self.index_range), (self.value, self.value_range)):
                 low, high = ds.get_bounds()
@@ -241,6 +238,15 @@ class LinePlot(BaseXYPlot):
                     self._cached_data_pts = []
                     self._cached_valid = True
                     return
+
+            index_high = self.index_range.high
+            index_low = self.index_range.low
+            screen_low, screen_high = self.index_mapper.screen_bounds
+            screen_size = screen_high-screen_low
+            index, indices = self.index.get_data_bounded((index_low, index_high),
+                screen_size)
+            print indices
+            value = self.value.get_data_indexed(indices)
 
             if len(index) == 0 or len(value) == 0 or len(index) != len(value):
                 self._cached_data_pts = []

@@ -81,11 +81,11 @@ class AbstractDataSource(HasTraits):
         """
         raise NotImplementedError
     
-    def get_data_bounded(self, bounds, resolution=None):
-        """get_data_bounded(bounds, resolution) -> (values, indexable)
+    def get_data_bounded(self, bounds, screen_size=None):
+        """get_data_bounded(bounds, screen_size) -> (values, indexable)
         
-        Return data values given bounds and optional resolution (pixels per
-        value unit).  May return values outside the requested range.  Also
+        Return data values given bounds and optional screen_size in pixels.
+        May return values outside the requested range.  Also
         returns a tuple of objects which can be used in slicing operations
         which indicate how the returned values relate to the original values
         in the underlying data set.  The latter values may be None if no
