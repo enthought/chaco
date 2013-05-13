@@ -33,6 +33,9 @@ class TextBoxOverlay(AbstractOverlay):
     # The color of the outside box.
     border_color = ColorTrait("dodgerblue")
 
+    # The color of the text.
+    text_color = ColorTrait("black")
+
     # The thickness of box border.
     border_size = Int(1)
 
@@ -66,7 +69,7 @@ class TextBoxOverlay(AbstractOverlay):
         # different shapes and put the text inside it without the label
         # filling a rectangle on top of it
         label = Label(text=self.text, font=self.font, bgcolor="transparent",
-                      margin=5)
+                      color=self.text_color, margin=5)
         width, height = label.get_width_height(gc)
 
         valign, halign = self.align
