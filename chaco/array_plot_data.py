@@ -7,7 +7,8 @@ from numpy import array, ndarray
 from traits.api import Dict
 
 # Local, relative imports
-from abstract_plot_data import AbstractPlotData
+from .abstract_plot_data import AbstractPlotData
+from .abstract_data_source import AbstractDataSource
 
 
 class ArrayPlotData(AbstractPlotData):
@@ -124,18 +125,11 @@ class ArrayPlotData(AbstractPlotData):
             return None
 
         if generate_name:
-            # Find all 'series*' and increment
-            candidates = [n[6:] for n in self.list_data() if n.startswith('series')]
-            max_int = 0
-            for c in candidates:
-                try:
-                    if int(c) > max_int:
-                        max_int = int(c)
-                except ValueError:
-                    pass
-            name = "series%d" % (max_int + 1)
-            self.update_data({name: new_data})
-            return self.name
+            names = self._generate_names(1)
+            name = names[0]
+            
+        self.update_data({name: new_data})
+        return name
 
 
     def update_data(self, data):
@@ -183,10 +177,11 @@ class ArrayPlotData(AbstractPlotData):
     def _generate_indices(self):
         """ Generator that yields all integers that match "series%d" in keys
         """
-        for names in self.list_data():
-            if n.startswith('series'):
+        yield 0 # default minimum
+        for name in self.list_data():
+            if name.startswith('series'):
                 try:
-                    v = int(n[6:])
+                    v = int(name[6:])
                 except ValueError:
                     continue
                 yield v
@@ -195,11 +190,11 @@ class ArrayPlotData(AbstractPlotData):
         """ Update the array, ensuring that data is an array
         """
         new_data = {}
-        for name, iterable in data:
-            if not isinstance(iterable, ndarray):
-                new_data[name] = array(iterable)
+        for name, value in data.items():
+            if not isinstance(value, (ndarray, AbstractDataSource)):
+                new_data[name] = array(value)
             else:
-                new_data[name] = iterable
+                new_data[name] = value
 
         self.arrays.update(new_data)
 
