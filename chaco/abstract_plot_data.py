@@ -49,24 +49,51 @@ class AbstractPlotData(HasTraits):
         raise NotImplementedError
 
 
-    def set_data(self, name, new_data, generate_name=False):
+    def del_data(self, name):
+        """ Deletes the array specified by *name*, or raises a KeyError if
+        the named array does not exist.
+        
+        If the instance is not writable, then this must do nothing.
+        
         """
-        Returns the new data's name.
+        raise NotImplementedError
 
-        If **writable** is True, then this method sets the data associated
-        with the given name to the new value.
+    def set_data(self, name, new_data, generate_name=False):
+        """ Sets the specified array as the value for either the specified
+        name or a generated name.
 
-        If **writable** is False, then this method must do nothing.
+        If the instance's `writable` attribute is True, then this method sets
+        the data associated with the given name to the new value, otherwise it
+        does nothing.
 
-        If *generate_name* is True, then the data source must
-        create a new name to bind to the data, and return it.
+        Parameters
+        ----------
+        name : string
+            The name of the array whose value is to be set.
+        new_data : array
+            The array to set as the value of *name*.
+        generate_name : Boolean
+            If True, a unique name of the form 'seriesN' is created for the
+            array, and is used in place of *name*. The 'N' in 'seriesN' is
+            one greater the largest N already used.
 
-        If the name does not exist, then the method attaches a new data entry
-        to this PlotData.
+        Returns
+        -------
+        The name under which the array was set.
 
         """
         raise NotImplementedError
 
+
+    def update_data(self, data):
+        """
+        Update a set of data values, firing only one data_changed event.
+        
+        The *data* argument should be a dictionary whose keys are data names
+        and whose values are the data objects.
+        
+        """
+        raise NotImplementedError
 
     def set_selection(self, name, selection):
         """ Sets the selection on the specified data.
@@ -83,3 +110,20 @@ class AbstractPlotData(HasTraits):
             array named by *name* is selected.
         """
         raise NotImplementedError
+
+    #------------------------------------------------------------------------
+    # Dictionary Interface
+    #------------------------------------------------------------------------
+
+    def __getitem__(self, name):
+        return self.arrays.get(name, None)
+
+    def __setitem__(self, name, value):
+        return self.set_data(name, value)
+
+    def __delitem__(self, name):
+        return self.del_data(name)
+
+    def update(self, data):
+        self.update_data(data)
+    
