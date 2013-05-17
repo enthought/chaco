@@ -133,7 +133,7 @@ class ImageData(AbstractDataSource):
 
         Implements AbstractDataSource.
         """
-        return self.data
+        return self.data        
 
     def is_masked(self):
         """is_masked() -> False

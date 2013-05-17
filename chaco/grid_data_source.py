@@ -103,6 +103,27 @@ class GridDataSource(AbstractDataSource):
             ydata = ArrayDataSource(array([]))
 
         return xdata, ydata
+    
+    def get_data_bounded(self, bounds, screen_size):
+        if self._xdata is not None and self._ydata is not None:
+            xdata, xindices = self._xdata.get_data_bounded(bounds[0], screen_size[0])
+            ydata, yindices = self._ydata.get_data_bounded(bounds[1], screen_size[1])
+            return (xdata, ydata), (xindices, yindicies)
+        else:
+            return ((ArrayDataSource(array([])), ArrayDataSource(array([]))),
+                (None, None))
+    
+    def get_data_indexed(self, indices):
+        xindices, yindices = indices
+        if self._xdata is not None:
+            xdata = self._xdata.get_data_indexed(xindices)
+        else:
+            xdata = ArrayDataSource(array([]))
+        if self._ydata is not None:
+            ydata = self._ydata.get_data_indexed(yindices)
+        else:
+            ydata = ArrayDataSource(array([]))
+        return xdata, ydata
 
     def get_bounds(self):
         """get_bounds() -> ((LLx, LLy), (URx, URy))

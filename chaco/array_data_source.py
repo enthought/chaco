@@ -143,14 +143,11 @@ class ArrayDataSource(AbstractDataSource):
         N = self._data.shape[0]
         # note that we over-sample to get points just outside bounds
         # XXX use resolution to downsample
-        print self.sort_order
         if self.sort_order == 'ascending':
             start, end = self._data.searchsorted(bounds)
             start = max(start-1, 0)
             end = min(end+1, N)
-            step = max(int((end-start)/(4*screen_size)), 1)
-            s = slice(start, end, step)
-            print s
+            s = slice(start, end)
             return self._data[s], s
         elif self.sort_order == 'descending':
             end, start = self._data[::-1].searchsorted(bounds)
