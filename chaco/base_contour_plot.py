@@ -20,10 +20,19 @@ class BaseContourPlot(Base2DPlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # List of levels to contour.
+    # Defines the levels to contour.
+    # ``levels`` can be either: a list of floating point numbers that define
+    # the value of the function at the contours; a positive integer, in which
+    # case the range of the value is divided in the given number of equally
+    # spaced levels; or "auto" (default), which divides the range in 10 levels
     levels = Trait("auto", Int, List)
 
     # The color(s) of the lines.
+    # ``colors`` can be given as a color name, in which case all contours have
+    # the same color, as a list of colors, or as a colormap. If the list of
+    # colors is shorter than the number of levels, the values are repeated
+    # from the beginning of the list. Default is black.
+    # Colors are associated with levels of increasing value.
     colors = Trait(None, Str, Instance(ColorMapper), List, Tuple)
 
     # If present, the color mapper for the colorbar to look at.

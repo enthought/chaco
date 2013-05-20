@@ -1,5 +1,5 @@
 """
-Implementation of a plut using a custom overlay and tool
+Implementation of a plot using a custom overlay and tool
 """
 
 from __future__ import with_statement
@@ -12,6 +12,7 @@ from enable.api import ComponentEditor
 from chaco.api import Plot, ArrayPlotData, AbstractOverlay
 from enable.api import BaseTool
 from enable.markers import DOT_MARKER, DotMarker
+
 
 class BoxSelectTool(BaseTool):
     """ Tool for selecting all points within a box
@@ -34,8 +35,8 @@ class BoxSelectTool(BaseTool):
         self.event_state = "normal"
 
     def selecting_mouse_move(self, event):
-        x1, y1 = self.map_to_data(event.x-25, event.y-25)
-        x2, y2 = self.map_to_data(event.x+25, event.y+25)
+        x1, y1 = self.map_to_data(event.x - 25, event.y - 25)
+        x2, y2 = self.map_to_data(event.x + 25, event.y + 25)
 
         index_datasource = self.component.index
         index_datasource.metadata['selections'] = (x1, x2)
@@ -83,8 +84,8 @@ class XRayOverlay(AbstractOverlay):
 
         with gc:
             gc.set_alpha(0.8)
-            gc.set_fill_color((1.0,1.0,1.0))
-            gc.rect(x1, y1, x2-x1, y2-y1)
+            gc.set_fill_color((1.0, 1.0, 1.0))
+            gc.rect(x1, y1, x2 - x1, y2 - y1)
             gc.draw_path()
 
         pts = self._get_selected_points()
@@ -95,7 +96,7 @@ class XRayOverlay(AbstractOverlay):
             gc.draw_marker_at_points(screen_pts, 3, DOT_MARKER)
         else:
             gc.save_state()
-            for sx,sy in screen_pts:
+            for sx, sy in screen_pts:
                 gc.translate_ctm(sx, sy)
                 gc.begin_path()
                 self.marker.add_to_path(gc, 3)
@@ -115,8 +116,10 @@ class XRayOverlay(AbstractOverlay):
         value_selection = value_datasource.metadata['selections']
         value = value_datasource.get_data()
 
-        x_indices = numpy.where((index > index_selection[0]) & (index < index_selection[-1]))
-        y_indices = numpy.where((value > value_selection[0]) & (value < value_selection[-1]))
+        x_indices = numpy.where((index > index_selection[0]) &
+                                (index < index_selection[-1]))
+        y_indices = numpy.where((value > value_selection[0]) &
+                                (value < value_selection[-1]))
 
         indices = list(set(x_indices[0]) & set(y_indices[0]))
 
@@ -143,6 +146,7 @@ class XRayOverlay(AbstractOverlay):
         value_selection = value_datasource.metadata['selections']
         return tuple(value_mapper.map_screen(numpy.array(value_selection)))
 
+
 class PlotExample(HasTraits):
 
     plot = Instance(Plot)
@@ -167,4 +171,3 @@ value = numpy.sin(index) + numpy.arange(0, 10, 0.1)
 
 example = PlotExample(index, value)
 example.configure_traits()
-

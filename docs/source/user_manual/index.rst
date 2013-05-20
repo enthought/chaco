@@ -1,11 +1,12 @@
+.. _user_guide:
+
 ===========
-User Manual
+User guide
 ===========
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
-    installation.rst
     introduction.rst
     plot_types.rst
     containers.rst

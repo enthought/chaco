@@ -33,6 +33,9 @@ class TextBoxOverlay(AbstractOverlay):
     # The color of the outside box.
     border_color = ColorTrait("dodgerblue")
 
+    # The color of the text.
+    text_color = ColorTrait("black")
+
     # The thickness of box border.
     border_size = Int(1)
 
@@ -66,7 +69,7 @@ class TextBoxOverlay(AbstractOverlay):
         # different shapes and put the text inside it without the label
         # filling a rectangle on top of it
         label = Label(text=self.text, font=self.font, bgcolor="transparent",
-                      margin=5)
+                      color=self.text_color, margin=5)
         width, height = label.get_width_height(gc)
 
         valign, halign = self.align
@@ -94,12 +97,16 @@ class TextBoxOverlay(AbstractOverlay):
                 x = component.x + self.padding
 
         # attempt to get the box entirely within the component
-        if x + width > component.width:
-            x = max(0, component.width-width)
-        if y + height > component.height:
-            y = max(0, component.height - height)
-        elif y < 0:
-            y = 0
+        x_min, y_min, x_max, y_max = (component.x,
+                                      component.y,
+                                      component.x + component.width,
+                                      component.y + component.height)
+        if x + width > x_max:
+            x = max(x_min, x_max - width)
+        if y + height > y_max:
+            y = max(y_min, y_max - height)
+        elif y < y_min:
+            y = y_min
 
         # apply the alpha channel
         color = self.bgcolor_

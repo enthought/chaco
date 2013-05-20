@@ -180,4 +180,7 @@ class PlotFrame(DemoFrame):
         return Window(self, -1, component=container)
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(800,600), title="Stock price and volume")
+    # Save demo so that it doesn't get garbage collected when run within
+    # existing event loop (i.e. from ipython).
+    demo = demo_main(PlotFrame, size=(800,600),
+                     title="Stock price and volume")

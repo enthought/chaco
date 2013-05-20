@@ -3,9 +3,9 @@
 
 # Major library imports
 from types import IntType, FloatType
-from numpy import arange, array, asarray, clip, \
-                  divide, isinf, isnan, ones, searchsorted, \
-                  sometrue, sort, take, where, zeros, linspace, ones_like
+from numpy import arange, array, asarray, clip, divide, float32, int8, isinf, \
+        isnan, ones, searchsorted, sometrue, sort, take, uint8, where, zeros, \
+        linspace, ones_like
 
 # Enthought library imports
 from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
@@ -14,6 +14,8 @@ from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
 # Relative imports
 from abstract_colormap import AbstractColormap
 from data_range_1d import DataRange1D
+
+from speedups import map_colors
 
 
 class ColorMapTemplate(HasTraits):
@@ -188,7 +190,7 @@ class ColorMapper(AbstractColormap):
         rgba_arr = [[],[],[],[]]
         for line in lines[1:]:
             strvalues = line.strip().split()
-            values = [float(value) for value in strvalues]
+            values = [float32(value) for value in strvalues]
             if len(values) > 4:
                 channels = (0,1,2,3)
             else:
@@ -246,17 +248,11 @@ class ColorMapper(AbstractColormap):
         if self._dirty:
             self._recalculate()
 
-        low = self.range.low
-        range_diff = self.range.high - low
+        rgba = map_colors(data_array, self.steps, self.range.low,
+                self.range.high, self._red_lut, self._green_lut,
+                self._blue_lut, self._alpha_lut)
 
-        if range_diff == 0.0 or isinf(range_diff):
-            # Handle null range, or infinite range (which can happen during 
-            # initialization before range is connected to a data source).
-            norm_data = 0.5*ones_like(data_array)
-        else:
-            norm_data = clip((data_array - low) / range_diff, 0.0, 1.0)
-
-        return self._map(norm_data)
+        return rgba
 
 
     def map_index(self, ary):
@@ -364,8 +360,8 @@ class ColorMapper(AbstractColormap):
                 "data mapping points must have x in increasing order")
         # begin generation of lookup table
         x = x * (n-1)
-        lut = zeros((n,), float)
-        xind = arange(float(n))
+        lut = zeros((n,), float32)
+        xind = arange(float32(n), dtype=float32)
         ind = searchsorted(x, xind)[1:-1]
 
         lut[1:-1] = ( divide(xind[1:-1] - take(x,ind-1),
@@ -387,6 +383,10 @@ class ColorMapper(AbstractColormap):
         it returns an array with the new shape = oldshape+(4,).  Any values
         that are outside the 0,1 interval are clipped to that interval before
         generating RGB values.
+
+        This is no longer used in this class. It has been deprecated and
+        retained for API compatibility.
+
         """
 
         if type(X) in [IntType, FloatType]:

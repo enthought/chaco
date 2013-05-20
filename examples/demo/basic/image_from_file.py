@@ -144,7 +144,7 @@ class DemoView(HasTraits):
             # Load the image with the user supplied filename
             image = ImageData.fromfile(self._load_file)
 
-            # Update the plot data. NB we must extract _date from the image
+            # Update the plot data. NB we must extract _data from the image
             # for the time being, until ImageData is made more friendly
             self.pd.set_data("imagedata", image._data)
 

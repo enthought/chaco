@@ -7,7 +7,7 @@ import logging
 
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
 from traits.api import Any, Bool, Enum, Float, Instance, Property, \
-        Range
+        Range, Tuple, cached_property, on_trait_change
 from enable.api import black_color_trait
 from kiva.constants import FILL_STROKE
 
@@ -21,6 +21,8 @@ from base import reverse_map_1d
 logger = logging.getLogger(__name__)
 
 
+# TODO: make child of BaseXYPlot
+
 class BarPlot(AbstractPlotRenderer):
     """
     A renderer for bar charts.
@@ -32,6 +34,9 @@ class BarPlot(AbstractPlotRenderer):
     value = Instance(ArrayDataSource)
 
     # The data source to use as "starting" values for the bars.
+    # For instance, if the values are [10, 20] and starting_value
+    # is [3, 7], BarPlot will plot two bars, one  between 3 and 10, and
+    # one between 7 and 20
     starting_value = Instance(ArrayDataSource)
 
     # Labels for the indices.
@@ -72,6 +77,16 @@ class BarPlot(AbstractPlotRenderer):
     line_color = black_color_trait
     # Color to fill the bars.
     fill_color = black_color_trait
+
+    # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+    # It has the same RGB values as line_color_, and its alpha value is the
+    # alpha value of self.line_color multiplied by self.alpha. 
+    effective_line_color = Property(Tuple, depends_on=['line_color', 'alpha'])
+    
+    # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
+    # It has the same RGB values as fill_color_, and its alpha value is the
+    # alpha value of self.fill_color multiplied by self.alpha.   
+    effective_fill_color = Property(Tuple, depends_on=['fill_color', 'alpha'])
 
     # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     alpha = Range(0.0, 1.0, 1.0)
@@ -134,9 +149,6 @@ class BarPlot(AbstractPlotRenderer):
         # Set any keyword Traits that were postponed.
         self.set(**postponed)
 
-        # update colors to use the correct alpha channel
-        self.line_color_ = self.line_color_[0:3] + (self.alpha,)
-        self.fill_color_ = self.fill_color_[0:3] + (self.alpha,)
 
     def map_screen(self, data_array):
         """ Maps an array of data points into screen space and returns it as
@@ -266,8 +278,8 @@ class BarPlot(AbstractPlotRenderer):
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             gc.set_antialias(self.antialias)
-            gc.set_stroke_color(self.line_color_)
-            gc.set_fill_color(self.fill_color_)
+            gc.set_stroke_color(self.effective_line_color)
+            gc.set_fill_color(self.effective_fill_color)
             gc.set_line_width(self.line_width)
 
             if self.bar_width_type == "data":
@@ -314,8 +326,8 @@ class BarPlot(AbstractPlotRenderer):
 
     def _render_icon(self, gc, x, y, width, height):
         with gc:
-            gc.set_fill_color(self.fill_color_)
-            gc.set_stroke_color(self.line_color_)
+            gc.set_fill_color(self.effective_fill_color)
+            gc.set_stroke_color(self.effective_line_color)
             gc.rect(x+width/4, y+height/4, width/2, height/2)
             gc.draw_path(FILL_STROKE)
 
@@ -405,9 +417,8 @@ class BarPlot(AbstractPlotRenderer):
         self.invalidate_draw()
         self._cache_valid = False
 
-    def _alpha_changed(self):
-        self.line_color_ = self.line_color_[0:3] + (self.alpha,)
-        self.fill_color_ = self.fill_color_[0:3] + (self.alpha,)
+    @on_trait_change('line_color, line_width, fill_color, alpha')
+    def _attributes_changed(self):
         self.invalidate_draw()
         self.request_redraw()
 
@@ -479,6 +490,27 @@ class BarPlot(AbstractPlotRenderer):
         self.invalidate_draw()
         self.request_redraw()
 
+    #------------------------------------------------------------------------
+    # Property getters
+    #------------------------------------------------------------------------
+
+    @cached_property
+    def _get_effective_line_color(self):
+        if len(self.line_color_) == 4:
+            line_alpha = self.line_color_[-1]
+        else:
+            line_alpha = 1.0
+        c = self.line_color_[:3] + (line_alpha * self.alpha,)
+        return c
+
+    @cached_property
+    def _get_effective_fill_color(self):
+        if len(self.fill_color_) == 4:
+            fill_alpha = self.fill_color_[-1]
+        else:
+            fill_alpha = 1.0
+        c = self.fill_color_[:3] + (fill_alpha * self.alpha,)
+        return c
 
 
 ### EOF ####################################################################

@@ -1,4 +1,5 @@
-"""
+""" 1D Function plotter.
+
 This example creates a simple 1D function examiner, illustrating the use of
 ChacoPlotEditors for displaying simple plot relations, as well as TraitsUI
 integration. Any 1D numpy/scipy.special function should work in the function

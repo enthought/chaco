@@ -6,7 +6,7 @@ import warnings
 try:
 # PDF imports from reportlab
     from reportlab.pdfgen.canvas import Canvas
-    from reportlab.lib.pagesizes import letter, A4
+    from reportlab.lib.pagesizes import letter, A4, landscape
     from reportlab.lib.units import inch, cm, mm, pica
 
 except ImportError:
@@ -18,6 +18,8 @@ from kiva.pdf import GraphicsContext
 PAGE_SIZE_MAP = {
         "letter": letter,
         "A4": A4,
+        "landscape_letter":landscape(letter),
+        "landscape_A4":landscape(A4)
         }
 
 UNITS_MAP = {

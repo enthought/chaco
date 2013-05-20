@@ -328,28 +328,27 @@ class LineSegmentTool(AbstractOverlay):
     def _map_data(self, point):
         """ Maps values from screen space into data space.
         """
-        index_mapper = self.component.index_mapper
-        value_mapper = self.component.value_mapper
+        x_mapper = self.component.x_mapper
+        y_mapper = self.component.y_mapper
         if self.component.orientation == 'h':
-            ndx = index_mapper.map_data(point[0])
-            val = value_mapper.map_data(point[1])
+            ndx = x_mapper.map_data(point[0])
+            val = y_mapper.map_data(point[1])
         else:
-            ndx = index_mapper.map_data(point[1])
-            val = value_mapper.map_data(point[0])
+            val = x_mapper.map_data(point[0])
+            ndx = y_mapper.map_data(point[1])
         return (ndx, val)
 
     def _map_screen(self, point):
         """ Maps values from data space into screen space.
         """
-        index_mapper = self.component.index_mapper
-        value_mapper = self.component.value_mapper
-
+        x_mapper = self.component.x_mapper
+        y_mapper = self.component.y_mapper
         if self.component.orientation == 'h':
-            x = index_mapper.map_screen(point[0])
-            y = value_mapper.map_screen(point[1])
+            x = x_mapper.map_screen(point[0])
+            y = y_mapper.map_screen(point[1])
         else:
-            y = index_mapper.map_screen(point[0])
-            x = value_mapper.map_screen(point[1])
+            x = x_mapper.map_screen(point[1])
+            y = y_mapper.map_screen(point[0])
         return (x, y)
 
 

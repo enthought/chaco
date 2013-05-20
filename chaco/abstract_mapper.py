@@ -16,6 +16,8 @@ class AbstractMapper(HasTraits):
     # on this mapper for visual output should do a redraw or repaint.
     updated = Event
 
+    # FIXME: domain_limits is never used
+
     # A tuple representing the minimum and maximum values of the domain (data
     # space).  The dimensionality of each value varies depending on the
     # dimensions of the mapper, so for 1D mappers these will be scalars, for

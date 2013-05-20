@@ -1,17 +1,20 @@
 """ Defines the ScatterPlot class, and associated Traits UI view and helper
 function.
 """
-from __future__ import with_statement
+
+# Standard library imports
+import itertools
 
 # Major library imports
-from numpy import abs, argmin, around, array, asarray, compress, invert, isnan, \
-                sqrt, sum, transpose, where
+from numpy import abs, argmin, around, array, asarray, compress, invert, \
+        isnan, sqrt, sum, transpose, where, ndarray
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
         CustomMarker, MarkerNameDict, MarkerTrait
 from kiva.constants import STROKE
-from traits.api import Any, Array, Bool, Float, Int, Trait, Callable
+from traits.api import Any, Array, Bool, Float, Trait, Callable, Property, \
+        Tuple, Either, cached_property
 from traitsui.api import View, VGroup, Item
 
 # Local relative imports
@@ -39,9 +42,10 @@ class ScatterPlotView(View):
 # Helper functions for scatterplot rendering
 #------------------------------------------------------------------------------
 
+
 def render_markers(gc, points, marker, marker_size,
                    color, line_width, outline_color,
-                   custom_symbol=None, debug=False):
+                   custom_symbol=None, debug=False, point_mask=None):
     """ Helper function for a PlotComponent instance to render a
     set of (x,y) points onto a graphics context.  Currently, it makes some
     assumptions about the attributes on the plot object; these may be factored
@@ -65,13 +69,16 @@ def render_markers(gc, points, marker, marker_size,
         The color of the marker outline
     custom_symbol : CompiledPath
         If the marker style is 'custom', this is the symbol
+    point_mask : array of bools
+        The mask specifying which points need to be rendered. The `points`
+        array is already masked
     """
 
     if len(points) == 0:
         return
 
     # marker can be string, class, or instance
-    if type(marker) == str:
+    if isinstance(marker, basestring):
         marker = MarkerNameDict[marker]()
     elif issubclass(marker, AbstractMarker):
         marker = marker()
@@ -92,52 +99,31 @@ def render_markers(gc, points, marker, marker_size,
 
         gc.begin_path()
 
-        # This is the fastest method - use one of the kiva built-in markers
-        if (not debug) and hasattr(gc, "draw_marker_at_points") \
-            and (marker.__class__ != CustomMarker) \
-            and (gc.draw_marker_at_points(points,
-                                          marker_size,
-                                          marker.kiva_marker) != 0):
-                pass
-
-        # The second fastest method - draw the path into a compiled path, then
-        # draw the compiled path at each point
-        elif hasattr(gc, 'draw_path_at_points'):
-            #if debug:
-            #    import pdb; pdb.set_trace()
-            if marker.__class__ != CustomMarker:
-                path = gc.get_empty_path()
-                marker.add_to_path(path, marker_size)
-                mode = marker.draw_mode
-            else:
-                path = custom_symbol
-                mode = STROKE
-            if not marker.antialias:
-                gc.set_antialias(False)
-            gc.draw_path_at_points(points, path, mode)
-
-        # Neither of the fast functions worked, so use the brute-force, manual way
+        if isinstance(marker_size, ndarray):
+            if point_mask is not None:
+                marker_size = marker_size[point_mask]
         else:
-            if not marker.antialias:
-                gc.set_antialias(False)
-            if marker.__class__ != CustomMarker:
+            marker_size = itertools.repeat(marker_size)
+
+        if not marker.antialias:
+            gc.set_antialias(False)
+        if not isinstance(marker, CustomMarker):
+            for pt,size in itertools.izip(points, marker_size):
+                sx, sy = pt
                 with gc:
-                    for sx,sy in points:
-                        gc.translate_ctm(sx, sy)
-                        gc.begin_path()
-                        # Kiva GCs have a path-drawing interface
-                        marker.add_to_path(gc, marker_size)
-                        gc.draw_path(marker.draw_mode)
-                        gc.translate_ctm(-sx, -sy)
-            else:
-                path = custom_symbol
+                    gc.translate_ctm(sx, sy)
+                    # Kiva GCs have a path-drawing interface
+                    marker.add_to_path(gc, size)
+                    gc.draw_path(marker.draw_mode)
+        else:
+            path = custom_symbol
+            for pt,size in itertools.izip(points, marker_size):
+                sx, sy = pt
                 with gc:
-                    for sx,sy in points:
-                        gc.translate_ctm(sx, sy)
-                        gc.begin_path()
-                        gc.add_path(path)
-                        gc.draw_path(STROKE)
-                        gc.translate_ctm(-sx, -sy)
+                    gc.translate_ctm(sx, sy)
+                    gc.scale_ctm(size, size)
+                    gc.add_path(path)
+                    gc.draw_path(STROKE)
 
     return
 
@@ -165,8 +151,10 @@ class ScatterPlot(BaseXYPlot):
     # keys.
     marker = MarkerTrait
 
-    # The pixel size of the marker, not including the thickness of the outline.
-    marker_size = Float(4.0)
+    # The pixel size of the markers, not including the thickness of the outline.
+    # Default value is 4.0.
+    # TODO: for consistency, there should be a size data source and a mapper
+    marker_size = Either(Float, Array)
 
     # The function which actually renders the markers
     render_markers_func = Callable(render_markers)
@@ -180,6 +168,17 @@ class ScatterPlot(BaseXYPlot):
 
     # The color of the outline to draw around the marker.
     outline_color = black_color_trait
+
+    # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+    # It has the same RGB values as color_, and its alpha value is the alpha
+    # value of self.color multiplied by self.alpha. 
+    effective_color = Property(Tuple, depends_on=['color', 'alpha'])
+    
+    # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
+    # It has the same RGB values as outline_color_, and its alpha value is the
+    # alpha value of self.outline_color multiplied by self.alpha.   
+    effective_outline_color = Property(Tuple, depends_on=['outline_color', 'alpha'])
+
 
     # Traits UI View for customizing the plot.
     traits_view = ScatterPlotView()
@@ -458,20 +457,19 @@ class ScatterPlot(BaseXYPlot):
 
         self.render_markers_func(gc, points, self.marker, self.marker_size,
                        self.color_, self.line_width, self.outline_color_,
-                       self.custom_symbol)
+                       self.custom_symbol, point_mask=self._cached_point_mask)
 
-        if self.show_selection and self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
+        if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
             sel_pts = self.map_screen(self._cached_selected_pts)
             self.render_markers_func(gc, sel_pts, self.selection_marker,
                     self.selection_marker_size, self.selection_color_,
                     self.selection_line_width, self.selection_outline_color_,
-                    self.custom_symbol)
+                    self.custom_symbol, point_mask=self._cached_point_mask)
 
         if not icon_mode:
             # Draw the default axes, if necessary
             self._draw_default_axes(gc)
             gc.restore_state()
-
 
     def _render_icon(self, gc, x, y, width, height):
         point = array([x+width/2, y+height/2])
@@ -483,8 +481,6 @@ class ScatterPlot(BaseXYPlot):
     #------------------------------------------------------------------------
 
     def _alpha_changed(self):
-        self.color_ = self.color_[0:3] + (self.alpha,)
-        self.outline_color_ = self.outline_color_[0:3] + (self.alpha,)
         self.invalidate_draw()
         self.request_redraw()
 
@@ -513,5 +509,33 @@ class ScatterPlot(BaseXYPlot):
         self.invalidate_draw()
         self.request_redraw()
 
+    #------------------------------------------------------------------------
+    # Defaults
+    #------------------------------------------------------------------------
+
+    def _marker_size_default(self):
+        return 4.0
+
+    #------------------------------------------------------------------------
+    # Properties
+    #------------------------------------------------------------------------
+
+    @cached_property
+    def _get_effective_color(self):
+        if len(self.color_) == 4:
+            edge_alpha = self.color_[-1]
+        else:
+            edge_alpha = 1.0
+        c = self.color_[:3] + (edge_alpha * self.alpha,)
+        return c
+
+    @cached_property
+    def _get_effective_outline_color(self):
+        if len(self.outline_color_) == 4:
+            edge_alpha = self.outline_color_[-1]
+        else:
+            edge_alpha = 1.0
+        c = self.outline_color_[:3] + (edge_alpha * self.alpha,)
+        return c
 
 # EOF

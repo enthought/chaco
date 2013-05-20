@@ -8,11 +8,11 @@ import warnings
 
 # Major library imports
 from numpy import argsort, array, concatenate, inf, invert, isnan, \
-                  take, transpose, zeros
+                  take, transpose, zeros, sqrt, argmin, clip, column_stack
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, LineStyle
-from traits.api import Enum, Float, List, Str
+from traits.api import Enum, Float, List, Str, Property, Tuple, cached_property
 from traitsui.api import Item, View
 
 # Local relative imports
@@ -31,6 +31,11 @@ class LinePlot(BaseXYPlot):
     """
     # The color of the line.
     color = black_color_trait
+
+    # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+    # It has the same RGB values as color_, and its alpha value is the alpha
+    # value of self.color multiplied by self.alpha. 
+    effective_color = Property(Tuple, depends_on=['color', 'alpha'])
 
     # The color to use to highlight the line when selected.
     selected_color = ColorTrait("lightyellow")
@@ -79,33 +84,93 @@ class LinePlot(BaseXYPlot):
     _cached_screen_pts = List
 
 
-    def hittest(self, screen_pt, threshold=7.0):
+    def hittest(self, screen_pt, threshold=7.0, return_distance = False):
         """
         Tests whether the given screen point is within *threshold* pixels of
         any data points on the line.  If so, then it returns the (x,y) value of
         a data point near the screen point.  If not, then it returns None.
-
-        Note: This only checks data points and *not* the actual line segments
-        connecting them.
         """
+
+        # First, check screen_pt is directly on a point in the lineplot
         ndx = self.map_index(screen_pt, threshold)
         if ndx is not None:
-            return (self.index.get_data()[ndx], self.value.get_data()[ndx])
+            # screen_pt is one of the points in the lineplot
+            data_pt = (self.index.get_data()[ndx], self.value.get_data()[ndx])
+            if return_distance:
+                scrn_pt = self.map_screen(data_pt)
+                dist = sqrt((screen_pt[0] - scrn_pt[0])**2
+                            + (screen_pt[1] - scrn_pt[1])**2)
+                return (data_pt[0], data_pt[1], dist)
+            else:
+                return data_pt
         else:
-            data_x = self.map_data(screen_pt)
+            # We now must check the lines themselves
+
+            # Must check all lines within threshold along the major axis,
+            # so determine the bounds of the region of interest in dataspace
+            if self.orientation == "h":
+                dmax = self.map_data((screen_pt[0]+threshold, screen_pt[1]))
+                dmin = self.map_data((screen_pt[0]-threshold, screen_pt[1]))
+            else:
+                dmax = self.map_data((screen_pt[0], screen_pt[1]+threshold))
+                dmin = self.map_data((screen_pt[0], screen_pt[1]-threshold))
+
             xmin, xmax = self.index.get_bounds()
-            if xmin <= data_x <= xmax:
-                if self.orientation == "h":
-                    sy = screen_pt[1]
+
+            # Now compute the bounds of the region of interest as indexes
+            if dmin < xmin:
+                ndx1 = 0
+            elif dmin > xmax:
+                ndx1 = len(self.value.get_data())-1
+            else:
+                ndx1 = reverse_map_1d(self.index.get_data(), dmin,
+                                      self.index.sort_order)
+            if dmax < xmin:
+                ndx2 = 0
+            elif dmax > xmax:
+                ndx2 = len(self.value.get_data())-1
+            else:
+                ndx2 = reverse_map_1d(self.index.get_data(), dmax,
+                                      self.index.sort_order)
+
+            start_ndx = max(0, min(ndx1-1, ndx2-1,))
+            end_ndx = min(len(self.value.get_data())-1, max(ndx1+1, ndx2+1))
+
+            # Compute the distances to all points in the range of interest
+            start = array([ self.index.get_data()[start_ndx:end_ndx],
+                            self.value.get_data()[start_ndx:end_ndx] ])
+            end = array([ self.index.get_data()[start_ndx+1:end_ndx+1],
+                            self.value.get_data()[start_ndx+1:end_ndx+1] ])
+
+            # Convert to screen points
+            s_start = transpose(self.map_screen(transpose(start)))
+            s_end = transpose(self.map_screen(transpose(end)))
+
+            # t gives the parameter of the closest point to screen_pt
+            # on the line going from s_start to s_end
+            t = _closest_point(screen_pt, s_start, s_end)
+
+            # Restrict to points on the line segment s_start->s_end
+            t = clip(t, 0, 1)
+
+            # Gives the corresponding point on the line
+            px, py = _t_to_point(t, s_start, s_end)
+
+            # Calculate distances
+            dist =  sqrt((px - screen_pt[0])**2 +
+                         (py - screen_pt[1])**2)
+
+            # Find the minimum
+            n = argmin(dist)
+            # And return if it is good
+            if dist[n] <= threshold:
+                best_pt = self.map_data((px[n], py[n]), all_values=True)
+
+                if return_distance:
+                    return [best_pt[0], best_pt[1], dist[n]]
                 else:
-                    sy = screen_pt[0]
+                    return best_pt
 
-                interp_val = self.interpolate(data_x)
-                interp_y = self.value_mapper.map_screen(interp_val)
-
-                if abs(sy - interp_y) <= threshold:
-                    return reverse_map_1d(self.index.get_data(), data_x,
-                                          self.index.sort_order)
             return None
 
     def interpolate(self, index_value):
@@ -248,8 +313,10 @@ class LinePlot(BaseXYPlot):
                         if end != data_end:
                             end += 1
 
-                        run_data = transpose(array((block_index[start:end],
-                                                    block_value[start:end])))
+                        run_data = ( block_index[start:end],
+                                     block_value[start:end] )
+                        run_data = column_stack(run_data)
+
                         points.append(run_data)
 
             self._cached_data_pts = points
@@ -310,7 +377,7 @@ class LinePlot(BaseXYPlot):
                 render(gc, selected_points, self.orientation)
 
             # Render using the normal style
-            gc.set_stroke_color(self.color_)
+            gc.set_stroke_color(self.effective_color)
             gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
             render(gc, points, self.orientation)
@@ -356,7 +423,7 @@ class LinePlot(BaseXYPlot):
 
     def _render_icon(self, gc, x, y, width, height):
         with gc:
-            gc.set_stroke_color(self.color_)
+            gc.set_stroke_color(self.effective_color)
             gc.set_line_width(self.line_width)
             gc.set_line_dash(self.line_style_)
             gc.set_antialias(0)
@@ -384,7 +451,6 @@ class LinePlot(BaseXYPlot):
         return
 
     def _alpha_changed(self):
-        self.color_ = self.color_[0:3] + (self.alpha,)
         self.invalidate_draw()
         self.request_redraw()
         return
@@ -411,6 +477,33 @@ class LinePlot(BaseXYPlot):
                 del state[key]
 
         return state
+
+    @cached_property
+    def _get_effective_color(self):
+        alpha = self.color_[-1] if len(self.color_) == 4 else 1
+        c = self.color_[:3] + (alpha * self.alpha,)
+        return c
+
+def _closest_point(target, p1, p2):
+    '''Utility function for hittest:
+    finds the point on the line between p1 and p2 to
+    the target. Returns the 't' value of that point
+    where the line is parametrized as
+        t -> p1*(1-t) + p2*t
+    Notably, if t=0 is p1, t=2 is p2 and anything outside
+    that range is a point outisde p1, p2 on the line
+    Note: can divide by zero, so user should check for that'''
+    t = ((p1[0] - target[0])*(p1[0]-p2[0]) \
+            + (p1[1] - target[1])*(p1[1]-p2[1]))\
+        / ((p1[0] - p2[0])*(p1[0] - p2[0]) + (p1[1] - p2[1])*(p1[1] - p2[1]))
+    return t
+
+def _t_to_point(t, p1, p2):
+    '''utility function for hittest for use with _closest_point
+    returns the point corresponding to the parameter t
+    on the line going between p1 and p2'''
+    return ( p1[0]*(1-t) + p2[0]*t,
+             p1[1]*(1-t) + p2[1]*t )
 
 
 # EOF
