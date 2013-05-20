@@ -15,7 +15,7 @@ from __future__ import with_statement
 from math import ceil, floor, pi
 
 # Enthought library imports.
-from traits.api import Bool, Either, Enum, Instance, Callable, \
+from traits.api import Bool, Either, Enum, Instance, \
                                  List, Range, Trait, Tuple
 from kiva.agg import GraphicsContextArray
 
