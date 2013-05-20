@@ -136,16 +136,21 @@ class CMapImagePlot(ImagePlot):
             mapped_value = self._cached_mapped_image
             ImagePlot._compute_cached_image(self, mapped_value)
         else:
+            self._mapped_image_cache_valid = True
             ImagePlot._compute_cached_image(self, self.value.data, mapper=lambda data:
                 self._cmap_values(data))
             
     def _update_value_mapper(self):
         self._mapped_image_cache_valid = False
-        self.request_redraw()
+        self._image_cache_valid = False
+        self.invalidate_draw()
+        #self.request_redraw()
 
     def _update_selections(self):
         self._mapped_image_cache_valid = False
+        self._image_cache_valid = False
         self.invalidate_draw()
+        #self.request_redraw()
 
     #------------------------------------------------------------------------
     # Properties
@@ -178,7 +183,7 @@ class CMapImagePlot(ImagePlot):
             if new.range is None and old.range is not None:
                 new.range = old.range
         self._update_value_mapper()
-
+    
     def _value_data_changed_fired(self):
         super(CMapImagePlot, self)._value_data_changed_fired()
         self._mapped_image_cache_valid = False
