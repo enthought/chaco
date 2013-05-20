@@ -1,3 +1,10 @@
+#
+# (C) Copyright 2013 Enthought, Inc., Austin, TX
+# All right reserved.
+#
+# This file is open source software distributed according to the terms in
+# LICENSE.txt
+#
 
 from numpy import invert, zeros
 
@@ -37,7 +44,7 @@ class CMapImagePlot(ImagePlot):
     # RGB color to use to fade out unselected points.
     fade_background = Tuple((0,0,0))
     
-    # whether to pre-compute the full colormapped image
+    # whether to pre-compute the full colormapped RGB(A) image
     cache_full_map = Bool(True)
 
     #------------------------------------------------------------------------
@@ -47,7 +54,7 @@ class CMapImagePlot(ImagePlot):
     # Is the mapped image valid?
     _mapped_image_cache_valid = Bool(False)
 
-    # Cache of the fully mapped image.
+    # Cache of the fully mapped RGB(A) image.
     _cached_mapped_image = Any
 
     #------------------------------------------------------------------------
