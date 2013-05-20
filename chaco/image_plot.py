@@ -29,11 +29,6 @@ class ImagePlot(Base2DPlot):
     # The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
     
-    # An optional downsampling function applied to data before caching.
-    # The callable should expect an array and the screen bounds of image plot
-    # as arguments
-    downsample = Either(Callable, None)
-
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -169,9 +164,6 @@ class ImagePlot(Base2DPlot):
 
             # Since data is row-major, j1 and j2 go first
             data = data[j1:j2, i1:i2]
-        
-        if self.downsample is not None:
-            data = self.downsample(data, self.bounds)
         
         if mapper is not None:
             data = mapper(data)
@@ -324,10 +316,6 @@ class ImagePlot(Base2DPlot):
         self.request_redraw()
 
     def _value_data_changed_fired(self):
-        self._image_cache_valid = False
-        self.request_redraw()
-    
-    def _downsample_changed(self):
         self._image_cache_valid = False
         self.request_redraw()
         
