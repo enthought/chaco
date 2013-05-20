@@ -98,6 +98,8 @@ class ArrayPlotData(AbstractPlotData):
         """
         if name in self.arrays:
             del self.arrays[name]
+            #Should be implemented according to AbstractPlotData documentation
+            event['removed'] = [name]
         else:
             raise KeyError("Data series '%s' does not exist." % name)
 
