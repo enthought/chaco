@@ -14,7 +14,7 @@ from traits.api import Any, Bool, Float, Instance, Property, Tuple
 # Local relative imports
 from image_plot import ImagePlot
 from abstract_colormap import AbstractColormap
-from speedups import apply_selection_fade, map_colors
+from speedups import apply_selection_fade, map_colors_uint8
 
 
 class CMapImagePlot(ImagePlot):
@@ -109,16 +109,8 @@ class CMapImagePlot(ImagePlot):
         """ Maps the data to RGB(A) with optional selection masks overlayed
         
         """
-        cmap = self.value_mapper
-        # XXX should cache these somewhere
-        red_lut = (cmap._red_lut*255.0).as_int('uint8')
-        green_lut = (cmap._green_lut*255.0).as_int('uint8')
-        blue_lut = (cmap._blue_lut*255.0).as_int('uint8')
-        alpha_lut = (cmap._alpha_lut*255.0).as_int('uint8')
-        # get the RGBA values from speedups.py
-        mapped_image = map_colors(data, cmap.steps,
-            cmap.range.low, cmap.range.high, red_lut, green_lut,
-            blue_lut, alpha_lut)
+        # get the RGBA values from the color map as uint8
+        mapped_image = self.value_mapper.map_uint8(data)
         if selection_masks is not None:
             # construct a composite mask
             if len(selection_masks) > 0:
