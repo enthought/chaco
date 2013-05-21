@@ -303,8 +303,7 @@ class PlotUI(HasTraits):
         self.colorbar.index_mapper.range.high = self.maxz
         self._image_index.set_data(model.xs, model.ys)
         self._image_value.data = model.zs
-        self.pd.set_data("line_index", model.xs)
-        self.pd.set_data("line_index2", model.ys)
+        self.pd.update_data(line_index=model.xs, line_index2=model.ys)
         self.container.invalidate_draw()
         self.container.request_redraw()
 
@@ -325,27 +324,22 @@ class PlotUI(HasTraits):
         if self._image_index.metadata.has_key("selections"):
             x_ndx, y_ndx = self._image_index.metadata["selections"]
             if y_ndx and x_ndx:
-                self.pd.set_data("line_value",
-                                 self._image_value.data[y_ndx,:])
-                self.pd.set_data("line_value2",
-                                 self._image_value.data[:,x_ndx])
                 xdata, ydata = self._image_index.get_data()
                 xdata, ydata = xdata.get_data(), ydata.get_data()
-                self.pd.set_data("scatter_index", array([xdata[x_ndx]]))
-                self.pd.set_data("scatter_index2", array([ydata[y_ndx]]))
-                self.pd.set_data("scatter_value",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
-                self.pd.set_data("scatter_value2",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
-                self.pd.set_data("scatter_color",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
-                self.pd.set_data("scatter_color2",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
+                self.pd.update_data(
+                    line_value=self._image_value.data[y_ndx,:],
+                    line_value2=self._image_value.data[:,x_ndx],
+                    scatter_index=array([xdata[x_ndx]]),
+                    scatter_index2=array([ydata[y_ndx]]),
+                    scatter_value=array([self._image_value.data[y_ndx, x_ndx]]),
+                    scatter_value2=array([self._image_value.data[y_ndx, x_ndx]]),
+                    scatter_color=array([self._image_value.data[y_ndx, x_ndx]]),
+                    scatter_color2=array([self._image_value.data[y_ndx, x_ndx]])
+                )
         else:
-            self.pd.set_data("scatter_value", array([]))
-            self.pd.set_data("scatter_value2", array([]))
-            self.pd.set_data("line_value", array([]))
-            self.pd.set_data("line_value2", array([]))
+            self.pd.update_data({"scatter_value": array([]),
+                "scatter_value2": array([]), "line_value": array([]),
+                "line_value2": array([])})
 
     def _colormap_changed(self):
         self._cmap = default_colormaps.color_map_name_dict[self.colormap]
