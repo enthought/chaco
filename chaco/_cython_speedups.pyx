@@ -21,6 +21,7 @@ cdef inline float float_min(float a, float b):
 
 @cython.wraparound(False)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 def map_colors(
         data_array not None,
         int steps,
