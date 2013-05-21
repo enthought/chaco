@@ -133,21 +133,18 @@ class ArrayPlotData(AbstractPlotData):
         return name
 
 
-    def update_data(self, data):
+    def update_data(self, *args, **kwargs):
         """ Sets the specified array as the value for either the specified
         name or a generated name.
 
-        Implements AbstractPlotData.
-
-        Parameters
-        ----------
-        data : dict of str: array
-            The name of the array whose value is to be set.
+        Implements AbstractPlotData's update_data() method.  This method has
+        the same signature as the dictionary update() method.
 
         """
         if not self.writable:
             return None
-
+        
+        data = dict(*args, **kwargs)
         event = {}
         for name in data:
             if name in self.arrays:
@@ -190,12 +187,13 @@ class ArrayPlotData(AbstractPlotData):
     def _update_data(self, data):
         """ Update the array, ensuring that data is an array
         """
-        new_data = {}
+        # note that this call modifies data, but that's OK since the callers
+        # all create the dictionary that they pass in
         for name, value in data.items():
             if not isinstance(value, (ndarray, AbstractDataSource)):
-                new_data[name] = array(value)
+                data[name] = array(value)
             else:
-                new_data[name] = value
+                data[name] = value
 
         self.arrays.update(new_data)
 

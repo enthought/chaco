@@ -85,12 +85,12 @@ class AbstractPlotData(HasTraits):
         raise NotImplementedError
 
 
-    def update_data(self, data):
+    def update_data(self, *args, **kwargs):
         """
         Update a set of data values, firing only one data_changed event.
         
-        The *data* argument should be a dictionary whose keys are data names
-        and whose values are the data objects.
+        This function has the same signature as the dictionary update()
+        method.
         
         """
         raise NotImplementedError
@@ -124,6 +124,6 @@ class AbstractPlotData(HasTraits):
     def __delitem__(self, name):
         return self.del_data(name)
 
-    def update(self, data):
-        self.update_data(data)
+    def update(self, *args, **kwargs):
+        self.update_data(*args, **kwargs)
     
