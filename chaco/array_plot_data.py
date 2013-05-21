@@ -195,5 +195,5 @@ class ArrayPlotData(AbstractPlotData):
             else:
                 data[name] = value
 
-        self.arrays.update(new_data)
+        self.arrays.update(data)
 
