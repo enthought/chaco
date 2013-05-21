@@ -1,5 +1,4 @@
 
-
 # Major library imports
 import warnings
 
@@ -15,19 +14,22 @@ except ImportError:
 
 from kiva.pdf import GraphicsContext
 
+
+PAGE_DPI = 72.0
+
 PAGE_SIZE_MAP = {
-        "letter": letter,
-        "A4": A4,
-        "landscape_letter":landscape(letter),
-        "landscape_A4":landscape(A4)
-        }
+    "letter": letter,
+    "A4": A4,
+    "landscape_letter": landscape(letter),
+    "landscape_A4": landscape(A4)
+}
 
 UNITS_MAP = {
-        "inch": inch,
-        "cm": cm,
-        "mm": mm,
-        "pica": pica,
-        }
+    "inch": inch,
+    "cm": cm,
+    "mm": mm,
+    "pica": pica,
+}
 
 if Canvas is not None:
     class PdfPlotGraphicsContext(GraphicsContext):
@@ -42,17 +44,17 @@ if Canvas is not None:
         pagesize = "letter"  # Enum("letter", "A4")
 
         # A tuple (x, y, width, height) specifying the box into which the plot
-        # should be rendered.  **x** and **y** correspond to the lower-left hand
-        # coordinates of the box in the coordinates of the page (i.e. 0,0 is at the
-        # lower left).  **width** and **height** can be positive or negative;
+        # should be rendered.  **x** and **y** correspond to the lower-left
+        # hand coordinates of the box in the coordinates of the page
+        # (i.e. 0,0 is at the lower left).  **width** and **height** can be
+        # positive or negative;
         # if they are positive, they are interpreted as distances from (x,y);
-        # if they are negative, they are interpreted as distances from the right
-        # and top of the page, respectively.
+        # if they are negative, they are interpreted as distances from the
+        # right and top of the page, respectively.
         dest_box = (0.5, 0.5, -0.5, -0.5)
 
         # The units of the values in dest_box
         dest_box_units = "inch"   # Enum("inch", "cm", "mm", "pica")
-
 
         def __init__(self, pdf_canvas=None, filename=None, pagesize=None,
                      dest_box=None, dest_box_units=None):
@@ -65,17 +67,30 @@ if Canvas is not None:
             if dest_box_units:
                 self.dest_box_units = dest_box_units
 
-            if pdf_canvas == None:
+            if pdf_canvas is None:
                 pdf_canvas = self._create_new_canvas()
 
             GraphicsContext.__init__(self, pdf_canvas)
 
+        def add_page(self):
+            """ Adds a new page to the PDF canvas and makes that the current
+            drawing target.
+            """
+            if self.gc is None:
+                warnings.warn("PDF Canvas has not been created yet.")
+                return
+
+            # Add the new page
+            self.gc.showPage()
+
+            # We'll need to call _initialize_page() before drawing
+            self._page_initialized = False
 
         def render_component(self, component, container_coords=False,
                              halign="center", valign="top"):
-            """ Erases the current contents of the graphics context and renders the
-            given component at the maximum possible scaling while preserving aspect
-            ratio.
+            """ Erases the current contents of the graphics context and renders
+            the given component at the maximum possible scaling while
+            preserving aspect ratio.
 
             Parameters
             ----------
@@ -84,21 +99,25 @@ if Canvas is not None:
             container_coords : Boolean
                 Whether to use coordinates of the component's container
             halign : "center", "left", "right"
-                Determines the position of the component if it is narrower than the
-                graphics context area (after scaling)
+                Determines the position of the component if it is narrower than
+                the graphics context area (after scaling)
             valign : "center", "top", "bottom"
-                Determiens the position of the component if it is shorter than the
-                graphics context area (after scaling)
+                Determiens the position of the component if it is shorter than
+                the graphics context area (after scaling)
 
             Description
             -----------
             If *container_coords* is False, then the (0,0) coordinate of this
             graphics context corresponds to the lower-left corner of the
-            component's **outer_bounds**. If *container_coords* is True, then the
-            method draws the component as it appears inside its container, i.e., it
-            treats (0,0) of the graphics context as the lower-left corner of the
-            container's outer bounds.
+            component's **outer_bounds**. If *container_coords* is True, then
+            the method draws the component as it appears inside its container,
+            i.e., it treats (0, 0) of the graphics context as the lower-left
+            corner of the container's outer bounds.
             """
+
+            if not self._page_initialized:
+                # Make sure the origin is set up as before.
+                self._initialize_page(self.gc)
 
             x, y = component.outer_position
             if container_coords:
@@ -108,8 +127,8 @@ if Canvas is not None:
                 y = -y
                 width, height = component.outer_bounds
 
-            # Compute the correct scaling to fit the component into the available
-            # canvas space while preserving aspect ratio.
+            # Compute the correct scaling to fit the component into the
+            # available canvas space while preserving aspect ratio.
             units = UNITS_MAP[self.dest_box_units]
             pagesize = PAGE_SIZE_MAP[self.pagesize]
 
@@ -157,7 +176,7 @@ if Canvas is not None:
 
             self.translate_ctm(trans_x, trans_y)
             self.scale_ctm(scale, scale)
-            self.clip_to_rect(0, 0, width, height)
+            self.clip_to_rect(-x, -y, width, height)
             old_bb_setting = component.use_backbuffer
             component.use_backbuffer = False
             component.draw(self, view_bounds=(0, 0, width, height))
@@ -168,30 +187,49 @@ if Canvas is not None:
             self.gc.save()
 
         def _create_new_canvas(self):
+            """ Create the PDF canvas context.
+            """
+            x, y, w, h, = self._get_bounding_box()
+            if w < 0 or h < 0:
+                self.gc = None
+                return
+
+            pagesize = PAGE_SIZE_MAP[self.pagesize]
+            gc = Canvas(filename=self.filename, pagesize=pagesize)
+            self._initialize_page(gc)
+
+            return gc
+
+        def _get_bounding_box(self):
+            """ Compute the bounding rect of a page.
+            """
             pagesize = PAGE_SIZE_MAP[self.pagesize]
             units = UNITS_MAP[self.dest_box_units]
-            gc = Canvas(filename=self.filename, pagesize=pagesize)
 
-            width = pagesize[0] * units * inch / 72.0
-            height = pagesize[1] * units * inch / 72.0
             x = self.dest_box[0] * units
             y = self.dest_box[1] * units
             w = self.dest_box[2] * units
             h = self.dest_box[3] * units
 
             if w < 0:
-                w += width
+                w += pagesize[0] * units * inch / PAGE_DPI
             if h < 0:
-                h += height
+                h += pagesize[1] * units * inch / PAGE_DPI
 
             if w < 0 or h < 0:
                 warnings.warn("Margins exceed page dimensions.")
-                self.gc = None
-                return
 
-            gc.translate(x,y)
+            return x, y, w, h
+
+        def _initialize_page(self, gc):
+            """ Make sure the origin is set to something consistent.
+            """
+            x, y, w, h, = self._get_bounding_box()
+
+            gc.translate(x, y)
+
             path = gc.beginPath()
             path.rect(0, 0, w, h)
             gc.clipPath(path, stroke=0, fill=0)
-            return gc
 
+            self._page_initialized = True
