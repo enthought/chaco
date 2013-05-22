@@ -192,3 +192,55 @@ def map_colors(data_array, steps, low, high, red_lut, green_lut, blue_lut,
 
     return rgba
 
+def map_colors_uint8(data_array, steps, low, high, red_lut, green_lut, blue_lut,
+        alpha_lut):
+    '''Map colors from color lookup tables to a data array.
+
+    This is used in ColorMapper.map_screen
+
+    Parameters
+    ----------
+    data_array : ndarray
+        The data array
+    steps: int
+        The number of steps in the color map (depth)
+    low : float
+        The low end of the data range
+    high : float
+        The high end of the data range
+    red_lut : ndarray of uint8
+        The red channel lookup table
+    green_lut : ndarray of uint8
+        The green channel lookup table
+    blue_lut : ndarray of uint8
+        The blue channel lookup table
+    alpha_lut : ndarray of uint8
+        The alpha channel lookup table
+    
+    Returns
+    -------
+    rgba: ndarray of uint8
+        The rgba values of data_array according to the lookup tables. The shape
+        of this array is equal to data_array.shape + (4,).
+
+    '''
+    range_diff = high - low
+
+    if range_diff == 0.0 or isinf(range_diff):
+        # Handle null range, or infinite range (which can happen during 
+        # initialization before range is connected to a data source).
+        norm_data = 0.5*ones_like(data_array)
+    else:
+        norm_data = clip((data_array - low) / range_diff, 0.0, 1.0)
+
+
+    nanmask = isnan(norm_data)
+    norm_data = where(nanmask, 0, (norm_data * (steps-1)).astype('uint8'))
+    rgba = zeros(norm_data.shape+(4,), dtype='uint8')
+    rgba[...,0] = where(nanmask, 0, take(red_lut, norm_data))
+    rgba[...,1] = where(nanmask, 0, take(green_lut, norm_data))
+    rgba[...,2] = where(nanmask, 0, take(blue_lut, norm_data))
+    rgba[...,3] = where(nanmask, 0, take(alpha_lut, norm_data))
+
+    return rgba
+
