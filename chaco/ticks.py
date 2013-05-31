@@ -15,7 +15,7 @@ tick-related values (i.e., bounds and intervals).
 # Major library imports
 from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
     float64, floor, linspace, log10, minimum, ndarray, newaxis, \
-    putmask, shape
+    putmask, shape, isinf
 
 # Enthought library imports
 from traits.api import HasTraits, Any
@@ -205,6 +205,10 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
 
     if upper > end:
         end += tick_interval
+
+    if isinf(start) or isinf(end + (tick_interval / 2.0)):
+        return []
+
     ticks = arange( start, end + (tick_interval / 2.0), tick_interval )
 
     if len( ticks ) < 2:
