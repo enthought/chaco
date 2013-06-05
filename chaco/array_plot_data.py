@@ -169,9 +169,9 @@ class ArrayPlotData(AbstractPlotData):
         """ Generate n new names
         """
         max_index = max(self._generate_indices())
-        names = ["series{d}".format(n) for n in range(max_index+1, max_index+n+1)]
+        names = ["series{0:d}".format(n) for n in range(max_index+1, max_index+n+1)]
         return names
-    
+
     def _generate_indices(self):
         """ Generator that yields all integers that match "series%d" in keys
         """
