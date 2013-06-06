@@ -45,6 +45,12 @@ class TextBoxOverlay(AbstractOverlay):
     # Number of pixels of padding around the text within the box.
     padding = Int(5)
 
+    # The maximum width of the displayed text. This affects the width of the
+    # text only, not the text box, which includes margins around the text and
+    # `padding`.
+    # A `max_text_width` of 0.0 means that the width will not be restricted.
+    max_text_width = Float(0.0)
+
     # Alignment of the text in the box:
     #
     # * "ur": upper right
@@ -72,7 +78,8 @@ class TextBoxOverlay(AbstractOverlay):
         # different shapes and put the text inside it without the label
         # filling a rectangle on top of it
         label = Label(text=self.text, font=self.font, bgcolor="transparent",
-                      color=self.text_color, margin=5)
+                      color=self.text_color, max_width=self.max_text_width,
+                      margin=5)
         width, height = label.get_width_height(gc)
 
         valign, halign = self.align
