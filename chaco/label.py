@@ -11,8 +11,8 @@ from numpy import array, dot
 from enable.api import black_color_trait, transparent_color_trait
 from kiva.constants import FILL
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Bool, Enum, Float, HasTraits, Int, \
-                                 List, Str, on_trait_change
+from traits.api import (Any, Bool, Float, HasTraits, Int, List, Str,
+                        on_trait_change)
 
 
 class Label(HasTraits):
@@ -63,7 +63,6 @@ class Label(HasTraits):
     # Number of pixels of spacing between lines of text.
     line_spacing = Int(5)
 
-
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -76,34 +75,37 @@ class Label(HasTraits):
 
     def __init__(self, **traits):
         HasTraits.__init__(self, **traits)
-        self._bounding_box = [0,0]
+        self._bounding_box = [0, 0]
         return
 
     def _calc_line_positions(self, gc):
         if not self._position_cache_valid:
             with gc:
                 gc.set_font(self.font)
-                # The bottommost line starts at postion (0,0).
+                # The bottommost line starts at postion (0, 0).
                 x_pos = []
                 y_pos = []
-                self._bounding_box = [0,0]
+                self._bounding_box = [0, 0]
                 margin = self.margin
                 prev_y_pos = margin
                 prev_y_height = -self.line_spacing
                 max_width = 0
                 for line in self.text.split("\n")[::-1]:
                     if line != "":
-                        (width, height, descent, leading) = gc.get_full_text_extent(line)
+                        (width, height, descent, leading) = \
+                            gc.get_full_text_extent(line)
                         ascent = height - abs(descent)
                         if width > max_width:
                             max_width = width
-                        new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
+                        new_y_pos = prev_y_pos + prev_y_height \
+                            + self.line_spacing
                     else:
-                        # For blank lines, we use the height of the previous line, if there
-                        # is one.  The width is 0.
+                        # For blank lines, we use the height of the previous
+                        # line, if there is one.  The width is 0.
                         leading = 0
                         if prev_y_height != -self.line_spacing:
-                            new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
+                            new_y_pos = prev_y_pos + prev_y_height \
+                                + self.line_spacing
                             ascent = prev_y_height
                         else:
                             new_y_pos = prev_y_pos
@@ -117,7 +119,8 @@ class Label(HasTraits):
             self._line_ypos = y_pos[::-1]
             border_width = self.border_width if self.border_visible else 0
             self._bounding_box[0] = max_width + 2*margin + 2*border_width
-            self._bounding_box[1] = prev_y_pos + prev_y_height + margin + 2*border_width
+            self._bounding_box[1] = prev_y_pos + prev_y_height + margin \
+                + 2*border_width
             self._position_cache_valid = True
         return
 
@@ -159,12 +162,12 @@ class Label(HasTraits):
         ]
         # rotate about centre, and offset to bounding box coords
         points = [dot(self.get_rotation_matrix(), point).transpose()[0]+offset
-            for point in base_points]
+                  for point in base_points]
         return points
 
     def get_rotation_matrix(self):
         return array([[cos(self.rotate_angle), -sin(self.rotate_angle)],
-            [sin(self.rotate_angle), cos(self.rotate_angle)]])
+                     [sin(self.rotate_angle), cos(self.rotate_angle)]])
 
     def draw(self, gc):
         """ Draws the label.
@@ -193,13 +196,14 @@ class Label(HasTraits):
                 gc.set_stroke_color(self.border_color_)
                 gc.set_line_width(self.border_width)
                 border_offset = (self.border_width-1)/2.0
-                gc.rect(border_offset, border_offset, width-2*border_offset, height-2*border_offset)
+                gc.rect(border_offset, border_offset,
+                        width-2*border_offset, height-2*border_offset)
                 gc.stroke_path()
 
             gc.set_fill_color(self.color_)
             gc.set_stroke_color(self.color_)
             gc.set_font(self.font)
-            if self.font.size<=8.0:
+            if self.font.size <= 8.0:
                 gc.set_antialias(0)
             else:
                 gc.set_antialias(1)
@@ -222,4 +226,3 @@ class Label(HasTraits):
     @on_trait_change("font,margin,text,rotate_angle")
     def _invalidate_position_cache(self):
         self._position_cache_valid = False
-
