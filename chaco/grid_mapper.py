@@ -3,11 +3,14 @@ Defines the GridMapper class, which maps from a 2-D region in data space
 into a structured (gridded) 1-D output space.
 """
 
+# Python standard library imports
+from contextlib import contextmanager
+
 # Major library imports
 from numpy import transpose
 
 # Enthought library imports
-from traits.api import Bool, DelegatesTo, Instance, Float, Property
+from traits.api import Bool, DelegatesTo, Instance, Float, Enum, Property
 
 # Local relative imports
 from abstract_mapper import AbstractMapper
@@ -52,12 +55,19 @@ class GridMapper(AbstractMapper):
     # the ratio if both screen and data space extents are non-zero.
     stretch_data_x = DelegatesTo("_xmapper", prefix="stretch_data")
     stretch_data_y = DelegatesTo("_ymapper", prefix="stretch_data")
+    
+    # Should the mapper try to maintain a fixed aspect ratio between x and y
+    maintain_aspect_ratio = Bool
+    
+    # The aspect ratio that we wish to maintain
+    aspect_ratio = Float(1.0)
 
     #------------------------------------------------------------------------
     # Private Traits
     #------------------------------------------------------------------------
 
     _updating_submappers = Bool(False)
+    _updating_aspect = Bool(False)
 
     _xmapper = Instance(Base1DMapper)
     _ymapper = Instance(Base1DMapper)
@@ -131,15 +141,41 @@ class GridMapper(AbstractMapper):
     #------------------------------------------------------------------------
 
     def _update_bounds(self):
-        self._updating_submappers = True
-        self._xmapper.screen_bounds = (self.x_low_pos, self.x_high_pos)
-        self._ymapper.screen_bounds = (self.y_low_pos, self.y_high_pos)
-        self._updating_submappers = False
+        with self._update_submappers():
+            self._xmapper.screen_bounds = (self.x_low_pos, self.x_high_pos)
+            self._ymapper.screen_bounds = (self.y_low_pos, self.y_high_pos)
         self.updated = True
 
     def _update_range(self):
         self.updated = True
 
+    def _update_aspect_x(self):
+        y_width = self._ymapper.high_pos-self._ymapper.low_pos
+        if y_width == 0:
+            return
+        y_scale = (self._ymapper.range.high-self._ymapper.range.low)/y_width
+        x_range_low = self._xmapper.range.low
+        x_width = self._xmapper.high_pos-self._xmapper.low_pos
+        sign = self._xmapper.sign * self._ymapper.sign
+        if x_width == 0 or sign == 0:
+            return
+        x_scale = sign*y_scale/self.aspect_ratio
+        with self._update_aspect():
+            self._xmapper.range.set_bounds(x_range_low, x_range_low+x_scale*x_width)
+
+    def _update_aspect_y(self):
+        x_width = self._xmapper.high_pos-self._xmapper.low_pos
+        if x_width == 0:
+            return
+        x_scale = (self._xmapper.range.high-self._xmapper.range.low)/x_width
+        y_range_low = self._ymapper.range.low
+        y_width = self._ymapper.high_pos-self._ymapper.low_pos
+        sign = self._xmapper.sign * self._ymapper.sign
+        if y_width == 0 or sign == 0:
+            return
+        y_scale = sign*x_scale*self.aspect_ratio
+        with self._update_aspect():
+            self._ymapper.range.set_bounds(y_range_low, y_range_low+y_scale*y_width)
 
     #------------------------------------------------------------------------
     # Property handlers
@@ -183,11 +219,31 @@ class GridMapper(AbstractMapper):
                 self.y_low_pos, self.y_high_pos)
 
     def _updated_fired_for__xmapper(self):
+        if not self._updating_aspect:
+            if self.maintain_aspect_ratio and self.stretch_data_x:
+                self._update_aspect_y()
         if not self._updating_submappers:
             self.updated = True
-
+    
     def _updated_fired_for__ymapper(self):
+        if not self._updating_aspect:
+            if self.maintain_aspect_ratio and self.stretch_data_y:
+                self._update_aspect_x()
         if not self._updating_submappers:
             self.updated = True
 
+    @contextmanager
+    def _update_submappers(self):
+        self._updating_submappers = True
+        try:
+            yield
+        finally:
+            self._updating_submappers = False
 
+    @contextmanager
+    def _update_aspect(self):
+        self._updating_aspect = True
+        try:
+            yield
+        finally:
+            self._updating_aspect = False
