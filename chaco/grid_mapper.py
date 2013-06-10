@@ -10,7 +10,7 @@ from contextlib import contextmanager
 from numpy import transpose
 
 # Enthought library imports
-from traits.api import Bool, DelegatesTo, Instance, Float, Enum, Property
+from traits.api import Bool, DelegatesTo, Instance, Float, Property
 
 # Local relative imports
 from abstract_mapper import AbstractMapper
