@@ -32,6 +32,9 @@ class Base1DMapper(AbstractMapper):
     # the ratio if both screen and data space extents are non-zero.
     stretch_data = Bool(True)
 
+    # The sign of the mapping: 1 if deltas match sign, -1 if opposite sign
+    sign = Property
+
     # If the subclass uses a cache, _cache_valid is maintained to
     # monitor its status
     _cache_valid = Bool(False)
@@ -73,6 +76,16 @@ class Base1DMapper(AbstractMapper):
 
     def _get_screen_bounds(self):
         return (self.low_pos, self.high_pos)
+
+    def _get_sign(self):
+        delta_screen = (self.high_pos - self.low_pos)
+        delta_data = (self.range.high-self.range.low)
+        if delta_screen == 0 or delta_data == 0:
+            return 0
+        elif delta_screen/float(delta_data) < 0:
+            return -1
+        else:
+            return 1
 
     def _set_screen_bounds(self, new_bounds):
         if new_bounds[0] == self.low_pos and new_bounds[1] == self.high_pos:
