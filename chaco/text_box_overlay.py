@@ -5,7 +5,7 @@ from __future__ import with_statement
 # Enthought library imports
 from enable.api import ColorTrait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Enum, Int, Str, Float, Trait
+from traits.api import Any, Enum, Int, Str, Float, Trait, Bool
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay
@@ -33,8 +33,14 @@ class TextBoxOverlay(AbstractOverlay):
     # The color of the outside box.
     border_color = ColorTrait("dodgerblue")
 
+    # The color of the text.
+    text_color = ColorTrait("black")
+
     # The thickness of box border.
     border_size = Int(1)
+    
+    # The border visibility. Defaults to true to duplicate previous behavior.
+    border_visible = Bool(True)
 
     # Number of pixels of padding around the text within the box.
     padding = Int(5)
@@ -66,7 +72,7 @@ class TextBoxOverlay(AbstractOverlay):
         # different shapes and put the text inside it without the label
         # filling a rectangle on top of it
         label = Label(text=self.text, font=self.font, bgcolor="transparent",
-                      margin=5)
+                      color=self.text_color, margin=5)
         width, height = label.get_width_height(gc)
 
         valign, halign = self.align
@@ -122,24 +128,25 @@ class TextBoxOverlay(AbstractOverlay):
             gc.set_stroke_color(self.border_color_)
             gc.set_fill_color(color)
 
-            # draw a rounded rectangle
-            x = y = 0
-            end_radius = 8.0
-            gc.begin_path()
-            gc.move_to(x + end_radius, y)
-            gc.arc_to(x + width, y,
-                    x + width,
-                    y + end_radius, end_radius)
-            gc.arc_to(x + width,
-                    y + height,
-                    x + width - end_radius,
-                    y + height, end_radius)
-            gc.arc_to(x, y + height,
-                    x, y,
-                    end_radius)
-            gc.arc_to(x, y,
-                    x + width + end_radius,
-                    y, end_radius)
-            gc.draw_path()
+            if self.border_visible:
+                # draw a rounded rectangle.
+                x = y = 0
+                end_radius = 8.0
+                gc.begin_path()
+                gc.move_to(x + end_radius, y)
+                gc.arc_to(x + width, y,
+                        x + width,
+                        y + end_radius, end_radius)
+                gc.arc_to(x + width,
+                        y + height,
+                        x + width - end_radius,
+                        y + height, end_radius)
+                gc.arc_to(x, y + height,
+                        x, y,
+                        end_radius)
+                gc.arc_to(x, y,
+                        x + width + end_radius,
+                        y, end_radius)
+                gc.draw_path()
 
             label.draw(gc)

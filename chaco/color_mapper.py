@@ -15,7 +15,7 @@ from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
 from abstract_colormap import AbstractColormap
 from data_range_1d import DataRange1D
 
-from speedups import map_colors
+from speedups import map_colors, map_colors_uint8
 
 
 class ColorMapTemplate(HasTraits):
@@ -276,6 +276,18 @@ class ColorMapper(AbstractColormap):
             self._segmentdata[name] = data[::-1]
         self._recalculate()
 
+    def map_uint8(self, data_array):
+        """ Maps an array of data values to an array of colors.
+        """
+        if self._dirty:
+            self._recalculate()
+
+        rgba = map_colors_uint8(data_array, self.steps, self.range.low,
+                self.range.high, self._red_lut_uint8, self._green_lut_uint8,
+                self._blue_lut_uint8, self._alpha_lut_uint8)
+
+        return rgba
+
 
     #------------------------------------------------------------------------
     # Private methods
@@ -312,6 +324,10 @@ class ColorMapper(AbstractColormap):
         self._alpha_lut = self._make_mapping_array(
             self.steps, self._segmentdata['alpha']
         )
+        self._red_lut_uint8 = (self._red_lut * 255.0).astype('uint8')
+        self._green_lut_uint8 = (self._green_lut * 255.0).astype('uint8')
+        self._blue_lut_uint8 = (self._blue_lut * 255.0).astype('uint8')
+        self._alpha_lut_uint8 = (self._alpha_lut * 255.0).astype('uint8')
         self.updated = True
         self._dirty = False
 
