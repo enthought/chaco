@@ -933,6 +933,10 @@ class Plot(DataView):
                     else:
                         raise ValueError("Unhandled array shape in creating new plot: " \
                                          + str(data.shape))
+                else:
+                    raise ValueError("Unhandled array shape in creating new plot: " \
+                                     + str(data.shape))
+
 
             elif isinstance(data, AbstractDataSource):
                 ds = data
