@@ -27,10 +27,10 @@ Basics
 ::
 
     import wx
-    from scipy import arange
+    from numpy import arange
     from scipy.special import jn
     from chaco.api import HPlotContainer, create_line_plot
-    from enable.wx_backend.api import Window
+    from enable.api import Window
 
     class PlotFrame(wx.Frame):
 	def __init__(self, *args, **kw):
@@ -57,6 +57,9 @@ Basics
 	app = wx.PySimpleApp()
 	frame = PlotFrame(None)
 	app.MainLoop()
+
+Note that this will require for the ETS_CONFIG environment variable to
+be set to 'wx'.
 
 * integrate a Chaco plot into my QT app?
 * integrate a Chaco plot into my Traits UI?
