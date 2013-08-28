@@ -81,7 +81,8 @@ class TransformColorMapper(ColorMapper):
         """
         # Call the colormap factory function to create an instance of a
         # ColorMapper.
-        color_mapper = color_map(None, **traits)
+        range = traits.pop('range', None)
+        color_mapper = color_map(range, **traits)
         segdata = color_mapper._segmentdata
         return cls.from_segment_map(segdata, range=color_mapper.range,
                                     data_func=data_func, unit_func=unit_func,
