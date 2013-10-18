@@ -1,0 +1,18 @@
+language: python
+python:
+  - 2.7
+  - 2.6
+install:
+  # nose is already installed
+  - pip install unittest2
+  - pip install cython 
+  - sudo apt-get install python-numpy
+  - sudo apt-get install swig
+  - pip install git+http://github.com/enthought/traits.git#egg=traits
+  - pip install git+http://github.com/enthought/enable.git#egg=enable
+  - python setup.py develop
+script: 
+  - nosetests chaco
+notifications:
+  email:
+    - travis-ci@enthought.com
