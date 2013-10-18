@@ -2,12 +2,15 @@ language: python
 python:
   - 2.7
   - 2.6
+before_install:
+  - source .travis_before_install
 install:
   # nose is already installed
   - pip install unittest2
   - pip install cython 
   - sudo apt-get install python-numpy
   - sudo apt-get install swig
+  # Test against the current master of traits, traitsui and enable
   - pip install git+http://github.com/enthought/traits.git#egg=traits
   - pip install git+http://github.com/enthought/traitsui.git#egg=traitsui
   - pip install git+http://github.com/enthought/enable.git#egg=enable
