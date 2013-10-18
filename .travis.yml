@@ -9,6 +9,7 @@ install:
   - sudo apt-get install python-numpy
   - sudo apt-get install swig
   - pip install git+http://github.com/enthought/traits.git#egg=traits
+  - pip install git+http://github.com/enthought/traitsui.git#egg=traitsui
   - pip install git+http://github.com/enthought/enable.git#egg=enable
   - python setup.py develop
 script: 
