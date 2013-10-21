@@ -2,7 +2,6 @@ language: python
 python:
   - 2.7
   - 2.6
-  - 2.5
 virtualenv:
   # This allows installing PyQt using apt-get and being able to import it.
   system_site_packages: true
@@ -25,7 +24,6 @@ script:
   - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then nosetests chaco; fi
   # FIXME: tricky to install PyQt for version <= 2.6, only running chaco/tests
   - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then nosetests chaco/tests; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.5' ]]; then nosetests chaco/tests; fi
 notifications:
   email:
     - travis-ci@enthought.com
