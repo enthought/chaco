@@ -1,0 +1,20 @@
+Chaco Changelog
+===============
+
+Since 4.3.0
+
+New Features:
+
+ * 
+
+Enhancements:
+
+ * Add Travis-CI support (#136)
+   
+
+Fixes:
+
+ * 
+
+There are currently some other unlisted changes going back some time
+before this file was created.
