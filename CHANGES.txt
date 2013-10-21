@@ -5,7 +5,7 @@ Since 4.3.0
 
 New Features:
 
- * 
+ * Add control of the maximum width of a tick label. Provide that hook to the TextBoxOverlay. (# 128)
 
 Enhancements:
 
