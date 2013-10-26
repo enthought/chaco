@@ -29,7 +29,7 @@ import os, sys, webbrowser, io
 from base64 import encodestring
 
 # Major library imports
-import Image
+from PIL import Image
 from numpy import arange, searchsorted, where, array, vstack, linspace
 from scipy.special import jn
 
