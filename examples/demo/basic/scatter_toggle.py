@@ -104,10 +104,10 @@ class Demo(HasTraits):
 
     def _metadata_handler(self):
         sel_indices = self.index_datasource.metadata.get('selections', [])
-        print "Selection indices:", sel_indices
+        print("Selection indices:", sel_indices)
 
         hover_indices = self.index_datasource.metadata.get('hover', [])
-        print "Hover indices:", hover_indices
+        print("Hover indices:", hover_indices)
 
     def _plot_default(self):
         plot = _create_plot_component()
