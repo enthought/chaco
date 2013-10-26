@@ -140,7 +140,7 @@ class MPAxisTool(AxisTool):
             self._last_blob_pos = (event.x, event.y)
 
     def normal_blob_up(self, event):
-        print "Axis blob up"
+        print("Axis blob up")
         if event.bid == self.cur_bid:
             if hasattr(event, "bid"):
                 event.window.release_blob(event.bid)

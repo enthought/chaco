@@ -8,7 +8,7 @@ from tutorial2 import demo
 
 class EventPrinter(AbstractController):
     def dispatch(self, event, suffix):
-        print suffix, "event received at (%d,%d)" % (event.x, event.y)
+        print(suffix, "event received at (%d,%d)" % (event.x, event.y))
 
 plot = demo.plot
 plot.tools.append(EventPrinter(plot))

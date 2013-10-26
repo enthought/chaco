@@ -1,7 +1,7 @@
 """ Makes a copy of the plot in the overlay and adds it to the canvas.
 """
 
-from __future__ import with_statement
+
 
 # Enthought library imports
 from traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple

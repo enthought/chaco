@@ -37,7 +37,7 @@ class PlotExample(HasTraits):
         # replace the index values with some nicer labels
         label_axis = LabelAxis(self.plot, orientation='bottom',
                                title='Months',
-                               positions = range(1, 10),
+                               positions = list(range(1, 10)),
                                labels = ['jan', 'feb', 'march', 'april', 'may'],
                                small_haxis_style=True)
 

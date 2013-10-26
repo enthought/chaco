@@ -312,10 +312,10 @@ class PlotFrame(DemoFrame):
 def download_data():
     global dl_path, run_cleanup
 
-    print 'Please enter the location of the "voldata" subdirectory containing'
-    print 'the data files for this demo, or enter a path to download to (7.8MB).'
-    print 'Press <ENTER> to download to the current directory.'
-    dl_path = raw_input('Path: ').strip().rstrip("/").rstrip("\\")
+    print('Please enter the location of the "voldata" subdirectory containing')
+    print('the data files for this demo, or enter a path to download to (7.8MB).')
+    print('Press <ENTER> to download to the current directory.')
+    dl_path = input('Path: ').strip().rstrip("/").rstrip("\\")
 
     if not dl_path.endswith("voldata"):
         voldata_path = os.path.join(dl_path, 'voldata')
@@ -335,33 +335,33 @@ def download_data():
         data_good = False
 
     if not data_good:
-        import urllib
+        import urllib.request, urllib.parse, urllib.error
         import tarfile
 
         if len(dl_path) > 0 and not os.path.exists(dl_path):
-            print 'The given path does not exist.'
+            print('The given path does not exist.')
             run_cleanup = False
             sys.exit()
 
         if not os.path.isabs(dl_path):
-            print 'Downloading to: ' + os.path.join(os.getcwd(), dl_path)
+            print('Downloading to: ' + os.path.join(os.getcwd(), dl_path))
         else:
-            print 'Downloading to: ' + dl_path
+            print('Downloading to: ' + dl_path)
 
         try:
             # download and extract the file
-            print "Downloading data, Please Wait (7.8MB)"
-            opener = urllib.urlopen('http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz')
+            print("Downloading data, Please Wait (7.8MB)")
+            opener = urllib.request.urlopen('http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz')
         except:
-            print 'Download error. Opening backup data.'
+            print('Download error. Opening backup data.')
             run_cleanup = False
             raise
 
         try:
             open(tar_path, 'wb').write(opener.read())
         except:
-            print 'Cannot write to the destination directory specified. ' \
-                  'Opening backup data.'
+            print('Cannot write to the destination directory specified. ' \
+                  'Opening backup data.')
             run_cleanup = False
             raise
 
@@ -374,12 +374,12 @@ def download_data():
         tar_file.close()
         os.unlink(tar_path)
     else:
-        print 'Previously downloaded data detected.'
+        print('Previously downloaded data detected.')
 
 def cleanup_data():
     global dl_path
 
-    answer = raw_input('Remove downloaded files? [Y/N]: ')
+    answer = input('Remove downloaded files? [Y/N]: ')
     if answer.lower() == 'y':
         try:
             shutil.rmtree(os.path.join(dl_path, 'voldata'))

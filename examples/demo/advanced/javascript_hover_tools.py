@@ -25,7 +25,7 @@ Author: Judah De Paula <judah@enthought.com>
 Date: November 21, 2008.
 """
 # Standard library imports
-import os, sys, webbrowser, cStringIO
+import os, sys, webbrowser, io
 from base64 import encodestring
 
 # Major library imports
@@ -524,7 +524,7 @@ def make_palettized_png_str(gc):
     img = Image.fromstring("RGBA",
                            (gc.width(), gc.height()), gc.bmp_array.tostring())
     img2 = img.convert("P")
-    output_buf = cStringIO.StringIO()
+    output_buf = io.StringIO()
     img2.save(output_buf, 'png')
     output = encodestring(output_buf.getvalue())
     output_buf.close()
@@ -579,9 +579,9 @@ def main(embedded=False):
     # 5. Load the finished product.
     try:
         webbrowser.open(out_html)
-    except Exception, e:
-        print 'Browser did not open properly.  Exception %s.  The results' \
-              'can be viewed with the file plot_hover_coords.html.' % str(e)
+    except Exception as e:
+        print('Browser did not open properly.  Exception %s.  The results' \
+              'can be viewed with the file plot_hover_coords.html.' % str(e))
         raise
     return
 
