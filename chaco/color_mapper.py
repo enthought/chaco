@@ -2,7 +2,6 @@
 """
 
 # Major library imports
-from types import IntType, FloatType
 from numpy import arange, array, asarray, clip, divide, float32, int8, isinf, \
         isnan, ones, searchsorted, sometrue, sort, take, uint8, where, zeros, \
         linspace, ones_like
@@ -264,7 +263,7 @@ class ColorMapper(AbstractColormap):
 
         indices = (ary - self.range.low) / (self.range.high - self.range.low) * self.steps
 
-        return clip(indices.astype(IntType), 0, self.steps - 1)
+        return clip(indices.astype(int), 0, self.steps - 1)
 
     def reverse_colormap(self):
         """ Reverses the color bands of this colormap.
@@ -405,7 +404,7 @@ class ColorMapper(AbstractColormap):
 
         """
 
-        if type(X) in [IntType, FloatType]:
+        if type(X) in [int, float]:
             vtype = 'scalar'
             xa = array([X])
         else:
