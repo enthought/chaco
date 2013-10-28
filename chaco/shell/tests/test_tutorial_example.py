@@ -5,7 +5,7 @@ source: docs/source/user_manual/chaco_tutorial.rst
 """
 import unittest
 from numpy import linspace, pi, sin
-from enthought.chaco.shell import plot, show, title, ytitle
+from chaco.shell import plot, title, ytitle
 
 
 class InteractiveTestCase(unittest.TestCase):
