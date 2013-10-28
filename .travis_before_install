@@ -1,4 +1,4 @@
-# Set up PyQt4 for potential UI tests.
+# Set up PyQt4 and WX for UI tests.
 
 export DISPLAY=:99.0
 sh -e /etc/init.d/xvfb start
@@ -9,4 +9,7 @@ python -c 'import PyQt4'
 python -c 'import PyQt4.QtCore'
 python -c 'import PyQt4.QtGui'
 
-export ETS_TOOLKIT=qt4
+# Also install WX
+sudo apt-get install python-wxgtk2.8 python-wxtools wx2.8-i18n
+
+#export ETS_TOOLKIT=qt4
