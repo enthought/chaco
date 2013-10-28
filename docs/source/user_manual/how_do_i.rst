@@ -58,7 +58,7 @@ Basics
 	frame = PlotFrame(None)
 	app.MainLoop()
 
-Note that this will require for the ETS_CONFIG environment variable to
+Note that this will require for the ETS_TOOLKIT environment variable to
 be set to 'wx'.
 
 * integrate a Chaco plot into my QT app?
