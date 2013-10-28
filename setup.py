@@ -6,7 +6,8 @@ from setuptools import setup, Extension, find_packages
 
 
 info = {}
-execfile(join('chaco', '__init__.py'), info)
+chaco_init = join('chaco', '__init__.py')
+exec(compile(open(chaco_init).read(), chaco_init, 'exec'), info)
 
 numpy_include_dir = get_include()
 
@@ -71,4 +72,5 @@ setup(
     packages = find_packages(),
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
     zip_safe = False,
+    use_2to3=True,
 )
