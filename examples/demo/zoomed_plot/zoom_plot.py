@@ -24,7 +24,7 @@ from chaco.api import VPlotContainer, ArrayPlotData, Plot, PlotGrid, PlotAxis
 from chaco.tools.api import RangeSelection
 
 # Relative imports
-from .zoom_overlay import ZoomOverlay
+from zoom_overlay import ZoomOverlay
 
 sample_path = os.path.join('examples','data','sample.wav')
 alt_path = os.path.join('..','data','sample.wav')
@@ -33,7 +33,7 @@ fname = find_resource('Chaco', sample_path, alt_path=alt_path,
 numpts = 3000
 
 def read_music_data():
-    from .wav_to_numeric import wav_to_numeric
+    from wav_to_numeric import wav_to_numeric
     index, data = wav_to_numeric(fname)
     return index[:numpts], data[:numpts]
 
