@@ -83,7 +83,11 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                 y = y_map.map_data(location[1])
                 nexty = y + (cy - y)*(self._value_factor/new_value_factor)
 
-            pan_state = PanState((cx,cy), (nextx, nexty))
+            if self.component.orientation == 'v':
+                cx, cy = cy, cx
+                nextx, nexty = nexty, nextx
+
+            pan_state = PanState((cx, cy), (nextx, nexty))
             zoom_state = ZoomState((self._index_factor, self._value_factor),
                                    (new_index_factor, new_value_factor))
 
@@ -125,6 +129,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                 return
             if self._zoom_limit_reached(new_value_factor, 'x'):
                 return
+
         self._do_zoom(new_index_factor, new_value_factor)
 
     def zoom_out(self, factor=0):
