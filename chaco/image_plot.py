@@ -36,7 +36,7 @@ class ImagePlot(Base2DPlot):
 
     # The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
-
+    
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -129,7 +129,7 @@ class ImagePlot(Base2DPlot):
 
         The parameter *data* is for subclasses that might not store an RGB(A)
         image as the value, but need to compute one to display (colormaps, etc.).
-
+        
         The parameter *mapper* is also for subclasses that might not store an
         RGB(A) image as their value, and gives an opportunity to produce the
         values only for the visible region, rather than for the whole plot,
@@ -142,15 +142,16 @@ class ImagePlot(Base2DPlot):
         (lpt, upt) = self.index.get_bounds()
         ll_x, ll_y = self.map_screen([lpt])[0]
         ur_x, ur_y = self.map_screen([upt])[0]
-        if ll_x > ur_x:
+        if "right" in self.origin:
             ll_x, ur_x = ur_x, ll_x
-        if ll_y > ur_y:
+        if "top" in self.origin:
             ll_y, ur_y = ur_y, ll_y
         virtual_width = ur_x - ll_x
         virtual_height = ur_y - ll_y
 
-        virtual_rect = [ll_x, ll_y, virtual_width, virtual_height]
-        args = self.position + self.bounds + virtual_rect
+        args = self.position \
+             + self.bounds \
+             + [ll_x, ll_y, virtual_width, virtual_height]
         img_pixels, gc_rect = self._calc_zoom_coords(*args)
 
         # Grab the appropriate sub-image, if necessary
@@ -160,19 +161,18 @@ class ImagePlot(Base2DPlot):
                 y_length = self.value.get_array_bounds()[1][1]
                 j1 = y_length - j1
                 j2 = y_length - j2
+                # swap so that j1 < j2
+                j1, j2 = j2, j1
             if "right" in self.origin:
                 x_length = self.value.get_array_bounds()[0][1]
                 i1 = x_length - i1
                 i2 = x_length - i2
-
-            if j1 > j2:
-                j1, j2 = j2, j1
-            if i1 > i2:
+                # swap so that i1 < i2
                 i1, i2 = i2, i1
 
             # Since data is row-major, j1 and j2 go first
             data = data[j1:j2, i1:i2]
-
+        
         if mapper is not None:
             data = mapper(data)
 
@@ -189,11 +189,12 @@ class ImagePlot(Base2DPlot):
             raise RuntimeError, "Unknown colormap depth value: %i" \
                                 % data.value_depth
 
+
         self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)
         if gc_rect is not None:
             self._cached_dest_rect = gc_rect
         else:
-            self._cached_dest_rect = virtual_rect
+            self._cached_dest_rect = (ll_x, ll_y, virtual_width, virtual_height)
         self._image_cache_valid = True
 
     def _calc_zoom_coords(self, px, py, plot_width, plot_height,
@@ -247,23 +248,23 @@ class ImagePlot(Base2DPlot):
         # x2,y2 refers to the upper-right corner.
 
         # 1. screen space -> pixel offsets
-        if self.orientation == "v":
-            plot_width, plot_height = plot_height, plot_width
+        if self.orientation == "h":
+            x1 = px - ix
+            x2 = (px + plot_width) - ix
+            y1 = py - iy
+            y2 = (py + plot_height) - iy
+        else:
+            x1 = px - ix
+            x2 = (px + plot_height) - ix
+            y1 = py - iy
+            y2 = (py + plot_width) - iy
 
-        x1 = px - ix
-        x2 = (px + plot_width) - ix
-        y1 = py - iy
-        y2 = (py + plot_height) - iy
-
-        if x1 > x2:
-            x1, x2 = x2, x1
-        if y1 > y2:
-            y1, y2 = y2, y1
 
         # 2. pixel offsets -> data array indices
         # X and Y are transposed because for image plot data
-        xpixels = self.value.get_width()
-        ypixels = self.value.get_height()
+        pixel_bounds = self.value.get_array_bounds()
+        xpixels = pixel_bounds[0][1] - pixel_bounds[0][0]
+        ypixels = pixel_bounds[1][1] - pixel_bounds[1][0]
         i1 = max(floor(float(x1) / image_width * xpixels), 0)
         i2 = min(ceil(float(x2) / image_width * xpixels), xpixels)
         j1 = max(floor(float(y1) / image_height * ypixels), 0)
@@ -326,4 +327,4 @@ class ImagePlot(Base2DPlot):
     def _value_data_changed_fired(self):
         self._image_cache_valid = False
         self.request_redraw()
-
+        
