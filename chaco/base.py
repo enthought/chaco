@@ -78,11 +78,11 @@ def bin_search(values, value, ascending):
     lo = 0
     hi = len( values )
     while True:
-        mid  = (hi + lo) / 2
-        test = cmp( values[ mid ], value ) * ascending
-        if test == 0:
+        mid  = (hi + lo) // 2
+        midval = values[ mid ]
+        if midval == value:
             return mid
-        if test > 0:
+        elif midval > value:
             hi = mid
         else:
             lo = mid
