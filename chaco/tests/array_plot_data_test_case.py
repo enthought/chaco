@@ -40,9 +40,9 @@ class ArrayPlotDataTestCase(unittest.TestCase):
 
         # While we're here, check that get_data works as advertised.
         grumpy_out = plot_data.get_data('Grumpy')
-	try:
+        try:
             self.assertIs(grumpy_out, grumpy)
-	except AttributeError:
+        except AttributeError:
             # Python 2.6
             self.assertTrue(grumpy_out is grumpy)
 
