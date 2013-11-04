@@ -9,7 +9,7 @@ from traitsui.api import Item, View
 import numpy as np
 
 import nose
-from _tools import store_exceptions_on_all_threads, assert_raises
+from chaco.tests._tools import store_exceptions_on_all_threads, assert_raises
 
 
 class PlotViewer(HasTraits):
