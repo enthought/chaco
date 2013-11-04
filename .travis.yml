@@ -21,9 +21,9 @@ install:
   - python setup.py develop
 script: 
   # Running all tests in chaco/tests and chaco/tests2
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then nosetests chaco; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then nosetests -v chaco; fi
   # FIXME: tricky to install PyQt for version <= 2.6, only running chaco/tests
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then nosetests chaco/tests; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then nosetests -v chaco/tests; fi
 notifications:
   email:
     - travis-ci@enthought.com
