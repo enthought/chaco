@@ -1,5 +1,5 @@
 import contextlib
-import unittest
+from traits.testing.unittest_tools import unittest
 
 import numpy
 
@@ -40,11 +40,7 @@ class ArrayPlotDataTestCase(unittest.TestCase):
 
         # While we're here, check that get_data works as advertised.
         grumpy_out = plot_data.get_data('Grumpy')
-        try:
-            self.assertIs(grumpy_out, grumpy)
-        except AttributeError:
-            # Python 2.6
-            self.assertTrue(grumpy_out is grumpy)
+        self.assertIs(grumpy_out, grumpy)
 
         with self.monitor_events(plot_data) as events:
             plot_data.set_data('Grumpy', grumpy_too)

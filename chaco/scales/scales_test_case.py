@@ -1,5 +1,5 @@
 
-import unittest
+from traits.testing.unittest_tools import unittest
 
 from numpy import array
 
@@ -167,11 +167,7 @@ class BasicFormatterTestCase(TicksTestCase):
             labels = fmt.format(ticks, numlabels, None)
             actual = sum(map(len, labels))
             err = abs(estimate - actual) / actual
-            try:
-                self.assertLess(err, 0.5)
-            except AttributeError:
-                # Python 2.6
-                self.assert_(err < 0.5)
+            self.assertLess(err, 0.5)
         return
 
     def test_width_based_default_scale(self):
