@@ -19,7 +19,7 @@ TRIM_RENDERED = (slice(2, None), slice(0, -2), 0)
 
 
 @contextmanager
-def temp_image_file(suffix='.png', prefix='test', dir=None):
+def temp_image_file(suffix='.tif', prefix='test', dir=None):
     fd, filename = tempfile.mkstemp(suffix=suffix, prefix=prefix, dir=dir)
     try:
         yield filename
