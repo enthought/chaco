@@ -122,6 +122,9 @@ class ImagePlot(Base2DPlot):
         scale_y = 1 if self.y_axis_is_flipped else -1
 
         x, y, w, h = self._cached_dest_rect
+        if w <= 0 or h <= 0:
+            return
+
         x_center = x + w / 2
         y_center = y + h / 2
         with gc:
