@@ -3,9 +3,7 @@ import tempfile
 from contextlib import contextmanager
 
 import numpy as np
-from skimage import io
-from skimage.data import coins
-from skimage.color import gray2rgb
+from scipy.misc import lena
 
 from traits.etsconfig.api import ETSConfig
 from chaco.api import (PlotGraphicsContext, GridDataSource, GridMapper,
@@ -15,8 +13,8 @@ from chaco.api import (PlotGraphicsContext, GridDataSource, GridMapper,
 # The Quartz backend rescales pixel values, so use a higher threshold.
 MAX_RMS_ERROR = 16 if ETSConfig.kiva_backend == 'quartz' else 1
 
-IMAGE = coins()
-RGB = gray2rgb(IMAGE)
+IMAGE = lena().astype(np.uint8)
+RGB = np.dstack([IMAGE] * 3)
 # Rendering adds rows and columns for some reason.
 TRIM_RENDERED = (slice(2, None), slice(0, -2), 0)
 
@@ -56,7 +54,7 @@ def image_from_renderer(renderer, orientation):
 
     with temp_image_file() as filename:
         save_renderer_result(renderer, filename)
-        rendered_image = io.imread(filename)[TRIM_RENDERED]
+        rendered_image = ImageData.fromfile(filename).data[TRIM_RENDERED]
     return rendered_image
 
 
