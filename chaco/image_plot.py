@@ -18,7 +18,8 @@ from contextlib import contextmanager
 import numpy as np
 
 # Enthought library imports.
-from traits.api import Bool, Either, Enum, Instance, List, Range, Trait, Tuple
+from traits.api import (Bool, Either, Enum, Instance, List, Range, Trait,
+                        Tuple, Property, cached_property)
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
@@ -51,6 +52,12 @@ class ImagePlot(Base2DPlot):
     # The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
 
+    # Bool indicating whether x-axis is flipped.
+    x_axis_is_flipped = Property(depends_on=['orientation', 'origin'])
+
+    # Bool indicating whether y-axis is flipped.
+    y_axis_is_flipped = Property(depends_on=['orientation', 'origin'])
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -65,17 +72,21 @@ class ImagePlot(Base2DPlot):
     # **_cached_image** is to be drawn.
     _cached_dest_rect = Either(Tuple, List)
 
+    # Bool indicating whether the origin is top-left or bottom-right.
+    # The name "principal diagonal" is borrowed from linear algebra.
+    _origin_on_principal_diagonal = Property(depends_on='origin')
+
     #------------------------------------------------------------------------
     # Properties
     #------------------------------------------------------------------------
 
-    @property
-    def x_axis_is_flipped(self):
+    @cached_property
+    def _get_x_axis_is_flipped(self):
         return ((self.orientation == 'h' and 'right' in self.origin) or
                 (self.orientation == 'v' and 'top' in self.origin))
 
-    @property
-    def y_axis_is_flipped(self):
+    @cached_property
+    def _get_y_axis_is_flipped(self):
         return ((self.orientation == 'h' and 'top' in self.origin) or
                 (self.orientation == 'v' and 'right' in self.origin))
 
@@ -152,9 +163,8 @@ class ImagePlot(Base2DPlot):
     # Private methods
     #------------------------------------------------------------------------
 
-    @property
-    def _origin_on_principal_diagonal(self):
-        # The name "principal diagonal" comes from linear algebra.
+    @cached_property
+    def _get__origin_on_principal_diagonal(self):
         bottom_right = 'bottom' in self.origin and 'right' in self.origin
         top_left = 'top' in self.origin and 'left' in self.origin
         return bottom_right or top_left
