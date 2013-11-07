@@ -3,7 +3,6 @@ import tempfile
 from contextlib import contextmanager
 
 import numpy as np
-from scipy.misc import lena
 
 from traits.etsconfig.api import ETSConfig
 from chaco.api import (PlotGraphicsContext, GridDataSource, GridMapper,
@@ -13,7 +12,7 @@ from chaco.api import (PlotGraphicsContext, GridDataSource, GridMapper,
 # The Quartz backend rescales pixel values, so use a higher threshold.
 MAX_RMS_ERROR = 16 if ETSConfig.kiva_backend == 'quartz' else 1
 
-IMAGE = lena().astype(np.uint8)
+IMAGE = np.random.random_integers(0, 255, size=(100, 200)).astype(np.uint8)
 RGB = np.dstack([IMAGE] * 3)
 # Rendering adds rows and columns for some reason.
 TRIM_RENDERED = (slice(2, None), slice(0, -2), 0)
