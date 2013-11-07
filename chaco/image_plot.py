@@ -13,14 +13,28 @@ from __future__ import with_statement
 
 # Standard library imports
 from math import ceil, floor, pi
+from contextlib import contextmanager
+
+import numpy as np
 
 # Enthought library imports.
-from traits.api import Bool, Either, Enum, Instance, \
-                                 List, Range, Trait, Tuple
+from traits.api import Bool, Either, Enum, Instance, List, Range, Trait, Tuple
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
 from base_2d_plot import Base2DPlot
+
+try:
+    from kiva.quartz.ABCGI import InterpolationQuality
+except ImportError:
+    pass
+else:
+    KIVA_INTERP_QUALITY = {"nearest": InterpolationQuality.none,
+                           "bilinear": InterpolationQuality.low,
+                           "bicubic": InterpolationQuality.high}
+
+
+KIVA_DEPTH_MAP = {3: "rgb24", 4: "rgba32"}
 
 
 class ImagePlot(Base2DPlot):
@@ -36,7 +50,7 @@ class ImagePlot(Base2DPlot):
 
     # The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
-    
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -52,265 +66,18 @@ class ImagePlot(Base2DPlot):
     _cached_dest_rect = Either(Tuple, List)
 
     #------------------------------------------------------------------------
-    # Base2DPlot interface
+    # Properties
     #------------------------------------------------------------------------
 
-    def _render(self, gc):
-        """ Actually draws the plot.
+    @property
+    def x_axis_is_flipped(self):
+        return ((self.orientation == 'h' and 'right' in self.origin) or
+                (self.orientation == 'v' and 'top' in self.origin))
 
-        Implements the Base2DPlot interface.
-        """
-        if not self._image_cache_valid:
-            self._compute_cached_image()
-
-        if "bottom" in self.origin:
-            sy = -1
-        else:
-            sy = 1
-        if "left" in self.origin:
-            sx = 1
-        else:
-            sx = -1
-
-        # If the orientation is flipped, the BR and TL cases are swapped
-        if self.orientation == "v" and sx == sy:
-            sx, sy = -sx, -sy
-
-        with gc:
-            gc.clip_to_rect(self.x, self.y, self.width, self.height)
-            gc.set_alpha(self.alpha)
-
-            # Kiva image interpolation note:
-            # Kiva's Agg backend uses the interpolation setting of the *source*
-            # image to determine the type of interpolation to use when drawing the
-            # image.  The mac backend uses the interpolation setting on the
-            # destination GC.
-            old_interp = self._cached_image.get_image_interpolation()
-            if hasattr(gc, "set_interpolation_quality"):
-                from kiva.quartz.ABCGI import InterpolationQuality
-                interp_quality_dict = {"nearest": InterpolationQuality.none,
-                        "bilinear": InterpolationQuality.low,
-                        "bicubic": InterpolationQuality.high}
-                gc.set_interpolation_quality(interp_quality_dict[self.interpolation])
-            elif hasattr(gc, "set_image_interpolation"):
-                self._cached_image.set_image_interpolation(self.interpolation)
-            x, y, w, h = self._cached_dest_rect
-            if self.orientation == "h":        # for horizontal orientation:
-                gc.translate_ctm(x+w/2, y+h/2)   # translate back normally
-            else:                              # for vertical orientation:
-                gc.translate_ctm(y+h/2, x+w/2)   # translate back with dx,dy swap
-            gc.scale_ctm(sx, sy)               # flip axes as appropriate
-            if self.orientation == "v":        # for vertical orientation:
-                gc.scale_ctm(1,-1)               # restore origin to lower left
-                gc.rotate_ctm(pi/2)              # rotate 1/4 turn clockwise
-            gc.translate_ctm(-x-w/2, -y-h/2)   # translate image center to origin
-            gc.draw_image(self._cached_image, self._cached_dest_rect)
-            self._cached_image.set_image_interpolation(old_interp)
-
-    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
-                  index_only=False):
-        """ Maps a screen space point to an index into the plot's index array(s).
-
-        Implements the AbstractPlotRenderer interface. Uses 0.0 for *threshold*,
-        regardless of the passed value.
-        """
-        # For image plots, treat hittesting threshold as 0.0, because it's
-        # the only thing that really makes sense.
-        return Base2DPlot.map_index(self, screen_pt, 0.0, outside_returns_none,
-                                    index_only)
-
-    #------------------------------------------------------------------------
-    # Private methods
-    #------------------------------------------------------------------------
-
-    def _compute_cached_image(self, data=None, mapper=None):
-        """ Computes the correct sub-image coordinates and renders an image
-        into self._cached_image.
-
-        The parameter *data* is for subclasses that might not store an RGB(A)
-        image as the value, but need to compute one to display (colormaps, etc.).
-        
-        The parameter *mapper* is also for subclasses that might not store an
-        RGB(A) image as their value, and gives an opportunity to produce the
-        values only for the visible region, rather than for the whole plot,
-        at the expense of more frequent computation.
-        """
-
-        if data is None:
-            data = self.value.data
-
-        (lpt, upt) = self.index.get_bounds()
-        ll_x, ll_y = self.map_screen([lpt])[0]
-        ur_x, ur_y = self.map_screen([upt])[0]
-        if "right" in self.origin:
-            ll_x, ur_x = ur_x, ll_x
-        if "top" in self.origin:
-            ll_y, ur_y = ur_y, ll_y
-        virtual_width = ur_x - ll_x
-        virtual_height = ur_y - ll_y
-
-        args = self.position \
-             + self.bounds \
-             + [ll_x, ll_y, virtual_width, virtual_height]
-        img_pixels, gc_rect = self._calc_zoom_coords(*args)
-
-        # Grab the appropriate sub-image, if necessary
-        if img_pixels is not None:
-            i1, j1, i2, j2 = img_pixels
-            if "top" in self.origin:
-                y_length = self.value.get_array_bounds()[1][1]
-                j1 = y_length - j1
-                j2 = y_length - j2
-                # swap so that j1 < j2
-                j1, j2 = j2, j1
-            if "right" in self.origin:
-                x_length = self.value.get_array_bounds()[0][1]
-                i1 = x_length - i1
-                i2 = x_length - i2
-                # swap so that i1 < i2
-                i1, i2 = i2, i1
-
-            # Since data is row-major, j1 and j2 go first
-            data = data[j1:j2, i1:i2]
-        
-        if mapper is not None:
-            data = mapper(data)
-
-        # Furthermore, the data presented to the GraphicsContextArray needs to
-        # be contiguous.  If it is not, we need to make a copy.
-        if not data.flags['C_CONTIGUOUS']:
-            data = data.copy()
-
-        if data.shape[2] == 3:
-            kiva_depth = "rgb24"
-        elif data.shape[2] == 4:
-            kiva_depth = "rgba32"
-        else:
-            raise RuntimeError, "Unknown colormap depth value: %i" \
-                                % data.value_depth
-
-
-        self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)
-        if gc_rect is not None:
-            self._cached_dest_rect = gc_rect
-        else:
-            self._cached_dest_rect = (ll_x, ll_y, virtual_width, virtual_height)
-        self._image_cache_valid = True
-
-    def _calc_zoom_coords(self, px, py, plot_width, plot_height,
-                                ix, iy, image_width, image_height):
-        """ Calculates the coordinates of a zoomed sub-image.
-
-        Because of floating point limitations, it is not advisable to request a
-        extreme level of zoom, e.g., idx or idy > 10^10.
-
-        Parameters
-        ----------
-        px : number
-            X-coordinate of plot pixel bounds
-        py : number
-            Y-coordinate of plot pixel bounds
-        plot_width : number
-            Width of plot pixel bounds
-        plot_height : number
-            Height of plot pixel bounds
-        ix : number
-            X-coordinate of image pixel bounds
-        iy : number
-            Y-coordinate of image pixel bounds
-        image_width : number
-            Width of image pixel bounds
-        image_height : number
-            Height of image pixel bounds
-
-        Returns
-        -------
-        ((i1, j1, i2, j2), (x, y, dx, dy))
-            Lower left and upper right indices of the sub-image to be extracted,
-            and graphics context origin and extents to draw the sub-image into.
-        (None, None)
-            No image extraction is necessary.
-        """
-        if (image_width < 1.5*plot_width) and (image_height < 1.5*plot_height):
-            return (None, None)
-
-        if 0 in (plot_width, plot_height, image_width, image_height):
-            return (None, None)
-
-        # We figure out the subimage coordinates using a two-step process:
-        # 1. convert the plot boundaries from screen space into pixel offsets
-        #    in the virtual image
-        # 2. convert the coordinates in the virtual image into indices
-        #    into the image data array
-        # 3. from the data array indices, compute the screen coordinates of
-        #    the corners of the data array sub-indices
-        # in all the cases below, x1,y1 refers to the lower-left corner, and
-        # x2,y2 refers to the upper-right corner.
-
-        # 1. screen space -> pixel offsets
-        if self.orientation == "h":
-            x1 = px - ix
-            x2 = (px + plot_width) - ix
-            y1 = py - iy
-            y2 = (py + plot_height) - iy
-        else:
-            x1 = px - ix
-            x2 = (px + plot_height) - ix
-            y1 = py - iy
-            y2 = (py + plot_width) - iy
-
-
-        # 2. pixel offsets -> data array indices
-        # X and Y are transposed because for image plot data
-        pixel_bounds = self.value.get_array_bounds()
-        xpixels = pixel_bounds[0][1] - pixel_bounds[0][0]
-        ypixels = pixel_bounds[1][1] - pixel_bounds[1][0]
-        i1 = max(floor(float(x1) / image_width * xpixels), 0)
-        i2 = min(ceil(float(x2) / image_width * xpixels), xpixels)
-        j1 = max(floor(float(y1) / image_height * ypixels), 0)
-        j2 = min(ceil(float(y2) / image_height * ypixels), ypixels)
-
-        # 3. array indices -> new screen space coordinates
-        x1 = float(i1)/xpixels * image_width + ix
-        x2 = float(i2)/xpixels * image_width + ix
-        y1 = float(j1)/ypixels * image_height + iy
-        y2 = float(j2)/ypixels * image_height + iy
-
-        # Handle really, really, subpixel cases
-        subimage_index = [i1, j1, i2, j2]
-        subimage_coords = [x1, y1, x2-x1, y2-y1]
-        plot_dimensions = (px, py, plot_width, plot_height)
-        xparams = (0, 2)
-        yparams = (1, 3)
-        for pos_index, size_index in (xparams, yparams):
-            if subimage_index[pos_index] == subimage_index[pos_index+2]-1:
-                # xcoords lie inside the same pixel, so set the subimage
-                # coords to be the width of the image
-                subimage_coords[pos_index] = plot_dimensions[pos_index]
-                subimage_coords[size_index] = plot_dimensions[size_index]
-            elif subimage_index[pos_index] == subimage_index[pos_index+2]-2:
-                # coords span across a pixel boundary.  Find the scaling
-                # factor of the virtual (and potentially large) subimage
-                # size to the image size, and scale it down.  We can do
-                # this without distortion b/c we are straddling only one
-                # pixel boundary.
-                #
-                # If we scale down the extent to twice the screen size, we can
-                # be sure that no matter what the offset, we will cover the
-                # entire screen, since we are only straddling one pixel boundary.
-                # The formula for calculating the new origin can be worked out
-                # on paper.
-                extent = subimage_coords[size_index]
-                pixel_extent = extent/2   # we are indexed into two pixels
-                origin = subimage_coords[pos_index]
-                scale = float(2 * plot_dimensions[size_index] / extent)
-                subimage_coords[size_index] *= scale
-                subimage_coords[pos_index] = origin + (1-scale)*pixel_extent
-
-        subimage_index = map(int, subimage_index)
-
-        return [subimage_index, subimage_coords]
-
+    @property
+    def y_axis_is_flipped(self):
+        return ((self.orientation == 'h' and 'top' in self.origin) or
+                (self.orientation == 'v' and 'right' in self.origin))
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -327,4 +94,247 @@ class ImagePlot(Base2DPlot):
     def _value_data_changed_fired(self):
         self._image_cache_valid = False
         self.request_redraw()
-        
+
+    #------------------------------------------------------------------------
+    # Base2DPlot interface
+    #------------------------------------------------------------------------
+
+    def _render(self, gc):
+        """ Draw the plot to screen.
+
+        Implements the Base2DPlot interface.
+        """
+        if not self._image_cache_valid:
+            self._compute_cached_image()
+
+        scale_x = -1 if self.x_axis_is_flipped else 1
+        scale_y = 1 if self.y_axis_is_flipped else -1
+
+        x, y, w, h = self._cached_dest_rect
+        x_center = x + w / 2
+        y_center = y + h / 2
+        with gc:
+            gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            gc.set_alpha(self.alpha)
+
+            # Translate origin to the center of the graphics context.
+            if self.orientation == "h":
+                gc.translate_ctm(x_center, y_center)
+            else:
+                gc.translate_ctm(y_center, x_center)
+
+            # Flip axes to move origin to the correct position.
+            gc.scale_ctm(scale_x, scale_y)
+
+            if self.orientation == "v":
+                self._transpose_about_origin(gc)
+
+            # Translate the origin back to its original position.
+            gc.translate_ctm(-x_center, -y_center)
+
+            with self._temporary_interp_setting(gc):
+                gc.draw_image(self._cached_image, self._cached_dest_rect)
+
+    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
+                  index_only=False):
+        """ Maps a screen space point to an index into the plot's index
+        array(s).
+
+        Implements the AbstractPlotRenderer interface. Uses 0.0 for
+        *threshold*, regardless of the passed value.
+        """
+        # For image plots, treat hittesting threshold as 0.0, because it's
+        # the only thing that really makes sense.
+        return Base2DPlot.map_index(self, screen_pt, 0.0, outside_returns_none,
+                                    index_only)
+
+    #------------------------------------------------------------------------
+    # Private methods
+    #------------------------------------------------------------------------
+
+    @property
+    def _origin_on_principal_diagonal(self):
+        # The name "principal diagonal" comes from linear algebra.
+        bottom_right = 'bottom' in self.origin and 'right' in self.origin
+        top_left = 'top' in self.origin and 'left' in self.origin
+        return bottom_right or top_left
+
+    def _transpose_about_origin(self, gc):
+        if self._origin_on_principal_diagonal:
+            gc.scale_ctm(-1, 1)
+        else:
+            gc.scale_ctm(1, -1)
+        gc.rotate_ctm(pi/2)
+
+    @contextmanager
+    def _temporary_interp_setting(self, gc):
+        if hasattr(gc, "set_interpolation_quality"):
+            # Quartz uses interpolation setting on the destination GC.
+            interp_quality = KIVA_INTERP_QUALITY[self.interpolation]
+            gc.set_interpolation_quality(interp_quality)
+            yield
+        elif hasattr(gc, "set_image_interpolation"):
+            # Agg backend uses the interpolation setting of the *source*
+            # image to determine the type of interpolation to use when
+            # drawing. Temporarily change image's interpolation value.
+            old_interp = self._cached_image.get_image_interpolation()
+            set_interp = self._cached_image.set_image_interpolation
+            try:
+                set_interp(self.interpolation)
+                yield
+            finally:
+                set_interp(old_interp)
+
+    def _calc_virtual_screen_bbox(self):
+        """ Return the rectangle describing the image in screen space
+        assuming that the entire image could fit on screen.
+
+        Zoomed-in images will have "virtual" sizes larger than the image.
+        Note that vertical orientations flip x- and y-axes such that x is
+        vertical and y is horizontal.
+        """
+        # Upper-right values are always larger than lower-left values,
+        # regardless of origin or orientation...
+        (lower_left, upper_right) = self.index.get_bounds()
+        # ... but if the origin is not 'bottom left', the data-to-screen
+        # mapping will flip min and max values.
+        x_min, y_min = self.map_screen([lower_left])[0]
+        x_max, y_max = self.map_screen([upper_right])[0]
+        if x_min > x_max:
+            x_min, x_max = x_max, x_min
+        if y_min > y_max:
+            y_min, y_max = y_max, y_min
+
+        virtual_x_size = x_max - x_min
+        virtual_y_size = y_max - y_min
+        return [x_min, y_min, virtual_x_size, virtual_y_size]
+
+    def _compute_cached_image(self, data=None, mapper=None):
+        """ Computes the correct screen coordinates and renders an image into
+        `self._cached_image`.
+
+        Parameters
+        ----------
+        data : array
+            Image data. If None, image is derived from the `value` attribute.
+        mapper : function
+            Allows subclasses to transform the displayed values for the visible
+            region. This may be used to adapt grayscale images to RGB(A)
+            images.
+        """
+        if data is None:
+            data = self.value.data
+
+        virtual_rect = self._calc_virtual_screen_bbox()
+        index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect)
+
+        col_min, col_max, row_min, row_max = index_bounds
+        data = data[row_min:row_max, col_min:col_max]
+
+        if mapper is not None:
+            data = mapper(data)
+
+        if len(data.shape) != 3:
+            raise RuntimeError("`ImagePlot` requires color images.")
+        elif data.shape[2] not in KIVA_DEPTH_MAP:
+            msg = "Unknown colormap depth value: {}"
+            raise RuntimeError(msg.format(data.shape[2]))
+        kiva_depth = KIVA_DEPTH_MAP[data.shape[2]]
+
+        # Data presented to the GraphicsContextArray needs to be contiguous.
+        data = np.ascontiguousarray(data)
+        self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)
+        self._cached_dest_rect = screen_rect
+        self._image_cache_valid = True
+
+    def _calc_zoom_coords(self, image_rect):
+        """ Calculates the coordinates of a zoomed sub-image.
+
+        Because of floating point limitations, it is not advisable to request a
+        extreme level of zoom, e.g., idx or idy > 10^10.
+
+        Parameters
+        ----------
+        image_rect : 4-tuple
+            (x, y, width, height) rectangle describing the pixels bounds of the
+            full, **rendered** image. This will be larger than the canvas when
+            zoomed in since the full image may not fit on the canvas.
+
+        Returns
+        -------
+        index_bounds : 4-tuple
+            The column and row indices (col_min, col_max, row_min, row_max) of
+            the sub-image to be extracted and drawn into `screen_rect`.
+        screen_rect : 4-tuple
+            (x, y, width, height) rectangle describing the pixels bounds where
+            the image will be rendered in the plot.
+        """
+        ix, iy, image_width, image_height = image_rect
+        if 0 in (image_width, image_height) or 0 in self.bounds:
+            return (None, None)
+
+        array_bounds = self._array_bounds_from_screen_rect(image_rect)
+        col_min, col_max, row_min, row_max = array_bounds
+        # Convert array indices back into screen coordinates after its been
+        # clipped to fit within the bounds.
+        array_width = self.value.get_width()
+        array_height = self.value.get_height()
+        x_min = float(col_min) / array_width * image_width + ix
+        x_max = float(col_max) / array_width * image_width + ix
+        y_min = float(row_min) / array_height * image_height + iy
+        y_max = float(row_max) / array_height * image_height + iy
+
+        # Flip indexes **after** calculating screen coordinates.
+        # The screen coordinates will get flipped in the renderer.
+        if self.y_axis_is_flipped:
+            row_min = array_height - row_min
+            row_max = array_height - row_max
+            row_min, row_max = row_max, row_min
+        if self.x_axis_is_flipped:
+            col_min = array_width - col_min
+            col_max = array_width - col_max
+            col_min, col_max = col_max, col_min
+
+        index_bounds = map(int, [col_min, col_max, row_min, row_max])
+        screen_rect = [x_min, y_min, x_max - x_min, y_max - y_min]
+        return index_bounds, screen_rect
+
+    def _array_bounds_from_screen_rect(self, image_rect):
+        """ Transform virtual-image rectangle into array indices.
+
+        The virtual-image rectangle is in screen coordinates and can be outside
+        the plot bounds. This method converts the rectangle into array indices
+        and clips to the plot bounds.
+        """
+        # Plot dimensions are independent of orientation and origin, but data
+        # dimensions vary with orientation. Flip plot dimensions to match data
+        # since outputs will be in data space.
+        if self.orientation == "h":
+            x_min, y_min = self.position
+            plot_width, plot_height = self.bounds
+        else:
+            y_min, x_min = self.position
+            plot_height, plot_width = self.bounds
+
+        ix, iy, image_width, image_height = image_rect
+        # Screen coordinates of virtual-image that fit into plot window.
+        x_min -= ix
+        y_min -= iy
+        x_max = x_min + plot_width
+        y_max = y_min + plot_height
+
+        array_width = self.value.get_width()
+        array_height = self.value.get_height()
+        # Convert screen coordinates to array indexes
+        col_min = floor(float(x_min) / image_width * array_width)
+        col_max = ceil(float(x_max) / image_width * array_width)
+        row_min = floor(float(y_min) / image_height * array_height)
+        row_max = ceil(float(y_max) / image_height * array_height)
+
+        # Clip index bounds to the array bounds.
+        col_min = max(col_min, 0)
+        col_max = min(col_max, array_width)
+        row_min = max(row_min, 0)
+        row_max = min(row_max, array_height)
+
+        return col_min, col_max, row_min, row_max
