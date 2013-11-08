@@ -31,7 +31,7 @@ class Demo(HasTraits):
     traits_view = View(
         Group(
             UItem('plot', editor=ComponentEditor(size=(1000, 500))),
-            orientation = "vertical"
+            orientation="vertical"
         ),
         resizable=True, title="Demo of image origin and orientation"
     )
@@ -63,7 +63,7 @@ class Demo(HasTraits):
             zoom = ZoomTool(plot, tool_mode="box", always_on=False)
             plot.overlays.append(zoom)
 
-            title = '{}, {}'
+            title = '{0}, {1}'
             plot.title = title.format(orientation_name[orientation],
                                       origin.replace(' ', '-'))
 
@@ -74,6 +74,7 @@ class Demo(HasTraits):
 
 
 demo = Demo()
+
 
 if __name__ == "__main__":
     demo.configure_traits()

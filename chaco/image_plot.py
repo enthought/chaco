@@ -26,13 +26,14 @@ from kiva.agg import GraphicsContextArray
 from base_2d_plot import Base2DPlot
 
 try:
+    # InterpolationQuality required for Quartz backend only (requires OSX).
     from kiva.quartz.ABCGI import InterpolationQuality
 except ImportError:
     pass
 else:
-    KIVA_INTERP_QUALITY = {"nearest": InterpolationQuality.none,
-                           "bilinear": InterpolationQuality.low,
-                           "bicubic": InterpolationQuality.high}
+    QUARTZ_INTERP_QUALITY = {"nearest": InterpolationQuality.none,
+                             "bilinear": InterpolationQuality.low,
+                             "bicubic": InterpolationQuality.high}
 
 
 KIVA_DEPTH_MAP = {3: "rgb24", 4: "rgba32"}
@@ -183,7 +184,7 @@ class ImagePlot(Base2DPlot):
     def _temporary_interp_setting(self, gc):
         if hasattr(gc, "set_interpolation_quality"):
             # Quartz uses interpolation setting on the destination GC.
-            interp_quality = KIVA_INTERP_QUALITY[self.interpolation]
+            interp_quality = QUARTZ_INTERP_QUALITY[self.interpolation]
             gc.set_interpolation_quality(interp_quality)
             yield
         elif hasattr(gc, "set_image_interpolation"):
@@ -250,7 +251,7 @@ class ImagePlot(Base2DPlot):
         if len(data.shape) != 3:
             raise RuntimeError("`ImagePlot` requires color images.")
         elif data.shape[2] not in KIVA_DEPTH_MAP:
-            msg = "Unknown colormap depth value: {}"
+            msg = "Unknown colormap depth value: {0}"
             raise RuntimeError(msg.format(data.shape[2]))
         kiva_depth = KIVA_DEPTH_MAP[data.shape[2]]
 
