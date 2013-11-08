@@ -75,7 +75,7 @@ class Label(HasTraits):
 
     _bounding_box = List()
     _position_cache_valid = Bool(False)
-    _text_needs_fitting = Bool(True)
+    _text_needs_fitting = Bool(False)
     _line_xpos = Any()
     _line_ypos = Any()
     _rot_matrix = Any()
@@ -190,8 +190,7 @@ class Label(HasTraits):
     #------------------------------------------------------------------------
 
     def _text_changed(self):
-        if self.max_width > 0.0:
-            self._text_needs_fitting = True
+        self._text_needs_fitting = (self.max_width > 0.0)
 
     @on_trait_change("font,margin,text,rotate_angle")
     def _invalidate_position_cache(self):
