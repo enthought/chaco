@@ -10,7 +10,7 @@ from scales import Pow10Scale, FixedScale, LogScale, DefaultScale, ScaleSystem, 
 class TicksTestCase(unittest.TestCase):
     """ Base class for scale and scale system unit tests """
     def assert_empty(self, arg):
-        self.assert_(len(arg) == 0)
+        self.assertEqual(len(arg), 0)
 
     def check_ticks(self, ticks1, ticks2):
         self.assertEqual(len(ticks1),len(ticks2))
@@ -20,7 +20,7 @@ class TicksTestCase(unittest.TestCase):
     def check_labels(self, labels1, labels2):
         self.assertEqual(len(labels1),len(labels2))
         for t1, t2, in zip(labels1, labels2):
-            self.assert_(t1 == t2)
+            self.assertEqual(t1, t2)
 
 
 class ScalesTestCase(TicksTestCase):
@@ -204,7 +204,7 @@ class BasicFormatterTestCase(TicksTestCase):
             labels = scale.labels(start, end, char_width=width)
             print "(%d,%d)" % (start,end), " avail:", width,
             print " used:", sum([len(x[1]) for x in labels]),
-            print zip(*labels)[1]
+            print list(zip(*labels))[1]
         return
 
 class OffsetFormatterTestCase(TicksTestCase):
