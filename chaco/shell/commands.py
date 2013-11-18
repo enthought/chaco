@@ -793,6 +793,7 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
     elif ext in [".bmp", ".png", ".jpg"]:
         from chaco.api import PlotGraphicsContext
+        gc = PlotGraphicsContext(tuple(p.outer_bounds))
 
         # temporarily turn off the backbuffer for offscreen rendering
         use_backbuffer = p.use_backbuffer
