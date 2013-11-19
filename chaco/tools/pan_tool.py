@@ -103,6 +103,7 @@ class PanTool(BaseTool):
             event.y = dest[1]
             self.panning_mouse_move(event)
         return
+
     def normal_left_down(self, event):
         """ Handles the left mouse button being pressed when the tool is in
         the 'normal' state.
@@ -171,23 +172,22 @@ class PanTool(BaseTool):
 
         if self._auto_constrain and self.constrain_direction is None:
             # Determine the constraint direction
-            if abs(event.x - self._original_xy[0]) > abs(event.y - self._original_xy[1]):
+            x_orig, y_orig = self._original_xy
+            if abs(event.x - x_orig) > abs(event.y - y_orig):
                 self.constrain_direction = "x"
             else:
                 self.constrain_direction = "y"
 
-        for direction, bound_name, ndx in [("x","width",0), ("y","height",1)]:
+        direction_info = [("x", "width", 0), ("y", "height", 1)]
+        for direction, bound_name, index in direction_info:
             if not self.constrain or self.constrain_direction == direction:
                 mapper = getattr(plot, direction + "_mapper")
-                range = mapper.range
                 domain_min, domain_max = mapper.domain_limits
                 eventpos = getattr(event, direction)
-                origpos = self._original_xy[ndx]
+                origpos = self._original_xy[index]
 
                 screenlow, screenhigh = mapper.screen_bounds
                 screendelta = self.speed * (eventpos - origpos)
-                #if getattr(plot, direction + "_direction", None) == "flipped":
-                #    screendelta = -screendelta
 
                 newlow = mapper.map_data(screenlow - screendelta)
                 newhigh = mapper.map_data(screenhigh - screendelta)
@@ -201,33 +201,35 @@ class PanTool(BaseTool):
                 # linear mappers (which is used 99% of the time).
                 if domain_min is None:
                     if self.restrict_to_data:
-                        domain_min = min([source.get_data().min() for source in range.sources])
+                        domain_min = min([source.get_data().min()
+                                          for source in mapper.range.sources])
                     else:
                         domain_min = -inf
                 if domain_max is None:
                     if self.restrict_to_data:
-                        domain_max = max([source.get_data().max() for source in range.sources])
+                        domain_max = max([source.get_data().max()
+                                          for source in mapper.range.sources])
                     else:
                         domain_max = inf
+
                 if (newlow <= domain_min) and (newhigh >= domain_max):
                     # Don't do anything; effectively, freeze the pan
                     continue
+
                 if newlow <= domain_min:
-                    delta = newhigh - newlow
                     newlow = domain_min
-                    # Don't let the adjusted newhigh exceed domain_max; this
-                    # can happen with a nonlinear mapper.
-                    newhigh = min(domain_max, domain_min + delta)
+                    # Calculate delta in screen space, which is always linear.
+                    screen_delta = mapper.map_screen(domain_min) - screenlow
+                    newhigh = mapper.map_data(screenhigh + screen_delta)
                 elif newhigh >= domain_max:
-                    delta = newhigh - newlow
                     newhigh = domain_max
-                    # Don't let the adjusted newlow go below domain_min; this
-                    # can happen with a nonlinear mapper.
-                    newlow = max(domain_min, domain_max - delta)
+                    # Calculate delta in screen space, which is always linear.
+                    screen_delta = mapper.map_screen(domain_max) - screenhigh
+                    newlow = mapper.map_data(screenlow + screen_delta)
 
                 # Use .set_bounds() so that we don't generate two range_changed
                 # events on the DataRange
-                range.set_bounds(newlow, newhigh)
+                mapper.range.set_bounds(newlow, newhigh)
 
         event.handled = True
 
