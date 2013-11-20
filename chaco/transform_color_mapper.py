@@ -3,7 +3,7 @@ from numpy import clip, isinf, ones_like, empty
 from chaco.api import ColorMapper
 from traits.api import Trait, Callable, Tuple, Float, on_trait_change
 
-from speedups import map_colors
+from speedups import map_colors, map_colors_uint8
 
 class TransformColorMapper(ColorMapper):
     """This class adds arbitrary data transformations to a ColorMapper.
@@ -129,6 +129,16 @@ class TransformColorMapper(ColorMapper):
         norm_data = self._compute_normalized_data(data_array)
         indices = (norm_data * (self.steps-1)).astype(int)
         return indices
+
+    def map_uint8(self, data_array):
+        """ Maps an array of data values to an array of colors.
+        """
+        norm_data = self._compute_normalized_data(data_array)
+        rgba = map_colors_uint8(norm_data, self.steps, 0.0, 1.0,
+                self._red_lut_uint8, self._green_lut_uint8,
+                self._blue_lut_uint8, self._alpha_lut_uint8)
+
+        return rgba
 
     #-------------------------------------------------------------------
     # Private methods

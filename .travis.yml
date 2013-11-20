@@ -1,0 +1,29 @@
+language: python
+python:
+  - 2.7
+  - 2.6
+virtualenv:
+  # This allows installing PyQt using apt-get and being able to import it.
+  system_site_packages: true
+before_install:
+  # On Python 2.7 we install PyQt4 and run the UI tests.
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then source .travis_before_install; fi
+install:
+  # nose is already installed
+  - pip install unittest2
+  - pip install cython 
+  - sudo apt-get install python-numpy
+  - sudo apt-get install swig
+  # Test against the current master of traits, traitsui and enable
+  - pip install git+http://github.com/enthought/traits.git#egg=traits
+  - pip install git+http://github.com/enthought/traitsui.git#egg=traitsui
+  - pip install git+http://github.com/enthought/enable.git#egg=enable
+  - python setup.py develop
+script: 
+  # Running all tests in chaco/tests and chaco/tests2
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then nosetests -v chaco; fi
+  # FIXME: tricky to install PyQt for version <= 2.6, only running chaco/tests
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then nosetests -v chaco/tests; fi
+notifications:
+  email:
+    - travis-ci@enthought.com

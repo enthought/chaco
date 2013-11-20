@@ -1,3 +1,11 @@
+
+Enhancements
+------------
+
+ * AbstractPlotData and subclasses now implement an update_data() method which
+   updates the data whilst firing only one update event.
+
+
 Chaco 4.1.0
 ===========
 

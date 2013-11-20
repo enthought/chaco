@@ -4,14 +4,14 @@ This demonstrates how to create a plot offscreen and save it to an image
 file on disk.
 """
 # Standard library imports
-import os, sys
+import os
+import sys
 
 # Major library imports
-from numpy import fabs, linspace, pi, sin
+from numpy import linspace
 from scipy.special import jn
 
 # Enthought library imports
-from traits.api import false
 from traits.etsconfig.api import ETSConfig
 
 # Chaco imports
@@ -24,6 +24,7 @@ DPI = 72.0
 # with the GraphicsContext's CTM.
 dpi_scale = DPI / 72.0
 
+
 def create_plot():
     numpoints = 100
     low = -5
@@ -32,9 +33,9 @@ def create_plot():
     pd = ArrayPlotData(index=x)
     p = Plot(pd, bgcolor="oldlace", padding=50, border_visible=True)
     for i in range(10):
-        pd.set_data("y" + str(i), jn(i,x))
+        pd.set_data("y" + str(i), jn(i, x))
         p.plot(("index", "y" + str(i)), color=tuple(COLOR_PALETTE[i]),
-               width = 2.0 * dpi_scale)
+               width=2.0 * dpi_scale)
     p.x_grid.visible = True
     p.x_grid.line_width *= dpi_scale
     p.y_grid.visible = True
@@ -42,7 +43,8 @@ def create_plot():
     p.legend.visible = True
     return p
 
-def draw_plot(filename, size=(800,600)):
+
+def draw_plot(filename, size=(800, 600)):
     container = create_plot()
     container.outer_bounds = list(size)
     container.do_layout(force=True)
@@ -51,7 +53,8 @@ def draw_plot(filename, size=(800,600)):
     gc.save(filename)
     return
 
-def draw_svg(filename, size=(800,600)):
+
+def draw_svg(filename, size=(800, 600)):
     from chaco.svg_graphics_context import SVGGraphicsContext
     container = create_plot()
     container.bounds = list(size)
@@ -60,14 +63,24 @@ def draw_svg(filename, size=(800,600)):
     gc.render_component(container)
     gc.save(filename)
 
-def draw_pdf(filename, size=(800,600)):
+
+def draw_pdf(filename, size=(800, 600)):
     from chaco.pdf_graphics_context import PdfPlotGraphicsContext
     container = create_plot()
-    container.bounds = list(size)
+    container.outer_bounds = list(size)
     container.do_layout(force=True)
-    gc = PdfPlotGraphicsContext(filename=filename, dest_box = (0.5, 0.5, 5.0, 5.0))
-    gc.render_component(container)
+    gc = PdfPlotGraphicsContext(filename=filename,
+                                dest_box=(0.5, 0.5, 5.0, 5.0))
+
+    for i in range(2):
+        # draw the plot
+        gc.render_component(container)
+
+        #Start a new page for subsequent draw commands.
+        gc.add_page()
+
     gc.save()
+
 
 def get_directory(filename):
     print 'Please enter a path in which to place generated plots.'
@@ -89,7 +102,7 @@ def get_directory(filename):
 if __name__ == "__main__":
     if ETSConfig.kiva_backend == 'svg':
         # Render the plot as a SVG
-        draw_svg(get_directory('noninteractive.svg'), size=(800,600))
+        draw_svg(get_directory('noninteractive.svg'), size=(800, 600))
     elif ETSConfig.kiva_backend == 'pdf':
         # Render the plot as a PDF, requires on ReportLab
         draw_pdf(get_directory('noninteractive.pdf'))
