@@ -1,3 +1,11 @@
+#
+# (C) Copyright 2013 Enthought, Inc., Austin, TX
+# All right reserved.
+#
+# This file is open source software distributed according to the terms in
+# LICENSE.txt
+#
+
 """ Defines the ImagePlot class.
 """
 
@@ -28,7 +36,7 @@ class ImagePlot(Base2DPlot):
 
     # The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
-
+    
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -115,15 +123,20 @@ class ImagePlot(Base2DPlot):
     # Private methods
     #------------------------------------------------------------------------
 
-    def _compute_cached_image(self, data=None):
+    def _compute_cached_image(self, data=None, mapper=None):
         """ Computes the correct sub-image coordinates and renders an image
         into self._cached_image.
 
         The parameter *data* is for subclasses that might not store an RGB(A)
         image as the value, but need to compute one to display (colormaps, etc.).
+        
+        The parameter *mapper* is also for subclasses that might not store an
+        RGB(A) image as their value, and gives an opportunity to produce the
+        values only for the visible region, rather than for the whole plot,
+        at the expense of more frequent computation.
         """
 
-        if data == None:
+        if data is None:
             data = self.value.data
 
         (lpt, upt) = self.index.get_bounds()
@@ -159,6 +172,9 @@ class ImagePlot(Base2DPlot):
 
             # Since data is row-major, j1 and j2 go first
             data = data[j1:j2, i1:i2]
+        
+        if mapper is not None:
+            data = mapper(data)
 
         # Furthermore, the data presented to the GraphicsContextArray needs to
         # be contiguous.  If it is not, we need to make a copy.
@@ -172,6 +188,7 @@ class ImagePlot(Base2DPlot):
         else:
             raise RuntimeError, "Unknown colormap depth value: %i" \
                                 % data.value_depth
+
 
         self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)
         if gc_rect is not None:
@@ -310,3 +327,4 @@ class ImagePlot(Base2DPlot):
     def _value_data_changed_fired(self):
         self._image_cache_valid = False
         self.request_redraw()
+        

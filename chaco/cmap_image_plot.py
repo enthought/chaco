@@ -1,12 +1,20 @@
+#
+# (C) Copyright 2013 Enthought, Inc., Austin, TX
+# All right reserved.
+#
+# This file is open source software distributed according to the terms in
+# LICENSE.txt
+#
 
-from numpy import invert, zeros
+from numpy import zeros
 
 # Enthought library imports.
 from traits.api import Any, Bool, Float, Instance, Property, Tuple
 
 # Local relative imports
 from image_plot import ImagePlot
-from color_mapper import ColorMapper
+from abstract_colormap import AbstractColormap
+from speedups import apply_selection_fade
 
 
 class CMapImagePlot(ImagePlot):
@@ -21,7 +29,7 @@ class CMapImagePlot(ImagePlot):
     #------------------------------------------------------------------------
 
     # Maps from scalar data values in self.data.value to color tuples
-    value_mapper = Instance(ColorMapper)
+    value_mapper = Instance(AbstractColormap)
 
     # Convenience property for value_mapper as color_mapper
     color_mapper = Property
@@ -36,6 +44,9 @@ class CMapImagePlot(ImagePlot):
     #fade_background = Tuple((255,255,255))
     # RGB color to use to fade out unselected points.
     fade_background = Tuple((0,0,0))
+    
+    # whether to pre-compute the full colormapped RGB(A) image
+    cache_full_map = Bool(True)
 
     #------------------------------------------------------------------------
     # Private Traits
@@ -44,7 +55,7 @@ class CMapImagePlot(ImagePlot):
     # Is the mapped image valid?
     _mapped_image_cache_valid = Bool(False)
 
-    # Cache of the fully mapped image.
+    # Cache of the fully mapped RGB(A) image.
     _cached_mapped_image = Any
 
     #------------------------------------------------------------------------
@@ -93,35 +104,50 @@ class CMapImagePlot(ImagePlot):
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
-
+    
+    def _cmap_values(self, data, selection_masks=None):
+        """ Maps the data to RGB(A) with optional selection masks overlayed
+        
+        """
+        # get the RGBA values from the color map as uint8
+        mapped_image = self.value_mapper.map_uint8(data)
+        if selection_masks is not None:
+            # construct a composite mask
+            if len(selection_masks) > 0:
+                mask = zeros(mapped_image.shape[:2], dtype=bool)
+                for m in selection_masks:
+                    mask = mask | m
+            else:
+                mask = zeros(self._cached_mapped_image.shape[:2], dtype=bool)
+            # Apply the selection fade, from speedups.py
+            apply_selection_fade(mapped_image, mask,
+                    self.fade_alpha, self.fade_background)
+        return mapped_image
+        
     def _compute_cached_image(self, selection_masks=None):
         """ Updates the cached image.
         """
-        if not self._mapped_image_cache_valid:
-            cached_mapped_image = \
-                self.value_mapper.map_screen(self.value.data) * 255
-            if selection_masks is not None:
-                # construct a composite mask
-                mask = zeros(cached_mapped_image.shape[:2], dtype=bool)
-                for m in selection_masks:
-                    mask = mask | m
-                invmask = invert(mask)
-                # do a cheap alpha blend with our specified color
-                cached_mapped_image[invmask,0:3] = \
-                    self.fade_alpha*(cached_mapped_image[invmask,0:3] -
-                                     self.fade_background) + self.fade_background
-            self._cached_mapped_image = cached_mapped_image
+        if self.cache_full_map:
+            if not self._mapped_image_cache_valid:
+                self._cached_mapped_image = self._cmap_values(self.value.data,
+                    selection_masks)
+                self._mapped_image_cache_valid = True
+
+            mapped_value = self._cached_mapped_image
+            ImagePlot._compute_cached_image(self, mapped_value)
+        else:
             self._mapped_image_cache_valid = True
-
-        mapped_value = self._cached_mapped_image
-        ImagePlot._compute_cached_image(self, mapped_value.astype("UInt8"))
-
+            ImagePlot._compute_cached_image(self, self.value.data, mapper=lambda data:
+                self._cmap_values(data))
+            
     def _update_value_mapper(self):
         self._mapped_image_cache_valid = False
+        self._image_cache_valid = False
         self.invalidate_draw()
 
     def _update_selections(self):
         self._mapped_image_cache_valid = False
+        self._image_cache_valid = False
         self.invalidate_draw()
 
     #------------------------------------------------------------------------
@@ -155,7 +181,7 @@ class CMapImagePlot(ImagePlot):
             if new.range is None and old.range is not None:
                 new.range = old.range
         self._update_value_mapper()
-
+    
     def _value_data_changed_fired(self):
         super(CMapImagePlot, self)._value_data_changed_fired()
         self._mapped_image_cache_valid = False
@@ -165,4 +191,8 @@ class CMapImagePlot(ImagePlot):
         super(CMapImagePlot, self)._index_data_changed_fired()
         self._mapped_image_cache_valid = False
         return
+    
+    def _cache_full_map_changed(self):
+        self._mapped_image_cache_valid = False
+        
 

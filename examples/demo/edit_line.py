@@ -8,9 +8,10 @@ Right-drag pans the plot.
 
 Mousewheel up and down zooms the plot in and out.
 
-Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular region to
-zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow and
-alt-right-arrow moves you forwards and backwards through the "zoom history".
+Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
+region to zoom.  If you use a sequence of zoom boxes, pressing control-y and
+control-z  (use Meta-y and Meta-z on Mac) moves you forwards and backwards
+through the "zoom history".
 """
 
 # Major library imports
@@ -23,7 +24,7 @@ from chaco.example_support import COLOR_PALETTE
 from enable.tools.api import DragTool
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance, Int, Tuple
-from traitsui.api import Item, Group, View
+from traitsui.api import UItem, View
 
 # Chaco imports
 from chaco.api import add_default_axes, add_default_grids, \
@@ -160,7 +161,7 @@ def _create_plot_component():
 
     # The ZoomTool tool is stateful and allows drawing a zoom
     # box to select a zoom region.
-    zoom = ZoomTool(scatter, tool_mode="box", always_on=False, drag_button=None)
+    zoom = ZoomTool(scatter, tool_mode="box", always_on=False)
     scatter.overlays.append(zoom)
 
     scatter.tools.append(PointDraggingTool(scatter))
@@ -181,19 +182,17 @@ def _create_plot_component():
 # Attributes to use for the plot view.
 size=(800,700)
 title="Simple line plot"
+
 #===============================================================================
 # # Demo class that is used by the demo.py application.
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
-    traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+    traits_view = View(UItem('plot', editor=ComponentEditor()),
+                       width=size[0], height=size[1], resizable=True,
+                       title=title
+                       )
 
     def _plot_default(self):
          return _create_plot_component()

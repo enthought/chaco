@@ -5,7 +5,7 @@ from __future__ import with_statement
 
 # Major library imports
 from numpy import argsort, array, concatenate, nonzero, invert, take, \
-                  isnan, transpose, newaxis, zeros
+                  isnan, transpose, newaxis, zeros, ndarray
 
 # Enthought library imports
 from kiva.constants import STROKE
@@ -52,7 +52,7 @@ class ColormappedScatterPlot(ScatterPlot):
 
     # Determines what drawing approach to use:
     #
-    # bands:
+    # banded:
     #     Draw the points color-band by color-band, thus reducing the number of
     #     set_stroke_color() calls. Disadvantage is that some colors will
     #     appear more prominently than others if there are a lot of
@@ -66,7 +66,7 @@ class ColormappedScatterPlot(ScatterPlot):
     #
     # TODO: Based on preliminary results, "banded" isn't significantly
     # more expensive than "bruteforce" for small datasets (<1000),
-    # so perhaps bruteforce should be removed.
+    # so perhaps banded should be removed.
     render_method = Enum("auto", "banded", "bruteforce")
 
     # A dict mapping color-map indices to arrays of indices into self.data.
@@ -160,6 +160,7 @@ class ColormappedScatterPlot(ScatterPlot):
 
 
         self._cached_data_pts = points[point_mask]
+        self._cached_point_mask = point_mask
 
         self._cache_valid = True
         return
@@ -251,7 +252,7 @@ class ColormappedScatterPlot(ScatterPlot):
     def _calc_render_method(self, numpoints):
         """ Returns a string indicating the render method.
         """
-        if numpoints > 1000:
+        if numpoints > 1000 and isinstance(self.marker_size, float):
             return 'banded'
         else:
             return "bruteforce"
@@ -283,6 +284,7 @@ class ColormappedScatterPlot(ScatterPlot):
 
         marker = self.marker_
         size = self.marker_size
+        assert isinstance(size, float), "Variable size markers not implemented for banded rendering"
 
         # Set up the GC for drawing
         gc.set_line_dash( None )
@@ -346,22 +348,26 @@ class ColormappedScatterPlot(ScatterPlot):
             gc.set_line_width(self.line_width)
 
             marker_cls = self.marker_
-            size = self.marker_size
+            marker_size = self.marker_size
+            if isinstance(marker_size, ndarray) and self._cached_point_mask is not None:
+                marker_size = marker_size[self._cached_point_mask]
             mode = marker_cls.draw_mode
 
             if marker_cls != "custom":
                 if (hasattr(gc, "draw_marker_at_points") and self.marker not in ('custom', 'circle', 'diamond')):
-                    draw_func = lambda x, y: gc.draw_marker_at_points([[x,y]], size, marker_cls.kiva_marker)
+                    draw_func = lambda x, y, size: gc.draw_marker_at_points([[x,y]], size, marker_cls.kiva_marker)
 
                 elif hasattr(gc, "draw_path_at_points"):
-                    path = gc.get_empty_path()
                     # turn the class into an instance... we should make add_to_path a
                     # class method at some point.
-                    marker_cls().add_to_path(path, size)
-                    draw_func = lambda x, y: gc.draw_path_at_points([[x,y]], path, mode)
+                    m = marker_cls()
+                    def draw_func(x, y, size):
+                        path = gc.get_empty_path()
+                        m.add_to_path(path, size)
+                        gc.draw_path_at_points([[x, y]], path, mode)
                 else:
                     m = marker_cls()
-                    def draw_func(x, y):
+                    def draw_func(x, y, size):
                         gc.translate_ctm(x, y)
                         gc.begin_path()
                         m.add_to_path(gc, size)
@@ -369,8 +375,12 @@ class ColormappedScatterPlot(ScatterPlot):
                         gc.translate_ctm(-x, -y)
 
                 for i in range(len(x)):
+                    if isinstance(marker_size, float):
+                        size = marker_size
+                    else:
+                        size = marker_size[i]
                     gc.set_fill_color(colors[i])
-                    draw_func(x[i], y[i])
+                    draw_func(x[i], y[i], size)
 
             else:
                 path = marker_cls.custom_symbol

@@ -78,6 +78,7 @@ from candle_plot import CandlePlot
 from multi_line_plot import MultiLinePlot
 from jitterplot import JitterPlot
 from variable_size_scatterplot import VariableSizeScatterPlot
+from horizon_plot import BandedMapper, HorizonPlot
 
 # Plot factories
 from plot_factory import create_bar_plot, create_line_plot, create_scatter_plot, \

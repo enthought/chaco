@@ -6,7 +6,7 @@ from numpy import array, empty, sometrue, transpose, vstack, zeros
 
 # Enthought library imports
 from traits.api import Any, Array, Enum, Event, Bool, Instance, \
-                                 Property, Trait, List
+                                 Property, Str, Trait, List
 from kiva.agg import points_in_polygon
 
 # Chaco imports
@@ -54,9 +54,16 @@ class LassoSelection(AbstractController):
     # in the plot.
     selection_datasource = Instance(AbstractDataSource)
 
+    # The name of the metadata on the datasource that we will write
+    # the selection mask to
+    metadata_name = Str("selection")
+
     # Mapping from screen space to data space. By default, it is just
     # self.component.
     plot = Property
+
+    # The button which this tool responds to
+    drag_button = Enum("left", "right")
 
     # The possible event states of this selection tool (overrides
     # enable.Interactor).
@@ -114,6 +121,14 @@ class LassoSelection(AbstractController):
     #----------------------------------------------------------------------
 
     def normal_left_down(self, event):
+        if self.drag_button == "left":
+            return self.normal_mouse_down(event)
+
+    def normal_right_down(self, event):
+        if self.drag_button == "right":
+            return self.normal_mouse_down(event)
+
+    def normal_mouse_down(self, event):
         """ Handles the left mouse button being pressed while the tool is
         in the 'normal' state.
 
@@ -121,10 +136,10 @@ class LassoSelection(AbstractController):
         """
         # We may want to generalize this for the n-dimensional case...
 
-        self._active_selection = empty((0,2))
+        self._active_selection = empty((0,2), dtype=numpy.bool)
 
         if self.selection_datasource is not None:
-            self.selection_datasource.metadata['selection'] = zeros(len(self.selection_datasource.get_data()))
+            self.selection_datasource.metadata[self.metadata_name] = zeros(len(self.selection_datasource.get_data()), dtype=numpy.bool)
         self.selection_mode = "include"
         self.event_state = 'selecting'
         self.selecting_mouse_move(event)
@@ -140,7 +155,15 @@ class LassoSelection(AbstractController):
         return
 
     def selecting_left_up(self, event):
-        """ Handles the left mouse coming up in the 'selecting' state.
+        if self.drag_button == "left":
+            return self.selecting_mouse_up(event)
+
+    def selecting_right_up(self, event):
+        if self.drag_button == "right":
+            return self.selecting_mouse_up(event)
+
+    def selecting_mouse_up(self, event):
+        """ Handles the mouse button coming up in the 'selecting' state.
 
         Completes the selection and switches to the 'normal' state.
         """
@@ -149,7 +172,7 @@ class LassoSelection(AbstractController):
         self._update_selection()
 
         self._previous_selections.append(self._active_selection)
-        self._active_selection = empty((0,2))
+        self._active_selection = empty((0,2), dtype=numpy.bool)
         return
 
     def selecting_mouse_move(self, event):
@@ -175,8 +198,8 @@ class LassoSelection(AbstractController):
 
         Ends the selection operation.
         """
-        self.selecting_left_up(event)
-        return
+        # Treat this as if it were a selecting_mouse_up event
+        return self.selecting_mouse_up(event)
 
     def normal_key_pressed(self, event):
         """ Handles the user pressing a key in the 'normal' state.
@@ -189,7 +212,7 @@ class LassoSelection(AbstractController):
             self._reset()
             self._select_all()
         elif event.character == 'i' and event.control_down:
-            self.selecting_left_up(None)
+            self.selecting_mouse_up(None)
             self.selection_mode = 'invert'
             self._select_all()
         return
@@ -199,13 +222,13 @@ class LassoSelection(AbstractController):
     #----------------------------------------------------------------------
 
     def _dataspace_points_default(self):
-        return empty((0,2))
+        return empty((0,2), dtype=numpy.bool)
 
     def _reset(self):
         """ Resets the selection
         """
         self.event_state='normal'
-        self._active_selection = empty((0,2))
+        self._active_selection = empty((0,2), dtype=numpy.bool)
         self._previous_selections = []
         self._update_selection()
 
@@ -225,13 +248,13 @@ class LassoSelection(AbstractController):
 
 
     def _update_selection(self):
-        """ Sets the selection datasource's 'selection' metadata element
-            to a mask of all the points selected
+        """ Sets the selection datasource's metadata to a mask of all
+        the points selected
         """
         if self.selection_datasource is None:
             return
 
-        selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.int32)
+        selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.bool)
         data = self._get_data()
 
         # Compose the selection mask from the cached selections first, then
@@ -250,8 +273,8 @@ class LassoSelection(AbstractController):
         else:
             selected_mask |= (points_in_polygon(data, self._active_selection, False))
 
-        if sometrue(selected_mask != self.selection_datasource.metadata['selection']):
-            self.selection_datasource.metadata['selection'] = selected_mask
+        if sometrue(selected_mask != self.selection_datasource.metadata[self.metadata_name]):
+            self.selection_datasource.metadata[self.metadata_name] = selected_mask
             self.selection_changed = True
         return
 

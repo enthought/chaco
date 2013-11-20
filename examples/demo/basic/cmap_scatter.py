@@ -1,12 +1,12 @@
-#!/usr/bin/env python
 """
-Draws a colormapped scatterplot of some random data.
+Scatterplot with range-selectable data points
 
-Interactions are the same as simple_line, and additionally, range selection
-is available on the colorbar.  Right-click-drag will select a range of
-colors on the colormap.  This range can be dragged around, and the main
-plot will respond accordingly.  Left-click anywhere on the colorbar to
-cancel the range selection.
+Draws a colormapped scatterplot of random data.
+
+In addition to normal zooming and panning on the plot, the user can select
+a range of data values by right-dragging in the color bar.
+
+Left-click in the color bar to cancel the range selection.
 """
 
 # Major library imports
@@ -16,7 +16,7 @@ from numpy.random import random
 # Enthought library imports
 from enable.api import Component, ComponentEditor, Window
 from traits.api import HasTraits, Instance
-from traitsui.api import Item, Group, View
+from traitsui.api import Item, VGroup, View, Label
 
 # Chaco imports
 from chaco.api import ArrayPlotData, ColorBar, \
@@ -56,7 +56,7 @@ def _create_plot_component():
               bgcolor = "white")
 
     # Tweak some of the plot properties
-    plot.title = "Colormapped Scatter Plot"
+    plot.title = "Colormapped Scatter Plot with Range-selectable Data Points"
     plot.padding = 50
     plot.x_grid.visible = False
     plot.y_grid.visible = False
@@ -114,11 +114,13 @@ class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
+                    VGroup(
+                        Label('Right-drag on colorbar to select data range'),
                         Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
+                        ),
+                    resizable=True, 
+                    title=title
                     )
     def _plot_default(self):
          return _create_plot_component()
@@ -127,5 +129,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-# EOF

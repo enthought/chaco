@@ -1,6 +1,10 @@
-#!/usr/bin/env python
 """
-Example of using tooltips on Chaco plots
+Scattergram inspector tool
+
+Allows the user to highlight and/or select individual points of a scattergram.
+
+When the mouse hovers over a scatter point, it changes temporarily. If you click
+on a point, you select and mark (or unselect and unmark) the point.
 """
 
 # Major library imports
@@ -74,5 +78,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-#---EOF---

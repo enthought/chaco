@@ -18,9 +18,8 @@ from traits.api import HasTraits, Instance, Int
 from traitsui.api import Item, View
 
 # Chaco imports
-from chaco.api import ArrayDataSource, MultiArrayDataSource, DataRange1D, \
-        LinearMapper, QuiverPlot, OverlayPlotContainer, add_default_grids, \
-        add_default_axes
+from chaco.api import add_default_grids, add_default_axes, ArrayPlotData, \
+    Plot, OverlayPlotContainer
 from chaco.tools.api import PanTool, ZoomTool
 
 
@@ -42,25 +41,12 @@ class PlotExample(HasTraits):
         vectorlen = self.vectorlen
         vectors = array((random(numpts)*vectorlen, random(numpts)*vectorlen)).T
 
-        # Create an array data sources to plot all vectors at once
-        xs = ArrayDataSource(x, sort_order='ascending')
-        ys = ArrayDataSource(y)
-        vector_ds = MultiArrayDataSource(vectors)
-
-        # Set up the Plot
-        xrange = DataRange1D()
-        xrange.add(xs)
-        yrange = DataRange1D()
-        yrange.add(ys)
-
-        quiverplot = QuiverPlot(index = xs, value = ys,
-                        vectors = vector_ds,
-                        index_mapper = LinearMapper(range=xrange),
-                        value_mapper = LinearMapper(range=yrange),
-                        bgcolor = "white")
-
-        add_default_axes(quiverplot)
-        add_default_grids(quiverplot)
+        data = ArrayPlotData()
+        data.set_data('index', x)
+        data.set_data('value', y)
+        data.set_data('vectors', vectors)
+        quiverplot = Plot(data)
+        quiverplot.quiverplot(('index', 'value', 'vectors'))
 
         # Attach some tools to the plot
         quiverplot.tools.append(PanTool(quiverplot, constrain_key="shift"))

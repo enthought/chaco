@@ -50,11 +50,11 @@ class ImageData(AbstractDataSource):
     data = Property(ImageTrait)
 
     # Is **raw_value**, the actual underlying image data
-    # array, transposed from **value**? (I.e., does the first axis correspond to
+    # array, transposed from **data**? (I.e., does the first axis correspond to
     # the x-direction and the second axis correspond to the y-direction?)
     #
     # Rather than transposing or swapping axes on the data and destroying
-    # continuity, this class exposes the data as both **value** and **raw_value**.
+    # continuity, this class exposes the data as both **data** and **raw_value**.
     transposed = Bool(False)
 
     # A read-only attribute that exposes the underlying array.

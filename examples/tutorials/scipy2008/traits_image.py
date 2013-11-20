@@ -31,10 +31,10 @@ class ImagePlotTraits(HasTraits):
         plotdata = ArrayPlotData(imagedata = z)
         # Create a Plot and associate it with the PlotData
         plot = Plot(plotdata)
-        # Create a line plot in the Plot
-        self.renderer = plot.img_plot("imagedata", name="plot1", xbounds=x, ybounds=y, colormap=jet)[0]
+        # Create an image plot in the Plot
+        self.renderer = plot.img_plot("imagedata", name="plot1",
+                                      xbounds=xgrid, ybounds=ygrid, colormap=jet)[0]
         self.plot = plot
-        return
 
     def _origin_changed(self):
         self.renderer.origin = self.origin

@@ -12,16 +12,16 @@ from scipy import fft
 
 # Enthought library imports
 from chaco.default_colormaps import jet
-from traits.api import HasTraits, Instance, Any
+from traits.api import HasTraits, Any
 
 # Chaco imports
-from chaco.api import Plot, ArrayPlotData, HPlotContainer, \
-        OverlayPlotContainer
+from chaco.api import Plot, ArrayPlotData, OverlayPlotContainer
 from chaco.tools.api import MoveTool, PanTool, ZoomTool
 
 NUM_SAMPLES = 1024
 SAMPLING_RATE = 11025
 SPECTROGRAM_LENGTH = 100
+
 
 def create_plot_component(obj):
     # Setup the spectrum plot
@@ -66,10 +66,12 @@ def create_plot_component(obj):
         0.0, float(SPECTROGRAM_LENGTH*NUM_SAMPLES)/float(SAMPLING_RATE),
         num=SPECTROGRAM_LENGTH)
     spectrogram_freq = linspace(0.0, float(SAMPLING_RATE/2), num=NUM_SAMPLES/2)
+    xbounds = (spectrogram_time[0], spectrogram_time[-1])
+    ybounds = (spectrogram_freq[0], spectrogram_freq[-1])
     spectrogram_plot.img_plot('imagedata',
                               name='Spectrogram',
-                              xbounds=spectrogram_time,
-                              ybounds=spectrogram_freq,
+                              xbounds=xbounds,
+                              ybounds=ybounds,
                               colormap=jet,
                               )
     range_obj = spectrogram_plot.plots['Spectrogram'][0].value_mapper.range

@@ -7,9 +7,7 @@ Three of the plots are now oriented vertically, but the dataspace of all
 will move the Y axis of one of the horizontally-oriented plots, and vice
 versa.
 """
-
 # Major library imports
-import wx
 from numpy import arange
 from scipy.special import jn
 
@@ -17,9 +15,10 @@ from scipy.special import jn
 from enable.api import Window
 from enable.example_support import DemoFrame, demo_main
 from traits.api import HasTraits
+from pyface.timer.api import Timer
 
 # Chaco imports
-from chaco.api import *
+from chaco.api import create_line_plot, OverlayPlotContainer, ArrayDataSource
 from chaco.tools.api import MoveTool, PanTool, ZoomTool
 
 
@@ -28,19 +27,21 @@ COLOR_PALETTE = ("mediumslateblue", "maroon", "darkgreen", "goldenrod",
 
 PLOT_SIZE = 250
 
+
 class AnimatedPlot(HasTraits):
+
     def __init__(self, x, y, color="blue", bgcolor="white", orientation="h"):
         self.y_values = y[:]
         if type(x) == ArrayDataSource:
             self.x_values = x.get_data()[:]
             plot = create_line_plot((x, self.y_values), color=color,
-                                    bgcolor=bgcolor, add_grid=True, add_axis=True,
-                                    orientation=orientation)
+                                    bgcolor=bgcolor, add_grid=True,
+                                    add_axis=True, orientation=orientation)
         else:
             self.x_values = x[:]
             plot = create_line_plot((self.x_values,self.y_values), color=color,
-                                    bgcolor=bgcolor, add_grid=True, add_axis=True,
-                                    orientation=orientation)
+                                    bgcolor=bgcolor, add_grid=True,
+                                    add_axis=True, orientation=orientation)
 
         plot.resizable = ""
         plot.bounds = [PLOT_SIZE, PLOT_SIZE]
@@ -69,9 +70,6 @@ class AnimatedPlot(HasTraits):
 
 
 class PlotFrame(DemoFrame):
-
-    def _create_data(self):
-        values = [jn(i, x) for i in range(10)]
 
     def _create_window(self):
         numpoints = 50
@@ -105,27 +103,21 @@ class PlotFrame(DemoFrame):
             container.add(plot)
             self.animated_plots.append(animated_plot)
 
-
         for i, a_plot in enumerate(self.animated_plots):
-            a_plot.plot.position = [50 + (i%3)*(PLOT_SIZE+50), 50 + (i//3)*(PLOT_SIZE+50)]
+            a_plot.plot.position = [50 + (i%3)*(PLOT_SIZE+50),
+                                    50 + (i//3)*(PLOT_SIZE+50)]
 
-
-        # Set the timer to generate events to us
-        timerId = wx.NewId()
-        self.timer = wx.Timer(self, timerId)
-        self.Bind(wx.EVT_TIMER, self.onTimer, id=timerId)
-        self.timer.Start(100.0, wx.TIMER_CONTINUOUS)
-
+        self.timer = Timer(100.0, self.onTimer)
         self.container = container
         return Window(self, -1, component=container)
 
-    def onTimer(self, event):
+    def onTimer(self, *args):
         for plot in self.animated_plots:
             plot.timer_tick()
         return
 
 
 if __name__ == "__main__":
-    demo_main(PlotFrame, size=(1000,800), title="Updating line plot")
-
-# EOF
+    # Save demo so that it doesn't get garbage collected when run within
+    # existing event loop (i.e. from ipython).
+    demo = demo_main(PlotFrame, size=(950, 650), title="Updating line plot")

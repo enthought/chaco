@@ -12,6 +12,7 @@ from traits.api import Enum, Property, ReadOnly, Tuple
 from base import PointTrait, reverse_map_1d, SortOrderTrait
 from array_data_source import ArrayDataSource
 
+
 class PointDataSource(ArrayDataSource):
     """ A data source representing a (possibly unordered) set of (X,Y) points.
 

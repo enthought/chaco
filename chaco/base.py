@@ -92,19 +92,22 @@ def bin_search(values, value, ascending):
 def reverse_map_1d(data, pt, sort_order, floor_only=False):
     """Returns the index of *pt* in the array *data*.
 
+    Raises IndexError if *pt* is outside the range of values in *data*.
+
     Parameters
     ----------
     data : 1-D array
         data to search
+
     pt : scalar value
         value to find, which must be within the value range of *data*
+
     sort_order : string
         "ascending" or "descending"
+
     floor_only : bool
         if true, don't find "nearest" point, instead find last point
         less (greater) than pt
-
-    Raises IndexError if *pt* is outside the range of values in *data*.
     """
     if sort_order == "ascending":
         ndx = bin_search(data, pt, 1)

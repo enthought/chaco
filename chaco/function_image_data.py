@@ -33,14 +33,18 @@ class FunctionImageData(ImageData):
     @on_trait_change('data_range.updated')
     def recalculate(self):
         if self.func is not None and self.data_range is not None:
-            newarray = self.func(self.data_range.x_range.low, self.data_range.x_range.high,
-                self.data_range.y_range.low, self.data_range.y_range.high)
+            newarray = self.func(
+                self.data_range.x_range.low,
+                self.data_range.x_range.high,
+                self.data_range.y_range.low,
+                self.data_range.y_range.high
+            )
             ImageData.set_data(self, newarray)
         else:
             self._data = array([], dtype=float)
 
     def set_data(self, *args, **kw):
-        raise RuntimeError("Cannot set numerical data on a FunctionDataSource")
+        raise RuntimeError("Cannot set numerical data on a FunctionImageData")
 
     def set_mask(self, mask):
         # This would be REALLY FREAKING SLICK, but it's currently unimplemented

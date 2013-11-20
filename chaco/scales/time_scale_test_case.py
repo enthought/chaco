@@ -148,7 +148,7 @@ class TimeScaleTestCase(TicksTestCase):
         ts = TimeScale(microseconds=1)
         base = DTS(1975, 3, 15, 10, 45, 10)
         start = base + 2.8e-6
-        end = start + 9.2e-6
+        end = base + 9.2e-6
         ticks = ts.ticks(start, end)
         desired = [base+i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6, 9e-6)]
         print "ticks:   ", ticks

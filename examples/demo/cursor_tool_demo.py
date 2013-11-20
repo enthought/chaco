@@ -1,7 +1,11 @@
 """
-A Demonstration of the CursorTool functionality
+Cursor tool
+
+A cursor tool lets you drag vertical and horizontal lines whose intersection
+defines one point on the plot.
 
 Left-button drag to move the cursors round.
+
 Right-drag to pan the plots. 'z'-key to Zoom
 
 """

@@ -3,9 +3,9 @@
 
 # Major library imports
 from types import IntType, FloatType
-from numpy import arange, array, asarray, clip, \
-                  divide, isnan, ones, searchsorted, \
-                  sometrue, sort, take, where, zeros, linspace, ones_like
+from numpy import arange, array, asarray, clip, divide, float32, int8, isinf, \
+        isnan, ones, searchsorted, sometrue, sort, take, uint8, where, zeros, \
+        linspace, ones_like
 
 # Enthought library imports
 from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
@@ -14,6 +14,8 @@ from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
 # Relative imports
 from abstract_colormap import AbstractColormap
 from data_range_1d import DataRange1D
+
+from speedups import map_colors, map_colors_uint8
 
 
 class ColorMapTemplate(HasTraits):
@@ -188,7 +190,7 @@ class ColorMapper(AbstractColormap):
         rgba_arr = [[],[],[],[]]
         for line in lines[1:]:
             strvalues = line.strip().split()
-            values = [float(value) for value in strvalues]
+            values = [float32(value) for value in strvalues]
             if len(values) > 4:
                 channels = (0,1,2,3)
             else:
@@ -246,16 +248,11 @@ class ColorMapper(AbstractColormap):
         if self._dirty:
             self._recalculate()
 
-        high = self.range.high
-        low = self.range.low
+        rgba = map_colors(data_array, self.steps, self.range.low,
+                self.range.high, self._red_lut, self._green_lut,
+                self._blue_lut, self._alpha_lut)
 
-        # Handle null ranges
-        if high == low:
-            norm_data = 0.5*ones_like(data_array)
-        else:
-            norm_data = clip((data_array - low) / (high - low), 0.0, 1.0)
-
-        return self._map(norm_data)
+        return rgba
 
 
     def map_index(self, ary):
@@ -278,6 +275,18 @@ class ColorMapper(AbstractColormap):
             data[:,0] = (1.0 - data[:,0])
             self._segmentdata[name] = data[::-1]
         self._recalculate()
+
+    def map_uint8(self, data_array):
+        """ Maps an array of data values to an array of colors.
+        """
+        if self._dirty:
+            self._recalculate()
+
+        rgba = map_colors_uint8(data_array, self.steps, self.range.low,
+                self.range.high, self._red_lut_uint8, self._green_lut_uint8,
+                self._blue_lut_uint8, self._alpha_lut_uint8)
+
+        return rgba
 
 
     #------------------------------------------------------------------------
@@ -315,6 +324,10 @@ class ColorMapper(AbstractColormap):
         self._alpha_lut = self._make_mapping_array(
             self.steps, self._segmentdata['alpha']
         )
+        self._red_lut_uint8 = (self._red_lut * 255.0).astype('uint8')
+        self._green_lut_uint8 = (self._green_lut * 255.0).astype('uint8')
+        self._blue_lut_uint8 = (self._blue_lut * 255.0).astype('uint8')
+        self._alpha_lut_uint8 = (self._alpha_lut * 255.0).astype('uint8')
         self.updated = True
         self._dirty = False
 
@@ -363,8 +376,8 @@ class ColorMapper(AbstractColormap):
                 "data mapping points must have x in increasing order")
         # begin generation of lookup table
         x = x * (n-1)
-        lut = zeros((n,), float)
-        xind = arange(float(n))
+        lut = zeros((n,), float32)
+        xind = arange(float32(n), dtype=float32)
         ind = searchsorted(x, xind)[1:-1]
 
         lut[1:-1] = ( divide(xind[1:-1] - take(x,ind-1),
@@ -386,6 +399,10 @@ class ColorMapper(AbstractColormap):
         it returns an array with the new shape = oldshape+(4,).  Any values
         that are outside the 0,1 interval are clipped to that interval before
         generating RGB values.
+
+        This is no longer used in this class. It has been deprecated and
+        retained for API compatibility.
+
         """
 
         if type(X) in [IntType, FloatType]:

@@ -14,23 +14,6 @@ the origin of the name "Kiva" for our vector graphics layer that Chaco uses for
 rendering.
 
 
-Why was Chaco named "Chaco2" for a while?
-=========================================
-
-Starting in January of 2006, we refactored and reimplemented much of the core
-Chaco API. The effort has been named "chaco2", and lives in the
-:mod:`chaco2` namespace. During that time, the original Chaco package
-("Chaco Classic") was in maintenance-only mode, but there was still code that
-needed features from both Chaco Classic and Chaco2.  That code has finally been
-either shelved or refactored, and the latest versions of Chaco (3.0 and up) are
-back to residing in the :mod:`chaco` namespace.  We still have
-compatibility modules in :mod:`chaco2`, but they just proxy for the
-real code in :mod:`chaco`.
-
-The same applies to the :mod:`enable` and :mod:`enable2`
-packages.
-
-
 What are the pros and cons of Chaco vs. matplotlib?
 ===================================================
 
