@@ -51,9 +51,16 @@ class SVGGraphicsContext(GraphicsContext):
         if not container_coords:
             x = -x
             y = -y
+
+        # Compute the new x and y scale from the translation
+        width, height = self.width(), self.height()
+        width_scale = (width - x) / float(width)
+        height_scale = (height - y) / float(height)
+
         with self:
             self.translate_ctm(x, y)
-            component.draw(self, view_bounds=(0, 0, self.width(), self.height()))
+            self.scale_ctm(width_scale, height_scale)
+            component.draw(self, view_bounds=(0, 0, width, height))
         return
 
     def clip_to_rect(self, x, y, width, height):
