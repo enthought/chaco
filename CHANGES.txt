@@ -1,20 +1,41 @@
-Chaco Changelog
+
+Chaco CHANGELOG
 ===============
 
-Since 4.3.0
+Release 4.4.0
+-------------
+This release contains a lot of enhancements and bug fixes mostly to the OOP API of Chaco but also its shell mode.
 
-New Features:
 
- * Add control of the maximum width of a tick label. Provide that hook to the TextBoxOverlay. (# 128)
+Change summary since 4.3.0
+--------------------------
 
-Enhancements:
+New features
 
- * Add Travis-CI support (#136)
-   
+ * Improved ArrayPlotData to support changing multiple arrays without triggering a re-plot after each update. This 
+   prevents the plot from being temporarily out of synch, which is important if the index and the values are both changed
+   to new values with different shapes (PR#124).
+ * Added control of the maximum width of a tick label. Provide that hook to the TextBoxOverlay. (PR#128)
+ * Fixed aspect ratio grid mappers (PR#129). This allows various 2D plots to control the shape of the pixels in an 
+   image.
 
-Fixes:
+Enhancements
 
- * 
+ * Improved the display of multi-word titles (PR#148).
+ * Add Travis-CI support for python 2.6 and 2.7 (PR#136, PR#145, PR#146)
+ * Minor improvements to the documentation (PR#134, PR#118).
+ * Made the cmap_image_plot caching more efficient and faster in large data situations (PR#123).
+ * Improved support for exporting to multipage PDF (PR#109) and drawing in landscape orientation (PR#115).
+ * Added control over whether a border for an overlay should be drawn (PR#116).
+ * Made LineSegmentTool work with BasePlot2D (PR#121)
+ * TextBoxOverlay now exposes the text color as a top level trait (PR#120). 
 
-There are currently some other unlisted changes going back some time
-before this file was created.
+Fixes
+
+ * Fixed clipping issue when exporting plot to SVG (PR#111) and PDF (PR#109)
+ * Fixed export to png, bmp, jpg formats in the shell mode (PR#149)
+ * Removed unexpected zoom when panning if the pan tool has restrict_to_data set to True and the plot has nonlinear    
+   axes (PR#150). 
+ * Fixed a couple of failing unit tests (PR#143)
+ * Fix sort_order bug (PR#141, issue#119)
+
