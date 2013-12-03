@@ -15,7 +15,7 @@ features are that 1) they keep a reference to the plot they are decorating in
 :attr:`~chaco.abstract_overlay.AbstractOverlay.component`;
 2) the background color
 :attr:`~chaco.abstract_overlay.AbstractOverlay.bgcolor`
-is 'trasparent' by default;
+is 'transparent' by default;
 3) they plot :ref:`on the 'overlay' layer <plot_layers>` by default.
 
 
@@ -60,7 +60,7 @@ appending it to its underlays layer: ::
 Attributes
 ----------
 
-This attributes control the appearance of the axis:
+These attributes control the appearance of the axis:
 
 :attr:`~chaco.axis.PlotAxis.title`,
 :attr:`~chaco.axis.PlotAxis.title_font`,
@@ -98,7 +98,7 @@ This attributes control the appearance of the axis:
 :attr:`~chaco.axis.PlotAxis.tick_label_offset`,
 :attr:`~chaco.axis.PlotAxis.tick_label_position`,
 
-  The attributes allow to fine-tune the aspect of the tick labels:
+  These attributes allow to fine-tune the aspect of the tick labels:
   first of all, the font (e.g. '12 pt bold italic') and color of the
   labels. The position and orientation of the label can be also be
   closely controlled: :attr:`tick_label_rotate_angle` give the rotation

@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Quickstart &mdash; chaco v4.2.1 documentation</title>
+    <title>Quickstart &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,9 +27,9 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="index.html" />
     <link rel="next" title="Tutorials, webinars, and examples" href="user_manual/tutorials_and_examples.html" />
-    <link rel="prev" title="Chaco 4.2.1" href="index.html" /> 
+    <link rel="prev" title="Chaco 4.4.0" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -36,9 +39,9 @@
           <a href="user_manual/tutorials_and_examples.html" title="Tutorials, webinars, and examples"
              accesskey="N">next</a></li>
         <li class="right" >
-          <a href="index.html" title="Chaco 4.2.1"
+          <a href="index.html" title="Chaco 4.4.0"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="index.html">chaco 4.4.0 documentation</a> &raquo;</li>
   
     <li><a href="#">Quickstart</a></li>
   
@@ -59,7 +62,7 @@
 <col width="49%" />
 </colgroup>
 <tbody valign="top">
-<tr><td><img alt="_images/simple_line.png" class="first last align-center" src="_images/simple_line.png" style="height: 300px;" />
+<tr class="row-odd"><td><img alt="_images/simple_line.png" class="first last align-center" src="_images/simple_line.png" style="height: 300px;" />
 </td>
 <td><img alt="_images/scalar_function.png" class="first last align-center" src="_images/scalar_function.png" style="height: 300px;" />
 </td>
@@ -149,7 +152,7 @@ examples can be browsed from the start menu, by clicking
 <li>On Linux, they are in the <tt class="file docutils literal"><span class="pre">Examples/Chaco-&lt;version&gt;</span></tt> subdirectory of
 your installation location.</li>
 <li>On Mac OS X, they are in the
-<tt class="file docutils literal"><span class="pre">/Applications/Enthought/Examples/Chaco-&lt;version&gt;</span></tt> directory.</li>
+<tt class="file docutils literal"><span class="pre">/Applications/Enthought/Examples/chaco-&lt;version&gt;</span></tt> directory.</li>
 </ul>
 </li>
 <li><p class="first">If you downloaded and installed Chaco from source (from GitHub or via the
@@ -157,23 +160,19 @@ PyPI tar.gz file), the examples are located in the <tt class="file docutils lite
 subdirectory inside the root of the Chaco source tree, next to <tt class="file docutils literal"><span class="pre">docs/</span></tt>
 and the <tt class="file docutils literal"><span class="pre">enthought/</span></tt> directories.</p>
 </li>
-<li><p class="first">If you don&#8217;t know how Chaco was installed, then you can download the
-examples separately using Git (or Subversion for older versions of Chaco):</p>
-<ul>
-<li><p class="first">For the most up-to-date version of the examples:</p>
-<p><strong class="command">git clone https://github.com/enthought/chaco/tree/master/examples</strong></p>
-</li>
-<li><p class="first">For the most up-to-date version of the examples using the old version of
-the namespace (importing chaco using <tt class="docutils literal"><span class="pre">from</span> <span class="pre">enthought.chaco</span></tt>):</p>
-<p><strong class="command">git clone https://github.com/enthought/chaco/tree/old-namespace/examples</strong></p>
-</li>
-<li><p class="first">ETS 3.0 or Chaco 3.0:</p>
-<p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples</strong></p>
-</li>
-<li><p class="first">ETS 2.8 or Chaco 2.0.x:</p>
-<p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples</strong></p>
-</li>
-</ul>
+<li><p class="first">If you don&#8217;t know how Chaco was installed, you can download the latest
+versions of examples individually from github:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples">https://github.com/enthought/chaco/tree/master/examples</a></p>
+</div></blockquote>
+<p>For ETS 3.0 or Chaco 3.0, you can check out the examples with Subversion:</p>
+<blockquote>
+<div><p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples</strong></p>
+</div></blockquote>
+<p>For ETS 2.8 or Chaco 2.0.x:</p>
+<blockquote>
+<div><p><strong class="command">svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples</strong></p>
+</div></blockquote>
 </li>
 </ol>
 <p>Chaco examples can be found in the <tt class="file docutils literal"><span class="pre">examples/demo/</span></tt> and
@@ -408,7 +407,7 @@ free and open source under the BSD license.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -429,9 +428,9 @@ free and open source under the BSD license.</p>
           <a href="user_manual/tutorials_and_examples.html" title="Tutorials, webinars, and examples"
              >next</a></li>
         <li class="right" >
-          <a href="index.html" title="Chaco 4.2.1"
+          <a href="index.html" title="Chaco 4.4.0"
              >previous</a> |</li>
-        <li><a href="index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="index.html">chaco 4.4.0 documentation</a> &raquo;</li>
   
     <li><a href="#">Quickstart</a></li>
   
@@ -439,9 +438,9 @@ free and open source under the BSD license.</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

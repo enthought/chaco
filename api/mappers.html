@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Mappers &mdash; chaco v4.2.1 documentation</title>
+    <title>Mappers &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Containers" href="containers.html" />
     <link rel="prev" title="Data Ranges" href="data_ranges.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="data_ranges.html" title="Data Ranges"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Mappers</a></li>
@@ -67,7 +70,7 @@ region in output space.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>updated</strong> : Event</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>updated</strong> : Event</p>
 <blockquote>
 <div><p>A generic &#8220;update&#8221; event that generally means that anything that relies
 on this mapper for visual output should do a redraw or repaint.</p>
@@ -85,14 +88,14 @@ image and 2D mappers these will be tuples.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.AbstractMapper.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big> &rarr; data_val<a class="headerlink" href="#chaco.api.AbstractMapper.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data(screen_val) -&gt; data_val</p>
 <p>Maps values from screen space into data space.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.AbstractMapper.map_data_array">
-<tt class="descname">map_data_array</tt><big>(</big><em>screen_vals</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_data_array</tt><big>(</big><em>screen_vals</em><big>)</big> &rarr; data_vals<a class="headerlink" href="#chaco.api.AbstractMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data_array(screen_vals) -&gt; data_vals</p>
 <p>Maps an array of values from screen space into data space.
 By default, this method just loops over the points, calling map_data()
@@ -102,7 +105,7 @@ implmentation with a faster one.</p>
 
 <dl class="method">
 <dt id="chaco.api.AbstractMapper.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big> &rarr; screen_array<a class="headerlink" href="#chaco.api.AbstractMapper.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_screen(data_array) -&gt; screen_array</p>
 <p>Maps values from data space into screen space.</p>
 </dd></dl>
@@ -122,7 +125,7 @@ region in output space.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>range</strong> : Instance(DataRange1D)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>range</strong> : Instance(DataRange1D)</p>
 <blockquote>
 <div><p>The data-space bounds of the mapper.</p>
 </div></blockquote>
@@ -140,11 +143,15 @@ region in output space.</p>
 Must be a tuple (low_pos, high_pos).</p>
 </div></blockquote>
 <p><strong>stretch_data</strong> : Bool(True)</p>
-<blockquote class="last">
+<blockquote>
 <div><p>Should the mapper stretch the dataspace when its screen space bounds are
 modified (default), or should it preserve the screen-to-data ratio and
 resize the data bounds?  If the latter, it will only try to preserve
 the ratio if both screen and data space extents are non-zero.</p>
+</div></blockquote>
+<p><strong>sign</strong> : Property</p>
+<blockquote class="last">
+<div><p>The sign of the mapping: 1 if deltas match sign, -1 if opposite sign</p>
 </div></blockquote>
 </td>
 </tr>
@@ -166,14 +173,14 @@ data space and a corresponding fixed line in screen space.</p>
 and <strong>high_pos</strong>.</p>
 <dl class="method">
 <dt id="chaco.api.LinearMapper.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#chaco.api.LinearMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big> &rarr; data_val<a class="headerlink" href="#chaco.api.LinearMapper.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data(screen_val) -&gt; data_val</p>
 <p>Overrides AbstractMapper. Maps values from screen space into data space.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.LinearMapper.map_data_array">
-<tt class="descname">map_data_array</tt><big>(</big><em>screen_vals</em><big>)</big><a class="headerlink" href="#chaco.api.LinearMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_data_array</tt><big>(</big><em>screen_vals</em><big>)</big> &rarr; data_vals<a class="headerlink" href="#chaco.api.LinearMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data_array(screen_vals) -&gt; data_vals</p>
 <p>Overrides AbstractMapper. Maps an array of values from screen space
 into data space.</p>
@@ -181,7 +188,7 @@ into data space.</p>
 
 <dl class="method">
 <dt id="chaco.api.LinearMapper.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.LinearMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big> &rarr; screen_array<a class="headerlink" href="#chaco.api.LinearMapper.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_screen(data_array) -&gt; screen_array</p>
 <p>Overrides AbstractMapper. Maps values from data space into screen space.</p>
 </dd></dl>
@@ -201,7 +208,7 @@ space to a 1-D region in output space.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>fill_value</strong> : Float(1.0)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>fill_value</strong> : Float(1.0)</p>
 <blockquote class="last">
 <div><p>The value to map when asked to map values &lt;= LOG_MINIMUM to screen space.</p>
 </div></blockquote>
@@ -211,14 +218,14 @@ space to a 1-D region in output space.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.LogMapper.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big><a class="headerlink" href="#chaco.api.LogMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_data</tt><big>(</big><em>screen_val</em><big>)</big> &rarr; data_val<a class="headerlink" href="#chaco.api.LogMapper.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data(screen_val) -&gt; data_val</p>
 <p>Overrides Abstract Mapper. Maps values from screen space into data space.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.LogMapper.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.LogMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big> &rarr; screen_array<a class="headerlink" href="#chaco.api.LogMapper.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_screen(data_array) -&gt; screen_array</p>
 <p>Overrides AbstractMapper. Maps values from data space to screen space.</p>
 </dd></dl>
@@ -234,14 +241,15 @@ space to a 1-D region in output space.</p>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_mapper.AbstractMapper</span></tt></p>
 <p>Maps a 2-D data space to and from screen space by specifying a 2-tuple in
 data space or by specifying a pair of screen coordinates.</p>
-<p>The mapper concerns itself only with metric and not with orientation. So, to
-&#8220;flip&#8221; a screen space orientation, swap the appropriate screen space
-values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_low_pos</strong>, and <strong>y_high_pos</strong>.</p>
+<p>The mapper concerns itself only with metric and not with orientation. So,
+to &#8220;flip&#8221; a screen space orientation, swap the appropriate screen space
+values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_low_pos</strong>, and
+<strong>y_high_pos</strong>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>range</strong> : Instance(DataRange2D)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>range</strong> : Instance(DataRange2D)</p>
 <blockquote>
 <div><p>The data-space bounds of the mapper.</p>
 </div></blockquote>
@@ -273,21 +281,29 @@ modified (default), or should it preserve the screen-to-data ratio and
 resize the data bounds?  If the latter, it will only try to preserve
 the ratio if both screen and data space extents are non-zero.</p>
 </div></blockquote>
-<p class="last"><strong>stretch_data_y</strong> : DelegatesTo(&#8216;_ymapper&#8217;, prefix=&#8217;stretch_data&#8217;)</p>
+<p><strong>stretch_data_y</strong> : DelegatesTo(&#8216;_ymapper&#8217;, prefix=&#8217;stretch_data&#8217;)</p>
+<p><strong>maintain_aspect_ratio</strong> : Bool</p>
+<blockquote>
+<div><p>Should the mapper try to maintain a fixed aspect ratio between x and y</p>
+</div></blockquote>
+<p><strong>aspect_ratio</strong> : Float(1.0)</p>
+<blockquote class="last">
+<div><p>The aspect ratio that we wish to maintain</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
 <dt id="chaco.api.GridMapper.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_pts</em><big>)</big><a class="headerlink" href="#chaco.api.GridMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_data</tt><big>(</big><em>screen_pts</em><big>)</big> &rarr; data_vals<a class="headerlink" href="#chaco.api.GridMapper.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_data(screen_pts) -&gt; data_vals</p>
 <p>Maps values from screen space into data space.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.GridMapper.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_pts</em><big>)</big><a class="headerlink" href="#chaco.api.GridMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">map_screen</tt><big>(</big><em>data_pts</em><big>)</big> &rarr; screen_array<a class="headerlink" href="#chaco.api.GridMapper.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>map_screen(data_pts) -&gt; screen_array</p>
 <p>Maps values from data space into screen space.</p>
 </dd></dl>
@@ -313,7 +329,7 @@ ColorMapper constructor.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color_bands</strong> : Property(Array)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color_bands</strong> : Property(Array)</p>
 <blockquote>
 <div><p>The color table.</p>
 </div></blockquote>
@@ -400,6 +416,12 @@ the transitions.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="chaco.api.ColorMapper.map_uint8">
+<tt class="descname">map_uint8</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper.map_uint8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data values to an array of colors.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="chaco.api.ColorMapper.reverse_colormap">
 <tt class="descname">reverse_colormap</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ColorMapper.reverse_colormap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reverses the color bands of this colormap.</p>
@@ -420,7 +442,7 @@ plots.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>segment_map</strong> : Any</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>segment_map</strong> : Any</p>
 <blockquote>
 <div><p>The segment data of the color map.</p>
 </div></blockquote>
@@ -478,7 +500,7 @@ unit interval [0,1] to itself (e.g. x^2 or sin(pi*x/2)).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_func</strong> : Trait(None, None, Callable)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_func</strong> : Trait(None, None, Callable)</p>
 <p><strong>unit_func</strong> : Trait(None, None, Callable)</p>
 <p class="last"><strong>transformed_bounds</strong> : Tuple(Trait(None, None, Float), Trait(None, None, Float))</p>
 </td>
@@ -522,6 +544,12 @@ TransoformColorMapper.factory_from_color_map().</p>
 <dd><p>Maps an array of data values to an array of colors.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.map_uint8">
+<tt class="descname">map_uint8</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.TransformColorMapper.map_uint8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data values to an array of colors.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -559,7 +587,7 @@ TransoformColorMapper.factory_from_color_map().</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -582,7 +610,7 @@ TransoformColorMapper.factory_from_color_map().</p>
         <li class="right" >
           <a href="data_ranges.html" title="Data Ranges"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Mappers</a></li>
@@ -591,9 +619,9 @@ TransoformColorMapper.factory_from_color_map().</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

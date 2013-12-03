@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plot Factories &mdash; chaco v4.2.1 documentation</title>
+    <title>Plot Factories &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Axis and Grid" href="axis.html" />
     <link rel="prev" title="Renderers" href="renderers.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="renderers.html" title="Renderers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Plot Factories</a></li>
@@ -124,7 +127,7 @@ something other than &#8220;normal&#8221; if they are flipped.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_changed</strong> : Event</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_changed</strong> : Event</p>
 <blockquote>
 <div><p>Indicates that some of the data has changed.  The event object must
 be a dict with keys &#8220;added&#8221;, &#8220;removed&#8221;, &#8220;changed&#8221; and values that are
@@ -144,6 +147,14 @@ set_data()?</p>
 </tbody>
 </table>
 <dl class="method">
+<dt id="chaco.api.AbstractPlotData.del_data">
+<tt class="descname">del_data</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.del_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the array specified by <em>name</em>, or raises a KeyError if
+the named array does not exist.</p>
+<p>If the instance is not writable, then this must do nothing.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="chaco.api.AbstractPlotData.get_data">
 <tt class="descname">get_data</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the data or data source associated with <em>name</em>.</p>
@@ -162,14 +173,36 @@ hashable type.</p>
 <dl class="method">
 <dt id="chaco.api.AbstractPlotData.set_data">
 <tt class="descname">set_data</tt><big>(</big><em>name</em>, <em>new_data</em>, <em>generate_name=False</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.set_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the new data&#8217;s name.</p>
-<p>If <strong>writable</strong> is True, then this method sets the data associated
-with the given name to the new value.</p>
-<p>If <strong>writable</strong> is False, then this method must do nothing.</p>
-<p>If <em>generate_name</em> is True, then the data source must
-create a new name to bind to the data, and return it.</p>
-<p>If the name does not exist, then the method attaches a new data entry
-to this PlotData.</p>
+<dd><p>Sets the specified array as the value for either the specified
+name or a generated name.</p>
+<p>If the instance&#8217;s <cite>writable</cite> attribute is True, then this method sets
+the data associated with the given name to the new value, otherwise it
+does nothing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
+<blockquote>
+<div><p>The name of the array whose value is to be set.</p>
+</div></blockquote>
+<p><strong>new_data</strong> : array</p>
+<blockquote>
+<div><p>The array to set as the value of <em>name</em>.</p>
+</div></blockquote>
+<p><strong>generate_name</strong> : Boolean</p>
+<blockquote>
+<div><p>If True, a unique name of the form &#8216;seriesN&#8217; is created for the
+array, and is used in place of <em>name</em>. The &#8216;N&#8217; in &#8216;seriesN&#8217; is
+one greater the largest N already used.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>The name under which the array was set.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -182,7 +215,7 @@ data.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
 <blockquote>
 <div><p>Name of an array</p>
 </div></blockquote>
@@ -195,6 +228,14 @@ array named by <em>name</em> is selected.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractPlotData.update_data">
+<tt class="descname">update_data</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.update_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a set of data values, firing only one data_changed event.</p>
+<p>This function has the same signature as the dictionary update()
+method.</p>
 </dd></dl>
 
 </dd></dl>
@@ -214,7 +255,7 @@ Chaco components or interactors.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>arrays</strong> : Dict</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>arrays</strong> : Dict</p>
 <blockquote>
 <div><p>Map of names to arrays.  Although there is no restriction on the array
 dimensions, each array must correspond to a single plot item; that
@@ -255,12 +296,14 @@ the named array does not exist.</p>
 <tt class="descname">set_data</tt><big>(</big><em>name</em>, <em>new_data</em>, <em>generate_name=False</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the specified array as the value for either the specified
 name or a generated name.</p>
-<p>Implements AbstractPlotData.</p>
+<p>If the instance&#8217;s <cite>writable</cite> attribute is True, then this method sets
+the data associated with the given name to the new value, otherwise it
+does nothing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
 <blockquote>
 <div><p>The name of the array whose value is to be set.</p>
 </div></blockquote>
@@ -276,7 +319,7 @@ one greater the largest N already used.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>The name under which the array was set.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>The name under which the array was set.</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -287,6 +330,15 @@ one greater the largest N already used.</p>
 <dt id="chaco.api.ArrayPlotData.set_selection">
 <tt class="descname">set_selection</tt><big>(</big><em>name</em>, <em>selection</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.set_selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overrides AbstractPlotData to do nothing and not raise an error.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayPlotData.update_data">
+<tt class="descname">update_data</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.update_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the specified array as the value for either the specified
+name or a generated name.</p>
+<p>Implements AbstractPlotData&#8217;s update_data() method.  This method has
+the same signature as the dictionary update() method.</p>
 </dd></dl>
 
 </dd></dl>
@@ -319,7 +371,7 @@ data sources, create those data sources before handing them to the Plot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data</strong> : Instance(AbstractPlotData)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data</strong> : Instance(AbstractPlotData)</p>
 <blockquote>
 <div><p>The PlotData instance that drives this plot.</p>
 </div></blockquote>
@@ -346,7 +398,7 @@ destroyed if no color plots are on the plot.</p>
 and ordered to be red-green color-blind friendly, though should not
 be an issue for blue-yellow.</p>
 </div></blockquote>
-<p><strong>renderer_map</strong> : Dict(dict(line=LinePlot, bar=BarPlot, scatter=ScatterPlot, polygon=PolygonPlot, filled_line=FilledLinePlot, cmap_scatter=ColormappedScatterPlot, img_plot=ImagePlot, cmap_img_plot=CMapImagePlot, contour_line_plot=ContourLinePlot, contour_poly_plot=ContourPolyPlot, candle=CandlePlot))</p>
+<p><strong>renderer_map</strong> : Dict(dict(line=LinePlot, bar=BarPlot, scatter=ScatterPlot, polygon=PolygonPlot, filled_line=FilledLinePlot, cmap_scatter=ColormappedScatterPlot, img_plot=ImagePlot, cmap_img_plot=CMapImagePlot, contour_line_plot=ContourLinePlot, contour_poly_plot=ContourPolyPlot, candle=CandlePlot, quiver=QuiverPlot))</p>
 <blockquote>
 <div><p>Mapping of renderer type string to renderer class
 This can be overriden to customize what renderer type the Plot
@@ -391,7 +443,7 @@ will instantiate for its various plotting methods.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>index_name</strong> : str</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>index_name</strong> : str</p>
 <blockquote>
 <div><p>The name of the index datasource.</p>
 </div></blockquote>
@@ -431,7 +483,7 @@ will instantiate for its various plotting methods.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : list(string), tuple(string)</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : list(string), tuple(string)</p>
 <blockquote>
 <div><p>The names of the data to be plotted in the ArrayDataSource.  The
 number of arguments determines how they are interpreted:</p>
@@ -459,7 +511,7 @@ then a log scale is used.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call.</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -474,7 +526,7 @@ then a log scale is used.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
 <blockquote>
 <div><p>The name of the data array in self.plot_data, which must be
 floating point data.</p>
@@ -551,7 +603,7 @@ will be used.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
 <blockquote>
 <div><p>The name of the data array in self.plot_data</p>
 </div></blockquote>
@@ -602,7 +654,7 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string, tuple(string), list(string)</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string, tuple(string), list(string)</p>
 <blockquote>
 <div><p>The data to be plotted. The type of plot and the number of
 arguments determines how the arguments are interpreted:</p>
@@ -649,7 +701,7 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 </div></blockquote>
 </td>
 </tr>
-<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call to plot()</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call to plot()</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -662,6 +714,40 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 <span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y1&quot;</span><span class="p">,</span> <span class="s">&quot;y2&quot;</span><span class="p">,</span> <span class="s">&quot;y3&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Plot.quiverplot">
+<tt class="descname">quiverplot</tt><big>(</big><em>data</em>, <em>name=None</em>, <em>origin=None</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.quiverplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new sub-plot using the given data and plot style.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : list(string), tuple(string)</p>
+<blockquote>
+<div><p>The names of the data to be plotted in the ArrayDataSource.  There
+is only one combination accepted by this function:</p>
+<p>(index, value, vectors)
+index and value together determine the start coordinates of
+each vector.  The vectors are an Nx2</p>
+</div></blockquote>
+<p><strong>name</strong> : string</p>
+<blockquote>
+<div><p>The name of the plot.  If None, then a default one is created.</p>
+</div></blockquote>
+<p><strong>origin</strong> : string</p>
+<blockquote>
+<div><p>Which corner the origin of this plot should occupy:
+&#8220;bottom left&#8221;, &#8220;top left&#8221;, &#8220;bottom right&#8221;, &#8220;top right&#8221;</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -683,7 +769,7 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>auto_hide</strong> : DelegatesTo(&#8216;toolbar&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>auto_hide</strong> : DelegatesTo(&#8216;toolbar&#8217;)</p>
 <blockquote>
 <div><p>Should we turn on the auto-hide feature on the toolbar?</p>
 </div></blockquote>
@@ -741,7 +827,7 @@ instance <a href="#id2"><span class="problematic" id="id3">`</span></a>obj`s too
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -764,7 +850,7 @@ instance <a href="#id2"><span class="problematic" id="id3">`</span></a>obj`s too
         <li class="right" >
           <a href="renderers.html" title="Renderers"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Plot Factories</a></li>
@@ -773,9 +859,9 @@ instance <a href="#id2"><span class="problematic" id="id3">`</span></a>obj`s too
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

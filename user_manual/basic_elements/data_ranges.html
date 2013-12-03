@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Data ranges &mdash; chaco v4.2.1 documentation</title>
+    <title>Data ranges &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../../index.html" />
     <link rel="up" title="Introduction" href="../introduction.html" />
     <link rel="next" title="Mappers" href="mappers.html" />
     <link rel="prev" title="Data sources" href="data_sources.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="data_sources.html" title="Data sources"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >User guide</a> &raquo;</li>
           <li><a href="../introduction.html" accesskey="U">Introduction</a> &raquo;</li>
   
@@ -76,7 +79,7 @@ and
 <blockquote>
 <div><p><tt class="xref py py-attr docutils literal"><span class="pre">sources</span></tt></p>
 <blockquote>
-<div>A list of data sources associated to the data range. Concrete implementation
+<div>A list of data sources associated to the data range. Concrete implementations
 of data range listen to the event
 <tt class="xref py py-attr docutils literal"><span class="pre">data_changed</span></tt>
 and refresh their bounds as appropriate (e.g., when the bounds are
@@ -104,11 +107,11 @@ upper bound is set automatically from the associated data sources.</div></blockq
 <blockquote>
 <div><p><tt class="xref py py-attr docutils literal"><span class="pre">add(*datasources)</span></tt></p>
 <blockquote>
-<div>Convenience method to associate one ore more data sources to the range.
+<div>Convenience method to associate one or more data sources to the range.
 The method avoids adding the same data source twice.</div></blockquote>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">remove(*datasources)</span></tt></p>
 <blockquote>
-<div>Convenience method to remove one ore more data sources from the range.
+<div>Convenience method to remove one or more data sources from the range.
 If one of the data sources is not associated with the range,
 it is ignored.</div></blockquote>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">clip_data(data)</span></tt></p>
@@ -211,7 +214,7 @@ return 2-elements tuples containing the bounds for  for the two dimensions.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -234,7 +237,7 @@ return 2-elements tuples containing the bounds for  for the two dimensions.</p>
         <li class="right" >
           <a href="data_sources.html" title="Data sources"
              >previous</a> |</li>
-        <li><a href="../../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >User guide</a> &raquo;</li>
           <li><a href="../introduction.html" >Introduction</a> &raquo;</li>
   
@@ -244,9 +247,9 @@ return 2-elements tuples containing the bounds for  for the two dimensions.</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

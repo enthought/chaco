@@ -98,7 +98,7 @@ that can be used in Traits applications to react to changes in the data source:
 
       .. note::
 
-         This majority of concrete data sources do not fire this event when
+         The majority of concrete data sources do not fire this event when
          the data values change. Rather, the event is usually fired when new
          data or a new mask is assigned through setter methods (see
          notes below).
@@ -108,6 +108,7 @@ that can be used in Traits applications to react to changes in the data source:
       Fired when the data bounds change.
 
     :attr:`~chaco.abstract_data_source.AbstractDataSource.metadata_changed`
+
       Fired when the content of :attr:`metadata` changes (both the
       :attr:`metadata` dictionary object or any of its items).
 

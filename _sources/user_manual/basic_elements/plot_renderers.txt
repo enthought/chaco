@@ -50,7 +50,7 @@ Box properties
 
 All plot renderers are :mod:`enable` graphical components, and thus correspond
 to a rectangular area in screen space. The renderer keeps track of two
-area: an inner box that only contains the plot, and an outer box
+areas: an inner box that only contains the plot, and an outer box
 that includes the padding and border area.
 The properties of the boxes are controlled by
 these attributes:
@@ -108,7 +108,7 @@ these attributes:
     :attr:`aspect_ratio`,
     :attr:`auto_center`
 
-      Ratio of the components's width to its heights. This is used to maintain
+      Ratio of the component's width to its height. This is used to maintain
       a fixed ratio between bounds when thet are changed independently,
       for example when resizing the window. :attr:`auto_center`
       specifies if the component should center itself in any space
@@ -127,7 +127,7 @@ these attributes:
       also be set to a single integer, in which case all four padding
       attributes are set to the same value.
 
-      :attr:`hpadding` and :attr:`vpadding` are read-only property that return
+      :attr:`hpadding` and :attr:`vpadding` are read-only properties that return
       the total amount of horizontal and vertical padding (including
       the border width if the border is visible).
 
@@ -146,7 +146,7 @@ and borders:
 
       The background color of this component (default is white). This can be
       set to "transparent" or "none" if the component should be see-through.
-      The color can be specified as a string or as and RGB or RGBa tuple.
+      The color can be specified as a string or as an RGB or RGBa tuple.
 
     :attr:`fill_padding`
 
@@ -168,7 +168,7 @@ and borders:
     :attr:`border_color`
 
       Color of the border.
-      The color can be specified as a string or as and RGB or RGBa tuple.
+      The color can be specified as a string or as an RGB or RGBa tuple.
 
 
 .. _plot_layers:
@@ -177,7 +177,7 @@ Layers
 ------
 
 Each plot is rendered in a sequence of layers so that different components
-can plot at different time. For example, a line plot is drawn *before*
+can plot at different times. For example, a line plot is drawn *before*
 its legend, but *after* the axes and background grid.
 
 The default drawing order is defined in
@@ -253,8 +253,8 @@ Others
 
     :attr:`use_backbuffer`
 
-      If True, the polt renders itself to an
-      offscreen buffer that is cached for later use. If False, (default) then
+      If True, the plot renders itself to an
+      offscreen buffer that is cached for later use. If False (default), then
       the component will *never* render itself back-buffered, even if asked
       to do so.
 
@@ -367,7 +367,7 @@ Two more attributes are worth mentioning:
 
 :attr:`~chaco.base_xy_plot.BaseXYPlot.use_downsampling`
 
-  If this attribute is True, the plot use downsampling for faster display
+  If this attribute is True, the plot uses downsampling for faster display
   (default is False). In other words, the number of display points depends
   on the plot size and range, and not on the total number of data points
   available.
@@ -390,7 +390,7 @@ companion interface, :ref:`BaseXYPlot <xy_plots>`,
 it handles data sources and
 data mappers, along with convenient shortcuts to find axes, labels and grids.
 
-Unlike other plot rendered, 2D plots draw on the
+Unlike other plot renderers, 2D plots draw on the
 :ref:`'image' layer <plot_layers>`, i.e., above any underlay element.
 
 Data-related traits
