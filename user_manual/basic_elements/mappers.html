@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Mappers &mdash; chaco v4.2.1 documentation</title>
+    <title>Mappers &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../../index.html" />
     <link rel="up" title="Introduction" href="../introduction.html" />
     <link rel="next" title="Plot renderers" href="plot_renderers.html" />
     <link rel="prev" title="Data ranges" href="data_ranges.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="data_ranges.html" title="Data ranges"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >User guide</a> &raquo;</li>
           <li><a href="../introduction.html" accesskey="U">Introduction</a> &raquo;</li>
   
@@ -150,13 +153,13 @@ y axes.</div></blockquote>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">screen_bounds</span></tt></p>
 <blockquote>
 <div>Convenience property to set/get the screen bounds with a single attribute.
-The value of this attribute a 4-elements tuple
+The value of this attribute is a 4-element tuple
 <tt class="docutils literal"><span class="pre">(x_low_pos,</span> <span class="pre">x_high_pos,</span> <span class="pre">y_low_pos,</span> <span class="pre">y_high_pos)</span></tt>.</div></blockquote>
 </div></blockquote>
 <p><tt class="xref py py-class docutils literal"><span class="pre">GridMapper</span></tt> uses two
 <tt class="xref py py-class docutils literal"><span class="pre">Base1DMapper</span></tt> instances to define mappers for
 the two axes (accessible from the two private attributes
-<tt class="xref py py-attr docutils literal"><span class="pre">_xmapper</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">_ymapper</span></tt>.
+<tt class="xref py py-attr docutils literal"><span class="pre">_xmapper</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">_ymapper</span></tt>).
 It thus possible to set them to be linear or
 logarithmic mappers. This is best made using the class constructor, which has
 this signature:</p>
@@ -205,7 +208,7 @@ but at the moment it is a copy of <tt class="xref py py-class docutils literal">
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -228,7 +231,7 @@ but at the moment it is a copy of <tt class="xref py py-class docutils literal">
         <li class="right" >
           <a href="data_ranges.html" title="Data ranges"
              >previous</a> |</li>
-        <li><a href="../../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >User guide</a> &raquo;</li>
           <li><a href="../introduction.html" >Introduction</a> &raquo;</li>
   
@@ -238,9 +241,9 @@ but at the moment it is a copy of <tt class="xref py py-class docutils literal">
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plot renderers &mdash; chaco v4.2.1 documentation</title>
+    <title>Plot renderers &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../../index.html" />
     <link rel="up" title="Introduction" href="../introduction.html" />
     <link rel="next" title="Plot types" href="../plot_types.html" />
     <link rel="prev" title="Mappers" href="mappers.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="mappers.html" title="Mappers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >User guide</a> &raquo;</li>
           <li><a href="../introduction.html" accesskey="U">Introduction</a> &raquo;</li>
   
@@ -93,7 +96,7 @@ Please refer to the API documentation for more details.</p>
 <h3>Box properties<a class="headerlink" href="#box-properties" title="Permalink to this headline">¶</a></h3>
 <p>All plot renderers are <tt class="xref py py-mod docutils literal"><span class="pre">enable</span></tt> graphical components, and thus correspond
 to a rectangular area in screen space. The renderer keeps track of two
-area: an inner box that only contains the plot, and an outer box
+areas: an inner box that only contains the plot, and an outer box
 that includes the padding and border area.
 The properties of the boxes are controlled by
 these attributes:</p>
@@ -144,7 +147,7 @@ always be twice as wide as the former.</div></blockquote>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">aspect_ratio</span></tt>,
 <tt class="xref py py-attr docutils literal"><span class="pre">auto_center</span></tt></p>
 <blockquote>
-<div>Ratio of the components&#8217;s width to its heights. This is used to maintain
+<div>Ratio of the component&#8217;s width to its height. This is used to maintain
 a fixed ratio between bounds when thet are changed independently,
 for example when resizing the window. <tt class="xref py py-attr docutils literal"><span class="pre">auto_center</span></tt>
 specifies if the component should center itself in any space
@@ -161,7 +164,7 @@ that is left empty (default is True).</div></blockquote>
 that returns a tuple of (left, right, top, bottom) padding. It can
 also be set to a single integer, in which case all four padding
 attributes are set to the same value.</p>
-<p><tt class="xref py py-attr docutils literal"><span class="pre">hpadding</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">vpadding</span></tt> are read-only property that return
+<p><tt class="xref py py-attr docutils literal"><span class="pre">hpadding</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">vpadding</span></tt> are read-only properties that return
 the total amount of horizontal and vertical padding (including
 the border width if the border is visible).</p>
 </div></blockquote>
@@ -180,7 +183,7 @@ and borders:</p>
 <blockquote>
 <div>The background color of this component (default is white). This can be
 set to &#8220;transparent&#8221; or &#8220;none&#8221; if the component should be see-through.
-The color can be specified as a string or as and RGB or RGBa tuple.</div></blockquote>
+The color can be specified as a string or as an RGB or RGBa tuple.</div></blockquote>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">fill_padding</span></tt></p>
 <blockquote>
 <div>If True (default), fill the padding area with the background color.</div></blockquote>
@@ -197,13 +200,13 @@ The color can be specified as a string or as and RGB or RGBa tuple.</div></block
 <p><tt class="xref py py-attr docutils literal"><span class="pre">border_color</span></tt></p>
 <blockquote>
 <div>Color of the border.
-The color can be specified as a string or as and RGB or RGBa tuple.</div></blockquote>
+The color can be specified as a string or as an RGB or RGBa tuple.</div></blockquote>
 </div></blockquote>
 </div>
 <div class="section" id="layers">
 <span id="plot-layers"></span><h3>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h3>
 <p>Each plot is rendered in a sequence of layers so that different components
-can plot at different time. For example, a line plot is drawn <em>before</em>
+can plot at different times. For example, a line plot is drawn <em>before</em>
 its legend, but <em>after</em> the axes and background grid.</p>
 <p>The default drawing order is defined in
 <tt class="xref py py-attr docutils literal"><span class="pre">draw_order</span></tt> as a list
@@ -267,8 +270,8 @@ The renderer defines its position relative to this.</div></blockquote>
 <blockquote>
 <div><p><tt class="xref py py-attr docutils literal"><span class="pre">use_backbuffer</span></tt></p>
 <blockquote>
-<div>If True, the polt renders itself to an
-offscreen buffer that is cached for later use. If False, (default) then
+<div>If True, the plot renders itself to an
+offscreen buffer that is cached for later use. If False (default), then
 the component will <em>never</em> render itself back-buffered, even if asked
 to do so.</div></blockquote>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">invalidate_and_redraw()</span></tt></p>
@@ -365,7 +368,7 @@ and <tt class="xref py py-attr docutils literal"><span class="pre">get_closest_l
 set to &#8216;transparent` by default.</div></blockquote>
 <p><tt class="xref py py-attr docutils literal"><span class="pre">use_downsampling</span></tt></p>
 <blockquote>
-<div><p>If this attribute is True, the plot use downsampling for faster display
+<div><p>If this attribute is True, the plot uses downsampling for faster display
 (default is False). In other words, the number of display points depends
 on the plot size and range, and not on the total number of data points
 available.</p>
@@ -386,7 +389,7 @@ image and contour plots. Just like its
 companion interface, <a class="reference internal" href="#xy-plots"><em>BaseXYPlot</em></a>,
 it handles data sources and
 data mappers, along with convenient shortcuts to find axes, labels and grids.</p>
-<p>Unlike other plot rendered, 2D plots draw on the
+<p>Unlike other plot renderers, 2D plots draw on the
 <a class="reference internal" href="#plot-layers"><em>&#8216;image&#8217; layer</em></a>, i.e., above any underlay element.</p>
 <div class="section" id="id3">
 <h3>Data-related traits<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
@@ -466,7 +469,7 @@ It ranges from 0.0 for transparent to 1.0 (default) for full intensity.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -489,7 +492,7 @@ It ranges from 0.0 for transparent to 1.0 (default) for full intensity.</p>
         <li class="right" >
           <a href="mappers.html" title="Mappers"
              >previous</a> |</li>
-        <li><a href="../../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >User guide</a> &raquo;</li>
           <li><a href="../introduction.html" >Introduction</a> &raquo;</li>
   
@@ -499,9 +502,9 @@ It ranges from 0.0 for transparent to 1.0 (default) for full intensity.</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

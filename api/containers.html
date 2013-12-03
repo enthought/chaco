@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Containers &mdash; chaco v4.2.1 documentation</title>
+    <title>Containers &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Visual Components" href="visual_components.html" />
     <link rel="prev" title="Mappers" href="mappers.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="mappers.html" title="Mappers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Containers</a></li>
@@ -74,7 +77,7 @@ the visual results will probably be incorrect.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>container_under_layers</strong> : Tuple(&#8216;background&#8217;, &#8216;image&#8217;, &#8216;underlay&#8217;, &#8216;plot&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>container_under_layers</strong> : Tuple(&#8216;background&#8217;, &#8216;image&#8217;, &#8216;underlay&#8217;, &#8216;plot&#8217;)</p>
 <blockquote>
 <div><p>Redefine the container layers to name the main layer as &#8220;plot&#8221; instead
 of the Enable default of &#8220;mainlayer&#8221;</p>
@@ -117,7 +120,7 @@ space.  All of its components must therefore be resizable.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
 <p><strong>use_backbuffer</strong> : False</p>
 <blockquote class="last">
 <div><p>Do not use an off-screen backbuffer.</p>
@@ -150,7 +153,7 @@ according to <strong>stack_order* in the same order that they appear in the
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
 <p><strong>stack_order</strong> : Enum(&#8216;left_to_right&#8217;, &#8216;right_to_left&#8217;)</p>
 <blockquote>
 <div><p>The order in which components in the plot container are laid out.</p>
@@ -181,7 +184,7 @@ according to <strong>stack_order* in the same order that they appear in the
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
 <p><strong>stack_dimension</strong> : &#8216;v&#8217;</p>
 <blockquote>
 <div><p>Overrides StackedPlotContainer.</p>
@@ -229,7 +232,7 @@ ordered list, this class keeps components as a simple list and exposes a
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
 <p><strong>spacing</strong> : Either(Tuple, List, Array)</p>
 <blockquote>
 <div><p>The amount of space to put on either side of each component, expressed
@@ -324,7 +327,7 @@ into self.fixed_lengths and self.resizable_lengths.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>selection_screen_start</strong> : Float(0.0)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>selection_screen_start</strong> : Float(0.0)</p>
 <blockquote>
 <div><p>Screen position of the start of the selection, which can be in the x- or
 y-dimension, depending on <strong>selection_direction</strong>.</p>
@@ -393,7 +396,7 @@ y-dimension, depending on <strong>selection_direction</strong>.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -416,7 +419,7 @@ y-dimension, depending on <strong>selection_direction</strong>.</p>
         <li class="right" >
           <a href="mappers.html" title="Mappers"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Containers</a></li>
@@ -425,9 +428,9 @@ y-dimension, depending on <strong>selection_direction</strong>.</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tools &mdash; chaco v4.2.1 documentation</title>
+    <title>Tools &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Tech Notes" href="../tech_notes.html" />
     <link rel="prev" title="Axis and Grid" href="axis.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="axis.html" title="Axis and Grid"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Tools</a></li>
@@ -65,7 +68,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>zoom_in_key</strong> : Instance(KeySpec, args=(&#8216;+&#8217;), kw={&#8216;ignore&#8217;: [&#8216;shift&#8217;]})</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>zoom_in_key</strong> : Instance(KeySpec, args=(&#8216;+&#8217;), kw={&#8216;ignore&#8217;: [&#8216;shift&#8217;]})</p>
 <blockquote>
 <div><p>Keys to zoom in/out</p>
 </div></blockquote>
@@ -156,7 +159,7 @@ desired region to zoom in to</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>tool_mode</strong> : Enum(&#8216;box&#8217;, &#8216;range&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>tool_mode</strong> : Enum(&#8216;box&#8217;, &#8216;range&#8217;)</p>
 <blockquote>
 <div><p>The selection mode:</p>
 <dl class="docutils">
@@ -278,7 +281,7 @@ in the &#8216;normal&#8217; state.</p>
 <dl class="method">
 <dt id="chaco.tools.api.BetterSelectingZoom.pre_selecting_left_down">
 <tt class="descname">pre_selecting_left_down</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.pre_selecting_left_down" title="Permalink to this definition">¶</a></dt>
-<dd><p>the use pressed the key to turn on the zoom mode,
+<dd><p>The user pressed the key to turn on the zoom mode,
 now handle the click to start the select mode</p>
 </dd></dl>
 
@@ -340,7 +343,7 @@ receives to all of the tools.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>tools</strong> : List</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>tools</strong> : List</p>
 <blockquote>
 <div><p>The tools to which this tool broadcasts events.</p>
 </div></blockquote>
@@ -375,7 +378,7 @@ point under the cursor.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>visible</strong> : False</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>visible</strong> : False</p>
 <blockquote>
 <div><p>This tool is a listener, and does not display anything (overrides BaseTool).</p>
 </div></blockquote>
@@ -414,7 +417,7 @@ to the DataLabel.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
 <blockquote>
 <div><p>The mouse button that initiates the drag.</p>
 </div></blockquote>
@@ -473,7 +476,7 @@ gracefully manages the transition into and out of drag mode.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
 <blockquote>
 <div><p>The mouse button used for this drag operation.</p>
 </div></blockquote>
@@ -481,7 +484,7 @@ gracefully manages the transition into and out of drag mode.</p>
 <blockquote>
 <div><p>End the drag operation if the mouse leaves the associated component?</p>
 </div></blockquote>
-<p><strong>cancel_keys</strong> : Tuple(&#8216;Esc&#8217;)</p>
+<p><strong>cancel_keys</strong> : List(Str, [&#8216;Esc&#8217;])</p>
 <blockquote>
 <div><p>These keys, if pressed during drag, cause the drag operation to reset.</p>
 </div></blockquote>
@@ -559,7 +562,7 @@ drag.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>xdata</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>xdata</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><p>A data source for the x-dimension of the drawn points.</p>
 </div></blockquote>
@@ -609,7 +612,7 @@ of the axis mappers.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;, &#8216;middle&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;, &#8216;middle&#8217;)</p>
 <blockquote>
 <div><p>The mouse button that initiates the drag</p>
 </div></blockquote>
@@ -655,7 +658,7 @@ graph by clicking on it.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>metadata_name</strong> : Str(&#8216;selections&#8217;)</p>
 <blockquote>
 <div><p>The name of the data source metadata which controls selections.</p>
 </div></blockquote>
@@ -707,7 +710,7 @@ graph by clicking on it.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>new_value</strong> : Event</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>new_value</strong> : Event</p>
 <blockquote>
 <div><p>This event fires whenever the mouse moves over a new image point.
 Its value is a dict with a key &#8220;color_value&#8221;, and possibly a key
@@ -754,7 +757,7 @@ ImageInspectorTool instance.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>image_inspector</strong> : Any</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>image_inspector</strong> : Any</p>
 <blockquote>
 <div><p>An instance of ImageInspectorTool; this overlay listens to the tool
 for changes, and updates its displayed text accordingly.</p>
@@ -794,7 +797,7 @@ by dragging the mouse along the outline of the region.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>dataspace_points</strong> : Property(Array)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>dataspace_points</strong> : Property(Array)</p>
 <blockquote>
 <div><p>An Nx2 array of points in data space representing all selected points.</p>
 </div></blockquote>
@@ -835,10 +838,19 @@ points included in a previous selection.</p>
 that the indices in this data source must match the indices of the data
 in the plot.</p>
 </div></blockquote>
+<p><strong>metadata_name</strong> : Str(&#8216;selection&#8217;)</p>
+<blockquote>
+<div><p>The name of the metadata on the datasource that we will write
+the selection mask to</p>
+</div></blockquote>
 <p><strong>plot</strong> : Property</p>
 <blockquote>
 <div><p>Mapping from screen space to data space. By default, it is just
 self.component.</p>
+</div></blockquote>
+<p><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
+<blockquote>
+<div><p>The button which this tool responds to</p>
 </div></blockquote>
 <p><strong>event_state</strong> : Enum(&#8216;normal&#8217;, &#8216;selecting&#8217;)</p>
 <blockquote class="last">
@@ -866,18 +878,11 @@ selection region.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.tools.api.LassoSelection.normal_left_down">
-<tt class="descname">normal_left_down</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#chaco.tools.api.LassoSelection.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.tools.api.LassoSelection.normal_mouse_down">
+<tt class="descname">normal_mouse_down</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#chaco.tools.api.LassoSelection.normal_mouse_down" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles the left mouse button being pressed while the tool is
 in the &#8216;normal&#8217; state.</p>
 <p>Puts the tool into &#8216;selecting&#8217; mode, and starts defining the selection.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="chaco.tools.api.LassoSelection.selecting_left_up">
-<tt class="descname">selecting_left_up</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#chaco.tools.api.LassoSelection.selecting_left_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the left mouse coming up in the &#8216;selecting&#8217; state.</p>
-<p>Completes the selection and switches to the &#8216;normal&#8217; state.</p>
 </dd></dl>
 
 <dl class="method">
@@ -893,6 +898,13 @@ in the &#8216;normal&#8217; state.</p>
 <tt class="descname">selecting_mouse_move</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#chaco.tools.api.LassoSelection.selecting_mouse_move" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles the mouse moving when the tool is in the &#8216;selecting&#8217; state.</p>
 <p>The selection is extended to the current mouse position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LassoSelection.selecting_mouse_up">
+<tt class="descname">selecting_mouse_up</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#chaco.tools.api.LassoSelection.selecting_mouse_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse button coming up in the &#8216;selecting&#8217; state.</p>
+<p>Completes the selection and switches to the &#8216;normal&#8217; state.</p>
 </dd></dl>
 
 </dd></dl>
@@ -911,7 +923,7 @@ to the legend.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;right&#8217;)</p>
 <blockquote>
 <div><p>The mouse button that initiates the drag.</p>
 </div></blockquote>
@@ -970,12 +982,37 @@ or hide certain plots.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : &#8216;right&#8217;</p>
-<p class="last"><strong>dim_factor</strong> : Float(3.0)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : &#8216;right&#8217;</p>
+<blockquote>
+<div><p>: Which mousebutton to use to move the legend</p>
+</div></blockquote>
+<p><strong>dim_factor</strong> : Float(3.0)</p>
+<blockquote>
+<div><p>: What to divide the alpha value by when plot is not selected</p>
+</div></blockquote>
+<p><strong>line_scale</strong> : Float(2.0)</p>
+<blockquote class="last">
+<div><p>: How much to scale the line when it is selected or deselected</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="chaco.tools.api.LegendHighlighter.dim_factor">
+<tt class="descname">dim_factor</tt><em class="property"> = None</em><a class="headerlink" href="#chaco.tools.api.LegendHighlighter.dim_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LegendHighlighter.drag_button">
+<tt class="descname">drag_button</tt><em class="property"> = None</em><a class="headerlink" href="#chaco.tools.api.LegendHighlighter.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LegendHighlighter.line_scale">
+<tt class="descname">line_scale</tt><em class="property"> = None</em><a class="headerlink" href="#chaco.tools.api.LegendHighlighter.line_scale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
@@ -992,7 +1029,7 @@ an X-Y plot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;, &#8216;index_x&#8217;, &#8216;index_y&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;, &#8216;index_x&#8217;, &#8216;index_y&#8217;)</p>
 <blockquote>
 <div><p>The axis that this tool is parallel to.</p>
 </div></blockquote>
@@ -1090,7 +1127,7 @@ series of points connected by lines.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>component</strong> : Instance(Component)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>component</strong> : Instance(Component)</p>
 <blockquote>
 <div><p>The component that this tool overlays</p>
 </div></blockquote>
@@ -1316,7 +1353,7 @@ button and dragging.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;middle&#8217;, &#8216;right&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>drag_button</strong> : Enum(&#8216;left&#8217;, &#8216;middle&#8217;, &#8216;right&#8217;)</p>
 <blockquote>
 <div><p>The mouse button that initiates the drag operation.</p>
 </div></blockquote>
@@ -1465,7 +1502,7 @@ line corresponding to the index indicated by the &#8220;selections&#8221; metada
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
 <blockquote>
 <div><p>The axis that this tool is parallel to.</p>
 </div></blockquote>
@@ -1512,7 +1549,7 @@ the user left-clicks to deselect.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
 <blockquote>
 <div><p>The axis to which this tool is perpendicular.</p>
 </div></blockquote>
@@ -1866,7 +1903,7 @@ selected.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>axis</strong> : Enum(&#8216;index&#8217;, &#8216;value&#8217;)</p>
 <blockquote>
 <div><p>The axis to which this tool is perpendicular.</p>
 </div></blockquote>
@@ -1937,7 +1974,7 @@ a boolean array mask of seleted dataspace points with any other name</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>incremental_select</strong> : True</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>incremental_select</strong> : True</p>
 <blockquote>
 <div><p>The regression updates as more points are added (overrides LassoSelection).</p>
 </div></blockquote>
@@ -1966,7 +2003,7 @@ a boolean array mask of seleted dataspace points with any other name</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>line_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>line_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
 <p><strong>line_style</strong> : LineStyle(&#8216;dash&#8217;)</p>
 <p class="last"><strong>line_width</strong> : Float(2.0)</p>
 </td>
@@ -1988,7 +2025,7 @@ the plot component.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>filename</strong> : Str(&#8216;saved_plot.png&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>filename</strong> : Str(&#8216;saved_plot.png&#8217;)</p>
 <blockquote>
 <div><p>The file that the image is saved in.  The format will be deduced from
 the extension.</p>
@@ -2041,7 +2078,7 @@ key in metadata, and the index of a clicked point to &#8220;selection&#8221;.</p
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>persistent_hover</strong> : Bool(False)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>persistent_hover</strong> : Bool(False)</p>
 <blockquote>
 <div><p>If persistent_hover is False, then a point will be de-hovered as soon as
 the mouse leaves its hittesting area.  If persistent_hover is True, then
@@ -2089,7 +2126,7 @@ to handle actual selection/deselection.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>threshold</strong> : Float(5.0)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>threshold</strong> : Float(5.0)</p>
 <blockquote>
 <div><p>The threshold, in pixels, around the cursor location to search for points.</p>
 </div></blockquote>
@@ -2163,7 +2200,7 @@ effect.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>new_value</strong> : Event</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>new_value</strong> : Event</p>
 <blockquote>
 <div><p>This event fires whenever the mouse moves over a new image point.
 Its value is a dict with default keys &#8220;x&#8221;, &#8220;y&#8221;, &#8220;index&#8221; and &#8220;value&#8221;.</p>
@@ -2201,13 +2238,13 @@ to modify the dictionary.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>event</strong> :</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>event</strong> :</p>
 <blockquote>
 <div><p>The mouse_move event.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>A dictionary.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>A dictionary.</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -2310,7 +2347,7 @@ state.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_mode</strong> : &#8216;none&#8217;</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_mode</strong> : &#8216;none&#8217;</p>
 <blockquote>
 <div><p>This tool does not have a visual representation (overrides BaseTool).</p>
 </div></blockquote>
@@ -2408,7 +2445,7 @@ state.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -2431,7 +2468,7 @@ state.</p>
         <li class="right" >
           <a href="axis.html" title="Axis and Grid"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Tools</a></li>
@@ -2440,9 +2477,9 @@ state.</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

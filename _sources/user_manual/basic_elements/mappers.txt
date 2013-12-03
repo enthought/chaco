@@ -108,13 +108,13 @@ List of Chaco data mappers
       :attr:`~chaco.grid_mapper.GridMapper.screen_bounds`
 
         Convenience property to set/get the screen bounds with a single attribute.
-        The value of this attribute a 4-elements tuple
+        The value of this attribute is a 4-element tuple
         ``(x_low_pos, x_high_pos, y_low_pos, y_high_pos)``.
 
   :class:`~chaco.grid_mapper.GridMapper` uses two
   :class:`~chaco.base_1d_mapper.Base1DMapper` instances to define mappers for
   the two axes (accessible from the two private attributes
-  :attr:`_xmapper` and :attr:`_ymapper`.
+  :attr:`_xmapper` and :attr:`_ymapper`).
   It thus possible to set them to be linear or
   logarithmic mappers. This is best made using the class constructor, which has
   this signature:

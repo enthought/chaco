@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Renderers &mdash; chaco v4.2.1 documentation</title>
+    <title>Renderers &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Plot Factories" href="plot_factories.html" />
     <link rel="prev" title="Visual Components" href="visual_components.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="visual_components.html" title="Visual Components"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Renderers</a></li>
@@ -66,7 +69,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><p>The data source to use for the index coordinate.</p>
 </div></blockquote>
@@ -221,7 +224,7 @@ an array.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(GridDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(GridDataSource)</p>
 <blockquote>
 <div><p>The data source to use for the index coordinate.</p>
 </div></blockquote>
@@ -335,7 +338,7 @@ space changes, etc.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><p>The data source to use for the index coordinate.</p>
 </div></blockquote>
@@ -446,7 +449,7 @@ points in this plot&#8217;s dataset.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
 <blockquote>
 <div><p>A point to test.</p>
 </div></blockquote>
@@ -458,7 +461,7 @@ line regardless of distance from the plot.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>(x1, y1, x2, y2, dist) of the endpoints of the line segment</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>(x1, y1, x2, y2, dist) of the endpoints of the line segment</strong> :</p>
 <p><strong>closest to *screen_pt*.  The *dist* element is the perpendicular</strong> :</p>
 <p><strong>distance from *screen_pt* to the line.  If there is only a single point</strong> :</p>
 <p><strong>in the renderer&#8217;s data, then the method returns the same point twice.</strong> :</p>
@@ -479,7 +482,7 @@ them; to do the latter use get_closest_line() instead.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
 <blockquote>
 <div><p>A point to test.</p>
 </div></blockquote>
@@ -491,7 +494,7 @@ are performed, and the nearest point is returned.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>(x, y, distance) of a datapoint nearest to *screen_pt*.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>(x, y, distance) of a datapoint nearest to *screen_pt*.</strong> :</p>
 <p class="last"><strong>If no data points are within *threshold* of *screen_pt*, returns None.</strong> :</p>
 </td>
 </tr>
@@ -515,7 +518,7 @@ plot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
 <blockquote>
 <div><p>A point to test.</p>
 </div></blockquote>
@@ -530,7 +533,7 @@ plot.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>If self.hittest_type is &#8216;point&#8217;, then this method returns the screen</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>If self.hittest_type is &#8216;point&#8217;, then this method returns the screen</strong> :</p>
 <p><strong>coordinates of the closest point on the plot as a tuple (x,y)</strong> :</p>
 <p><strong>If self.hittest_type is &#8216;line&#8217;, then this method returns the screen</strong> :</p>
 <p><strong>endpoints of the line segment closest to *screen_pt*, as</strong> :</p>
@@ -564,7 +567,7 @@ otherwise, it returns only the index values.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt :</strong> :</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt :</strong> :</p>
 <blockquote>
 <div><p>Screen space point</p>
 </div></blockquote>
@@ -613,7 +616,7 @@ an array.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
 <blockquote>
 <div><p>The CompiledPath to use if <strong>marker</strong> is set to &#8220;custom&#8221;. This attribute
 must be a compiled path for the Kiva context onto which this plot will
@@ -625,9 +628,11 @@ the right thing.</p>
 <div><p>The type of marker to use.  This is a mapped trait using strings as the
 keys.</p>
 </div></blockquote>
-<p><strong>marker_size</strong> : Float(4.0)</p>
+<p><strong>marker_size</strong> : Either(Float, Array)</p>
 <blockquote>
-<div><p>The pixel size of the marker, not including the thickness of the outline.</p>
+<div><p>The pixel size of the markers, not including the thickness of the outline.
+Default value is 4.0.
+TODO: for consistency, there should be a size data source and a mapper</p>
 </div></blockquote>
 <p><strong>render_markers_func</strong> : Callable(render_markers)</p>
 <blockquote>
@@ -719,7 +724,7 @@ an array.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>alpha</strong> : Trait(1.0, Range(0.0, 1.0))</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>alpha</strong> : Trait(1.0, Range(0.0, 1.0))</p>
 <blockquote>
 <div><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
 for full intensity.</p>
@@ -755,7 +760,7 @@ scalars, and renders them as a colormapped image.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_mapper</strong> : Instance(ColorMapper)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_mapper</strong> : Instance(AbstractColormap)</p>
 <blockquote>
 <div><p>Maps from scalar data values in self.data.value to color tuples</p>
 </div></blockquote>
@@ -773,12 +778,16 @@ scalars, and renders them as a colormapped image.</p>
 active selection</p>
 </div></blockquote>
 <p><strong>fade_background</strong> : Tuple((0, 0, 0))</p>
-<blockquote class="last">
+<blockquote>
 <div><dl class="docutils">
 <dt>fade_background = Tuple((255,255,255))</dt>
 <dd><p class="first last">RGB color to use to fade out unselected points.</p>
 </dd>
 </dl>
+</div></blockquote>
+<p><strong>cache_full_map</strong> : Bool(True)</p>
+<blockquote class="last">
+<div><p>whether to pre-compute the full colormapped RGB(A) image</p>
 </div></blockquote>
 </td>
 </tr>
@@ -805,7 +814,7 @@ as a contour plot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>widths</strong> : Trait(1.0, Float, List)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>widths</strong> : Trait(1.0, Float, List)</p>
 <blockquote>
 <div><p>The thickness(es) of the contour lines.
 It can be either a scalar value, valid for all contour lines, or a list
@@ -847,7 +856,7 @@ in plot_factory.py can hide some of this verbosity for common cases.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color</strong> : black_color_trait</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color</strong> : black_color_trait</p>
 <blockquote>
 <div><p>The color of the line.</p>
 </div></blockquote>
@@ -938,7 +947,7 @@ behaves like a normal ScatterPlot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color_data</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color_data</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><p>Source for color data.</p>
 </div></blockquote>
@@ -1008,7 +1017,7 @@ points to a very low alpha.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>plot</strong> : Property</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>plot</strong> : Property</p>
 <blockquote>
 <div><p>The ColormappedScatterPlot that this overlay is listening to.
 By default, it looks at self.component</p>
@@ -1073,7 +1082,7 @@ the line as small as possible while still putting ink on the page.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>edge_color</strong> : black_color_trait</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>edge_color</strong> : black_color_trait</p>
 <blockquote>
 <div><p>The color of the line on the edge of the polygon.</p>
 </div></blockquote>
@@ -1133,7 +1142,7 @@ point is inside the polygon, and False otherwise.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_low</strong> : Instance(AbstractDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_low</strong> : Instance(AbstractDataSource)</p>
 <blockquote>
 <div><p>The datasource containing the low values</p>
 </div></blockquote>
@@ -1177,7 +1186,7 @@ or (y, xlow, xhigh) depending on self.orientation.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>fill_color</strong> : Alias(&#8216;face_color&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>fill_color</strong> : Alias(&#8216;face_color&#8217;)</p>
 <p><strong>fill_direction</strong> : Enum(&#8216;down&#8217;, &#8216;up&#8217;)</p>
 <blockquote>
 <div><p>Direction to fill. Down is towards the origin, up is towards the max</p>
@@ -1219,7 +1228,7 @@ point.  Also called a &#8220;right angle plot&#8221;.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_type</strong> : Enum(&#8216;vector&#8217;, &#8216;radial&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_type</strong> : Enum(&#8216;vector&#8217;, &#8216;radial&#8217;)</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>Determines how to interpret the data in the <strong>vectors</strong> data source.</dt>
@@ -1272,7 +1281,7 @@ determined by the minimum space between adjacent index values.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>min_values</strong> : Instance(AbstractDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>min_values</strong> : Instance(AbstractDataSource)</p>
 <blockquote>
 <div><p>The minimum values at each index point.  If None, then no stem and no
 endcap line will be drawn below each bar.</p>
@@ -1328,7 +1337,7 @@ and N is the number of points in each line.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>yindex</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>yindex</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><blockquote>
 <div><p>M and N appearing in the comments are as defined in the docstring.</p>
@@ -1406,18 +1415,7 @@ in the call to the constructor.</p>
 <dt id="chaco.api.VariableSizeScatterPlot">
 <em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">VariableSizeScatterPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.VariableSizeScatterPlot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.scatterplot.ScatterPlot</span></tt></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>marker_size</strong> : Array</p>
-<blockquote class="last">
-<div><p>TODO: for consistency, there should be a size data source and a mapper</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<p># TODO: This should be officially deprecated.</p>
 </dd></dl>
 
 </div>
@@ -1431,7 +1429,7 @@ in the call to the constructor.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>bands</strong> : DelegatesTo(&#8216;value_mapper&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>bands</strong> : DelegatesTo(&#8216;value_mapper&#8217;)</p>
 <p><strong>color_mapper</strong> : Instance(ColorMapper)</p>
 <p><strong>mirror</strong> : Bool(False)</p>
 <p><strong>negative_bands</strong> : Bool(True)</p>
@@ -1497,7 +1495,7 @@ negative bands</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -1520,7 +1518,7 @@ negative bands</p>
         <li class="right" >
           <a href="visual_components.html" title="Visual Components"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Renderers</a></li>
@@ -1529,9 +1527,9 @@ negative bands</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Visual Components &mdash; chaco v4.2.1 documentation</title>
+    <title>Visual Components &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Renderers" href="renderers.html" />
     <link rel="prev" title="Containers" href="containers.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="containers.html" title="Containers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Visual Components</a></li>
@@ -70,7 +73,7 @@ interactors and plot tools.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>origin</strong> : Enum(&#8216;bottom left&#8217;, &#8216;top left&#8217;, &#8216;bottom right&#8217;, &#8216;top right&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>origin</strong> : Enum(&#8216;bottom left&#8217;, &#8216;top left&#8217;, &#8216;bottom right&#8217;, &#8216;top right&#8217;)</p>
 <p><strong>bgcolor</strong> : &#8216;transparent&#8217;</p>
 <blockquote>
 <div><p>Overrides the default value inherited from PlotComponent.</p>
@@ -98,7 +101,7 @@ interactors and plot tools.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
 <blockquote>
 <div><p>The screen space point to map.</p>
 </div></blockquote>
@@ -122,7 +125,7 @@ of <em>screen_pt</em>, and ignores the value coordinate.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>An index into the plot&#8217;s index array(s). Typically this index is just</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>An index into the plot&#8217;s index array(s). Typically this index is just</strong> :</p>
 <p><strong>an integer, but if the plot has a 2-D index dimension, then this method</strong> :</p>
 <p><strong>returns a tuple of integers. If the input point cannot be mapped to an</strong> :</p>
 <p><strong>index, then None is returned.</strong> :</p>
@@ -159,7 +162,7 @@ containment-ownership relationship.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>component</strong> : Instance(Component)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>component</strong> : Instance(Component)</p>
 <blockquote>
 <div><p>The component that this object overlays. This can be None. By default, if
 this object is called to draw(), it tries to render onto this component.</p>
@@ -200,7 +203,7 @@ This class will be removed some time in the near future.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : ()</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : ()</p>
 <blockquote>
 <div><p>A named list of places/positions/&#8221;slots&#8221; on the frame where PlotComponents
 can place themselves.  Subclasses must redefine this trait with the
@@ -282,7 +285,7 @@ This class will be removed sometime in the future.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : (&#8216;center&#8217;, &#8216;left&#8217;, &#8216;right&#8217;, &#8216;top&#8217;, &#8216;bottom&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : (&#8216;center&#8217;, &#8216;left&#8217;, &#8216;right&#8217;, &#8216;top&#8217;, &#8216;bottom&#8217;)</p>
 <blockquote>
 <div><p>Slots or positions on the frame where plot components can place themselves.
 Overrides PlotFrame.</p>
@@ -334,7 +337,7 @@ just like a normal PlotContainer.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>orientation</strong> : Enum(&#8216;h&#8217;, &#8216;v&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>orientation</strong> : Enum(&#8216;h&#8217;, &#8216;v&#8217;)</p>
 <blockquote>
 <div><p>The orientation of the index axis.</p>
 </div></blockquote>
@@ -498,7 +501,7 @@ This class will be removed sometime in the future.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : &#8216;center&#8217;</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>slot_names</strong> : &#8216;center&#8217;</p>
 <blockquote>
 <div><p>This frame has only one position for plot components. Overrides
 PlotFrame.</p>
@@ -546,7 +549,7 @@ protected stub methods.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>draw_order</strong> : Instance(list, args=(DEFAULT_DRAWING_ORDER))</p>
 <blockquote>
 <div><p>The order in which various rendering classes on this component are drawn.
 Note that if this component is placed in a container, in most cases
@@ -622,7 +625,7 @@ labels to store state, perform layout, and render the text.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : Str</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : Str</p>
 <blockquote>
 <div><p>The label text.  Carriage returns (n) are always connverted into
 line breaks.</p>
@@ -660,8 +663,15 @@ line breaks.</p>
 <div><p>Number of pixels of margin around the label, for both X and Y dimensions.</p>
 </div></blockquote>
 <p><strong>line_spacing</strong> : Int(5)</p>
-<blockquote class="last">
+<blockquote>
 <div><p>Number of pixels of spacing between lines of text.</p>
+</div></blockquote>
+<p><strong>max_width</strong> : Float(0.0)</p>
+<blockquote class="last">
+<div><p>Number of pixels to limit the width of the label to. Lines which are
+too long will be broken to fit on word boundaries. Line width is
+calculated without considering the value of <cite>margin</cite>.
+A <cite>max_width</cite> of 0.0 means that lines will not be broken.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -685,8 +695,8 @@ of this text label&#8217;s box.</p>
 <dl class="method">
 <dt id="chaco.api.Label.get_bounding_poly">
 <tt class="descname">get_bounding_poly</tt><big>(</big><em>gc</em><big>)</big><a class="headerlink" href="#chaco.api.Label.get_bounding_poly" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a list [(x0,y0), (x1,y1),...] of tuples representing a polygon
-that bounds the label.</p>
+<dd><p>Returns a list [(x0,y0), (x1,y1),...] of tuples representing a
+polygon that bounds the label.</p>
 </dd></dl>
 
 <dl class="method">
@@ -711,7 +721,7 @@ reference.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : LabelDelegate</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : LabelDelegate</p>
 <blockquote>
 <div><p>The text of the label.</p>
 </div></blockquote>
@@ -804,7 +814,7 @@ PlotComponent.)</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>font</strong> : KivaFont(&#8216;modern 12&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>font</strong> : KivaFont(&#8216;modern 12&#8217;)</p>
 <blockquote>
 <div><p>The font to use for the legend text.</p>
 </div></blockquote>
@@ -962,7 +972,7 @@ includes the padding</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>font</strong> : KivaFont(&#8216;modern 10&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>font</strong> : KivaFont(&#8216;modern 10&#8217;)</p>
 <blockquote>
 <div><p>The font to render the tooltip.</p>
 </div></blockquote>
@@ -1032,12 +1042,13 @@ and unclipped on its overlaid component?</p>
 <dt id="chaco.api.DataLabel">
 <em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">DataLabel</tt><big>(</big><em>component=None</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chaco.api.DataLabel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.tooltip.ToolTip</span></tt></p>
-<p>A label on a point in data space, optionally with an arrow to the point.</p>
+<p>A label on a point in data space.</p>
+<p>Optionally, an arrow is drawn to the point.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
 <blockquote>
 <div><p>The symbol to use if <strong>marker</strong> is set to &#8220;custom&#8221;. This attribute must
 be a compiled path for the given Kiva context.</p>
@@ -1078,6 +1089,17 @@ the label draws into the padding area (where axes typically reside).</p>
 <blockquote>
 <div><p>The center y position (average of y and y2)</p>
 </div></blockquote>
+<p><strong>label_style</strong> : Enum(&#8216;box&#8217;, &#8216;bubble&#8217;)</p>
+<blockquote>
+<div><p>&#8216;box&#8217; is a simple rectangular box, with an arrow that is a single line
+with an arrowhead at the data point.
+&#8216;bubble&#8217; can be given rounded corners (by setting <cite>corner_radius</cite>), and
+the &#8216;arrow&#8217; is a thin triangular wedge with its point at the data point.
+When label_style is &#8216;bubble&#8217;, the following traits are ignored:</p>
+<blockquote>
+<div><p>arrow_size, arrow_color, arrow_root, and arrow_max_length.</p>
+</div></blockquote>
+</div></blockquote>
 <p><strong>marker_visible</strong> : Bool(True)</p>
 <blockquote>
 <div><p>Mark the point on the data that this label refers to?</p>
@@ -1089,12 +1111,13 @@ keys.</p>
 </div></blockquote>
 <p><strong>marker_size</strong> : Int(4)</p>
 <blockquote>
-<div><p>The pixel size of the marker (doesn&#8217;t include the thickness of the outline).</p>
+<div><p>The pixel size of the marker (doesn&#8217;t include the thickness of the
+outline).</p>
 </div></blockquote>
 <p><strong>marker_line_width</strong> : Float(1.0)</p>
 <blockquote>
-<div><p>The thickness, in pixels, of the outline to draw around the marker.  If
-this is 0, no outline will be drawn.</p>
+<div><p>The thickness, in pixels, of the outline to draw around the marker.
+If this is 0, no outline will be drawn.</p>
 </div></blockquote>
 <p><strong>marker_color</strong> : ColorTrait(&#8216;red&#8217;)</p>
 <blockquote>
@@ -1120,8 +1143,9 @@ used if <strong>data_point</strong> is not None.</p>
 <p><strong>arrow_root</strong> : Trait(&#8216;auto&#8217;, &#8216;auto&#8217;, &#8216;top left&#8217;, &#8216;top right&#8217;, &#8216;bottom left&#8217;, &#8216;bottom right&#8217;, &#8216;top center&#8217;, &#8216;bottom center&#8217;, &#8216;left center&#8217;, &#8216;right center&#8217;)</p>
 <blockquote>
 <div><p>The position of the base of the arrow on the label.  If this
-is &#8216;auto&#8217;, then the label uses <strong>label_position</strong>.  Otherwise, it treats
-the label as if it were at the label position indicated by this attribute.</p>
+is &#8216;auto&#8217;, then the label uses <strong>label_position</strong>.  Otherwise, it
+treats the label as if it were at the label position indicated by
+this attribute.</p>
 </div></blockquote>
 <p><strong>arrow_min_length</strong> : Float(0)</p>
 <blockquote>
@@ -1129,9 +1153,13 @@ the label as if it were at the label position indicated by this attribute.</p>
 the arrow will be drawn regardless of how short it is.</p>
 </div></blockquote>
 <p><strong>arrow_max_length</strong> : Float(inf)</p>
-<blockquote class="last">
+<blockquote>
 <div><p>The maximum length of the arrow before it will be drawn.  By default,
 the arrow will be drawn regardless of how long it is.</p>
+</div></blockquote>
+<p><strong>corner_radius</strong> : Float(10)</p>
+<blockquote class="last">
+<div><p>The radius (in screen coordinates) of the curved corners of the &#8220;bubble&#8221;.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -1159,7 +1187,7 @@ the arrow will be drawn regardless of how long it is.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>lasso_selection</strong> : Instance(&#8216;chaco.tools.lasso_selection.LassoSelection&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>lasso_selection</strong> : Instance(&#8216;chaco.tools.lasso_selection.LassoSelection&#8217;)</p>
 <blockquote>
 <div><p>The LassoSelection that provides the data for this overlay.</p>
 </div></blockquote>
@@ -1212,7 +1240,7 @@ the arrow will be drawn regardless of how long it is.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index_mapper</strong> : Instance(AbstractMapper)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index_mapper</strong> : Instance(AbstractMapper)</p>
 <blockquote>
 <div><p>Screen mapper for index data.</p>
 </div></blockquote>
@@ -1297,7 +1325,7 @@ the orientation of the plot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : Str</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>text</strong> : Str</p>
 <blockquote>
 <div><p>The text to display in the box.</p>
 </div></blockquote>
@@ -1317,13 +1345,28 @@ the orientation of the plot.</p>
 <blockquote>
 <div><p>The color of the outside box.</p>
 </div></blockquote>
+<p><strong>text_color</strong> : ColorTrait(&#8216;black&#8217;)</p>
+<blockquote>
+<div><p>The color of the text.</p>
+</div></blockquote>
 <p><strong>border_size</strong> : Int(1)</p>
 <blockquote>
 <div><p>The thickness of box border.</p>
 </div></blockquote>
+<p><strong>border_visible</strong> : Bool(True)</p>
+<blockquote>
+<div><p>The border visibility. Defaults to true to duplicate previous behavior.</p>
+</div></blockquote>
 <p><strong>padding</strong> : Int(5)</p>
 <blockquote>
 <div><p>Number of pixels of padding around the text within the box.</p>
+</div></blockquote>
+<p><strong>max_text_width</strong> : Float(0.0)</p>
+<blockquote>
+<div><p>The maximum width of the displayed text. This affects the width of the
+text only, not the text box, which includes margins around the text and
+<cite>padding</cite>.
+A <cite>max_text_width</cite> of 0.0 means that the width will not be restricted.</p>
 </div></blockquote>
 <p><strong>align</strong> : Enum(&#8216;ur&#8217;, &#8216;ul&#8217;, &#8216;ll&#8217;, &#8216;lr&#8217;)</p>
 <blockquote>
@@ -1368,7 +1411,7 @@ DataLabel.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>hover_metadata_name</strong> : Str(&#8216;hover&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>hover_metadata_name</strong> : Str(&#8216;hover&#8217;)</p>
 <blockquote>
 <div><p>The style to use when a point is hovered over</p>
 </div></blockquote>
@@ -1436,7 +1479,7 @@ DataLabel.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -1459,7 +1502,7 @@ DataLabel.</p>
         <li class="right" >
           <a href="containers.html" title="Containers"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Visual Components</a></li>
@@ -1468,9 +1511,9 @@ DataLabel.</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

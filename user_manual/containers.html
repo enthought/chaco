@@ -4,17 +4,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Containers and Layout &mdash; chaco v4.2.1 documentation</title>
+    <title>Containers and Layout &mdash; chaco 4.4.0 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.2.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +27,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco v4.2.1 documentation" href="../index.html" />
+    <link rel="top" title="chaco 4.4.0 documentation" href="../index.html" />
     <link rel="up" title="User guide" href="index.html" />
     <link rel="next" title="Tools and Overlays" href="tools.html" />
     <link rel="prev" title="Plot types" href="plot_types.html" /> 
@@ -39,7 +42,7 @@
         <li class="right" >
           <a href="plot_types.html" title="Plot types"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">User guide</a> &raquo;</li>
   
     <li><a href="#">Containers and Layout</a></li>
@@ -523,14 +526,14 @@ can be resized. Its value is one of <tt class="docutils literal"><span class="pr
 vertical direction), <tt class="docutils literal"><span class="pre">'hv'</span></tt> (resizable in both, default).</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">aspect_ratio</span></tt>, the ratio of the component&#8217;s width to its height.
 This is used by the component itself to maintain bounds when the bounds
-are changed independently. Default is <tt class="xref docutils literal"><span class="pre">None</span></tt>, meaning that the aspect
+are changed independently. Default is <tt class="docutils literal"><span class="pre">None</span></tt>, meaning that the aspect
 ratio is not enforced.</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">padding_left</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">padding_right</span></tt>,
 <tt class="xref py py-attr docutils literal"><span class="pre">padding_top</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">padding_bottom</span></tt> set the amount of padding space
 to leave around the component (default is 0). The property <tt class="xref py py-attr docutils literal"><span class="pre">padding</span></tt>
 allows to set all of them as a tuple (left, right, top, bottom).</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">auto_center</span></tt>, controls the behavior when the component&#8217;s bounds are
-set to a value that does not conform its aspect ratio. If <tt class="xref docutils literal"><span class="pre">True</span></tt>
+set to a value that does not conform its aspect ratio. If <tt class="docutils literal"><span class="pre">True</span></tt>
 (default), the component centers itself in the free space.</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">fixed_preferred_size</span></tt>: If the component is resizable, this attribute
 specifies the amount of space that the component would like to get in each
@@ -600,8 +603,8 @@ to draw on top of all components? Do you want the &#8220;background&#8221; eleme
 to be behind everything else?</p>
 <p>This is resolved by the <tt class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></tt> trait. The container will
 draw all layers in succession. If a component sets <tt class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></tt>
-to <tt class="xref docutils literal"><span class="pre">False</span></tt> (default), the container will ask it to draw the corresponding
-layer as it is reached in the loop. If <tt class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>,
+to <tt class="docutils literal"><span class="pre">False</span></tt> (default), the container will ask it to draw the corresponding
+layer as it is reached in the loop. If <tt class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>,
 the whole component will draw in one go when the container reaches
 the layer specified in the attribute <tt class="docutils literal"><span class="pre">component.draw_layer</span></tt>,
 which by default is &#8216;plot&#8217;.</p>
@@ -645,7 +648,7 @@ interrupted.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If the attribute <tt class="xref py py-attr docutils literal"><span class="pre">auto_handle_event</span></tt> of the
-component is set to <tt class="xref docutils literal"><span class="pre">True</span></tt>, calling the event
+component is set to <tt class="docutils literal"><span class="pre">True</span></tt>, calling the event
 method automatically sets <tt class="docutils literal"><span class="pre">event.handled</span> <span class="pre">=</span> <span class="pre">True</span></tt>.</p>
 </div>
 <p>Possible event names are:</p>
@@ -753,7 +756,7 @@ more details about the event dispatching happening at that level.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -776,7 +779,7 @@ more details about the event dispatching happening at that level.</p>
         <li class="right" >
           <a href="plot_types.html" title="Plot types"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco v4.2.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">chaco 4.4.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >User guide</a> &raquo;</li>
   
     <li><a href="#">Containers and Layout</a></li>
@@ -785,9 +788,9 @@ more details about the event dispatching happening at that level.</p>
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2011, Enthought, Inc..
-      Last updated on Jul 31, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2008-2013, Enthought, Inc..
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

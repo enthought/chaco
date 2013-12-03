@@ -27,7 +27,7 @@ This is a summary of the most important attributes and methods
 
     :attr:`~chaco.abstract_data_range.AbstractDataRange.sources`
 
-      A list of data sources associated to the data range. Concrete implementation
+      A list of data sources associated to the data range. Concrete implementations
       of data range listen to the event
       :attr:`~chaco.abstract_data_source.AbstractDataSource.data_changed`
       and refresh their bounds as appropriate (e.g., when the bounds are
@@ -60,12 +60,12 @@ This is a summary of the most important attributes and methods
 
     :attr:`~chaco.base_data_range.BaseDataRange.add(*datasources)`
 
-      Convenience method to associate one ore more data sources to the range.
+      Convenience method to associate one or more data sources to the range.
       The method avoids adding the same data source twice.
 
     :attr:`~chaco.base_data_range.BaseDataRange.remove(*datasources)`
 
-      Convenience method to remove one ore more data sources from the range.
+      Convenience method to remove one or more data sources from the range.
       If one of the data sources is not associated with the range,
       it is ignored.
 
