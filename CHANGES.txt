@@ -2,13 +2,18 @@
 Chaco CHANGELOG
 ===============
 
+
+What's new in Chaco 4.5.0
+-------------------------
+
+
+
 Release 4.4.1
 -------------
 This release contains a lot of enhancements and bug fixes mostly to the OOP API of Chaco but also its shell mode.
 
 
 Change summary since 4.3.0
---------------------------
 
 New features
 
