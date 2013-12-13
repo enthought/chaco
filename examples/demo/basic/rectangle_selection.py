@@ -46,12 +46,18 @@ class RectSelectionDemo(HasTraits):
         return plot_data
 
     def update_zoom(self):
+        # selected box is in data space coordinates
+        # by default data space is defined in number of array elements
         box = self.selection.selected_box
+        height = self.img.shape[0]
+        width = self.img.shape[1]
         if box is not ():
-            bottom = max(0, int(box[2]))
-            top = min(self.img.shape[0], int(box[3]))
+            # plot is displayed with the y-axis inverted, so we need to map
+            # the 0-axis coordinates
+            bottom = max(0, height - int(box[3]))
+            top = min(height, height - int(box[2]))
             left = max(0, int(box[0]))
-            right = min(self.img.shape[1], int(box[1]))
+            right = min(width, int(box[1]))
             self.plot_data.set_data("zoom_img",
                                     self.img[bottom:top, left:right])
             self.zoom_plot.plot_components[0].index.set_data((left, right),
