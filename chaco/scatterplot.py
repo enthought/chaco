@@ -456,7 +456,7 @@ class ScatterPlot(BaseXYPlot):
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
         self.render_markers_func(gc, points, self.marker, self.marker_size,
-                       self.color_, self.line_width, self.outline_color_,
+                       self.effective_color, self.line_width, self.effective_outline_color,
                        self.custom_symbol, point_mask=self._cached_point_mask)
 
         if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
