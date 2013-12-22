@@ -1,7 +1,7 @@
 
 .. highlight:: python
    :linenothreshold: 10
-   
+
 .. _tutorial:
 
 ###############################
@@ -20,14 +20,14 @@ Knowledge of NumPy can be helpful for certain parts of the tutorial. Knowledge
 of GUI programming concepts such as widgets, windows, and events are helpful
 for the last portion of the tutorial, but it is not required.
 
-This tutorial demonstrates using Chaco with Traits UI, so knowledge of the
-Traits framework is also helpful. We don't use very many sophisticated aspects
+This tutorial demonstrates using Chaco with Traits(UI), so knowledge of the
+`Traits User Manual <http://docs.enthought.com/traits/>`_ framework is also
+helpful. We don't use very many sophisticated aspects
 of Traits or Traits UI, and it is entirely possible to pick it up as you go
-through the tutorial. This tutorial applies to Enthought Tool Suite
-version 3.x.
+through the tutorial.
 
 It's also worth pointing out that you don't *have* to use Traits UI in order to
-use Chaco --- you can integrate Chaco directly with Qt or wxPython --- but for
+use Chaco -- you can integrate Chaco components directly with Qt or wxPython -- but for
 this tutorial, we use Traits UI to make things easier.
 
 
@@ -151,22 +151,20 @@ lack of a better term. There is definitely a bit more code, and the plot
 initially doesn't look much different, but it sets us up to do more interesting
 things, as you will see later on::
 
+    from numpy import linspace, sin
     from traits.api import HasTraits, Instance
     from traitsui.api import View, Item
     from chaco.api import Plot, ArrayPlotData
-    from enable.component_editor import ComponentEditor
-    from numpy import linspace, sin
+    from enable.api import ComponentEditor
 
     class LinePlot(HasTraits):
         plot = Instance(Plot)
 
         traits_view = View(
-            Item('plot',editor=ComponentEditor(), show_label=False), 
+            Item('plot',editor=ComponentEditor(), show_label=False),
             width=500, height=500, resizable=True, title="Chaco Plot")
 
-        def __init__(self):
-            super(LinePlot, self).__init__()
-
+        def _plot_default(self):
             x = linspace(-14, 14, 100)
             y = sin(x) * x**3
             plotdata = ArrayPlotData(x=x, y=y)
@@ -174,8 +172,7 @@ things, as you will see later on::
             plot = Plot(plotdata)
             plot.plot(("x", "y"), type="line", color="blue")
             plot.title = "sin(x) * x^3"
-
-            self.plot = plot
+            return plot
 
     if __name__ == "__main__":
         LinePlot().configure_traits()
@@ -205,53 +202,50 @@ from :class:`HasTraits`.
 
 Next, we declare a Traits UI View for this class::
 
-    traits_view = View( 
-            Item('plot',editor=ComponentEditor(), show_label=False), 
-            width=500, height=500, resizable=True, title="Chaco Plot") 
+    traits_view = View(
+            Item('plot',editor=ComponentEditor(), show_label=False),
+            width=500, height=500, resizable=True, title="Chaco Plot")
 
 Inside this view, we are placing a reference to the :attr:`plot` trait and
-telling Traits UI to use the :class:`ComponentEditor` (imported from 
-:mod:`enable.component_editor`) to display it. If the
-trait were an Int or Str or Float, Traits could automatically pick an 
-appropriate GUI element to display it. Since Traits UI doesn't natively know 
+telling Traits UI to use the :class:`ComponentEditor` (imported from
+:mod:`enable.api`) to display it. If the
+trait were an Int or Str or Float, Traits could automatically pick an
+appropriate GUI element to display it. Since Traits UI doesn't natively know
 how to display Chaco components, we explicitly tell it what kind of editor to
 use.
 
 The other parameters in the :class:`View` constructor are pretty
-self-explanatory, and the 
-`Traits UI User's Guide <http://code.enthought.com/projects/traits/docs/html/TUIUG/index.html>`_ 
+self-explanatory, and the `Traits UI User Manual <http://docs.enthought.com/traitsui/>`_
 documents all the various properties
-you can set here. For our purposes, this Traits View is sort of boilerplate. It
+you can set here. For our purposes, this Traits :class:`View` is sort of boilerplate. It
 gets us a nice little window that we can resize. We'll be using something like
-this View in most of the examples in the rest of the tutorial.
+this :class:`View` in most of the examples in the rest of the tutorial.
 
-Now, let's look at the constructor, where the real work gets done::
+Now, let's look at the constructor for the plot object we will display, where
+the real work gets done::
 
-    def __init__(self): 
-        super(LinePlot, self).__init__()
-        x = linspace(-14, 14, 100) 
-        y = sin(x) * x**3 
-        plotdata = ArrayPlotData(x=x, y=y) 
+    def _plot_default(self):
+        x = linspace(-14, 14, 100)
+        y = sin(x) * x**3
+        plotdata = ArrayPlotData(x=x, y=y)
 
-The first thing we do here is call the super-class's :meth:`__init__` method,
-which ensures that all the Traits machinery is properly set up, even though the
-:meth:`__init__` method is overridden. Then we create some mock data, just like
+The first thing we do here is to create some mock data, just like
 in the script-oriented approach. But rather than directly calling some sort of
 plotting function to throw up a plot, we create this :class:`ArrayPlotData`
-object and stick the data in there. The ArrayPlotData object is a simple
-structure that associates a name with a NumPy array.
+object and stick the data in there. The :class:`ArrayPlotData` object is a simple
+structure that associates names with NumPy arrays.
 
 In a script-oriented approach to plotting, whenever you have to update the data
 or tweak any part of the plot, you basically re-run the entire script.  Chaco's
 model is based on having objects representing each of the little pieces of a
 plot, and they all use Traits events to notify one another that some attribute
-has changed.  So, the ArrayPlotData is an object that interfaces your
+has changed.  So, the :class:`ArrayPlotData` is an object that interfaces your
 data with the rest of the objects in the plot.  In a later example we'll see
-how we can use the ArrayPlotData to quickly swap data items in and
+how we can use the :class:`ArrayPlotData` to quickly swap data items in and
 out, without affecting the rest of the plot.
 
 The next line creates an actual :class:`Plot` object, and gives it the
-ArrayPlotData instance we created previously::
+:class:`ArrayPlotData` instance we created previously::
 
     plot = Plot(plotdata)
 
@@ -260,19 +254,20 @@ renderers, which are the objects that do the actual task of transforming data
 into lines and markers and colors on the screen, and it is a factory for
 instantiating renderers. Once you get more familiar with Chaco, you can choose
 to not use the Plot object, and instead directly create renderers and containers
-manually. Nonetheless, the Plot object does a lot of nice housekeeping that is
+manually. Nonetheless, the :class:`Plot` object does a lot of nice housekeeping that is
 useful in a large majority of use cases.
 
-Next, we call the :meth:`plot` method on the Plot object we just created::
+Next, we call the :meth:`plot` method on the :class:`Plot` object we just
+created::
 
     plot.plot(("x", "y"), type="line", color="blue")
 
 This creates a blue line plot of the data items named "x" and "y".  Note that
 we are not passing in an actual array here; we are passing in the names of arrays
-in the ArrayPlotData we created previously.
+in the :class:`ArrayPlotData` we created previously.
 
 This method call creates a new renderer --- in this case a line renderer --- and
-adds it to the Plot.
+adds it to the :class:`Plot`.
 
 This may seem kind of redundant or roundabout to folks who are used to passing
 in a pile of NumPy arrays to a plot function, but consider this:
@@ -287,15 +282,15 @@ Next, we set a title on the plot::
 
     plot.title = "sin(x) * x^3"
 
-And then we set our :attr:`plot` trait to the new plot::
+And then we set our :attr:`plot` trait to the plot we created by returning it::
 
-    self.plot = plot
+    return plot
 
 The last thing we do in this script is set up some code to run when the script
 is executed::
 
-    if __name__ == "__main__": 
-        LinePlot().configure_traits() 
+    if __name__ == "__main__":
+        LinePlot().configure_traits()
 
 This one-liner instantiates a LinePlot object and calls its
 :meth:`configure_traits` method.  This brings up a dialog with a traits editor for
@@ -309,22 +304,20 @@ Scatter plots
 
 We can use the same pattern to build a scatter plot::
 
-    from traits.api import HasTraits, Instance
-    from traitsui.api import View, Item
-    from chaco.api import Plot, ArrayPlotData
-    from enable.component_editor import ComponentEditor
     from numpy import linspace, sin
-    
+    from traits.api import HasTraits, Instance
+    from traitsui.api import Item, View
+    from chaco.api import ArrayPlotData, Plot
+    from enable.api import ComponentEditor
+
     class ScatterPlot(HasTraits):
         plot = Instance(Plot)
 
         traits_view = View(
-            Item('plot',editor=ComponentEditor(), show_label=False), 
+            Item('plot',editor=ComponentEditor(), show_label=False),
             width=500, height=500, resizable=True, title="Chaco Plot")
 
-        def __init__(self):
-            super(ScatterPlot, self).__init__()
-
+        def _plot_default(self):
             x = linspace(-14, 14, 100)
             y = sin(x) * x**3
             plotdata = ArrayPlotData(x = x, y = y)
@@ -332,8 +325,7 @@ We can use the same pattern to build a scatter plot::
             plot = Plot(plotdata)
             plot.plot(("x", "y"), type="scatter", color="blue")
             plot.title = "sin(x) * x^3"
-
-            self.plot = plot
+            return plot
 
     if __name__ == "__main__":
         ScatterPlot().configure_traits()
@@ -350,22 +342,20 @@ Image plots
 
 Image plots can be created in a similar fashion::
 
-    from traits.api import HasTraits, Instance
-    from traitsui.api import View, Item
-    from chaco.api import Plot, ArrayPlotData, jet
-    from enable.component_editor import ComponentEditor
     from numpy import exp, linspace, meshgrid
-    
+    from traits.api import HasTraits, Instance
+    from traitsui.api import Item, View
+    from chaco.api import ArrayPlotData, Plot, jet
+    from enable.api import ComponentEditor
+
     class ImagePlot(HasTraits):
         plot = Instance(Plot)
 
         traits_view = View(
             Item('plot', editor=ComponentEditor(), show_label=False),
             width=500, height=500, resizable=True, title="Chaco Plot")
-            
-        def __init__(self):
-            super(ImagePlot, self).__init__()
 
+        def _plot_default(self):
             x = linspace(0, 10, 50)
             y = linspace(0, 5, 50)
             xgrid, ygrid = meshgrid(x, y)
@@ -374,9 +364,8 @@ Image plots can be created in a similar fashion::
 
             plot = Plot(plotdata)
             plot.img_plot("imagedata", colormap=jet)
+            return plot
 
-            self.plot = plot
-            
     if __name__ == "__main__":
         ImagePlot().configure_traits()
 
@@ -401,33 +390,30 @@ its :meth:`plot()` method twice. Each call creates a new renderer and adds it to
 the Plot object's list of renderers. Also notice that we are reusing the *x*
 array from the ArrayPlotData::
 
-    from traits.api import HasTraits, Instance
-    from traitsui.api import View, Item
-    from chaco.api import Plot, ArrayPlotData
-    from enable.component_editor import ComponentEditor
     from numpy import cos, linspace, sin
+    from traits.api import HasTraits, Instance
+    from traitsui.api import Item, View
+    from chaco.api import ArrayPlotData, Plot
+    from enable.api import ComponentEditor
 
-    class OverlappingPlot(HasTraits): 
+    class OverlappingPlot(HasTraits):
 
         plot = Instance(Plot)
 
         traits_view = View(
-            Item('plot',editor=ComponentEditor(), show_label=False), 
-            width=500, height=500, resizable=True, title="Chaco Plot") 
+            Item('plot',editor=ComponentEditor(), show_label=False),
+            width=500, height=500, resizable=True, title="Chaco Plot")
 
-        def __init__(self):
-            super(OverlappingPlot, self).__init__()
-
+        def _plot_default(self):
             x = linspace(-14, 14, 100)
-            y = x/2 * sin(x) 
-            y2 = cos(x) 
-            plotdata = ArrayPlotData(x=x, y=y, y2=y2) 
+            y = x/2 * sin(x)
+            y2 = cos(x)
+            plotdata = ArrayPlotData(x=x, y=y, y2=y2)
 
             plot = Plot(plotdata)
-            plot.plot(("x", "y"), type="scatter", color="blue") 
-            plot.plot(("x", "y2"), type="line", color="red") 
-
-            self.plot = plot
+            plot.plot(("x", "y"), type="scatter", color="blue")
+            plot.plot(("x", "y2"), type="line", color="red")
+            return plot
 
     if __name__ == "__main__":
         OverlappingPlot().configure_traits()
@@ -481,36 +467,34 @@ Containers can have any Chaco component added to them.  The following code
 creates a separate Plot instance for the scatter plot and the line
 plot, and adds them both to the HPlotContainer object::
 
-    from traits.api import HasTraits, Instance
-    from traitsui.api import View, Item
-    from chaco.api import HPlotContainer, ArrayPlotData, Plot
-    from enable.component_editor import ComponentEditor
     from numpy import linspace, sin
-    
-    class ContainerExample(HasTraits): 
+    from traits.api import HasTraits, Instance
+    from traitsui.api import Item, View
+    from chaco.api import ArrayPlotData, HPlotContainer, Plot
+    from enable.api import ComponentEditor
+
+    class ContainerExample(HasTraits):
 
         plot = Instance(HPlotContainer)
 
         traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
-                           width=1000, height=600, resizable=True, title="Chaco Plot") 
+                           width=1000, height=600, resizable=True, title="Chaco Plot")
 
-        def __init__(self):
-            super(ContainerExample, self).__init__()
-
+        def _plot_default(self):
             x = linspace(-14, 14, 100)
-            y = sin(x) * x**3 
-            plotdata = ArrayPlotData(x=x, y=y) 
+            y = sin(x) * x**3
+            plotdata = ArrayPlotData(x=x, y=y)
 
             scatter = Plot(plotdata)
-            scatter.plot(("x", "y"), type="scatter", color="blue") 
+            scatter.plot(("x", "y"), type="scatter", color="blue")
 
             line = Plot(plotdata)
-            line.plot(("x", "y"), type="line", color="blue") 
+            line.plot(("x", "y"), type="line", color="blue")
 
             container = HPlotContainer(scatter, line)
-            self.plot = container
+            return container
 
-    if __name__ == "__main__": 
+    if __name__ == "__main__":
         ContainerExample().configure_traits()
 
 
@@ -562,20 +546,19 @@ traits, generating events, and capable of responding to events.
 We're going to modify our previous ScatterPlot example to demonstrate some
 of these capabilities.  Here is the full listing of the modified code::
 
-    from traits.api import HasTraits, Instance, Int
-    from traitsui.api import View, Group, Item
-    from enable.api import ColorTrait
-    from enable.component_editor import ComponentEditor
-    from chaco.api import marker_trait, Plot, ArrayPlotData
     from numpy import linspace, sin
+    from traits.api import HasTraits, Instance, Int
+    from traitsui.api import Item, Group, View
+    from chaco.api import ArrayPlotData, marker_trait, Plot
+    from enable.api import ColorTrait, ComponentEditor
 
     class ScatterPlotTraits(HasTraits):
-    
+
         plot = Instance(Plot)
         color = ColorTrait("blue")
         marker = marker_trait
         marker_size = Int(4)
-    
+
         traits_view = View(
             Group(Item('color', label="Color", style="custom"),
                   Item('marker', label="Marker"),
@@ -583,10 +566,8 @@ of these capabilities.  Here is the full listing of the modified code::
                   Item('plot', editor=ComponentEditor(), show_label=False),
                        orientation = "vertical"),
                   width=800, height=600, resizable=True, title="Chaco Plot")
-    
-        def __init__(self):
-            super(ScatterPlotTraits, self).__init__()
 
+        def _plot_default(self):
             x = linspace(-14, 14, 100)
             y = sin(x) * x**3
             plotdata = ArrayPlotData(x = x, y = y)
@@ -594,17 +575,17 @@ of these capabilities.  Here is the full listing of the modified code::
             plot = Plot(plotdata)
 
             self.renderer = plot.plot(("x", "y"), type="scatter", color="blue")[0]
-            self.plot = plot
-    
+            return plot
+
         def _color_changed(self):
             self.renderer.color = self.color
-    
+
         def _marker_changed(self):
             self.renderer.marker = self.marker
-    
+
         def _marker_size_changed(self):
             self.renderer.marker_size = self.marker_size
-    
+
     if __name__ == "__main__":
         ScatterPlotTraits().configure_traits()
 
@@ -613,25 +594,25 @@ Let's step through the changes.
 
 First, we add traits for color, marker type, and marker size::
 
-    class ScatterPlotTraits(HasTraits): 
-        plot = Instance(Plot) 
-        color = ColorTrait("blue") 
-        marker = marker_trait 
-        marker_size = Int(4) 
+    class ScatterPlotTraits(HasTraits):
+        plot = Instance(Plot)
+        color = ColorTrait("blue")
+        marker = marker_trait
+        marker_size = Int(4)
 
 We also change our Traits UI View to include references to these
 new traits.  We put them in a Traits UI :class:`Group` so that we can control
 the layout in the dialog a little better --- here, we're setting the layout
 orientation of the elements in the dialog to "vertical". ::
 
-    traits_view = View( 
-        Group( 
-            Item('color', label="Color", style="custom"), 
-            Item('marker', label="Marker"), 
-            Item('marker_size', label="Size"), 
-            Item('plot', editor=ComponentEditor(), show_label=False), 
-                 orientation = "vertical" ), 
-            width=500, height=500, resizable=True, 
+    traits_view = View(
+        Group(
+            Item('color', label="Color", style="custom"),
+            Item('marker', label="Marker"),
+            Item('marker_size', label="Size"),
+            Item('plot', editor=ComponentEditor(), show_label=False),
+                 orientation = "vertical" ),
+            width=500, height=500, resizable=True,
             title="Chaco Plot")
 
 Now we have to do something with those traits.  We modify the
@@ -691,9 +672,15 @@ Dynamically changing plot content
 
 Traits are not just useful for tweaking visual features. For instance, you can
 use them to select among several data items. This next example is based on
-the earlier :ref:`LinePlot example <line_plot_example>`, and we’ll walk through the modifications: ::
+the earlier :ref:`LinePlot example <line_plot_example>`, and we’ll walk through
+the modifications: ::
 
     from scipy.special import jn
+    from numpy import linspace
+    from traits.api import Enum, HasTraits, Instance
+    from traitsui.api import Item, View
+    from chaco.api import ArrayPlotData, Plot
+    from enable.api import ComponentEditor
 
     class DataChooser(HasTraits):
 
@@ -707,7 +694,7 @@ the earlier :ref:`LinePlot example <line_plot_example>`, and we’ll walk throug
             width=800, height=600, resizable=True,
             title="Data Chooser")
 
-        def __init__(self):
+        def _plot_default(self):
             x = linspace(-5, 10, 100)
 
             # jn is the Bessel function
@@ -719,11 +706,13 @@ the earlier :ref:`LinePlot example <line_plot_example>`, and we’ll walk throug
 
             plot = Plot(self.plotdata)
             plot.plot(("x", "y"), type="line", color="blue")
-            self.plot = plot
+            return plot
 
         def _data_name_changed(self):
             self.plotdata.set_data("y", self.data[self.data_name])
 
+    if __name__ == "__main__":
+        DataChooser().configure_traits()
 
 First, we add an Enumeration trait to select a particular data name ::
 
@@ -788,7 +777,7 @@ space region. This is the full code::
                            width=1000, height=600, resizable=True,
                            title="Connected Range")
 
-        def __init__(self):
+        def _container_default(self):
             x = linspace(-14, 14, 100)
             y = sin(x) * x**3
             plotdata = ArrayPlotData(x = x, y = y)
@@ -799,7 +788,7 @@ space region. This is the full code::
             line = Plot(plotdata)
             line.plot(("x", "y"), type="line", color="blue")
 
-            self.container = HPlotContainer(scatter, line)
+            container = HPlotContainer(scatter, line)
 
             scatter.tools.append(PanTool(scatter))
             scatter.tools.append(ZoomTool(scatter))
@@ -808,6 +797,7 @@ space region. This is the full code::
             line.tools.append(ZoomTool(line))
 
             scatter.range2d = line.range2d
+            return container
 
 
 First, we define a "horizontal" container that displays the plots side
@@ -915,9 +905,7 @@ This is the full code that we will analyze step by step below ::
                            width=500, height=500, resizable=True,
                            title="Chaco Plot")
 
-        def __init__(self, *args, **kw):
-            super(PlotEditor, self).__init__(*args, **kw)
-
+        def _plot_default(self):
             x = linspace(-14, 14, 100)
             y = sin(x) * x**3
             plotdata = ArrayPlotData(x = x, y = y)
@@ -927,8 +915,7 @@ This is the full code that we will analyze step by step below ::
 
             plot.tools.append(PanTool(plot))
             plot.tools.append(ZoomTool(plot))
-
-            self.plot = plot
+            return plot
 
         def _orientation_changed(self):
             if self.orientation == "vertical":
@@ -1030,7 +1017,7 @@ the :ref:`LinePlot example <line_plot_example>` so that we can pan and zoom. ::
             resizable=True,
             title="Chaco Plot")
 
-        def __init__(self):
+        def _plot_default(self):
             x = linspace(-14, 14, 100)
             y = sin(x) * x**3
             plotdata = ArrayPlotData(x = x, y = y)
@@ -1041,8 +1028,7 @@ the :ref:`LinePlot example <line_plot_example>` so that we can pan and zoom. ::
             plot.tools.append(PanTool(plot))
             plot.tools.append(ZoomTool(plot))
             plot.tools.append(DragZoom(plot, drag_button="right"))
-
-            self.plot = plot
+            return plot
 
 
 The example illustrates the general usage pattern: we create a new instance of
@@ -1094,13 +1080,13 @@ In the constructor, we do not add the interactive tools:
 .. code-block:: python
     :linenos:
 
-        def __init__(self):
+        def _plot_default(self):
             x = linspace(-14, 14, 100)
             y = sin(x) * x**3
             plotdata = ArrayPlotData(x = x, y = y)
             plot = Plot(plotdata)
             plot.plot(("x", "y"), type="line", color="blue")
-            self.plot = plot
+            return plot
 
 Instead, we write a trait event handler for the ``tools`` trait:
 
