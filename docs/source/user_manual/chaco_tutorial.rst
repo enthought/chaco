@@ -519,7 +519,7 @@ touch in the middle:
             line.padding_left = 0
             line.y_axis.orientation = "right"
 
-            self.plot = container
+            return container
 
 Something to note here is that all Chaco components have both bounds and
 padding (or margin).  In order to make our plots touch, we need to zero out the
@@ -768,6 +768,13 @@ In the next set of examples, we’ll look at how to hook some of those up.
 First, we are going to make two separate plots look at the same data
 space region. This is the full code::
 
+    from numpy import linspace, sin
+    from traits.api import HasTraits, Instance
+    from traitsui.api import Item, View
+    from chaco.api import ArrayPlotData, Plot, HPlotContainer
+    from chaco.tools.api import PanTool, ZoomTool
+    from enable.api import ComponentEditor
+
     class ConnectedRange(HasTraits):
 
         container = Instance(HPlotContainer)
@@ -799,6 +806,8 @@ space region. This is the full code::
             scatter.range2d = line.range2d
             return container
 
+    if __name__ == "__main__":
+        ConnectedRange().configure_traits()
 
 First, we define a "horizontal" container that displays the plots side
 to side::
@@ -891,6 +900,13 @@ in different windows.
 First of all, we define a Traits UI view of a customizable plot.
 This is the full code that we will analyze step by step below ::
 
+    from numpy import linspace, sin
+    from traits.api import Enum, HasTraits, Instance
+    from traitsui.api import Item, View
+    from chaco.api import ArrayPlotData, Plot
+    from chaco.tools.api import PanTool, ZoomTool
+    from enable.api import ComponentEditor
+
     class PlotEditor(HasTraits):
 
         plot = Instance(Plot)
@@ -977,8 +993,8 @@ In the last two lines, we open Traits UI editors on both objects.
 Note that we call :meth:`edit_traits()` on the first object,
 and :meth:`configure_traits()` on the second object.
 The technical reason for this is that :meth:`configure_traits()`
-will start the wxPython main loop (thereby blocking the script until the
-window is closed), whereas :meth:`edit_traits()` will not. Thus, when
+will start the GUI main loop, and therefore block the script until the
+window is closed, whereas :meth:`edit_traits()` will not. Thus, when
 opening multiple windows, we would call :meth:`edit_traits()`
 on all but the last one.
 
@@ -1005,7 +1021,12 @@ Thus far, none of the example plots we’ve built are truly interactive,
 e.g., you cannot pan or zoom them. In the next example, we will modify
 the :ref:`LinePlot example <line_plot_example>` so that we can pan and zoom. ::
 
-    from chaco.tools.api import PanTool, ZoomTool, DragZoom
+    from numpy import linspace, sin
+    from traits.api import HasTraits, Instance
+    from traitsui.api import Item, View
+    from chaco.api import ArrayPlotData, Plot
+    from chaco.tools.api import DragZoom, PanTool, ZoomTool
+    from enable.api import ComponentEditor
 
     class ToolsExample(HasTraits):
 
@@ -1032,8 +1053,8 @@ the :ref:`LinePlot example <line_plot_example>` so that we can pan and zoom. ::
 
 
 The example illustrates the general usage pattern: we create a new instance of
-a Tool, giving it a reference
-to the Plot, and then we append that tool to a list of tools on the plot.
+a :class:`Tool`, giving it a reference
+to the :class:`Plot`, and then we append that tool to the list of tools on the plot.
 This looks a little redundant, but there is a reason why the tools
 need a reference back to the plot: the tools use methods and attributes
 of the plot
@@ -1046,7 +1067,7 @@ Dynamically controlling interactions
 ====================================
 
 One of the nice things about having interactivity bundled up into modular
-tools is that one can dynamically control when the interaction are allowed
+tools is that one can dynamically control when the interactions are allowed
 and when they are not.
 
 We will modify the previous example so that we can externally control
@@ -1065,9 +1086,14 @@ strings, and not the tool classes themselves.
 .. code-block:: python
     :linenos:
 
-    from traitsui.api import CheckListEditor
+    from numpy import linspace, sin
+    from traits.api import HasTraits, Instance
+    from traitsui.api import CheckListEditor, Item, View
+    from chaco.api import ArrayPlotData, Plot
+    from chaco.tools.api import DragZoom, PanTool, ZoomTool
+    from enable.api import ComponentEditor
 
-    class ToolsExample(HasTraits):
+    class ToolsExample2(HasTraits):
 
         plot = Instance(Plot)
 
