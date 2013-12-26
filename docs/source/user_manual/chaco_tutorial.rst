@@ -506,7 +506,7 @@ This produces the following plot:
 
 There are many parameters you can configure on a container, like background
 color, border thickness, spacing, and padding.  We insert some more
-lines between lines 20 and 21 of the previous example to make the two plots
+lines between lines 25 and 26 of the previous example to make the two plots
 touch in the middle:
 
 .. code-block:: python
@@ -621,7 +621,7 @@ the call to :meth:`plot`::
 
     self.renderer = plot.plot(("x", "y"), type="scatter", color="blue")[0]
 
-Recall that a Plot is a container for renderers and a factory for them. When
+Recall that a :class:`Plot` is a container for renderers and a factory for them. When
 called, its :meth:`plot` method returns a list of the renderers that the call
 created. In previous examples we've been just ignoring or discarding the return
 value, since we had no use for it. In this case, however, we grab a
@@ -697,7 +697,7 @@ the modifications: ::
         def _plot_default(self):
             x = linspace(-5, 10, 100)
 
-            # jn is the Bessel function
+            # jn is the Bessel function or order n
             self.data = {"jn0": jn(0, x),
                          "jn1": jn(1, x),
                          "jn2": jn(2, x)}
@@ -1050,7 +1050,8 @@ the :ref:`LinePlot example <line_plot_example>` so that we can pan and zoom. ::
             plot.tools.append(ZoomTool(plot))
             plot.tools.append(DragZoom(plot, drag_button="right"))
             return plot
-
+    if __name__ == "__main__":
+        ToolsExample().configure_traits()
 
 The example illustrates the general usage pattern: we create a new instance of
 a :class:`Tool`, giving it a reference
