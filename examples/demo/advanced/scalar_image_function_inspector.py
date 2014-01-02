@@ -10,6 +10,8 @@ chosen by a line interactor.
 Animation must be disabled (unchecked) before the model can be edited.
 """
 
+from __future__ import with_statement
+
 # Standard library imports
 from optparse import OptionParser
 import sys
@@ -301,8 +303,7 @@ class PlotUI(HasTraits):
         self.colorbar.index_mapper.range.high = self.maxz
         self._image_index.set_data(model.xs, model.ys)
         self._image_value.data = model.zs
-        self.pd.set_data("line_index", model.xs)
-        self.pd.set_data("line_index2", model.ys)
+        self.pd.update_data(line_index=model.xs, line_index2=model.ys)
         self.container.invalidate_draw()
         self.container.request_redraw()
 
@@ -323,27 +324,22 @@ class PlotUI(HasTraits):
         if self._image_index.metadata.has_key("selections"):
             x_ndx, y_ndx = self._image_index.metadata["selections"]
             if y_ndx and x_ndx:
-                self.pd.set_data("line_value",
-                                 self._image_value.data[y_ndx,:])
-                self.pd.set_data("line_value2",
-                                 self._image_value.data[:,x_ndx])
                 xdata, ydata = self._image_index.get_data()
                 xdata, ydata = xdata.get_data(), ydata.get_data()
-                self.pd.set_data("scatter_index", array([xdata[x_ndx]]))
-                self.pd.set_data("scatter_index2", array([ydata[y_ndx]]))
-                self.pd.set_data("scatter_value",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
-                self.pd.set_data("scatter_value2",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
-                self.pd.set_data("scatter_color",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
-                self.pd.set_data("scatter_color2",
-                    array([self._image_value.data[y_ndx, x_ndx]]))
+                self.pd.update_data(
+                    line_value=self._image_value.data[y_ndx,:],
+                    line_value2=self._image_value.data[:,x_ndx],
+                    scatter_index=array([xdata[x_ndx]]),
+                    scatter_index2=array([ydata[y_ndx]]),
+                    scatter_value=array([self._image_value.data[y_ndx, x_ndx]]),
+                    scatter_value2=array([self._image_value.data[y_ndx, x_ndx]]),
+                    scatter_color=array([self._image_value.data[y_ndx, x_ndx]]),
+                    scatter_color2=array([self._image_value.data[y_ndx, x_ndx]])
+                )
         else:
-            self.pd.set_data("scatter_value", array([]))
-            self.pd.set_data("scatter_value2", array([]))
-            self.pd.set_data("line_value", array([]))
-            self.pd.set_data("line_value2", array([]))
+            self.pd.update_data({"scatter_value": array([]),
+                "scatter_value2": array([]), "line_value": array([]),
+                "line_value2": array([])})
 
     def _colormap_changed(self):
         self._cmap = default_colormaps.color_map_name_dict[self.colormap]
@@ -493,7 +489,7 @@ class ModelView(HasTraits):
                        title = "Function Inspector",
                        resizable=True)
 
-    @on_trait_change('model, view')
+    @on_trait_change('model, model.model_changed, view')
     def update_view(self):
         if self.model is not None and self.view is not None:
             self.view.update(self.model)
@@ -503,11 +499,6 @@ class ModelView(HasTraits):
         
     def _edit_view_fired(self):
         self.view.configure_traits(view="plot_edit_view")
-
-    def _model_changed(self):
-        if self.view is not None:
-            self.view.update(self.model)
-
             
     def _start_timer(self):
         # Start up the timer! We should do this only when the demo actually
@@ -525,14 +516,6 @@ class ModelView(HasTraits):
         self._start_timer()
         return super(ModelView, self).configure_traits(*args, **kws)
             
-
-options_dict = {'colormap' : "jet",
-                'num_levels' : 15,
-                'function' : "tanh(x**2+y)*cos(y)*jn(0,x+y*2)"}
-model=Model(**options_dict)
-view=PlotUI(**options_dict)
-popup = ModelView(model=model, view=view)
-
 def show_plot(**kwargs):
     model = Model(**kwargs)
     view = PlotUI(**kwargs)

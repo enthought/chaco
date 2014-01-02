@@ -225,7 +225,7 @@ class TimeScale(AbstractScale):
     def __init__(self, **kw_interval):
         """ Defines the time period that this scale uses.
         """
-        self.formatter = kw_interval.get("formatter", TimeFormatter())
+        self.formatter = kw_interval.pop("formatter", TimeFormatter())
         unit, val = kw_interval.items()[0]
         self.unit = unit
         if "_of_" in unit:

@@ -71,11 +71,6 @@ class JitterPlot(AbstractPlotRenderer):
     # The color of the outline to draw around the marker.
     outline_color = black_color_trait
 
-    # Override the base class default for **origin**, which specifies corners.
-    # Since this is a 1D plot, it only makes sense to have the origin at the
-    # edges.
-    origin = Enum("bottom", "top", "left", "right")
-
     #------------------------------------------------------------------------
     # Built-in selection handling
     #------------------------------------------------------------------------
@@ -342,13 +337,13 @@ class JitterPlot(AbstractPlotRenderer):
         y = self.y
         y2 = self.y2
 
-        if "left" in self.origin:
+        if "left" in self.origin and self.orientation == 'h':
             mapper.screen_bounds = (x, x2)
-        elif "right" in self.origin:
+        elif "right" in self.origin and self.orientation == 'h':
             mapper.screen_bounds = (x2, x)
-        elif "bottom" in self.origin:
+        elif "bottom" in self.origin  and self.orientation == 'v':
             mapper.screen_bounds = (y, y2)
-        elif "top" in self.origin:
+        elif "top" in self.origin  and self.orientation == 'v':
             mapper.screen_bounds = (y2, y)
 
         self.invalidate_draw()

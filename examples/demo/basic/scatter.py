@@ -37,7 +37,7 @@ def _create_plot_component():
     x = sort(random(numpts))
     y = random(numpts)
 
-    # Create a plot data obect and give it this data
+    # Create a plot data object and give it this data
     pd = ArrayPlotData()
     pd.set_data("index", x)
     pd.set_data("value", y)

@@ -157,7 +157,7 @@ marker_trans = {
     '+': 'plus',
     's': 'square',
     '^': 'triangle',
-    'v': 'down triangle'
+    'v': 'inverted_triangle'
 }
 
 line_re = re.compile('--|-\.|[-:]')
@@ -285,9 +285,7 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
             format["marker"] = marker
             format["color"] = markercolor
 
-        # Check the data sort order, but only if it will create a new datasource
-        if x not in active_plot.datasources:
-            x_sort_order = _check_sort_order(plotdata.get_data(x))
+        x_sort_order = _check_sort_order(plotdata.get_data(x))
         plots.extend(active_plot.plot((x,y), type=",".join(plot_type), **format))
 
         # Set the sort order

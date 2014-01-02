@@ -4,11 +4,10 @@ import numpy
 
 from chaco.abstract_overlay import AbstractOverlay
 from enable.api import ColorTrait, KeySpec
-from traits.api import Bool, Enum, Trait, Int, Float, Tuple, \
-        Instance, DelegatesTo, Property
+from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance, Property
 from traits.util.deprecated import deprecated
 
-from better_zoom import BetterZoom, ZoomState
+from better_zoom import BetterZoom
 from tool_states import SelectedZoomState
 
 class BetterSelectingZoom(AbstractOverlay, BetterZoom):
@@ -98,11 +97,24 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     # is currently enabled.
     _enabled = Bool(False)
 
+    #-------------------------------------------------------------------------
+    # Private traits
+    #-------------------------------------------------------------------------
+
+    # the original numerical screen ranges
+    _orig_low_setting = Tuple
+    _orig_high_setting = Tuple
+
     def __init__(self, component=None, *args, **kw):
         # Since this class uses multiple inheritance (eek!), lets be
         # explicit about the order of the parent class constructors
         AbstractOverlay.__init__(self, component, *args, **kw)
         BetterZoom.__init__(self, component, *args, **kw)
+        # Store the original range settings
+        x_range = self._get_x_mapper().range
+        y_range = self._get_y_mapper().range
+        self._orig_low_setting = (x_range.low_setting, y_range.low_setting)
+        self._orig_high_setting = (x_range.high_setting, y_range.high_setting)
 
     def reset(self, event=None):
         """ Resets the tool to normal state, with no start or end position.
@@ -159,7 +171,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         return
 
     def pre_selecting_left_down(self, event):
-        """ the use pressed the key to turn on the zoom mode,
+        """ The user pressed the key to turn on the zoom mode,
             now handle the click to start the select mode
         """
         self._start_select(event)
@@ -182,7 +194,32 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
 
         The selection is extended to the current mouse position.
         """
-        self._screen_end = (event.x, event.y)
+        # Take into account when we update the current endpoint, but only
+        # if we are in box select mode.  The way we handle aspect ratio
+        # is to find the largest rectangle of the specified aspect which
+        # will fit within the rectangle defined by the start coords and
+        # the current mouse position.
+        if self.tool_mode == "box" and self.aspect_ratio is not None:
+            x1, y1 = self._screen_start
+            x2, y2 = event.x, event.y
+            if (y2 - y1) == 0:
+                x2 = x1
+                y2 = y1
+            else:
+                width = abs(x2 - x1)
+                height = abs(y2 - y1)
+                drawn_aspect = width / height
+                if drawn_aspect > self.aspect_ratio:
+                    # Drawn box is wider, so use its height to compute the
+                    # restricted width
+                    x2 = x1 + height * self.aspect_ratio * (1 if x2 > x1 else -1)
+                else:
+                    # Drawn box is taller, so use its width to compute the
+                    # restricted height
+                    y2 = y1 + width / self.aspect_ratio * (1 if y2 > y1 else -1)
+            self._screen_end = (x2, y2)
+        else:
+            self._screen_end = (event.x, event.y)
         self.component.request_redraw()
         event.handled = True
         return
@@ -193,7 +230,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
 
         Finishes selecting and does the zoom.
         """
-        if self.drag_button == "left":
+        if self.drag_button in ("left", None):
             self._end_select(event)
         return
 
@@ -426,3 +463,24 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             high[axis_index] = high_val
         return low, high
 
+    def _reset_range_settings(self):
+        """ Reset the range settings to their original values """
+        x_range = self._get_x_mapper().range
+        y_range = self._get_y_mapper().range
+        x_range.low_setting, y_range.low_setting = self._orig_low_setting
+        x_range.high_setting, y_range.high_setting = self._orig_high_setting
+
+    #--------------------------------------------------------------------------
+    #  overloaded
+    #--------------------------------------------------------------------------
+
+    def _prev_state_pressed(self):
+        super(BetterSelectingZoom, self)._prev_state_pressed()
+        # Reset the range settings
+        if self._history_index == 0:
+            self._reset_range_settings()
+
+    def _reset_state_pressed(self):
+        super(BetterSelectingZoom, self)._reset_state_pressed()
+        # Reset the range settings
+        self._reset_range_settings()

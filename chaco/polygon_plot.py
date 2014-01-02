@@ -113,7 +113,7 @@ class PolygonPlot(BaseXYPlot):
         """
         with gc:
             gc.set_stroke_color(self.effective_edge_color)
-            gc.set_line_width(self.line_width)
+            gc.set_line_width(self.edge_width)
             gc.set_fill_color(self.effective_face_color)
             if hasattr(self, 'line_style_'):
                 gc.set_line_dash(self.line_style_)

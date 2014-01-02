@@ -13,8 +13,12 @@ from abstract_data_source import AbstractDataSource
 
 
 class MultiArrayDataSource(AbstractDataSource):
-    """ A data source representing a single, continuous array of numerical data
-    of potentially more than one dimension.
+    """ A data source representing a single, continuous array of
+    multidimensional numerical data.
+
+    It is useful, for example, to define 2D vector data at each point of
+    a scatter plot (as in QuiverPlot), or to represent multiple values
+    for each index (as in MultiLinePlot).
 
     This class does not listen to the array for value changes;  To implement
     such behavior, define a subclass that hooks up the appropriate listeners.

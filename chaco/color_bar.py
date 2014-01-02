@@ -4,7 +4,7 @@
 from __future__ import with_statement
 
 # Major library imports
-from numpy import array, arange, ones, transpose, uint8
+from numpy import array, arange, ascontiguousarray, ones, transpose, uint8
 
 # Enthought library imports
 from traits.api import Any, Bool, Enum, Instance, Property, \
@@ -170,7 +170,7 @@ class ColorBar(AbstractPlotRenderer):
                                     color_values.shape[1]))* color_values * 255
 
         if orientation == "v":
-            bmparray = transpose(bmparray, axes=(1,0,2))[::-1]
+            bmparray = ascontiguousarray(transpose(bmparray, axes=(1,0,2))[::-1])
         bmparray = bmparray.astype(uint8)
         img = GraphicsContext(bmparray, "rgba32")
         return img

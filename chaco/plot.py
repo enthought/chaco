@@ -37,6 +37,7 @@ from plot_label import PlotLabel
 from polygon_plot import PolygonPlot
 from scatterplot import ScatterPlot
 from filled_line_plot import FilledLinePlot
+from quiverplot import QuiverPlot
 
 
 
@@ -115,7 +116,8 @@ class Plot(DataView):
                              cmap_img_plot = CMapImagePlot,
                              contour_line_plot = ContourLinePlot,
                              contour_poly_plot = ContourPolyPlot,
-                             candle = CandlePlot))
+                             candle = CandlePlot,
+                             quiver = QuiverPlot,))
 
     #------------------------------------------------------------------------
     # Annotations and decorations
@@ -239,7 +241,7 @@ class Plot(DataView):
         """ Adds a new sub-plot using the given data and plot style.
 
         Parameters
-        ==========
+        ----------
         data : string, tuple(string), list(string)
             The data to be plotted. The type of plot and the number of
             arguments determines how the arguments are interpreted:
@@ -275,7 +277,7 @@ class Plot(DataView):
             plot types requested, e.g.,'line_color' or 'line_width'.
 
         Examples
-        ========
+        --------
         ::
 
             plot("my_data", type="line", name="myplot", color=lightblue)
@@ -285,10 +287,9 @@ class Plot(DataView):
             plot(("x", "y1", "y2", "y3"))
 
         Returns
-        =======
+        -------
         [renderers] -> list of renderers created in response to this call to plot()
         """
-
         if len(data) == 0:
             return
 
@@ -304,7 +305,9 @@ class Plot(DataView):
             name = self._make_new_plot_name()
         if origin is None:
             origin = self.default_origin
+            
         if plot_type in ("line", "scatter", "polygon", "bar", "filled_line"):
+            # Tie data to the index range
             if len(data) == 1:
                 if self.default_index is None:
                     # Create the default index based on the length of the first
@@ -321,6 +324,7 @@ class Plot(DataView):
                 self.index_range.add(index)
                 data = data[1:]
 
+            # Tie data to the value_range and create the renderer for each data
             new_plots = []
             simple_plot_types = ("line", "scatter")
             for value_name in data:
@@ -351,28 +355,6 @@ class Plot(DataView):
                         self._auto_color_idx = \
                             (self._auto_color_idx + 1) % len(self.auto_colors)
                         styles["fill_color"] = self.auto_colors[self._auto_color_idx]
-
-                    bar_width = styles.get('bar_width', cls().bar_width)
-                    index_min = min([source.get_data().min() \
-                                     for source in self.index_range.sources])
-                    index_max = max([source.get_data().max() \
-                                     for source in self.index_range.sources])
-                    self.index_range.low = index_min - bar_width
-                    self.index_range.high = index_max + bar_width
-
-
-                    value_min = min([source.get_data().min() \
-                                     for source in self.value_range.sources])
-                    value_max = max([source.get_data().max() \
-                                     for source in self.value_range.sources])
-
-                    self.value_range.low = value_min - (value_max-value_min)*0.1
-                    self.value_range.high = value_max + (value_max-value_min)*0.1
-
-                    self.index_range.tight_bounds = False
-                    self.value_range.tight_bounds = False
-
-
                 else:
                     raise ValueError("Unhandled plot type: " + plot_type)
 
@@ -396,10 +378,44 @@ class Plot(DataView):
                            orientation=self.orientation,
                            origin = origin,
                            **styles)
+                
                 self.add(plot)
                 new_plots.append(plot)
+            
+            if plot_type == 'bar':
+                # For bar plots, compute the ranges from the data to make the 
+                # plot look clean. 
+                
+                def custom_index_func(data_low, data_high, margin, tight_bounds):
+                    """ Compute custom bounds of the plot along index (in 
+                    data space).
+                    """
+                    bar_width = styles.get('bar_width', cls().bar_width)
+                    plot_low = data_low - bar_width
+                    plot_high = data_high + bar_width
+                    return plot_low, plot_high
+                
+                if self.index_range.bounds_func is None:
+                    self.index_range.bounds_func = custom_index_func
+                        
+                def custom_value_func(data_low, data_high, margin, tight_bounds):
+                    """ Compute custom bounds of the plot along value (in 
+                    data space).
+                    """
+                    plot_low = data_low - (data_high-data_low)*0.1
+                    plot_high = data_high + (data_high-data_low)*0.1
+                    return plot_low, plot_high
+                
+                if self.value_range.bounds_func is None:    
+                    self.value_range.bounds_func = custom_value_func
+                
+                self.index_range.tight_bounds = False
+                self.value_range.tight_bounds = False
+                self.index_range.refresh()
+                self.value_range.refresh()
 
             self.plots[name] = new_plots
+            
         elif plot_type == "cmap_scatter":
             if len(data) != 3:
                 raise ValueError("Colormapped scatter plots require (index, value, color) data")
@@ -480,7 +496,7 @@ class Plot(DataView):
         *data*'s second axis, and ybounds corresponds to the first axis.
 
         Parameters
-        ==========
+        ----------
         data : string
             The name of the data array in self.plot_data
         name : string
@@ -535,7 +551,7 @@ class Plot(DataView):
         """ Adds contour plots to this Plot object.
 
         Parameters
-        ==========
+        ----------
         data : string
             The name of the data array in self.plot_data, which must be
             floating point data.
@@ -615,7 +631,7 @@ class Plot(DataView):
             The 2D plot data
 
         axis : int
-            The axis along which the bounds are tyo be set
+            The axis along which the bounds are to be set
         """
 
         num_ticks = array_data.shape[axis] + 1
@@ -707,7 +723,7 @@ class Plot(DataView):
         """ Adds a new sub-plot using the given data and plot style.
 
         Parameters
-        ==========
+        ----------
         data : list(string), tuple(string)
             The names of the data to be plotted in the ArrayDataSource.  The
             number of arguments determines how they are interpreted:
@@ -736,7 +752,7 @@ class Plot(DataView):
             then a log scale is used.
 
         Styles
-        ======
+        ------
         These are all optional keyword arguments.
 
         bar_color : string, 3- or 4-tuple
@@ -760,7 +776,7 @@ class Plot(DataView):
             error bar.
 
         Returns
-        =======
+        -------
         [renderers] -> list of renderers created in response to this call.
         """
         if len(data) == 0:
@@ -828,6 +844,71 @@ class Plot(DataView):
         self.add(plot)
         self.plots[name] = [plot]
         return [plot]
+
+    def quiverplot(self, data, name=None, origin=None,
+                    **styles):
+        """ Adds a new sub-plot using the given data and plot style.
+
+        Parameters
+        ----------
+        data : list(string), tuple(string)
+            The names of the data to be plotted in the ArrayDataSource.  There
+            is only one combination accepted by this function:
+
+            (index, value, vectors)
+                index and value together determine the start coordinates of
+                each vector.  The vectors are an Nx2
+
+        name : string
+            The name of the plot.  If None, then a default one is created.
+
+        origin : string
+            Which corner the origin of this plot should occupy:
+                "bottom left", "top left", "bottom right", "top right"
+
+        Styles
+        ------
+        These are all optional keyword arguments.
+
+        line_color : string (default = "black")
+            The color of the arrows
+        line_width : float (default = 1.0)
+            The thickness, in pixels, of the arrows.
+        arrow_size : int (default = 5)
+            The length, in pixels, of the arrowhead
+
+        Returns
+        -------
+        [renderers] -> list of renderers created in response to this call.
+        """
+        if name is None:
+            name = self._make_new_plot_name()
+        if origin is None:
+            origin = self.default_origin
+
+        index, value, vectors = map(self._get_or_create_datasource, data)
+
+        self.index_range.add(index)
+        self.value_range.add(value)
+
+        imap = LinearMapper(range=self.index_range,
+                            stretch_data=self.index_mapper.stretch_data)
+        vmap = LinearMapper(range=self.value_range,
+                            stretch_data=self.value_mapper.stretch_data)
+
+        cls = self.renderer_map["quiver"]
+        plot = cls(index = index,
+                   value = value,
+                   vectors = vectors,
+                   index_mapper = imap,
+                   value_mapper = vmap,
+                   name = name,
+                   origin = origin,
+                   **styles
+                   )
+        self.add(plot)
+        self.plots[name] = [plot]
+        return [plot]        
 
     def delplot(self, *names):
         """ Removes the named sub-plots. """
@@ -969,18 +1050,20 @@ class Plot(DataView):
     def _data_update_handler(self, name, event):
         # event should be a dict with keys "added", "removed", and "changed",
         # per the comments in AbstractPlotData.
-        if event.has_key("added"):
-            pass
+        if "removed" in event:
+            for name in event["removed"]:
+                del self.datasources[name]
 
-        if event.has_key("removed"):
-            pass
+        if "added" in event:
+            for name in event["added"]:
+                self._get_or_create_datasource(name)
 
-        if event.has_key("changed"):
+        if "changed" in event:
             for name in event["changed"]:
-                if self.datasources.has_key(name):
+                if name in self.datasources:
                     source = self.datasources[name]
                     source.set_data(self.data.get_data(name))
-
+                    
     def _plots_items_changed(self, event):
         if self.legend:
             self.legend.plots = self.plots

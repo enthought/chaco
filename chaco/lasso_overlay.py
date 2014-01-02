@@ -7,7 +7,7 @@ from numpy import concatenate, newaxis
 
 # Enthought library imports
 from enable.api import ColorTrait, LineStyle
-from traits.api import Float, Instance
+from traits.api import Float, Instance, Bool
 
 # Local imports
 from abstract_overlay import AbstractOverlay
@@ -34,11 +34,17 @@ class LassoOverlay(AbstractOverlay):
     # The background color (overrides AbstractOverlay).
     bgcolor = 'clear'
 
+    # Whether to draw the lasso
+    # depends on the state of the lasso tool
+    _draw_selection = Bool(False)
+
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
 
         Implements AbstractOverlay.
         """
+        if not self._draw_selection:
+            return
         with gc:
             c = other_component
             gc.clip_to_rect(c.x, c.y, c.width, c.height)
@@ -46,6 +52,11 @@ class LassoOverlay(AbstractOverlay):
         return
 
     def _updated_changed_for_lasso_selection(self):
+        self.component.invalidate_draw()
+        self.component.request_redraw()
+
+    def _event_state_fired_for_lasso_selection(self, val):
+        self._draw_selection = val == 'selecting'
         self.component.invalidate_draw()
         self.component.request_redraw()
 
@@ -63,7 +74,7 @@ class LassoOverlay(AbstractOverlay):
                 if len(points) == 0:
                     return
                 points = concatenate((points, points[0, newaxis]), axis=0)
-                gc.set_line_width(self.border_width)
+                gc.set_line_width(self.selection_border_width)
                 gc.set_line_dash(self.selection_border_dash_)
                 gc.set_fill_color(self.selection_fill_color_)
                 gc.set_stroke_color(self.selection_border_color_)

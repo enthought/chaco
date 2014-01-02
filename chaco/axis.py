@@ -37,6 +37,9 @@ class PlotAxis(AbstractOverlay):
     # The mapper that drives this axis.
     mapper = Instance(AbstractMapper)
 
+    # Keep an origin for plots that aren't attached to a component
+    origin = Enum("bottom left", "top left", "bottom right", "top right")
+
     # The text of the axis title.
     title = Trait('', Str, Unicode) #May want to add PlotLabel option
 
@@ -61,7 +64,7 @@ class PlotAxis(AbstractOverlay):
     # The color of the tick labels.
     tick_label_color = ColorTrait("black")
 
-    # The rotation of the tick labels.  (Only multiples of 90 are supported)
+    # The rotation of the tick labels.
     tick_label_rotate_angle = Float(0)
 
     # Whether to align to corners or edges (corner is better for 45 degree rotation)
@@ -435,19 +438,20 @@ class PlotAxis(AbstractOverlay):
         screenlow = self.mapper.low_pos
         if overlay_component is not None:
             origin = getattr(overlay_component, 'origin', 'bottom left')
-            if self.orientation in ("top", "bottom"):
-                if "right" in origin:
-                    flip_from_gc = True
-                else:
-                    flip_from_gc = False
-            elif self.orientation in ("left", "right"):
-                if "top" in origin:
-                    flip_from_gc = True
-                else:
-                    flip_from_gc = False
-
-            if flip_from_gc:
-                screenlow, screenhigh = screenhigh, screenlow
+        else:
+            origin = self.origin
+        if self.orientation in ("top", "bottom"):
+            if "right" in origin:
+                flip_from_gc = True
+            else:
+                flip_from_gc = False
+        elif self.orientation in ("left", "right"):
+            if "top" in origin:
+                flip_from_gc = True
+            else:
+                flip_from_gc = False
+        if flip_from_gc:
+            screenlow, screenhigh = screenhigh, screenlow
 
         if (datalow == datahigh) or (screenlow == screenhigh) or \
            (datalow in [inf, -inf]) or (datahigh in [inf, -inf]):
@@ -522,6 +526,7 @@ class PlotAxis(AbstractOverlay):
 
 
     def _calculate_geometry(self):
+        origin = self.origin
         screenhigh = self.mapper.high_pos
         screenlow = self.mapper.low_pos
 
@@ -532,11 +537,13 @@ class PlotAxis(AbstractOverlay):
             self._title_orientation = array([0.,1.])
             self.title_angle = 0.0
             if self.orientation == 'top':
-                self._origin_point = array(self.position) + self._major_axis * screenlow
+                self._origin_point = array(self.position)
                 self._inside_vector = array([0.,-1.])
             else: #self.oriention == 'bottom'
-                self._origin_point = array(self.position) + array([0., self.bounds[1]]) + self._major_axis*screenlow
+                self._origin_point = array(self.position) + array([0., self.bounds[1]])
                 self._inside_vector = array([0., 1.])
+            if "right" in origin:
+                screenlow, screenhigh = screenhigh, screenlow
 
         elif self.orientation in ('left', 'right'):
             self._major_axis_size = self.bounds[1]
@@ -544,18 +551,20 @@ class PlotAxis(AbstractOverlay):
             self._major_axis = array([0., 1.])
             self._title_orientation = array([-1., 0])
             if self.orientation == 'left':
-                self._origin_point = array(self.position) + array([self.bounds[0], 0.]) + self._major_axis*screenlow
+                self._origin_point = array(self.position) + array([self.bounds[0], 0.])
                 self._inside_vector = array([1., 0.])
                 self.title_angle = 90.0
             else: #self.orientation == 'right'
-                self._origin_point = array(self.position) + self._major_axis * screenlow
+                self._origin_point = array(self.position)
                 self._inside_vector = array([-1., 0.])
                 self.title_angle = 270.0
+            if "top" in origin:
+                screenlow, screenhigh = screenhigh, screenlow
 
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
 
-        self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
+        self._end_axis_point = abs(screenhigh-screenlow)*self._major_axis + self._origin_point
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.
         self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
@@ -604,7 +613,7 @@ class PlotAxis(AbstractOverlay):
         if self.ensure_ticks_bounded:
             self._origin_point -= self._inside_vector*self.tick_in
 
-        self._end_axis_point = (screenhigh-screenlow)*self._major_axis + self._origin_point
+        self._end_axis_point = abs(screenhigh-screenlow)*self._major_axis + self._origin_point
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.
         self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
@@ -693,6 +702,9 @@ class PlotAxis(AbstractOverlay):
             if hasattr(component, attr):
                 self.mapper = getattr(component, attr)
                 break
+
+        # Keep our origin in sync with the component
+        self.origin = getattr(component, 'origin', 'bottom left')
         return
 
 
@@ -732,6 +744,7 @@ class PlotAxis(AbstractOverlay):
             'tick_interval',
             'tick_generator',
             'orientation',
+            'origin',
             'axis_line_visible',
             'axis_line_color',
             'axis_line_weight',

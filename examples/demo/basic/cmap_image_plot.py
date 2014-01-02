@@ -31,7 +31,7 @@ def _create_plot_component():
     x, y = meshgrid(xs,ys)
     z = exp(-(x**2+y**2)/100)
 
-    # Create a plot data obect and give it this data
+    # Create a plot data object and give it this data
     pd = ArrayPlotData()
     pd.set_data("imagedata", z)
 

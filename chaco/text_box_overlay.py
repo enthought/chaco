@@ -5,7 +5,7 @@ from __future__ import with_statement
 # Enthought library imports
 from enable.api import ColorTrait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Enum, Int, Str, Float, Trait
+from traits.api import Any, Enum, Int, Str, Float, Trait, Bool
 
 # Local, relative imports
 from abstract_overlay import AbstractOverlay
@@ -16,7 +16,7 @@ class TextBoxOverlay(AbstractOverlay):
     """ Draws a box with text in it.
     """
 
-    #### Configuration traits ##################################################
+    #### Configuration traits #################################################
 
     # The text to display in the box.
     text = Str
@@ -33,11 +33,23 @@ class TextBoxOverlay(AbstractOverlay):
     # The color of the outside box.
     border_color = ColorTrait("dodgerblue")
 
+    # The color of the text.
+    text_color = ColorTrait("black")
+
     # The thickness of box border.
     border_size = Int(1)
 
+    # The border visibility. Defaults to true to duplicate previous behavior.
+    border_visible = Bool(True)
+
     # Number of pixels of padding around the text within the box.
     padding = Int(5)
+
+    # The maximum width of the displayed text. This affects the width of the
+    # text only, not the text box, which includes margins around the text and
+    # `padding`.
+    # A `max_text_width` of 0.0 means that the width will not be restricted.
+    max_text_width = Float(0.0)
 
     # Alignment of the text in the box:
     #
@@ -51,7 +63,7 @@ class TextBoxOverlay(AbstractOverlay):
     # of the text box.  Must be a sequence of length 2.
     alternate_position = Any
 
-    #### Public 'AbstractOverlay' interface ####################################
+    #### Public 'AbstractOverlay' interface ###################################
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws the box overlaid on another component.
@@ -66,6 +78,7 @@ class TextBoxOverlay(AbstractOverlay):
         # different shapes and put the text inside it without the label
         # filling a rectangle on top of it
         label = Label(text=self.text, font=self.font, bgcolor="transparent",
+                      color=self.text_color, max_width=self.max_text_width,
                       margin=5)
         width, height = label.get_width_height(gc)
 
@@ -94,12 +107,16 @@ class TextBoxOverlay(AbstractOverlay):
                 x = component.x + self.padding
 
         # attempt to get the box entirely within the component
-        if x + width > component.width:
-            x = max(0, component.width-width)
-        if y + height > component.height:
-            y = max(0, component.height - height)
-        elif y < 0:
-            y = 0
+        x_min, y_min, x_max, y_max = (component.x,
+                                      component.y,
+                                      component.x + component.width,
+                                      component.y + component.height)
+        if x + width > x_max:
+            x = max(x_min, x_max - width)
+        if y + height > y_max:
+            y = max(y_min, y_max - height)
+        elif y < y_min:
+            y = y_min
 
         # apply the alpha channel
         color = self.bgcolor_
@@ -118,24 +135,25 @@ class TextBoxOverlay(AbstractOverlay):
             gc.set_stroke_color(self.border_color_)
             gc.set_fill_color(color)
 
-            # draw a rounded rectangle
-            x = y = 0
-            end_radius = 8.0
-            gc.begin_path()
-            gc.move_to(x + end_radius, y)
-            gc.arc_to(x + width, y,
-                    x + width,
-                    y + end_radius, end_radius)
-            gc.arc_to(x + width,
-                    y + height,
-                    x + width - end_radius,
-                    y + height, end_radius)
-            gc.arc_to(x, y + height,
-                    x, y,
-                    end_radius)
-            gc.arc_to(x, y,
-                    x + width + end_radius,
-                    y, end_radius)
-            gc.draw_path()
+            if self.border_visible:
+                # draw a rounded rectangle.
+                x = y = 0
+                end_radius = 8.0
+                gc.begin_path()
+                gc.move_to(x + end_radius, y)
+                gc.arc_to(x + width, y,
+                          x + width,
+                          y + end_radius, end_radius)
+                gc.arc_to(x + width,
+                          y + height,
+                          x + width - end_radius,
+                          y + height, end_radius)
+                gc.arc_to(x, y + height,
+                          x, y,
+                          end_radius)
+                gc.arc_to(x, y,
+                          x + width + end_radius,
+                          y, end_radius)
+                gc.draw_path()
 
             label.draw(gc)

@@ -7,13 +7,16 @@ Left-drag pans the plot.
 
 Mousewheel up and down zooms the plot in and out.
 
-Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular region to
-zoom.  If you use a sequence of zoom boxes, pressing alt-left-arrow and
-alt-right-arrow moves you forwards and backwards through the "zoom history".
+Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
+region to zoom.  If you use a sequence of zoom boxes, pressing control-y
+and control-z (Meta-y and Meta-z on Mac) moves you forwards and backwards
+through the "zoom history".
+
+Right-drag is enabled on some of the labels.
 """
 
 # Major library imports
-from numpy import arange
+from numpy import linspace
 from scipy.special import jn
 
 # Enthought library imports
@@ -41,16 +44,18 @@ class PlotExample(HasTraits):
 
     def _plot_default(self):
 
-        container = OverlayPlotContainer(padding = 50, fill_padding = True,
-                                         bgcolor = "lightgray", use_backbuffer=True)
+        container = OverlayPlotContainer(padding=50, fill_padding=True,
+                                         bgcolor="lightgray",
+                                         use_backbuffer=True)
 
         # Create the initial X-series of data
         numpoints = self.numpoints
         low = self.low
         high = self.high
-        x = arange(low, high+0.001, (high-low)/numpoints)
+        x = linspace(low, high, numpoints + 1)
         y = jn(0, x)
-        plot = create_line_plot((x,y), color=tuple(COLOR_PALETTE[0]), width=2.0)
+        plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[0]),
+                                width=2.0)
         plot.index.sort_order = "ascending"
         plot.bgcolor = "white"
         plot.border_visible = True
@@ -67,7 +72,7 @@ class PlotExample(HasTraits):
         # from its data point.
         label = DataLabel(component=plot, data_point=(x[40], y[40]),
                           label_position="top left", padding=40,
-                          bgcolor = "lightgray",
+                          bgcolor="lightgray",
                           border_visible=False)
         plot.overlays.append(label)
         tool = DataLabelTool(label, drag_button="right", auto_arrow_root=True)
@@ -80,7 +85,8 @@ class PlotExample(HasTraits):
                            bgcolor="transparent",
                            marker_color="blue",
                            marker_line_color="transparent",
-                           marker = "diamond",
+                           marker="diamond",
+                           font='modern 14',
                            arrow_visible=False)
         plot.overlays.append(label2)
 
@@ -91,6 +97,44 @@ class PlotExample(HasTraits):
                            marker="circle",
                            arrow_visible=False)
         plot.overlays.append(label3)
+
+        # This label uses label_style='bubble'.
+        label4 = DataLabel(component=plot, data_point=(x[60], y[60]),
+                           border_padding=10,
+                           marker_color="red",
+                           marker_size=3,
+                           label_position=(20, 50),
+                           label_style='bubble',
+                           label_text="Something interesting",
+                           label_format="at x=%(x).2f, y=%(y).2f",
+                           font='modern 18',
+                           bgcolor=(1, 1, 0.75, 1),
+                          )
+        plot.overlays.append(label4)
+        tool4 = DataLabelTool(label4, drag_button="right",
+                              auto_arrow_root=True)
+        label4.tools.append(tool4)
+
+        # Another 'bubble' label.  This one sets arrow_min_length=20, so
+        # the arrow is not drawn when the label is close to the data point.
+        label5 = DataLabel(component=plot, data_point=(x[65], y[65]),
+                           border_padding=10,
+                           marker_color="green",
+                           marker_size=4,
+                           show_label_coords=False,
+                           label_style='bubble',
+                           label_position=(25, 5),
+                           label_text="Label with\narrow_min_length=20",
+                           border_visible=False,
+                           arrow_min_length=20,
+                           font='modern 14',
+                           bgcolor=(0.75, 0.75, 0.75, 1),
+                          )
+        plot.overlays.append(label5)
+        tool5 = DataLabelTool(label5, drag_button="right",
+                              auto_arrow_root=True)
+        label5.tools.append(tool5)
+
         container.add(plot)
 
         return container

@@ -76,6 +76,7 @@ class DataRange1D(BaseDataRange):
     #   resets to 'auto'.
     default_state = Enum('auto', 'high_track', 'low_track')
 
+    # FIXME: this attribute is not used anywhere, is it safe to remove it?
     # Is this range dependent upon another range?
     fit_to_subset = Bool(False)
 

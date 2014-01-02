@@ -4,8 +4,8 @@
 from numpy import inf
 
 # Enthought library imports
-from enable.api import BaseTool, Pointer
-from traits.api import Bool, Enum, Float, Tuple
+from enable.api import BaseTool, Pointer, KeySpec
+from traits.api import Bool, Enum, Float, Tuple, Instance
 
 
 class PanTool(BaseTool):
@@ -28,6 +28,16 @@ class PanTool(BaseTool):
     # direction.  To do so, set constrain=True, constrain_key=None, and
     # constrain_direction to the desired direction.
     constrain_key = Enum(None, "shift", "control", "alt")
+
+    # Keys to Pan via keyboard
+    pan_right_key = Instance(KeySpec, args=("Right",))
+    pan_left_key = Instance(KeySpec, args=("Left",))
+    pan_up_key = Instance(KeySpec, args=("Up",))
+    pan_down_key = Instance(KeySpec, args=("Down",))
+
+    # number of pixels the keys should pan
+    # disabled if 0.0
+    pan_keys_step = Float(0.0)
 
     # Constrain the panning to one direction?
     constrain = Bool(False)
@@ -67,6 +77,32 @@ class PanTool(BaseTool):
     # The possible event states of this tool (overrides enable.Interactor).
     event_state = Enum("normal", "panning")
 
+    def normal_key_pressed(self, event):
+        """ Handles a key being pressed when the tool is in the 'normal'
+        state.
+        """
+        if self.pan_keys_step == 0.0:
+            return
+        src = self.component.bounds[0]/2, self.component.bounds[1]/2
+        dest = src
+        if self.pan_left_key.match(event):
+            dest = (src[0] - self.pan_keys_step,
+                    src[1])
+        elif self.pan_right_key.match(event):
+            dest = (src[0] + self.pan_keys_step,
+                    src[1])
+        elif self.pan_down_key.match(event):
+            dest = (src[0],
+                    src[1] - self.pan_keys_step)
+        elif self.pan_up_key.match(event):
+            dest = (src[0],
+                    src[1] + self.pan_keys_step)
+        if src != dest:
+            self._original_xy = src
+            event.x = dest[0]
+            event.y = dest[1]
+            self.panning_mouse_move(event)
+        return
 
     def normal_left_down(self, event):
         """ Handles the left mouse button being pressed when the tool is in
@@ -136,23 +172,22 @@ class PanTool(BaseTool):
 
         if self._auto_constrain and self.constrain_direction is None:
             # Determine the constraint direction
-            if abs(event.x - self._original_xy[0]) > abs(event.y - self._original_xy[1]):
+            x_orig, y_orig = self._original_xy
+            if abs(event.x - x_orig) > abs(event.y - y_orig):
                 self.constrain_direction = "x"
             else:
                 self.constrain_direction = "y"
 
-        for direction, bound_name, ndx in [("x","width",0), ("y","height",1)]:
+        direction_info = [("x", "width", 0), ("y", "height", 1)]
+        for direction, bound_name, index in direction_info:
             if not self.constrain or self.constrain_direction == direction:
                 mapper = getattr(plot, direction + "_mapper")
-                range = mapper.range
                 domain_min, domain_max = mapper.domain_limits
                 eventpos = getattr(event, direction)
-                origpos = self._original_xy[ndx]
+                origpos = self._original_xy[index]
 
                 screenlow, screenhigh = mapper.screen_bounds
                 screendelta = self.speed * (eventpos - origpos)
-                #if getattr(plot, direction + "_direction", None) == "flipped":
-                #    screendelta = -screendelta
 
                 newlow = mapper.map_data(screenlow - screendelta)
                 newhigh = mapper.map_data(screenhigh - screendelta)
@@ -166,33 +201,35 @@ class PanTool(BaseTool):
                 # linear mappers (which is used 99% of the time).
                 if domain_min is None:
                     if self.restrict_to_data:
-                        domain_min = min([source.get_data().min() for source in range.sources])
+                        domain_min = min([source.get_data().min()
+                                          for source in mapper.range.sources])
                     else:
                         domain_min = -inf
                 if domain_max is None:
                     if self.restrict_to_data:
-                        domain_max = max([source.get_data().max() for source in range.sources])
+                        domain_max = max([source.get_data().max()
+                                          for source in mapper.range.sources])
                     else:
                         domain_max = inf
+
                 if (newlow <= domain_min) and (newhigh >= domain_max):
                     # Don't do anything; effectively, freeze the pan
                     continue
+
                 if newlow <= domain_min:
-                    delta = newhigh - newlow
                     newlow = domain_min
-                    # Don't let the adjusted newhigh exceed domain_max; this
-                    # can happen with a nonlinear mapper.
-                    newhigh = min(domain_max, domain_min + delta)
+                    # Calculate delta in screen space, which is always linear.
+                    screen_delta = mapper.map_screen(domain_min) - screenlow
+                    newhigh = mapper.map_data(screenhigh + screen_delta)
                 elif newhigh >= domain_max:
-                    delta = newhigh - newlow
                     newhigh = domain_max
-                    # Don't let the adjusted newlow go below domain_min; this
-                    # can happen with a nonlinear mapper.
-                    newlow = max(domain_min, domain_max - delta)
+                    # Calculate delta in screen space, which is always linear.
+                    screen_delta = mapper.map_screen(domain_max) - screenhigh
+                    newlow = mapper.map_data(screenlow + screen_delta)
 
                 # Use .set_bounds() so that we don't generate two range_changed
                 # events on the DataRange
-                range.set_bounds(newlow, newhigh)
+                mapper.range.set_bounds(newlow, newhigh)
 
         event.handled = True
 

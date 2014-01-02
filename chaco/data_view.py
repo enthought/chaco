@@ -3,7 +3,7 @@ functions.
 """
 from numpy import array, transpose
 
-from traits.api import Enum, Instance, Property
+from traits.api import Bool, Enum, Instance, Property
 from enable.colors import color_table
 
 from abstract_overlay import AbstractOverlay
@@ -165,6 +165,14 @@ class DataView(OverlayPlotContainer):
     # The grid that intersects the y-axis, i.e., a set of horizontal lines.
     y_grid = Instance(PlotGrid)
 
+    # Whether to automatically create the x_axis and y_axis if they were not
+    # already set by the caller.
+    auto_axis = Bool(True)
+
+    # Whether to automatically create the x_grid and y_grid if they were not
+    # already set by the caller.
+    auto_grid = Bool(True)
+
     # Convenience property for accessing the index axis, which can be X or Y,
     # depending on **orientation**.
     index_axis = AxisProperty
@@ -265,20 +273,20 @@ class DataView(OverlayPlotContainer):
         if color_table[self.bgcolor] == color_table[grid_color]:
             grid_color = 'white'
 
-        if not self.x_grid:
+        if not self.x_grid and self.auto_grid:
             self.x_grid = PlotGrid(mapper=self.x_mapper, orientation="vertical",
                                   line_color=grid_color, line_style="dot",
                                   component=self)
-        if not self.y_grid:
+        if not self.y_grid and self.auto_grid:
             self.y_grid = PlotGrid(mapper=self.y_mapper, orientation="horizontal",
                                   line_color=grid_color, line_style="dot",
                                   component=self)
 
-        if not self.x_axis:
+        if not self.x_axis and self.auto_axis:
             self.x_axis = PlotAxis(mapper=self.x_mapper, orientation="bottom",
                                   component=self)
 
-        if not self.y_axis:
+        if not self.y_axis and self.auto_axis:
             self.y_axis = PlotAxis(mapper=self.y_mapper, orientation="left",
                                   component=self)
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2011 by Enthought, Inc.
+# Copyright (c) 2008-2013 by Enthought, Inc.
 # All rights reserved.
 from os.path import join
 from numpy import get_include
@@ -8,13 +8,21 @@ from setuptools import setup, Extension, find_packages
 info = {}
 execfile(join('chaco', '__init__.py'), info)
 
+numpy_include_dir = get_include()
+
 
 # Register Python extensions
 contour = Extension(
     'chaco.contour.contour',
     sources=['chaco/contour/cntr.c'],
-    include_dirs=[get_include()],
+    include_dirs=[numpy_include_dir],
     define_macros=[('NUMPY', None)]
+    )
+
+cython_speedups = Extension(
+    'chaco._cython_speedups', 
+    sources=['chaco/_cython_speedups.c'],
+    include_dirs=[numpy_include_dir],
     )
 
 # Commenting this out for now, until we get the module fully tested and working
@@ -56,7 +64,7 @@ setup(
     long_description = open('README.rst').read(),
     download_url = ('http://www.enthought.com/repo/ets/chaco-%s.tar.gz' %
                     info['__version__']),
-    ext_modules = [contour],
+    ext_modules = [contour, cython_speedups],
     include_package_data = True,
     install_requires = info['__requires__'],
     license = 'BSD',

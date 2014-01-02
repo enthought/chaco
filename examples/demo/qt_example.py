@@ -3,30 +3,19 @@ Example of how to directly embed Chaco into Qt widgets.
 
 The actual plot being created is drawn from the basic/line_plot1.py code.
 """
-
-# FIXME: does not run from ipython-qtconsole (ok under python).
-
 from traits.etsconfig.etsconfig import ETSConfig
 ETSConfig.toolkit = "qt4"
 
-import sys
 from numpy import linspace
 from scipy.special import jn
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtGui
+from pyface.util.guisupport import get_app_qt4, start_event_loop_qt4
 
 from enable.api import Window
 
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
-
-class PlotFrame(QtGui.QWidget):
-    """ This widget simply hosts an opaque enable.qt4_backend.Window
-    object, which provides the bridge between Enable/Chaco and the underlying
-    UI toolkit (qt4).  
-    """
-    def __init__(self, parent, **kw):
-        QtGui.QWidget.__init__(self)
 
 def create_chaco_plot(parent):
     x = linspace(-2.0, 10.0, 100)
@@ -49,13 +38,13 @@ def create_chaco_plot(parent):
     # and drawing.  We can create whatever hierarchy of nested containers we
     # want, as long as the top-level item gets set as the .component attribute
     # of a Window.
-    return Window(parent, -1, component = plot)
+    return Window(parent, -1, component=plot)
+
 
 def main():
-    app = QtGui.QApplication.instance()
+    app = get_app_qt4()
     main_window = QtGui.QMainWindow()
     main_window.resize(500,500)
-    
 
     enable_window = create_chaco_plot(main_window)
 
@@ -64,8 +53,11 @@ def main():
     main_window.setCentralWidget(enable_window.control)
 
     main_window.show()
-    app.exec_()
+    start_event_loop_qt4(app)
+    return main_window
+
 
 if __name__ == "__main__":
-    main()
-
+    # Save window so that it doesn't get garbage collected when run within
+    # existing event loop (i.e. from ipython).
+    window = main()
