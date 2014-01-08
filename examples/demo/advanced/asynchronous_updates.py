@@ -175,7 +175,7 @@ def blur_image(image, blur_level):
 # Attributes to use for the plot view.
 #==============================================================================
 size = (800, 600)
-title = "Basic Colormapped Image Plot"
+title = "Image with asynchronous blurring"
 
 
 #==============================================================================
