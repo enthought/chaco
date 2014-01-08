@@ -24,7 +24,7 @@ try:
     from encore.concurrent.futures.asynchronizer import Asynchronizer
 except ImportError:
     import sys
-    sys.exit('You need encore installed to run this demo.')
+    sys.exit('You need futures and encore installed to run this demo.')
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, VPlotContainer, gray
