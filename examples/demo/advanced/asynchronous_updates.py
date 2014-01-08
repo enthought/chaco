@@ -68,11 +68,11 @@ class BlurPlotController(HasTraits):
         if self.asynchronous:
             # The 'submit' call is non-blocking, and returns almost
             # immediately.  The asynchronizer will pass
-            # self._blur_and_redispatch_update and its arguments (the "job") to
-            # the executor to be run on one of the executor's worker threads
-            # when the asynchronizer's current job (if any) is complete. If
-            # another job (presumably with a different blur_level) comes in
-            # before this happens, this job will never be executed.
+            # self._blur_and_notify_plot and its arguments (the "job") to the
+            # executor to be run on one of the executor's worker threads when
+            # the asynchronizer's current job (if any) is complete. If another
+            # job (presumably with a different blur_level) comes in before this
+            # happens, this job will never be executed.
             self._asynchronizer.submit(self._blur_and_notify_plot, image,
                                        blur_level)
         else:
