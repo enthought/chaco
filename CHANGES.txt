@@ -7,6 +7,14 @@ What's new in Chaco 4.5.0
 -------------------------
 
 
+Change summary since 4.4.1
+
+New features
+
+ * Addeded asynchronous_updates.py demo that shows a pattern for generating
+   expensive plots while keeping the interface responsive (PR#170).
+
+
 
 Release 4.4.1
 -------------
