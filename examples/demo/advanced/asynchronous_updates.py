@@ -1,6 +1,6 @@
 """
 Perform expensive calculations based on user interactions while keeping the GUI
-responsive. This makes use of asynchronous programming tools in the encode
+responsive. This makes use of asynchronous programming tools in the encore
 package.
 
 Move the slider to blur the image. Note the slider stays responsive even though
