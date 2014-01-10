@@ -27,7 +27,7 @@ before_script:
   - cd testrunner
 script: 
   # Running all tests in chaco/tests and chaco/tests2
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; thencoverage run -m nose.core chaco --exe; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then coverage run -m nose.core chaco --exe; fi
   # FIXME: tricky to install PyQt for version <= 2.6, only running chaco/tests
   - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then coverage run -m nose.core chaco/tests --exe; fi
 notifications:
