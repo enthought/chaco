@@ -8,8 +8,8 @@ http://github.enthought.com/chaco
    :target: https://travis-ci.org/enthought/chaco
    :alt: Build status
 
-.. image:: https://coveralls.io/repos/enthought/traits/badge.png
-   :target: https://coveralls.io/r/enthought/traits
+.. image:: https://coveralls.io/repos/enthought/chaco/badge.png
+   :target: https://coveralls.io/r/enthought/chaco
    :alt: Coverage status
 
 Chaco is a Python plotting application toolkit that facilitates writing
