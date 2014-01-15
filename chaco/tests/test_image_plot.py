@@ -30,8 +30,8 @@ def temp_image_file(suffix='.tif', prefix='test', dir=None):
 
 def get_image_index_and_mapper(image):
     h, w = image.shape[:2]
-    index = GridDataSource(np.arange(h), np.arange(w))
-    index_mapper = GridMapper(range=DataRange2D(low=(0, 0), high=(h-1, w-1)))
+    index = GridDataSource(np.arange(h+1), np.arange(w+1))
+    index_mapper = GridMapper(range=DataRange2D(low=(0, 0), high=(h, w)))
     return index, index_mapper
 
 
