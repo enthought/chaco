@@ -250,16 +250,21 @@ class ImagePlot(Base2DPlot):
 
         if len(data.shape) != 3:
             raise RuntimeError("`ImagePlot` requires color images.")
-        elif data.shape[2] not in KIVA_DEPTH_MAP:
-            msg = "Unknown colormap depth value: {0}"
+
+        # Update cached image and rectangle.
+        self._cached_image = self._kiva_array_from_numpy_array(data)
+        self._cached_dest_rect = screen_rect
+        self._image_cache_valid = True
+
+    def _kiva_array_from_numpy_array(self, data):
+        if data.shape[2] not in KIVA_DEPTH_MAP:
+            msg = "Unknown colormap depth value: {}"
             raise RuntimeError(msg.format(data.shape[2]))
         kiva_depth = KIVA_DEPTH_MAP[data.shape[2]]
 
         # Data presented to the GraphicsContextArray needs to be contiguous.
         data = np.ascontiguousarray(data)
-        self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)
-        self._cached_dest_rect = screen_rect
-        self._image_cache_valid = True
+        return GraphicsContextArray(data, pix_format=kiva_depth)
 
     def _calc_zoom_coords(self, image_rect):
         """ Calculates the coordinates of a zoomed sub-image.
