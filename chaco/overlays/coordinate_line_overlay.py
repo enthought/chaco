@@ -8,7 +8,7 @@ from __future__ import with_statement
 
 from traits.api import Instance, Float, Array
 from enable.api import black_color_trait, LineStyle, Component
-from chaco.api import AbstractOverlay
+from chaco.api import AbstractOverlay, Base2DPlot
 
 
 class CoordinateLineOverlay(AbstractOverlay):
@@ -51,10 +51,16 @@ class CoordinateLineOverlay(AbstractOverlay):
     def overlay(self, component, gc, view_bounds, mode="normal"):
 
         comp = self.component
-        x_pts = comp.index_mapper.map_screen(self.index_data)
-        y_pts = comp.value_mapper.map_screen(self.value_data)
-        if comp.orientation == "v":
-            x_pts, y_pts = y_pts, x_pts
+        if isinstance(self.component, Base2DPlot):
+            x_mapper = comp.index_mapper._xmapper
+            y_mapper = comp.index_mapper._ymapper
+        else:
+            x_mapper = comp.index_mapper
+            y_mapper = comp.value_mapper
+            if comp.orientation == "v":
+                x_mapper, y_mapper = y_mapper, x_mapper
+        x_pts = x_mapper.map_screen(self.index_data)
+        y_pts = y_mapper.map_screen(self.value_data)
 
         with gc:
             # Set the line color and style parameters.
