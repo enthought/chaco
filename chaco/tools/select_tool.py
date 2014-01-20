@@ -73,7 +73,7 @@ class SelectTool(BaseTool):
         """
         raise NotImplementedError
 
-    def normal_left_down(self, event):
+    def normal_left_up(self, event):
         """ Handles the left mouse button being pressed when the tool is in the
         'normal' state.
 
