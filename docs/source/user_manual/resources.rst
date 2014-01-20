@@ -15,7 +15,7 @@ the `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
 Further Reading and resources
 =============================
 
-You can also learn more about Chaco:
+You can also learn more about Chaco by:
 
 * running :ref:`the tutorials <built_in_tutorials>` included with the Chaco package,
 
@@ -25,7 +25,7 @@ You can also learn more about Chaco:
 
 * reading about :ref:`the API <api_docs>` from the developer guide.
 
-* following the Chaco mailing list: chaco-users@enthought.com
+* following the Enthought Tool Suite mailing list: enthought-dev@enthought.com
 
 .. _built_in_tutorials:
 
