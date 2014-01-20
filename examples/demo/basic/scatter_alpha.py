@@ -1,17 +1,10 @@
 """
-Scatter plot with panning and zooming
+Scatter plot demonstrating varying alpha
 
 Shows a scatter plot of a set of random points,
-with basic Chaco panning and zooming.
-
-Interacting with the plot:
-
-  - Left-mouse-drag pans the plot.
-  - Mouse wheel up and down zooms the plot in and out.
-  - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
-    region to zoom. If you use a sequence of zoom boxes, pressing alt-left-arrow
-    and alt-right-arrow moves you forwards and backwards through the "zoom
-    history".
+with basic Chaco panning and zooming.  Has a slider
+which varies the alpha interactively, fading the plot
+in and out.
 """
 
 # Major library imports
@@ -44,13 +37,6 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    plot.plot(("index", "value"),
-              type="scatter",
-              marker="circle",
-              index_sort="ascending",
-              color="orange",
-              marker_size=3,
-              bgcolor="white")
 
     # Tweak some of the plot properties
     plot.title = "Scatter Plot"
@@ -63,6 +49,18 @@ def _create_plot_component():
     plot.overlays.append(zoom)
 
     return plot
+
+
+def _create_scatter_renderer(plot):
+    renderer = plot.plot(("index", "value"),
+                          type="scatter",
+                          marker="circle",
+                          index_sort="ascending",
+                          color="orange",
+                          marker_size=3,
+                          bgcolor="white")[0]
+
+    return renderer
 
 #===============================================================================
 # Attributes to use for the plot view.
@@ -96,9 +94,7 @@ class Demo(HasTraits):
          return _create_plot_component()
 
     def _scatter_renderer_default(self):
-        plot = self.plot
-        renderer = plot.plots.values()[0][0]
-        print renderer
+        renderer = _create_scatter_renderer(self.plot)
         return renderer
 
 demo = Demo()
