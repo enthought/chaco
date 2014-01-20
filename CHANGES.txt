@@ -6,6 +6,9 @@ Chaco CHANGELOG
 What's new in Chaco 4.5.0
 -------------------------
 
+Fixes
+
+ * Make the `alpha` attribute of scatter plots work as intended (PR#164).
 
 
 Release 4.4.1
@@ -17,11 +20,11 @@ Change summary since 4.3.0
 
 New features
 
- * Improved ArrayPlotData to support changing multiple arrays without triggering a re-plot after each update. This 
+ * Improved ArrayPlotData to support changing multiple arrays without triggering a re-plot after each update. This
    prevents the plot from being temporarily out of synch, which is important if the index and the values are both
    changed to new values with different shapes (PR#124).
  * Added control of the maximum width of a tick label. Provided that hook to the TextBoxOverlay (PR#128).
- * Added control to generate fixed aspect ratio grid mappers (PR#129). This allows various 2D plots to control the 
+ * Added control to generate fixed aspect ratio grid mappers (PR#129). This allows various 2D plots to control the
    shape of the pixels in an image.
 
 Enhancements
@@ -32,16 +35,15 @@ Enhancements
  * Improved support for exporting to multipage PDF (PR#109) and drawing in landscape orientation (PR#115).
  * Added control over whether a border for an overlay should be drawn (PR#116).
  * Made LineSegmentTool work with BasePlot2D (PR#121).
- * TextBoxOverlay now exposes the text color as a top level trait (PR#120). 
- * Added Travis-CI support for python 2.6 and 2.7 (PR#136, PR#145, PR#146). Github now displays the status inside 
-   each Pull Requests as well as in the README.rst on the project github landing page. 
+ * TextBoxOverlay now exposes the text color as a top level trait (PR#120).
+ * Added Travis-CI support for python 2.6 and 2.7 (PR#136, PR#145, PR#146). Github now displays the status inside
+   each Pull Requests as well as in the README.rst on the project github landing page.
 
 Fixes
 
  * Fixed clipping issue when exporting plot to SVG (PR#111) and PDF (PR#109).
  * Fixed export to png, bmp, jpg formats in the shell mode (PR#149).
- * Removed unexpected zoom when panning if the pan tool has restrict_to_data set to True and the plot has nonlinear    
-   axes (PR#150). 
+ * Removed unexpected zoom when panning if the pan tool has restrict_to_data set to True and the plot has nonlinear
+   axes (PR#150).
  * Fixed a few of failing unit tests (PR#143).
  * Fix sort_order bug (PR#141, issue#119).
-
