@@ -6,6 +6,9 @@ Chaco CHANGELOG
 What's new in Chaco 4.5.0
 -------------------------
 
+Fixes
+
+ * Fix CoordinateLineOverlay so that it works with Base2DPlots (PR#165).
 
 
 Release 4.4.1
