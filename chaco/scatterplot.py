@@ -99,6 +99,31 @@ def render_markers(gc, points, marker, marker_size,
 
         gc.begin_path()
 
+        # try to invoke optimized routines if only one size and gc supports
+        if not isinstance(marker_size, ndarray):
+            # try fastest routine
+            if marker.__class__ != CustomMarker:
+                # get fast renderer, or dummy if not implemented
+                renderer = getattr(gc, 'draw_marker_at_points', lambda *a: 0)
+                result = renderer(points, marker_size, marker.kiva_marker)
+                # it worked, we're done
+                if result != 0:
+                    return
+
+            # try next fastest routine
+            if hasattr(gc, 'draw_path_at_points'):
+                if marker.__class__ != CustomMarker:
+                    path = gc.get_empty_path()
+                    marker.add_to_path(path, marker_size)
+                    mode = marker.draw_mode
+                else:
+                    path = custom_symbol
+                    mode = STROKE
+                if not marker.antialias:
+                    gc.set_antialias(False)
+                gc.draw_path_at_points(points, path, mode)
+                return
+
         if isinstance(marker_size, ndarray):
             if point_mask is not None:
                 marker_size = marker_size[point_mask]
@@ -171,12 +196,12 @@ class ScatterPlot(BaseXYPlot):
 
     # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
     # It has the same RGB values as color_, and its alpha value is the alpha
-    # value of self.color multiplied by self.alpha. 
+    # value of self.color multiplied by self.alpha.
     effective_color = Property(Tuple, depends_on=['color', 'alpha'])
-    
+
     # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
     # It has the same RGB values as outline_color_, and its alpha value is the
-    # alpha value of self.outline_color multiplied by self.alpha.   
+    # alpha value of self.outline_color multiplied by self.alpha.
     effective_outline_color = Property(Tuple, depends_on=['outline_color', 'alpha'])
 
 
