@@ -7,7 +7,10 @@ from math import sqrt
 from numpy import arange, array
 from numpy.testing import assert_equal, assert_almost_equal
 
-from chaco.api import bin_search, find_runs, reverse_map_1d, point_line_distance
+from chaco.api import bin_search, find_runs, reverse_map_1d, point_line_distance, colors_equal
+from enable.api import ColorTrait
+from traits.api import HasTraits
+
 
 class BinSearchTestCase(unittest.TestCase):
     def test_ascending_data(self):
@@ -165,6 +168,46 @@ class PointLineDistanceTestCase(unittest.TestCase):
         assert_almost_equal(dist, 0.0)
 
 
+class SimpleColorTraits(HasTraits):
+    """ A class to hold a ColorTrait for testing """
+    color = ColorTrait
+        
+class ColorEqualTestCase(unittest.TestCase):
+
+    def test_strings(self):
+        color = 'blue'
+        inst1 = SimpleColorTraits(color=color)
+        inst2 = SimpleColorTraits(color=color)
+        self.assert_(colors_equal(inst1.color, inst2.color))
+
+    def test_tuples(self):
+        color = (0, 1, 0)
+        inst1 = SimpleColorTraits(color=color)
+        inst2 = SimpleColorTraits(color=color)
+        self.assert_(colors_equal(inst1.color, inst2.color))
+
+    def test_string_tuple(self):
+        color1 = 'red'
+        color2 = (1, 0, 0)
+        inst1 = SimpleColorTraits(color=color1)
+        inst2 = SimpleColorTraits(color=color2)
+        self.assert_(colors_equal(inst1.color, inst2.color))
+
+    def test_tuples_different_length(self):
+        color1 = (0, 1, 0)
+        color2 = (0, 1, 0, 1)
+        inst1 = SimpleColorTraits(color=color1)
+        inst2 = SimpleColorTraits(color=color2)
+        self.assert_(colors_equal(inst1.color, inst2.color))
+
+    def test_alpha(self):
+        color1 = (0, 1, 0, 1.0)
+        color2 = (0, 1, 0, 0.5)
+        inst1 = SimpleColorTraits(color=color1)
+        inst2 = SimpleColorTraits(color=color2)
+        self.assertTrue(colors_equal(inst1.color, inst2.color, match_alpha=False))
+        self.assertFalse(colors_equal(inst1.color, inst2.color, match_alpha=True))
+
+
 if __name__ == '__main__':
-    import nose
-    nose.run()
+    unittest.main()
