@@ -6,7 +6,7 @@
 from base import NumericalSequenceTrait, PointTrait, ImageTrait, DimensionTrait, \
                  SortOrderTrait, bin_search, reverse_map_1d, right_shift, \
                  left_shift, sort_points, find_runs, arg_find_runs, \
-                 point_line_distance
+                 point_line_distance, colors_equal
 
 # Data model
 from abstract_data_source import AbstractDataSource
