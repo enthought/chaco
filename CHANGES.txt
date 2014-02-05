@@ -8,8 +8,9 @@ What's new in Chaco 4.5.0
 
 Fixes
 
- * restored fast renderers for scatterplots that were unintentionally removed in
+ * Restored fast renderers for scatterplots that were unintentionally removed in
    PR#101 (PR#175).
+ * Make the `alpha` attribute of scatter plots work as intended (PR#164).
 
 Release 4.4.1
 -------------
