@@ -19,8 +19,7 @@ class DrawScatterplotCase(unittest.TestCase):
         gc = PlotGraphicsContext(size)
         gc.render_component(scatterplot)
         actual = gc.bmp_array[:,:,:]
-        #gc.save('scatter.png')
-        assert(not alltrue(actual == 255))
+        self.assertFalse(alltrue(actual == 255))
 
     def test_scatter_circle(self):
         """ Coverage test to check circles work """
@@ -34,8 +33,7 @@ class DrawScatterplotCase(unittest.TestCase):
         gc = PlotGraphicsContext(size)
         gc.render_component(scatterplot)
         actual = gc.bmp_array[:,:,:]
-        #gc.save('scatter.png')
-        assert(not alltrue(actual == 255))
+        self.assertFalse(alltrue(actual == 255))
 
     def test_scatter_custom(self):
         """ Coverage test to check custom markers work """
@@ -58,8 +56,7 @@ class DrawScatterplotCase(unittest.TestCase):
         gc = PlotGraphicsContext(size)
         gc.render_component(scatterplot)
         actual = gc.bmp_array[:,:,:]
-        #gc.save('scatter.png')
-        assert(not alltrue(actual == 255))
+        self.assertFalse(alltrue(actual == 255))
 
     def test_scatter_slow(self):
         """ Coverage test to check multiple marker size works """
@@ -73,8 +70,7 @@ class DrawScatterplotCase(unittest.TestCase):
         gc = PlotGraphicsContext(size)
         gc.render_component(scatterplot)
         actual = gc.bmp_array[:,:,:]
-        #gc.save('scatter.png')
-        assert(not alltrue(actual == 255))
+        self.assertFalse(alltrue(actual == 255))
 
 
 if __name__ == "__main__":
