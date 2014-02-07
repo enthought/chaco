@@ -1009,7 +1009,7 @@ class Plot(DataView):
                 elif len(data.shape) == 2:
                     ds = ImageData(data=data, value_depth=1)
                 elif len(data.shape) == 3 and data.shape[2] in (3,4):
-                        ds = ImageData(data=data, value_depth=int(data.shape[2]))
+                    ds = ImageData(data=data, value_depth=int(data.shape[2]))
                 else:
                     raise ValueError("Unhandled array shape in creating new plot: " \
                                      + str(data.shape))
