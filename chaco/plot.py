@@ -305,7 +305,7 @@ class Plot(DataView):
             name = self._make_new_plot_name()
         if origin is None:
             origin = self.default_origin
-            
+
         if plot_type in ("line", "scatter", "polygon", "bar", "filled_line"):
             # Tie data to the index range
             if len(data) == 1:
@@ -378,44 +378,44 @@ class Plot(DataView):
                            orientation=self.orientation,
                            origin = origin,
                            **styles)
-                
+
                 self.add(plot)
                 new_plots.append(plot)
-            
+
             if plot_type == 'bar':
-                # For bar plots, compute the ranges from the data to make the 
-                # plot look clean. 
-                
+                # For bar plots, compute the ranges from the data to make the
+                # plot look clean.
+
                 def custom_index_func(data_low, data_high, margin, tight_bounds):
-                    """ Compute custom bounds of the plot along index (in 
+                    """ Compute custom bounds of the plot along index (in
                     data space).
                     """
                     bar_width = styles.get('bar_width', cls().bar_width)
                     plot_low = data_low - bar_width
                     plot_high = data_high + bar_width
                     return plot_low, plot_high
-                
+
                 if self.index_range.bounds_func is None:
                     self.index_range.bounds_func = custom_index_func
-                        
+
                 def custom_value_func(data_low, data_high, margin, tight_bounds):
-                    """ Compute custom bounds of the plot along value (in 
+                    """ Compute custom bounds of the plot along value (in
                     data space).
                     """
                     plot_low = data_low - (data_high-data_low)*0.1
                     plot_high = data_high + (data_high-data_low)*0.1
                     return plot_low, plot_high
-                
-                if self.value_range.bounds_func is None:    
+
+                if self.value_range.bounds_func is None:
                     self.value_range.bounds_func = custom_value_func
-                
+
                 self.index_range.tight_bounds = False
                 self.value_range.tight_bounds = False
                 self.index_range.refresh()
                 self.value_range.refresh()
 
             self.plots[name] = new_plots
-            
+
         elif plot_type == "cmap_scatter":
             if len(data) != 3:
                 raise ValueError("Colormapped scatter plots require (index, value, color) data")
@@ -908,7 +908,7 @@ class Plot(DataView):
                    )
         self.add(plot)
         self.plots[name] = [plot]
-        return [plot]        
+        return [plot]
 
     def delplot(self, *names):
         """ Removes the named sub-plots. """
@@ -1008,12 +1008,8 @@ class Plot(DataView):
                     ds = ArrayDataSource(data, sort_order="none")
                 elif len(data.shape) == 2:
                     ds = ImageData(data=data, value_depth=1)
-                elif len(data.shape) == 3:
-                    if data.shape[2] in (3,4):
+                elif len(data.shape) == 3 and data.shape[2] in (3,4):
                         ds = ImageData(data=data, value_depth=int(data.shape[2]))
-                    else:
-                        raise ValueError("Unhandled array shape in creating new plot: " \
-                                         + str(data.shape))
                 else:
                     raise ValueError("Unhandled array shape in creating new plot: " \
                                      + str(data.shape))
@@ -1063,7 +1059,7 @@ class Plot(DataView):
                 if name in self.datasources:
                     source = self.datasources[name]
                     source.set_data(self.data.get_data(name))
-                    
+
     def _plots_items_changed(self, event):
         if self.legend:
             self.legend.plots = self.plots
@@ -1189,5 +1185,3 @@ class Plot(DataView):
 
     def _get_title_font(self):
         return self._title.font
-
-
