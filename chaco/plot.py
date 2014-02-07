@@ -1011,16 +1011,13 @@ class Plot(DataView):
                 elif len(data.shape) == 3 and data.shape[2] in (3,4):
                     ds = ImageData(data=data, value_depth=int(data.shape[2]))
                 else:
-                    raise ValueError("Unhandled array shape in creating new plot: " \
-                                     + str(data.shape))
-
-
+                    raise ValueError("Unhandled array shape in creating new "
+                                     "plot: %s" % str(data.shape))
             elif isinstance(data, AbstractDataSource):
                 ds = data
-
             else:
-                raise ValueError("Couldn't create datasource for data of type " + \
-                                 str(type(data)))
+                raise ValueError("Couldn't create datasource for data of "
+                                 "type %s" % type(data))
 
             self.datasources[name] = ds
 
