@@ -102,7 +102,7 @@ def render_markers(gc, points, marker, marker_size,
         # try to invoke optimized routines if only one size and gc supports
         if not isinstance(marker_size, ndarray):
             # try fastest routine
-            if marker.__class__ != CustomMarker:
+            if not isinstance(marker, CustomMarker):
                 # get fast renderer, or dummy if not implemented
                 renderer = getattr(gc, 'draw_marker_at_points', lambda *a: 0)
                 result = renderer(points, marker_size, marker.kiva_marker)
