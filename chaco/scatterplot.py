@@ -112,7 +112,7 @@ def render_markers(gc, points, marker, marker_size,
 
             # try next fastest routine
             if hasattr(gc, 'draw_path_at_points'):
-                if marker.__class__ != CustomMarker:
+                if not isinstance(marker, CustomMarker):
                     path = gc.get_empty_path()
                     marker.add_to_path(path, marker_size)
                     mode = marker.draw_mode
