@@ -60,6 +60,14 @@ class RectangleSelectionTool(AbstractOverlay, BaseTool):
     border_size = Int(1)
 
     #: The possible event states of this selection tool.
+    # normal:
+    #     Nothing has been selected, and the user is not dragging the mouse.
+    # selecting:
+    #     The user is dragging the mouse and actively changing the
+    #     selection region; resizing of an existing selection also
+    #     uses this mode.
+    # moving:
+    #   The user moving (not resizing) the selection range.
     event_state = Enum("normal", "selecting", "moving")
 
     #: The (x, y) screen point where the mouse went down.
