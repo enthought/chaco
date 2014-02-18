@@ -112,6 +112,7 @@ class RectangleSelectionTool(AbstractOverlay, BaseTool):
 
     def normal_mouse_move(self, event):
         self.position = (event.x, event.y)
+        event.handled = True
 
     def normal_mouse_enter(self, event):
         """ Try to set the focus to the window when the mouse enters, otherwise
