@@ -158,7 +158,7 @@ class RectangleSelectionTool(AbstractOverlay, BaseTool):
     def moving_mouse_move(self, event):
         """ Handles the mouse moving when the tool is in the 'moving' state.
 
-        Moves the overlayby an amount corresponding to the amount that the
+        Moves the overlay by an amount corresponding to the amount that the
         mouse has moved since its button was pressed. If the new selection
         range overlaps the endpoints of the data, it is truncated to that
         endpoint.
