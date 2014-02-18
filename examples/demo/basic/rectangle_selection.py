@@ -1,5 +1,5 @@
 from chaco.api import (ArrayPlotData, HPlotContainer, Plot)
-from chaco.tools.api import RectangleSelectionTool
+from chaco.tools.api import RectangleSelection
 from enable.api import ComponentEditor
 from scipy.misc import lena
 from traits.api import (Any, Array, cached_property, HasTraits, Instance,
@@ -33,8 +33,7 @@ class RectSelectionDemo(HasTraits):
         img_plot = Plot(self.plot_data)
         img_plot.img_plot("img",
                           origin="top left")
-        rst = RectangleSelectionTool(img_plot)
-        img_plot.tools.append(rst)
+        rst = RectangleSelection(img_plot)
         img_plot.overlays.append(rst)
         self.selection = rst
         rst.on_trait_change(self.update_zoom, 'event_state')
