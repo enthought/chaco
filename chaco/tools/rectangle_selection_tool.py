@@ -62,10 +62,10 @@ class RectangleSelectionTool(AbstractOverlay, BaseTool):
     #: The possible event states of this selection tool.
     event_state = Enum("normal", "selecting", "moving")
 
-    #: The (x,y) screen point where the mouse went down.
+    #: The (x, y) screen point where the mouse went down.
     _screen_start = Trait(None, None, Tuple)
 
-    #: The (x,,y) screen point of the last seen mouse move event.
+    #: The (x, y) screen point of the last seen mouse move event.
     _screen_end = Trait(None, None, Tuple)
 
     #: If **always_on** is False, this attribute indicates whether the tool
@@ -77,13 +77,13 @@ class RectangleSelectionTool(AbstractOverlay, BaseTool):
     #------------------------------------------------------------------------
 
     #: The position of the initial user click for moving the selection.
-    _move_start = Array  # (x,y)
+    _move_start = Array  # (x, y)
 
     #: Move distance during moving state.
-    _move_offset = Array(value=(0, 0))  # (x,y)
+    _move_offset = Array(value=(0, 0))  # (x, )
 
     def __init__(self, component=None, *args, **kw):
-        # Since this class uses multiple inheritance (eek!), lets be
+        # Since this class uses multiple inheritance (eek!), let's be
         # explicit about the order of the parent class constructors
         AbstractOverlay.__init__(self, component, *args, **kw)
         BaseTool.__init__(self, component, *args, **kw)
