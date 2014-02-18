@@ -5,11 +5,11 @@ import numpy
 
 # Enthought library imports
 from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Array
-from enable.api import BaseTool, ColorTrait, KeySpec
+from enable.api import ColorTrait, KeySpec
 from chaco.abstract_overlay import AbstractOverlay
 
 
-class RectangleSelectionTool(AbstractOverlay, BaseTool):
+class RectangleSelection(AbstractOverlay):
     """ Selection tool which allows the user to draw a box which defines a
     selected region and draw an overlay for the selected region.
     """
@@ -90,12 +90,6 @@ class RectangleSelectionTool(AbstractOverlay, BaseTool):
     #: Move distance during moving state.
     _move_offset = Array(value=(0, 0))  # (x, )
 
-    def __init__(self, component=None, *args, **kw):
-        # Since this class uses multiple inheritance (eek!), let's be
-        # explicit about the order of the parent class constructors
-        AbstractOverlay.__init__(self, component, *args, **kw)
-        BaseTool.__init__(self, component, *args, **kw)
-
     def reset(self, event=None):
         """ Resets the tool to normal state.
         """
@@ -106,7 +100,7 @@ class RectangleSelectionTool(AbstractOverlay, BaseTool):
         self.selected_box = ()
 
     #--------------------------------------------------------------------------
-    #  BaseTool interface
+    #  Interactor interface
     #--------------------------------------------------------------------------
 
     def normal_key_pressed(self, event):
@@ -135,10 +129,6 @@ class RectangleSelectionTool(AbstractOverlay, BaseTool):
 
         If the tool is enabled or always on, it starts selecting.
         """
-        if self.component.active_tool in (None, self):
-            self.component.active_tool = self
-        else:
-            self._enabled = False
 
         if self._within_selected_box(event):
             self._start_move(event)
