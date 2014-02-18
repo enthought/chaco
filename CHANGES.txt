@@ -6,10 +6,6 @@ Chaco CHANGELOG
 What's new in Chaco 4.5.0
 -------------------------
 
-Fixes
-
- * Make the `alpha` attribute of scatter plots work as intended (PR#164).
-
 Change summary since 4.4.1
 
 New features
@@ -17,6 +13,11 @@ New features
  * Addeded asynchronous_updates.py demo that shows a pattern for generating
    expensive plots while keeping the interface responsive (PR#170).
 
+Fixes
+
+ * Restored fast renderers for scatterplots that were unintentionally removed in
+   PR#101 (PR#175).
+ * Make the `alpha` attribute of scatter plots work as intended (PR#164).
 
 
 Release 4.4.1
