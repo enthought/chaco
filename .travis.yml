@@ -15,9 +15,11 @@ install:
   - sudo apt-get install python-numpy
   - sudo apt-get install swig
   # Test against the current master of traits, traitsui and enable
-  - pip install PIL --allow-external PIL --allow-unverified PIL
   - pip install git+http://github.com/enthought/traits.git#egg=traits
   - pip install git+http://github.com/enthought/traitsui.git#egg=traitsui
+  # New version of pip does not install packages that are external to the pypi repositories. Since PIL is external and enable needs PIL, 
+  # to install we have to tell pip to specifically allow PIL to be installed.
+  - pip install PIL --allow-external PIL --allow-unverified PIL
   - pip install git+http://github.com/enthought/enable.git#egg=enable
   - python setup.py develop
 script:
