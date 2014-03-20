@@ -1,7 +1,7 @@
 [run]
 branch = True
 source = chaco
-omit = */tests/*
+omit = *tests_*, */tests/*
 
 [report]
 # Regexes for lines to exclude from consideration
