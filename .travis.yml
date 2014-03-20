@@ -17,7 +17,7 @@ install:
 script:
   - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then ETS_TOOLKIT='qt4' coverage run -p -m nose.core -v chaco; fi
   - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then ETS_TOOLKIT='wx' coverage run -p -m nose.core -v chaco; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then ETS_TOOLKIT='wx' coverage combine; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then coverage combine; fi
   - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then coverage run -m nose.core -v chaco/tests; fi
 notifications:
   email:
