@@ -8,6 +8,12 @@ http://github.enthought.com/chaco
    :target: https://travis-ci.org/enthought/chaco
    :alt: Build status
 
+
+.. image:: https://coveralls.io/repos/enthought/chaco/badge.png?branch=feature%2Fcoverall_badge
+  :target: https://coveralls.io/r/enthought/chaco?branch=feature%2Fcoverall_badge
+  :alt: Test coverage
+
+
 Chaco is a Python plotting application toolkit that facilitates writing
 plotting applications at all levels of complexity, from simple scripts with
 hard-coded data to large plotting programs with complex data interrelationships
