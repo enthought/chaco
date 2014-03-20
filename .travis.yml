@@ -6,21 +6,18 @@ virtualenv:
   # This allows installing PyQt using apt-get and being able to import it.
   system_site_packages: true
 before_install:
-  # On Python 2.7 we install PyQt4 and run the UI tests.
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then source .travis_before_install; fi
   - sudo apt-get update
   - sudo apt-get install python-numpy swig
-
+  - source .travis_before_install
 install:
   - pip install cython
   - pip install coveralls
   - pip install -r dev_requirements.txt
   - python setup.py develop
 script:
-  # Running all tests in chaco/tests and chaco/tests2
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then coverage run -m nose.core -v chaco; fi
-  # FIXME: tricky to install PyQt for version <= 2.6, only running chaco/tests
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then coverage run -m nose.core -v chaco/tests; fi
+  - ETS_TOOLKIT='qt4' coverage run -p -m nose.core -v chaco
+  - ETS_TOOLKIT='wx' coverage run -p -m nose.core -v chaco
+  - coverage combine
 notifications:
   email:
     - travis-ci@enthought.com
