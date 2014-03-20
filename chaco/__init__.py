@@ -3,7 +3,7 @@
 """ Two-dimensional plotting application toolkit.
     Part of the Chaco project of the Enthought Tool Suite.
 """
-__version__ = '4.3.0'
+__version__ = '4.5.0.dev'
 
 __requires__ = [
    'enable',
