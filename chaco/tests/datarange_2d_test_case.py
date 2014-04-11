@@ -154,13 +154,13 @@ class DataRange2DTestCase(unittest.TestCase):
         high = (1337, 9001)
 
         r.set_bounds(low, high)
-        self.assertTupleEqual(r.low_setting, low)
-        self.assertTupleEqual(r.high_setting, high)
+        self.assertEqual(r.low_setting, low)
+        self.assertEqual(r.high_setting, high)
 
         r.reset()
 
-        self.assertTupleEqual(r.low_setting, ('auto', 'auto'))
-        self.assertTupleEqual(r.high_setting, ('auto', 'auto'))
+        self.assertEqual(r.low_setting, ('auto', 'auto'))
+        self.assertEqual(r.high_setting, ('auto', 'auto'))
         self.assertEqual(r.x_range.low_setting, 'auto')
         self.assertEqual(r.y_range.low_setting, 'auto')
         self.assertEqual(r.x_range.high_setting, 'auto')
