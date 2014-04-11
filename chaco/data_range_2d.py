@@ -126,9 +126,9 @@ class DataRange2D(BaseDataRange):
     def reset(self):
         """ Resets the bounds of this range.
         """
-        self._high_setting = ('auto', 'auto')
-        self._low_setting = ('auto', 'auto')
-        self._refresh_bounds()
+        self.high_setting = ('auto', 'auto')
+        self.low_setting = ('auto', 'auto')
+        self.refresh()
 
     def refresh(self):
         """ If any of the bounds is 'auto', this method refreshes the actual
