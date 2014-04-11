@@ -147,6 +147,25 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.low, array([-100,-100]))
         assert_ary_(r.high, array([100,100]))
 
+    def test_reset_bounds(self):
+        r = DataRange2D()
+
+        low = (13, 42)
+        high = (1337, 9001)
+
+        r.set_bounds(low, high)
+        self.assertTupleEqual(r.low_setting, low)
+        self.assertTupleEqual(r.high_setting, high)
+
+        r.reset()
+
+        self.assertTupleEqual(r.low_setting, ('auto', 'auto'))
+        self.assertTupleEqual(r.high_setting, ('auto', 'auto'))
+        self.assertEqual(r.x_range.low_setting, 'auto')
+        self.assertEqual(r.y_range.low_setting, 'auto')
+        self.assertEqual(r.x_range.high_setting, 'auto')
+        self.assertEqual(r.y_range.high_setting, 'auto')
+
 
     def test_clip_data(self):
         r = DataRange2D(low=[2.0,5.0], high=[10.0,8.0])
