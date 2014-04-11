@@ -55,19 +55,6 @@ class DataRange2D(BaseDataRange):
     # Private traits
     #------------------------------------------------------------------------
 
-    # The "_setting" attributes correspond to what the user has "set"; the
-    # "_value" attributes are the actual numerical values for the given
-    # setting.
-
-    # The user-specified low settings.
-    _low_setting = Trait(('auto', 'auto'), Any)
-    # The actual numerical values for the low setting.
-    _low_value = Trait((-inf, -inf), Tuple(CFloat, CFloat))
-    # The user-specified high settings.
-    _high_setting = Trait(('auto', 'auto'), Any)
-    # The actual numerical value for the high setting.
-    _high_value = Trait((inf, inf), Tuple(CFloat, CFloat))
-
     # DataRange1D for the x-dimension.
     _xrange = Instance(DataRange1D, args=())
     # DataRange1D for the y-dimension.
@@ -134,8 +121,8 @@ class DataRange2D(BaseDataRange):
         """ If any of the bounds is 'auto', this method refreshes the actual
         low and high values from the set of the view filters' data sources.
         """
-        if 'auto' not in self._low_setting and \
-           'auto' not in self._high_setting:
+        if 'auto' not in self.low_setting and \
+           'auto' not in self.high_setting:
             # If the user has hard-coded bounds, then refresh() doesn't do
             # anything.
             return
