@@ -143,12 +143,8 @@ class DataRange2D(BaseDataRange):
             self._refresh_bounds()
 
     #------------------------------------------------------------------------
-    # Public methods
+    # Private methods
     #------------------------------------------------------------------------
-
-    def _do_set_high_setting(self, val, fire_event=True):
-        self._xrange.high_setting = val[0]
-        self._yrange.high_setting = val[1]
 
     def _refresh_bounds(self):
         self._xrange.refresh()
@@ -185,6 +181,10 @@ class DataRange2D(BaseDataRange):
 
     def _set_high_setting(self, val):
         self._do_set_high_setting(val)
+
+    def _do_set_high_setting(self, val, fire_event=True):
+        self._xrange.high_setting = val[0]
+        self._yrange.high_setting = val[1]
 
     def _get_x_range(self):
         return self._xrange
