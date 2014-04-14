@@ -5,7 +5,6 @@
         DONE *. draw_border output should match a similar draw_rect output
 """
 
-import nose
 import unittest
 
 from numpy import array, alltrue, ravel

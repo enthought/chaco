@@ -644,5 +644,4 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(lr.bounds, (100,100))
 
 if __name__ == '__main__':
-    import nose
-    nose.run()
+    unittest.main()

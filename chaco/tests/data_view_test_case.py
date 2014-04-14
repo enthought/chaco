@@ -39,5 +39,4 @@ class DataViewTestCase(unittest.TestCase):
         self.assert_(dv.range2d.y_range is dv.value_mapper.range)
 
 if __name__ == '__main__':
-    import nose
-    nose.run()
+    unittest.main()

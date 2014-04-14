@@ -155,5 +155,4 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
 ##         print '**************', colormap._color_bands, colormap._value_bands
 
 if __name__ == '__main__':
-    import nose
-    nose.run()
+    unittest.main()
