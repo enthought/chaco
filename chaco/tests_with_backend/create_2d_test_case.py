@@ -91,4 +91,4 @@ def test_process_2d_bounds():
 
 
 if __name__ == '__main__':
-    nose.main()
+    nose.runmodule()
