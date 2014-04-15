@@ -18,7 +18,7 @@ Fixes
  * Restored fast renderers for scatterplots that were unintentionally removed in
    PR#101 (PR#175).
  * Make the `alpha` attribute of scatter plots work as intended (PR#164).
-
+ * Resume running test for empty container that has been skipped (PR#190).
 
 Release 4.4.1
 -------------
