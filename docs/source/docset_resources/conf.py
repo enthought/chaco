@@ -16,7 +16,7 @@ import sys, os
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
-sys.path.append(os.path.abspath('sphinxext'))
+sys.path.append(os.path.abspath('../sphinxext'))
 
 # General configuration
 # ---------------------
@@ -96,7 +96,7 @@ html_style = 'default.css'
 
 # The name of an image file (within the static path) to place at the top of
 # the sidebar.
-html_logo = '../_static/e-logo-rev.png'
+html_logo = 'e-logo-rev.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
