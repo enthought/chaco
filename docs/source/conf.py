@@ -16,6 +16,9 @@
 import sys
 import os
 
+# The docset build will use slightly different formatting rules
+BUILD_DOCSET = bool(os.environ.get('BUILD_DOCSET'))
+
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
@@ -82,6 +85,12 @@ pygments_style = 'sphinx'
 # Options for HTML output
 # -----------------------
 
+# When using docset browsers like Dash and Zeal the side bar is redundant.
+if BUILD_DOCSET:
+    html_theme_options = {
+        'nosidebar': 'true'
+    }
+
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
 # given in html_static_path.
@@ -124,7 +133,7 @@ html_use_smartypants = True
 #html_additional_pages = {}
 
 # If false, no module index is generated.
-html_use_modindex = False
+html_use_modindex = BUILD_DOCSET
 
 # If false, no index is generated.
 html_use_index = BUILD_DOCSET

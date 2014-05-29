@@ -131,7 +131,7 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 docset:
-	$(SPHINXBUILD) -b html -c source/docset_resources $(ALLSPHINXOPTS) $(BUILDDIR)/docset_html
+	BUILD_DOCSET=1 $(SPHINXBUILD) -b html -c source/docset_resources $(ALLSPHINXOPTS) $(BUILDDIR)/docset_html
 	@echo "Creating docset with doc2dash"
 	doc2dash -f -d $(BUILDDIR) -i $(BUILDDIR)/docset_html/_static/e-logo-rev.png -n Chaco $(BUILDDIR)/docset_html
 	@echo "Chaco docset is available in $(BUILDDIR)/Chaco.docset"
