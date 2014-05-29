@@ -39,7 +39,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'chaco'
-copyright = '2008-2013, Enthought, Inc.'
+copyright = '2008-2014, Enthought, Inc.'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
