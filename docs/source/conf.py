@@ -3,15 +3,18 @@
 # Chaco documentation build configuration file, created by
 # sphinx-quickstart on Mon Jul 21 21:01:40 2008.
 #
-# This file is execfile()d with the current directory set to its containing dir.
+# This file is execfile()d with the current directory set to its containing
+# dir.
 #
 # The contents of this file are pickled, so don't put values in the namespace
-# that aren't pickleable (module imports are okay, they're removed automatically).
+# that aren't pickleable (module imports are okay, they're removed
+# automatically).
 #
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys, os
+import sys
+import os
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
@@ -21,8 +24,8 @@ sys.path.append(os.path.abspath('sphinxext'))
 # General configuration
 # ---------------------
 
-# Add any Sphinx extension module names here, as strings. They can be extensions
-# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'traitsdoc']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -53,11 +56,12 @@ today_fmt = '%B %d, %Y'
 # List of documents that shouldn't be included in the build.
 #unused_docs = []
 
-# List of directories, relative to source directories, that shouldn't be searched
-# for source files.
+# List of directories, relative to source directories, that shouldn't be
+# searched for source files.
 #exclude_dirs = []
 
-# The reST default role (used for this markup: `text`) to use for all documents.
+# The reST default role (used for this markup: `text`) to use for all
+# documents.
 #default_role = None
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
@@ -123,7 +127,7 @@ html_use_smartypants = True
 html_use_modindex = False
 
 # If false, no index is generated.
-html_use_index = False
+html_use_index = BUILD_DOCSET
 
 # If true, the index is split into individual pages for each letter.
 #html_split_index = False
@@ -153,7 +157,8 @@ htmlhelp_basename = 'Chacodoc'
 #latex_font_size = '10pt'
 
 # Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title, author, document class [howto/manual]).
+# (source start file, target name, title, author, document class
+# [howto/manual]).
 latex_documents = [
   ('index', 'Chaco.tex', 'Chaco Documentation', 'Enthought', 'manual'),
 ]
