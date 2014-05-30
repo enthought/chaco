@@ -1,6 +1,6 @@
 language: python
 python:
-  - "2.7_with_system_site_packages"
+  - '2.7_with_system_site_packages'
   - 2.6
 before_install:
   - sudo apt-get update
@@ -12,9 +12,9 @@ install:
   - pip install -r dev_requirements.txt
   - python setup.py develop
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7_with_system_site_packages' ]]; then ETS_TOOLKIT='qt4' coverage run -p -m nose.core -v chaco; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7_with_system_site_packages' ]]; then ETS_TOOLKIT='wx' coverage run -p -m nose.core -v chaco; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7_with_system_site_packages' ]]; then coverage combine; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == *_with_system_site_packages ]]; then ETS_TOOLKIT='qt4' coverage run -p -m nose.core -v chaco; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == *_with_system_site_packages ]]; then ETS_TOOLKIT='wx' coverage run -p -m nose.core -v chaco; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == *_with_system_site_packages ]]; then coverage combine; fi
   - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then coverage run -m nose.core -v chaco/tests; fi
 notifications:
   email:
