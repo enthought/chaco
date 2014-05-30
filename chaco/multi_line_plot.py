@@ -26,7 +26,7 @@ class MultiLinePlot(BaseXYPlot):
     """ A plot consisting of multiple lines.
 
     The data to be plotted must come from a two-dimensional array with shape M by N
-    stored in a TraceArrayDataSource object.  M is the number of lines to be plotted,
+    stored in a MultiArrayDataSource object.  M is the number of lines to be plotted,
     and N is the number of points in each line.
 
     Constructor Parameters
