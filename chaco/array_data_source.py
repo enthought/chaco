@@ -10,15 +10,32 @@ from traits.api import Any, Constant, Int, Tuple
 from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
 from abstract_data_source import AbstractDataSource
 
+
 def bounded_nanargmin(arr):
-    min = nanargmin(arr)
+    """ Find the index of the minimum value, ignoring NaNs.
+
+    If all NaNs, return 0.
+    """
+    # Different versions of numpy behave differently in the all-NaN case, so we
+    # catch this condition in two different ways.
+    try:
+        min = nanargmin(arr)
+    except ValueError:
+        return 0
     if isfinite(min):
         return min
     else:
         return 0
 
 def bounded_nanargmax(arr):
-    max = nanargmax(arr)
+    """ Find the index of the maximum value, ignoring NaNs.
+
+    If all NaNs, return -1.
+    """
+    try:
+        max = nanargmax(arr)
+    except ValueError:
+        return -1
     if isfinite(max):
         return max
     else:
