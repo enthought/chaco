@@ -24,6 +24,7 @@ from kiva.agg import GraphicsContextArray
 
 # Local relative imports
 from base_2d_plot import Base2DPlot
+from image_utils import trim_screen_rect
 
 try:
     # InterpolationQuality required for Quartz backend only (requires OSX).
@@ -241,8 +242,12 @@ class ImagePlot(Base2DPlot):
 
         virtual_rect = self._calc_virtual_screen_bbox()
         index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect)
-
         col_min, col_max, row_min, row_max = index_bounds
+
+        view_rect = self.position + self.bounds
+        sub_array_size = (col_max - col_min, row_max - row_min)
+        screen_rect = trim_screen_rect(screen_rect, view_rect, sub_array_size)
+
         data = data[row_min:row_max, col_min:col_max]
 
         if mapper is not None:
