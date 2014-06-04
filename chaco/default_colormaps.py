@@ -6654,6 +6654,120 @@ def gist_yarg(range, **traits):
     return ColorMapper.from_segment_map(_data, range=range, **traits)
 
 
+def CubicYF(range, **traits):
+    """ Generator of the 'CubicYF' colormap from Matteo Niccoli.
+
+    Lab-based rainbow scheme with cubic-law luminance.
+
+    http://mycarta.wordpress.com/color-palettes/
+    """
+    palette = np.array([
+        [0.5151, 0.0482, 0.6697],
+        [0.5199, 0.1762, 0.8083],
+        [0.4884, 0.2912, 0.9234],
+        [0.4297, 0.3855, 0.9921],
+        [0.3893, 0.4792, 0.9775],
+        [0.3337, 0.5650, 0.9056],
+        [0.2795, 0.6419, 0.8287],
+        [0.2210, 0.7123, 0.7258],
+        [0.2468, 0.7612, 0.6248],
+        [0.2833, 0.8125, 0.5069],
+        [0.3198, 0.8492, 0.3956],
+        [0.3602, 0.8896, 0.2919],
+        [0.4568, 0.9136, 0.3018],
+        [0.6033, 0.9255, 0.3295],
+        [0.7066, 0.9255, 0.3414],
+        [0.8000, 0.9255, 0.3529],
+    ])
+    return ColorMapper.from_palette_array(palette, range=range, **traits)
+
+
+def CubicL(range, **traits):
+    """ Generator of the 'CubicL' colormap from Matteo Niccoli.
+
+    Lab-based rainbow scheme with cubic-law luminance, like `CubicYF`
+    but with red at the high end, a modest deviation from being
+    completely perceptual.
+
+    http://mycarta.wordpress.com/color-palettes/
+    """
+    palette = np.array([
+        [0.4706, 0.0000, 0.5216],
+        [0.5137, 0.0527, 0.7096],
+        [0.4942, 0.2507, 0.8781],
+        [0.4296, 0.3858, 0.9922],
+        [0.3691, 0.5172, 0.9495],
+        [0.2963, 0.6191, 0.8515],
+        [0.2199, 0.7134, 0.7225],
+        [0.2643, 0.7836, 0.5756],
+        [0.3094, 0.8388, 0.4248],
+        [0.3623, 0.8917, 0.2858],
+        [0.5200, 0.9210, 0.3137],
+        [0.6800, 0.9255, 0.3386],
+        [0.8000, 0.9255, 0.3529],
+        [0.8706, 0.8549, 0.3608],
+        [0.9514, 0.7466, 0.3686],
+        [0.9765, 0.5887, 0.3569],
+    ])
+    return ColorMapper.from_palette_array(palette, range=range, **traits)
+
+
+def LinearL(range, **traits):
+    """ Generator of the 'LinearL' colormap from Matteo Niccoli.
+
+    Lab-based linear lightness rainbow.
+
+    http://mycarta.wordpress.com/color-palettes/
+    """
+    palette = np.array([
+        [0.0143, 0.0143, 0.0143],
+        [0.1413, 0.0555, 0.1256],
+        [0.1761, 0.0911, 0.2782],
+        [0.1710, 0.1314, 0.4540],
+        [0.1074, 0.2234, 0.4984],
+        [0.0686, 0.3044, 0.5068],
+        [0.0008, 0.3927, 0.4267],
+        [0.0000, 0.4763, 0.3464],
+        [0.0000, 0.5565, 0.2469],
+        [0.0000, 0.6381, 0.1638],
+        [0.2167, 0.6966, 0.0000],
+        [0.3898, 0.7563, 0.0000],
+        [0.6912, 0.7795, 0.0000],
+        [0.8548, 0.8041, 0.4555],
+        [0.9712, 0.8429, 0.7287],
+        [0.9692, 0.9273, 0.8961],
+    ])
+    return ColorMapper.from_palette_array(palette, range=range, **traits)
+
+
+def LinearLHot(range, **traits):
+    """ Generator of the 'LinearLHot' colormap from Matteo Niccoli.
+
+    Linear lightness modification of the `hot` colormap.
+
+    http://mycarta.wordpress.com/color-palettes/
+    """
+    palette = np.array([
+        [0.0225, 0.0121, 0.0121],
+        [0.1927, 0.0225, 0.0311],
+        [0.3243, 0.0106, 0.0000],
+        [0.4463, 0.0000, 0.0091],
+        [0.5706, 0.0000, 0.0737],
+        [0.6969, 0.0000, 0.1337],
+        [0.8213, 0.0000, 0.1792],
+        [0.8636, 0.0000, 0.0565],
+        [0.8821, 0.2555, 0.0000],
+        [0.8720, 0.4182, 0.0000],
+        [0.8424, 0.5552, 0.0000],
+        [0.8031, 0.6776, 0.0000],
+        [0.7659, 0.7870, 0.0000],
+        [0.8170, 0.8296, 0.0000],
+        [0.8853, 0.8896, 0.4113],
+        [0.9481, 0.9486, 0.7165],
+    ])
+    return ColorMapper.from_palette_array(palette, range=range, **traits)
+
+
 # Make the convenient list of all the function names as well as a dictionary
 # of name->function mappings.  These are useful for UI editors.
 
@@ -6712,6 +6826,10 @@ color_map_functions = [
     gist_rainbow,
     gist_stern,
     gist_yarg,
+    CubicYF,
+    CubicL,
+    LinearL,
+    LinearLHot,
 ]
 
 color_map_dict = {}
