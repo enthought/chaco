@@ -4,8 +4,8 @@ functions.
 from numpy import array, transpose
 
 from traits.api import Bool, Enum, Instance, Property
-from enable.colors import color_table
 
+from chaco.api import colors_equal
 from abstract_overlay import AbstractOverlay
 from axis import PlotAxis
 from base_1d_mapper import Base1DMapper
@@ -270,7 +270,7 @@ class DataView(OverlayPlotContainer):
         # make sure the grid and bgcolor are not the same color
 
         grid_color = 'lightgray'
-        if color_table[self.bgcolor] == color_table[grid_color]:
+        if colors_equal(self.bgcolor, grid_color):
             grid_color = 'white'
 
         if not self.x_grid and self.auto_grid:

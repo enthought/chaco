@@ -221,5 +221,24 @@ def point_line_distance(pt, p1, p2):
 
     return sqrt(dot(diff,diff))
 
+def standardize_color(color):
+    from enable.api import color_table
+    if isinstance(color, basestring):
+        color = color_table[color]
+    color = list(color)
+    if len(color) == 3:
+        color.append(1.0)
+    return tuple(color)
+
+def colors_equal(color1, color2, match_alpha=False):
+    """ Determine whether two colors are equal.  If match_alpha==True,
+    they must have the same alpha value as well. """
+    color1 = standardize_color(color1)
+    color2 = standardize_color(color2)
+    if not match_alpha:
+        color1 = color1[:3]
+        color2 = color2[:3]
+    return color1 == color2
+
 
 #EOF

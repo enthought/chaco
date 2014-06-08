@@ -16,6 +16,23 @@ class DataViewTestCase(unittest.TestCase):
         self.assert_(dv.range2d.x_range==dv.index_range)
         self.assert_(dv.range2d.y_range==dv.value_range)
 
+    def test_bgcolor(self):
+        """ Test setting background color """
+        color = 'blue'
+        dv = DataView(bgcolor=color)
+        self.assertEqual(dv.bgcolor, color)
+        color = (0,0,0,0)
+        dv = DataView(bgcolor=color)
+        self.assertEqual(dv.bgcolor, color)
+
+    def test_bg_gridcolor(self):
+        """Test setting background to grid color"""
+        for color in ['lightgray', 'lightgray',
+                      (0.827, 0.827, 0.827), (0.827, 0.827, 0.827, 1.0)]:
+            dv = DataView(bgcolor=color)
+            self.assertEqual(dv.bgcolor, color)
+            self.assertEqual(dv.x_grid.line_color, 'white')
+
     def test_orientation(self):
         dv = DataView()
         x_mapper_start = dv.x_mapper
