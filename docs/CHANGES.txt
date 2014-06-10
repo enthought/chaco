@@ -5,6 +5,12 @@ Enhancements
  * AbstractPlotData and subclasses now implement an update_data() method which
    updates the data whilst firing only one update event.
 
+Fixes
+-----
+
+ * DataRange2D.reset and DataRange2D.refresh now work properly by operating on
+   xrange and yrange, like the other settings operations.
+
 
 Chaco 4.1.0
 ===========
