@@ -24,7 +24,8 @@ range and has the color palette indicated by the function name.
 from numpy import array
 
 # Local imports.
-from color_mapper import ColorMapper
+from .color_mapper import ColorMapper
+from .diverging_colormaps import generate_diverging_palette
 
 # The colormaps will be added to this at the end of the file.
 __all__ = ['reverse', 'center', 'color_map_functions', 'color_map_dict',
@@ -6661,7 +6662,7 @@ def CubicYF(range, **traits):
 
     http://mycarta.wordpress.com/color-palettes/
     """
-    palette = np.array([
+    palette = array([
         [0.5151, 0.0482, 0.6697],
         [0.5199, 0.1762, 0.8083],
         [0.4884, 0.2912, 0.9234],
@@ -6691,7 +6692,7 @@ def CubicL(range, **traits):
 
     http://mycarta.wordpress.com/color-palettes/
     """
-    palette = np.array([
+    palette = array([
         [0.4706, 0.0000, 0.5216],
         [0.5137, 0.0527, 0.7096],
         [0.4942, 0.2507, 0.8781],
@@ -6719,7 +6720,7 @@ def LinearL(range, **traits):
 
     http://mycarta.wordpress.com/color-palettes/
     """
-    palette = np.array([
+    palette = array([
         [0.0143, 0.0143, 0.0143],
         [0.1413, 0.0555, 0.1256],
         [0.1761, 0.0911, 0.2782],
@@ -6747,7 +6748,7 @@ def LinearLHot(range, **traits):
 
     http://mycarta.wordpress.com/color-palettes/
     """
-    palette = np.array([
+    palette = array([
         [0.0225, 0.0121, 0.0121],
         [0.1927, 0.0225, 0.0311],
         [0.3243, 0.0106, 0.0000],
@@ -6765,6 +6766,20 @@ def LinearLHot(range, **traits):
         [0.8853, 0.8896, 0.4113],
         [0.9481, 0.9486, 0.7165],
     ])
+    return ColorMapper.from_palette_array(palette, range=range, **traits)
+
+
+def CoolWarm(range, **traits):
+    """ Generator of Kenneth Moreland's CoolWarm colormap.
+
+    Blue-White-Red with smooth lightness transitions. Good for applying to 3D
+    surfaces or otherwise have extra shading applied.
+
+    http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf
+    """
+    cool = array([59, 76, 192]) / 255.0
+    warm = array([180, 4, 38]) / 255.0
+    palette = generate_diverging_palette(cool, warm, 33)
     return ColorMapper.from_palette_array(palette, range=range, **traits)
 
 
@@ -6830,6 +6845,7 @@ color_map_functions = [
     CubicL,
     LinearL,
     LinearLHot,
+    CoolWarm,
 ]
 
 color_map_dict = {}
