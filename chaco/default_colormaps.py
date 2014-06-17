@@ -25,7 +25,8 @@ from numpy import array
 
 # Local imports.
 from .color_mapper import ColorMapper
-from .diverging_colormaps import generate_diverging_palette
+from .colormap_generators import generate_cubehelix_palette, \
+    generate_diverging_palette
 
 # The colormaps will be added to this at the end of the file.
 __all__ = ['reverse', 'center', 'color_map_functions', 'color_map_dict',
@@ -6779,7 +6780,19 @@ def CoolWarm(range, **traits):
     """
     cool = array([59, 76, 192]) / 255.0
     warm = array([180, 4, 38]) / 255.0
-    palette = generate_diverging_palette(cool, warm, 33)
+    palette = generate_diverging_palette(cool, warm, 256)
+    return ColorMapper.from_palette_array(palette, range=range, **traits)
+
+
+def CubeHelix(range, **traits):
+    """ Generator of Dave Green's CubeHelix colormap.
+
+    Sequential colormap with a linear lightness increasing from black to white
+    deviating away from gray in a tapered helix.
+
+    https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/
+    """
+    palette = generate_cubehelix_palette()
     return ColorMapper.from_palette_array(palette, range=range, **traits)
 
 
@@ -6846,6 +6859,7 @@ color_map_functions = [
     LinearL,
     LinearLHot,
     CoolWarm,
+    CubeHelix,
 ]
 
 color_map_dict = {}
