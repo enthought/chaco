@@ -10,7 +10,7 @@ Change summary since 4.4.1
 
 New features
 
- * Added perceptual colormaps by Matteo Niccoli.
+ * Added perceptual colormaps by Matteo Niccoli and Dave Green.
 
  * Added asynchronous_updates.py demo that shows a pattern for generating
    expensive plots while keeping the interface responsive (PR#170).
