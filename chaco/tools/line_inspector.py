@@ -78,7 +78,8 @@ class LineInspector(BaseTool):
         if self.is_listener:
             tmp = self._get_screen_pts()
         elif self.is_interactive:
-            tmp = self._last_position
+            global_pos = self.window.get_pointer_position()
+            tmp = self.get_relative_coordinates(*global_pos)
 
         if tmp:
             sx, sy = tmp
