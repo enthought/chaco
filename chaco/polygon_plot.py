@@ -100,7 +100,7 @@ class PolygonPlot(BaseXYPlot):
             gc.set_line_dash(self.edge_style_)
             gc.set_fill_color(self.effective_face_color)
 
-            # bnds is True where where polygons are separated, last is also True
+            # bnds is True where polygons are separated + ensures last is True
             # indx contains the list of indices that separates the polygons
             # lines contains a list of lines that represents all polygons
             bnds = [np.isnan(point[0]) for point in points]
@@ -146,7 +146,7 @@ class PolygonPlot(BaseXYPlot):
         value = self.value.get_data()
         points = zip(index,value)
 
-        # bnds is True where where polygons are separated, last is also True
+        # bnds is True where polygons are separated + ensures last is True
         # indx contains the list of indices that separates the polygons
         # lines contains a list of lines that represents all polygons
         bnds = [np.isnan(point[0]) for point in points]
