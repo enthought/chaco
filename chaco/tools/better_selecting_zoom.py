@@ -327,6 +327,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         """ Ends selection of the zoom region, adds the new zoom range to
         the zoom stack, and does the zoom.
         """
+        self._screen_end = (event.x, event.y)
 
         start = numpy.array(self._screen_start)
         end = numpy.array(self._screen_end)
