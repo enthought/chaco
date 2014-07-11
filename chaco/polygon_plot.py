@@ -112,7 +112,7 @@ class PolygonPlot(BaseXYPlot):
             for line in lines:
                 gc.lines(line)
                 gc.close_path()
-            gc.draw_path()
+                gc.draw_path()
 
 
     def _render_icon(self, gc, x, y, width, height):
