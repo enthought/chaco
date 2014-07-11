@@ -100,8 +100,18 @@ class PolygonPlot(BaseXYPlot):
             gc.set_line_dash(self.edge_style_)
             gc.set_fill_color(self.effective_face_color)
 
-            gc.lines(points)
-            gc.close_path()
+            # bnds is True where where polygons are separated, last is also True
+            # indx contains the list of indices that separates the polygons
+            # lines contains a list of lines that represents all polygons
+            bnds = [np.isnan(point[0]) for point in points]
+            if not bnds[-1]:
+                bnds.append(True)
+            indx = [-1] + [n for n, b in enumerate(bnds) if b]
+            lines = [points[i+1:j] for i, j in zip(indx[:-1],indx[1:])]
+
+            for line in lines:
+                gc.lines(line)
+                gc.close_path()
             gc.draw_path()
 
 
@@ -134,11 +144,23 @@ class PolygonPlot(BaseXYPlot):
         data_pt = self.map_data(screen_pt, all_values=True)
         index = self.index.get_data()
         value = self.value.get_data()
-        poly = np.vstack((index,value)).T
-        if points_in_polygon([data_pt], poly)[0] == 1:
-            return True
-        else:
-            return False
+        points = zip(index,value)
+
+        # bnds is True where where polygons are separated, last is also True
+        # indx contains the list of indices that separates the polygons
+        # lines contains a list of lines that represents all polygons
+        bnds = [np.isnan(point[0]) for point in points]
+        if not bnds[-1]:
+            bnds.append(True)
+        indx = [-1] + [n for n, b in enumerate(bnds) if b]
+        lines = [points[i+1:j] for i, j in zip(indx[:-1],indx[1:])]
+
+        for line in lines:
+            poly = np.vstack(line).T
+            if points_in_polygon([data_pt], poly)[0] == 1:
+                return True
+
+        return False
 
     #------------------------------------------------------------------------
     # Event handlers
