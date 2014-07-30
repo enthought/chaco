@@ -188,17 +188,16 @@ lms_from_atd = solve(atd_from_xyz.T, lms_from_xyz.T).T
 
 
 # XYZ white-point coordinates
-#  from http://www.aim-dtp.net/aim/technology/cie_xyz/cie_xyz.htm
+#  from http://en.wikipedia.org/wiki/Standard_illuminant
 whitepoints = {
-    'CIE A': ['Normal incandescent', triwhite(0.4476, 0.4074)],
-    'CIE B': ['Direct sunlight', triwhite(0.3457, 0.3585)],
-    'CIE C': ['Average sunlight', triwhite(0.3101, 0.3162)],
+    'CIE A': ['Normal incandescent', triwhite(0.44757, 0.40745)],
+    'CIE B': ['Direct sunlight', triwhite(0.34842, 0.35161)],
+    'CIE C': ['Average sunlight', triwhite(0.31006, 0.31616)],
     'CIE E': ['Normalized reference', triwhite(1.0/3, 1.0/3)],
-    'D50': ['Bright tungsten', triwhite(0.3457, 0.3585)],
-    'D55': ['Cloudy daylight', triwhite(0.3324, 0.3474)],
-    'D65': ['Daylight', triwhite(0.312713, 0.329016)],
-    'D75': ['?', triwhite(0.299, 0.3149)],
-    'D93': ['low-quality old CRT', triwhite(0.2848, 0.2932)],
+    'D50': ['Bright tungsten', triwhite(0.34567, 0.35850)],
+    'D55': ['Cloudy daylight', triwhite(0.33242, 0.34743)],
+    'D65': ['Daylight', triwhite(0.31271, 0.32902)],
+    'D75': ['?', triwhite(0.29902, 0.31485)],
 }
 
 
