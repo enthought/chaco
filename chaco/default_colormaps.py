@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-2014, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -56,7 +56,10 @@ def reverse(func):
 
     # Look a little like the wrapped function.
     cmap.__name__ = 'reversed_' + func.__name__
-    cmap.__doc__ = 'Reversed: ' + func.__doc__
+    if func.__doc__ is not None:
+        cmap.__doc__ = 'Reversed: ' + func.__doc__
+    else:
+        cmap.__doc__ = 'Reversed: ' + func.__name__
     return cmap
 
 def center(func, center=0.0):
@@ -90,7 +93,10 @@ def center(func, center=0.0):
 
     # Look a little like the wrapped function.
     cmap.__name__ = 'centered_' + func.__name__
-    cmap.__doc__ = 'Centered: ' + func.__doc__
+    if func.__doc__ is not None:
+        cmap.__doc__ = 'Centered: ' + func.__doc__
+    else:
+        cmap.__doc__ = 'Centered: ' + func.__name__
     return cmap
 
 def fix(func, range):
@@ -125,7 +131,10 @@ def fix(func, range):
 
     # Look a little like the wrapped function.
     cmap.__name__ = 'fixed_' + func.__name__
-    cmap.__doc__ = 'Fixed: ' + func.__doc__
+    if func.__doc__ is not None:
+        cmap.__doc__ = 'Fixed: ' + func.__doc__
+    else:
+        cmap.__doc__ = 'Fixed: ' + func.__name__
     return cmap
 
 
