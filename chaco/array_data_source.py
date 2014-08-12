@@ -1,7 +1,7 @@
 """ Defines the ArrayDataSource class."""
 
 # Major library imports
-from numpy import array, isfinite, ones, nanargmin, nanargmax, ndarray
+from numpy import array, isnan, isfinite, ones, nanargmin, nanargmax, ndarray
 
 # Enthought library imports
 from traits.api import Any, Constant, Int, Tuple
@@ -11,6 +11,8 @@ from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
 from abstract_data_source import AbstractDataSource
 
 def bounded_nanargmin(arr):
+    if all(isnan(arr)):
+        return 0
     min = nanargmin(arr)
     if isfinite(min):
         return min
@@ -18,6 +20,8 @@ def bounded_nanargmin(arr):
         return 0
 
 def bounded_nanargmax(arr):
+    if all(isnan(arr)):
+        return -1
     max = nanargmax(arr)
     if isfinite(max):
         return max
