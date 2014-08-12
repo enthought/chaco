@@ -4,7 +4,7 @@ Test of basic dataseries behavior.
 
 import unittest
 
-from numpy import arange, array, allclose
+from numpy import arange, array, allclose, empty, isnan, nan
 from chaco.api import ArrayDataSource, PointDataSource
 
 
@@ -42,6 +42,15 @@ class ArrayDataTestCase(unittest.TestCase):
         sd = ArrayDataSource(myarray)
         self.assert_(len(myarray) == sd.get_size())
         return
+
+    def test_bounds_all_nans(self):
+        myarray = empty(10)
+        myarray[:] = nan
+        sd = ArrayDataSource(myarray)
+        bounds = sd.get_bounds()
+        self.assertTrue(isnan(bounds[0]))
+        self.assertTrue(isnan(bounds[1]))
+
 
 class PointDataTestCase(unittest.TestCase):
     # Since PointData is mostly the same as ScalarData, the key things to

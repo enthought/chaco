@@ -1,8 +1,6 @@
 import sys
 import unittest
 
-import nose
-
 from chaco.api import HPlotContainer, OverlayPlotContainer, \
                                 PlotComponent, VPlotContainer, GridContainer
 from traits.api import Any, Tuple
@@ -399,15 +397,6 @@ class SizePrefsTestCase(unittest.TestCase):
 class GridContainerTestCase(ContainerTestCase):
 
     def test_empty_container(self):
-        # FIXME:
-        #   This test is failing when run with nosetests and coverage.
-        #   Therefore, it is skipped when coverage is imported.
-        #   If you want to fix this, please look at:
-        #     https://svn.enthought.com/enthought/ticket/1618
-        #   where I posted more details about this problem.
-        if 'coverage' in sys.modules:
-            raise nose.SkipTest
-
         cont = GridContainer(shape=(1,1))
         cont.bounds = [100,100]
         cont.do_layout()
