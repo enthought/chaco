@@ -81,7 +81,7 @@ from variable_size_scatterplot import VariableSizeScatterPlot
 from horizon_plot import BandedMapper, HorizonPlot
 from scatterplot_1d import ScatterPlot1D
 from line_scatterplot_1d import LineScatterPlot1D
-from textplot_1d import TextPlot1D
+from text_plot_1d import TextPlot1D
 
 # Plot factories
 from plot_factory import create_bar_plot, create_line_plot, create_scatter_plot, \
