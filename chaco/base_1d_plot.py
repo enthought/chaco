@@ -19,10 +19,14 @@ from .base import reverse_map_1d
 
 
 class Base1DPlot(AbstractPlotRenderer):
-    """ A color bar for a color-mapped plot.
+    """ Base class for one-dimensional plots
+
+    This class provides a base for plots such as jitter plots, color bars,
+    single-axis scatter plots, and geophysical horizon and tops plots.
+
     """
 
-    # The data source of values
+    #: The data source of values
     index = Instance(ArrayDataSource)
 
     #: Screen mapper for index data.
@@ -36,13 +40,13 @@ class Base1DPlot(AbstractPlotRenderer):
     #: the orientation of the plot.
     y_mapper = Property(depends_on='orientation')
 
-    # The orientation of the index axis.
+    #: The orientation of the index axis.
     orientation = Enum('v', 'h')
 
-    # Should the plot go left-to-right or bottom-to-top (normal) or the reverse?
+    #: Should the plot go left-to-right or bottom-to-top (normal) or the reverse?
     direction = Enum('normal', 'flipped')
 
-    # Faux origin for the axis to look at
+    #: Faux origin for the axes and other objects to look at
     origin = Property(
         Enum('bottom left', 'top left', 'bottom right', 'top right'),
         depends_on=['orientation', 'direction']
@@ -52,31 +56,72 @@ class Base1DPlot(AbstractPlotRenderer):
     # Private traits
     #------------------------------------------------------------------------
 
+    #: flag whether the data cache is valid
     _cache_valid = Bool(False)
 
+    #: cache of the index values in data space
     _cached_data = Any()
+
+    #: cache of the sorted index values in data space
     _cached_data_pts_sorted = Any()
+
+    #: cache of the sorted indices of the index values
     _cached_data_argsort = Any()
 
+    #: flag whether the screen coordinates are valid
     _screen_cache_valid = Bool(False)
+
+    #: cache holding the screen coordinates of the index values
     _cached_screen_pts = Any()
 
     #------------------------------------------------------------------------
     # AbstractPlotRenderer interface
     #------------------------------------------------------------------------
 
-    def map_screen(self, data_pts):
+    def map_screen(self, data_array):
         """ Maps a 1D array of data points into screen space and returns it as
         a 1D array.
 
+        Parameters
+        ----------
+
+        data_array : 1D array
+            An array of data-space values to be mapped to screen coordinates.
+
+        Returns
+        -------
+
+        screen_array : 1D array
+            An array of points in screen space, either x-values (if
+            orientation is 'h') or y-values (if orientation is 'v').
+
+        Notes
+        -----
+
+        Returning a 1D array is experimental, and may break some tools and
+        overlays.  If needs be we can refactor so that it returns a 2D array.
+
         """
-        # data_pts is array of length N
-        if len(data_pts) == 0:
+        # data_array is 1D array of length N
+        if len(data_array) == 0:
             return []
-        return asarray(self.index_mapper.map_screen(data_pts))
+        return asarray(self.index_mapper.map_screen(data_array))
 
     def map_data(self, screen_pts):
-        """ Maps 2D screen space points into the 1D "index" space of the plot.
+        """ Maps 2D screen space points into the 1D index space of the plot.
+
+        Parameters
+        ----------
+
+        screen_pts : tuple of x-array, y-array
+            2 arrays (or values) screen space coordinates.
+
+        Returns
+        -------
+
+        data_array : 1D array
+            An array of points in data space corresponding to the screen-space
+            points.
 
         """
         x, y = screen_pts
@@ -86,8 +131,36 @@ class Base1DPlot(AbstractPlotRenderer):
             return asarray(self.index_mapper.map_data(x))
 
     def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True,
-                  index_only = True):
+                  index_only=True):
         """ Maps a screen space point to an index into the plot's index array.
+
+        Parameters
+        ----------
+
+        screen_pts: tuple of x-array, y-array
+            2 arrays (or values) screen space coordinates.
+        threshold : float
+            Optional screen-space distance allowed between *screen_pt* and the
+            plot; if non-zero, then a *screen_pt* within this distance is
+            mapped to the neared plot index. (This feature is useful for sparse
+            data.)
+        outside_returns_none : Boolean
+            If True, then if *screen_pt* is outside the range of the data, the
+            method returns None. If False, it returns the nearest end index in
+            such a case.
+        index_only : Boolean
+            This is included for compatibity with the base class, but is
+            ignored, as it is always true for 1D plots.
+
+        Returns
+        -------
+
+        index : int
+            An index into the index array. If the input point cannot be mapped
+            to an index, then None is returned.
+
+            If *screen_pt* corresponds to multiple indices, then only the first
+            index is returned.
 
         """
         data_pt = self.map_data(screen_pt)
@@ -137,6 +210,7 @@ class Base1DPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
 
     def _compute_screen_coord(self):
+        """ Compute the screen coordinates of the index values """
         if not self._screen_cache_valid:
             self._gather_points()
             pts = self.map_screen(self._cached_data)
@@ -147,6 +221,7 @@ class Base1DPlot(AbstractPlotRenderer):
         return self._cached_screen_pts
 
     def _gather_points(self):
+        """ Ensure that data cache is valid """
         if self._cache_valid:
             return
         if not self.index:
@@ -164,6 +239,8 @@ class Base1DPlot(AbstractPlotRenderer):
         self._screen_cached_valid = False
 
     def _update_mappers(self):
+        """ Update the mapper when the bounds, orientation or direction change
+        """
         mapper = self.index_mapper
         if mapper is None:
             return
@@ -173,14 +250,16 @@ class Base1DPlot(AbstractPlotRenderer):
         y = self.y
         y2 = self.y2
 
-        if "left" in self.origin and self.orientation == 'h':
-            mapper.screen_bounds = (x, x2)
-        elif "right" in self.origin and self.orientation == 'h':
-            mapper.screen_bounds = (x2, x)
-        elif "bottom" in self.origin  and self.orientation == 'v':
-            mapper.screen_bounds = (y, y2)
-        elif "top" in self.origin  and self.orientation == 'v':
-            mapper.screen_bounds = (y2, y)
+        if self.orientation == 'h':
+            if self.direction == 'normal':
+                mapper.screen_bounds = (x, x2)
+            elif self.direction == 'flipped':
+                mapper.screen_bounds = (x2, x)
+        elif self.orientation == 'v':
+            if self.direction == 'normal':
+                mapper.screen_bounds = (y, y2)
+            elif self.direction == 'flipped':
+                mapper.screen_bounds = (y2, y)
 
         self.invalidate_draw()
         self._cache_valid = False
@@ -239,4 +318,7 @@ class Base1DPlot(AbstractPlotRenderer):
         self._update_mappers()
 
     def _orientation_changed(self):
+        self._update_mappers()
+
+    def _direction_changed(self):
         self._update_mappers()

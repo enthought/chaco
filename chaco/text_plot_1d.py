@@ -1,5 +1,6 @@
 """
-Scatterplot in one dimension only
+A plot that renders text values along one dimension
+
 """
 
 
@@ -7,19 +8,22 @@ from __future__ import absolute_import
 
 from itertools import izip
 
-from numpy import empty
+from numpy import array, empty
 
 # Enthought library imports
 from chaco.api import Label
-from enable.api import black_color_trait, ColorTrait, MarkerTrait
+from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Bool, Callable, Enum, Float, Int, List, on_trait_change
+from traits.api import Bool, Callable, Enum, Float, Int, List, on_trait_change
 
 # local imports
 from .base_1d_plot import Base1DPlot
 
+
 def default_formatter(val):
-    return ("%f"%val).rstrip("0").rstrip(".")
+    """ Format a index value as a string """
+    return ("%f" % val).rstrip("0").rstrip(".")
+
 
 class TextPlot1D(Base1DPlot):
     """ A plot that positions textual labels in 1D """
@@ -31,7 +35,7 @@ class TextPlot1D(Base1DPlot):
     text_font = KivaFont('modern 10')
 
     #: The color of the tick labels.
-    text_color = ColorTrait("black")
+    text_color = black_color_trait
 
     #: The rotation of the tick labels.
     text_rotate_angle = Float(0)
@@ -48,16 +52,28 @@ class TextPlot1D(Base1DPlot):
     #: offset of text relative to non-index direction in pixels
     text_offset = Float
 
-    #: private trait holding text of text relative to non-index direction
+    #------------------------------------------------------------------------
+    # Private traits
+    #------------------------------------------------------------------------
+
+    #: private trait holding position of text relative to non-index direction
     _text_position = Float
 
+    #: flag for whether the cache of Label instances is valid
     _label_cache_valid = Bool(False)
+
+    #: cache of Label instances for faster rendering
     _label_cache = List
 
-    def _compute_labels(self):
-        """Generates the labels for text plot.
-        """
-        # labels are already computed
+    #: cache of bounding boxes of labels
+    _label_box_cache = List
+
+    #------------------------------------------------------------------------
+    # Private methods
+    #------------------------------------------------------------------------
+
+    def _compute_labels(self, gc):
+        """Generate the Label instances for the plot. """
         formatter = self.formatter
 
         def build_label(val):
@@ -70,14 +86,17 @@ class TextPlot1D(Base1DPlot):
 
 
         self._label_cache = [build_label(val) for val in self.index.get_data()]
+        self._label_box_cache = [array(label.get_bounding_box(gc), float)
+                                 for label in self._label_cache]
+        self._label_cache_valid = True
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
+        """ Draw the text at the specified index values """
 
         if len(self.index.get_data()) == 0:
             return
         if not self._label_cache_valid:
-            self._compute_labels()
-        self._label_cache_valid =  True
+            self._compute_labels(gc)
 
         coord = self._compute_screen_coord()
         pts = empty(shape=(len(coord), 2))
@@ -99,10 +118,8 @@ class TextPlot1D(Base1DPlot):
                     gc.translate_ctm(*pt)
                     label.draw(gc)
 
-    def __text_position_default(self):
-        return self._get_text_position()
-
     def _get_text_position(self):
+        """ Compute the text label position in the non-index direction """
         x, y = self.position
         w, h = self.bounds
 
@@ -117,8 +134,18 @@ class TextPlot1D(Base1DPlot):
             position = y + h
 
         position += self.text_offset
-        print position, self.alignment
         return position
+
+    #------------------------------------------------------------------------
+    # Trait handlers
+    #------------------------------------------------------------------------
+
+    def __text_position_default(self):
+        return self._get_text_position()
+
+    #------------------------------------------------------------------------
+    # Trait events
+    #------------------------------------------------------------------------
 
     @on_trait_change("index.data_changed")
     def _invalidate(self):
@@ -139,4 +166,5 @@ class TextPlot1D(Base1DPlot):
         self._text_position = self._get_text_position()
 
     def _alignment_changed(self):
+        super(TextPlot1D, self)._alignment_changed()
         self._text_position = self._get_text_position()

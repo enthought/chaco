@@ -1,7 +1,7 @@
 """
-Scatterplot in one dimension only
-"""
+A 1D scatterplot that draws lines across the renderer at the index values
 
+"""
 
 from __future__ import absolute_import
 
@@ -9,25 +9,23 @@ from numpy import empty
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, LineStyle
-from traits.api import Any, Bool, Callable, Enum, Float, Str
+from traits.api import Any, Bool, Float, Str
 
 # local imports
 from .base_1d_plot import Base1DPlot
-from .scatterplot import render_markers
 
 
 class LineScatterPlot1D(Base1DPlot):
-    """ A scatterplot that in 1D """
+    """ A 1D scatterplot that draws lines across the renderer """
 
-    # The thickness, in pixels, of the line
+    #: The thickness, in pixels, of the lines
     line_width = Float(1.0)
 
-    # The fill color of the line.
+    #: The fill color of the lines.
     color = black_color_trait
 
-    # The line dash style.
+    #: The line dash style.
     line_style = LineStyle
-
 
     #------------------------------------------------------------------------
     # Selection and selection rendering
@@ -37,18 +35,27 @@ class LineScatterPlot1D(Base1DPlot):
     # datasource.
     #------------------------------------------------------------------------
 
-    selection_metadata_name = Str("selections")
-
+    #: whether or not to display a selection
     show_selection = Bool(True)
 
+    #: the plot data metadata name to watch for selection information
+    selection_metadata_name = Str("selections")
+
+    #: the thickness, in pixels, of the selected lines
     selected_line_width = Float(1.0)
 
+    #: the color of the selected lines
     selected_color = ColorTrait("yellow")
 
-    # The style of the selected line.
+    #: The line dash style of the selected line.
     selected_line_style = LineStyle("solid")
 
+    #------------------------------------------------------------------------
+    # Private methods
+    #------------------------------------------------------------------------
+
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
+        """ Draw the plot """
         coord = self._compute_screen_coord()
         lines = empty(shape=(len(coord), 4))
 
@@ -66,6 +73,7 @@ class LineScatterPlot1D(Base1DPlot):
         self._render(gc, lines)
 
     def _render(self, gc, lines):
+        """ Render a sequence of line values, accounting for selections """
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             if not self.index:
@@ -92,24 +100,13 @@ class LineScatterPlot1D(Base1DPlot):
                                     self.line_width, self.line_style_)
 
     def _render_lines(self, gc, lines, color, width, dash):
+        """ Render a collection of lines with a given style """
         with gc:
             gc.set_stroke_color(color)
             gc.set_line_width(width)
             gc.set_line_dash(dash)
-            gc.begin_path()
             for line in lines:
+                gc.begin_path()
                 line.shape = (2, 2)
                 gc.lines(line)
-            gc.stroke_path()
-
-    def _bounds_changed(self, old, new):
-        super(LineScatterPlot1D, self)._bounds_changed(old, new)
-        self._marker_position = self._get_marker_position()
-
-    def _bounds_items_changed(self, event):
-        super(LineScatterPlot1D, self)._bounds_items_changed(event)
-        self._marker_position = self._get_marker_position()
-
-    def _orientation_changed(self):
-        super(LineScatterPlot1D, self)._orientation_changed()
-        self._marker_position = self._get_marker_position()
+                gc.stroke_path()
