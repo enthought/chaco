@@ -165,6 +165,9 @@ class TextPlot1D(Base1DPlot):
         super(TextPlot1D, self)._orientation_changed()
         self._text_position = self._get_text_position()
 
+    def _direction_changed(self):
+        super(TextPlot1D, self)._direction_changed()
+        self._text_position = self._get_text_position()
+
     def _alignment_changed(self):
-        super(TextPlot1D, self)._alignment_changed()
         self._text_position = self._get_text_position()
