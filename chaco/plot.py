@@ -966,12 +966,12 @@ class Plot(DataView):
                 if "bottom" in self.origin:
                     direction = 'normal'
                 else:
-                    direction = 'reversed'
+                    direction = 'flipped'
             else:
                 if "left" in self.origin:
                     direction = 'normal'
                 else:
-                    direction = 'reversed'
+                    direction = 'flipped'
 
         plots = []
         if plot_type in ("scatter_1d", "textplot_1d", "line_scatter_1d"):
