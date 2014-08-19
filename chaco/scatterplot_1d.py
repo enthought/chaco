@@ -68,7 +68,7 @@ class ScatterPlot1D(Base1DPlot):
     selection_outline_color = black_color_trait
 
     #: alignment of markers relative to non-index direction
-    marker_alignment = Enum("center", "left", "right", "top", "bottom")
+    alignment = Enum("center", "left", "right", "top", "bottom")
 
     #: offset of markers relative to non-index direction in pixels
     marker_offset = Float
@@ -131,11 +131,11 @@ class ScatterPlot1D(Base1DPlot):
         if self.orientation == 'v':
             y, h = x, w
 
-        if self.marker_alignment == 'center':
+        if self.alignment == 'center':
             position = y + h/2.0
-        elif self.marker_alignment in ['left', 'bottom']:
+        elif self.alignment in ['left', 'bottom']:
             position = y
-        elif self.marker_alignment in ['right', 'top']:
+        elif self.alignment in ['right', 'top']:
             position = y + h
 
         position += self.marker_offset
@@ -153,5 +153,5 @@ class ScatterPlot1D(Base1DPlot):
         super(ScatterPlot1D, self)._orientation_changed()
         self._marker_position = self._get_marker_position()
 
-    def _marker_alignment_changed(self):
+    def _alignment_changed(self):
         self._marker_position = self._get_marker_position()

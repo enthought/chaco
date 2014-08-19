@@ -50,7 +50,7 @@ def _create_plot_component():
         type='scatter_1d',
         orientation='h',
         marker='plus',
-        marker_alignment='bottom'
+        alignment='bottom'
     )
 
     plot.plot_1d(
@@ -66,7 +66,7 @@ def _create_plot_component():
         type='scatter_1d',
         orientation='v',
         marker='plus',
-        marker_alignment='left'
+        alignment='left'
     )
 
     plot.plot(("index", "value"),
