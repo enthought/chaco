@@ -317,6 +317,17 @@ class Base1DPlot(AbstractPlotRenderer):
         super(Base1DPlot, self)._bounds_items_changed(event)
         self._update_mappers()
 
+    def _position_changed(self, old, new):
+        super(Base1DPlot, self)._position_changed(old, new)
+        self._update_mappers()
+
+    def _position_items_changed(self, event):
+        super(Base1DPlot, self)._position_items_changed(event)
+        self._update_mappers()
+
+    def _updated_changed_for_index_mapper(self):
+        self._update_mappers()
+
     def _orientation_changed(self):
         self._update_mappers()
 
