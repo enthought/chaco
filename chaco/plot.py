@@ -41,6 +41,7 @@ from scatterplot_1d import ScatterPlot1D
 from text_plot_1d import TextPlot1D
 from filled_line_plot import FilledLinePlot
 from quiverplot import QuiverPlot
+from jitterplot import JitterPlot
 
 
 
@@ -123,7 +124,8 @@ class Plot(DataView):
                              quiver = QuiverPlot,
                              scatter_1d = ScatterPlot1D,
                              textplot_1d = TextPlot1D,
-                             line_scatter_1d = LineScatterPlot1D))
+                             line_scatter_1d = LineScatterPlot1D,
+                             jitterplot = JitterPlot))
 
     #------------------------------------------------------------------------
     # Annotations and decorations
@@ -974,7 +976,8 @@ class Plot(DataView):
                     direction = 'flipped'
 
         plots = []
-        if plot_type in ("scatter_1d", "textplot_1d", "line_scatter_1d"):
+        if plot_type in ("scatter_1d", "textplot_1d", "line_scatter_1d",
+                         "jitterplot"):
             # Tie data to the index range
             index = self._get_or_create_datasource(data[0])
             if self.default_index is None:
