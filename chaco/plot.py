@@ -990,7 +990,11 @@ class Plot(DataView):
                 index_range = self.index_range
                 index_mapper = self.index_mapper
                 self.index_scale = scale
+        else:
+            raise ValueError("Unknown plot type: " + plot_type)
 
+        if plot_type in ("scatter_1d", "line_scatter_1d", "jitterplot"):
+            # simple 1d positional plots with no associated value
             for source in data:
                 index = self._get_or_create_datasource(source)
                 index_range.add(index)
@@ -1010,8 +1014,26 @@ class Plot(DataView):
                             **styles)
                 plots.append(plot)
                 self.add(plot)
-        else:
-            raise ValueError("Unknown plot type: " + plot_type)
+        elif plot_type in ("textplot_1d",):
+            # simple positional plots with a single associated value
+            for source in data[1:]:
+                value = self._get_or_create_datasource(source)
+
+                if scale == "linear":
+                    imap = LinearMapper(range=index_range,
+                                        stretch_data=index_mapper.stretch_data)
+                else:
+                    imap = LogMapper(range=index_range,
+                                    stretch_data=index_mapper.stretch_data)
+                cls = self.renderer_map[plot_type]
+                plot = cls(index=index,
+                           index_mapper=imap,
+                           value=value,
+                           orientation=orientation,
+                           direction=direction,
+                           **styles)
+                plots.append(plot)
+                self.add(plot)
 
         self.plots[name] = plots
         return plots

@@ -11,25 +11,20 @@ from itertools import izip
 from numpy import array, empty
 
 # Enthought library imports
-from chaco.api import Label
+from chaco.api import ArrayDataSource, Label
 from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Bool, Callable, Enum, Float, Int, List, on_trait_change
+from traits.api import Bool, Enum, Float, Int, Instance, List, on_trait_change
 
 # local imports
 from .base_1d_plot import Base1DPlot
 
 
-def default_formatter(val):
-    """ Format a index value as a string """
-    return ("%f" % val).rstrip("0").rstrip(".")
-
-
 class TextPlot1D(Base1DPlot):
     """ A plot that positions textual labels in 1D """
 
-    #: label formatter: callable that given an index, returns appropriate text
-    formatter = Callable(default_formatter)
+    #: text values corresponding to indices
+    value = Instance(ArrayDataSource)
 
     #: The font of the tick labels.
     text_font = KivaFont('modern 10')
@@ -74,18 +69,14 @@ class TextPlot1D(Base1DPlot):
 
     def _compute_labels(self, gc):
         """Generate the Label instances for the plot. """
-        formatter = self.formatter
-
-        def build_label(val):
-            text = formatter(val) if formatter is not None else str(val)
-            return Label(text=text,
-                         font=self.text_font,
-                         color=self.text_color,
-                         rotate_angle=self.text_rotate_angle,
-                         margin=self.text_margin)
-
-
-        self._label_cache = [build_label(val) for val in self.index.get_data()]
+        self._label_cache = [
+            Label(
+                text=text,
+                font=self.text_font,
+                color=self.text_color,
+                rotate_angle=self.text_rotate_angle,
+                margin=self.text_margin
+            ) for text in self.value.get_data()]
         self._label_box_cache = [array(label.get_bounding_box(gc), float)
                                  for label in self._label_cache]
         self._label_cache_valid = True
@@ -151,6 +142,10 @@ class TextPlot1D(Base1DPlot):
     def _invalidate(self):
         self._cache_valid = False
         self._screen_cache_valid = False
+        self._label_cache_valid = False
+
+    @on_trait_change("value.data_changed")
+    def _invalidate_labels(self):
         self._label_cache_valid = False
 
     def _bounds_changed(self, old, new):
