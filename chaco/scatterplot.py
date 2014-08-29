@@ -6,8 +6,8 @@ function.
 import itertools
 
 # Major library imports
-from numpy import abs, argmin, around, array, asarray, compress, invert, \
-        isnan, sqrt, sum, transpose, where, ndarray
+from numpy import abs, around, array, asarray, compress, invert, isnan, \
+    nanargmin, sqrt, sum, transpose, where, ndarray
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
@@ -345,7 +345,7 @@ class ScatterPlot(BaseXYPlot):
             else:
                 delta = screen_points - array([screen_pt])
                 distances = sqrt(sum(delta*delta, axis=1))
-            closest_ndx = argmin(distances)
+            closest_ndx = nanargmin(distances)
             if distances[closest_ndx] <= threshold:
                 return closest_ndx
             else:
