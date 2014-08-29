@@ -293,6 +293,12 @@ class ScatterPlot(BaseXYPlot):
 
         Overrides the BaseXYPlot implementation..
         """
+        index_data = self.index.get_data()
+        value_data = self.value.get_data()
+
+        if len(value_data) == 0 or len(index_data) == 0:
+            return None
+
         if index_only and self.index.sort_order != "none":
             data_pt = self.map_data(screen_pt)[0]
             # The rest of this was copied out of BaseXYPlot.
@@ -300,11 +306,6 @@ class ScatterPlot(BaseXYPlot):
             # it expect map_data to return a value, not a pair.
             if ((data_pt < self.index_mapper.range.low) or \
                 (data_pt > self.index_mapper.range.high)) and outside_returns_none:
-                return None
-            index_data = self.index.get_data()
-            value_data = self.value.get_data()
-
-            if len(value_data) == 0 or len(index_data) == 0:
                 return None
 
             try:
@@ -335,7 +336,7 @@ class ScatterPlot(BaseXYPlot):
                 return None
         else:
             # Brute force implementation
-            all_data = transpose(array([self.index.get_data(), self.value.get_data()]))
+            all_data = transpose(array([index_data, value_data]))
             screen_points = around(self.map_screen(all_data))
             if len(screen_points) == 0:
                 return None
