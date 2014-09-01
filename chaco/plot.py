@@ -927,8 +927,9 @@ class Plot(DataView):
         data : string, tuple(string), list(string)
             The data to be plotted. The each item generates a separate renderer
             using the named data source
-        type : comma-delimited string of "scatter_1d", etc.
-            The types of plots to add.
+        type : string
+            The type of plots to add.  One of  of "scatter_1d",
+            "line_scatter_1d", "textplot_1d", "jitterplot"
         name : string
             The name of the plot.  If None, then a default one is created
             (usually "plotNNN").

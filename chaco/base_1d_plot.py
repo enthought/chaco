@@ -34,11 +34,11 @@ class Base1DPlot(AbstractPlotRenderer):
 
     #: Corresponds to either **index_mapper** or None, depending on
     #: the orientation of the plot.
-    x_mapper = Property(depends_on='orientation')
+    x_mapper = Property(depends_on=['orientation', 'index_mapper'])
 
     #: Corresponds to either **index_mapper** or None, depending on
     #: the orientation of the plot.
-    y_mapper = Property(depends_on='orientation')
+    y_mapper = Property(depends_on=['orientation', 'index_mapper'])
 
     #: The orientation of the index axis.
     orientation = Enum('v', 'h')
