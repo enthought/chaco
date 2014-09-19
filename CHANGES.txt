@@ -21,6 +21,7 @@ Fixes
    PR#101 (PR#175).
  * Make the `alpha` attribute of scatter plots work as intended (PR#164).
  * Resume running test for empty container that has been skipped (PR#190).
+ * Avoid a numpy crash when using a data source of a unicode array (PR#213).
 
 Release 4.4.1
 -------------
