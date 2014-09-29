@@ -23,6 +23,7 @@ Fixes
  * Resume running test for empty container that has been skipped (PR#190).
  * Improved handling of missing or empty data in scatterplot (PR#210)
  * Avoid a numpy crash when using a data source of a unicode array (PR#213).
+ * RangeSelection properly clips bounds when leaving selection area (PR#217).
 
 Release 4.4.1
 -------------
