@@ -36,7 +36,7 @@ class ImagePlot(Base2DPlot):
 
     # The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
-    
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -129,7 +129,7 @@ class ImagePlot(Base2DPlot):
 
         The parameter *data* is for subclasses that might not store an RGB(A)
         image as the value, but need to compute one to display (colormaps, etc.).
-        
+
         The parameter *mapper* is also for subclasses that might not store an
         RGB(A) image as their value, and gives an opportunity to produce the
         values only for the visible region, rather than for the whole plot,
@@ -148,6 +148,13 @@ class ImagePlot(Base2DPlot):
             ll_y, ur_y = ur_y, ll_y
         virtual_width = ur_x - ll_x
         virtual_height = ur_y - ll_y
+
+        # Convert to the coordinates of the graphics context, which expects
+        # origin to be at the center of a pixel.
+        ll_x -= 0.5
+        ll_y -= 0.5
+        virtual_width += 1
+        virtual_height += 1
 
         args = self.position \
              + self.bounds \
@@ -172,7 +179,7 @@ class ImagePlot(Base2DPlot):
 
             # Since data is row-major, j1 and j2 go first
             data = data[j1:j2, i1:i2]
-        
+
         if mapper is not None:
             data = mapper(data)
 
@@ -327,4 +334,4 @@ class ImagePlot(Base2DPlot):
     def _value_data_changed_fired(self):
         self._image_cache_valid = False
         self.request_redraw()
-        
+
