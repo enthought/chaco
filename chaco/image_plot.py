@@ -151,10 +151,8 @@ class ImagePlot(Base2DPlot):
 
         # Convert to the coordinates of the graphics context, which expects
         # origin to be at the center of a pixel.
-        ll_x -= 0.5
-        ll_y -= 0.5
-        virtual_width += 1
-        virtual_height += 1
+        ll_x += 0.5
+        ll_y += 0.5
 
         args = self.position \
              + self.bounds \
