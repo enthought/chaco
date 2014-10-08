@@ -24,6 +24,7 @@ Fixes
  * Improved handling of missing or empty data in scatterplot (PR#210)
  * Avoid a numpy crash when using a data source of a unicode array (PR#213).
  * Fix white gap between image border and image (PR#219).
+ * Fix redraw color mapped image plot when color mapper updates (PR#221)
 
 Release 4.4.1
 -------------
