@@ -199,16 +199,17 @@ class PanTool(BaseTool):
                 # values.  As a first approximation, we're just going to
                 # use a linear approximation, which works perfectly for
                 # linear mappers (which is used 99% of the time).
+                data = [arr for arr in
+                        (source.get_data() for source in mapper.range.sources)
+                        if arr.size > 0]
                 if domain_min is None:
                     if self.restrict_to_data:
-                        domain_min = min([source.get_data().min()
-                                          for source in mapper.range.sources])
+                        domain_min = min([arr.min() for arr in data])
                     else:
                         domain_min = -inf
                 if domain_max is None:
                     if self.restrict_to_data:
-                        domain_max = max([source.get_data().max()
-                                          for source in mapper.range.sources])
+                        domain_max = max([arr.max() for arr in data])
                     else:
                         domain_max = inf
 
