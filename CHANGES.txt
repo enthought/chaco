@@ -25,6 +25,7 @@ Fixes
  * Avoid a numpy crash when using a data source of a unicode array (PR#213).
  * PanTool with `restrict_to_data` selected works with empty data sources
    (PR#215).
+ * Fix white gap between image border and image (PR#219).
 
 Release 4.4.1
 -------------
