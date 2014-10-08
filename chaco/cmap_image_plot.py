@@ -144,6 +144,7 @@ class CMapImagePlot(ImagePlot):
         self._mapped_image_cache_valid = False
         self._image_cache_valid = False
         self.invalidate_draw()
+        self.request_redraw()
 
     def _update_selections(self):
         self._mapped_image_cache_valid = False
