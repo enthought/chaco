@@ -3,7 +3,6 @@ import unittest
 import mock
 
 import numpy
-import scipy.special
 
 from enable.api import AbstractWindow
 from chaco.api import (
@@ -20,7 +19,7 @@ class TestCMapImagePlot(unittest.TestCase):
         xs = numpy.linspace(-2 * numpy.pi, +2 * numpy.pi, npoints)
         ys = numpy.linspace(-1.5*numpy.pi, +1.5*numpy.pi, npoints)
         x, y = numpy.meshgrid(xs, ys)
-        z = scipy.special.jn(2, x)*y*x
+        z = y * x
 
         index = GridDataSource(xdata=xs, ydata=ys)
         index_mapper = GridMapper(range=DataRange2D(index))
