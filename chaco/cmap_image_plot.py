@@ -143,13 +143,12 @@ class CMapImagePlot(ImagePlot):
     def _update_value_mapper(self):
         self._mapped_image_cache_valid = False
         self._image_cache_valid = False
-        self.invalidate_draw()
-        self.request_redraw()
+        self.invalidate_and_redraw()
 
     def _update_selections(self):
         self._mapped_image_cache_valid = False
         self._image_cache_valid = False
-        self.invalidate_draw()
+        self.invalidate_and_redraw()
 
     #------------------------------------------------------------------------
     # Properties
