@@ -14,7 +14,7 @@ class LinearMapperTestCase(unittest.TestCase):
         r = DataRange1D(ds)
         mapper = LinearMapper(range=r, low_pos=50, high_pos=100)
         result = mapper.map_screen(ary)
-        assert_equal(result , array([50, 60, 70, 80, 90, 100]))
+        assert_equal(result, array([50, 60, 70, 80, 90, 100]))
         return
 
     def test_reversed(self):
@@ -23,7 +23,7 @@ class LinearMapperTestCase(unittest.TestCase):
         r = DataRange1D(ds)
         mapper = LinearMapper(range=r, low_pos=100, high_pos=0)
         result = mapper.map_screen(ary)
-        assert_equal(result , array([100, 80, 60, 40, 20, 0]))
+        assert_equal(result, array([100, 80, 60, 40, 20, 0]))
         return
 
     def test_update_screen_bounds_stretch_data(self):
@@ -73,6 +73,24 @@ class LinearMapperTestCase(unittest.TestCase):
         result = mapper.map_screen(ary)
         assert_array_almost_equal(
             result, array([120.0, 100.0, 80.0, 60.0, 40.0, 20.0]))
+
+    def test_set_screen_bounds_to_zero_dont_stretch_data(self):
+        ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        ds = ArrayDataSource(ary)
+        r = DataRange1D(ds)
+        mapper = LinearMapper(range=r, stretch_data=False)
+        # Initialize bounds.
+        mapper.screen_bounds = (0.0, 100.0)
+        self.assertAlmostEqual(mapper.range.low, 5.0)
+        self.assertAlmostEqual(mapper.range.high, 10.0)
+        # Decreasing the bounds to zero and then enlarging
+        # them again should preserve the data range.
+        mapper.screen_bounds = (0.0, 0.0)
+        self.assertAlmostEqual(mapper.range.low, 5.0)
+        self.assertAlmostEqual(mapper.range.high, 5.0)
+        mapper.screen_bounds = (0.0, 100.0)
+        self.assertAlmostEqual(mapper.range.low, 5.0)
+        self.assertAlmostEqual(mapper.range.high, 10.0)
 
 
 if __name__ == '__main__':
