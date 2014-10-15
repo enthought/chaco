@@ -96,7 +96,7 @@ class Base1DMapper(AbstractMapper):
             d_data = rangehigh - rangelow
             d_screen = self.high_pos - self.low_pos
             if d_data != 0 and d_screen != 0:
-                new_data_extent = d_data / d_screen * abs(new_bounds[1] - new_bounds[0])
+                new_data_extent = d_data / d_screen * (new_bounds[1] - new_bounds[0])
                 self.range.set_bounds(rangelow, rangelow + new_data_extent)
         self.set(low_pos = new_bounds[0], trait_change_notify=False)
         self.set(high_pos = new_bounds[1], trait_change_notify=False)
