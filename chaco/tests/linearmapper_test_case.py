@@ -116,7 +116,7 @@ class LinearMapperTestCase(unittest.TestCase):
         mapper.screen_bounds = (100.0, 50.0)
         mapper.low_pos = 110.0
         result = mapper.map_screen(ary)
-        assert_array_almost_equal(result, array([100, 90, 80, 70, 60, 50]))
+        assert_array_almost_equal(result, array([110, 100, 90, 80, 70, 60]))
 
     def test_update_high_pos_stretch_data(self):
         ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
@@ -160,7 +160,7 @@ class LinearMapperTestCase(unittest.TestCase):
         mapper.screen_bounds = (100.0, 50.0)
         mapper.high_pos = 40.0
         result = mapper.map_screen(ary)
-        assert_array_almost_equal(result, array([90, 80, 70, 60, 50, 40]))
+        assert_array_almost_equal(result, array([100, 90, 80, 70, 60, 50]))
 
 
 
