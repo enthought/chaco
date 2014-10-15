@@ -20,7 +20,7 @@ class Base1DMapper(AbstractMapper):
     low_pos = Float(0.0)
 
     # The screen space position of the upper bound of the data space.
-    high_pos  = Float(1.0)
+    high_pos = Float(1.0)
 
     # Convenience property to get low and high positions in one structure.
     # Must be a tuple (low_pos, high_pos).
@@ -42,6 +42,10 @@ class Base1DMapper(AbstractMapper):
     # Indicates whether or not the bounds have been set at all, or if they
     # are at their initial default values.
     _bounds_initialized = Bool(False)
+
+    # Ratio of data-range to screen-range to use when stretch_data = False.
+    # Valid only when _bounds_initialized is True.
+    _data_to_screen_ratio = Float(1.0)
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -88,20 +92,21 @@ class Base1DMapper(AbstractMapper):
             return 1
 
     def _set_screen_bounds(self, new_bounds):
-        if new_bounds[0] == self.low_pos and new_bounds[1] == self.high_pos:
+        if (new_bounds[0] == self.low_pos and
+                new_bounds[1] == self.high_pos and self._bounds_initialized):
             return
-        if not self.stretch_data and self.range is not None and self._bounds_initialized:
-            rangelow = self.range.low
-            rangehigh = self.range.high
-            d_data = rangehigh - rangelow
-            d_screen = self.high_pos - self.low_pos
-            if d_data != 0 and d_screen != 0:
-                new_data_extent = d_data / d_screen * abs(new_bounds[1] - new_bounds[0])
+        if not self.stretch_data and self.range is not None:
+            if self._bounds_initialized:
+                screen_extent = new_bounds[1] - new_bounds[0]
+                new_data_extent = self._data_to_screen_ratio * screen_extent
+                rangelow = self.range.low
                 self.range.set_bounds(rangelow, rangelow + new_data_extent)
-        self.set(low_pos = new_bounds[0], trait_change_notify=False)
-        self.set(high_pos = new_bounds[1], trait_change_notify=False)
+            elif self.low_pos != self.high_pos:
+                self._bounds_initialized = True
+                self._data_to_screen_ratio = ((self.range.high - self.range.low) /
+                                              (self.high_pos - self.low_pos))
+        self.set(low_pos=new_bounds[0], trait_change_notify=False)
+        self.set(high_pos=new_bounds[1], trait_change_notify=False)
         self._cache_valid = False
-        self._bounds_initialized = True
         self.updated = True
         return
-
