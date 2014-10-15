@@ -95,18 +95,18 @@ class Base1DMapper(AbstractMapper):
         if (new_bounds[0] == self.low_pos and
                 new_bounds[1] == self.high_pos and self._bounds_initialized):
             return
-        if (not self.stretch_data and self.range is not None and
-                self._bounds_initialized):
-            screen_extent = new_bounds[1] - new_bounds[0]
-            new_data_extent = self._data_to_screen_ratio * screen_extent
-            rangelow = self.range.low
-            self.range.set_bounds(rangelow, rangelow + new_data_extent)
+        if not self.stretch_data and self.range is not None:
+            if self._bounds_initialized:
+                screen_extent = new_bounds[1] - new_bounds[0]
+                new_data_extent = self._data_to_screen_ratio * screen_extent
+                rangelow = self.range.low
+                self.range.set_bounds(rangelow, rangelow + new_data_extent)
+            elif self.low_pos != self.high_pos:
+                self._bounds_initialized = True
+                self._data_to_screen_ratio = ((self.range.high - self.range.low) /
+                                              (self.high_pos - self.low_pos))
         self.set(low_pos=new_bounds[0], trait_change_notify=False)
         self.set(high_pos=new_bounds[1], trait_change_notify=False)
         self._cache_valid = False
-        if not self._bounds_initialized:
-            self._bounds_initialized = True
-            self._data_to_screen_ratio = ((self.range.high - self.range.low) /
-                                          (self.high_pos - self.low_pos))
         self.updated = True
         return
