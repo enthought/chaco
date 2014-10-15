@@ -50,7 +50,6 @@ class Base1DMapper(AbstractMapper):
     def _low_pos_changed(self, old, new):
         self._cache_valid = False
         if not self.stretch_data:
-            print old, new
             self._adjust_range((old, self.high_pos), (new, self.high_pos))
         self.updated = True
 
@@ -106,8 +105,6 @@ class Base1DMapper(AbstractMapper):
         if self.range is not None and self._bounds_initialized:
             rangelow = self.range.low
             rangehigh = self.range.high
-
-            print old_bounds, new_bounds, (rangelow, rangehigh)
             d_data = rangehigh - rangelow
             old_d_screen = old_bounds[1] - old_bounds[0]
             if d_data != 0 and old_d_screen != 0:
