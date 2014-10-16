@@ -206,6 +206,51 @@ class LinearMapperTestCase(unittest.TestCase):
         result = mapper.map_screen(ary)
         assert_array_almost_equal(result, array([50, 60, 70, 80, 90, 100]))
 
+    def test_update_low_pos_stretch_data_with_zero(self):
+        ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        ds = ArrayDataSource(ary)
+        r = DataRange1D(ds)
+        mapper = LinearMapper(range=r, stretch_data=True)
+        # Initialize the bounds, then modify them.
+        mapper.screen_bounds = (50.0, 100.0)
+        mapper.low_pos = 100.0
+        result = mapper.map_screen(ary)
+        assert_array_almost_equal(result, array([100, 100, 100, 100, 100, 100]))
+
+    def test_update_low_pos_dont_stretch_data_with_zero(self):
+        ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        ds = ArrayDataSource(ary)
+        r = DataRange1D(ds)
+        mapper = LinearMapper(range=r, stretch_data=False)
+        # Initialize the bounds, then modify them.
+        mapper.screen_bounds = (50.0, 100.0)
+        mapper.low_pos = 100.0
+        result = mapper.map_screen(ary)
+        assert_array_almost_equal(result, array([100, 100, 100, 100, 100, 100]))
+
+    def test_update_high_pos_stretch_data_with_zero(self):
+        ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        ds = ArrayDataSource(ary)
+        r = DataRange1D(ds)
+        mapper = LinearMapper(range=r, stretch_data=True)
+        # Initialize the bounds, then modify them.
+        mapper.screen_bounds = (50.0, 100.0)
+        mapper.high_pos = 50.0
+        result = mapper.map_screen(ary)
+        assert_array_almost_equal(result, array([50, 50, 50, 50, 50, 50]))
+
+    def test_update_high_pos_dont_stretch_data_with_zero(self):
+        ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        ds = ArrayDataSource(ary)
+        r = DataRange1D(ds)
+        mapper = LinearMapper(range=r, stretch_data=False)
+        # Initialize the bounds, then modify them.
+        mapper.screen_bounds = (50.0, 100.0)
+        mapper.high_pos = 100.0
+        result = mapper.map_screen(ary)
+        assert_array_almost_equal(result, array([50, 60, 70, 80, 90, 100]))
+
+
 
 if __name__ == '__main__':
     import nose
