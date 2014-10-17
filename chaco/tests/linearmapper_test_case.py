@@ -12,7 +12,13 @@ class LinearMapperTestCase(unittest.TestCase):
         ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
         ds = ArrayDataSource(ary)
         r = DataRange1D(ds)
-        mapper = LinearMapper(range=r, low_pos=50, high_pos=100)
+        mapper = LinearMapper(range=r)
+        self.assertFalse(mapper._low_bound_initialized)
+        self.assertFalse(mapper._high_bound_initialized)
+        mapper.low_pos=50
+        self.assertTrue(mapper._low_bound_initialized)
+        mapper.high_pos=100
+        self.assertTrue(mapper._high_bound_initialized)
         result = mapper.map_screen(ary)
         assert_equal(result , array([50, 60, 70, 80, 90, 100]))
         return
@@ -21,7 +27,41 @@ class LinearMapperTestCase(unittest.TestCase):
         ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
         ds = ArrayDataSource(ary)
         r = DataRange1D(ds)
-        mapper = LinearMapper(range=r, low_pos=100, high_pos=0)
+        mapper = LinearMapper(range=r)
+        self.assertFalse(mapper._low_bound_initialized)
+        self.assertFalse(mapper._high_bound_initialized)
+        mapper.low_pos=100
+        self.assertTrue(mapper._low_bound_initialized)
+        mapper.high_pos=0
+        self.assertTrue(mapper._high_bound_initialized)
+        result = mapper.map_screen(ary)
+        assert_equal(result , array([100, 80, 60, 40, 20, 0]))
+        return
+
+    def test_set_screen_bounds(self):
+        ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        ds = ArrayDataSource(ary)
+        r = DataRange1D(ds)
+        mapper = LinearMapper(range=r)
+        self.assertFalse(mapper._low_bound_initialized)
+        self.assertFalse(mapper._high_bound_initialized)
+        mapper.screen_bounds = (50.0, 100.0)
+        self.assertTrue(mapper._low_bound_initialized)
+        self.assertTrue(mapper._high_bound_initialized)
+        result = mapper.map_screen(ary)
+        assert_equal(result , array([50, 60, 70, 80, 90, 100]))
+        return
+
+    def test_reversed_set_screen_bounds(self):
+        ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        ds = ArrayDataSource(ary)
+        r = DataRange1D(ds)
+        mapper = LinearMapper(range=r)
+        self.assertFalse(mapper._low_bound_initialized)
+        self.assertFalse(mapper._high_bound_initialized)
+        mapper.screen_bounds = (100.0, 0.0)
+        self.assertTrue(mapper._low_bound_initialized)
+        self.assertTrue(mapper._high_bound_initialized)
         result = mapper.map_screen(ary)
         assert_equal(result , array([100, 80, 60, 40, 20, 0]))
         return

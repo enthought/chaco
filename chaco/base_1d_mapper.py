@@ -41,7 +41,8 @@ class Base1DMapper(AbstractMapper):
 
     # Indicates whether or not the bounds have been set at all, or if they
     # are at their initial default values.
-    _bounds_initialized = Bool(False)
+    _low_bound_initialized = Bool(False)
+    _high_bound_initialized = Bool(False)
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -51,12 +52,14 @@ class Base1DMapper(AbstractMapper):
         self._cache_valid = False
         if not self.stretch_data:
             self._adjust_range((old, self.high_pos), (new, self.high_pos))
+        self._low_bound_initialized = True
         self.updated = True
 
     def _high_pos_changed(self, old, new):
         self._cache_valid = False
         if not self.stretch_data:
             self._adjust_range((self.low_pos, old), (self.low_pos, new))
+        self._high_bound_initialized = True
         self.updated = True
 
     def _range_changed(self, old, new):
@@ -97,12 +100,15 @@ class Base1DMapper(AbstractMapper):
         self.set(low_pos = new_bounds[0], trait_change_notify=False)
         self.set(high_pos = new_bounds[1], trait_change_notify=False)
         self._cache_valid = False
-        self._bounds_initialized = True
+        self._low_bound_initialized = True
+        self._high_bound_initialized = True
         self.updated = True
         return
 
     def _adjust_range(self, old_bounds, new_bounds):
-        if self.range is not None and self._bounds_initialized:
+        initialized = self._low_bound_initialized and \
+                      self._high_bound_initialized
+        if self.range is not None and initialized:
             rangelow = self.range.low
             rangehigh = self.range.high
             d_data = rangehigh - rangelow
