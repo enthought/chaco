@@ -26,6 +26,7 @@ Fixes
  * PanTool with `restrict_to_data` selected works with empty data sources
    (PR#215).
  * Fix white gap between image border and image (PR#219).
+ * Fix behaviour of mappers when stretch_data trait is False (PR#227)
 
 Release 4.4.1
 -------------
