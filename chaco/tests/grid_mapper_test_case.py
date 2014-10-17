@@ -21,6 +21,47 @@ class GridMapperTestCase(unittest.TestCase):
         assert_equal(result, [(50,0), (60,0), (70,5),
                               (80,5), (90,10), (100,10)])
 
+    def test_map_screen_scalar(self):
+        x_ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        y_ary = array([1.0, 1.0, 2.0, 2.0, 3.0, 3.0])
+        ds = GridDataSource(xdata=x_ary, ydata=y_ary)
+        r = DataRange2D(ds)
+        mapper = GridMapper(range=r)
+        mapper.x_low_pos=50
+        mapper.x_high_pos=100
+        mapper.y_low_pos=0
+        mapper.y_high_pos=10
+        result = mapper.map_screen(transpose((6.0, 1.0)))
+        assert_equal(result, [60, 0])
+
+    def test_map_data(self):
+        x_ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        y_ary = array([1.0, 1.0, 2.0, 2.0, 3.0, 3.0])
+        ds = GridDataSource(xdata=x_ary, ydata=y_ary)
+        r = DataRange2D(ds)
+        mapper = GridMapper(range=r)
+        mapper.x_low_pos=50
+        mapper.x_high_pos=100
+        mapper.y_low_pos=0
+        mapper.y_high_pos=10
+        screen_ary = array([(50,0), (60,0), (70,5), (80,5), (90,10), (100,10)])
+        result = mapper.map_data(screen_ary)
+        assert_equal(result, transpose((x_ary, y_ary)))
+
+    def test_map_data_scalar(self):
+        x_ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
+        y_ary = array([1.0, 1.0, 2.0, 2.0, 3.0, 3.0])
+        ds = GridDataSource(xdata=x_ary, ydata=y_ary)
+        r = DataRange2D(ds)
+        mapper = GridMapper(range=r)
+        mapper.x_low_pos=50
+        mapper.x_high_pos=100
+        mapper.y_low_pos=0
+        mapper.y_high_pos=10
+        screen_ary = (60, 0)
+        result = mapper.map_data(screen_ary)
+        assert_equal(result, [6.0, 1.0])
+
 
 if __name__ == '__main__':
     import nose
