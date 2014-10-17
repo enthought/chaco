@@ -119,7 +119,10 @@ class GridMapper(AbstractMapper):
         xs, ys = transpose(data_pts)
         screen_xs = self._xmapper.map_screen(xs)
         screen_ys = self._ymapper.map_screen(ys)
-        return zip(screen_xs, screen_ys)
+        screen_pts = empty(shape=xs.shape+(2,), dtype=float)
+        screen_pts[..., 0] = screen_xs
+        screen_pts[..., 1] = screen_ys
+        return screen_pts
 
     def map_data(self, screen_pts):
         """ map_data(screen_pts) -> data_vals
