@@ -8,12 +8,13 @@ What's new in Chaco 4.5.0
 
 Change summary since 4.4.1
 
-New features
+New features/Improvements
 
  * Added perceptual colormaps by Matteo Niccoli, Dave Green and Kenneth Moreland.
-
- * Added asynchronous_updates.py demo that shows a pattern for generating
+ * Added `asynchronous_updates.py` demo that shows a pattern for generating
    expensive plots while keeping the interface responsive (PR#170).
+ * Speeded up by 10x the data mappers of the `GridMapper` class (mapping of 2D data 
+   to/from screen space).
 
 Fixes
 
@@ -22,7 +23,7 @@ Fixes
  * Make the `alpha` attribute of scatter plots work as intended (PR#164).
  * Resume running test for empty container that has been skipped (PR#190).
  * Improved handling of missing or empty data in scatterplot (PR#210)
- * Avoid a numpy crash when using a data source of a unicode array (PR#213).
+ * Avoid a NumPy crash when using a data source of a unicode array (PR#213).
  * PanTool with `restrict_to_data` selected works with empty data sources
    (PR#215).
  * Fix white gap between image border and image (PR#219).
