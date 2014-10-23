@@ -5,6 +5,8 @@ Test of basic dataseries behavior.
 import unittest
 
 from numpy import arange, array, allclose, empty, isnan, nan
+import numpy as np
+
 from chaco.api import ArrayDataSource, PointDataSource
 
 
@@ -50,6 +52,12 @@ class ArrayDataTestCase(unittest.TestCase):
         bounds = sd.get_bounds()
         self.assertTrue(isnan(bounds[0]))
         self.assertTrue(isnan(bounds[1]))
+
+    def test_bounds_non_numeric(self):
+        myarray = np.array([u'abc', u'foo', u'bar', u'def'], dtype=unicode)
+        sd = ArrayDataSource(myarray)
+        bounds = sd.get_bounds()
+        self.assertEqual(bounds, (u'abc', u'def'))
 
 
 class PointDataTestCase(unittest.TestCase):
