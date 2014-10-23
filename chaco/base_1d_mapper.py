@@ -41,21 +41,26 @@ class Base1DMapper(AbstractMapper):
 
     # Indicates whether or not the bounds have been set at all, or if they
     # are at their initial default values.
-    _bounds_initialized = Bool(False)
+    _low_bound_initialized = Bool(False)
+    _high_bound_initialized = Bool(False)
 
     #------------------------------------------------------------------------
     # Event handlers
     #------------------------------------------------------------------------
 
-    def _low_pos_changed(self):
+    def _low_pos_changed(self, old, new):
         self._cache_valid = False
+        if not self.stretch_data:
+            self._adjust_range((old, self.high_pos), (new, self.high_pos))
+        self._low_bound_initialized = True
         self.updated = True
-        return
 
-    def _high_pos_changed(self):
+    def _high_pos_changed(self, old, new):
         self._cache_valid = False
+        if not self.stretch_data:
+            self._adjust_range((self.low_pos, old), (self.low_pos, new))
+        self._high_bound_initialized = True
         self.updated = True
-        return
 
     def _range_changed(self, old, new):
         if old is not None:
@@ -90,18 +95,24 @@ class Base1DMapper(AbstractMapper):
     def _set_screen_bounds(self, new_bounds):
         if new_bounds[0] == self.low_pos and new_bounds[1] == self.high_pos:
             return
-        if not self.stretch_data and self.range is not None and self._bounds_initialized:
-            rangelow = self.range.low
-            rangehigh = self.range.high
-            d_data = rangehigh - rangelow
-            d_screen = self.high_pos - self.low_pos
-            if d_data != 0 and d_screen != 0:
-                new_data_extent = d_data / d_screen * abs(new_bounds[1] - new_bounds[0])
-                self.range.set_bounds(rangelow, rangelow + new_data_extent)
+        if not self.stretch_data:
+            self._adjust_range((self.low_pos, self.high_pos), new_bounds)
         self.set(low_pos = new_bounds[0], trait_change_notify=False)
         self.set(high_pos = new_bounds[1], trait_change_notify=False)
         self._cache_valid = False
-        self._bounds_initialized = True
+        self._low_bound_initialized = True
+        self._high_bound_initialized = True
         self.updated = True
         return
 
+    def _adjust_range(self, old_bounds, new_bounds):
+        initialized = self._low_bound_initialized and \
+                      self._high_bound_initialized
+        if self.range is not None and initialized:
+            rangelow = self.range.low
+            rangehigh = self.range.high
+            d_data = rangehigh - rangelow
+            old_d_screen = old_bounds[1] - old_bounds[0]
+            if d_data != 0 and old_d_screen != 0:
+                new_data_extent = d_data / old_d_screen * (new_bounds[1] - new_bounds[0])
+                self.range.set_bounds(rangelow, rangelow + new_data_extent)
