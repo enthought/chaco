@@ -15,7 +15,7 @@ from traitsui.api import Item, RangeEditor
 # Local, relative imports
 from array_data_source import ArrayDataSource
 from base import left_shift, right_shift
-from color_mapper import ColorMapper
+from abstract_colormap import AbstractColormap
 from scatterplot import ScatterPlot, ScatterPlotView
 
 
@@ -43,7 +43,7 @@ class ColormappedScatterPlot(ScatterPlot):
     color_data = Instance(ArrayDataSource)
 
     # Mapping for colors.
-    color_mapper = Instance(ColorMapper)
+    color_mapper = Instance(AbstractColormap)
 
     # The alpha value to apply to the result of the color-mapping process.
     # (This makes it easier to create color maps without having to worry
