@@ -9,7 +9,7 @@ from numpy import argsort, array, concatenate, nonzero, invert, take, \
 
 # Enthought library imports
 from kiva.constants import STROKE
-from traits.api import Dict, Enum, Float, Instance
+from traits.api import Dict, Enum, Float, Instance, on_trait_change
 from traitsui.api import Item, RangeEditor
 
 # Local, relative imports
@@ -413,6 +413,11 @@ class ColormappedScatterPlot(ScatterPlot):
         self.request_redraw()
 
         return
+
+    @on_trait_change('color_mapper:updated')
+    def _color_mapper_updated(self):
+        self.invalidate_draw()
+        self.request_redraw()
 
     def _fill_alpha_changed(self):
         self.invalidate_draw()
