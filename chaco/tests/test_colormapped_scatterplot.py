@@ -1,4 +1,5 @@
 import unittest
+from unittest2 import expectedFailure
 
 from numpy import alltrue, arange
 from enable.compiled_path import CompiledPath
@@ -54,7 +55,7 @@ class TestColormappedScatterplot(unittest.TestCase):
         actual = self.gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
-    @unittest.skip('expected failure')
+    @expectedFailure
     def test_scatter_custom(self):
         # Coverage test to check custom markers work
 
