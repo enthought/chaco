@@ -34,7 +34,7 @@ class TestColormappedScatterplot(unittest.TestCase):
             index_mapper=self.index_mapper,
             value_mapper=self.value_mapper,
             color_data=self.color_data,
-            size_data=self.size_data,
+            marker_size=self.size_data,
             color_mapper=self.color_mapper,
         )
         self.scatterplot.outer_bounds = [50, 50]
@@ -52,8 +52,10 @@ class TestColormappedScatterplot(unittest.TestCase):
 
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
+        self.gc.save('colormapped_scatter_circle.png')
         self.assertFalse(alltrue(actual == 255))
 
+    @unittest.expectedFailure
     def test_scatter_custom(self):
         # Coverage test to check custom markers work
 
@@ -65,11 +67,12 @@ class TestColormappedScatterplot(unittest.TestCase):
         path.line_to(-5, 5)
         path.line_to(-5, -5)
 
-        self.scatterplot.marker = 'circle'
+        self.scatterplot.marker = 'custom'
         self.scatterplot.custom_symbol = path
 
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
+        self.gc.save('colormapped_scatter_custom.png')
         self.assertFalse(alltrue(actual == 255))
 
     def test_colormap_updated(self):
