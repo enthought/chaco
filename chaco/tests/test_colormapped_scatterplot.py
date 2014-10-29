@@ -54,7 +54,7 @@ class TestColormappedScatterplot(unittest.TestCase):
         actual = self.gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
-    @unittest.expectedFailure
+    @unittest.SkipTest
     def test_scatter_custom(self):
         # Coverage test to check custom markers work
 
