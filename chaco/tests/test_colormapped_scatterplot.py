@@ -52,7 +52,6 @@ class TestColormappedScatterplot(unittest.TestCase):
 
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
-        self.gc.save('colormapped_scatter_circle.png')
         self.assertFalse(alltrue(actual == 255))
 
     @unittest.expectedFailure
@@ -72,7 +71,6 @@ class TestColormappedScatterplot(unittest.TestCase):
 
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
-        self.gc.save('colormapped_scatter_custom.png')
         self.assertFalse(alltrue(actual == 255))
 
     def test_colormap_updated(self):
