@@ -15,7 +15,7 @@ MAX_RMS_ERROR = 16 if ETSConfig.kiva_backend == 'quartz' else 1
 IMAGE = np.random.random_integers(0, 255, size=(100, 200)).astype(np.uint8)
 RGB = np.dstack([IMAGE] * 3)
 # Rendering adds rows and columns for some reason.
-TRIM_RENDERED = (slice(2, None), slice(0, -2), 0)
+TRIM_RENDERED = (slice(1, -1), slice(1, -1), 0)
 
 
 @contextmanager
@@ -49,7 +49,7 @@ def image_from_renderer(renderer, orientation):
     renderer.bounds = (data.get_width() + 1, data.get_height() + 1)
     if orientation == 'v':
         renderer.bounds = renderer.bounds[::-1]
-    renderer.position = 0.5, 0.5
+    renderer.position = 0, 0
 
     with temp_image_file() as filename:
         save_renderer_result(renderer, filename)
