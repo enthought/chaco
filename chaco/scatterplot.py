@@ -6,8 +6,8 @@ function.
 import itertools
 
 # Major library imports
-from numpy import abs, argmin, around, array, asarray, compress, invert, \
-        isnan, sqrt, sum, transpose, where, ndarray
+from numpy import around, array, asarray, column_stack, \
+    isfinite, isnan, nanargmin, ndarray, sqrt, sum, transpose, where
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
@@ -252,14 +252,6 @@ class ScatterPlot(BaseXYPlot):
         if len(data_array) == 0:
             return []
 
-        # XXX: For some reason, doing the tuple unpacking doesn't work:
-        #        x_ary, y_ary = transpose(data_array)
-        # There is a mysterious error "object of too small depth for
-        # desired array".  However, if you catch this exception and
-        # try to execute the very same line of code again, it works
-        # without any complaints.
-        #
-        # For now, we just use slicing to assign the X and Y arrays.
         data_array = asarray(data_array)
         if len(data_array.shape) == 1:
             x_ary = data_array[0]
@@ -271,9 +263,9 @@ class ScatterPlot(BaseXYPlot):
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
         if self.orientation == "h":
-            return transpose(array((sx,sy)))
+            return column_stack([sx, sy])
         else:
-            return transpose(array((sy,sx)))
+            return column_stack([sy, sx])
 
     def map_data(self, screen_pt, all_values=True):
         """ Maps a screen space point into the "index" space of the plot.
@@ -293,6 +285,12 @@ class ScatterPlot(BaseXYPlot):
 
         Overrides the BaseXYPlot implementation..
         """
+        index_data = self.index.get_data()
+        value_data = self.value.get_data()
+
+        if len(value_data) == 0 or len(index_data) == 0:
+            return None
+
         if index_only and self.index.sort_order != "none":
             data_pt = self.map_data(screen_pt)[0]
             # The rest of this was copied out of BaseXYPlot.
@@ -300,11 +298,6 @@ class ScatterPlot(BaseXYPlot):
             # it expect map_data to return a value, not a pair.
             if ((data_pt < self.index_mapper.range.low) or \
                 (data_pt > self.index_mapper.range.high)) and outside_returns_none:
-                return None
-            index_data = self.index.get_data()
-            value_data = self.value.get_data()
-
-            if len(value_data) == 0 or len(index_data) == 0:
                 return None
 
             try:
@@ -335,7 +328,7 @@ class ScatterPlot(BaseXYPlot):
                 return None
         else:
             # Brute force implementation
-            all_data = transpose(array([self.index.get_data(), self.value.get_data()]))
+            all_data = transpose(array([index_data, value_data]))
             screen_points = around(self.map_screen(all_data))
             if len(screen_points) == 0:
                 return None
@@ -344,7 +337,7 @@ class ScatterPlot(BaseXYPlot):
             else:
                 delta = screen_points - array([screen_pt])
                 distances = sqrt(sum(delta*delta, axis=1))
-            closest_ndx = argmin(distances)
+            closest_ndx = nanargmin(distances)
             if distances[closest_ndx] <= threshold:
                 return closest_ndx
             else:
@@ -378,14 +371,17 @@ class ScatterPlot(BaseXYPlot):
         index_range_mask = self.index_mapper.range.mask_data(index)
         value_range_mask = self.value_mapper.range.mask_data(value)
 
-        nan_mask = invert(isnan(index)) & index_mask & \
-                   invert(isnan(value)) & value_mask
+        nan_mask = (isfinite(index) & index_mask &
+                    isfinite(value) & value_mask)
         point_mask = nan_mask & index_range_mask & value_range_mask
 
         if not self._cache_valid:
-            points = transpose(array((index,value)))
-            self._cached_data_pts = compress(point_mask, points, axis=0)
-            self._cached_point_mask = point_mask[:]
+            if not point_mask.all():
+                points = column_stack([index[point_mask], value[point_mask]])
+            else:
+                points = column_stack([index, value])
+            self._cached_data_pts = points
+            self._cached_point_mask = point_mask
             self._cache_valid = True
 
         if not self._selection_cache_valid:
@@ -396,20 +392,21 @@ class ScatterPlot(BaseXYPlot):
             # structured?  Hopefully, when we create the Selection objects,
             # we'll have to define a small algebra about how they are combined,
             # and this will fall out...
+            point_mask = point_mask.copy()
             for ds in (self.index, self.value):
                 if ds.metadata.get('selection_masks', None) is not None:
                     try:
                         for mask in ds.metadata['selection_masks']:
                             point_mask &= mask
                         indices = where(point_mask == True)
-                        points = transpose(array((index[indices], value[indices])))
+                        points = column_stack([index[indices], value[indices]])
                     except:
                         continue
                 elif ds.metadata.get('selections', None) is not None:
                     try:
                         indices = ds.metadata['selections']
                         point_mask = point_mask[indices]
-                        points = transpose(array((index[indices], value[indices])))
+                        points = column_stack([index[indices], value[indices]])
                     except:
                         continue
                 else:
@@ -530,9 +527,12 @@ class ScatterPlot(BaseXYPlot):
         self.request_redraw()
 
     def _either_metadata_changed(self):
-        self._selection_cache_valid = False
-        self.invalidate_draw()
-        self.request_redraw()
+        if self.show_selection:
+            # Only redraw when we are showing the selection. Otherwise, there
+            # is nothing to update in response to this event.
+            self._selection_cache_valid = False
+            self.invalidate_draw()
+            self.request_redraw()
 
     #------------------------------------------------------------------------
     # Defaults

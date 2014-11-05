@@ -1,5 +1,6 @@
 --allow-external PIL
 --allow-unverified PIL
+PIL
 unittest2
 coverage
 -e git+http://github.com/enthought/traits.git#egg=traits

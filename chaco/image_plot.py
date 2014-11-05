@@ -199,6 +199,8 @@ class ImagePlot(Base2DPlot):
                 yield
             finally:
                 set_interp(old_interp)
+        else:
+            yield
 
     def _calc_virtual_screen_bbox(self):
         """ Return the rectangle describing the image in screen space
@@ -222,6 +224,11 @@ class ImagePlot(Base2DPlot):
 
         virtual_x_size = x_max - x_min
         virtual_y_size = y_max - y_min
+
+        # Convert to the coordinates of the graphics context, which expects
+        # origin to be at the center of a pixel.
+        x_min += 0.5
+        y_min += 0.5
         return [x_min, y_min, virtual_x_size, virtual_y_size]
 
     def _compute_cached_image(self, data=None, mapper=None):

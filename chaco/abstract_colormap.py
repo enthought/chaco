@@ -1,6 +1,6 @@
 """ Defines the base class for color maps
 """
-from traits.api import Enum, HasTraits, Instance
+from traits.api import Enum, Event, HasTraits, Instance
 
 from data_range_1d import DataRange1D
 
@@ -15,6 +15,9 @@ class AbstractColormap(HasTraits):
     # The color depth of the colors to use.
     color_depth = Enum('rgba', 'rgb')
 
+    # A generic "update" event that generally means that anything that relies
+    # on this mapper for visual output should do a redraw or repaint.
+    updated = Event
 
     def map_screen(self, val):
         """
