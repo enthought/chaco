@@ -42,13 +42,13 @@ class TestColormappedScatterplot(unittest.TestCase):
         self.gc = PlotGraphicsContext((50, 50))
 
     def test_scatter_render(self):
-        # Coverage test to check basic case works
+        """ Coverage test to check basic case works """
         self.gc.render_component(self.scatterplot)
         actual = self.gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
     def test_scatter_circle(self):
-        # Coverage test to check circles work
+        """ Coverage test to check circles work """
         self.scatterplot.marker = 'circle'
 
         self.gc.render_component(self.scatterplot)
@@ -57,8 +57,10 @@ class TestColormappedScatterplot(unittest.TestCase):
 
     @skip
     def test_scatter_custom(self):
-        # Coverage test to check custom markers work
-        # XXX which apparently they currently don't. See #232.
+        """ Coverage test to check custom markers work...
+
+        XXX ...which apparently they currently don't. See #232.
+        """
 
         # build path
         path = CompiledPath()
@@ -77,7 +79,7 @@ class TestColormappedScatterplot(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_colormap_updated(self):
-        # If colormapper updated then we need to redraw """
+        """ If colormapper updated then we need to redraw """
         self.color_mapper.updated = True
         self.assertFalse(self.scatterplot.draw_valid)
 
