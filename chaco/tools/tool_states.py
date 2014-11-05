@@ -132,12 +132,12 @@ class SelectedZoomState(ZoomState):
         x_mapper = zoom_tool._get_x_mapper()
         y_mapper = zoom_tool._get_y_mapper()
 
-        x_mapper.range.set_bound(low=self.next[0], high=self.next[1])
-        y_mapper.range.set_bound(low=self.next[2], high=self.next[3])
+        x_mapper.range.set_bounds(low=self.next[0], high=self.next[1])
+        y_mapper.range.set_bounds(low=self.next[2], high=self.next[3])
 
     def revert(self, zoom_tool):
         x_mapper = zoom_tool._get_x_mapper()
         y_mapper = zoom_tool._get_y_mapper()
 
-        x_mapper.range.set_bound(low=self.prev[0], high=self.prev[1])
-        y_mapper.range.set_bound(low=self.prev[2], high=self.prev[3])
+        x_mapper.range.set_bounds(low=self.prev[0], high=self.prev[1])
+        y_mapper.range.set_bounds(low=self.prev[2], high=self.prev[3])
