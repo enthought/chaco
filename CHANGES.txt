@@ -11,9 +11,9 @@ Change summary since 4.4.1
 New features
 
  * Added perceptual colormaps by Matteo Niccoli, Dave Green and Kenneth Moreland.
-
  * Added asynchronous_updates.py demo that shows a pattern for generating
    expensive plots while keeping the interface responsive (PR#170).
+
 
 Fixes
 
@@ -31,6 +31,12 @@ Fixes
  * Fix behaviour of mappers when stretch_data trait is False (PR#227)
  * ColormappedScatterplot now redraws when colour map’s updated event fires (PR#230)
  * Speed improvements for scatter plots with lots of points (PR#234)
+
+
+Maintenance
+
+ * Added unit tests for ColormappedScatterplot (PR#231).
+
 
 Release 4.4.1
 -------------
