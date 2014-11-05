@@ -304,8 +304,8 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         center = (low + high)/2.0
 
         new_range = range/factor
-        mapper.range.high = center + new_range/2
-        mapper.range.low = center - new_range/2
+        mapper.range.set_bounds(low=center - new_range/2,
+                                high=center + new_range/2)
 
     def _get_x_mapper(self):
         if isinstance(self.component.index_mapper, GridMapper):
