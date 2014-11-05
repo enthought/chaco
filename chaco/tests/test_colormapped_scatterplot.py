@@ -58,7 +58,7 @@ class TestColormappedScatterplot(unittest.TestCase):
     @skip
     def test_scatter_custom(self):
         # Coverage test to check custom markers work
-        # XXX which apparently they currently don't
+        # XXX which apparently they currently don't. See #232.
 
         # build path
         path = CompiledPath()
