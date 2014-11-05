@@ -30,6 +30,7 @@ Fixes
  * Fix redraw color mapped image plot when color mapper updates (PR#221)
  * Fix behaviour of mappers when stretch_data trait is False (PR#227)
  * ColormappedScatterplot now redraws when colour map’s updated event fires (PR#230)
+ * Speed improvements for scatter plots with lots of points (PR#234)
 
 Release 4.4.1
 -------------
