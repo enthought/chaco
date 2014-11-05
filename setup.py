@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2013 by Enthought, Inc.
+# Copyright (c) 2008-2014 by Enthought, Inc.
 # All rights reserved.
 from os.path import join
 from numpy import get_include
@@ -20,7 +20,7 @@ contour = Extension(
     )
 
 cython_speedups = Extension(
-    'chaco._cython_speedups', 
+    'chaco._cython_speedups',
     sources=['chaco/_cython_speedups.c'],
     include_dirs=[numpy_include_dir],
     )
