@@ -510,9 +510,16 @@ class RangeSelection(AbstractController):
 
         pos = self._get_axis_coord(event)
         if pos >= high:
-            selection_high = self.mapper.map_data(high)
+            # clip to the boundary appropriate for the mapper's orientation.
+            if self.mapper.sign == 1:
+                selection_high = self.mapper.map_data(high)
+            else:
+                selection_high = self.mapper.map_data(low)
         elif pos <= low:
-            selection_low = self.mapper.map_data(low)
+            if self.mapper.sign == 1:
+                selection_low = self.mapper.map_data(low)
+            else:
+                selection_low = self.mapper.map_data(high)
 
         self.selection = (selection_low, selection_high)
         event.window.set_pointer("arrow")
