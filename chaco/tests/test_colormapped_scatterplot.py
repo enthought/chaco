@@ -1,5 +1,5 @@
 import unittest
-from unittest2 import expectedFailure
+from unittest2 import skip
 
 from numpy import alltrue, arange
 from enable.compiled_path import CompiledPath
@@ -55,16 +55,18 @@ class TestColormappedScatterplot(unittest.TestCase):
         actual = self.gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
-    @expectedFailure
+    @skip
     def test_scatter_custom(self):
         # Coverage test to check custom markers work
+        # XXX which apparently they currently don't
 
         # build path
         path = CompiledPath()
+        path.begin_path()
         path.move_to(-5, -5)
+        path.line_to(-5, 5)
         path.line_to(5, 5)
         path.line_to(5, -5)
-        path.line_to(-5, 5)
         path.line_to(-5, -5)
 
         self.scatterplot.marker = 'custom'
