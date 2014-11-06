@@ -92,11 +92,12 @@ To do this, you can either:
    setuptools) or using `pip <http://www.pip-installer.org/en/latest/>`_. For
    example
 
-   :command:`easy_install chaco`
+   :command:`pip install chaco`
 
    or
 
-   :command:`pip install chaco`
+   :command:`easy_install chaco`
+
 
 2. Or, download the source from the `Chaco GitHub repository
    <https://github.com/enthought/chaco>`_ or alternatively as a part of the
@@ -363,9 +364,8 @@ relatively simple basis on top of which we can build full-featured applications
 with custom UIs and custom tools. For example, the Traits object allows you to
 create controls for your plot at a very high level, add these controls to the
 UI with very little work, and add listeners to update the plot when the data
-changes.  Chaco also allows you to create tools to interact with the plot and
-overlays that make these tools intuitive and visually appealing.
-
+changes.  Chaco also allows you to create custom tools to interact with the
+plot and overlays that make these tools intuitive and visually appealing.
 
 .. rubric:: Footnotes
 
@@ -373,6 +373,14 @@ overlays that make these tools intuitive and visually appealing.
     with ``--gui=qt``. Make sure that the environment variable ``QT_API``
     is set correctly, as described `here
     <http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside>`_
+
+
+Where to learn more?
+=====================
+
+To learn more about the power of Chaco and build powerful rich client
+applications with custom visualizations, consider going over the
+:ref:`tutorials` section or learning from the :ref:`user_guide`.
 
 
 License
@@ -397,4 +405,5 @@ what the logic of the fix is and to add one or more unit test to ensure future
 stability. The Pull Request description can and often needs to contain
 screenshots of the issue or the fix. Finally, it is always a good idea to
 consider discuss the feature/bug and the
-fix in the mailing list `enthought-dev@enthought.com`.
+fix in the `enthought-dev
+<https://mail.enthought.com/mailman/listinfo/enthought-dev>`_ mailing list.
