@@ -44,7 +44,8 @@ Dependencies
 
 * `Enable <https://github.com/enthought/enable/>`_, a framework for writing
   interactive visual components, and for abstracting away GUI-toolkit-specific
-  details of mouse and keyboard handling
+  details of mouse and keyboard handling. This currently still depends on the
+  Python Image Library (PIL).
 
 * `NumPy <http://numpy.scipy.org/>`_, for dealing efficiently with large
   datasets
@@ -87,16 +88,29 @@ libraries installed.
 To do this, you can either:
 
 1. Install Chaco and its :ref:`dependencies` from `PyPI
-   <http://pypi.python.org/pypi>`_ using `easy_install
+   <http://pypi.python.org/pypi>`_ using
+   `pip <http://www.pip-installer.org/en/latest/>`_ or using `easy_install
    <http://packages.python.org/distribute/easy_install.html>`_ (part of
-   setuptools) or using `pip <http://www.pip-installer.org/en/latest/>`_. For
-   example
+   setuptools). For example
 
    :command:`pip install chaco`
 
    or
 
    :command:`easy_install chaco`
+
+
+.. note::
+   If you have already install Chaco and just want to update to the newest
+   version, use
+
+      :command:`pip install --upgrade chaco`
+
+.. note::
+   Because Chaco depends on Enable which depends on PIL, certain platforms
+   cannot install PIL from PyPI without these options:
+
+      :command:`pip install --allow-external PIL --allow-unverified PIL chaco`
 
 
 2. Or, download the source from the `Chaco GitHub repository
@@ -256,13 +270,13 @@ This shows two overlapping line plots.
 
 You can interact with this plot just as in the previous section.
 
-Now exit the plot, and start IPython with the ``--gui=wx`` or ``--gui=qt`` [#guiqt]_
-option:
+Now close the plot, and start IPython with the ``--gui=qt`` [#guiqt]_ or
+``--gui=wx`` option:
 
     :command:`ipython --gui=qt`
 
-This tells IPython to start a Qt mainloop in a background thread. Now run the
-previous example again::
+This tells IPython to start a Qt or WX mainloop in a background thread. Now run
+the previous example again::
 
     In [1]: run lines.py
 
@@ -298,8 +312,13 @@ information on all you can do with Chaco from within IPython.
 Chaco plot embedded in a Traits application
 ===========================================
 
-Let's create, from scratch, the simplest possible Chaco plot (embedded inside a
-`Traits`_ application).
+The previous section showed how Chaco can be used interactively similarly to
+`Matlab` or Matplotlib's `pyplot` package.
+
+Now, let's create, from scratch, the simplest possible Chaco plot which
+embedded inside a `Traits`_ application. This will require more work but will
+represent the basis for a potential large-scale, custom and powerful rich
+client application. This is really what Chaco has been written for.
 
 First, some imports to bring in necessary components::
 
