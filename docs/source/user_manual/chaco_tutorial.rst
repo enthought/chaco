@@ -112,11 +112,11 @@ Here is a simple example of the "script-oriented" approach for creating
 a static plot.  This is probably familiar to anyone who has used Gnuplot,
 MATLAB, or Matplotlib::
 
-    import numpy as np
+    from numpy import linspace, pi, sin
     from chaco.shell import *
 
-    x = np.linspace(-2*pi, 2*pi, 100)
-    y = np.sin(x)
+    x = linspace(-2*pi, 2*pi, 100)
+    y = sin(x)
 
     plot(x, y, "r-")
     title("First plot")
