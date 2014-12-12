@@ -2,6 +2,13 @@
 Chaco CHANGELOG
 ===============
 
+Change summary since 4.5.0
+
+Fixes
+
+ * Workaround RuntimeWarnings from nanmin and nanmax in ImageData.get_bounds
+   (PR #242).
+
 
 What's new in Chaco 4.5.0
 -------------------------
