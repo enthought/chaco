@@ -7,6 +7,8 @@ Change summary since 4.5.0
 Fixes
 
  * Fixed default position attribute in BetterZoom tool (PR#241)
+ * Workaround RuntimeWarnings from nanmin and nanmax in ImageData.get_bounds
+   (PR #242).
 
 What's new in Chaco 4.5.0
 -------------------------
