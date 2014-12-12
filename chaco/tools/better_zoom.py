@@ -2,7 +2,7 @@ import numpy
 
 from chaco.grid_mapper import GridMapper
 from enable.api import BaseTool, KeySpec
-from traits.api import Enum, Float, Instance, Bool, HasTraits, List
+from traits.api import Enum, Float, Instance, Bool, List, Tuple
 
 from tool_history_mixin import ToolHistoryMixin
 from tool_states import ZoomState, PanState, GroupedToolState, ToolState
@@ -55,6 +55,9 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
 
     # The amount to zoom in by. The zoom out will be inversely proportional
     zoom_factor = Float(2.0)
+
+    #: the position to zoom on (usually the mouse location)
+    position = Tuple(Float, Float)
 
     # The zoom factor on each axis
     _index_factor = Float(1.0)
@@ -358,3 +361,11 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         for state in self._history[::-1]:
             state.revert(self)
         self._history = []
+
+    #--------------------------------------------------------------------------
+    #  Traits defaults
+    #--------------------------------------------------------------------------
+
+    def _position_default(self):
+        # center of the component is a sensible default
+        return self._center_screen()
