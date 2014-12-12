@@ -2,6 +2,11 @@
 Chaco CHANGELOG
 ===============
 
+Change summary since 4.5.0
+
+Fixes
+
+ * Fixed default position attribute in BetterZoom tool (PR#241)
 
 What's new in Chaco 4.5.0
 -------------------------
@@ -13,7 +18,7 @@ New features/Improvements
  * Added perceptual colormaps by Matteo Niccoli, Dave Green and Kenneth Moreland.
  * Added `asynchronous_updates.py` demo that shows a pattern for generating
    expensive plots while keeping the interface responsive (PR#170).
- * Speeded up by 10x the data mappers of the `GridMapper` class (mapping of 2D data 
+ * Speeded up by 10x the data mappers of the `GridMapper` class (mapping of 2D data
    to/from screen space).
 
 
