@@ -21,6 +21,7 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
     def test_init_defaults(self):
         data_source = ImageData()
         assert_array_equal(data_source.data, [])
+
         # this isn't right -
         #self.assertEqual(data_source.value_dimension, "scalar")
         #self.assertEqual(data_source.image_dimension, "image")
