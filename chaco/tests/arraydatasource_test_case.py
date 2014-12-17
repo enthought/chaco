@@ -2,10 +2,10 @@
 Test of basic dataseries behavior.
 """
 
-import unittest
+import unittest2 as unittest
 
 from numpy import arange, array, allclose, empty, isnan, nan, ones
-from numpy.testing import assert_almost_equal, assert_array_equal
+from numpy.testing import assert_array_equal
 import numpy as np
 
 from chaco.api import ArrayDataSource, PointDataSource
