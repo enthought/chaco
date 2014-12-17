@@ -37,6 +37,37 @@ class FunctionDataSourceTestCase(UnittestTools, unittest.TestCase):
         with self.assertRaises(RuntimeError):
             data_source.set_data(lambda low, high: linspace(low, high, 101))
 
+    def test_range_high_changed(self):
+        myfunc = lambda low, high: linspace(low, high, 101)**2
+        data_source = FunctionDataSource(func=myfunc)
+        data_source.data_range = DataRange1D(low_setting=0.0, high_setting=1.0)
+
+        with self.assertTraitChanges(data_source, 'data_changed', count=1):
+            data_source.data_range.high_setting = 2.0
+
+        assert_array_equal(linspace(0.0, 2.0, 101)**2, data_source.get_data())
+
+    def test_range_low_changed(self):
+        myfunc = lambda low, high: linspace(low, high, 101)**2
+        data_source = FunctionDataSource(func=myfunc)
+        data_source.data_range = DataRange1D(low_setting=0.0, high_setting=1.0)
+
+        with self.assertTraitChanges(data_source, 'data_changed', count=1):
+            data_source.data_range.low_setting = -1.0
+
+        assert_array_equal(linspace(-1.0, 1.0, 101)**2, data_source.get_data())
+
+    def test_range_data_range_changed(self):
+        myfunc = lambda low, high: linspace(low, high, 101)**2
+        data_source = FunctionDataSource(func=myfunc)
+        data_source.data_range = DataRange1D(low_setting=0.0, high_setting=1.0)
+
+        with self.assertTraitChanges(data_source, 'data_changed', count=1):
+            data_source.data_range = DataRange1D(low_setting=-2.0,
+                                                 high_setting=2.0)
+
+        assert_array_equal(linspace(-2.0, 2.0, 101)**2, data_source.get_data())
+
     def test_set_mask(self):
         myfunc = lambda low, high: linspace(low, high, 101)**2
         data_source = FunctionDataSource(func=myfunc)
