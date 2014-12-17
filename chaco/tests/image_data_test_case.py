@@ -145,3 +145,24 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         data_source = ImageData.fromfile(path)
 
         self.assertEqual(data_source.value_depth, 4)
+
+    def test_metadata(self):
+        myarray = arange(15).reshape(5, 3, 1)
+        data_source = ImageData(data=myarray)
+
+        self.assertEqual(data_source.metadata,
+                         {'annotations': [], 'selections': []})
+
+    def test_metadata_changed(self):
+        myarray = arange(15).reshape(5, 3, 1)
+        data_source = ImageData(data=myarray)
+
+        with self.assertTraitChanges(data_source, 'metadata_changed', count=1):
+            data_source.metadata = {'new_metadata': True}
+
+    def test_metadata_items_changed(self):
+        myarray = arange(15).reshape(5, 3, 1)
+        data_source = ImageData(data=myarray)
+
+        with self.assertTraitChanges(data_source, 'metadata_changed', count=1):
+            data_source.metadata['new_metadata'] = True

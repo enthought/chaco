@@ -4,7 +4,7 @@ Test of basic dataseries behavior.
 
 import unittest2 as unittest
 
-from numpy import array, linspace, nan, ones
+from numpy import array, linspace, ones
 from numpy.testing import assert_array_equal
 import numpy as np
 
