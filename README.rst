@@ -9,8 +9,8 @@ http://github.enthought.com/chaco
    :alt: Build status
 
 
-.. image:: https://coveralls.io/repos/enthought/chaco/badge.png?branch=feature%2Fcoverall_badge
-  :target: https://coveralls.io/r/enthought/chaco?branch=feature%2Fcoverall_badge
+.. image:: https://coveralls.io/repos/enthought/chaco/badge.png?branch=master
+  :target: https://coveralls.io/r/enthought/chaco?branch=master
   :alt: Test coverage
 
 
