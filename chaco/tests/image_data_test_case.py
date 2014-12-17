@@ -2,7 +2,7 @@
 Test of basic dataseries behavior.
 """
 
-import unittest
+import unittest2 as unittest
 
 from numpy import arange, swapaxes
 from numpy.testing import assert_array_equal
