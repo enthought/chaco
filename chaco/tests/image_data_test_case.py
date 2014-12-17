@@ -2,13 +2,18 @@
 Test of basic dataseries behavior.
 """
 
-import unittest2 as unittest
+import os
 
+import unittest2 as unittest
 from numpy import arange, swapaxes
 from numpy.testing import assert_array_equal
+from pkg_resources import resource_filename
 
 from chaco.api import ImageData
 from traits.testing.unittest_tools import UnittestTools
+
+
+data_dir = resource_filename('chaco.tests', 'data')
 
 
 class ArrayDataTestCase(UnittestTools, unittest.TestCase):
@@ -126,3 +131,17 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         data_source = ImageData(data=myarray, transposed=True)
 
         self.assertEqual(((0, 5), (0, 3)), data_source.get_array_bounds())
+
+    def test_fromfile_png_rgb(self):
+        # basic smoke test - assume that kiva.image does the right thing
+        path = os.path.join(data_dir, 'PngSuite', 'basn2c08.png')
+        data_source = ImageData.fromfile(path)
+
+        self.assertEqual(data_source.value_depth, 3)
+
+    def test_fromfile_png_rgba(self):
+        # basic smoke test - assume that kiva.image does the right thing
+        path = os.path.join(data_dir, 'PngSuite', 'basi6a08.png')
+        data_source = ImageData.fromfile(path)
+
+        self.assertEqual(data_source.value_depth, 4)

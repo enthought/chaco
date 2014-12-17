@@ -1,1 +1,3 @@
 include chaco/*.h
+include chaco/tests/data/PngSuite/*.png
+include chaco/tests/data/PngSuite/LICENSE.txt

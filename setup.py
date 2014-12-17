@@ -58,8 +58,11 @@ setup(
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.strip()) > 0],
-    package_data={'chaco': ['tools/toolbars/images/*.png',
-                            'layers/data/*.svg']},
+    package_data={
+        'chaco': ['tools/toolbars/images/*.png',
+                  'layers/data/*.svg',
+                  'tests/data/PngSuite/*.png']
+    },
     description = 'interactive 2-dimensional plotting',
     long_description = open('README.rst').read(),
     download_url = ('http://www.enthought.com/repo/ets/chaco-%s.tar.gz' %
