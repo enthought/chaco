@@ -90,6 +90,7 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
     def test_get_data_no_data(self):
         data_source = ArrayDataSource(None)
 
+        # XXX A _scalar_?  Not array([]) or None?
         assert_array_equal(data_source.get_data(), 0.0)
 
     def test_get_data_mask(self):
@@ -107,8 +108,8 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
 
         data, mask = data_source.get_data_mask()
         # XXX this is what I would expect, given get_data() behaviour
-        assert_array_equal(data, [])
-        assert_array_equal(data, [])
+        assert_array_equal(data, 0.0)
+        assert_array_equal(data, True)
 
     def test_get_data_mask_no_mask(self):
         myarray = arange(10)
@@ -147,13 +148,13 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         # this is special-cased in the code, so exercise the code path
         data_source = ArrayDataSource(array([]))
         bounds = data_source.get_bounds()
-        # XXX this is sort of inconsistent with test_bounds_all_nan()
+        # XXX this is sort of inconsistent with test_bounds_all_nans()
         self.assertEqual(bounds, (0, 0))
 
     def test_bounds_empty(self):
         data_source = ArrayDataSource()
         bounds = data_source.get_bounds()
-        # XXX this is sort of inconsistent with test_bounds_all_nan()
+        # XXX this is sort of inconsistent with test_bounds_all_nans()
         self.assertEqual(bounds, (0, 0))
 
     def test_bounds_all_nans(self):
