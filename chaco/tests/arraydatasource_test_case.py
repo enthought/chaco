@@ -137,10 +137,58 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         bounds = data_source.get_bounds()
         self.assertEqual(bounds, (0, 18))
 
+    def test_bounds_length_one(self):
+        # this is special-cased in the code, so exercise the code path
+        data_source = ArrayDataSource(array([1.0]))
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (1.0, 1.0))
+
+    def test_bounds_length_zero(self):
+        # this is special-cased in the code, so exercise the code path
+        data_source = ArrayDataSource(array([]))
+        bounds = data_source.get_bounds()
+        # XXX this is sort of inconsistent with test_bounds_all_nan()
+        self.assertEqual(bounds, (0, 0))
+
     def test_bounds_empty(self):
         data_source = ArrayDataSource()
         bounds = data_source.get_bounds()
+        # XXX this is sort of inconsistent with test_bounds_all_nan()
         self.assertEqual(bounds, (0, 0))
+
+    def test_bounds_all_nans(self):
+        myarray = empty(10)
+        myarray[:] = nan
+        sd = ArrayDataSource(myarray)
+        bounds = sd.get_bounds()
+        self.assertTrue(isnan(bounds[0]))
+        self.assertTrue(isnan(bounds[1]))
+
+    def test_bounds_some_nan(self):
+        data_source = ArrayDataSource(array([np.nan, 3, 0, 9, np.nan, 18, 3]))
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (0, 18))
+
+    def test_bounds_negative_inf(self):
+        data_source = ArrayDataSource(array([12, 3, -np.inf, 9, 2, 18, 3]))
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (-np.inf, 18))
+
+    def test_bounds_positive_inf(self):
+        data_source = ArrayDataSource(array([12, 3, 0, 9, 2, np.inf, 3]))
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (0, np.inf))
+
+    def test_bounds_negative_positive_inf(self):
+        data_source = ArrayDataSource(array([12, 3, -np.inf, 9, 2, np.inf, 3]))
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (-np.inf, np.inf))
+
+    def test_bounds_non_numeric(self):
+        myarray = np.array([u'abc', u'foo', u'bar', u'def'], dtype=unicode)
+        data_source = ArrayDataSource(myarray)
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (u'abc', u'def'))
 
     def test_data_size(self):
         # We know that ArrayDataTestCase always returns the exact length of
@@ -148,20 +196,6 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         myarray = arange(913)
         data_source = ArrayDataSource(myarray)
         self.assertEqual(len(myarray), data_source.get_size())
-
-    def test_bounds_all_nans(self):
-        myarray = empty(10)
-        myarray[:] = nan
-        data_source = ArrayDataSource(myarray)
-        bounds = data_source.get_bounds()
-        self.assertTrue(isnan(bounds[0]))
-        self.assertTrue(isnan(bounds[1]))
-
-    def test_bounds_non_numeric(self):
-        myarray = np.array([u'abc', u'foo', u'bar', u'def'], dtype=unicode)
-        data_source = ArrayDataSource(myarray)
-        bounds = data_source.get_bounds()
-        self.assertEqual(bounds, (u'abc', u'def'))
 
 
 class PointDataTestCase(unittest.TestCase):
