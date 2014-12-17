@@ -4,59 +4,163 @@ Test of basic dataseries behavior.
 
 import unittest
 
-from numpy import arange, array, allclose, empty, isnan, nan
+from numpy import arange, array, allclose, empty, isnan, nan, ones
+from numpy.testing import assert_almost_equal, assert_array_equal
 import numpy as np
 
 from chaco.api import ArrayDataSource, PointDataSource
+from traits.testing.unittest_tools import UnittestTools
 
 
-class ArrayDataTestCase(unittest.TestCase):
-    def test_basic_set_get(self):
+class ArrayDataTestCase(UnittestTools, unittest.TestCase):
+
+    def test_init_defaults(self):
+        data_source = ArrayDataSource()
+        assert_array_equal(data_source._data, [])
+        self.assertEqual(data_source.value_dimension, "scalar")
+        self.assertEqual(data_source.sort_order, "none")
+        self.assertFalse(data_source.is_masked())
+
+    def test_basic_setup(self):
         myarray = arange(10)
-        sd = ArrayDataSource(myarray)
-        self.assertTrue(allclose(myarray, sd._data))
-        self.assert_(sd.value_dimension == "scalar")
-        return
+        data_source = ArrayDataSource(myarray)
+        assert_array_equal(myarray, data_source._data)
+        self.assertEqual(data_source.value_dimension, "scalar")
+        self.assertEqual(data_source.sort_order, "none")
+        self.assertFalse(data_source.is_masked())
+
+    def test_set_data(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+        new_array = arange(0, 20, 2)
+
+        with self.assertTraitChanges(data_source, 'data_changed', count=1):
+            data_source.set_data(new_array)
+
+        assert_array_equal(new_array, data_source._data)
+        self.assertEqual(data_source.get_bounds(), (0, 18))
+        self.assertEqual(data_source.sort_order, "none")
+
+    def test_set_data_ordered(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+        new_array = arange(20, 0, -2)
+
+        with self.assertTraitChanges(data_source, 'data_changed', count=1):
+            data_source.set_data(new_array, sort_order='descending')
+
+        assert_array_equal(new_array, data_source._data)
+        self.assertEqual(data_source.get_bounds(), (2, 20))
+        self.assertEqual(data_source.sort_order, "descending")
+
+    def test_set_mask(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+        mymask = array([i % 2 for i in myarray], dtype=bool)
+
+        with self.assertTraitChanges(data_source, 'data_changed', count=1):
+            data_source.set_mask(mymask)
+
+        assert_array_equal(myarray, data_source._data)
+        assert_array_equal(mymask, data_source._cached_mask)
+        self.assertTrue(data_source.is_masked())
+        self.assertEqual(data_source.get_bounds(), (0, 9))
+
+    def test_remove_mask(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+        mymask = array([i % 2 for i in myarray], dtype=bool)
+        data_source.set_mask(mymask)
+        self.assertTrue(data_source.is_masked())
+
+        with self.assertTraitChanges(data_source, 'data_changed', count=1):
+            data_source.remove_mask()
+
+        assert_array_equal(myarray, data_source._data)
+        self.assertIsNone(data_source._cached_mask, None)
+        self.assertFalse(data_source.is_masked())
+        self.assertEqual(data_source.get_bounds(), (0, 9))
+
+    def test_get_data(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+
+        assert_array_equal(myarray, data_source.get_data())
+
+    def test_get_data_no_data(self):
+        data_source = ArrayDataSource(None)
+
+        assert_array_equal(data_source.get_data(), 0.0)
+
+    def test_get_data_mask(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+        mymask = array([i % 2 for i in myarray], dtype=bool)
+        data_source.set_mask(mymask)
+
+        data, mask = data_source.get_data_mask()
+        assert_array_equal(data, myarray)
+
+    @unittest.skip('get_data_mask() fails in this case')
+    def test_get_data_mask_no_data(self):
+        data_source = ArrayDataSource(None)
+
+        data, mask = data_source.get_data_mask()
+        # XXX this is what I would expect, given get_data() behaviour
+        assert_array_equal(data, [])
+        assert_array_equal(data, [])
+
+    def test_get_data_mask_no_mask(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+
+        data, mask = data_source.get_data_mask()
+        assert_array_equal(data, myarray)
+        assert_array_equal(mask, ones(shape=10, dtype=bool))
 
     def test_bounds(self):
         # ascending
         myarray = arange(10)
-        sd = ArrayDataSource(myarray, sort_order="ascending")
-        bounds = sd.get_bounds()
-        self.assert_(bounds == (0,9))
+        data_source = ArrayDataSource(myarray, sort_order="ascending")
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (0, 9))
 
         # descending
         myarray = arange(10)[::-1]
-        sd = ArrayDataSource(myarray, sort_order="descending")
-        bounds = sd.get_bounds()
-        self.assert_(bounds == (0,9))
+        data_source = ArrayDataSource(myarray, sort_order="descending")
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (0, 9))
 
         # no order
-        myarray = array([12,3,0,9,2,18,3])
-        sd = ArrayDataSource(myarray, sort_order="none")
-        bounds = sd.get_bounds()
-        self.assert_(bounds == (0,18))
-        return
+        myarray = array([12, 3, 0, 9, 2, 18, 3])
+        data_source = ArrayDataSource(myarray, sort_order="none")
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (0, 18))
+
+    def test_bounds_empty(self):
+        data_source = ArrayDataSource()
+        bounds = data_source.get_bounds()
+        self.assertEqual(bounds, (0, 0))
 
     def test_data_size(self):
-        # We know that ScalarData always returns the exact length of its data
+        # We know that ArrayDataTestCase always returns the exact length of
+        # its data
         myarray = arange(913)
-        sd = ArrayDataSource(myarray)
-        self.assert_(len(myarray) == sd.get_size())
-        return
+        data_source = ArrayDataSource(myarray)
+        self.assertEqual(len(myarray), data_source.get_size())
 
     def test_bounds_all_nans(self):
         myarray = empty(10)
         myarray[:] = nan
-        sd = ArrayDataSource(myarray)
-        bounds = sd.get_bounds()
+        data_source = ArrayDataSource(myarray)
+        bounds = data_source.get_bounds()
         self.assertTrue(isnan(bounds[0]))
         self.assertTrue(isnan(bounds[1]))
 
     def test_bounds_non_numeric(self):
         myarray = np.array([u'abc', u'foo', u'bar', u'def'], dtype=unicode)
-        sd = ArrayDataSource(myarray)
-        bounds = sd.get_bounds()
+        data_source = ArrayDataSource(myarray)
+        bounds = data_source.get_bounds()
         self.assertEqual(bounds, (u'abc', u'def'))
 
 
