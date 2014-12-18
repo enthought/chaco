@@ -6,7 +6,6 @@ import unittest2 as unittest
 
 from numpy import array, linspace, ones
 from numpy.testing import assert_array_equal
-import numpy as np
 
 from chaco.api import DataRange1D
 from chaco.function_data_source import FunctionDataSource

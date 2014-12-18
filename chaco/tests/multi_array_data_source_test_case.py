@@ -134,7 +134,7 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
         self.assertEqual(bounds, (0, 0))
 
     def test_bounds_all_nans(self):
-        myarray = empty((10,2))
+        myarray = empty((10, 2))
         myarray[:, :] = nan
         data_source = MultiArrayDataSource(myarray)
         bounds = data_source.get_bounds()

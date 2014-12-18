@@ -262,7 +262,6 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
                     "_min_index", "_max_index"}:
             self.assertTrue(key not in state)
 
-
     @unittest.skip("I think this is just broken")
     def test_serialization_post_load(self):
         myarray = arange(10)
@@ -284,7 +283,6 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         assert_array_equal(mask, ones(10))
 
 
-
 class PointDataTestCase(unittest.TestCase):
     # Since PointData is mostly the same as ScalarData, the key things to
     # test are functionality that use _compute_bounds() and reverse_map().
@@ -294,15 +292,16 @@ class PointDataTestCase(unittest.TestCase):
     def test_basic_set_get(self):
         myarray = self.create_array()
         pd = PointDataSource(myarray)
-        self.assertTrue(allclose(myarray,pd._data))
+        self.assertTrue(allclose(myarray, pd._data))
         self.assert_(pd.value_dimension == "point")
         return
 
     def test_bounds(self):
         myarray = self.create_array()
         pd = PointDataSource(myarray)
-        self.assertEqual(pd.get_bounds(),((0,0), (9,90)))
+        self.assertEqual(pd.get_bounds(), ((0, 0), (9, 90)))
         return
+
 
 if __name__ == '__main__':
     import nose
