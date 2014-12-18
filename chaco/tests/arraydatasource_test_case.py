@@ -258,8 +258,8 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         self.assertTrue('value_dimension' not in state)
         self.assertTrue('index_dimension' not in state)
         self.assertTrue('persist_data' not in state)
-        for key in {"_data", "_cached_mask", "_cached_bounds",
-                    "_min_index", "_max_index"}:
+        for key in ["_data", "_cached_mask", "_cached_bounds", "_min_index",
+                    "_max_index"]:
             self.assertTrue(key not in state)
 
     @unittest.skip("I think this is just broken")
