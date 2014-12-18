@@ -4,15 +4,14 @@ Test of basic dataseries behavior.
 
 import unittest2 as unittest
 
-from numpy import arange, array, allclose, empty, isnan, nan, ones
+from numpy import arange, array, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal
-import numpy as np
 
 from chaco.api import MultiArrayDataSource
 from traits.testing.unittest_tools import UnittestTools
 
 
-class ArrayDataTestCase(UnittestTools, unittest.TestCase):
+class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
 
     def test_init_defaults(self):
         data_source = MultiArrayDataSource()
@@ -27,6 +26,7 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         data_source = MultiArrayDataSource(myarray)
 
         assert_array_equal(myarray, data_source._data)
+        # XXX this doesn't match AbstractDataSource's interface
         self.assertEqual(data_source.index_dimension, 0)
         self.assertEqual(data_source.value_dimension, 1)
         self.assertEqual(data_source.sort_order, "ascending")
@@ -49,6 +49,12 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         data_source = MultiArrayDataSource(myarray)
 
         assert_array_equal(myarray, data_source.get_data())
+
+    def test_get_data_axes(self):
+        myarray = arange(20).reshape(10, 2)
+        data_source = MultiArrayDataSource(myarray)
+
+        assert_array_equal(arange(0, 20, 2), data_source.get_data(axes=0))
 
     def test_get_data_no_data(self):
         data_source = MultiArrayDataSource()

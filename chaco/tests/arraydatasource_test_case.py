@@ -2,8 +2,9 @@
 Test of basic dataseries behavior.
 """
 
-import unittest2 as unittest
+import pickle
 
+import unittest2 as unittest
 from numpy import arange, array, allclose, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal
 import numpy as np
@@ -198,6 +199,25 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         data_source = ArrayDataSource(myarray)
         self.assertEqual(len(myarray), data_source.get_size())
 
+    def test_reverse_map(self):
+        # sort_order ascending
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray, sort_order='ascending')
+
+        self.assertEqual(data_source.reverse_map(4.0), 4)
+
+        # sort_order descending
+        myarray = arange(10)[::-1]
+        data_source = ArrayDataSource(myarray, sort_order='descending')
+
+        self.assertEqual(data_source.reverse_map(4.0), 5)
+
+        # sort_order none
+        myarray = array([12, 3, 0, 9, 2, 18, 3])
+        data_source = ArrayDataSource(myarray, sort_order='ascending')
+
+        self.assertEqual(data_source.reverse_map(3), None)
+
     def test_metadata(self):
         myarray = arange(10)
         data_source = ArrayDataSource(myarray)
@@ -218,6 +238,51 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
 
         with self.assertTraitChanges(data_source, 'metadata_changed', count=1):
             data_source.metadata['new_metadata'] = True
+
+    def test_serialization_state(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+
+        state = data_source.__getstate__()
+        self.assertTrue('value_dimension' not in state)
+        self.assertTrue('index_dimension' not in state)
+        self.assertTrue('persist_data' not in state)
+
+    @unittest.skip("persist_data probably shouldn't be persisted")
+    def test_serialization_state_no_persist(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+        data_source.persist_data = False
+
+        state = data_source.__getstate__()
+        self.assertTrue('value_dimension' not in state)
+        self.assertTrue('index_dimension' not in state)
+        self.assertTrue('persist_data' not in state)
+        for key in {"_data", "_cached_mask", "_cached_bounds",
+                    "_min_index", "_max_index"}:
+            self.assertTrue(key not in state)
+
+
+    @unittest.skip("I think this is just broken")
+    def test_serialization_post_load(self):
+        myarray = arange(10)
+        data_source = ArrayDataSource(myarray)
+        mymask = array([i % 2 for i in myarray], dtype=bool)
+        data_source.set_mask(mymask)
+
+        pickled_data_source = pickle.dumps(data_source)
+        unpickled_data_source = pickle.loads(pickled_data_source)
+        unpickled_data_source._post_load()
+
+        self.assertEqual(unpickled_data_source._cached_bounds, ())
+        self.assertEqual(unpickled_data_source._cached_mask, None)
+
+        assert_array_equal(data_source.get_data(),
+                           unpickled_data_source.get_data())
+
+        mask = unpickled_data_source.get_data_mask()[1]
+        assert_array_equal(mask, ones(10))
+
 
 
 class PointDataTestCase(unittest.TestCase):
