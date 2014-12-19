@@ -109,7 +109,7 @@ from .abstract_controller import AbstractController
 
 # Importing various symbols into the Chaco namespace for backwards
 # compatibility.  New code should directly import from Enable.
-from .enable.base_tool import BaseTool, KeySpec
-from .enable.markers import marker_trait
+from enable.base_tool import BaseTool, KeySpec
+from enable.markers import marker_trait
 
 #EOF
