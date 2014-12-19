@@ -2,6 +2,8 @@
 Defines basic traits and functions for the data model.
 """
 
+from __future__ import division
+
 # Standard library imports
 from math import radians, sqrt
 
@@ -69,7 +71,8 @@ def bin_search(values, value, ascending):
     array value is the last value less (greater) than the desired value.
     Returns -1 if *value* is beyond the minimum or maximum of *values*.
     """
-    if ascending > 0:
+    ascending = ascending > 0
+    if ascending:
         if (value < values[0]) or (value > values[-1]):
             return -1
     else:
@@ -82,7 +85,7 @@ def bin_search(values, value, ascending):
         midval = values[ mid ]
         if midval == value:
             return mid
-        elif midval > value:
+        elif (ascending and midval > value) or (not ascending and midval < value):
             hi = mid
         else:
             lo = mid
