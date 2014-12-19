@@ -1,5 +1,5 @@
 """
-Test of basic dataseries behavior.
+Test of ArrayDataSource behavior.
 """
 
 import pickle
@@ -13,7 +13,12 @@ from chaco.api import ArrayDataSource, PointDataSource
 from traits.testing.unittest_tools import UnittestTools
 
 
-class ArrayDataTestCase(UnittestTools, unittest.TestCase):
+class ArrayDataSourceTest(UnittestTools, unittest.TestCase):
+
+    def setUp(self):
+        self.myarray = arange(10)
+        self.mymask = array([i % 2 for i in self.myarray], dtype=bool)
+        self.data_source = ArrayDataSource(self.myarray)
 
     def test_init_defaults(self):
         data_source = ArrayDataSource()
@@ -23,70 +28,58 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         self.assertFalse(data_source.is_masked())
 
     def test_basic_setup(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-        assert_array_equal(myarray, data_source._data)
-        self.assertEqual(data_source.value_dimension, "scalar")
-        self.assertEqual(data_source.sort_order, "none")
-        self.assertFalse(data_source.is_masked())
+        assert_array_equal(self.myarray, self.data_source._data)
+        self.assertEqual(self.data_source.value_dimension, "scalar")
+        self.assertEqual(self.data_source.sort_order, "none")
+        self.assertFalse(self.data_source.is_masked())
 
     def test_set_data(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
         new_array = arange(0, 20, 2)
 
-        with self.assertTraitChanges(data_source, 'data_changed', count=1):
-            data_source.set_data(new_array)
+        with self.assertTraitChanges(self.data_source, 'data_changed',
+                                     count=1):
+            self.data_source.set_data(new_array)
 
-        assert_array_equal(new_array, data_source._data)
-        self.assertEqual(data_source.get_bounds(), (0, 18))
-        self.assertEqual(data_source.sort_order, "none")
+        assert_array_equal(new_array, self.data_source._data)
+        self.assertEqual(self.data_source.get_bounds(), (0, 18))
+        self.assertEqual(self.data_source.sort_order, "none")
 
     def test_set_data_ordered(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
         new_array = arange(20, 0, -2)
 
-        with self.assertTraitChanges(data_source, 'data_changed', count=1):
-            data_source.set_data(new_array, sort_order='descending')
+        with self.assertTraitChanges(self.data_source, 'data_changed',
+                                     count=1):
+            self.data_source.set_data(new_array, sort_order='descending')
 
-        assert_array_equal(new_array, data_source._data)
-        self.assertEqual(data_source.get_bounds(), (2, 20))
-        self.assertEqual(data_source.sort_order, "descending")
+        assert_array_equal(new_array, self.data_source._data)
+        self.assertEqual(self.data_source.get_bounds(), (2, 20))
+        self.assertEqual(self.data_source.sort_order, "descending")
 
     def test_set_mask(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-        mymask = array([i % 2 for i in myarray], dtype=bool)
+        with self.assertTraitChanges(self.data_source, 'data_changed',
+                                     count=1):
+            self.data_source.set_mask(self.mymask)
 
-        with self.assertTraitChanges(data_source, 'data_changed', count=1):
-            data_source.set_mask(mymask)
-
-        assert_array_equal(myarray, data_source._data)
-        assert_array_equal(mymask, data_source._cached_mask)
-        self.assertTrue(data_source.is_masked())
-        self.assertEqual(data_source.get_bounds(), (0, 9))
+        assert_array_equal(self.myarray, self.data_source._data)
+        assert_array_equal(self.mymask, self.data_source._cached_mask)
+        self.assertTrue(self.data_source.is_masked())
+        self.assertEqual(self.data_source.get_bounds(), (0, 9))
 
     def test_remove_mask(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-        mymask = array([i % 2 for i in myarray], dtype=bool)
-        data_source.set_mask(mymask)
-        self.assertTrue(data_source.is_masked())
+        self.data_source.set_mask(self.mymask)
+        self.assertTrue(self.data_source.is_masked())
 
-        with self.assertTraitChanges(data_source, 'data_changed', count=1):
-            data_source.remove_mask()
+        with self.assertTraitChanges(self.data_source, 'data_changed',
+                                     count=1):
+            self.data_source.remove_mask()
 
-        assert_array_equal(myarray, data_source._data)
-        self.assertIsNone(data_source._cached_mask, None)
-        self.assertFalse(data_source.is_masked())
-        self.assertEqual(data_source.get_bounds(), (0, 9))
+        assert_array_equal(self.myarray, self.data_source._data)
+        self.assertIsNone(self.data_source._cached_mask, None)
+        self.assertFalse(self.data_source.is_masked())
+        self.assertEqual(self.data_source.get_bounds(), (0, 9))
 
     def test_get_data(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-
-        assert_array_equal(myarray, data_source.get_data())
+        assert_array_equal(self.myarray, self.data_source.get_data())
 
     def test_get_data_no_data(self):
         data_source = ArrayDataSource(None)
@@ -95,13 +88,11 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         assert_array_equal(data_source.get_data(), 0.0)
 
     def test_get_data_mask(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-        mymask = array([i % 2 for i in myarray], dtype=bool)
-        data_source.set_mask(mymask)
+        self.data_source.set_mask(self.mymask)
 
-        data, mask = data_source.get_data_mask()
-        assert_array_equal(data, myarray)
+        data, mask = self.data_source.get_data_mask()
+        assert_array_equal(data, self.myarray)
+        assert_array_equal(mask, self.mymask)
 
     @unittest.skip('get_data_mask() fails in this case')
     def test_get_data_mask_no_data(self):
@@ -113,18 +104,13 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
         assert_array_equal(data, True)
 
     def test_get_data_mask_no_mask(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-
-        data, mask = data_source.get_data_mask()
-        assert_array_equal(data, myarray)
+        data, mask = self.data_source.get_data_mask()
+        assert_array_equal(data, self.myarray)
         assert_array_equal(mask, ones(shape=10, dtype=bool))
 
     def test_bounds(self):
         # ascending
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray, sort_order="ascending")
-        bounds = data_source.get_bounds()
+        bounds = self.data_source.get_bounds()
         self.assertEqual(bounds, (0, 9))
 
         # descending
@@ -214,47 +200,36 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
 
         # sort_order none
         myarray = array([12, 3, 0, 9, 2, 18, 3])
-        data_source = ArrayDataSource(myarray, sort_order='ascending')
+        data_source = ArrayDataSource(myarray, sort_order='none')
 
-        self.assertEqual(data_source.reverse_map(3), None)
+        with self.assertRaises(NotImplementedError):
+            data_source.reverse_map(3)
 
     def test_metadata(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-
-        self.assertEqual(data_source.metadata,
+        self.assertEqual(self.data_source.metadata,
                          {'annotations': [], 'selections': []})
 
     def test_metadata_changed(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-
-        with self.assertTraitChanges(data_source, 'metadata_changed', count=1):
-            data_source.metadata = {'new_metadata': True}
+        with self.assertTraitChanges(self.data_source, 'metadata_changed',
+                                     count=1):
+            self.data_source.metadata = {'new_metadata': True}
 
     def test_metadata_items_changed(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-
-        with self.assertTraitChanges(data_source, 'metadata_changed', count=1):
-            data_source.metadata['new_metadata'] = True
+        with self.assertTraitChanges(self.data_source, 'metadata_changed',
+                                     count=1):
+            self.data_source.metadata['new_metadata'] = True
 
     def test_serialization_state(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-
-        state = data_source.__getstate__()
+        state = self.data_source.__getstate__()
         self.assertTrue('value_dimension' not in state)
         self.assertTrue('index_dimension' not in state)
         self.assertTrue('persist_data' not in state)
 
     @unittest.skip("persist_data probably shouldn't be persisted")
     def test_serialization_state_no_persist(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-        data_source.persist_data = False
+        self.data_source.persist_data = False
 
-        state = data_source.__getstate__()
+        state = self.data_source.__getstate__()
         self.assertTrue('value_dimension' not in state)
         self.assertTrue('index_dimension' not in state)
         self.assertTrue('persist_data' not in state)
@@ -264,19 +239,16 @@ class ArrayDataTestCase(UnittestTools, unittest.TestCase):
 
     @unittest.skip("I think this is just broken")
     def test_serialization_post_load(self):
-        myarray = arange(10)
-        data_source = ArrayDataSource(myarray)
-        mymask = array([i % 2 for i in myarray], dtype=bool)
-        data_source.set_mask(mymask)
+        self.data_source.set_mask(self.mymask)
 
-        pickled_data_source = pickle.dumps(data_source)
+        pickled_data_source = pickle.dumps(self.data_source)
         unpickled_data_source = pickle.loads(pickled_data_source)
         unpickled_data_source._post_load()
 
         self.assertEqual(unpickled_data_source._cached_bounds, ())
         self.assertEqual(unpickled_data_source._cached_mask, None)
 
-        assert_array_equal(data_source.get_data(),
+        assert_array_equal(self.data_source.get_data(),
                            unpickled_data_source.get_data())
 
         mask = unpickled_data_source.get_data_mask()[1]
