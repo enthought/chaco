@@ -10,7 +10,7 @@ from traitsui.api import Item, View
 class CustomTool(BaseTool):
 
     def normal_mouse_move(self, event):
-        print "Screen point:", event.x, event.y
+        print("Screen point:", event.x, event.y)
 
 class ScatterPlot(HasTraits):
 

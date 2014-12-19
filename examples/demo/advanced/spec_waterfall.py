@@ -91,7 +91,7 @@ def _create_plot_component(obj):
                            color="red")[0]
     obj.spectrum_plot.padding = 50
     obj.spectrum_plot.title = "Spectrum"
-    spec_range = obj.spectrum_plot.plots.values()[0][0].value_mapper.range
+    spec_range = list(obj.spectrum_plot.plots.values())[0][0].value_mapper.range
     spec_range.low = 0.0
     spec_range.high = 5.0
     obj.spectrum_plot.index_axis.title = 'Frequency (hz)'
@@ -109,12 +109,12 @@ def _create_plot_component(obj):
     obj.time_plot.title = "Time"
     obj.time_plot.index_axis.title = 'Time (seconds)'
     obj.time_plot.value_axis.title = 'Amplitude'
-    time_range = obj.time_plot.plots.values()[0][0].value_mapper.range
+    time_range = list(obj.time_plot.plots.values())[0][0].value_mapper.range
     time_range.low = -0.2
     time_range.high = 0.2
 
     # Spectrogram plot
-    values = [zeros(NUM_SAMPLES/2) for i in xrange(SPECTROGRAM_LENGTH)]
+    values = [zeros(NUM_SAMPLES/2) for i in range(SPECTROGRAM_LENGTH)]
     p = WaterfallRenderer(index = spec_renderer.index, values = values,
             index_mapper = LinearMapper(range = obj.spectrum_plot.index_mapper.range),
             value_mapper = LinearMapper(range = DataRange1D(low=0, high=SPECTROGRAM_LENGTH)),

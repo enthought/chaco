@@ -1517,7 +1517,7 @@ static void
 Cntr_dealloc(Cntr* self)
 {
     Cntr_clear(self);
-    self->ob_type->tp_free((PyObject*)self);
+    Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 static PyObject *
@@ -1651,8 +1651,8 @@ static PyMethodDef Cntr_methods[] = {
 };
 
 static PyTypeObject CntrType = {
-    PyObject_HEAD_INIT(NULL)
-    0,                         /*ob_size*/
+	PyVarObject_HEAD_INIT(NULL, 0)
+    /*0,*/ 	                   /*ob_size included in PyVarObject_HEAD_INIT*/
     "cntr.Cntr",               /*tp_name*/
     sizeof(Cntr),              /*tp_basicsize*/
     0,                         /*tp_itemsize*/
@@ -1697,46 +1697,48 @@ static PyMethodDef module_methods[] = {
 };
 
 
-#ifdef NUMARRAY
-PyMODINIT_FUNC
-initcontour(void)
-{
-    PyObject* m;
-
-    if (PyType_Ready(&CntrType) < 0)
-        return;
-
-    m = Py_InitModule3("contour", module_methods,
-                       "Contouring engine as an extension type (numarray).");
-
-    if (m == NULL)
-      return;
-
-    import_array();
-    Py_INCREF(&CntrType);
-    PyModule_AddObject(m, "Cntr", (PyObject *)&CntrType);
-}
-
+#if PY_MAJOR_VERSION >= 3
+    #define MOD_INIT(name) PyMODINIT_FUNC PyInit_##name(void)
+	#define RETURN_MODINIT return m
 #else
-PyMODINIT_FUNC
-initcontour(void)
-{
-    PyObject* m;
-
-    if (PyType_Ready(&CntrType) < 0)
-        return;
-
-    m = Py_InitModule3("contour", module_methods,
-                       "Contouring engine as an extension type (Numeric).");
-
-    if (m == NULL)
-      return;
-
-    import_array();
-    Py_INCREF(&CntrType);
-    PyModule_AddObject(m, "Cntr", (PyObject *)&CntrType);
-}
-
+    #define MOD_INIT(name) PyMODINIT_FUNC init##name(void)
+	#define RETURN_MODINIT return
 #endif
 
+
+MOD_INIT(contour)
+{
+    PyObject* m = NULL;
+
+    if (PyType_Ready(&CntrType) < 0)
+        RETURN_MODINIT;
+
+#if PY_MAJOR_VERSION >= 3
+    static struct PyModuleDef moduledef = {
+        PyModuleDef_HEAD_INIT,
+        "contour",     /* m_name */
+        "Contouring engine as an extension type",  /* m_doc */
+        -1,                  /* m_size */
+        module_methods,    /* m_methods */
+        NULL,                /* m_reload */
+        NULL,                /* m_traverse */
+        NULL,                /* m_clear */
+        NULL,                /* m_free */
+    };
+
+    m = PyModule_Create(&moduledef);
+
+#else
+    m = Py_InitModule3("contour", module_methods,
+                       "Contouring engine as an extension type");
+#endif
+
+    if (m == NULL)
+    	RETURN_MODINIT;
+
+    import_array();
+    Py_INCREF(&CntrType);
+    PyModule_AddObject(m, "Cntr", (PyObject *)&CntrType);
+    RETURN_MODINIT;
+}
 

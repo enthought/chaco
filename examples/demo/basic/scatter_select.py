@@ -100,8 +100,8 @@ class Demo(HasTraits):
 
     def _selection_changed(self):
         mask = self.index_datasource.metadata['selection']
-        print "New selection: "
-        print compress(mask, arange(len(mask)))
+        print("New selection: ")
+        print(compress(mask, arange(len(mask))))
         # Ensure that the points are printed immediately:
         sys.stdout.flush()
         
