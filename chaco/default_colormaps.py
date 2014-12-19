@@ -57,7 +57,7 @@ def reverse(func):
         return cm
 
     # Look a little like the wrapped function.
-    cmap.__name__ = 'reversed_' + func.__name__
+    cmap.__name__ = b'reversed_' + func.__name__
     if func.__doc__ is not None:
         cmap.__doc__ = 'Reversed: ' + func.__doc__
     else:
@@ -94,7 +94,7 @@ def center(func, center=0.0):
         return func(range, **traits)
 
     # Look a little like the wrapped function.
-    cmap.__name__ = 'centered_' + func.__name__
+    cmap.__name__ = b'centered_' + func.__name__
     if func.__doc__ is not None:
         cmap.__doc__ = 'Centered: ' + func.__doc__
     else:
@@ -132,7 +132,7 @@ def fix(func, range):
         return func(range, **traits)
 
     # Look a little like the wrapped function.
-    cmap.__name__ = 'fixed_' + func.__name__
+    cmap.__name__ = b'fixed_' + func.__name__
     if func.__doc__ is not None:
         cmap.__doc__ = 'Fixed: ' + func.__doc__
     else:

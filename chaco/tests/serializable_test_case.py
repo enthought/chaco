@@ -6,7 +6,7 @@ import unittest
 
 # pickling child classes doesn't work well in the unittest framework unless
 # the classes to be pickled are in a different file
-from serializable_base import Circle, Poly
+from .serializable_base import Circle, Poly
 
 class SimpleSerializationTestCase(unittest.TestCase):
 
