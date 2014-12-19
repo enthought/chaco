@@ -205,7 +205,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
             # passing them to find_runs().
             grid_column_indices = sort(y_sorted[start:end][:,0])
             #pdb.set_trace()
-            #print grid_column_indices.shape
+            #print(grid_column_indices.shape)
             for span in find_runs(grid_column_indices):
                 x = self._cell_lefts[span[0]]
                 y = self._cell_bottoms[rownum]

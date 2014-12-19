@@ -150,7 +150,7 @@ class BasicFormatterTestCase(TicksTestCase):
             for mdigits, desired in lst[1:]:
                 s = fmt._nice_sci(val, mdigits)
                 if s != desired:
-                    print "Mismatch for", val, "; desired:", desired, "actual:", s
+                    print("Mismatch for", val, "; desired:", desired, "actual:", s)
 
 
     def test_estimate_default_scale(self):
@@ -181,8 +181,8 @@ class BasicFormatterTestCase(TicksTestCase):
         print
         for start, end, width in test_intervals:
             labels = scale.labels(start, end, char_width=width)
-            print "(%d,%d)" % (start,end), " avail:", width,
-            print " used:", sum([len(x[1]) for x in labels])
+            print("(%d,%d)" % (start,end), " avail:", width,
+                  " used:", sum([len(x[1]) for x in labels]))
         return
 
     def test_scale_system(self):
@@ -204,9 +204,9 @@ class BasicFormatterTestCase(TicksTestCase):
         print
         for start, end, width in test_intervals:
             labels = scale.labels(start, end, char_width=width)
-            print "(%d,%d)" % (start,end), " avail:", width,
-            print " used:", sum([len(x[1]) for x in labels]),
-            print list(zip(*labels))[1]
+            print("(%d,%d)" % (start,end), " avail:", width,
+                  " used:", sum([len(x[1]) for x in labels]),
+                  list(zip(*labels))[1])
         return
 
 class OffsetFormatterTestCase(TicksTestCase):
@@ -227,11 +227,11 @@ class OffsetFormatterTestCase(TicksTestCase):
             scale = FixedScale(resolution = resol)
             numlabels = 12
             ticks = scale.ticks(start, end, numlabels)
-            print "range:", start, end
+            print("range:", start, end)
             labels = fmt.format(ticks, numlabels, None)
-            print "Labels:", labels, "\n"
-            print "estimated width:", fmt.estimate_width(start, end, numlabels)
-            print "actual width:", sum(map(len, labels))
+            print("Labels:", labels, "\n")
+            print("estimated width:", fmt.estimate_width(start, end, numlabels))
+            print("actual width:", sum(map(len, labels)))
 
 
 

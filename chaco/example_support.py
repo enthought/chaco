@@ -160,6 +160,6 @@ elif ETSConfig.toolkit == 'pyglet':
 
 
 if __name__ == "__main__":
-    print "\n" + doc + "\n"
+    print("\n" + doc + "\n")
 
 # EOF

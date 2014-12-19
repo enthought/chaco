@@ -89,5 +89,5 @@ class GatherPointsBase(object):
 #        now = time.time()
 #        for i in range(numruns):
 #            points, selection = func(*args)
-#        print "%s (%d pts, %d runs):" % (name, numpoints, numruns), (time.time() - now)
+#        print("%s (%d pts, %d runs):" % (name, numpoints, numruns), (time.time() - now))
 #    return

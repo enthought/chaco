@@ -20,7 +20,7 @@ class SimpleSerializationTestCase(unittest.TestCase):
             o1 = getattr(a,name)
             o2 = getattr(b,name)
             if isinstance(o1, list) or isinstance(o1, tuple):
-                print "Warning: Cowardly refusing to do deep compares"
+                print("Warning: Cowardly refusing to do deep compares")
             else:
                 self.assert_(o1 == o2)
         return

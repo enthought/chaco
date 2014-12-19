@@ -104,7 +104,7 @@ class PlotSession(HasTraits):
                 return
         elif type(ident) == int:
             if ident >= len(self.windows):
-                print "No such window %d." % ident
+                print("No such window %d." % ident)
 
             win = self.windows.pop(ident)
             if len(self.windows) == 0:

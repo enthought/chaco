@@ -103,7 +103,7 @@ def chaco_commands():
     save
         saves the current plot to a file (png, bmp, jpg, pdf)
     """
-    print chaco_commands.__doc__
+    print(chaco_commands.__doc__)
 
     # The following are not implemented yet
     """
@@ -767,13 +767,13 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
     """
     p = curplot()
     if not p:
-        print "Doing nothing because there is no active plot."
+        print("Doing nothing because there is no active plot.")
         return
 
     import os.path
     ext = os.path.splitext(filename)[-1]
     if ext == ".pdf":
-        print "Warning: the PDF backend is still a little buggy."
+        print("Warning: the PDF backend is still a little buggy.")
         from chaco.pdf_graphics_context import PdfPlotGraphicsContext
         # Set some default PDF options if none are provided
         if dest_box is None:
@@ -791,7 +791,7 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
         gc.save()
         del gc
-        print "Saved to", filename
+        print("Saved to", filename)
 
     elif ext in [".bmp", ".png", ".jpg"]:
         from chaco.api import PlotGraphicsContext
@@ -805,10 +805,10 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
         gc.save(filename)
         del gc
-        print "Saved to", filename
+        print("Saved to", filename)
     else:
-        print "Format not yet supported:", ext
-        print "Currently supported formats are: bmp, png, jpg."
+        print("Format not yet supported:", ext)
+        print("Currently supported formats are: bmp, png, jpg.")
     return
 
 
