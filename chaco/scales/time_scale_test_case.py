@@ -1,12 +1,14 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from itertools import starmap
 from datetime import datetime as DT
 
-from scales import ScaleSystem
-from time_scale import dt_to_sec, trange, TimeScale, HMSScales
-from formatters import TimeFormatter
+from .scales import ScaleSystem
+from .time_scale import dt_to_sec, trange, TimeScale, HMSScales
+from .formatters import TimeFormatter
 
-from scales_test_case import TicksTestCase
+from .scales_test_case import TicksTestCase
 
 
 def DTS(*args, **kw):

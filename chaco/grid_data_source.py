@@ -1,6 +1,8 @@
 """ Defines the GridDataSource class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import array
 
@@ -8,9 +10,9 @@ from numpy import array
 from traits.api import Constant, Instance, Tuple
 
 # Chaco imports
-from abstract_data_source import AbstractDataSource
-from array_data_source import ArrayDataSource
-from base import SortOrderTrait
+from .abstract_data_source import AbstractDataSource
+from .array_data_source import ArrayDataSource
+from .base import SortOrderTrait
 
 
 class GridDataSource(AbstractDataSource):
@@ -147,8 +149,3 @@ class GridDataSource(AbstractDataSource):
 
     def _metadata_items_changed(self, event):
         self.metadata_changed = True
-
-
-
-
-

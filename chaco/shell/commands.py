@@ -1,6 +1,8 @@
 """ Defines commands for the Chaco shell.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 try:
     from wx import GetApp
 except ImportError:
@@ -15,8 +17,8 @@ from chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
     CalendarScaleSystem)
 from chaco.default_colormaps import *
 
-import plot_maker
-from session import PlotSession
+import .plot_maker
+from .session import PlotSession
 
 session = PlotSession()
 

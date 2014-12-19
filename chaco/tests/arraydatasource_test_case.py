@@ -2,6 +2,8 @@
 Test of basic dataseries behavior.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
 from numpy import arange, array, allclose, empty, isnan, nan

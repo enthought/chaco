@@ -1,3 +1,6 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from chaco.shell.scaly_plot import ScalyPlot
 from enable.component_editor import ComponentEditor
 from pyface.workbench.api import TraitsUIEditor
@@ -135,4 +138,3 @@ class PlotEditor(TraitsUIEditor):
                 self.session.del_window(ndx)
             except ValueError:
                 pass
-

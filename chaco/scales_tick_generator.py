@@ -1,5 +1,8 @@
 """ Defines the ScalesTickGenerator class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import array
 
 from traits.api import Any
@@ -7,7 +10,7 @@ from enable.font_metrics_provider import font_metrics_provider
 from ticks import AbstractTickGenerator
 
 # Use the new scales/ticks library
-from scales.api import ScaleSystem
+from .scales.api import ScaleSystem
 
 
 class ScalesTickGenerator(AbstractTickGenerator):

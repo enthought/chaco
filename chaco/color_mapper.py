@@ -1,6 +1,8 @@
 """ Defines the ColorMapper and ColorMapTemplate classes.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import arange, array, asarray, clip, divide, float32, int8, isinf, \
         isnan, ones, searchsorted, sometrue, sort, take, uint8, where, zeros, \
@@ -11,10 +13,10 @@ from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
                                  Int, Property, Str, Trait
 
 # Relative imports
-from abstract_colormap import AbstractColormap
-from data_range_1d import DataRange1D
+from .abstract_colormap import AbstractColormap
+from .data_range_1d import DataRange1D
 
-from speedups import map_colors, map_colors_uint8
+from .speedups import map_colors, map_colors_uint8
 
 
 class ColorMapTemplate(HasTraits):

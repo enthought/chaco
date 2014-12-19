@@ -1,5 +1,8 @@
 """ Defines the TrackingPanTool class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Chaco imports
 from chaco.tools.api import PanTool
 

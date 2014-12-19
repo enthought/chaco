@@ -2,6 +2,8 @@
 Test cases for the LinePlot's hittest() function
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 from numpy import arange, array, linalg
 from chaco.api import (ArrayDataSource, ArrayPlotData,

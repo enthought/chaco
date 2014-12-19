@@ -9,6 +9,8 @@ Defines AbstractDataMapper and BruteForceDataMapper classes, and related trait
 and functions.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 from numpy import array, concatenate, take, argsort, argmin, \
                   argmax, transpose, newaxis, sort

@@ -2,6 +2,8 @@
 handle bad input values for time.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import warnings
 import time as stdlib_time
 # Yup, we're exposing everything from time.
@@ -74,4 +76,3 @@ def localtime(t=None):
     timetuple = (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second,
         dt.weekday(), doy(dt), -1)
     return struct_time(timetuple)
-

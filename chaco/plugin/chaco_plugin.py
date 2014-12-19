@@ -1,6 +1,8 @@
 """ Envisage 3 plugin for Chaco functionality.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from envisage.api import Plugin
 from traits.api import List
 
@@ -54,4 +56,3 @@ class ChacoPlugin(Plugin):
             win.raise_window()
 
         commands.show = show
-

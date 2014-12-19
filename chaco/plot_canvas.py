@@ -1,10 +1,12 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from enable.api import Canvas
 from traits.api import Instance, Tuple
 
 # Local, relative chaco imports
-from plot_containers import DEFAULT_DRAWING_ORDER
+from .plot_containers import DEFAULT_DRAWING_ORDER
 
 class PlotCanvas(Canvas):
     """ The PlotCanvas is basically like Canvas, but we inherit some behaviors
@@ -79,4 +81,3 @@ class PlotCanvas(Canvas):
         for component in self.components + self.underlays + self.overlays:
             component.do_layout()
         return
-

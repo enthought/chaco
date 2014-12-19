@@ -1,6 +1,9 @@
 """ Defines the DataView class, and associated property traits and property
 functions.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import array, transpose
 
 from traits.api import Bool, Enum, Instance, Property
@@ -475,5 +478,3 @@ class DataView(OverlayPlotContainer):
     def _get_origin(self):
         # FIXME:
         return self.default_origin
-
-

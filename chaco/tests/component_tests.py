@@ -1,3 +1,6 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from enable.api import Component
 
 
@@ -49,4 +52,3 @@ def test_padding_trait_default():
     assert c.padding_bottom == 0
     assert c.padding_left == 15
     assert c.padding_right == 0
-

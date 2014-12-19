@@ -5,6 +5,8 @@
         DONE *. draw_border output should match a similar draw_rect output
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import nose
 import unittest
 

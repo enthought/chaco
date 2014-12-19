@@ -3,6 +3,8 @@ Contains the logic behind creating and configuring new plots
 from a set of user-supplied arguments.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Standard library imports
 import io
 import re
@@ -19,7 +21,7 @@ from chaco.tools.api import HighlightTool
 
 
 # Local relative imports
-from chaco_shell_error import ChacoShellError
+from .chaco_shell_error import ChacoShellError
 
 
 # Normally I don't define an __all__, but this lets us distinguish

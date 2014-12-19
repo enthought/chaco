@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library imports
 from numpy import column_stack, compress, invert, isnan, transpose
@@ -9,8 +9,8 @@ import logging
 from traits.api import Any, Enum, Float, Instance
 
 # Chaco imports
-from lineplot import LinePlot
-from abstract_data_source import AbstractDataSource
+from .lineplot import LinePlot
+from .abstract_data_source import AbstractDataSource
 
 # Set up a logger for this module
 logger = logging.getLogger(__name__)
@@ -156,4 +156,3 @@ class ErrorBarPlot(LinePlot):
 
     def _render_icon(self, gc, x, y, width, height):
         pass
-

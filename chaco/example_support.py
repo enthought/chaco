@@ -1,3 +1,6 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 doc = \
 """
 This file contains a support class that wraps up the boilerplate toolkit calls
@@ -29,7 +32,7 @@ from traits.etsconfig.api import ETSConfig
 
 
 # Import a default palette for backwards compatibility
-from default_colors import cbrewer as COLOR_PALETTE
+from .default_colors import cbrewer as COLOR_PALETTE
 
 
 # FIXME - it should be enough to do the following import, but because of the

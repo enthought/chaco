@@ -1,11 +1,14 @@
 """ Defines cell-related classes and functions.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import take, array, concatenate, nonzero
 
 from traits.api import HasStrictTraits, Instance, Delegate, Array, List, \
                              Tuple, Property, Trait, Any, Disallow
 
-from datamapper import AbstractDataMapper, right_shift, left_shift, sort_points
+from .datamapper import AbstractDataMapper, right_shift, left_shift, sort_points
 
 
 def find_runs(int_array, order='ascending'):

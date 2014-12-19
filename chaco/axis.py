@@ -1,7 +1,7 @@
 """ Defines the PlotAxis class, and associated validator and UI.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library import
 from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
@@ -14,11 +14,11 @@ from traits.api import Any, Float, Int, Str, Trait, Unicode, \
      Bool, Event, List, Array, Instance, Enum, Callable
 
 # Local relative imports
-from ticks import AbstractTickGenerator, DefaultTickGenerator
-from abstract_mapper import AbstractMapper
-from abstract_overlay import AbstractOverlay
-from label import Label
-from log_mapper import LogMapper
+from .ticks import AbstractTickGenerator, DefaultTickGenerator
+from .abstract_mapper import AbstractMapper
+from .abstract_overlay import AbstractOverlay
+from .label import Label
+from .log_mapper import LogMapper
 
 
 def DEFAULT_TICK_FORMATTER(val):

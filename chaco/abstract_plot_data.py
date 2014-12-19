@@ -1,5 +1,8 @@
 """ Defines the base class for plot data.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Bool, Event, HasTraits
 
 
@@ -52,9 +55,9 @@ class AbstractPlotData(HasTraits):
     def del_data(self, name):
         """ Deletes the array specified by *name*, or raises a KeyError if
         the named array does not exist.
-        
+
         If the instance is not writable, then this must do nothing.
-        
+
         """
         raise NotImplementedError
 
@@ -88,10 +91,10 @@ class AbstractPlotData(HasTraits):
     def update_data(self, *args, **kwargs):
         """
         Update a set of data values, firing only one data_changed event.
-        
+
         This function has the same signature as the dictionary update()
         method.
-        
+
         """
         raise NotImplementedError
 
@@ -126,4 +129,3 @@ class AbstractPlotData(HasTraits):
 
     def update(self, *args, **kwargs):
         self.update_data(*args, **kwargs)
-    

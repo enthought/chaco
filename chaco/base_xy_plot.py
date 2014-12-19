@@ -1,7 +1,7 @@
 """ Defines the base class for XY plots.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from math import sqrt
 from numpy import around, array, isnan, transpose
@@ -13,14 +13,14 @@ from traits.api import Any, Array, Bool, Enum, Float, Instance, \
 
 
 # Local relative imports
-from abstract_mapper import AbstractMapper
-from abstract_plot_renderer import AbstractPlotRenderer
-from abstract_data_source import AbstractDataSource
-from array_data_source import ArrayDataSource
-from axis import PlotAxis
-from base import point_line_distance, reverse_map_1d
-from grid import PlotGrid
-from plot_label import PlotLabel
+from .abstract_mapper import AbstractMapper
+from .abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_data_source import AbstractDataSource
+from .array_data_source import ArrayDataSource
+from .axis import PlotAxis
+from .base import point_line_distance, reverse_map_1d
+from .grid import PlotGrid
+from .plot_label import PlotLabel
 
 
 class BaseXYPlot(AbstractPlotRenderer):

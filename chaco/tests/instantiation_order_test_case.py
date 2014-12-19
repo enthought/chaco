@@ -3,6 +3,8 @@ Tests that various plot and data objects can be instantiated, assigned, and
 re-assigned in any order.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
 from numpy import array

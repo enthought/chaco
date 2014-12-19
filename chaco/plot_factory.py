@@ -3,20 +3,22 @@ Contains convenience functions to create ready-made PlotRenderer
 and PlotFrame instances of various types.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import array, ndarray, transpose, cos, sin
 
 # Local relative imports
-from abstract_data_source import AbstractDataSource
-from array_data_source import ArrayDataSource
-from axis import PlotAxis
-from barplot import BarPlot
-from data_range_1d import DataRange1D
-from grid import PlotGrid
-from linear_mapper import LinearMapper
-from scatterplot import ScatterPlot
-from polar_mapper import PolarMapper
-from lineplot import LinePlot
-from polar_line_renderer import PolarLineRenderer
+from .abstract_data_source import AbstractDataSource
+from .array_data_source import ArrayDataSource
+from .axis import PlotAxis
+from .barplot import BarPlot
+from .data_range_1d import DataRange1D
+from .grid import PlotGrid
+from .linear_mapper import LinearMapper
+from .scatterplot import ScatterPlot
+from .polar_mapper import PolarMapper
+from .lineplot import LinePlot
+from .polar_line_renderer import PolarLineRenderer
 
 def _create_data_sources(data, index_sort="none"):
     """

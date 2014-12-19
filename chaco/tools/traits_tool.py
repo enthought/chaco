@@ -1,6 +1,9 @@
 """ Defines the TraitsTool and Fifo classes, and get_nested_components90
 function.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from enable.api import BaseTool, Container
 from traits.api import List, Dict, Str

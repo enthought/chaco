@@ -2,7 +2,7 @@
 function.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from numpy import around, array, asarray, column_stack, float64, inf, zeros, zeros_like
 
@@ -13,10 +13,10 @@ from traits.api import Any, Bool, Callable, Enum, Float, Instance, \
 from traitsui.api import HGroup, Item, VGroup, View, TextEditor
 
 # Local, relative imports
-from abstract_overlay import AbstractOverlay
-from abstract_mapper import AbstractMapper
-from log_mapper import LogMapper
-from ticks import AbstractTickGenerator, DefaultTickGenerator
+from .abstract_overlay import AbstractOverlay
+from .abstract_mapper import AbstractMapper
+from .log_mapper import LogMapper
+from .ticks import AbstractTickGenerator, DefaultTickGenerator
 
 
 def float_or_auto(val):

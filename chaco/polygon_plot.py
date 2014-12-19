@@ -1,7 +1,7 @@
 """ Defines the PolygonPlot class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library imports
 import numpy as np
@@ -14,7 +14,7 @@ from traits.api import Enum, Float, Tuple, Property, cached_property, \
                         on_trait_change
 
 # Local imports.
-from base_xy_plot import BaseXYPlot
+from .base_xy_plot import BaseXYPlot
 
 class PolygonPlot(BaseXYPlot):
     """ Plots a polygon in dataspace.
@@ -51,15 +51,15 @@ class PolygonPlot(BaseXYPlot):
 
     # Override the hittest_type trait inherited from BaseXYPlot
     hittest_type = Enum("poly", "point", "line")
-    
+
     # The RGBA tuple for rendering edges.  It is always a tuple of length 4.
     # It has the same RGB values as edge_color_, and its alpha value is the
-    # alpha value of self.edge_color multiplied by self.alpha. 
+    # alpha value of self.edge_color multiplied by self.alpha.
     effective_edge_color = Property(Tuple, depends_on=['edge_color', 'alpha'])
-    
+
     # The RGBA tuple for rendering the face.  It is always a tuple of length 4.
     # It has the same RGB values as face_color_, and its alpha value is the
-    # alpha value of self.face_color multiplied by self.alpha.   
+    # alpha value of self.face_color multiplied by self.alpha.
     effective_face_color = Property(Tuple, depends_on=['face_color', 'alpha'])
 
     #----------------------------------------------------------------------

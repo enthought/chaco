@@ -1,13 +1,16 @@
 """ Defines the ColormappedSelectionOverlay class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import logical_and
 
 # Enthought library imports
 from traits.api import Any, Bool, Float, Instance, Property, Enum
 
 # Local imports
-from abstract_overlay import AbstractOverlay
-from colormapped_scatterplot import ColormappedScatterPlot
+from .abstract_overlay import AbstractOverlay
+from .colormapped_scatterplot import ColormappedScatterPlot
 
 class ColormappedSelectionOverlay(AbstractOverlay):
     """

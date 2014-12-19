@@ -2,6 +2,8 @@
 Defines the PointDataSource class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import array, transpose
 
@@ -9,8 +11,8 @@ from numpy import array, transpose
 from traits.api import Enum, Property, ReadOnly, Tuple
 
 # Local, relative imports
-from base import PointTrait, reverse_map_1d, SortOrderTrait
-from array_data_source import ArrayDataSource
+from .base import PointTrait, reverse_map_1d, SortOrderTrait
+from .array_data_source import ArrayDataSource
 
 
 class PointDataSource(ArrayDataSource):

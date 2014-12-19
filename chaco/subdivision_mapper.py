@@ -1,5 +1,8 @@
 """ Defines the SubdivisionDataMapper and SubdivisionLineDataMapper classes.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 import math
 from numpy import array, arange, concatenate, searchsorted, nonzero, transpose, \
@@ -10,10 +13,10 @@ import numpy
 from traits.api import List, Array, Tuple, Int, Float
 
 # Local, relative imports
-from datamapper import AbstractDataMapper, right_shift, left_shift, \
+from .datamapper import AbstractDataMapper, right_shift, left_shift, \
                        sort_points, ArraySortTrait, \
                        array_zip
-from subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
+from .subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
                               arg_find_runs
 
 

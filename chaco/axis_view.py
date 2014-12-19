@@ -1,5 +1,7 @@
 """ Defines the Traits UI view for a PlotAxis """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import TraitError
 from traitsui.api import View, HGroup, Group, VGroup, Item, TextEditor
 
@@ -50,4 +52,3 @@ AxisView = View(VGroup(
                 ),
                 buttons = ["OK", "Cancel"]
             )
-

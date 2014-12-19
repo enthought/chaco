@@ -2,6 +2,9 @@
 
 This definition remains for backwards compatibility.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from chaco.scatterplot import ScatterPlot
 
 

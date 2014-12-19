@@ -2,11 +2,14 @@
 Classes for formatting labels for values or times.
 """
 
-from math import ceil, floor, fmod, log10
-from numpy import abs, all, array, asarray, amax, amin
-from safetime import strftime, time, safe_fromtimestamp, localtime
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import warnings
 
+from math import ceil, floor, fmod, log10
+from numpy import abs, all, array, asarray, amax, amin
+
+from .safetime import strftime, time, safe_fromtimestamp, localtime
 
 __all__ = ['NullFormatter', 'BasicFormatter', 'IntegerFormatter',
            'OffsetFormatter', 'TimeFormatter', 'strftimeEx']
@@ -667,5 +670,3 @@ class TimeFormatter(object):
             width = widths[ int(len(widths) / 2) ] * numlabels
 
         return numlabels, width
-
-

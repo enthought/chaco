@@ -2,11 +2,13 @@
 A scale for time and calendar intervals.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from math import floor
 
-from scales import AbstractScale, ScaleSystem, frange, heckbert_interval
-from formatters import TimeFormatter
-from safetime import (safe_fromtimestamp, datetime, timedelta, EPOCH,
+from .scales import AbstractScale, ScaleSystem, frange, heckbert_interval
+from .formatters import TimeFormatter
+from .safetime import (safe_fromtimestamp, datetime, timedelta, EPOCH,
                       MINYEAR, MAXYEAR)
 
 # Labels for date and time units.

@@ -1,5 +1,8 @@
 """ Defines the LogMapper and InvalidDataRangeException classes.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import array, isnan, log, log10, exp, zeros, sometrue,\
     floor, ceil, ndarray
@@ -8,7 +11,7 @@ from numpy import array, isnan, log, log10, exp, zeros, sometrue,\
 from traits.api import Bool, Float
 
 #Local relative imports
-from base_1d_mapper import Base1DMapper
+from .base_1d_mapper import Base1DMapper
 
 
 LOG_MINIMUM = 0.0

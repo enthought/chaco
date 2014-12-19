@@ -2,7 +2,7 @@
 Defines basic traits and functions for the data model.
 """
 
-from __future__ import division
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Standard library imports
 from math import radians, sqrt

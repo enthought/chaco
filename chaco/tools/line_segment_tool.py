@@ -1,6 +1,7 @@
 """ Defines the LineSegmentTool class.
 """
-from __future__ import with_statement
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library imports
 from numpy import array

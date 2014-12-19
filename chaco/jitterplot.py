@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from itertools import izip
 from math import sqrt
@@ -9,11 +9,11 @@ from enable.api import black_color_trait, MarkerTrait
 from traits.api import (Any, Bool, Callable, Enum, Float,
         Instance, Int, Property, Str, Trait, on_trait_change)
 
-from abstract_plot_renderer import AbstractPlotRenderer
-from abstract_mapper import AbstractMapper
-from array_data_source import ArrayDataSource
-from base import reverse_map_1d
-from scatterplot import render_markers
+from .abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_mapper import AbstractMapper
+from .array_data_source import ArrayDataSource
+from .base import reverse_map_1d
+from .scatterplot import render_markers
 
 
 class JitterPlot(AbstractPlotRenderer):
@@ -360,4 +360,3 @@ class JitterPlot(AbstractPlotRenderer):
 
     def _orientation_changed(self):
         self._update_mappers()
-

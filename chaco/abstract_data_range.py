@@ -2,11 +2,13 @@
 Defines the base class for data ranges.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from traits.api import Event, Float, HasTraits, Instance, List, Trait
 
 # Local relative imports
-from abstract_data_source import AbstractDataSource
+from .abstract_data_source import AbstractDataSource
 
 
 class AbstractDataRange(HasTraits):
@@ -118,4 +120,3 @@ class AbstractDataRange(HasTraits):
         This method is called only if one of the bounds settings is "auto".
         """
         raise NotImplementedError
-

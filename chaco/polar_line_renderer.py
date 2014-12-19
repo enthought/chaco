@@ -1,7 +1,7 @@
 """ Defines the PolarLineRenderer class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library imports
 from numpy import array, cos, pi, sin, transpose
@@ -11,7 +11,7 @@ from enable.api import black_color_trait, LineStyle
 from traits.api import Float
 
 # Local, relative imports
-from abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_plot_renderer import AbstractPlotRenderer
 
 
 class PolarLineRenderer(AbstractPlotRenderer):

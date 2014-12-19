@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from traits.api import (Bool, Enum, Float, Int, CList, Property, Trait,
         on_trait_change)
@@ -172,6 +172,3 @@ class DataBox(AbstractOverlay):
     def my_component_resized(self):
         self._bounds_valid = False
         self._position_valid = False
-
-
-

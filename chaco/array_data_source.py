@@ -1,5 +1,7 @@
 """ Defines the ArrayDataSource class."""
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import array, isfinite, ones, ndarray
 import numpy as np
@@ -8,8 +10,8 @@ import numpy as np
 from traits.api import Any, Constant, Int, Tuple
 
 # Chaco imports
-from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
-from abstract_data_source import AbstractDataSource
+from .base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
+from .abstract_data_source import AbstractDataSource
 
 
 def bounded_nanargmin(arr):

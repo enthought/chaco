@@ -1,6 +1,8 @@
 """ Defines the Serializable mix-in class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 class Serializable(object):
     """
     Mix-in class to help serialization.  Serializes just the attributes in

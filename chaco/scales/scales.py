@@ -3,12 +3,14 @@ Functions and classes that compute ticks and labels for graph axes, with
 special handling of time and calendar axes.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from bisect import bisect
 from math import ceil, floor, log10
 from numpy import abs, argmin, array, isnan, linspace
 
 # Local imports
-from formatters import BasicFormatter
+from .formatters import BasicFormatter
 
 
 __all__ = ["AbstractScale", "DefaultScale", "FixedScale", "Pow10Scale",
@@ -548,4 +550,3 @@ class ScaleSystem(object):
         scale_intervals = array([s.num_ticks(start, end, numticks) for s in self.scales])
         closest = argmin(abs(scale_intervals - numticks))
         return self.scales[closest]
-

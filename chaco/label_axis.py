@@ -1,5 +1,8 @@
 """ Defines the LabelAxis class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from traceback import print_exc
 from numpy import array, float64, inf, searchsorted, take, unique
@@ -8,8 +11,8 @@ from numpy import array, float64, inf, searchsorted, take, unique
 from traits.api import Any, Str, List, Float
 
 # Local, relative imports
-from axis import PlotAxis
-from label import Label
+from .axis import PlotAxis
+from .label import Label
 
 
 class LabelAxis(PlotAxis):
@@ -107,4 +110,3 @@ class LabelAxis(PlotAxis):
         except:
             print_exc()
         return
-

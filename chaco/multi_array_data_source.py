@@ -1,5 +1,8 @@
 """ Defines the MultiArrayDataSource class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major package imports
 from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
 
@@ -7,8 +10,8 @@ from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
 from traits.api import Any, Int, Tuple
 
 # Chaco imports
-from base import NumericalSequenceTrait, SortOrderTrait
-from abstract_data_source import AbstractDataSource
+from .base import NumericalSequenceTrait, SortOrderTrait
+from .abstract_data_source import AbstractDataSource
 
 
 class MultiArrayDataSource(AbstractDataSource):

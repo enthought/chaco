@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from numpy import array, compress, matrix, newaxis, sqrt, zeros
 
@@ -8,8 +8,8 @@ from enable.api import ColorTrait
 from traits.api import Array, Enum, Float, Instance, Int
 
 # Chaco relative imports
-from abstract_data_source import AbstractDataSource
-from scatterplot import ScatterPlot
+from .abstract_data_source import AbstractDataSource
+from .scatterplot import ScatterPlot
 
 class QuiverPlot(ScatterPlot):
 

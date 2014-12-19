@@ -1,5 +1,8 @@
 """ Defines the MoveTool class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from traits.api import Tuple
 from enable.tools.drag_tool import DragTool
@@ -38,4 +41,3 @@ class MoveTool(DragTool):
             c.hgrid.invalidate()
         event.handled = True
         c.request_redraw()
-

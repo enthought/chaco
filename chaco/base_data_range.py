@@ -2,8 +2,10 @@
 Defines the BaseDataRange class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Local relative imports
-from abstract_data_range import AbstractDataRange
+from .abstract_data_range import AbstractDataRange
 
 
 class BaseDataRange(AbstractDataRange):
@@ -32,6 +34,3 @@ class BaseDataRange(AbstractDataRange):
         for datasource in datasources:
             if datasource in self.sources:
                 self.sources.remove(datasource)
-
-
-

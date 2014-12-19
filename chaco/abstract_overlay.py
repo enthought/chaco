@@ -4,10 +4,12 @@ This class is primarily used so that tools can easily distinguish between
 data-related plot items and the decorators on them.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from enable.api import Component
 from traits.api import Instance
 
-from plot_component import PlotComponent
+from .plot_component import PlotComponent
 
 
 class AbstractOverlay(PlotComponent):

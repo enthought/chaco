@@ -1,7 +1,7 @@
 """ Defines the LinePlot class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Standard library imports
 import warnings
@@ -16,8 +16,8 @@ from traits.api import Enum, Float, List, Str, Property, Tuple, cached_property
 from traitsui.api import Item, View
 
 # Local relative imports
-from base import arg_find_runs, bin_search, reverse_map_1d
-from base_xy_plot import BaseXYPlot
+from .base import arg_find_runs, bin_search, reverse_map_1d
+from .base_xy_plot import BaseXYPlot
 
 
 
@@ -34,7 +34,7 @@ class LinePlot(BaseXYPlot):
 
     # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
     # It has the same RGB values as color_, and its alpha value is the alpha
-    # value of self.color multiplied by self.alpha. 
+    # value of self.color multiplied by self.alpha.
     effective_color = Property(Tuple, depends_on=['color', 'alpha'])
 
     # The color to use to highlight the line when selected.
