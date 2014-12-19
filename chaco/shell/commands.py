@@ -17,7 +17,7 @@ from chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
     CalendarScaleSystem)
 from chaco.default_colormaps import *
 
-import .plot_maker
+import chaco.shell.plot_maker as plot_maker
 from .session import PlotSession
 
 session = PlotSession()
