@@ -7,7 +7,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import numpy
 
 # Chaco imports
-from range_selection import RangeSelection
+from .range_selection import RangeSelection
 
 
 class RangeSelection2D(RangeSelection):
