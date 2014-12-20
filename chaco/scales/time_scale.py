@@ -166,7 +166,7 @@ def trange(start, end, **time_unit):
         raise ValueError("trange() only takes one keyword argument, got %d" % len(time_unit))
 
     # Months and years are non-uniform, so we special-case them.
-    unit, value = time_unit.items()[0]
+    unit, value = list(time_unit.items())[0]
     if unit == 'months':
         return trange_months(start, end, value)
     elif unit == 'years':
@@ -228,7 +228,7 @@ class TimeScale(AbstractScale):
         """ Defines the time period that this scale uses.
         """
         self.formatter = kw_interval.pop("formatter", TimeFormatter())
-        unit, val = kw_interval.items()[0]
+        unit, val = list(kw_interval.items())[0]
         self.unit = unit
         if "_of_" in unit:
             # Calendar time interval - divide by the number of ticks per larger
