@@ -68,7 +68,7 @@ def tfrac(t, **time_unit):
     =======
     A tuple: (aligned time as UNIX time, remainder in seconds)
     """
-    unit, period = time_unit.items()[0]
+    unit, period = list(time_unit.items())[0]
     if unit == "milliseconds":
         unit = "microsecond"
         period *= 1000
@@ -328,7 +328,7 @@ class TimeScale(AbstractScale):
                     break
             ticks = ticks[start_ndx : end_ndx+1]
 
-        return map(dt_to_sec, ticks)
+        return list(map(dt_to_sec, ticks))
 
     def labels(self, start, end, numlabels=None, char_width=None):
         """ Returns a series of ticks and corresponding strings for labels

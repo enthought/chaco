@@ -131,9 +131,9 @@ class BasicFormatter(object):
         else:
             # For decimal mode,
             if not (ticks % 1).any():
-                labels = map(str, ticks.astype(int))
+                labels = list(map(str, ticks.astype(int)))
             else:
-                labels = map(str, ticks)
+                labels = list(map(str, ticks))
 
         return labels
 
@@ -239,7 +239,7 @@ class IntegerFormatter(BasicFormatter):
     def format(self, ticks, numlabels=None, char_width=None, fill_ratio=0.3):
         """ Formats integer tick labels.
         """
-        return map(str, map(int, ticks))
+        return list(map(str, map(int, ticks)))
 
 
 class OffsetFormatter(BasicFormatter):
