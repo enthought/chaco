@@ -1,12 +1,13 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from enable.tools.drag_tool import DragTool
+
 from .better_zoom import BetterZoom
 from .better_selecting_zoom import BetterSelectingZoom
 from .broadcaster import BroadcasterTool
 from .dataprinter import DataPrinter
 from .data_label_tool import DataLabelTool
-from .enable.tools.drag_tool import DragTool
 from .draw_points_tool import DrawPointsTool
 from .drag_zoom import DragZoom
 from .highlight_tool import HighlightTool
