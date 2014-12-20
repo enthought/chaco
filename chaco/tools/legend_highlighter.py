@@ -17,7 +17,7 @@ def get_hit_plots(legend, event):
         # always look at the front of the label where we know we'll get a hit.
         label = legend.get_label_at(legend.x + 20, event.y)
 
-    except:
+    except Exception:
         raise
         label = None
 
