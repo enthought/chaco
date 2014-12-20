@@ -17,7 +17,7 @@ from chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
     CalendarScaleSystem)
 from chaco.default_colormaps import *
 
-import chaco.shell.plot_maker as plot_maker
+from .plot_maker import do_contour, do_imread, do_imshow, do_pcolor, do_plot, do_plotv
 from .session import PlotSession
 
 session = PlotSession()
@@ -307,8 +307,7 @@ def plot(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_plot(session.data, cont,
-                               *data, **kwargs)
+    plots = do_plot(session.data, cont, *data, **kwargs)
 
     cont.request_redraw()
     return
@@ -375,7 +374,7 @@ def loglog(*data, **kwargs):
 def imread(*data, **kwargs):
     """ Returns image file as an array. """
 
-    return plot_maker.do_imread(*data, **kwargs)
+    return do_imread(*data, **kwargs)
 
 
 def imshow(*data, **kwargs):
@@ -400,8 +399,7 @@ def imshow(*data, **kwargs):
 
     if "colormap" not in kwargs:
         kwargs["colormap"] = session.colormap
-    plots = plot_maker.do_imshow(session.data, cont,
-                                 *data, **kwargs)
+    plots = do_imshow(session.data, cont, *data, **kwargs)
     cont.request_redraw()
     return
 
@@ -424,8 +422,7 @@ def pcolor(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_pcolor(session.data, session.colormap, cont,
-                                 *data, **kwargs)
+    plots = do_pcolor(session.data, session.colormap, cont, *data, **kwargs)
     cont.request_redraw()
     return
 
@@ -449,8 +446,8 @@ def contour(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_contour(session.data, session.colormap, cont,
-                                  "line", *data, **kwargs)
+    plots = do_contour(session.data, session.colormap, cont, "line",
+                       *data, **kwargs)
     cont.request_redraw()
     return
 
@@ -474,7 +471,7 @@ def contourf(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_contour(session.data, session.colormap, cont,
+    plots = do_contour(session.data, session.colormap, cont,
                                   "poly", *data, **kwargs)
     cont.request_redraw()
     return
@@ -540,7 +537,7 @@ def plotv(*args, **kwargs):
     """
 
     cont = _do_plot_boilerplate(kwargs)
-    plots = plot_maker.do_plotv(session, *args, **kwargs)
+    plots = do_plotv(session, *args, **kwargs)
     cont.add(*plots)
     cont.request_redraw()
     return
