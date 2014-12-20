@@ -1,7 +1,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from cPickle import loads, dumps
+from pickle import loads, dumps
 import unittest
 
 # pickling child classes doesn't work well in the unittest framework unless
