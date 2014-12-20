@@ -7,10 +7,10 @@ from numpy import array
 
 from traits.api import Any
 from enable.font_metrics_provider import font_metrics_provider
-from ticks import AbstractTickGenerator
 
 # Use the new scales/ticks library
 from .scales.api import ScaleSystem
+from .ticks import AbstractTickGenerator
 
 
 class ScalesTickGenerator(AbstractTickGenerator):
