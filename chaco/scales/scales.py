@@ -85,7 +85,7 @@ class AbstractScale(object):
         """
         ticks = self.ticks(start, end, numlabels)
         labels = self.formatter.format(ticks, numlabels, char_width)
-        return zip(ticks, labels)
+        return list(zip(ticks, labels))
 
     def label_width(self, start, end, numlabels=None, char_width=None):
         """ Returns an estimate of the total number of characters used by the

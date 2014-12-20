@@ -51,7 +51,7 @@ def arg_find_runs(int_array, order='ascending'):
     rshifted = right_shift(int_array, int_array[0]-increment)
     start_indices = concatenate([[0], nonzero(int_array - (rshifted+increment))[0]])
     end_indices = left_shift(start_indices, len(int_array))
-    return zip(start_indices, end_indices)
+    return list(zip(start_indices, end_indices))
 
 
 class AbstractCell(HasStrictTraits):
