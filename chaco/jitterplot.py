@@ -182,7 +182,7 @@ class JitterPlot(AbstractPlotRenderer):
         data = self._cached_data_pts_sorted
         try:
             ndx = reverse_map_1d(data, data_pt, "ascending")
-        except IndexError, e:
+        except IndexError as e:
             if outside_returns_none:
                 return None
             else:

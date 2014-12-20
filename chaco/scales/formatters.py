@@ -570,7 +570,7 @@ class TimeFormatter(object):
             try:
                 tm = localtime(t)
                 s = strftimeEx(format, t, tm)
-            except ValueError, e:
+            except ValueError as e:
                 warnings.warn("Unable to convert tick for timestamp " + str(t))
                 labels.append("ERR")
                 continue

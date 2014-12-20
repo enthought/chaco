@@ -158,7 +158,7 @@ class Base2DPlot(AbstractPlotRenderer):
         try:
             x_ndx = reverse_map_1d(x_data, x_pt, self.index.sort_order[0],
                                    floor_only=True)
-        except IndexError, e:
+        except IndexError as e:
             if outside_returns_none:
                 return None, None
 
@@ -171,7 +171,7 @@ class Base2DPlot(AbstractPlotRenderer):
         try:
             y_ndx = reverse_map_1d(y_data, y_pt, self.index.sort_order[1],
                                    floor_only=True)
-        except IndexError, e:
+        except IndexError as e:
             if outside_returns_none:
                 return None, None
 

@@ -304,7 +304,7 @@ class ScatterPlot(BaseXYPlot):
 
             try:
                 ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
-            except IndexError, e:
+            except IndexError as e:
                 # if reverse_map raises this exception, it means that data_pt is
                 # outside the range of values in index_data.
                 if outside_returns_none:
