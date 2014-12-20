@@ -191,8 +191,8 @@ class ImagePlot(Base2DPlot):
         elif data.shape[2] == 4:
             kiva_depth = "rgba32"
         else:
-            raise RuntimeError, "Unknown colormap depth value: %i" \
-                                % data.value_depth
+            raise RuntimeError("Unknown colormap depth value: %i" \
+                                % data.value_depth)
 
 
         self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)

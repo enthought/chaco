@@ -133,7 +133,7 @@ class PlotSession(HasTraits):
         elif win is None:
             self.active_window_index = None
         else:
-            raise RuntimeError, "That window is not part of this session."
+            raise RuntimeError("That window is not part of this session.")
 
     def _colormap_changed(self):
         plots = []

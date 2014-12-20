@@ -75,7 +75,7 @@ def do_plotv(session, *args, **kw):
     elif plot_type == "line":
         plots = [create_line_plot(sources) for sources in sources_list]
     else:
-        raise ChacoShellError, "Unknown plot type '%s'." % plot_type
+        raise ChacoShellError("Unknown plot type '%s'." % plot_type)
 
     for plot in plots:
         plot.orientation = kw.get("orientation", "h")
@@ -96,7 +96,7 @@ def make_data_sources(session, index_sort="none", *args):
             data.append(arg)
 
     if len(data) == 0:
-        raise ChacoShellError, "Insufficient data for plot."
+        raise ChacoShellError("Insufficient data for plot.")
 
     # 1D array(s)
     if len(data[0].shape) == 1:
@@ -128,8 +128,8 @@ def make_data_sources(session, index_sort="none", *args):
 
     # Not a two-dimensional array, error.
     else:
-        raise ChacoShellError, "Unable to create plot data sources from array of" \
-                               "shape " + str(data[1].shape) + "."
+        raise ChacoShellError("Unable to create plot data sources from array of" \
+                               "shape " + str(data[1].shape) + ".")
 
 
 #-----------------------------------------------------------------------------

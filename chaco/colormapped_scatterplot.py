@@ -329,7 +329,7 @@ class ColormappedScatterPlot(ScatterPlot):
                                     self.outline_color_, self.line_width)
                 gc.draw_path_at_points(xy, path, mode)
         else:
-            raise RuntimeError, "Batch drawing requested on non-batch-capable GC."
+            raise RuntimeError("Batch drawing requested on non-batch-capable GC.")
         return
 
     def _render_bruteforce(self, gc, points):

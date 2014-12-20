@@ -181,7 +181,7 @@ class LinePlot(BaseXYPlot):
         """
 
         if self.index is None or self.value is None:
-            raise IndexError, "cannot index when data source index or value is None"
+            raise IndexError("cannot index when data source index or value is None")
 
         index_data = self.index.get_data()
         value_data = self.value.get_data()

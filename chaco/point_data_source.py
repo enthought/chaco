@@ -75,7 +75,7 @@ class PointDataSource(ArrayDataSource):
     def __init__(self, data = transpose(array([[],[]])), **kw):
         shape = data.shape
         if (len(shape) != 2) or (shape[1] != 2):
-            raise RuntimeError, "PointDataSource constructor requires Nx2 array, but got array of shape " + str(shape) + " instead."
+            raise RuntimeError("PointDataSource constructor requires Nx2 array, but got array of shape " + str(shape) + " instead.")
         super(PointDataSource, self).__init__(data, **kw)
         return
 
@@ -113,10 +113,10 @@ class PointDataSource(ArrayDataSource):
         if self.sort_order == "none":
             # By default, only provide reverse_map if the value data is sorted
             # along one of its axes.
-            raise NotImplementedError
+            raise NotImplementedError()
 
         if index != 0 and index != 1:
-            raise ValueError, "Index must be 0 or 1."
+            raise ValueError("Index must be 0 or 1.")
 
         # This basically reduces to a scalar data search along self.data[index].
         lowerleft, upperright= self._cached_bounds

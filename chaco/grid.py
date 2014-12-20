@@ -30,7 +30,7 @@ def float_or_auto(val):
     except:
         if isinstance(val, basestring) and val == "auto":
             return val
-    raise TraitError, "Tick interval must be a number or 'auto'."
+    raise TraitError("Tick interval must be a number or 'auto'.")
 
 # View for setting grid properties.
 GridView = View(VGroup(
@@ -260,7 +260,7 @@ class PlotGrid(AbstractOverlay):
             self._tick_positions = around(column_stack((tick_positions,
                                            zeros_like(tick_positions) + position[1])))
         else:
-            raise self.NotImplementedError
+            raise NotImplementedError()
 
         # Compute the transverse direction extents
         self._tick_extents = zeros((len(ticks), 2), dtype=float)

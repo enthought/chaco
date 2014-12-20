@@ -238,7 +238,7 @@ class ChacoPlotEditor ( Editor ):
         elif ETSConfig.toolkit == 'qt4':
             control.resize(factory.width, factory.height)
         else:
-            raise NotImplementedError
+            raise NotImplementedError()
 
         # Attach listeners to the object's traits appropriately so we can
         # update the plot when they change.  For the _update_axis_grids()
@@ -337,7 +337,7 @@ class ChacoPlotEditor ( Editor ):
                                                 value_bounds = value_bounds,
                                                 orientation = plotitem.orientation)
         else:
-            raise RuntimeError, "Unknown plot type '%s' in ChacoPlotEditor." % plot_type
+            raise RuntimeError("Unknown plot type '%s' in ChacoPlotEditor." % plot_type)
 
         self._set_basic_properties(plot, plotitem)
 

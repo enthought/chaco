@@ -150,8 +150,8 @@ class BasePlotFrame(Container, PlotComponent):
         if name in self.slot_names:
             return self._frame_slots[name]
         else:
-            raise AttributeError, "'%s' object has no attribute '%s'" % \
-                                    (self.__class__.__name__, name)
+            raise AttributeError("'%s' object has no attribute '%s'" % \
+                                    (self.__class__.__name__, name))
 
     def __setattr__(self, name, value):
         if name in self.slot_names:

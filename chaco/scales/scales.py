@@ -40,7 +40,7 @@ class AbstractScale(object):
             Number of ticks that the caller would like to get
 
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def num_ticks(self, start, end, desired_ticks=None):
         """ Returns an approximate number of ticks that this scale
@@ -63,7 +63,7 @@ class AbstractScale(object):
         -------
         A float or an integer.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def labels(self, start, end, numlabels=None, char_width=None):
         """ Returns a series of ticks and corresponding strings for labels
@@ -469,7 +469,7 @@ class ScaleSystem(object):
 
         # Check for insufficient arguments.
         if numlabels is None and char_width is None:
-            raise ValueError, "Either numlabels or char_width (or both) must be given."
+            raise ValueError("Either numlabels or char_width (or both) must be given.")
 
         if numlabels == 0 or char_width == 0 or isnan(start) or isnan(end):
             return []

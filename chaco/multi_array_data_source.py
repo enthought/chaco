@@ -216,7 +216,7 @@ class MultiArrayDataSource(AbstractDataSource):
         if len(value.shape) != 2:
             msg = 'Input is %d dimensional, but it must be 1 or 2' \
                   'dimensional.' % len(value.shape)
-            raise ValueError, msg
+            raise ValueError(msg)
 
         self._data = value
 

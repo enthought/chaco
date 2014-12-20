@@ -242,7 +242,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
                     #~ elif cell.sort_order == 'descending':
                         #~ cell.points = find_runs(sort_points(cellpts)[::-1], 'descending')
                     #~ else:
-                        #~ raise RuntimeError, "Invalid sort_order: " + cell.sort_order
+                        #~ raise RuntimeError("Invalid sort_order: " + cell.sort_order)
         #~ return
 
 class SubdivisionLineDataMapper(SubdivisionDataMapper):

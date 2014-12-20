@@ -460,7 +460,7 @@ class PlotAxis(AbstractOverlay):
             return
 
         if datalow > datahigh:
-            raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
+            raise RuntimeError("DataRange low is greater than high; unable to compute axis ticks.")
 
         if not self.tick_generator:
             return
