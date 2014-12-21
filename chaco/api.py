@@ -67,8 +67,8 @@ from .base_xy_plot import BaseXYPlot
 from .scatterplot import ScatterPlot, render_markers
 from .image_plot import ImagePlot
 from .cmap_image_plot import CMapImagePlot
-from .contour_line_plot import ContourLinePlot
-from .contour_poly_plot import ContourPolyPlot
+#from .contour_line_plot import ContourLinePlot
+#from .contour_poly_plot import ContourPolyPlot
 from .lineplot import LinePlot
 from .colormapped_scatterplot import ColormappedScatterPlot
 from .colormapped_selection_overlay import ColormappedSelectionOverlay
