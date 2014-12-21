@@ -5,7 +5,10 @@ function.
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Standard library imports
-import itertools
+try:
+    from itertools import izip
+except ImportError:
+    izip = zip
 
 # Major library imports
 from numpy import around, array, asarray, column_stack, \
@@ -135,7 +138,7 @@ def render_markers(gc, points, marker, marker_size,
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):
-            for pt,size in itertools.izip(points, marker_size):
+            for pt,size in izip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -144,7 +147,7 @@ def render_markers(gc, points, marker, marker_size,
                     gc.draw_path(marker.draw_mode)
         else:
             path = custom_symbol
-            for pt,size in itertools.izip(points, marker_size):
+            for pt,size in izip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
