@@ -14,6 +14,10 @@ install:
   - pip install coveralls
   - pip install -r dev_requirements.txt
   - python setup.py develop
+before_script:
+  - mkdir testrunner
+  - cp .coveragerc testrunner/
+  - cd testrunner
 script:
   - if [[ $TRAVIS_PYTHON_VERSION == *_with_system_site_packages ]]; then ETS_TOOLKIT='qt4' coverage run -p -m nose.core -v chaco; fi
   - if [[ $TRAVIS_PYTHON_VERSION == *_with_system_site_packages ]]; then ETS_TOOLKIT='wx' coverage run -p -m nose.core -v chaco; fi
