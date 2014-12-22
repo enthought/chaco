@@ -6,7 +6,7 @@ from traits.testing.unittest_tools import unittest
 
 import numpy
 
-from chaco.api import ArrayPlotData
+from chaco.array_plot_data import ArrayPlotData
 from traits.api import HasTraits, Instance, List, on_trait_change
 
 

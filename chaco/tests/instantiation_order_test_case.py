@@ -8,8 +8,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import unittest
 
 from numpy import array
-from chaco.api import ArrayDataSource, DataRange1D, \
-                                 LinearMapper
+from chaco.array_data_source import ArrayDataSource
+from chaco.data_range_1d import DataRange1D
+from chaco.linear_mapper import LinearMapper
 
 class DataPipelineTestCase(unittest.TestCase):
     def test_piecewise_construction(self):

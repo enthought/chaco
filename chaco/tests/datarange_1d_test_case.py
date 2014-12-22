@@ -8,7 +8,8 @@ from numpy.testing import assert_equal
 
 from traits.api import HasTraits, Instance, Bool, on_trait_change
 
-from chaco.api import DataRange1D, ArrayDataSource
+from chaco.data_range_1d import DataRange1D
+from chaco.array_data_source import ArrayDataSource
 
 
 class Foo(HasTraits):

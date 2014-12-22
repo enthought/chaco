@@ -13,7 +13,8 @@ import unittest
 from numpy import array, alltrue, ravel
 
 # Chaco imports
-from chaco.api import Plot, PlotGraphicsContext
+from chaco.plot import Plot
+from chaco.plot_graphics_context import PlotGraphicsContext
 
 
 class DrawBorderTestCase(unittest.TestCase):

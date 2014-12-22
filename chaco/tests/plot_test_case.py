@@ -6,7 +6,8 @@ import unittest
 from numpy import arange
 
 # Chaco imports
-from chaco.api import ArrayPlotData, Plot
+from chaco.array_plot_data import ArrayPlotData
+from chaco.plot import Plot
 
 
 class PlotTestCase(unittest.TestCase):

@@ -4,11 +4,12 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import sys
 import unittest
 
-from chaco.api import HPlotContainer, OverlayPlotContainer, \
-                                PlotComponent, VPlotContainer, GridContainer
+from chaco.plot_containers import HPlotContainer, OverlayPlotContainer, \
+    VPlotContainer, GridPlotContainer
+from chaco.plot_component import PlotComponent
 from traits.api import Any, Tuple
 
-SizePrefs = GridContainer.SizePrefs
+SizePrefs = GridPlotContainer.SizePrefs
 
 
 class ContainerTestCase(unittest.TestCase):

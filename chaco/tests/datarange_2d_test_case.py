@@ -6,7 +6,9 @@ import unittest
 from numpy import alltrue, arange, array, ravel, transpose, zeros, inf, isinf
 from numpy.testing import assert_equal, assert_
 
-from chaco.api import DataRange2D, GridDataSource, PointDataSource
+from chaco.data_range_2d import DataRange2D
+from chaco.grid_data_source import GridDataSource
+from chaco.point_data_source import PointDataSource
 
 
 class DataRange2DTestCase(unittest.TestCase):

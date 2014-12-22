@@ -6,7 +6,9 @@ from numpy import array
 from numpy.testing import assert_array_almost_equal, assert_equal
 
 
-from chaco.api import ArrayDataSource, DataRange1D, LinearMapper
+from chaco.array_data_source import ArrayDataSource
+from chaco.data_range_1d import DataRange1D
+from chaco.linear_mapper import LinearMapper
 
 class LinearMapperTestCase(unittest.TestCase):
 

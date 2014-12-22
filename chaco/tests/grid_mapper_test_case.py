@@ -5,7 +5,9 @@ import unittest
 from numpy import array, transpose
 from numpy.testing import assert_equal
 
-from chaco.api import GridDataSource, DataRange2D, GridMapper
+from chaco.grid_data_source import GridDataSource
+from chaco.data_range_2d import DataRange2D
+from chaco.grid_mapper import GridMapper
 
 class GridMapperTestCase(unittest.TestCase):
 

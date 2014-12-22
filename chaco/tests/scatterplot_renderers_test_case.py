@@ -7,7 +7,8 @@ from numpy import alltrue
 from enable.compiled_path import CompiledPath
 
 # Chaco imports
-from chaco.api import create_scatter_plot, PlotGraphicsContext
+from chaco.api import create_scatter_plot
+from chaco.plot_graphics_context import PlotGraphicsContext
 
 
 class DrawScatterplotCase(unittest.TestCase):
