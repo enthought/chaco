@@ -1,7 +1,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import unittest
+import unittest2 as unittest
 
 from numpy import alltrue
 from enable.compiled_path import CompiledPath
@@ -62,6 +62,7 @@ class DrawScatterplotCase(unittest.TestCase):
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
+    @unittest.skip("tickles bug in enable under python 3")
     def test_scatter_slow(self):
         """ Coverage test to check multiple marker size works """
         size = (50, 50)
