@@ -2,6 +2,22 @@
 Chaco CHANGELOG
 ===============
 
+What's new in Chaco 5.0.0
+-------------------------
+
+Change summary since 4.6.0
+
+New Features
+
+ * Experimental Python 3 support. The Chaco codebase has been ported to run on
+   Python 2.6, 2.7, 3.2, 3.3 and 3.4.  The basic test suite runs without error
+   on 3.2, 3.3 and 3.4 on Travis CI, but has not been extensively used yet.
+   Feedback appreciated. (PR#259)
+
+
+What's new in Chaco 4.6.0
+-------------------------
+
 Change summary since 4.5.0
 
 Fixes
@@ -20,7 +36,7 @@ New features/Improvements
  * Added perceptual colormaps by Matteo Niccoli, Dave Green and Kenneth Moreland.
  * Added `asynchronous_updates.py` demo that shows a pattern for generating
    expensive plots while keeping the interface responsive (PR#170).
- * Speeded up by 10x the data mappers of the `GridMapper` class (mapping of 2D data 
+ * Speeded up by 10x the data mappers of the `GridMapper` class (mapping of 2D data
    to/from screen space).
 
 
