@@ -6,10 +6,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 # Standard library imports
 import itertools
-try:
-    from itertools import izip
-except ImportError:
-    izip = zip
 
 # Major library imports
 from numpy import around, array, asarray, column_stack, \
@@ -27,6 +23,11 @@ from traitsui.api import View, VGroup, Item
 from .base_xy_plot import BaseXYPlot
 from .speedups import scatterplot_gather_points
 from .base import reverse_map_1d
+
+
+# generically get a zip iterator
+izip = getattr(itertools, 'izip', zip)
+
 
 #------------------------------------------------------------------------------
 # Traits UI View for customizing a scatter plot.
