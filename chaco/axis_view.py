@@ -1,5 +1,7 @@
 """ Defines the Traits UI view for a PlotAxis """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import TraitError
 from traitsui.api import View, HGroup, Group, VGroup, Item, TextEditor
 
@@ -14,7 +16,7 @@ def float_or_auto(val):
     except:
         if isinstance(val, basestring) and val == "auto":
             return val
-    raise TraitError, "Tick interval must be a number or 'auto'."
+    raise TraitError("Tick interval must be a number or 'auto'.")
 
 # Traits UI for a PlotAxis.
 AxisView = View(VGroup(
@@ -50,4 +52,3 @@ AxisView = View(VGroup(
                 ),
                 buttons = ["OK", "Cancel"]
             )
-

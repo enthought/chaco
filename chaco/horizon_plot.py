@@ -1,12 +1,13 @@
-from __future__ import with_statement
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from numpy import array, transpose, ndarray, empty
 from traits.api import Instance, DelegatesTo, Bool, Int
 
 from enable.api import transparent_color_trait
-from chaco.color_mapper import ColorMapper
-from chaco.base_xy_plot import BaseXYPlot
-from chaco.linear_mapper import LinearMapper
+from .color_mapper import ColorMapper
+from .base_xy_plot import BaseXYPlot
+from .linear_mapper import LinearMapper
 
 class BandedMapper(LinearMapper):
     bands = Int(4)
@@ -82,7 +83,7 @@ class HorizonPlot(BaseXYPlot):
         # Get color bands
         bands = array(self.color_mapper._get_color_bands())
 
-        with gc: 
+        with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             # draw positive bands
             inc = -1 * array([0, y_plus_height])
@@ -93,10 +94,10 @@ class HorizonPlot(BaseXYPlot):
 
             # draw negative bands
             if self.negative_bands:
-                if self.mirror: 
+                if self.mirror:
                     points[:,1] = oy - points[:,1]
                     zeroy = oy
-                else: 
+                else:
                     points[:,1] += y_plus_height
                     inc *= -1
                     zeroy = int(yhigh) + 2
@@ -114,14 +115,14 @@ class HorizonPlot(BaseXYPlot):
         gc.set_fill_color(tuple(face_col))
         gc.begin_path()
         startx, starty = points[0]
-        gc.move_to(startx, oy) 
+        gc.move_to(startx, oy)
         gc.line_to(startx, starty)
 
         gc.lines(points)
 
         endx, endy = points[-1]
-        gc.line_to(endx, oy) 
-        gc.line_to(startx, oy) 
+        gc.line_to(endx, oy)
+        gc.line_to(startx, oy)
 
         gc.close_path()
         gc.fill_path()

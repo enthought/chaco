@@ -2,10 +2,12 @@
 Defines the AbstractDataSource class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Bool, Dict, Event, HasTraits
 
 # Local relative imports
-from base import DimensionTrait
+from .base import DimensionTrait
 
 class AbstractDataSource(HasTraits):
     """ This abstract interface must be implemented by any class supplying data

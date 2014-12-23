@@ -3,6 +3,8 @@ Traits UI editor for WX, based on the Chaco1 PlotEditor in
 traits.ui.wx.plot_editor.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from traits.etsconfig.api import ETSConfig
 from enable.api import black_color_trait, LineStyle, ColorTrait,\
@@ -19,14 +21,14 @@ from traitsui.toolkit import toolkit_object
 Editor = toolkit_object('editor:Editor')
 
 # Local relative imports
-from axis import PlotAxis
-from plot_containers import OverlayPlotContainer
-from plot_factory import create_line_plot, create_scatter_plot, \
+from .axis import PlotAxis
+from .plot_containers import OverlayPlotContainer
+from .plot_factory import create_line_plot, create_scatter_plot, \
                          add_default_grids, add_default_axes
-from plot_label import PlotLabel
+from .plot_label import PlotLabel
 
 # Somewhat unorthodox...
-from chaco.tools.api import PanTool, ZoomTool
+from .tools.api import PanTool, ZoomTool
 
 #-------------------------------------------------------------------------------
 #  Trait definitions:
@@ -236,7 +238,7 @@ class ChacoPlotEditor ( Editor ):
         elif ETSConfig.toolkit == 'qt4':
             control.resize(factory.width, factory.height)
         else:
-            raise NotImplementedError
+            raise NotImplementedError()
 
         # Attach listeners to the object's traits appropriately so we can
         # update the plot when they change.  For the _update_axis_grids()
@@ -335,7 +337,7 @@ class ChacoPlotEditor ( Editor ):
                                                 value_bounds = value_bounds,
                                                 orientation = plotitem.orientation)
         else:
-            raise RuntimeError, "Unknown plot type '%s' in ChacoPlotEditor." % plot_type
+            raise RuntimeError("Unknown plot type '%s' in ChacoPlotEditor." % plot_type)
 
         self._set_basic_properties(plot, plotitem)
 

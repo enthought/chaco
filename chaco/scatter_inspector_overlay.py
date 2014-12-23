@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library imports
 from numpy import array, asarray
@@ -9,8 +9,8 @@ from enable.api import ColorTrait, MarkerTrait
 from traits.api import Float, Int, Str, Trait
 
 # Local, relative imports
-from abstract_overlay import AbstractOverlay
-from scatterplot import render_markers
+from .abstract_overlay import AbstractOverlay
+from .scatterplot import render_markers
 
 class ScatterInspectorOverlay(AbstractOverlay):
     """
@@ -145,5 +145,3 @@ class ScatterInspectorOverlay(AbstractOverlay):
         if new:
             new.on_trait_change(self.metadata_changed, 'metadata_changed')
         return
-
-

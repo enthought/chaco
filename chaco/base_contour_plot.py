@@ -1,4 +1,6 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import array, isscalar, issubsctype, linspace, number
 
 # Enthought library imports
@@ -7,8 +9,8 @@ from traits.api import Bool, Instance, Int, List, Property, \
         Range, Str, Trait, Tuple
 
 # Local relative imports
-from base_2d_plot import Base2DPlot
-from color_mapper import ColorMapper
+from .base_2d_plot import Base2DPlot
+from .color_mapper import ColorMapper
 
 
 class BaseContourPlot(Base2DPlot):

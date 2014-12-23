@@ -17,6 +17,8 @@ Dave Green's cubehelix family of colormaps can be generated using
     https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import numpy as np
 
 from .color_spaces import msh2xyz, srgb2xyz, xyz2msh, xyz2srgb

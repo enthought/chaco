@@ -1,6 +1,8 @@
 """ Defines the Serializable mix-in class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 class Serializable(object):
     """
     Mix-in class to help serialization.  Serializes just the attributes in
@@ -56,7 +58,7 @@ class Serializable(object):
         you want post_load() to happen in the same order as MRO, which super()
         does automatically.
         """
-        print 'Serializable._post_load'
+        print('Serializable._post_load')
         pass
 
     def _do_setstate(self, state):
@@ -96,10 +98,10 @@ class Serializable(object):
 #        for attrib in all_pickles:
 #            state[attrib] = getattr(self, attrib)
 #
-#        print '<<<<<<<<<<<<<', self
+#        print('<<<<<<<<<<<<<', self)
 #        for key,value in state.items():
-#            print key, type(value)
-#        print '>>>>>>>>>>>>>'
+#            print(key, type(value))
+#        print('>>>>>>>>>>>>>')
 #
 #        return state
 

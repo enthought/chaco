@@ -1,7 +1,7 @@
 """ Defines the MultiLinePlot class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Standard library imports
 import warnings
@@ -17,9 +17,9 @@ from traits.api import Float, List, Str, Trait, \
             Bool, Callable, Property, cached_property, Instance, Array
 from traitsui.api import Item, View, ScrubberEditor, HGroup
 
-from array_data_source import ArrayDataSource
-from base import arg_find_runs, bin_search
-from base_xy_plot import BaseXYPlot
+from .array_data_source import ArrayDataSource
+from .base import arg_find_runs, bin_search
+from .base_xy_plot import BaseXYPlot
 
 
 class MultiLinePlot(BaseXYPlot):

@@ -1,11 +1,14 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import numpy
 
 from chaco.grid_mapper import GridMapper
 from enable.api import BaseTool, KeySpec
 from traits.api import Enum, Float, Instance, Bool, HasTraits, List
 
-from tool_history_mixin import ToolHistoryMixin
-from tool_states import ZoomState, PanState, GroupedToolState, ToolState
+from .tool_history_mixin import ToolHistoryMixin
+from .tool_states import ZoomState, PanState, GroupedToolState, ToolState
 
 
 class BetterZoom(BaseTool, ToolHistoryMixin):

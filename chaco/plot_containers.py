@@ -1,5 +1,8 @@
 """ Defines various plot container classes, including stacked, grid, and overlay.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import amax, any, arange, array, cumsum, hstack, sum, zeros, zeros_like
 
@@ -10,7 +13,7 @@ from enable.simple_layout import simple_container_get_preferred_size, \
                                             simple_container_do_layout
 
 # Local relative imports
-from base_plot_container import BasePlotContainer
+from .base_plot_container import BasePlotContainer
 
 
 __all__ = ["OverlayPlotContainer", "HPlotContainer", "VPlotContainer", \
@@ -714,4 +717,3 @@ class GridPlotContainer(BasePlotContainer):
 
 
 ### EOF
-

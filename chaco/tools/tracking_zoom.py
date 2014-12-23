@@ -1,8 +1,10 @@
 """ Defines the TrackingZoom class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Chaco imports
-from zoom_tool import ZoomTool
+from .zoom_tool import ZoomTool
 
 class TrackingZoom(ZoomTool):
     """ Allows the user to zoom in or out on a plot that is using tracking.

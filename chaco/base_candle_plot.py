@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library imports
 from numpy import array, column_stack
@@ -9,7 +9,7 @@ from enable.api import ColorTrait
 from traits.api import Bool, Float, Int, List, Property, Trait
 
 # Chaco imports
-from base_xy_plot import BaseXYPlot
+from .base_xy_plot import BaseXYPlot
 
 # TODO: allow to set the width of the bar
 
@@ -161,7 +161,3 @@ class BaseCandlePlot(BaseXYPlot):
         bar_max = array([y + height - (height / 3)])
         center = array([y + (height / 2)])
         self._render(gc, array([x+width/4]), array([x+3*width/4]), min, bar_min, center, bar_max, max)
-
-
-
-

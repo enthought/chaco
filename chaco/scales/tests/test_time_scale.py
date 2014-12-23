@@ -103,7 +103,7 @@ def test_tfrac_milliseconds_04():
     t = 1.0078121
     # Note that the last digit is lost due to rounding to microsecond scale.
     (base, frac) = tfrac(t, milliseconds=1)
-    print base, frac
+    print(base, frac)
     assert base == 1.007
     assert frac == 0.000812
 
@@ -111,7 +111,7 @@ def test_tfrac_milliseconds_05():
     t = 1.0078056
     # Note that the last digit is lost due to rounding to microsecond scale.
     (base, frac) = tfrac(t, milliseconds=1)
-    print base, frac
+    print(base, frac)
     assert base == 1.007
     assert frac == 0.000806
 
@@ -154,7 +154,7 @@ def test_trange_seconds_01():
 
 def test_trange_seconds_02():
     r = trange(0, 10, seconds=1)
-    assert r == range(11)
+    assert r == list(range(11))
 
 def test_trange_seconds_03():
     r = trange(0, 1.5, seconds=1)

@@ -1,6 +1,8 @@
 """ Defines the ColorMapper and ColorMapTemplate classes.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import arange, array, asarray, clip, divide, float32, int8, isinf, \
         isnan, ones, searchsorted, sometrue, sort, take, uint8, where, zeros, \
@@ -11,10 +13,10 @@ from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
                                  Int, Property, Str, Trait
 
 # Relative imports
-from abstract_colormap import AbstractColormap
-from data_range_1d import DataRange1D
+from .abstract_colormap import AbstractColormap
+from .data_range_1d import DataRange1D
 
-from speedups import map_colors, map_colors_uint8
+from .speedups import map_colors, map_colors_uint8
 
 
 class ColorMapTemplate(HasTraits):
@@ -133,16 +135,16 @@ class ColorMapper(AbstractColormap):
         # From the offsets and the color data, generate a segment map.
         segment_map = {}
         red_values = palette[:,0]
-        segment_map['red'] = zip(offsets, red_values, red_values)
+        segment_map['red'] = list(zip(offsets, red_values, red_values))
         green_values = palette[:,1]
-        segment_map['green'] = zip(offsets, green_values, green_values)
+        segment_map['green'] = list(zip(offsets, green_values, green_values))
         blue_values = palette[:,2]
-        segment_map['blue'] = zip(offsets, blue_values, blue_values)
+        segment_map['blue'] = list(zip(offsets, blue_values, blue_values))
         if n_components == 3:
             alpha_values = ones(n_colors)
         else:
             alpha_values = palette[:,3]
-        segment_map['alpha'] = zip(offsets, alpha_values, alpha_values)
+        segment_map['alpha'] = list(zip(offsets, alpha_values, alpha_values))
 
         return cls(segment_map, **traits)
 
@@ -303,7 +305,7 @@ class ColorMapper(AbstractColormap):
         if self.color_depth is 'rgba':
             luts.append(self._alpha_lut)
 
-        result = zip(*luts)
+        result = list(zip(*luts))
 
         return result
 

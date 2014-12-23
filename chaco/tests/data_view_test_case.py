@@ -1,7 +1,11 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
-from chaco.api import DataRange2D, DataView, GridDataSource
+from chaco.data_range_2d import DataRange2D
+from chaco.data_view import DataView
+from chaco.grid_data_source import GridDataSource
 
 
 class DataViewTestCase(unittest.TestCase):

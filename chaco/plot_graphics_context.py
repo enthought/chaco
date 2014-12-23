@@ -1,7 +1,7 @@
 """ Defines the PlotGraphicsContext class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from enable.kiva_graphics_context import GraphicsContext
 
@@ -68,4 +68,3 @@ class PlotGraphicsContextMixin(object):
 
 class PlotGraphicsContext(PlotGraphicsContextMixin, GraphicsContext):
     pass
-

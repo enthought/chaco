@@ -1,6 +1,8 @@
 """ Defines the PlotWindow class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from enable.api import Window
 from chaco.shell.scaly_plot import ScalyPlot
 

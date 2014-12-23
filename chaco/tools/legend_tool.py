@@ -1,6 +1,8 @@
 """ Defines the LegendTool class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from traits.api import Bool, Enum
 from enable.tools.drag_tool import DragTool

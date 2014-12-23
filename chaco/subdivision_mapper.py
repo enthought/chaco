@@ -1,5 +1,8 @@
 """ Defines the SubdivisionDataMapper and SubdivisionLineDataMapper classes.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 import math
 from numpy import array, arange, concatenate, searchsorted, nonzero, transpose, \
@@ -10,10 +13,10 @@ import numpy
 from traits.api import List, Array, Tuple, Int, Float
 
 # Local, relative imports
-from datamapper import AbstractDataMapper, right_shift, left_shift, \
+from .datamapper import AbstractDataMapper, right_shift, left_shift, \
                        sort_points, ArraySortTrait, \
                        array_zip
-from subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
+from .subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
                               arg_find_runs
 
 
@@ -202,7 +205,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
             # passing them to find_runs().
             grid_column_indices = sort(y_sorted[start:end][:,0])
             #pdb.set_trace()
-            #print grid_column_indices.shape
+            #print(grid_column_indices.shape)
             for span in find_runs(grid_column_indices):
                 x = self._cell_lefts[span[0]]
                 y = self._cell_bottoms[rownum]
@@ -239,7 +242,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
                     #~ elif cell.sort_order == 'descending':
                         #~ cell.points = find_runs(sort_points(cellpts)[::-1], 'descending')
                     #~ else:
-                        #~ raise RuntimeError, "Invalid sort_order: " + cell.sort_order
+                        #~ raise RuntimeError("Invalid sort_order: " + cell.sort_order)
         #~ return
 
 class SubdivisionLineDataMapper(SubdivisionDataMapper):

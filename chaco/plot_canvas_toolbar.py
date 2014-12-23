@@ -1,10 +1,12 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Any, Enum, Int
 from enable.drawing.api import ToolbarButton
 
 # Local, relative imports
-from plot_containers import VPlotContainer
-from plot_component import PlotComponent
+from .plot_containers import VPlotContainer
+from .plot_component import PlotComponent
 
 
 class PlotCanvasToolbar(VPlotContainer):

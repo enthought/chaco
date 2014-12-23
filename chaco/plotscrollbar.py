@@ -1,4 +1,6 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Any, Enum, Int, Property, Trait
 
 from enable.api import NativeScrollBar
@@ -100,7 +102,6 @@ class PlotScrollBar(NativeScrollBar):
         else:
             ticksize = 1
         foo = (totalmin, totalmax, view, ticksize)
-        print "scrollrange:", foo
         self.set(range = foo,
                  scroll_position = max(min(self.scroll_position, totalmax-view), totalmin),
                  trait_change_notify=False)

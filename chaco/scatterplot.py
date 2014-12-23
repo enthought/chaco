@@ -2,6 +2,8 @@
 function.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Standard library imports
 import itertools
 
@@ -18,9 +20,14 @@ from traits.api import Any, Array, Bool, Float, Trait, Callable, Property, \
 from traitsui.api import View, VGroup, Item
 
 # Local relative imports
-from base_xy_plot import BaseXYPlot
-from speedups import scatterplot_gather_points
-from base import reverse_map_1d
+from .base_xy_plot import BaseXYPlot
+from .speedups import scatterplot_gather_points
+from .base import reverse_map_1d
+
+
+# generically get a zip iterator
+izip = getattr(itertools, 'izip', zip)
+
 
 #------------------------------------------------------------------------------
 # Traits UI View for customizing a scatter plot.
@@ -133,7 +140,7 @@ def render_markers(gc, points, marker, marker_size,
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):
-            for pt,size in itertools.izip(points, marker_size):
+            for pt,size in izip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -142,7 +149,7 @@ def render_markers(gc, points, marker, marker_size,
                     gc.draw_path(marker.draw_mode)
         else:
             path = custom_symbol
-            for pt,size in itertools.izip(points, marker_size):
+            for pt,size in izip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -302,7 +309,7 @@ class ScatterPlot(BaseXYPlot):
 
             try:
                 ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
-            except IndexError, e:
+            except IndexError as e:
                 # if reverse_map raises this exception, it means that data_pt is
                 # outside the range of values in index_data.
                 if outside_returns_none:

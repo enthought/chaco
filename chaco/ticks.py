@@ -12,6 +12,9 @@
 tick-related values (i.e., bounds and intervals).
 
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
     float64, floor, linspace, log10, minimum, ndarray, newaxis, \

@@ -3,6 +3,8 @@ Defines the LinearMapper class, which maps from a 1-D region in data space
 into a 1-D output space.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import array, empty, ndarray
 
@@ -10,7 +12,7 @@ from numpy import array, empty, ndarray
 from traits.api import Bool, Float
 
 # Local relative imports
-from base_1d_mapper import Base1DMapper
+from .base_1d_mapper import Base1DMapper
 
 
 class LinearMapper(Base1DMapper):

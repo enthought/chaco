@@ -1,8 +1,13 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
 from numpy import allclose, array, ravel
 
-from chaco.api import ArrayDataSource, ColorMapper, DataRange1D
+from chaco.array_data_source import ArrayDataSource
+from chaco.color_mapper import ColorMapper
+from chaco.data_range_1d import DataRange1D
 
 
 class LinearSegmentedColormapTestCase(unittest.TestCase):
@@ -152,7 +157,7 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
 
 ##         colormap._recalculate()
 
-##         print '**************', colormap._color_bands, colormap._value_bands
+##         print('**************', colormap._color_bands, colormap._value_bands)
 
 if __name__ == '__main__':
     import nose

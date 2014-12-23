@@ -2,12 +2,15 @@
 Test of basic dataseries behavior.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
 from numpy import arange, array, allclose, empty, isnan, nan
 import numpy as np
 
-from chaco.api import ArrayDataSource, PointDataSource
+from chaco.array_data_source import ArrayDataSource
+from chaco.point_data_source import PointDataSource
 
 
 class ArrayDataTestCase(unittest.TestCase):

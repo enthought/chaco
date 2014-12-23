@@ -2,6 +2,8 @@
 Defines basic traits and functions for the data model.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Standard library imports
 from math import radians, sqrt
 
@@ -54,7 +56,7 @@ def n_gon(center, r, nsides, rot_degrees=0):
     rotation about the center may be specified with *rot_degrees*.
     """
     if nsides < 3:
-        raise ValueError, 'Must have at least 3 sides in a polygon'
+        raise ValueError('Must have at least 3 sides in a polygon')
     rotation = radians(rot_degrees)
     theta = (pi * 2) / nsides
     return [poly_point(center, r, i*theta+rotation) for i in range(nsides)]
@@ -69,7 +71,8 @@ def bin_search(values, value, ascending):
     array value is the last value less (greater) than the desired value.
     Returns -1 if *value* is beyond the minimum or maximum of *values*.
     """
-    if ascending > 0:
+    ascending = ascending > 0
+    if ascending:
         if (value < values[0]) or (value > values[-1]):
             return -1
     else:
@@ -82,7 +85,7 @@ def bin_search(values, value, ascending):
         midval = values[ mid ]
         if midval == value:
             return mid
-        elif midval > value:
+        elif (ascending and midval > value) or (not ascending and midval < value):
             hi = mid
         else:
             lo = mid
@@ -114,10 +117,10 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
     elif sort_order == "descending":
         ndx = bin_search(data, pt, -1)
     else:
-        raise NotImplementedError, "reverse_map_1d() requires a sorted array"
+        raise NotImplementedError("reverse_map_1d() requires a sorted array")
 
     if ndx == -1:
-        raise IndexError, "value outside array data range"
+        raise IndexError("value outside array data range")
 
 
     # Now round the index to the closest matching index.  Do this
@@ -166,7 +169,7 @@ def sort_points(points, index=0):
     on their x-coordinate.
     """
     if len(points.shape) != 2 or (2 not in points.shape):
-        raise RuntimeError, "sort_points(): Array of wrong shape."
+        raise RuntimeError("sort_points(): Array of wrong shape.")
     return take( points, argsort(points[:,index]) )
 
 def find_runs(int_array, order='ascending'):
@@ -208,7 +211,7 @@ def arg_find_runs(int_array, order='ascending'):
     rshifted = right_shift(int_array, int_array[0]-increment).view(ndarray)
     start_indices = concatenate([[0], nonzero(int_array - (rshifted+increment))[0]])
     end_indices = left_shift(start_indices, len(int_array))
-    return zip(start_indices, end_indices)
+    return list(zip(start_indices, end_indices))
 
 
 def point_line_distance(pt, p1, p2):

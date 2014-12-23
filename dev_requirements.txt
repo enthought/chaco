@@ -1,8 +1,7 @@
---allow-external PIL
---allow-unverified PIL
-PIL
+pillow
 unittest2
 coverage
--e git+http://github.com/enthought/traits.git#egg=traits
--e git+http://github.com/enthought/traitsui.git#egg=traitsui
--e git+http://github.com/enthought/enable.git#egg=enable
+-e git+https://github.com/enthought/traits.git#egg=traits
+-e git+https://github.com/pradyun/pyface.git@python3#egg=pyface
+-e git+https://github.com/pradyun/traitsui.git@python3#egg=traitsui
+-e git+https://github.com/pradyun/enable.git@python3#egg=enable

@@ -1,3 +1,6 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import array
 from traits.api import Instance, Callable, on_trait_change
 from chaco.api import DataRange2D, ImageData

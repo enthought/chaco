@@ -2,12 +2,14 @@
 Unit tests for utility functions in chaco.base
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 from math import sqrt
 from numpy import arange, array
 from numpy.testing import assert_equal, assert_almost_equal
 
-from chaco.api import bin_search, find_runs, reverse_map_1d, point_line_distance
+from chaco.base import bin_search, find_runs, reverse_map_1d, point_line_distance
 
 class BinSearchTestCase(unittest.TestCase):
     def test_ascending_data(self):

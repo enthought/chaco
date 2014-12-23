@@ -1,6 +1,7 @@
 """ Defines the TextBoxOverlay class.
 """
-from __future__ import with_statement
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Enthought library imports
 from enable.api import ColorTrait
@@ -8,8 +9,8 @@ from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Any, Enum, Int, Str, Float, Trait, Bool
 
 # Local, relative imports
-from abstract_overlay import AbstractOverlay
-from label import Label
+from .abstract_overlay import AbstractOverlay
+from .label import Label
 
 
 class TextBoxOverlay(AbstractOverlay):

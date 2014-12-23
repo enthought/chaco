@@ -1,8 +1,11 @@
 """ Defines the base class for various types of zoom tools.
 """
-import warnings
-warnings.warn("BaseZoomTool has been deprecated, use BetterZoomTool", DeprecationWarning)
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import warnings
+
+warnings.warn("BaseZoomTool has been deprecated, use BetterZoomTool", DeprecationWarning)
 
 from numpy import allclose, inf
 
@@ -109,4 +112,3 @@ class BaseZoomTool(HasTraits):
             low[axis_index] = low_val
             high[axis_index] = high_val
         return low, high
-

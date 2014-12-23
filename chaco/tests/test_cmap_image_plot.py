@@ -1,3 +1,6 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
 import mock
@@ -5,9 +8,12 @@ import mock
 import numpy
 
 from enable.api import AbstractWindow
-from chaco.api import (
-    CMapImagePlot, DataRange1D, DataRange2D, GridDataSource, GridMapper,
-    ImageData)
+from chaco.cmap_image_plot import CMapImagePlot
+from chaco.data_range_1d import DataRange1D
+from chaco.data_range_2d import DataRange2D
+from chaco.grid_data_source import GridDataSource
+from chaco.grid_mapper import GridMapper
+from chaco.image_data import ImageData
 from chaco.default_colormaps import Spectral
 
 class TestCMapImagePlot(unittest.TestCase):

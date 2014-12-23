@@ -3,6 +3,9 @@
 source: docs/source/user_manual/chaco_tutorial.rst
 
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 from numpy import linspace, pi, sin
 from chaco.shell import plot, title, ytitle

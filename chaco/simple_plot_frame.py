@@ -8,14 +8,14 @@
 #
 #################################################################################
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Enthought library imports
 from traits.api import Bool
 
 # Local, relative imports
-from base_plot_frame import BasePlotFrame
-from plot_containers import OverlayPlotContainer
+from .base_plot_frame import BasePlotFrame
+from .plot_containers import OverlayPlotContainer
 
 class SimplePlotFrame(BasePlotFrame):
     """

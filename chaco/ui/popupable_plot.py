@@ -1,3 +1,6 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from traits.api import List
 from chaco.api import VPlotContainer
@@ -31,5 +34,3 @@ class PopupablePlot(Plot):
         self.command_queue.append((data, kw))
         super(PopupablePlot, self).plot(data, **kw)
         return
-
-

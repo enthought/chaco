@@ -1,5 +1,8 @@
 """ Defines the DataLabel class and related trait and function.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from math import sqrt
 from numpy import array, asarray, inf
@@ -11,8 +14,8 @@ from traits.api import Any, Array, Bool, Enum, Float, Int, List, \
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
-from scatterplot import render_markers
-from tooltip import ToolTip
+from .scatterplot import render_markers
+from .tooltip import ToolTip
 
 
 # Specifies the position of a label relative to its target.  This can
@@ -122,8 +125,8 @@ def find_region(px, py, x, y, x2, y2):
               +----------+
          left |  inside  | right
               +----------+
-             /            \ 
-            /    bottom    \ 
+             /            \
+            /    bottom    \
 
     """
     if px < x:
