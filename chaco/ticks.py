@@ -13,6 +13,7 @@ tick-related values (i.e., bounds and intervals).
 
 """
 # Major library imports
+from math import isinf
 from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
     float64, floor, linspace, log10, minimum, ndarray, newaxis, \
     putmask, shape
@@ -143,6 +144,12 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
         axis end points.
     """
 
+    if (isinf(data_low) or isinf(data_high) or isinf(tick_interval)):
+        return []
+
+    if (isinf(tick_interval)):
+        return []
+
     is_auto_low  = (bound_low  == 'auto')
     is_auto_high = (bound_high == 'auto')
 
@@ -205,7 +212,14 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
 
     if upper > end:
         end += tick_interval
-    ticks = arange( start, end + (tick_interval / 2.0), tick_interval )
+
+    if isinf(start) or isinf(end + (tick_interval / 2.0)):
+        return []
+
+    try:
+        ticks = arange( start, end + (tick_interval / 2.0), tick_interval )
+    except ValueError:
+        return []
 
     if len( ticks ) < 2:
         ticks = array( ( ( lower - lower * 1.0e-7 ), lower ) )
