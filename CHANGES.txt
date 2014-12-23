@@ -9,7 +9,7 @@ New Features
  * Experimental Python 3 support. The Chaco codebase has been ported to run on
    Python 2.6, 2.7, 3.2, 3.3 and 3.4.  The basic test suite runs without error
    on 3.2, 3.3 and 3.4 on Travis CI, but has not been extensively used yet.
-   Feedback appreciated. (PR#259)
+   Feedback appreciated. (PR#261)
 
 Fixes
 
