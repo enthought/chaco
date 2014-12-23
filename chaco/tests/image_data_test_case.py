@@ -56,7 +56,7 @@ class ImageDataTestCase(UnittestTools, unittest.TestCase):
         myarray = arange(15).reshape(5, 3, 1)
         data_source = ImageData(data=myarray, transposed=True)
 
-        assert_array_equal(swapaxes(myarray, 0, 1), self.data_source.get_data())
+        assert_array_equal(swapaxes(myarray, 0, 1), data_source.get_data())
 
     def test_get_data_mask(self):
         # XXX this is probably not the right thing
