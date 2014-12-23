@@ -1,5 +1,5 @@
 """
-Test of ArrayDataSource behavior.
+Tests of ArrayDataSource behavior.
 """
 
 import pickle
@@ -13,7 +13,7 @@ from chaco.api import ArrayDataSource, PointDataSource
 from traits.testing.unittest_tools import UnittestTools
 
 
-class ArrayDataSourceTest(UnittestTools, unittest.TestCase):
+class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
 
     def setUp(self):
         self.myarray = arange(10)
@@ -24,8 +24,10 @@ class ArrayDataSourceTest(UnittestTools, unittest.TestCase):
         data_source = ArrayDataSource()
         assert_array_equal(data_source._data, [])
         self.assertEqual(data_source.value_dimension, "scalar")
+        self.assertEqual(data_source.index_dimension, "scalar")
         self.assertEqual(data_source.sort_order, "none")
         self.assertFalse(data_source.is_masked())
+        self.assertEqual(data_source.persist_data, True)
 
     def test_basic_setup(self):
         assert_array_equal(self.myarray, self.data_source._data)
@@ -84,7 +86,6 @@ class ArrayDataSourceTest(UnittestTools, unittest.TestCase):
     def test_get_data_no_data(self):
         data_source = ArrayDataSource(None)
 
-        # XXX A _scalar_?  Not array([]) or None?
         assert_array_equal(data_source.get_data(), 0.0)
 
     def test_get_data_mask(self):
@@ -99,9 +100,8 @@ class ArrayDataSourceTest(UnittestTools, unittest.TestCase):
         data_source = ArrayDataSource(None)
 
         data, mask = data_source.get_data_mask()
-        # XXX this is what I would expect, given get_data() behaviour
         assert_array_equal(data, 0.0)
-        assert_array_equal(data, True)
+        assert_array_equal(mask, True)
 
     def test_get_data_mask_no_mask(self):
         data, mask = self.data_source.get_data_mask()
@@ -221,21 +221,21 @@ class ArrayDataSourceTest(UnittestTools, unittest.TestCase):
 
     def test_serialization_state(self):
         state = self.data_source.__getstate__()
-        self.assertTrue('value_dimension' not in state)
-        self.assertTrue('index_dimension' not in state)
-        self.assertTrue('persist_data' not in state)
+        self.assertNotIn('value_dimension', state)
+        self.assertNotIn('index_dimension', state)
+        self.assertNotIn('persist_data', state)
 
     @unittest.skip("persist_data probably shouldn't be persisted")
     def test_serialization_state_no_persist(self):
         self.data_source.persist_data = False
 
         state = self.data_source.__getstate__()
-        self.assertTrue('value_dimension' not in state)
-        self.assertTrue('index_dimension' not in state)
-        self.assertTrue('persist_data' not in state)
+        self.assertNotIn('value_dimension', state)
+        self.assertNotIn('index_dimension', state)
+        self.assertNotIn('persist_data', state)
         for key in ["_data", "_cached_mask", "_cached_bounds", "_min_index",
                     "_max_index"]:
-            self.assertTrue(key not in state)
+            self.assertIn(key, state)
 
     @unittest.skip("I think this is just broken")
     def test_serialization_post_load(self):

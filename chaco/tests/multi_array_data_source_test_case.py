@@ -1,5 +1,5 @@
 """
-Test of basic dataseries behavior.
+Test of MultiArrayDataSource behavior.
 """
 
 import unittest2 as unittest
