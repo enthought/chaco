@@ -13,6 +13,10 @@ from traits.testing.unittest_tools import UnittestTools
 
 class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
 
+    def setUp(self):
+        self.myarray = arange(20).reshape(10, 2)
+        self.data_source = MultiArrayDataSource(self.myarray)
+
     def test_init_defaults(self):
         data_source = MultiArrayDataSource()
         assert_array_equal(data_source._data, empty(shape=(0, 1), dtype=float))
@@ -22,39 +26,28 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
         self.assertFalse(data_source.is_masked())
 
     def test_basic_setup(self):
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-
-        assert_array_equal(myarray, data_source._data)
+        assert_array_equal(self.myarray, self.data_source._data)
         # XXX this doesn't match AbstractDataSource's interface
-        self.assertEqual(data_source.index_dimension, 0)
-        self.assertEqual(data_source.value_dimension, 1)
-        self.assertEqual(data_source.sort_order, "ascending")
-        self.assertFalse(data_source.is_masked())
+        self.assertEqual(self.data_source.index_dimension, 0)
+        self.assertEqual(self.data_source.value_dimension, 1)
+        self.assertEqual(self.data_source.sort_order, "ascending")
+        self.assertFalse(self.data_source.is_masked())
 
     def test_set_data(self):
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
         new_array = arange(0, 40, 2).reshape(10, 2)
 
-        with self.assertTraitChanges(data_source, 'data_changed', count=1):
-            data_source.set_data(new_array)
+        with self.assertTraitChanges(self.data_source, 'data_changed', count=1):
+            self.data_source.set_data(new_array)
 
-        assert_array_equal(new_array, data_source._data)
-        self.assertEqual(data_source.get_bounds(), (0, 38))
-        self.assertEqual(data_source.sort_order, "ascending")
+        assert_array_equal(new_array, self.data_source._data)
+        self.assertEqual(self.data_source.get_bounds(), (0, 38))
+        self.assertEqual(self.data_source.sort_order, "ascending")
 
     def test_get_data(self):
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-
-        assert_array_equal(myarray, data_source.get_data())
+        assert_array_equal(self.myarray, self.data_source.get_data())
 
     def test_get_data_axes(self):
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-
-        assert_array_equal(arange(0, 20, 2), data_source.get_data(axes=0))
+        assert_array_equal(arange(0, 20, 2), self.data_source.get_data(axes=0))
 
     def test_get_data_no_data(self):
         data_source = MultiArrayDataSource()
@@ -63,18 +56,13 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
                            empty(shape=(0, 1), dtype=float))
 
     def test_get_data_mask(self):
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-
-        data, mask = data_source.get_data_mask()
-        assert_array_equal(data, myarray)
+        data, mask = self.data_source.get_data_mask()
+        assert_array_equal(data, self.myarray)
         assert_array_equal(mask, ones(shape=(10, 2), dtype=bool))
 
     def test_bounds(self):
         # ascending
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-        bounds = data_source.get_bounds()
+        bounds = self.data_source.get_bounds()
         self.assertEqual(bounds, (0, 19))
 
         # descending
@@ -91,9 +79,7 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
 
     def test_bounds_value(self):
         # ascending
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-        bounds = data_source.get_bounds(value=0)
+        bounds = self.data_source.get_bounds(value=0)
         self.assertEqual(bounds, (0, 18))
 
         # descending
@@ -110,9 +96,7 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
 
     def test_bounds_index(self):
         # ascending
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-        bounds = data_source.get_bounds(index=0)
+        bounds = self.data_source.get_bounds(index=0)
         self.assertEqual(bounds, (0, 1))
 
         # descending
@@ -142,24 +126,15 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
         self.assertTrue(isnan(bounds[1]))
 
     def test_metadata(self):
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-
-        self.assertEqual(data_source.metadata,
+        self.assertEqual(self.data_source.metadata,
                          {'annotations': [], 'selections': []})
 
     @unittest.skip('change handler missing from class')
     def test_metadata_changed(self):
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-
-        with self.assertTraitChanges(data_source, 'metadata_changed', count=1):
-            data_source.metadata = {'new_metadata': True}
+        with self.assertTraitChanges(self.data_source, 'metadata_changed', count=1):
+            self.data_source.metadata = {'new_metadata': True}
 
     @unittest.skip('change handler missing from class')
     def test_metadata_items_changed(self):
-        myarray = arange(20).reshape(10, 2)
-        data_source = MultiArrayDataSource(myarray)
-
-        with self.assertTraitChanges(data_source, 'metadata_changed', count=1):
-            data_source.metadata['new_metadata'] = True
+        with self.assertTraitChanges(self.data_source, 'metadata_changed', count=1):
+            self.data_source.metadata['new_metadata'] = True
