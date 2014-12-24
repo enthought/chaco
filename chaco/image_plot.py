@@ -289,10 +289,17 @@ class ImagePlot(Base2DPlot):
         yparams = (1, 3)
         for pos_index, size_index in (xparams, yparams):
             if subimage_index[pos_index] == subimage_index[pos_index+2]-1:
-                # xcoords lie inside the same pixel, so set the subimage
-                # coords to be the width of the image
-                subimage_coords[pos_index] = plot_dimensions[pos_index]
-                subimage_coords[size_index] = plot_dimensions[size_index]
+                # coords lie inside the same pixel, so can clamp subimage_coords
+                # to the plot bounds
+                clamped_min = max(subimage_coords[pos_index],
+                                  plot_dimensions[pos_index])
+
+                si_max = subimage_coords[pos_index] + subimage_coords[size_index]
+                plot_max = plot_dimensions[pos_index] + plot_dimensions[size_index]
+                clamped_max = min(si_max, plot_max)
+
+                subimage_coords[pos_index] = clamped_min
+                subimage_coords[size_index] = clamped_max - clamped_min
             elif subimage_index[pos_index] == subimage_index[pos_index+2]-2:
                 # coords span across a pixel boundary.  Find the scaling
                 # factor of the virtual (and potentially large) subimage
@@ -305,12 +312,17 @@ class ImagePlot(Base2DPlot):
                 # entire screen, since we are only straddling one pixel boundary.
                 # The formula for calculating the new origin can be worked out
                 # on paper.
+                #
+                # Panning to near an edge so only one transition is visible
+                # causes an attempt to scale up the subimage_coords, so we
+                # guard against that case too.
                 extent = subimage_coords[size_index]
                 pixel_extent = extent/2   # we are indexed into two pixels
                 origin = subimage_coords[pos_index]
                 scale = float(2 * plot_dimensions[size_index] / extent)
-                subimage_coords[size_index] *= scale
-                subimage_coords[pos_index] = origin + (1-scale)*pixel_extent
+                if scale < 1:
+                    subimage_coords[size_index] *= scale
+                    subimage_coords[pos_index] = origin + (1-scale)*pixel_extent
 
         subimage_index = map(int, subimage_index)
 
