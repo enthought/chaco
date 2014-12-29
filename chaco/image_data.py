@@ -10,7 +10,7 @@ from numpy import fmax, fmin, swapaxes
 from traits.api import Bool, Int, Property, ReadOnly, Tuple
 
 # Local relative imports
-from .base import DimensionTrait, ImageTrait
+from .base import ImageTrait
 from .abstract_data_source import AbstractDataSource
 
 class ImageData(AbstractDataSource):
@@ -22,7 +22,7 @@ class ImageData(AbstractDataSource):
     on the context in which the ImageData instance will be used.
     """
     # The dimensionality of the data.
-    dimension = ReadOnly(DimensionTrait('image'))
+    dimension = ReadOnly(2)
 
     # Depth of the values at each i,j. Values that are used include:
     #
