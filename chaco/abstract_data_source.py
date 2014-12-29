@@ -1,136 +1,170 @@
 """
 Defines the AbstractDataSource class.
+
+This is the abstract base class for all sources which provide data to Chaco
+plots and renderers.
+
+
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from traits.api import Bool, Dict, Event, HasTraits
+from traits.api import ABCHasTraits, Dict, Event, Int, Str
 
 # Local relative imports
-from .base import DimensionTrait
+from .base import ValueType
 
-class AbstractDataSource(HasTraits):
-    """ This abstract interface must be implemented by any class supplying data
-    to Chaco.
 
-    Chaco does not have a notion of a "data format". For the most part, a data
-    source looks like an array of values with an optional mask and metadata.
-    If you implement this interface, you are responsible for adapting your
-    domain-specific or application-specific data to meet this interface.
+class AbstractDataSource(ABCHasTraits):
+    """ Abstract interface for data sources used by Chaco renderers
+
+    This abstract interface must be implemented by any class supplying data
+    to Chaco renderers. Chaco does not have a notion of a "data format".
+    For the most part, a data source looks like an array of values with an
+    optional mask and metadata. If you implement this interface, you are
+    responsible for adapting your domain-specific or application-specific data
+    to meet this interface.
 
     Chaco provides some basic data source implementations. In most cases, the
     easiest strategy is to create one of these basic data source with the
     numeric data from a domain model. In cases when this strategy is not
     possible, domain classes (or an adapter) must implement AbstractDataSource.
+
+    Notes
+    -----
+
+    The contract implied by the AbstractDataSource interface is that data
+    arrays provided by the get methods of the class should not be treated as
+    read-only arrays, and that any change to the data or mask (such as by
+    subclasses which provide a `set_data` method) will be accompanied by the
+    `data_changed` event being fired.
+
     """
 
-    # The dimensionality of the value at each index point.
-    # Subclasses re-declare this trait as a read-only trait with
-    # the right default value.
-    value_dimension = DimensionTrait
+    #: The dimension of the values provided by the data source.
+    #: Implementations of the interface will typically redefine this as a
+    #: read-only trait with a particular value.
+    value_type = ValueType
 
-    # The dimensionality of the indices into this data source.
-    # Subclasses re-declare this trait as a read-only trait with
-    # the right default value.
-    index_dimension = DimensionTrait
+    #: The dimension of the indices into the data source.
+    #: Implementations of the interface will typically redefine this as a
+    #: read-only trait with a particular value.
+    dimension = Int
 
-    # A dictionary keyed on strings.  In general, it maps to indices (or tuples
-    # of indices, depending on **value_dimension**), as in the case of
-    # selections and annotations.  Applications and renderers can add their own
-    # custom metadata, but must avoid using keys that might result in name
-    # collision.
-    metadata = Dict
+    #: The metadata for the data source.
+    #: Metadata values are typically used for annotations and selections
+    #: on the data source, and so each keyword corresponds to a collection of
+    #: indices into the data source.  Applications and renderers can add their
+    #: own custom metadata, but must avoid using keys that might result in name
+    #: collision.
+    metadata = Dict(Str)
 
-    # Event that fires when the data values change.
+    #: Event that fires when the data values change.
     data_changed = Event
 
-    # Event that fires when just the bounds change.
+    #: Event that fires when the bounds (ie. the extent of the values) change.
     bounds_changed = Event
 
-    # Event that fires when metadata structure is changed.
+    #: Event that fires when metadata structure is changed.
     metadata_changed = Event
 
-    # Should the data that this datasource refers to be serialized when
-    # the datasource is serialized?
-    persist_data = Bool(True)
-
     #------------------------------------------------------------------------
-    # Abstract methods
+    # AbstractDataSource interface
     #------------------------------------------------------------------------
 
     def get_data(self):
-        """get_data() -> data_array
+        """Get an array representing the data stored in the data source.
 
-        Returns a data array of the dimensions of the data source. This data
-        array must not be altered in-place, and the caller must assume it is
-        read-only.  This data is contiguous and not masked.
+        Returns
+        -------
 
-        In the case of structured (gridded) 2-D data, this method may return
-        two 1-D ArrayDataSources as an optimization.
+        data_array : array
+            An array of the dimensions specified by the index and value
+            dimension traits. This data array must not be altered in-place,
+            and the caller must assume it is read-only.  This data is
+            contiguous and not masked.
+
         """
         raise NotImplementedError
 
     def get_data_mask(self):
-        """get_data_mask() -> (data_array, mask_array)
+        """Get arrays representing the data and the mask of the data source.
 
-        Returns the full, raw, source data array and a corresponding binary
-        mask array.  Treat both arrays as read-only.
+        Returns
+        -------
 
-        The mask is a superposition of the masks of all upstream data sources.
-        The length of the returned array may be much larger than what
-        get_size() returns; the unmasked portion, however, matches what
-        get_size() returns.
+        data_array, mask: array of values, array of bool
+            Returns the full, raw, source data array and a corresponding binary
+            mask array.  Treat both arrays as read-only.
+
+            The mask is a superposition of the masks of all upstream data sources.
+            The length of the returned array may be much larger than what
+            get_size() returns; the unmasked portion, however, matches what
+            get_size() returns.
+
         """
         raise NotImplementedError
 
     def is_masked(self):
-        """is_masked() -> bool
+        """Whether or not the data is masked.
 
-        Returns True if this data source's data uses a mask. In this case,
-        to retrieve the data, call get_data_mask() instead of get_data().
-        If you call get_data() for this data source, it returns data, but that
-        data might not be the expected data.
+        Returns
+        -------
+
+        is_masked : bool
+            True if this data source's data uses a mask. In this case,
+            to retrieve the data, call get_data_mask() instead of get_data().
+
         """
         raise NotImplementedError
 
     def get_size(self):
-        """get_size() -> int
+        """The size of the data.
 
-        Returns an integer estimate or the exact size of the dataset that
-        get_data() returns for this object.  This method is useful for
-        down-sampling.
+        This method is useful for down-sampling.
+
+        Returns
+        -------
+
+        size : int or tuple of ints
+            An estimate (or the exact size) of the dataset that get_data()
+            returns for this object.  For data sets with n-dimensional index
+            values, this can return an n-tuple indicating the size in each
+            dimension.
+
         """
         raise NotImplementedError
 
     def get_bounds(self):
-        """get_bounds() -> tuple(min, max)
+        """Get the minimum and maximum finite values of the data.
 
-        Returns a tuple (min, max) of the bounding values for the data source.
-        In the case of 2-D data, min and max are 2-D points that represent the
-        bounding corners of a rectangle enclosing the data set.  Note that
-        these values are not view-dependent, but represent intrinsic properties
-        of the data source.
+        Returns
+        -------
 
-        If data is the empty set, then the min and max vals are 0.0.
+        bounds : tuple of min, max
+            A tuple (min, max) of the bounding values for the data source.
+            In the case of n-dimensional data values, min and max are
+            n-dimensional points that represent the bounding corners of a
+            rectangle enclosing the data set.  Note that these values are not
+            view-dependent, but represent intrinsic properties of the data
+            source.
+
+        Raises
+        ------
+
+        TypeError:
+            If data's value type is not amenable to sorting, a TypeError can
+            be raised.
+
+        ValueError:
+            If data is empty, all NaN, or otherwise has no sensible ordering,
+            then this should raise a ValueError.
+
         """
         raise NotImplementedError
 
 
-    ### Persistence ###########################################################
+    ### Trait defaults #######################################################
 
     def _metadata_default(self):
         return {"selections":[], "annotations":[]}
-
-    def __getstate__(self):
-        state = super(AbstractDataSource,self).__getstate__()
-
-        # everything but 'metadata'
-        for key in ['value_dimension', 'index_dimension', 'persist_data']:
-            if state.has_key(key):
-                del state[key]
-
-        return state
-
-
-
-# EOF

@@ -9,33 +9,40 @@ from math import radians, sqrt
 
 # Major library imports
 from numpy import (array, argsort, concatenate, cos, dot, empty, nonzero,
-    pi, sin, take, ndarray)
+    pi, sin, take, ndarray, number)
 
 # Enthought library imports
-from traits.api import CArray, Enum, Trait
+from traits.api import ArrayOrNone, Enum
 
 
+# Exceptions
+
+class DataUpdateError(RuntimeError):
+    pass
+
+class DataInvalidError(ValueError):
+    pass
 
 # Dimensions
 
 # A single array of numbers.
-NumericalSequenceTrait = Trait(None, None, CArray(value=empty(0)))
+NumericalSequenceTrait = ArrayOrNone(shape=(None,), value=empty(0))
 
 # A sequence of pairs of numbers, i.e., an Nx2 array.
-PointTrait = Trait(None, None, CArray(value=empty(0)))
+PointTrait = ArrayOrNone(shape=(None, 2), value=empty(shape=(0, 2)))
 
 # An NxM array of numbers.
-ImageTrait = Trait(None, None, CArray(value=empty(0)))
+ImageTrait = ArrayOrNone(shape=(None, None), value=empty(shape=(0, 0)))
 
 # An 3D array of numbers of shape (Nx, Ny, Nz)
-CubeTrait = Trait(None, None, CArray(value=empty(0)))
+CubeTrait = ArrayOrNone(shape=(None, None, None), value=empty(shape=(0, 0, 0)))
 
+#: The fundamental value types that data sources can take.  These can be
+#: agumented by adding to `ValueType.values`.
+ValueType = Enum("scalar", "point", "color", "index", "mask", "text",
+                 "datetime")
 
-# This enumeration lists the fundamental mathematical coordinate types that
-# Chaco supports.
-DimensionTrait = Enum("scalar", "point", "image", "cube")
-
-# Linear sort order.
+#: Linear sort order.
 SortOrderTrait = Enum("ascending", "descending", "none")
 
 
