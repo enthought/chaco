@@ -144,10 +144,7 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
         axis end points.
     """
 
-    if (isinf(data_low) or isinf(data_high) or isinf(tick_interval)):
-        return []
-
-    if (isinf(tick_interval)):
+    if (_isOutOfRange(data_low) or _isOutOfRange(data_high) or _isOutOfRange(tick_interval)):
         return []
 
     is_auto_low  = (bound_low  == 'auto')
@@ -273,6 +270,11 @@ def heckbert_interval(data_low, data_high, numticks=8):
     graphmax = ceil(data_high / d) * d
     #nfrac = max(-floor(log10(d)), 0)
     return graphmin, graphmax, d
+
+
+def _isOutOfRange(value):
+    """ determines if value is float and equals to infinity """
+    return value is float and isinf(value)
 
 
 def _nice(x, round=False):
