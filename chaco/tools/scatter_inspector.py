@@ -1,11 +1,13 @@
 """ Defines the ScatterInspector tool class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from traits.api import Bool, Str
 
 # Local, relative imports
-from select_tool import SelectTool
+from .select_tool import SelectTool
 
 
 class ScatterInspector(SelectTool):

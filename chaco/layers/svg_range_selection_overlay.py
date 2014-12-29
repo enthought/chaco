@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import numpy
@@ -7,7 +7,7 @@ import numpy
 from chaco.api import GridMapper
 from traits.api import Property, Enum, Str, cached_property
 
-from status_layer import StatusLayer
+from .status_layer import StatusLayer
 
 class SvgRangeSelectionOverlay(StatusLayer):
     """ This is a primitive range selection overlay which uses

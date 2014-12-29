@@ -8,11 +8,13 @@ The module also provides some helper factory functions for creating text
 formatters for dictionary values.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import array
 
 from traits.api import Any, List, Callable, Enum, Bool
 
-from text_grid_overlay import TextGridOverlay
+from .text_grid_overlay import TextGridOverlay
 
 def basic_formatter(key, decimals):
     """Create a basic '<key>: <value>' formatting function
@@ -189,4 +191,3 @@ class SimpleInspectorOverlay(TextGridOverlay):
         self.visibility = self.inspector.visible
         if self.visibility != "auto":
             self.visible = self.visibility
-

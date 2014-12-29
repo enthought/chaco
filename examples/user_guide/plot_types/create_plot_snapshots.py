@@ -470,7 +470,7 @@ def get_contour_line_plot():
         index_mapper = index_mapper,
         value = value,
         colors = color_mapper,
-        widths = range(1, 11),
+        widths = list(range(1, 11)),
         **PLOT_DEFAULTS
     )
 

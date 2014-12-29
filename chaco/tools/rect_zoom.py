@@ -1,5 +1,8 @@
 """ Defines the RectZoomTool class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from zoom_tool import ZoomTool
 
 class RectZoomTool(ZoomTool):
@@ -16,4 +19,3 @@ class RectZoomTool(ZoomTool):
     # The tool is always on; left-clicking initiates a zoom (overrides
     # SimpleZoom).
     always_on = True
-

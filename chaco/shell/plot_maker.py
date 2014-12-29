@@ -3,7 +3,10 @@ Contains the logic behind creating and configuring new plots
 from a set of user-supplied arguments.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Standard library imports
+import io
 import re
 
 # Major library imports
@@ -18,7 +21,7 @@ from chaco.tools.api import HighlightTool
 
 
 # Local relative imports
-from chaco_shell_error import ChacoShellError
+from .chaco_shell_error import ChacoShellError
 
 
 # Normally I don't define an __all__, but this lets us distinguish
@@ -72,7 +75,7 @@ def do_plotv(session, *args, **kw):
     elif plot_type == "line":
         plots = [create_line_plot(sources) for sources in sources_list]
     else:
-        raise ChacoShellError, "Unknown plot type '%s'." % plot_type
+        raise ChacoShellError("Unknown plot type '%s'." % plot_type)
 
     for plot in plots:
         plot.orientation = kw.get("orientation", "h")
@@ -93,7 +96,7 @@ def make_data_sources(session, index_sort="none", *args):
             data.append(arg)
 
     if len(data) == 0:
-        raise ChacoShellError, "Insufficient data for plot."
+        raise ChacoShellError("Insufficient data for plot.")
 
     # 1D array(s)
     if len(data[0].shape) == 1:
@@ -125,8 +128,8 @@ def make_data_sources(session, index_sort="none", *args):
 
     # Not a two-dimensional array, error.
     else:
-        raise ChacoShellError, "Unable to create plot data sources from array of" \
-                               "shape " + str(data[1].shape) + "."
+        raise ChacoShellError("Unable to create plot data sources from array of" \
+                               "shape " + str(data[1].shape) + ".")
 
 
 #-----------------------------------------------------------------------------
@@ -307,7 +310,7 @@ def do_imread(*data, **kwargs):
     """ Returns image file as array. """
 
     # Check to see if the data given is either a file path or a file object
-    if isinstance(data[0], basestring) or isinstance(data[0], file):
+    if isinstance(data[0], basestring) or isinstance(data[0], io.IOBase):
         return ImageData.fromfile(data[0])
     else:
         raise ValueError("do_imread takes a string filename")

@@ -2,6 +2,8 @@
 handle bad input values for time.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import warnings
 import time as stdlib_time
 # Yup, we're exposing everything from time.
@@ -26,7 +28,7 @@ def safe_fromtimestamp(timestamp, *args, **kwds):
     """
     try:
         return EPOCH + timedelta(seconds=timestamp)
-    except (ValueError, OverflowError), e:
+    except (ValueError, OverflowError) as e:
         warnings.warn("Timestamp out of range.  Returning safe default value.")
         if timestamp <= 0:
             return datetime(MINYEAR, 1, 1, 0, 0, 0)
@@ -74,4 +76,3 @@ def localtime(t=None):
     timetuple = (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second,
         dt.weekday(), doy(dt), -1)
     return struct_time(timetuple)
-

@@ -1,5 +1,8 @@
 """ Defines the BasePlotContainer class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import warnings
 
 # Enthought library imports
@@ -7,7 +10,7 @@ from enable.api import Container
 from traits.api import Bool, Instance, Property, Str, Tuple
 
 # Local, relative imports
-from plot_component import DEFAULT_DRAWING_ORDER, PlotComponent
+from .plot_component import DEFAULT_DRAWING_ORDER, PlotComponent
 
 
 class BasePlotContainer(Container):

@@ -3,6 +3,8 @@ Defines the GridMapper class, which maps from a 2-D region in data space
 into a structured (gridded) 1-D output space.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Python standard library imports
 from contextlib import contextmanager
 
@@ -13,11 +15,11 @@ from numpy import column_stack, transpose
 from traits.api import Bool, DelegatesTo, Instance, Float, Property
 
 # Local relative imports
-from abstract_mapper import AbstractMapper
-from base_1d_mapper import Base1DMapper
-from data_range_2d import DataRange2D
-from linear_mapper import LinearMapper
-from log_mapper import LogMapper
+from .abstract_mapper import AbstractMapper
+from .base_1d_mapper import Base1DMapper
+from .data_range_2d import DataRange2D
+from .linear_mapper import LinearMapper
+from .log_mapper import LogMapper
 
 
 class GridMapper(AbstractMapper):

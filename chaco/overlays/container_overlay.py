@@ -5,6 +5,8 @@ into the overlay of a plot.  This allows the easy use of standard Enable
 components in plot overlays.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Instance
 from enable.api import Container, Component
 from chaco.api import PlotComponent

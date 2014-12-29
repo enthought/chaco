@@ -1,10 +1,13 @@
 """ Defines the RangeSelection controller class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 import numpy
 
 # Chaco imports
-from range_selection import RangeSelection
+from .range_selection import RangeSelection
 
 
 class RangeSelection2D(RangeSelection):

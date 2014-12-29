@@ -1,10 +1,12 @@
 """ An overlay containing a TextGrid
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Instance
 from enable.text_grid import TextGrid
 
-from aligned_container_overlay import AlignedContainerOverlay
+from .aligned_container_overlay import AlignedContainerOverlay
 
 class TextGridOverlay(AlignedContainerOverlay):
     """ Overlay for plots containing a TextGrid

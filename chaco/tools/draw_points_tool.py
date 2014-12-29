@@ -1,5 +1,8 @@
 """ Defines the DrawPointsTool class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import array, float64, hstack
 
@@ -60,5 +63,3 @@ class DrawPointsTool(BaseTool):
 
 
 #EOF
-
-

@@ -1,3 +1,6 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 from unittest2 import skip
 
@@ -5,8 +8,12 @@ from numpy import alltrue, arange
 from enable.compiled_path import CompiledPath
 
 # Chaco imports
-from chaco.api import (ArrayDataSource, ColormappedScatterPlot, DataRange1D,
-                       LinearMapper, PlotGraphicsContext, jet)
+from chaco.array_data_source import ArrayDataSource
+from chaco.colormapped_scatterplot import ColormappedScatterPlot
+from chaco.data_range_1d import DataRange1D
+from chaco.linear_mapper import LinearMapper
+from chaco.plot_graphics_context import PlotGraphicsContext
+from chaco.default_colormaps import jet
 
 
 class TestColormappedScatterplot(unittest.TestCase):

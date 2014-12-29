@@ -2,10 +2,12 @@
 free-standing windows.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Any, Dict, List, Str
 from chaco.shell.session import PlotSession
 
-from plot_editor import PlotEditor
+from .plot_editor import PlotEditor
 
 
 class WorkbenchSession(PlotSession):
@@ -53,5 +55,3 @@ class WorkbenchSession(PlotSession):
         workbench.edit(new_win.obj, kind=lambda *args, **kwds: new_win)
 
         return len(self.windows)-1
-
-

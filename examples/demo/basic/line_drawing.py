@@ -38,9 +38,9 @@ class MyLineDrawer(LineSegmentTool):
     """
 
     def _finalize_selection(self):
-        print "Dataspace points:"
+        print("Dataspace points:")
         for point in self.points:
-            print "\t", point
+            print("\t", point)
 
 #===============================================================================
 # # Create the Chaco plot.

@@ -1,6 +1,9 @@
 """ Defines the ImageInspectorTool, ImageInspectorOverlay, and
 ImageInspectorColorbarOverlay classes.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from enable.api import BaseTool, KeySpec
 from traits.api import Any, Bool, Enum, Event, Tuple

@@ -1,7 +1,12 @@
-from chaco.api import Plot
-from chaco.tools.toolbars.plot_toolbar import PlotToolbar
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Type, DelegatesTo, Instance, Enum, \
         on_trait_change
+
+from .plot import Plot
+from .tools.toolbars.plot_toolbar import PlotToolbar
+
 
 class ToolbarPlot(Plot):
     # Should we turn on the auto-hide feature on the toolbar?

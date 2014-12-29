@@ -2,10 +2,15 @@
 Test cases for the LinePlot's hittest() function
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 from numpy import arange, array, linalg
-from chaco.api import (ArrayDataSource, ArrayPlotData,
-                       Plot, LinearMapper, DataRange1D)
+from chaco.array_data_source import ArrayDataSource
+from chaco.array_plot_data import ArrayPlotData
+from chaco.plot import Plot
+from chaco.linear_mapper import LinearMapper
+from chaco.data_range_1d import DataRange1D
 
 class HittestTestCase(unittest.TestCase):
     def make_plot(self, orientation):

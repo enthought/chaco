@@ -1,4 +1,6 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 # Enthought library imports
 from enable.api import BaseTool, KeySpec
@@ -106,6 +108,3 @@ class SelectTool(BaseTool):
                         self._select(token)
                     event.handled = True
             return
-
-
-

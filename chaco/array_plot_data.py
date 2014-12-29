@@ -1,5 +1,7 @@
 """ Defines ArrayPlotData.
 """
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 from numpy import array, ndarray
 
@@ -128,7 +130,7 @@ class ArrayPlotData(AbstractPlotData):
         if generate_name:
             names = self._generate_names(1)
             name = names[0]
-            
+
         self.update_data({name: new_data})
         return name
 
@@ -143,7 +145,7 @@ class ArrayPlotData(AbstractPlotData):
         """
         if not self.writable:
             return None
-        
+
         data = dict(*args, **kwargs)
         event = {}
         for name in data:
@@ -163,7 +165,7 @@ class ArrayPlotData(AbstractPlotData):
 
     #------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------    
+    #------------------------------------------------------------------------
 
     def _generate_names(self, n):
         """ Generate n new names
@@ -196,4 +198,3 @@ class ArrayPlotData(AbstractPlotData):
                 data[name] = value
 
         self.arrays.update(data)
-

@@ -3,6 +3,8 @@ Defines the PolarMapper class, which maps from a 1-D region in data space
 into a 1-D output space.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import array
 
@@ -10,7 +12,7 @@ from numpy import array
 from traits.api import Bool, Float
 
 # Local relative imports
-from abstract_mapper import AbstractMapper
+from .abstract_mapper import AbstractMapper
 
 ###############################################################
 # same as linear mapper at the moment... to be modified later #

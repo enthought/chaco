@@ -1,10 +1,12 @@
 
-from cPickle import loads, dumps
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+from pickle import loads, dumps
 import unittest
 
 # pickling child classes doesn't work well in the unittest framework unless
 # the classes to be pickled are in a different file
-from serializable_base import Circle, Poly
+from .serializable_base import Circle, Poly
 
 class SimpleSerializationTestCase(unittest.TestCase):
 
@@ -18,7 +20,7 @@ class SimpleSerializationTestCase(unittest.TestCase):
             o1 = getattr(a,name)
             o2 = getattr(b,name)
             if isinstance(o1, list) or isinstance(o1, tuple):
-                print "Warning: Cowardly refusing to do deep compares"
+                print("Warning: Cowardly refusing to do deep compares")
             else:
                 self.assert_(o1 == o2)
         return

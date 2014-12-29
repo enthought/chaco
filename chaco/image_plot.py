@@ -9,7 +9,7 @@
 """ Defines the ImagePlot class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Standard library imports
 from math import ceil, floor, pi
@@ -20,7 +20,7 @@ from traits.api import Bool, Either, Enum, Instance, \
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
-from base_2d_plot import Base2DPlot
+from .base_2d_plot import Base2DPlot
 
 
 class ImagePlot(Base2DPlot):
@@ -191,8 +191,8 @@ class ImagePlot(Base2DPlot):
         elif data.shape[2] == 4:
             kiva_depth = "rgba32"
         else:
-            raise RuntimeError, "Unknown colormap depth value: %i" \
-                                % data.value_depth
+            raise RuntimeError("Unknown colormap depth value: %i" \
+                                % data.value_depth)
 
 
         self._cached_image = GraphicsContextArray(data, pix_format=kiva_depth)
@@ -332,4 +332,3 @@ class ImagePlot(Base2DPlot):
     def _value_data_changed_fired(self):
         self._image_cache_valid = False
         self.request_redraw()
-

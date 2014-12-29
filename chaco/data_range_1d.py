@@ -2,6 +2,7 @@
 Defines the DataRange1D class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library imports
 from math import ceil, floor, log
@@ -12,9 +13,9 @@ from traits.api import Bool, CFloat, Enum, Float, Property, Trait, \
                                  Callable
 
 # Local relative imports
-from base import arg_find_runs
-from base_data_range import BaseDataRange
-from ticks import heckbert_interval
+from .base import arg_find_runs
+from .base_data_range import BaseDataRange
+from .ticks import heckbert_interval
 
 
 class DataRange1D(BaseDataRange):

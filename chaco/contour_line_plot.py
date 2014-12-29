@@ -1,7 +1,7 @@
 """ Defines the ContourLinePlot class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Major library imports
 from numpy import array, linspace, meshgrid, transpose
@@ -12,8 +12,8 @@ from kiva import constants
 from traits.api import Bool, Dict, Float, List, Str, Trait
 
 # Local relative imports
-from base_contour_plot import BaseContourPlot
-from contour.contour import Cntr
+from .base_contour_plot import BaseContourPlot
+from .contour.contour import Cntr
 
 
 class ContourLinePlot(BaseContourPlot):
@@ -206,4 +206,3 @@ class ContourLinePlot(BaseContourPlot):
         if self._level_cache_valid:
             self._update_styles()
             self.invalidate_draw()
-

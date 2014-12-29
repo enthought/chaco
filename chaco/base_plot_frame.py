@@ -8,14 +8,14 @@
 #
 #################################################################################
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Enthought library imports
 from enable.api import Container
 from traits.api import Enum
 
 # Local, relative imports
-from plot_component import PlotComponent, DEFAULT_DRAWING_ORDER
+from .plot_component import PlotComponent, DEFAULT_DRAWING_ORDER
 
 
 class BasePlotFrame(Container, PlotComponent):
@@ -150,8 +150,8 @@ class BasePlotFrame(Container, PlotComponent):
         if name in self.slot_names:
             return self._frame_slots[name]
         else:
-            raise AttributeError, "'%s' object has no attribute '%s'" % \
-                                    (self.__class__.__name__, name)
+            raise AttributeError("'%s' object has no attribute '%s'" % \
+                                    (self.__class__.__name__, name))
 
     def __setattr__(self, name, value):
         if name in self.slot_names:

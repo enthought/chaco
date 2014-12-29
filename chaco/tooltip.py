@@ -1,7 +1,7 @@
 """ Defines the ToolTip class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from numpy import array
 
@@ -13,9 +13,9 @@ from traits.api import Any, Bool, List, Int, Float, on_trait_change
 
 
 # Local imports
-from abstract_overlay import AbstractOverlay
-from plot_component import PlotComponent
-from label import Label
+from .abstract_overlay import AbstractOverlay
+from .plot_component import PlotComponent
+from .label import Label
 
 
 class ToolTip(AbstractOverlay):

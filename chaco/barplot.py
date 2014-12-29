@@ -1,7 +1,7 @@
 """ Defines the BarPlot class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 
@@ -12,10 +12,10 @@ from enable.api import black_color_trait
 from kiva.constants import FILL_STROKE
 
 # Local relative imports
-from chaco.abstract_plot_renderer import AbstractPlotRenderer
-from abstract_mapper import AbstractMapper
-from array_data_source import ArrayDataSource
-from base import reverse_map_1d
+from .abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_mapper import AbstractMapper
+from .array_data_source import ArrayDataSource
+from .base import reverse_map_1d
 
 
 logger = logging.getLogger(__name__)
@@ -80,12 +80,12 @@ class BarPlot(AbstractPlotRenderer):
 
     # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
     # It has the same RGB values as line_color_, and its alpha value is the
-    # alpha value of self.line_color multiplied by self.alpha. 
+    # alpha value of self.line_color multiplied by self.alpha.
     effective_line_color = Property(Tuple, depends_on=['line_color', 'alpha'])
-    
+
     # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
     # It has the same RGB values as fill_color_, and its alpha value is the
-    # alpha value of self.fill_color multiplied by self.alpha.   
+    # alpha value of self.fill_color multiplied by self.alpha.
     effective_fill_color = Property(Tuple, depends_on=['fill_color', 'alpha'])
 
     # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0

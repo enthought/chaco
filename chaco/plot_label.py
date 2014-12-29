@@ -1,13 +1,13 @@
 """ Defines the PlotLabel class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from enable.font_metrics_provider import font_metrics_provider
 from traits.api import DelegatesTo, Enum, Instance, Str, Trait
 
-from abstract_overlay import AbstractOverlay
-from label import Label
+from .abstract_overlay import AbstractOverlay
+from .label import Label
 
 
 LabelDelegate = DelegatesTo("_label")

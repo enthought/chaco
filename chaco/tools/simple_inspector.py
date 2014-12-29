@@ -5,6 +5,8 @@ the current mouse cursor position in a plot.  It is intended for use with
 SimpleInspectorOverlay, but other objects can potentially hook into its API.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from chaco.image_plot import ImagePlot
 from enable.api import BaseTool, KeySpec
 from traits.api import Bool, Event, Tuple, Enum, Callable

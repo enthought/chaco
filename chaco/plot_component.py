@@ -1,5 +1,8 @@
 """ Defines the PlotComponent class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from enable.api import Component
 from enable.kiva_graphics_context import GraphicsContext
@@ -60,5 +63,3 @@ class PlotComponent(Component):
         if new == False:
             raise RuntimeError("The old-style drawing mechanism is no longer " \
                     "supported in Chaco.")
-
-

@@ -2,11 +2,14 @@
 Classes for formatting labels for values or times.
 """
 
-from math import ceil, floor, fmod, log10
-from numpy import abs, all, array, asarray, amax, amin
-from safetime import strftime, time, safe_fromtimestamp, localtime
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import warnings
 
+from math import ceil, floor, fmod, log10
+from numpy import abs, all, array, asarray, amax, amin
+
+from .safetime import strftime, time, safe_fromtimestamp, localtime
 
 __all__ = ['NullFormatter', 'BasicFormatter', 'IntegerFormatter',
            'OffsetFormatter', 'TimeFormatter', 'strftimeEx']
@@ -128,9 +131,9 @@ class BasicFormatter(object):
         else:
             # For decimal mode,
             if not (ticks % 1).any():
-                labels = map(str, ticks.astype(int))
+                labels = list(map(str, ticks.astype(int)))
             else:
-                labels = map(str, ticks)
+                labels = list(map(str, ticks))
 
         return labels
 
@@ -236,7 +239,7 @@ class IntegerFormatter(BasicFormatter):
     def format(self, ticks, numlabels=None, char_width=None, fill_ratio=0.3):
         """ Formats integer tick labels.
         """
-        return map(str, map(int, ticks))
+        return list(map(str, map(int, ticks)))
 
 
 class OffsetFormatter(BasicFormatter):
@@ -567,7 +570,7 @@ class TimeFormatter(object):
             try:
                 tm = localtime(t)
                 s = strftimeEx(format, t, tm)
-            except ValueError, e:
+            except ValueError as e:
                 warnings.warn("Unable to convert tick for timestamp " + str(t))
                 labels.append("ERR")
                 continue
@@ -667,5 +670,3 @@ class TimeFormatter(object):
             width = widths[ int(len(widths) / 2) ] * numlabels
 
         return numlabels, width
-
-
