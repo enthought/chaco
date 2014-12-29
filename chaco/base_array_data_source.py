@@ -447,7 +447,7 @@ class BaseArrayDataSource(AbstractDataSource):
         """
         acquired = self._update_lock.acquire(False)
         if not acquired:
-            msg = "data update conflict, {} cannot acquire lock"
+            msg = "data update conflict, {0} cannot acquire lock"
             raise DataUpdateError(msg.format(self))
         try:
             self.invalidate_data()
@@ -483,5 +483,5 @@ class Guard(object):
 
     def __exit__(self, exc_type, exc_value, tb):
         if not self.valid:
-            msg = "data source {} data is not valid"
+            msg = "data source {0} data is not valid"
             raise DataInvalidError(msg.format(self))
