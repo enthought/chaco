@@ -7,7 +7,8 @@ from math import sqrt
 from numpy import arange, array
 from numpy.testing import assert_equal, assert_almost_equal
 
-from chaco.api import bin_search, find_runs, reverse_map_1d, point_line_distance
+from chaco.api import (arg_find_runs, bin_search, find_runs, reverse_map_1d,
+                       point_line_distance)
 
 class BinSearchTestCase(unittest.TestCase):
     def test_ascending_data(self):
@@ -132,6 +133,49 @@ class FindRunsTestCase(unittest.TestCase):
         x = array([30,41,40,39,38,37,12])
         assert_equal(find_runs(x, order='descending') , \
                             [[30], [41,40,39,38,37], [12]])
+
+    def test_find_runs_flat(self):
+        x = array([0,0,0,1,1,1,1,0,0,0,0])
+        assert_equal(find_runs(x, order='flat') , \
+                            [[0,0,0], [1,1,1,1], [0,0,0,0]])
+
+
+class ArgFindRunsTestCase(unittest.TestCase):
+    def test_arg_find_runs_middle(self):
+        x = array([0,8,7,8,9,2,3,4,10])
+        assert_equal(arg_find_runs(x) , [[0, 1], [1, 2], [2, 5], [5, 8], [8, 9]])
+
+    def test_arg_find_runs_start(self):
+        x = array([3,4,5,12,9,17])
+        assert_equal(arg_find_runs(x) , [[0, 3], [3, 4], [4, 5], [5, 6]])
+
+    def test_arg_find_runs_end(self):
+        x = array([18,23,24,25])
+        assert_equal(arg_find_runs(x) , [[0, 1], [1, 4]])
+
+    def test_arg_find_runs_offset(self):
+        # because of the nature of the find_runs algorithm, there may be
+        # fencepost errors with runs that start at x[1] or x[-2]
+        x = array([10,12,13,14,28,16])
+        assert_equal(arg_find_runs(x) , [[0, 1], [1, 4], [4, 5], [5, 6]])
+        x = array([10,15,16,17,34])
+        assert_equal(arg_find_runs(x) , [[0, 1],[1, 4],[4, 5]])
+
+    def test_arg_find_runs_none(self):
+        x = array([])
+        assert_equal(arg_find_runs(x) , [])
+        x = array([12,15,27])
+        assert_equal(arg_find_runs(x) , [[0, 1],[1, 2],[2, 3]])
+
+    def test_arg_find_runs_descending(self):
+        x = array([30,41,40,39,38,37,12])
+        assert_equal(arg_find_runs(x, order='descending') , \
+                            [[0, 1], [1, 6], [6, 7]])
+
+    def test_arg_find_runs_flat(self):
+        x = array([0,0,0,1,1,1,1,0,0,0,0])
+        assert_equal(arg_find_runs(x, order='flat') , \
+                            [[0, 3], [3, 7], [7, 11]])
 
 
 class PointLineDistanceTestCase(unittest.TestCase):
