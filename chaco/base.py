@@ -6,8 +6,8 @@ Defines basic traits and functions for the data model.
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, cos, dot, empty, nonzero,
-    pi, sin, take, ndarray)
+from numpy import (array, argsort, concatenate, column_stack, cos, dot, empty,
+                   nonzero, pi, searchsorted, sin, take, ndarray)
 
 # Enthought library imports
 from traits.api import CArray, Enum, Trait
@@ -71,12 +71,12 @@ def bin_search(values, value, ascending):
     if ascending > 0:
         if (value < values[0]) or (value > values[-1]):
             return -1
-        index = values.searchsorted(value, 'right') - 1
+        index = searchsorted(values, value, 'right') - 1
     else:
         if (value < values[-1]) or (value > values[0]):
             return -1
         ascending_values = values[::-1]
-        index = len(values) - ascending_values.searchsorted(value, 'left') - 1
+        index = len(values) - searchsorted(ascending_values, value, 'left') - 1
     return index
 
 
@@ -177,10 +177,7 @@ def find_runs(int_array, order='ascending'):
     return [ [0,0,0], [1,1,1,1], [0,0,0,0] ]
     """
     ranges = arg_find_runs(int_array, order)
-    if ranges:
-        return [int_array[i:j] for (i,j) in ranges]
-    else:
-        return []
+    return [int_array[i:j] for (i,j) in ranges]
 
 def arg_find_runs(int_array, order='ascending'):
     """
@@ -199,7 +196,7 @@ def arg_find_runs(int_array, order='ascending'):
     rshifted = right_shift(int_array, int_array[0]-increment).view(ndarray)
     start_indices = concatenate([[0], nonzero(int_array - (rshifted+increment))[0]])
     end_indices = left_shift(start_indices, len(int_array))
-    return zip(start_indices, end_indices)
+    return column_stack((start_indices, end_indices))
 
 
 def point_line_distance(pt, p1, p2):
