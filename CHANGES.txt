@@ -4,6 +4,10 @@ Chaco CHANGELOG
 
 Change summary since 4.5.0
 
+New features/Improvements
+
+ * Replaced bin_search by numpy.searchsorted-based routine for 5x speedup. (PR #263)
+
 Fixes
 
  * Workaround RuntimeWarnings from nanmin and nanmax in ImageData.get_bounds
