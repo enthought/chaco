@@ -298,11 +298,11 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         """
 
         if xy_axis == 'x':
-            return (factor > self.x_max_zoom_factor or
-                    factor < self.x_min_zoom_factor)
+            return not (self.x_min_zoom_factor <=
+                        factor <= self.x_max_zoom_factor)
         else:
-            return (factor > self.y_max_zoom_factor or
-                    factor < self.y_min_zoom_factor)
+            return not (self.y_min_zoom_factor <=
+                        factor <= self.y_max_zoom_factor)
 
     def _zoom_in_mapper(self, mapper, factor):
 
