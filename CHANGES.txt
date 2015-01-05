@@ -20,6 +20,10 @@ What's new in Chaco 4.6.0
 
 Change summary since 4.5.0
 
+Enhancements
+
+ * More comprehensive testing for AbstractDataSource subclasses (PR #244).
+
 Fixes
 
  * Workaround RuntimeWarnings from nanmin and nanmax in ImageData.get_bounds

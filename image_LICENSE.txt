@@ -17,3 +17,7 @@ examples/basic:
 chaco/layers/data:
                    Dialog-error.svg | Tango, CC 2.5, modified to remove gadients
                  Dialog-warning.svg | Tango, CC 2.5, modified to remove gadients
+
+chaco/tests/data/PngSuite:
+                       basi6a08.png | PngSuite, free use, see PngSuite/LICENSE.txt
+                       basi2c08.png | PngSuite, free use, see PngSuite/LICENSE.txt

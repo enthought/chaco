@@ -5,7 +5,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from .base import NumericalSequenceTrait, PointTrait, ImageTrait, DimensionTrait, \
+from .base import NumericalSequenceTrait, PointTrait, ImageTrait, \
                  SortOrderTrait, bin_search, reverse_map_1d, right_shift, \
                  left_shift, sort_points, find_runs, arg_find_runs, \
                  point_line_distance
