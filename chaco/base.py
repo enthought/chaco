@@ -8,11 +8,11 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, cos, dot, empty, nonzero,
-    pi, sin, take, ndarray, number)
+from numpy import (array, argsort, concatenate, column_stack, cos, dot, empty,
+    nonzero, pi, sin, take, ndarray, number)
 
 # Enthought library imports
-from traits.api import ArrayOrNone, Enum
+from traits.api import ArrayOrNone, Either, Enum
 
 
 # Exceptions
@@ -23,16 +23,24 @@ class DataUpdateError(RuntimeError):
 class DataInvalidError(ValueError):
     pass
 
+class DataBoundsError(ValueError):
+    pass
+
 # Dimensions
 
 # A single array of numbers.
 NumericalSequenceTrait = ArrayOrNone(shape=(None,), value=empty(0))
 
+# A single array of arbitrary length vectors, or a collection of sequences.
+SequenceVectorTrait = ArrayOrNone(shape=(None, None), value=empty(shape=(0, 0)))
+
 # A sequence of pairs of numbers, i.e., an Nx2 array.
-PointTrait = ArrayOrNone(shape=(None, 2), value=empty(shape=(0, 2)))
+PointSequenceTrait = ArrayOrNone(shape=(None, 2), value=empty(shape=(0, 2)))
 
 # An NxM array of numbers.
-ImageTrait = ArrayOrNone(shape=(None, None), value=empty(shape=(0, 0)))
+ScalarImageTrait = ArrayOrNone(shape=(None, None), value=empty(shape=(0, 0)))
+ColorImageTrait = ArrayOrNone(shape=(None, None, (3, 4)), value=empty(shape=(0, 0, 3)))
+ImageTrait = Either(ScalarImageTrait, ColorImageTrait)
 
 # An 3D array of numbers of shape (Nx, Ny, Nz)
 CubeTrait = ArrayOrNone(shape=(None, None, None), value=empty(shape=(0, 0, 0)))
@@ -69,35 +77,25 @@ def n_gon(center, r, nsides, rot_degrees=0):
     return [poly_point(center, r, i*theta+rotation) for i in range(nsides)]
 
 
-# Ripped from Chaco 1.0's plot_base.py
 def bin_search(values, value, ascending):
     """
     Performs a binary search of a sorted array looking for a specified value.
 
     Returns the lowest position where the value can be found or where the
     array value is the last value less (greater) than the desired value.
-    Returns -1 if *value* is beyond the minimum or maximum of *values*.
+    Returns -1 if `value` is beyond the minimum or maximum of `values`.
     """
-    ascending = ascending > 0
-    if ascending:
+    if ascending > 0:
         if (value < values[0]) or (value > values[-1]):
             return -1
+        index = values.searchsorted(value, 'right') - 1
     else:
         if (value < values[-1]) or (value > values[0]):
             return -1
-    lo = 0
-    hi = len( values )
-    while True:
-        mid  = (hi + lo) // 2
-        midval = values[ mid ]
-        if midval == value:
-            return mid
-        elif (ascending and midval > value) or (not ascending and midval < value):
-            hi = mid
-        else:
-            lo = mid
-        if lo >= (hi - 1):
-            return lo
+        ascending_values = values[::-1]
+        index = len(values) - ascending_values.searchsorted(value, 'left') - 1
+    return index
+
 
 def reverse_map_1d(data, pt, sort_order, floor_only=False):
     """Returns the index of *pt* in the array *data*.
@@ -128,7 +126,6 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
 
     if ndx == -1:
         raise IndexError("value outside array data range")
-
 
     # Now round the index to the closest matching index.  Do this
     # by determining the width (in value space) of each cell and

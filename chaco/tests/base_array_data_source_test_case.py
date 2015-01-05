@@ -13,7 +13,7 @@ from numpy.testing import assert_array_equal
 from traits.api import ReadOnly, TraitError
 from traits.testing.unittest_tools import UnittestTools
 
-from chaco.base import DataInvalidError, DataUpdateError
+from chaco.base import DataInvalidError, DataUpdateError, DataBoundsError
 from chaco.base_array_data_source import BaseArrayDataSource
 
 
@@ -165,7 +165,7 @@ class BaseArrayDataSourceTestCase(unittest.TestCase, UnittestTools):
 
         self.validate_data(data_source, new_data)
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(DataBoundsError):
             self.empty_data_source.get_bounds()
 
     def test_set_data_invalid(self):

@@ -44,12 +44,12 @@ class AbstractDataSource(ABCHasTraits):
     #: The dimension of the values provided by the data source.
     #: Implementations of the interface will typically redefine this as a
     #: read-only trait with a particular value.
-    value_type = ValueType
+    value_type = ValueType('scalar')
 
     #: The dimension of the indices into the data source.
     #: Implementations of the interface will typically redefine this as a
     #: read-only trait with a particular value.
-    dimension = Int
+    dimension = Int(1)
 
     #: The metadata for the data source.
     #: Metadata values are typically used for annotations and selections
