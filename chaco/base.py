@@ -8,8 +8,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, column_stack, cos, dot, empty,
-    nonzero, pi, sin, take, ndarray, number)
+from numpy import (array, argsort, concatenate, cos, dot, empty, nonzero, pi,
+    sin, take, ndarray)
 
 # Enthought library imports
 from traits.api import ArrayOrNone, Either, Enum
@@ -36,6 +36,7 @@ SequenceVectorTrait = ArrayOrNone(shape=(None, None), value=empty(shape=(0, 0)))
 
 # A sequence of pairs of numbers, i.e., an Nx2 array.
 PointSequenceTrait = ArrayOrNone(shape=(None, 2), value=empty(shape=(0, 2)))
+PointTrait = PointSequenceTrait
 
 # An NxM array of numbers.
 ScalarImageTrait = ArrayOrNone(shape=(None, None), value=empty(shape=(0, 0)))
