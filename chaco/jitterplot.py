@@ -5,15 +5,10 @@ from itertools import izip
 from math import sqrt
 import numpy as np
 
-from enable.api import black_color_trait, MarkerTrait
-from traits.api import (Any, Bool, Callable, Enum, Float,
-        Instance, Int, Property, Str, Trait, on_trait_change)
+from traits.api import Any, Int
 
 from .scatterplot_1d import ScatterPlot1D
-from .abstract_mapper import AbstractMapper
-from .array_data_source import ArrayDataSource
 from .base import reverse_map_1d
-from .scatterplot import render_markers
 
 
 class JitterPlot(ScatterPlot1D):
@@ -31,10 +26,6 @@ class JitterPlot(ScatterPlot1D):
     #------------------------------------------------------------------------
 
     _cached_screen_map = Any()  # dict mapping index to value points
-
-    # The random number seed used to generate the jitter.  We store this
-    # so that the jittering is stable as the data is replotted.
-    _jitter_seed = Trait(None, None, Int)
 
     #------------------------------------------------------------------------
     # Component/AbstractPlotRenderer interface
@@ -60,23 +51,23 @@ class JitterPlot(ScatterPlot1D):
             ys = [sm[x] for x in xs]
 
         else:
-            if self._jitter_seed is None:
-                self._set_seed(data_array)
             xs = self.index_mapper.map_screen(data_array)
-            ys = self._make_jitter_vals(len(data_array))
+            ys = self._make_jitter_vals(data_array)
 
         if self.orientation == "h":
             return np.vstack((xs, ys)).T
         else:
             return np.vstack((ys, xs)).T
 
-    def _make_jitter_vals(self, numpts):
-        vals = np.random.uniform(0, self.jitter_width, numpts)
+    def _make_jitter_vals(self, data_array):
+        random_state = np.random.RandomState(data_array[:100])
+        numpts = len(data_array)
+        vals = random_state.uniform(0, self.jitter_width, numpts)
         vals += self._marker_position
         return vals
 
     def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True, \
-                  index_only = True):
+                  index_only=True):
         """ Maps a screen space point to an index into the plot's index array(s).
         """
         screen_points = self._cached_screen_pts
@@ -96,7 +87,7 @@ class JitterPlot(ScatterPlot1D):
         data = self._cached_data_pts_sorted
         try:
             ndx = reverse_map_1d(data, data_pt, "ascending")
-        except IndexError, e:
+        except IndexError:
             if outside_returns_none:
                 return None
             else:
@@ -139,15 +130,6 @@ class JitterPlot(ScatterPlot1D):
             self._cached_data_pts_sorted = None
             self._cached_data_argsort = None
         return self._cached_screen_pts
-
-    def _set_seed(self, data_array):
-        """ Sets the internal random seed based on some input data """
-        if isinstance(data_array, np.ndarray):
-            seed = np.random.seed(data_array.size)
-        else:
-            seed = np.random.seed(map(int, data_array[:100]))
-
-        self._jitter_seed = seed
 
     def _get_marker_position(self):
         x, y = self.position
