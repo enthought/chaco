@@ -34,7 +34,6 @@ class Jitterplot1DTest(unittest.TestCase):
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
-        gc.save('test.png')
 
     def test_scatter_1d_horizontal(self):
         self.scatterplot.orientation = 'h'
