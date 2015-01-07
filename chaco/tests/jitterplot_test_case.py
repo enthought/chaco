@@ -1,4 +1,4 @@
-import unittest
+import unittest2 as unittest
 
 from numpy import alltrue, arange, array
 from numpy.testing import assert_almost_equal
