@@ -2,18 +2,27 @@
 Chaco CHANGELOG
 ===============
 
+Change summary since 4.5.0
+
+Fixes
+
+ * Fixed default position attribute in BetterZoom tool (PR#241)
+ * Workaround RuntimeWarnings from nanmin and nanmax in ImageData.get_bounds
+   (PR #242).
 
 What's new in Chaco 4.5.0
 -------------------------
 
 Change summary since 4.4.1
 
-New features
+New features/Improvements
 
  * Added perceptual colormaps by Matteo Niccoli, Dave Green and Kenneth Moreland.
-
- * Added asynchronous_updates.py demo that shows a pattern for generating
+ * Added `asynchronous_updates.py` demo that shows a pattern for generating
    expensive plots while keeping the interface responsive (PR#170).
+ * Speeded up by 10x the data mappers of the `GridMapper` class (mapping of 2D data
+   to/from screen space).
+
 
 Fixes
 
@@ -22,13 +31,21 @@ Fixes
  * Make the `alpha` attribute of scatter plots work as intended (PR#164).
  * Resume running test for empty container that has been skipped (PR#190).
  * Improved handling of missing or empty data in scatterplot (PR#210)
- * Avoid a numpy crash when using a data source of a unicode array (PR#213).
+ * Avoid a NumPy crash when using a data source of a unicode array (PR#213).
  * PanTool with `restrict_to_data` selected works with empty data sources
    (PR#215).
  * RangeSelection properly clips bounds when leaving selection area (PR#217).
  * Fix white gap between image border and image (PR#219).
  * Fix redraw color mapped image plot when color mapper updates (PR#221)
  * Fix behaviour of mappers when stretch_data trait is False (PR#227)
+ * ColormappedScatterplot now redraws when colour map’s updated event fires (PR#230)
+ * Speed improvements for scatter plots with lots of points (PR#234)
+
+
+Maintenance
+
+ * Added unit tests for ColormappedScatterplot (PR#231).
+
 
 Release 4.4.1
 -------------
