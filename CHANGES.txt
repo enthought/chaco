@@ -4,6 +4,12 @@ Chaco CHANGELOG
 
 Change summary since 4.5.0
 
+New features/Improvements
+
+ * A new base "1D plot" class introduced for handling one-dimensional plots,
+   including refactoring the existing Jitterplot and adding 1D scatterplot
+   variants that render markers, lines or text. (PR #209)
+
 Fixes
 
  * Fixed default position attribute in BetterZoom tool (PR#241)
