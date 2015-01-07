@@ -28,7 +28,8 @@ class Scatterplot1DTest(unittest.TestCase):
     def test_scatter_1d(self):
         self.assertEqual(self.scatterplot.origin, 'bottom left')
         self.assertIsNone(self.scatterplot.x_mapper)
-        self.assertEqual(self.scatterplot.y_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(self.scatterplot.y_mapper,
+                         self.scatterplot.index_mapper)
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
@@ -39,7 +40,8 @@ class Scatterplot1DTest(unittest.TestCase):
         self.scatterplot.orientation = 'h'
 
         self.assertEqual(self.scatterplot.origin, 'bottom left')
-        self.assertEqual(self.scatterplot.x_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(self.scatterplot.x_mapper,
+                         self.scatterplot.index_mapper)
         self.assertIsNone(self.scatterplot.y_mapper)
 
         gc = PlotGraphicsContext(self.size)
@@ -52,7 +54,8 @@ class Scatterplot1DTest(unittest.TestCase):
 
         self.assertEqual(self.scatterplot.origin, 'top left')
         self.assertIsNone(self.scatterplot.x_mapper)
-        self.assertEqual(self.scatterplot.y_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(self.scatterplot.y_mapper,
+                         self.scatterplot.index_mapper)
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
@@ -64,7 +67,8 @@ class Scatterplot1DTest(unittest.TestCase):
         self.scatterplot.orientation = 'h'
 
         self.assertEqual(self.scatterplot.origin, 'bottom right')
-        self.assertEqual(self.scatterplot.x_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(self.scatterplot.x_mapper,
+                         self.scatterplot.index_mapper)
         self.assertIsNone(self.scatterplot.y_mapper)
 
         gc = PlotGraphicsContext(self.size)
@@ -73,7 +77,7 @@ class Scatterplot1DTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_scatter_1d_circle(self):
-        self.scatterplot.marker='circle'
+        self.scatterplot.marker = 'circle'
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
@@ -87,7 +91,7 @@ class Scatterplot1DTest(unittest.TestCase):
         path.line_to(-5, 5)
         path.line_to(-5, -5)
 
-        self.scatterplot.marker='custom'
+        self.scatterplot.marker = 'custom'
         self.scatterplot.custom_symbol = path
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)

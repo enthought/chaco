@@ -27,7 +27,8 @@ class LineScatterPlot1DTest(unittest.TestCase):
     def test_scatter_1d(self):
         self.assertEqual(self.scatterplot.origin, 'bottom left')
         self.assertIsNone(self.scatterplot.x_mapper)
-        self.assertEqual(self.scatterplot.y_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(self.scatterplot.y_mapper,
+                         self.scatterplot.index_mapper)
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
@@ -38,7 +39,8 @@ class LineScatterPlot1DTest(unittest.TestCase):
         self.scatterplot.orientation = 'h'
 
         self.assertEqual(self.scatterplot.origin, 'bottom left')
-        self.assertEqual(self.scatterplot.x_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(self.scatterplot.x_mapper,
+                         self.scatterplot.index_mapper)
         self.assertIsNone(self.scatterplot.y_mapper)
 
         gc = PlotGraphicsContext(self.size)
@@ -51,7 +53,8 @@ class LineScatterPlot1DTest(unittest.TestCase):
 
         self.assertEqual(self.scatterplot.origin, 'top left')
         self.assertIsNone(self.scatterplot.x_mapper)
-        self.assertEqual(self.scatterplot.y_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(self.scatterplot.y_mapper,
+                         self.scatterplot.index_mapper)
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
@@ -63,7 +66,8 @@ class LineScatterPlot1DTest(unittest.TestCase):
         self.scatterplot.orientation = 'h'
 
         self.assertEqual(self.scatterplot.origin, 'bottom right')
-        self.assertEqual(self.scatterplot.x_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(self.scatterplot.x_mapper,
+                         self.scatterplot.index_mapper)
         self.assertIsNone(self.scatterplot.y_mapper)
 
         gc = PlotGraphicsContext(self.size)
