@@ -4,9 +4,13 @@ Chaco CHANGELOG
 
 Change summary since 4.5.0
 
-Enhancements
+New features/Improvements
 
  * More comprehensive testing for AbstractDataSource subclasses (PR #244).
+
+ * Replaced chaco.base.bin_search by numpy.searchsorted-based routine for
+   5x speedup and remove use of zip in chaco.base.arg_find_runs in favour of
+   column_stack for 10x speedup in bad cases. (PR #263)
 
 Fixes
 
