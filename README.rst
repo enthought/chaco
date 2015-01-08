@@ -2,7 +2,9 @@
 chaco: interactive 2-dimensional plotting
 =========================================
 
-http://github.enthought.com/chaco
+http://www.github.com/enthought/chaco
+
+http://docs.enthought.com/chaco
 
 .. image:: https://api.travis-ci.org/enthought/chaco.png?branch=master
    :target: https://travis-ci.org/enthought/chaco
