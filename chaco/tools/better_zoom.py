@@ -1,8 +1,17 @@
-import numpy
+# Copyright (c) 2005-2014, Enthought, Inc.
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
+#
+# Author: Enthought, Inc.
 
 from chaco.grid_mapper import GridMapper
 from enable.api import BaseTool, KeySpec
-from traits.api import Enum, Float, Instance, Bool, HasTraits, List
+from traits.api import Enum, Float, Instance, Bool, List, Tuple
 
 from tool_history_mixin import ToolHistoryMixin
 from tool_states import ZoomState, PanState, GroupedToolState, ToolState
@@ -43,18 +52,21 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
     # only applies in 'range' mode.
     axis = Enum("both", "index", "value")
 
-    # The maximum ratio between the original data space bounds and the zoomed-in
-    # data space bounds.  If No limit is desired, set to inf
+    # The maximum ratio between the original data space bounds and the
+    # zoomed-in data space bounds.  If No limit is desired, set to inf
     x_max_zoom_factor = Float(1e5)
     y_max_zoom_factor = Float(1e5)
 
-    # The maximum ratio between the zoomed-out data space bounds and the original
-    # bounds.  If No limit is desired, set to -inf
+    # The maximum ratio between the zoomed-out data space bounds and the
+    # original bounds.  If No limit is desired, set to -inf
     x_min_zoom_factor = Float(1e-5)
     y_min_zoom_factor = Float(1e-5)
 
     # The amount to zoom in by. The zoom out will be inversely proportional
     zoom_factor = Float(2.0)
+
+    #: the position to zoom on (usually the mouse location)
+    position = Tuple(Float, Float)
 
     # The zoom factor on each axis
     _index_factor = Float(1.0)
@@ -83,7 +95,7 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
                 y = y_map.map_data(location[1])
                 nexty = y + (cy - y)*(self._value_factor/new_value_factor)
 
-            pan_state = PanState((cx,cy), (nextx, nexty))
+            pan_state = PanState((cx, cy), (nextx, nexty))
             zoom_state = ZoomState((self._index_factor, self._value_factor),
                                    (new_index_factor, new_value_factor))
 
@@ -184,7 +196,6 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
             if self._zoom_limit_reached(new_value_factor, 'x'):
                 return
         self._do_zoom(new_index_factor, new_value_factor)
-
 
     def zoom_in_y(self, factor=0):
         if factor == 0:
@@ -287,13 +298,11 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         """
 
         if xy_axis == 'x':
-            if factor <= self.x_max_zoom_factor and factor >= self.x_min_zoom_factor:
-                return False
-            return True
+            return not (self.x_min_zoom_factor <=
+                        factor <= self.x_max_zoom_factor)
         else:
-            if factor <= self.y_max_zoom_factor and factor >= self.y_min_zoom_factor:
-                return False
-            return True
+            return not (self.y_min_zoom_factor <=
+                        factor <= self.y_max_zoom_factor)
 
     def _zoom_in_mapper(self, mapper, factor):
 
@@ -358,3 +367,11 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         for state in self._history[::-1]:
             state.revert(self)
         self._history = []
+
+    #--------------------------------------------------------------------------
+    #  Traits defaults
+    #--------------------------------------------------------------------------
+
+    def _position_default(self):
+        # center of the component is a sensible default
+        return self._center_screen()
