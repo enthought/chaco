@@ -60,6 +60,7 @@ from scatter_inspector_overlay import ScatterInspectorOverlay
 
 # Renderers
 from barplot import BarPlot
+from base_1d_plot import Base1DPlot
 from base_2d_plot import Base2DPlot
 from base_xy_plot import BaseXYPlot
 from scatterplot import ScatterPlot, render_markers
