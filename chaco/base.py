@@ -8,8 +8,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, cos, dot, empty, nonzero,
-    pi, sin, take, ndarray)
+from numpy import (array, argsort, concatenate, column_stack, cos, dot, empty,
+                   nonzero, pi, searchsorted, sin, take, ndarray)
 
 # Enthought library imports
 from traits.api import CArray, Enum, Trait
@@ -62,35 +62,42 @@ def n_gon(center, r, nsides, rot_degrees=0):
     return [poly_point(center, r, i*theta+rotation) for i in range(nsides)]
 
 
-# Ripped from Chaco 1.0's plot_base.py
 def bin_search(values, value, ascending):
-    """
-    Performs a binary search of a sorted array looking for a specified value.
+    """ Performs a binary search of a sorted array for a specified value.
+
+    Parameters
+    ----------
+
+    values : array
+        The values being searched.
+
+    value : float
+        The value being searched for.
+
+    ascending : -1 or 1
+        This value should be 1 if the values array is ascending, or -1 if
+        the values array is descending.
+
+    Returns
+    -------
 
     Returns the lowest position where the value can be found or where the
     array value is the last value less (greater) than the desired value.
-    Returns -1 if *value* is beyond the minimum or maximum of *values*.
+    Returns -1 if `value` is beyond the minimum or maximum of `values`.
+
     """
     ascending = ascending > 0
     if ascending:
         if (value < values[0]) or (value > values[-1]):
             return -1
+        index = searchsorted(values, value, 'right') - 1
     else:
         if (value < values[-1]) or (value > values[0]):
             return -1
-    lo = 0
-    hi = len( values )
-    while True:
-        mid  = (hi + lo) // 2
-        midval = values[ mid ]
-        if midval == value:
-            return mid
-        elif (ascending and midval > value) or (not ascending and midval < value):
-            hi = mid
-        else:
-            lo = mid
-        if lo >= (hi - 1):
-            return lo
+        ascending_values = values[::-1]
+        index = len(values) - searchsorted(ascending_values, value, 'left') - 1
+    return index
+
 
 def reverse_map_1d(data, pt, sort_order, floor_only=False):
     """Returns the index of *pt* in the array *data*.
@@ -189,10 +196,7 @@ def find_runs(int_array, order='ascending'):
     return [ [0,0,0], [1,1,1,1], [0,0,0,0] ]
     """
     ranges = arg_find_runs(int_array, order)
-    if ranges:
-        return [int_array[i:j] for (i,j) in ranges]
-    else:
-        return []
+    return [int_array[i:j] for (i,j) in ranges]
 
 def arg_find_runs(int_array, order='ascending'):
     """
@@ -211,7 +215,7 @@ def arg_find_runs(int_array, order='ascending'):
     rshifted = right_shift(int_array, int_array[0]-increment).view(ndarray)
     start_indices = concatenate([[0], nonzero(int_array - (rshifted+increment))[0]])
     end_indices = left_shift(start_indices, len(int_array))
-    return list(zip(start_indices, end_indices))
+    return column_stack((start_indices, end_indices))
 
 
 def point_line_distance(pt, p1, p2):
@@ -223,6 +227,3 @@ def point_line_distance(pt, p1, p2):
     diff = v1 - dot(v1, v2) / dot(v2, v2) * v2
 
     return sqrt(dot(diff,diff))
-
-
-#EOF
