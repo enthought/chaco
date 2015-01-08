@@ -61,12 +61,28 @@ def n_gon(center, r, nsides, rot_degrees=0):
 
 
 def bin_search(values, value, ascending):
-    """
-    Performs a binary search of a sorted array looking for a specified value.
+    """ Performs a binary search of a sorted array for a specified value.
+
+    Parameters
+    ----------
+
+    values : array
+        The values being searched.
+
+    value : float
+        The value being searched for.
+
+    ascending : -1 or 1
+        This value should be 1 if the values array is ascending, or -1 if
+        the values array is descending.
+
+    Returns
+    -------
 
     Returns the lowest position where the value can be found or where the
     array value is the last value less (greater) than the desired value.
     Returns -1 if `value` is beyond the minimum or maximum of `values`.
+
     """
     if ascending > 0:
         if (value < values[0]) or (value > values[-1]):
