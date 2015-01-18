@@ -251,7 +251,7 @@ class ArrayDataSource(AbstractDataSource):
         data_len = 0
         try:
             data_len = len(data)
-        except:
+        except Exception:
             pass
         if data_len == 0:
             self._min_index = 0
