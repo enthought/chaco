@@ -1,74 +1,77 @@
+"""
+Tests of GridDataSource behavior.
+"""
 
-import unittest
+import unittest2 as unittest
 
-from numpy import alltrue, array, ravel, isinf
+from numpy import array
+from numpy.testing import assert_array_equal
 
 from chaco.api import GridDataSource
+from traits.testing.unittest_tools import UnittestTools
 
 
-class GridDataSourceTestCase(unittest.TestCase):
+class GridDataSourceTestCase(UnittestTools, unittest.TestCase):
+
+    def setUp(self):
+        self.data_source = GridDataSource(
+            xdata=array([1, 2, 3]),
+            ydata=array([1.5, 0.5, -0.5, -1.5]),
+            sort_order=('ascending', 'descending'))
 
     def test_empty(self):
-        ds = GridDataSource()
-        self.assert_(ds.sort_order == ('none', 'none'))
-        self.assert_(ds.index_dimension == 'image')
-        self.assert_(ds.value_dimension == 'scalar')
-        self.assert_(ds.metadata == {"selections":[], "annotations":[]})
-        xdata, ydata = ds.get_data()
-        assert_ary_(xdata.get_data(), array([]))
-        assert_ary_(ydata.get_data(), array([]))
-        self.assert_(ds.get_bounds() == ((0,0),(0,0)))
+        data_source = GridDataSource()
+        self.assertEqual(data_source.sort_order, ('none', 'none'))
+        self.assertEqual(data_source.index_dimension, 'image')
+        self.assertEqual(data_source.value_dimension, 'scalar')
+        self.assertEqual(data_source.metadata,
+                         {"selections":[], "annotations":[]})
+        xdata, ydata = data_source.get_data()
+        assert_array_equal(xdata.get_data(), array([]))
+        assert_array_equal(ydata.get_data(), array([]))
+        self.assertEqual(data_source.get_bounds(), ((0,0),(0,0)))
 
     def test_init(self):
-        test_xd = array([1,2,3])
+        test_xd = array([1, 2, 3])
         test_yd = array([1.5, 0.5, -0.5, -1.5])
         test_sort_order = ('ascending', 'descending')
 
-        ds = GridDataSource(xdata=test_xd, ydata=test_yd,
-                            sort_order=test_sort_order)
-
-        self.assert_(ds.sort_order == test_sort_order)
-        xd, yd = ds.get_data()
-        assert_ary_(xd.get_data(), test_xd)
-        assert_ary_(yd.get_data(), test_yd)
-        self.assert_(ds.get_bounds() == ((min(test_xd),min(test_yd)),
-                                         (max(test_xd),max(test_yd))))
+        self.assertEqual(self.data_source.sort_order, test_sort_order)
+        xd, yd = self.data_source.get_data()
+        assert_array_equal(xd.get_data(), test_xd)
+        assert_array_equal(yd.get_data(), test_yd)
+        self.assertEqual(self.data_source.get_bounds(),
+                         ((min(test_xd),min(test_yd)),
+                          (max(test_xd),max(test_yd))))
 
     def test_set_data(self):
-        ds = GridDataSource(xdata=array([1,2,3]),
-                            ydata=array([1.5, 0.5, -0.5, -1.5]),
-                            sort_order=('ascending', 'descending'))
 
         test_xd = array([0,2,4])
         test_yd = array([0,1,2,3,4,5])
         test_sort_order = ('none', 'none')
 
-        ds.set_data(xdata=test_xd, ydata=test_yd, sort_order=('none', 'none'))
+        self.data_source.set_data(xdata=test_xd, ydata=test_yd,
+                             sort_order=('none', 'none'))
 
-        self.assert_(ds.sort_order == test_sort_order)
-        xd, yd = ds.get_data()
-        assert_ary_(xd.get_data(), test_xd)
-        assert_ary_(yd.get_data(), test_yd)
-        self.assert_(ds.get_bounds() == ((min(test_xd),min(test_yd)),
-                                         (max(test_xd),max(test_yd))))
+        self.assertEqual(self.data_source.sort_order, test_sort_order)
+        xd, yd = self.data_source.get_data()
+        assert_array_equal(xd.get_data(), test_xd)
+        assert_array_equal(yd.get_data(), test_yd)
+        self.assertEqual(self.data_source.get_bounds(),
+                         ((min(test_xd),min(test_yd)),
+                          (max(test_xd),max(test_yd))))
 
+    def test_metadata(self):
+        self.assertEqual(self.data_source.metadata,
+                         {'annotations': [], 'selections': []})
 
+    def test_metadata_changed(self):
+        with self.assertTraitChanges(self.data_source, 'metadata_changed', count=1):
+            self.data_source.metadata = {'new_metadata': True}
 
-
-def assert_close_(desired,actual):
-    diff_allowed = 1e-5
-    diff = abs(ravel(actual) - ravel(desired))
-    for d in diff:
-        if not isinf(d):
-            assert alltrue(d <= diff_allowed)
-            return
-
-def assert_ary_(desired, actual):
-    if (desired == 'auto'):
-        assert actual == 'auto'
-    for d in range(len(desired)):
-        assert desired[d] == actual[d]
-    return
+    def test_metadata_items_changed(self):
+        with self.assertTraitChanges(self.data_source, 'metadata_changed', count=1):
+            self.data_source.metadata['new_metadata'] = True
 
 
 if __name__ == '__main__':

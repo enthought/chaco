@@ -5,6 +5,11 @@ python:
 before_install:
   - sudo apt-get update
   - sudo apt-get install python-numpy swig
+  # Simlinks for PIL compilation
+  - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib/
+  - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so /usr/lib/
+  - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libpng.so /usr/lib/
+  - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib/
   - source .travis_before_install
 install:
   - pip install cython
