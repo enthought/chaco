@@ -16,7 +16,7 @@ tick-related values (i.e., bounds and intervals).
 from math import isinf
 from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
     float64, floor, linspace, log10, minimum, ndarray, newaxis, \
-    putmask, shape
+    putmask, shape, floating
 
 # Enthought library imports
 from traits.api import HasTraits, Any
@@ -144,7 +144,7 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
         axis end points.
     """
 
-    if (_isOutOfRange(data_low) or _isOutOfRange(data_high) or _isOutOfRange(tick_interval)):
+    if _isOutOfRange(data_low) or _isOutOfRange(data_high) or _isOutOfRange(tick_interval):
         return []
 
     is_auto_low  = (bound_low  == 'auto')
@@ -274,7 +274,7 @@ def heckbert_interval(data_low, data_high, numticks=8):
 
 def _isOutOfRange(value):
     """ determines if value is float and equals to infinity """
-    return value is float and isinf(value)
+    return isinstance(value, (float, floating)) and isinf(value)
 
 
 def _nice(x, round=False):
