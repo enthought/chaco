@@ -17,12 +17,17 @@ VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
 # Name of the directory containing the package.
 PKG_PATHNAME = 'chaco'
+
+# Name of the file containing the version information.
 _VERSION_FILENAME = os.path.join(PKG_PATHNAME, '_version.py')
 
 
-# Return the git revision as a string
 def git_version():
+    """ Parse version information from the current git commit.
 
+    Parse the output of `git describe` and return the git hash and the number
+    of commits since the last version tag.
+    """
 
     def _minimal_ext_cmd(cmd):
         # construct minimal environment
@@ -57,8 +62,10 @@ def git_version():
 
 
 def write_version_py(filename=_VERSION_FILENAME):
+    """ Create a file containing the version information. """
+
     template = """\
-# THIS FILE IS GENERATED FROM CHACO SETUP.PY
+# This file was automatically generated from the `setup.py` script.
 version = '{version}'
 full_version = '{full_version}'
 git_revision = '{git_revision}'
