@@ -3,7 +3,7 @@
 PIL
 unittest2
 coverage
+kiwisolver
 -e git+http://github.com/enthought/traits.git#egg=traits
 -e git+http://github.com/enthought/traitsui.git#egg=traitsui
 -e git+http://github.com/enthought/enable.git#egg=enable
--e git+http://github.com/nucleic/kiwi.git#egg=kiwisolver
