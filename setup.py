@@ -170,8 +170,6 @@ if __name__ == "__main__":
         },
         description = 'interactive 2-dimensional plotting',
         long_description = open('README.rst').read(),
-        download_url = ('http://www.enthought.com/repo/ets/chaco-%s.tar.gz' %
-                        '__version__'),
         ext_modules = [contour, cython_speedups],
         include_package_data = True,
         install_requires = __requires__,
