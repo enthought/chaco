@@ -46,7 +46,8 @@ def git_version():
         return out
 
     try:
-        out = _minimal_ext_cmd(['git', 'describe', '--tags'])
+        out = _minimal_ext_cmd(
+            ['git', 'describe', '--match', '?.?.?', '--tags'])
     except OSError:
         out = ''
 
