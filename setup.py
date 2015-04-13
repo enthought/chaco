@@ -41,7 +41,7 @@ setup(
     author_email = 'pwang@enthought.com',
     maintainer = 'ETS Developers',
     maintainer_email = 'enthought-dev@enthought.com',
-    url = 'http://code.enthought.com/projects/chaco',
+    url = 'https://github.com/enthought/chaco'
     classifiers = [c.strip() for c in """\
         Development Status :: 5 - Production/Stable
         Intended Audience :: Developers
