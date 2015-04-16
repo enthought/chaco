@@ -46,6 +46,12 @@ def git_version():
         return out
 
     try:
+        # We ask git to find the latest tag matching a glob expression. The
+        # intention is to find a release tag of the form '4.50.2'. Strictly
+        # speaking, the glob expression also matches tags of the form
+        # '4abc.5xyz.2gtluuu', but it's very difficult with glob expressions
+        # to distinguish between the two cases, and the likelihood of a
+        # problem is minimal.
         out = _minimal_ext_cmd(
             ['git', 'describe', '--match', '[0-9]*.[0-9]*.[0-9]*', '--tags'])
     except OSError:
