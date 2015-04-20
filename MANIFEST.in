@@ -1,4 +1,6 @@
 include chaco/*.h
+include chaco/tests/data/PngSuite/*.png
+include chaco/tests/data/PngSuite/LICENSE.txt
 include chaco/tools/toolbars/images*.png
 include chaco/tools/toolbars/images*.svg
 include chaco/tools/toolbars/images*.txt
