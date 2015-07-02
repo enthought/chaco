@@ -6,10 +6,12 @@ Change summary since 4.5.0
 
 New features/Improvements
 
+ * A new base "1D plot" class introduced for handling one-dimensional plots,
+   including refactoring the existing Jitterplot and adding 1D scatterplot
+   variants that render markers, lines or text. (PR #209)
  * More comprehensive testing for AbstractDataSource subclasses. That 
    includes ArrayDataSource, FunctionDataSource, GridDataSource, ImageData, 
    MultiArrayDataSource (PR #244). 
-
  * Replaced chaco.base.bin_search by numpy.searchsorted-based routine for
    5x speedup and remove use of zip in chaco.base.arg_find_runs in favour of
    column_stack for 10x speedup in bad cases. (PR #263)

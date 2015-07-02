@@ -60,6 +60,7 @@ from scatter_inspector_overlay import ScatterInspectorOverlay
 
 # Renderers
 from barplot import BarPlot
+from base_1d_plot import Base1DPlot
 from base_2d_plot import Base2DPlot
 from base_xy_plot import BaseXYPlot
 from scatterplot import ScatterPlot, render_markers
@@ -79,6 +80,9 @@ from multi_line_plot import MultiLinePlot
 from jitterplot import JitterPlot
 from variable_size_scatterplot import VariableSizeScatterPlot
 from horizon_plot import BandedMapper, HorizonPlot
+from scatterplot_1d import ScatterPlot1D
+from line_scatterplot_1d import LineScatterPlot1D
+from text_plot_1d import TextPlot1D
 
 # Plot factories
 from plot_factory import create_bar_plot, create_line_plot, create_scatter_plot, \
