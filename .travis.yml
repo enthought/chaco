@@ -18,7 +18,6 @@ addons:
     - python-numpy
     - swig
     - ccache
-    - cmake
 before_install:
   - ccache -s
   - pip install --upgrade pip
