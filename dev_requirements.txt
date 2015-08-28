@@ -1,6 +1,4 @@
---allow-external PIL
---allow-unverified PIL
-PIL
+pillow
 unittest2 ; python_version == '2.6'
 coverage
 kiwisolver
