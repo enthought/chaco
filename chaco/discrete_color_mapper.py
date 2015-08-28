@@ -32,14 +32,22 @@ class DiscreteColorMapper(AbstractColormap):
         palette = asarray(palette, dtype=float)
         return cls(palette=palette, **traits)
 
+    @classmethod
+    def from_colormap(cls, colormap, steps, **traits):
+        """ Creates a discrete color mapper from a palette array. """
+        from chaco.data_range_1d import DataRange1D
+        # create the colormapper and sample from it
+        colormapper = colormap(DataRange1D(low=0, high=steps-1), steps=steps)
+        palette = colormapper.color_bands
+        return cls(palette=palette, **traits)
+
     def map_screen(self, data):
         """ Maps an array of data to an array of colors """
         return self._palette[self.map_index(data)]
 
     def map_index(self, data):
         """ Maps an array of data to an array of indexes into the palette """
-        # note:
-        index = asarray(data)
+        index = asarray(data).round()
         index = data.clip(0, len(self.palette)-1).astype(int, copy=False)
         return index
 

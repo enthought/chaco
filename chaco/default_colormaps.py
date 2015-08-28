@@ -7941,7 +7941,7 @@ def viridis(range, **traits):
 
 # Colorbrewer quantitative colormaps
 
-def accent(**traits):
+def accent(range, **traits):
     """ Generator for the 'accent' colormap from ColorBrewer. """
     data = [[0.49803921580314636, 0.7882353067398071, 0.49803921580314636],
             [0.7450980544090271, 0.6823529601097107, 0.8313725590705872],
@@ -7951,10 +7951,10 @@ def accent(**traits):
             [0.9411764740943909, 0.007843137718737125, 0.49803921580314636],
             [0.7490196228027344, 0.35686275362968445, 0.09019608050584793],
             [0.4000000059604645, 0.4000000059604645, 0.4000000059604645]]
-    return DiscreteColorMapper.from_palette_array(data, **traits)
+    return DiscreteColorMapper.from_palette_array(data, range=range, **traits)
 
 
-def Dark2(**traits):
+def Dark2(range, **traits):
     """ Generator for the 'Dark2' colormap from ColorBrewer. """
     data = [[0.10588235408067703, 0.6196078658103943, 0.46666666865348816],
             [0.8509804010391235, 0.37254902720451355, 0.007843137718737125],
@@ -7964,10 +7964,10 @@ def Dark2(**traits):
             [0.9019607901573181, 0.6705882549285889, 0.007843137718737125],
             [0.6509804129600525, 0.4627451002597809, 0.11372549086809158],
             [0.4000000059604645, 0.4000000059604645, 0.4000000059604645]]
-    return DiscreteColorMapper.from_palette_array(data, **traits)
+    return DiscreteColorMapper.from_palette_array(data, range=range, **traits)
 
 
-def Paired(**traits):
+def Paired(range, **traits):
     """ Generator for the 'Paired' colormap from ColorBrewer. """
     data = [[0.6509804129600525, 0.8078431487083435, 0.8901960849761963],
             [0.12156862765550613, 0.47058823704719543, 0.7058823704719543],
@@ -7981,10 +7981,10 @@ def Paired(**traits):
             [0.4156862795352936, 0.239215686917305, 0.6039215922355652],
             [1.0, 1.0, 0.6000000238418579],
             [0.6941176652908325, 0.3490196168422699, 0.1568627506494522]]
-    return ColorMapper.from_palette_array(data, **traits)
+    return ColorMapper.from_palette_array(data, range=range, **traits)
 
 
-def Pastel1(**traits):
+def Pastel1(range, **traits):
     """ Generator for the 'Pastel1' colormap from ColorBrewer. """
     data = [[0.9843137264251709, 0.7058823704719543, 0.6823529601097107],
             [0.7019608020782471, 0.8039215803146362, 0.8901960849761963],
@@ -7995,10 +7995,10 @@ def Pastel1(**traits):
             [0.8980392217636108, 0.8470588326454163, 0.7411764860153198],
             [0.9921568632125854, 0.8549019694328308, 0.9254902005195618],
             [0.9490196108818054, 0.9490196108818054, 0.9490196108818054]]
-    return ColorMapper.from_palette_array(data, **traits)
+    return ColorMapper.from_palette_array(data, range=range, **traits)
 
 
-def Pastel2(**traits):
+def Pastel2(range, **traits):
     """ Generator for the 'Pastel2' colormap from ColorBrewer.
 
     Although the ColorBrewer colormaps are defined as discrete colormaps, we
@@ -8014,10 +8014,10 @@ def Pastel2(**traits):
             [1.0, 0.9490196108818054, 0.6823529601097107],
             [0.9450980424880981, 0.886274516582489, 0.800000011920929],
             [0.800000011920929, 0.800000011920929, 0.800000011920929]]
-    return ColorMapper.from_palette_array(data, **traits)
+    return ColorMapper.from_palette_array(data, range=range, **traits)
 
 
-def Set1(**traits):
+def Set1(range, **traits):
     """ Generator for the 'Set1' colormap from ColorBrewer.
     """
     _data = [[0.8941176533699036, 0.10196078568696976, 0.10980392247438431],
@@ -8029,7 +8029,7 @@ def Set1(**traits):
              [0.6509804129600525, 0.33725491166114807, 0.1568627506494522],
              [0.9686274528503418, 0.5058823823928833, 0.7490196228027344],
              [0.6000000238418579, 0.6000000238418579, 0.6000000238418579]]
-    return ColorMapper.from_palette_array(_data, **traits)
+    return ColorMapper.from_palette_array(_data, range=range, **traits)
 
 
 def Set2(range, **traits):
