@@ -1,7 +1,7 @@
 --allow-external PIL
 --allow-unverified PIL
 PIL
-unittest2
+unittest2 ; python_version == '2.6'
 coverage
 kiwisolver
 git+http://github.com/enthought/traits.git#egg=traits
