@@ -17,6 +17,9 @@ matrix:
       env: ETS_TOOLKIT=''
     - python: 2.7_with_system_site_packages
       env: ETS_TOOLKIT=''
+cache:
+  - ccache
+  - pip
 addons:
   apt:
     packages:
