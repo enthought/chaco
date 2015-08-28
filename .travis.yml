@@ -39,7 +39,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 install:
   - pip install cython
-  - CFLAGS="-I/usr/lib/x86_64-linux-gnu/" pip install -r dev-requirements
+  - CFLAGS="-I/usr/lib/x86_64-linux-gnu/" pip install -r dev-requirements.txt
   - if [[ $TRAVIS_PYTHON_VERSION != '2.6' ]]; echo "./PIL" > $VIRTUAL_ENV/lib/python2.7/site-packages/PIL.pth; fi
   - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; echo "./PIL" > $VIRTUAL_ENV/lib/python2.6/site-packages/PIL.pth; fi
   - python setup.py develop
