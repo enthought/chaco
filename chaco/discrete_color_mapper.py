@@ -39,8 +39,8 @@ class DiscreteColorMapper(AbstractColormap):
     def map_index(self, data):
         """ Maps an array of data to an array of indexes into the palette """
         # note:
-        index = asarray(data).astype(int, copy=False)
-        index = data.clip(0, len(self.palette)-1)
+        index = asarray(data)
+        index = data.clip(0, len(self.palette)-1).astype(int, copy=False)
         return index
 
     def map_uint8(self, data):
