@@ -7981,7 +7981,7 @@ def Paired(range, **traits):
             [0.4156862795352936, 0.239215686917305, 0.6039215922355652],
             [1.0, 1.0, 0.6000000238418579],
             [0.6941176652908325, 0.3490196168422699, 0.1568627506494522]]
-    return ColorMapper.from_palette_array(data, range=range, **traits)
+    return DiscreteColorMapper.from_palette_array(data, range=range, **traits)
 
 
 def Pastel1(range, **traits):
@@ -7995,7 +7995,7 @@ def Pastel1(range, **traits):
             [0.8980392217636108, 0.8470588326454163, 0.7411764860153198],
             [0.9921568632125854, 0.8549019694328308, 0.9254902005195618],
             [0.9490196108818054, 0.9490196108818054, 0.9490196108818054]]
-    return ColorMapper.from_palette_array(data, range=range, **traits)
+    return DiscreteColorMapper.from_palette_array(data, range=range, **traits)
 
 
 def Pastel2(range, **traits):
@@ -8014,7 +8014,7 @@ def Pastel2(range, **traits):
             [1.0, 0.9490196108818054, 0.6823529601097107],
             [0.9450980424880981, 0.886274516582489, 0.800000011920929],
             [0.800000011920929, 0.800000011920929, 0.800000011920929]]
-    return ColorMapper.from_palette_array(data, range=range, **traits)
+    return DiscreteColorMapper.from_palette_array(data, range=range, **traits)
 
 
 def Set1(range, **traits):
@@ -8029,7 +8029,7 @@ def Set1(range, **traits):
              [0.6509804129600525, 0.33725491166114807, 0.1568627506494522],
              [0.9686274528503418, 0.5058823823928833, 0.7490196228027344],
              [0.6000000238418579, 0.6000000238418579, 0.6000000238418579]]
-    return ColorMapper.from_palette_array(_data, range=range, **traits)
+    return DiscreteColorMapper.from_palette_array(_data, range=range, **traits)
 
 
 def Set2(range, **traits):
@@ -8047,7 +8047,7 @@ def Set2(range, **traits):
             [1.0, 0.8509804010391235, 0.18431372940540314],
             [0.8980392217636108, 0.7686274647712708, 0.5803921818733215],
             [0.7019608020782471, 0.7019608020782471, 0.7019608020782471]]
-    return ColorMapper.from_palette_array(data, range=range, **traits)
+    return DiscreteColorMapper.from_palette_array(data, range=range, **traits)
 
 
 def Set3(range, **traits):
@@ -8069,7 +8069,7 @@ def Set3(range, **traits):
             [0.7372549176216125, 0.501960813999176, 0.7411764860153198],
             [0.800000011920929, 0.9215686321258545, 0.772549033164978],
             [1.0, 0.929411768913269, 0.43529412150382996]]
-    return ColorMapper.from_palette_array(data, range=range, **traits)
+    return DiscreteColorMapper.from_palette_array(data, range=range, **traits)
 
 
 # Make the convenient list of all the function names as well as a dictionary

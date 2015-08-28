@@ -1,7 +1,7 @@
 import unittest
 
 from numpy import array, empty, uint8
-from numpy.testing import assert_almost_equal, assert_array_equal
+from numpy.testing import assert_array_almost_equal, assert_array_equal
 
 from chaco.api import DiscreteColorMapper
 
@@ -20,8 +20,8 @@ class DiscreteColormapTestCase(unittest.TestCase):
 
         self.assertEqual(b.shape, (3, 4))
         for i in range(3):
-            assert_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
-        assert_almost_equal(b[:, 3], [1, 1, 1])
+            assert_array_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
+        assert_array_almost_equal(b[:, 3], [1, 1, 1])
 
     def test_color_space_rgb(self):
         self.colormap.color_depth = 'rgb'
@@ -30,7 +30,7 @@ class DiscreteColormapTestCase(unittest.TestCase):
 
         self.assertEqual(b.shape, (3, 3))
         for i in range(3):
-            assert_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
+            assert_array_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
 
     def test_map_uint8(self):
         self.colormap.color_depth = 'rgb'
@@ -40,7 +40,7 @@ class DiscreteColormapTestCase(unittest.TestCase):
         self.assertEqual(b.shape, (3, 3))
         self.assertEqual(b.dtype, uint8)
         for i in range(3):
-            assert_almost_equal(b[:, i], array([0, 128, 192]))
+            assert_array_almost_equal(b[:, i], array([0, 128, 192]))
 
     def test_map_uint8_rgb(self):
         a = array([0, 2, 3])
@@ -49,8 +49,8 @@ class DiscreteColormapTestCase(unittest.TestCase):
         self.assertEqual(b.shape, (3, 4))
         self.assertEqual(b.dtype, uint8)
         for i in range(3):
-            assert_almost_equal(b[:, i], array([0, 128, 192]))
-        assert_almost_equal(b[:, 3], [255, 255, 255])
+            assert_array_almost_equal(b[:, i], array([0, 128, 192]))
+        assert_array_almost_equal(b[:, 3], [255, 255, 255])
 
     def test_map_index(self):
         self.colormap.color_depth = 'rgb'
@@ -70,7 +70,7 @@ class DiscreteColormapTestCase(unittest.TestCase):
 
         self.assertEqual(b.shape, (3, 4))
         for i in range(4):
-            assert_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
+            assert_array_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
 
     def test_alpha_palette_rgb(self):
         gray_data = empty(shape=(5, 4))
@@ -82,7 +82,7 @@ class DiscreteColormapTestCase(unittest.TestCase):
 
         self.assertEqual(b.shape, (3, 3))
         for i in range(3):
-            assert_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
+            assert_array_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
 
     def test_alpha_palette_map_uint8(self):
         gray_data = empty(shape=(5, 4))
@@ -94,7 +94,7 @@ class DiscreteColormapTestCase(unittest.TestCase):
         self.assertEqual(b.shape, (3, 4))
         self.assertEqual(b.dtype, uint8)
         for i in range(4):
-            assert_almost_equal(b[:, i], array([0, 128, 192]))
+            assert_array_almost_equal(b[:, i], array([0, 128, 192]))
 
     def test_alpha_palette_map_uint8_rgb(self):
         gray_data = empty(shape=(5, 4))
@@ -107,7 +107,7 @@ class DiscreteColormapTestCase(unittest.TestCase):
         self.assertEqual(b.shape, (3, 3))
         self.assertEqual(b.dtype, uint8)
         for i in range(3):
-            assert_almost_equal(b[:, i], array([0, 128, 192]))
+            assert_array_almost_equal(b[:, i], array([0, 128, 192]))
 
     def test_from_colormap(self):
         from chaco.color_mapper import ColorMapper
@@ -130,7 +130,7 @@ class DiscreteColormapTestCase(unittest.TestCase):
 
         self.assertEqual(b.shape, (3, 4))
         for i in range(4):
-            assert_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
+            assert_array_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
 
 if __name__ == '__main__':
     import nose

@@ -55,6 +55,10 @@ class DiscreteColorMapper(AbstractColormap):
         """ Maps an array of data to an array of colors """
         return self._uint8_palette[self.map_index(data)]
 
+    def reverse_colormap(self):
+        """ Reverses the palette of this colormap. """
+        self.palette = self.palette[::-1]
+
     @on_trait_change('palette, color_depth')
     def _update_palettes(self):
         """ Generate palette adjusted for color depth and fire update event"""
