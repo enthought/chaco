@@ -29,6 +29,9 @@ addons:
     - python-pip
     - python-wxtools
     - python-numpy
+    - libtiff5-dev 
+    - libjpeg8-dev 
+    - zlib1g-dev    
     - swig
     - ccache
 before_install:
