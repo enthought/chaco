@@ -21,7 +21,7 @@ from traitsui.api import Item, VGroup, View, Label
 # Chaco imports
 from chaco.api import ArrayPlotData, ColorBar, \
                                  ColormappedSelectionOverlay, HPlotContainer, \
-                                 LinearMapper, Plot
+                                 LabelAxis, LinearMapper, Plot
 from chaco.default_colormaps import accent
 from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
                                        RangeSelectionOverlay
@@ -81,8 +81,6 @@ def _create_plot_component():
     colorbar.plot = cmap_renderer
     colorbar.padding_top = plot.padding_top
     colorbar.padding_bottom = plot.padding_bottom
-    colorbar.grid_visible = False
-    colorbar._axis.tick_visible = False
 
     # Create a container to position the plot and the colorbar side-by-side
     container = HPlotContainer(use_backbuffer = True)
@@ -98,6 +96,8 @@ def create_colorbar(colormap):
                         resizable='v',
                         width=30,
                         padding=20)
+    colorbar.grid_visible = False
+    colorbar._axis.tick_visible = False
     colorbar.tools.append(RangeSelection(component=colorbar))
     colorbar.overlays.append(RangeSelectionOverlay(component=colorbar,
                                                    border_color="white",
@@ -108,7 +108,7 @@ def create_colorbar(colormap):
 #===============================================================================
 # Attributes to use for the plot view.
 size=(650,650)
-title="Colormapped scatter plot"
+title="Discrete colormapped scatter plot"
 
 #===============================================================================
 # # Demo class that is used by the demo.py application.
@@ -131,4 +131,5 @@ class Demo(HasTraits):
 demo = Demo()
 
 if __name__ == "__main__":
+    print demo.plot.components[1]._axis
     demo.configure_traits()
