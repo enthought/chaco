@@ -81,6 +81,8 @@ def _create_plot_component():
     colorbar.plot = cmap_renderer
     colorbar.padding_top = plot.padding_top
     colorbar.padding_bottom = plot.padding_bottom
+    colorbar.grid_visible = False
+    colorbar._axis.tick_visible = False
 
     # Create a container to position the plot and the colorbar side-by-side
     container = HPlotContainer(use_backbuffer = True)
