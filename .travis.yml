@@ -15,8 +15,6 @@ matrix:
       env: ETS_TOOLKIT='wx'
     - python: 2.7_with_system_site_packages
       env: ETS_TOOLKIT=''
-    - python: 2.7_with_system_site_packages
-      env: ETS_TOOLKIT=''
 cache:
   - pip
   - ccache
@@ -29,9 +27,9 @@ addons:
     - python-pip
     - python-wxtools
     - python-numpy
-    - libtiff5-dev 
-    - libjpeg8-dev 
-    - zlib1g-dev    
+    - libtiff5-dev
+    - libjpeg8-dev
+    - zlib1g-dev
     - swig
     - ccache
 before_install:
@@ -42,9 +40,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 install:
   - pip install cython
-  - CFLAGS="-I/usr/lib/x86_64-linux-gnu/" pip install -r dev_requirements.txt
-  - if [[ $TRAVIS_PYTHON_VERSION != '2.6' ]]; then echo "./PIL" > $VIRTUAL_ENV/lib/python2.7/site-packages/PIL.pth; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then echo "./PIL" > $VIRTUAL_ENV/lib/python2.6/site-packages/PIL.pth; fi
+  - pip install -r dev_requirements.txt
   - python setup.py develop
 script:
   - coverage run -m nose.core -v chaco/tests
