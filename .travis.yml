@@ -6,15 +6,13 @@ python:
 env:
   - ETS_TOOLKIT='qt4'
   - ETS_TOOLKIT='wx'
-  - ETS_TOOLKIT=''
+  - ETS_TOOLKIT='null'
 matrix:
   exclude:
     - python: 2.6
       env: ETS_TOOLKIT='qt4'
     - python: 2.6
       env: ETS_TOOLKIT='wx'
-    - python: 2.7_with_system_site_packages
-      env: ETS_TOOLKIT=''
 cache:
   - pip
   - ccache
