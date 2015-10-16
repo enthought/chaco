@@ -1,6 +1,6 @@
 pillow
+nose-exclude
 unittest2
-coverage
 kiwisolver
 git+http://github.com/enthought/traits.git#egg=traits
 git+http://github.com/enthought/traitsui.git#egg=traitsui
