@@ -1,5 +1,6 @@
-pillow
 nose-exclude
+coverage
+pillow
 unittest2
 kiwisolver
 git+http://github.com/enthought/traits.git#egg=traits
