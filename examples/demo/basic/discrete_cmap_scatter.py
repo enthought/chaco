@@ -1,7 +1,7 @@
 """
 Scatterplot with range-selectable data points
 
-Draws a colormapped scatterplot of random data.
+Draws a colormapped scatterplot of discrete random data.
 
 In addition to normal zooming and panning on the plot, the user can select
 a range of data values by right-dragging in the color bar.
