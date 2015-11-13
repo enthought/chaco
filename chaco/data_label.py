@@ -405,8 +405,8 @@ class DataLabel(ToolTip):
                     by = y2
                 else:
                     by = y
+            arrow_len = sqrt((px - bx)**2 + (py - by)**2)
 
-        arrow_len = sqrt((px - bx) ** 2 + (py - by) ** 2)
         arrow_visible = (self.arrow_visible and
                          (arrow_len >= self.arrow_min_length))
 
