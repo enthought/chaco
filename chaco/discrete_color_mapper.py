@@ -41,7 +41,7 @@ class DiscreteColorMapper(AbstractColormap):
         """ Creates a discrete color mapper from a palette array. """
         from chaco.data_range_1d import DataRange1D
         traits.pop('range', None)
-        range = DataRange1D(low=-0.5, high=len(steps)-0.5)
+        range = DataRange1D(low=-0.5, high=steps-0.5)
         # create the colormapper and sample from it
         colormapper = colormap(range, steps=steps)
         palette = colormapper.color_bands
