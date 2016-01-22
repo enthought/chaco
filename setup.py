@@ -149,7 +149,7 @@ if __name__ == "__main__":
         name = 'chaco',
         version = __version__,
         author = 'Peter Wang, et. al.',
-        author_email = 'pwang@enthought.com',
+        author_email = 'info@enthought.com',
         maintainer = 'ETS Developers',
         maintainer_email = 'enthought-dev@enthought.com',
         url = 'http://docs.enthought.com/chaco',
