@@ -12,6 +12,12 @@ Renderers
     :members:
     :show-inheritance:
 
+:class:`Base1DPlot`
+===================
+.. autoclass:: Base1DPlot
+    :members:
+    :show-inheritance:
+
 :class:`Base2DPlot`
 ===================
 .. autoclass:: Base2DPlot
@@ -102,12 +108,29 @@ Renderers
     :members:
     :show-inheritance:
 
-.. TODO This one is causing an exception in Sphinx
-.. :class:`JitterPlot`
-.. ===================
-.. .. autoclass:: JitterPlot
-..     :members:
-..     :show-inheritance:
+:class:`ScatterPlot1D`
+====================
+.. autoclass:: ScatterPlot
+    :members:
+    :show-inheritance:
+
+..:class:`JitterPlot`
+..===================
+.... autoclass:: JitterPlot
+..    :members:
+..    :show-inheritance:
+
+..:class:`LineScatterPlot1D`
+..===================
+.... autoclass:: LineScatterPlot1D
+..    :members:
+..    :show-inheritance:
+
+..:class:`TextPlot1D`
+..===================
+.... autoclass:: TextPlot1D
+..    :members:
+ ..   :show-inheritance:
 
 :class:`VariableSizeScatterPlot`
 ================================
@@ -120,4 +143,3 @@ Renderers
 .. autoclass:: HorizonPlot
     :members:
     :show-inheritance:
-

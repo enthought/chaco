@@ -241,7 +241,11 @@ elif ETSConfig.toolkit == "qt4":
                     pass
 
 else:
-    pass
 
+    class PlotWindow(object):
+
+        def __init__(self, *args, **kwargs):
+            raise NotImplmentedError(
+                'PlotWindow not implemented for `null` toolkit')
 
 # EOF
