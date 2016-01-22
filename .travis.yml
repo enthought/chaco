@@ -1,23 +1,45 @@
 language: python
+sudo: false
 python:
-  - '2.7_with_system_site_packages'
   - 2.6
+  - 2.7_with_system_site_packages
+env:
+  - ETS_TOOLKIT='qt4'
+  - ETS_TOOLKIT='wx'
+  - ETS_TOOLKIT='null'
+matrix:
+  exclude:
+    - python: 2.6
+      env: ETS_TOOLKIT='qt4'
+    - python: 2.6
+      env: ETS_TOOLKIT='wx'
+cache:
+  - pip
+  - ccache
+addons:
+  apt:
+    packages:
+    - python-qt4
+    - python-qt4-gl
+    - python-wxtools
+    - python-numpy
+    - libjpeg8-dev
+    - zlib1g-dev
+    - swig
+    - ccache
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install python-numpy swig
-  - source .travis_before_install
+  - ccache -s
+  - pip install --upgrade pip
+  - export PATH=/usr/lib/ccache:${PATH}
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 install:
   - pip install cython
-  - pip install coveralls
-  - pip install -r dev_requirements.txt
+  - pip install -r travis-ci-requirements.txt
   - python setup.py develop
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION == *_with_system_site_packages ]]; then ETS_TOOLKIT='qt4' coverage run -p -m nose.core -v chaco; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == *_with_system_site_packages ]]; then ETS_TOOLKIT='wx' coverage run -p -m nose.core -v chaco; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == *_with_system_site_packages ]]; then coverage combine; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then coverage run -m nose.core -v chaco/tests; fi
-notifications:
-  email:
-    - travis-ci@enthought.com
+  - coverage run -m nose.core -v chaco --exclude-dir=chaco/tests_with_backend
+  - if [[ $ETS_TOOLKIT != 'null' ]]; then coverage run -a -m nose.core -v chaco/tests_with_backend; fi
 after_success:
-  coveralls
+  - pip install codecov
+  - codecov
