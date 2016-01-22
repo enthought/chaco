@@ -11,13 +11,14 @@ from itertools import izip
 from numpy import array, empty
 
 # Enthought library imports
-from chaco.api import ArrayDataSource, Label
 from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Bool, Enum, Float, Int, Instance, List, on_trait_change
 
 # local imports
 from .base_1d_plot import Base1DPlot
+from .array_data_source import ArrayDataSource
+from .label import Label
 
 
 class TextPlot1D(Base1DPlot):

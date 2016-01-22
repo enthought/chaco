@@ -4,13 +4,12 @@ Test of ImageData behavior.
 
 import os
 
-import unittest2 as unittest
 from numpy import arange, swapaxes
 from numpy.testing import assert_array_equal
 from pkg_resources import resource_filename
 
 from chaco.api import ImageData
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.unittest_tools import UnittestTools, unittest
 
 
 data_dir = resource_filename('chaco.tests', 'data')
