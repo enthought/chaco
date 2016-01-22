@@ -2,7 +2,7 @@ nose-exclude
 coverage
 pillow
 unittest2
-kiwisolver
+kiwisolver ; python_version <= "2.7"
 git+http://github.com/enthought/traits.git#egg=traits
 git+http://github.com/enthought/traitsui.git#egg=traitsui
 git+http://github.com/enthought/enable.git@feature/python3#egg=enable
