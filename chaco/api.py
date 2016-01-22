@@ -27,6 +27,7 @@ from grid_mapper import GridMapper
 from log_mapper import LogMapper
 from linear_mapper import LinearMapper
 from color_mapper import ColorMapper, ColorMapTemplate
+from discrete_color_mapper import DiscreteColorMapper
 from transform_color_mapper import TransformColorMapper
 
 # Colormaps and color palettes
