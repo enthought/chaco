@@ -1,7 +1,7 @@
-import unittest2 as unittest
-
 from numpy import alltrue, arange, array
 from numpy.testing import assert_almost_equal
+
+from traits.testing.unittest_tools import unittest
 
 # Chaco imports
 from chaco.api import (ArrayDataSource, DataRange1D, LinearMapper,

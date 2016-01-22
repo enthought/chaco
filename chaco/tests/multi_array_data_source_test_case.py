@@ -2,13 +2,11 @@
 Test of MultiArrayDataSource behavior.
 """
 
-import unittest2 as unittest
-
 from numpy import arange, array, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal
 
 from chaco.api import MultiArrayDataSource
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.unittest_tools import UnittestTools, unittest
 
 
 class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):

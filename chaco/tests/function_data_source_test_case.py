@@ -2,14 +2,12 @@
 Test of FunctionDataSource behavior.
 """
 
-import unittest2 as unittest
-
 from numpy import array, linspace, ones
 from numpy.testing import assert_array_equal
 
 from chaco.api import DataRange1D
 from chaco.function_data_source import FunctionDataSource
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.unittest_tools import UnittestTools, unittest
 
 
 class FunctionDataSourceTestCase(UnittestTools, unittest.TestCase):

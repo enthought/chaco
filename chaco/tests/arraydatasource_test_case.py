@@ -6,7 +6,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import pickle
 
-import unittest2 as unittest
 from numpy import arange, array, allclose, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal
 import numpy as np

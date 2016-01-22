@@ -6,11 +6,8 @@ import numpy as np
 
 from traits.api import Any, Int
 
-from .abstract_plot_renderer import AbstractPlotRenderer
-from .abstract_mapper import AbstractMapper
-from .array_data_source import ArrayDataSource
 from .base import reverse_map_1d
-from .scatterplot import render_markers
+from .scatterplot_1d import ScatterPlot1D
 
 
 class JitterPlot(ScatterPlot1D):

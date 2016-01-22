@@ -1,10 +1,10 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import unittest2 as unittest
-
 from numpy import alltrue
+
 from enable.compiled_path import CompiledPath
+from traits.testing.unittest_tools import unittest
 
 # Chaco imports
 from chaco.api import create_scatter_plot
