@@ -50,6 +50,9 @@ class LineScatterPlot1D(Base1DPlot):
     #: The line dash style of the selected line.
     selected_line_style = LineStyle("solid")
 
+    #: The fade amount for unselected regions
+    unselected_alpha = Float(0.3)
+
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
@@ -87,8 +90,6 @@ class LineScatterPlot1D(Base1DPlot):
 
                 color = list(self.color_)
                 color[3] *= self.unselected_alpha
-                outline_color = list(self.outline_color_)
-                outline_color[3] *= self.unselected_alpha
                 if unselected_lines.size > 0:
                     self._render_lines(gc, unselected_lines, self.color_,
                                        self.line_width, self.line_style_)
