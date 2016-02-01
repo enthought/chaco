@@ -53,19 +53,32 @@ class ScatterPlot1D(Base1DPlot):
     # datasource.
     #------------------------------------------------------------------------
 
+    #: the plot data metadata name to watch for selection information
     selection_metadata_name = Str("selections")
 
+    #: whether or not to display a selection
     show_selection = Bool(True)
 
+    #: the marker type for selected points
     selection_marker = MarkerTrait
 
+    #: the marker size for selected points
     selection_marker_size = Float(4.0)
 
+    #: the thickness, in pixels, of the selected points
     selection_line_width = Float(1.0)
 
+    #: the color of the selected points
     selection_color = ColorTrait("yellow")
 
+    #: the outline color of the selected points
     selection_outline_color = black_color_trait
+
+    #: The fade amount for unselected regions
+    unselected_alpha = Float(0.3)
+
+    #: The marker outline width to use for unselected points
+    unselected_line_width = Float(1.0)
 
     #: alignment of markers relative to non-index direction
     alignment = Enum("center", "left", "right", "top", "bottom")
@@ -113,13 +126,13 @@ class ScatterPlot1D(Base1DPlot):
                         self.custom_symbol)
                 if selected_pts.size > 0:
                     self.render_markers_func(gc, selected_pts, self.marker,
-                        self.marker_size, self.selected_color_,
+                        self.marker_size, self.selection_color_,
                         self.line_width, self.outline_color_,
                         self.custom_symbol)
             else:
                 self.render_markers_func(gc, pts, self.marker,
-                        self.marker_size, self.color_, self.line_width,self.outline_color_,
-                        self.custom_symbol)
+                        self.marker_size, self.color_, self.line_width,
+                        self.outline_color_, self.custom_symbol)
 
     def __marker_positon_default(self):
         return self._get_marker_position()
