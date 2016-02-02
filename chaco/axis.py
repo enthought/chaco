@@ -807,5 +807,6 @@ class MinorPlotAxis(PlotAxis):
         self.tick_label_formatter  = lambda x: ''
         self.tick_in  = 2
         self.tick_out = 2
+        self.axis_line_visible = False
 
 # EOF ########################################################################
