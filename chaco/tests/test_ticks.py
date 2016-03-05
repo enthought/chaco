@@ -1,4 +1,4 @@
-import unittest
+import unittest2 as unittest
 
 from chaco.ticks import DefaultTickGenerator, auto_interval
 
