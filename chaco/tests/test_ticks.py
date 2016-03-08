@@ -54,7 +54,7 @@ class TestMinorTickGenerator(unittest.TestCase):
                 bounds_high=high,
                 interval=i,
             )
-            self.assertEqual(ticksMinor, ticksDefault)
+            self.assertEqual(ticksMinor.tolist(), ticksDefault.tolist())
     
     def test_minor_tick_generator_without_interval(self):
         """A minor tick generator should return more ticks than
