@@ -803,10 +803,16 @@ class MinorPlotAxis(PlotAxis):
     
     def __init__(self, *args, **kwargs):
         super(MinorPlotAxis, self).__init__(*args, **kwargs)
-        self.tick_generator = MinorTickGenerator()
-        self.tick_label_formatter  = lambda x: ''
-        self.tick_in  = 2
-        self.tick_out = 2
-        self.axis_line_visible = False
+
+        if 'tick_generator' not in kwargs:
+            self.tick_generator = MinorTickGenerator()
+        if 'tick_label_formatter' not in kwargs:
+            self.tick_label_formatter = lambda x: ''
+        if 'tick_in' not in kwargs:
+            self.tick_in  = 2
+        if 'tick_out' not in kwargs:
+            self.tick_out = 2
+        if 'axis_line_visible' not in kwargs:
+            self.axis_line_visible = False
 
 # EOF ########################################################################
