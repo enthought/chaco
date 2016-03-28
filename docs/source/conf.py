@@ -17,6 +17,9 @@ import sys, os
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
 sys.path.append(os.path.abspath('sphinxext'))
+sys.path.append(os.path.abspath(os.path.join('..','..')))
+
+from chaco import __version__
 
 # General configuration
 # ---------------------
@@ -40,9 +43,7 @@ copyright = '2008-2014, Enthought, Inc.'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
-d = {}
-execfile(os.path.join('..', '..', 'chaco', '__init__.py'), d)
-version = release = d['__version__']
+version = release = __version__
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -142,6 +143,7 @@ html_use_index = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Chacodoc'
 
+html_theme='classic'
 
 # Options for LaTeX output
 # ------------------------

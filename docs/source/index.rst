@@ -44,4 +44,6 @@ Documentation
    :width: 800 px
    :align: center
 
+------------
+
 * :ref:`search`

@@ -10,22 +10,18 @@ Quickstart
 +----------------------------------------+--------------------------------------+
 
 This section is meant to help users on well-supported platforms and common
-Python environments get started using Chaco as quickly as possible. Chaco users
-can subscribe to the `enthought-dev
-<https://mail.enthought.com/mailman/listinfo/enthought-dev>`_  mailing list to
-post questions, consult archives, and share tips.
-
+Python environments get started using Chaco as quickly as possible.
 
 Installation
 ============
 
-There are several ways to get Chaco. The easiest way is through the `Enthought
-Python Distribution (EPD) <http://www.enthought.com/epd>`_, which is available
-for several platforms and also provides many other useful packages.  Chaco may
+There are several ways to get Chaco. The easiest way is through `Enthought
+Canopy (Canopy) <https://www.enthought.com/products/canopy>`_, which is available
+for several platforms and also provides many other useful packages. Chaco may
 also be available through a package manager on your platform, such as apt on
 Ubuntu or `MacPorts <http://www.macports.org/>`_ on OS X.  You can also build
 Chaco yourself, but because of the number of packages required, we highly
-recommend you install EPD.
+recommend you install Canopy
 
 .. _dependencies:
 
@@ -84,7 +80,7 @@ To do this, you can either
 
 1. Install Chaco and its :ref:`dependencies` from `PyPI
    <http://pypi.python.org/pypi>`_ using `easy_install
-   <http://packages.python.org/distribute/easy_install.html>`_ (part of
+   <https://pythonhosted.org/setuptools/easy_install.html>`_ (part of
    setuptools) or using `pip <http://www.pip-installer.org/en/latest/>`_. For
    example
 
@@ -139,14 +135,6 @@ Location
 
      https://github.com/enthought/chaco/tree/master/examples
 
-   For ETS 3.0 or Chaco 3.0, you can check out the examples with Subversion:
-
-     :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/3.0.0/examples`
-
-   For ETS 2.8 or Chaco 2.0.x:
-
-     :command:`svn co https://svn.enthought.com/svn/enthought/Chaco/tags/enthought.chaco2_2.0.5/examples`
-
 Chaco examples can be found in the :file:`examples/demo/` and
 :file:`examples/tutorials/` directories. Some are classified by themes and
 located in separate directories.  Almost all of the Chaco examples are
@@ -172,6 +160,7 @@ This opens a plot of several Bessel functions with a legend.
   .. image:: images/simple_line.png
 
 You can interact with the plot in several ways:
+
 .. Ctrl-Left and Ctrl-Right don't work in OS X?
 
 * To pan the plot, hold down the left mouse button inside the plot area (but

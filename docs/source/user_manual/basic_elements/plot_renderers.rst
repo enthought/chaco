@@ -258,20 +258,20 @@ All :class:`~chaco.abstract_plot_renderer.AbstractPlotRenderer` subclasses are
 expected to provide three methods for mapping to and from screen space and
 data space:
 
-    :method:`map_screen`
+    :attr:`map_screen`
 
         This is expected to take an array of points (as columns) in
         the appropriate data coordinates, and return the corresponding points
         in screen pixel coordinates (measured from the bottom left of the
         plot component).
 
-    :method:`map_data`
-        This is the reverse of :method:`map_screen`, and takes an array of
+    :attr:`map_data`
+        This is the reverse of :attr:`map_screen`, and takes an array of
         points (as columns) screen pixel coordinates relative to the renderer
         component and return the corresponding points in screen data
         coordinates.
 
-    :method:`map_index`
+    :attr:`map_index`
         This method takes a point in screen pixel coordinates and returns an
         appropriate index value that can be used to index into data.  This can
         be used by hit-testing methods (see below), and provides optional
@@ -457,7 +457,7 @@ The attribute :attr:`~chaco.base_2d_plot.Base2DPlot.alpha` defines the
 global transparency value for the whole plot.
 It ranges from 0.0 for transparent to 1.0 (default) for full intensity.
 
-.. _oned_plots:
+.. _1d_plots:
 
 1D Plots Interface
 ==================
