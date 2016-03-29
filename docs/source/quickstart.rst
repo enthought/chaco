@@ -79,14 +79,9 @@ installed.
 To do this, you can either
 
 1. Install Chaco and its :ref:`dependencies` from `PyPI
-   <http://pypi.python.org/pypi>`_ using `easy_install
-   <https://pythonhosted.org/setuptools/easy_install.html>`_ (part of
-   setuptools) or using `pip <http://www.pip-installer.org/en/latest/>`_. For
+   <http://pypi.python.org/pypi>`_ using
+    `pip <http://www.pip-installer.org/en/latest/>`_. For
    example
-
-   :command:`easy_install chaco`
-
-   or
 
    :command:`pip install chaco`
 
