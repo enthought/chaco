@@ -48,27 +48,26 @@ Dependencies
   interactive plots. As an alternative to PyQt, Chaco is being tested more and
   more with the `PySide <http://www.pyside.org/>`_ toolkit (LGPL license).
 
-.. .. note
-.. ::
-.. In addition to wxPython or PyQt a cross-platform OpenGL backend (using
-.. Pyglet) is in the works, and it will not require WX or Qt.
+.. Note::
+   In addition to wxPython or PyQt a cross-platform OpenGL backend (using
+   Pyglet) is in the works, and it will not require WX or Qt.
 
-Installing Chaco with EPD
--------------------------
+Installing Chaco with Canopy
+-----------------------------
 
 Chaco, the rest of the `Enthought Tool Suite <http://code.enthought.com/>`_,
-and a lot more are bundled with EPD.  Getting EPD allows you to install Chaco
+and a lot more are bundled with Canopy.  Getting Canopy allows you to install Chaco
 and all its dependencies at once; however, these packages will be linked to a
-new instance of Python.  The EPD Free distribution is free for all users and
+new instance of Python. Canopy Express is free for all users and
 contains all that you need to use Chaco.
 
-To get EPD, go to the `EPD download page
-<http://www.enthought.com/products/getepd.php>`_ and get the appropriate
+To get Canopy, go to the `Canopy download page
+<http://www.enthought.com/products/canopy>`_ and get the appropriate
 version for your platform.  After running the installer, you will have a
 working version of Chaco and several examples.
 
 Building Chaco
---------------
+---------------
 
 Building Chaco on your machine requires you to build Chaco and each of its
 dependencies, but it has the advantage of installing Chaco on top of the Python
@@ -79,9 +78,7 @@ installed.
 To do this, you can either
 
 1. Install Chaco and its :ref:`dependencies` from `PyPI
-   <http://pypi.python.org/pypi>`_ using
-    `pip <http://www.pip-installer.org/en/latest/>`_. For
-   example
+   <http://pypi.python.org/pypi>`_ using `pip <http://www.pip-installer.org/en/latest/>`_. For example
 
    :command:`pip install chaco`
 
@@ -105,7 +102,7 @@ you may or may not have the examples already.
 Location
 --------
 
-1. If you installed Chaco as part of EPD, the location of the examples depends
+1. If you installed Chaco as part of Canopy, the location of the examples depends
    on your platform:
 
    * On Windows, they are in the Examples\\ subdirectory of your installation
