@@ -94,11 +94,19 @@ class DragZoom(DragTool, BetterZoom):
         if not self.single_axis:
             self.zoom_in_x(zoom_x)
             self.zoom_in_y(zoom_y)
-        else:
+        else: 
+            # Zoom only along specified axis
+            flip = self.component.orientation=='v'
             if self.axis == 'index':
-                self.zoom_in_x(zoom_x)
+                if flip:
+                    self.zoom_in_y(zoom_y)
+                else:
+                    self.zoom_in_x(zoom_x)
             if self.axis == 'value':
-                self.zoom_in_y(zoom_y)
+                if flip:
+                    self.zoom_in_x(zoom_x)
+                else:
+                    self.zoom_in_y(zoom_y)
 
         return
 
