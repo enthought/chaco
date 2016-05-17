@@ -24,6 +24,7 @@ addons:
     packages:
     - python-qt4
     - python-qt4-gl
+    - python-qt4-dev
     - python-wxtools
     - python-numpy
     - libjpeg8-dev
