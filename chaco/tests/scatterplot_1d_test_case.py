@@ -121,3 +121,38 @@ class Scatterplot1DTest(unittest.TestCase):
         points = array([[0, 124.5], [124.5, 0]])
         assert_almost_equal(self.scatterplot.map_data(points),
                             array([9.0, 4.5]))
+
+    def test_scatter_1d_selection(self):
+        # select a single point
+        self.scatterplot.index.metadata['selections'] = [
+            (arange(10) % 2 == 0),
+        ]
+
+        gc = PlotGraphicsContext(self.size)
+        gc.render_component(self.scatterplot)
+        actual = gc.bmp_array[:, :, :]
+        self.assertFalse(alltrue(actual == 255))
+
+    def test_scatter_1d_selection_mask_name(self):
+        # select with a mask
+        self.scatterplot.selection_metadata_name = 'highlight_masks'
+        self.scatterplot.index.metadata['highlight_masks'] = [
+            (arange(10) % 2 == 0),
+        ]
+
+        gc = PlotGraphicsContext(self.size)
+        gc.render_component(self.scatterplot)
+        actual = gc.bmp_array[:, :, :]
+        self.assertFalse(alltrue(actual == 255))
+
+    def test_scatter_1d_selection_alpha(self):
+        # test with different alpha
+        self.scatterplot.unselected_alpha = 0.4
+        self.scatterplot.index.metadata['selections'] = [
+            (arange(10) % 2 == 0),
+        ]
+
+        gc = PlotGraphicsContext(self.size)
+        gc.render_component(self.scatterplot)
+        actual = gc.bmp_array[:, :, :]
+        self.assertFalse(alltrue(actual == 255))
