@@ -15,7 +15,7 @@ SizePrefs = GridPlotContainer.SizePrefs
 class ContainerTestCase(unittest.TestCase):
     def assert_tuple(self, t1, t2):
         self.assertEquals(len(t1), len(t2))
-        for i in xrange(len(t1)):
+        for i in range(len(t1)):
             self.assertEquals(t1[i], t2[i])
 
 

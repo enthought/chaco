@@ -67,7 +67,7 @@ class FunctionDataSourceTestCase(UnittestTools, unittest.TestCase):
                            self.data_source.get_data())
 
     def test_set_mask(self):
-        mymask = array([i % 2 for i in xrange(101)], dtype=bool)
+        mymask = array([i % 2 for i in range(101)], dtype=bool)
 
         with self.assertRaises(NotImplementedError):
             self.data_source.set_mask(mymask)
