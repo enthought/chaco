@@ -45,6 +45,10 @@ before_install:
 install:
   - pip install cython
   - pip install -r travis-ci-requirements.txt
+  - git clone https://github.com/enthought/enable.git
+  - cd enable
+  - python setup.py install
+  - cd ..
   - python setup.py develop
 script:
   - coverage run -m nose.core -v chaco --exclude-dir=chaco/tests_with_backend
