@@ -2,15 +2,17 @@
 Tests of ArrayDataSource behavior.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import pickle
 
-import unittest2 as unittest
 from numpy import arange, array, allclose, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal
 import numpy as np
 
-from chaco.api import ArrayDataSource, PointDataSource
-from traits.testing.unittest_tools import UnittestTools
+from chaco.array_data_source import ArrayDataSource
+from chaco.point_data_source import PointDataSource
+from traits.testing.unittest_tools import UnittestTools, unittest
 
 
 class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):

@@ -39,7 +39,7 @@ def test():
     fname = find_resource('Chaco', sample_path, alt_path=alt_path,
         return_path=True)
     index, data = wav_to_numeric(fname)
-    print data[:100]
+    print(data[:100])
     return index, data
 
 if __name__== '__main__':

@@ -1,6 +1,6 @@
 """ LOGO overlay """
 
-from __future__ import with_statement
+
 
 from numpy import array, cos, invert, isnan, nan, pi, sin, vstack
 from traits.api import Array, Enum, Float, Range

@@ -1,6 +1,8 @@
 """ A Plot which uses ScaleSystems for its ticks.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import Any
 
 from chaco.api import (DataRange2D, LinearMapper, LogMapper,

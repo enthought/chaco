@@ -1,7 +1,7 @@
 """ Defines the SelectableOverlayPlotContainer class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from numpy import array, float64
 
@@ -10,7 +10,7 @@ from traits.api import Bool, Float, Enum
 from enable.api import ColorTrait
 
 # Local imports
-from plot_containers import OverlayPlotContainer
+from .plot_containers import OverlayPlotContainer
 
 class SelectableOverlayPlotContainer(OverlayPlotContainer):
     """
@@ -68,5 +68,3 @@ class SelectableOverlayPlotContainer(OverlayPlotContainer):
                 gc.rect(lowerleft[0], lowerleft[1], upperright[0], upperright[1])
                 gc.draw_path()
         return
-
-

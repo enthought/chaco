@@ -1,6 +1,8 @@
 """ Defines commands for the Chaco shell.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 try:
     from wx import GetApp
 except ImportError:
@@ -15,8 +17,8 @@ from chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
     CalendarScaleSystem)
 from chaco.default_colormaps import *
 
-import plot_maker
-from session import PlotSession
+from .plot_maker import do_contour, do_imread, do_imshow, do_pcolor, do_plot, do_plotv
+from .session import PlotSession
 
 session = PlotSession()
 
@@ -101,7 +103,7 @@ def chaco_commands():
     save
         saves the current plot to a file (png, bmp, jpg, pdf)
     """
-    print chaco_commands.__doc__
+    print(chaco_commands.__doc__)
 
     # The following are not implemented yet
     """
@@ -305,8 +307,7 @@ def plot(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_plot(session.data, cont,
-                               *data, **kwargs)
+    plots = do_plot(session.data, cont, *data, **kwargs)
 
     cont.request_redraw()
     return
@@ -373,7 +374,7 @@ def loglog(*data, **kwargs):
 def imread(*data, **kwargs):
     """ Returns image file as an array. """
 
-    return plot_maker.do_imread(*data, **kwargs)
+    return do_imread(*data, **kwargs)
 
 
 def imshow(*data, **kwargs):
@@ -398,8 +399,7 @@ def imshow(*data, **kwargs):
 
     if "colormap" not in kwargs:
         kwargs["colormap"] = session.colormap
-    plots = plot_maker.do_imshow(session.data, cont,
-                                 *data, **kwargs)
+    plots = do_imshow(session.data, cont, *data, **kwargs)
     cont.request_redraw()
     return
 
@@ -422,8 +422,7 @@ def pcolor(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_pcolor(session.data, session.colormap, cont,
-                                 *data, **kwargs)
+    plots = do_pcolor(session.data, session.colormap, cont, *data, **kwargs)
     cont.request_redraw()
     return
 
@@ -447,8 +446,8 @@ def contour(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_contour(session.data, session.colormap, cont,
-                                  "line", *data, **kwargs)
+    plots = do_contour(session.data, session.colormap, cont, "line",
+                       *data, **kwargs)
     cont.request_redraw()
     return
 
@@ -472,7 +471,7 @@ def contourf(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_contour(session.data, session.colormap, cont,
+    plots = do_contour(session.data, session.colormap, cont,
                                   "poly", *data, **kwargs)
     cont.request_redraw()
     return
@@ -538,7 +537,7 @@ def plotv(*args, **kwargs):
     """
 
     cont = _do_plot_boilerplate(kwargs)
-    plots = plot_maker.do_plotv(session, *args, **kwargs)
+    plots = do_plotv(session, *args, **kwargs)
     cont.add(*plots)
     cont.request_redraw()
     return
@@ -765,13 +764,13 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
     """
     p = curplot()
     if not p:
-        print "Doing nothing because there is no active plot."
+        print("Doing nothing because there is no active plot.")
         return
 
     import os.path
     ext = os.path.splitext(filename)[-1]
     if ext == ".pdf":
-        print "Warning: the PDF backend is still a little buggy."
+        print("Warning: the PDF backend is still a little buggy.")
         from chaco.pdf_graphics_context import PdfPlotGraphicsContext
         # Set some default PDF options if none are provided
         if dest_box is None:
@@ -789,7 +788,7 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
         gc.save()
         del gc
-        print "Saved to", filename
+        print("Saved to", filename)
 
     elif ext in [".bmp", ".png", ".jpg"]:
         from chaco.api import PlotGraphicsContext
@@ -803,10 +802,10 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
         gc.save(filename)
         del gc
-        print "Saved to", filename
+        print("Saved to", filename)
     else:
-        print "Format not yet supported:", ext
-        print "Currently supported formats are: bmp, png, jpg."
+        print("Format not yet supported:", ext)
+        print("Currently supported formats are: bmp, png, jpg.")
     return
 
 

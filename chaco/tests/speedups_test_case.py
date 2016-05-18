@@ -1,4 +1,6 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
 from numpy import alltrue, array, ravel, zeros, isinf, linspace
@@ -87,7 +89,5 @@ class GatherPointsBase(object):
 #        now = time.time()
 #        for i in range(numruns):
 #            points, selection = func(*args)
-#        print "%s (%d pts, %d runs):" % (name, numpoints, numruns), (time.time() - now)
+#        print("%s (%d pts, %d runs):" % (name, numpoints, numruns), (time.time() - now))
 #    return
-
-

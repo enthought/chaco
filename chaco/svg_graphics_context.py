@@ -1,6 +1,7 @@
 """ Defines the PlotGraphicsContext class.
 """
-from __future__ import with_statement
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from kiva.svg import GraphicsContext
 
@@ -72,4 +73,3 @@ class SVGGraphicsContext(GraphicsContext):
         GraphicsContext.clip_to_rect(self, x-0.5, y-0.5, width+1, height+1)
 
 # EOF
-

@@ -1,17 +1,21 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import sys
 import unittest
 
-from chaco.api import HPlotContainer, OverlayPlotContainer, \
-                                PlotComponent, VPlotContainer, GridContainer
+from chaco.plot_containers import HPlotContainer, OverlayPlotContainer, \
+    VPlotContainer, GridPlotContainer
+from chaco.plot_component import PlotComponent
 from traits.api import Any, Tuple
 
-SizePrefs = GridContainer.SizePrefs
+SizePrefs = GridPlotContainer.SizePrefs
 
 
 class ContainerTestCase(unittest.TestCase):
     def assert_tuple(self, t1, t2):
         self.assertEquals(len(t1), len(t2))
-        for i in xrange(len(t1)):
+        for i in range(len(t1)):
             self.assertEquals(t1[i], t2[i])
 
 
@@ -394,16 +398,16 @@ class SizePrefsTestCase(unittest.TestCase):
 
 
 
-class GridContainerTestCase(ContainerTestCase):
+class GridPlotContainerTestCase(ContainerTestCase):
 
     def test_empty_container(self):
-        cont = GridContainer(shape=(1,1))
+        cont = GridPlotContainer(shape=(1,1))
         cont.bounds = [100,100]
         cont.do_layout()
         return
 
     def test_all_empty_cells(self):
-        cont = GridContainer(shape=(2,2), spacing=(0,0))
+        cont = GridPlotContainer(shape=(2,2), spacing=(0,0))
         cont.component_grid = [[None, None], [None, None]]
         size = cont.get_preferred_size()
         self.assert_tuple(size, (0,0))
@@ -412,7 +416,7 @@ class GridContainerTestCase(ContainerTestCase):
         return
 
     def test_some_empty_cells(self):
-        cont = GridContainer(shape=(2,2), spacing=(0,0))
+        cont = GridPlotContainer(shape=(2,2), spacing=(0,0))
         a = StaticPlotComponent([100,30])
         b = StaticPlotComponent([50,40])
         cont.component_grid = [[a, None], [None, b]]
@@ -426,7 +430,7 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(b.outer_bounds, (50, 40))
 
     def test_single_cell(self):
-        cont = GridContainer(shape=(1,1))
+        cont = GridPlotContainer(shape=(1,1))
         comp1 = StaticPlotComponent([200,300])
         cont.add(comp1)
         cont.do_layout()
@@ -437,7 +441,7 @@ class GridContainerTestCase(ContainerTestCase):
         return
 
     def test_nonresizable_container(self):
-        cont = GridContainer(shape=(1,1), resizable="")
+        cont = GridPlotContainer(shape=(1,1), resizable="")
         comp1 = StaticPlotComponent([200,300])
         cont.add(comp1)
         cont.do_layout()
@@ -446,7 +450,7 @@ class GridContainerTestCase(ContainerTestCase):
         return
 
     def test_row(self):
-        cont = GridContainer(shape=(1,3), halign="center", valign="center")
+        cont = GridPlotContainer(shape=(1,3), halign="center", valign="center")
         c1 = StaticPlotComponent([50,50])
         c2 = StaticPlotComponent([30,30])
         c3 = StaticPlotComponent([0,0], resizable="hv")
@@ -472,7 +476,7 @@ class GridContainerTestCase(ContainerTestCase):
 
     def test_two_by_two(self):
         """ Tests a 2x2 grid of components """
-        cont = GridContainer(shape=(2,2), halign="center", valign="center")
+        cont = GridPlotContainer(shape=(2,2), halign="center", valign="center")
         ul = StaticPlotComponent([50,50])     # upper-left component
         lr = StaticPlotComponent([100,100])   # lower-right component
         top = StaticPlotComponent([0,0], resizable="hv")
@@ -491,7 +495,7 @@ class GridContainerTestCase(ContainerTestCase):
         return
 
     def test_spacing(self):
-        cont = GridContainer(shape=(2,2), spacing=(10,10),
+        cont = GridPlotContainer(shape=(2,2), spacing=(10,10),
                              halign="center", valign="center")
         ul = StaticPlotComponent([50,50])     # upper-left component
         lr = StaticPlotComponent([100,100])   # lower-right component
@@ -511,7 +515,7 @@ class GridContainerTestCase(ContainerTestCase):
         return
 
     def test_resizable(self):
-        cont = GridContainer(shape=(2,2), spacing=(0,0),
+        cont = GridPlotContainer(shape=(2,2), spacing=(0,0),
                              halign="center", valign="center")
         ul = StaticPlotComponent([0,0], resizable="hv")
         lr = StaticPlotComponent([0,0], resizable="hv")
@@ -532,7 +536,7 @@ class GridContainerTestCase(ContainerTestCase):
 
     def test_resizable2(self):
         # Tests a resizable component that also has a preferred size
-        cont = GridContainer(shape=(2,2), spacing=(0,0),
+        cont = GridPlotContainer(shape=(2,2), spacing=(0,0),
                              halign="center", valign="center")
         ul = StaticPlotComponent([150,150], resizable="hv")
         lr = StaticPlotComponent([0,0], resizable="hv")
@@ -552,7 +556,7 @@ class GridContainerTestCase(ContainerTestCase):
 
     def test_resizable_mixed(self):
         """ Tests mixing resizable and non-resizable components """
-        cont = GridContainer(shape=(2,2), spacing=(10,10),
+        cont = GridPlotContainer(shape=(2,2), spacing=(10,10),
                              halign="center", valign="center")
         ul = StaticPlotComponent([0,0], resizable="hv")
         lr = StaticPlotComponent([0,0], resizable="hv")
@@ -574,7 +578,7 @@ class GridContainerTestCase(ContainerTestCase):
     def test_resizable_mixed2(self):
         # Tests laying out resizable components with preferred
         # sized alongside non-resizable components.
-        cont = GridContainer(shape=(2,2), spacing=(0,0),
+        cont = GridPlotContainer(shape=(2,2), spacing=(0,0),
                              halign="center", valign="center")
         ul = ResizablePlotComponent([150,150])
         lr = StaticPlotComponent([50,50], resizable="")
@@ -595,8 +599,8 @@ class GridContainerTestCase(ContainerTestCase):
     def test_resizable_mixed_h(self):
         # Tests the layout of a non-resizable component, a resizable with a
         # preferred size, and a fully resizable component in a horizontal
-        # GridContainer
-        cont = GridContainer(shape=(3,1), spacing=(0,0),
+        # GridPlotContainer
+        cont = GridPlotContainer(shape=(3,1), spacing=(0,0),
                              halign="center", valign="center")
         left = StaticPlotComponent([50,10], resizable="")
         middle = ResizablePlotComponent([100,10])
@@ -613,7 +617,7 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(right.bounds, (50,10))
 
     def test_non_resizable(self):
-        cont = GridContainer(shape=(2,2), spacing=(10,10),
+        cont = GridPlotContainer(shape=(2,2), spacing=(10,10),
                              halign="center", valign="center")
         ul = StaticPlotComponent([100,100], resizable="")
         ur = StaticPlotComponent([100,100], resizable="")

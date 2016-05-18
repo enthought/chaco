@@ -1,6 +1,7 @@
 """ Defines the LineInspector tool class.
 """
-from __future__ import with_statement
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Enthought library imports
 from enable.api import BaseTool, ColorTrait, LineStyle

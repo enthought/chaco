@@ -4,8 +4,8 @@
 from traits.api import Bool, Instance, Float, Property
 
 # Local relative imports
-from abstract_mapper import AbstractMapper
-from data_range_1d import DataRange1D
+from .abstract_mapper import AbstractMapper
+from .data_range_1d import DataRange1D
 
 
 class Base1DMapper(AbstractMapper):

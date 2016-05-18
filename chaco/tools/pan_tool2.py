@@ -1,4 +1,6 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import inf
 
 from enable.api import Pointer
@@ -168,5 +170,3 @@ class PanTool(DragTool):
             event.window.set_mouse_owner(None)
         event.handled = True
         return
-
-

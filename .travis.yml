@@ -1,18 +1,21 @@
 language: python
 sudo: false
 python:
-  - 2.6
   - 2.7_with_system_site_packages
+  - 3.4
+  - 3.5
 env:
   - ETS_TOOLKIT='qt4'
   - ETS_TOOLKIT='wx'
   - ETS_TOOLKIT='null'
 matrix:
   exclude:
-    - python: 2.6
-      env: ETS_TOOLKIT='qt4'
-    - python: 2.6
+    - python: 3.4
       env: ETS_TOOLKIT='wx'
+    - python: 3.5
+      env: ETS_TOOLKIT='wx'
+    - python: 3.5
+      env: ETS_TOOLKIT='qt4'
 cache:
   - pip
   - ccache
@@ -21,25 +24,37 @@ addons:
     packages:
     - python-qt4
     - python-qt4-gl
+    - python-qt4-dev
     - python-wxtools
     - python-numpy
     - libjpeg8-dev
     - zlib1g-dev
+    - libpng-dev
+    - libfreetype36-dev
+    - python-cairo
+    - cmake
     - swig
     - ccache
 before_install:
   - ccache -s
   - pip install --upgrade pip
+  - if [[ ${TRAVIS_PYTHON_VERSION} == "3.4" && ${ETS_TOOLKIT} == "qt4" ]]; then ./build_pyside_wheel.sh; fi
   - export PATH=/usr/lib/ccache:${PATH}
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 install:
   - pip install cython
   - pip install -r travis-ci-requirements.txt
+  - git clone https://github.com/enthought/enable.git
+  - cd enable
   - python setup.py develop
+  - cd ..
+  - python setup.py develop
+  - mkdir testing_dir
+  - cd testing_dir
 script:
-  - coverage run -m nose.core -v chaco --exclude-dir=chaco/tests_with_backend
-  - if [[ $ETS_TOOLKIT != 'null' ]]; then coverage run -a -m nose.core -v chaco/tests_with_backend; fi
+  - coverage run -m nose.core -v chaco --exclude-dir=../chaco/tests_with_backend
+  - if [[ $ETS_TOOLKIT != 'null' ]]; then coverage run -a -m nose.core -v ../chaco/tests_with_backend; fi
 after_success:
   - pip install codecov
   - codecov

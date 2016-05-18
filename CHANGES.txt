@@ -4,7 +4,12 @@ Chaco CHANGELOG
 
 Change summary since 4.5.0
 
-New features/Improvements
+New Features/Improvements
+
+ * Experimental Python 3 support. The Chaco codebase has been ported to run on
+   Python 2.6, 2.7, 3.2, 3.3 and 3.4.  The basic test suite runs without error
+   on 3.2, 3.3 and 3.4 on Travis CI, but has not been extensively used yet.
+   Feedback appreciated. (PR#261)
 
  * A new base "1D plot" class introduced for handling one-dimensional plots,
    including refactoring the existing Jitterplot and adding 1D scatterplot

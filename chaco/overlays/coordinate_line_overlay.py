@@ -4,7 +4,7 @@ This module defines the CoordinateLineOverlay class, a Chaco overlay
 for Plot (and similar) objects.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from traits.api import Instance, Float, Array
 from enable.api import black_color_trait, LineStyle, Component

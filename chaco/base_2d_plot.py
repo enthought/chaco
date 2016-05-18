@@ -1,5 +1,8 @@
 """ Defines the base class for 2-D plots.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Standard library imports
 from numpy import asarray, isnan
 
@@ -7,12 +10,12 @@ from numpy import asarray, isnan
 from traits.api import Enum, Event, Instance, Property, Range, Trait
 
 # Local relative imports
-from abstract_plot_renderer import AbstractPlotRenderer
-from base import reverse_map_1d
-from plot_label import PlotLabel
-from grid_data_source import GridDataSource
-from grid_mapper import GridMapper
-from image_data import ImageData
+from .abstract_plot_renderer import AbstractPlotRenderer
+from .base import reverse_map_1d
+from .plot_label import PlotLabel
+from .grid_data_source import GridDataSource
+from .grid_mapper import GridMapper
+from .image_data import ImageData
 
 
 class Base2DPlot(AbstractPlotRenderer):
@@ -155,7 +158,7 @@ class Base2DPlot(AbstractPlotRenderer):
         try:
             x_ndx = reverse_map_1d(x_data, x_pt, self.index.sort_order[0],
                                    floor_only=True)
-        except IndexError, e:
+        except IndexError as e:
             if outside_returns_none:
                 return None, None
 
@@ -168,7 +171,7 @@ class Base2DPlot(AbstractPlotRenderer):
         try:
             y_ndx = reverse_map_1d(y_data, y_pt, self.index.sort_order[1],
                                    floor_only=True)
-        except IndexError, e:
+        except IndexError as e:
             if outside_returns_none:
                 return None, None
 
@@ -338,4 +341,3 @@ class Base2DPlot(AbstractPlotRenderer):
         if new is not None:
             new.on_trait_change(self._update_index_mapper, "updated")
         self._update_index_mapper()
-

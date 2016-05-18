@@ -21,6 +21,8 @@ In that case, they produce a Colormap which linearly maps over the specified
 range and has the color palette indicated by the function name.
 """
 
+from __future__ import absolute_import, division, print_function
+
 from numpy import array
 
 # Local imports.

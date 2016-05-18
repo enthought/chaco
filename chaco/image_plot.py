@@ -9,7 +9,7 @@
 """ Defines the ImagePlot class.
 """
 
-from __future__ import with_statement
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 # Standard library imports
 from math import ceil, floor, pi
@@ -23,8 +23,8 @@ from traits.api import (Bool, Either, Enum, Instance, List, Range, Trait,
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
-from base_2d_plot import Base2DPlot
-from image_utils import trim_screen_rect
+from .base_2d_plot import Base2DPlot
+from .image_utils import trim_screen_rect
 
 try:
     # InterpolationQuality required for Quartz backend only (requires OSX).
@@ -356,6 +356,7 @@ class ImagePlot(Base2DPlot):
 
         array_width = self.value.get_width()
         array_height = self.value.get_height()
+
         # Convert screen coordinates to array indexes
         col_min = floor(float(x_min) / image_width * array_width)
         col_max = ceil(float(x_max) / image_width * array_width)

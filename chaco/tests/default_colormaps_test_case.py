@@ -10,13 +10,15 @@
 #
 #------------------------------------------------------------------------------
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
 import numpy as np
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
-from chaco.api import DataRange1D
-from .. import default_colormaps
+from chaco.data_range_1d import DataRange1D
+from chaco import default_colormaps
 
 
 class DefaultColormapsTestCase(unittest.TestCase):
@@ -54,7 +56,6 @@ class DefaultColormapsTestCase(unittest.TestCase):
         x = np.array([2, 4, 0])
         datarange = DataRange1D(low_setting=0, high_setting=4)
         for cmap_func in default_colormaps.discrete_color_map_functions:
-            print cmap_func
             cmapper = cmap_func(datarange)
             rgba = cmapper.map_screen(x)
             self.assertEqual(rgba.shape, (3, 4))
@@ -68,5 +69,3 @@ class DefaultColormapsTestCase(unittest.TestCase):
             y = (len(cmapper.palette)-1-x[::-1])
             r_rgba = r_cmapper.map_screen(y)
             assert_array_almost_equal(r_rgba, rgba[::-1])
-
-            # center and fix do nothing for discrete colormaps

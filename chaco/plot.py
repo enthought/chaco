@@ -1,5 +1,8 @@
 """ Defines the Plot class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 import itertools
 import warnings
@@ -10,40 +13,38 @@ from types import FunctionType
 from traits.api import Delegate, Dict, Instance, Int, List, Property, Str
 
 # Local, relative imports
-from abstract_colormap import AbstractColormap
-from abstract_data_source import AbstractDataSource
-from abstract_plot_data import AbstractPlotData
-from array_data_source import ArrayDataSource
-from array_plot_data import ArrayPlotData
-from base_xy_plot import BaseXYPlot
-from barplot import BarPlot
-from candle_plot import CandlePlot
-from colormapped_scatterplot import ColormappedScatterPlot
-from contour_line_plot import ContourLinePlot
-from contour_poly_plot import ContourPolyPlot
-from cmap_image_plot import CMapImagePlot
-from data_range_1d import DataRange1D
-from data_view import DataView
-from default_colormaps import Spectral
-from grid_data_source import GridDataSource
-from grid_mapper import GridMapper
-from image_data import ImageData
-from image_plot import ImagePlot
-from legend import Legend
-from lineplot import LinePlot
-from line_scatterplot_1d import LineScatterPlot1D
-from linear_mapper import LinearMapper
-from log_mapper import LogMapper
-from plot_label import PlotLabel
-from polygon_plot import PolygonPlot
-from scatterplot import ScatterPlot
-from scatterplot_1d import ScatterPlot1D
-from text_plot_1d import TextPlot1D
-from filled_line_plot import FilledLinePlot
-from quiverplot import QuiverPlot
-from jitterplot import JitterPlot
-
-
+from .abstract_colormap import AbstractColormap
+from .abstract_data_source import AbstractDataSource
+from .abstract_plot_data import AbstractPlotData
+from .array_data_source import ArrayDataSource
+from .array_plot_data import ArrayPlotData
+from .base_xy_plot import BaseXYPlot
+from .barplot import BarPlot
+from .candle_plot import CandlePlot
+from .colormapped_scatterplot import ColormappedScatterPlot
+from .contour_line_plot import ContourLinePlot
+from .contour_poly_plot import ContourPolyPlot
+from .cmap_image_plot import CMapImagePlot
+from .data_range_1d import DataRange1D
+from .data_view import DataView
+from .default_colormaps import Spectral
+from .grid_data_source import GridDataSource
+from .grid_mapper import GridMapper
+from .image_data import ImageData
+from .image_plot import ImagePlot
+from .legend import Legend
+from .lineplot import LinePlot
+from .line_scatterplot_1d import LineScatterPlot1D
+from .linear_mapper import LinearMapper
+from .log_mapper import LogMapper
+from .plot_label import PlotLabel
+from .polygon_plot import PolygonPlot
+from .scatterplot import ScatterPlot
+from .scatterplot_1d import ScatterPlot1D
+from .text_plot_1d import TextPlot1D
+from .filled_line_plot import FilledLinePlot
+from .quiverplot import QuiverPlot
+from .jitterplot import JitterPlot
 
 
 #-----------------------------------------------------------------------------
@@ -173,8 +174,8 @@ class Plot(DataView):
             elif type(data) in (ndarray, tuple, list):
                 self.data = ArrayPlotData(data)
             else:
-                raise ValueError, "Don't know how to create PlotData for data" \
-                                  "of type " + str(type(data))
+                raise ValueError("Don't know how to create PlotData for data" \
+                                  "of type " + str(type(data)))
 
         if not self._title:
             self._title = PlotLabel(font="swiss 16", visible=False,

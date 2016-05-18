@@ -1,5 +1,8 @@
 """ Defines the ToolHistoryMixin class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from traits.api import HasTraits, Instance, Int, List
 from enable.api import KeySpec
 

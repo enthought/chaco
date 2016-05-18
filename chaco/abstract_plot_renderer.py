@@ -1,10 +1,13 @@
 """ Defines a base class for plot renderers.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports.
 from traits.api import Enum
 
 # Local relative imports
-from plot_component import PlotComponent
+from .plot_component import PlotComponent
 
 class AbstractPlotRenderer(PlotComponent):
     """ This is the minimal interface that all plot renderers must support.

@@ -87,13 +87,13 @@ class MyPlot(HasTraits):
     def _fixed_x_changed(self):
         self.plot.x_mapper.stretch_data = not self.fixed_x
         # Also have to change all the renderers' mappers
-        for renderer in chain(*self.plot.plots.values()):
+        for renderer in chain(*list(self.plot.plots.values())):
             renderer.index_mapper.stretch_data = not self.fixed_x
         self.plot.request_redraw()
 
     def _fixed_y_changed(self):
         self.plot.y_mapper.stretch_data = not self.fixed_y
-        for renderer in chain(*self.plot.plots.values()):
+        for renderer in chain(*list(self.plot.plots.values())):
             renderer.value_mapper.stretch_data = not self.fixed_y
         self.plot.request_redraw()
 

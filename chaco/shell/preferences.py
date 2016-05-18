@@ -1,6 +1,8 @@
 """ Defines the Preferences class for the Chaco shell.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from enable.api import white_color_trait
 from traits.api import Enum, HasTraits, Int, Str
 

@@ -1,5 +1,8 @@
 """ Defines the LassoSelection controller class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 import numpy
 from numpy import array, empty, sometrue, transpose, vstack, zeros
@@ -319,5 +322,3 @@ class LassoSelection(AbstractController):
     def _set_plot(self, val):
         self._plot = val
         return
-
-

@@ -5,13 +5,16 @@
         DONE *. draw_border output should match a similar draw_rect output
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import nose
 import unittest
 
 from numpy import array, alltrue, ravel
 
 # Chaco imports
-from chaco.api import Plot, PlotGraphicsContext
+from chaco.plot import Plot
+from chaco.plot_graphics_context import PlotGraphicsContext
 
 
 class DrawBorderTestCase(unittest.TestCase):

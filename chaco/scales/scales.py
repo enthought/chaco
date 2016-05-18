@@ -3,12 +3,14 @@ Functions and classes that compute ticks and labels for graph axes, with
 special handling of time and calendar axes.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from bisect import bisect
 from math import ceil, floor, log10
 from numpy import abs, argmin, array, isnan, linspace
 
 # Local imports
-from formatters import BasicFormatter
+from .formatters import BasicFormatter
 
 
 __all__ = ["AbstractScale", "DefaultScale", "FixedScale", "Pow10Scale",
@@ -38,7 +40,7 @@ class AbstractScale(object):
             Number of ticks that the caller would like to get
 
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def num_ticks(self, start, end, desired_ticks=None):
         """ Returns an approximate number of ticks that this scale
@@ -61,7 +63,7 @@ class AbstractScale(object):
         -------
         A float or an integer.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def labels(self, start, end, numlabels=None, char_width=None):
         """ Returns a series of ticks and corresponding strings for labels
@@ -83,7 +85,7 @@ class AbstractScale(object):
         """
         ticks = self.ticks(start, end, numlabels)
         labels = self.formatter.format(ticks, numlabels, char_width)
-        return zip(ticks, labels)
+        return list(zip(ticks, labels))
 
     def label_width(self, start, end, numlabels=None, char_width=None):
         """ Returns an estimate of the total number of characters used by the
@@ -467,7 +469,7 @@ class ScaleSystem(object):
 
         # Check for insufficient arguments.
         if numlabels is None and char_width is None:
-            raise ValueError, "Either numlabels or char_width (or both) must be given."
+            raise ValueError("Either numlabels or char_width (or both) must be given.")
 
         if numlabels == 0 or char_width == 0 or isnan(start) or isnan(end):
             return []
@@ -548,4 +550,3 @@ class ScaleSystem(object):
         scale_intervals = array([s.num_ticks(start, end, numticks) for s in self.scales])
         closest = argmin(abs(scale_intervals - numticks))
         return self.scales[closest]
-

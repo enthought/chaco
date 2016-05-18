@@ -1,6 +1,8 @@
 """ Defines various traits that are used in many places in Chaco.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from traits.api import Enum
 

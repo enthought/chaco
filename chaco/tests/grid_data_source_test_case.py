@@ -2,13 +2,13 @@
 Tests of GridDataSource behavior.
 """
 
-import unittest2 as unittest
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from numpy import array
 from numpy.testing import assert_array_equal
 
-from chaco.api import GridDataSource
-from traits.testing.unittest_tools import UnittestTools
+from chaco.grid_data_source import GridDataSource
+from traits.testing.unittest_tools import UnittestTools, unittest
 
 
 class GridDataSourceTestCase(UnittestTools, unittest.TestCase):

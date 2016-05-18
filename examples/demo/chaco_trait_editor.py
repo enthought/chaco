@@ -2,7 +2,7 @@
 This particular editor allows the user to set two endpoints of an
 interval.
 """
-from __future__ import with_statement
+
 
 from traits.etsconfig.api import ETSConfig
 if ETSConfig.toolkit == 'wx':

@@ -155,7 +155,7 @@ def blur_image(image, blur_level):
     """ Blur the image using a potentially time-consuming algorithm """
 
     blurred_image = image.copy()
-    for _ in xrange(blur_level**2):
+    for _ in range(blur_level**2):
         blurred_image[1:-1, 1:-1] += (
             blurred_image[:-2, 1:-1] +  # top
             blurred_image[2:, 1:-1] +  # bottom

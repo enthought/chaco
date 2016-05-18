@@ -9,6 +9,8 @@ Defines AbstractDataMapper and BruteForceDataMapper classes, and related trait
 and functions.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 
 from numpy import array, concatenate, take, argsort, argmin, \
                   argmax, transpose, newaxis, sort
@@ -45,7 +47,7 @@ def sort_points(points, index=0):
     to their x-coordinate (index=0) or y-coordinate (index=1).
     """
     if len(points.shape) != 2 or (2 not in points.shape):
-        raise RuntimeError, "sort_points(): Array of wrong shape."
+        raise RuntimeError("sort_points(): Array of wrong shape.")
     return take( points, argsort(points[:,index]) )
 
 def array_zip(*arys):

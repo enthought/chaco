@@ -2,13 +2,16 @@
 Unit tests for utility functions in chaco.base
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 from math import sqrt
 from numpy import arange, array
 from numpy.testing import assert_equal, assert_almost_equal
 
-from chaco.api import (arg_find_runs, bin_search, find_runs, reverse_map_1d,
-                       point_line_distance)
+from chaco.base import (arg_find_runs, bin_search, find_runs, reverse_map_1d,
+                        point_line_distance)
+
 
 class BinSearchTestCase(unittest.TestCase):
     def test_ascending_data(self):
@@ -45,6 +48,7 @@ class BinSearchTestCase(unittest.TestCase):
         self.assertEqual(bin_search(ary, 5.1, -1), 4)
         self.assertEqual(bin_search(ary, 4.9, -1), 5)
 
+
 class ReverseMap1DTestCase(unittest.TestCase):
 
     def test_ascending(self):
@@ -52,18 +56,18 @@ class ReverseMap1DTestCase(unittest.TestCase):
         rmap = lambda x: reverse_map_1d(ary, x, 'ascending')
 
         # inside bounds
-        self.assert_(rmap(0.0) == 0)
-        self.assert_(rmap(5.0) == 5)
-        self.assert_(rmap(9.0) == 9)
+        self.assertEqual(rmap(0.0), 0)
+        self.assertEqual(rmap(5.0), 5)
+        self.assertEqual(rmap(9.0), 9)
 
         # out of bounds
         self.assertRaises(IndexError, rmap, 10.0)
         self.assertRaises(IndexError, rmap, -1.0)
 
         # rounding
-        self.assert_(rmap(3.4) == 3)
-        self.assert_(rmap(3.5) == 3)
-        self.assert_(rmap(3.6) == 4)
+        self.assertEqual(rmap(3.4), 3)
+        self.assertEqual(rmap(3.5), 3)
+        self.assertEqual(rmap(3.6), 4)
         return
 
     def test_ascending_floor(self):
@@ -71,9 +75,9 @@ class ReverseMap1DTestCase(unittest.TestCase):
         rmap = lambda x: reverse_map_1d(ary, x, 'ascending', floor_only=True)
 
         # test rounding
-        self.assert_(rmap(3.4) == 3)
-        self.assert_(rmap(3.5) == 3)
-        self.assert_(rmap(3.6) == 3)
+        self.assertEqual(rmap(3.4), 3)
+        self.assertEqual(rmap(3.5), 3)
+        self.assertEqual(rmap(3.6), 3)
         return
 
     def test_descending(self):
@@ -81,18 +85,18 @@ class ReverseMap1DTestCase(unittest.TestCase):
         rmap = lambda x: reverse_map_1d(ary, x, 'descending')
 
         # inside bounds
-        self.assert_(rmap(10.0) == 0)
-        self.assert_(rmap(5.0) == 5)
-        self.assert_(rmap(1.0) == 9)
+        self.assertEqual(rmap(10.0), 0)
+        self.assertEqual(rmap(5.0), 5)
+        self.assertEqual(rmap(1.0), 9)
 
         # out of bounds
         self.assertRaises(IndexError, rmap, 0.0)
         self.assertRaises(IndexError, rmap, 11.0)
 
         # rounding
-        self.assert_(rmap(8.6) == 1)
-        self.assert_(rmap(8.5) == 1)
-        self.assert_(rmap(8.4) == 2)
+        self.assertEqual(rmap(8.6), 1)
+        self.assertEqual(rmap(8.5), 1)
+        self.assertEqual(rmap(8.4), 2)
         return
 
     def test_descending_floor(self):
@@ -100,9 +104,9 @@ class ReverseMap1DTestCase(unittest.TestCase):
         rmap = lambda x: reverse_map_1d(ary, x, 'descending', floor_only=True)
 
         # test rounding
-        self.assert_(rmap(8.6) == 1)
-        self.assert_(rmap(8.5) == 1)
-        self.assert_(rmap(8.4) == 1)
+        self.assertEqual(rmap(8.6), 1)
+        self.assertEqual(rmap(8.5), 1)
+        self.assertEqual(rmap(8.4), 1)
         return
 
 

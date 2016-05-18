@@ -1,5 +1,8 @@
 """ Defines the HighlightTool class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Major library imports
 from numpy import ones
 
@@ -89,7 +92,7 @@ class HighlightTool(BaseTool):
         for p in plots:
             if hasattr(p, "hittest"):
                 cpoint = p.hittest((event.x,event.y), self.threshold)
-                if cpoint:
+                if cpoint is not None:
                     return p
         return None
 

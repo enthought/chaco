@@ -2,17 +2,19 @@
 A scale for time and calendar intervals.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from math import floor
 
-from scales import AbstractScale, ScaleSystem, frange, heckbert_interval
-from formatters import TimeFormatter
-from safetime import (safe_fromtimestamp, datetime, timedelta, EPOCH,
+from .scales import AbstractScale, ScaleSystem, frange, heckbert_interval
+from .formatters import TimeFormatter
+from .safetime import (safe_fromtimestamp, datetime, timedelta, EPOCH,
                       MINYEAR, MAXYEAR)
 
 # Labels for date and time units.
 datetime_scale = ["microsecond", "second", "minute", "hour",
                   "day", "month", "year"]
-datetime_zeros = zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1])
+datetime_zeros = list(zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1]))
 
 
 __all__ = ["TimeScale", "CalendarScaleSystem", "HMSScales", "MDYScales",
@@ -66,7 +68,7 @@ def tfrac(t, **time_unit):
     =======
     A tuple: (aligned time as UNIX time, remainder in seconds)
     """
-    unit, period = time_unit.items()[0]
+    unit, period = list(time_unit.items())[0]
     if unit == "milliseconds":
         unit = "microsecond"
         period *= 1000
@@ -164,7 +166,7 @@ def trange(start, end, **time_unit):
         raise ValueError("trange() only takes one keyword argument, got %d" % len(time_unit))
 
     # Months and years are non-uniform, so we special-case them.
-    unit, value = time_unit.items()[0]
+    unit, value = list(time_unit.items())[0]
     if unit == 'months':
         return trange_months(start, end, value)
     elif unit == 'years':
@@ -226,7 +228,7 @@ class TimeScale(AbstractScale):
         """ Defines the time period that this scale uses.
         """
         self.formatter = kw_interval.pop("formatter", TimeFormatter())
-        unit, val = kw_interval.items()[0]
+        unit, val = list(kw_interval.items())[0]
         self.unit = unit
         if "_of_" in unit:
             # Calendar time interval - divide by the number of ticks per larger
@@ -326,7 +328,7 @@ class TimeScale(AbstractScale):
                     break
             ticks = ticks[start_ndx : end_ndx+1]
 
-        return map(dt_to_sec, ticks)
+        return list(map(dt_to_sec, ticks))
 
     def labels(self, start, end, numlabels=None, char_width=None):
         """ Returns a series of ticks and corresponding strings for labels
@@ -336,7 +338,7 @@ class TimeScale(AbstractScale):
         """
         ticks = self.ticks(start, end, numlabels)
         labels = self.formatter.format(ticks, numlabels, char_width, ticker=self)
-        return zip(ticks, labels)
+        return list(zip(ticks, labels))
 
     def label_width(self, start, end, numlabels=None, char_width=None):
         """ Returns an estimate of total number of characters used by the

@@ -6,15 +6,17 @@
 # LICENSE.txt
 #
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import zeros
 
 # Enthought library imports.
 from traits.api import Any, Bool, Float, Instance, Property, Tuple
 
 # Local relative imports
-from image_plot import ImagePlot
-from abstract_colormap import AbstractColormap
-from speedups import apply_selection_fade
+from .image_plot import ImagePlot
+from .abstract_colormap import AbstractColormap
+from .speedups import apply_selection_fade
 
 
 class CMapImagePlot(ImagePlot):
@@ -44,7 +46,7 @@ class CMapImagePlot(ImagePlot):
     #fade_background = Tuple((255,255,255))
     # RGB color to use to fade out unselected points.
     fade_background = Tuple((0,0,0))
-    
+
     # whether to pre-compute the full colormapped RGB(A) image
     cache_full_map = Bool(True)
 
@@ -104,10 +106,10 @@ class CMapImagePlot(ImagePlot):
     #------------------------------------------------------------------------
     # Private methods
     #------------------------------------------------------------------------
-    
+
     def _cmap_values(self, data, selection_masks=None):
         """ Maps the data to RGB(A) with optional selection masks overlayed
-        
+
         """
         # get the RGBA values from the color map as uint8
         mapped_image = self.value_mapper.map_uint8(data)
@@ -123,7 +125,7 @@ class CMapImagePlot(ImagePlot):
             apply_selection_fade(mapped_image, mask,
                     self.fade_alpha, self.fade_background)
         return mapped_image
-        
+
     def _compute_cached_image(self, selection_masks=None):
         """ Updates the cached image.
         """
@@ -139,7 +141,7 @@ class CMapImagePlot(ImagePlot):
             self._mapped_image_cache_valid = True
             ImagePlot._compute_cached_image(self, self.value.data, mapper=lambda data:
                 self._cmap_values(data))
-            
+
     def _update_value_mapper(self):
         self._mapped_image_cache_valid = False
         self._image_cache_valid = False
@@ -181,7 +183,7 @@ class CMapImagePlot(ImagePlot):
             if new.range is None and old.range is not None:
                 new.range = old.range
         self._update_value_mapper()
-    
+
     def _value_data_changed_fired(self):
         super(CMapImagePlot, self)._value_data_changed_fired()
         self._mapped_image_cache_valid = False
@@ -191,8 +193,6 @@ class CMapImagePlot(ImagePlot):
         super(CMapImagePlot, self)._index_data_changed_fired()
         self._mapped_image_cache_valid = False
         return
-    
+
     def _cache_full_map_changed(self):
         self._mapped_image_cache_valid = False
-        
-

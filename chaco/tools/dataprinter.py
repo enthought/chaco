@@ -1,5 +1,8 @@
 """ Defines the DataPrinter tool class.
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthought library imports
 from traits.api import Str
 from enable.api import BaseTool
@@ -33,11 +36,10 @@ class DataPrinter(BaseTool):
                 ndx = plot.map_index((event.x, event.y), index_only = True)
                 x = plot.index.get_data()[ndx]
                 y = plot.value.get_data()[ndx]
-                print self.format % (x,y)
+                print(self.format % (x,y))
             else:
-                print "dataprinter: don't know how to handle plots of type",
-                print plot.__class__.__name__
-        return
+                print("dataprinter: don't know how to handle plots of type",
+                      plot.__class__.__name__)
 
 
 # EOF

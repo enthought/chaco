@@ -1,12 +1,18 @@
-import unittest
-from unittest2 import skip
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from numpy import alltrue, arange
+
 from enable.compiled_path import CompiledPath
+from traits.testing.unittest_tools import unittest
 
 # Chaco imports
-from chaco.api import (ArrayDataSource, ColormappedScatterPlot, DataRange1D,
-                       LinearMapper, PlotGraphicsContext, jet)
+from chaco.array_data_source import ArrayDataSource
+from chaco.colormapped_scatterplot import ColormappedScatterPlot
+from chaco.data_range_1d import DataRange1D
+from chaco.linear_mapper import LinearMapper
+from chaco.plot_graphics_context import PlotGraphicsContext
+from chaco.default_colormaps import jet
 
 
 class TestColormappedScatterplot(unittest.TestCase):
@@ -55,7 +61,7 @@ class TestColormappedScatterplot(unittest.TestCase):
         actual = self.gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
-    @skip
+    @unittest.skip
     def test_scatter_custom(self):
         """ Coverage test to check custom markers work...
 

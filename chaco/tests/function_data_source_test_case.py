@@ -2,14 +2,12 @@
 Test of FunctionDataSource behavior.
 """
 
-import unittest2 as unittest
-
 from numpy import array, linspace, ones
 from numpy.testing import assert_array_equal
 
 from chaco.api import DataRange1D
 from chaco.function_data_source import FunctionDataSource
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.unittest_tools import UnittestTools, unittest
 
 
 class FunctionDataSourceTestCase(UnittestTools, unittest.TestCase):
@@ -69,7 +67,7 @@ class FunctionDataSourceTestCase(UnittestTools, unittest.TestCase):
                            self.data_source.get_data())
 
     def test_set_mask(self):
-        mymask = array([i % 2 for i in xrange(101)], dtype=bool)
+        mymask = array([i % 2 for i in range(101)], dtype=bool)
 
         with self.assertRaises(NotImplementedError):
             self.data_source.set_mask(mymask)

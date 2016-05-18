@@ -1,6 +1,8 @@
 """ Defines the PlotSession class.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Enthoght library imports
 from chaco.array_plot_data import ArrayPlotData
 from chaco.default_colormaps import *
@@ -9,8 +11,8 @@ from traits.api import Any, Bool, Dict, HasTraits, Instance, Int, \
 
 
 # Local, relative imports
-from plot_window import PlotWindow
-from preferences import Preferences
+from .plot_window import PlotWindow
+from .preferences import Preferences
 
 
 class PlotSession(HasTraits):
@@ -102,7 +104,7 @@ class PlotSession(HasTraits):
                 return
         elif type(ident) == int:
             if ident >= len(self.windows):
-                print "No such window %d." % ident
+                print("No such window %d." % ident)
 
             win = self.windows.pop(ident)
             if len(self.windows) == 0:
@@ -131,7 +133,7 @@ class PlotSession(HasTraits):
         elif win is None:
             self.active_window_index = None
         else:
-            raise RuntimeError, "That window is not part of this session."
+            raise RuntimeError("That window is not part of this session.")
 
     def _colormap_changed(self):
         plots = []

@@ -3,6 +3,9 @@
 source: docs/source/user_manual/chaco_tutorial.rst
 
 """
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from numpy import linspace, pi, sin
 
 from traits.etsconfig.api import ETSConfig

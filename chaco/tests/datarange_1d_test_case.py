@@ -1,4 +1,6 @@
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 
 from numpy import arange, array, zeros, inf
@@ -6,7 +8,8 @@ from numpy.testing import assert_equal
 
 from traits.api import HasTraits, Instance, Bool, on_trait_change
 
-from chaco.api import DataRange1D, ArrayDataSource
+from chaco.data_range_1d import DataRange1D
+from chaco.array_data_source import ArrayDataSource
 
 
 class Foo(HasTraits):
@@ -95,7 +98,6 @@ class DataRangeTestCase(unittest.TestCase):
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(100.0, 'track')
-        print foo.range.low, foo.range.high
         # Verify the values.
         self.assertEqual(foo.range.low, 100.0)
         self.assertEqual(foo.range.high, 101.0)
