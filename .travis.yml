@@ -50,6 +50,8 @@ install:
   - python setup.py develop
   - cd ..
   - python setup.py develop
+  - mkdir testing_dir
+  - cd testing_dir
 script:
   - coverage run -m nose.core -v chaco --exclude-dir=chaco/tests_with_backend
   - if [[ $ETS_TOOLKIT != 'null' ]]; then coverage run -a -m nose.core -v chaco/tests_with_backend; fi
