@@ -5,4 +5,4 @@ unittest2
 kiwisolver
 git+http://github.com/enthought/traits.git#egg=traits
 git+http://github.com/enthought/traitsui.git#egg=traitsui
-git+http://github.com/enthought/enable.git#egg=enable
+-vv git+http://github.com/enthought/enable.git#egg=enable
