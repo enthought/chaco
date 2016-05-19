@@ -13,7 +13,7 @@ from chaco.scales.api import TimeFormatter
 
 # Note on testing:
 # Chaco assumes times are in UTC seconds since Posix Epoch but does ticking
-# in whatever the local time is on the host maschine.  This is problematic for
+# in whatever the local time is on the host machine.  This is problematic for
 # testing, because correct responses depend on current state of the test
 # machine, and will vary by location and time of year.  For hour/day/year
 # testing, where TZ matter, we select 3 timezones to test in:
