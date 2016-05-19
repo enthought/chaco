@@ -20,11 +20,14 @@ addons:
   apt:
     packages:
     - python-qt4
+    - python-qt4-dev
     - python-qt4-gl
     - python-wxtools
     - python-numpy
     - libjpeg8-dev
     - zlib1g-dev
+    - libpng-dev
+    - libfreetype6-dev
     - swig
     - ccache
 before_install:
