@@ -25,11 +25,8 @@ from chaco.scales.api import TimeFormatter
 #   shifts, which should hopefully reveal bugs with previous-day or -year
 #   baselines.
 #
-# Note that this isn't quite bullet-proof, as things will break if Hawaii or
-# the Northern Territory ever change their timezones (eg. by introducing
-# daylight savings).  We also rely on os.environ['TZ'] working to run the
-# tests, but at the time of writing it remains to be seen if this works for
-# Windows.
+# Note that we don't actually change the timezone for the process, but this is
+# good enough to test the logic for the tfrac and trange functions.
 
 #----------------------------------------------------------------
 # Utilities
@@ -43,7 +40,10 @@ HONOLULU = -10.0*3600
 
 @contextlib.contextmanager
 def set_timezone(tz):
-    """ Temporarily select the timezone to use
+    """ Temporarily select the timezone to use.
+
+    This works by temporarily replacing the EPOCH module variable with a
+    different value.
 
     Parameters
     ----------
