@@ -297,8 +297,8 @@ class TimeScale(AbstractScale):
 
         # get range of years of interest
         # add 2 because of python ranges + guard against timezone shifts
-        # eg. 20000101 -> 19991231 because of local timezone, so end is 1999+2
-        years = range(start_dt.year, end_dt.year+2)
+        # eg. if 20000101 -> 19991231 because of local timezone, end is 1999+2
+        years = range(start_dt.year, min(end_dt.year+2, MAXYEAR))
         if self.unit == "day_of_month":
             # get naive datetimes for start of each day of each month
             # in range of years.  Excess will be discarded later.
@@ -309,7 +309,7 @@ class TimeScale(AbstractScale):
         elif self.unit == "month_of_year":
             # get naive datetimes for start of each month in range of years
             dates = [datetime(year, month, 1)
-                      for year in years for month in self.vals]
+                     for year in years for month in self.vals]
         else:
             raise ValueError("Unknown calendar unit '%s'" % self.unit)
 
