@@ -35,32 +35,36 @@ from chaco.scales.api import TimeFormatter
 # Utilities
 #----------------------------------------------------------------
 
+# Interesting timezone offsets
+UTC = 0.0
+ALICE_SPRINGS = 9.5*3600
+HONOLULU = -10.0*3600
+
+
 @contextlib.contextmanager
-def set_timezone(tz_string):
-    """ Temporarily select the timezont to use """
+def set_timezone(tz):
+    """ Temporarily select the timezone to use
+
+    Parameters
+    ----------
+    tz : str or number
+        Either a standard tz offset
+    """
     import chaco.scales.safetime
     import chaco.scales.time_scale
 
-    # set locale timezone
-    old_tz = os.environ.get('TZ')
-    os.environ['TZ'] = tz_string
+    new_epoch = datetime.datetime.utcfromtimestamp(tz)
+    old_epoch = chaco.scales.safetime.EPOCH
+
+    # set module global EPOCHs based on new timezone
+    chaco.scales.safetime.EPOCH = new_epoch
+    chaco.scales.time_scale.EPOCH = new_epoch
     try:
-        # set module global EPOCHs based on new timezone
-        old_epoch = chaco.scales.safetime.EPOCH
-        chaco.scales.safetime.EPOCH = datetime.datetime.fromtimestamp(0.0)
-        chaco.scales.time_scale.EPOCH = chaco.scales.safetime.EPOCH
-        try:
-            yield
-        finally:
-            # restore module global EPOCHs
-            chaco.scales.safetime.EPOCH = old_epoch
-            chaco.scales.time_scale.EPOCH = old_epoch
+        yield
     finally:
-        # restore module timezone
-        if old_tz is not None:
-            os.environ['TZ'] = old_tz
-        else:
-            del os.environ['TZ']
+        # restore module global EPOCHs
+        chaco.scales.safetime.EPOCH = old_epoch
+        chaco.scales.time_scale.EPOCH = old_epoch
 
 
 #----------------------------------------------------------------
@@ -68,7 +72,7 @@ def set_timezone(tz_string):
 #----------------------------------------------------------------
 
 def test_tfrac_years_01():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3601
         (base, frac) = tfrac(t, years=1)
         assert base == 0
@@ -76,7 +80,7 @@ def test_tfrac_years_01():
 
 def test_tfrac_years_01_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3601
         (base, frac) = tfrac(t, years=1)
         assert base == 3600 * -9.5  # Alice Springs year start UTC timestamp
@@ -84,14 +88,14 @@ def test_tfrac_years_01_Alice_Springs():
 
 def test_tfrac_years_01_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         t = 3601
         (base, frac) = tfrac(t, years=1)
         assert base == 3600 * (-365*24 + 10)  # previous Honolulu year start UTC timestamp
         assert frac == 3600 * (364*24 + 15) + 1  # 15:00:01 in the afternoon, Dec 31
 
 def test_tfrac_years_02():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3601
         (base, frac) = tfrac(t, years=10)
         assert base == 0
@@ -99,7 +103,7 @@ def test_tfrac_years_02():
 
 def test_tfrac_years_02_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3601
         (base, frac) = tfrac(t, years=10)
         assert base == 3600 * -9.5  # Alice Springs decade start UTC timestamp
@@ -107,7 +111,7 @@ def test_tfrac_years_02_Alice_Springs():
 
 def test_tfrac_years_02_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         t = 3601
         (base, frac) = tfrac(t, years=10)
         # previous Honolulu decade start UTC timestamp (including leap years)
@@ -116,7 +120,7 @@ def test_tfrac_years_02_Honolulu():
         assert frac == 3600 * ((365*9+3 + 364)*24 + 15) + 1
 
 def test_tfrac_days_01():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3601
         (base, frac) = tfrac(t, days=1)
         assert base == 0
@@ -124,7 +128,7 @@ def test_tfrac_days_01():
 
 def test_tfrac_days_01_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3601
         (base, frac) = tfrac(t, days=1)
         assert base == 3600 * -9.5  # Alice Springs day start UTC timestamp
@@ -132,14 +136,14 @@ def test_tfrac_days_01_Alice_Springs():
 
 def test_tfrac_days_01_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         t = 3601
         (base, frac) = tfrac(t, days=1)
         assert base == 3600 * (-24 + 10)  # previous Honolulu day start UTC timestamp
         assert frac == 3600 * 15 + 1  # 15:00:01 in the afternoon
 
 def test_tfrac_days_02():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3*24.0*3600 + 1000.0
         (base, frac) = tfrac(t, days=1)
         assert base == 3600 * 24 * 3
@@ -147,7 +151,7 @@ def test_tfrac_days_02():
 
 def test_tfrac_days_02_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3*24.0*3600 + 1000.0
         (base, frac) = tfrac(t, days=1)
         assert base == 3600 * (24 * 3 - 9.5)
@@ -155,14 +159,14 @@ def test_tfrac_days_02_Alice_Springs():
 
 def test_tfrac_days_02_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         t = 3*24.0*3600 + 1000.0
         (base, frac) = tfrac(t, days=1)
         assert base == 3600 * (24 * 2 + 10)
         assert frac == 3600 * (24 - 10) + 1000
 
 def test_tfrac_hours_01():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3601
         (base, frac) = tfrac(t, hours=1)
         assert base == 3600
@@ -170,14 +174,14 @@ def test_tfrac_hours_01():
 
 def test_tfrac_hours_01_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3601
         (base, frac) = tfrac(t, hours=1)
         assert base == 1800
         assert frac == 1801
 
 def test_tfrac_hours_02():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3601
         (base, frac) = tfrac(t, hours=2)
         assert base == 0
@@ -185,14 +189,14 @@ def test_tfrac_hours_02():
 
 def test_tfrac_hours_02_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3601
         (base, frac) = tfrac(t, hours=2)
         assert base == 1800
         assert frac == 1801
 
 def test_tfrac_hours_03():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3600 * 5.5
         (base, frac) = tfrac(t, hours=2)
         assert base == 3600 * 4
@@ -200,14 +204,14 @@ def test_tfrac_hours_03():
 
 def test_tfrac_hours_03_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3600 * 5.5
         (base, frac) = tfrac(t, hours=2)
         assert base == 3600 * 4.5
         assert frac == 3600 * 1
 
 def test_tfrac_hours_04():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3600 * 5.5
         (base, frac) = tfrac(t, hours=3)
         assert base == 3600 * 3.0
@@ -215,14 +219,14 @@ def test_tfrac_hours_04():
 
 def test_tfrac_hours_04_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3600 * 5.5
         (base, frac) = tfrac(t, hours=3)
         assert base == 3600 * 5.5
         assert frac == 3600 * 0
 
 def test_tfrac_hours_05():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         t = 3600 * 15.5
         (base, frac) = tfrac(t, hours=6)
         assert base == 3600 * 12.0
@@ -230,7 +234,7 @@ def test_tfrac_hours_05():
 
 def test_tfrac_hours_05_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         t = 3600 * 15.5
         (base, frac) = tfrac(t, hours=6)
         assert base == 3600 * 14.5
@@ -298,97 +302,97 @@ def test_tfrac_milliseconds_05():
 #----------------------------------------------------------------
 
 def test_trange_hours_01():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         r = trange(0, 1, hours=1)
         assert r == []
 
 def test_trange_hours_01_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         r = trange(0, 1, hours=1)
         assert r == []
 
 def test_trange_hours_01_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         r = trange(0, 1, hours=1)
         assert r == []
 
 def test_trange_hours_02():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         r = trange(-1, 1, hours=1)
         assert r == [0.0]
 
 def test_trange_hours_02_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         r = trange(-1, 1, hours=1)
         assert r == []
 
 def test_trange_hours_02_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         r = trange(-1, 1, hours=1)
         assert r == [0.0]
 
 def test_trange_hours_03():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         r = trange(0, 3600, hours=1)
         assert r == [0.0, 3600.0]
 
 def test_trange_hours_03_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         r = trange(0, 3600, hours=1)
         assert r == [1800.0]
 
 def test_trange_hours_03_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         r = trange(0, 3600, hours=1)
         assert r == [0.0, 3600.0]
 
 def test_trange_hours_04():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         r = trange(-3600, 3600, hours=1)
         assert r == [-3600.0, 0.0, 3600.0]
 
 def test_trange_hours_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         r = trange(-3600, 3600, hours=1)
         assert r == [-1800.0, 1800.0]
 
 def test_trange_hours_04_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         r = trange(-3600, 3600, hours=1)
         assert r == [-3600.0, 0.0, 3600.0]
 
 def test_trange_hours_05():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         r = trange(-10, 3610, hours=1)
         assert r == [0.0, 3600.0]
 
 def test_trange_hours_06():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         r = trange(-10, 7210, hours=1)
         assert r == [0.0, 3600.0, 7200.0]
 
 def test_trange_hours_07():
-    with set_timezone('UTC'):
+    with set_timezone(UTC):
         r = trange(-10, 7210, hours=2)
         assert r == [0.0, 7200.0]
 
 def test_trange_hours_07_Alice_Springs():
     # Australia/North (UTC+09:30, never DST)
-    with set_timezone('Australia/North'):
+    with set_timezone(ALICE_SPRINGS):
         r = trange(-10, 7210, hours=2)
         assert r == [1800.0]
 
 def test_trange_hours_07_Honolulu():
     # Pacific/Honolulu (UTC-10:00, never DST)
-    with set_timezone('Pacific/Honolulu'):
+    with set_timezone(HONOLULU):
         r = trange(-10, 7210, hours=2)
         assert r == [0.0, 7200.0]
 
