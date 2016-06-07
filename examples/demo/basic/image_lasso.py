@@ -5,6 +5,7 @@ plot.  The underlying plot is similar to the one in cmap_image_plot.py.
 
 Use Shift-drag to select multiple disjoint regions.
 """
+from __future__ import print_function
 
 # Major library imports
 from numpy import linspace, meshgrid, pi, sin

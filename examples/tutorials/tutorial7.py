@@ -1,4 +1,5 @@
 """Tutorial 7. Writing a tool (cont.) - Looking at data space"""
+from __future__ import print_function
 
 from chaco.api import AbstractController
 
