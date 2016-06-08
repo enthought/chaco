@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 from numpy import linspace, sin
 
@@ -53,4 +54,3 @@ class ScatterPlot(HasTraits):
 demo=ScatterPlot()
 if __name__ == "__main__":
     demo.edit_traits(kind="livemodal")
-
