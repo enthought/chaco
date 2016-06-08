@@ -69,8 +69,8 @@ class Foo(HasTraits):
     def __init__(self, **kwtraits):
         super(Foo, self).__init__(**kwtraits)
         self._d = dict(x=self.xdata)
-        exec "from scipy import *" in self._d
-        exec "from scipy.special import *" in self._d
+        exec("from scipy import *", self._d)
+        exec("from scipy.special import *", self._d)
         self._ydata = eval(self.eq, self._d)
 
     def _eq_changed(self, old, new):

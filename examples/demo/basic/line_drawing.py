@@ -16,6 +16,7 @@ Line segment drawing:
       drawn points will be reset.  By default, _finalize_selection() does nothing,
       but subclasses can customize this.
 """
+from __future__ import print_function
 
 # Major library imports
 from numpy import sort
@@ -38,9 +39,9 @@ class MyLineDrawer(LineSegmentTool):
     """
 
     def _finalize_selection(self):
-        print "Dataspace points:"
+        print("Dataspace points:")
         for point in self.points:
-            print "\t", point
+            print("\t", point)
 
 #===============================================================================
 # # Create the Chaco plot.

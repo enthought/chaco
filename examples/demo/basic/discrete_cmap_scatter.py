@@ -131,5 +131,4 @@ class Demo(HasTraits):
 demo = Demo()
 
 if __name__ == "__main__":
-    print demo.plot.components[1]._axis
     demo.configure_traits()

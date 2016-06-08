@@ -34,10 +34,10 @@ class PlotExample(HasTraits):
                     'var g', 'var h', 'var i']
         vertical_axis = LabelAxis(plot, orientation='left',
                                 title='Categories',
-                                positions = range(1, 10),
+                                positions = list(range(1, 10)),
                                 labels=label_list)
         vertical2_axis = LabelAxis(plot, orientation='right',
-                                   positions = range(1, 10),
+                                   positions = list(range(1, 10)),
                                    labels=label_list)
 
         plot.underlays.append(vertical_axis)
@@ -49,7 +49,7 @@ class PlotExample(HasTraits):
     def _get_points(self):
         index = linspace(pi/4, 3*pi/2, 9)
         data = sin(index) + 2
-        return (range(1, 10), data)
+        return (list(range(1, 10)), data)
 
     def _make_curves(self):
         (index_points, value_points) = self._get_points()

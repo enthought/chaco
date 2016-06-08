@@ -37,22 +37,22 @@ def main():
     plot_gc.render_component(myplot)
 
     # Get the directory to save the image in
-    print 'Please enter a path in which to place generated plots.'
-    print 'Press <ENTER> to generate in the current directory.'
-    path = raw_input('Path: ').strip()
+    print('Please enter a path in which to place generated plots.')
+    print('Press <ENTER> to generate in the current directory.')
+    path = input('Path: ').strip()
     path = os.path.expanduser(path)
 
     if len(path) > 0 and not os.path.exists(path):
-        print 'The given path does not exist.'
+        print('The given path does not exist.')
         sys.exit()
 
     # The file name to save the plot as
     file_name = "tutorial1.png"
 
     if not os.path.isabs(path):
-        print 'Creating image: ' + os.path.join(os.getcwd(), path, file_name)
+        print('Creating image: ' + os.path.join(os.getcwd(), path, file_name))
     else:
-        print 'Creating image: ' + os.path.join(path, file_name)
+        print('Creating image: ' + os.path.join(path, file_name))
 
     # Finally, we tell the graphics context to save itself to disk as an image.
     plot_gc.save(os.path.join(path, file_name))
