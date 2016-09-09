@@ -5,7 +5,7 @@ import itertools
 import warnings
 
 import six
-
+import six.moves as sm
 from numpy import arange, array, ndarray, linspace
 from types import FunctionType
 
@@ -801,24 +801,24 @@ class Plot(DataView):
 
         # Create the datasources
         if len(data) == 3:
-            index, bar_min, bar_max = map(self._get_or_create_datasource, data)
+            index, bar_min, bar_max = sm.map(self._get_or_create_datasource, data)
             self.value_range.add(bar_min, bar_max)
             center = None
             min = None
             max = None
         elif len(data) == 4:
-            index, bar_min, center, bar_max = map(self._get_or_create_datasource, data)
+            index, bar_min, center, bar_max = sm.map(self._get_or_create_datasource, data)
             self.value_range.add(bar_min, center, bar_max)
             min = None
             max = None
         elif len(data) == 5:
             index, min, bar_min, bar_max, max = \
-                            map(self._get_or_create_datasource, data)
+                sm.map(self._get_or_create_datasource, data)
             self.value_range.add(min, bar_min, bar_max, max)
             center = None
         elif len(data) == 6:
             index, min, bar_min, center, bar_max, max = \
-                            map(self._get_or_create_datasource, data)
+                sm.map(self._get_or_create_datasource, data)
             self.value_range.add(min, bar_min, center, bar_max, max)
         self.index_range.add(index)
 
@@ -1059,7 +1059,7 @@ class Plot(DataView):
 
         # Cull the candidate list of sources to remove by checking the other plots
         sources_in_use = set()
-        for p in itertools.chain(*self.plots.values()):
+        for p in itertools.chain(*list(six.itervalues(self.plots))):
                 sources_in_use.add(p.index)
                 sources_in_use.add(p.value)
 
@@ -1161,7 +1161,7 @@ class Plot(DataView):
     #------------------------------------------------------------------------
 
     def _color_mapper_changed(self):
-        for plist in self.plots.values():
+        for plist in six.itervalues(self.plots):
             for plot in plist:
                 plot.color_mapper = self.color_mapper
         self.invalidate_draw()

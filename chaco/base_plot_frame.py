@@ -108,7 +108,7 @@ class BasePlotFrame(Container, PlotComponent):
         layout; if so, the frame needs to do layout also.
         """
         if not self._layout_needed and not force and self.fit_components != "":
-            for slot in six.itervalues(self._frame_slots.values()):
+            for slot in six.itervalues(self._frame_slots):
                 if slot._layout_needed:
                     self._layout_needed = True
                     break

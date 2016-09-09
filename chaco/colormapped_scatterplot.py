@@ -326,7 +326,7 @@ class ColormappedScatterPlot(ScatterPlot):
                 mode = STROKE
 
             color_bands = cmap.color_bands
-            for color_index, xy in point_bands.items():
+            for color_index, xy in six.iteritems(point_bands):
                 self._set_draw_info(gc, mode, color_bands[color_index],
                                     self.outline_color_, self.line_width)
                 gc.draw_path_at_points(xy, path, mode)
