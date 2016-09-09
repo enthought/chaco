@@ -9,6 +9,9 @@
 
 from __future__ import with_statement
 
+import six
+import six.moves as sm
+
 # Enthought library imports
 from traits.api import Bool, Float
 
@@ -146,7 +149,7 @@ class CrossPlotFrame(BasePlotFrame):
         center.outer_position = [center_x, center_y]
         center.outer_bounds = [bottom.width, left.height]
 
-        for slot in self._frame_slots.values():
+        for slot in six.itervalues(self._frame_slots):
             if slot.visible:
                 preferred_size = slot.get_preferred_size()
                 if "h" not in slot.resizable:

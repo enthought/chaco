@@ -2,7 +2,8 @@
 Traits UI editor for WX, based on the Chaco1 PlotEditor in
 traits.ui.wx.plot_editor.
 """
-
+import six
+import six.moves as sm
 # Enthought library imports
 from traits.etsconfig.api import ETSConfig
 from enable.api import black_color_trait, LineStyle, ColorTrait,\
@@ -329,7 +330,7 @@ class ChacoPlotEditor ( Editor ):
         plot_creator_map = { "line": self._create_line_plot,
                              "scatter": self._create_scatter_plot }
 
-        if plot_type in plot_creator_map.keys():
+        if plot_type in plot_creator_map:
             plot = plot_creator_map[plot_type](plotitem, (x_values, y_values),
                                                 index_bounds = index_bounds,
                                                 value_bounds = value_bounds,

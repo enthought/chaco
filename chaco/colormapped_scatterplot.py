@@ -3,6 +3,8 @@
 
 from __future__ import with_statement
 
+import six
+import six.moves as sm
 # Major library imports
 from numpy import argsort, array, concatenate, nonzero, invert, take, \
                   isnan, transpose, newaxis, zeros, ndarray
@@ -303,14 +305,14 @@ class ColormappedScatterPlot(ScatterPlot):
                                 self.outline_color_, self.line_width)
             index_bands = self._index_bands
             mode = marker.draw_mode
-            for color_index in index_bands.keys():
+            for color_index, index_band in six.iteritems(index_bands):
                 self._set_draw_info(gc, mode, color_bands[color_index])
-                gc.draw_marker_at_points(xy_points[index_bands[color_index]], size, marker.kiva_marker)
+                gc.draw_marker_at_points(xy_points[index_band], size, marker.kiva_marker)
 
 
         elif hasattr( gc, 'draw_path_at_points' ):
             point_bands = {}
-            for color_index, indices in self._index_bands.items():
+            for color_index, indices in six.iteritems(self._index_bands):
                 point_bands[color_index] = xy_points[indices]
             # We have to construct the path for the marker.
             if self.marker != 'custom':
