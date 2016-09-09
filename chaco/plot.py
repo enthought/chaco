@@ -3,6 +3,9 @@
 # Major library imports
 import itertools
 import warnings
+
+import six
+
 from numpy import arange, array, ndarray, linspace
 from types import FunctionType
 
@@ -10,38 +13,38 @@ from types import FunctionType
 from traits.api import Delegate, Dict, Instance, Int, List, Property, Str
 
 # Local, relative imports
-from abstract_colormap import AbstractColormap
-from abstract_data_source import AbstractDataSource
-from abstract_plot_data import AbstractPlotData
-from array_data_source import ArrayDataSource
-from array_plot_data import ArrayPlotData
-from base_xy_plot import BaseXYPlot
-from barplot import BarPlot
-from candle_plot import CandlePlot
-from colormapped_scatterplot import ColormappedScatterPlot
-from contour_line_plot import ContourLinePlot
-from contour_poly_plot import ContourPolyPlot
-from cmap_image_plot import CMapImagePlot
-from data_range_1d import DataRange1D
-from data_view import DataView
-from default_colormaps import Spectral
-from grid_data_source import GridDataSource
-from grid_mapper import GridMapper
-from image_data import ImageData
-from image_plot import ImagePlot
-from legend import Legend
-from lineplot import LinePlot
-from line_scatterplot_1d import LineScatterPlot1D
-from linear_mapper import LinearMapper
-from log_mapper import LogMapper
-from plot_label import PlotLabel
-from polygon_plot import PolygonPlot
-from scatterplot import ScatterPlot
-from scatterplot_1d import ScatterPlot1D
-from text_plot_1d import TextPlot1D
-from filled_line_plot import FilledLinePlot
-from quiverplot import QuiverPlot
-from jitterplot import JitterPlot
+from .abstract_colormap import AbstractColormap
+from .abstract_data_source import AbstractDataSource
+from .abstract_plot_data import AbstractPlotData
+from .array_data_source import ArrayDataSource
+from .array_plot_data import ArrayPlotData
+from .base_xy_plot import BaseXYPlot
+from .barplot import BarPlot
+from .candle_plot import CandlePlot
+from .colormapped_scatterplot import ColormappedScatterPlot
+from .contour_line_plot import ContourLinePlot
+from .contour_poly_plot import ContourPolyPlot
+from .cmap_image_plot import CMapImagePlot
+from .data_range_1d import DataRange1D
+from .data_view import DataView
+from .default_colormaps import Spectral
+from .grid_data_source import GridDataSource
+from .grid_mapper import GridMapper
+from .image_data import ImageData
+from .image_plot import ImagePlot
+from .legend import Legend
+from .lineplot import LinePlot
+from .line_scatterplot_1d import LineScatterPlot1D
+from .linear_mapper import LinearMapper
+from .log_mapper import LogMapper
+from .plot_label import PlotLabel
+from .polygon_plot import PolygonPlot
+from .scatterplot import ScatterPlot
+from .scatterplot_1d import ScatterPlot1D
+from .text_plot_1d import TextPlot1D
+from .filled_line_plot import FilledLinePlot
+from .quiverplot import QuiverPlot
+from .jitterplot import JitterPlot
 
 
 
@@ -173,8 +176,8 @@ class Plot(DataView):
             elif type(data) in (ndarray, tuple, list):
                 self.data = ArrayPlotData(data)
             else:
-                raise ValueError, "Don't know how to create PlotData for data" \
-                                  "of type " + str(type(data))
+                raise ValueError("Don't know how to create PlotData for data" \
+                                  "of type " + str(type(data)))
 
         if not self._title:
             self._title = PlotLabel(font="swiss 16", visible=False,
@@ -301,7 +304,7 @@ class Plot(DataView):
         if len(data) == 0:
             return
 
-        if isinstance(data, basestring):
+        if isinstance(data, six.string_types):
             data = (data,)
 
         self.index_scale = index_scale
@@ -435,10 +438,10 @@ class Plot(DataView):
                 value = self._get_or_create_datasource(data[1])
                 self.value_range.add(value)
                 color = self._get_or_create_datasource(data[2])
-                if not styles.has_key("color_mapper"):
+                if "color_mapper" not in styles:
                     raise ValueError("Scalar 2D data requires a color_mapper.")
 
-                colormap = styles.pop("color_mapper", None)
+                colormap = styles.pop("color_mapper")
 
                 if self.color_mapper is not None and self.color_mapper.range is not None:
                     color_range = self.color_mapper.range
@@ -693,12 +696,12 @@ class Plot(DataView):
         array_data = value_ds.get_data()
 
         # process bounds to get linspaces
-        if isinstance(xbounds, basestring):
+        if isinstance(xbounds, six.string_types):
             xbounds = self._get_or_create_datasource(xbounds).get_data()
 
         xs = self._process_2d_bounds(xbounds, array_data, 1)
 
-        if isinstance(ybounds, basestring):
+        if isinstance(ybounds, six.string_types):
             ybounds = self._get_or_create_datasource(ybounds).get_data()
 
         ys = self._process_2d_bounds(ybounds, array_data, 0)
@@ -953,7 +956,7 @@ class Plot(DataView):
         if len(data) == 0:
             return
 
-        if isinstance(data, basestring):
+        if isinstance(data, six.string_types):
             data = (data,)
 
         # TODO: support lists of plot types

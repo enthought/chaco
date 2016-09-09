@@ -2,7 +2,7 @@
 """
 
 # Chaco imports
-from zoom_tool import ZoomTool
+from .zoom_tool import ZoomTool
 
 class TrackingZoom(ZoomTool):
     """ Allows the user to zoom in or out on a plot that is using tracking.

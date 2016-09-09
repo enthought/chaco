@@ -9,8 +9,8 @@ import logging
 from traits.api import Any, Enum, Float, Instance
 
 # Chaco imports
-from lineplot import LinePlot
-from abstract_data_source import AbstractDataSource
+from .lineplot import LinePlot
+from .abstract_data_source import AbstractDataSource
 
 # Set up a logger for this module
 logger = logging.getLogger(__name__)

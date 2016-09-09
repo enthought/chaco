@@ -6,8 +6,8 @@ from numpy import logical_and
 from traits.api import Any, Bool, Float, Instance, Property, Enum
 
 # Local imports
-from abstract_overlay import AbstractOverlay
-from colormapped_scatterplot import ColormappedScatterPlot
+from .abstract_overlay import AbstractOverlay
+from .colormapped_scatterplot import ColormappedScatterPlot
 
 class ColormappedSelectionOverlay(AbstractOverlay):
     """

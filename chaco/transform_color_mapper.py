@@ -3,7 +3,7 @@ from numpy import clip, isinf, ones_like, empty
 from chaco.api import ColorMapper
 from traits.api import Trait, Callable, Tuple, Float, on_trait_change
 
-from speedups import map_colors, map_colors_uint8
+from .speedups import map_colors, map_colors_uint8
 
 class TransformColorMapper(ColorMapper):
     """This class adds arbitrary data transformations to a ColorMapper.

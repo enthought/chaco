@@ -11,10 +11,10 @@ from traits.api import Any, Array, Bool, Dict, Event, Float, HasTraits, \
                                  Int, Property, Str, Trait
 
 # Relative imports
-from abstract_colormap import AbstractColormap
-from data_range_1d import DataRange1D
+from .abstract_colormap import AbstractColormap
+from .data_range_1d import DataRange1D
 
-from speedups import map_colors, map_colors_uint8
+from .speedups import map_colors, map_colors_uint8
 
 
 class ColorMapTemplate(HasTraits):

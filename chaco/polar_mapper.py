@@ -10,7 +10,7 @@ from numpy import array
 from traits.api import Bool, Float
 
 # Local relative imports
-from abstract_mapper import AbstractMapper
+from .abstract_mapper import AbstractMapper
 
 ###############################################################
 # same as linear mapper at the moment... to be modified later #

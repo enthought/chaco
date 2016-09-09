@@ -7,8 +7,8 @@ from numpy import fmax, fmin, swapaxes
 from traits.api import Bool, Int, Property, ReadOnly, Tuple
 
 # Local relative imports
-from base import DimensionTrait, ImageTrait
-from abstract_data_source import AbstractDataSource
+from .base import DimensionTrait, ImageTrait
+from .abstract_data_source import AbstractDataSource
 
 class ImageData(AbstractDataSource):
     """

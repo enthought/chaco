@@ -20,7 +20,7 @@ class StaticPlotComponent(PlotComponent):
 
     def __init__(self, bounds, *args, **kw):
         kw["bounds"] = bounds
-        if not kw.has_key("resizable"):
+        if "resizable" not in kw:
             kw["resizable"] = ""
         PlotComponent.__init__(self, *args, **kw)
         return

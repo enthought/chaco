@@ -10,7 +10,7 @@ from numpy import array, empty, ndarray
 from traits.api import Bool, Float
 
 # Local relative imports
-from base_1d_mapper import Base1DMapper
+from .base_1d_mapper import Base1DMapper
 
 
 class LinearMapper(Base1DMapper):

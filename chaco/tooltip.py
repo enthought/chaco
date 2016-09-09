@@ -13,9 +13,9 @@ from traits.api import Any, Bool, List, Int, Float, on_trait_change
 
 
 # Local imports
-from abstract_overlay import AbstractOverlay
-from plot_component import PlotComponent
-from label import Label
+from .abstract_overlay import AbstractOverlay
+from .plot_component import PlotComponent
+from .label import Label
 
 
 class ToolTip(AbstractOverlay):

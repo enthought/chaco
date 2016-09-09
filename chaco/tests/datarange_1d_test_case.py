@@ -95,7 +95,7 @@ class DataRangeTestCase(unittest.TestCase):
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(100.0, 'track')
-        print foo.range.low, foo.range.high
+        print(foo.range.low, foo.range.high)
         # Verify the values.
         self.assertEqual(foo.range.low, 100.0)
         self.assertEqual(foo.range.high, 101.0)

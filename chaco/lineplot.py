@@ -16,8 +16,8 @@ from traits.api import Enum, Float, List, Str, Property, Tuple, cached_property
 from traitsui.api import Item, View
 
 # Local relative imports
-from base import arg_find_runs, bin_search, reverse_map_1d
-from base_xy_plot import BaseXYPlot
+from .base import arg_find_runs, bin_search, reverse_map_1d
+from .base_xy_plot import BaseXYPlot
 
 
 
@@ -181,7 +181,7 @@ class LinePlot(BaseXYPlot):
         """
 
         if self.index is None or self.value is None:
-            raise IndexError, "cannot index when data source index or value is None"
+            raise IndexError("cannot index when data source index or value is None")
 
         index_data = self.index.get_data()
         value_data = self.value.get_data()
@@ -473,7 +473,7 @@ class LinePlot(BaseXYPlot):
     def __getstate__(self):
         state = super(LinePlot,self).__getstate__()
         for key in ['traits_view']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

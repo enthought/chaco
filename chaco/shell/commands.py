@@ -1,6 +1,8 @@
 """ Defines commands for the Chaco shell.
 """
 
+import six
+
 try:
     from wx import GetApp
 except ImportError:
@@ -15,8 +17,8 @@ from chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
     CalendarScaleSystem)
 from chaco.default_colormaps import *
 
-import plot_maker
-from session import PlotSession
+from . import plot_maker
+from .session import PlotSession
 
 session = PlotSession()
 
@@ -101,7 +103,7 @@ def chaco_commands():
     save
         saves the current plot to a file (png, bmp, jpg, pdf)
     """
-    print chaco_commands.__doc__
+    print(chaco_commands.__doc__)
 
     # The following are not implemented yet
     """
@@ -225,7 +227,7 @@ def colormap(map):
          The color map to use; if it is a string, it is the name of a default
          colormap; if it is a callable, it must return an AbstractColorMap.
     """
-    if isinstance(map, basestring):
+    if isinstance(map, six.string_types):
         session.colormap = color_map_name_dict[map]
     else:
         session.colormap = map
@@ -261,7 +263,7 @@ def _do_plot_boilerplate(kwargs, image=False):
     returns a Plot object for the plotting function to use.
     """
 
-    if kwargs.has_key("hold"):
+    if "hold" in kwargs:
         hold(kwargs["hold"])
         del kwargs["hold"]
 
@@ -691,7 +693,7 @@ def _set_scale(axis, system):
             ticks = p.y_ticks
         if system == 'time':
             system = CalendarScaleSystem()
-        if isinstance(system, basestring):
+        if isinstance(system, six.string_types):
             setattr(p, log_linear_trait, system)
         else:
             if system is None:
@@ -765,13 +767,13 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
     """
     p = curplot()
     if not p:
-        print "Doing nothing because there is no active plot."
+        print("Doing nothing because there is no active plot.")
         return
 
     import os.path
     ext = os.path.splitext(filename)[-1]
     if ext == ".pdf":
-        print "Warning: the PDF backend is still a little buggy."
+        print("Warning: the PDF backend is still a little buggy.")
         from chaco.pdf_graphics_context import PdfPlotGraphicsContext
         # Set some default PDF options if none are provided
         if dest_box is None:
@@ -789,7 +791,7 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
         gc.save()
         del gc
-        print "Saved to", filename
+        print("Saved to", filename)
 
     elif ext in [".bmp", ".png", ".jpg"]:
         from chaco.api import PlotGraphicsContext
@@ -803,10 +805,10 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
         gc.save(filename)
         del gc
-        print "Saved to", filename
+        print("Saved to", filename)
     else:
-        print "Format not yet supported:", ext
-        print "Currently supported formats are: bmp, png, jpg."
+        print("Format not yet supported:", ext)
+        print("Currently supported formats are: bmp, png, jpg.")
     return
 
 

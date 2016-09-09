@@ -12,9 +12,9 @@ from traits.api import Bool, CFloat, Enum, Float, Property, Trait, \
                                  Callable
 
 # Local relative imports
-from base import arg_find_runs
-from base_data_range import BaseDataRange
-from ticks import heckbert_interval
+from .base import arg_find_runs
+from .base_data_range import BaseDataRange
+from .ticks import heckbert_interval
 
 
 class DataRange1D(BaseDataRange):

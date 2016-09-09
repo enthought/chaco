@@ -28,16 +28,16 @@ def _create_data_sources(data, index_sort="none"):
         if type(index) in (list, tuple, ndarray):
             index = ArrayDataSource(array(index), sort_order=index_sort)
         elif not isinstance(index, AbstractDataSource):
-            raise RuntimeError, "Need an array or list of values or a DataSource, got %s instead." % type(index)
+            raise RuntimeError("Need an array or list of values or a DataSource, got %s instead." % type(index))
 
         if type(value) in (list, tuple, ndarray):
             value = ArrayDataSource(array(value))
         elif not isinstance(value, AbstractDataSource):
-            raise RuntimeError, "Need an array or list of values or a DataSource, got %s instead." % type(index)
+            raise RuntimeError("Need an array or list of values or a DataSource, got %s instead." % type(index))
 
         return index, value
     else:
-        raise RuntimeError, "Unable to create datasources."
+        raise RuntimeError("Unable to create datasources."
 
 
 def create_scatter_plot(data=[], index_bounds=None, value_bounds=None,

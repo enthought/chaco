@@ -3,7 +3,7 @@
 
 from traits.api import Enum, Any
 
-from container_overlay import ContainerOverlay
+from .container_overlay import ContainerOverlay
 
 class AlignedContainerOverlay(ContainerOverlay):
     """ Container overlay that aligns itself to the plot

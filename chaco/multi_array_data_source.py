@@ -7,8 +7,8 @@ from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
 from traits.api import Any, Int, Tuple
 
 # Chaco imports
-from base import NumericalSequenceTrait, SortOrderTrait
-from abstract_data_source import AbstractDataSource
+from .base import NumericalSequenceTrait, SortOrderTrait
+from .abstract_data_source import AbstractDataSource
 
 
 class MultiArrayDataSource(AbstractDataSource):
@@ -213,7 +213,7 @@ class MultiArrayDataSource(AbstractDataSource):
         if len(value.shape) != 2:
             msg = 'Input is %d dimensional, but it must be 1 or 2' \
                   'dimensional.' % len(value.shape)
-            raise ValueError, msg
+            raise ValueError(msg)
 
         self._data = value
 

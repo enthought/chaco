@@ -146,6 +146,8 @@ class LineInspector(BaseTool):
                             metadata = x_coord, old_y_data
                         elif self.axis == "index_y":
                             metadata = old_x_data, y_coord
+                        else:
+                            raise ValueError(self.axis)
                     else:
                         if plot.orientation == "h":
                             x_ndx, y_ndx =  plot.map_index((event.x, event.y),
@@ -157,7 +159,8 @@ class LineInspector(BaseTool):
                             metadata = x_ndx, old_y_data
                         elif self.axis == "index_y":
                             metadata = old_x_data, y_ndx
-
+                        else:
+                            raise ValueError(self.axis)
                     plot.index.metadata[self.metadata_name] = metadata
 
             plot.request_redraw()

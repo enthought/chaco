@@ -29,7 +29,7 @@ from traits.etsconfig.api import ETSConfig
 
 
 # Import a default palette for backwards compatibility
-from default_colors import cbrewer as COLOR_PALETTE
+from .default_colors import cbrewer as COLOR_PALETTE
 
 
 # FIXME - it should be enough to do the following import, but because of the
@@ -157,6 +157,6 @@ elif ETSConfig.toolkit == 'pyglet':
 
 
 if __name__ == "__main__":
-    print "\n" + doc + "\n"
+    print("\n" + doc + "\n")
 
 # EOF

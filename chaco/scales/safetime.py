@@ -26,7 +26,7 @@ def safe_fromtimestamp(timestamp, *args, **kwds):
     """
     try:
         return EPOCH + timedelta(seconds=timestamp)
-    except (ValueError, OverflowError), e:
+    except (ValueError, OverflowError) as e:
         warnings.warn("Timestamp out of range.  Returning safe default value.")
         if timestamp <= 0:
             return datetime(MINYEAR, 1, 1, 0, 0, 0)

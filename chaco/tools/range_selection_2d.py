@@ -4,7 +4,7 @@
 import numpy
 
 # Chaco imports
-from range_selection import RangeSelection
+from .range_selection import RangeSelection
 
 
 class RangeSelection2D(RangeSelection):

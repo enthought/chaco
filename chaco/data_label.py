@@ -11,8 +11,8 @@ from traits.api import Any, Array, Bool, Enum, Float, Int, List, \
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
-from scatterplot import render_markers
-from tooltip import ToolTip
+from .scatterplot import render_markers
+from .tooltip import ToolTip
 
 
 # Specifies the position of a label relative to its target.  This can

@@ -10,10 +10,10 @@ import numpy
 from traits.api import List, Array, Tuple, Int, Float
 
 # Local, relative imports
-from datamapper import AbstractDataMapper, right_shift, left_shift, \
+from .datamapper import AbstractDataMapper, right_shift, left_shift, \
                        sort_points, ArraySortTrait, \
                        array_zip
-from subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
+from .subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
                               arg_find_runs
 
 
@@ -239,7 +239,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
                     #~ elif cell.sort_order == 'descending':
                         #~ cell.points = find_runs(sort_points(cellpts)[::-1], 'descending')
                     #~ else:
-                        #~ raise RuntimeError, "Invalid sort_order: " + cell.sort_order
+                        #~ raise RuntimeError("Invalid sort_order: " + cell.sort_order)
         #~ return
 
 class SubdivisionLineDataMapper(SubdivisionDataMapper):

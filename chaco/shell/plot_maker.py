@@ -7,6 +7,8 @@ from a set of user-supplied arguments.
 import io
 import re
 
+import six
+
 # Major library imports
 from numpy import all, array, arange, asarray, reshape, shape, transpose
 
@@ -19,7 +21,7 @@ from chaco.tools.api import HighlightTool
 
 
 # Local relative imports
-from chaco_shell_error import ChacoShellError
+from .chaco_shell_error import ChacoShellError
 
 
 # Normally I don't define an __all__, but this lets us distinguish
@@ -73,7 +75,7 @@ def do_plotv(session, *args, **kw):
     elif plot_type == "line":
         plots = [create_line_plot(sources) for sources in sources_list]
     else:
-        raise ChacoShellError, "Unknown plot type '%s'." % plot_type
+        raise ChacoShellError("Unknown plot type '%s'." % plot_type)
 
     for plot in plots:
         plot.orientation = kw.get("orientation", "h")
@@ -94,7 +96,7 @@ def make_data_sources(session, index_sort="none", *args):
             data.append(arg)
 
     if len(data) == 0:
-        raise ChacoShellError, "Insufficient data for plot."
+        raise ChacoShellError("Insufficient data for plot.")
 
     # 1D array(s)
     if len(data[0].shape) == 1:
@@ -126,8 +128,8 @@ def make_data_sources(session, index_sort="none", *args):
 
     # Not a two-dimensional array, error.
     else:
-        raise ChacoShellError, "Unable to create plot data sources from array of" \
-                               "shape " + str(data[1].shape) + "."
+        raise ChacoShellError("Unable to create plot data sources from array of" \
+                              "shape " + str(data[1].shape) + ".")
 
 
 #-----------------------------------------------------------------------------
@@ -212,7 +214,7 @@ def _process_group(group, plot_data=None):
         # with a format string, or an x and y were provided.  If PlotData
         # was provided, use that to disambiguate; otherwise, assume that the
         # second string is a format string.
-        if isinstance(group[1], basestring):
+        if isinstance(group[1], six.string_types):
             if plot_data and group[1] in plot_data.list_data():
                 x = group[0]
                 y = group[1]
@@ -252,7 +254,7 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
     groups = []
     valid_names = plotdata.list_data()
     for arg in data_and_formats:
-        if not isinstance(arg, basestring):
+        if not isinstance(arg, six.string_types):
             # an array was passed in
             cur_group.append(plotdata.set_data("", arg, generate_name=True))
         elif arg in valid_names:
@@ -308,7 +310,7 @@ def do_imread(*data, **kwargs):
     """ Returns image file as array. """
 
     # Check to see if the data given is either a file path or a file object
-    if isinstance(data[0], basestring) or isinstance(data[0], io.IOBase):
+    if isinstance(data[0], six.string_types) or isinstance(data[0], io.IOBase):
         return ImageData.fromfile(data[0])
     else:
         raise ValueError("do_imread takes a string filename")
@@ -401,7 +403,7 @@ def _get_or_create_plot_data(data, plotdata):
     """
     valid_names = plotdata.list_data()
 
-    if not isinstance(data, basestring):
+    if not isinstance(data, six.string_types):
         name = plotdata.set_data("", data, generate_name=True)
     else:
         if data not in valid_names:

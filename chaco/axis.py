@@ -14,11 +14,11 @@ from traits.api import Any, Float, Int, Str, Trait, Unicode, \
      Bool, Event, List, Array, Instance, Enum, Callable
 
 # Local relative imports
-from ticks import AbstractTickGenerator, DefaultTickGenerator
-from abstract_mapper import AbstractMapper
-from abstract_overlay import AbstractOverlay
-from label import Label
-from log_mapper import LogMapper
+from .ticks import AbstractTickGenerator, DefaultTickGenerator
+from .abstract_mapper import AbstractMapper
+from .abstract_overlay import AbstractOverlay
+from .label import Label
+from .log_mapper import LogMapper
 
 
 def DEFAULT_TICK_FORMATTER(val):
@@ -193,7 +193,7 @@ class PlotAxis(AbstractOverlay):
         called automatically be the Traits framework when .edit_traits() is
         invoked.
         """
-        from axis_view import AxisView
+        from .axis_view import AxisView
         return AxisView
 
 
@@ -460,7 +460,7 @@ class PlotAxis(AbstractOverlay):
             return
 
         if datalow > datahigh:
-            raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
+            raise RuntimeError("DataRange low is greater than high; unable to compute axis ticks.")
 
         if not self.tick_generator:
             return
@@ -783,7 +783,7 @@ class PlotAxis(AbstractOverlay):
 
         state = super(PlotAxis,self).__getstate__()
         for key in dont_pickle:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

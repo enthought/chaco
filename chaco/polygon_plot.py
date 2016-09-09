@@ -14,7 +14,7 @@ from traits.api import Enum, Float, Tuple, Property, cached_property, \
                         on_trait_change
 
 # Local imports.
-from base_xy_plot import BaseXYPlot
+from .base_xy_plot import BaseXYPlot
 
 class PolygonPlot(BaseXYPlot):
     """ Plots a polygon in dataspace.

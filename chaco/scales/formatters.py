@@ -4,7 +4,7 @@ Classes for formatting labels for values or times.
 
 from math import ceil, floor, fmod, log10
 from numpy import abs, all, array, asarray, amax, amin
-from safetime import strftime, time, safe_fromtimestamp, localtime
+from .safetime import strftime, time, safe_fromtimestamp, localtime
 import warnings
 
 
@@ -567,7 +567,7 @@ class TimeFormatter(object):
             try:
                 tm = localtime(t)
                 s = strftimeEx(format, t, tm)
-            except ValueError, e:
+            except ValueError as e:
                 warnings.warn("Unable to convert tick for timestamp " + str(t))
                 labels.append("ERR")
                 continue

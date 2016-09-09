@@ -9,8 +9,8 @@ from traits.api import Any, Bool, CFloat, Instance, Property, Trait, \
     Tuple, on_trait_change
 
 # Local relative imports
-from base_data_range import BaseDataRange
-from data_range_1d import DataRange1D
+from .base_data_range import BaseDataRange
+from .data_range_1d import DataRange1D
 
 
 class DataRange2D(BaseDataRange):

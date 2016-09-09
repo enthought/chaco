@@ -13,11 +13,11 @@ from traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
                                  Instance, List, CList, Float, Str
 
 # Local relative imports
-from abstract_overlay import AbstractOverlay
-from label import Label
-from lineplot import LinePlot
-from plot_component import PlotComponent
-from scatterplot import ScatterPlot
+from .abstract_overlay import AbstractOverlay
+from .label import Label
+from .lineplot import LinePlot
+from .plot_component import PlotComponent
+from .scatterplot import ScatterPlot
 
 
 class AbstractCompositeIconRenderer(HasTraits):

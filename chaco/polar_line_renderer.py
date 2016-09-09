@@ -11,7 +11,7 @@ from enable.api import black_color_trait, LineStyle
 from traits.api import Float
 
 # Local, relative imports
-from abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_plot_renderer import AbstractPlotRenderer
 
 
 class PolarLineRenderer(AbstractPlotRenderer):

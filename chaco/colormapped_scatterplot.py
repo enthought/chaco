@@ -13,10 +13,10 @@ from traits.api import Dict, Enum, Float, Instance, on_trait_change
 from traitsui.api import Item, RangeEditor
 
 # Local, relative imports
-from array_data_source import ArrayDataSource
-from base import left_shift, right_shift
-from abstract_colormap import AbstractColormap
-from scatterplot import ScatterPlot, ScatterPlotView
+from .array_data_source import ArrayDataSource
+from .base import left_shift, right_shift
+from .abstract_colormap import AbstractColormap
+from .scatterplot import ScatterPlot, ScatterPlotView
 
 
 class ColormappedScatterPlotView(ScatterPlotView):
@@ -329,7 +329,7 @@ class ColormappedScatterPlot(ScatterPlot):
                                     self.outline_color_, self.line_width)
                 gc.draw_path_at_points(xy, path, mode)
         else:
-            raise RuntimeError, "Batch drawing requested on non-batch-capable GC."
+            raise RuntimeError("Batch drawing requested on non-batch-capable GC.")
         return
 
     def _render_bruteforce(self, gc, points):

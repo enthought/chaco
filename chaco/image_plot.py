@@ -23,8 +23,8 @@ from traits.api import (Bool, Either, Enum, Instance, List, Range, Trait,
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
-from base_2d_plot import Base2DPlot
-from image_utils import trim_screen_rect
+from .base_2d_plot import Base2DPlot
+from .image_utils import trim_screen_rect
 
 try:
     # InterpolationQuality required for Quartz backend only (requires OSX).

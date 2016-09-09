@@ -1,5 +1,6 @@
 """ Defines the PlotSession class.
 """
+import six
 
 # Enthoght library imports
 from chaco.array_plot_data import ArrayPlotData
@@ -9,8 +10,8 @@ from traits.api import Any, Bool, Dict, HasTraits, Instance, Int, \
 
 
 # Local, relative imports
-from plot_window import PlotWindow
-from preferences import Preferences
+from .plot_window import PlotWindow
+from .preferences import Preferences
 
 
 class PlotSession(HasTraits):
@@ -78,7 +79,7 @@ class PlotSession(HasTraits):
 
     def get_window(self, ident):
         """ Retrieves a window either by index or by name """
-        if isinstance(ident, basestring):
+        if isinstance(ident, six.string_types):
             return self.window_map.get(ident, None)
         elif type(ident) == int and ident < len(self.windows):
             return self.windows[ident]
@@ -94,7 +95,7 @@ class PlotSession(HasTraits):
             The name of the window in **window_map**, or the index of the
             window in **windows**.
         """
-        if isinstance(ident, basestring):
+        if isinstance(ident, six.string_types):
             if ident in self.window_map:
                 win = self.window_map[ident]
                 del self.window_map[ident]
@@ -102,7 +103,7 @@ class PlotSession(HasTraits):
                 return
         elif type(ident) == int:
             if ident >= len(self.windows):
-                print "No such window %d." % ident
+                print("No such window %d." % ident)
 
             win = self.windows.pop(ident)
             if len(self.windows) == 0:
@@ -131,7 +132,7 @@ class PlotSession(HasTraits):
         elif win is None:
             self.active_window_index = None
         else:
-            raise RuntimeError, "That window is not part of this session."
+            raise RuntimeError("That window is not part of this session.")
 
     def _colormap_changed(self):
         plots = []
@@ -145,7 +146,7 @@ class PlotSession(HasTraits):
                 p.invalidate_draw()
                 p.request_redraw()
             elif hasattr(p, "colors"):
-                if isinstance(p.colors, basestring) or \
+                if isinstance(p.colors, six.string_types) or \
                    isinstance(p.colors, AbstractColormap):
                     p.colors = color_map_dict[self.colormap]
 

@@ -89,7 +89,7 @@ def verify_result_image(input_image, expected_image, **plot_kwargs):
     assert expected_image.dtype == np.uint8
     image_result = rendered_image_result(input_image, **plot_kwargs)
     rms = calculate_rms(image_result, expected_image)
-    print "RMS =", rms
+    print("RMS =", rms)
     assert rms < MAX_RMS_ERROR
 
 

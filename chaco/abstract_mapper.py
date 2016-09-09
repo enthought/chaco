@@ -55,7 +55,7 @@ class AbstractMapper(HasTraits):
     def __getstate__(self):
         state = super(AbstractMapper,self).__getstate__()
         for key in ['_cache_valid']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

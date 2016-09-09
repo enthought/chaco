@@ -136,7 +136,7 @@ class SaveAsButton(ToolbarButton):
         gc.render_component(plot_component)
         try:
             gc.save(filename)
-        except KeyError, e:
+        except KeyError as e:
             errmsg = ("The filename must have an extension that matches "
                       "a graphics format, such as '.png' or '.tiff'.")
             if str(e.message) != '':

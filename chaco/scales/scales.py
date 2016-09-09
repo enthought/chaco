@@ -8,7 +8,7 @@ from math import ceil, floor, log10
 from numpy import abs, argmin, array, isnan, linspace
 
 # Local imports
-from formatters import BasicFormatter
+from .formatters import BasicFormatter
 
 
 __all__ = ["AbstractScale", "DefaultScale", "FixedScale", "Pow10Scale",
@@ -467,7 +467,7 @@ class ScaleSystem(object):
 
         # Check for insufficient arguments.
         if numlabels is None and char_width is None:
-            raise ValueError, "Either numlabels or char_width (or both) must be given."
+            raise ValueError("Either numlabels or char_width (or both) must be given.")
 
         if numlabels == 0 or char_width == 0 or isnan(start) or isnan(end):
             return []

@@ -4,7 +4,7 @@ from enable.api import Canvas
 from traits.api import Instance, Tuple
 
 # Local, relative chaco imports
-from plot_containers import DEFAULT_DRAWING_ORDER
+from .plot_containers import DEFAULT_DRAWING_ORDER
 
 class PlotCanvas(Canvas):
     """ The PlotCanvas is basically like Canvas, but we inherit some behaviors
