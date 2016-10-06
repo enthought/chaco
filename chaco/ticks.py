@@ -163,13 +163,6 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
             tick_interval = 0.5
             lower         = data_low  - 0.5
             upper         = data_high + 0.5
-        elif is_base2( rng ) and is_base2( upper ) and rng > 4:
-            if rng == 2:
-                tick_interval = 1
-            elif rng == 4:
-                tick_interval = 4
-            else:
-                tick_interval = rng / 4   # maybe we want it 8?
         else:
             tick_interval = auto_interval( lower, upper )
     elif tick_interval < 0:
@@ -216,33 +209,6 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
 
     return [tick for tick in ticks if tick >= bound_low and tick <= bound_high]
 
-#--------------------------------------------------------------------------------
-#  Determine if a number is a power of 2:
-#--------------------------------------------------------------------------------
-
-def is_base2 ( range ):
-    """ Returns True if *range* is a positive base-2 number (2, 4, 8, 16, ...).
-    """
-    if range <= 0.0:
-        return False
-    else:
-        lg = log2( range )
-        return ((lg == floor( lg )) and (lg > 0.0))
-
-#--------------------------------------------------------------------------------
-#  Compute n log 2:
-#--------------------------------------------------------------------------------
-
-def log2 ( num ):
-    """ Returns the base 2 logarithm of a number (or array).
-
-    """
-    #    !! 1e-16 is here to prevent errors when log is 0
-    if num == 0.0:
-        num += 1.0e-16
-    elif type( num ) is ndarray:
-        putmask( num, equal( num, 0.0), 1.0e-16 )
-    return log10( num ) / log10( 2 )
 
 #--------------------------------------------------------------------------------
 #  Compute the best tick interval for a specified data range:
