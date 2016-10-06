@@ -17,9 +17,6 @@ import sys, os
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
 sys.path.append(os.path.abspath('sphinxext'))
-sys.path.append(os.path.abspath(os.path.join('..','..')))
-
-from chaco import __version__
 
 # General configuration
 # ---------------------
@@ -43,8 +40,10 @@ copyright = '2008-2016, Enthought, Inc.'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
-release = __version__
-version = '.'.join(release.split('.',3)[:3])
+d = {}
+execfile(os.path.join('..', '..', 'chaco', '_version.py'), d)
+release = d['version']
+version = '.'.join(release.split('.',2)[:2])
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:

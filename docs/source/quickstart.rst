@@ -48,10 +48,6 @@ Dependencies
   interactive plots. As an alternative to PyQt, Chaco is being tested more and
   more with the `PySide <http://www.pyside.org/>`_ toolkit (LGPL license).
 
-.. Note::
-   In addition to wxPython or PyQt a cross-platform OpenGL backend (using
-   Pyglet) is in the works, and it will not require WX or Qt.
-
 Installing Chaco with Canopy
 -----------------------------
 
