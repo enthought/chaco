@@ -42,13 +42,14 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'chaco'
-copyright = '2008-2014, Enthought, Inc.'
+copyright = '2008-2016, Enthought, Inc.'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 d = {}
-execfile(os.path.join('..', '..', 'chaco', '__init__.py'), d)
-version = release = d['__version__']
+execfile(os.path.join('..', '..', 'chaco', '_version.py'), d)
+release = d['version']
+version = '.'.join(release.split('.',2)[:2])
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -98,7 +99,7 @@ html_style = 'default.css'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = "Chaco 4 User Manual"
+html_title = "Chaco {}".format(version)
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -155,6 +156,7 @@ html_use_index = BUILD_DOCSET
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Chacodoc'
 
+html_theme='classic'
 
 # Options for LaTeX output
 # ------------------------

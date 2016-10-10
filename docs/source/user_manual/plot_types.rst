@@ -682,6 +682,7 @@ The aspect of the polar plot can be controlled with these parameters:
 .. image:: images/user_guide/polar_plot.png
   :width: 350px
 
+.. _jitter_plot:
 
 Jitter Plot
 ===========

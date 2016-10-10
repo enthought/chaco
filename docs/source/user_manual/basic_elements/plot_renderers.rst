@@ -27,7 +27,7 @@ for :ref:`X-vs-Y plots <xy_plots>`,
 :ref:`contour plots <contour_plot>`) and
 :class:`~chaco.base_1d_plot.Base1DPlot`, which is the interface for
 :ref:`1D plots <1d_plots>` (e.g., :ref:`jitter plots <jitter_plot>` or
-:ref:`1D scatter plots <scatter_plot_1d>`).
+:ref:`1D scatter plots <scatter_plot>`).
 
 The base interface inherits from a deep hierarchy of classes generating
 from the :mod:`enable` package, starting with
@@ -258,20 +258,31 @@ All :class:`~chaco.abstract_plot_renderer.AbstractPlotRenderer` subclasses are
 expected to provide three methods for mapping to and from screen space and
 data space:
 
-    :method:`map_screen`
+    .. :py:method:: map_screen(data_array)
+
+    :map_screen:
 
         This is expected to take an array of points (as columns) in
         the appropriate data coordinates, and return the corresponding points
         in screen pixel coordinates (measured from the bottom left of the
         plot component).
 
-    :method:`map_data`
-        This is the reverse of :method:`map_screen`, and takes an array of
+    .. :py:method: map_data(screen_pt)
+
+    :map_data:
+
+        This is the reverse of map_screen, and takes an array of
         points (as columns) screen pixel coordinates relative to the renderer
         component and return the corresponding points in screen data
         coordinates.
 
-    :method:`map_index`
+    .. :py:method:map_index(screen_pt,
+                            threshold=0.0,
+                            outside_returns_none=True,
+                            index_only=False)
+
+    :map_index:
+
         This method takes a point in screen pixel coordinates and returns an
         appropriate index value that can be used to index into data.  This can
         be used by hit-testing methods (see below), and provides optional
@@ -457,7 +468,7 @@ The attribute :attr:`~chaco.base_2d_plot.Base2DPlot.alpha` defines the
 global transparency value for the whole plot.
 It ranges from 0.0 for transparent to 1.0 (default) for full intensity.
 
-.. _oned_plots:
+.. _1d_plots:
 
 1D Plots Interface
 ==================

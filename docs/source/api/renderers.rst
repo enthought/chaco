@@ -109,7 +109,7 @@ Renderers
     :show-inheritance:
 
 :class:`ScatterPlot1D`
-====================
+======================
 .. autoclass:: ScatterPlot
     :members:
     :show-inheritance:
@@ -130,7 +130,7 @@ Renderers
 ..===================
 .... autoclass:: TextPlot1D
 ..    :members:
- ..   :show-inheritance:
+..    :show-inheritance:
 
 :class:`VariableSizeScatterPlot`
 ================================
