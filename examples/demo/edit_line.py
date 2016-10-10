@@ -60,7 +60,7 @@ class PointDraggingTool(DragTool):
 
         ndx = plot.map_index((event.x, event.y), self.threshold)
         if ndx is None:
-            if plot.index.metadata.has_key('selections'):
+            if 'selections' in plot.index.metadata:
                 del plot.index.metadata['selections']
         else:
             plot.index.metadata['selections'] = [ndx]
@@ -98,7 +98,7 @@ class PointDraggingTool(DragTool):
 
     def drag_end(self, event):
         plot = self.component
-        if plot.index.metadata.has_key('selections'):
+        if 'selections' in plot.index.metadata:
             del plot.index.metadata['selections']
         plot.invalidate_draw()
         plot.request_redraw()

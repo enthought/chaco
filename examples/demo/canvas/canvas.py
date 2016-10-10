@@ -70,7 +70,7 @@ def add_basic_tools(plot):
 def do_plot(name, pd):
     xname = name + "_x"
     yname = name + "_y"
-    pd.set_data(xname, range(len(DATA[name])))
+    pd.set_data(xname, list(range(len(DATA[name]))))
     pd.set_data(yname, DATA[name])
 
     plot = Plot(pd, padding = 30,
@@ -132,7 +132,7 @@ def clone_plot(clonetool, drop_position):
 
     newplot.datasources = copy(oldplot.datasources)
 
-    for name, renderers in oldplot.plots.items():
+    for name, renderers in list(oldplot.plots.items()):
         newrenderers = []
         for renderer in renderers:
             new_r = clone_renderer(renderer)
@@ -145,7 +145,7 @@ def clone_plot(clonetool, drop_position):
         newplot.plots[name] = newrenderers
     #newplot.plots = copy(oldplot.plots)
 
-    for name, renderers in newplot.plots.items():
+    for name, renderers in list(newplot.plots.items()):
         newplot.add(*renderers)
 
     newplot.index_axis.title = oldplot.index_axis.title
@@ -249,7 +249,7 @@ def make_toolbar(canvas):
 
     # Create buttons
     controller = ButtonController()
-    for name in DATA.keys():
+    for name in list(DATA.keys()):
         plot = do_plot(name, pd)
         if MULTITOUCH:
             plot.tools.append(MPPanZoom(plot))

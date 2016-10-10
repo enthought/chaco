@@ -5,6 +5,11 @@ Enhancements
  * AbstractPlotData and subclasses now implement an update_data() method which
    updates the data whilst firing only one update event.
 
+Fixes
+-----
+
+ * Fixed UnboundLocalError in the Plot class when attempting to create a data
+   source from an array of unsupported shape.
 
 Chaco 4.1.0
 ===========

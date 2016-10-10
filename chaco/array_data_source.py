@@ -1,7 +1,8 @@
 """ Defines the ArrayDataSource class."""
 
 # Major library imports
-from numpy import array, isfinite, ones, nanargmin, nanargmax, ndarray
+from numpy import array, isfinite, ones, ndarray
+import numpy as np
 
 # Enthought library imports
 from traits.api import Any, Constant, Int, Tuple
@@ -10,15 +11,42 @@ from traits.api import Any, Constant, Int, Tuple
 from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
 from abstract_data_source import AbstractDataSource
 
+
 def bounded_nanargmin(arr):
-    min = nanargmin(arr)
+    """ Find the index of the minimum value, ignoring NaNs.
+
+    If all NaNs, return 0.
+    """
+    # Different versions of numpy behave differently in the all-NaN case, so we
+    # catch this condition in two different ways.
+    try:
+        if np.issubdtype(arr.dtype, np.floating):
+            min = np.nanargmin(arr)
+        elif np.issubdtype(arr.dtype, np.number):
+            min = np.argmin(arr)
+        else:
+            min = 0
+    except ValueError:
+        return 0
     if isfinite(min):
         return min
     else:
         return 0
 
 def bounded_nanargmax(arr):
-    max = nanargmax(arr)
+    """ Find the index of the maximum value, ignoring NaNs.
+
+    If all NaNs, return -1.
+    """
+    try:
+        if np.issubdtype(arr.dtype, np.floating):
+            max = np.nanargmax(arr)
+        elif np.issubdtype(arr.dtype, np.number):
+            max = np.argmax(arr)
+        else:
+            max = -1
+    except ValueError:
+        return -1
     if isfinite(max):
         return max
     else:
@@ -223,7 +251,7 @@ class ArrayDataSource(AbstractDataSource):
         data_len = 0
         try:
             data_len = len(data)
-        except:
+        except Exception:
             pass
         if data_len == 0:
             self._min_index = 0

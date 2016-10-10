@@ -8,8 +8,10 @@ select or unselect them.
     - Left-click on a point to select or unselect it.
     - Left-drag to pan.
     - Mouse wheel to zoom
-    
+
 """
+from __future__ import print_function
+
 # FIXME: the 'z' zoom interaction is ill-behaved.
 
 # Major library imports
@@ -93,7 +95,7 @@ class Demo(HasTraits):
 
     traits_view = View(
                     VGroup(
-                        HGroup(spring, Label('Click point to select/unselect'), 
+                        HGroup(spring, Label('Click point to select/unselect'),
                             spring),
                         Item('plot', editor=ComponentEditor(size=size,
                                                             bgcolor=bg_color),
@@ -104,10 +106,10 @@ class Demo(HasTraits):
 
     def _metadata_handler(self):
         sel_indices = self.index_datasource.metadata.get('selections', [])
-        print "Selection indices:", sel_indices
+        print("Selection indices:", sel_indices)
 
         hover_indices = self.index_datasource.metadata.get('hover', [])
-        print "Hover indices:", hover_indices
+        print("Hover indices:", hover_indices)
 
     def _plot_default(self):
         plot = _create_plot_component()

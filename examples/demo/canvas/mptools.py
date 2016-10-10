@@ -78,7 +78,7 @@ class MPDragZoom(DragZoom):
         else:
             idx = 1-self.axis_index
         d2 = {}
-        for id, coords in d.items():
+        for id, coords in list(d.items()):
             d2[id] = coords[idx]
         return d2
 
@@ -91,8 +91,8 @@ class MPDragZoom(DragZoom):
     def drag_start(self, event, capture_mouse=False):
         bid1, bid2 = sorted(self._moves)
         xy01, xy02 = self._moves[bid1], self._moves[bid2]
-        self._orig_low, self._orig_high = map(asarray,
-            self._map_coordinate_box(xy01, xy02))
+        self._orig_low, self._orig_high = list(map(asarray,
+            self._map_coordinate_box(xy01, xy02)))
         self.orig_center = (self._orig_high + self._orig_low) / 2.0
         self.orig_diag = l2norm(self._orig_high - self._orig_low)
 
@@ -130,7 +130,7 @@ class MPDragZoom(DragZoom):
         # Get dataspace coordinates of the previous and new coordinates
         bid1, bid2 = sorted(self._moves)
         p1, p2 = self._blobs[bid1], self._blobs[bid2]
-        low, high = map(asarray, self._map_coordinate_box(p1, p2))
+        low, high = list(map(asarray, self._map_coordinate_box(p1, p2)))
 
         # Compute the amount of translation
         center = (high + low) / 2.0
@@ -144,7 +144,7 @@ class MPDragZoom(DragZoom):
 
         # The original screen bounds are used to test if we've reached max_zoom
         orig_screen_low, orig_screen_high = \
-                map(asarray, self._map_coordinate_box(*self._orig_screen_bounds))
+                list(map(asarray, self._map_coordinate_box(*self._orig_screen_bounds)))
         new_low = center - zoom * (center - orig_screen_low) - translation
         new_high = center + zoom * (orig_screen_high - center) - translation
 
@@ -286,7 +286,7 @@ class MPRangeSelection(RangeSelection):
         else:
             idx = 1-self.axis_index
         d2 = {}
-        for id, coords in d.items():
+        for id, coords in list(d.items()):
             d2[id] = coords[idx]
         return d2
 
@@ -329,7 +329,7 @@ class MPRangeSelection(RangeSelection):
             axis_index = self.axis_index
             low = self.plot.position[axis_index]
             high = low + self.plot.bounds[axis_index] - 1
-            p1, p2 = self._axis_blobs.values()
+            p1, p2 = list(self._axis_blobs.values())
             # XXX: what if p1 or p2 is out of bounds?
             m1 = self.mapper.map_data(p1)
             m2 = self.mapper.map_data(p2)
@@ -338,7 +338,7 @@ class MPRangeSelection(RangeSelection):
             self.selection = (low_val, high_val)
             self.component.request_redraw()
         elif len(self._moves) == 1:
-            id, p0 = self._axis_moves.items()[0]
+            id, p0 = list(self._axis_moves.items())[0]
             m0 = self.mapper.map_data(p0)
             low, high = self.selection
             if low <= m0 <= high:

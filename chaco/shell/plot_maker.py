@@ -4,6 +4,7 @@ from a set of user-supplied arguments.
 """
 
 # Standard library imports
+import io
 import re
 
 # Major library imports
@@ -307,7 +308,7 @@ def do_imread(*data, **kwargs):
     """ Returns image file as array. """
 
     # Check to see if the data given is either a file path or a file object
-    if isinstance(data[0], basestring) or isinstance(data[0], file):
+    if isinstance(data[0], basestring) or isinstance(data[0], io.IOBase):
         return ImageData.fromfile(data[0])
     else:
         raise ValueError("do_imread takes a string filename")

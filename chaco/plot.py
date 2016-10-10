@@ -31,13 +31,17 @@ from image_data import ImageData
 from image_plot import ImagePlot
 from legend import Legend
 from lineplot import LinePlot
+from line_scatterplot_1d import LineScatterPlot1D
 from linear_mapper import LinearMapper
 from log_mapper import LogMapper
 from plot_label import PlotLabel
 from polygon_plot import PolygonPlot
 from scatterplot import ScatterPlot
+from scatterplot_1d import ScatterPlot1D
+from text_plot_1d import TextPlot1D
 from filled_line_plot import FilledLinePlot
 from quiverplot import QuiverPlot
+from jitterplot import JitterPlot
 
 
 
@@ -117,7 +121,11 @@ class Plot(DataView):
                              contour_line_plot = ContourLinePlot,
                              contour_poly_plot = ContourPolyPlot,
                              candle = CandlePlot,
-                             quiver = QuiverPlot,))
+                             quiver = QuiverPlot,
+                             scatter_1d = ScatterPlot1D,
+                             textplot_1d = TextPlot1D,
+                             line_scatter_1d = LineScatterPlot1D,
+                             jitterplot = JitterPlot))
 
     #------------------------------------------------------------------------
     # Annotations and decorations
@@ -305,7 +313,7 @@ class Plot(DataView):
             name = self._make_new_plot_name()
         if origin is None:
             origin = self.default_origin
-            
+
         if plot_type in ("line", "scatter", "polygon", "bar", "filled_line"):
             # Tie data to the index range
             if len(data) == 1:
@@ -378,44 +386,44 @@ class Plot(DataView):
                            orientation=self.orientation,
                            origin = origin,
                            **styles)
-                
+
                 self.add(plot)
                 new_plots.append(plot)
-            
+
             if plot_type == 'bar':
-                # For bar plots, compute the ranges from the data to make the 
-                # plot look clean. 
-                
+                # For bar plots, compute the ranges from the data to make the
+                # plot look clean.
+
                 def custom_index_func(data_low, data_high, margin, tight_bounds):
-                    """ Compute custom bounds of the plot along index (in 
+                    """ Compute custom bounds of the plot along index (in
                     data space).
                     """
                     bar_width = styles.get('bar_width', cls().bar_width)
                     plot_low = data_low - bar_width
                     plot_high = data_high + bar_width
                     return plot_low, plot_high
-                
+
                 if self.index_range.bounds_func is None:
                     self.index_range.bounds_func = custom_index_func
-                        
+
                 def custom_value_func(data_low, data_high, margin, tight_bounds):
-                    """ Compute custom bounds of the plot along value (in 
+                    """ Compute custom bounds of the plot along value (in
                     data space).
                     """
                     plot_low = data_low - (data_high-data_low)*0.1
                     plot_high = data_high + (data_high-data_low)*0.1
                     return plot_low, plot_high
-                
-                if self.value_range.bounds_func is None:    
+
+                if self.value_range.bounds_func is None:
                     self.value_range.bounds_func = custom_value_func
-                
+
                 self.index_range.tight_bounds = False
                 self.value_range.tight_bounds = False
                 self.index_range.refresh()
                 self.value_range.refresh()
 
             self.plots[name] = new_plots
-            
+
         elif plot_type == "cmap_scatter":
             if len(data) != 3:
                 raise ValueError("Colormapped scatter plots require (index, value, color) data")
@@ -908,7 +916,129 @@ class Plot(DataView):
                    )
         self.add(plot)
         self.plots[name] = [plot]
-        return [plot]        
+        return [plot]
+
+    def plot_1d(self, data, type='scatter_1d', name=None, orientation=None,
+                direction=None, scale="linear", **styles):
+        """ Adds a new sub-plot using the given data and plot style.
+
+        Parameters
+        ----------
+        data : string, tuple(string), list(string)
+            The data to be plotted. The each item generates a separate renderer
+            using the named data source
+        type : string
+            The type of plots to add.  One of  of "scatter_1d",
+            "line_scatter_1d", "textplot_1d", "jitterplot"
+        name : string
+            The name of the plot.  If None, then a default one is created
+            (usually "plotNNN").
+        scale : string
+            The type of scale to use for the index axis. If not "linear", then
+            a log scale is used.
+        orientation : string
+            Whether the single dimension is horizontal ('h') or vertical ('v').
+        direction : string
+            Whether data is mapped in the usual direction (left to right or
+            bottom to top) or reversed.
+        styles : series of keyword arguments
+            attributes and values that apply to one or more of the
+            plot types requested, e.g.,'line_color' or 'line_width'.
+
+        Returns
+        -------
+        [renderers] -> list of renderers created in response to this call to plot()
+        """
+
+        if len(data) == 0:
+            return
+
+        if isinstance(data, basestring):
+            data = (data,)
+
+        # TODO: support lists of plot types
+        plot_type = type
+        if name is None:
+            name = self._make_new_plot_name()
+
+        if orientation is None:
+            orientation = self.orientation
+
+        if direction is None:
+            if orientation == 'v':
+                if "bottom" in self.origin:
+                    direction = 'normal'
+                else:
+                    direction = 'flipped'
+            else:
+                if "left" in self.origin:
+                    direction = 'normal'
+                else:
+                    direction = 'flipped'
+
+        plots = []
+        if plot_type in ("scatter_1d", "textplot_1d", "line_scatter_1d",
+                         "jitterplot"):
+            # Tie data to the index range
+            index = self._get_or_create_datasource(data[0])
+            if self.default_index is None:
+                self.default_index = index
+            if orientation != self.orientation:
+                index_range = self.value_range
+                index_mapper = self.value_mapper
+                self.value_scale = scale
+            else:
+                index_range = self.index_range
+                index_mapper = self.index_mapper
+                self.index_scale = scale
+        else:
+            raise ValueError("Unknown plot type: " + plot_type)
+
+        if plot_type in ("scatter_1d", "line_scatter_1d", "jitterplot"):
+            # simple 1d positional plots with no associated value
+            for source in data:
+                index = self._get_or_create_datasource(source)
+                index_range.add(index)
+
+                if scale == "linear":
+                    imap = LinearMapper(range=index_range,
+                                        stretch_data=index_mapper.stretch_data)
+                else:
+                    imap = LogMapper(range=index_range,
+                                    stretch_data=index_mapper.stretch_data)
+
+                cls = self.renderer_map[plot_type]
+                plot = cls(index=index,
+                            index_mapper=imap,
+                            orientation=orientation,
+                            direction=direction,
+                            **styles)
+                plots.append(plot)
+                self.add(plot)
+        elif plot_type in ("textplot_1d",):
+            # simple positional plots with a single associated value
+            for source in data[1:]:
+                value = self._get_or_create_datasource(source)
+
+                if scale == "linear":
+                    imap = LinearMapper(range=index_range,
+                                        stretch_data=index_mapper.stretch_data)
+                else:
+                    imap = LogMapper(range=index_range,
+                                    stretch_data=index_mapper.stretch_data)
+                cls = self.renderer_map[plot_type]
+                plot = cls(index=index,
+                           index_mapper=imap,
+                           value=value,
+                           orientation=orientation,
+                           direction=direction,
+                           **styles)
+                plots.append(plot)
+                self.add(plot)
+
+        self.plots[name] = plots
+        return plots
+
 
     def delplot(self, *names):
         """ Removes the named sub-plots. """
@@ -1008,19 +1138,16 @@ class Plot(DataView):
                     ds = ArrayDataSource(data, sort_order="none")
                 elif len(data.shape) == 2:
                     ds = ImageData(data=data, value_depth=1)
-                elif len(data.shape) == 3:
-                    if data.shape[2] in (3,4):
-                        ds = ImageData(data=data, value_depth=int(data.shape[2]))
-                    else:
-                        raise ValueError("Unhandled array shape in creating new plot: " \
-                                         + str(data.shape))
-
+                elif len(data.shape) == 3 and data.shape[2] in (3,4):
+                    ds = ImageData(data=data, value_depth=int(data.shape[2]))
+                else:
+                    raise ValueError("Unhandled array shape in creating new "
+                                     "plot: %s" % str(data.shape))
             elif isinstance(data, AbstractDataSource):
                 ds = data
-
             else:
-                raise ValueError("Couldn't create datasource for data of type " + \
-                                 str(type(data)))
+                raise ValueError("Couldn't create datasource for data of "
+                                 "type %s" % type(data))
 
             self.datasources[name] = ds
 
@@ -1059,7 +1186,7 @@ class Plot(DataView):
                 if name in self.datasources:
                     source = self.datasources[name]
                     source.set_data(self.data.get_data(name))
-                    
+
     def _plots_items_changed(self, event):
         if self.legend:
             self.legend.plots = self.plots
@@ -1185,5 +1312,3 @@ class Plot(DataView):
 
     def _get_title_font(self):
         return self._title.font
-
-

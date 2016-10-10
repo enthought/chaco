@@ -63,6 +63,7 @@ class DrawScatterplotCase(unittest.TestCase):
         size = (50, 50)
         scatterplot = create_scatter_plot(
             data=[range(10), range(10)],
+            marker="circle",
             border_visible=False,
             marker_size=range(1, 11),
         )

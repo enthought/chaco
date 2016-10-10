@@ -2,7 +2,7 @@
 Implementation of a plot using a custom overlay and tool
 """
 
-from __future__ import with_statement
+
 
 import numpy
 
@@ -126,7 +126,7 @@ class XRayOverlay(AbstractOverlay):
         sel_index = index[indices]
         sel_value = value[indices]
 
-        return zip(sel_index, sel_value)
+        return list(zip(sel_index, sel_value))
 
     def _get_selection_index_screen_range(self):
         """ maps the selected bounds which were set by the tool into screen

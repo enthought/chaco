@@ -563,5 +563,5 @@ but uses instead
 its own reference to the window, :attr:`self.window`.
 
 See also the `documentation of the enable library
-<http://github.enthought.com/enable/enable_concepts.html>`_, which gives
+<http://docs.enthought.com/enable/enable_concepts.html>`_, which gives
 more details about the event dispatching happening at that level.

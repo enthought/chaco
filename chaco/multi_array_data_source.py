@@ -2,7 +2,6 @@
 """
 # Major package imports
 from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
-import types
 
 # Enthought library imports
 from traits.api import Any, Int, Tuple
@@ -80,7 +79,7 @@ class MultiArrayDataSource(AbstractDataSource):
         sliced along the **index_dimension**.
         """
 
-        if type(axes) == types.IntType:
+        if type(axes) == int:
             if self.index_dimension == 0:
                 data = self._data[::, axes]
             else:
@@ -162,7 +161,7 @@ class MultiArrayDataSource(AbstractDataSource):
         if self._data is None or 0 in self._data.shape:
             return (0.0, 0.0)
 
-        if type(value) == types.IntType:
+        if type(value) == int:
             if self.value_dimension == 0:
                 maxi = nanmax(self._data[value, ::])
                 mini = nanmin(self._data[value, ::])
@@ -170,7 +169,7 @@ class MultiArrayDataSource(AbstractDataSource):
                 # value_dimension == 1
                 maxi = nanmax(self._data[::, value])
                 mini = nanmin(self._data[::, value])
-        elif type(index) == types.IntType:
+        elif type(index) == int:
             if self.index_dimension == 0:
                 maxi = nanmax(self._data[index, ::])
                 mini = nanmin(self._data[index, ::])
