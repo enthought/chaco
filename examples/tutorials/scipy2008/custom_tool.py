@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 from numpy import linspace, sin
 
@@ -12,14 +13,14 @@ class CustomTool(BaseTool):
     event_state = Enum("normal", "mousedown")
 
     def normal_mouse_move(self, event):
-        print "Screen:", event.x, event.y
+        print("Screen:", event.x, event.y)
 
     def normal_left_down(self, event):
         self.event_state = "mousedown"
         event.handled = True
 
     def mousedown_mouse_move(self, event):
-        print "Data:", self.component.map_data((event.x, event.y))
+        print("Data:", self.component.map_data((event.x, event.y)))
 
     def mousedown_left_up(self, event):
         self.event_state = "normal"
@@ -53,4 +54,3 @@ class ScatterPlot(HasTraits):
 demo=ScatterPlot()
 if __name__ == "__main__":
     demo.edit_traits(kind="livemodal")
-

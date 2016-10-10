@@ -1,7 +1,8 @@
 """ Defines the ArrayDataSource class."""
 
 # Major library imports
-from numpy import array, isfinite, ones, nanargmin, nanargmax, ndarray
+from numpy import array, isfinite, ones, ndarray
+import numpy as np
 
 # Enthought library imports
 from traits.api import Any, Constant, Int, Tuple
@@ -19,7 +20,12 @@ def bounded_nanargmin(arr):
     # Different versions of numpy behave differently in the all-NaN case, so we
     # catch this condition in two different ways.
     try:
-        min = nanargmin(arr)
+        if np.issubdtype(arr.dtype, np.floating):
+            min = np.nanargmin(arr)
+        elif np.issubdtype(arr.dtype, np.number):
+            min = np.argmin(arr)
+        else:
+            min = 0
     except ValueError:
         return 0
     if isfinite(min):
@@ -33,7 +39,12 @@ def bounded_nanargmax(arr):
     If all NaNs, return -1.
     """
     try:
-        max = nanargmax(arr)
+        if np.issubdtype(arr.dtype, np.floating):
+            max = np.nanargmax(arr)
+        elif np.issubdtype(arr.dtype, np.number):
+            max = np.argmax(arr)
+        else:
+            max = -1
     except ValueError:
         return -1
     if isfinite(max):
@@ -240,7 +251,7 @@ class ArrayDataSource(AbstractDataSource):
         data_len = 0
         try:
             data_len = len(data)
-        except:
+        except Exception:
             pass
         if data_len == 0:
             self._min_index = 0

@@ -19,12 +19,15 @@ The base interface is defined in the abstract class
 attributes and methods to set size, position, and aspect of the
 plotting area.
 
-Two more specialized interface are used by most concrete implementations,
+Three more specialized interfaces are used by most concrete implementations,
 namely :class:`~chaco.base_xy_plot.BaseXYPlot`, which is the interface
-for :ref:`X-vs-Y plots <xy_plots>`, and
+for :ref:`X-vs-Y plots <xy_plots>`,
 :class:`~chaco.base_2d_plot.Base2DPlot`, which is the interface for
 :ref:`2D plots <2d_plots>` (e.g., :ref:`image plots <image_plot>` or
-:ref:`contour plots <contour_plot>`).
+:ref:`contour plots <contour_plot>`) and
+:class:`~chaco.base_1d_plot.Base1DPlot`, which is the interface for
+:ref:`1D plots <1d_plots>` (e.g., :ref:`jitter plots <jitter_plot>` or
+:ref:`1D scatter plots <scatter_plot_1d>`).
 
 The base interface inherits from a deep hierarchy of classes generating
 from the :mod:`enable` package, starting with
@@ -33,7 +36,7 @@ space) and :class:`enable.interactor.Interactor` (which allows plot
 components to react to mouse and keyboard events), and down through
 :class:`enable.component.Component` and :class:`chaco.plot_component.PlotComponent`
 (follow :ref:`this link for a description of the relationship between Chaco and enable <chaco_enable_kiva>`).
-The class were most of the functionality is defined is
+The class where most of the functionality is defined is
 :class:`enable.component.Component`.
 
 Here we give a summary of all the important properties exposed in
@@ -248,6 +251,33 @@ to the larger graphical context:
 
       List of viewport that are viewing this component
 
+Screen and Data Mapping
+-----------------------
+
+All :class:`~chaco.abstract_plot_renderer.AbstractPlotRenderer` subclasses are
+expected to provide three methods for mapping to and from screen space and
+data space:
+
+    :method:`map_screen`
+
+        This is expected to take an array of points (as columns) in
+        the appropriate data coordinates, and return the corresponding points
+        in screen pixel coordinates (measured from the bottom left of the
+        plot component).
+
+    :method:`map_data`
+        This is the reverse of :method:`map_screen`, and takes an array of
+        points (as columns) screen pixel coordinates relative to the renderer
+        component and return the corresponding points in screen data
+        coordinates.
+
+    :method:`map_index`
+        This method takes a point in screen pixel coordinates and returns an
+        appropriate index value that can be used to index into data.  This can
+        be used by hit-testing methods (see below), and provides optional
+        arguments such as threshold distances.  Not every renderer implements
+        this, and some data sets may not be amenable to this method, either.
+
 Others
 ------
 
@@ -426,3 +456,42 @@ Others
 The attribute :attr:`~chaco.base_2d_plot.Base2DPlot.alpha` defines the
 global transparency value for the whole plot.
 It ranges from 0.0 for transparent to 1.0 (default) for full intensity.
+
+.. _oned_plots:
+
+1D Plots Interface
+==================
+
+The class :class:`chaco.base_1d_plot.Base1DPlot` defines a more concrete
+interface for plots that plot their data along one axis, either horizontal
+or vertical. Like the other base plot classes it handles data sources and
+data mappers to convert real data into screen coordinates, but unlike the
+other classes it doesn't define shortcuts for plot axes, labels and background
+grids.  These decorations should either be provided directly when creating the
+plot, if they are desired, or provided by plot containers like the
+:class:`chaco.data_view.DataView` or :class:`chaco.plot.Plot` classes.
+
+Data-related traits
+-------------------
+
+1D plots need one source of data and one mapper to map coordinates to screen
+space. The data source is stored in the attribute
+:attr:`~chaco.base_1d_plot.Base1DPlot.index` and the corresponding mapper is
+:attr:`~chaco.base_1d_plot.Base1DPlot.index_mapper`.
+
+The 'index' corresponds to either the horizontal 'X' coordinates
+or the vertical 'Y' coordinates depending on the orientation of the
+plot: for :attr:`~chaco.base_1d_plot.Base1DPlot.orientation` equal to
+'h' (for horizontal), indices are on the X-axis, and values on the Y-axis.
+The opposite is true when :attr:`~chaco.base_xy_plot.base_1d_plot.orientation`
+is 'v' (the default). The convenience properties
+:attr:`~chaco.base_1d_plot.Base1DPlot.x_mapper` and
+:attr:`~chaco.base_1d_plot.Base1DPlot.y_mapper` allow accessing the mappers
+for the two axes in an orientation-independent way. The properties take the
+value ``None`` for the off-orientation case (ie.
+:attr:`~chaco.base_1d_plot.Base1DPlot.x_mapper` is ``None`` for vertical
+orientation and :attr:`~chaco.base_1d_plot.Base1DPlot.y_mapper` is ``None``
+for horizontal orientation).
+
+Finally, the property :attr:`~chaco.base_1d_plot.Base1DPlot.index_range` gives
+direct access to the data ranges stored in the index and value mappers.

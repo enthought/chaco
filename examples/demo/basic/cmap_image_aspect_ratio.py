@@ -43,7 +43,6 @@ def _create_plot_component():
                              colormap=jet)[0]
     img_plot.index_mapper.aspect_ratio = 0.5
     img_plot.index_mapper.maintain_aspect_ratio = True
-    print 'here'
 
     # Tweak some of the plot properties
     plot.title = "My First Image Plot"
@@ -81,4 +80,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-

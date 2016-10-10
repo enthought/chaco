@@ -13,7 +13,7 @@ image_file = find_resource('Chaco', image_path, alt_path=alt_path)
 
 # Check to see if the image was found
 if image_file is None:
-    print 'The image "capitol.jpg" could not be found.'
+    print('The image "capitol.jpg" could not be found.')
     sys.exit()
 
 # Create the image

@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 from numpy import linspace, sin
 
@@ -10,7 +11,7 @@ from traitsui.api import Item, View
 class CustomTool(BaseTool):
 
     def normal_mouse_move(self, event):
-        print "Screen point:", event.x, event.y
+        print("Screen point:", event.x, event.y)
 
 class ScatterPlot(HasTraits):
 

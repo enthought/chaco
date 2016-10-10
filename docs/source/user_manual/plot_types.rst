@@ -123,7 +123,7 @@ The color information is controlled by the
 data source, and the
 :attr:`~chaco.colormapped_scatterplot.ColormappedScatterPlot.color_mapper`
 mapper. A large number of ready-to-use color maps are defined in the
-module :mod:`chaco.default_colormaps`.
+module :mod:`chaco.default_colormaps`, including discrete color maps.
 
 In addition to the parameters supported by a
 :ref:`scatter plot <scatter_plot>`, a colormapped scatter plot defines
@@ -430,7 +430,8 @@ screen coordinates (a :class:`~chaco.grid_mapper.GridMapper`). The scalar
 data is passed through the :attr:`value` attribute as an
 :class:`~chaco.image_data.ImageData` source. Finally,
 a color mapper maps the scalar data to colors. The module
-:mod:`chaco.default_colormaps` defines many ready-to-use colormaps.
+:mod:`chaco.default_colormaps` defines many ready-to-use colormaps, including
+discrete color maps.
 
 For example: ::
 
@@ -443,7 +444,7 @@ For example: ::
     index_mapper = GridMapper(range=DataRange2D(index))
 
     color_source = ImageData(data=z, value_depth=1)
-    color_mapper = dc.Spectral(DataRange1D(color_source))
+    color_mapper = Spectral(DataRange1D(color_source))
 
     cmap_plot = CMapImagePlot(
         index=index,

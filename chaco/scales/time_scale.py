@@ -285,48 +285,41 @@ class TimeScale(AbstractScale):
     def cal_ticks(self, start, end):
         """ ticks() method for calendar-based intervals """
 
+        # start and end are in seconds since Epoch, get naive datetimes
         try:
-            start = datetime.fromtimestamp(start)
+            start_dt = datetime.fromtimestamp(start)
         except ValueError:
-            start = datetime(MINYEAR, 1, 1, 0, 0, 0)
+            start_dt = datetime(MINYEAR, 1, 1, 0, 0, 0)
         try:
-            end = datetime.fromtimestamp(end)
+            end_dt = datetime.fromtimestamp(end)
         except ValueError:
-            end = datetime(MAXYEAR, 1, 1, 0, 0, 0)
+            end_dt = datetime(MAXYEAR, 1, 1, 0, 0, 0)
 
+        # get range of years of interest
+        # add 2 because of python ranges + guard against timezone shifts
+        # eg. if 20000101 -> 19991231 because of local timezone, end is 1999+2
+        years = range(start_dt.year, min(end_dt.year+2, MAXYEAR+1))
         if self.unit == "day_of_month":
-            s = start.year + 1/12.0 * start.month
-            e = end.year + 1/12.0 * end.month
-            num_months = int(round((e - s) * 12)) + 1   # add 1 for fencepost
-            start_year = start.year
-            start_month = start.month
-            ym = [divmod(i, 12)
-                  for i in range(start_month-1, start_month-1+num_months)]
-            months = [start.replace(year=start_year+y, month=m+1, day=1)
-                      for (y,m) in ym]
-            ticks = [dt.replace(day=i) for dt in months for i in self.vals]
+            # get naive datetimes for start of each day of each month
+            # in range of years.  Excess will be discarded later.
+            months = range(1, 13)
+            dates = [datetime(year, month, i)
+                     for year in years for month in months for i in self.vals]
 
         elif self.unit == "month_of_year":
-            years = [start.replace(year=newyear, day=1)
-                     for newyear in range(start.year, end.year+1)]
-            ticks = [dt.replace(month=i, day=1)
-                     for dt in years for i in self.vals]
-
+            # get naive datetimes for start of each month in range of years
+            dates = [datetime(year, month, 1)
+                     for year in years for month in self.vals]
         else:
             raise ValueError("Unknown calendar unit '%s'" % self.unit)
 
-        if len(ticks) > 0:
-            # Find the first and last index in all_ticks that falls
-            # within (start,end)
-            for start_ndx in range(len(ticks)):
-                if ticks[start_ndx] >= start:
-                    break
-            for end_ndx in range(len(ticks)-1, 0, -1):
-                if ticks[end_ndx] <= end:
-                    break
-            ticks = ticks[start_ndx : end_ndx+1]
+        # safely convert to seconds since epoch
+        ticks = [dt_to_sec(date) for date in dates]
 
-        return map(dt_to_sec, ticks)
+        # trim excess timestamps
+        ticks = [t for t in ticks if start <= t <= end]
+
+        return ticks
 
     def labels(self, start, end, numlabels=None, char_width=None):
         """ Returns a series of ticks and corresponding strings for labels
