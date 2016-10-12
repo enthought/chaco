@@ -17,7 +17,12 @@ import sys
 import os
 
 # The docset build will use slightly different formatting rules
-BUILD_DOCSET = bool(os.environ.get('BUILD_DOCSET'))
+
+def get_build_docset():
+    flag = os.environ.get('BUILD_DOCSET', '')
+    return flag.lower() not in ("0", "no", "")
+
+BUILD_DOCSET = get_build_docset()
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
