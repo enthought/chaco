@@ -21,7 +21,7 @@ which is available for Windows, Linux and Mac OSX and also provides many other
 useful packages. Chaco may also be available through a package manager on your
 platform, such as apt on Ubuntu, yum on Redhat or
 `MacPorts <http://www.macports.org/>`_ on OS X.  You can also build Chaco from
-it's `source code <https://github.com/enthought/chaco>`_, but because of the
+its `source code <https://github.com/enthought/chaco>`_, but because of the
 dependencies, the easiest way by far is to install Canopy.
 
 .. _dependencies:
@@ -39,8 +39,7 @@ Dependencies
 
 * `Enable <https://github.com/enthought/enable/>`_, a framework for writing
   interactive visual components, and for abstracting away GUI-toolkit-specific
-  details of mouse and keyboard handling. This currently still depends on the
-  Python Image Library (PIL).
+  details of mouse and keyboard handling.
 
 * `NumPy <http://numpy.scipy.org/>`_, for dealing efficiently with large
   datasets
@@ -54,7 +53,7 @@ Installing Chaco with Canopy
 ----------------------------
 
 Chaco, the rest of the `Enthought Tool Suite <http://code.enthought.com/>`_,
-and a lot more are bundled with enthought Canopy (formerly EPD).  Getting
+and a lot more are bundled with Enthought Canopy (formerly EPD).  Getting
 Canopy gives you a one-click install of Chaco
 and all its dependencies at once; however, these packages will be linked to a
 new instance of Python. Canopy Express is free for all users and
@@ -84,25 +83,15 @@ To do this, you can either:
 
    :command:`pip install chaco`
 
-   or
-
-   :command:`easy_install chaco`
-
 .. note::
    If you have already installed Chaco and just want to update to the newest
    version, use
 
         :command:`pip install --upgrade chaco`
 
-.. note::
-   Because Chaco depends on Enable, which depends on PIL, certain plarforms
-   cannot install PIL from PyPI without these options:
-
-        :command:`pip install --allow-external PIL --allow-unverified PIL chaco`
-
 2. Or, download the source from the `Chaco GitHub repository
-   <https://github.com/enthought/chaco>`_ or alternatively as a part of
-   `Enthought Tool Suite <http://code.enthought.com/source/>`_.
+   <https://github.com/enthought/chaco>`_ or alternatively as a part of the
+   full `Enthought Tool Suite <https://github.com/enthought/ets>`_.
 
 .. Please refer to the :ref:`installation` section for more detailed
 .. instructions.
@@ -380,7 +369,7 @@ free and open source under the BSD license.
 Reporting bugs and contributing
 ===============================
 
-since Chaco is open source and hosted on
+Since Chaco is open source and hosted on
 `Github <https://github.com/enthought/chaco>`_, the development version can
 always be checked out from Github, forked, and modified at will. When a bug is
 found, please submit an issue in the
