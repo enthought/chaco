@@ -83,10 +83,6 @@ To do this, you can either:
 
    :command:`pip install chaco`
 
-   or
-
-   :command:`easy_install chaco`
-
 .. note::
    If you have already installed Chaco and just want to update to the newest
    version, use
@@ -373,7 +369,7 @@ free and open source under the BSD license.
 Reporting bugs and contributing
 ===============================
 
-since Chaco is open source and hosted on
+Since Chaco is open source and hosted on
 `Github <https://github.com/enthought/chaco>`_, the development version can
 always be checked out from Github, forked, and modified at will. When a bug is
 found, please submit an issue in the
