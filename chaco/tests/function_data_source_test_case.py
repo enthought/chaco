@@ -2,7 +2,7 @@
 Test of FunctionDataSource behavior.
 """
 
-import unittest2 as unittest
+import unittest
 
 from numpy import array, linspace, ones
 from numpy.testing import assert_array_equal
