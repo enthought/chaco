@@ -19,10 +19,12 @@ cache:
 init:
     - ps: $Env:sdkbin = "C:\Program Files\Microsoft SDKs\Windows" + $Env:sdkver + "\Bin"
     - ps: $ENV:sdkverpath = "C:\Program Files\Microsoft SDKs\Windows" + $Env:sdkver + "\Setup\WindowsSdkVer.exe"
-    - ps: $ENV:path = $Env:python + ";" + $env:pythjon + "\scripts;" + $Env:sdkbin + ";" + $Env:path
+    - ps: $ENV:path = $Env:python + ";" + $env:python + "\scripts;" + $Env:sdkbin + ";" + $Env:path
 
 install:
     - ps: if ((Test-Path "C:\temp") -eq 0)  {mkdir C:\temp}
-    - ps: python -m pip install -upgrade --no-binary wheel pip
+    - ps: python -m pip install --upgrade --no-binary wheel pip
     - ps: pip install --upgrade wheel
     - ps: pip --version
+
+    - cmd /v:on /e:on /c ".\appveyor-install-deps.cmd"
