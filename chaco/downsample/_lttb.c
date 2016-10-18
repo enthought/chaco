@@ -816,12 +816,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 #define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
 #endif
 
-/* BufferIndexError.proto */
-static void __Pyx_RaiseBufferIndexError(int axis);
-
-/* BufferIndexErrorNogil.proto */
-static void __Pyx_RaiseBufferIndexErrorNogil(int axis);
-
 /* ForceInitThreads.proto */
 #ifndef __PYX_FORCE_INIT_THREADS
   #define __PYX_FORCE_INIT_THREADS 0
@@ -1509,9 +1503,9 @@ static PyObject *__pyx_tuple__19;
 static PyObject *__pyx_tuple__20;
 static PyObject *__pyx_codeobj__15;
 
-/* "chaco/downsample/_lttb.pyx":10
+/* "chaco/downsample/_lttb.pyx":9
  * 
- * #@cython.boundscheck(False)
+ * @cython.boundscheck(False)
  * def lttb(double[:, :] points not None, Py_ssize_t n_buckets):             # <<<<<<<<<<<<<<
  *     """ Apply the largest triangle three buckets algorithm to data points
  * 
@@ -1547,11 +1541,11 @@ static PyObject *__pyx_pw_5chaco_10downsample_5_lttb_1lttb(PyObject *__pyx_self,
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_n_buckets)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("lttb", 1, 2, 2, 1); __PYX_ERR(0, 10, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("lttb", 1, 2, 2, 1); __PYX_ERR(0, 9, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "lttb") < 0)) __PYX_ERR(0, 10, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "lttb") < 0)) __PYX_ERR(0, 9, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1559,19 +1553,19 @@ static PyObject *__pyx_pw_5chaco_10downsample_5_lttb_1lttb(PyObject *__pyx_self,
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_points = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[0]); if (unlikely(!__pyx_v_points.memview)) __PYX_ERR(0, 10, __pyx_L3_error)
-    __pyx_v_n_buckets = __Pyx_PyIndex_AsSsize_t(values[1]); if (unlikely((__pyx_v_n_buckets == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 10, __pyx_L3_error)
+    __pyx_v_points = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[0]); if (unlikely(!__pyx_v_points.memview)) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_n_buckets = __Pyx_PyIndex_AsSsize_t(values[1]); if (unlikely((__pyx_v_n_buckets == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("lttb", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 10, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("lttb", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 9, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("chaco.downsample._lttb.lttb", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(((PyObject *)__pyx_v_points.memview) == Py_None)) {
-    PyErr_Format(PyExc_TypeError, "Argument '%.200s' must not be None", "points"); __PYX_ERR(0, 10, __pyx_L1_error)
+    PyErr_Format(PyExc_TypeError, "Argument '%.200s' must not be None", "points"); __PYX_ERR(0, 9, __pyx_L1_error)
   }
   __pyx_r = __pyx_pf_5chaco_10downsample_5_lttb_lttb(__pyx_self, __pyx_v_points, __pyx_v_n_buckets);
 
@@ -1616,18 +1610,18 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
   __Pyx_memviewslice __pyx_t_5 = { 0, 0, { 0 }, { 0 }, { 0 } };
   Py_ssize_t __pyx_t_6;
   Py_ssize_t __pyx_t_7;
-  int __pyx_t_8;
+  Py_ssize_t __pyx_t_8;
   Py_ssize_t __pyx_t_9;
   Py_ssize_t __pyx_t_10;
   Py_ssize_t __pyx_t_11;
   Py_ssize_t __pyx_t_12;
   Py_ssize_t __pyx_t_13;
-  Py_ssize_t __pyx_t_14;
+  double __pyx_t_14;
   double __pyx_t_15;
-  double __pyx_t_16;
+  Py_ssize_t __pyx_t_16;
   Py_ssize_t __pyx_t_17;
-  Py_ssize_t __pyx_t_18;
-  int __pyx_t_19;
+  int __pyx_t_18;
+  Py_ssize_t __pyx_t_19;
   Py_ssize_t __pyx_t_20;
   Py_ssize_t __pyx_t_21;
   Py_ssize_t __pyx_t_22;
@@ -1657,10 +1651,9 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
   Py_ssize_t __pyx_t_46;
   Py_ssize_t __pyx_t_47;
   Py_ssize_t __pyx_t_48;
-  Py_ssize_t __pyx_t_49;
   __Pyx_RefNannySetupContext("lttb", 0);
 
-  /* "chaco/downsample/_lttb.pyx":33
+  /* "chaco/downsample/_lttb.pyx":32
  *     http://skemman.is/handle/1946/15343
  *     """
  *     cdef Py_ssize_t data_length = points.shape[0]             # <<<<<<<<<<<<<<
@@ -1669,7 +1662,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
   __pyx_v_data_length = (__pyx_v_points.shape[0]);
 
-  /* "chaco/downsample/_lttb.pyx":34
+  /* "chaco/downsample/_lttb.pyx":33
  *     """
  *     cdef Py_ssize_t data_length = points.shape[0]
  *     cdef Py_ssize_t a = 0             # <<<<<<<<<<<<<<
@@ -1678,7 +1671,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
   __pyx_v_a = 0;
 
-  /* "chaco/downsample/_lttb.pyx":35
+  /* "chaco/downsample/_lttb.pyx":34
  *     cdef Py_ssize_t data_length = points.shape[0]
  *     cdef Py_ssize_t a = 0
  *     cdef Py_ssize_t sampled_index = 0             # <<<<<<<<<<<<<<
@@ -1687,20 +1680,20 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
   __pyx_v_sampled_index = 0;
 
-  /* "chaco/downsample/_lttb.pyx":38
+  /* "chaco/downsample/_lttb.pyx":37
  *     cdef double max_area, area, avg_x, avg_y, a_x, a_y, baseline, height, bucket_size
  *     cdef Py_ssize_t max_area_index, next_a, i, j, k, count
  *     cdef double[:, :] sampled = empty(shape=(n_buckets, 2), dtype=float)             # <<<<<<<<<<<<<<
  * 
  *     cdef Py_ssize_t current_bucket_start, current_bucket_end, next_bucket_end
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_empty); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_empty); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_n_buckets); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_n_buckets); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
@@ -1708,21 +1701,21 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
   __Pyx_GIVEREF(__pyx_int_2);
   PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_int_2);
   __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_shape, __pyx_t_4) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_shape, __pyx_t_4) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, ((PyObject *)(&PyFloat_Type))) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, ((PyObject *)(&PyFloat_Type))) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(__pyx_t_4);
-  if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_sampled = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "chaco/downsample/_lttb.pyx":42
+  /* "chaco/downsample/_lttb.pyx":41
  *     cdef Py_ssize_t current_bucket_start, current_bucket_end, next_bucket_end
  * 
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -1736,7 +1729,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
       #endif
       /*try:*/ {
 
-        /* "chaco/downsample/_lttb.pyx":43
+        /* "chaco/downsample/_lttb.pyx":42
  * 
  *     with nogil:
  *         sampled[sampled_index, 0] = points[a, 0]             # <<<<<<<<<<<<<<
@@ -1745,76 +1738,32 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
         __pyx_t_6 = __pyx_v_a;
         __pyx_t_7 = 0;
-        __pyx_t_8 = -1;
-        if (__pyx_t_6 < 0) {
-          __pyx_t_6 += __pyx_v_points.shape[0];
-          if (unlikely(__pyx_t_6 < 0)) __pyx_t_8 = 0;
-        } else if (unlikely(__pyx_t_6 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-        if (__pyx_t_7 < 0) {
-          __pyx_t_7 += __pyx_v_points.shape[1];
-          if (unlikely(__pyx_t_7 < 0)) __pyx_t_8 = 1;
-        } else if (unlikely(__pyx_t_7 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-        if (unlikely(__pyx_t_8 != -1)) {
-          __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-          __PYX_ERR(0, 43, __pyx_L4_error)
-        }
-        __pyx_t_9 = __pyx_v_sampled_index;
-        __pyx_t_10 = 0;
-        __pyx_t_8 = -1;
-        if (__pyx_t_9 < 0) {
-          __pyx_t_9 += __pyx_v_sampled.shape[0];
-          if (unlikely(__pyx_t_9 < 0)) __pyx_t_8 = 0;
-        } else if (unlikely(__pyx_t_9 >= __pyx_v_sampled.shape[0])) __pyx_t_8 = 0;
-        if (__pyx_t_10 < 0) {
-          __pyx_t_10 += __pyx_v_sampled.shape[1];
-          if (unlikely(__pyx_t_10 < 0)) __pyx_t_8 = 1;
-        } else if (unlikely(__pyx_t_10 >= __pyx_v_sampled.shape[1])) __pyx_t_8 = 1;
-        if (unlikely(__pyx_t_8 != -1)) {
-          __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-          __PYX_ERR(0, 43, __pyx_L4_error)
-        }
-        *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_9 * __pyx_v_sampled.strides[0]) ) + __pyx_t_10 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_6 * __pyx_v_points.strides[0]) ) + __pyx_t_7 * __pyx_v_points.strides[1]) )));
+        if (__pyx_t_6 < 0) __pyx_t_6 += __pyx_v_points.shape[0];
+        if (__pyx_t_7 < 0) __pyx_t_7 += __pyx_v_points.shape[1];
+        __pyx_t_8 = __pyx_v_sampled_index;
+        __pyx_t_9 = 0;
+        if (__pyx_t_8 < 0) __pyx_t_8 += __pyx_v_sampled.shape[0];
+        if (__pyx_t_9 < 0) __pyx_t_9 += __pyx_v_sampled.shape[1];
+        *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_8 * __pyx_v_sampled.strides[0]) ) + __pyx_t_9 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_6 * __pyx_v_points.strides[0]) ) + __pyx_t_7 * __pyx_v_points.strides[1]) )));
 
-        /* "chaco/downsample/_lttb.pyx":44
+        /* "chaco/downsample/_lttb.pyx":43
  *     with nogil:
  *         sampled[sampled_index, 0] = points[a, 0]
  *         sampled[sampled_index, 1] = points[a, 1]             # <<<<<<<<<<<<<<
  *         sampled_index += 1
  * 
  */
-        __pyx_t_11 = __pyx_v_a;
-        __pyx_t_12 = 1;
-        __pyx_t_8 = -1;
-        if (__pyx_t_11 < 0) {
-          __pyx_t_11 += __pyx_v_points.shape[0];
-          if (unlikely(__pyx_t_11 < 0)) __pyx_t_8 = 0;
-        } else if (unlikely(__pyx_t_11 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-        if (__pyx_t_12 < 0) {
-          __pyx_t_12 += __pyx_v_points.shape[1];
-          if (unlikely(__pyx_t_12 < 0)) __pyx_t_8 = 1;
-        } else if (unlikely(__pyx_t_12 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-        if (unlikely(__pyx_t_8 != -1)) {
-          __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-          __PYX_ERR(0, 44, __pyx_L4_error)
-        }
-        __pyx_t_13 = __pyx_v_sampled_index;
-        __pyx_t_14 = 1;
-        __pyx_t_8 = -1;
-        if (__pyx_t_13 < 0) {
-          __pyx_t_13 += __pyx_v_sampled.shape[0];
-          if (unlikely(__pyx_t_13 < 0)) __pyx_t_8 = 0;
-        } else if (unlikely(__pyx_t_13 >= __pyx_v_sampled.shape[0])) __pyx_t_8 = 0;
-        if (__pyx_t_14 < 0) {
-          __pyx_t_14 += __pyx_v_sampled.shape[1];
-          if (unlikely(__pyx_t_14 < 0)) __pyx_t_8 = 1;
-        } else if (unlikely(__pyx_t_14 >= __pyx_v_sampled.shape[1])) __pyx_t_8 = 1;
-        if (unlikely(__pyx_t_8 != -1)) {
-          __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-          __PYX_ERR(0, 44, __pyx_L4_error)
-        }
-        *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_13 * __pyx_v_sampled.strides[0]) ) + __pyx_t_14 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_11 * __pyx_v_points.strides[0]) ) + __pyx_t_12 * __pyx_v_points.strides[1]) )));
+        __pyx_t_10 = __pyx_v_a;
+        __pyx_t_11 = 1;
+        if (__pyx_t_10 < 0) __pyx_t_10 += __pyx_v_points.shape[0];
+        if (__pyx_t_11 < 0) __pyx_t_11 += __pyx_v_points.shape[1];
+        __pyx_t_12 = __pyx_v_sampled_index;
+        __pyx_t_13 = 1;
+        if (__pyx_t_12 < 0) __pyx_t_12 += __pyx_v_sampled.shape[0];
+        if (__pyx_t_13 < 0) __pyx_t_13 += __pyx_v_sampled.shape[1];
+        *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_12 * __pyx_v_sampled.strides[0]) ) + __pyx_t_13 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_10 * __pyx_v_points.strides[0]) ) + __pyx_t_11 * __pyx_v_points.strides[1]) )));
 
-        /* "chaco/downsample/_lttb.pyx":45
+        /* "chaco/downsample/_lttb.pyx":44
  *         sampled[sampled_index, 0] = points[a, 0]
  *         sampled[sampled_index, 1] = points[a, 1]
  *         sampled_index += 1             # <<<<<<<<<<<<<<
@@ -1823,16 +1772,16 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
         __pyx_v_sampled_index = (__pyx_v_sampled_index + 1);
 
-        /* "chaco/downsample/_lttb.pyx":47
+        /* "chaco/downsample/_lttb.pyx":46
  *         sampled_index += 1
  * 
  *         bucket_size = (data_length - 2.0)/(n_buckets - 2.0)             # <<<<<<<<<<<<<<
  *         current_bucket_start = 1
  *         current_bucket_end = <Py_ssize_t>bucket_size + 1
  */
-        __pyx_t_15 = (__pyx_v_data_length - 2.0);
-        __pyx_t_16 = (__pyx_v_n_buckets - 2.0);
-        if (unlikely(__pyx_t_16 == 0)) {
+        __pyx_t_14 = (__pyx_v_data_length - 2.0);
+        __pyx_t_15 = (__pyx_v_n_buckets - 2.0);
+        if (unlikely(__pyx_t_15 == 0)) {
           #ifdef WITH_THREAD
           PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
           #endif
@@ -1840,11 +1789,11 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
           #ifdef WITH_THREAD
           PyGILState_Release(__pyx_gilstate_save);
           #endif
-          __PYX_ERR(0, 47, __pyx_L4_error)
+          __PYX_ERR(0, 46, __pyx_L4_error)
         }
-        __pyx_v_bucket_size = (__pyx_t_15 / __pyx_t_16);
+        __pyx_v_bucket_size = (__pyx_t_14 / __pyx_t_15);
 
-        /* "chaco/downsample/_lttb.pyx":48
+        /* "chaco/downsample/_lttb.pyx":47
  * 
  *         bucket_size = (data_length - 2.0)/(n_buckets - 2.0)
  *         current_bucket_start = 1             # <<<<<<<<<<<<<<
@@ -1853,7 +1802,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
         __pyx_v_current_bucket_start = 1;
 
-        /* "chaco/downsample/_lttb.pyx":49
+        /* "chaco/downsample/_lttb.pyx":48
  *         bucket_size = (data_length - 2.0)/(n_buckets - 2.0)
  *         current_bucket_start = 1
  *         current_bucket_end = <Py_ssize_t>bucket_size + 1             # <<<<<<<<<<<<<<
@@ -1862,18 +1811,18 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
         __pyx_v_current_bucket_end = (((Py_ssize_t)__pyx_v_bucket_size) + 1);
 
-        /* "chaco/downsample/_lttb.pyx":51
+        /* "chaco/downsample/_lttb.pyx":50
  *         current_bucket_end = <Py_ssize_t>bucket_size + 1
  * 
  *         for i in range(n_buckets-2):             # <<<<<<<<<<<<<<
  *             # find the average values of the next bucket
  *             avg_x = 0.0
  */
-        __pyx_t_17 = (__pyx_v_n_buckets - 2);
-        for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_17; __pyx_t_18+=1) {
-          __pyx_v_i = __pyx_t_18;
+        __pyx_t_16 = (__pyx_v_n_buckets - 2);
+        for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
+          __pyx_v_i = __pyx_t_17;
 
-          /* "chaco/downsample/_lttb.pyx":53
+          /* "chaco/downsample/_lttb.pyx":52
  *         for i in range(n_buckets-2):
  *             # find the average values of the next bucket
  *             avg_x = 0.0             # <<<<<<<<<<<<<<
@@ -1882,7 +1831,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_avg_x = 0.0;
 
-          /* "chaco/downsample/_lttb.pyx":54
+          /* "chaco/downsample/_lttb.pyx":53
  *             # find the average values of the next bucket
  *             avg_x = 0.0
  *             avg_y = 0.0             # <<<<<<<<<<<<<<
@@ -1891,7 +1840,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_avg_y = 0.0;
 
-          /* "chaco/downsample/_lttb.pyx":55
+          /* "chaco/downsample/_lttb.pyx":54
  *             avg_x = 0.0
  *             avg_y = 0.0
  *             count = 0             # <<<<<<<<<<<<<<
@@ -1900,7 +1849,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_count = 0;
 
-          /* "chaco/downsample/_lttb.pyx":56
+          /* "chaco/downsample/_lttb.pyx":55
  *             avg_y = 0.0
  *             count = 0
  *             next_bucket_end = <Py_ssize_t>((i+2)*bucket_size) + 1             # <<<<<<<<<<<<<<
@@ -1909,17 +1858,17 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_next_bucket_end = (((Py_ssize_t)((__pyx_v_i + 2) * __pyx_v_bucket_size)) + 1);
 
-          /* "chaco/downsample/_lttb.pyx":57
+          /* "chaco/downsample/_lttb.pyx":56
  *             count = 0
  *             next_bucket_end = <Py_ssize_t>((i+2)*bucket_size) + 1
  *             if next_bucket_end > data_length:             # <<<<<<<<<<<<<<
  *                 next_bucket_end = data_length
  * 
  */
-          __pyx_t_19 = ((__pyx_v_next_bucket_end > __pyx_v_data_length) != 0);
-          if (__pyx_t_19) {
+          __pyx_t_18 = ((__pyx_v_next_bucket_end > __pyx_v_data_length) != 0);
+          if (__pyx_t_18) {
 
-            /* "chaco/downsample/_lttb.pyx":58
+            /* "chaco/downsample/_lttb.pyx":57
  *             next_bucket_end = <Py_ssize_t>((i+2)*bucket_size) + 1
  *             if next_bucket_end > data_length:
  *                 next_bucket_end = data_length             # <<<<<<<<<<<<<<
@@ -1928,7 +1877,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
             __pyx_v_next_bucket_end = __pyx_v_data_length;
 
-            /* "chaco/downsample/_lttb.pyx":57
+            /* "chaco/downsample/_lttb.pyx":56
  *             count = 0
  *             next_bucket_end = <Py_ssize_t>((i+2)*bucket_size) + 1
  *             if next_bucket_end > data_length:             # <<<<<<<<<<<<<<
@@ -1937,18 +1886,18 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           }
 
-          /* "chaco/downsample/_lttb.pyx":60
+          /* "chaco/downsample/_lttb.pyx":59
  *                 next_bucket_end = data_length
  * 
  *             for j in range(current_bucket_end, next_bucket_end):             # <<<<<<<<<<<<<<
  *                 count += 1
  *                 avg_x += (points[j, 0] - avg_x)/count
  */
-          __pyx_t_20 = __pyx_v_next_bucket_end;
-          for (__pyx_t_21 = __pyx_v_current_bucket_end; __pyx_t_21 < __pyx_t_20; __pyx_t_21+=1) {
-            __pyx_v_j = __pyx_t_21;
+          __pyx_t_19 = __pyx_v_next_bucket_end;
+          for (__pyx_t_20 = __pyx_v_current_bucket_end; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
+            __pyx_v_j = __pyx_t_20;
 
-            /* "chaco/downsample/_lttb.pyx":61
+            /* "chaco/downsample/_lttb.pyx":60
  * 
  *             for j in range(current_bucket_end, next_bucket_end):
  *                 count += 1             # <<<<<<<<<<<<<<
@@ -1957,29 +1906,18 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
             __pyx_v_count = (__pyx_v_count + 1);
 
-            /* "chaco/downsample/_lttb.pyx":62
+            /* "chaco/downsample/_lttb.pyx":61
  *             for j in range(current_bucket_end, next_bucket_end):
  *                 count += 1
  *                 avg_x += (points[j, 0] - avg_x)/count             # <<<<<<<<<<<<<<
  *                 avg_y += (points[j, 1] - avg_y)/count
  *                 j += 1
  */
-            __pyx_t_22 = __pyx_v_j;
-            __pyx_t_23 = 0;
-            __pyx_t_8 = -1;
-            if (__pyx_t_22 < 0) {
-              __pyx_t_22 += __pyx_v_points.shape[0];
-              if (unlikely(__pyx_t_22 < 0)) __pyx_t_8 = 0;
-            } else if (unlikely(__pyx_t_22 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-            if (__pyx_t_23 < 0) {
-              __pyx_t_23 += __pyx_v_points.shape[1];
-              if (unlikely(__pyx_t_23 < 0)) __pyx_t_8 = 1;
-            } else if (unlikely(__pyx_t_23 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-            if (unlikely(__pyx_t_8 != -1)) {
-              __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-              __PYX_ERR(0, 62, __pyx_L4_error)
-            }
-            __pyx_t_16 = ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_22 * __pyx_v_points.strides[0]) ) + __pyx_t_23 * __pyx_v_points.strides[1]) ))) - __pyx_v_avg_x);
+            __pyx_t_21 = __pyx_v_j;
+            __pyx_t_22 = 0;
+            if (__pyx_t_21 < 0) __pyx_t_21 += __pyx_v_points.shape[0];
+            if (__pyx_t_22 < 0) __pyx_t_22 += __pyx_v_points.shape[1];
+            __pyx_t_15 = ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_21 * __pyx_v_points.strides[0]) ) + __pyx_t_22 * __pyx_v_points.strides[1]) ))) - __pyx_v_avg_x);
             if (unlikely(__pyx_v_count == 0)) {
               #ifdef WITH_THREAD
               PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
@@ -1988,33 +1926,22 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
               #ifdef WITH_THREAD
               PyGILState_Release(__pyx_gilstate_save);
               #endif
-              __PYX_ERR(0, 62, __pyx_L4_error)
+              __PYX_ERR(0, 61, __pyx_L4_error)
             }
-            __pyx_v_avg_x = (__pyx_v_avg_x + (__pyx_t_16 / __pyx_v_count));
+            __pyx_v_avg_x = (__pyx_v_avg_x + (__pyx_t_15 / __pyx_v_count));
 
-            /* "chaco/downsample/_lttb.pyx":63
+            /* "chaco/downsample/_lttb.pyx":62
  *                 count += 1
  *                 avg_x += (points[j, 0] - avg_x)/count
  *                 avg_y += (points[j, 1] - avg_y)/count             # <<<<<<<<<<<<<<
  *                 j += 1
  * 
  */
-            __pyx_t_24 = __pyx_v_j;
-            __pyx_t_25 = 1;
-            __pyx_t_8 = -1;
-            if (__pyx_t_24 < 0) {
-              __pyx_t_24 += __pyx_v_points.shape[0];
-              if (unlikely(__pyx_t_24 < 0)) __pyx_t_8 = 0;
-            } else if (unlikely(__pyx_t_24 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-            if (__pyx_t_25 < 0) {
-              __pyx_t_25 += __pyx_v_points.shape[1];
-              if (unlikely(__pyx_t_25 < 0)) __pyx_t_8 = 1;
-            } else if (unlikely(__pyx_t_25 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-            if (unlikely(__pyx_t_8 != -1)) {
-              __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-              __PYX_ERR(0, 63, __pyx_L4_error)
-            }
-            __pyx_t_16 = ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_24 * __pyx_v_points.strides[0]) ) + __pyx_t_25 * __pyx_v_points.strides[1]) ))) - __pyx_v_avg_y);
+            __pyx_t_23 = __pyx_v_j;
+            __pyx_t_24 = 1;
+            if (__pyx_t_23 < 0) __pyx_t_23 += __pyx_v_points.shape[0];
+            if (__pyx_t_24 < 0) __pyx_t_24 += __pyx_v_points.shape[1];
+            __pyx_t_15 = ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_23 * __pyx_v_points.strides[0]) ) + __pyx_t_24 * __pyx_v_points.strides[1]) ))) - __pyx_v_avg_y);
             if (unlikely(__pyx_v_count == 0)) {
               #ifdef WITH_THREAD
               PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();
@@ -2023,11 +1950,11 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
               #ifdef WITH_THREAD
               PyGILState_Release(__pyx_gilstate_save);
               #endif
-              __PYX_ERR(0, 63, __pyx_L4_error)
+              __PYX_ERR(0, 62, __pyx_L4_error)
             }
-            __pyx_v_avg_y = (__pyx_v_avg_y + (__pyx_t_16 / __pyx_v_count));
+            __pyx_v_avg_y = (__pyx_v_avg_y + (__pyx_t_15 / __pyx_v_count));
 
-            /* "chaco/downsample/_lttb.pyx":64
+            /* "chaco/downsample/_lttb.pyx":63
  *                 avg_x += (points[j, 0] - avg_x)/count
  *                 avg_y += (points[j, 1] - avg_y)/count
  *                 j += 1             # <<<<<<<<<<<<<<
@@ -2037,7 +1964,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
             __pyx_v_j = (__pyx_v_j + 1);
           }
 
-          /* "chaco/downsample/_lttb.pyx":67
+          /* "chaco/downsample/_lttb.pyx":66
  * 
  *             # find maximum triangle area in current bucket
  *             max_area = -INFINITY             # <<<<<<<<<<<<<<
@@ -2046,7 +1973,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_max_area = (-INFINITY);
 
-          /* "chaco/downsample/_lttb.pyx":68
+          /* "chaco/downsample/_lttb.pyx":67
  *             # find maximum triangle area in current bucket
  *             max_area = -INFINITY
  *             area = -INFINITY             # <<<<<<<<<<<<<<
@@ -2055,55 +1982,33 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_area = (-INFINITY);
 
-          /* "chaco/downsample/_lttb.pyx":69
+          /* "chaco/downsample/_lttb.pyx":68
  *             max_area = -INFINITY
  *             area = -INFINITY
  *             a_x = points[a, 0]             # <<<<<<<<<<<<<<
  *             a_y = points[a, 1]
  *             baseline = (a_x - avg_x)
  */
-          __pyx_t_26 = __pyx_v_a;
-          __pyx_t_27 = 0;
-          __pyx_t_8 = -1;
-          if (__pyx_t_26 < 0) {
-            __pyx_t_26 += __pyx_v_points.shape[0];
-            if (unlikely(__pyx_t_26 < 0)) __pyx_t_8 = 0;
-          } else if (unlikely(__pyx_t_26 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-          if (__pyx_t_27 < 0) {
-            __pyx_t_27 += __pyx_v_points.shape[1];
-            if (unlikely(__pyx_t_27 < 0)) __pyx_t_8 = 1;
-          } else if (unlikely(__pyx_t_27 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-          if (unlikely(__pyx_t_8 != -1)) {
-            __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-            __PYX_ERR(0, 69, __pyx_L4_error)
-          }
-          __pyx_v_a_x = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_26 * __pyx_v_points.strides[0]) ) + __pyx_t_27 * __pyx_v_points.strides[1]) )));
+          __pyx_t_25 = __pyx_v_a;
+          __pyx_t_26 = 0;
+          if (__pyx_t_25 < 0) __pyx_t_25 += __pyx_v_points.shape[0];
+          if (__pyx_t_26 < 0) __pyx_t_26 += __pyx_v_points.shape[1];
+          __pyx_v_a_x = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_25 * __pyx_v_points.strides[0]) ) + __pyx_t_26 * __pyx_v_points.strides[1]) )));
 
-          /* "chaco/downsample/_lttb.pyx":70
+          /* "chaco/downsample/_lttb.pyx":69
  *             area = -INFINITY
  *             a_x = points[a, 0]
  *             a_y = points[a, 1]             # <<<<<<<<<<<<<<
  *             baseline = (a_x - avg_x)
  *             height = (avg_y - a_y)
  */
-          __pyx_t_28 = __pyx_v_a;
-          __pyx_t_29 = 1;
-          __pyx_t_8 = -1;
-          if (__pyx_t_28 < 0) {
-            __pyx_t_28 += __pyx_v_points.shape[0];
-            if (unlikely(__pyx_t_28 < 0)) __pyx_t_8 = 0;
-          } else if (unlikely(__pyx_t_28 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-          if (__pyx_t_29 < 0) {
-            __pyx_t_29 += __pyx_v_points.shape[1];
-            if (unlikely(__pyx_t_29 < 0)) __pyx_t_8 = 1;
-          } else if (unlikely(__pyx_t_29 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-          if (unlikely(__pyx_t_8 != -1)) {
-            __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-            __PYX_ERR(0, 70, __pyx_L4_error)
-          }
-          __pyx_v_a_y = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_28 * __pyx_v_points.strides[0]) ) + __pyx_t_29 * __pyx_v_points.strides[1]) )));
+          __pyx_t_27 = __pyx_v_a;
+          __pyx_t_28 = 1;
+          if (__pyx_t_27 < 0) __pyx_t_27 += __pyx_v_points.shape[0];
+          if (__pyx_t_28 < 0) __pyx_t_28 += __pyx_v_points.shape[1];
+          __pyx_v_a_y = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_27 * __pyx_v_points.strides[0]) ) + __pyx_t_28 * __pyx_v_points.strides[1]) )));
 
-          /* "chaco/downsample/_lttb.pyx":71
+          /* "chaco/downsample/_lttb.pyx":70
  *             a_x = points[a, 0]
  *             a_y = points[a, 1]
  *             baseline = (a_x - avg_x)             # <<<<<<<<<<<<<<
@@ -2112,7 +2017,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_baseline = (__pyx_v_a_x - __pyx_v_avg_x);
 
-          /* "chaco/downsample/_lttb.pyx":72
+          /* "chaco/downsample/_lttb.pyx":71
  *             a_y = points[a, 1]
  *             baseline = (a_x - avg_x)
  *             height = (avg_y - a_y)             # <<<<<<<<<<<<<<
@@ -2121,83 +2026,61 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_height = (__pyx_v_avg_y - __pyx_v_a_y);
 
-          /* "chaco/downsample/_lttb.pyx":74
+          /* "chaco/downsample/_lttb.pyx":73
  *             height = (avg_y - a_y)
  * 
  *             for k in range(current_bucket_start, current_bucket_end):             # <<<<<<<<<<<<<<
  *                 area = fabs(baseline * (points[k, 1] - a_y) -
  *                         (a_x - points[k, 0]) * height)/2
  */
-          __pyx_t_20 = __pyx_v_current_bucket_end;
-          for (__pyx_t_21 = __pyx_v_current_bucket_start; __pyx_t_21 < __pyx_t_20; __pyx_t_21+=1) {
-            __pyx_v_k = __pyx_t_21;
+          __pyx_t_19 = __pyx_v_current_bucket_end;
+          for (__pyx_t_20 = __pyx_v_current_bucket_start; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
+            __pyx_v_k = __pyx_t_20;
 
-            /* "chaco/downsample/_lttb.pyx":75
+            /* "chaco/downsample/_lttb.pyx":74
  * 
  *             for k in range(current_bucket_start, current_bucket_end):
  *                 area = fabs(baseline * (points[k, 1] - a_y) -             # <<<<<<<<<<<<<<
  *                         (a_x - points[k, 0]) * height)/2
  *                 if area > max_area:
  */
-            __pyx_t_30 = __pyx_v_k;
-            __pyx_t_31 = 1;
-            __pyx_t_8 = -1;
-            if (__pyx_t_30 < 0) {
-              __pyx_t_30 += __pyx_v_points.shape[0];
-              if (unlikely(__pyx_t_30 < 0)) __pyx_t_8 = 0;
-            } else if (unlikely(__pyx_t_30 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-            if (__pyx_t_31 < 0) {
-              __pyx_t_31 += __pyx_v_points.shape[1];
-              if (unlikely(__pyx_t_31 < 0)) __pyx_t_8 = 1;
-            } else if (unlikely(__pyx_t_31 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-            if (unlikely(__pyx_t_8 != -1)) {
-              __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-              __PYX_ERR(0, 75, __pyx_L4_error)
-            }
+            __pyx_t_29 = __pyx_v_k;
+            __pyx_t_30 = 1;
+            if (__pyx_t_29 < 0) __pyx_t_29 += __pyx_v_points.shape[0];
+            if (__pyx_t_30 < 0) __pyx_t_30 += __pyx_v_points.shape[1];
 
-            /* "chaco/downsample/_lttb.pyx":76
+            /* "chaco/downsample/_lttb.pyx":75
  *             for k in range(current_bucket_start, current_bucket_end):
  *                 area = fabs(baseline * (points[k, 1] - a_y) -
  *                         (a_x - points[k, 0]) * height)/2             # <<<<<<<<<<<<<<
  *                 if area > max_area:
  *                     max_area = area
  */
-            __pyx_t_32 = __pyx_v_k;
-            __pyx_t_33 = 0;
-            __pyx_t_8 = -1;
-            if (__pyx_t_32 < 0) {
-              __pyx_t_32 += __pyx_v_points.shape[0];
-              if (unlikely(__pyx_t_32 < 0)) __pyx_t_8 = 0;
-            } else if (unlikely(__pyx_t_32 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-            if (__pyx_t_33 < 0) {
-              __pyx_t_33 += __pyx_v_points.shape[1];
-              if (unlikely(__pyx_t_33 < 0)) __pyx_t_8 = 1;
-            } else if (unlikely(__pyx_t_33 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-            if (unlikely(__pyx_t_8 != -1)) {
-              __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-              __PYX_ERR(0, 76, __pyx_L4_error)
-            }
+            __pyx_t_31 = __pyx_v_k;
+            __pyx_t_32 = 0;
+            if (__pyx_t_31 < 0) __pyx_t_31 += __pyx_v_points.shape[0];
+            if (__pyx_t_32 < 0) __pyx_t_32 += __pyx_v_points.shape[1];
 
-            /* "chaco/downsample/_lttb.pyx":75
+            /* "chaco/downsample/_lttb.pyx":74
  * 
  *             for k in range(current_bucket_start, current_bucket_end):
  *                 area = fabs(baseline * (points[k, 1] - a_y) -             # <<<<<<<<<<<<<<
  *                         (a_x - points[k, 0]) * height)/2
  *                 if area > max_area:
  */
-            __pyx_v_area = (fabs(((__pyx_v_baseline * ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_30 * __pyx_v_points.strides[0]) ) + __pyx_t_31 * __pyx_v_points.strides[1]) ))) - __pyx_v_a_y)) - ((__pyx_v_a_x - (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_32 * __pyx_v_points.strides[0]) ) + __pyx_t_33 * __pyx_v_points.strides[1]) )))) * __pyx_v_height))) / 2.0);
+            __pyx_v_area = (fabs(((__pyx_v_baseline * ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_29 * __pyx_v_points.strides[0]) ) + __pyx_t_30 * __pyx_v_points.strides[1]) ))) - __pyx_v_a_y)) - ((__pyx_v_a_x - (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_31 * __pyx_v_points.strides[0]) ) + __pyx_t_32 * __pyx_v_points.strides[1]) )))) * __pyx_v_height))) / 2.0);
 
-            /* "chaco/downsample/_lttb.pyx":77
+            /* "chaco/downsample/_lttb.pyx":76
  *                 area = fabs(baseline * (points[k, 1] - a_y) -
  *                         (a_x - points[k, 0]) * height)/2
  *                 if area > max_area:             # <<<<<<<<<<<<<<
  *                     max_area = area
  *                     next_a = k
  */
-            __pyx_t_19 = ((__pyx_v_area > __pyx_v_max_area) != 0);
-            if (__pyx_t_19) {
+            __pyx_t_18 = ((__pyx_v_area > __pyx_v_max_area) != 0);
+            if (__pyx_t_18) {
 
-              /* "chaco/downsample/_lttb.pyx":78
+              /* "chaco/downsample/_lttb.pyx":77
  *                         (a_x - points[k, 0]) * height)/2
  *                 if area > max_area:
  *                     max_area = area             # <<<<<<<<<<<<<<
@@ -2206,7 +2089,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
               __pyx_v_max_area = __pyx_v_area;
 
-              /* "chaco/downsample/_lttb.pyx":79
+              /* "chaco/downsample/_lttb.pyx":78
  *                 if area > max_area:
  *                     max_area = area
  *                     next_a = k             # <<<<<<<<<<<<<<
@@ -2215,85 +2098,41 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
               __pyx_v_next_a = __pyx_v_k;
 
-              /* "chaco/downsample/_lttb.pyx":80
+              /* "chaco/downsample/_lttb.pyx":79
  *                     max_area = area
  *                     next_a = k
  *                     sampled[sampled_index, 0] = points[k, 0]             # <<<<<<<<<<<<<<
  *                     sampled[sampled_index, 1] = points[k, 1]
  * 
  */
-              __pyx_t_34 = __pyx_v_k;
-              __pyx_t_35 = 0;
-              __pyx_t_8 = -1;
-              if (__pyx_t_34 < 0) {
-                __pyx_t_34 += __pyx_v_points.shape[0];
-                if (unlikely(__pyx_t_34 < 0)) __pyx_t_8 = 0;
-              } else if (unlikely(__pyx_t_34 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-              if (__pyx_t_35 < 0) {
-                __pyx_t_35 += __pyx_v_points.shape[1];
-                if (unlikely(__pyx_t_35 < 0)) __pyx_t_8 = 1;
-              } else if (unlikely(__pyx_t_35 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-              if (unlikely(__pyx_t_8 != -1)) {
-                __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-                __PYX_ERR(0, 80, __pyx_L4_error)
-              }
-              __pyx_t_36 = __pyx_v_sampled_index;
-              __pyx_t_37 = 0;
-              __pyx_t_8 = -1;
-              if (__pyx_t_36 < 0) {
-                __pyx_t_36 += __pyx_v_sampled.shape[0];
-                if (unlikely(__pyx_t_36 < 0)) __pyx_t_8 = 0;
-              } else if (unlikely(__pyx_t_36 >= __pyx_v_sampled.shape[0])) __pyx_t_8 = 0;
-              if (__pyx_t_37 < 0) {
-                __pyx_t_37 += __pyx_v_sampled.shape[1];
-                if (unlikely(__pyx_t_37 < 0)) __pyx_t_8 = 1;
-              } else if (unlikely(__pyx_t_37 >= __pyx_v_sampled.shape[1])) __pyx_t_8 = 1;
-              if (unlikely(__pyx_t_8 != -1)) {
-                __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-                __PYX_ERR(0, 80, __pyx_L4_error)
-              }
-              *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_36 * __pyx_v_sampled.strides[0]) ) + __pyx_t_37 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_34 * __pyx_v_points.strides[0]) ) + __pyx_t_35 * __pyx_v_points.strides[1]) )));
+              __pyx_t_33 = __pyx_v_k;
+              __pyx_t_34 = 0;
+              if (__pyx_t_33 < 0) __pyx_t_33 += __pyx_v_points.shape[0];
+              if (__pyx_t_34 < 0) __pyx_t_34 += __pyx_v_points.shape[1];
+              __pyx_t_35 = __pyx_v_sampled_index;
+              __pyx_t_36 = 0;
+              if (__pyx_t_35 < 0) __pyx_t_35 += __pyx_v_sampled.shape[0];
+              if (__pyx_t_36 < 0) __pyx_t_36 += __pyx_v_sampled.shape[1];
+              *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_35 * __pyx_v_sampled.strides[0]) ) + __pyx_t_36 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_33 * __pyx_v_points.strides[0]) ) + __pyx_t_34 * __pyx_v_points.strides[1]) )));
 
-              /* "chaco/downsample/_lttb.pyx":81
+              /* "chaco/downsample/_lttb.pyx":80
  *                     next_a = k
  *                     sampled[sampled_index, 0] = points[k, 0]
  *                     sampled[sampled_index, 1] = points[k, 1]             # <<<<<<<<<<<<<<
  * 
  *             a = next_a
  */
-              __pyx_t_38 = __pyx_v_k;
-              __pyx_t_39 = 1;
-              __pyx_t_8 = -1;
-              if (__pyx_t_38 < 0) {
-                __pyx_t_38 += __pyx_v_points.shape[0];
-                if (unlikely(__pyx_t_38 < 0)) __pyx_t_8 = 0;
-              } else if (unlikely(__pyx_t_38 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-              if (__pyx_t_39 < 0) {
-                __pyx_t_39 += __pyx_v_points.shape[1];
-                if (unlikely(__pyx_t_39 < 0)) __pyx_t_8 = 1;
-              } else if (unlikely(__pyx_t_39 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-              if (unlikely(__pyx_t_8 != -1)) {
-                __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-                __PYX_ERR(0, 81, __pyx_L4_error)
-              }
-              __pyx_t_40 = __pyx_v_sampled_index;
-              __pyx_t_41 = 1;
-              __pyx_t_8 = -1;
-              if (__pyx_t_40 < 0) {
-                __pyx_t_40 += __pyx_v_sampled.shape[0];
-                if (unlikely(__pyx_t_40 < 0)) __pyx_t_8 = 0;
-              } else if (unlikely(__pyx_t_40 >= __pyx_v_sampled.shape[0])) __pyx_t_8 = 0;
-              if (__pyx_t_41 < 0) {
-                __pyx_t_41 += __pyx_v_sampled.shape[1];
-                if (unlikely(__pyx_t_41 < 0)) __pyx_t_8 = 1;
-              } else if (unlikely(__pyx_t_41 >= __pyx_v_sampled.shape[1])) __pyx_t_8 = 1;
-              if (unlikely(__pyx_t_8 != -1)) {
-                __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-                __PYX_ERR(0, 81, __pyx_L4_error)
-              }
-              *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_40 * __pyx_v_sampled.strides[0]) ) + __pyx_t_41 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_38 * __pyx_v_points.strides[0]) ) + __pyx_t_39 * __pyx_v_points.strides[1]) )));
+              __pyx_t_37 = __pyx_v_k;
+              __pyx_t_38 = 1;
+              if (__pyx_t_37 < 0) __pyx_t_37 += __pyx_v_points.shape[0];
+              if (__pyx_t_38 < 0) __pyx_t_38 += __pyx_v_points.shape[1];
+              __pyx_t_39 = __pyx_v_sampled_index;
+              __pyx_t_40 = 1;
+              if (__pyx_t_39 < 0) __pyx_t_39 += __pyx_v_sampled.shape[0];
+              if (__pyx_t_40 < 0) __pyx_t_40 += __pyx_v_sampled.shape[1];
+              *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_39 * __pyx_v_sampled.strides[0]) ) + __pyx_t_40 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_37 * __pyx_v_points.strides[0]) ) + __pyx_t_38 * __pyx_v_points.strides[1]) )));
 
-              /* "chaco/downsample/_lttb.pyx":77
+              /* "chaco/downsample/_lttb.pyx":76
  *                 area = fabs(baseline * (points[k, 1] - a_y) -
  *                         (a_x - points[k, 0]) * height)/2
  *                 if area > max_area:             # <<<<<<<<<<<<<<
@@ -2303,7 +2142,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
             }
           }
 
-          /* "chaco/downsample/_lttb.pyx":83
+          /* "chaco/downsample/_lttb.pyx":82
  *                     sampled[sampled_index, 1] = points[k, 1]
  * 
  *             a = next_a             # <<<<<<<<<<<<<<
@@ -2312,7 +2151,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_a = __pyx_v_next_a;
 
-          /* "chaco/downsample/_lttb.pyx":84
+          /* "chaco/downsample/_lttb.pyx":83
  * 
  *             a = next_a
  *             current_bucket_start = current_bucket_end             # <<<<<<<<<<<<<<
@@ -2321,7 +2160,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_current_bucket_start = __pyx_v_current_bucket_end;
 
-          /* "chaco/downsample/_lttb.pyx":85
+          /* "chaco/downsample/_lttb.pyx":84
  *             a = next_a
  *             current_bucket_start = current_bucket_end
  *             current_bucket_end = next_bucket_end             # <<<<<<<<<<<<<<
@@ -2330,7 +2169,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_current_bucket_end = __pyx_v_next_bucket_end;
 
-          /* "chaco/downsample/_lttb.pyx":87
+          /* "chaco/downsample/_lttb.pyx":86
  *             current_bucket_end = next_bucket_end
  * 
  *             sampled_index += 1             # <<<<<<<<<<<<<<
@@ -2339,7 +2178,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_sampled_index = (__pyx_v_sampled_index + 1);
 
-          /* "chaco/downsample/_lttb.pyx":89
+          /* "chaco/downsample/_lttb.pyx":88
  *             sampled_index += 1
  * 
  *             skipped = 0             # <<<<<<<<<<<<<<
@@ -2349,86 +2188,42 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
           __pyx_v_skipped = 0;
         }
 
-        /* "chaco/downsample/_lttb.pyx":91
+        /* "chaco/downsample/_lttb.pyx":90
  *             skipped = 0
  * 
  *         sampled[-1, 0] = points[-1, 0]             # <<<<<<<<<<<<<<
  *         sampled[-1, 1] = points[-1, 1]
  * 
  */
-        __pyx_t_42 = -1L;
-        __pyx_t_43 = 0;
-        __pyx_t_8 = -1;
-        if (__pyx_t_42 < 0) {
-          __pyx_t_42 += __pyx_v_points.shape[0];
-          if (unlikely(__pyx_t_42 < 0)) __pyx_t_8 = 0;
-        } else if (unlikely(__pyx_t_42 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-        if (__pyx_t_43 < 0) {
-          __pyx_t_43 += __pyx_v_points.shape[1];
-          if (unlikely(__pyx_t_43 < 0)) __pyx_t_8 = 1;
-        } else if (unlikely(__pyx_t_43 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-        if (unlikely(__pyx_t_8 != -1)) {
-          __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-          __PYX_ERR(0, 91, __pyx_L4_error)
-        }
-        __pyx_t_44 = -1L;
-        __pyx_t_45 = 0;
-        __pyx_t_8 = -1;
-        if (__pyx_t_44 < 0) {
-          __pyx_t_44 += __pyx_v_sampled.shape[0];
-          if (unlikely(__pyx_t_44 < 0)) __pyx_t_8 = 0;
-        } else if (unlikely(__pyx_t_44 >= __pyx_v_sampled.shape[0])) __pyx_t_8 = 0;
-        if (__pyx_t_45 < 0) {
-          __pyx_t_45 += __pyx_v_sampled.shape[1];
-          if (unlikely(__pyx_t_45 < 0)) __pyx_t_8 = 1;
-        } else if (unlikely(__pyx_t_45 >= __pyx_v_sampled.shape[1])) __pyx_t_8 = 1;
-        if (unlikely(__pyx_t_8 != -1)) {
-          __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-          __PYX_ERR(0, 91, __pyx_L4_error)
-        }
-        *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_44 * __pyx_v_sampled.strides[0]) ) + __pyx_t_45 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_42 * __pyx_v_points.strides[0]) ) + __pyx_t_43 * __pyx_v_points.strides[1]) )));
+        __pyx_t_41 = -1L;
+        __pyx_t_42 = 0;
+        if (__pyx_t_41 < 0) __pyx_t_41 += __pyx_v_points.shape[0];
+        if (__pyx_t_42 < 0) __pyx_t_42 += __pyx_v_points.shape[1];
+        __pyx_t_43 = -1L;
+        __pyx_t_44 = 0;
+        if (__pyx_t_43 < 0) __pyx_t_43 += __pyx_v_sampled.shape[0];
+        if (__pyx_t_44 < 0) __pyx_t_44 += __pyx_v_sampled.shape[1];
+        *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_43 * __pyx_v_sampled.strides[0]) ) + __pyx_t_44 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_41 * __pyx_v_points.strides[0]) ) + __pyx_t_42 * __pyx_v_points.strides[1]) )));
 
-        /* "chaco/downsample/_lttb.pyx":92
+        /* "chaco/downsample/_lttb.pyx":91
  * 
  *         sampled[-1, 0] = points[-1, 0]
  *         sampled[-1, 1] = points[-1, 1]             # <<<<<<<<<<<<<<
  * 
  *     return sampled
  */
-        __pyx_t_46 = -1L;
-        __pyx_t_47 = 1;
-        __pyx_t_8 = -1;
-        if (__pyx_t_46 < 0) {
-          __pyx_t_46 += __pyx_v_points.shape[0];
-          if (unlikely(__pyx_t_46 < 0)) __pyx_t_8 = 0;
-        } else if (unlikely(__pyx_t_46 >= __pyx_v_points.shape[0])) __pyx_t_8 = 0;
-        if (__pyx_t_47 < 0) {
-          __pyx_t_47 += __pyx_v_points.shape[1];
-          if (unlikely(__pyx_t_47 < 0)) __pyx_t_8 = 1;
-        } else if (unlikely(__pyx_t_47 >= __pyx_v_points.shape[1])) __pyx_t_8 = 1;
-        if (unlikely(__pyx_t_8 != -1)) {
-          __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-          __PYX_ERR(0, 92, __pyx_L4_error)
-        }
-        __pyx_t_48 = -1L;
-        __pyx_t_49 = 1;
-        __pyx_t_8 = -1;
-        if (__pyx_t_48 < 0) {
-          __pyx_t_48 += __pyx_v_sampled.shape[0];
-          if (unlikely(__pyx_t_48 < 0)) __pyx_t_8 = 0;
-        } else if (unlikely(__pyx_t_48 >= __pyx_v_sampled.shape[0])) __pyx_t_8 = 0;
-        if (__pyx_t_49 < 0) {
-          __pyx_t_49 += __pyx_v_sampled.shape[1];
-          if (unlikely(__pyx_t_49 < 0)) __pyx_t_8 = 1;
-        } else if (unlikely(__pyx_t_49 >= __pyx_v_sampled.shape[1])) __pyx_t_8 = 1;
-        if (unlikely(__pyx_t_8 != -1)) {
-          __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_8);
-          __PYX_ERR(0, 92, __pyx_L4_error)
-        }
-        *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_48 * __pyx_v_sampled.strides[0]) ) + __pyx_t_49 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_46 * __pyx_v_points.strides[0]) ) + __pyx_t_47 * __pyx_v_points.strides[1]) )));
+        __pyx_t_45 = -1L;
+        __pyx_t_46 = 1;
+        if (__pyx_t_45 < 0) __pyx_t_45 += __pyx_v_points.shape[0];
+        if (__pyx_t_46 < 0) __pyx_t_46 += __pyx_v_points.shape[1];
+        __pyx_t_47 = -1L;
+        __pyx_t_48 = 1;
+        if (__pyx_t_47 < 0) __pyx_t_47 += __pyx_v_sampled.shape[0];
+        if (__pyx_t_48 < 0) __pyx_t_48 += __pyx_v_sampled.shape[1];
+        *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_47 * __pyx_v_sampled.strides[0]) ) + __pyx_t_48 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_45 * __pyx_v_points.strides[0]) ) + __pyx_t_46 * __pyx_v_points.strides[1]) )));
       }
 
-      /* "chaco/downsample/_lttb.pyx":42
+      /* "chaco/downsample/_lttb.pyx":41
  *     cdef Py_ssize_t current_bucket_start, current_bucket_end, next_bucket_end
  * 
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -2452,21 +2247,21 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
       }
   }
 
-  /* "chaco/downsample/_lttb.pyx":94
+  /* "chaco/downsample/_lttb.pyx":93
  *         sampled[-1, 1] = points[-1, 1]
  * 
  *     return sampled             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_sampled, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 94, __pyx_L1_error)
+  __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_sampled, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_r = __pyx_t_4;
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "chaco/downsample/_lttb.pyx":10
+  /* "chaco/downsample/_lttb.pyx":9
  * 
- * #@cython.boundscheck(False)
+ * @cython.boundscheck(False)
  * def lttb(double[:, :] points not None, Py_ssize_t n_buckets):             # <<<<<<<<<<<<<<
  *     """ Apply the largest triangle three buckets algorithm to data points
  * 
@@ -14846,7 +14641,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 50, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 131, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 146, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 149, __pyx_L1_error)
@@ -15009,17 +14804,17 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
 
-  /* "chaco/downsample/_lttb.pyx":10
+  /* "chaco/downsample/_lttb.pyx":9
  * 
- * #@cython.boundscheck(False)
+ * @cython.boundscheck(False)
  * def lttb(double[:, :] points not None, Py_ssize_t n_buckets):             # <<<<<<<<<<<<<<
  *     """ Apply the largest triangle three buckets algorithm to data points
  * 
  */
-  __pyx_tuple__14 = PyTuple_Pack(25, __pyx_n_s_points, __pyx_n_s_n_buckets, __pyx_n_s_data_length, __pyx_n_s_a, __pyx_n_s_sampled_index, __pyx_n_s_max_area, __pyx_n_s_area, __pyx_n_s_avg_x, __pyx_n_s_avg_y, __pyx_n_s_a_x, __pyx_n_s_a_y, __pyx_n_s_baseline, __pyx_n_s_height, __pyx_n_s_bucket_size, __pyx_n_s_max_area_index, __pyx_n_s_next_a, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_count, __pyx_n_s_sampled, __pyx_n_s_current_bucket_start, __pyx_n_s_current_bucket_end, __pyx_n_s_next_bucket_end, __pyx_n_s_skipped); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(25, __pyx_n_s_points, __pyx_n_s_n_buckets, __pyx_n_s_data_length, __pyx_n_s_a, __pyx_n_s_sampled_index, __pyx_n_s_max_area, __pyx_n_s_area, __pyx_n_s_avg_x, __pyx_n_s_avg_y, __pyx_n_s_a_x, __pyx_n_s_a_y, __pyx_n_s_baseline, __pyx_n_s_height, __pyx_n_s_bucket_size, __pyx_n_s_max_area_index, __pyx_n_s_next_a, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_count, __pyx_n_s_sampled, __pyx_n_s_current_bucket_start, __pyx_n_s_current_bucket_end, __pyx_n_s_next_bucket_end, __pyx_n_s_skipped); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(2, 0, 25, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_cwebster_src_chaco_chaco, __pyx_n_s_lttb, 10, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(2, 0, 25, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_cwebster_src_chaco_chaco, __pyx_n_s_lttb, 9, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 9, __pyx_L1_error)
 
   /* "View.MemoryView":282
  *         return self.name
@@ -15250,16 +15045,16 @@ PyMODINIT_FUNC PyInit__lttb(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "chaco/downsample/_lttb.pyx":10
+  /* "chaco/downsample/_lttb.pyx":9
  * 
- * #@cython.boundscheck(False)
+ * @cython.boundscheck(False)
  * def lttb(double[:, :] points not None, Py_ssize_t n_buckets):             # <<<<<<<<<<<<<<
  *     """ Apply the largest triangle three buckets algorithm to data points
  * 
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_5chaco_10downsample_5_lttb_1lttb, NULL, __pyx_n_s_chaco_downsample__lttb); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_5chaco_10downsample_5_lttb_1lttb, NULL, __pyx_n_s_chaco_downsample__lttb); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_lttb, __pyx_t_2) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_lttb, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "chaco/downsample/_lttb.pyx":1
@@ -15649,23 +15444,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
     return result;
 }
 #endif
-
-/* BufferIndexError */
-  static void __Pyx_RaiseBufferIndexError(int axis) {
-  PyErr_Format(PyExc_IndexError,
-     "Out of bounds on buffer access (axis %d)", axis);
-}
-
-/* BufferIndexErrorNogil */
-  static void __Pyx_RaiseBufferIndexErrorNogil(int axis) {
-    #ifdef WITH_THREAD
-    PyGILState_STATE gilstate = PyGILState_Ensure();
-    #endif
-    __Pyx_RaiseBufferIndexError(axis);
-    #ifdef WITH_THREAD
-    PyGILState_Release(gilstate);
-    #endif
-}
 
 /* BufferFormatCheck */
   static CYTHON_INLINE int __Pyx_IsLittleEndian(void) {

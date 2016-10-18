@@ -15,11 +15,14 @@ except ImportError:
 def largest_triangle_three_buckets(points, n_buckets):
     """ Apply the largest triangle three buckets algorithm to data points
 
+    This function assumes that all values are finite and the index values are
+    monotone increasing.
+
     Parameters
     ----------
     points : N, 2 array of float
         The points as a N by 2 array of floats.  The index values (column 0)
-        must be monotone.
+        must be monotone increasing.
     n_buckets : int
         The number of buckets.
 

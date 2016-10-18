@@ -5,7 +5,6 @@ from libc.math cimport isnan, fabs, floor, INFINITY
 from numpy import empty, inf
 
 
-
 @cython.boundscheck(False)
 def lttb(double[:, :] points not None, Py_ssize_t n_buckets):
     """ Apply the largest triangle three buckets algorithm to data points
