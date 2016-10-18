@@ -231,11 +231,10 @@ def intersect_range(x, low, high, mask=None):
     """ Discard 1D intervals outside of range, with optional mask
 
     This is an optimized routine for detecting which points are endpoints
-    of intervals assuming that the x values are not monotone.  An optional
-    mask can be provided for points which should be excluded from
-    consideration for other reasons (such as not being selected).  Returns
-    a mask of points which are endpoints of intervals which potentially
-    intersect the range.
+    of visible segments in a 1D polyline.  An optional mask can be provided for
+    points which should be excluded from consideration for other reasons
+    (such as not being selected).  Returns a mask of points which are
+    endpoints of intervals which potentially intersect the range.
 
     Parameters
     ----------
