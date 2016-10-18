@@ -6,8 +6,9 @@ Defines basic traits and functions for the data model.
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, column_stack, cos, dot, empty,
-                   nonzero, pi, searchsorted, sin, take, ndarray)
+from numpy import (array, argsort, concatenate, column_stack, copy, cos, dot,
+                   empty, isfinite, nonzero, pi, searchsorted, seterr,
+                   sin, take, ndarray)
 
 # Enthought library imports
 from traits.api import CArray, Enum, Trait
@@ -226,4 +227,58 @@ def point_line_distance(pt, p1, p2):
     return sqrt(dot(diff,diff))
 
 
-#EOF
+def intersect_range(x, low, high, mask=None):
+    """ Discard 1D intervals outside of range, with optional mask
+
+    This is an optimized routine for detecting which points are endpoints
+    of intervals assuming that the x values are not monotone.  An optional
+    mask can be provided for points which should be excluded from
+    consideration for other reasons (such as not being selected).  Returns
+    a mask of points which are endpoints of intervals which potentially
+    intersect the range.
+
+    Parameters
+    ----------
+    x : 1d array
+        The array of interval endpoints.
+    low : number
+        The low end of the range.
+    high : number
+        The high end of the range.
+    mask : 1d array of bools or None
+        The mask of points to consider, or None.  If None then any non-finite
+        points will be ignored.
+
+    Returns
+    -------
+    mask : 1d array of bools
+        A mask array of points which are endpoints of intervals which
+        potentially intersect the range.
+    """
+    # TODO: write a fast Cython version
+    # TODO: write an optimized version for ordered data
+    if mask is None:
+        mask = isfinite(x)
+
+    # find relationships to range bounds
+    old_err = seterr(invalid='ignore')
+    try:
+        not_low_x = (x >= low) & mask
+        not_high_x = (x <= high) & mask
+    finally:
+        seterr(**old_err)
+
+    # a point is in if it is not low and not high
+    result = (not_low_x & not_high_x)
+
+    if x.shape[0] >= 2:
+        # interval intersects range if one end not low and other end not high
+        interval_mask = ((not_low_x[:-1] & not_high_x[1:]) |
+                         (not_high_x[:-1] & not_low_x[1:]))
+
+        # point is also in if at least one of its interval is in
+        result[1:-1] |= interval_mask[:-1] | interval_mask[1:]
+        result[0] |= interval_mask[0]
+        result[-1] |= interval_mask[-1]
+
+    return result

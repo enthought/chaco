@@ -4,11 +4,11 @@ Unit tests for utility functions in chaco.base
 
 import unittest
 from math import sqrt
-from numpy import arange, array
-from numpy.testing import assert_equal, assert_almost_equal
+from numpy import arange, array, linspace, nan, ones
+from numpy.testing import assert_equal, assert_almost_equal, assert_array_equal
 
-from chaco.api import (arg_find_runs, bin_search, find_runs, reverse_map_1d,
-                       point_line_distance)
+from chaco.base import (arg_find_runs, bin_search, find_runs, intersect_range,
+                        reverse_map_1d, point_line_distance)
 
 class BinSearchTestCase(unittest.TestCase):
     def test_ascending_data(self):
@@ -213,6 +213,273 @@ class PointLineDistanceTestCase(unittest.TestCase):
         dist = point_line_distance(test, p1, p2)
         assert_almost_equal(dist, 0.0)
 
+
+class IntersectRangeTestCase(unittest.TestCase):
+
+    # zero point test
+
+    def test_empty(self):
+        x = array([])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [])
+
+    # single point tests
+
+    def test_in(self):
+        x = array([0.5])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True])
+
+    def test_lower_bound(self):
+        x = array([0.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True])
+
+    def test_upper_bound(self):
+        x = array([1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True])
+
+    def test_low(self):
+        x = array([-1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False])
+
+    def test_high(self):
+        x = array([2.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False])
+
+    # two point tests
+
+    def test_low_low(self):
+        x = array([-2.0, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False]*2)
+
+    def test_low_in(self):
+        x = array([-1.0, 0.5])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*2)
+
+    def test_low_lower_bound(self):
+        x = array([-1.0, 0.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*2)
+
+    def test_low_high(self):
+        x = array([-2.0, 2.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*2)
+
+    def test_in_in(self):
+        x = array([0.75, 0.5])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*2)
+
+    def test_in_high(self):
+        x = array([-0.5, 2.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*2)
+
+    def test_high_low(self):
+        x = array([2.0, -2.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*2)
+
+    def test_high_high(self):
+        x = array([3.0, 2.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False]*2)
+
+    # three point tests
+
+    def test_low_low_low(self):
+        x = array([-3.0, -2.0, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False]*3)
+
+    def test_in_low_low(self):
+        x = array([0.5, -2.0, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, False])
+
+    def test_high_low_low(self):
+        x = array([2.0, -2.0, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, False])
+
+    def test_low_in_low(self):
+        x = array([-3.0, 0.5, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_in_in_low(self):
+        x = array([0.75, 0.5, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_high_in_low(self):
+        x = array([2.0, 0.5, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_low_high_low(self):
+        x = array([-3.0, 2, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_in_high_low(self):
+        x = array([0.5, 2, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_high_high_low(self):
+        x = array([2.5, 2, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, True, True])
+
+    def test_low_low_in(self):
+        x = array([-3.0, -2.0, 0.5])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, True, True])
+
+    def test_in_low_in(self):
+        x = array([0.5, -2.0, 0.5])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, True])
+
+    def test_high_low_in(self):
+        x = array([2.0, -2.0, 0.5])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, True])
+
+    def test_low_in_in(self):
+        x = array([-3.0, 0.5, 0.75])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_in_in_in(self):
+        x = array([0.75, 0.5, 0.25])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_high_in_in(self):
+        x = array([2.0, 0.5, 0.75])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_low_high_in(self):
+        x = array([-3.0, 2, 0.5])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_in_high_in(self):
+        x = array([0.5, 2, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_high_high_in(self):
+        x = array([2.5, 2, 0.5])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, True, True])
+
+    def test_low_low_high(self):
+        x = array([-3.0, -2.0, 2])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, True, True])
+
+    def test_in_low_high(self):
+        x = array([0.5, -2.0, 2])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, True])
+
+    def test_high_low_high(self):
+        x = array([2.0, -2.0, 2])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, True])
+
+    def test_low_in_high(self):
+        x = array([-3.0, 0.5, 2])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_in_in_high(self):
+        x = array([0.75, 0.5, 2])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_high_in_high(self):
+        x = array([2.0, 0.5, 2])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True]*3)
+
+    def test_low_high_high(self):
+        x = array([-3.0, 2, 3])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, False])
+
+    def test_in_high_high(self):
+        x = array([0.5, 2, 3])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, False])
+
+    def test_high_high_high(self):
+        x = array([2.5, 2, 3])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, False, False])
+
+    # some mask tests (not comprehensive)
+
+    def test_mask_low_low(self):
+        x = array([nan, 2, 3])
+        mask = array([False, True, True])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, False, False])
+
+    def test_mask_high_low(self):
+        x = array([nan, 2, -1.0])
+        mask = array([False, True, True])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, True, True])
+
+    def test_in_mask_low(self):
+        x = array([0.5, nan, -1.0])
+        mask = array([True, False, True])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, False, False])
+
+    def test_in_mask_in(self):
+        x = array([0.5, nan, 0.75])
+        mask = array([True, False, True])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, False, True])
+
+    def test_in_low_mask(self):
+        x = array([0.5, -1.0, nan])
+        mask = array([True, True, False])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, False])
+
+    def test_low_low_mask(self):
+        x = array([-0.5, -1.0, nan])
+        mask = array([True, True, False])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, False, False])
+
+    # other tests
+
+    def test_all_inside(self):
+        x = linspace(1, 2, 101)
+        result = intersect_range(x, 0.0, 3.0)
+        assert_array_equal(result, ones(101, dtype=bool))
+
+    def test_all_inside_mask(self):
+        x = linspace(1, 2, 101)
+        mask = (x <= 1.4) | (x >= 1.6)
+        result = intersect_range(x, 0.0, 3.0, mask)
+        print mask ^ result
+        assert_array_equal(result, mask)
 
 if __name__ == '__main__':
     import nose
