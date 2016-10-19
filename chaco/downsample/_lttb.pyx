@@ -60,7 +60,6 @@ def lttb(double[:, :] points not None, Py_ssize_t n_buckets):
                 count += 1
                 avg_x += (points[j, 0] - avg_x)/count
                 avg_y += (points[j, 1] - avg_y)/count
-                j += 1
 
             # find maximum triangle area in current bucket
             max_area = -INFINITY

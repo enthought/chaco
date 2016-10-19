@@ -329,13 +329,13 @@ class LinePlot(BaseXYPlot):
     def _downsample(self):
         if not self._screen_cache_valid:
             m = self.index_mapper
-            delta_screen = (m.high_pos - m.low_pos)
+            delta_screen = int(m.high_pos - m.low_pos)
             if delta_screen == 0:
                 downsampled = []
             else:
                 # TODO: implement other downsampling methods
                 from chaco.downsample.lttb import largest_triangle_three_buckets
-                downsampled = [largest_triangle_three_buckets(p, int(delta_screen))
+                downsampled = [largest_triangle_three_buckets(p, delta_screen)
                                for p in self._cached_data_pts]
 
             self._cached_screen_pts = [self.map_screen(p) for p in downsampled]

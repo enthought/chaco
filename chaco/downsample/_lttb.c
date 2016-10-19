@@ -1911,7 +1911,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  *                 count += 1
  *                 avg_x += (points[j, 0] - avg_x)/count             # <<<<<<<<<<<<<<
  *                 avg_y += (points[j, 1] - avg_y)/count
- *                 j += 1
+ * 
  */
             __pyx_t_21 = __pyx_v_j;
             __pyx_t_22 = 0;
@@ -1934,8 +1934,8 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  *                 count += 1
  *                 avg_x += (points[j, 0] - avg_x)/count
  *                 avg_y += (points[j, 1] - avg_y)/count             # <<<<<<<<<<<<<<
- *                 j += 1
  * 
+ *             # find maximum triangle area in current bucket
  */
             __pyx_t_23 = __pyx_v_j;
             __pyx_t_24 = 1;
@@ -1953,18 +1953,9 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
               __PYX_ERR(0, 62, __pyx_L4_error)
             }
             __pyx_v_avg_y = (__pyx_v_avg_y + (__pyx_t_15 / __pyx_v_count));
-
-            /* "chaco/downsample/_lttb.pyx":63
- *                 avg_x += (points[j, 0] - avg_x)/count
- *                 avg_y += (points[j, 1] - avg_y)/count
- *                 j += 1             # <<<<<<<<<<<<<<
- * 
- *             # find maximum triangle area in current bucket
- */
-            __pyx_v_j = (__pyx_v_j + 1);
           }
 
-          /* "chaco/downsample/_lttb.pyx":66
+          /* "chaco/downsample/_lttb.pyx":65
  * 
  *             # find maximum triangle area in current bucket
  *             max_area = -INFINITY             # <<<<<<<<<<<<<<
@@ -1973,7 +1964,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_max_area = (-INFINITY);
 
-          /* "chaco/downsample/_lttb.pyx":67
+          /* "chaco/downsample/_lttb.pyx":66
  *             # find maximum triangle area in current bucket
  *             max_area = -INFINITY
  *             area = -INFINITY             # <<<<<<<<<<<<<<
@@ -1982,7 +1973,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_area = (-INFINITY);
 
-          /* "chaco/downsample/_lttb.pyx":68
+          /* "chaco/downsample/_lttb.pyx":67
  *             max_area = -INFINITY
  *             area = -INFINITY
  *             a_x = points[a, 0]             # <<<<<<<<<<<<<<
@@ -1995,7 +1986,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
           if (__pyx_t_26 < 0) __pyx_t_26 += __pyx_v_points.shape[1];
           __pyx_v_a_x = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_25 * __pyx_v_points.strides[0]) ) + __pyx_t_26 * __pyx_v_points.strides[1]) )));
 
-          /* "chaco/downsample/_lttb.pyx":69
+          /* "chaco/downsample/_lttb.pyx":68
  *             area = -INFINITY
  *             a_x = points[a, 0]
  *             a_y = points[a, 1]             # <<<<<<<<<<<<<<
@@ -2008,7 +1999,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
           if (__pyx_t_28 < 0) __pyx_t_28 += __pyx_v_points.shape[1];
           __pyx_v_a_y = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_27 * __pyx_v_points.strides[0]) ) + __pyx_t_28 * __pyx_v_points.strides[1]) )));
 
-          /* "chaco/downsample/_lttb.pyx":70
+          /* "chaco/downsample/_lttb.pyx":69
  *             a_x = points[a, 0]
  *             a_y = points[a, 1]
  *             baseline = (a_x - avg_x)             # <<<<<<<<<<<<<<
@@ -2017,7 +2008,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_baseline = (__pyx_v_a_x - __pyx_v_avg_x);
 
-          /* "chaco/downsample/_lttb.pyx":71
+          /* "chaco/downsample/_lttb.pyx":70
  *             a_y = points[a, 1]
  *             baseline = (a_x - avg_x)
  *             height = (avg_y - a_y)             # <<<<<<<<<<<<<<
@@ -2026,7 +2017,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_height = (__pyx_v_avg_y - __pyx_v_a_y);
 
-          /* "chaco/downsample/_lttb.pyx":73
+          /* "chaco/downsample/_lttb.pyx":72
  *             height = (avg_y - a_y)
  * 
  *             for k in range(current_bucket_start, current_bucket_end):             # <<<<<<<<<<<<<<
@@ -2037,7 +2028,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
           for (__pyx_t_20 = __pyx_v_current_bucket_start; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
             __pyx_v_k = __pyx_t_20;
 
-            /* "chaco/downsample/_lttb.pyx":74
+            /* "chaco/downsample/_lttb.pyx":73
  * 
  *             for k in range(current_bucket_start, current_bucket_end):
  *                 area = fabs(baseline * (points[k, 1] - a_y) -             # <<<<<<<<<<<<<<
@@ -2049,7 +2040,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
             if (__pyx_t_29 < 0) __pyx_t_29 += __pyx_v_points.shape[0];
             if (__pyx_t_30 < 0) __pyx_t_30 += __pyx_v_points.shape[1];
 
-            /* "chaco/downsample/_lttb.pyx":75
+            /* "chaco/downsample/_lttb.pyx":74
  *             for k in range(current_bucket_start, current_bucket_end):
  *                 area = fabs(baseline * (points[k, 1] - a_y) -
  *                         (a_x - points[k, 0]) * height)/2             # <<<<<<<<<<<<<<
@@ -2061,7 +2052,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
             if (__pyx_t_31 < 0) __pyx_t_31 += __pyx_v_points.shape[0];
             if (__pyx_t_32 < 0) __pyx_t_32 += __pyx_v_points.shape[1];
 
-            /* "chaco/downsample/_lttb.pyx":74
+            /* "chaco/downsample/_lttb.pyx":73
  * 
  *             for k in range(current_bucket_start, current_bucket_end):
  *                 area = fabs(baseline * (points[k, 1] - a_y) -             # <<<<<<<<<<<<<<
@@ -2070,7 +2061,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
             __pyx_v_area = (fabs(((__pyx_v_baseline * ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_29 * __pyx_v_points.strides[0]) ) + __pyx_t_30 * __pyx_v_points.strides[1]) ))) - __pyx_v_a_y)) - ((__pyx_v_a_x - (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_31 * __pyx_v_points.strides[0]) ) + __pyx_t_32 * __pyx_v_points.strides[1]) )))) * __pyx_v_height))) / 2.0);
 
-            /* "chaco/downsample/_lttb.pyx":76
+            /* "chaco/downsample/_lttb.pyx":75
  *                 area = fabs(baseline * (points[k, 1] - a_y) -
  *                         (a_x - points[k, 0]) * height)/2
  *                 if area > max_area:             # <<<<<<<<<<<<<<
@@ -2080,7 +2071,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
             __pyx_t_18 = ((__pyx_v_area > __pyx_v_max_area) != 0);
             if (__pyx_t_18) {
 
-              /* "chaco/downsample/_lttb.pyx":77
+              /* "chaco/downsample/_lttb.pyx":76
  *                         (a_x - points[k, 0]) * height)/2
  *                 if area > max_area:
  *                     max_area = area             # <<<<<<<<<<<<<<
@@ -2089,7 +2080,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
               __pyx_v_max_area = __pyx_v_area;
 
-              /* "chaco/downsample/_lttb.pyx":78
+              /* "chaco/downsample/_lttb.pyx":77
  *                 if area > max_area:
  *                     max_area = area
  *                     next_a = k             # <<<<<<<<<<<<<<
@@ -2098,7 +2089,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
               __pyx_v_next_a = __pyx_v_k;
 
-              /* "chaco/downsample/_lttb.pyx":79
+              /* "chaco/downsample/_lttb.pyx":78
  *                     max_area = area
  *                     next_a = k
  *                     sampled[sampled_index, 0] = points[k, 0]             # <<<<<<<<<<<<<<
@@ -2115,7 +2106,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
               if (__pyx_t_36 < 0) __pyx_t_36 += __pyx_v_sampled.shape[1];
               *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_35 * __pyx_v_sampled.strides[0]) ) + __pyx_t_36 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_33 * __pyx_v_points.strides[0]) ) + __pyx_t_34 * __pyx_v_points.strides[1]) )));
 
-              /* "chaco/downsample/_lttb.pyx":80
+              /* "chaco/downsample/_lttb.pyx":79
  *                     next_a = k
  *                     sampled[sampled_index, 0] = points[k, 0]
  *                     sampled[sampled_index, 1] = points[k, 1]             # <<<<<<<<<<<<<<
@@ -2132,7 +2123,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
               if (__pyx_t_40 < 0) __pyx_t_40 += __pyx_v_sampled.shape[1];
               *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_39 * __pyx_v_sampled.strides[0]) ) + __pyx_t_40 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_37 * __pyx_v_points.strides[0]) ) + __pyx_t_38 * __pyx_v_points.strides[1]) )));
 
-              /* "chaco/downsample/_lttb.pyx":76
+              /* "chaco/downsample/_lttb.pyx":75
  *                 area = fabs(baseline * (points[k, 1] - a_y) -
  *                         (a_x - points[k, 0]) * height)/2
  *                 if area > max_area:             # <<<<<<<<<<<<<<
@@ -2142,7 +2133,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
             }
           }
 
-          /* "chaco/downsample/_lttb.pyx":82
+          /* "chaco/downsample/_lttb.pyx":81
  *                     sampled[sampled_index, 1] = points[k, 1]
  * 
  *             a = next_a             # <<<<<<<<<<<<<<
@@ -2151,7 +2142,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_a = __pyx_v_next_a;
 
-          /* "chaco/downsample/_lttb.pyx":83
+          /* "chaco/downsample/_lttb.pyx":82
  * 
  *             a = next_a
  *             current_bucket_start = current_bucket_end             # <<<<<<<<<<<<<<
@@ -2160,7 +2151,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_current_bucket_start = __pyx_v_current_bucket_end;
 
-          /* "chaco/downsample/_lttb.pyx":84
+          /* "chaco/downsample/_lttb.pyx":83
  *             a = next_a
  *             current_bucket_start = current_bucket_end
  *             current_bucket_end = next_bucket_end             # <<<<<<<<<<<<<<
@@ -2169,7 +2160,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_current_bucket_end = __pyx_v_next_bucket_end;
 
-          /* "chaco/downsample/_lttb.pyx":86
+          /* "chaco/downsample/_lttb.pyx":85
  *             current_bucket_end = next_bucket_end
  * 
  *             sampled_index += 1             # <<<<<<<<<<<<<<
@@ -2178,7 +2169,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
  */
           __pyx_v_sampled_index = (__pyx_v_sampled_index + 1);
 
-          /* "chaco/downsample/_lttb.pyx":88
+          /* "chaco/downsample/_lttb.pyx":87
  *             sampled_index += 1
  * 
  *             skipped = 0             # <<<<<<<<<<<<<<
@@ -2188,7 +2179,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
           __pyx_v_skipped = 0;
         }
 
-        /* "chaco/downsample/_lttb.pyx":90
+        /* "chaco/downsample/_lttb.pyx":89
  *             skipped = 0
  * 
  *         sampled[-1, 0] = points[-1, 0]             # <<<<<<<<<<<<<<
@@ -2205,7 +2196,7 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
         if (__pyx_t_44 < 0) __pyx_t_44 += __pyx_v_sampled.shape[1];
         *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_sampled.data + __pyx_t_43 * __pyx_v_sampled.strides[0]) ) + __pyx_t_44 * __pyx_v_sampled.strides[1]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_points.data + __pyx_t_41 * __pyx_v_points.strides[0]) ) + __pyx_t_42 * __pyx_v_points.strides[1]) )));
 
-        /* "chaco/downsample/_lttb.pyx":91
+        /* "chaco/downsample/_lttb.pyx":90
  * 
  *         sampled[-1, 0] = points[-1, 0]
  *         sampled[-1, 1] = points[-1, 1]             # <<<<<<<<<<<<<<
@@ -2247,13 +2238,13 @@ static PyObject *__pyx_pf_5chaco_10downsample_5_lttb_lttb(CYTHON_UNUSED PyObject
       }
   }
 
-  /* "chaco/downsample/_lttb.pyx":93
+  /* "chaco/downsample/_lttb.pyx":92
  *         sampled[-1, 1] = points[-1, 1]
  * 
  *     return sampled             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_sampled, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v_sampled, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_r = __pyx_t_4;
   __pyx_t_4 = 0;
