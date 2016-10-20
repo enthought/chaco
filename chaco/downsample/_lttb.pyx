@@ -1,6 +1,6 @@
 cimport cython
 
-from libc.math cimport isnan, fabs, floor, INFINITY
+from libc.math cimport isnan, fabs, floor
 
 from numpy import empty, inf
 
@@ -32,6 +32,7 @@ def lttb(double[:, :] points not None, Py_ssize_t n_buckets):
     cdef Py_ssize_t data_length = points.shape[0]
     cdef Py_ssize_t a = 0
     cdef Py_ssize_t sampled_index = 0
+    cdef double negative_infinity = -inf
     cdef double max_area, area, avg_x, avg_y, a_x, a_y, baseline, height, bucket_size
     cdef Py_ssize_t max_area_index, next_a, i, j, k, count
     cdef double[:, :] sampled = empty(shape=(n_buckets, 2), dtype=float)
@@ -62,8 +63,8 @@ def lttb(double[:, :] points not None, Py_ssize_t n_buckets):
                 avg_y += (points[j, 1] - avg_y)/count
 
             # find maximum triangle area in current bucket
-            max_area = -INFINITY
-            area = -INFINITY
+            max_area = negative_infinity
+            area = negative_infinity
             a_x = points[a, 0]
             a_y = points[a, 1]
             baseline = (a_x - avg_x)
