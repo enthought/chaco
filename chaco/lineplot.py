@@ -34,7 +34,7 @@ class LinePlot(BaseXYPlot):
 
     # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
     # It has the same RGB values as color_, and its alpha value is the alpha
-    # value of self.color multiplied by self.alpha. 
+    # value of self.color multiplied by self.alpha.
     effective_color = Property(Tuple, depends_on=['color', 'alpha'])
 
     # The color to use to highlight the line when selected.
@@ -215,7 +215,10 @@ class LinePlot(BaseXYPlot):
 
     def get_screen_points(self):
         self._gather_points()
-        return [self.map_screen(ary) for ary in self._cached_data_pts]
+        if self.use_downsampling:
+            return self._downsample()
+        else:
+            return [self.map_screen(ary) for ary in self._cached_data_pts]
 
     #------------------------------------------------------------------------
     # Private methods; implements the BaseXYPlot stub methods
@@ -325,34 +328,19 @@ class LinePlot(BaseXYPlot):
 
     def _downsample(self):
         if not self._screen_cache_valid:
-            self._cached_screen_pts = [self.map_screen(p) for p in self._cached_data_pts]
+            m = self.index_mapper
+            delta_screen = int(m.high_pos - m.low_pos)
+            if delta_screen == 0:
+                downsampled = []
+            else:
+                # TODO: implement other downsampling methods
+                from chaco.downsample.lttb import largest_triangle_three_buckets
+                downsampled = [largest_triangle_three_buckets(p, delta_screen)
+                               for p in self._cached_data_pts]
+
+            self._cached_screen_pts = [self.map_screen(p) for p in downsampled]
             self._screen_cache_valid = True
 
-            pt_arrays = self._cached_screen_pts
-
-            # some boneheaded short-circuits
-            m = self.index_mapper
-            total_numpoints = sum([p.shape for p in pt_arrays])
-            if (total_numpoints < 400) or (total_numpoints < m.high_pos - m.low_pos):
-                return self._cached_screen_pts
-
-            # the new point array and a counter of how many actual points we've added
-            # to it
-            new_arrays = []
-            for pts in pt_arrays:
-                new_pts = zeros(pts.shape, "d")
-                numpoints = 1
-                new_pts[0] = pts[0]
-
-                last_x, last_y = pts[0]
-                for x, y in pts[1:]:
-                    if (x-last_x)**2 + (y-last_y)**2 > 2:
-                        new_pts[numpoints] = (x,y)
-                        last_x = x
-                        last_y = y
-                        numpoints += 1
-
-                new_arrays.append(new_pts[:numpoints])
         return self._cached_screen_pts
 
     def _render(self, gc, points, selected_points=None):
