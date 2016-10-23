@@ -457,38 +457,70 @@ class IntersectRangeTestCase(unittest.TestCase):
     # some mask tests (not comprehensive)
 
     def test_mask_low_low(self):
-        x = array([nan, 2, 3])
+        x = array([1, 2, 3])
         mask = array([False, True, True])
-        result = intersect_range(x, 0.0, 1.0)
+        result = intersect_range(x, 0.0, 1.0, mask)
         assert_array_equal(result, [False, False, False])
 
     def test_mask_high_low(self):
-        x = array([nan, 2, -1.0])
+        x = array([1, 2, -1.0])
         mask = array([False, True, True])
-        result = intersect_range(x, 0.0, 1.0)
+        result = intersect_range(x, 0.0, 1.0, mask)
         assert_array_equal(result, [False, True, True])
 
     def test_in_mask_low(self):
-        x = array([0.5, nan, -1.0])
+        x = array([0.5, 0, -1.0])
         mask = array([True, False, True])
-        result = intersect_range(x, 0.0, 1.0)
+        result = intersect_range(x, 0.0, 1.0, mask)
         assert_array_equal(result, [True, False, False])
 
     def test_in_mask_in(self):
-        x = array([0.5, nan, 0.75])
+        x = array([0.5, 0.25, 0.75])
         mask = array([True, False, True])
-        result = intersect_range(x, 0.0, 1.0)
+        result = intersect_range(x, 0.0, 1.0, mask)
         assert_array_equal(result, [True, False, True])
 
     def test_in_low_mask(self):
-        x = array([0.5, -1.0, nan])
+        x = array([0.5, -1.0, 0.5])
         mask = array([True, True, False])
-        result = intersect_range(x, 0.0, 1.0)
+        result = intersect_range(x, 0.0, 1.0, mask)
         assert_array_equal(result, [True, True, False])
 
     def test_low_low_mask(self):
-        x = array([-0.5, -1.0, nan])
+        x = array([-0.5, -1.0, 0.5])
         mask = array([True, True, False])
+        result = intersect_range(x, 0.0, 1.0, mask)
+        assert_array_equal(result, [False, False, False])
+
+    # some nan tests (not comprehensive)
+
+    def test_nan_low_low(self):
+        x = array([nan, 2, 3])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, False, False])
+
+    def test_nan_high_low(self):
+        x = array([nan, 2, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [False, True, True])
+
+    def test_in_nan_low(self):
+        x = array([0.5, nan, -1.0])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, False, False])
+
+    def test_in_nan_in(self):
+        x = array([0.5, nan, 0.75])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, False, True])
+
+    def test_in_low_nan(self):
+        x = array([0.5, -1.0, nan])
+        result = intersect_range(x, 0.0, 1.0)
+        assert_array_equal(result, [True, True, False])
+
+    def test_low_low_nan(self):
+        x = array([-0.5, -1.0, nan])
         result = intersect_range(x, 0.0, 1.0)
         assert_array_equal(result, [False, False, False])
 
