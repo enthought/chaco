@@ -6,14 +6,13 @@ Defines basic traits and functions for the data model.
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, column_stack, copy, cos, dot,
-                   empty, isfinite, nonzero, pi, searchsorted, seterr,
-                   sin, take, ndarray)
+from numpy import (array, argsort, concatenate, cos, diff, dot, empty, isfinite,
+                   nonzero, pi, searchsorted, seterr, sin)
 
 # Enthought library imports
 from traits.api import CArray, Enum, Trait
 
-
+delta = {'ascending': 1, 'descending': -1, 'flat': 0}
 
 # Dimensions
 
@@ -46,6 +45,7 @@ def poly_point(center, r, degrees):
     x = r * cos(degrees) + center[0]
     y = r * sin(degrees) + center[1]
     return x,y
+
 
 def n_gon(center, r, nsides, rot_degrees=0):
     """ Generates the points of a regular polygon with specified center,
@@ -165,6 +165,7 @@ def left_shift(ary, newval):
     "Returns a left-shifted version of *ary* with *newval* inserted on the right."
     return concatenate([ary[1:], [newval]])
 
+
 def sort_points(points, index=0):
     """
     sort_points(array_of_points, index=<0|1>) -> sorted_array
@@ -173,9 +174,10 @@ def sort_points(points, index=0):
     to their x- or y-coordinate.  If *index* is zero, the points are sorted
     on their x-coordinate.
     """
-    if len(points.shape) != 2 or (2 not in points.shape):
+    if points.ndim != 2:
         raise RuntimeError, "sort_points(): Array of wrong shape."
-    return take( points, argsort(points[:,index]) )
+    return points[argsort(points[:, index]), :]
+
 
 def find_runs(int_array, order='ascending'):
     """
@@ -196,24 +198,40 @@ def find_runs(int_array, order='ascending'):
     ranges = arg_find_runs(int_array, order)
     return [int_array[i:j] for (i,j) in ranges]
 
+
 def arg_find_runs(int_array, order='ascending'):
     """
     Like find_runs(), but returns a list of tuples indicating the start and
     end indices of runs in the input *int_array*.
     """
-    if len(int_array) == 0:
+    n_points = len(int_array)
+    if n_points == 0:
         return []
-    assert len(int_array.shape)==1, "find_runs() requires a 1D integer array."
-    if order == 'ascending':
-        increment = 1
-    elif order == 'descending':
-        increment = -1
+    indices = nonzero(diff(int_array) - delta.get(order, 0))[0] + 1
+    result = empty(shape=(len(indices) + 1, 2), dtype=indices.dtype)
+    result[0, 0] = 0
+    result[-1, 1] = n_points
+    result[1:, 0] = indices
+    result[:-1, 1] = indices
+    return result
+
+
+def arg_true_runs(bool_array):
+    """ Find runs where array is True """
+    if len(bool_array) == 0:
+        return []
+    runs = arg_find_runs(bool_array, 'flat')
+    # runs have to alternate true and false
+    if bool_array[0]:
+        # even runs are true
+        return runs[::2]
+    elif len(runs) >= 2:
+        # odd runs are true
+        return runs[1::2]
     else:
-        increment = 0
-    rshifted = right_shift(int_array, int_array[0]-increment).view(ndarray)
-    start_indices = concatenate([[0], nonzero(int_array - (rshifted+increment))[0]])
-    end_indices = left_shift(start_indices, len(int_array))
-    return column_stack((start_indices, end_indices))
+        # array is all False
+        return []
+
 
 
 def point_line_distance(pt, p1, p2):

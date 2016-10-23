@@ -16,7 +16,7 @@ from traits.api import Enum, Float, List, Str, Property, Tuple, cached_property
 from traitsui.api import Item, View
 
 # Local relative imports
-from base import arg_find_runs, bin_search, reverse_map_1d, intersect_range
+from base import arg_find_runs, arg_true_runs, reverse_map_1d, intersect_range
 from base_xy_plot import BaseXYPlot
 
 
@@ -228,7 +228,7 @@ class LinePlot(BaseXYPlot):
         """
         if not self._cache_valid:
 
-            if not self.index or not self.value:
+            if self.index is None or self.value is None:
                 return
 
             index = self.index.get_data()
@@ -271,16 +271,8 @@ class LinePlot(BaseXYPlot):
             mask = intersect_range(value, self.value_range.low,
                                    self.value_range.high, mask)
 
-            blocks = [b for b in arg_find_runs(mask, "flat")
-                      if mask[b[0]] != 0]
-
-            points = []
-            for block in blocks:
-                start, end = block
-                block_index = index[start:end]
-                block_value = value[start:end]
-                run_data = column_stack([block_index, block_value])
-                points.append(run_data)
+            points = [column_stack([index[start:end], value[start:end]])
+                      for start, end in arg_true_runs(mask)]
 
             self._cached_data_pts = points
             self._cache_valid = True

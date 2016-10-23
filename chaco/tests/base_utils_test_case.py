@@ -7,8 +7,9 @@ from math import sqrt
 from numpy import arange, array, linspace, nan, ones
 from numpy.testing import assert_equal, assert_almost_equal, assert_array_equal
 
-from chaco.base import (arg_find_runs, bin_search, find_runs, intersect_range,
-                        reverse_map_1d, point_line_distance)
+from chaco.base import (arg_find_runs, arg_true_runs, bin_search, find_runs,
+                       intersect_range, reverse_map_1d, point_line_distance)
+
 
 class BinSearchTestCase(unittest.TestCase):
     def test_ascending_data(self):
@@ -181,6 +182,30 @@ class ArgFindRunsTestCase(unittest.TestCase):
         x = array([0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0])
         assert_equal(arg_find_runs(x, order='flat'), \
                      [[0, 3], [3, 7], [7, 11]])
+
+
+class TestArgTrueRuns(unittest.TestCase):
+
+      def test_none(self):
+        x = array([], dtype=bool)
+        assert_equal(arg_true_runs(x), [])
+
+      def test_even(self):
+        x = array([1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0], dtype=bool)
+        assert_equal(arg_true_runs(x), [[0, 3], [7, 9]])
+
+      def test_odd(self):
+        x = array([0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1], dtype=bool)
+        assert_equal(arg_true_runs(x), [[3, 7], [9, 11]])
+
+      def test_all_true(self):
+        x = array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], dtype=bool)
+        assert_equal(arg_true_runs(x), [[0, 11]])
+
+      def test_all_false(self):
+        x = array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], dtype=bool)
+        assert_equal(arg_true_runs(x), [])
+
 
 
 class PointLineDistanceTestCase(unittest.TestCase):
