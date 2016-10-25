@@ -257,7 +257,9 @@ def intersect_range(x, low, high, mask=None):
     Parameters
     ----------
     x : 1d array
-        The array of interval endpoints.
+        The array of connected interval endpoints.  If the x is
+        [x0, x1, x2, ...] then the intervals are
+        [[x0, x1], [x1, x2], [x2, x3], ...].
     low : number
         The low end of the range.
     high : number
