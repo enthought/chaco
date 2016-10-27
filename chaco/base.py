@@ -6,13 +6,13 @@ Defines basic traits and functions for the data model.
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, column_stack, cos, dot, empty,
-                   nonzero, pi, searchsorted, sin, take, ndarray)
+from numpy import (array, argsort, concatenate, cos, diff, dot, empty, isfinite,
+                   nonzero, pi, searchsorted, seterr, sin)
 
 # Enthought library imports
 from traits.api import CArray, Enum, Trait
 
-
+delta = {'ascending': 1, 'descending': -1, 'flat': 0}
 
 # Dimensions
 
@@ -45,6 +45,7 @@ def poly_point(center, r, degrees):
     x = r * cos(degrees) + center[0]
     y = r * sin(degrees) + center[1]
     return x,y
+
 
 def n_gon(center, r, nsides, rot_degrees=0):
     """ Generates the points of a regular polygon with specified center,
@@ -164,6 +165,7 @@ def left_shift(ary, newval):
     "Returns a left-shifted version of *ary* with *newval* inserted on the right."
     return concatenate([ary[1:], [newval]])
 
+
 def sort_points(points, index=0):
     """
     sort_points(array_of_points, index=<0|1>) -> sorted_array
@@ -172,9 +174,10 @@ def sort_points(points, index=0):
     to their x- or y-coordinate.  If *index* is zero, the points are sorted
     on their x-coordinate.
     """
-    if len(points.shape) != 2 or (2 not in points.shape):
+    if points.ndim != 2:
         raise RuntimeError, "sort_points(): Array of wrong shape."
-    return take( points, argsort(points[:,index]) )
+    return points[argsort(points[:, index]), :]
+
 
 def find_runs(int_array, order='ascending'):
     """
@@ -195,24 +198,40 @@ def find_runs(int_array, order='ascending'):
     ranges = arg_find_runs(int_array, order)
     return [int_array[i:j] for (i,j) in ranges]
 
+
 def arg_find_runs(int_array, order='ascending'):
     """
     Like find_runs(), but returns a list of tuples indicating the start and
     end indices of runs in the input *int_array*.
     """
-    if len(int_array) == 0:
+    n_points = len(int_array)
+    if n_points == 0:
         return []
-    assert len(int_array.shape)==1, "find_runs() requires a 1D integer array."
-    if order == 'ascending':
-        increment = 1
-    elif order == 'descending':
-        increment = -1
+    indices = nonzero(diff(int_array) - delta.get(order, 0))[0] + 1
+    result = empty(shape=(len(indices) + 1, 2), dtype=indices.dtype)
+    result[0, 0] = 0
+    result[-1, 1] = n_points
+    result[1:, 0] = indices
+    result[:-1, 1] = indices
+    return result
+
+
+def arg_true_runs(bool_array):
+    """ Find runs where array is True """
+    if len(bool_array) == 0:
+        return []
+    runs = arg_find_runs(bool_array, 'flat')
+    # runs have to alternate true and false
+    if bool_array[0]:
+        # even runs are true
+        return runs[::2]
+    elif len(runs) >= 2:
+        # odd runs are true
+        return runs[1::2]
     else:
-        increment = 0
-    rshifted = right_shift(int_array, int_array[0]-increment).view(ndarray)
-    start_indices = concatenate([[0], nonzero(int_array - (rshifted+increment))[0]])
-    end_indices = left_shift(start_indices, len(int_array))
-    return column_stack((start_indices, end_indices))
+        # array is all False
+        return []
+
 
 
 def point_line_distance(pt, p1, p2):
@@ -226,4 +245,59 @@ def point_line_distance(pt, p1, p2):
     return sqrt(dot(diff,diff))
 
 
-#EOF
+def intersect_range(x, low, high, mask=None):
+    """ Discard 1D intervals outside of range, with optional mask
+
+    This is an optimized routine for detecting which points are endpoints
+    of visible segments in a 1D polyline.  An optional mask can be provided for
+    points which should be excluded from consideration for other reasons
+    (such as not being selected).  Returns a mask of points which are
+    endpoints of intervals which potentially intersect the range.
+
+    Parameters
+    ----------
+    x : 1d array
+        The array of connected interval endpoints.  If the x is
+        [x0, x1, x2, ...] then the intervals are
+        [[x0, x1], [x1, x2], [x2, x3], ...].
+    low : number
+        The low end of the range.
+    high : number
+        The high end of the range.
+    mask : 1d array of bools or None
+        The mask of points to consider, or None.  If None then any non-finite
+        points will be ignored.
+
+    Returns
+    -------
+    mask : 1d array of bools
+        A mask array of points which are endpoints of intervals which
+        potentially intersect the range.
+    """
+    # TODO: write a fast Cython version
+    # TODO: write an optimized version for ordered data
+    if mask is None:
+        mask = isfinite(x)
+
+    # find relationships to range bounds
+    old_err = seterr(invalid='ignore')
+    try:
+        not_low_x = (x >= low) & mask
+        not_high_x = (x <= high) & mask
+    finally:
+        seterr(**old_err)
+
+    # a point is in if it is not low and not high
+    result = (not_low_x & not_high_x)
+
+    if x.shape[0] >= 2:
+        # interval intersects range if one end not low and other end not high
+        interval_mask = ((not_low_x[:-1] & not_high_x[1:]) |
+                         (not_high_x[:-1] & not_low_x[1:]))
+
+        # point is also in if at least one of its interval is in
+        result[1:-1] |= interval_mask[:-1] | interval_mask[1:]
+        result[0] |= interval_mask[0]
+        result[-1] |= interval_mask[-1]
+
+    return result
