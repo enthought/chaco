@@ -38,7 +38,6 @@ addons:
 before_install:
   - ccache -s
   - pip install --upgrade pip
-  - pip install six
   - if [[ ${TRAVIS_PYTHON_VERSION} == "3.4" && ${ETS_TOOLKIT} == "qt4" ]]; then ./build_pyside_wheel.sh; fi
   - export PATH=/usr/lib/ccache:${PATH}
   - export DISPLAY=:99.0
@@ -48,6 +47,7 @@ install:
   - pip install -r travis-ci-requirements.txt
   - git clone https://github.com/enthought/enable.git
   - cd enable
+  - pip install six
   - python setup.py develop
   - cd ..
   - python setup.py develop
