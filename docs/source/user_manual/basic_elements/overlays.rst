@@ -57,6 +57,28 @@ appending it to its underlays layer: ::
 
     plot.underlays.append(x_axis)
 
+Minor Axes
+----------
+
+The Chaco overlay representing a *minor* plot axis is defined in the class
+:class:`~chaco.axis.MinorPlotAxis` (a subclass of
+:class:`~chaco.axis.PlotAxis`).
+
+A :class:`~chaco.axis.MinorPlotAxis` should be added along with a
+:class:`~chaco.axis.PlotAxis`. For example, a minor axis can be
+added with: ::
+
+    x_major_axis = PlotAxis(orientation='bottom',
+                      title='My x axis',
+                      mapper=plot.x_mapper,
+                      component=plot)
+    plot.underlays.append(x_major_axis)
+
+    x_minor_axis = MinorPlotAxis(orientation='bottom',
+                      mapper=plot.x_mapper,
+                      component=plot)
+    plot.underlays.append(x_minor_axis)
+
 Attributes
 ----------
 
