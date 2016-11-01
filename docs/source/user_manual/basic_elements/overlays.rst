@@ -57,15 +57,15 @@ appending it to its underlays layer: ::
 
     plot.underlays.append(x_axis)
 
-Minor Axes
-----------
+Minor Axes Ticks
+----------------
 
 The Chaco overlay representing a *minor* plot axis is defined in the class
 :class:`~chaco.axis.MinorPlotAxis` (a subclass of
-:class:`~chaco.axis.PlotAxis`).
+:class:`~chaco.axis.PlotAxis`). This overlay adds minor tick marks to an axis.
 
 A :class:`~chaco.axis.MinorPlotAxis` should be added along with a
-:class:`~chaco.axis.PlotAxis`. For example, a minor axis can be
+:class:`~chaco.axis.PlotAxis`. For example, minor axis tick marks can be
 added with: ::
 
     x_major_axis = PlotAxis(orientation='bottom',
