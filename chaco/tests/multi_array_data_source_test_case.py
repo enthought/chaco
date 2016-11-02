@@ -2,7 +2,7 @@
 Test of MultiArrayDataSource behavior.
 """
 
-import unittest2 as unittest
+import unittest
 
 from numpy import arange, array, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal

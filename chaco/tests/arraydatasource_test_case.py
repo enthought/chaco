@@ -4,7 +4,7 @@ Tests of ArrayDataSource behavior.
 
 import pickle
 
-import unittest2 as unittest
+import unittest
 from numpy import arange, array, allclose, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal
 import numpy as np
