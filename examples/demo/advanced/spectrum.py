@@ -104,6 +104,9 @@ def get_audio_data():
     try:
         audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
     except IOError as e:
+        # Workaround "Input overflowed" issue on OS X, by restarting stream
+        if e.errno != "Input overflowed":
+            raise
         audio_data = zeros((NUM_SAMPLES,))
         _stream.stop_stream()
         _stream.close()
