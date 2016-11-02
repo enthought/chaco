@@ -1,5 +1,4 @@
 import unittest
-from unittest2 import skip
 
 from numpy import alltrue, arange
 from enable.compiled_path import CompiledPath
@@ -55,7 +54,7 @@ class TestColormappedScatterplot(unittest.TestCase):
         actual = self.gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
 
-    @skip
+    @unittest.skip("Broken; see GH #232.")
     def test_scatter_custom(self):
         """ Coverage test to check custom markers work...
 
