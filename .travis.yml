@@ -47,7 +47,7 @@ install:
   - pip install -r travis-ci-requirements.txt
   - git clone https://github.com/enthought/enable.git
   - cd enable
-  - pip install six
+  - git reset --hard bb1acd232f6fc43a7307929aa4aa65844c918c4b
   - python setup.py develop
   - cd ..
   - python setup.py develop
