@@ -101,6 +101,19 @@ class ShowAllTickGenerator(AbstractTickGenerator):
         # ignore all the high, low, etc. data and just return every position
         return array(self.positions, float64)
 
+class MinorTickGenerator(DefaultTickGenerator):
+    """ An implementation of AbstractTickGenerator that extends DefaultTickGenerator,
+        but sets the tick interval to a smaller length.
+    """
+    def get_ticks(self, data_low, data_high, bounds_low, bounds_high,
+                          interval, use_endpoints=False, scale='linear'):
+        if interval == 'auto':
+            # for the default interval, generate a smaller tick interval
+            interval = auto_interval(0, auto_interval(data_low, data_high), max_ticks=5)
+        
+        return super(MinorTickGenerator, self).get_ticks(data_low, data_high,
+                                bounds_low, bounds_high, interval, use_endpoints, scale)
+
 #-------------------------------------------------------------------------------
 #  Code imported from plt/plot_utility.py:
 #-------------------------------------------------------------------------------
@@ -252,7 +265,7 @@ def _nice(x, round=False):
     return nf * pow(10, expv)
 
 
-def auto_interval ( data_low, data_high ):
+def auto_interval ( data_low, data_high, max_ticks=9 ):
     """ Calculates the tick interval for a range.
 
         The boundaries for the data to be plotted on the axis are::
@@ -260,7 +273,7 @@ def auto_interval ( data_low, data_high ):
             data_bounds = (data_low,data_high)
 
         The function chooses the number of tick marks, which can be between
-        3 and 9 marks (including end points), and chooses tick intervals at
+        3 and max_ticks marks (including end points), and chooses tick intervals at
         1, 2, 2.5, 5, 10, 20, ...
 
         Returns
@@ -273,7 +286,7 @@ def auto_interval ( data_low, data_high ):
     # We'll choose from between 2 and 8 tick marks.
     # Preference is given to more ticks:
     #   Note reverse order and see kludge below...
-    divisions = arange( 8.0, 2.0, -1.0 ) # ( 7, 6, ..., 3 )
+    divisions = arange( max_ticks-1, 2.0, -1.0 ) # for max_ticks=9, ( 7, 6, ..., 3 )
 
     # Calculate the intervals for the divisions:
     candidate_intervals = range / divisions
