@@ -25,6 +25,7 @@ New features/Improvements
 
 Fixes
 
+ * Fixed occasional IOError crashes in spectrum demo (PR#323).
  * Fixed issue with range zoom selection being non-transparent (PR#309).
  * Fixed lasso selection for newer NumPy (PR#307).
  * Fixed timescale tests and calendar timescales (PR#298).
