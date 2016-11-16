@@ -490,7 +490,8 @@ class Plot(DataView):
 
 
     def img_plot(self, data, name=None, colormap=None,
-                 xbounds=None, ybounds=None, origin=None, hide_grids=True, **styles):
+                 xbounds=None, ybounds=None, origin=None, hide_grids=True,
+                 **styles):
         """ Adds image plots to this Plot object.
 
         If *data* has shape (N, M, 3) or (N, M, 4), then it is treated as RGB or
@@ -551,7 +552,7 @@ class Plot(DataView):
             cls = self.renderer_map["cmap_img_plot"]
             kwargs = dict(value_mapper=colormap, **styles)
         return self._create_2d_plot(cls, name, origin, xbounds, ybounds, value,
-                                    hide_grids, **kwargs)
+                                    hide_grids, cell_plot=True, **kwargs)
 
 
     def contour_plot(self, data, type="line", name=None, poly_cmap=None,
@@ -620,10 +621,10 @@ class Plot(DataView):
             raise ValueError("Unhandled contour plot type: " + type)
 
         return self._create_2d_plot(cls, name, origin, xbounds, ybounds, value,
-                                    hide_grids, **kwargs)
+                                    hide_grids, cell_plot=False, **kwargs)
 
 
-    def _process_2d_bounds(self, bounds, array_data, axis):
+    def _process_2d_bounds(self, bounds, array_data, axis, cell_plot):
         """Transform an arbitrary bounds definition into a linspace.
 
         Process all the ways the user could have defined the x- or y-bounds
@@ -640,51 +641,56 @@ class Plot(DataView):
 
         axis : int
             The axis along which the bounds are to be set
+
+        cell_plot : bool
+            Is the data plotted at the vertices or in the cells bounded by
+            the grid (eg. contour plot vs. image plot)
         """
 
-        num_ticks = array_data.shape[axis] + 1
+        if cell_plot:
+            num_ticks = array_data.shape[axis] + 1
+        else:
+            num_ticks = array_data.shape[axis]
 
         if bounds is None:
             return arange(num_ticks)
 
-        if type(bounds) is tuple:
+        if isinstance(bounds, tuple):
             # create a linspace with the bounds limits
             return linspace(bounds[0], bounds[1], num_ticks)
 
-        if type(bounds) is ndarray and len(bounds.shape) == 1:
-            # bounds is 1D, but of the wrong size
-
+        elif isinstance(bounds, ndarray) and bounds.ndim == 1:
             if len(bounds) != num_ticks:
+                # bounds is 1D, but of the wrong size
                 msg = ("1D bounds of an image plot needs to have 1 more "
                        "element than its corresponding data shape, because "
                        "they represent the locations of pixel boundaries.")
                 raise ValueError(msg)
             else:
-                return linspace(bounds[0], bounds[-1], num_ticks)
+                return bounds
 
-        if type(bounds) is ndarray and len(bounds.shape) == 2:
+        elif isinstance(bounds, ndarray) and bounds.ndim == 2:
             # bounds is 2D, assumed to be a meshgrid
             # This is triggered when doing something like
             # >>> xbounds, ybounds = meshgrid(...)
-            # >>> z = f(xbounds, ybounds)
-
-            if bounds.shape != array_data.shape:
+            if bounds.shape[axis] != num_ticks:
                 msg = ("2D bounds of an image plot needs to have the same "
                        "shape as the underlying data, because "
                        "they are assumed to be generated from meshgrids.")
                 raise ValueError(msg)
             else:
-                if axis == 0: bounds = bounds[:,0]
-                else: bounds = bounds[0,:]
-                interval = bounds[1] - bounds[0]
-                return linspace(bounds[0], bounds[-1]+interval, num_ticks)
+                if axis == 0:
+                    bounds = bounds[:,0]
+                else:
+                    bounds = bounds[0,:]
+                return bounds
 
         raise ValueError("bounds must be None, a tuple, an array, "
                          "or a PlotData name")
 
 
     def _create_2d_plot(self, cls, name, origin, xbounds, ybounds, value_ds,
-                        hide_grids, **kwargs):
+                        hide_grids, cell_plot=False, **kwargs):
         if name is None:
             name = self._make_new_plot_name()
         if origin is None:
@@ -696,12 +702,12 @@ class Plot(DataView):
         if isinstance(xbounds, basestring):
             xbounds = self._get_or_create_datasource(xbounds).get_data()
 
-        xs = self._process_2d_bounds(xbounds, array_data, 1)
+        xs = self._process_2d_bounds(xbounds, array_data, 1, cell_plot)
 
         if isinstance(ybounds, basestring):
             ybounds = self._get_or_create_datasource(ybounds).get_data()
 
-        ys = self._process_2d_bounds(ybounds, array_data, 0)
+        ys = self._process_2d_bounds(ybounds, array_data, 0, cell_plot)
 
         # Create the index and add its datasources to the appropriate ranges
         index = GridDataSource(xs, ys, sort_order=('ascending', 'ascending'))
