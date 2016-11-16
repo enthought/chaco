@@ -10,7 +10,8 @@ Draws a contour polygon plot with a contour line plot on top
 """
 
 # Major library imports
-from numpy import cosh, exp, linspace, meshgrid, pi, tanh
+from numpy import abs, cosh, exp, linspace, meshgrid, pi, tanh, nan
+from numpy.random import uniform
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor
@@ -27,29 +28,36 @@ from chaco.tools.api import PanTool, ZoomTool
 def _create_plot_component():
 
     # Create a scalar field to contour
-    xs = linspace(-2*pi, 2*pi, 600)
-    ys = linspace(-1.5*pi, 1.5*pi, 300)
+    # uses a randomly sampled, non-uniform grid
+    xs = uniform(-2*pi, 2*pi, 600)
+    xs.sort()
+    ys = uniform(-1.5*pi, 1.5*pi, 300)
+    ys.sort()
     x, y = meshgrid(xs,ys)
     z = tanh(x*y/6)*cosh(exp(-y**2)*x/3)
     z = x*y
 
-    # Create a plot data obect and give it this data
+    # mask out a region with nan values
+    mask = ((abs(x-5) <= 1) & (abs(y-2) <= 2))
+    z[mask] = nan
+
+    # Create a plot data object and give it this data
     pd = ArrayPlotData()
     pd.set_data("imagedata", z)
 
     # Create a contour polygon plot of the data
-    plot = Plot(pd, default_origin="top left")
+    plot = Plot(pd, default_origin="bottom left")
     plot.contour_plot("imagedata",
                       type="poly",
                       poly_cmap=jet,
-                      xbounds=(xs[0], xs[-1]),
-                      ybounds=(ys[0], ys[-1]))
+                      xbounds=x,
+                      ybounds=y)
 
     # Create a contour line plot for the data, too
     plot.contour_plot("imagedata",
                       type="line",
-                      xbounds=(xs[0], xs[-1]),
-                      ybounds=(ys[0], ys[-1]))
+                      xbounds=x,
+                      ybounds=y)
 
     # Tweak some of the plot properties
     plot.title = "My First Contour Plot"
