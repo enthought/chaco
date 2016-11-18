@@ -4,7 +4,7 @@
 from __future__ import with_statement
 
 # Major library imports
-from numpy import array, isfinite, linspace, meshgrid, transpose
+from numpy import array, isfinite, meshgrid, transpose
 
 # Enthought library imports
 from traits.api import Bool, Dict
@@ -61,7 +61,8 @@ class ContourPolyPlot(BaseContourPlot):
                     if self.orientation == "h":
                         spoly = self.index_mapper.map_screen(poly)
                     else:
-                        spoly = array(self.index_mapper.map_screen(poly))[:,::-1]
+                        spoly = array(
+                            self.index_mapper.map_screen(poly))[:, ::-1]
                     gc.lines(spoly)
                     gc.close_path()
                     gc.draw_path()
@@ -70,7 +71,7 @@ class ContourPolyPlot(BaseContourPlot):
         """ Updates the cache of contour polygons """
         if self.value.is_masked():
             # XXX masked data and get_data_mask not currently implemented
-            data = self.value.get_data_mask()
+            data, mask = self.value.get_data_mask()
             mask &= isfinite(data)
         else:
             data = self.value.get_data()
@@ -99,4 +100,4 @@ class ContourPolyPlot(BaseContourPlot):
         self._poly_cache_valid = False
 
     def _update_colors(self):
-        BaseContourPlot._update_colors(self, numcolors = len(self._levels) - 1)
+        BaseContourPlot._update_colors(self, numcolors=len(self._levels) - 1)

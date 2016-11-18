@@ -4,7 +4,7 @@
 from __future__ import with_statement
 
 # Major library imports
-from numpy import array, isfinite, linspace, meshgrid, transpose
+from numpy import array, isfinite, meshgrid, transpose
 
 # Enthought library imports
 from enable.api import LineStyle
@@ -105,7 +105,8 @@ class ContourLinePlot(BaseContourPlot):
                     if self.orientation == "h":
                         strace = self.index_mapper.map_screen(trace)
                     else:
-                        strace = array(self.index_mapper.map_screen(trace))[:,::-1]
+                        strace = array(
+                            self.index_mapper.map_screen(trace))[:, ::-1]
                     gc.begin_path()
                     gc.lines(strace)
                     gc.stroke_path()
@@ -114,7 +115,7 @@ class ContourLinePlot(BaseContourPlot):
         """ Updates the cache of contour lines """
         if self.value.is_masked():
             # XXX masked data and get_data_mask not currently implemented
-            data = self.value.get_data_mask()
+            data, mask = self.value.get_data_mask()
             mask &= isfinite(data)
         else:
             data = self.value.get_data()
@@ -155,7 +156,7 @@ class ContourLinePlot(BaseContourPlot):
         else:
             self._widths = []
             for i in range(len(self._levels)):
-                self._widths.append(self.widths[i%len(self.widths)])
+                self._widths.append(self.widths[i % len(self.widths)])
 
         self._widths_cache_valid = True
 
@@ -182,11 +183,10 @@ class ContourLinePlot(BaseContourPlot):
         else:
             self._styles = []
             for i in range(len(self._levels)):
-                self._style_map_trait = self.styles[i%len(self.styles)]
+                self._style_map_trait = self.styles[i % len(self.styles)]
                 self._styles.append(self._style_map_trait_)
 
         self._styles_cache_valid = True
-
 
     #------------------------------------------------------------------------
     # Event handlers
