@@ -4,7 +4,7 @@
 from __future__ import with_statement
 
 # Major library imports
-from numpy import array, linspace, meshgrid, transpose
+from numpy import array, isfinite, meshgrid, transpose
 
 # Enthought library imports
 from enable.api import LineStyle
@@ -105,24 +105,30 @@ class ContourLinePlot(BaseContourPlot):
                     if self.orientation == "h":
                         strace = self.index_mapper.map_screen(trace)
                     else:
-                        strace = array(self.index_mapper.map_screen(trace))[:,::-1]
+                        strace = array(
+                            self.index_mapper.map_screen(trace))[:, ::-1]
                     gc.begin_path()
                     gc.lines(strace)
                     gc.stroke_path()
 
     def _update_contours(self):
         """ Updates the cache of contour lines """
-        # x and y data are "fenceposts" so ignore the last value
-        # XXX: this truncation is causing errors in Cntr() as of r13735
-        xdata = self.index._xdata.get_data()
-        ydata = self.index._ydata.get_data()
-        xs = linspace(xdata[0], xdata[-1], len(xdata)-1)
-        ys = linspace(ydata[0], ydata[-1], len(ydata)-1)
-        xg, yg = meshgrid(xs, ys)
-        if self.orientation == "h":
-            c = Cntr(xg, yg, self.value.raw_value)
+        if self.value.is_masked():
+            # XXX masked data and get_data_mask not currently implemented
+            data, mask = self.value.get_data_mask()
+            mask &= isfinite(data)
         else:
-            c = Cntr(xg, yg, self.value.raw_value.T)
+            data = self.value.get_data()
+            mask = isfinite(data)
+
+        x_data, y_data = self.index.get_data()
+        xs = x_data.get_data()
+        ys = y_data.get_data()
+        xg, yg = meshgrid(xs, ys)
+
+        # note: contour wants mask True in invalid locations
+        c = Cntr(xg, yg, data, ~mask)
+
         self._cached_contours = {}
         for level in self._levels:
             self._cached_contours[level] = []
@@ -150,7 +156,7 @@ class ContourLinePlot(BaseContourPlot):
         else:
             self._widths = []
             for i in range(len(self._levels)):
-                self._widths.append(self.widths[i%len(self.widths)])
+                self._widths.append(self.widths[i % len(self.widths)])
 
         self._widths_cache_valid = True
 
@@ -177,11 +183,10 @@ class ContourLinePlot(BaseContourPlot):
         else:
             self._styles = []
             for i in range(len(self._levels)):
-                self._style_map_trait = self.styles[i%len(self.styles)]
+                self._style_map_trait = self.styles[i % len(self.styles)]
                 self._styles.append(self._style_map_trait_)
 
         self._styles_cache_valid = True
-
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -206,4 +211,3 @@ class ContourLinePlot(BaseContourPlot):
         if self._level_cache_valid:
             self._update_styles()
             self.invalidate_draw()
-
