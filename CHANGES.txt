@@ -6,6 +6,8 @@ Change summary since 4.5.0
 
 New features/Improvements
 
+ * Fixes and improvements to contour plots: now can use non-uniformly sampled
+   grids and have masked regions (PR#326).
  * Added MinorPlotAxis (PR#288).
  * Improved gather points for line plots (PR#318).
  * Added line plot downsampling via Largest Triangle Three Buckets
