@@ -7,7 +7,7 @@ from math import radians, sqrt
 
 # Major library imports
 from numpy import (array, argsort, concatenate, cos, diff, dot, empty, isfinite,
-                   nonzero, pi, searchsorted, seterr, sin)
+                   nonzero, pi, searchsorted, seterr, sin, uint8)
 
 # Enthought library imports
 from traits.api import CArray, Enum, Trait
@@ -220,7 +220,7 @@ def arg_true_runs(bool_array):
     """ Find runs where array is True """
     if len(bool_array) == 0:
         return []
-    runs = arg_find_runs(bool_array, 'flat')
+    runs = arg_find_runs(bool_array.astype(uint8), 'flat')
     # runs have to alternate true and false
     if bool_array[0]:
         # even runs are true
