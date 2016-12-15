@@ -1712,11 +1712,7 @@ static PyMethodDef module_methods[] = {
 MOD_INIT(contour)
 {
     PyObject* m = NULL;
-
-    if (PyType_Ready(&CntrType) < 0)
-        RETURN_MODINIT;
-
-#if PY_MAJOR_VERSION >= 3
+#if PY_MAJOR_VERSION >= 3    
     static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
         "contour",     /* m_name */
@@ -1728,9 +1724,12 @@ MOD_INIT(contour)
         NULL,                /* m_clear */
         NULL,                /* m_free */
     };
+#endif
+    if (PyType_Ready(&CntrType) < 0)
+        RETURN_MODINIT;
 
+#if PY_MAJOR_VERSION >= 3
     m = PyModule_Create(&moduledef);
-
 #else
     m = Py_InitModule3("contour", module_methods,
                        "Contouring engine as an extension type");
