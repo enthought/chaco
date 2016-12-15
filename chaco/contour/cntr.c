@@ -1574,9 +1574,12 @@ Cntr_init(Cntr *self, PyObject *args, PyObject *kwds)
     ypa = (PyArrayObject *) PyArray_ContiguousFromObject(yarg, 'd', 2, 2);
     zpa = (PyArrayObject *) PyArray_ContiguousFromObject(zarg, 'd', 2, 2);
     if (marg)
-        mpa = (PyArrayObject *) PyArray_ContiguousFromObject(marg, '1', 2, 2);
+        mpa = (PyArrayObject *) PyArray_ContiguousFromObject(marg, NPY_BOOL, 2, 2);
     else
         mpa = NULL;
+    if (PyErr_Occurred()) {
+        goto error;
+    }
 
     if (xpa == NULL || ypa == NULL || zpa == NULL || (marg && mpa == NULL))
     {
