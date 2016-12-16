@@ -30,7 +30,7 @@ addons:
     - libjpeg8-dev
     - zlib1g-dev
     - libpng-dev
-    - libfreetype36-dev
+    - libfreetype6-dev
     - python-cairo
     - cmake
     - swig
