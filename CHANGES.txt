@@ -27,6 +27,8 @@ New features/Improvements
 
 Fixes
 
+ * Fixed issues with contour plots on Python 3.5 (PR#329 and PR#332).
+ * Fixed issue with diff of boolean arrays on newer NumPy versions (PR#329).
  * Fixed occasional IOError crashes in spectrum demo (PR#323).
  * Fixed issue with range zoom selection being non-transparent (PR#309).
  * Fixed lasso selection for newer NumPy (PR#307).
