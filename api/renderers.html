@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Renderers &mdash; chaco 4.5.0 documentation</title>
+    <title>Renderers &mdash; Chaco 4.6</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +25,13 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco 4.5.0 documentation" href="../index.html" />
+    <link rel="top" title="Chaco 4.6" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Plot Factories" href="plot_factories.html" />
     <link rel="prev" title="Visual Components" href="visual_components.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,8 +40,8 @@
         <li class="right" >
           <a href="visual_components.html" title="Visual Components"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Renderers</a></li>
   
@@ -54,22 +52,22 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="renderers">
 <span id="id1"></span><h1>Renderers<a class="headerlink" href="#renderers" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="barplot">
-<h2><a class="reference internal" href="#chaco.api.BarPlot" title="chaco.api.BarPlot"><tt class="xref py py-class docutils literal"><span class="pre">BarPlot</span></tt></a><a class="headerlink" href="#barplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.BarPlot" title="chaco.api.BarPlot"><code class="xref py py-class docutils literal"><span class="pre">BarPlot</span></code></a><a class="headerlink" href="#barplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.BarPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">BarPlot</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chaco.api.BarPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">BarPlot</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BarPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></p>
 <p>A renderer for bar charts.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><p>The data source to use for the index coordinate.</p>
 </div></blockquote>
@@ -190,21 +188,21 @@ depending on the orientation of the plot</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.BarPlot.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_pt</em><big>)</big><a class="headerlink" href="#chaco.api.BarPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_data</code><span class="sig-paren">(</span><em>screen_pt</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BarPlot.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point into the &#8220;index&#8221; space of the plot.</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.BarPlot.map_index">
-<tt class="descname">map_index</tt><big>(</big><em>screen_pt</em>, <em>threshold=2.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><big>)</big><a class="headerlink" href="#chaco.api.BarPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_index</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=2.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BarPlot.map_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point to an index into the plot&#8217;s index array(s).</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.BarPlot.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.BarPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_screen</code><span class="sig-paren">(</span><em>data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BarPlot.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps an array of data points into screen space and returns it as
 an array.</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
@@ -213,18 +211,202 @@ an array.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="base1dplot">
+<h2><a class="reference internal" href="#chaco.api.Base1DPlot" title="chaco.api.Base1DPlot"><code class="xref py py-class docutils literal"><span class="pre">Base1DPlot</span></code></a><a class="headerlink" href="#base1dplot" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.Base1DPlot">
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">Base1DPlot</code><span class="sig-paren">(</span><em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Base1DPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></p>
+<p>Base class for one-dimensional plots</p>
+<p>This class provides a base for plots such as jitter plots, color bars,
+single-axis scatter plots, and geophysical horizon and tops plots.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
+<blockquote>
+<div><p>: The data source of values</p>
+</div></blockquote>
+<p><strong>index_mapper</strong> : Instance(AbstractMapper)</p>
+<blockquote>
+<div><p>: Screen mapper for index data.</p>
+</div></blockquote>
+<p><strong>x_mapper</strong> : Property(depends_on=[&#8216;orientation&#8217;, &#8216;index_mapper&#8217;])</p>
+<blockquote>
+<div><p>: Corresponds to either <strong>index_mapper</strong> or None, depending on
+: the orientation of the plot.</p>
+</div></blockquote>
+<p><strong>y_mapper</strong> : Property(depends_on=[&#8216;orientation&#8217;, &#8216;index_mapper&#8217;])</p>
+<blockquote>
+<div><p>: Corresponds to either <strong>index_mapper</strong> or None, depending on
+: the orientation of the plot.</p>
+</div></blockquote>
+<p><strong>orientation</strong> : Enum(&#8216;v&#8217;, &#8216;h&#8217;)</p>
+<blockquote>
+<div><p>: The orientation of the index axis.</p>
+</div></blockquote>
+<p><strong>direction</strong> : Enum(&#8216;normal&#8217;, &#8216;flipped&#8217;)</p>
+<blockquote>
+<div><p>: Should the plot go left-to-right or bottom-to-top (normal) or the reverse?</p>
+</div></blockquote>
+<p><strong>origin</strong> : Property(Enum(&#8216;bottom left&#8217;, &#8216;top left&#8217;, &#8216;bottom right&#8217;, &#8216;top right&#8217;), depends_on=[&#8216;orientation&#8217;, &#8216;direction&#8217;])</p>
+<blockquote class="last">
+<div><p>: Faux origin for the axes and other objects to look at</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="chaco.api.Base1DPlot.direction">
+<code class="descname">direction</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.Base1DPlot.direction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DPlot.index">
+<code class="descname">index</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.Base1DPlot.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DPlot.index_mapper">
+<code class="descname">index_mapper</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.Base1DPlot.index_mapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Base1DPlot.map_data">
+<code class="descname">map_data</code><span class="sig-paren">(</span><em>screen_pts</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Base1DPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps 2D screen space points into the 1D index space of the plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>screen_pts</strong> : tuple of x-array, y-array</p>
+<blockquote>
+<div><p>2 arrays (or values) screen space coordinates.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>data_array</strong> : 1D array</p>
+<blockquote class="last">
+<div><p>An array of points in data space corresponding to the screen-space
+points.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Base1DPlot.map_index">
+<code class="descname">map_index</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=2.0</em>, <em>outside_returns_none=True</em>, <em>index_only=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Base1DPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot&#8217;s index array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>screen_pts: tuple of x-array, y-array</strong> :</p>
+<blockquote>
+<div><p>2 arrays (or values) screen space coordinates.</p>
+</div></blockquote>
+<p><strong>threshold</strong> : float</p>
+<blockquote>
+<div><p>Optional screen-space distance allowed between <em>screen_pt</em> and the
+plot; if non-zero, then a <em>screen_pt</em> within this distance is
+mapped to the neared plot index. (This feature is useful for sparse
+data.)</p>
+</div></blockquote>
+<p><strong>outside_returns_none</strong> : Boolean</p>
+<blockquote>
+<div><p>If True, then if <em>screen_pt</em> is outside the range of the data, the
+method returns None. If False, it returns the nearest end index in
+such a case.</p>
+</div></blockquote>
+<p><strong>index_only</strong> : Boolean</p>
+<blockquote>
+<div><p>This is included for compatibity with the base class, but is
+ignored, as it is always true for 1D plots.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>index</strong> : int</p>
+<blockquote class="last">
+<div><p>An index into the index array. If the input point cannot be mapped
+to an index, then None is returned.</p>
+<p>If <em>screen_pt</em> corresponds to multiple indices, then only the first
+index is returned.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Base1DPlot.map_screen">
+<code class="descname">map_screen</code><span class="sig-paren">(</span><em>data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Base1DPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a 1D array of data points into screen space and returns it as
+a 1D array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_array</strong> : 1D array</p>
+<blockquote>
+<div><p>An array of data-space values to be mapped to screen coordinates.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>screen_array</strong> : 1D array</p>
+<blockquote class="last">
+<div><p>An array of points in screen space, either x-values (if
+orientation is &#8216;h&#8217;) or y-values (if orientation is &#8216;v&#8217;).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Returning a 1D array is experimental, and may break some tools and
+overlays.  If needs be we can refactor so that it returns a 2D array.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DPlot.orientation">
+<code class="descname">orientation</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.Base1DPlot.orientation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DPlot.origin">
+<code class="descname">origin</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.Base1DPlot.origin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DPlot.x_mapper">
+<code class="descname">x_mapper</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.Base1DPlot.x_mapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DPlot.y_mapper">
+<code class="descname">y_mapper</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.Base1DPlot.y_mapper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="base2dplot">
-<h2><a class="reference internal" href="#chaco.api.Base2DPlot" title="chaco.api.Base2DPlot"><tt class="xref py py-class docutils literal"><span class="pre">Base2DPlot</span></tt></a><a class="headerlink" href="#base2dplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.Base2DPlot" title="chaco.api.Base2DPlot"><code class="xref py py-class docutils literal"><span class="pre">Base2DPlot</span></code></a><a class="headerlink" href="#base2dplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.Base2DPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">Base2DPlot</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.Base2DPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">Base2DPlot</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Base2DPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></p>
 <p>Base class for 2-D plots.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(GridDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(GridDataSource)</p>
 <blockquote>
 <div><p>The data source to use for the index coordinate.</p>
 </div></blockquote>
@@ -298,14 +480,14 @@ is done in this class).</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.Base2DPlot.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_pts</em><big>)</big><a class="headerlink" href="#chaco.api.Base2DPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_data</code><span class="sig-paren">(</span><em>screen_pts</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Base2DPlot.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point into the &#8220;index&#8221; space of the plot.</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.Base2DPlot.map_index">
-<tt class="descname">map_index</tt><big>(</big><em>screen_pt</em>, <em>threshold=2.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><big>)</big><a class="headerlink" href="#chaco.api.Base2DPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_index</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=2.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Base2DPlot.map_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point to an index into the plot&#8217;s index arrays.</p>
 <p>Implements the AbstractPlotRenderer interface.
 The <em>index_only</em> parameter is ignored because the index is
@@ -314,7 +496,7 @@ intrinsically 2-D.</p>
 
 <dl class="method">
 <dt id="chaco.api.Base2DPlot.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_pts</em><big>)</big><a class="headerlink" href="#chaco.api.Base2DPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_screen</code><span class="sig-paren">(</span><em>data_pts</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Base2DPlot.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps an array of data points into screen space and returns it as
 an array.</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
@@ -324,11 +506,11 @@ an array.</p>
 
 </div>
 <div class="section" id="basexyplot">
-<h2><a class="reference internal" href="#chaco.api.BaseXYPlot" title="chaco.api.BaseXYPlot"><tt class="xref py py-class docutils literal"><span class="pre">BaseXYPlot</span></tt></a><a class="headerlink" href="#basexyplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.BaseXYPlot" title="chaco.api.BaseXYPlot"><code class="xref py py-class docutils literal"><span class="pre">BaseXYPlot</span></code></a><a class="headerlink" href="#basexyplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.BaseXYPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">BaseXYPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">BaseXYPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BaseXYPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></p>
 <p>Base class for simple X-vs-Y plots that consist of a single index
 data array and a single value data array.</p>
 <p>Subclasses handle the actual rendering, but this base class takes care of
@@ -338,7 +520,7 @@ space changes, etc.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>index</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><p>The data source to use for the index coordinate.</p>
 </div></blockquote>
@@ -442,14 +624,14 @@ This makes data updates slower, but makes hit-tests extremely fast.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.BaseXYPlot.get_closest_line">
-<tt class="descname">get_closest_line</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.get_closest_line" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_closest_line</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=7.0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BaseXYPlot.get_closest_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests for proximity in screen-space against lines connecting the
 points in this plot&#8217;s dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
 <blockquote>
 <div><p>A point to test.</p>
 </div></blockquote>
@@ -461,7 +643,7 @@ line regardless of distance from the plot.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>(x1, y1, x2, y2, dist) of the endpoints of the line segment</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>(x1, y1, x2, y2, dist) of the endpoints of the line segment</strong> :</p>
 <p><strong>closest to *screen_pt*.  The *dist* element is the perpendicular</strong> :</p>
 <p><strong>distance from *screen_pt* to the line.  If there is only a single point</strong> :</p>
 <p><strong>in the renderer&#8217;s data, then the method returns the same point twice.</strong> :</p>
@@ -474,7 +656,7 @@ line regardless of distance from the plot.</p>
 
 <dl class="method">
 <dt id="chaco.api.BaseXYPlot.get_closest_point">
-<tt class="descname">get_closest_point</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.get_closest_point" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_closest_point</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=7.0</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BaseXYPlot.get_closest_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests for proximity in screen-space.</p>
 <p>This method checks only data points, not the line segments connecting
 them; to do the latter use get_closest_line() instead.</p>
@@ -482,7 +664,7 @@ them; to do the latter use get_closest_line() instead.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
 <blockquote>
 <div><p>A point to test.</p>
 </div></blockquote>
@@ -494,7 +676,7 @@ are performed, and the nearest point is returned.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>(x, y, distance) of a datapoint nearest to *screen_pt*.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>(x, y, distance) of a datapoint nearest to *screen_pt*.</strong> :</p>
 <p class="last"><strong>If no data points are within *threshold* of *screen_pt*, returns None.</strong> :</p>
 </td>
 </tr>
@@ -504,21 +686,21 @@ are performed, and the nearest point is returned.</p>
 
 <dl class="method">
 <dt id="chaco.api.BaseXYPlot.get_screen_points">
-<tt class="descname">get_screen_points</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.get_screen_points" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_screen_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BaseXYPlot.get_screen_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the currently visible screen-space points.</p>
 <p>Intended for use with overlays.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.BaseXYPlot.hittest">
-<tt class="descname">hittest</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em>, <em>return_distance=False</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.hittest" title="Permalink to this definition">¶</a></dt>
+<code class="descname">hittest</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=7.0</em>, <em>return_distance=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BaseXYPlot.hittest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs proximity testing between a given screen point and the
 plot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>screen_pt</strong> : (x,y)</p>
 <blockquote>
 <div><p>A point to test.</p>
 </div></blockquote>
@@ -533,7 +715,7 @@ plot.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>If self.hittest_type is &#8216;point&#8217;, then this method returns the screen</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>If self.hittest_type is &#8216;point&#8217;, then this method returns the screen</strong> :</p>
 <p><strong>coordinates of the closest point on the plot as a tuple (x,y)</strong> :</p>
 <p><strong>If self.hittest_type is &#8216;line&#8217;, then this method returns the screen</strong> :</p>
 <p><strong>endpoints of the line segment closest to *screen_pt*, as</strong> :</p>
@@ -551,7 +733,7 @@ plot.</p>
 
 <dl class="method">
 <dt id="chaco.api.BaseXYPlot.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_pt</em>, <em>all_values=False</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_data</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>all_values=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BaseXYPlot.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point into the &#8220;index&#8221; space of the plot.</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
 <p>If <em>all_values</em> is True, returns an array of (index, value) tuples;
@@ -560,14 +742,14 @@ otherwise, it returns only the index values.</p>
 
 <dl class="method">
 <dt id="chaco.api.BaseXYPlot.map_index">
-<tt class="descname">map_index</tt><big>(</big><em>screen_pt</em>, <em>threshold=2.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_index</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=2.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BaseXYPlot.map_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point to an index into the plot&#8217;s index array(s).</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>screen_pt :</strong> :</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>screen_pt :</strong> :</p>
 <blockquote>
 <div><p>Screen space point</p>
 </div></blockquote>
@@ -596,7 +778,7 @@ coordinates.</p>
 
 <dl class="method">
 <dt id="chaco.api.BaseXYPlot.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.BaseXYPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_screen</code><span class="sig-paren">(</span><em>data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BaseXYPlot.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps an array of data points into screen space and returns it as
 an array.</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
@@ -606,17 +788,17 @@ an array.</p>
 
 </div>
 <div class="section" id="scatterplot">
-<h2><a class="reference internal" href="#chaco.api.ScatterPlot" title="chaco.api.ScatterPlot"><tt class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></tt></a><a class="headerlink" href="#scatterplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.ScatterPlot" title="chaco.api.ScatterPlot"><code class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></code></a><a class="headerlink" href="#scatterplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.ScatterPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ScatterPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.ScatterPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ScatterPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ScatterPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></p>
 <p>Renders a scatter plot, given an index and value arrays.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
 <blockquote>
 <div><p>The CompiledPath to use if <strong>marker</strong> is set to &#8220;custom&#8221;. This attribute
 must be a compiled path for the Kiva context onto which this plot will
@@ -689,7 +871,7 @@ datasource.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.ScatterPlot.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_pt</em>, <em>all_values=True</em><big>)</big><a class="headerlink" href="#chaco.api.ScatterPlot.map_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_data</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>all_values=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ScatterPlot.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point into the &#8220;index&#8221; space of the plot.</p>
 <p>Overrides the BaseXYPlot implementation, and always returns an
 array of (index, value) tuples.</p>
@@ -697,14 +879,14 @@ array of (index, value) tuples.</p>
 
 <dl class="method">
 <dt id="chaco.api.ScatterPlot.map_index">
-<tt class="descname">map_index</tt><big>(</big><em>screen_pt</em>, <em>threshold=0.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><big>)</big><a class="headerlink" href="#chaco.api.ScatterPlot.map_index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_index</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=0.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ScatterPlot.map_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point to an index into the plot&#8217;s index array(s).</p>
 <p>Overrides the BaseXYPlot implementation..</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.ScatterPlot.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.ScatterPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_screen</code><span class="sig-paren">(</span><em>data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ScatterPlot.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps an array of data points into screen space and returns it as
 an array.</p>
 <p>Implements the AbstractPlotRenderer interface.</p>
@@ -714,24 +896,32 @@ an array.</p>
 
 </div>
 <div class="section" id="imageplot">
-<h2><a class="reference internal" href="#chaco.api.ImagePlot" title="chaco.api.ImagePlot"><tt class="xref py py-class docutils literal"><span class="pre">ImagePlot</span></tt></a><a class="headerlink" href="#imageplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.ImagePlot" title="chaco.api.ImagePlot"><code class="xref py py-class docutils literal"><span class="pre">ImagePlot</span></code></a><a class="headerlink" href="#imageplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.ImagePlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ImagePlot</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.ImagePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_2d_plot.Base2DPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ImagePlot</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImagePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_2d_plot.Base2DPlot</span></code></p>
 <p>A plot based on an image.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>alpha</strong> : Trait(1.0, Range(0.0, 1.0))</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>alpha</strong> : Trait(1.0, Range(0.0, 1.0))</p>
 <blockquote>
 <div><p>Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
 for full intensity.</p>
 </div></blockquote>
 <p><strong>interpolation</strong> : Enum(&#8216;nearest&#8217;, &#8216;bilinear&#8217;, &#8216;bicubic&#8217;)</p>
-<blockquote class="last">
+<blockquote>
 <div><p>The interpolation method to use when rendering an image onto the GC.</p>
+</div></blockquote>
+<p><strong>x_axis_is_flipped</strong> : Property(depends_on=[&#8216;orientation&#8217;, &#8216;origin&#8217;])</p>
+<blockquote>
+<div><p>Bool indicating whether x-axis is flipped.</p>
+</div></blockquote>
+<p><strong>y_axis_is_flipped</strong> : Property(depends_on=[&#8216;orientation&#8217;, &#8216;origin&#8217;])</p>
+<blockquote class="last">
+<div><p>Bool indicating whether y-axis is flipped.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -739,28 +929,29 @@ for full intensity.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.ImagePlot.map_index">
-<tt class="descname">map_index</tt><big>(</big><em>screen_pt</em>, <em>threshold=0.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><big>)</big><a class="headerlink" href="#chaco.api.ImagePlot.map_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maps a screen space point to an index into the plot&#8217;s index array(s).</p>
-<p>Implements the AbstractPlotRenderer interface. Uses 0.0 for <em>threshold</em>,
-regardless of the passed value.</p>
+<code class="descname">map_index</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=0.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImagePlot.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot&#8217;s index
+array(s).</p>
+<p>Implements the AbstractPlotRenderer interface. Uses 0.0 for
+<em>threshold</em>, regardless of the passed value.</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="cmapimageplot">
-<h2><a class="reference internal" href="#chaco.api.CMapImagePlot" title="chaco.api.CMapImagePlot"><tt class="xref py py-class docutils literal"><span class="pre">CMapImagePlot</span></tt></a><a class="headerlink" href="#cmapimageplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.CMapImagePlot" title="chaco.api.CMapImagePlot"><code class="xref py py-class docutils literal"><span class="pre">CMapImagePlot</span></code></a><a class="headerlink" href="#cmapimageplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.CMapImagePlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">CMapImagePlot</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.CMapImagePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.image_plot.ImagePlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">CMapImagePlot</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.CMapImagePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.image_plot.ImagePlot</span></code></p>
 <p>Colormapped image plot.  Takes a value data object whose elements are
 scalars, and renders them as a colormapped image.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_mapper</strong> : Instance(AbstractColormap)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>value_mapper</strong> : Instance(AbstractColormap)</p>
 <blockquote>
 <div><p>Maps from scalar data values in self.data.value to color tuples</p>
 </div></blockquote>
@@ -795,7 +986,7 @@ active selection</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.CMapImagePlot.set_value_selection">
-<tt class="descname">set_value_selection</tt><big>(</big><em>val</em><big>)</big><a class="headerlink" href="#chaco.api.CMapImagePlot.set_value_selection" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_value_selection</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.CMapImagePlot.set_value_selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a range of values in the value data source as selected.</p>
 </dd></dl>
 
@@ -803,18 +994,18 @@ active selection</p>
 
 </div>
 <div class="section" id="contourlineplot">
-<h2><a class="reference internal" href="#chaco.api.ContourLinePlot" title="chaco.api.ContourLinePlot"><tt class="xref py py-class docutils literal"><span class="pre">ContourLinePlot</span></tt></a><a class="headerlink" href="#contourlineplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.ContourLinePlot" title="chaco.api.ContourLinePlot"><code class="xref py py-class docutils literal"><span class="pre">ContourLinePlot</span></code></a><a class="headerlink" href="#contourlineplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.ContourLinePlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ContourLinePlot</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.ContourLinePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_contour_plot.BaseContourPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ContourLinePlot</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ContourLinePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_contour_plot.BaseContourPlot</span></code></p>
 <p>Takes a value data object whose elements are scalars, and renders them
 as a contour plot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>widths</strong> : Trait(1.0, Float, List)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>widths</strong> : Trait(1.0, Float, List)</p>
 <blockquote>
 <div><p>The thickness(es) of the contour lines.
 It can be either a scalar value, valid for all contour lines, or a list
@@ -842,11 +1033,11 @@ Widths are associated with levels of increasing value.</p>
 
 </div>
 <div class="section" id="lineplot">
-<h2><a class="reference internal" href="#chaco.api.LinePlot" title="chaco.api.LinePlot"><tt class="xref py py-class docutils literal"><span class="pre">LinePlot</span></tt></a><a class="headerlink" href="#lineplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.LinePlot" title="chaco.api.LinePlot"><code class="xref py py-class docutils literal"><span class="pre">LinePlot</span></code></a><a class="headerlink" href="#lineplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.LinePlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">LinePlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.LinePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">LinePlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.LinePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></p>
 <p>A plot consisting of a line.</p>
 <p>This is the most fundamental object to use to create line plots. However,
 it is somewhat low-level and therefore creating one properly to do what
@@ -856,7 +1047,7 @@ in plot_factory.py can hide some of this verbosity for common cases.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color</strong> : black_color_trait</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>color</strong> : black_color_trait</p>
 <blockquote>
 <div><p>The color of the line.</p>
 </div></blockquote>
@@ -916,7 +1107,7 @@ point.  Also called a &#8220;right angle plot&#8221;.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.LinePlot.hittest">
-<tt class="descname">hittest</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em>, <em>return_distance=False</em><big>)</big><a class="headerlink" href="#chaco.api.LinePlot.hittest" title="Permalink to this definition">¶</a></dt>
+<code class="descname">hittest</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=7.0</em>, <em>return_distance=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.LinePlot.hittest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the given screen point is within <em>threshold</em> pixels of
 any data points on the line.  If so, then it returns the (x,y) value of
 a data point near the screen point.  If not, then it returns None.</p>
@@ -924,7 +1115,7 @@ a data point near the screen point.  If not, then it returns None.</p>
 
 <dl class="method">
 <dt id="chaco.api.LinePlot.interpolate">
-<tt class="descname">interpolate</tt><big>(</big><em>index_value</em><big>)</big><a class="headerlink" href="#chaco.api.LinePlot.interpolate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">interpolate</code><span class="sig-paren">(</span><em>index_value</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.LinePlot.interpolate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of the plot at the given index value in screen space.
 Raises an IndexError when <em>index_value</em> exceeds the bounds of indexes on
 the value.</p>
@@ -934,11 +1125,11 @@ the value.</p>
 
 </div>
 <div class="section" id="colormappedscatterplot">
-<h2><a class="reference internal" href="#chaco.api.ColormappedScatterPlot" title="chaco.api.ColormappedScatterPlot"><tt class="xref py py-class docutils literal"><span class="pre">ColormappedScatterPlot</span></tt></a><a class="headerlink" href="#colormappedscatterplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.ColormappedScatterPlot" title="chaco.api.ColormappedScatterPlot"><code class="xref py py-class docutils literal"><span class="pre">ColormappedScatterPlot</span></code></a><a class="headerlink" href="#colormappedscatterplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.ColormappedScatterPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ColormappedScatterPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.ColormappedScatterPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.scatterplot.ScatterPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ColormappedScatterPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColormappedScatterPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.scatterplot.ScatterPlot</span></code></p>
 <p>A scatter plot that allows each point to take on a different color,
 corresponding to a color map.</p>
 <p>If the <strong>color_data</strong> or <strong>color_mapper</strong> attributes are None, then it
@@ -947,7 +1138,7 @@ behaves like a normal ScatterPlot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>color_data</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>color_data</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><p>Source for color data.</p>
 </div></blockquote>
@@ -994,7 +1185,7 @@ so perhaps banded should be removed.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.ColormappedScatterPlot.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.ColormappedScatterPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_screen</code><span class="sig-paren">(</span><em>data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColormappedScatterPlot.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps an array of data points into screen space, and returns them as
 an array.</p>
 <p>The <em>data_array</em> parameter must be an Nx2 (index, value) or Nx3
@@ -1006,18 +1197,18 @@ array of (x, y) tuples.</p>
 
 </div>
 <div class="section" id="colormappedselectionoverlay">
-<h2><a class="reference internal" href="#chaco.api.ColormappedSelectionOverlay" title="chaco.api.ColormappedSelectionOverlay"><tt class="xref py py-class docutils literal"><span class="pre">ColormappedSelectionOverlay</span></tt></a><a class="headerlink" href="#colormappedselectionoverlay" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.ColormappedSelectionOverlay" title="chaco.api.ColormappedSelectionOverlay"><code class="xref py py-class docutils literal"><span class="pre">ColormappedSelectionOverlay</span></code></a><a class="headerlink" href="#colormappedselectionoverlay" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.ColormappedSelectionOverlay">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ColormappedSelectionOverlay</tt><big>(</big><em>component=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chaco.api.ColormappedSelectionOverlay" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ColormappedSelectionOverlay</code><span class="sig-paren">(</span><em>component=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColormappedSelectionOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
 <p>Overlays and changes a ColormappedScatterPlot to fade its non-selected
 points to a very low alpha.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>plot</strong> : Property</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>plot</strong> : Property</p>
 <blockquote>
 <div><p>The ColormappedScatterPlot that this overlay is listening to.
 By default, it looks at self.component</p>
@@ -1049,7 +1240,7 @@ selection values, if range selection mode is enabled</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.ColormappedSelectionOverlay.overlay">
-<tt class="descname">overlay</tt><big>(</big><em>component</em>, <em>gc</em>, <em>view_bounds=None</em>, <em>mode='normal'</em><big>)</big><a class="headerlink" href="#chaco.api.ColormappedSelectionOverlay.overlay" title="Permalink to this definition">¶</a></dt>
+<code class="descname">overlay</code><span class="sig-paren">(</span><em>component</em>, <em>gc</em>, <em>view_bounds=None</em>, <em>mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColormappedSelectionOverlay.overlay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws this component overlaid on another component.</p>
 <p>Implements AbstractOverlay.</p>
 </dd></dl>
@@ -1058,11 +1249,11 @@ selection values, if range selection mode is enabled</p>
 
 </div>
 <div class="section" id="polygonplot">
-<h2><a class="reference internal" href="#chaco.api.PolygonPlot" title="chaco.api.PolygonPlot"><tt class="xref py py-class docutils literal"><span class="pre">PolygonPlot</span></tt></a><a class="headerlink" href="#polygonplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.PolygonPlot" title="chaco.api.PolygonPlot"><code class="xref py py-class docutils literal"><span class="pre">PolygonPlot</span></code></a><a class="headerlink" href="#polygonplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.PolygonPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">PolygonPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.PolygonPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">PolygonPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PolygonPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></p>
 <p>Plots a polygon in dataspace.</p>
 <p>Assuming that the index and value mappers are linear mappers, and that
 &#8220;index&#8221; corresponds to X-coordinates and &#8220;value&#8221; corresponds to
@@ -1082,7 +1273,7 @@ the line as small as possible while still putting ink on the page.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>edge_color</strong> : black_color_trait</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>edge_color</strong> : black_color_trait</p>
 <blockquote>
 <div><p>The color of the line on the edge of the polygon.</p>
 </div></blockquote>
@@ -1120,7 +1311,7 @@ alpha value of self.face_color multiplied by self.alpha.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.PolygonPlot.hittest">
-<tt class="descname">hittest</tt><big>(</big><em>screen_pt</em>, <em>threshold=7.0</em>, <em>return_distance=False</em><big>)</big><a class="headerlink" href="#chaco.api.PolygonPlot.hittest" title="Permalink to this definition">¶</a></dt>
+<code class="descname">hittest</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=7.0</em>, <em>return_distance=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PolygonPlot.hittest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs point-in-polygon testing or point/line proximity testing.
 If self.hittest_type is &#8220;line&#8221; or &#8220;point&#8221;, then behaves like the
 parent class BaseXYPlot.hittest().</p>
@@ -1132,17 +1323,17 @@ point is inside the polygon, and False otherwise.</p>
 
 </div>
 <div class="section" id="errorbarplot">
-<h2><a class="reference internal" href="#chaco.api.ErrorBarPlot" title="chaco.api.ErrorBarPlot"><tt class="xref py py-class docutils literal"><span class="pre">ErrorBarPlot</span></tt></a><a class="headerlink" href="#errorbarplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.ErrorBarPlot" title="chaco.api.ErrorBarPlot"><code class="xref py py-class docutils literal"><span class="pre">ErrorBarPlot</span></code></a><a class="headerlink" href="#errorbarplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.ErrorBarPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ErrorBarPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.ErrorBarPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.lineplot.LinePlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ErrorBarPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ErrorBarPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.lineplot.LinePlot</span></code></p>
 <p>Renders errorbars at various points.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>value_low</strong> : Instance(AbstractDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>value_low</strong> : Instance(AbstractDataSource)</p>
 <blockquote>
 <div><p>The datasource containing the low values</p>
 </div></blockquote>
@@ -1164,7 +1355,7 @@ point is inside the polygon, and False otherwise.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.ErrorBarPlot.map_screen">
-<tt class="descname">map_screen</tt><big>(</big><em>data_array</em><big>)</big><a class="headerlink" href="#chaco.api.ErrorBarPlot.map_screen" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_screen</code><span class="sig-paren">(</span><em>data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ErrorBarPlot.map_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>data_array can be Nx2 or Nx3.  In the former case, each row is
 treated as (index, value), and this method returns screen X and Y
 coordinates.  In the latter case, each row is treated as (index,
@@ -1176,17 +1367,17 @@ or (y, xlow, xhigh) depending on self.orientation.</p>
 
 </div>
 <div class="section" id="filledlineplot">
-<h2><a class="reference internal" href="#chaco.api.FilledLinePlot" title="chaco.api.FilledLinePlot"><tt class="xref py py-class docutils literal"><span class="pre">FilledLinePlot</span></tt></a><a class="headerlink" href="#filledlineplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.FilledLinePlot" title="chaco.api.FilledLinePlot"><code class="xref py py-class docutils literal"><span class="pre">FilledLinePlot</span></code></a><a class="headerlink" href="#filledlineplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.FilledLinePlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">FilledLinePlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.FilledLinePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.polygon_plot.PolygonPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">FilledLinePlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.FilledLinePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.polygon_plot.PolygonPlot</span></code></p>
 <p>Draws a line plot filled to the axis</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>fill_color</strong> : Alias(&#8216;face_color&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>fill_color</strong> : Alias(&#8216;face_color&#8217;)</p>
 <p><strong>fill_direction</strong> : Enum(&#8216;down&#8217;, &#8216;up&#8217;)</p>
 <blockquote>
 <div><p>Direction to fill. Down is towards the origin, up is towards the max</p>
@@ -1219,16 +1410,16 @@ point.  Also called a &#8220;right angle plot&#8221;.</p>
 
 </div>
 <div class="section" id="quiverplot">
-<h2><a class="reference internal" href="#chaco.api.QuiverPlot" title="chaco.api.QuiverPlot"><tt class="xref py py-class docutils literal"><span class="pre">QuiverPlot</span></tt></a><a class="headerlink" href="#quiverplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.QuiverPlot" title="chaco.api.QuiverPlot"><code class="xref py py-class docutils literal"><span class="pre">QuiverPlot</span></code></a><a class="headerlink" href="#quiverplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.QuiverPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">QuiverPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.QuiverPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.scatterplot.ScatterPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">QuiverPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.QuiverPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.scatterplot.ScatterPlot</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_type</strong> : Enum(&#8216;vector&#8217;, &#8216;radial&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>data_type</strong> : Enum(&#8216;vector&#8217;, &#8216;radial&#8217;)</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>Determines how to interpret the data in the <strong>vectors</strong> data source.</dt>
@@ -1264,11 +1455,11 @@ the setting of the <strong>data_type</strong> attribute.</p>
 
 </div>
 <div class="section" id="candleplot">
-<h2><a class="reference internal" href="#chaco.api.CandlePlot" title="chaco.api.CandlePlot"><tt class="xref py py-class docutils literal"><span class="pre">CandlePlot</span></tt></a><a class="headerlink" href="#candleplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.CandlePlot" title="chaco.api.CandlePlot"><code class="xref py py-class docutils literal"><span class="pre">CandlePlot</span></code></a><a class="headerlink" href="#candleplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.CandlePlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">CandlePlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.CandlePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_candle_plot.BaseCandlePlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">CandlePlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.CandlePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_candle_plot.BaseCandlePlot</span></code></p>
 <p>A plot consisting of a filled bar with an optional centerline and
 stems extending to extrema.  Usually used to represent some statistics
 on bins of data, with the centerline representing the mean, the bar
@@ -1281,7 +1472,7 @@ determined by the minimum space between adjacent index values.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>min_values</strong> : Instance(AbstractDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>min_values</strong> : Instance(AbstractDataSource)</p>
 <blockquote>
 <div><p>The minimum values at each index point.  If None, then no stem and no
 endcap line will be drawn below each bar.</p>
@@ -1314,7 +1505,7 @@ endcap line will be drawn above each bar.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.CandlePlot.map_data">
-<tt class="descname">map_data</tt><big>(</big><em>screen_pt</em>, <em>all_values=True</em><big>)</big><a class="headerlink" href="#chaco.api.CandlePlot.map_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">map_data</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>all_values=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.CandlePlot.map_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps a screen space point into the &#8220;index&#8221; space of the plot.</p>
 <p>Overrides the BaseXYPlot implementation, and always returns an
 array of (index, value) tuples.</p>
@@ -1324,11 +1515,11 @@ array of (index, value) tuples.</p>
 
 </div>
 <div class="section" id="multilineplot">
-<h2><a class="reference internal" href="#chaco.api.MultiLinePlot" title="chaco.api.MultiLinePlot"><tt class="xref py py-class docutils literal"><span class="pre">MultiLinePlot</span></tt></a><a class="headerlink" href="#multilineplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.MultiLinePlot" title="chaco.api.MultiLinePlot"><code class="xref py py-class docutils literal"><span class="pre">MultiLinePlot</span></code></a><a class="headerlink" href="#multilineplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.MultiLinePlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">MultiLinePlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.MultiLinePlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">MultiLinePlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.MultiLinePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></p>
 <p>A plot consisting of multiple lines.</p>
 <p>The data to be plotted must come from a two-dimensional array with shape M by N
 stored in a MultiArrayDataSource object.  M is the number of lines to be plotted,
@@ -1337,7 +1528,7 @@ and N is the number of points in each line.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>yindex</strong> : Instance(ArrayDataSource)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>yindex</strong> : Instance(ArrayDataSource)</p>
 <blockquote>
 <div><blockquote>
 <div><p>M and N appearing in the comments are as defined in the docstring.</p>
@@ -1402,34 +1593,157 @@ in the call to the constructor.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.MultiLinePlot.trait_view">
-<tt class="descname">trait_view</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#chaco.api.MultiLinePlot.trait_view" title="Permalink to this definition">¶</a></dt>
+<code class="descname">trait_view</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.MultiLinePlot.trait_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a minimalist View, with just the amplitude and color attributes.</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
+<div class="section" id="scatterplot1d">
+<h2><code class="xref py py-class docutils literal"><span class="pre">ScatterPlot1D</span></code><a class="headerlink" href="#scatterplot1d" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ScatterPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></p>
+<p>Renders a scatter plot, given an index and value arrays.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>custom_symbol</strong> : Any</p>
+<blockquote>
+<div><p>The CompiledPath to use if <strong>marker</strong> is set to &#8220;custom&#8221;. This attribute
+must be a compiled path for the Kiva context onto which this plot will
+be rendered.  Usually, importing kiva.GraphicsContext will do
+the right thing.</p>
+</div></blockquote>
+<p><strong>marker</strong> : MarkerTrait</p>
+<blockquote>
+<div><p>The type of marker to use.  This is a mapped trait using strings as the
+keys.</p>
+</div></blockquote>
+<p><strong>marker_size</strong> : Either(Float, Array)</p>
+<blockquote>
+<div><p>The pixel size of the markers, not including the thickness of the outline.
+Default value is 4.0.
+TODO: for consistency, there should be a size data source and a mapper</p>
+</div></blockquote>
+<p><strong>render_markers_func</strong> : Callable(render_markers)</p>
+<blockquote>
+<div><p>The function which actually renders the markers</p>
+</div></blockquote>
+<p><strong>line_width</strong> : Float(1.0)</p>
+<blockquote>
+<div><p>The thickness, in pixels, of the outline to draw around the marker.  If
+this is 0, no outline is drawn.</p>
+</div></blockquote>
+<p><strong>color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The fill color of the marker.</p>
+</div></blockquote>
+<p><strong>outline_color</strong> : black_color_trait</p>
+<blockquote>
+<div><p>The color of the outline to draw around the marker.</p>
+</div></blockquote>
+<p><strong>effective_color</strong> : Property(Tuple, depends_on=[&#8216;color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote>
+<div><p>The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id16"><span class="problematic" id="id17">color_</span></a>, and its alpha value is the alpha
+value of self.color multiplied by self.alpha.</p>
+</div></blockquote>
+<p><strong>effective_outline_color</strong> : Property(Tuple, depends_on=[&#8216;outline_color&#8217;, &#8216;alpha&#8217;])</p>
+<blockquote>
+<div><p>The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
+It has the same RGB values as <a href="#id18"><span class="problematic" id="id19">outline_color_</span></a>, and its alpha value is the
+alpha value of self.outline_color multiplied by self.alpha.</p>
+</div></blockquote>
+<p><strong>traits_view</strong> : ScatterPlotView()</p>
+<blockquote>
+<div><p>Traits UI View for customizing the plot.</p>
+</div></blockquote>
+<p><strong>show_selection</strong> : Bool(True)</p>
+<blockquote>
+<div><blockquote>
+<div><p>Selection and selection rendering
+A selection on the lot is indicated by setting the index or value
+datasource&#8217;s &#8216;selections&#8217; metadata item to a list of indices, or the
+&#8216;selection_mask&#8217; metadata to a boolean array of the same length as the
+datasource.</p>
+</div></blockquote>
+<p>show_selection</p>
+</div></blockquote>
+<p><strong>selection_marker</strong> : MarkerTrait</p>
+<p><strong>selection_marker_size</strong> : Float(4.0)</p>
+<p><strong>selection_line_width</strong> : Float(1.0)</p>
+<p><strong>selection_color</strong> : ColorTrait(&#8216;yellow&#8217;)</p>
+<p class="last"><strong>selection_outline_color</strong> : black_color_trait</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt>
+<code class="descname">map_data</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>all_values=True</em><span class="sig-paren">)</span></dt>
+<dd><p>Maps a screen space point into the &#8220;index&#8221; space of the plot.</p>
+<p>Overrides the BaseXYPlot implementation, and always returns an
+array of (index, value) tuples.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">map_index</code><span class="sig-paren">(</span><em>screen_pt</em>, <em>threshold=0.0</em>, <em>outside_returns_none=True</em>, <em>index_only=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Maps a screen space point to an index into the plot&#8217;s index array(s).</p>
+<p>Overrides the BaseXYPlot implementation..</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">map_screen</code><span class="sig-paren">(</span><em>data_array</em><span class="sig-paren">)</span></dt>
+<dd><p>Maps an array of data points into screen space and returns it as
+an array.</p>
+<p>Implements the AbstractPlotRenderer interface.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>..:class:<cite>JitterPlot</cite>
+..===================
+.... autoclass:: JitterPlot
+..    :members:
+..    :show-inheritance:</p>
+<p>..:class:<cite>LineScatterPlot1D</cite>
+..===================
+.... autoclass:: LineScatterPlot1D
+..    :members:
+..    :show-inheritance:</p>
+<p>..:class:<cite>TextPlot1D</cite>
+..===================
+.... autoclass:: TextPlot1D
+..    :members:
+..    :show-inheritance:</p>
+</div>
 <div class="section" id="variablesizescatterplot">
-<h2><a class="reference internal" href="#chaco.api.VariableSizeScatterPlot" title="chaco.api.VariableSizeScatterPlot"><tt class="xref py py-class docutils literal"><span class="pre">VariableSizeScatterPlot</span></tt></a><a class="headerlink" href="#variablesizescatterplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.VariableSizeScatterPlot" title="chaco.api.VariableSizeScatterPlot"><code class="xref py py-class docutils literal"><span class="pre">VariableSizeScatterPlot</span></code></a><a class="headerlink" href="#variablesizescatterplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.VariableSizeScatterPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">VariableSizeScatterPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.VariableSizeScatterPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.scatterplot.ScatterPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">VariableSizeScatterPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.VariableSizeScatterPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.scatterplot.ScatterPlot</span></code></p>
 <p># TODO: This should be officially deprecated.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="horizonplot">
-<h2><a class="reference internal" href="#chaco.api.HorizonPlot" title="chaco.api.HorizonPlot"><tt class="xref py py-class docutils literal"><span class="pre">HorizonPlot</span></tt></a><a class="headerlink" href="#horizonplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.HorizonPlot" title="chaco.api.HorizonPlot"><code class="xref py py-class docutils literal"><span class="pre">HorizonPlot</span></code></a><a class="headerlink" href="#horizonplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.HorizonPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">HorizonPlot</tt><big>(</big><em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.HorizonPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">HorizonPlot</code><span class="sig-paren">(</span><em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.HorizonPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.base_xy_plot.BaseXYPlot</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>bands</strong> : DelegatesTo(&#8216;value_mapper&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>bands</strong> : DelegatesTo(&#8216;value_mapper&#8217;)</p>
 <p><strong>color_mapper</strong> : Instance(ColorMapper)</p>
 <p><strong>mirror</strong> : Bool(False)</p>
 <p><strong>negative_bands</strong> : Bool(True)</p>
@@ -1457,7 +1771,7 @@ negative bands</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -1465,34 +1779,38 @@ negative bands</p>
 <h3>Page Contents</h3>
 <ul>
 <li><a class="reference internal" href="#">Renderers</a><ul>
-<li><a class="reference internal" href="#barplot"><tt class="docutils literal"><span class="pre">BarPlot</span></tt></a></li>
-<li><a class="reference internal" href="#base2dplot"><tt class="docutils literal"><span class="pre">Base2DPlot</span></tt></a></li>
-<li><a class="reference internal" href="#basexyplot"><tt class="docutils literal"><span class="pre">BaseXYPlot</span></tt></a></li>
-<li><a class="reference internal" href="#scatterplot"><tt class="docutils literal"><span class="pre">ScatterPlot</span></tt></a></li>
-<li><a class="reference internal" href="#imageplot"><tt class="docutils literal"><span class="pre">ImagePlot</span></tt></a></li>
-<li><a class="reference internal" href="#cmapimageplot"><tt class="docutils literal"><span class="pre">CMapImagePlot</span></tt></a></li>
-<li><a class="reference internal" href="#contourlineplot"><tt class="docutils literal"><span class="pre">ContourLinePlot</span></tt></a></li>
-<li><a class="reference internal" href="#lineplot"><tt class="docutils literal"><span class="pre">LinePlot</span></tt></a></li>
-<li><a class="reference internal" href="#colormappedscatterplot"><tt class="docutils literal"><span class="pre">ColormappedScatterPlot</span></tt></a></li>
-<li><a class="reference internal" href="#colormappedselectionoverlay"><tt class="docutils literal"><span class="pre">ColormappedSelectionOverlay</span></tt></a></li>
-<li><a class="reference internal" href="#polygonplot"><tt class="docutils literal"><span class="pre">PolygonPlot</span></tt></a></li>
-<li><a class="reference internal" href="#errorbarplot"><tt class="docutils literal"><span class="pre">ErrorBarPlot</span></tt></a></li>
-<li><a class="reference internal" href="#filledlineplot"><tt class="docutils literal"><span class="pre">FilledLinePlot</span></tt></a></li>
-<li><a class="reference internal" href="#quiverplot"><tt class="docutils literal"><span class="pre">QuiverPlot</span></tt></a></li>
-<li><a class="reference internal" href="#candleplot"><tt class="docutils literal"><span class="pre">CandlePlot</span></tt></a></li>
-<li><a class="reference internal" href="#multilineplot"><tt class="docutils literal"><span class="pre">MultiLinePlot</span></tt></a></li>
-<li><a class="reference internal" href="#variablesizescatterplot"><tt class="docutils literal"><span class="pre">VariableSizeScatterPlot</span></tt></a></li>
-<li><a class="reference internal" href="#horizonplot"><tt class="docutils literal"><span class="pre">HorizonPlot</span></tt></a></li>
+<li><a class="reference internal" href="#barplot"><code class="docutils literal"><span class="pre">BarPlot</span></code></a></li>
+<li><a class="reference internal" href="#base1dplot"><code class="docutils literal"><span class="pre">Base1DPlot</span></code></a></li>
+<li><a class="reference internal" href="#base2dplot"><code class="docutils literal"><span class="pre">Base2DPlot</span></code></a></li>
+<li><a class="reference internal" href="#basexyplot"><code class="docutils literal"><span class="pre">BaseXYPlot</span></code></a></li>
+<li><a class="reference internal" href="#scatterplot"><code class="docutils literal"><span class="pre">ScatterPlot</span></code></a></li>
+<li><a class="reference internal" href="#imageplot"><code class="docutils literal"><span class="pre">ImagePlot</span></code></a></li>
+<li><a class="reference internal" href="#cmapimageplot"><code class="docutils literal"><span class="pre">CMapImagePlot</span></code></a></li>
+<li><a class="reference internal" href="#contourlineplot"><code class="docutils literal"><span class="pre">ContourLinePlot</span></code></a></li>
+<li><a class="reference internal" href="#lineplot"><code class="docutils literal"><span class="pre">LinePlot</span></code></a></li>
+<li><a class="reference internal" href="#colormappedscatterplot"><code class="docutils literal"><span class="pre">ColormappedScatterPlot</span></code></a></li>
+<li><a class="reference internal" href="#colormappedselectionoverlay"><code class="docutils literal"><span class="pre">ColormappedSelectionOverlay</span></code></a></li>
+<li><a class="reference internal" href="#polygonplot"><code class="docutils literal"><span class="pre">PolygonPlot</span></code></a></li>
+<li><a class="reference internal" href="#errorbarplot"><code class="docutils literal"><span class="pre">ErrorBarPlot</span></code></a></li>
+<li><a class="reference internal" href="#filledlineplot"><code class="docutils literal"><span class="pre">FilledLinePlot</span></code></a></li>
+<li><a class="reference internal" href="#quiverplot"><code class="docutils literal"><span class="pre">QuiverPlot</span></code></a></li>
+<li><a class="reference internal" href="#candleplot"><code class="docutils literal"><span class="pre">CandlePlot</span></code></a></li>
+<li><a class="reference internal" href="#multilineplot"><code class="docutils literal"><span class="pre">MultiLinePlot</span></code></a></li>
+<li><a class="reference internal" href="#scatterplot1d"><code class="docutils literal"><span class="pre">ScatterPlot1D</span></code></a></li>
+<li><a class="reference internal" href="#variablesizescatterplot"><code class="docutils literal"><span class="pre">VariableSizeScatterPlot</span></code></a></li>
+<li><a class="reference internal" href="#horizonplot"><code class="docutils literal"><span class="pre">HorizonPlot</span></code></a></li>
 </ul>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/api/renderers.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/renderers.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -1500,16 +1818,13 @@ negative bands</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1518,18 +1833,18 @@ negative bands</p>
         <li class="right" >
           <a href="visual_components.html" title="Visual Components"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Renderers</a></li>
   
 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2014, Enthought, Inc..
-      Last updated on Nov 05, 2014.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Dec 22, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

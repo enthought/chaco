@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Containers and Layout &mdash; chaco 4.5.0 documentation</title>
+    <title>Containers and Layout &mdash; Chaco 4.6</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,23 +25,23 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco 4.5.0 documentation" href="../index.html" />
+    <link rel="top" title="Chaco 4.6" href="../index.html" />
     <link rel="up" title="User guide" href="index.html" />
     <link rel="next" title="Tools and Overlays" href="tools.html" />
-    <link rel="prev" title="Plot types" href="plot_types.html" /> 
+    <link rel="prev" title="Overlays: axis, legend, grid, etc." href="basic_elements/overlays.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="tools.html" title="Tools and Overlays"
              accesskey="N">next</a></li>
         <li class="right" >
-          <a href="plot_types.html" title="Plot types"
+          <a href="basic_elements/overlays.html" title="Overlays: axis, legend, grid, etc."
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">User guide</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">User guide</a> &raquo;</li>
   
     <li><a href="#">Containers and Layout</a></li>
   
@@ -54,7 +52,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="containers-and-layout">
 <h1>Containers and Layout<a class="headerlink" href="#containers-and-layout" title="Permalink to this headline">¶</a></h1>
@@ -65,35 +63,35 @@ In order to arrange  plots and other components (e.g., colorbars, legends)
 in a single panel,
 Chaco uses <em>containers</em> to organize the layout.</p>
 <p>Chaco implements 4 different containers:
-<a class="reference internal" href="#hv-plot-container"><em>HPlotContainer and VPlotContainer</em></a>,
-<a class="reference internal" href="#grid-plot-container"><em>GridPlotContainer</em></a>, and <a class="reference internal" href="#overlay-plot-container"><em>OverlayPlotContainer</em></a>.</p>
+<a class="reference internal" href="#hv-plot-container"><span class="std std-ref">HPlotContainer and VPlotContainer</span></a>,
+<a class="reference internal" href="#grid-plot-container"><span class="std std-ref">GridPlotContainer</span></a>, and <a class="reference internal" href="#overlay-plot-container"><span class="std std-ref">OverlayPlotContainer</span></a>.</p>
 <p>All containers are derived from the base class
-<tt class="xref py py-class docutils literal"><span class="pre">​BasePlotContainer</span></tt>, and share
+<code class="xref py py-class docutils literal"><span class="pre">​BasePlotContainer</span></code>, and share
 a common interface:</p>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">__init__(*components,</span> <span class="pre">**parameters)</span></tt> (constructor of the container object):
+<li><p class="first"><code class="docutils literal"><span class="pre">__init__(*components,</span> <span class="pre">**parameters)</span></code> (constructor of the container object):
 The constructor of a plot container takes a sequence of
 components, which are added to the container itself,
 and a set of keyword arguments, which are used to initialize the
 parameters of the container. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">scatter_plot</span><span class="p">,</span> <span class="n">line_plot</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">scatter_plot</span><span class="p">,</span> <span class="n">line_plot</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>creates a container with horizontal layout containing two plots
-(<tt class="docutils literal"><span class="pre">scatter_plot</span></tt> and <tt class="docutils literal"><span class="pre">line_plot</span></tt>), with a spacing of 100 pixels between
+(<code class="docutils literal"><span class="pre">scatter_plot</span></code> and <code class="docutils literal"><span class="pre">line_plot</span></code>), with a spacing of 100 pixels between
 them.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">add(*components)</span></tt>: Append ore or more plots to the ones already present in the
+<li><p class="first"><code class="docutils literal"><span class="pre">add(*components)</span></code>: Append ore or more plots to the ones already present in the
 container. For example, this is equivalent to the code above:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">container</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">line_plot</span><span class="p">,</span> <span class="n">scatter_plot</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">remove(self,</span> <span class="pre">*components)</span></tt>: Remove a sequence of components from the
+<li><p class="first"><code class="docutils literal"><span class="pre">remove(self,</span> <span class="pre">*components)</span></code>: Remove a sequence of components from the
 container</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">insert(index,</span> <span class="pre">component)</span></tt>: Inserts a component at a specific position
+<li><p class="first"><code class="docutils literal"><span class="pre">insert(index,</span> <span class="pre">component)</span></code>: Inserts a component at a specific position
 in the components list</p>
 </li>
 </ul>
@@ -115,36 +113,36 @@ copies. Instead, one should create multiple plots objects.</p>
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Create a vertical container containing two horizontal containers</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Create a vertical container containing two horizontal containers</span>
 <span class="n">h_container1</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">()</span>
 <span class="n">h_container2</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">()</span>
 <span class="n">outer_container</span> <span class="o">=</span> <span class="n">VPlotContainer</span><span class="p">(</span><span class="n">h_container1</span><span class="p">,</span> <span class="n">h_container2</span><span class="p">,</span>
-                                 <span class="n">stack_order</span><span class="o">=</span><span class="s">&quot;top_to_bottom&quot;</span><span class="p">)</span>
+                                 <span class="n">stack_order</span><span class="o">=</span><span class="s2">&quot;top_to_bottom&quot;</span><span class="p">)</span>
 
-<span class="c"># Add the three plots to the first container</span>
+<span class="c1"># Add the three plots to the first container</span>
 <span class="n">h_container1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scatter_plot</span><span class="p">,</span> <span class="n">line_plot1</span><span class="p">,</span> <span class="n">line_plot2</span><span class="p">)</span>
 
-<span class="c"># Now add the first line plot to the second container =&gt; it is removed</span>
-<span class="c"># from the first, as each plot can only have one container</span>
+<span class="c1"># Now add the first line plot to the second container =&gt; it is removed</span>
+<span class="c1"># from the first, as each plot can only have one container</span>
 <span class="n">h_container2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">line_plot1</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <p>results in this layout:</p>
 <blockquote class="last">
-<div><img alt="../_images/one_container_per_plot.png" src="../_images/one_container_per_plot.png" style="height: 200pt;" />
+<div><a class="reference internal image-reference" href="../_images/one_container_per_plot.png"><img alt="../_images/one_container_per_plot.png" src="../_images/one_container_per_plot.png" style="height: 200pt;" /></a>
 </div></blockquote>
 </div>
 <div class="section" id="hplotcontainer-and-vplotcontainer">
 <span id="hv-plot-container"></span><h3>HPlotContainer and VPlotContainer<a class="headerlink" href="#hplotcontainer-and-vplotcontainer" title="Permalink to this headline">¶</a></h3>
-<p><tt class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></tt> and
-<tt class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></tt> display a set of components
+<p><code class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></code> and
+<code class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></code> display a set of components
 in an horizontal and vertical stack, respectively, as shown in these simple
 examples:</p>
-<img alt="../_images/hplotcontainer.png" src="../_images/hplotcontainer.png" style="height: 200pt;" />
-<img alt="../_images/vplotcontainer.png" src="../_images/vplotcontainer.png" style="height: 200pt;" />
+<a class="reference internal image-reference" href="../_images/hplotcontainer.png"><img alt="../_images/hplotcontainer.png" src="../_images/hplotcontainer.png" style="height: 200pt;" /></a>
+<a class="reference internal image-reference" href="../_images/vplotcontainer.png"><img alt="../_images/vplotcontainer.png" src="../_images/vplotcontainer.png" style="height: 200pt;" /></a>
 <p>In both cases, a series of line plots and scatter plots is added to an
-<tt class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></tt> or a
-<tt class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></tt>:</p>
+<code class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></code> or a
+<code class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></code>:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -160,28 +158,28 @@ examples:</p>
 13
 14
 15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Create the data and the PlotData object</span>
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Create the data and the PlotData object</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
 <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
 
-<span class="c"># Create a scatter plot</span>
+<span class="c1"># Create a scatter plot</span>
 <span class="n">scatter_plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-<span class="n">scatter_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">scatter_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 
-<span class="c"># Create a line plot</span>
+<span class="c1"># Create a line plot</span>
 <span class="n">line_plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-<span class="n">line_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">line_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 
-<span class="c"># Create a horizontal container and put the two plots inside it</span>
+<span class="c1"># Create a horizontal container and put the two plots inside it</span>
 <span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">line_plot</span><span class="p">,</span> <span class="n">scatter_plot</span><span class="p">)</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">plot</span> <span class="o">=</span> <span class="n">container</span>
 </pre></div>
 </td></tr></table></div>
-<p><tt class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></tt> is also used often to
+<p><code class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></code> is also used often to
 display a colorbar or legend to the side of a plot. For example, this
 plot</p>
-<img alt="../_images/h_container_colorbar.png" src="../_images/h_container_colorbar.png" style="height: 200pt;" />
+<a class="reference internal image-reference" href="../_images/h_container_colorbar.png"><img alt="../_images/h_container_colorbar.png" src="../_images/h_container_colorbar.png" style="height: 200pt;" /></a>
 <p>was created using a color-mapped scatter plot and a colorbar inside a
 horizontal container:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -202,48 +200,48 @@ horizontal container:</p>
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Create the plot</span>
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Create the plot</span>
 <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;index&quot;</span><span class="p">,</span> <span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="s">&quot;color&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;cmap_scatter&quot;</span><span class="p">,</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;cmap_scatter&quot;</span><span class="p">,</span>
           <span class="n">color_mapper</span><span class="o">=</span><span class="n">jet</span><span class="p">)</span>
 
-<span class="c"># Create the colorbar, handing in the appropriate range and colormap</span>
+<span class="c1"># Create the colorbar, handing in the appropriate range and colormap</span>
 <span class="n">colormap</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">color_mapper</span>
 <span class="n">colorbar</span> <span class="o">=</span> <span class="n">ColorBar</span><span class="p">(</span><span class="n">index_mapper</span><span class="o">=</span><span class="n">LinearMapper</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="n">colormap</span><span class="o">.</span><span class="n">range</span><span class="p">),</span>
                     <span class="n">color_mapper</span><span class="o">=</span><span class="n">colormap</span><span class="p">,</span>
-                    <span class="n">orientation</span><span class="o">=</span><span class="s">&#39;v&#39;</span><span class="p">,</span>
-                    <span class="n">resizable</span><span class="o">=</span><span class="s">&#39;v&#39;</span><span class="p">,</span>
+                    <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">,</span>
+                    <span class="n">resizable</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">,</span>
                     <span class="n">width</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
                     <span class="n">padding</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 
 <span class="n">colorbar</span><span class="o">.</span><span class="n">padding_top</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">padding_top</span>
 <span class="n">colorbar</span><span class="o">.</span><span class="n">padding_bottom</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">padding_bottom</span>
 
-<span class="c"># Create a container to position the plot and the colorbar side-by-side</span>
+<span class="c1"># Create a container to position the plot and the colorbar side-by-side</span>
 <span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">colorbar</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <div class="section" id="hplotcontainer-parameters">
 <h4>HPlotContainer parameters<a class="headerlink" href="#hplotcontainer-parameters" title="Permalink to this headline">¶</a></h4>
 <p>This is a list of parameters that are specific to
-<tt class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></tt></p>
+<code class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></code></p>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">stack_order</span></tt>:
+<li><p class="first"><code class="docutils literal"><span class="pre">stack_order</span></code>:
 The order in which components in the plot container are laid out. The
 default behavior is left-to-right.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">stack_order</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;left_to_right&quot;</span><span class="p">,</span> <span class="s">&quot;right_to_left&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stack_order</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;left_to_right&quot;</span><span class="p">,</span> <span class="s2">&quot;right_to_left&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">spacing</span></tt>:
+<li><p class="first"><code class="docutils literal"><span class="pre">spacing</span></code>:
 The amount of space to put between components.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">spacing</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">spacing</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">valign</span></tt>:
+<li><p class="first"><code class="docutils literal"><span class="pre">valign</span></code>:
 The vertical alignment of objects that don&#8217;t span the full height.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">valign</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;bottom&quot;</span><span class="p">,</span> <span class="s">&quot;top&quot;</span><span class="p">,</span> <span class="s">&quot;center&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">valign</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -252,51 +250,51 @@ The vertical alignment of objects that don&#8217;t span the full height.</p>
 <div class="section" id="vplotcontainer-parameters">
 <h4>VPlotContainer parameters<a class="headerlink" href="#vplotcontainer-parameters" title="Permalink to this headline">¶</a></h4>
 <p>This is a list of parameters that are specific to
-<tt class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></tt></p>
+<code class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></code></p>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">stack_order</span></tt>:
+<li><p class="first"><code class="docutils literal"><span class="pre">stack_order</span></code>:
 The order in which components in the plot container are laid out. The
 default behavior is bottom-to-top.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">stack_order</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;bottom_to_top&quot;</span><span class="p">,</span> <span class="s">&quot;top_to_bottom&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stack_order</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;bottom_to_top&quot;</span><span class="p">,</span> <span class="s2">&quot;top_to_bottom&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">spacing</span></tt>:
+<li><p class="first"><code class="docutils literal"><span class="pre">spacing</span></code>:
 The amount of space to put between components.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">spacing</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">spacing</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">halign</span></tt>:
+<li><p class="first"><code class="docutils literal"><span class="pre">halign</span></code>:
 The horizontal alignment of objects that don&#8217;t span the full width.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">halign</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="s">&quot;right&quot;</span><span class="p">,</span> <span class="s">&quot;center&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">halign</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
 </ul>
-<div class="admonition-see-also admonition seealso">
+<div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><strong>HPlotContainer and VPlotContainer in action.</strong> See <tt class="docutils literal"><span class="pre">demo/financial_plot.py</span></tt>,
-<tt class="docutils literal"><span class="pre">demo/two_plots.py</span></tt>, <tt class="docutils literal"><span class="pre">demo/advanced/scalar_image_function_inspector.py</span></tt>,
-and <tt class="docutils literal"><span class="pre">demo/basc/cmap_scatter.py</span></tt>
+<p class="last"><strong>HPlotContainer and VPlotContainer in action.</strong> See <code class="docutils literal"><span class="pre">demo/financial_plot.py</span></code>,
+<code class="docutils literal"><span class="pre">demo/two_plots.py</span></code>, <code class="docutils literal"><span class="pre">demo/advanced/scalar_image_function_inspector.py</span></code>,
+and <code class="docutils literal"><span class="pre">demo/basc/cmap_scatter.py</span></code>
 in the Chaco examples directory.</p>
 </div>
 </div>
 </div>
 <div class="section" id="gridplotcontainer">
 <span id="grid-plot-container"></span><h3>GridPlotContainer<a class="headerlink" href="#gridplotcontainer" title="Permalink to this headline">¶</a></h3>
-<p>Just as the name suggests, a <tt class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></tt>
+<p>Just as the name suggests, a <code class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></code>
 lays out plots in a regular grid.</p>
 <p>Unlike the previous containers, one has to specify in advance the number
 of rows and columns in the plot. Plots with different sizes and/or
-aspect ratios are aligned according to the parameters <tt class="docutils literal"><span class="pre">halign</span></tt> and
-<tt class="docutils literal"><span class="pre">valign</span></tt>.</p>
+aspect ratios are aligned according to the parameters <code class="docutils literal"><span class="pre">halign</span></code> and
+<code class="docutils literal"><span class="pre">valign</span></code>.</p>
 <p>For example, to generate this plot</p>
-<img alt="../_images/grid_container1.png" src="../_images/grid_container1.png" style="height: 250pt;" />
+<a class="reference internal image-reference" href="../_images/grid_container1.png"><img alt="../_images/grid_container1.png" src="../_images/grid_container1.png" style="height: 250pt;" /></a>
 <p>one needs to create six plots of fixed height and add them successively
 (left-to-right, top-to-bottom) to the
-<tt class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></tt>. Plots are aligned to
-the top by setting <tt class="docutils literal"><span class="pre">valign</span> <span class="pre">=</span> <span class="pre">'top'</span></tt>.</p>
+<code class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></code>. Plots are aligned to
+the top by setting <code class="docutils literal"><span class="pre">valign</span> <span class="pre">=</span> <span class="pre">'top'</span></code>.</p>
 <p>The complete code looks like this:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -335,41 +333,41 @@ the top by setting <tt class="docutils literal"><span class="pre">valign</span> 
 35
 36
 37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">GridContainerExample</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GridContainerExample</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
 
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">GridPlotContainer</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
         <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span>
     <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># Create a GridContainer to hold all of our plots: 2 rows, 3 columns</span>
+        <span class="c1"># Create a GridContainer to hold all of our plots: 2 rows, 3 columns</span>
         <span class="n">container</span> <span class="o">=</span> <span class="n">GridPlotContainer</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span>
                                       <span class="n">spacing</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
-                                      <span class="n">valign</span><span class="o">=</span><span class="s">&#39;top&#39;</span><span class="p">,</span>
-                                      <span class="n">bgcolor</span><span class="o">=</span><span class="s">&#39;lightgray&#39;</span><span class="p">)</span>
+                                      <span class="n">valign</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
+                                      <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">)</span>
 
-        <span class="c"># Create x data</span>
+        <span class="c1"># Create x data</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
         <span class="n">pd</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">x</span><span class="p">)</span>
 
-        <span class="c"># Plot some Bessel functions and add the plots to our container</span>
+        <span class="c1"># Plot some Bessel functions and add the plots to our container</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
-            <span class="n">data_name</span> <span class="o">=</span> <span class="s">&#39;y{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">data_name</span> <span class="o">=</span> <span class="s1">&#39;y{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
             <span class="n">pd</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data_name</span><span class="p">,</span> <span class="n">jn</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
 
             <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
-            <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&#39;index&#39;</span><span class="p">,</span> <span class="n">data_name</span><span class="p">),</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">data_name</span><span class="p">),</span>
                       <span class="n">color</span><span class="o">=</span><span class="n">COLOR_PALETTE</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                       <span class="n">line_width</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
 
-            <span class="c"># Set each plot&#39;s aspect based on its position in the grid</span>
+            <span class="c1"># Set each plot&#39;s aspect based on its position in the grid</span>
             <span class="n">plot</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="p">((</span><span class="n">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">50</span><span class="p">,</span>
-                     <span class="n">resizable</span><span class="o">=</span><span class="s">&#39;h&#39;</span><span class="p">)</span>
+                     <span class="n">resizable</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
 
-            <span class="c"># Add to the grid container</span>
+            <span class="c1"># Add to the grid container</span>
             <span class="n">container</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">container</span>
@@ -378,40 +376,40 @@ the top by setting <tt class="docutils literal"><span class="pre">valign</span> 
 <div class="section" id="gridplotcontainer-parameters">
 <h4>GridPlotContainer parameters<a class="headerlink" href="#gridplotcontainer-parameters" title="Permalink to this headline">¶</a></h4>
 <p>This is a list of parameters that are specific to
-<tt class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></tt></p>
+<code class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></code></p>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">valign</span></tt>:
+<li><p class="first"><code class="docutils literal"><span class="pre">valign</span></code>:
 The vertical alignment of objects that don&#8217;t span the full height.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">valign</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;bottom&quot;</span><span class="p">,</span> <span class="s">&quot;top&quot;</span><span class="p">,</span> <span class="s">&quot;center&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">valign</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">halign</span></tt>:
+<li><p class="first"><code class="docutils literal"><span class="pre">halign</span></code>:
 The horizontal alignment of objects that don&#8217;t span the full width.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">halign</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="s">&quot;right&quot;</span><span class="p">,</span> <span class="s">&quot;center&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">halign</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">spacing</span></tt>: A tuple or list of <tt class="docutils literal"><span class="pre">(h_spacing,</span> <span class="pre">v_spacing)</span></tt>,
+<li><p class="first"><code class="docutils literal"><span class="pre">spacing</span></code>: A tuple or list of <code class="docutils literal"><span class="pre">(h_spacing,</span> <span class="pre">v_spacing)</span></code>,
 giving spacing values
 for the horizontal and vertical direction. Default is (0, 0).</p>
 </li>
 </ul>
-<div class="admonition-see-also admonition seealso">
+<div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><strong>GridPlotContainer in action.</strong> See <tt class="docutils literal"><span class="pre">demo/basic/grid_container.py</span></tt>
-and <tt class="docutils literal"><span class="pre">demo/basic/grid_container_aspect_ratio.py</span></tt>
+<p class="last"><strong>GridPlotContainer in action.</strong> See <code class="docutils literal"><span class="pre">demo/basic/grid_container.py</span></code>
+and <code class="docutils literal"><span class="pre">demo/basic/grid_container_aspect_ratio.py</span></code>
 in the Chaco examples directory.</p>
 </div>
 </div>
 </div>
 <div class="section" id="overlayplotcontainer">
 <span id="overlay-plot-container"></span><h3>OverlayPlotContainer<a class="headerlink" href="#overlayplotcontainer" title="Permalink to this headline">¶</a></h3>
-<p>Overlay containers <tt class="xref py py-class docutils literal"><span class="pre">OverlayPlotContainer</span></tt>
+<p>Overlay containers <code class="xref py py-class docutils literal"><span class="pre">OverlayPlotContainer</span></code>
 lay out plots on top of each other.
-The <tt class="xref py py-class docutils literal"><span class="pre">chaco.plot.Plot</span></tt> class
+The <code class="xref py py-class docutils literal"><span class="pre">chaco.plot.Plot</span></code> class
 in Chaco is a special subclass of
-<tt class="xref py py-class docutils literal"><span class="pre">OverlayPlotContainer</span></tt>.</p>
+<code class="xref py py-class docutils literal"><span class="pre">OverlayPlotContainer</span></code>.</p>
 <p>Overlay containers can be used to create &#8220;inset&#8221; plots. In the following
 code, for instance, we create a zoomable plot with an fixed inset showing the
 full data:</p>
@@ -453,41 +451,41 @@ full data:</p>
 36
 37
 38
-39</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">OverlayContainerExample</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">OverlayContainerExample</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
 
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">OverlayPlotContainer</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
         <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span>
     <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># Create data</span>
+        <span class="c1"># Create data</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">jn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
         <span class="n">pd</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
         <span class="n">zoomable_plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
-        <span class="n">zoomable_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&#39;index&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">),</span>
-                           <span class="n">name</span><span class="o">=</span><span class="s">&#39;external&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;red&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">zoomable_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+                           <span class="n">name</span><span class="o">=</span><span class="s1">&#39;external&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
-        <span class="c"># Attach tools to the plot</span>
+        <span class="c1"># Attach tools to the plot</span>
         <span class="n">zoom</span> <span class="o">=</span> <span class="n">ZoomTool</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">zoomable_plot</span><span class="p">,</span>
-                        <span class="n">tool_mode</span><span class="o">=</span><span class="s">&quot;box&quot;</span><span class="p">,</span> <span class="n">always_on</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                        <span class="n">tool_mode</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="n">always_on</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
         <span class="n">zoomable_plot</span><span class="o">.</span><span class="n">overlays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zoom</span><span class="p">)</span>
         <span class="n">zoomable_plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PanTool</span><span class="p">(</span><span class="n">zoomable_plot</span><span class="p">))</span>
 
-        <span class="c"># Create a second inset plot, not resizable, not zoom-able</span>
+        <span class="c1"># Create a second inset plot, not resizable, not zoom-able</span>
         <span class="n">inset_plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">pd</span><span class="p">)</span>
-        <span class="n">inset_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&#39;index&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;blue&#39;</span><span class="p">)</span>
-        <span class="n">inset_plot</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">resizable</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">inset_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+        <span class="n">inset_plot</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">resizable</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                        <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">250</span><span class="p">,</span> <span class="mi">150</span><span class="p">],</span>
                        <span class="n">position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">450</span><span class="p">,</span> <span class="mi">350</span><span class="p">],</span>
                        <span class="n">border_visible</span> <span class="o">=</span> <span class="bp">True</span>
                        <span class="p">)</span>
 
-        <span class="c"># Create a container and add our plots</span>
+        <span class="c1"># Create a container and add our plots</span>
         <span class="n">container</span> <span class="o">=</span> <span class="n">OverlayPlotContainer</span><span class="p">()</span>
         <span class="n">container</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">zoomable_plot</span><span class="p">)</span>
         <span class="n">container</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">inset_plot</span><span class="p">)</span>
@@ -495,15 +493,15 @@ full data:</p>
 </pre></div>
 </td></tr></table></div>
 <p>The code above generates this plot:</p>
-<img alt="../_images/overlay_container_inset.png" src="../_images/overlay_container_inset.png" style="height: 250pt;" />
-<div class="admonition-see-also admonition seealso">
+<a class="reference internal image-reference" href="../_images/overlay_container_inset.png"><img alt="../_images/overlay_container_inset.png" src="../_images/overlay_container_inset.png" style="height: 250pt;" /></a>
+<div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><strong>GridPlotContainer in action.</strong> See <tt class="docutils literal"><span class="pre">demo/basic/inset_plot.py</span></tt>
+<p class="last"><strong>GridPlotContainer in action.</strong> See <code class="docutils literal"><span class="pre">demo/basic/inset_plot.py</span></code>
 and
-<tt class="docutils literal"><span class="pre">demo/advanced/scalar_image_function_inspector.py</span></tt>
+<code class="docutils literal"><span class="pre">demo/advanced/scalar_image_function_inspector.py</span></code>
 in the Chaco examples directory. To learn more about sharing
-axes on overlapping plots, see <tt class="docutils literal"><span class="pre">demo/multiaxis.py</span></tt> and
-<tt class="docutils literal"><span class="pre">demo/multiaxis_with_Plot.py</span></tt>.</p>
+axes on overlapping plots, see <code class="docutils literal"><span class="pre">demo/multiaxis.py</span></code> and
+<code class="docutils literal"><span class="pre">demo/multiaxis_with_Plot.py</span></code>.</p>
 </div>
 </div>
 </div>
@@ -520,22 +518,22 @@ containers declare their preferences, which are taken into account by
 their container to set their final aspect.</p>
 <p>The basic traits that control the layout preferences of a component are:</p>
 <ul class="simple">
-<li><tt class="xref py py-attr docutils literal"><span class="pre">resizable</span></tt>, a string indicating in which directions the component
-can be resized. Its value is one of <tt class="docutils literal"><span class="pre">''</span></tt> (not resizable), <tt class="docutils literal"><span class="pre">'h'</span></tt>
-(resizable in the horizontal direction), <tt class="docutils literal"><span class="pre">'v'</span></tt> (resizable in the
-vertical direction), <tt class="docutils literal"><span class="pre">'hv'</span></tt> (resizable in both, default).</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">aspect_ratio</span></tt>, the ratio of the component&#8217;s width to its height.
+<li><code class="xref py py-attr docutils literal"><span class="pre">resizable</span></code>, a string indicating in which directions the component
+can be resized. Its value is one of <code class="docutils literal"><span class="pre">''</span></code> (not resizable), <code class="docutils literal"><span class="pre">'h'</span></code>
+(resizable in the horizontal direction), <code class="docutils literal"><span class="pre">'v'</span></code> (resizable in the
+vertical direction), <code class="docutils literal"><span class="pre">'hv'</span></code> (resizable in both, default).</li>
+<li><code class="xref py py-attr docutils literal"><span class="pre">aspect_ratio</span></code>, the ratio of the component&#8217;s width to its height.
 This is used by the component itself to maintain bounds when the bounds
-are changed independently. Default is <tt class="docutils literal"><span class="pre">None</span></tt>, meaning that the aspect
+are changed independently. Default is <code class="docutils literal"><span class="pre">None</span></code>, meaning that the aspect
 ratio is not enforced.</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">padding_left</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">padding_right</span></tt>,
-<tt class="xref py py-attr docutils literal"><span class="pre">padding_top</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">padding_bottom</span></tt> set the amount of padding space
-to leave around the component (default is 0). The property <tt class="xref py py-attr docutils literal"><span class="pre">padding</span></tt>
+<li><code class="xref py py-attr docutils literal"><span class="pre">padding_left</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">padding_right</span></code>,
+<code class="xref py py-attr docutils literal"><span class="pre">padding_top</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">padding_bottom</span></code> set the amount of padding space
+to leave around the component (default is 0). The property <code class="xref py py-attr docutils literal"><span class="pre">padding</span></code>
 allows to set all of them as a tuple (left, right, top, bottom).</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">auto_center</span></tt>, controls the behavior when the component&#8217;s bounds are
-set to a value that does not conform its aspect ratio. If <tt class="docutils literal"><span class="pre">True</span></tt>
+<li><code class="xref py py-attr docutils literal"><span class="pre">auto_center</span></code>, controls the behavior when the component&#8217;s bounds are
+set to a value that does not conform its aspect ratio. If <code class="docutils literal"><span class="pre">True</span></code>
 (default), the component centers itself in the free space.</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">fixed_preferred_size</span></tt>: If the component is resizable, this attribute
+<li><code class="xref py py-attr docutils literal"><span class="pre">fixed_preferred_size</span></code>: If the component is resizable, this attribute
 specifies the amount of space that the component would like to get in each
 dimension, as a tuple (width, height). This attribute can be used to
 establish
@@ -546,82 +544,82 @@ always be twice as wide as the former.</li>
 </ul>
 <p>You can get access to the actual bounds of the component, (including
 padding and border) using the
-<tt class="docutils literal"><span class="pre">outer</span></tt> properties:</p>
+<code class="docutils literal"><span class="pre">outer</span></code> properties:</p>
 <ul class="simple">
-<li><tt class="xref py py-attr docutils literal"><span class="pre">outer_position</span></tt>, the x,y point of the lower left corner of the
+<li><code class="xref py py-attr docutils literal"><span class="pre">outer_position</span></code>, the x,y point of the lower left corner of the
 padding outer box around
-the component. Use <tt class="xref py py-meth docutils literal"><span class="pre">set_outer_position()</span></tt> to change these values.</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">outer_bounds</span></tt>,
+the component. Use <code class="xref py py-meth docutils literal"><span class="pre">set_outer_position()</span></code> to change these values.</li>
+<li><code class="xref py py-attr docutils literal"><span class="pre">outer_bounds</span></code>,
 the number of horizontal and vertical pixels in the padding outer box.
-Use <tt class="xref py py-meth docutils literal"><span class="pre">set_outer_bounds()</span></tt> to change these values.</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">outer_x</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_y</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_x2</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_y2:,</span>
-<span class="pre">:attr:`outer_width</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">outer_height</span></tt>:
+Use <code class="xref py py-meth docutils literal"><span class="pre">set_outer_bounds()</span></code> to change these values.</li>
+<li><code class="xref py py-attr docutils literal"><span class="pre">outer_x</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">outer_y</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">outer_x2</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">outer_y2:,</span>
+<span class="pre">:attr:`outer_width</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">outer_height</span></code>:
 coordinates of lower-left pixel of the box,
 coordinates of the upper-right pixel of the box,
 width and height of the outer box in pixels</li>
 </ul>
-<p>See also the documentation of the class <tt class="xref py py-class docutils literal"><span class="pre">enable.component.Component</span></tt>
+<p>See also the documentation of the class <code class="xref py py-class docutils literal"><span class="pre">enable.component.Component</span></code>
 for more details about the internal parameters of Chaco components.</p>
-<p>The container can set the attribute <tt class="xref py py-attr docutils literal"><span class="pre">fit_components</span></tt> to control if
+<p>The container can set the attribute <code class="xref py py-attr docutils literal"><span class="pre">fit_components</span></code> to control if
 it should resize itself to fit its components. Allowed values are
-<tt class="docutils literal"><span class="pre">''</span></tt> (do not resize, default), <tt class="docutils literal"><span class="pre">'h'</span></tt>
-(resize in the horizontal direction), <tt class="docutils literal"><span class="pre">'v'</span></tt> (resize in the
-vertical direction), <tt class="docutils literal"><span class="pre">'hv'</span></tt> (resize in both).</p>
+<code class="docutils literal"><span class="pre">''</span></code> (do not resize, default), <code class="docutils literal"><span class="pre">'h'</span></code>
+(resize in the horizontal direction), <code class="docutils literal"><span class="pre">'v'</span></code> (resize in the
+vertical direction), <code class="docutils literal"><span class="pre">'hv'</span></code> (resize in both).</p>
 </div>
 <div class="section" id="rendering-order">
 <h3>Rendering order<a class="headerlink" href="#rendering-order" title="Permalink to this headline">¶</a></h3>
 <p>Every plot component has several layers:</p>
 <ol class="arabic">
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">background</span></tt>: Background image, shading, and borders</p>
+<li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">background</span></code>: Background image, shading, and borders</p>
 </li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">underlay</span></tt>: Axes and grids</p>
+<li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">underlay</span></code>: Axes and grids</p>
 </li>
 <li><dl class="first docutils">
-<dt><tt class="xref py py-attr docutils literal"><span class="pre">image</span></tt>: A special layer for plots that render as images.  This is in</dt>
+<dt><code class="xref py py-attr docutils literal"><span class="pre">image</span></code>: A special layer for plots that render as images.  This is in</dt>
 <dd><p class="first last">a separate layer since these plots must all render before non-image
 plots.</p>
 </dd>
 </dl>
 </li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">plot</span></tt>: The main plot area</p>
+<li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">plot</span></code>: The main plot area</p>
 </li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">annotation</span></tt>: Lines and text that are conceptually part of the &#8220;plot&#8221; but
+<li><p class="first"><code class="xref py py-attr docutils literal"><span class="pre">annotation</span></code>: Lines and text that are conceptually part of the &#8220;plot&#8221; but
 need to be rendered on top of everything else in the plot.</p>
 </li>
 <li><dl class="first docutils">
-<dt><tt class="xref py py-attr docutils literal"><span class="pre">overlay</span></tt>: Legends, selection regions, and other tool-drawn visual</dt>
+<dt><code class="xref py py-attr docutils literal"><span class="pre">overlay</span></code>: Legends, selection regions, and other tool-drawn visual</dt>
 <dd><p class="first last">elements</p>
 </dd>
 </dl>
 </li>
 </ol>
-<p>These are defined by <tt class="xref py py-attr docutils literal"><span class="pre">DEFAULT_DRAWING_ORDER</span></tt>,
-and stored in the <tt class="xref py py-attr docutils literal"><span class="pre">drawing_order</span></tt> trait.</p>
+<p>These are defined by <code class="xref py py-attr docutils literal"><span class="pre">DEFAULT_DRAWING_ORDER</span></code>,
+and stored in the <code class="xref py py-attr docutils literal"><span class="pre">drawing_order</span></code> trait.</p>
 <p>Complexity arises when you have multiple components in a container: How do
 their layers affect each other? Do you want the &#8220;overlay&#8221; layer of a component
 to draw on top of all components? Do you want the &#8220;background&#8221; elements
 to be behind everything else?</p>
-<p>This is resolved by the <tt class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></tt> trait. The container will
-draw all layers in succession. If a component sets <tt class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></tt>
-to <tt class="docutils literal"><span class="pre">False</span></tt> (default), the container will ask it to draw the corresponding
-layer as it is reached in the loop. If <tt class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></tt> is <tt class="docutils literal"><span class="pre">True</span></tt>,
+<p>This is resolved by the <code class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></code> trait. The container will
+draw all layers in succession. If a component sets <code class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></code>
+to <code class="docutils literal"><span class="pre">False</span></code> (default), the container will ask it to draw the corresponding
+layer as it is reached in the loop. If <code class="xref py py-attr docutils literal"><span class="pre">unified_draw</span></code> is <code class="docutils literal"><span class="pre">True</span></code>,
 the whole component will draw in one go when the container reaches
-the layer specified in the attribute <tt class="docutils literal"><span class="pre">component.draw_layer</span></tt>,
+the layer specified in the attribute <code class="docutils literal"><span class="pre">component.draw_layer</span></code>,
 which by default is &#8216;plot&#8217;.</p>
 <p>For example, if you want a plot to act as an overlay, you could set
-<tt class="docutils literal"><span class="pre">unified_draw</span> <span class="pre">=</span> <span class="pre">True</span></tt> and <tt class="docutils literal"><span class="pre">draw_layer</span> <span class="pre">=</span> <span class="pre">'overlay'</span></tt>. These values tell the
+<code class="docutils literal"><span class="pre">unified_draw</span> <span class="pre">=</span> <span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">draw_layer</span> <span class="pre">=</span> <span class="pre">'overlay'</span></code>. These values tell the
 container to render the component when it gets to the &#8216;overlay&#8217; layer.</p>
-<p>Set <tt class="xref py py-attr docutils literal"><span class="pre">overlay_border</span></tt> to True if you want the border to draw as part of
+<p>Set <code class="xref py py-attr docutils literal"><span class="pre">overlay_border</span></code> to True if you want the border to draw as part of
 the overlay; otherwise it draws as part of the background. By default,
-the border is drawn just inside the plot area; set <tt class="xref py py-attr docutils literal"><span class="pre">inset_border</span></tt> to
+the border is drawn just inside the plot area; set <code class="xref py py-attr docutils literal"><span class="pre">inset_border</span></code> to
 False to draw it just outside the plot area.</p>
 <div class="section" id="backbuffer">
 <h4>Backbuffer<a class="headerlink" href="#backbuffer" title="Permalink to this headline">¶</a></h4>
 <p>A backbuffer provides the ability to render into an offscreen buffer, which is
 blitted on every draw, until it is invalidated. Various traits such as
-<tt class="xref py py-attr docutils literal"><span class="pre">use_backbuffer</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">backbuffer_padding</span></tt> control the behavior of
+<code class="xref py py-attr docutils literal"><span class="pre">use_backbuffer</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">backbuffer_padding</span></code> control the behavior of
 the backbuffer. A backbuffer is used for non-OpenGL backends, such as <cite>agg</cite>
-and on OS X. If <tt class="xref py py-attr docutils literal"><span class="pre">use_backbuffer</span></tt> is False, a backbuffer is never used,
+and on OS X. If <code class="xref py py-attr docutils literal"><span class="pre">use_backbuffer</span></code> is False, a backbuffer is never used,
 even if a backbuffer is referenced by a component.</p>
 </div>
 </div>
@@ -637,19 +635,19 @@ In summary, when a component gets an event, it dispatches it to:</p>
 <li>its listener tools</li>
 </ol>
 <p>On each of these elements, Chaco looks for a method of the form
-<tt class="docutils literal"><span class="pre">{component_state}_{event_name}</span></tt>. For example,
+<code class="docutils literal"><span class="pre">{component_state}_{event_name}</span></code>. For example,
 in response to the user pressing the left mouse button
-on a tool in state <tt class="docutils literal"><span class="pre">normal</span></tt> (the default state, see <em class="xref std std-ref">Tool states</em>),
-Chaco would look for a method called <tt class="docutils literal"><span class="pre">normal_left_down</span></tt>.</p>
+on a tool in state <code class="docutils literal"><span class="pre">normal</span></code> (the default state, see <a class="reference internal" href="chaco_tutorial.html#tool-states"><span class="std std-ref">Stateful tools</span></a>),
+Chaco would look for a method called <code class="docutils literal"><span class="pre">normal_left_down</span></code>.</p>
 <p>If this exists, the event is
 dispatched and the component decides whether to handle the element
-and set <tt class="docutils literal"><span class="pre">event.handled</span> <span class="pre">=</span> <span class="pre">True</span></tt>, in which case the dispatch chain is
+and set <code class="docutils literal"><span class="pre">event.handled</span> <span class="pre">=</span> <span class="pre">True</span></code>, in which case the dispatch chain is
 interrupted.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If the attribute <tt class="xref py py-attr docutils literal"><span class="pre">auto_handle_event</span></tt> of the
-component is set to <tt class="docutils literal"><span class="pre">True</span></tt>, calling the event
-method automatically sets <tt class="docutils literal"><span class="pre">event.handled</span> <span class="pre">=</span> <span class="pre">True</span></tt>.</p>
+<p class="last">If the attribute <code class="xref py py-attr docutils literal"><span class="pre">auto_handle_event</span></code> of the
+component is set to <code class="docutils literal"><span class="pre">True</span></code>, calling the event
+method automatically sets <code class="docutils literal"><span class="pre">event.handled</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
 </div>
 <p>Possible event names are:</p>
 <table class="hlist"><tr><td><ul class="simple">
@@ -684,27 +682,27 @@ method automatically sets <tt class="docutils literal"><span class="pre">event.h
 <p>Most objects default to having just a single event
 state, which is the &#8220;normal&#8221; event state. To make a component that
 handled a left-click, you could subclass
-<tt class="xref py py-class docutils literal"><span class="pre">PlotComponent</span></tt>, and implement
-<tt class="xref py py-meth docutils literal"><span class="pre">normal_left_down()</span></tt> or <tt class="xref py py-meth docutils literal"><span class="pre">normal_left_up()</span></tt>. The signature for handler
+<code class="xref py py-class docutils literal"><span class="pre">PlotComponent</span></code>, and implement
+<code class="xref py py-meth docutils literal"><span class="pre">normal_left_down()</span></code> or <code class="xref py py-meth docutils literal"><span class="pre">normal_left_up()</span></code>. The signature for handler
 methods is just one parameter, which is an event object that is an instance of
-(a subclass of) <tt class="xref py py-class docutils literal"><span class="pre">BasicEvent</span></tt>.
-Subclasses of <tt class="xref py py-class docutils literal"><span class="pre">BasicEvent</span></tt>
-are <tt class="xref py py-class docutils literal"><span class="pre">MouseEvent</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">DragEvent</span></tt>,
-<tt class="xref py py-class docutils literal"><span class="pre">KeyEvent</span></tt>, and
-<tt class="xref py py-class docutils literal"><span class="pre">BlobEvent</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">BlobFrameEvent</span></tt>
+(a subclass of) <code class="xref py py-class docutils literal"><span class="pre">BasicEvent</span></code>.
+Subclasses of <code class="xref py py-class docutils literal"><span class="pre">BasicEvent</span></code>
+are <code class="xref py py-class docutils literal"><span class="pre">MouseEvent</span></code>, <code class="xref py py-class docutils literal"><span class="pre">DragEvent</span></code>,
+<code class="xref py py-class docutils literal"><span class="pre">KeyEvent</span></code>, and
+<code class="xref py py-class docutils literal"><span class="pre">BlobEvent</span></code> and <code class="xref py py-class docutils literal"><span class="pre">BlobFrameEvent</span></code>
 (for multitouch). It&#8217;s fairly easy to extend this event
 system with new kinds of events and new suffixes (as was done for multitouch).</p>
 <p>Events contain a reference to the GUI toolkit window that generated them
-as <tt class="xref py py-attr docutils literal"><span class="pre">event.window</span></tt>.
+as <code class="xref py py-attr docutils literal"><span class="pre">event.window</span></code>.
 A common pattern is for component to call methods on the window
 to do things like set a tooltip or create a context menu.
 A draw or update of the window does not
-actually happen until the next <tt class="xref py py-meth docutils literal"><span class="pre">paint()</span></tt>.
+actually happen until the next <code class="xref py py-meth docutils literal"><span class="pre">paint()</span></code>.
 By that time, the
 component no longer has a reference to the event or the event&#8217;s window,
 but uses instead
-its own reference to the window, <tt class="xref py py-attr docutils literal"><span class="pre">self.window</span></tt>.</p>
-<p>See also the <a class="reference external" href="http://github.enthought.com/enable/enable_concepts.html">documentation of the enable library</a>, which gives
+its own reference to the window, <code class="xref py py-attr docutils literal"><span class="pre">self.window</span></code>.</p>
+<p>See also the <a class="reference external" href="http://docs.enthought.com/enable/enable_concepts.html">documentation of the enable library</a>, which gives
 more details about the event dispatching happening at that level.</p>
 </div>
 </div>
@@ -714,7 +712,7 @@ more details about the event dispatching happening at that level.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -748,12 +746,14 @@ more details about the event dispatching happening at that level.</p>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/user_manual/containers.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_manual/containers.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -761,36 +761,33 @@ more details about the event dispatching happening at that level.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="tools.html" title="Tools and Overlays"
              >next</a></li>
         <li class="right" >
-          <a href="plot_types.html" title="Plot types"
+          <a href="basic_elements/overlays.html" title="Overlays: axis, legend, grid, etc."
              >previous</a> |</li>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="index.html" >User guide</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >User guide</a> &raquo;</li>
   
     <li><a href="#">Containers and Layout</a></li>
   
 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2014, Enthought, Inc..
-      Last updated on Nov 05, 2014.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Dec 22, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

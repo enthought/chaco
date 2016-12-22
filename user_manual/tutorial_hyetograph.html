@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating an interactive Hyetograph with Chaco and Traits &mdash; chaco 4.5.0 documentation</title>
+    <title>Creating an interactive Hyetograph with Chaco and Traits &mdash; Chaco 4.6</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +25,13 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco 4.5.0 documentation" href="../index.html" /> 
+    <link rel="top" title="Chaco 4.6" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
   
     <li><a href="#">Creating an interactive Hyetograph with Chaco and Traits</a></li>
   
@@ -44,7 +42,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="creating-an-interactive-hyetograph-with-chaco-and-traits">
 <span id="tutorial-hyetograph"></span><h1>Creating an interactive Hyetograph with Chaco and Traits<a class="headerlink" href="#creating-an-interactive-hyetograph-with-chaco-and-traits" title="Permalink to this headline">¶</a></h1>
@@ -95,10 +93,10 @@ view without needing any additional programming.</li>
 In calling your function you want to specify where the function is and
 then import it.  The following code snippet imports all the names that
 will be used for our application.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> \
-    <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
+    <span class="kn">import</span> <span class="nn">HasTraits</span><span class="o">,</span> <span class="nn">Int</span><span class="o">,</span> <span class="nn">Range</span><span class="o">,</span> <span class="nn">Array</span><span class="o">,</span> <span class="nn">Enum</span><span class="o">,</span> <span class="nn">on_trait_change</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="k">import</span> <span class="n">ChacoPlotItem</span>
 </pre></div>
 </div>
 </div>
@@ -112,16 +110,16 @@ hierarchies if needed.</p>
 <p>Within this class we define all the class variables using Traits types
 which will later be used in the UI.  These traits are set to equal
 their type similar to many typed languages.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Creates a simple hyetograph demo. &quot;&quot;&quot;</span>
     <span class="n">timeline</span> <span class="o">=</span> <span class="n">Array</span>
     <span class="n">intensity</span> <span class="o">=</span> <span class="n">Array</span>
     <span class="n">nrcs</span> <span class="o">=</span> <span class="n">Array</span>
-    <span class="n">duration</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;In Hours&#39;</span><span class="p">)</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;In Hours&#39;</span><span class="p">)</span>
     <span class="n">year_storm</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">county</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&#39;Brazos&#39;</span><span class="p">,</span> <span class="s">&#39;Dallas&#39;</span><span class="p">,</span> <span class="s">&#39;El Paso&#39;</span><span class="p">,</span> <span class="s">&#39;Harris&#39;</span><span class="p">)</span>
+    <span class="n">county</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s1">&#39;Brazos&#39;</span><span class="p">,</span> <span class="s1">&#39;Dallas&#39;</span><span class="p">,</span> <span class="s1">&#39;El Paso&#39;</span><span class="p">,</span> <span class="s1">&#39;Harris&#39;</span><span class="p">)</span>
     <span class="n">curve_number</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&#39;line&#39;</span><span class="p">,</span> <span class="s">&#39;scatter&#39;</span><span class="p">)</span>
+    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">,</span> <span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The above code snippet shows a number of Traits features,</p>
@@ -143,7 +141,7 @@ each instance of the class will have a unique copy of the traits.</li>
 </ol>
 </div></blockquote>
 <p>The Traits API Reference contains more information about the standard
-Trait types; see the <tt class="xref py py-mod docutils literal"><span class="pre">trait_types</span></tt> module in the <a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/traits.trait_types.html">Traits API Reference</a>.</p>
+Trait types; see the <code class="xref py py-mod docutils literal"><span class="pre">trait_types</span></code> module in the <a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/traits.trait_types.html">Traits API Reference</a>.</p>
 </div>
 <div class="section" id="setting-up-the-user-interface-ui">
 <h2>Setting up the User Interface (UI)<a class="headerlink" href="#setting-up-the-user-interface-ui" title="Permalink to this headline">¶</a></h2>
@@ -152,54 +150,55 @@ editable entry for each trait within the class.  But a user-defined
 view usually looks better, so we&#8217;ll use View and Items to change the
 default class view.  Changing the default UI is done by creating a
 trait on the class that is of the View type.  Multiple View traits can
-be defined and used, with the one named <tt class="docutils literal"><span class="pre">traits_view</span></tt> being used as
+be defined and used, with the one named <code class="docutils literal"><span class="pre">traits_view</span></code> being used as
 the default.</p>
 <p>Continuing with our application, here is the View definition.</p>
-<div class="highlight-python"><pre>class Hyetograph(HasTraits):
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
 
-    &lt;... snip ...&gt;
+    <span class="o">&lt;...</span> <span class="n">snip</span> <span class="o">...&gt;</span>
 
-    view1 = View(Item('plot_type'),
-                 ChacoPlotItem('timeline', 'intensity',
-                               type_trait='plot_type',
-                               resizable=True,
-                               x_label='Time (hr)',
-                               y_label='Intensity (in/hr)',
-                               color='blue',
-                               bgcolor='white',
-                               border_visible=True,
-                               border_width=1,
-                               padding_bg_color='lightgray'),
-                 Item(name='duration'),
-                 Item(name='year_storm'),
-                 Item(name='county'),
+    <span class="n">view1</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot_type&#39;</span><span class="p">),</span>
+                 <span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s1">&#39;timeline&#39;</span><span class="p">,</span> <span class="s1">&#39;intensity&#39;</span><span class="p">,</span>
+                               <span class="n">type_trait</span><span class="o">=</span><span class="s1">&#39;plot_type&#39;</span><span class="p">,</span>
+                               <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">x_label</span><span class="o">=</span><span class="s1">&#39;Time (hr)&#39;</span><span class="p">,</span>
+                               <span class="n">y_label</span><span class="o">=</span><span class="s1">&#39;Intensity (in/hr)&#39;</span><span class="p">,</span>
+                               <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                               <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+                               <span class="n">border_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">border_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                               <span class="n">padding_bg_color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">),</span>
+                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;duration&#39;</span><span class="p">),</span>
+                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;year_storm&#39;</span><span class="p">),</span>
+                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;county&#39;</span><span class="p">),</span>
 
-                 # After infiltration using the nrcs curve number method.
-                 ChacoPlotItem('timeline', 'nrcs',
-                                type_trait='plot_type',
-                                resizable=True,
-                                x_label='Time',
-                                y_label='Intensity',
-                                color='blue',
-                                bgcolor='white',
-                                border_visible=True,
-                                border_width=1,
-                                padding_bg_color='lightgray'),
-                Item('curve_number'),
-                resizable = True,
-                width=800, height=800)</pre>
+                 <span class="c1"># After infiltration using the nrcs curve number method.</span>
+                 <span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s1">&#39;timeline&#39;</span><span class="p">,</span> <span class="s1">&#39;nrcs&#39;</span><span class="p">,</span>
+                                <span class="n">type_trait</span><span class="o">=</span><span class="s1">&#39;plot_type&#39;</span><span class="p">,</span>
+                                <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">x_label</span><span class="o">=</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span>
+                                <span class="n">y_label</span><span class="o">=</span><span class="s1">&#39;Intensity&#39;</span><span class="p">,</span>
+                                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                                <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+                                <span class="n">border_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">border_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">padding_bg_color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">),</span>
+                <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;curve_number&#39;</span><span class="p">),</span>
+                <span class="n">resizable</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>Views generally contain Item objects and named parameters.  Views can
 also contain Groups of Items as well as many other types of layout
 features not covered here.  By default, Item objects take a string of
-the trait to edit.  For example, the <tt class="docutils literal"><span class="pre">Item(name='county')</span></tt> will
+the trait to edit.  For example, the <code class="docutils literal"><span class="pre">Item(name='county')</span></code> will
 create a pull-down menu in the UI showing the four valid counties that
 the user can select from.</p>
 <p>There are three important observations to be seen in the above view
 definition.  First, there are two Chaco plot items embedded in the
 view.  The top plot is the intensity versus time and the bottom is
 nrcs versus time.  Second, default window will be sized at 800 by 800
-pixels, but the option <tt class="docutils literal"><span class="pre">resizable</span> <span class="pre">=</span> <span class="pre">True</span></tt> will allow the user to
+pixels, but the option <code class="docutils literal"><span class="pre">resizable</span> <span class="pre">=</span> <span class="pre">True</span></code> will allow the user to
 change the size of the window.  And third, the traits are split up so
 3 of them are displayed below the first plot and only 1 is displayed
 below the second.  Here is a snapshot of what our application will
@@ -215,10 +214,10 @@ numbers does nothing because they&#8217;re hooked up to nothing and there
 are no listeners on the trait event notifications.  So , next we&#8217;ll
 add some hyetograph calculations that modify the intensity and nrcs
 Array traits.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">calculate_intensity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_intensity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The Hyetograph calculations. &quot;&quot;&quot;</span>
-    <span class="c"># Assigning A, B, and C values based on year, storm, and county</span>
-    <span class="n">counties</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Brazos&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;Dallas&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&#39;El Paso&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">&#39;Harris&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
+    <span class="c1"># Assigning A, B, and C values based on year, storm, and county</span>
+    <span class="n">counties</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Brazos&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Dallas&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;El Paso&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;Harris&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
     <span class="n">years</span> <span class="o">=</span> <span class="p">{</span>
         <span class="mi">2</span> <span class="p">:</span> <span class="p">[</span><span class="mi">65</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">.</span><span class="mi">806</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="o">.</span><span class="mi">791</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="o">.</span><span class="mi">797</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mf">7.9</span><span class="p">,</span> <span class="o">.</span><span class="mi">800</span><span class="p">],</span>
         <span class="mi">10</span><span class="p">:</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="o">.</span><span class="mi">763</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mf">8.7</span><span class="p">,</span> <span class="o">.</span><span class="mi">777</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="o">.</span><span class="mi">795</span><span class="p">,</span><span class="mi">81</span><span class="p">,</span> <span class="mf">7.7</span><span class="p">,</span> <span class="o">.</span><span class="mi">753</span><span class="p">],</span>
@@ -240,9 +239,9 @@ Array traits.</p>
         <span class="n">temp</span><span class="o">=</span><span class="n">i</span>
     <span class="n">result</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">cumdepth</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-    <span class="c"># Alternating block method implementation.</span>
+    <span class="c1"># Alternating block method implementation.</span>
     <span class="n">result</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-    <span class="n">switch</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">switch</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">o</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">switch</span><span class="p">:</span>
@@ -260,7 +259,7 @@ Array traits.</p>
     <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_number</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span>
     <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intensity</span> <span class="o">-</span> <span class="p">(</span><span class="o">.</span><span class="mi">2</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
     <span class="n">vr</span> <span class="o">=</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intensity</span> <span class="o">+</span> <span class="p">(</span><span class="o">.</span><span class="mi">8</span> <span class="o">*</span> <span class="n">s</span><span class="p">))</span>
-    <span class="c"># There&#39;s no such thing as negative run-off.</span>
+    <span class="c1"># There&#39;s no such thing as negative run-off.</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">vr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -282,20 +281,20 @@ specific convention.  Alternatively, a dynamic handler is set up by
 calling a function at runtime, providing for on-the-fly event
 processing.  Below is a function that calls the two calculation
 functions.  The interesting line is the decorator,
-<tt class="docutils literal"><span class="pre">&#64;on_trait_change</span></tt> that tells Traits to call the function whenever
+<code class="docutils literal"><span class="pre">&#64;on_trait_change</span></code> that tells Traits to call the function whenever
 any of the values within the list of traits change.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@on_trait_change</span><span class="p">(</span><span class="s">&#39;duration, year_storm, county, curve_number&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@on_trait_change</span><span class="p">(</span><span class="s1">&#39;duration, year_storm, county, curve_number&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_perform_calculations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">calculate_intensity</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">calculate_runoff</span><span class="p">()</span>
 </pre></div>
 </div>
 <dl class="docutils">
-<dt>So now when the application is run, when the <tt class="docutils literal"><span class="pre">duration</span></tt> trait is</dt>
+<dt>So now when the application is run, when the <code class="docutils literal"><span class="pre">duration</span></code> trait is</dt>
 <dd>changed or any of the four listed traits change, the calculation
 functions are automatically called and the data changes.  And these
 traits will automatically change when the user adjusts the widgets
-in the UI.  So when the user changes the <tt class="docutils literal"><span class="pre">duration</span></tt> in the UI
+in the UI.  So when the user changes the <code class="docutils literal"><span class="pre">duration</span></code> in the UI
 from 12 hours to 24 hours this will automatically effect both of
 the plots since the listeners force a recalculation of both of the
 functions.</dd>
@@ -307,13 +306,14 @@ functions.</dd>
 instantiated, and then a configure_traits() call is done.  However we
 must first call the data calculation functions from within the class
 to initialize the data arrays.  Here&#8217;s the last piece of the program.</p>
-<div class="highlight-python"><pre>    def start(self):
-        self._perform_calculations()
-        self.configure_traits()
+<div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_perform_calculations</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 
 
-f=Hyetograph()
-f.start()</pre>
+<span class="n">f</span><span class="o">=</span><span class="n">Hyetograph</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
 </div>
 <p>start() performs the calculations needed for the Arrays used to plot,
 and then triggers the UI.  The application is complete, and if you now
@@ -325,10 +325,10 @@ the following image,</p>
 <div class="section" id="source-code">
 <h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>The final version of the program, <cite>hyetograph.py</cite>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> \
-    <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
+    <span class="kn">import</span> <span class="nn">HasTraits</span><span class="o">,</span> <span class="nn">Int</span><span class="o">,</span> <span class="nn">Range</span><span class="o">,</span> <span class="nn">Array</span><span class="o">,</span> <span class="nn">Enum</span><span class="o">,</span> <span class="nn">on_trait_change</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="k">import</span> <span class="n">ChacoPlotItem</span>
 
 
 <span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
@@ -336,47 +336,47 @@ the following image,</p>
     <span class="n">timeline</span> <span class="o">=</span> <span class="n">Array</span>
     <span class="n">intensity</span> <span class="o">=</span> <span class="n">Array</span>
     <span class="n">nrcs</span> <span class="o">=</span> <span class="n">Array</span>
-    <span class="n">duration</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;In Hours&#39;</span><span class="p">)</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;In Hours&#39;</span><span class="p">)</span>
     <span class="n">year_storm</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">county</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&#39;Brazos&#39;</span><span class="p">,</span> <span class="s">&#39;Dallas&#39;</span><span class="p">,</span> <span class="s">&#39;El Paso&#39;</span><span class="p">,</span> <span class="s">&#39;Harris&#39;</span><span class="p">)</span>
+    <span class="n">county</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s1">&#39;Brazos&#39;</span><span class="p">,</span> <span class="s1">&#39;Dallas&#39;</span><span class="p">,</span> <span class="s1">&#39;El Paso&#39;</span><span class="p">,</span> <span class="s1">&#39;Harris&#39;</span><span class="p">)</span>
     <span class="n">curve_number</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&#39;line&#39;</span><span class="p">,</span> <span class="s">&#39;scatter&#39;</span><span class="p">)</span>
+    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s1">&#39;line&#39;</span><span class="p">,</span> <span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
 
-    <span class="n">view1</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot_type&#39;</span><span class="p">),</span>
-                 <span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s">&#39;timeline&#39;</span><span class="p">,</span> <span class="s">&#39;intensity&#39;</span><span class="p">,</span>
-                               <span class="n">type_trait</span><span class="o">=</span><span class="s">&#39;plot_type&#39;</span><span class="p">,</span>
-                               <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                               <span class="n">x_label</span><span class="o">=</span><span class="s">&#39;Time (hr)&#39;</span><span class="p">,</span>
-                               <span class="n">y_label</span><span class="o">=</span><span class="s">&#39;Intensity (in/hr)&#39;</span><span class="p">,</span>
-                               <span class="n">color</span><span class="o">=</span><span class="s">&#39;blue&#39;</span><span class="p">,</span>
-                               <span class="n">bgcolor</span><span class="o">=</span><span class="s">&#39;white&#39;</span><span class="p">,</span>
-                               <span class="n">border_visible</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">view1</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot_type&#39;</span><span class="p">),</span>
+                 <span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s1">&#39;timeline&#39;</span><span class="p">,</span> <span class="s1">&#39;intensity&#39;</span><span class="p">,</span>
+                               <span class="n">type_trait</span><span class="o">=</span><span class="s1">&#39;plot_type&#39;</span><span class="p">,</span>
+                               <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">x_label</span><span class="o">=</span><span class="s1">&#39;Time (hr)&#39;</span><span class="p">,</span>
+                               <span class="n">y_label</span><span class="o">=</span><span class="s1">&#39;Intensity (in/hr)&#39;</span><span class="p">,</span>
+                               <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                               <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+                               <span class="n">border_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">border_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                               <span class="n">padding_bg_color</span><span class="o">=</span><span class="s">&#39;lightgray&#39;</span><span class="p">),</span>
-                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;duration&#39;</span><span class="p">),</span>
-                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;year_storm&#39;</span><span class="p">),</span>
-                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;county&#39;</span><span class="p">),</span>
+                               <span class="n">padding_bg_color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">),</span>
+                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;duration&#39;</span><span class="p">),</span>
+                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;year_storm&#39;</span><span class="p">),</span>
+                 <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;county&#39;</span><span class="p">),</span>
 
-                 <span class="c"># After infiltration using the nrcs curve number method.</span>
-                 <span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s">&#39;timeline&#39;</span><span class="p">,</span> <span class="s">&#39;nrcs&#39;</span><span class="p">,</span>
-                                <span class="n">type_trait</span><span class="o">=</span><span class="s">&#39;plot_type&#39;</span><span class="p">,</span>
-                                <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                                <span class="n">x_label</span><span class="o">=</span><span class="s">&#39;Time&#39;</span><span class="p">,</span>
-                                <span class="n">y_label</span><span class="o">=</span><span class="s">&#39;Intensity&#39;</span><span class="p">,</span>
-                                <span class="n">color</span><span class="o">=</span><span class="s">&#39;blue&#39;</span><span class="p">,</span>
-                                <span class="n">bgcolor</span><span class="o">=</span><span class="s">&#39;white&#39;</span><span class="p">,</span>
-                                <span class="n">border_visible</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                 <span class="c1"># After infiltration using the nrcs curve number method.</span>
+                 <span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s1">&#39;timeline&#39;</span><span class="p">,</span> <span class="s1">&#39;nrcs&#39;</span><span class="p">,</span>
+                                <span class="n">type_trait</span><span class="o">=</span><span class="s1">&#39;plot_type&#39;</span><span class="p">,</span>
+                                <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">x_label</span><span class="o">=</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span>
+                                <span class="n">y_label</span><span class="o">=</span><span class="s1">&#39;Intensity&#39;</span><span class="p">,</span>
+                                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                                <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+                                <span class="n">border_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                 <span class="n">border_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                                <span class="n">padding_bg_color</span><span class="o">=</span><span class="s">&#39;lightgray&#39;</span><span class="p">),</span>
-                <span class="n">Item</span><span class="p">(</span><span class="s">&#39;curve_number&#39;</span><span class="p">),</span>
-                <span class="n">resizable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                <span class="n">padding_bg_color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">),</span>
+                <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;curve_number&#39;</span><span class="p">),</span>
+                <span class="n">resizable</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
                 <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 
 
     <span class="k">def</span> <span class="nf">calculate_intensity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; The Hyetograph calculations. &quot;&quot;&quot;</span>
-        <span class="c"># Assigning A, B, and C values based on year, storm, and county</span>
-        <span class="n">counties</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Brazos&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;Dallas&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&#39;El Paso&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">&#39;Harris&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
+        <span class="c1"># Assigning A, B, and C values based on year, storm, and county</span>
+        <span class="n">counties</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Brazos&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Dallas&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;El Paso&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;Harris&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
         <span class="n">years</span> <span class="o">=</span> <span class="p">{</span>
             <span class="mi">2</span> <span class="p">:</span> <span class="p">[</span><span class="mi">65</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">.</span><span class="mi">806</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="o">.</span><span class="mi">791</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="o">.</span><span class="mi">797</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mf">7.9</span><span class="p">,</span> <span class="o">.</span><span class="mi">800</span><span class="p">],</span>
             <span class="mi">10</span><span class="p">:</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="o">.</span><span class="mi">763</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mf">8.7</span><span class="p">,</span> <span class="o">.</span><span class="mi">777</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="o">.</span><span class="mi">795</span><span class="p">,</span><span class="mi">81</span><span class="p">,</span> <span class="mf">7.7</span><span class="p">,</span> <span class="o">.</span><span class="mi">753</span><span class="p">],</span>
@@ -398,9 +398,9 @@ the following image,</p>
             <span class="n">temp</span><span class="o">=</span><span class="n">i</span>
         <span class="n">result</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">cumdepth</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-        <span class="c"># Alternating block method implementation.</span>
+        <span class="c1"># Alternating block method implementation.</span>
         <span class="n">result</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-        <span class="n">switch</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">switch</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">o</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">switch</span><span class="p">:</span>
@@ -418,14 +418,14 @@ the following image,</p>
         <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_number</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span>
         <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intensity</span> <span class="o">-</span> <span class="p">(</span><span class="o">.</span><span class="mi">2</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
         <span class="n">vr</span> <span class="o">=</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intensity</span> <span class="o">+</span> <span class="p">(</span><span class="o">.</span><span class="mi">8</span> <span class="o">*</span> <span class="n">s</span><span class="p">))</span>
-        <span class="c"># There&#39;s no such thing as negative run-off.</span>
+        <span class="c1"># There&#39;s no such thing as negative run-off.</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">vr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nrcs</span> <span class="o">=</span> <span class="n">vr</span>
 
 
-    <span class="nd">@on_trait_change</span><span class="p">(</span><span class="s">&#39;duration, year_storm, county, curve_number&#39;</span><span class="p">)</span>
+    <span class="nd">@on_trait_change</span><span class="p">(</span><span class="s1">&#39;duration, year_storm, county, curve_number&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_perform_calculations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_intensity</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_runoff</span><span class="p">()</span>
@@ -447,7 +447,7 @@ the following image,</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -469,12 +469,14 @@ the following image,</p>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/user_manual/tutorial_hyetograph.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_manual/tutorial_hyetograph.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -482,29 +484,26 @@ the following image,</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
   
     <li><a href="#">Creating an interactive Hyetograph with Chaco and Traits</a></li>
   
 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2014, Enthought, Inc..
-      Last updated on Nov 05, 2014.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Dec 22, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Axis and Grid &mdash; chaco 4.5.0 documentation</title>
+    <title>Axis and Grid &mdash; Chaco 4.6</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +25,13 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco 4.5.0 documentation" href="../index.html" />
+    <link rel="top" title="Chaco 4.6" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Tools" href="tools.html" />
     <link rel="prev" title="Plot Factories" href="plot_factories.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,8 +40,8 @@
         <li class="right" >
           <a href="plot_factories.html" title="Plot Factories"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Axis and Grid</a></li>
   
@@ -54,16 +52,16 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="axis-and-grid">
 <span id="axis"></span><h1>Axis and Grid<a class="headerlink" href="#axis-and-grid" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="plotaxis">
-<h2><a class="reference internal" href="#chaco.api.PlotAxis" title="chaco.api.PlotAxis"><tt class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></tt></a><a class="headerlink" href="#plotaxis" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.PlotAxis" title="chaco.api.PlotAxis"><code class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></code></a><a class="headerlink" href="#plotaxis" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.PlotAxis">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">PlotAxis</tt><big>(</big><em>component=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.PlotAxis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">PlotAxis</code><span class="sig-paren">(</span><em>component=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotAxis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
 <p>The PlotAxis is a visual component that can be rendered on its own as
 a standalone component or attached as an overlay to another component.
 (To attach it as an overlay, set its <strong>component</strong> attribute.)</p>
@@ -73,7 +71,7 @@ the component.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>mapper</strong> : Instance(AbstractMapper)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>mapper</strong> : Instance(AbstractMapper)</p>
 <blockquote>
 <div><p>The mapper that drives this axis.</p>
 </div></blockquote>
@@ -215,26 +213,26 @@ Typically, axes are resizable in both dimensions.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.PlotAxis.invalidate">
-<tt class="descname">invalidate</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.PlotAxis.invalidate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">invalidate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotAxis.invalidate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Invalidates the pre-computed layout and scaling data.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.PlotAxis.mapper_updated">
-<tt class="descname">mapper_updated</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.PlotAxis.mapper_updated" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mapper_updated</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotAxis.mapper_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler that is bound to this axis&#8217;s mapper&#8217;s <strong>updated</strong> event</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.PlotAxis.overlay">
-<tt class="descname">overlay</tt><big>(</big><em>component</em>, <em>gc</em>, <em>view_bounds=None</em>, <em>mode='normal'</em><big>)</big><a class="headerlink" href="#chaco.api.PlotAxis.overlay" title="Permalink to this definition">¶</a></dt>
+<code class="descname">overlay</code><span class="sig-paren">(</span><em>component</em>, <em>gc</em>, <em>view_bounds=None</em>, <em>mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotAxis.overlay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws this component overlaid on another component.</p>
 <p>Overrides AbstractOverlay.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.PlotAxis.traits_view">
-<tt class="descname">traits_view</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.PlotAxis.traits_view" title="Permalink to this definition">¶</a></dt>
+<code class="descname">traits_view</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotAxis.traits_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a View instance for use with Traits UI.  This method is
 called automatically be the Traits framework when .edit_traits() is
 invoked.</p>
@@ -244,17 +242,17 @@ invoked.</p>
 
 </div>
 <div class="section" id="labelaxis">
-<h2><a class="reference internal" href="#chaco.api.LabelAxis" title="chaco.api.LabelAxis"><tt class="xref py py-class docutils literal"><span class="pre">LabelAxis</span></tt></a><a class="headerlink" href="#labelaxis" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.LabelAxis" title="chaco.api.LabelAxis"><code class="xref py py-class docutils literal"><span class="pre">LabelAxis</span></code></a><a class="headerlink" href="#labelaxis" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.LabelAxis">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">LabelAxis</tt><big>(</big><em>component=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.LabelAxis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.axis.PlotAxis</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">LabelAxis</code><span class="sig-paren">(</span><em>component=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.LabelAxis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.axis.PlotAxis</span></code></p>
 <p>An axis whose ticks are labeled with text instead of numbers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>labels</strong> : List(Str)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>labels</strong> : List(Str)</p>
 <blockquote>
 <div><p>List of labels to use on tick marks.</p>
 </div></blockquote>
@@ -274,11 +272,11 @@ invoked.</p>
 
 </div>
 <div class="section" id="plotgrid">
-<h2><a class="reference internal" href="#chaco.api.PlotGrid" title="chaco.api.PlotGrid"><tt class="xref py py-class docutils literal"><span class="pre">PlotGrid</span></tt></a><a class="headerlink" href="#plotgrid" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.PlotGrid" title="chaco.api.PlotGrid"><code class="xref py py-class docutils literal"><span class="pre">PlotGrid</span></code></a><a class="headerlink" href="#plotgrid" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.PlotGrid">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">PlotGrid</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#chaco.api.PlotGrid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">PlotGrid</code><span class="sig-paren">(</span><em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
 <p>An overlay that represents a grid.</p>
 <p>A grid is a set of parallel lines, horizontal or vertical. You can use
 multiple grids with different settings for the horizontal and vertical
@@ -287,7 +285,7 @@ lines in a plot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>mapper</strong> : Instance(AbstractMapper)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>mapper</strong> : Instance(AbstractMapper)</p>
 <blockquote>
 <div><p>The mapper (and associated range) that drive this PlotGrid.</p>
 </div></blockquote>
@@ -371,33 +369,33 @@ transverse_bounds has no effect, and vice versa.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.PlotGrid.do_layout">
-<tt class="descname">do_layout</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chaco.api.PlotGrid.do_layout" title="Permalink to this definition">¶</a></dt>
+<code class="descname">do_layout</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotGrid.do_layout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tells this component to do layout at a given size.</p>
 <p>Overrides PlotComponent.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.PlotGrid.invalidate">
-<tt class="descname">invalidate</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.PlotGrid.invalidate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">invalidate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotGrid.invalidate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Invalidate cached information about the grid.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.PlotGrid.mapper_updated">
-<tt class="descname">mapper_updated</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.PlotGrid.mapper_updated" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mapper_updated</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotGrid.mapper_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler that is bound to this mapper&#8217;s <strong>updated</strong> event.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.PlotGrid.overlay">
-<tt class="descname">overlay</tt><big>(</big><em>other_component</em>, <em>gc</em>, <em>view_bounds=None</em>, <em>mode='normal'</em><big>)</big><a class="headerlink" href="#chaco.api.PlotGrid.overlay" title="Permalink to this definition">¶</a></dt>
+<code class="descname">overlay</code><span class="sig-paren">(</span><em>other_component</em>, <em>gc</em>, <em>view_bounds=None</em>, <em>mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotGrid.overlay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws this component overlaid on another component.</p>
 <p>Overrides AbstractOverlay.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.PlotGrid.visual_attr_changed">
-<tt class="descname">visual_attr_changed</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.PlotGrid.visual_attr_changed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">visual_attr_changed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotGrid.visual_attr_changed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an attribute that affects the appearance of the grid
 is changed.</p>
 </dd></dl>
@@ -406,21 +404,21 @@ is changed.</p>
 
 </div>
 <div class="section" id="abstracttickgenerator">
-<h2><a class="reference internal" href="#chaco.api.AbstractTickGenerator" title="chaco.api.AbstractTickGenerator"><tt class="xref py py-class docutils literal"><span class="pre">AbstractTickGenerator</span></tt></a><a class="headerlink" href="#abstracttickgenerator" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.AbstractTickGenerator" title="chaco.api.AbstractTickGenerator"><code class="xref py py-class docutils literal"><span class="pre">AbstractTickGenerator</span></code></a><a class="headerlink" href="#abstracttickgenerator" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.AbstractTickGenerator">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">AbstractTickGenerator</tt><a class="headerlink" href="#chaco.api.AbstractTickGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">AbstractTickGenerator</code><a class="headerlink" href="#chaco.api.AbstractTickGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract class for tick generators.</p>
 <dl class="method">
 <dt id="chaco.api.AbstractTickGenerator.get_ticks">
-<tt class="descname">get_ticks</tt><big>(</big><em>data_low</em>, <em>data_high</em>, <em>bounds_low</em>, <em>bounds_high</em>, <em>interval</em>, <em>use_endpoints=False</em>, <em>scale='linear'</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractTickGenerator.get_ticks" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_ticks</code><span class="sig-paren">(</span><em>data_low</em>, <em>data_high</em>, <em>bounds_low</em>, <em>bounds_high</em>, <em>interval</em>, <em>use_endpoints=False</em>, <em>scale='linear'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractTickGenerator.get_ticks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of ticks points in data space.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data_low, data_high</strong> : float</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_low, data_high</strong> : float</p>
 <blockquote>
 <div><p>The actual minimum and maximum of index values of the entire
 dataset.</p>
@@ -449,7 +447,7 @@ might not fall exactly on the bounds.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>tick_list</strong> : array of floats</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>tick_list</strong> : array of floats</p>
 <blockquote class="last">
 <div><p>Where ticks are to be placed.</p>
 </div></blockquote>
@@ -463,11 +461,11 @@ might not fall exactly on the bounds.</p>
 
 </div>
 <div class="section" id="defaulttickgenerator">
-<h2><a class="reference internal" href="#chaco.api.DefaultTickGenerator" title="chaco.api.DefaultTickGenerator"><tt class="xref py py-class docutils literal"><span class="pre">DefaultTickGenerator</span></tt></a><a class="headerlink" href="#defaulttickgenerator" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.DefaultTickGenerator" title="chaco.api.DefaultTickGenerator"><code class="xref py py-class docutils literal"><span class="pre">DefaultTickGenerator</span></code></a><a class="headerlink" href="#defaulttickgenerator" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.DefaultTickGenerator">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">DefaultTickGenerator</tt><a class="headerlink" href="#chaco.api.DefaultTickGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.ticks.AbstractTickGenerator</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">DefaultTickGenerator</code><a class="headerlink" href="#chaco.api.DefaultTickGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.ticks.AbstractTickGenerator</span></code></p>
 <p>An implementation of AbstractTickGenerator that simply uses the
 auto_ticks() and log_auto_ticks() functions.</p>
 </dd></dl>
@@ -477,7 +475,7 @@ auto_ticks() and log_auto_ticks() functions.</p>
 <h2><cite>auto_ticks</cite><a class="headerlink" href="#auto-ticks" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.auto_ticks">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">auto_ticks</tt><big>(</big><em>data_low</em>, <em>data_high</em>, <em>bound_low</em>, <em>bound_high</em>, <em>tick_interval</em>, <em>use_endpoints=True</em><big>)</big><a class="headerlink" href="#chaco.api.auto_ticks" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">auto_ticks</code><span class="sig-paren">(</span><em>data_low</em>, <em>data_high</em>, <em>bound_low</em>, <em>bound_high</em>, <em>tick_interval</em>, <em>use_endpoints=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.auto_ticks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds locations for axis tick marks.</p>
 <p>Calculates the locations for tick marks on an axis. The <em>bound_low</em>,
 <em>bound_high</em>, and <em>tick_interval</em> parameters specify how the axis end
@@ -486,7 +484,7 @@ points and tick interval are calculated.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data_low, data_high</strong> : number</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_low, data_high</strong> : number</p>
 <blockquote>
 <div><p>The minimum and maximum values of the data along this axis.
 If any of the bound settings are &#8216;auto&#8217; or &#8216;fit&#8217;, the axis
@@ -516,7 +514,7 @@ might not fall exactly on the bounds.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>An array of tick mark locations. The first and last tick entries are the</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>An array of tick mark locations. The first and last tick entries are the</strong> :</p>
 <p class="last"><strong>axis end points.</strong> :</p>
 </td>
 </tr>
@@ -529,20 +527,20 @@ might not fall exactly on the bounds.</p>
 <h2><cite>auto_interval</cite><a class="headerlink" href="#auto-interval" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.auto_interval">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">auto_interval</tt><big>(</big><em>data_low</em>, <em>data_high</em><big>)</big><a class="headerlink" href="#chaco.api.auto_interval" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">auto_interval</code><span class="sig-paren">(</span><em>data_low</em>, <em>data_high</em>, <em>max_ticks=9</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.auto_interval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the tick interval for a range.</p>
 <p>The boundaries for the data to be plotted on the axis are:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">data_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_low</span><span class="p">,</span><span class="n">data_high</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_low</span><span class="p">,</span><span class="n">data_high</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The function chooses the number of tick marks, which can be between
-3 and 9 marks (including end points), and chooses tick intervals at
+3 and max_ticks marks (including end points), and chooses tick intervals at
 1, 2, 2.5, 5, 10, 20, ...</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>interval</strong> : float</p>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>interval</strong> : float</p>
 <blockquote class="last">
 <div><p>tick mark interval for axis</p>
 </div></blockquote>
@@ -557,14 +555,14 @@ might not fall exactly on the bounds.</p>
 <h2><cite>tick_intervals</cite><a class="headerlink" href="#tick-intervals" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.tick_intervals">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">tick_intervals</tt><big>(</big><em>data_low</em>, <em>data_high</em>, <em>intervals</em><big>)</big><a class="headerlink" href="#chaco.api.tick_intervals" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">tick_intervals</code><span class="sig-paren">(</span><em>data_low</em>, <em>data_high</em>, <em>intervals</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.tick_intervals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the best tick interval length to achieve a specified number of
 tick intervals.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data_low, data_high</strong> : number</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_low, data_high</strong> : number</p>
 <blockquote>
 <div><p>The minimum and maximum values of the data along this axis.
 If any of the bound settings are &#8216;auto&#8217; or &#8216;fit&#8217;, the axis
@@ -576,7 +574,7 @@ traits are calculated automatically from these values.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>Returns a float indicating the tick interval length.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>Returns a float indicating the tick interval length.</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -588,7 +586,7 @@ traits are calculated automatically from these values.</p>
 <h2><cite>log_auto_ticks</cite><a class="headerlink" href="#log-auto-ticks" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.log_auto_ticks">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">log_auto_ticks</tt><big>(</big><em>data_low</em>, <em>data_high</em>, <em>bound_low</em>, <em>bound_high</em>, <em>tick_interval</em>, <em>use_endpoints=True</em><big>)</big><a class="headerlink" href="#chaco.api.log_auto_ticks" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">log_auto_ticks</code><span class="sig-paren">(</span><em>data_low</em>, <em>data_high</em>, <em>bound_low</em>, <em>bound_high</em>, <em>tick_interval</em>, <em>use_endpoints=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.log_auto_ticks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Like auto_ticks(), but for log scales.</p>
 </dd></dl>
 
@@ -597,7 +595,7 @@ traits are calculated automatically from these values.</p>
 <h2><cite>auto_bounds</cite><a class="headerlink" href="#auto-bounds" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.auto_bounds">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">auto_bounds</tt><big>(</big><em>data_low</em>, <em>data_high</em>, <em>tick_interval</em><big>)</big><a class="headerlink" href="#chaco.api.auto_bounds" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">auto_bounds</code><span class="sig-paren">(</span><em>data_low</em>, <em>data_high</em>, <em>tick_interval</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.auto_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates appropriate upper and lower bounds for the axis from
 the data bounds and the given axis interval.</p>
 <p>The boundaries  hit either exactly on the lower and upper values
@@ -609,7 +607,7 @@ or on the tick mark just beyond the lower and upper values.</p>
 <h2><cite>calc_bound</cite><a class="headerlink" href="#calc-bound" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.calc_bound">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">calc_bound</tt><big>(</big><em>end_point</em>, <em>tick_interval</em>, <em>is_upper</em><big>)</big><a class="headerlink" href="#chaco.api.calc_bound" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">calc_bound</code><span class="sig-paren">(</span><em>end_point</em>, <em>tick_interval</em>, <em>is_upper</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.calc_bound" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds an axis end point that includes the value <em>end_point</em>.</p>
 <p>If the tick mark interval results in a tick mark hitting directly on the
 end point, <em>end_point</em> is returned.  Otherwise, the location of the tick
@@ -625,7 +623,7 @@ end of the axis.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -633,11 +631,11 @@ end of the axis.</p>
 <h3>Page Contents</h3>
 <ul>
 <li><a class="reference internal" href="#">Axis and Grid</a><ul>
-<li><a class="reference internal" href="#plotaxis"><tt class="docutils literal"><span class="pre">PlotAxis</span></tt></a></li>
-<li><a class="reference internal" href="#labelaxis"><tt class="docutils literal"><span class="pre">LabelAxis</span></tt></a></li>
-<li><a class="reference internal" href="#plotgrid"><tt class="docutils literal"><span class="pre">PlotGrid</span></tt></a></li>
-<li><a class="reference internal" href="#abstracttickgenerator"><tt class="docutils literal"><span class="pre">AbstractTickGenerator</span></tt></a></li>
-<li><a class="reference internal" href="#defaulttickgenerator"><tt class="docutils literal"><span class="pre">DefaultTickGenerator</span></tt></a></li>
+<li><a class="reference internal" href="#plotaxis"><code class="docutils literal"><span class="pre">PlotAxis</span></code></a></li>
+<li><a class="reference internal" href="#labelaxis"><code class="docutils literal"><span class="pre">LabelAxis</span></code></a></li>
+<li><a class="reference internal" href="#plotgrid"><code class="docutils literal"><span class="pre">PlotGrid</span></code></a></li>
+<li><a class="reference internal" href="#abstracttickgenerator"><code class="docutils literal"><span class="pre">AbstractTickGenerator</span></code></a></li>
+<li><a class="reference internal" href="#defaulttickgenerator"><code class="docutils literal"><span class="pre">DefaultTickGenerator</span></code></a></li>
 <li><a class="reference internal" href="#auto-ticks"><cite>auto_ticks</cite></a></li>
 <li><a class="reference internal" href="#auto-interval"><cite>auto_interval</cite></a></li>
 <li><a class="reference internal" href="#tick-intervals"><cite>tick_intervals</cite></a></li>
@@ -648,12 +646,14 @@ end of the axis.</p>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/api/axis.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/axis.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -661,16 +661,13 @@ end of the axis.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -679,18 +676,18 @@ end of the axis.</p>
         <li class="right" >
           <a href="plot_factories.html" title="Plot Factories"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Axis and Grid</a></li>
   
 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2014, Enthought, Inc..
-      Last updated on Nov 05, 2014.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Dec 22, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>
