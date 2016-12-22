@@ -22,6 +22,15 @@ PKG_PATHNAME = 'chaco'
 _VERSION_FILENAME = os.path.join(PKG_PATHNAME, '_version.py')
 
 
+def read_version_py(path):
+    """ Read a _version.py file in a safe way. """
+    with open(path, 'r') as fp:
+        code = compile(fp.read(), 'chaco._version', 'exec')
+    context = {}
+    exec(code, context)
+    return context['git_revision'], context['full_version']
+
+
 def git_version():
     """ Parse version information from the current git commit.
 
@@ -85,17 +94,19 @@ if not is_released:
     # write_version_py(), otherwise the import of _version messes
     # up the build under Python 3.
     fullversion = VERSION
+    chaco_version_path =  os.path.join(
+        os.path.dirname(__file__), 'chaco', '_version.py')
     if os.path.exists('.git'):
         git_rev, dev_num = git_version()
     elif os.path.exists(filename):
         # must be a source distribution, use existing version file
         try:
-            from chaco._version import git_revision as git_rev
-            from chaco._version import full_version as full_v
-        except ImportError:
-            msg = ("Unable to import 'git_revision' or 'full_revision'. "
-                   "Try removing {} and the build directory before building.")
-            raise ImportError(msg.format(_VERSION_FILENAME))
+            git_revision, full_version = read_version_py(chaco_version_path)
+        except (SyntaxError, KeyError):
+            raise RuntimeError("Unable to read git_revision. Try removing "
+                               "chaco/_version.py and the build directory "
+                               "before building.")
+
 
         match = re.match(r'.*?\.dev(?P<dev_num>\d+)', full_v)
         if match is None:
