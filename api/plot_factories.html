@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plot Factories &mdash; chaco 4.5.0 documentation</title>
+    <title>Plot Factories &mdash; Chaco 4.6</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +25,13 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco 4.5.0 documentation" href="../index.html" />
+    <link rel="top" title="Chaco 4.6" href="../index.html" />
     <link rel="up" title="Programmer’s Reference" href="../programmers_reference.html" />
     <link rel="next" title="Axis and Grid" href="axis.html" />
     <link rel="prev" title="Renderers" href="renderers.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,8 +40,8 @@
         <li class="right" >
           <a href="renderers.html" title="Renderers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Plot Factories</a></li>
   
@@ -54,7 +52,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="plot-factories">
 <span id="id1"></span><h1>Plot Factories<a class="headerlink" href="#plot-factories" title="Permalink to this headline">¶</a></h1>
@@ -62,7 +60,7 @@
 <h2><cite>create_bar_plot</cite><a class="headerlink" href="#create-bar-plot" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.create_bar_plot">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">create_bar_plot</tt><big>(</big><em>data=</em><span class="optional">[</span><span class="optional">]</span>, <em>index_bounds=None</em>, <em>value_bounds=None</em>, <em>orientation='h'</em>, <em>color='red'</em>, <em>bar_width=10.0</em>, <em>value_mapper_class=&lt;class 'chaco.linear_mapper.LinearMapper'&gt;</em>, <em>line_color='black'</em>, <em>fill_color='red'</em>, <em>line_width=1</em>, <em>bgcolor='transparent'</em>, <em>border_visible=False</em>, <em>antialias=True</em>, <em>add_grid=False</em>, <em>add_axis=False</em><big>)</big><a class="headerlink" href="#chaco.api.create_bar_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">create_bar_plot</code><span class="sig-paren">(</span><em>data=[]</em>, <em>index_bounds=None</em>, <em>value_bounds=None</em>, <em>orientation='h'</em>, <em>color='red'</em>, <em>bar_width=10.0</em>, <em>value_mapper_class=&lt;class 'chaco.linear_mapper.LinearMapper'&gt;</em>, <em>line_color='black'</em>, <em>fill_color='red'</em>, <em>line_width=1</em>, <em>bgcolor='transparent'</em>, <em>border_visible=False</em>, <em>antialias=True</em>, <em>add_grid=False</em>, <em>add_axis=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.create_bar_plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -70,7 +68,7 @@
 <h2><cite>create_line_plot</cite><a class="headerlink" href="#create-line-plot" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.create_line_plot">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">create_line_plot</tt><big>(</big><em>data=</em><span class="optional">[</span><span class="optional">]</span>, <em>index_bounds=None</em>, <em>value_bounds=None</em>, <em>orientation='h'</em>, <em>color='red'</em>, <em>width=1.0</em>, <em>dash='solid'</em>, <em>value_mapper_class=&lt;class 'chaco.linear_mapper.LinearMapper'&gt;</em>, <em>bgcolor='transparent'</em>, <em>border_visible=False</em>, <em>add_grid=False</em>, <em>add_axis=False</em>, <em>index_sort='none'</em><big>)</big><a class="headerlink" href="#chaco.api.create_line_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">create_line_plot</code><span class="sig-paren">(</span><em>data=[]</em>, <em>index_bounds=None</em>, <em>value_bounds=None</em>, <em>orientation='h'</em>, <em>color='red'</em>, <em>width=1.0</em>, <em>dash='solid'</em>, <em>value_mapper_class=&lt;class 'chaco.linear_mapper.LinearMapper'&gt;</em>, <em>bgcolor='transparent'</em>, <em>border_visible=False</em>, <em>add_grid=False</em>, <em>add_axis=False</em>, <em>index_sort='none'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.create_line_plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -78,7 +76,7 @@
 <h2><cite>create_scatter_plot</cite><a class="headerlink" href="#create-scatter-plot" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.create_scatter_plot">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">create_scatter_plot</tt><big>(</big><em>data=</em><span class="optional">[</span><span class="optional">]</span>, <em>index_bounds=None</em>, <em>value_bounds=None</em>, <em>orientation='h'</em>, <em>color='green'</em>, <em>marker='square'</em>, <em>marker_size=4</em>, <em>bgcolor='transparent'</em>, <em>outline_color='black'</em>, <em>border_visible=True</em>, <em>add_grid=False</em>, <em>add_axis=False</em>, <em>index_sort='none'</em><big>)</big><a class="headerlink" href="#chaco.api.create_scatter_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">create_scatter_plot</code><span class="sig-paren">(</span><em>data=[]</em>, <em>index_bounds=None</em>, <em>value_bounds=None</em>, <em>orientation='h'</em>, <em>color='green'</em>, <em>marker='square'</em>, <em>marker_size=4</em>, <em>bgcolor='transparent'</em>, <em>outline_color='black'</em>, <em>border_visible=True</em>, <em>add_grid=False</em>, <em>add_axis=False</em>, <em>index_sort='none'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.create_scatter_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a ScatterPlot from a single Nx2 data array or a tuple of
 two length-N 1-D arrays.  The data must be sorted on the index if any
 reverse-mapping tools are to be used.</p>
@@ -90,7 +88,7 @@ reverse-mapping tools are to be used.</p>
 <h2><cite>create_polar_plot</cite><a class="headerlink" href="#create-polar-plot" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.create_polar_plot">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">create_polar_plot</tt><big>(</big><em>data</em>, <em>orientation='h'</em>, <em>color='black'</em>, <em>width=1.0</em>, <em>dash='solid'</em>, <em>grid='dot'</em>, <em>value_mapper_class=&lt;class 'chaco.polar_mapper.PolarMapper'&gt;</em><big>)</big><a class="headerlink" href="#chaco.api.create_polar_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">create_polar_plot</code><span class="sig-paren">(</span><em>data</em>, <em>orientation='h'</em>, <em>color='black'</em>, <em>width=1.0</em>, <em>dash='solid'</em>, <em>grid='dot'</em>, <em>value_mapper_class=&lt;class 'chaco.polar_mapper.PolarMapper'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.create_polar_plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -98,7 +96,7 @@ reverse-mapping tools are to be used.</p>
 <h2><cite>add_default_axes</cite><a class="headerlink" href="#add-default-axes" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.add_default_axes">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">add_default_axes</tt><big>(</big><em>plot</em>, <em>orientation='normal'</em>, <em>vtitle=''</em>, <em>htitle=''</em>, <em>axis_class=&lt;class 'chaco.axis.PlotAxis'&gt;</em><big>)</big><a class="headerlink" href="#chaco.api.add_default_axes" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">add_default_axes</code><span class="sig-paren">(</span><em>plot</em>, <em>orientation='normal'</em>, <em>vtitle=''</em>, <em>htitle=''</em>, <em>axis_class=&lt;class 'chaco.axis.PlotAxis'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.add_default_axes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates left and bottom axes for a plot.  Assumes that the index is
 horizontal and value is vertical by default; set <em>orientation</em> to
 something other than &#8220;normal&#8221; if they are flipped.</p>
@@ -109,7 +107,7 @@ something other than &#8220;normal&#8221; if they are flipped.</p>
 <h2><cite>add_default_grids</cite><a class="headerlink" href="#add-default-grids" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="chaco.api.add_default_grids">
-<tt class="descclassname">chaco.api.</tt><tt class="descname">add_default_grids</tt><big>(</big><em>plot</em>, <em>orientation='normal'</em><big>)</big><a class="headerlink" href="#chaco.api.add_default_grids" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">chaco.api.</code><code class="descname">add_default_grids</code><span class="sig-paren">(</span><em>plot</em>, <em>orientation='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.add_default_grids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates horizontal and vertical gridlines for a plot.  Assumes that the
 index is horizontal and value is vertical by default; set orientation to
 something other than &#8220;normal&#8221; if they are flipped.</p>
@@ -117,17 +115,17 @@ something other than &#8220;normal&#8221; if they are flipped.</p>
 
 </div>
 <div class="section" id="abstractplotdata">
-<h2><a class="reference internal" href="#chaco.api.AbstractPlotData" title="chaco.api.AbstractPlotData"><tt class="xref py py-class docutils literal"><span class="pre">AbstractPlotData</span></tt></a><a class="headerlink" href="#abstractplotdata" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.AbstractPlotData" title="chaco.api.AbstractPlotData"><code class="xref py py-class docutils literal"><span class="pre">AbstractPlotData</span></code></a><a class="headerlink" href="#abstractplotdata" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.AbstractPlotData">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">AbstractPlotData</tt><a class="headerlink" href="#chaco.api.AbstractPlotData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">AbstractPlotData</code><a class="headerlink" href="#chaco.api.AbstractPlotData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Defines the interface for data providers to Plot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data_changed</strong> : Event</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>data_changed</strong> : Event</p>
 <blockquote>
 <div><p>Indicates that some of the data has changed.  The event object must
 be a dict with keys &#8220;added&#8221;, &#8220;removed&#8221;, &#8220;changed&#8221; and values that are
@@ -148,7 +146,7 @@ set_data()?</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.AbstractPlotData.del_data">
-<tt class="descname">del_data</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.del_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">del_data</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotData.del_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes the array specified by <em>name</em>, or raises a KeyError if
 the named array does not exist.</p>
 <p>If the instance is not writable, then this must do nothing.</p>
@@ -156,7 +154,7 @@ the named array does not exist.</p>
 
 <dl class="method">
 <dt id="chaco.api.AbstractPlotData.get_data">
-<tt class="descname">get_data</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.get_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_data</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotData.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the data or data source associated with <em>name</em>.</p>
 <p>If there is no data or data source associated with the name, this method
 returns None.</p>
@@ -164,7 +162,7 @@ returns None.</p>
 
 <dl class="method">
 <dt id="chaco.api.AbstractPlotData.list_data">
-<tt class="descname">list_data</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.list_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">list_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotData.list_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of valid names to use for get_data().</p>
 <p>These names are generally strings but can also be integers or any other
 hashable type.</p>
@@ -172,7 +170,7 @@ hashable type.</p>
 
 <dl class="method">
 <dt id="chaco.api.AbstractPlotData.set_data">
-<tt class="descname">set_data</tt><big>(</big><em>name</em>, <em>new_data</em>, <em>generate_name=False</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.set_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_data</code><span class="sig-paren">(</span><em>name</em>, <em>new_data</em>, <em>generate_name=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotData.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the specified array as the value for either the specified
 name or a generated name.</p>
 <p>If the instance&#8217;s <cite>writable</cite> attribute is True, then this method sets
@@ -182,7 +180,7 @@ does nothing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
 <blockquote>
 <div><p>The name of the array whose value is to be set.</p>
 </div></blockquote>
@@ -198,7 +196,7 @@ one greater the largest N already used.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>The name under which the array was set.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>The name under which the array was set.</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -207,7 +205,7 @@ one greater the largest N already used.</p>
 
 <dl class="method">
 <dt id="chaco.api.AbstractPlotData.set_selection">
-<tt class="descname">set_selection</tt><big>(</big><em>name</em>, <em>selection</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.set_selection" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_selection</code><span class="sig-paren">(</span><em>name</em>, <em>selection</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotData.set_selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the selection on the specified data.</p>
 <p>This method informs the class that Chaco has selected a portion of the
 data.</p>
@@ -215,7 +213,7 @@ data.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
 <blockquote>
 <div><p>Name of an array</p>
 </div></blockquote>
@@ -232,7 +230,7 @@ array named by <em>name</em> is selected.</p>
 
 <dl class="method">
 <dt id="chaco.api.AbstractPlotData.update_data">
-<tt class="descname">update_data</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.AbstractPlotData.update_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_data</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotData.update_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update a set of data values, firing only one data_changed event.</p>
 <p>This function has the same signature as the dictionary update()
 method.</p>
@@ -242,11 +240,11 @@ method.</p>
 
 </div>
 <div class="section" id="arrayplotdata">
-<h2><a class="reference internal" href="#chaco.api.ArrayPlotData" title="chaco.api.ArrayPlotData"><tt class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></tt></a><a class="headerlink" href="#arrayplotdata" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.ArrayPlotData" title="chaco.api.ArrayPlotData"><code class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></code></a><a class="headerlink" href="#arrayplotdata" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.ArrayPlotData">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ArrayPlotData</tt><big>(</big><em>*data</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_data.AbstractPlotData</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ArrayPlotData</code><span class="sig-paren">(</span><em>*data</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayPlotData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.abstract_plot_data.AbstractPlotData</span></code></p>
 <p>A PlotData implementation class that handles a list of Numpy arrays
 (or a 2-D Numpy array).</p>
 <p>By default, it doesn&#8217;t allow its input data to be modified by downstream
@@ -255,7 +253,7 @@ Chaco components or interactors.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>arrays</strong> : Dict</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>arrays</strong> : Dict</p>
 <blockquote>
 <div><p>Map of names to arrays.  Although there is no restriction on the array
 dimensions, each array must correspond to a single plot item; that
@@ -273,27 +271,27 @@ multi-dimensional input data.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.ArrayPlotData.del_data">
-<tt class="descname">del_data</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.del_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">del_data</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayPlotData.del_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes the array specified by <em>name</em>, or raises a KeyError if
 the named array does not exist.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.ArrayPlotData.get_data">
-<tt class="descname">get_data</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.get_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_data</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayPlotData.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the array associated with <em>name</em>.</p>
 <p>Implements AbstractDataSource.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.ArrayPlotData.list_data">
-<tt class="descname">list_data</tt><big>(</big><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.list_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">list_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayPlotData.list_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of the names of the arrays managed by this instance.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.ArrayPlotData.set_data">
-<tt class="descname">set_data</tt><big>(</big><em>name</em>, <em>new_data</em>, <em>generate_name=False</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.set_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_data</code><span class="sig-paren">(</span><em>name</em>, <em>new_data</em>, <em>generate_name=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayPlotData.set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the specified array as the value for either the specified
 name or a generated name.</p>
 <p>If the instance&#8217;s <cite>writable</cite> attribute is True, then this method sets
@@ -303,7 +301,7 @@ does nothing.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : string</p>
 <blockquote>
 <div><p>The name of the array whose value is to be set.</p>
 </div></blockquote>
@@ -319,7 +317,7 @@ one greater the largest N already used.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>The name under which the array was set.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>The name under which the array was set.</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -328,13 +326,13 @@ one greater the largest N already used.</p>
 
 <dl class="method">
 <dt id="chaco.api.ArrayPlotData.set_selection">
-<tt class="descname">set_selection</tt><big>(</big><em>name</em>, <em>selection</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.set_selection" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_selection</code><span class="sig-paren">(</span><em>name</em>, <em>selection</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayPlotData.set_selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overrides AbstractPlotData to do nothing and not raise an error.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.ArrayPlotData.update_data">
-<tt class="descname">update_data</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#chaco.api.ArrayPlotData.update_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_data</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayPlotData.update_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the specified array as the value for either the specified
 name or a generated name.</p>
 <p>Implements AbstractPlotData&#8217;s update_data() method.  This method has
@@ -345,11 +343,11 @@ the same signature as the dictionary update() method.</p>
 
 </div>
 <div class="section" id="plot">
-<h2><a class="reference internal" href="#chaco.api.Plot" title="chaco.api.Plot"><tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt></a><a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.Plot" title="chaco.api.Plot"><code class="xref py py-class docutils literal"><span class="pre">Plot</span></code></a><a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.Plot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">Plot</tt><big>(</big><em>data=None</em>, <em>**kwtraits</em><big>)</big><a class="headerlink" href="#chaco.api.Plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.data_view.DataView</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">Plot</code><span class="sig-paren">(</span><em>data=None</em>, <em>**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.data_view.DataView</span></code></p>
 <p>Represents a correlated set of data, renderers, and axes in a single
 screen region.</p>
 <p>A Plot can reference an arbitrary amount of data and can have an
@@ -371,7 +369,7 @@ data sources, create those data sources before handing them to the Plot.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>data</strong> : Instance(AbstractPlotData)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>data</strong> : Instance(AbstractPlotData)</p>
 <blockquote>
 <div><p>The PlotData instance that drives this plot.</p>
 </div></blockquote>
@@ -398,7 +396,7 @@ destroyed if no color plots are on the plot.</p>
 and ordered to be red-green color-blind friendly, though should not
 be an issue for blue-yellow.</p>
 </div></blockquote>
-<p><strong>renderer_map</strong> : Dict(dict(line=LinePlot, bar=BarPlot, scatter=ScatterPlot, polygon=PolygonPlot, filled_line=FilledLinePlot, cmap_scatter=ColormappedScatterPlot, img_plot=ImagePlot, cmap_img_plot=CMapImagePlot, contour_line_plot=ContourLinePlot, contour_poly_plot=ContourPolyPlot, candle=CandlePlot, quiver=QuiverPlot))</p>
+<p><strong>renderer_map</strong> : Dict(dict(line=LinePlot, bar=BarPlot, scatter=ScatterPlot, polygon=PolygonPlot, filled_line=FilledLinePlot, cmap_scatter=ColormappedScatterPlot, img_plot=ImagePlot, cmap_img_plot=CMapImagePlot, contour_line_plot=ContourLinePlot, contour_poly_plot=ContourPolyPlot, candle=CandlePlot, quiver=QuiverPlot, scatter_1d=ScatterPlot1D, textplot_1d=TextPlot1D, line_scatter_1d=LineScatterPlot1D, jitterplot=JitterPlot))</p>
 <blockquote>
 <div><p>Mapping of renderer type string to renderer class
 This can be overriden to customize what renderer type the Plot
@@ -437,13 +435,13 @@ will instantiate for its various plotting methods.</p>
 </table>
 <dl class="method">
 <dt id="chaco.api.Plot.add_xy_plot">
-<tt class="descname">add_xy_plot</tt><big>(</big><em>index_name</em>, <em>value_name</em>, <em>renderer_factory</em>, <em>name=None</em>, <em>origin=None</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.add_xy_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_xy_plot</code><span class="sig-paren">(</span><em>index_name</em>, <em>value_name</em>, <em>renderer_factory</em>, <em>name=None</em>, <em>origin=None</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.add_xy_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a BaseXYPlot renderer subclass to this Plot.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>index_name</strong> : str</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>index_name</strong> : str</p>
 <blockquote>
 <div><p>The name of the index datasource.</p>
 </div></blockquote>
@@ -477,13 +475,13 @@ will instantiate for its various plotting methods.</p>
 
 <dl class="method">
 <dt id="chaco.api.Plot.candle_plot">
-<tt class="descname">candle_plot</tt><big>(</big><em>data</em>, <em>name=None</em>, <em>value_scale='linear'</em>, <em>origin=None</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.candle_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">candle_plot</code><span class="sig-paren">(</span><em>data</em>, <em>name=None</em>, <em>value_scale='linear'</em>, <em>origin=None</em>, <em>**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.candle_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new sub-plot using the given data and plot style.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : list(string), tuple(string)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : list(string), tuple(string)</p>
 <blockquote>
 <div><p>The names of the data to be plotted in the ArrayDataSource.  The
 number of arguments determines how they are interpreted:</p>
@@ -511,7 +509,7 @@ then a log scale is used.</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call.</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -520,13 +518,13 @@ then a log scale is used.</p>
 
 <dl class="method">
 <dt id="chaco.api.Plot.contour_plot">
-<tt class="descname">contour_plot</tt><big>(</big><em>data</em>, <em>type='line'</em>, <em>name=None</em>, <em>poly_cmap=None</em>, <em>xbounds=None</em>, <em>ybounds=None</em>, <em>origin=None</em>, <em>hide_grids=True</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.contour_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">contour_plot</code><span class="sig-paren">(</span><em>data</em>, <em>type='line'</em>, <em>name=None</em>, <em>poly_cmap=None</em>, <em>xbounds=None</em>, <em>ybounds=None</em>, <em>origin=None</em>, <em>hide_grids=True</em>, <em>**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.contour_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds contour plots to this Plot object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
 <blockquote>
 <div><p>The name of the data array in self.plot_data, which must be
 floating point data.</p>
@@ -577,20 +575,20 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 
 <dl class="method">
 <dt id="chaco.api.Plot.delplot">
-<tt class="descname">delplot</tt><big>(</big><em>*names</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.delplot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delplot</code><span class="sig-paren">(</span><em>*names</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.delplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes the named sub-plots.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.Plot.hideplot">
-<tt class="descname">hideplot</tt><big>(</big><em>*names</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.hideplot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">hideplot</code><span class="sig-paren">(</span><em>*names</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.hideplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to sets the named plots to be invisible.  Their
 renderers are not removed, and they are still in the list of plots.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.Plot.img_plot">
-<tt class="descname">img_plot</tt><big>(</big><em>data</em>, <em>name=None</em>, <em>colormap=None</em>, <em>xbounds=None</em>, <em>ybounds=None</em>, <em>origin=None</em>, <em>hide_grids=True</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.img_plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">img_plot</code><span class="sig-paren">(</span><em>data</em>, <em>name=None</em>, <em>colormap=None</em>, <em>xbounds=None</em>, <em>ybounds=None</em>, <em>origin=None</em>, <em>hide_grids=True</em>, <em>**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.img_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds image plots to this Plot object.</p>
 <p>If <em>data</em> has shape (N, M, 3) or (N, M, 4), then it is treated as RGB or
 RGBA (respectively) and <em>colormap</em> is ignored.</p>
@@ -603,7 +601,7 @@ will be used.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : string</p>
 <blockquote>
 <div><p>The name of the data array in self.plot_data</p>
 </div></blockquote>
@@ -641,20 +639,20 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 
 <dl class="method">
 <dt id="chaco.api.Plot.new_window">
-<tt class="descname">new_window</tt><big>(</big><em>configure=False</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.new_window" title="Permalink to this definition">¶</a></dt>
+<code class="descname">new_window</code><span class="sig-paren">(</span><em>configure=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.new_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function that creates a window containing the Plot</p>
 <p>Don&#8217;t call this if the plot is already displayed in a window.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="chaco.api.Plot.plot">
-<tt class="descname">plot</tt><big>(</big><em>data</em>, <em>type='line'</em>, <em>name=None</em>, <em>index_scale='linear'</em>, <em>value_scale='linear'</em>, <em>origin=None</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plot</code><span class="sig-paren">(</span><em>data</em>, <em>type='line'</em>, <em>name=None</em>, <em>index_scale='linear'</em>, <em>value_scale='linear'</em>, <em>origin=None</em>, <em>**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new sub-plot using the given data and plot style.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : string, tuple(string), list(string)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : string, tuple(string), list(string)</p>
 <blockquote>
 <div><p>The data to be plotted. The type of plot and the number of
 arguments determines how the arguments are interpreted:</p>
@@ -701,30 +699,81 @@ plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call to plot()</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call to plot()</strong> :</p>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="p">(</span><span class="s">&quot;my_data&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;myplot&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">lightblue</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;my_data&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;myplot&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">lightblue</span><span class="p">)</span>
 
-<span class="n">plot</span><span class="p">((</span><span class="s">&quot;x-data&quot;</span><span class="p">,</span> <span class="s">&quot;y-data&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x-data&quot;</span><span class="p">,</span> <span class="s2">&quot;y-data&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">)</span>
 
-<span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y1&quot;</span><span class="p">,</span> <span class="s">&quot;y2&quot;</span><span class="p">,</span> <span class="s">&quot;y3&quot;</span><span class="p">))</span>
+<span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y1&quot;</span><span class="p">,</span> <span class="s2">&quot;y2&quot;</span><span class="p">,</span> <span class="s2">&quot;y3&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="chaco.api.Plot.quiverplot">
-<tt class="descname">quiverplot</tt><big>(</big><em>data</em>, <em>name=None</em>, <em>origin=None</em>, <em>**styles</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.quiverplot" title="Permalink to this definition">¶</a></dt>
+<dt id="chaco.api.Plot.plot_1d">
+<code class="descname">plot_1d</code><span class="sig-paren">(</span><em>data</em>, <em>type='scatter_1d'</em>, <em>name=None</em>, <em>orientation=None</em>, <em>direction=None</em>, <em>scale='linear'</em>, <em>**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.plot_1d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new sub-plot using the given data and plot style.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>data</strong> : list(string), tuple(string)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : string, tuple(string), list(string)</p>
+<blockquote>
+<div><p>The data to be plotted. The each item generates a separate renderer
+using the named data source</p>
+</div></blockquote>
+<p><strong>type</strong> : string</p>
+<blockquote>
+<div><p>The type of plots to add.  One of  of &#8220;scatter_1d&#8221;,
+&#8220;line_scatter_1d&#8221;, &#8220;textplot_1d&#8221;, &#8220;jitterplot&#8221;</p>
+</div></blockquote>
+<p><strong>name</strong> : string</p>
+<blockquote>
+<div><p>The name of the plot.  If None, then a default one is created
+(usually &#8220;plotNNN&#8221;).</p>
+</div></blockquote>
+<p><strong>scale</strong> : string</p>
+<blockquote>
+<div><p>The type of scale to use for the index axis. If not &#8220;linear&#8221;, then
+a log scale is used.</p>
+</div></blockquote>
+<p><strong>orientation</strong> : string</p>
+<blockquote>
+<div><p>Whether the single dimension is horizontal (&#8216;h&#8217;) or vertical (&#8216;v&#8217;).</p>
+</div></blockquote>
+<p><strong>direction</strong> : string</p>
+<blockquote>
+<div><p>Whether data is mapped in the usual direction (left to right or
+bottom to top) or reversed.</p>
+</div></blockquote>
+<p><strong>styles</strong> : series of keyword arguments</p>
+<blockquote>
+<div><p>attributes and values that apply to one or more of the
+plot types requested, e.g.,&#8217;line_color&#8217; or &#8216;line_width&#8217;.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call to plot()</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Plot.quiverplot">
+<code class="descname">quiverplot</code><span class="sig-paren">(</span><em>data</em>, <em>name=None</em>, <em>origin=None</em>, <em>**styles</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.quiverplot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new sub-plot using the given data and plot style.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : list(string), tuple(string)</p>
 <blockquote>
 <div><p>The names of the data to be plotted in the ArrayDataSource.  There
 is only one combination accepted by this function:</p>
@@ -743,7 +792,7 @@ each vector.  The vectors are an Nx2</p>
 </div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call.</strong> :</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>[renderers] -&gt; list of renderers created in response to this call.</strong> :</p>
 </td>
 </tr>
 </tbody>
@@ -752,7 +801,7 @@ each vector.  The vectors are an Nx2</p>
 
 <dl class="method">
 <dt id="chaco.api.Plot.showplot">
-<tt class="descname">showplot</tt><big>(</big><em>*names</em><big>)</big><a class="headerlink" href="#chaco.api.Plot.showplot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">showplot</code><span class="sig-paren">(</span><em>*names</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Plot.showplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to sets the named plots to be visible.</p>
 </dd></dl>
 
@@ -760,16 +809,16 @@ each vector.  The vectors are an Nx2</p>
 
 </div>
 <div class="section" id="toolbarplot">
-<h2><a class="reference internal" href="#chaco.api.ToolbarPlot" title="chaco.api.ToolbarPlot"><tt class="xref py py-class docutils literal"><span class="pre">ToolbarPlot</span></tt></a><a class="headerlink" href="#toolbarplot" title="Permalink to this headline">¶</a></h2>
+<h2><a class="reference internal" href="#chaco.api.ToolbarPlot" title="chaco.api.ToolbarPlot"><code class="xref py py-class docutils literal"><span class="pre">ToolbarPlot</span></code></a><a class="headerlink" href="#toolbarplot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="chaco.api.ToolbarPlot">
-<em class="property">class </em><tt class="descclassname">chaco.api.</tt><tt class="descname">ToolbarPlot</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#chaco.api.ToolbarPlot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">chaco.plot.Plot</span></tt></p>
+<em class="property">class </em><code class="descclassname">chaco.api.</code><code class="descname">ToolbarPlot</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ToolbarPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">chaco.plot.Plot</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Traits :</th><td class="field-body"><p class="first"><strong>auto_hide</strong> : DelegatesTo(&#8216;toolbar&#8217;)</p>
+<tr class="field-odd field"><th class="field-name">Traits:</th><td class="field-body"><p class="first"><strong>auto_hide</strong> : DelegatesTo(&#8216;toolbar&#8217;)</p>
 <blockquote>
 <div><p>Should we turn on the auto-hide feature on the toolbar?</p>
 </div></blockquote>
@@ -797,7 +846,7 @@ instance <a href="#id2"><span class="problematic" id="id3">`</span></a>obj`s too
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -811,20 +860,22 @@ instance <a href="#id2"><span class="problematic" id="id3">`</span></a>obj`s too
 <li><a class="reference internal" href="#create-polar-plot"><cite>create_polar_plot</cite></a></li>
 <li><a class="reference internal" href="#add-default-axes"><cite>add_default_axes</cite></a></li>
 <li><a class="reference internal" href="#add-default-grids"><cite>add_default_grids</cite></a></li>
-<li><a class="reference internal" href="#abstractplotdata"><tt class="docutils literal"><span class="pre">AbstractPlotData</span></tt></a></li>
-<li><a class="reference internal" href="#arrayplotdata"><tt class="docutils literal"><span class="pre">ArrayPlotData</span></tt></a></li>
-<li><a class="reference internal" href="#plot"><tt class="docutils literal"><span class="pre">Plot</span></tt></a></li>
-<li><a class="reference internal" href="#toolbarplot"><tt class="docutils literal"><span class="pre">ToolbarPlot</span></tt></a></li>
+<li><a class="reference internal" href="#abstractplotdata"><code class="docutils literal"><span class="pre">AbstractPlotData</span></code></a></li>
+<li><a class="reference internal" href="#arrayplotdata"><code class="docutils literal"><span class="pre">ArrayPlotData</span></code></a></li>
+<li><a class="reference internal" href="#plot"><code class="docutils literal"><span class="pre">Plot</span></code></a></li>
+<li><a class="reference internal" href="#toolbarplot"><code class="docutils literal"><span class="pre">ToolbarPlot</span></code></a></li>
 </ul>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/api/plot_factories.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/plot_factories.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -832,16 +883,13 @@ instance <a href="#id2"><span class="problematic" id="id3">`</span></a>obj`s too
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -850,18 +898,18 @@ instance <a href="#id2"><span class="problematic" id="id3">`</span></a>obj`s too
         <li class="right" >
           <a href="renderers.html" title="Renderers"
              >previous</a> |</li>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Plot Factories</a></li>
   
 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2014, Enthought, Inc..
-      Last updated on Nov 05, 2014.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Dec 22, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

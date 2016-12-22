@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Interactive plotting with Chaco &mdash; chaco 4.5.0 documentation</title>
+    <title>Interactive plotting with Chaco &mdash; Chaco 4.6</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +25,13 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco 4.5.0 documentation" href="../index.html" /> 
+    <link rel="top" title="Chaco 4.6" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
   
     <li><a href="#">Interactive plotting with Chaco</a></li>
   
@@ -44,7 +42,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="interactive-plotting-with-chaco">
 <span id="tutorial"></span><h1>Interactive plotting with Chaco<a class="headerlink" href="#interactive-plotting-with-chaco" title="Permalink to this headline">¶</a></h1>
@@ -82,18 +80,18 @@ this tutorial, we use Traits UI to make things easier.</p>
 <p>Chaco is a <em>plotting application toolkit</em>. This means that it can build
 both static plots and dynamic data visualizations that let you
 interactively explore your data. Here are four basic examples of Chaco plots:</p>
-<img alt="../_images/tornado1.png" src="../_images/tornado1.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/tornado1.png"><img alt="../_images/tornado1.png" src="../_images/tornado1.png" style="height: 300pt;" /></a>
 <p>This plot shows a static &#8220;tornado plot&#8221; with a categorical Y axis and continuous
 X axis.  The plot is resizable, but the user cannot interact or explore the data
 in any way.</p>
-<img alt="../_images/simple_line2.png" src="../_images/simple_line2.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/simple_line2.png"><img alt="../_images/simple_line2.png" src="../_images/simple_line2.png" style="height: 300pt;" /></a>
 <p>This is an overlaid composition of line and scatter plots with a legend. Unlike
 the previous plot, the user can pan and zoom this plot, exploring the
 relationship between data curves in areas that appear densely overlapping.
 Furthermore, the user can move the legend to an arbitrary position on the plot,
 and as they resize the plot, the legend maintains the same screen-space
 separation relative to its closest corner.</p>
-<img alt="../_images/regression1.png" src="../_images/regression1.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/regression1.png"><img alt="../_images/regression1.png" src="../_images/regression1.png" style="height: 300pt;" /></a>
 <p>This example starts to demonstrate interacting with the data set in an
 exploratory way. Whereas interactivity in the previous example was limited to
 basic pan and zoom (which are fairly common in most plotting libraries), this is
@@ -105,7 +103,7 @@ then displayed in a text label.</p>
 <p>The lasso selection tool and regression overlay are both built in to Chaco,
 but they serve an additional purpose of demonstrating how one can build complex
 data-centric interactions and displays on top of the Chaco framework.</p>
-<img alt="../_images/scalar_function1.png" src="../_images/scalar_function1.png" style="height: 350pt;" />
+<a class="reference internal image-reference" href="../_images/scalar_function1.png"><img alt="../_images/scalar_function1.png" src="../_images/scalar_function1.png" style="height: 350pt;" /></a>
 <p>This is a much more complex demonstration of Chaco&#8217;s capabilities.  The user
 can view the cross sections of a 2-D scalar-valued function.  The cross sections
 update in real time as the user moves the mouse, and the &#8220;bubble&#8221; on each line
@@ -132,20 +130,20 @@ MATLAB, or Matplotlib:</p>
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">chaco.shell</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&quot;r-&quot;</span><span class="p">)</span>
-<span class="n">title</span><span class="p">(</span><span class="s">&quot;First plot&quot;</span><span class="p">)</span>
-<span class="n">ytitle</span><span class="p">(</span><span class="s">&quot;sin(x)&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">title</span><span class="p">(</span><span class="s2">&quot;First plot&quot;</span><span class="p">)</span>
+<span class="n">ytitle</span><span class="p">(</span><span class="s2">&quot;sin(x)&quot;</span><span class="p">)</span>
 <span class="n">show</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>This creates this plot:</p>
-<img alt="../_images/script_oriented.png" src="../_images/script_oriented.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/script_oriented.png"><img alt="../_images/script_oriented.png" src="../_images/script_oriented.png" style="height: 300pt;" /></a>
 <p>The basic structure of this example is that we generate some data, then we call
 functions to plot the data and configure the plot. There is a global concept of
 &#8220;the active plot&#8221;, and the functions do high-level manipulations on it. The
@@ -187,7 +185,7 @@ things, as you will see later on:</p>
 22
 23
 24
-25</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
@@ -197,8 +195,8 @@ things, as you will see later on:</p>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
-        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -206,16 +204,16 @@ things, as you will see later on:</p>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;sin(x) * x^3&quot;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;sin(x) * x^3&quot;</span>
         <span class="k">return</span> <span class="n">plot</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">LinePlot</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>This produces a plot similar to the previous script-oriented code snippet:</p>
-<img alt="../_images/first_plot.png" src="../_images/first_plot.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/first_plot.png"><img alt="../_images/first_plot.png" src="../_images/first_plot.png" style="height: 300pt;" /></a>
 <p>So, this is our first &#8220;real&#8221; Chaco plot. We will walk through this code and
 look at what each bit does.  This example serves as the basis for many of the
 later examples.</p>
@@ -223,35 +221,35 @@ later examples.</p>
 <div class="section" id="application-oriented-plotting-step-by-step">
 <h2>Application-oriented plotting, step by step<a class="headerlink" href="#application-oriented-plotting-step-by-step" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s start with the basics.  First, we declare a class to represent our
-plot, called <tt class="xref py py-class docutils literal"><span class="pre">LinePlot</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">LinePlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+plot, called <code class="xref py py-class docutils literal"><span class="pre">LinePlot</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinePlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This class uses the Enthought Traits package, and all of our objects subclass
-from <tt class="xref py py-class docutils literal"><span class="pre">HasTraits</span></tt>.</p>
+from <code class="xref py py-class docutils literal"><span class="pre">HasTraits</span></code>.</p>
 <p>Next, we declare a Traits UI View for this class:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
-        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Inside this view, we are placing a reference to the <tt class="xref py py-attr docutils literal"><span class="pre">plot</span></tt> trait and
-telling Traits UI to use the <tt class="xref py py-class docutils literal"><span class="pre">ComponentEditor</span></tt> (imported from
-<tt class="xref py py-mod docutils literal"><span class="pre">enable.api</span></tt>) to display it. If the
+<p>Inside this view, we are placing a reference to the <code class="xref py py-attr docutils literal"><span class="pre">plot</span></code> trait and
+telling Traits UI to use the <code class="xref py py-class docutils literal"><span class="pre">ComponentEditor</span></code> (imported from
+<code class="xref py py-mod docutils literal"><span class="pre">enable.api</span></code>) to display it. If the
 trait were an Int or Str or Float, Traits could automatically pick an
 appropriate GUI element to display it. Since Traits UI doesn&#8217;t natively know
 how to display Chaco components, we explicitly tell it what kind of editor to
 use.</p>
-<p>The other parameters in the <tt class="xref py py-class docutils literal"><span class="pre">View</span></tt> constructor are pretty
+<p>The other parameters in the <code class="xref py py-class docutils literal"><span class="pre">View</span></code> constructor are pretty
 self-explanatory, and the <a class="reference external" href="http://docs.enthought.com/traitsui/">Traits UI User Manual</a>
 documents all the various properties
-you can set here. For our purposes, this Traits <tt class="xref py py-class docutils literal"><span class="pre">View</span></tt> is sort of boilerplate. It
+you can set here. For our purposes, this Traits <code class="xref py py-class docutils literal"><span class="pre">View</span></code> is sort of boilerplate. It
 gets us a nice little window that we can resize. We&#8217;ll be using something like
-this <tt class="xref py py-class docutils literal"><span class="pre">View</span></tt> in most of the examples in the rest of the tutorial.</p>
+this <code class="xref py py-class docutils literal"><span class="pre">View</span></code> in most of the examples in the rest of the tutorial.</p>
 <p>Now, let&#8217;s look at the constructor for the plot object we will display, where
 the real work gets done:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
     <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
@@ -259,20 +257,20 @@ the real work gets done:</p>
 </div>
 <p>The first thing we do here is to create some mock data, just like
 in the script-oriented approach. But rather than directly calling some sort of
-plotting function to throw up a plot, we create this <tt class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></tt>
-object and stick the data in there. The <tt class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></tt> object is a simple
+plotting function to throw up a plot, we create this <code class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></code>
+object and stick the data in there. The <code class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></code> object is a simple
 structure that associates names with NumPy arrays.</p>
 <p>In a script-oriented approach to plotting, whenever you have to update the data
 or tweak any part of the plot, you basically re-run the entire script.  Chaco&#8217;s
 model is based on having objects representing each of the little pieces of a
 plot, and they all use Traits events to notify one another that some attribute
-has changed.  So, the <tt class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></tt> is an object that interfaces your
+has changed.  So, the <code class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></code> is an object that interfaces your
 data with the rest of the objects in the plot.  In a later example we&#8217;ll see
-how we can use the <tt class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></tt> to quickly swap data items in and
+how we can use the <code class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></code> to quickly swap data items in and
 out, without affecting the rest of the plot.</p>
-<p>The next line creates an actual <tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt> object, and gives it the
-<tt class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></tt> instance we created previously:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
+<p>The next line creates an actual <code class="xref py py-class docutils literal"><span class="pre">Plot</span></code> object, and gives it the
+<code class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></code> instance we created previously:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Chaco&#8217;s Plot object serves two roles: it is both a container of
@@ -280,18 +278,18 @@ renderers, which are the objects that do the actual task of transforming data
 into lines and markers and colors on the screen, and it is a factory for
 instantiating renderers. Once you get more familiar with Chaco, you can choose
 to not use the Plot object, and instead directly create renderers and containers
-manually. Nonetheless, the <tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt> object does a lot of nice housekeeping that is
+manually. Nonetheless, the <code class="xref py py-class docutils literal"><span class="pre">Plot</span></code> object does a lot of nice housekeeping that is
 useful in a large majority of use cases.</p>
-<p>Next, we call the <tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt> method on the <tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt> object we just
+<p>Next, we call the <code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code> method on the <code class="xref py py-class docutils literal"><span class="pre">Plot</span></code> object we just
 created:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This creates a blue line plot of the data items named &#8220;x&#8221; and &#8220;y&#8221;.  Note that
 we are not passing in an actual array here; we are passing in the names of arrays
-in the <tt class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></tt> we created previously.</p>
+in the <code class="xref py py-class docutils literal"><span class="pre">ArrayPlotData</span></code> we created previously.</p>
 <p>This method call creates a new renderer &#8212; in this case a line renderer &#8212; and
-adds it to the <tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt>.</p>
+adds it to the <code class="xref py py-class docutils literal"><span class="pre">Plot</span></code>.</p>
 <p>This may seem kind of redundant or roundabout to folks who are used to passing
 in a pile of NumPy arrays to a plot function, but consider this:
 ArrayPlotData objects can be shared between multiple Plots.  If you
@@ -301,23 +299,23 @@ then remember to shove in new data into every single one of those plots.  The
 ArrayPlotData object acts almost like a symlink between consumers of data and
 the actual data itself.</p>
 <p>Next, we set a title on the plot:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;sin(x) * x^3&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;sin(x) * x^3&quot;</span>
 </pre></div>
 </div>
-<p>And then we set our <tt class="xref py py-attr docutils literal"><span class="pre">plot</span></tt> trait to the plot we created by returning it:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">return</span> <span class="n">plot</span>
+<p>And then we set our <code class="xref py py-attr docutils literal"><span class="pre">plot</span></code> trait to the plot we created by returning it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="n">plot</span>
 </pre></div>
 </div>
 <p>The last thing we do in this script is set up some code to run when the script
 is executed:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">LinePlot</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>This one-liner instantiates a LinePlot object and calls its
-<tt class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></tt> method.  This brings up a dialog with a traits editor for
+<code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code> method.  This brings up a dialog with a traits editor for
 the object, built up according to the View we created earlier.  In our
-case, the editor just displays our <tt class="xref py py-attr docutils literal"><span class="pre">plot</span></tt> attribute using the
+case, the editor just displays our <code class="xref py py-attr docutils literal"><span class="pre">plot</span></code> attribute using the
 ComponentEditor.</p>
 </div>
 <div class="section" id="scatter-plots">
@@ -347,7 +345,7 @@ ComponentEditor.</p>
 22
 23
 24
-25</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
@@ -357,8 +355,8 @@ ComponentEditor.</p>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
-        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -366,18 +364,18 @@ ComponentEditor.</p>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
 
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;sin(x) * x^3&quot;</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;sin(x) * x^3&quot;</span>
         <span class="k">return</span> <span class="n">plot</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">ScatterPlot</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<p>Note that we have only changed the <em>type</em> argument to the <tt class="xref py py-meth docutils literal"><span class="pre">plot.plot()</span></tt> call
-and the name of the class from <tt class="xref py py-class docutils literal"><span class="pre">LinePlot</span></tt> to <tt class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></tt>. This
+<p>Note that we have only changed the <em>type</em> argument to the <code class="xref py py-meth docutils literal"><span class="pre">plot.plot()</span></code> call
+and the name of the class from <code class="xref py py-class docutils literal"><span class="pre">LinePlot</span></code> to <code class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></code>. This
 produces the following:</p>
-<img alt="../_images/scatter1.png" src="../_images/scatter1.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/scatter1.png"><img alt="../_images/scatter1.png" src="../_images/scatter1.png" style="height: 300pt;" /></a>
 </div>
 <div class="section" id="image-plots">
 <h2>Image plots<a class="headerlink" href="#image-plots" title="Permalink to this headline">¶</a></h2>
@@ -407,7 +405,7 @@ produces the following:</p>
 23
 24
 25
-26</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span><span class="p">,</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">meshgrid</span>
+26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span><span class="p">,</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">meshgrid</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">jet</span>
@@ -417,8 +415,8 @@ produces the following:</p>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
-        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
@@ -428,26 +426,26 @@ produces the following:</p>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">imagedata</span> <span class="o">=</span> <span class="n">z</span><span class="p">)</span>
 
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">img_plot</span><span class="p">(</span><span class="s">&quot;imagedata&quot;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="n">jet</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">img_plot</span><span class="p">(</span><span class="s2">&quot;imagedata&quot;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="n">jet</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">plot</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">ImagePlot</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>There are a few more steps to create the input Z data, and we also call a
-different method on the Plot object &#8212; <tt class="xref py py-meth docutils literal"><span class="pre">img_plot()</span></tt> instead of
-<tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt>.  The details of the method parameters are not that important
+different method on the Plot object &#8212; <code class="xref py py-meth docutils literal"><span class="pre">img_plot()</span></code> instead of
+<code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code>.  The details of the method parameters are not that important
 right now; this is just to demonstrate how we can apply the same basic pattern
 from the &#8220;first plot&#8221; example above to do other kinds of plots.</p>
-<img alt="../_images/image_plot1.png" src="../_images/image_plot1.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/image_plot1.png"><img alt="../_images/image_plot1.png" src="../_images/image_plot1.png" style="height: 300pt;" /></a>
 </div>
 <div class="section" id="multiple-plots">
 <h2>Multiple plots<a class="headerlink" href="#multiple-plots" title="Permalink to this headline">¶</a></h2>
 <p>Earlier we said that the Plot object is both a container of renderers and a
 factory (or generator) of renderers. This modification of the previous example
 illustrates this point. We only create a single instance of Plot, but we call
-its <tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt> method twice. Each call creates a new renderer and adds it to
+its <code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code> method twice. Each call creates a new renderer and adds it to
 the Plot object&#8217;s list of renderers. Also notice that we are reusing the <em>x</em>
 array from the ArrayPlotData:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -476,7 +474,7 @@ array from the ArrayPlotData:</p>
 24
 25
 26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
@@ -487,8 +485,8 @@ array from the ArrayPlotData:</p>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
-        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -497,36 +495,36 @@ array from the ArrayPlotData:</p>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y2</span><span class="o">=</span><span class="n">y2</span><span class="p">)</span>
 
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y2&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y2&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">plot</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">OverlappingPlot</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>This code generates the following plot:</p>
-<img alt="../_images/overlapping_plot.png" src="../_images/overlapping_plot.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/overlapping_plot.png"><img alt="../_images/overlapping_plot.png" src="../_images/overlapping_plot.png" style="height: 300pt;" /></a>
 </div>
 <div class="section" id="containers">
 <h2>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h2>
 <p>So far we&#8217;ve only seen single plots, but frequently we need to plot data side
-by side.  Chaco uses various subclasses of <tt class="xref py py-class docutils literal"><span class="pre">Container</span></tt> to do layout.
-Horizontal containers (<tt class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></tt>) place components horizontally:</p>
-<img alt="../_images/hplotcontainer.png" src="../_images/hplotcontainer.png" style="height: 350pt;" />
-<p>Vertical containers (<tt class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></tt>) array component vertically:</p>
-<img alt="../_images/vplotcontainer.png" src="../_images/vplotcontainer.png" style="height: 350pt;" />
-<p>Grid container (<tt class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></tt>) lays plots out in a grid:</p>
-<img alt="../_images/gridcontainer.png" src="../_images/gridcontainer.png" style="height: 350pt;" />
-<p>Overlay containers (<tt class="xref py py-class docutils literal"><span class="pre">OverlayPlotContainer</span></tt>) just overlay plots on top of
+by side.  Chaco uses various subclasses of <code class="xref py py-class docutils literal"><span class="pre">Container</span></code> to do layout.
+Horizontal containers (<code class="xref py py-class docutils literal"><span class="pre">HPlotContainer</span></code>) place components horizontally:</p>
+<a class="reference internal image-reference" href="../_images/hplotcontainer.png"><img alt="../_images/hplotcontainer.png" src="../_images/hplotcontainer.png" style="height: 350pt;" /></a>
+<p>Vertical containers (<code class="xref py py-class docutils literal"><span class="pre">VPlotContainer</span></code>) array component vertically:</p>
+<a class="reference internal image-reference" href="../_images/vplotcontainer.png"><img alt="../_images/vplotcontainer.png" src="../_images/vplotcontainer.png" style="height: 350pt;" /></a>
+<p>Grid container (<code class="xref py py-class docutils literal"><span class="pre">GridPlotContainer</span></code>) lays plots out in a grid:</p>
+<a class="reference internal image-reference" href="../_images/gridcontainer.png"><img alt="../_images/gridcontainer.png" src="../_images/gridcontainer.png" style="height: 350pt;" /></a>
+<p>Overlay containers (<code class="xref py py-class docutils literal"><span class="pre">OverlayPlotContainer</span></code>) just overlay plots on top of
 each other:</p>
-<img alt="../_images/simple_line2.png" src="../_images/simple_line2.png" style="height: 350pt;" />
+<a class="reference internal image-reference" href="../_images/simple_line2.png"><img alt="../_images/simple_line2.png" src="../_images/simple_line2.png" style="height: 350pt;" /></a>
 <p>You&#8217;ve actually already seen OverlayPlotContainer &#8212; the Plot
 class is actually a special subclass of OverlayPlotContainer.  All of
 the plots inside this container appear to share the same X- and Y-axis, but this
 is not a requirement of the container.  For instance, the following plot shows
 plots sharing only the X-axis:</p>
-<img alt="../_images/multiyaxis.png" src="../_images/multiyaxis.png" style="height: 350pt;" />
+<a class="reference internal image-reference" href="../_images/multiyaxis.png"><img alt="../_images/multiyaxis.png" src="../_images/multiyaxis.png" style="height: 350pt;" /></a>
 </div>
 <div class="section" id="using-a-container">
 <h2>Using a container<a class="headerlink" href="#using-a-container" title="Permalink to this headline">¶</a></h2>
@@ -561,7 +559,7 @@ plot, and adds them both to the HPlotContainer object:</p>
 26
 27
 28
-29</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">HPlotContainer</span><span class="p">,</span> <span class="n">Plot</span>
@@ -571,8 +569,8 @@ plot, and adds them both to the HPlotContainer object:</p>
 
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">HPlotContainer</span><span class="p">)</span>
 
-    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
-                       <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                       <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -580,31 +578,31 @@ plot, and adds them both to the HPlotContainer object:</p>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
         <span class="n">scatter</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">scatter</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">scatter</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 
         <span class="n">line</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">line</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 
         <span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">container</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">ContainerExample</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>This produces the following plot:</p>
-<img alt="../_images/container_example.png" src="../_images/container_example.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/container_example.png"><img alt="../_images/container_example.png" src="../_images/container_example.png" style="height: 300pt;" /></a>
 <p>There are many parameters you can configure on a container, like background
 color, border thickness, spacing, and padding.  We insert some more
 lines between lines 25 and 26 of the previous example to make the two plots
 touch in the middle:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 <span class="n">container</span><span class="o">.</span><span class="n">spacing</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="n">scatter</span><span class="o">.</span><span class="n">padding_right</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="n">line</span><span class="o">.</span><span class="n">padding_left</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">line</span><span class="o">.</span><span class="n">y_axis</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s">&quot;right&quot;</span>
+<span class="n">line</span><span class="o">.</span><span class="n">y_axis</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span>
 
 <span class="k">return</span> <span class="n">container</span>
 </pre></div>
@@ -614,7 +612,7 @@ padding (or margin).  In order to make our plots touch, we need to zero out the
 padding on the appropriate side of each plot.  We also move the Y-axis for the
 line plot (which is on the right hand side) to the right side.</p>
 <p>This produces the following:</p>
-<img alt="../_images/container_nospace.png" src="../_images/container_nospace.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/container_nospace.png"><img alt="../_images/container_nospace.png" src="../_images/container_nospace.png" style="height: 300pt;" /></a>
 </div>
 <div class="section" id="dynamically-changing-plots">
 <h2>Dynamically changing plots<a class="headerlink" href="#dynamically-changing-plots" title="Permalink to this headline">¶</a></h2>
@@ -667,7 +665,7 @@ of these capabilities.  Here is the full listing of the modified code:</p>
 39
 40
 41
-42</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+42</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">Int</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">Group</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">marker_trait</span><span class="p">,</span> <span class="n">Plot</span>
@@ -676,17 +674,17 @@ of these capabilities.  Here is the full listing of the modified code:</p>
 <span class="k">class</span> <span class="nc">ScatterPlotTraits</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
 
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
-    <span class="n">color</span> <span class="o">=</span> <span class="n">ColorTrait</span><span class="p">(</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">ColorTrait</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
     <span class="n">marker</span> <span class="o">=</span> <span class="n">marker_trait</span>
     <span class="n">marker_size</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Group</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;color&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Color&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;custom&quot;</span><span class="p">),</span>
-              <span class="n">Item</span><span class="p">(</span><span class="s">&#39;marker&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Marker&quot;</span><span class="p">),</span>
-              <span class="n">Item</span><span class="p">(</span><span class="s">&#39;marker_size&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Size&quot;</span><span class="p">),</span>
-              <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
-                   <span class="n">orientation</span> <span class="o">=</span> <span class="s">&quot;vertical&quot;</span><span class="p">),</span>
-              <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+        <span class="n">Group</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Color&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;custom&quot;</span><span class="p">),</span>
+              <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;marker&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Marker&quot;</span><span class="p">),</span>
+              <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;marker_size&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Size&quot;</span><span class="p">),</span>
+              <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+                   <span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;vertical&quot;</span><span class="p">),</span>
+              <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -695,7 +693,7 @@ of these capabilities.  Here is the full listing of the modified code:</p>
 
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">plot</span>
 
     <span class="k">def</span> <span class="nf">_color_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -707,65 +705,65 @@ of these capabilities.  Here is the full listing of the modified code:</p>
     <span class="k">def</span> <span class="nf">_marker_size_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">marker_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_size</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">ScatterPlotTraits</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>Let&#8217;s step through the changes.</p>
 <p>First, we add traits for color, marker type, and marker size:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ScatterPlotTraits</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ScatterPlotTraits</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
-    <span class="n">color</span> <span class="o">=</span> <span class="n">ColorTrait</span><span class="p">(</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">ColorTrait</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
     <span class="n">marker</span> <span class="o">=</span> <span class="n">marker_trait</span>
     <span class="n">marker_size</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>We also change our Traits UI View to include references to these
-new traits.  We put them in a Traits UI <tt class="xref py py-class docutils literal"><span class="pre">Group</span></tt> so that we can control
+new traits.  We put them in a Traits UI <code class="xref py py-class docutils literal"><span class="pre">Group</span></code> so that we can control
 the layout in the dialog a little better &#8212; here, we&#8217;re setting the layout
 orientation of the elements in the dialog to &#8220;vertical&#8221;.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
     <span class="n">Group</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;color&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Color&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;custom&quot;</span><span class="p">),</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;marker&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Marker&quot;</span><span class="p">),</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;marker_size&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Size&quot;</span><span class="p">),</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
-             <span class="n">orientation</span> <span class="o">=</span> <span class="s">&quot;vertical&quot;</span> <span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Color&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;custom&quot;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;marker&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Marker&quot;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;marker_size&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Size&quot;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+             <span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;vertical&quot;</span> <span class="p">),</span>
         <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-        <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Now we have to do something with those traits.  We modify the
 constructor so that we grab a handle to the renderer that is created by
-the call to <tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+the call to <code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Recall that a <tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt> is a container for renderers and a factory for them. When
-called, its <tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt> method returns a list of the renderers that the call
+<p>Recall that a <code class="xref py py-class docutils literal"><span class="pre">Plot</span></code> is a container for renderers and a factory for them. When
+called, its <code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code> method returns a list of the renderers that the call
 created. In previous examples we&#8217;ve been just ignoring or discarding the return
 value, since we had no use for it. In this case, however, we grab a
 reference to that renderer so that we can modify its attributes in later
 methods.</p>
-<p>The <tt class="xref py py-meth docutils literal"><span class="pre">plot()</span></tt> method returns a list of renderers because for some values
+<p>The <code class="xref py py-meth docutils literal"><span class="pre">plot()</span></code> method returns a list of renderers because for some values
 of the <em>type</em> argument, it will create multiple renderers.  In our case here,
 we are just doing a scatter plot, and this creates just a single renderer.</p>
 <p>Next, we define some Traits event handlers.  These are specially-named
 methods that are called whenever the value of a particular trait changes.  Here
-is the handler for <tt class="xref py py-attr docutils literal"><span class="pre">color</span></tt> trait:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_color_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+is the handler for <code class="xref py py-attr docutils literal"><span class="pre">color</span></code> trait:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_color_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span>
 </pre></div>
 </div>
-<p>This event handler is called whenever the value of <tt class="xref py py-attr docutils literal"><span class="pre">self.color</span></tt> changes,
+<p>This event handler is called whenever the value of <code class="xref py py-attr docutils literal"><span class="pre">self.color</span></code> changes,
 whether due to user interaction with a GUI, or due to code elsewhere. (The
 Traits framework automatically calls this method because its name follows the
-name template of <tt class="samp docutils literal"><span class="pre">_</span><em><span class="pre">traitname</span></em><span class="pre">_changed</span></tt>.) Since this method is called
+name template of <code class="samp docutils literal"><span class="pre">_</span><em><span class="pre">traitname</span></em><span class="pre">_changed</span></code>.) Since this method is called
 after the new value has already been updated, we can read out the new value just
-by accessing <tt class="xref py py-attr docutils literal"><span class="pre">self.color</span></tt>. We just copy the color to the scatter renderer.
+by accessing <code class="xref py py-attr docutils literal"><span class="pre">self.color</span></code>. We just copy the color to the scatter renderer.
 You can see why we needed to hold on to the renderer in the constructor.</p>
 <p>Now we do the same thing for the marker type and marker size traits:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_marker_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_marker_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">marker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker</span>
 
 <span class="k">def</span> <span class="nf">_marker_size_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -773,7 +771,7 @@ You can see why we needed to hold on to the renderer in the constructor.</p>
 </pre></div>
 </div>
 <p>Running the code produces an app that looks like this:</p>
-<img alt="../_images/traits.png" src="../_images/traits.png" style="height: 350pt;" />
+<a class="reference internal image-reference" href="../_images/traits.png"><img alt="../_images/traits.png" src="../_images/traits.png" style="height: 350pt;" /></a>
 <p>Depending on your platform, the color editor/swatch at the top may look different.
 This is how it looks on Mac OS X.  All of the controls here are &#8220;live&#8221;.  If you
 modify them, the plot updates.</p>
@@ -782,7 +780,7 @@ modify them, the plot updates.</p>
 <span id="data-chooser-example"></span><h2>Dynamically changing plot content<a class="headerlink" href="#dynamically-changing-plot-content" title="Permalink to this headline">¶</a></h2>
 <p>Traits are not just useful for tweaking visual features. For instance, you can
 use them to select among several data items. This next example is based on
-the earlier <a class="reference internal" href="#line-plot-example"><em>LinePlot example</em></a>, and we’ll walk through
+the earlier <a class="reference internal" href="#line-plot-example"><span class="std std-ref">LinePlot example</span></a>, and we’ll walk through
 the modifications:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -821,7 +819,7 @@ the modifications:</p>
 35
 36
 37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">jn</span>
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">jn</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
@@ -832,69 +830,71 @@ the modifications:</p>
 
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 
-    <span class="n">data_name</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;jn0&quot;</span><span class="p">,</span> <span class="s">&quot;jn1&quot;</span><span class="p">,</span> <span class="s">&quot;jn2&quot;</span><span class="p">)</span>
+    <span class="n">data_name</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;jn0&quot;</span><span class="p">,</span> <span class="s2">&quot;jn1&quot;</span><span class="p">,</span> <span class="s2">&quot;jn2&quot;</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;data_name&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Y data&quot;</span><span class="p">),</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;data_name&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Y data&quot;</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
         <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-        <span class="n">title</span><span class="o">=</span><span class="s">&quot;Data Chooser&quot;</span><span class="p">)</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Data Chooser&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-        <span class="c"># jn is the Bessel function or order n</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;jn0&quot;</span><span class="p">:</span> <span class="n">jn</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
-                     <span class="s">&quot;jn1&quot;</span><span class="p">:</span> <span class="n">jn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
-                     <span class="s">&quot;jn2&quot;</span><span class="p">:</span> <span class="n">jn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)}</span>
+        <span class="c1"># jn is the Bessel function or order n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;jn0&quot;</span><span class="p">:</span> <span class="n">jn</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+                     <span class="s2">&quot;jn1&quot;</span><span class="p">:</span> <span class="n">jn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+                     <span class="s2">&quot;jn2&quot;</span><span class="p">:</span> <span class="n">jn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)}</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;jn0&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;jn0&quot;</span><span class="p">])</span>
 
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">plot</span>
 
     <span class="k">def</span> <span class="nf">_data_name_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_name</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_name</span><span class="p">])</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">DataChooser</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>First, we add an Enumeration trait to select a particular data name</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">data_name</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;jn0&quot;</span><span class="p">,</span> <span class="s">&quot;jn1&quot;</span><span class="p">,</span> <span class="s">&quot;jn2&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data_name</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;jn0&quot;</span><span class="p">,</span> <span class="s2">&quot;jn1&quot;</span><span class="p">,</span> <span class="s2">&quot;jn2&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>and a corresponding <tt class="docutils literal"><span class="pre">Item</span></tt> in the Traits UI View</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">Item</span><span class="p">(</span><span class="s">&#39;data_name&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Y data&quot;</span><span class="p">)</span>
+<p>and a corresponding <code class="docutils literal"><span class="pre">Item</span></code> in the Traits UI View</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;data_name&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Y data&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>By default, an <tt class="docutils literal"><span class="pre">Enum</span></tt> trait will be displayed as a drop-down. In the
+<p>By default, an <code class="docutils literal"><span class="pre">Enum</span></code> trait will be displayed as a drop-down. In the
 constructor, we create a dictionary that maps the data names to actual
 numpy arrays:</p>
-<div class="highlight-python"><pre># jn is the Bessel function
+<div class="highlight-python"><div class="highlight"><pre><span></span># jn is the Bessel function
 self.data = {“jn0”: jn(0, x),
              “jn1”: jn(1, x),
-             “jn2”: jn(2, x)}</pre>
+             “jn2”: jn(2, x)}
+</pre></div>
 </div>
-<p>When we initialize the ArrayPlotData, we’ll set <tt class="docutils literal"><span class="pre">y</span></tt> to the <tt class="docutils literal"><span class="pre">jn0</span></tt> array.</p>
-<div class="highlight-python"><pre>self.plotdata = ArrayPlotData(x = x, y = self.data[“jn0”])
-plot = Plot(self.plotdata)</pre>
+<p>When we initialize the ArrayPlotData, we’ll set <code class="docutils literal"><span class="pre">y</span></code> to the <code class="docutils literal"><span class="pre">jn0</span></code> array.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>self.plotdata = ArrayPlotData(x = x, y = self.data[“jn0”])
+plot = Plot(self.plotdata)
+</pre></div>
 </div>
-<p>Note that we are storing a reference to the <tt class="docutils literal"><span class="pre">plotdata</span></tt> object.
+<p>Note that we are storing a reference to the <code class="docutils literal"><span class="pre">plotdata</span></code> object.
 In previous examples, there was no need to keep a reference around (except
 for the one stored inside the Plot object).</p>
 <p>Finally, we create an event handler for the “data_name” Trait. Any time the
-<tt class="docutils literal"><span class="pre">data_name</span></tt> trait changes, we’re going to look it up in the <tt class="docutils literal"><span class="pre">self.data</span></tt>
-dictionary, and push that value into the <tt class="docutils literal"><span class="pre">y</span></tt> data item in <tt class="docutils literal"><span class="pre">ArrayPlotData</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_data_name_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_name</span><span class="p">])</span>
+<code class="docutils literal"><span class="pre">data_name</span></code> trait changes, we’re going to look it up in the <code class="docutils literal"><span class="pre">self.data</span></code>
+dictionary, and push that value into the <code class="docutils literal"><span class="pre">y</span></code> data item in <code class="docutils literal"><span class="pre">ArrayPlotData</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_data_name_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">plotdata</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_name</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Note that there is no actual copying of data here, we’re just passing around
 numpy references.</p>
 <p>The final plot looks like this:</p>
-<img alt="../_images/data_chooser_example.png" src="../_images/data_chooser_example.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/data_chooser_example.png"><img alt="../_images/data_chooser_example.png" src="../_images/data_chooser_example.png" style="height: 300pt;" /></a>
 </div>
 <div class="section" id="connected-plots">
 <span id="connected-plots-example"></span><h2>Connected plots<a class="headerlink" href="#connected-plots" title="Permalink to this headline">¶</a></h2>
@@ -942,7 +942,7 @@ space region. This is the full code:</p>
 37
 38
 39
-40</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+40</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">HPlotContainer</span>
@@ -953,10 +953,10 @@ space region. This is the full code:</p>
 
     <span class="n">container</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">HPlotContainer</span><span class="p">)</span>
 
-    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;container&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;container&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span>
                             <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
                        <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                       <span class="n">title</span><span class="o">=</span><span class="s">&quot;Connected Range&quot;</span><span class="p">)</span>
+                       <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Connected Range&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_container_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -964,10 +964,10 @@ space region. This is the full code:</p>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
 
         <span class="n">scatter</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">scatter</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">scatter</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 
         <span class="n">line</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">line</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 
         <span class="n">container</span> <span class="o">=</span> <span class="n">HPlotContainer</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 
@@ -980,25 +980,25 @@ space region. This is the full code:</p>
         <span class="n">scatter</span><span class="o">.</span><span class="n">range2d</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">range2d</span>
         <span class="k">return</span> <span class="n">container</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">ConnectedRange</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>First, we define a &#8220;horizontal&#8221; container that displays the plots side
 to side:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">container</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">HPlotContainer</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">container</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">HPlotContainer</span><span class="p">)</span>
 
-<span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;container&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span>
+<span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;container&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span>
                         <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
                    <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                   <span class="n">title</span><span class="o">=</span><span class="s">&quot;Connected Range&quot;</span><span class="p">)</span>
+                   <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Connected Range&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>In the constructor, we define some data and create two plots of it,
 a line plot and a scatter plot, insert them in the container, and add
 pan and zoom tools to both.</p>
 <p>The most important part of the code is the last line of the constructor:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">scatter</span><span class="o">.</span><span class="n">range2d</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">range2d</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">scatter</span><span class="o">.</span><span class="n">range2d</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">range2d</span>
 </pre></div>
 </div>
 <p>Chaco has a concept of <em>data range</em> to express bounds in data space.
@@ -1011,19 +1011,19 @@ range object, <strong>and will change together in response to
 changes to the data space bounds</strong>. For example, panning
 or zooming one of the plots
 will result in the same transformation in the other:</p>
-<img alt="../_images/connected_range_example.png" src="../_images/connected_range_example.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/connected_range_example.png"><img alt="../_images/connected_range_example.png" src="../_images/connected_range_example.png" style="height: 300pt;" /></a>
 </div>
 <div class="section" id="plot-orientation-index-and-value">
 <h2>Plot orientation, index and value<a class="headerlink" href="#plot-orientation-index-and-value" title="Permalink to this headline">¶</a></h2>
-<p>We can modify the <a class="reference internal" href="#connected-plots-example"><em>connected plots example</em></a>
+<p>We can modify the <a class="reference internal" href="#connected-plots-example"><span class="std std-ref">connected plots example</span></a>
 such that the two plots only share one of the axes. The 2D data range
 trait is actually composed of two 1D data ranges, and we can access them
 independently. So to link up the x-axes we can substitute the line</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">scatter</span><span class="o">.</span><span class="n">range2d</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">range2d</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">scatter</span><span class="o">.</span><span class="n">range2d</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">range2d</span>
 </pre></div>
 </div>
 <p>with</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">scatter</span><span class="o">.</span><span class="n">index_range</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">index_range</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">scatter</span><span class="o">.</span><span class="n">index_range</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">index_range</span>
 </pre></div>
 </div>
 <p>Now the plot can move independently on the y-axis and are link on the x-axis.</p>
@@ -1033,28 +1033,28 @@ As it is possible to easily change the orientation of most Chaco plots,
 we want some way to differentiate between the abscissa and the ordinate axes.
 If we just stuck with <em>x</em> and <em>y</em>, things would get pretty confusing after
 a change in orientation, as one would now, for instance, change the y-axis
-by referring to it as <tt class="docutils literal"><span class="pre">x_range</span></tt>.</p>
+by referring to it as <code class="docutils literal"><span class="pre">x_range</span></code>.</p>
 <p>Instead, in Chaco we refer to the data domain as <em>index</em>, and to the co-domain
 (the set of possible values) as <em>value</em>.</p>
 <p>To illustrate how flexible this concept is, we can switch the orientation
 of the line plot by substituting</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">line</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>with</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">line</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s">&quot;v&quot;</span><span class="p">,</span> <span class="n">default_origin</span><span class="o">=</span><span class="s">&quot;top left&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="n">default_origin</span><span class="o">=</span><span class="s2">&quot;top left&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">default_origin</span></tt> parameter sets the index axis to be increasing
+<p>The <code class="docutils literal"><span class="pre">default_origin</span></code> parameter sets the index axis to be increasing
 downwards. As a result of these changes, now changes to the
 scatter plot index axis (the <em>x</em> axis) produces equivalent changes in the
 line plot index axis (the <em>y</em> axis):</p>
-<img alt="../_images/connected_index_example.png" src="../_images/connected_index_example.png" style="height: 300pt;" />
+<a class="reference internal image-reference" href="../_images/connected_index_example.png"><img alt="../_images/connected_index_example.png" src="../_images/connected_index_example.png" style="height: 300pt;" /></a>
 </div>
 <div class="section" id="multiple-windows">
 <h2>Multiple windows<a class="headerlink" href="#multiple-windows" title="Permalink to this headline">¶</a></h2>
 <p>Chaco components can also be connected beyond the boundary of a single window.
-We will again modify the <a class="reference internal" href="#line-plot-example"><em>LinePlot example</em></a>. This
+We will again modify the <a class="reference internal" href="#line-plot-example"><span class="std std-ref">LinePlot example</span></a>. This
 time, we will create a scatter plot and a line plot with connected ranges
 in different windows.</p>
 <p>First of all, we define a Traits UI view of a customizable plot.
@@ -1096,7 +1096,7 @@ This is the full code that we will analyze step by step below</p>
 35
 36
 37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
@@ -1107,15 +1107,15 @@ This is the full code that we will analyze step by step below</p>
 
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 
-    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="s">&quot;line&quot;</span><span class="p">)</span>
+    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">)</span>
 
-    <span class="n">orientation</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;horizontal&quot;</span><span class="p">,</span> <span class="s">&quot;vertical&quot;</span><span class="p">)</span>
+    <span class="n">orientation</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
 
-    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;orientation&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Orientation&quot;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;orientation&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Orientation&quot;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span>
                             <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
                        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                       <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+                       <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -1123,50 +1123,50 @@ This is the full code that we will analyze step by step below</p>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
 
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 
         <span class="n">plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PanTool</span><span class="p">(</span><span class="n">plot</span><span class="p">))</span>
         <span class="n">plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ZoomTool</span><span class="p">(</span><span class="n">plot</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">plot</span>
 
     <span class="k">def</span> <span class="nf">_orientation_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s">&quot;vertical&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s">&quot;v&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;vertical&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;v&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s">&quot;h&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span>
 </pre></div>
 </td></tr></table></div>
 <p>The plot defines two traits, one for the plot type (scatter of line plot)</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;scatter&quot;</span><span class="p">,</span> <span class="s">&quot;line&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>and one for the orientation of the plot</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">orientation</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;horizontal&quot;</span><span class="p">,</span> <span class="s">&quot;vertical&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">orientation</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">plot_type</span></tt> trait will not be exposed in the UI, but we add a
+<p>The <code class="docutils literal"><span class="pre">plot_type</span></code> trait will not be exposed in the UI, but we add a
 Traits UI item for the orientation:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s">&#39;orientation&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Orientation&quot;</span><span class="p">),</span> <span class="o">...</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;orientation&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Orientation&quot;</span><span class="p">),</span> <span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Since the <tt class="docutils literal"><span class="pre">orientation</span></tt> trait is an Enum, this will appear as a drop-down
+<p>Since the <code class="docutils literal"><span class="pre">orientation</span></code> trait is an Enum, this will appear as a drop-down
 box in the window.</p>
 <p>The constructor is very similar to the one used in the previous examples,
-except that we create a new plot of the type specified in the <tt class="docutils literal"><span class="pre">plot_type</span></tt>
+except that we create a new plot of the type specified in the <code class="docutils literal"><span class="pre">plot_type</span></code>
 trait:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Finally, we wrote a Trait event handler for the <tt class="docutils literal"><span class="pre">orientation</span></tt> trait,
+<p>Finally, we wrote a Trait event handler for the <code class="docutils literal"><span class="pre">orientation</span></code> trait,
 which changes the orientation of the plot as required:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_orientation_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s">&quot;vertical&quot;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s">&quot;v&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_orientation_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;vertical&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;v&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s">&quot;h&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span>
 </pre></div>
 </div>
-<p>The <tt class="xref py py-class docutils literal"><span class="pre">PlotEditor</span></tt> represents one window. When running the application,
+<p>The <code class="xref py py-class docutils literal"><span class="pre">PlotEditor</span></code> represents one window. When running the application,
 we can easily create two separate windows, and connect their axes in
 this way:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -1180,30 +1180,30 @@ this way:</p>
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 
-    <span class="c"># create two plots, one of type &quot;scatter&quot;, one of type &quot;line&quot;</span>
-    <span class="n">scatter</span> <span class="o">=</span> <span class="n">PlotEditor</span><span class="p">(</span><span class="n">plot_type</span> <span class="o">=</span> <span class="s">&quot;scatter&quot;</span><span class="p">)</span>
-    <span class="n">line</span> <span class="o">=</span> <span class="n">PlotEditor</span><span class="p">(</span><span class="n">plot_type</span> <span class="o">=</span> <span class="s">&quot;line&quot;</span><span class="p">)</span>
+    <span class="c1"># create two plots, one of type &quot;scatter&quot;, one of type &quot;line&quot;</span>
+    <span class="n">scatter</span> <span class="o">=</span> <span class="n">PlotEditor</span><span class="p">(</span><span class="n">plot_type</span> <span class="o">=</span> <span class="s2">&quot;scatter&quot;</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">PlotEditor</span><span class="p">(</span><span class="n">plot_type</span> <span class="o">=</span> <span class="s2">&quot;line&quot;</span><span class="p">)</span>
 
-    <span class="c"># connect the axes of the two plots</span>
+    <span class="c1"># connect the axes of the two plots</span>
     <span class="n">scatter</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">range2d</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">range2d</span>
 
-    <span class="c"># open two windows</span>
+    <span class="c1"># open two windows</span>
     <span class="n">line</span><span class="o">.</span><span class="n">edit_traits</span><span class="p">()</span>
     <span class="n">scatter</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>In the last two lines, we open Traits UI editors on both objects.
-Note that we call <tt class="xref py py-meth docutils literal"><span class="pre">edit_traits()</span></tt> on the first object,
-and <tt class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></tt> on the second object.
-The technical reason for this is that <tt class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></tt>
+Note that we call <code class="xref py py-meth docutils literal"><span class="pre">edit_traits()</span></code> on the first object,
+and <code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code> on the second object.
+The technical reason for this is that <code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code>
 will start the GUI main loop, and therefore block the script until the
-window is closed, whereas <tt class="xref py py-meth docutils literal"><span class="pre">edit_traits()</span></tt> will not. Thus, when
-opening multiple windows, we would call <tt class="xref py py-meth docutils literal"><span class="pre">edit_traits()</span></tt>
+window is closed, whereas <code class="xref py py-meth docutils literal"><span class="pre">edit_traits()</span></code> will not. Thus, when
+opening multiple windows, we would call <code class="xref py py-meth docutils literal"><span class="pre">edit_traits()</span></code>
 on all but the last one.</p>
 <p>Here is a screenshot of the two windows in action:</p>
-<img alt="../_images/connected_windows_example.png" src="../_images/connected_windows_example.png" style="height: 350pt;" />
+<a class="reference internal image-reference" href="../_images/connected_windows_example.png"><img alt="../_images/connected_windows_example.png" src="../_images/connected_windows_example.png" style="height: 350pt;" /></a>
 </div>
 <div class="section" id="plot-tools-adding-interactions">
 <h2>Plot tools: adding interactions<a class="headerlink" href="#plot-tools-adding-interactions" title="Permalink to this headline">¶</a></h2>
@@ -1217,7 +1217,7 @@ and container types and still use the old interactions, as long as we
 adhere to certain basic interfaces.</p>
 <p>Thus far, none of the example plots we’ve built are truly interactive,
 e.g., you cannot pan or zoom them. In the next example, we will modify
-the <a class="reference internal" href="#line-plot-example"><em>LinePlot example</em></a> so that we can pan and zoom.</p>
+the <a class="reference internal" href="#line-plot-example"><span class="std std-ref">LinePlot example</span></a> so that we can pan and zoom.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1248,7 +1248,7 @@ the <a class="reference internal" href="#line-plot-example"><em>LinePlot example
 28
 29
 30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
@@ -1260,30 +1260,30 @@ the <a class="reference internal" href="#line-plot-example"><em>LinePlot example
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span>
-        <span class="n">Item</span><span class="p">(</span><span class="s">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span><span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
         <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
         <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-        <span class="n">title</span><span class="o">=</span><span class="s">&quot;Chaco Plot&quot;</span><span class="p">)</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Chaco Plot&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
 
-        <span class="c"># append tools to pan, zoom, and drag</span>
+        <span class="c1"># append tools to pan, zoom, and drag</span>
         <span class="n">plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PanTool</span><span class="p">(</span><span class="n">plot</span><span class="p">))</span>
         <span class="n">plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ZoomTool</span><span class="p">(</span><span class="n">plot</span><span class="p">))</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DragZoom</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">drag_button</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="p">))</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DragZoom</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">drag_button</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">plot</span>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">ToolsExample</span><span class="p">()</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <p>The example illustrates the general usage pattern: we create a new instance of
-a <tt class="xref py py-class docutils literal"><span class="pre">Tool</span></tt>, giving it a reference
-to the <tt class="xref py py-class docutils literal"><span class="pre">Plot</span></tt>, and then we append that tool to the list of tools on the plot.
+a <code class="xref py py-class docutils literal"><span class="pre">Tool</span></code>, giving it a reference
+to the <code class="xref py py-class docutils literal"><span class="pre">Plot</span></code>, and then we append that tool to the list of tools on the plot.
 This looks a little redundant, but there is a reason why the tools
 need a reference back to the plot: the tools use methods and attributes
 of the plot
@@ -1301,10 +1301,10 @@ and when they are not.</p>
 what interactions are available on a plot.</p>
 <p>First, we add a new trait to hold a list of names of the tools.
 This is similar to adding a list of data items
-in the <a class="reference internal" href="#data-chooser-example"><em>DataChooser example</em></a>.
+in the <a class="reference internal" href="#data-chooser-example"><span class="std std-ref">DataChooser example</span></a>.
 However, instead of a drop-down (which is the default editor
 for an Enumeration trait), we tell Traits that we would like a
-check list by creating a <tt class="xref py py-class docutils literal"><span class="pre">CheckListEditor</span></tt>, so that we will be able
+check list by creating a <code class="xref py py-class docutils literal"><span class="pre">CheckListEditor</span></code>, so that we will be able
 to select multiple tools. We give the CheckListEditor a list of possible
 values, which are just the names of the tools. Notice that these are
 strings, and not the tool classes themselves.</p>
@@ -1320,7 +1320,7 @@ strings, and not the tool classes themselves.</p>
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">CheckListEditor</span><span class="p">,</span> <span class="n">Item</span><span class="p">,</span> <span class="n">View</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="kn">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
@@ -1331,8 +1331,8 @@ strings, and not the tool classes themselves.</p>
 
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
 
-    <span class="n">tools</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">editor</span><span class="o">=</span><span class="n">CheckListEditor</span><span class="p">(</span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;PanTool&quot;</span><span class="p">,</span>
-                                 <span class="s">&quot;SimpleZoom&quot;</span><span class="p">,</span> <span class="s">&quot;DragZoom&quot;</span><span class="p">]))</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="n">editor</span><span class="o">=</span><span class="n">CheckListEditor</span><span class="p">(</span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PanTool&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;SimpleZoom&quot;</span><span class="p">,</span> <span class="s2">&quot;DragZoom&quot;</span><span class="p">]))</span>
 </pre></div>
 </td></tr></table></div>
 <p>In the constructor, we do not add the interactive tools:</p>
@@ -1342,16 +1342,16 @@ strings, and not the tool classes themselves.</p>
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre>    <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">_plot_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
         <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
         <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
-        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">plot</span>
 </pre></div>
 </td></tr></table></div>
-<p>Instead, we write a trait event handler for the <tt class="docutils literal"><span class="pre">tools</span></tt> trait:</p>
+<p>Instead, we write a trait event handler for the <code class="docutils literal"><span class="pre">tools</span></code> trait:</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1362,39 +1362,39 @@ strings, and not the tool classes themselves.</p>
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre>    <span class="k">def</span> <span class="nf">_tools_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">_tools_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">eval</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">]</span>
 
-        <span class="c"># Remove all tools from the plot</span>
+        <span class="c1"># Remove all tools from the plot</span>
         <span class="n">plot_tools</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">tools</span>
         <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">plot_tools</span><span class="p">:</span>
             <span class="n">plot_tools</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
 
-        <span class="c"># Create new instances for the selected tool classes</span>
+        <span class="c1"># Create new instances for the selected tool classes</span>
         <span class="k">for</span> <span class="n">cls</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
 <p>The first line,</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">eval</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">eval</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>converts the value of the <tt class="docutils literal"><span class="pre">tools</span></tt> trait (a string) to a Tool class. In the
+<p>converts the value of the <code class="docutils literal"><span class="pre">tools</span></code> trait (a string) to a Tool class. In the
 of the method, we remove all the existing tools from the plot</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># Remove all tools from the plot</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Remove all tools from the plot</span>
 <span class="n">plot_tools</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">tools</span>
 <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">plot_tools</span><span class="p">:</span>
     <span class="n">plot_tools</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>and create new ones for the selected items:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># Create new instances for the selected tool classes</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Create new instances for the selected tool classes</span>
 <span class="k">for</span> <span class="n">cls</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Here is a screenshot of the final result:</p>
-<img alt="../_images/tool_chooser_example.png" src="../_images/tool_chooser_example.png" style="width: 350pt;" />
+<a class="reference internal image-reference" href="../_images/tool_chooser_example.png"><img alt="../_images/tool_chooser_example.png" src="../_images/tool_chooser_example.png" style="width: 350pt;" /></a>
 </div>
 <div class="section" id="writing-a-custom-tool">
 <h2>Writing a custom tool<a class="headerlink" href="#writing-a-custom-tool" title="Permalink to this headline">¶</a></h2>
@@ -1405,31 +1405,31 @@ pieces.</p>
 <p>Our next step is to write a simple, custom tool that will
 print out the position on the plot under the mouse cursor.
 This can be done in just a few lines:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">enable.api</span> <span class="kn">import</span> <span class="n">BaseTool</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">enable.api</span> <span class="kn">import</span> <span class="n">BaseTool</span>
 
 <span class="k">class</span> <span class="nc">CustomTool</span><span class="p">(</span><span class="n">BaseTool</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">normal_mouse_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&quot;Screen point:&quot;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span>
+        <span class="k">print</span> <span class="s2">&quot;Screen point:&quot;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span>
 </pre></div>
 </div>
-<p><tt class="xref py py-class docutils literal"><span class="pre">BaseTool</span></tt> is an abstract class that forms the interface for tools.
+<p><code class="xref py py-class docutils literal"><span class="pre">BaseTool</span></code> is an abstract class that forms the interface for tools.
 It defines a set of methods that are called for the
 most common mouse and keyboard events. In this case, we define a callback
-for the <tt class="docutils literal"><span class="pre">mouse_move</span></tt> event. The prefix <tt class="docutils literal"><span class="pre">normal</span></tt> indicated the
+for the <code class="docutils literal"><span class="pre">mouse_move</span></code> event. The prefix <code class="docutils literal"><span class="pre">normal</span></code> indicated the
 state of the tool, which we will cover next.</p>
-<p>All events have an <tt class="docutils literal"><span class="pre">x</span></tt> and a <tt class="docutils literal"><span class="pre">y</span></tt> position, and our custom tools is
+<p>All events have an <code class="docutils literal"><span class="pre">x</span></code> and a <code class="docutils literal"><span class="pre">y</span></code> position, and our custom tools is
 just going to print it out.</p>
-<img alt="../_images/custom_tool_example.png" src="../_images/custom_tool_example.png" style="height: 250pt;" />
-<p>Other event callbacks correspond to mouse gestures (<tt class="docutils literal"><span class="pre">mouse_enter</span></tt>,
-<tt class="docutils literal"><span class="pre">mouse_leave</span></tt>, <tt class="docutils literal"><span class="pre">mouse_wheel</span></tt>), mouse clicks (<tt class="docutils literal"><span class="pre">left_down</span></tt>, <tt class="docutils literal"><span class="pre">left_up</span></tt>,
-<tt class="docutils literal"><span class="pre">right_down</span></tt>, <tt class="docutils literal"><span class="pre">right_up</span></tt>), and key presses (<tt class="docutils literal"><span class="pre">key_pressed</span></tt>).</p>
+<a class="reference internal image-reference" href="../_images/custom_tool_example.png"><img alt="../_images/custom_tool_example.png" src="../_images/custom_tool_example.png" style="height: 250pt;" /></a>
+<p>Other event callbacks correspond to mouse gestures (<code class="docutils literal"><span class="pre">mouse_enter</span></code>,
+<code class="docutils literal"><span class="pre">mouse_leave</span></code>, <code class="docutils literal"><span class="pre">mouse_wheel</span></code>), mouse clicks (<code class="docutils literal"><span class="pre">left_down</span></code>, <code class="docutils literal"><span class="pre">left_up</span></code>,
+<code class="docutils literal"><span class="pre">right_down</span></code>, <code class="docutils literal"><span class="pre">right_up</span></code>), and key presses (<code class="docutils literal"><span class="pre">key_pressed</span></code>).</p>
 </div>
 <div class="section" id="stateful-tools">
-<h2>Stateful tools<a class="headerlink" href="#stateful-tools" title="Permalink to this headline">¶</a></h2>
+<span id="tool-states"></span><h2>Stateful tools<a class="headerlink" href="#stateful-tools" title="Permalink to this headline">¶</a></h2>
 <p>Chaco tools are stateful. You can think of them as state machines that
 toggle states based on the events they receive. All tools have at least
 one state, called &#8220;normal&#8221;. That is why the callback in the previous
-example began with the prefix <tt class="docutils literal"><span class="pre">normal_</span></tt>.</p>
+example began with the prefix <code class="docutils literal"><span class="pre">normal_</span></code>.</p>
 <p>Our next tool is going to have two states, &#8220;normal&#8221; and &#8220;mousedown&#8221;.
 We are going to enter the &#8220;mousedown&#8221; state when we detect a &#8220;left down&#8221;
 event, and we will exit that state when we detect a &#8220;left up&#8221; event:</p>
@@ -1446,43 +1446,43 @@ event, and we will exit that state when we detect a &#8220;left up&#8221; event:
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">CustomTool</span><span class="p">(</span><span class="n">BaseTool</span><span class="p">):</span>
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomTool</span><span class="p">(</span><span class="n">BaseTool</span><span class="p">):</span>
 
-    <span class="n">event_state</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;normal&quot;</span><span class="p">,</span> <span class="s">&quot;mousedown&quot;</span><span class="p">)</span>
+    <span class="n">event_state</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;mousedown&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">normal_mouse_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&quot;Screen:&quot;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span>
+        <span class="k">print</span> <span class="s2">&quot;Screen:&quot;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span>
 
     <span class="k">def</span> <span class="nf">normal_left_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">event_state</span> <span class="o">=</span> <span class="s">&quot;mousedown&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_state</span> <span class="o">=</span> <span class="s2">&quot;mousedown&quot;</span>
         <span class="n">event</span><span class="o">.</span><span class="n">handled</span> <span class="o">=</span> <span class="bp">True</span>
 
     <span class="k">def</span> <span class="nf">mousedown_left_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">event_state</span> <span class="o">=</span> <span class="s">&quot;normal&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_state</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span>
         <span class="n">event</span><span class="o">.</span><span class="n">handled</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </td></tr></table></div>
-<p>Every event has a <tt class="docutils literal"><span class="pre">handled</span></tt> boolean attribute that can be set to announce
+<p>Every event has a <code class="docutils literal"><span class="pre">handled</span></code> boolean attribute that can be set to announce
 that it has been taken care of. Handled events are not propagated further.</p>
 <p>So far, the custom tool would stop printing to screen while the left mouse
 button is pressed. This is because while the tools is in the &#8220;mousedown&#8221; state,
-a mouse move event looks for a <tt class="docutils literal"><span class="pre">mousedown_mouse_move</span></tt> callback method.
+a mouse move event looks for a <code class="docutils literal"><span class="pre">mousedown_mouse_move</span></code> callback method.
 We can write an implementation for it that maps the screen coordinates in
 data space:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">mousedown_mouse_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&quot;Data:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">map_data</span><span class="p">((</span><span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mousedown_mouse_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">&quot;Data:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">map_data</span><span class="p">((</span><span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">self.component</span></tt> attribute contains a reference to the underlying
+<p>The <code class="docutils literal"><span class="pre">self.component</span></code> attribute contains a reference to the underlying
 plot. This is why tools need to be given a reference to a plot when
 they are constructed: almost all tools need to use some capabilities
-(like <tt class="docutils literal"><span class="pre">map_data</span></tt>) of the components for which they are receiving events.</p>
-<img alt="../_images/custom_tool_stateful_example.png" src="../_images/custom_tool_stateful_example.png" style="height: 250pt;" />
+(like <code class="docutils literal"><span class="pre">map_data</span></code>) of the components for which they are receiving events.</p>
+<a class="reference internal image-reference" href="../_images/custom_tool_stateful_example.png"><img alt="../_images/custom_tool_stateful_example.png" src="../_images/custom_tool_stateful_example.png" style="height: 250pt;" /></a>
 </div>
 <div class="section" id="final-words">
 <h2>Final words<a class="headerlink" href="#final-words" title="Permalink to this headline">¶</a></h2>
 <p>This concludes this tutorial. For further information, please refer
-to the <a class="reference internal" href="resources.html#resources"><em>Other Chaco resources</em></a> page, or visit the <a class="reference internal" href="index.html#user-guide"><em>User guide</em></a>.</p>
+to the <a class="reference internal" href="resources.html#resources"><span class="std std-ref">Other Chaco resources</span></a> page, or visit the <a class="reference internal" href="index.html#user-guide"><span class="std std-ref">User guide</span></a>.</p>
 <p><em>This tutorial is based on the &#8220;Interactive plotting with Chaco&#8221; tutorial
 that was presented by Peter Wang at Scipy 2008</em></p>
 </div>
@@ -1492,7 +1492,7 @@ that was presented by Peter Wang at Scipy 2008</em></p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -1525,12 +1525,14 @@ that was presented by Peter Wang at Scipy 2008</em></p>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/user_manual/chaco_tutorial.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_manual/chaco_tutorial.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -1538,29 +1540,26 @@ that was presented by Peter Wang at Scipy 2008</em></p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
   
     <li><a href="#">Interactive plotting with Chaco</a></li>
   
 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2014, Enthought, Inc..
-      Last updated on Nov 05, 2014.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Dec 22, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

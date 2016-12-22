@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,15 +7,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Architecture Overview &mdash; chaco 4.5.0 documentation</title>
+    <title>Architecture Overview &mdash; Chaco 4.6</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '4.5.0',
+        URL_ROOT:    './',
+        VERSION:     '4.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +25,13 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/et.ico"/>
-    <link rel="top" title="chaco 4.5.0 documentation" href="index.html" />
+    <link rel="top" title="Chaco 4.6" href="index.html" />
     <link rel="up" title="Programmer’s Reference" href="programmers_reference.html" />
     <link rel="next" title="Commonly Used Modules and Classes" href="modules_and_classes.html" />
     <link rel="prev" title="Programmer’s Reference" href="programmers_reference.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,8 +40,8 @@
         <li class="right" >
           <a href="programmers_reference.html" title="Programmer’s Reference"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="programmers_reference.html" accesskey="U">Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Architecture Overview</a></li>
   
@@ -54,7 +52,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="architecture-overview">
 <h1><a class="toc-backref" href="#id1">Architecture Overview</a><a class="headerlink" href="#architecture-overview" title="Permalink to this headline">¶</a></h1>
@@ -120,9 +118,9 @@ these toolkits. The Kiva and Enable packages are bundled together in the
 <p>Kiva is a 2-D vector drawing library for Python. It serves a purpose similar to
 <a class="reference external" href="http://cairographics.org/">Cairo</a>. It allows us to compose vector graphics
 for display on the screen or for saving to a variety of vector and image file
-formats. To use Kiva, a program instantiates a Kiva <tt class="xref py py-class docutils literal"><span class="pre">GraphicsContext</span></tt>
+formats. To use Kiva, a program instantiates a Kiva <code class="xref py py-class docutils literal"><span class="pre">GraphicsContext</span></code>
 object of an appropriate type, and then makes drawing calls on it like
-<tt class="xref py py-meth docutils literal"><span class="pre">gc.draw_image()</span></tt>, <tt class="xref py py-meth docutils literal"><span class="pre">gc.line_to()</span></tt>, and <tt class="xref py py-meth docutils literal"><span class="pre">gc.show_text()</span></tt>. Kiva
+<code class="xref py py-meth docutils literal"><span class="pre">gc.draw_image()</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">gc.line_to()</span></code>, and <code class="xref py py-meth docutils literal"><span class="pre">gc.show_text()</span></code>. Kiva
 integrates with windowing toolkits like wxWindows and Qt, and it has an OpenGL
 backend as well. For wxPython and Qt, Kiva actually performs a high-quality,
 fast software rasterization using the Anti-Grain Geometry (AGG) library. For
@@ -162,16 +160,16 @@ Enable, for the time being, if you want some kind of canvas-like thing to
 model more than just pixel space on the screen, implement it using
 the mechanisms in Chaco.</p>
 <p>The way that Enable hooks up to the underlying GUI toolkit system is via an
-<tt class="xref py py-class docutils literal"><span class="pre">enable.Window</span></tt> object. Each toolkit has its own implementation of this
-object, and they all subclass from <tt class="xref py py-class docutils literal"><span class="pre">enable.AbstractWindow</span></tt>. They usually
+<code class="xref py py-class docutils literal"><span class="pre">enable.Window</span></code> object. Each toolkit has its own implementation of this
+object, and they all subclass from <code class="xref py py-class docutils literal"><span class="pre">enable.AbstractWindow</span></code>. They usually
 contain an instance of the GUI toolkit&#8217;s specific window object, whether it&#8217;s a
-<tt class="xref py py-class docutils literal"><span class="pre">wx.Window</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">Qt.QWidget</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">pyglet.window.Window</span></tt>. This
+<code class="xref py py-class docutils literal"><span class="pre">wx.Window</span></code> or <code class="xref py py-class docutils literal"><span class="pre">Qt.QWidget</span></code> or <code class="xref py py-class docutils literal"><span class="pre">pyglet.window.Window</span></code>. This
 instance is created upon initialization of the enable.Window and stored as the
-<tt class="xref py py-attr docutils literal"><span class="pre">control</span></tt> attribute on the Enable window. From the perspective of the GUI
+<code class="xref py py-attr docutils literal"><span class="pre">control</span></code> attribute on the Enable window. From the perspective of the GUI
 toolkit, an opaque widget gets created and stuck inside a parent control (or
 dialog or frame or window). This instance serves as a proxy between the GUI
 toolkit and the world of Enable. When the user clicks inside the widget area,
-the <tt class="xref py py-attr docutils literal"><span class="pre">control</span></tt> widget calls a method on the enable.Window object, which
+the <code class="xref py py-attr docutils literal"><span class="pre">control</span></code> widget calls a method on the enable.Window object, which
 then in turn can dispatch the event down the stack of Enable containers and
 components. When the system tells the widget to draw itself (e.g., as the result
 of a PAINT or EXPOSE event from the OS), the enable.Window is responsible for
@@ -186,13 +184,13 @@ enable.Window object does perform initialization on the GL GraphicsContext.)</p>
 <p>Some of the advantages to using Enable are that it makes mouse and key events
 from disparate windowing systems all share the same kind of signature, and be
 accessible via the same name. So, if you write bare wxPython and handle a
-<tt class="xref py py-obj docutils literal"><span class="pre">key_pressed</span></tt> event in wx, this might generate a value of
-<tt class="xref py py-obj docutils literal"><span class="pre">wx.WXK_BACK</span></tt>. Using Enable, you would just get a &#8220;key&#8221; back and its value
+<code class="xref py py-obj docutils literal"><span class="pre">key_pressed</span></code> event in wx, this might generate a value of
+<code class="xref py py-obj docutils literal"><span class="pre">wx.WXK_BACK</span></code>. Using Enable, you would just get a &#8220;key&#8221; back and its value
 would be the string &#8220;Backspace&#8221;, and this would hold true on Qt4 and Pyglet.
 Almost all of the event handling and rendering code in Chaco is identical under
 all of the backends; there are very few backend-specific changes that need to be
 handled at the Chaco level.</p>
-<p>The <tt class="xref py py-class docutils literal"><span class="pre">enable.Window</span></tt> object has a reference to a single top-level graphical
+<p>The <code class="xref py py-class docutils literal"><span class="pre">enable.Window</span></code> object has a reference to a single top-level graphical
 component (which includes containers, since they are subclasses of
 component).  Whenever it gets user input events, it recursively dispatches
 all the way down the potentially-nested stack of components.  Whenever a
@@ -228,43 +226,43 @@ install wxPython just to play with Chaco.</li>
 <p class="first admonition-title">Note</p>
 <p class="last">This section provides an overview of the relationships between these
 classes, and illustrates some sample usages.  For a more detailed list of
-the class hierarchy, please see <a class="reference internal" href="modules_and_classes.html#modules-and-classes"><em>Commonly Used Modules and Classes</em></a>.</p>
+the class hierarchy, please see <a class="reference internal" href="modules_and_classes.html#modules-and-classes"><span class="std std-ref">Commonly Used Modules and Classes</span></a>.</p>
 </div>
 <p>At the highest level, Chaco consists of:</p>
 <ul class="simple">
 <li>Visual components that render to screen or an output device
-(e.g., <tt class="xref py py-class docutils literal"><span class="pre">LinePlot</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">PlotGrid</span></tt>,
-<tt class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">Legend</span></tt>)</li>
+(e.g., <code class="xref py py-class docutils literal"><span class="pre">LinePlot</span></code>, <code class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></code>, <code class="xref py py-class docutils literal"><span class="pre">PlotGrid</span></code>,
+<code class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></code>, <code class="xref py py-class docutils literal"><span class="pre">Legend</span></code>)</li>
 <li>Data handling classes that wrap input data, interface with
 application-specific data sources, and transform coordinates
-between data and screen space (e.g., <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt>,
-<tt class="xref py py-class docutils literal"><span class="pre">GridDataSource</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt>)</li>
+between data and screen space (e.g., <code class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></code>,
+<code class="xref py py-class docutils literal"><span class="pre">GridDataSource</span></code>, <code class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></code>)</li>
 <li>Tools that handle keyboard or mouse events and modify other
-components (e.g., <tt class="xref py py-class docutils literal"><span class="pre">PanTool</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">ZoomTool</span></tt>,
-<tt class="xref py py-class docutils literal"><span class="pre">ScatterInspector</span></tt>)</li>
+components (e.g., <code class="xref py py-class docutils literal"><span class="pre">PanTool</span></code>, <code class="xref py py-class docutils literal"><span class="pre">ZoomTool</span></code>,
+<code class="xref py py-class docutils literal"><span class="pre">ScatterInspector</span></code>)</li>
 </ul>
 <p>Every Chaco plot is composed of these elements.  One can think of them
 as comprising a &#8220;display pipeline&#8221;, although the components form more
 of a graph.</p>
 <p>For example, a simple scatter plot will have:</p>
 <ul class="simple">
-<li>Two <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt> objects, one for the array of X data and one for
+<li>Two <code class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></code> objects, one for the array of X data and one for
 the Y data</li>
-<li>Two <tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> ranges, one for the X axis and one for the Y axis.
+<li>Two <code class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></code> ranges, one for the X axis and one for the Y axis.
 If we want the ranges to automatically compute the bounds of the dataset,
-then they need a reference to the an <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt>.</li>
-<li>Two independent <tt class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></tt> mappers, one for X axis and one for the
+then they need a reference to the an <code class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></code>.</li>
+<li>Two independent <code class="xref py py-class docutils literal"><span class="pre">LinearMapper</span></code> mappers, one for X axis and one for the
 Y axis.  The mappers convert from screen space to data space and vice verse,
-so they need a reference to the <tt class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></tt> objects so they know the
+so they need a reference to the <code class="xref py py-class docutils literal"><span class="pre">DataRange1D</span></code> objects so they know the
 data space extents.</li>
-<li>A <tt class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></tt> renderer, that has a reference to two mappers, as
-well as an index and a value <tt class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></tt>.</li>
+<li>A <code class="xref py py-class docutils literal"><span class="pre">ScatterPlot</span></code> renderer, that has a reference to two mappers, as
+well as an index and a value <code class="xref py py-class docutils literal"><span class="pre">ArrayDataSource</span></code>.</li>
 </ul>
 <p>This creates <em>only</em> the renderer that draws scatter markers in some region of
 screen space.  This does not create an X-axis, a Y-axis, or horizontal and
 vertical grids.  These other visuals are embodied as separate, distinct
-components: axes are drawn by the <tt class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></tt> component, and grids are
-drawn by the <tt class="xref py py-class docutils literal"><span class="pre">PlotGrid</span></tt> component.  Both of these overlays require a
+components: axes are drawn by the <code class="xref py py-class docutils literal"><span class="pre">PlotAxis</span></code> component, and grids are
+drawn by the <code class="xref py py-class docutils literal"><span class="pre">PlotGrid</span></code> component.  Both of these overlays require a
 mapper in order to know where on the screen they should draw.</p>
 </div>
 </div>
@@ -273,7 +271,7 @@ mapper in order to know where on the screen they should draw.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
@@ -292,12 +290,14 @@ mapper in order to know where on the screen they should draw.</p>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/architecture_overview.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/architecture_overview.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -305,16 +305,13 @@ mapper in order to know where on the screen they should draw.</p>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -323,18 +320,18 @@ mapper in order to know where on the screen they should draw.</p>
         <li class="right" >
           <a href="programmers_reference.html" title="Programmer’s Reference"
              >previous</a> |</li>
-        <li><a href="index.html">chaco 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Chaco 4.6</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="programmers_reference.html" >Programmer&#8217;s Reference</a> &raquo;</li>
   
     <li><a href="#">Architecture Overview</a></li>
   
 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2014, Enthought, Inc..
-      Last updated on Nov 05, 2014.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Dec 22, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

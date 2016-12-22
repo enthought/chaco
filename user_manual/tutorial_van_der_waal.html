@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Modeling Van der Waal’s Equation With Chaco and Traits &mdash; chaco 4.5.0 documentation</title>
+    <title>Modeling Van der Waal’s Equation With Chaco and Traits &mdash; Chaco 4.6</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -17,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +25,13 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="chaco 4.5.0 documentation" href="../index.html" /> 
+    <link rel="top" title="Chaco 4.6" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
   
     <li><a href="#">Modeling Van der Waal&#8217;s Equation With Chaco and Traits</a></li>
   
@@ -44,7 +42,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="modeling-van-der-waal-s-equation-with-chaco-and-traits">
 <span id="tutorial-van-der-waal"></span><h1>Modeling Van der Waal&#8217;s Equation With Chaco and Traits<a class="headerlink" href="#modeling-van-der-waal-s-equation-with-chaco-and-traits" title="Permalink to this headline">¶</a></h1>
@@ -76,28 +74,28 @@ includes features, technical notes, cookbooks, FAQ and more.</p>
 the task.  The following Traits class is made for the Van Der Waal
 equation, whose variables can be viewed on
 <a class="reference external" href="http://en.wikipedia.org/wiki/Van_der_Waals_equation">this wiki page</a>.  The
-<tt class="xref py py-attr docutils literal"><span class="pre">volume</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> attributes hold lists of our X- and
+<code class="xref py py-attr docutils literal"><span class="pre">volume</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> attributes hold lists of our X- and
 Y-coordinates, respectively, and are defined as arrays. The attributes
-<tt class="xref py py-attr docutils literal"><span class="pre">attraction</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">totVolume</span></tt> are  input parameters specified by the
+<code class="xref py py-attr docutils literal"><span class="pre">attraction</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">totVolume</span></code> are  input parameters specified by the
 user.  The type of the variables dictates their appearance in the GUI.  For
-example, <tt class="xref py py-attr docutils literal"><span class="pre">attraction</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">totVolume</span></tt> are defined as Ranges, so they
-show up as slider bars.  Likewise, <tt class="xref py py-attr docutils literal"><span class="pre">plot_type</span></tt> is shown as a drop-down
+example, <code class="xref py py-attr docutils literal"><span class="pre">attraction</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">totVolume</span></code> are defined as Ranges, so they
+show up as slider bars.  Likewise, <code class="xref py py-attr docutils literal"><span class="pre">plot_type</span></code> is shown as a drop-down
 list, since it is defined as an Enum.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># We&#39;ll also import a few things to be used later.</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ll also import a few things to be used later.</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> \
-    <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span><span class="p">,</span> <span class="n">Property</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span>
+    <span class="kn">import</span> <span class="nn">HasTraits</span><span class="o">,</span> <span class="nn">Array</span><span class="o">,</span> <span class="nn">Range</span><span class="o">,</span> <span class="nn">Float</span><span class="o">,</span> <span class="nn">Enum</span><span class="o">,</span> <span class="nn">on_trait_change</span><span class="o">,</span> <span class="nn">Property</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="k">import</span> <span class="n">ChacoPlotItem</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">arange</span>
 
 <span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="n">volume</span> <span class="o">=</span> <span class="n">Array</span>
     <span class="n">pressure</span> <span class="o">=</span> <span class="n">Array</span>
     <span class="n">attraction</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">50.0</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="n">totVolume</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=.</span><span class="mo">01</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">totVolume</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=.</span><span class="mi">01</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
     <span class="n">temperature</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">50.0</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">50.0</span><span class="p">)</span>
     <span class="n">r_constant</span><span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">8.314472</span><span class="p">)</span>
-    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="s">&quot;scatter&quot;</span><span class="p">)</span>
+    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="s2">&quot;scatter&quot;</span><span class="p">)</span>
 
 <span class="o">....</span>
 </pre></div>
@@ -105,46 +103,46 @@ list, since it is defined as an Enum.</p>
 </div>
 <div class="section" id="creating-the-view">
 <h2>Creating the View<a class="headerlink" href="#creating-the-view" title="Permalink to this headline">¶</a></h2>
-<p>The main GUI window is created by defining a Traits <tt class="xref py py-class docutils literal"><span class="pre">View</span></tt> instance.
+<p>The main GUI window is created by defining a Traits <code class="xref py py-class docutils literal"><span class="pre">View</span></code> instance.
 This View contains all of the GUI elements, including the plot.  To
 link a variable with a widget element on the GUI, we create a Traits
-<tt class="xref py py-class docutils literal"><span class="pre">Item</span></tt> instance with the same name as the variable and pass it as an
+<code class="xref py py-class docutils literal"><span class="pre">Item</span></code> instance with the same name as the variable and pass it as an
 argument of the Traits View instance declaration.  The
 <a class="reference external" href="https://svn.enthought.com/svn/enthought/Traits/tags/traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf">Traits UI User Guide</a>
 discusses the View and Item objects in depth. In order to
 embed a Chaco plot into a Traits View, you need to import the
-<tt class="xref py py-class docutils literal"><span class="pre">ChacoPlotItem</span></tt> class, which can be passed as a parameter to View just
+<code class="xref py py-class docutils literal"><span class="pre">ChacoPlotItem</span></code> class, which can be passed as a parameter to View just
 like the Item objects. The first two arguments to ChacoPlotItem are the
-lists of X- and Y-coordinates for the graph.  The attributes <tt class="xref py py-attr docutils literal"><span class="pre">volume</span></tt> and
-<tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> hold the lists of X- and Y-coordinates, and therefore are the
+lists of X- and Y-coordinates for the graph.  The attributes <code class="xref py py-attr docutils literal"><span class="pre">volume</span></code> and
+<code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> hold the lists of X- and Y-coordinates, and therefore are the
 first two arguments to Chaco2PlotItem.  Other parameters have been
 provided to the plot for additional customization:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="o">....</span>
 
-    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s">&quot;volume&quot;</span><span class="p">,</span> <span class="s">&quot;pressure&quot;</span><span class="p">,</span>
-                               <span class="n">type_trait</span><span class="o">=</span><span class="s">&quot;plot_type&quot;</span><span class="p">,</span>
-                               <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                               <span class="n">x_label</span><span class="o">=</span><span class="s">&quot;Volume&quot;</span><span class="p">,</span>
-                               <span class="n">y_label</span><span class="o">=</span><span class="s">&quot;Pressure&quot;</span><span class="p">,</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
+                               <span class="n">type_trait</span><span class="o">=</span><span class="s2">&quot;plot_type&quot;</span><span class="p">,</span>
+                               <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">x_label</span><span class="o">=</span><span class="s2">&quot;Volume&quot;</span><span class="p">,</span>
+                               <span class="n">y_label</span><span class="o">=</span><span class="s2">&quot;Pressure&quot;</span><span class="p">,</span>
                                <span class="n">x_bounds</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">120</span><span class="p">),</span>
-                               <span class="n">x_auto</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                               <span class="n">x_auto</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                <span class="n">y_bounds</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span>
-                               <span class="n">y_auto</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                               <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span>
-                               <span class="n">bgcolor</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span>
-                               <span class="n">border_visible</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                               <span class="n">y_auto</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                               <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+                               <span class="n">bgcolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+                               <span class="n">border_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">border_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                               <span class="n">title</span><span class="o">=</span><span class="s">&#39;Pressure vs. Volume&#39;</span><span class="p">,</span>
-                               <span class="n">padding_bg_color</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;attraction&#39;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;totVolume&#39;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;r_constant&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&#39;readonly&#39;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;plot_type&#39;</span><span class="p">),</span>
-                       <span class="n">resizable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
-                       <span class="n">buttons</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;OK&quot;</span><span class="p">],</span>
-                       <span class="n">title</span><span class="o">=</span><span class="s">&#39;Van der Waal Equation&#39;</span><span class="p">,</span>
+                               <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Pressure vs. Volume&#39;</span><span class="p">,</span>
+                               <span class="n">padding_bg_color</span><span class="o">=</span><span class="s2">&quot;lightgray&quot;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;attraction&#39;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;totVolume&#39;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;temperature&#39;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;r_constant&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;readonly&#39;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot_type&#39;</span><span class="p">),</span>
+                       <span class="n">resizable</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                       <span class="n">buttons</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OK&quot;</span><span class="p">],</span>
+                       <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Van der Waal Equation&#39;</span><span class="p">,</span>
                        <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 <span class="o">....</span>
 </pre></div>
@@ -156,24 +154,25 @@ provided to the plot for additional customization:</p>
 whenever the X- or Y-arrays are changed.  So, we need a function to
 re-calculate the X- and Y-coordinate lists whenever the input
 parameters are changed by the user moving the sliders in the GUI.</p>
-<p>The <tt class="xref py py-attr docutils literal"><span class="pre">volume</span></tt> attribute is the independent variable and <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> is
+<p>The <code class="xref py py-attr docutils literal"><span class="pre">volume</span></code> attribute is the independent variable and <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> is
 the dependent variable. The relationship between pressure and volume, as derived
 from the equation found on the wiki page, is:</p>
-<div class="highlight-python"><pre>            r_constant * Temperature       attraction
-Pressure =  ------------------------   -   ----------
-               Volume - totVolume          Volume**2</pre>
+<div class="highlight-default"><div class="highlight"><pre><span></span>            <span class="n">r_constant</span> <span class="o">*</span> <span class="n">Temperature</span>       <span class="n">attraction</span>
+<span class="n">Pressure</span> <span class="o">=</span>  <span class="o">------------------------</span>   <span class="o">-</span>   <span class="o">----------</span>
+               <span class="n">Volume</span> <span class="o">-</span> <span class="n">totVolume</span>          <span class="n">Volume</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
 </div>
 <p>Next, there are two programing tasks to complete:</p>
 <ol class="arabic simple">
 <li>Define trait listener methods for your input parameters. These
 methods are automatically called whenever the parameters are
-changed, since it will be time to recalculate the <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> array.</li>
+changed, since it will be time to recalculate the <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> array.</li>
 <li>Write a calculation method that updates your lists of X- and
 Y-coordinates for your plot.</li>
 </ol>
 <p>The following is the code for these two needs:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># Re-calculate when attraction, totVolume, or temperature are changed.</span>
-<span class="nd">@on_trait_change</span><span class="p">(</span><span class="s">&#39;attraction, totVolume, temperature&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Re-calculate when attraction, totVolume, or temperature are changed.</span>
+<span class="nd">@on_trait_change</span><span class="p">(</span><span class="s1">&#39;attraction, totVolume, temperature&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Update the data based on the numbers specified by the user. &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="n">arange</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -183,21 +182,21 @@ Y-coordinates for your plot.</li>
     <span class="k">return</span>
 </pre></div>
 </div>
-<p>The <tt class="xref py py-func docutils literal"><span class="pre">calc()</span></tt> function computes the <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> array using the current
+<p>The <code class="xref py py-func docutils literal"><span class="pre">calc()</span></code> function computes the <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> array using the current
 values of the independent variables.  Meanwhile, the
-<tt class="xref py py-func docutils literal"><span class="pre">&#64;on_trait_change()</span></tt> decorator (provided by Traits) tells Python to call
-<tt class="xref py py-func docutils literal"><span class="pre">calc()</span></tt> whenever any of the attributes <tt class="xref py py-attr docutils literal"><span class="pre">attraction</span></tt>,
-<tt class="xref py py-attr docutils literal"><span class="pre">totVolume</span></tt>, or <tt class="xref py py-attr docutils literal"><span class="pre">temperature</span></tt> changes.</p>
+<code class="xref py py-func docutils literal"><span class="pre">&#64;on_trait_change()</span></code> decorator (provided by Traits) tells Python to call
+<code class="xref py py-func docutils literal"><span class="pre">calc()</span></code> whenever any of the attributes <code class="xref py py-attr docutils literal"><span class="pre">attraction</span></code>,
+<code class="xref py py-attr docutils literal"><span class="pre">totVolume</span></code>, or <code class="xref py py-attr docutils literal"><span class="pre">temperature</span></code> changes.</p>
 </div>
 <div class="section" id="testing-your-program">
 <h2>Testing your Program<a class="headerlink" href="#testing-your-program" title="Permalink to this headline">¶</a></h2>
 <p>The application is complete, and can be tested by instantiating a copy
 of the class and then creating the view by calling the
-<tt class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></tt> method on the class.  For a simple test, run these
+<code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code> method on the class.  For a simple test, run these
 lines from an interpreter or a separate module:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">vanderwaals</span> <span class="kn">import</span> <span class="n">Data</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vanderwaals</span> <span class="k">import</span> <span class="n">Data</span>
 <span class="n">viewer</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">calc</span><span class="p">()</span>            <span class="c"># Must calculate the initial (x,y) lists</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">calc</span><span class="p">()</span>            <span class="c1"># Must calculate the initial (x,y) lists</span>
 <span class="n">viewer</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -212,28 +211,28 @@ data array, and causes the plot to update, showing the new values.</p>
 <div class="section" id="but-it-could-be-better">
 <h2>But it could be better....<a class="headerlink" href="#but-it-could-be-better" title="Permalink to this headline">¶</a></h2>
 <p>It seems inconvenient to have to call a calculation function manually
-before we call <tt class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></tt>.  Also, the pressure equation depends on
+before we call <code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code>.  Also, the pressure equation depends on
 the values of other variables. It would be nice to make the
 relationship between the dependant and independent variables clearer.
 There is another way we could define our variables that is easier for
 the user to understand, and provides better source documentation.</p>
 <p>Since our X-values remain constant in this example, it is wasteful to
-keep recreating the <tt class="xref py py-attr docutils literal"><span class="pre">volume</span></tt> array.  The Y-array, <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt>, is the
+keep recreating the <code class="xref py py-attr docutils literal"><span class="pre">volume</span></code> array.  The Y-array, <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code>, is the
 single array that needs to be updated when the independent variables
-change. So, instead of defining <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> as an <tt class="xref py py-class docutils literal"><span class="pre">Array</span></tt>, we define
-it as a <tt class="xref py py-class docutils literal"><span class="pre">Property</span></tt>. Property is a Traits type that allows you to define
+change. So, instead of defining <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> as an <code class="xref py py-class docutils literal"><span class="pre">Array</span></code>, we define
+it as a <code class="xref py py-class docutils literal"><span class="pre">Property</span></code>. Property is a Traits type that allows you to define
 a variable whose value is recalculated whenever it is requested. In
 addition, when the <em>depends_on</em> argument of a Property constructor is
-set to list of traits in your <tt class="xref py py-class docutils literal"><span class="pre">HasTraits</span></tt> class, the property&#8217;s trait
+set to list of traits in your <code class="xref py py-class docutils literal"><span class="pre">HasTraits</span></code> class, the property&#8217;s trait
 events fire whenever any of the dependent trait&#8217;s change events
-fire. This means that the <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> attribute fires a trait change
+fire. This means that the <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> attribute fires a trait change
 whenever our <em>depends_on</em> traits are changed. Meanwhile, the Chaco plot
-is automatically listening to the <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> attribute, so the plot
-display gets the new value of <tt class="xref py py-attr docutils literal"><span class="pre">pressure</span></tt> whenever someone changes
+is automatically listening to the <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> attribute, so the plot
+display gets the new value of <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> whenever someone changes
 the input parameters!</p>
 <p>When the value of a Property trait is requested, the
-<tt class="samp docutils literal"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></tt> method is called to calculate and return its
-current value. So we define use the <tt class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></tt> method as our new
+<code class="samp docutils literal"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></code> method is called to calculate and return its
+current value. So we define use the <code class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></code> method as our new
 calculation method.  It is important to note that this implementation
 does have a weakness.  Since we are calculating new pressures each
 time someone changes the value of the input variables, this could slow
@@ -244,28 +243,28 @@ recompute.</p>
 <ol class="arabic simple">
 <li>Define the Y-coordinate array variable as a Property instead of an
 Array.</li>
-<li>Perform the calculations in the <tt class="samp docutils literal"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></tt> method for the
-Y-coordinate array variable, which is <tt class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></tt> in this
+<li>Perform the calculations in the <code class="samp docutils literal"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></code> method for the
+Y-coordinate array variable, which is <code class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></code> in this
 example.</li>
-<li>Define the <tt class="samp docutils literal"><span class="pre">_</span><em><span class="pre">trait</span></em><span class="pre">_default</span></tt> method to set the initial value of
-the X-coordinate array, so <tt class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></tt> does not have to keep
+<li>Define the <code class="samp docutils literal"><span class="pre">_</span><em><span class="pre">trait</span></em><span class="pre">_default</span></code> method to set the initial value of
+the X-coordinate array, so <code class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></code> does not have to keep
 recalculating it.</li>
-<li>Remove the previous <tt class="xref py py-func docutils literal"><span class="pre">&#64;on_trait_change()</span></tt> decorator and calculation
+<li>Remove the previous <code class="xref py py-func docutils literal"><span class="pre">&#64;on_trait_change()</span></code> decorator and calculation
 method.</li>
 </ol>
 <p>The new pieces of code to add to the Data class are:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="o">...</span>
-    <span class="n">pressure</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Array</span><span class="p">,</span> <span class="n">depends_on</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;attraction&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;totVolume&#39;</span><span class="p">])</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Array</span><span class="p">,</span> <span class="n">depends_on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;attraction&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;totVolume&#39;</span><span class="p">])</span>
     <span class="o">...</span>
 
     <span class="k">def</span> <span class="nf">_volume_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">return</span> <span class="n">arange</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-    <span class="c"># Pressure is recalculated whenever one of the elements the property</span>
-    <span class="c"># depends on changes.  No need to use @on_trait_change.</span>
+    <span class="c1"># Pressure is recalculated whenever one of the elements the property</span>
+    <span class="c1"># depends on changes.  No need to use @on_trait_change.</span>
     <span class="k">def</span> <span class="nf">_get_pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">r_constant</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">)</span>
               <span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">totVolume</span><span class="p">)</span>
@@ -273,50 +272,50 @@ method.</li>
 </pre></div>
 </div>
 <p>You now no longer have to call an inconvenient calculation function
-before the first call to <tt class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></tt>!</p>
+before the first call to <code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code>!</p>
 </div>
 <div class="section" id="source-code">
 <h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>The final version on the program, <cite>vanderwaals.py</cite></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.api</span> \
-    <span class="kn">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">on_trait_change</span><span class="p">,</span> <span class="n">Property</span>
-<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="kn">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
-<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="kn">import</span> <span class="n">ChacoPlotItem</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
+    <span class="kn">import</span> <span class="nn">HasTraits</span><span class="o">,</span> <span class="nn">Array</span><span class="o">,</span> <span class="nn">Range</span><span class="o">,</span> <span class="nn">Float</span><span class="o">,</span> <span class="nn">Enum</span><span class="o">,</span> <span class="nn">on_trait_change</span><span class="o">,</span> <span class="nn">Property</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="k">import</span> <span class="n">ChacoPlotItem</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">arange</span>
 
 <span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="n">volume</span> <span class="o">=</span> <span class="n">Array</span>
-    <span class="n">pressure</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Array</span><span class="p">,</span> <span class="n">depends_on</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span> <span class="s">&#39;attraction&#39;</span><span class="p">,</span>
-                                       <span class="s">&#39;totVolume&#39;</span><span class="p">])</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Array</span><span class="p">,</span> <span class="n">depends_on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;attraction&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;totVolume&#39;</span><span class="p">])</span>
     <span class="n">attraction</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">50.0</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
-    <span class="n">totVolume</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=.</span><span class="mo">01</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">totVolume</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=.</span><span class="mi">01</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
     <span class="n">temperature</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">50.0</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">50.0</span><span class="p">)</span>
     <span class="n">r_constant</span><span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">8.314472</span><span class="p">)</span>
-    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s">&quot;line&quot;</span><span class="p">,</span> <span class="s">&quot;scatter&quot;</span><span class="p">)</span>
+    <span class="n">plot_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="s2">&quot;scatter&quot;</span><span class="p">)</span>
 
-    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s">&quot;volume&quot;</span><span class="p">,</span> <span class="s">&quot;pressure&quot;</span><span class="p">,</span>
-                               <span class="n">type_trait</span><span class="o">=</span><span class="s">&quot;plot_type&quot;</span><span class="p">,</span>
-                               <span class="n">resizable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                               <span class="n">x_label</span><span class="o">=</span><span class="s">&quot;Volume&quot;</span><span class="p">,</span>
-                               <span class="n">y_label</span><span class="o">=</span><span class="s">&quot;Pressure&quot;</span><span class="p">,</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
+                               <span class="n">type_trait</span><span class="o">=</span><span class="s2">&quot;plot_type&quot;</span><span class="p">,</span>
+                               <span class="n">resizable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">x_label</span><span class="o">=</span><span class="s2">&quot;Volume&quot;</span><span class="p">,</span>
+                               <span class="n">y_label</span><span class="o">=</span><span class="s2">&quot;Pressure&quot;</span><span class="p">,</span>
                                <span class="n">x_bounds</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">120</span><span class="p">),</span>
-                               <span class="n">x_auto</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                               <span class="n">x_auto</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                <span class="n">y_bounds</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span>
-                               <span class="n">y_auto</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                               <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span>
-                               <span class="n">bgcolor</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span>
-                               <span class="n">border_visible</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                               <span class="n">y_auto</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                               <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+                               <span class="n">bgcolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+                               <span class="n">border_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                <span class="n">border_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                               <span class="n">title</span><span class="o">=</span><span class="s">&#39;Pressure vs. Volume&#39;</span><span class="p">,</span>
-                               <span class="n">padding_bg_color</span><span class="o">=</span><span class="s">&quot;lightgray&quot;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;attraction&#39;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;totVolume&#39;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;r_constant&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&#39;readonly&#39;</span><span class="p">),</span>
-                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;plot_type&#39;</span><span class="p">),</span>
-                       <span class="n">resizable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
-                       <span class="n">buttons</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;OK&quot;</span><span class="p">],</span>
-                       <span class="n">title</span><span class="o">=</span><span class="s">&#39;Van der Waal Equation&#39;</span><span class="p">,</span>
+                               <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Pressure vs. Volume&#39;</span><span class="p">,</span>
+                               <span class="n">padding_bg_color</span><span class="o">=</span><span class="s2">&quot;lightgray&quot;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;attraction&#39;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;totVolume&#39;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;temperature&#39;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;r_constant&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;readonly&#39;</span><span class="p">),</span>
+                       <span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;plot_type&#39;</span><span class="p">),</span>
+                       <span class="n">resizable</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                       <span class="n">buttons</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OK&quot;</span><span class="p">],</span>
+                       <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Van der Waal Equation&#39;</span><span class="p">,</span>
                        <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 
 
@@ -330,7 +329,7 @@ before the first call to <tt class="xref py py-meth docutils literal"><span clas
               <span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">totVolume</span><span class="p">)</span>
              <span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attraction</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)))</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">viewer</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
     <span class="n">viewer</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
@@ -342,7 +341,7 @@ before the first call to <tt class="xref py py-meth docutils literal"><span clas
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -363,12 +362,14 @@ before the first call to <tt class="xref py py-meth docutils literal"><span clas
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/user_manual/tutorial_van_der_waal.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_manual/tutorial_van_der_waal.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -376,29 +377,26 @@ before the first call to <tt class="xref py py-meth docutils literal"><span clas
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li><a href="../index.html">chaco 4.5.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &raquo;</li>
   
     <li><a href="#">Modeling Van der Waal&#8217;s Equation With Chaco and Traits</a></li>
   
 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2008-2014, Enthought, Inc..
-      Last updated on Nov 05, 2014.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Dec 22, 2016.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>
