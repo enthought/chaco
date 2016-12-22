@@ -94,7 +94,8 @@ if not is_released:
     # write_version_py(), otherwise the import of _version messes
     # up the build under Python 3.
     fullversion = VERSION
-    chaco_version_path =  os.path.join(dirname(__file__), 'chaco', '_version.py')
+    chaco_version_path =  os.path.join(
+        os.path.dirname(__file__), 'chaco', '_version.py')
     if os.path.exists('.git'):
         git_rev, dev_num = git_version()
     elif os.path.exists(filename):
