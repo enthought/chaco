@@ -101,14 +101,14 @@ if not is_released:
     elif os.path.exists(filename):
         # must be a source distribution, use existing version file
         try:
-            git_revision, full_version = read_version_py(chaco_version_path)
+            git_rev, fullversion = read_version_py(chaco_version_path)
         except (SyntaxError, KeyError):
             raise RuntimeError("Unable to read git_revision. Try removing "
                                "chaco/_version.py and the build directory "
                                "before building.")
 
 
-        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', full_v)
+        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', fullversion)
         if match is None:
             dev_num = '0'
         else:
