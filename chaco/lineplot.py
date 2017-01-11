@@ -16,7 +16,7 @@ from traits.api import Enum, Float, List, Str, Property, Tuple, cached_property
 from traitsui.api import Item, View
 
 # Local relative imports
-from .base import arg_find_runs, bin_search, reverse_map_1d
+from .base import arg_find_runs, arg_true_runs, reverse_map_1d, intersect_range
 from .base_xy_plot import BaseXYPlot
 
 
@@ -34,7 +34,7 @@ class LinePlot(BaseXYPlot):
 
     # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
     # It has the same RGB values as color_, and its alpha value is the alpha
-    # value of self.color multiplied by self.alpha. 
+    # value of self.color multiplied by self.alpha.
     effective_color = Property(Tuple, depends_on=['color', 'alpha'])
 
     # The color to use to highlight the line when selected.
@@ -215,7 +215,10 @@ class LinePlot(BaseXYPlot):
 
     def get_screen_points(self):
         self._gather_points()
-        return [self.map_screen(ary) for ary in self._cached_data_pts]
+        if self.use_downsampling:
+            return self._downsample()
+        else:
+            return [self.map_screen(ary) for ary in self._cached_data_pts]
 
     #------------------------------------------------------------------------
     # Private methods; implements the BaseXYPlot stub methods
@@ -228,7 +231,7 @@ class LinePlot(BaseXYPlot):
         """
         if not self._cache_valid:
 
-            if not self.index or not self.value:
+            if self.index is None or self.value is None:
                 return
 
             index = self.index.get_data()
@@ -263,96 +266,35 @@ class LinePlot(BaseXYPlot):
             #        len(selection) > 0:
 
             # Split the index and value raw data into non-NaN chunks
-            nan_mask = invert(isnan(value)) & invert(isnan(index))
-            blocks = [b for b in arg_find_runs(nan_mask, "flat") if nan_mask[b[0]] != 0]
+            mask = invert(isnan(value)) & invert(isnan(index))
 
-            points = []
-            for block in blocks:
-                start, end = block
-                block_index = index[start:end]
-                block_value = value[start:end]
-                index_mask = self.index_mapper.range.mask_data(block_index)
+            # throw out index and value points outside the visible region
+            mask = intersect_range(index, self.index_range.low,
+                                   self.index_range.high, mask)
+            mask = intersect_range(value, self.value_range.low,
+                                   self.value_range.high, mask)
 
-                runs = [r for r in arg_find_runs(index_mask, "flat") \
-                        if index_mask[r[0]] != 0]
-
-                # Check to see if our data view region is between two points in the
-                # index data.  If so, then we have to reverse map our current view
-                # into the appropriate index and draw the bracketing points.
-                if runs == []:
-                    data_pt = self.map_data((self.x_mapper.low_pos, self.y_mapper.low_pos))
-                    if self.index.sort_order == "none":
-                        indices = argsort(index)
-                        sorted_index = take(index, indices)
-                        sorted_value = take(value, indices)
-                        sort = 1
-                    else:
-                        sorted_index = index
-                        sorted_value = value
-                        if self.index.sort_order == "ascending":
-                            sort = 1
-                        else:
-                            sort = -1
-                    ndx = bin_search(sorted_index, data_pt, sort)
-                    if ndx == -1:
-                        # bin_search can return -1 if data_pt is outside the bounds
-                        # of the source data
-                        continue
-
-                    points.append(transpose(array((sorted_index[ndx:ndx+2],
-                                                   sorted_value[ndx:ndx+2]))))
-
-                else:
-                    # Expand the width of every group of points so we draw the lines
-                    # up to their next point, outside the plot area
-                    data_end = len(index_mask)
-                    for run in runs:
-                        start, end = run
-                        if start != 0:
-                            start -= 1
-                        if end != data_end:
-                            end += 1
-
-                        run_data = ( block_index[start:end],
-                                     block_value[start:end] )
-                        run_data = column_stack(run_data)
-
-                        points.append(run_data)
+            points = [column_stack([index[start:end], value[start:end]])
+                      for start, end in arg_true_runs(mask)]
 
             self._cached_data_pts = points
             self._cache_valid = True
-        return
 
     def _downsample(self):
         if not self._screen_cache_valid:
-            self._cached_screen_pts = [self.map_screen(p) for p in self._cached_data_pts]
+            m = self.index_mapper
+            delta_screen = int(m.high_pos - m.low_pos)
+            if delta_screen == 0:
+                downsampled = []
+            else:
+                # TODO: implement other downsampling methods
+                from chaco.downsample.lttb import largest_triangle_three_buckets
+                downsampled = [largest_triangle_three_buckets(p, delta_screen)
+                               for p in self._cached_data_pts]
+
+            self._cached_screen_pts = [self.map_screen(p) for p in downsampled]
             self._screen_cache_valid = True
 
-            pt_arrays = self._cached_screen_pts
-
-            # some boneheaded short-circuits
-            m = self.index_mapper
-            total_numpoints = sum([p.shape for p in pt_arrays])
-            if (total_numpoints < 400) or (total_numpoints < m.high_pos - m.low_pos):
-                return self._cached_screen_pts
-
-            # the new point array and a counter of how many actual points we've added
-            # to it
-            new_arrays = []
-            for pts in pt_arrays:
-                new_pts = zeros(pts.shape, "d")
-                numpoints = 1
-                new_pts[0] = pts[0]
-
-                last_x, last_y = pts[0]
-                for x, y in pts[1:]:
-                    if (x-last_x)**2 + (y-last_y)**2 > 2:
-                        new_pts[numpoints] = (x,y)
-                        last_x = x
-                        last_y = y
-                        numpoints += 1
-
-                new_arrays.append(new_pts[:numpoints])
         return self._cached_screen_pts
 
     def _render(self, gc, points, selected_points=None):

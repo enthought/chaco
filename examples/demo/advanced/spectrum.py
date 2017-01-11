@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-This plot displays the audio waveform, spectrum, and spectrogram from the 
+This plot displays the audio waveform, spectrum, and spectrogram from the
 microphone.
 
 Based on updating_plot.py
@@ -101,7 +101,16 @@ def get_audio_data():
         pa = pyaudio.PyAudio()
         _stream = pa.open(format=pyaudio.paInt16, channels=1, rate=SAMPLING_RATE,
                      input=True, frames_per_buffer=NUM_SAMPLES)
-    audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
+    try:
+        audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
+    except IOError as e:
+        # Workaround "Input overflowed" issue on OS X, by restarting stream
+        if e.errno != "Input overflowed":
+            raise
+        audio_data = zeros((NUM_SAMPLES,))
+        _stream.stop_stream()
+        _stream.close()
+        _stream = None
     normalized_data = audio_data / 32768.0
     return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
 

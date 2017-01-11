@@ -14,7 +14,7 @@ from traits.api import Any, Float, Int, Str, Trait, Unicode, \
      Bool, Event, List, Array, Instance, Enum, Callable
 
 # Local relative imports
-from .ticks import AbstractTickGenerator, DefaultTickGenerator
+from .ticks import AbstractTickGenerator, DefaultTickGenerator, MinorTickGenerator
 from .abstract_mapper import AbstractMapper
 from .abstract_overlay import AbstractOverlay
 from .label import Label
@@ -795,5 +795,24 @@ class PlotAxis(AbstractOverlay):
         self._cache_valid = False
         return
 
+class MinorPlotAxis(PlotAxis):
+    """
+    The MinorPlotAxis is a PlotAxis which draws ticks with a smaller interval,
+    smaller tick sizes, and no tick labels.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(MinorPlotAxis, self).__init__(*args, **kwargs)
+
+        if 'tick_generator' not in kwargs:
+            self.tick_generator = MinorTickGenerator()
+        if 'tick_label_formatter' not in kwargs:
+            self.tick_label_formatter = lambda x: ''
+        if 'tick_in' not in kwargs:
+            self.tick_in  = 2
+        if 'tick_out' not in kwargs:
+            self.tick_out = 2
+        if 'axis_line_visible' not in kwargs:
+            self.axis_line_visible = False
 
 # EOF ########################################################################

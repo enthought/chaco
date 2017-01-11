@@ -10,6 +10,8 @@ Fixes
 
  * Fixed UnboundLocalError in the Plot class when attempting to create a data
    source from an array of unsupported shape.
+ * DataRange2D.reset and DataRange2D.refresh now work properly by operating on
+   xrange and yrange, like the other settings operations.
 
 Chaco 4.1.0
 ===========
