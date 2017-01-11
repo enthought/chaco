@@ -3,15 +3,26 @@
 # Chaco documentation build configuration file, created by
 # sphinx-quickstart on Mon Jul 21 21:01:40 2008.
 #
-# This file is execfile()d with the current directory set to its containing dir.
+# This file is execfile()d with the current directory set to its containing
+# dir.
 #
 # The contents of this file are pickled, so don't put values in the namespace
-# that aren't pickleable (module imports are okay, they're removed automatically).
+# that aren't pickleable (module imports are okay, they're removed
+# automatically).
 #
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys, os
+import sys
+import os
+
+# The docset build will use slightly different formatting rules
+
+def get_build_docset():
+    flag = os.environ.get('BUILD_DOCSET', '')
+    return flag.lower() not in ("0", "no", "")
+
+BUILD_DOCSET = get_build_docset()
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
@@ -21,8 +32,8 @@ sys.path.append(os.path.abspath('sphinxext'))
 # General configuration
 # ---------------------
 
-# Add any Sphinx extension module names here, as strings. They can be extensions
-# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'traitsdoc']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -36,13 +47,14 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'chaco'
-copyright = '2008-2014, Enthought, Inc.'
+copyright = '2008-2016, Enthought, Inc.'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 d = {}
-execfile(os.path.join('..', '..', 'chaco', '__init__.py'), d)
-version = release = d['__version__']
+execfile(os.path.join('..', '..', 'chaco', '_version.py'), d)
+release = d['version']
+version = '.'.join(release.split('.',2)[:2])
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -53,11 +65,12 @@ today_fmt = '%B %d, %Y'
 # List of documents that shouldn't be included in the build.
 #unused_docs = []
 
-# List of directories, relative to source directories, that shouldn't be searched
-# for source files.
+# List of directories, relative to source directories, that shouldn't be
+# searched for source files.
 #exclude_dirs = []
 
-# The reST default role (used for this markup: `text`) to use for all documents.
+# The reST default role (used for this markup: `text`) to use for all
+# documents.
 #default_role = None
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
@@ -78,6 +91,12 @@ pygments_style = 'sphinx'
 # Options for HTML output
 # -----------------------
 
+# When using docset browsers like Dash and Zeal the side bar is redundant.
+if BUILD_DOCSET:
+    html_theme_options = {
+        'nosidebar': 'true'
+    }
+
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
 # given in html_static_path.
@@ -85,7 +104,7 @@ html_style = 'default.css'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = None
+html_title = "Chaco {}".format(version)
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -120,10 +139,10 @@ html_use_smartypants = True
 #html_additional_pages = {}
 
 # If false, no module index is generated.
-html_use_modindex = False
+html_use_modindex = BUILD_DOCSET
 
 # If false, no index is generated.
-html_use_index = False
+html_use_index = BUILD_DOCSET
 
 # If true, the index is split into individual pages for each letter.
 #html_split_index = False
@@ -142,6 +161,7 @@ html_use_index = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Chacodoc'
 
+html_theme='classic'
 
 # Options for LaTeX output
 # ------------------------
@@ -153,7 +173,8 @@ htmlhelp_basename = 'Chacodoc'
 #latex_font_size = '10pt'
 
 # Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title, author, document class [howto/manual]).
+# (source start file, target name, title, author, document class
+# [howto/manual]).
 latex_documents = [
   ('index', 'Chaco.tex', 'Chaco Documentation', 'Enthought', 'manual'),
 ]

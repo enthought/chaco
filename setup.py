@@ -8,7 +8,7 @@ from numpy import get_include
 from setuptools import setup, Extension, find_packages
 
 MAJOR = 4
-MINOR = 6
+MINOR = 7
 MICRO = 0
 
 IS_RELEASED = False
@@ -20,6 +20,15 @@ PKG_PATHNAME = 'chaco'
 
 # Name of the file containing the version information.
 _VERSION_FILENAME = os.path.join(PKG_PATHNAME, '_version.py')
+
+
+def read_version_py(path):
+    """ Read a _version.py file in a safe way. """
+    with open(path, 'r') as fp:
+        code = compile(fp.read(), 'chaco._version', 'exec')
+    context = {}
+    exec(code, context)
+    return context['git_revision'], context['full_version']
 
 
 def git_version():
@@ -85,19 +94,21 @@ if not is_released:
     # write_version_py(), otherwise the import of _version messes
     # up the build under Python 3.
     fullversion = VERSION
+    chaco_version_path =  os.path.join(
+        os.path.dirname(__file__), 'chaco', '_version.py')
     if os.path.exists('.git'):
         git_rev, dev_num = git_version()
     elif os.path.exists(filename):
         # must be a source distribution, use existing version file
         try:
-            from chaco._version import git_revision as git_rev
-            from chaco._version import full_version as full_v
-        except ImportError:
-            msg = ("Unable to import 'git_revision' or 'full_revision'. "
-                   "Try removing {} and the build directory before building.")
-            raise ImportError(msg.format(_VERSION_FILENAME))
+            git_rev, fullversion = read_version_py(chaco_version_path)
+        except (SyntaxError, KeyError):
+            raise RuntimeError("Unable to read git_revision. Try removing "
+                               "chaco/_version.py and the build directory "
+                               "before building.")
 
-        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', full_v)
+
+        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', fullversion)
         if match is None:
             dev_num = '0'
         else:
@@ -133,6 +144,12 @@ if __name__ == "__main__":
     cython_speedups = Extension(
         'chaco._cython_speedups',
         sources=['chaco/_cython_speedups.c'],
+        include_dirs=[numpy_include_dir],
+    )
+
+    downsampling_lttb = Extension(
+        'chaco.downsample._lttb',
+        sources=['chaco/downsample/_lttb.c'],
         include_dirs=[numpy_include_dir],
     )
 
@@ -177,7 +194,7 @@ if __name__ == "__main__":
         },
         description = 'interactive 2-dimensional plotting',
         long_description = open('README.rst').read(),
-        ext_modules = [contour, cython_speedups],
+        ext_modules = [contour, cython_speedups, downsampling_lttb],
         include_package_data = True,
         install_requires = __requires__,
         license = 'BSD',

@@ -30,6 +30,7 @@ help:
 	@echo "  text       to make text files"
 	@echo "  man        to make manual pages"
 	@echo "  changes    to make an overview of all changed/added/deprecated items"
+	@echo "  docset     to make a docset for use with the Dash/Zeal api browsers"
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
@@ -128,3 +129,9 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
+
+docset:
+	BUILD_DOCSET=1 $(SPHINXBUILD) -b html -c source/ $(ALLSPHINXOPTS) $(BUILDDIR)/docset_html
+	@echo "Creating docset with doc2dash"
+	doc2dash -f -d $(BUILDDIR) -i $(BUILDDIR)/docset_html/_static/e-logo-rev.png -n Chaco $(BUILDDIR)/docset_html
+	@echo "Chaco docset is available in $(BUILDDIR)/Chaco.docset"

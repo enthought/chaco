@@ -392,14 +392,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                 x2, y2 = self._screen_end
                 rect = (x, y, x2-x+1, y2-y+1)
                 if self.color != "transparent":
-                    if self.alpha:
-                        color = list(self.color_)
-                        if len(color) == 4:
-                            color[3] = self.alpha
-                        else:
-                            color += [self.alpha]
-                    else:
-                        color = self.color_
+                    color = self._get_fill_color()
                     gc.set_fill_color(color)
                     gc.draw_rect(rect)
                 else:
@@ -420,13 +413,26 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
 
         with gc:
             gc.set_antialias(0)
-            gc.set_alpha(self.alpha)
-            gc.set_fill_color(self.color_)
+            color = self._get_fill_color()
+            gc.set_fill_color(color)
             gc.set_stroke_color(self.border_color_)
             gc.clip_to_rect(component.x, component.y, component.width, component.height)
             gc.draw_rect((lower_left[0], lower_left[1], upper_right[0], upper_right[1]))
 
         return
+
+    def _get_fill_color(self):
+        """Get the fill color based on the alpha and the color property
+        """
+        if self.alpha:
+            color = list(self.color_)
+            if len(color) == 4:
+                color[3] = self.alpha
+            else:
+                color += [self.alpha]
+        else:
+            color = self.color_
+        return color
 
     def _determine_axis(self):
         """ Determines whether the index of the coordinate along the axis of

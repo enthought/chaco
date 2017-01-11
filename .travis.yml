@@ -30,7 +30,7 @@ addons:
     - libjpeg8-dev
     - zlib1g-dev
     - libpng-dev
-    - libfreetype36-dev
+    - libfreetype6-dev
     - python-cairo
     - cmake
     - swig
@@ -45,8 +45,9 @@ before_install:
 install:
   - pip install cython
   - pip install -r travis-ci-requirements.txt
-  - git clone https://github.com/enthought/enable.git
+  - git clone https://github.com/enthought/enable.git --depth 1
   - cd enable
+  - pip install -r travis-ci-requirements
   - python setup.py develop
   - cd ..
   - python setup.py develop

@@ -1191,6 +1191,8 @@ Other event callbacks correspond to mouse gestures (``mouse_enter``,
 ``mouse_leave``, ``mouse_wheel``), mouse clicks (``left_down``, ``left_up``,
 ``right_down``, ``right_up``), and key presses (``key_pressed``).
 
+.. _Tool_States:
+
 Stateful tools
 ==============
 

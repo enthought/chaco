@@ -4,7 +4,7 @@ Test of ImageData behavior.
 
 import os
 
-import unittest2 as unittest
+import unittest
 from numpy import arange, swapaxes
 from numpy.testing import assert_array_equal
 from pkg_resources import resource_filename

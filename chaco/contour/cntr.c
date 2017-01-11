@@ -1574,9 +1574,12 @@ Cntr_init(Cntr *self, PyObject *args, PyObject *kwds)
     ypa = (PyArrayObject *) PyArray_ContiguousFromObject(yarg, 'd', 2, 2);
     zpa = (PyArrayObject *) PyArray_ContiguousFromObject(zarg, 'd', 2, 2);
     if (marg)
-        mpa = (PyArrayObject *) PyArray_ContiguousFromObject(marg, '1', 2, 2);
+        mpa = (PyArrayObject *) PyArray_ContiguousFromObject(marg, NPY_BOOL, 2, 2);
     else
         mpa = NULL;
+    if (PyErr_Occurred()) {
+        goto error;
+    }
 
     if (xpa == NULL || ypa == NULL || zpa == NULL || (marg && mpa == NULL))
     {
@@ -1709,11 +1712,7 @@ static PyMethodDef module_methods[] = {
 MOD_INIT(contour)
 {
     PyObject* m = NULL;
-
-    if (PyType_Ready(&CntrType) < 0)
-        RETURN_MODINIT;
-
-#if PY_MAJOR_VERSION >= 3
+#if PY_MAJOR_VERSION >= 3    
     static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
         "contour",     /* m_name */
@@ -1725,9 +1724,12 @@ MOD_INIT(contour)
         NULL,                /* m_clear */
         NULL,                /* m_free */
     };
+#endif
+    if (PyType_Ready(&CntrType) < 0)
+        RETURN_MODINIT;
 
+#if PY_MAJOR_VERSION >= 3
     m = PyModule_Create(&moduledef);
-
 #else
     m = Py_InitModule3("contour", module_methods,
                        "Contouring engine as an extension type");

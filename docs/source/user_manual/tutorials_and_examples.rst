@@ -21,20 +21,12 @@ Tutorials
   command-line plotting interface to build plots, in
   a Matlab or gnuplot-like style.
 
-Webinars
---------
+.. the webinars section here has been removed as the hyperlinks 
+    dont exist and/or are broken. it will be readded once we 
+    figure out how and where to host the webinars.
 
-* `Step-by-step Chaco - 2D plotting with Python <http://enthought.com/training/SCPwebinar.php#w2009-07-17>`_
 
-  Webinar recorded on, July 17, 2009, available as Windows Media Player (.wmv) video,
-  Matroska (.mkv) video, and as a slideshare slide show.
-
-* `EPDLab & Chaco <http://enthought.com/training/SCPwebinar.php#w2009-07-17>`_
-
-  Webinar recorded on, June 19, 2009, available as Windows Media Player (.wmv) video,
-  Matroska (.mkv) video, and as a slideshare slide show.
-
-.. tutorial_wx
+..  tutorial_wx
 
 Examples
 --------

@@ -24,7 +24,7 @@ the capabilities and feature sets of the two projects.
 
 
 Here is an `excerpt from a thread about this question
-<https://mail.enthought.com/pipermail/enthought-dev/2007-May/005363.html>`_ on
+<http://thread.gmane.org/gmane.comp.python.enthought.devel/5220/focus=5221>`_ on
 the enthought-dev mailing list.
 
 Gael Varoquaux's response::
