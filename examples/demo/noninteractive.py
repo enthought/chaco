@@ -93,6 +93,7 @@ def get_directory(filename):
 
     if not os.path.isabs(path):
         print('Creating image: ' + os.path.join(os.getcwd(), path, filename))
+
     else:
         print('Creating image: ' + os.path.join(path, filename))
 

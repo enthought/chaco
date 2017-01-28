@@ -28,7 +28,6 @@ class BroadcasterTool(BaseTool):
         else:
             tools = self.tools
             mouse_owned = False
-
         for tool in tools:
             if mouse_owned:
                 event.window.set_mouse_owner(tool, self.mouse_owners[tool])

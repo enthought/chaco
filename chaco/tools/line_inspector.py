@@ -78,7 +78,8 @@ class LineInspector(BaseTool):
         if self.is_listener:
             tmp = self._get_screen_pts()
         elif self.is_interactive:
-            tmp = self._last_position
+            global_pos = self.window.get_pointer_position()
+            tmp = self.get_relative_coordinates(*global_pos)
 
         if tmp:
             sx, sy = tmp
@@ -113,16 +114,17 @@ class LineInspector(BaseTool):
             return
         plot = self.component
         if plot is not None:
-            self._last_position = (event.x, event.y)
+            x, y = event.current_pointer_position()
+            self._last_position = (x, y)
             if isinstance(plot, BaseXYPlot):
                 if self.write_metadata:
                     if self.inspect_mode == "space":
                         index_coord, value_coord = \
-                            self._map_to_data(event.x, event.y)
+                            self._map_to_data(x, y)
                         plot.index.metadata[self.metadata_name] = index_coord
                         plot.value.metadata[self.metadata_name] = value_coord
                     else:
-                        ndx = plot.map_index((event.x, event.y),
+                        ndx = plot.map_index((x, y),
                                              threshold=5.0, index_only=True)
                         if ndx:
                             plot.index.metadata[self.metadata_name] = ndx
@@ -138,10 +140,10 @@ class LineInspector(BaseTool):
                     if self.inspect_mode == "space":
                         if plot.orientation == "h":
                             x_coord, y_coord = \
-                                plot.map_data([(event.x, event.y)])[0]
+                                plot.map_data([(x, y)])[0]
                         else:
                             y_coord, x_coord = \
-                                plot.map_data([(event.x, event.y)])[0]
+                                plot.map_data([(x, y)])[0]
                         if self.axis == "index_x":
                             metadata = x_coord, old_y_data
                         elif self.axis == "index_y":
@@ -150,10 +152,10 @@ class LineInspector(BaseTool):
                             raise ValueError(self.axis)
                     else:
                         if plot.orientation == "h":
-                            x_ndx, y_ndx =  plot.map_index((event.x, event.y),
+                            x_ndx, y_ndx =  plot.map_index((x, y),
                                                            threshold=5.0)
                         else:
-                            y_ndx, x_ndx = plot.map_index((event.x, event.y),
+                            y_ndx, x_ndx = plot.map_index((x, y),
                                                           threshold=5.0)
                         if self.axis == "index_x":
                             metadata = x_ndx, old_y_data

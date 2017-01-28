@@ -24,6 +24,60 @@ from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import BroadcasterTool, PanTool, ZoomTool
 from chaco.api import create_line_plot, add_default_axes
 
+from traits.api import List
+from chaco.tools.api import SelectedZoomState
+import numpy
+
+class CaeZoomTool(ZoomTool):
+    zoom_tools = List
+
+
+    def _end_select(self, event):
+        """ Ends selection of the zoom region, adds the new zoom range to
+        the zoom stack, and does the zoom.
+        """
+        self._screen_end = (event.x, event.y)
+
+        start = numpy.array(self._screen_start)
+        end = numpy.array(self._screen_end)
+
+        if sum(abs(end - start)) < self.minimum_screen_delta:
+            self._end_selecting(event)
+            event.handled = True
+            return
+        self.do_zoom(self._screen_start, self._screen_end)
+
+        for zoom_tool in self.zoom_tools:
+            zoom_tool.do_zoom(self._screen_start, self._screen_end)
+        self._end_selecting(event)
+        event.handled = True
+
+
+    def do_zoom(self, screen_start, screen_end):
+        low, high = self._map_coordinate_box(screen_start, screen_end)
+
+        x_range = self._get_x_mapper().range
+        y_range = self._get_y_mapper().range
+
+        prev = (x_range.low, x_range.high, y_range.low, y_range.high)
+
+        if self.tool_mode == 'range':
+            axis = self._determine_axis()
+            if axis == 1:
+                # vertical
+                next = (x_range.low, x_range.high, low[1], high[1])
+            else:
+                # horizontal
+                next = (low[0], high[0], y_range.low, y_range.high)
+
+        else:
+            next = (low[0], high[0], low[1], high[1])
+
+        zoom_state = SelectedZoomState(prev, next)
+        zoom_state.apply(self)
+        self._append_state(zoom_state)
+        return
+
 #===============================================================================
 # # Create the Chaco plot.
 #===============================================================================
@@ -57,10 +111,17 @@ def _create_plot_component():
     broadcaster = BroadcasterTool()
     broadcaster.tools.append(PanTool(plot1))
     broadcaster.tools.append(PanTool(foreign_plot))
+    broad_caster = None
 
     for c in (plot1, foreign_plot):
-        zoom = ZoomTool(component=c, tool_mode="box", always_on=False)
-        broadcaster.tools.append(zoom)
+        zoom = CaeZoomTool(component=c, tool_mode="box", always_on=False)
+        c.overlays.append(zoom)
+        if broad_caster is None:
+            print("OWNER", zoom)
+            broad_caster = zoom
+        else:
+            print("WADDUP", zoom)
+            broad_caster.zoom_tools.append(zoom)
 
     plot1.tools.append(broadcaster)
 
