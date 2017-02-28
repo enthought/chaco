@@ -140,7 +140,10 @@ class ColorBar(AbstractPlotRenderer):
 
             mapper = self.index_mapper
 
-            scrn_points = arange(mapper.low_pos, mapper.high_pos+1)
+            direction = 1 if self.direction == 'normal' else -1
+            scrn_points = arange(
+                mapper.low_pos, mapper.high_pos + 1, direction
+            )
 
             # Get the data values associated with the list of screen points.
             if mapper.range.low == mapper.range.high:
@@ -149,7 +152,6 @@ class ColorBar(AbstractPlotRenderer):
                 data_points = array([mapper.range.high])
             else:
                 data_points = mapper.map_data(scrn_points)
-
             if self.direction == 'flipped':
                 data_points = data_points[::-1]
 
