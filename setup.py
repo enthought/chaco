@@ -41,7 +41,7 @@ def git_version():
     def _minimal_ext_cmd(cmd):
         # construct minimal environment
         env = {}
-        for k in ['SYSTEMROOT', 'PATH']:
+        for k in ['SYSTEMROOT', 'PATH', 'HOME']:
             v = os.environ.get(k)
             if v is not None:
                 env[k] = v
