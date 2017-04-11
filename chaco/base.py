@@ -10,23 +10,23 @@ from numpy import (array, argsort, concatenate, cos, diff, dot, empty, isfinite,
                    nonzero, pi, searchsorted, seterr, sin, int8)
 
 # Enthought library imports
-from traits.api import CArray, Enum, Trait
+from traits.api import Enum, ArrayOrNone
 
 delta = {'ascending': 1, 'descending': -1, 'flat': 0}
 
 # Dimensions
 
 # A single array of numbers.
-NumericalSequenceTrait = Trait(None, None, CArray(value=empty(0)))
+NumericalSequenceTrait = ArrayOrNone()
 
 # A sequence of pairs of numbers, i.e., an Nx2 array.
-PointTrait = Trait(None, None, CArray(value=empty(0)))
+PointTrait = ArrayOrNone(shape=(None, 2))
 
-# An NxM array of numbers.
-ImageTrait = Trait(None, None, CArray(value=empty(0)))
+# An NxM array of numbers or NxMxRGB(A) array of colors.
+ImageTrait = ArrayOrNone()
 
 # An 3D array of numbers of shape (Nx, Ny, Nz)
-CubeTrait = Trait(None, None, CArray(value=empty(0)))
+CubeTrait = ArrayOrNone(shape=(None, None, None))
 
 
 # This enumeration lists the fundamental mathematical coordinate types that

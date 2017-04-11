@@ -4,8 +4,8 @@
 from numpy import array
 
 # Enthought library imports
-from traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, \
-                         List, Property, Str, Trait, Tuple
+from traits.api import Any, Array, ArrayOrNone, Bool, Enum, Event, Float, \
+    Instance, Int, List, Property, Str, Trait
 from enable.api import KeySpec
 
 # Chaco imports
@@ -133,7 +133,7 @@ class RangeSelection(AbstractController):
 
     # The data space start and end coordinates of the selected region,
     # expressed as a list.
-    _selection = Trait(None, None, Tuple, List, Array)
+    _selection = ArrayOrNone()
 
     # The selection in mask form.
     _selection_mask = Array

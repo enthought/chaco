@@ -1,4 +1,5 @@
 import unittest
+import warnings
 
 import numpy as np
 
@@ -50,6 +51,23 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
                         selection = tool.selection
                         self.assertTrue(selection[0] <= selection[1])
                         self.mouse_up(tool, x=x, y=y)
+
+    def test_selection_no_warning(self):
+        plot_data = ArrayPlotData()
+        arr = np.arange(4)
+        plot_data.set_data("x", arr)
+        plot_data.set_data("y", arr)
+        plot = Plot(plot_data)
+        renderer = plot.plot(('x', 'y'))[0]
+        tool = RangeSelection(renderer)
+        with warnings.catch_warnings(record=True) as w:
+            tool.selection = np.array([2.0, 3.0])
+        self.assertEqual(w, [])
+
+        # Accept tuples and lists and None
+        tool.selection = (1.5, 3.5)
+        tool.selection = [1.0, 2.0]
+        tool.selection = None
 
 
 if __name__ == '__main__':
