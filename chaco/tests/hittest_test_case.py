@@ -66,5 +66,4 @@ class HittestTestCase(unittest.TestCase):
         self.assertTrue(d < threshold)
 
 if __name__ == '__main__':
-    import nose
-    nose.run()
+    unittest.main()

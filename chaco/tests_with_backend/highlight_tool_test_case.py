@@ -50,4 +50,4 @@ def test_highlight_on_log_plot():
 
 
 if __name__ == '__main__':
-    nose.main()
+    nose.runmodule()

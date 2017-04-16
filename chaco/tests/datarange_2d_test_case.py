@@ -220,5 +220,4 @@ def assert_ary_(desired, actual):
 
 
 if __name__ == '__main__':
-    import nose
-    nose.run()
+    unittest.main()

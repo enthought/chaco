@@ -539,5 +539,4 @@ class IntersectRangeTestCase(unittest.TestCase):
         assert_array_equal(result, mask)
 
 if __name__ == '__main__':
-    import nose
-    nose.run()
+    unittest.main()

@@ -147,4 +147,4 @@ def test_process_2d_bounds_vertex_data():
 
 
 if __name__ == '__main__':
-    nose.main()
+    nose.runmodule()
