@@ -247,6 +247,7 @@ class ArrayDataSource(AbstractDataSource):
             # to do anyway... right?
             #data = self._data
             data = self.get_data()
+        data = data.view(ndarray)
 
         data_len = 0
         try:
@@ -278,8 +279,8 @@ class ArrayDataSource(AbstractDataSource):
                     # the data may be in a subclass of numpy.array, viewing
                     # the data as a ndarray will remove side effects of
                     # the subclasses, such as different operator behaviors
-                    self._min_index = bounded_nanargmin(data.view(ndarray))
-                    self._max_index = bounded_nanargmax(data.view(ndarray))
+                    self._min_index = bounded_nanargmin(data)
+                    self._max_index = bounded_nanargmax(data)
                 except (TypeError, IndexError, NotImplementedError):
                     # For strings and objects, we punt...  These show up in
                     # label-ish data sources.
