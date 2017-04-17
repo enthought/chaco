@@ -214,7 +214,8 @@ class MultiLinePlot(BaseXYPlot):
         else:
             # default coordinate spacing if there is only 1 coordinate
             dy = 1.0
-
+        
+        
         if self.use_global_bounds:
             max_abs = max(abs(self.global_min), abs(self.global_max))
         else:
@@ -239,6 +240,8 @@ class MultiLinePlot(BaseXYPlot):
         # Get the array from `value`
         data = self.value._data
         coordinates = self.yindex.get_data()
+        print self.amplitude
+        print self.amplitude_scale
         channel_data = self.scale*(self.amplitude*data + coordinates[:,np.newaxis]) \
                                 + self.offset
         return channel_data
@@ -249,7 +252,6 @@ class MultiLinePlot(BaseXYPlot):
         Collects the data points that are within the bounds of the plot and
         caches them.
         """
-
         if self._cache_valid:
             return
 
