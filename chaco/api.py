@@ -47,6 +47,7 @@ from plot_graphics_context import PlotGraphicsContext, PlotGraphicsContextMixin
 from selectable_overlay_container import SelectableOverlayPlotContainer
 from plot_containers import OverlayPlotContainer, HPlotContainer, VPlotContainer, \
                             GridPlotContainer
+from multi_axis_plot_container import MultiAxisPlotContainer, MultiAxisPlotAxis
 GridContainer = GridPlotContainer
 
 from label import Label
