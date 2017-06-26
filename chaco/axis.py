@@ -11,7 +11,7 @@ from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
 from enable.api import ColorTrait, LineStyle
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Any, Float, Int, Str, Trait, Unicode, \
-     Bool, Event, List, Array, Instance, Enum, Callable
+     Bool, Event, List, Array, Instance, Enum, Callable, ArrayOrNone
 
 # Local relative imports
 from ticks import AbstractTickGenerator, DefaultTickGenerator, MinorTickGenerator
@@ -148,9 +148,9 @@ class PlotAxis(AbstractOverlay):
     # Cached position calculations
 
     _tick_list = List  # These are caches of their respective positions
-    _tick_positions = Any #List
-    _tick_label_list = Any
-    _tick_label_positions = Any
+    _tick_positions = ArrayOrNone()
+    _tick_label_list = ArrayOrNone()
+    _tick_label_positions = ArrayOrNone()
     _tick_label_bounding_boxes = List
     _major_axis_size = Float
     _minor_axis_size = Float

@@ -1,5 +1,7 @@
 """ Defines the MultiArrayDataSource class.
 """
+import warnings
+
 # Major package imports
 from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
 
@@ -179,8 +181,11 @@ class MultiArrayDataSource(AbstractDataSource):
                 mini = nanmin(self._data[::, index])
         else:
             # value is None and index is None:
-            maxi = nanmax(self._data)
-            mini = nanmin(self._data)
+            with warnings.catch_warnings():
+                warnings.filterwarnings(
+                    'ignore', "All-NaN (slice|axis) encountered", RuntimeWarning)
+                maxi = nanmax(self._data)
+                mini = nanmin(self._data)
 
         return (mini, maxi)
 
