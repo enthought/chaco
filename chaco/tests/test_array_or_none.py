@@ -16,6 +16,8 @@ from chaco.scatterplot import ScatterPlot
 class TestArrayOrNone(unittest.TestCase):
     """ Test that the FutureWarning from numpy concerning comparison of arrays
     against None are not issued.
+
+    These warnings began with numpy 1.9.
     """
 
     def test_array_data_source(self):

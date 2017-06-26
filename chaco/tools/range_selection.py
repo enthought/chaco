@@ -132,7 +132,7 @@ class RangeSelection(AbstractController):
     _axis_index = Trait(None, None, Int)
 
     # The data space start and end coordinates of the selected region,
-    # expressed as a list.
+    # expressed as an array.
     _selection = ArrayOrNone()
 
     # The selection in mask form.
