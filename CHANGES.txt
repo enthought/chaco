@@ -2,6 +2,13 @@
 Chaco CHANGELOG
 ===============
 
+Release 4.7.0
+-------------
+
+Fixes
+
+* Update raise statement to be Python 3 compatible (PR #360)
+
 Release 4.6.1
 -------------
 
