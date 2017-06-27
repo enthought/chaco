@@ -174,7 +174,7 @@ class Plot(DataView):
                 self.data = ArrayPlotData(data)
             else:
                 raise ValueError("Don't know how to create PlotData for data"
-                                 "of type {!s}".format(type(data)))
+                                 "of type {}".format(type(data)))
 
         if not self._title:
             self._title = PlotLabel(font="swiss 16", visible=False,
