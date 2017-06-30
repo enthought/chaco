@@ -78,12 +78,9 @@ dependencies = {
     "six",
     "nose",
     "mock",
-    "coverage",
     "numpy",
     "pygments",
     "pyparsing",
-    "unittest2",
-    "pypdf2",
 }
 
 extra_dependencies = {
@@ -128,6 +125,8 @@ def install(runtime, toolkit, pillow, environment):
         "edm run -e {environment} -- pip install {pillow}",
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
+        ("edm run -e {environment} -- "
+         "pip install git+https://git@github.com/enthought/enable.git"),
         "edm run -e {environment} -- python setup.py install",
     ]
     click.echo("Creating environment '{environment}'".format(**parameters))
@@ -147,8 +146,7 @@ def test(runtime, toolkit, pillow, environment):
     environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
     commands = [
-        "edm run -e {environment} -- coverage run -m nose.core enable -v",
-        "edm run -e {environment} -- coverage run -a -m nose.core kiva -v",
+        "edm run -e {environment} -- coverage run -m nose.core chaco -v",
     ]
 
     # We run in a tempdir to avoid accidentally picking up wrong traitsui
@@ -238,7 +236,7 @@ def get_parameters(runtime, toolkit, pillow, environment):
                "not supported by test environments")
         raise RuntimeError(msg.format(**parameters))
     if environment is None:
-        tmpl = 'enable-test-{runtime}-{toolkit}'
+        tmpl = 'chaco-test-{runtime}-{toolkit}'
         environment = tmpl.format(**parameters)
         environment += '-{}'.format(str(pillow).translate(pillow_trans))
         parameters['environment'] = environment
