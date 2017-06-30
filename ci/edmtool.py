@@ -128,6 +128,8 @@ def install(runtime, toolkit, pillow, environment):
         "edm run -e {environment} -- pip install {pillow}",
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
+        ("edm run -e {environment} -- "
+         "pip install git+ssh://git@github.com/enthought/chaco"),
         "edm run -e {environment} -- python setup.py install",
     ]
     click.echo("Creating environment '{environment}'".format(**parameters))
@@ -147,7 +149,7 @@ def test(runtime, toolkit, pillow, environment):
     environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
     commands = [
-        "edm run -e {environment} -- coverage run -m nose.core enable -v",
+        "edm run -e {environment} -- coverage run -m nose.core chaco -v",
         "edm run -e {environment} -- coverage run -a -m nose.core kiva -v",
     ]
 
