@@ -52,6 +52,9 @@ class PlotAxis(AbstractOverlay):
     # The color of the title.
     title_color = ColorTrait("black")
 
+    # The angle of the title, in degrees, from horizontal line
+    title_angle = Float(0.)
+
     # The thickness (in pixels) of each tick.
     tick_weight = Float(1.0)
 
@@ -535,7 +538,6 @@ class PlotAxis(AbstractOverlay):
             self._minor_axis_size = self.bounds[1]
             self._major_axis = array([1., 0.])
             self._title_orientation = array([0.,1.])
-            self.title_angle = 0.0
             if self.orientation == 'top':
                 self._origin_point = array(self.position)
                 self._inside_vector = array([0.,-1.])
@@ -553,11 +555,9 @@ class PlotAxis(AbstractOverlay):
             if self.orientation == 'left':
                 self._origin_point = array(self.position) + array([self.bounds[0], 0.])
                 self._inside_vector = array([1., 0.])
-                self.title_angle = 90.0
             else: #self.orientation == 'right'
                 self._origin_point = array(self.position)
                 self._inside_vector = array([-1., 0.])
-                self.title_angle = 270.0
             if "top" in origin:
                 screenlow, screenhigh = screenhigh, screenlow
 
@@ -584,7 +584,6 @@ class PlotAxis(AbstractOverlay):
             self._minor_axis_size = overlay_component.bounds[1]
             self._major_axis = array([1., 0.])
             self._title_orientation = array([0.,1.])
-            self.title_angle = 0.0
             if self.orientation == 'top':
                 self._origin_point = array([overlay_component.x, overlay_component.y2])
                 self._inside_vector = array([0.0, -1.0])
@@ -602,11 +601,9 @@ class PlotAxis(AbstractOverlay):
             if self.orientation == 'left':
                 self._origin_point = array([overlay_component.x, overlay_component.y])
                 self._inside_vector = array([1.0, 0.0])
-                self.title_angle = 90.0
             else:
                 self._origin_point = array([overlay_component.x2, overlay_component.y])
                 self._inside_vector = array([-1.0, 0.0])
-                self.title_angle = 270.0
             if "top" in component_origin:
                 screenlow, screenhigh = screenhigh, screenlow
 
@@ -728,6 +725,7 @@ class PlotAxis(AbstractOverlay):
             'title_font',
             'title_spacing',
             'title_color',
+            'title_angle',
             'tick_weight',
             'tick_color',
             'tick_label_font',
@@ -755,6 +753,18 @@ class PlotAxis(AbstractOverlay):
         ]
         if name in invalidate_traits:
             self._invalidate()
+
+    # ------------------------------------------------------------------------
+    # Initialization-related methods
+    # ------------------------------------------------------------------------
+
+    def _title_angle_default(self):
+        if self.orientation == 'left':
+            return 90.0
+        if self.orientation == 'right':
+            return 270.0
+        # Then self.orientation in {'top', 'bottom'}
+        return 0.0
 
     #------------------------------------------------------------------------
     # Persistence-related methods
@@ -794,6 +804,7 @@ class PlotAxis(AbstractOverlay):
         self._reset_cache()
         self._cache_valid = False
         return
+
 
 class MinorPlotAxis(PlotAxis):
     """
