@@ -34,10 +34,11 @@ def _create_plot_component():
         pd.set_data("y" + str(i), jn(i,x))
 
     # Create some line plots of some of the data
-    plot1 = Plot(pd, title="Line Plot", padding=50, border_visible=True)
+    plot1 = Plot(pd, title="Line Plot", padding=60, border_visible=True)
     plot1.legend.visible = True
     plot1.plot(("index", "y0", "y1", "y2"), name="j_n, n<3", color="red")
     plot1.plot(("index", "y3"), name="j_3", color="blue")
+    plot1.value_axis.title = "J0, J1, J2, J3"
 
     # Attach some tools to the plot
     plot1.tools.append(PanTool(plot1))
@@ -46,9 +47,14 @@ def _create_plot_component():
 
     # Create a second scatter plot of one of the datasets, linking its
     # range to the first plot
-    plot2 = Plot(pd, range2d=plot1.range2d, title="Scatter plot", padding=50,
+    plot2 = Plot(pd, range2d=plot1.range2d, title="Scatter plot", padding=60,
                  border_visible=True)
     plot2.plot(('index', 'y3'), type="scatter", color="blue", marker="circle")
+
+    # Configure the vertical axis:
+    plot2.value_axis.title = "J3"
+    plot2.value_axis.orientation = "right"
+    plot2.value_axis.title_angle = 0.0  # instead of default 270 deg
 
     # Create a container and add our plots
     container = HPlotContainer()
