@@ -150,7 +150,6 @@ def test(runtime, toolkit, pillow, environment):
     environ['PYTHONUNBUFFERED'] = "1"
     commands = [
         "edm run -e {environment} -- coverage run -m nose.core chaco -v",
-        "edm run -e {environment} -- coverage run -a -m nose.core kiva -v",
     ]
 
     # We run in a tempdir to avoid accidentally picking up wrong traitsui
@@ -240,7 +239,7 @@ def get_parameters(runtime, toolkit, pillow, environment):
                "not supported by test environments")
         raise RuntimeError(msg.format(**parameters))
     if environment is None:
-        tmpl = 'enable-test-{runtime}-{toolkit}'
+        tmpl = 'chaco-test-{runtime}-{toolkit}'
         environment = tmpl.format(**parameters)
         environment += '-{}'.format(str(pillow).translate(pillow_trans))
         parameters['environment'] = environment
