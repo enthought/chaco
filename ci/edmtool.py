@@ -129,7 +129,7 @@ def install(runtime, toolkit, pillow, environment):
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
         ("edm run -e {environment} -- "
-         "pip install git+ssh://git@github.com/enthought/chaco"),
+         "pip install git+https://git@github.com/enthought/enable.git"),
         "edm run -e {environment} -- python setup.py install",
     ]
     click.echo("Creating environment '{environment}'".format(**parameters))
