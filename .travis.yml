@@ -25,13 +25,13 @@ matrix:
   include:
   - env: RUNTIME=2.7 TOOLKIT=wx
   - env: RUNTIME=2.7 TOOLKIT=pyqt
+  - env: RUNTIME=2.7 TOOLKIT=null
+  - env: RUNTIME=3.4 TOOLKIT=wx
+  - env: RUNTIME=3.4 TOOLKIT=pyqt
+  - env: RUNTIME=3.4 TOOLKIT=null
+  - env: RUNTIME=3.5 TOOLKIT=wx
   - env: RUNTIME=3.5 TOOLKIT=pyqt
-  - env: RUNTIME=2.7 TOOLKIT=null
   - env: RUNTIME=3.5 TOOLKIT=null
-  - env: RUNTIME=2.7 TOOLKIT=null
-  - env: RUNTIME=3.5 TOOLKIT=null
-  allow_failures:
-  - env: RUNTIME=2.7 TOOLKIT=wx
   fast_finish: true
 
 branches:
