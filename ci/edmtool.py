@@ -79,11 +79,9 @@ dependencies = {
     "six",
     "nose",
     "mock",
-    "coverage",
     "numpy",
     "pygments",
     "pyparsing",
-    "unittest2",
 }
 
 extra_dependencies = {
