@@ -84,7 +84,6 @@ dependencies = {
     "pygments",
     "pyparsing",
     "unittest2",
-    "pypdf2",
 }
 
 extra_dependencies = {
