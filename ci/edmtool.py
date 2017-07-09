@@ -160,7 +160,7 @@ def test(runtime, toolkit, pillow, environment):
         execute(commands_nobackend, parameters)
     click.echo('Done test')
 
-    if toolkit != null:
+    if toolkit != 'null':
         click.echo("Running backend tests in '{environment}'"
                    .format(**parameters))
         commands_backend = [
