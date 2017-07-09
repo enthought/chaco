@@ -145,8 +145,9 @@ def test(runtime, toolkit, pillow, environment):
     parameters = get_parameters(runtime, toolkit, pillow, environment)
     environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
-    commands = [
-        "edm run -e {environment} -- coverage run -m nose.core chaco -v",
+    commands_nobackend = [
+        ("edm run -e {environment} -- coverage run -m nose.core chaco -v "
+         "--exclude-dir=../chaco/tests_with_backend"),
     ]
 
     # We run in a tempdir to avoid accidentally picking up wrong traitsui
@@ -156,8 +157,20 @@ def test(runtime, toolkit, pillow, environment):
     click.echo("Running tests in '{environment}'".format(**parameters))
     with do_in_tempdir(files=['.coveragerc'], capture_files=['./.coverage*']):
         os.environ.update(environ)
-        execute(commands, parameters)
+        execute(commands_nobackend, parameters)
     click.echo('Done test')
+
+    if toolkit != null:
+        click.echo("Running backend tests in '{environment}'"
+                   .format(**parameters))
+        commands_backend = [
+            ("edm run -e {environment} -- coverage run -a "
+             "-m nose.core -v ../chaco/tests_with_backend")
+        ]
+        with do_in_tempdir(files=['.coveragerc'], capture_files=['./.coverage*']):
+            os.environ.update(environ)
+            execute(commands_backend, parameters)
+        click.echo('Done backend test')
 
 
 @cli.command()
