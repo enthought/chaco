@@ -26,8 +26,6 @@ matrix:
   - env: RUNTIME=2.7 TOOLKIT=wx
   - env: RUNTIME=2.7 TOOLKIT=pyqt
   - env: RUNTIME=2.7 TOOLKIT=null
-  - env: RUNTIME=3.4 TOOLKIT=pyqt
-  - env: RUNTIME=3.4 TOOLKIT=null
   - env: RUNTIME=3.5 TOOLKIT=pyqt
   - env: RUNTIME=3.5 TOOLKIT=null
   fast_finish: true

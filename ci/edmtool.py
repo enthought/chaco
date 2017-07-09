@@ -71,7 +71,6 @@ import click
 
 supported_combinations = {
     '2.7': {'pyqt', 'wx', 'null'},
-    '3.4': {'pyqt', 'null'},
     '3.5': {'pyqt', 'null'},
 }
 
