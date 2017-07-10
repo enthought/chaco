@@ -4,17 +4,9 @@ sudo: false
 addons:
   apt:
     packages:
-    - python-qt4
-    - python-qt4-dev
-    - python-qt4-gl
-    - python-wxtools
     - ccache
     - cmake
     - swig
-    - zlib1g-dev
-    - libpng-dev
-    - libfreetype6-dev
-    - libcairo2-dev
 
 env:
   global:
