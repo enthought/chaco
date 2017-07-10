@@ -100,12 +100,6 @@ environment_vars = {
     'null': {'ETS_TOOLKIT': 'null.image'},
 }
 
-if sys.version_info < (3, 0):
-    import string
-    pillow_trans = string.maketrans('<=>', '___')
-else:
-    pillow_trans = ''.maketrans({'<': '_', '=': '_', '>': '_'})
-
 
 @click.group()
 def cli():
@@ -115,19 +109,17 @@ def cli():
 @cli.command()
 @click.option('--runtime', default='3.5')
 @click.option('--toolkit', default='null')
-@click.option('--pillow', default='pillow')
 @click.option('--environment', default=None)
-def install(runtime, toolkit, pillow, environment):
+def install(runtime, toolkit, environment):
     """ Install project and dependencies into a clean EDM environment.
     """
-    parameters = get_parameters(runtime, toolkit, pillow, environment)
+    parameters = get_parameters(runtime, toolkit, environment)
     parameters['packages'] = ' '.join(
         dependencies | extra_dependencies.get(toolkit, set()))
     # edm commands to setup the development environment
     commands = [
         "edm environments create {environment} --force --version={runtime}",
         "edm install -y -e {environment} {packages}",
-        "edm run -e {environment} -- pip install {pillow}",
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
         ("edm run -e {environment} -- "
@@ -142,12 +134,11 @@ def install(runtime, toolkit, pillow, environment):
 @cli.command()
 @click.option('--runtime', default='3.5')
 @click.option('--toolkit', default='null')
-@click.option('--pillow', default='pillow')
 @click.option('--environment', default=None)
-def test(runtime, toolkit, pillow, environment):
+def test(runtime, toolkit, environment):
     """ Run the test suite in a given environment with the specified toolkit.
     """
-    parameters = get_parameters(runtime, toolkit, pillow, environment)
+    parameters = get_parameters(runtime, toolkit, environment)
     environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
     commands_nobackend = [
@@ -176,16 +167,14 @@ def test(runtime, toolkit, pillow, environment):
     click.echo('Done test')
 
 
-
 @cli.command()
 @click.option('--runtime', default='3.5')
 @click.option('--toolkit', default='null')
-@click.option('--pillow', default='pillow')
 @click.option('--environment', default=None)
-def cleanup(runtime, toolkit, pillow, environment):
+def cleanup(runtime, toolkit, environment):
     """ Remove a development environment.
     """
-    parameters = get_parameters(runtime, toolkit, pillow, environment)
+    parameters = get_parameters(runtime, toolkit, environment)
     commands = [
         "edm run -e {environment} -- python setup.py clean",
         "edm environments remove {environment} --purge -y",
@@ -198,13 +187,11 @@ def cleanup(runtime, toolkit, pillow, environment):
 @cli.command()
 @click.option('--runtime', default='3.5')
 @click.option('--toolkit', default='null')
-@click.option('--pillow', default='pillow')
-def test_clean(runtime, toolkit, pillow):
+def test_clean(runtime, toolkit):
     """ Run tests in a clean environment, cleaning up afterwards
     """
     args = ['--toolkit={}'.format(toolkit),
-            '--runtime={}'.format(runtime),
-            '--pillow={}'.format(pillow)]
+            '--runtime={}'.format(runtime)]
     try:
         install(args=args, standalone_mode=False)
         test(args=args, standalone_mode=False)
@@ -215,12 +202,11 @@ def test_clean(runtime, toolkit, pillow):
 @cli.command()
 @click.option('--runtime', default='3.5')
 @click.option('--toolkit', default='null')
-@click.option('--pillow', default='pillow')
 @click.option('--environment', default=None)
-def update(runtime, toolkit, pillow, environment):
+def update(runtime, toolkit, environment):
     """ Update/Reinstall package into environment.
     """
-    parameters = get_parameters(runtime, toolkit, pillow, environment)
+    parameters = get_parameters(runtime, toolkit, environment)
     commands = [
         "edm run -e {environment} -- python setup.py install"]
     click.echo("Re-installing in  '{environment}'".format(**parameters))
@@ -243,19 +229,18 @@ def test_all():
 # Utility routines
 # ----------------------------------------------------------------------------
 
-def get_parameters(runtime, toolkit, pillow, environment):
+def get_parameters(runtime, toolkit, environment):
     """Set up parameters dictionary for format() substitution
     """
-    parameters = {'runtime': runtime, 'toolkit': toolkit, 'pillow': pillow,
+    parameters = {'runtime': runtime, 'toolkit': toolkit,
                   'environment': environment}
     if toolkit not in supported_combinations[runtime]:
-        msg = ("Python {runtime}, toolkit {toolkit}, and pillow {pillow} "
+        msg = ("Python {runtime}, toolkit {toolkit}, "
                "not supported by test environments")
         raise RuntimeError(msg.format(**parameters))
     if environment is None:
         tmpl = 'chaco-test-{runtime}-{toolkit}'
         environment = tmpl.format(**parameters)
-        environment += '-{}'.format(str(pillow).translate(pillow_trans))
         parameters['environment'] = environment
     return parameters
 
