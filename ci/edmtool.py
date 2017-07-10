@@ -17,17 +17,19 @@ click library to automate the process of setting up test environments
 and running the test within them.  This improves repeatability and
 reliability of tests be removing many of the variables around the
 developer's particular Python environment.  Test environment setup and
-package management is performed using `EDM
-http://docs.enthought.com/edm/`_
+package management is performed using `EDM http://docs.enthought.com/edm/`_
+
 To use this to run you tests, you will need to install EDM and click
 into your working environment.  You will also need to have git
 installed to access required source code from github repositories.
+
 You can then do::
     python edmtool.py install --runtime=... --toolkit=...
 to create a test environment from the current codebase and::
     python edmtool.py test --runtime=... --toolkit=...
 to run tests in that environment.  You can remove the environment with::
     python edmtool.py cleanup --runtime=... --toolkit=...
+
 If you make changes you will either need to remove and re-install the
 environment or manually update the environment using ``edm``, as
 the install performs a ``python setup.py install`` rather than a ``develop``,
@@ -40,18 +42,20 @@ which will create, install, run tests, and then clean-up the environment.  And
 you can run tests in all supported runtimes and toolkits (with cleanup)
 using::
     python edmtool.py test_all
+
 Currently supported runtime values are ``2.7`` and ``3.5``, and currently
 supported toolkits are ``null``, ``pyqt``, and ``wx``.  Not all
 combinations of toolkits and runtimes will work, but the tasks will fail with
-a clear error if that is the case.
-Tests can still be run via the usual means in other environments if that suits
-a developer's purpose.
+a clear error if that is the case. Tests can still be run via the usual means
+in other environments if that suits a developer's purpose.
+
 Changing This File
 ------------------
 To change the packages installed during a test run, change the dependencies
 variable below.  To install a package from github, or one which is not yet
 available via EDM, add it to the `ci/requirements.txt` file (these will be
 installed by `pip`).
+
 Other changes to commands should be a straightforward change to the listed
 commands for each task. See the EDM documentation for more information about
 how to run commands within an EDM enviornment.
