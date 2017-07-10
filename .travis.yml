@@ -18,8 +18,10 @@ matrix:
   - env: RUNTIME=2.7 TOOLKIT=wx
   - env: RUNTIME=2.7 TOOLKIT=pyqt
   - env: RUNTIME=2.7 TOOLKIT=null
+  - env: RUNTIME=2.7 TOOLKIT=pyside
   - env: RUNTIME=3.5 TOOLKIT=pyqt
   - env: RUNTIME=3.5 TOOLKIT=null
+  - env: RUNTIME=3.5 TOOLKIT=pyside
   fast_finish: true
 
 branches:
