@@ -75,7 +75,7 @@ import click
 
 supported_combinations = {
     '2.7': {'pyqt', 'pyside', 'wx', 'null'},
-    '3.5': {'pyqt', 'pyside', 'null'},
+    '3.5': {'pyqt', 'null'},
 }
 
 dependencies = {
