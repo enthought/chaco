@@ -33,7 +33,7 @@ class BarPlot(AbstractPlotRenderer):
     # The data source to use as value points.
     value = Instance(ArrayDataSource)
 
-    # The data source to use as "starting" values for the bars.
+    # The data source to use as "starting" values for bars (along value axis).
     # For instance, if the values are [10, 20] and starting_value
     # is [3, 7], BarPlot will plot two bars, one  between 3 and 10, and
     # one between 7 and 20
