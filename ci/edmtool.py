@@ -83,6 +83,7 @@ dependencies = {
     "nose",
     "mock",
     "numpy",
+    "pandas",
     "pygments",
     "pyparsing",
     "cython"
