@@ -12,9 +12,10 @@ class DataFramePlotData(AbstractPlotData):
     """ A PlotData implementation class that handles a DataFrame.
 
     By default, it doesn't allow its input data to be modified by downstream
-    Chaco components or interactors. The index is availble as data unless there
-    is a column named 'index', in which case that column masks the DataFrame
-    index. (Rename that column if the DataFrame index must be accessible.)
+    Chaco components or interactors. The index is available as data unless
+    there is a column named 'index', in which case that column masks the
+    DataFrame index. (Rename that column if the DataFrame index must be
+    accessible.)
 
     """
 
