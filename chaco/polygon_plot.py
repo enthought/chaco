@@ -9,7 +9,7 @@ import numpy as np
 # Enthought library imports.
 from enable.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
-from kiva.agg import points_in_polygon
+from kiva.api import points_in_polygon
 from traits.api import Enum, Float, Tuple, Property, cached_property, \
                         on_trait_change
 

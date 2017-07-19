@@ -13,10 +13,10 @@ from numpy import around, array, asarray, column_stack, \
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
-        CustomMarker, MarkerNameDict, MarkerTrait
+    CustomMarker, MarkerNameDict, MarkerTrait
 from kiva.constants import STROKE
-from traits.api import Any, Array, Bool, Float, Trait, Callable, Property, \
-        Tuple, Either, cached_property
+from traits.api import Any, Array, ArrayOrNone, Bool, Float, Callable, \
+    Property, Tuple, Either, cached_property
 from traitsui.api import View, VGroup, Item
 
 # Local relative imports
@@ -234,7 +234,7 @@ class ScatterPlot(BaseXYPlot):
     # Private traits
     #------------------------------------------------------------------------
 
-    _cached_selected_pts = Trait(None, None, Array)
+    _cached_selected_pts = ArrayOrNone
     _cached_selected_screen_pts = Array
     _cached_point_mask = Array
     _cached_selection_point_mask = Array

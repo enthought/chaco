@@ -2,7 +2,25 @@
 Chaco CHANGELOG
 ===============
 
-Change summary since 4.5.0
+Release 4.7.0
+-------------
+
+Fixes
+
+* Update raise statement to be Python 3 compatible (PR #360)
+
+Release 4.6.1
+-------------
+
+Fixes
+
+ * Copy over HOME value to git environment. (PR#342)
+ * Fix issue with setup.py that prevent correct versioning on non-git checkouts.
+   (PR#337)
+
+
+Release 4.6.0
+-------------
 
 New features/Improvements
 
