@@ -1,3 +1,2 @@
 nose-exclude
 coverage
-pandas
