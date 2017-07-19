@@ -19,16 +19,17 @@ class DataFramePlotDataEventsCollector(HasTraits):
         self.data_changed_events.append(event)
 
 
+@contextlib.contextmanager
+def monitor_events(plot_data):
+    """
+    Context manager to collect data_changed events.
+
+    """
+    collector = DataFramePlotDataEventsCollector(plot_data=plot_data)
+    yield collector.data_changed_events
+
+
 class DataFramePlotDataTestCase(unittest.TestCase):
-
-    @contextlib.contextmanager
-    def monitor_events(self, plot_data):
-        """
-        Context manager to collect data_changed events.
-
-        """
-        collector = DataFramePlotDataEventsCollector(plot_data=plot_data)
-        yield collector.data_changed_events
 
     def test_data_changed_events(self):
         # Test data.
@@ -40,7 +41,7 @@ class DataFramePlotDataTestCase(unittest.TestCase):
 
         assert_array_equal(plot_data.get_data('index'), df.index.values)
 
-        with self.monitor_events(plot_data) as events:
+        with monitor_events(plot_data) as events:
             plot_data.set_data('arr', arr)
             self.assertEqual(events, [{'added': ['arr']}])
 
@@ -50,14 +51,60 @@ class DataFramePlotDataTestCase(unittest.TestCase):
             out = plot_data.get_data('arr')
             assert_array_equal(arr, out)
 
-        with self.monitor_events(plot_data) as events:
+        with monitor_events(plot_data) as events:
             plot_data.set_data('arr', arr2)
             self.assertEqual(events, [{'changed': ['arr']}])
             assert_array_equal(df['arr'].values, arr2)
 
-        with self.monitor_events(plot_data) as events:
+        with monitor_events(plot_data) as events:
             plot_data.del_data('arr')
             self.assertEqual(events, [{'removed': ['arr']}])
+
+    def test_no_index_column(self):
+        # Test data.
+        idx = np.arange(16)
+        arr = np.zeros(16)
+        df = DataFrame(index=idx)
+        plot_data = DataFramePlotData(data_frame=df)
+
+        assert_array_equal(plot_data.get_data('index'), df.index.values)
+
+        # Can set 'index'
+        with monitor_events(plot_data) as events:
+            plot_data.set_data('index', arr)
+            self.assertEqual(events, [{'changed': ['index']}])
+            self.assertNotIn('index', df.columns)
+            assert_array_equal(df.index.values, arr)
+
+        # Cannot remove 'index' column
+        with self.assertRaises(KeyError):
+            plot_data.del_data('index')
+
+    def test_index_column(self):
+        # Test data.
+        idx = np.arange(16)
+        arr = np.zeros(16)
+        arr2 = np.ones(16)
+        data = {'index': arr}
+        df = DataFrame(data, index=idx)
+        plot_data = DataFramePlotData(data_frame=df)
+
+        assert_array_equal(plot_data.get_data('index'), df['index'].values)
+
+        # Can set 'index' column
+        with monitor_events(plot_data) as events:
+            plot_data.set_data('index', arr2)
+            self.assertEqual(events, [{'changed': ['index']}])
+            assert_array_equal(df['index'].values, arr2)
+
+        # Can remove 'index' column
+        with monitor_events(plot_data) as events:
+            plot_data.del_data('index')
+            self.assertNotIn('index', df.columns)
+            # Since there is always an index, this will register a 'changed'
+            # event instead of a 'removed' event.
+            self.assertEqual(events, [{'changed': ['index']}])
+            assert_array_equal(plot_data.get_data('index'), df.index.values)
 
 
 if __name__ == '__main__':

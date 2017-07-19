@@ -72,7 +72,15 @@ class DataFramePlotData(AbstractPlotData):
 
         if name in self.data_frame.columns:
             del self.data_frame[name]
-            self.data_changed = {'removed': [name]}
+            if name == 'index':
+                # It is impossible to remove the 'index' in the PlotData.
+                # Removing a column named 'index' in the DataFrame means that
+                # the DataFrame index is now the 'index' in the PlotData. Thus,
+                # this results in a 'changed' event instead of a 'removed'
+                # event.
+                self.data_changed = {'changed': [name]}
+            else:
+                self.data_changed = {'removed': [name]}
         else:
             raise KeyError("Column '{}' does not exist.".format(name))
 
@@ -125,7 +133,7 @@ class DataFramePlotData(AbstractPlotData):
         data = dict(*args, **kwargs)
         event = {}
         for name in data:
-            if name in self.data_frame.columns:
+            if name == 'index' or name in self.data_frame.columns:
                 event.setdefault('changed', []).append(name)
             else:
                 event.setdefault('added', []).append(name)
@@ -166,7 +174,7 @@ class DataFramePlotData(AbstractPlotData):
 
     def _update_data(self, data):
         for name, value in data.items():
-            if name == 'index' and self._has_index_column:
+            if name == 'index' and not self._has_index_column:
                 self.data_frame.index = value
             else:
                 self.data_frame[name] = value
