@@ -1,14 +1,11 @@
 """ Defines DataFramePlotData.
 """
 
-from numpy import array, ndarray
-
 # Enthought library imports
 from traits.api import Bool, Instance, Property
 
 # Local, relative imports
 from .abstract_plot_data import AbstractPlotData
-from .abstract_data_source import AbstractDataSource
 
 
 class DataFramePlotData(AbstractPlotData):
@@ -39,7 +36,6 @@ class DataFramePlotData(AbstractPlotData):
 
     def _get__has_index_column(self):
         return 'index' in self.data_frame.columns
-
 
     #------------------------------------------------------------------------
     # AbstractPlotData Interface
@@ -111,7 +107,7 @@ class DataFramePlotData(AbstractPlotData):
         if generate_name:
             names = self._generate_names(1)
             name = names[0]
-            
+
         self.update_data({name: new_data})
         return name
 
@@ -125,7 +121,7 @@ class DataFramePlotData(AbstractPlotData):
         """
         if not self.writable:
             return None
-        
+
         data = dict(*args, **kwargs)
         event = {}
         for name in data:
@@ -144,21 +140,22 @@ class DataFramePlotData(AbstractPlotData):
 
     #------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------    
+    #------------------------------------------------------------------------
 
     def _generate_names(self, n):
         """ Generate n new names
         """
         max_index = max(self._generate_indices())
         names = [
-            "series{0:d}".format(n) for n in range(max_index+1, max_index+n+1)
+            "series{0:d}".format(i)
+            for i in range(max_index + 1, max_index + n + 1)
         ]
         return names
 
     def _generate_indices(self):
         """ Generator that yields all integers that match "series%d" in keys
         """
-        yield 0 # default minimum
+        yield 0  # default minimum
         for name in self.list_data():
             if name.startswith('series'):
                 try:
