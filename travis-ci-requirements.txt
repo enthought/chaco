@@ -5,4 +5,3 @@ pillow
 git+http://github.com/nucleic/kiwi.git#egg=kiwi
 traits
 traitsui
-pandas
