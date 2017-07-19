@@ -12,8 +12,8 @@ from numpy import array, zeros_like
 from enable.api import black_color_trait, white_color_trait
 from enable.font_metrics_provider import font_metrics_provider
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
-                                 Instance, List, CList, Float, Str
+from traits.api import ArrayOrNone, Bool, CList, Dict, Enum, Float, \
+    HasTraits, Instance, Int, List, Str
 
 # Local relative imports
 from .abstract_overlay import AbstractOverlay
@@ -164,7 +164,7 @@ class Legend(AbstractOverlay):
     _cached_labels = List
 
     # A cached array of label sizes.
-    _cached_label_sizes = Any
+    _cached_label_sizes = ArrayOrNone()
 
     # A cached list of label names.
     _cached_label_names = CList
@@ -176,7 +176,7 @@ class Legend(AbstractOverlay):
     _cached_visible_plots = CList
 
     # A cached array of label positions relative to the legend's origin
-    _cached_label_positions = Any
+    _cached_label_positions = ArrayOrNone()
 
     def is_in(self, x, y):
         """ overloads from parent class because legend alignment

@@ -6,7 +6,7 @@ from numpy import array, asarray, inf
 from numpy.linalg import norm
 
 # Enthought library imports
-from traits.api import Any, Array, Bool, Enum, Float, Int, List, \
+from traits.api import Any, ArrayOrNone, Bool, Enum, Float, Int, List, \
      Str, Tuple, Trait, on_trait_change, Property
 from enable.api import ColorTrait, MarkerTrait
 
@@ -163,7 +163,7 @@ class DataLabel(ToolTip):
     custom_symbol = Any
 
     # The point in data space where this label should anchor itself.
-    data_point = Trait(None, None, Tuple, List, Array)
+    data_point = ArrayOrNone()
 
     # The location of the data label relative to the data point.
     label_position = LabelPositionTrait

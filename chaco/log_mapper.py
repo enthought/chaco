@@ -3,6 +3,7 @@
 # Major library imports
 from numpy import array, isnan, log, log10, exp, zeros, sometrue,\
     floor, ceil, ndarray
+import numpy as np
 
 # Enthought library imports
 from traits.api import Bool, Float
@@ -54,7 +55,8 @@ class LogMapper(Base1DMapper):
             intermediate = data_array*0.0
         else:
             try:
-                mask = (data_array <= LOG_MINIMUM) | isnan(data_array)
+                with np.errstate(invalid='ignore'):
+                    mask = (data_array <= LOG_MINIMUM) | isnan(data_array)
                 if sometrue(mask):
                     data_array = array(data_array, copy=True, ndmin=1)
                     data_array[mask] = self.fill_value

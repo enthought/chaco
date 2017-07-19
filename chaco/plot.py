@@ -176,8 +176,8 @@ class Plot(DataView):
             elif type(data) in (ndarray, tuple, list):
                 self.data = ArrayPlotData(data)
             else:
-                raise ValueError("Don't know how to create PlotData for data" \
-                                  "of type " + str(type(data)))
+                raise ValueError("Don't know how to create PlotData for data "
+                                 "of type {0}".format(type(data)))
 
         if not self._title:
             self._title = PlotLabel(font="swiss 16", visible=False,

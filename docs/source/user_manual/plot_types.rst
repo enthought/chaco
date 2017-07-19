@@ -588,11 +588,11 @@ Draws a set of rectangular bars, mostly used to plot histograms.
 The class :class:`~chaco.barplot.BarPlot` defines the attributes of
 regular X-Y plots, plus the following parameters:
 
-    :attr:`~chaco.barplot.BarPlot.sorting_value`
+    :attr:`~chaco.barplot.BarPlot.starting_value`
       While :attr:`~chaco.barplot.BarPlot.value` is a data source defining
-      the upper limit of the bars, :attr:`~chaco.barplot.BarPlot.sorting_value`
+      the upper limit of the bars, :attr:`~chaco.barplot.BarPlot.starting_value`
       can be used to define their bottom limit. Default is 0.
-      (Note: "upper" and "bottom" assume a horizontal for the plot.)
+      (Note: "upper" and "bottom" assume a horizontal layout for the plot.)
 
     :attr:`~chaco.barplot.BarPlot.bar_width_type`
       Determines how to interpret the :attr:`bar_width` parameter.
