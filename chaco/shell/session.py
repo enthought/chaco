@@ -111,10 +111,10 @@ class PlotSession(HasTraits):
             elif self.active_window_index >= ident:
                 self.active_window_index -= 1
 
-            if win in self.window_map.values():
+            if win in six.itervalues(self.window_map):
                 # we have to go through the whole dict and remove all keys
                 # that correspond to the deleted window
-                for k, v in self.window_map.items():
+                for k, v in list(six.iteritems(self.window_map)):
                     if v == win:
                         del self.window_map[k]
         else:
@@ -138,7 +138,7 @@ class PlotSession(HasTraits):
         plots = []
         for w in self.windows:
             container = w.get_container()
-            for vals in container.plots.values():
+            for vals in six.itervalues(container.plots):
                 plots.extend(vals)
         for p in plots:
             if hasattr(p, "color_mapper"):

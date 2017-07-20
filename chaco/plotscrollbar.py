@@ -1,4 +1,6 @@
 
+import six.moves as sm
+
 from traits.api import Any, Enum, Int, Property, Trait
 
 from enable.api import NativeScrollBar
@@ -81,7 +83,7 @@ class PlotScrollBar(NativeScrollBar):
         range = self.mapper.range
         bounds_list = [source.get_bounds() for source in range.sources \
                        if source.get_size() > 0]
-        mins, maxes = zip(*bounds_list)
+        mins, maxes = sm.zip(*bounds_list)
         dmin = min(mins)
         dmax = max(maxes)
 

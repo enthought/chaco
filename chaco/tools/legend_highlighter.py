@@ -1,5 +1,8 @@
 import operator
 
+import six
+import six.moves as sm
+
 # ETS imports
 from chaco.tools.api import LegendTool
 from traits.api import List, Float
@@ -79,7 +82,7 @@ class LegendHighlighter(LegendTool):
 
     def _reset_selects(self, plots):
         """ Set all renderers to their default values. """
-        for plot in reduce(operator.add, plots.values()):
+        for plot in sm.reduce(operator.add, six.itervalues(plots)):
             if not hasattr(plot, '_orig_alpha'):
                 plot._orig_alpha = plot.alpha
                 plot._orig_line_width = plot.line_width
@@ -89,7 +92,7 @@ class LegendHighlighter(LegendTool):
 
     def _set_states(self, plots):
         """ Decorates a plot to indicate it is selected """
-        for plot in reduce(operator.add, plots.values()):
+        for plot in sm.reduce(operator.add, six.itervalues(plots)):
             if not hasattr(plot, '_orig_alpha'):
                 # FIXME: These attributes should be put into the class def.
                 plot._orig_alpha = plot.alpha

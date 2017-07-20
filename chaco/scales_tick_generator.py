@@ -1,5 +1,8 @@
 """ Defines the ScalesTickGenerator class.
 """
+
+import six.moves as sm
+
 from numpy import array
 
 from traits.api import Any
@@ -38,10 +41,12 @@ class ScalesTickGenerator(AbstractTickGenerator):
         test_str = "0123456789-+"
         charsize = metrics.get_full_text_extent(test_str)[0] / len(test_str)
         numchars = (bounds_high - bounds_low) / charsize
-        tmp = zip(*self.scale.labels(data_low, data_high, numlabels=8, char_width=numchars))
+        tmp = list(sm.zip(*self.scale.labels(data_low, data_high, numlabels=8,
+                                             char_width=numchars)))
         # Check to make sure we actually have labels/ticks to show before
         # unpacking the return tuple into (tick_array, labels).
         if len(tmp) == 0:
             return array([]), []
         else:
-            return array(tmp[0]), tmp[1]
+            tick_array, labels = tmp
+            return array(tick_array), labels

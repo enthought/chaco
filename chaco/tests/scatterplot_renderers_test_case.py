@@ -1,5 +1,7 @@
 import unittest
 
+import six.moves as sm
+
 from numpy import alltrue
 from enable.compiled_path import CompiledPath
 
@@ -12,7 +14,7 @@ class DrawScatterplotCase(unittest.TestCase):
         """ Coverage test to check basic case works """
         size = (50, 50)
         scatterplot = create_scatter_plot(
-            data=[range(10), range(10)],
+            data=[list(sm.xrange(10)), list(sm.xrange(10))],
             border_visible=False,
         )
         scatterplot.outer_bounds = list(size)
@@ -25,7 +27,7 @@ class DrawScatterplotCase(unittest.TestCase):
         """ Coverage test to check circles work """
         size = (50, 50)
         scatterplot = create_scatter_plot(
-            data=[range(10), range(10)],
+            data=[list(sm.xrange(10)), list(sm.xrange(10))],
             marker="circle",
             border_visible=False,
         )
@@ -47,7 +49,7 @@ class DrawScatterplotCase(unittest.TestCase):
 
         size = (50, 50)
         scatterplot = create_scatter_plot(
-            data=[range(10), range(10)],
+            data=[list(sm.xrange(10)), list(sm.xrange(10))],
             marker='custom',
             border_visible=False,
         )
@@ -62,10 +64,10 @@ class DrawScatterplotCase(unittest.TestCase):
         """ Coverage test to check multiple marker size works """
         size = (50, 50)
         scatterplot = create_scatter_plot(
-            data=[range(10), range(10)],
+            data=[list(sm.xrange(10)), list(sm.xrange(10))],
             marker="circle",
             border_visible=False,
-            marker_size=range(1, 11),
+            marker_size=list(sm.xrange(1, 11)),
         )
         scatterplot.outer_bounds = list(size)
         gc = PlotGraphicsContext(size)

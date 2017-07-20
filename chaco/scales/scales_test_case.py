@@ -203,7 +203,7 @@ class BasicFormatterTestCase(TicksTestCase):
         for start, end, width in test_intervals:
             labels = scale.labels(start, end, char_width=width)
             print("(%d,%d)" % (start,end), " avail:", width, end=" ")
-            print(" used:", sum([len(x[1]) for x in labels]), end= " ")
+            print(" used:", sum([len(x[1]) for x in labels]), end=" ")
             print(list(zip(*labels))[1])
         return
 

@@ -184,7 +184,7 @@ class TimeFormatterTestCase(TicksTestCase):
         print()
         for start, end, width in test_intervals:
             est_width = scale.label_width(DTS(*start), DTS(*end), char_width=width)
-            print(start, end, end= " ")
+            print(start, end, end=" ")
             print(" avail:", width, "est:", est_width[1], "numlabels:", est_width[0])
         return
 

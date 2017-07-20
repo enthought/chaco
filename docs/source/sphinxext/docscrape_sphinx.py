@@ -1,5 +1,9 @@
 import re, textwrap
-from docscrape import NumpyDocString, FunctionDoc, ClassDoc
+
+import six
+
+from .docscrape import NumpyDocString, FunctionDoc, ClassDoc
+
 
 class SphinxDocString(NumpyDocString):
     # string conversion routines
@@ -66,7 +70,7 @@ class SphinxDocString(NumpyDocString):
             return out
 
         out += ['.. index:: %s' % idx.get('default','')]
-        for section, references in idx.iteritems():
+        for section, references in six.iteritems(idx):
             if section == 'default':
                 continue
             elif section == 'refguide':

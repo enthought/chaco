@@ -2,6 +2,7 @@
 """
 
 import six
+import six.moves as sm
 
 try:
     from wx import GetApp
@@ -288,7 +289,7 @@ def _do_plot_boilerplate(kwargs, image=False):
         cont.overlays.append(ZoomTool(cont, tool_mode="box", always_on=True, drag_button="right"))
 
     if not session.hold:
-        cont.delplot(*cont.plots.keys())
+        cont.delplot(*list(six.iterkeys(cont.plots)))
 
     return cont
 

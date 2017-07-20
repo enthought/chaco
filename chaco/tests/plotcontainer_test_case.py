@@ -1,6 +1,8 @@
 import sys
 import unittest
 
+import six.moves as sm
+
 from chaco.api import HPlotContainer, OverlayPlotContainer, \
                                 PlotComponent, VPlotContainer, GridContainer
 from traits.api import Any, Tuple
@@ -10,9 +12,9 @@ SizePrefs = GridContainer.SizePrefs
 
 class ContainerTestCase(unittest.TestCase):
     def assert_tuple(self, t1, t2):
-        self.assertEquals(len(t1), len(t2))
-        for i in xrange(len(t1)):
-            self.assertEquals(t1[i], t2[i])
+        self.assertEqual(len(t1), len(t2))
+        for i in sm.xrange(len(t1)):
+            self.assertEqual(t1[i], t2[i])
 
 
 class StaticPlotComponent(PlotComponent):
@@ -52,21 +54,21 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
     def test_basics(self):
         container = OverlayPlotContainer(resizable='', bounds=[100.0,200.0])
         self.assert_tuple(container.get_preferred_size(), (100.0,200.0))
-        self.assertEquals(container._layout_needed, True)
+        self.assertEqual(container._layout_needed, True)
         container.do_layout()
-        self.assertEquals(container._layout_needed, False)
+        self.assertEqual(container._layout_needed, False)
         return
 
     def test_fixed_size_component(self):
         container = OverlayPlotContainer(resizable='', bounds=[200.0,300.0])
         # non-resizable component
         component = PlotComponent(resizable='', position=[50.0,60.0], bounds=[100.0,110.0])
-        self.assertEquals(container._layout_needed, True)
+        self.assertEqual(container._layout_needed, True)
         container.do_layout()
         container.add(component)
-        self.assertEquals(container._layout_needed, True)
+        self.assertEqual(container._layout_needed, True)
         container.do_layout()
-        self.assertEquals(container._layout_needed, False)
+        self.assertEqual(container._layout_needed, False)
 
         # check the results of the layout
         self.assert_tuple(container.get_preferred_size(), (200.0,300.0))
@@ -156,10 +158,10 @@ class HPlotContainerTestCase(ContainerTestCase):
         comp1 = StaticPlotComponent([200,100])
         container.add(comp1)
         container.do_layout()
-        self.failUnlessEqual(comp1.position, [0,50])
+        self.assertEqual(comp1.position, [0,50])
         container.valign="top"
         container.do_layout(force=True)
-        self.failUnlessEqual(comp1.position, [0,100])
+        self.assertEqual(comp1.position, [0,100])
         return
 
 
@@ -202,10 +204,10 @@ class VPlotContainerTestCase(ContainerTestCase):
         comp1 = StaticPlotComponent([100,200])
         container.add(comp1)
         container.do_layout()
-        self.failUnlessEqual(comp1.position, [50,0])
+        self.assertEqual(comp1.position, [50,0])
         container.halign="right"
         container.do_layout(force=True)
-        self.failUnlessEqual(comp1.position, [100,0])
+        self.assertEqual(comp1.position, [100,0])
         return
 
     def test_fit_components(self):
@@ -231,8 +233,8 @@ class VPlotContainerTestCase(ContainerTestCase):
 
 class SizePrefsTestCase(unittest.TestCase):
     def assert_tuple(self, t1, t2):
-        self.assertEquals(t1[0], t2[0])
-        self.assertEquals(t1[1], t2[1])
+        self.assertEqual(t1[0], t2[0])
+        self.assertEqual(t1[1], t2[1])
 
     def test_sequential_non_resizable(self):
         prefs = SizePrefs(4, "h")
@@ -252,9 +254,9 @@ class SizePrefsTestCase(unittest.TestCase):
         prefs.update_from_component(StaticPlotComponent([200,10]), 0)
         prefs.update_from_component(StaticPlotComponent([300,10]), 0)
         pref_size = prefs.get_preferred_size()
-        self.assertEquals(pref_size[0], 300)
+        self.assertEqual(pref_size[0], 300)
         sizes = prefs.compute_size_array(400)
-        self.assertEquals(sizes[0], 400)
+        self.assertEqual(sizes[0], 400)
 
     def test_sequential_resizable(self):
         prefs = SizePrefs(3, "v")
@@ -296,9 +298,9 @@ class SizePrefsTestCase(unittest.TestCase):
         for i in range(3):
             prefs.update_from_component(ResizablePlotComponent(), 0)
         pref_size = prefs.get_preferred_size()
-        self.assertEquals(pref_size[0], 0)
+        self.assertEqual(pref_size[0], 0)
         sizes = prefs.compute_size_array(60)
-        self.assertEquals(sizes[0], 60)
+        self.assertEqual(sizes[0], 60)
 
     def test_sequential_mixed_resizable(self):
         # Tests a sequence of resizable and fully resizable components.

@@ -12,11 +12,14 @@
 """
 
 import sys
-import cStringIO
+
+import six
+import six.moves as sm
+
 from compiler.ast import Const, Name, Tuple, Div, Mul, Sub, Add
 
 def unparse(ast, single_line_functions=False):
-    s = cStringIO.StringIO()
+    s = sm.cStringIO.StringIO()
     UnparseCompilerAst(ast, s, single_line_functions)
     return s.getvalue().lstrip()
 
@@ -504,7 +507,7 @@ class UnparseCompilerAst:
         # Check if parenthesis are needed on left side and then dispatch
         has_paren = False
         left_class = str(t.left.__class__)
-        if (left_class in op_precedence.keys() and
+        if (left_class in six.iterkeys(op_precedence) and
             op_precedence[left_class] < op_precedence[str(t.__class__)]):
             has_paren = True
         if has_paren:
@@ -517,7 +520,7 @@ class UnparseCompilerAst:
         # Check if parenthesis are needed on the right side and then dispatch
         has_paren = False
         right_class = str(t.right.__class__)
-        if (right_class in op_precedence.keys() and
+        if (right_class in six.iterkeys(op_precedence) and
             op_precedence[right_class] < op_precedence[str(t.__class__)]):
             has_paren = True
         if has_paren:

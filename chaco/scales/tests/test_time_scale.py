@@ -4,6 +4,8 @@ import datetime
 import os
 import contextlib
 
+import six.moves as sm
+
 import numpy as np
 
 from chaco.scales.time_scale import (
@@ -402,7 +404,7 @@ def test_trange_seconds_01():
 
 def test_trange_seconds_02():
     r = trange(0, 10, seconds=1)
-    assert r == range(11)
+    assert r == list(sm.xrange(11))
 
 def test_trange_seconds_03():
     r = trange(0, 1.5, seconds=1)

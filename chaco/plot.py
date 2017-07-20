@@ -903,7 +903,7 @@ class Plot(DataView):
         if origin is None:
             origin = self.default_origin
 
-        index, value, vectors = map(self._get_or_create_datasource, data)
+        index, value, vectors = list(sm.map(self._get_or_create_datasource, data))
 
         self.index_range.add(index)
         self.value_range.add(value)
@@ -1276,7 +1276,7 @@ class Plot(DataView):
                 if new is not None:
                     new.add(datasource)
         range_name = name + "_range"
-        for renderer in itertools.chain(*self.plots.values()):
+        for renderer in itertools.chain(six.itervalues(self.plots)):
             if hasattr(renderer, range_name):
                 setattr(renderer, range_name, new)
 
