@@ -355,8 +355,9 @@ class OffsetFormatter(BasicFormatter):
                 avg_size = len("%g%g" % (start, end)) / 2.0
                 initial_estimate = round(fill_ratio * char_width / avg_size)
             else:
-                raise RuntimeError("Should not get there")
-            # FIXME POTENTIAL BUG HERE
+                raise ValueError(
+                    "num_labels and char_width should not both be None."
+                )
             est_ticks = int(ticker.num_ticks(start, end, initial_estimate))
 
         elif numlabels:

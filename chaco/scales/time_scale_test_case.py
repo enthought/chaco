@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 from itertools import starmap
 from datetime import datetime as DT

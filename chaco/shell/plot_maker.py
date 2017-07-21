@@ -128,8 +128,9 @@ def make_data_sources(session, index_sort="none", *args):
 
     # Not a two-dimensional array, error.
     else:
-        raise ChacoShellError("Unable to create plot data sources from array of" \
-                              "shape " + str(data[1].shape) + ".")
+        raise ChacoShellError(
+            "Unable to create plot data sources from array of shape " +
+            str(data[1].shape) + ".")
 
 
 #-----------------------------------------------------------------------------

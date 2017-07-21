@@ -3,6 +3,8 @@ Allows isometric viewing of a 3D data cube.
 
 Click or click-drag in any data window to set the slice to view.
 """
+from __future__ import print_function
+import warnings
 
 # Outstanding TODOs:
 #  - need to add line inspectors to side and bottom plots, and synchronize
@@ -362,7 +364,7 @@ def download_data():
         try:
             open(tar_path, 'wb').write(opener.read())
         except:
-            print('Cannot write to the destination directory specified. ' \
+            print('Cannot write to the destination directory specified. '
                   'Opening backup data.')
             run_cleanup = False
             raise

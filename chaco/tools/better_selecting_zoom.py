@@ -16,7 +16,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     """
 
     # The selection mode:
-    #\\
+    #
     # range:
     #   Select a range across a single index or value axis.
     # box:

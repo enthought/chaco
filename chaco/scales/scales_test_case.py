@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 from traits.testing.unittest_tools import unittest
 
@@ -179,7 +180,7 @@ class BasicFormatterTestCase(TicksTestCase):
         print()
         for start, end, width in test_intervals:
             labels = scale.labels(start, end, char_width=width)
-            print("(%d,%d)" % (start,end), " avail:", width,)
+            print("(%d,%d)" % (start,end), " avail:", width, end=" ")
             print(" used:", sum([len(x[1]) for x in labels]))
         return
 

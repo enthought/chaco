@@ -8,7 +8,6 @@ from numpy.testing.utils import assert_almost_equal
 from chaco.shell.plot_maker import make_data_sources
 
 
-
 class MakeDataSourcesTestCase(unittest.TestCase):
 
     def test_1D_single(self):

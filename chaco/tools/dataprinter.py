@@ -1,5 +1,8 @@
 """ Defines the DataPrinter tool class.
 """
+
+from __future__ import print_function
+
 # Enthought library imports
 from traits.api import Str
 from enable.api import BaseTool

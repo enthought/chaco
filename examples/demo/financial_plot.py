@@ -82,7 +82,7 @@ def _create_plot_component():
     container.overlays.append(PlotLabel("Financial Plot",
                                         component=container,
                                         #font="Times New Roman 24"))
-                              #          font="Arial 24"
+                                       font="Arial 24"
                                         ))
     return container
 

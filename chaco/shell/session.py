@@ -1,5 +1,8 @@
 """ Defines the PlotSession class.
 """
+
+from __future__ import print_function
+
 import six
 
 # Enthoght library imports

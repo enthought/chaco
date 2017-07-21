@@ -247,8 +247,6 @@ class PanTool(BaseTool):
         return self._end_pan(event)
 
     def _start_pan(self, event, capture_mouse=True):
-        if event.control_down:
-            return
         self._original_xy = (event.x, event.y)
         if self.constrain_key is not None:
             if getattr(event, self.constrain_key + "_down"):

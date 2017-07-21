@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 doc = \
 """
 This file contains a support class that wraps up the boilerplate toolkit calls
@@ -7,7 +9,6 @@ anything when run on its own.
 Try running simple_line.py, colormapped_scatter.py, or check out any of
 the programs in in tutorials/.
 """
-
 from numpy import array
 
 from traits.etsconfig.api import ETSConfig

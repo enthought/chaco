@@ -1,11 +1,14 @@
+from __future__ import print_function
+
 import inspect
 import os
 import pydoc
 
-import docscrape
-from docscrape_sphinx import SphinxClassDoc, SphinxFunctionDoc
-import numpydoc
-import comment_eater
+from . import docscrape
+from .docscrape_sphinx import SphinxClassDoc, SphinxFunctionDoc
+from . import numpydoc
+from . import comment_eater
+
 
 class SphinxTraitsDoc(SphinxClassDoc):
     def __init__(self, cls, modulename='', func_doc=SphinxFunctionDoc):

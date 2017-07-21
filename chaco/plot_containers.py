@@ -662,7 +662,6 @@ class GridPlotContainer(BasePlotContainer):
         Adjusts self.shape accordingly.
         """
         numcells = self.shape[0] * self.shape[1]
-        #raise ValueError(numcells, self.components)
         if numcells < len(self.components):
             numrows, numcols = divmod(len(self.components), self.shape[0])
             self.shape = (numrows, numcols)

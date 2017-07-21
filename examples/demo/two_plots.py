@@ -39,7 +39,7 @@ def _create_plot_component():
     renderer.overlays.append(LineInspector(renderer, axis="index",
                                             write_metadata=True,
                                             is_listener=True))
-    left_plot.overlays.append(ZoomTool(left_plot, tool_mode="range", alpha=0.1))
+    left_plot.overlays.append(ZoomTool(left_plot, tool_mode="range"))
     left_plot.tools.append(PanTool(left_plot))
 
     # Create the right plot
@@ -50,7 +50,7 @@ def _create_plot_component():
     right_plot.y_axis.title = "X"
     renderer2 = right_plot.plot(("x", "y2"), type="line", color="red",
                                 width=2.0)[0]
-    #renderer2.index = renderer.index
+    renderer2.index = renderer.index
     renderer2.overlays.append(LineInspector(renderer2, write_metadata=True,
                               is_listener=True))
     renderer2.overlays.append(LineInspector(renderer2, axis="value",

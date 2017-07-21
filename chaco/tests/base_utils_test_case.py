@@ -2,6 +2,8 @@
 Unit tests for utility functions in chaco.base
 """
 
+from __future__ import print_function
+
 import unittest
 from math import sqrt
 from numpy import arange, array, linspace, nan, ones
