@@ -7,8 +7,6 @@ from ._speedups_fallback import *
 try:
     from ._cython_speedups import *
 except ImportError:
-    # TO TEST
-    raise
     pass
 
 

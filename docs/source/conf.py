@@ -52,9 +52,8 @@ copyright = '2008-2016, Enthought, Inc.'
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 d = {}
-exec(compile(open(os.path.join('..', '..', 'chaco', '_version.py')).read(),
-            os.path.join('..', '..', 'chaco', '_version.py'), 'exec'),
-     d)
+chaco_version_file = os.path.join('..', '..', 'chaco', '_version.py')
+exec(compile(open(chaco_version_file).read(), chaco_version_file, 'exec'), d)
 release = d['version']
 version = '.'.join(release.split('.',2)[:2])
 
