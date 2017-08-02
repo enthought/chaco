@@ -291,7 +291,7 @@ def _do_plot_boilerplate(kwargs, image=False):
         cont.overlays.append(ZoomTool(cont, tool_mode="box", always_on=True, drag_button="right"))
 
     if not session.hold:
-        cont.delplot(*list(six.iterkeys(cont.plots)))
+        cont.delplot(*list(cont.plots.keys()))
 
     return cont
 

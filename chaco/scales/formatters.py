@@ -468,7 +468,7 @@ class TimeFormatter(object):
         if self.formats:
             return
 
-        for fmt_name, fmt_strings in six.iteritems(self._formats):
+        for fmt_name, fmt_strings in self._formats.items():
             sizes = []
             tmptime = time()
             for s in fmt_strings:

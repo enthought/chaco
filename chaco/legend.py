@@ -358,7 +358,7 @@ class Legend(AbstractOverlay):
         if len(self.plots) == 0:
             return [0, 0]
 
-        plot_names, visible_plots = list(sm.map(list, sm.zip(*sorted(six.iteritems(self.plots)))))
+        plot_names, visible_plots = list(sm.map(list, sm.zip(*sorted(self.plots.items()))))
         label_names = self.labels
         if len(label_names) == 0:
             if len(self.plots) > 0:

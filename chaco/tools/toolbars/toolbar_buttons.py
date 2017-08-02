@@ -208,7 +208,7 @@ class ExportDataToClipboardButton(ToolbarButton):
     def _get_data_from_plots(self):
         values = []
         indices = []
-        for renderers in six.itervalues(self.container.component.plots):
+        for renderers in self.container.component.plots.values():
             for renderer in renderers:
                 indices.append(renderer.index.get_data())
                 values.append(renderer.value.get_data())

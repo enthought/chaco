@@ -149,7 +149,7 @@ class CrossPlotFrame(BasePlotFrame):
         center.outer_position = [center_x, center_y]
         center.outer_bounds = [bottom.width, left.height]
 
-        for slot in six.itervalues(self._frame_slots):
+        for slot in self._frame_slots.values():
             if slot.visible:
                 preferred_size = slot.get_preferred_size()
                 if "h" not in slot.resizable:

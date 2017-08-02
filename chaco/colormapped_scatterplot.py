@@ -305,14 +305,14 @@ class ColormappedScatterPlot(ScatterPlot):
                                 self.outline_color_, self.line_width)
             index_bands = self._index_bands
             mode = marker.draw_mode
-            for color_index, index_band in six.iteritems(index_bands):
+            for color_index in index_bands.keys():
                 self._set_draw_info(gc, mode, color_bands[color_index])
-                gc.draw_marker_at_points(xy_points[index_band], size, marker.kiva_marker)
+                gc.draw_marker_at_points(xy_points[index_bands[color_index]], size, marker.kiva_marker)
 
 
         elif hasattr( gc, 'draw_path_at_points' ):
             point_bands = {}
-            for color_index, indices in six.iteritems(self._index_bands):
+            for color_index, indices in self._index_bands.items():
                 point_bands[color_index] = xy_points[indices]
             # We have to construct the path for the marker.
             if self.marker != 'custom':
@@ -326,7 +326,7 @@ class ColormappedScatterPlot(ScatterPlot):
                 mode = STROKE
 
             color_bands = cmap.color_bands
-            for color_index, xy in six.iteritems(point_bands):
+            for color_index, xy in point_bands.items():
                 self._set_draw_info(gc, mode, color_bands[color_index],
                                     self.outline_color_, self.line_width)
                 gc.draw_path_at_points(xy, path, mode)

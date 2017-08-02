@@ -234,7 +234,7 @@ class TimeScale(AbstractScale):
         """ Defines the time period that this scale uses.
         """
         self.formatter = kw_interval.pop("formatter", TimeFormatter())
-        unit, val = list(six.iteritems(kw_interval))[0]
+        unit, val = list(kw_interval.items())[0]
         self.unit = unit
         if "_of_" in unit:
             # Calendar time interval - divide by the number of ticks per larger

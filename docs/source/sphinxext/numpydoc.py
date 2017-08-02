@@ -136,7 +136,7 @@ def autosummary_directive(dirname, arguments, options, content, lineno,
 
     docnames = []
     doctitles = {}
-    for name in six.iterkeys(titles):
+    for name in titles.keys():
         docname = 'generated/' + name
         doctitles[docname] = ""
         doctitles[docname + '.xhtml'] = ""

@@ -1065,7 +1065,7 @@ class Plot(DataView):
 
         # Cull the candidate list of sources to remove by checking the other plots
         sources_in_use = set()
-        for p in itertools.chain(*list(six.itervalues(self.plots))):
+        for p in itertools.chain(*list(self.plots.values())):
                 sources_in_use.add(p.index)
                 sources_in_use.add(p.value)
 
@@ -1167,7 +1167,7 @@ class Plot(DataView):
     #------------------------------------------------------------------------
 
     def _color_mapper_changed(self):
-        for plist in six.itervalues(self.plots):
+        for plist in self.plots.values():
             for plot in plist:
                 plot.color_mapper = self.color_mapper
         self.invalidate_draw()
