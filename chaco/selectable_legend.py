@@ -2,7 +2,7 @@
 from chaco.tools.api import SelectTool
 from traits.api import List
 
-from legend import Legend
+from .legend import Legend
 
 class SelectableLegend(Legend, SelectTool):
 

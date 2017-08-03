@@ -1,12 +1,13 @@
+from __future__ import print_function
 
 from itertools import starmap
 from datetime import datetime as DT
 
-from scales import ScaleSystem
-from time_scale import dt_to_sec, trange, TimeScale, HMSScales
-from formatters import TimeFormatter
+from .scales import ScaleSystem
+from .time_scale import dt_to_sec, trange, TimeScale, HMSScales
+from .formatters import TimeFormatter
 
-from scales_test_case import TicksTestCase
+from .scales_test_case import TicksTestCase
 
 
 def DTS(*args, **kw):
@@ -49,13 +50,13 @@ class TRangeTestCase(TicksTestCase):
         # so an increment of, say, 3 microseconds is only about a factor of 10
         # more than machine precision.
         base = DTS(2005, 3, 15, 10, 45, 10)
-        print "base: ", base
+        print("base: ", base)
         start = base + 0.0000027
         end   = base + 0.0000177
         ticks = trange(start, end, microseconds=5)
         desired = [base+i for i in (5e-6, 10e-6, 15e-6)]
-        print "ticks:   ", ticks
-        print "desired: ", desired
+        print("ticks:   ", ticks)
+        print("desired: ", desired)
         self.check_ticks(ticks, desired)
 
     def test_milliseconds(self):
@@ -73,8 +74,8 @@ class TRangeTestCase(TicksTestCase):
         secs_per_day = 24*3600
         ticks = trange(base, base + secs_per_day*5, days=1)
         desired = [base+i*secs_per_day for i in range(6)]
-        print "ticks:   ", ticks
-        print "desired: ", desired
+        print("ticks:   ", ticks)
+        print("desired: ", desired)
         self.check_ticks(ticks, desired)
 
     def test_daily_leap(self):
@@ -95,7 +96,7 @@ class TRangeTestCase(TicksTestCase):
         start = DTS(2005, 1, 1)
         ticks = trange(start, start + 9*24*3600, days=3)
         desired = [start+i*3*24*3600 for i in range(4)]
-        print "ticks: ", ticks, " desired: ", desired
+        print("ticks: ", ticks, " desired: ", desired)
         self.check_ticks(ticks, desired)
 
 
@@ -151,8 +152,8 @@ class TimeScaleTestCase(TicksTestCase):
         end = base + 9.2e-6
         ticks = ts.ticks(start, end)
         desired = [base+i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6, 9e-6)]
-        print "ticks:   ", ticks
-        print "desired: ", desired
+        print("ticks:   ", ticks)
+        print("desired: ", desired)
         self.check_ticks(ticks, desired)
 
 
@@ -181,11 +182,11 @@ class TimeFormatterTestCase(TicksTestCase):
         scale = TimeScale(minutes = 5)
         test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 50],
                           )
-        print
+        print()
         for start, end, width in test_intervals:
             est_width = scale.label_width(DTS(*start), DTS(*end), char_width=width)
-            print start, end,
-            print " avail:", width, "est:", est_width[1], "numlabels:", est_width[0]
+            print(start, end, end=" ")
+            print(" avail:", width, "est:", est_width[1], "numlabels:", est_width[0])
         return
 
     def test_labels(self):
@@ -194,12 +195,12 @@ class TimeFormatterTestCase(TicksTestCase):
 
         test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 150],
                           )
-        print
+        print()
         for start, end, width in test_intervals:
             labels = scale.labels(DTS(*start), DTS(*end), char_width=width)
-            print start, end, " avail:", width,
-            print " used:", sum([len(x[1]) for x in labels]),
-            print labels
+            print(start, end, " avail:", width, end=" ")
+            print(" used:", sum([len(x[1]) for x in labels]), end=" ")
+            print(labels)
         return
 
 

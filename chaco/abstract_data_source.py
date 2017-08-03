@@ -5,7 +5,7 @@ Defines the AbstractDataSource class.
 from traits.api import Bool, Dict, Event, HasTraits
 
 # Local relative imports
-from base import DimensionTrait
+from .base import DimensionTrait
 
 class AbstractDataSource(HasTraits):
     """ This abstract interface must be implemented by any class supplying data
@@ -124,7 +124,7 @@ class AbstractDataSource(HasTraits):
 
         # everything but 'metadata'
         for key in ['value_dimension', 'index_dimension', 'persist_data']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

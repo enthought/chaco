@@ -1,13 +1,15 @@
 """ Defines the ColormappedSelectionOverlay class.
 """
+import six.moves as sm
+
 from numpy import logical_and
 
 # Enthought library imports
 from traits.api import Any, Bool, Float, Instance, Property, Enum
 
 # Local imports
-from abstract_overlay import AbstractOverlay
-from colormapped_scatterplot import ColormappedScatterPlot
+from .abstract_overlay import AbstractOverlay
+from .colormapped_scatterplot import ColormappedScatterPlot
 
 class ColormappedSelectionOverlay(AbstractOverlay):
     """
@@ -74,7 +76,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             mask = (data_pts >= low) & (data_pts <= high)
 
         elif self.selection_type == 'mask':
-            mask = reduce(logical_and, datasource.metadata["selection_masks"])
+            mask = sm.reduce(logical_and, datasource.metadata["selection_masks"])
             if sum(mask)<2:
                 return
 

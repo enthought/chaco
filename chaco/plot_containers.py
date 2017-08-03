@@ -10,7 +10,7 @@ from enable.simple_layout import simple_container_get_preferred_size, \
                                             simple_container_do_layout
 
 # Local relative imports
-from base_plot_container import BasePlotContainer
+from .base_plot_container import BasePlotContainer
 
 
 __all__ = ["OverlayPlotContainer", "HPlotContainer", "VPlotContainer", \
@@ -220,7 +220,7 @@ class StackedPlotContainer(BasePlotContainer):
     def __getstate__(self):
         state = super(StackedPlotContainer,self).__getstate__()
         for key in ['stack_dimension', 'other_dimension', 'stack_index']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
         return state
 
@@ -269,7 +269,7 @@ class HPlotContainer(StackedPlotContainer):
     def __getstate__(self):
         state = super(HPlotContainer,self).__getstate__()
         for key in ['_cached_preferred_size']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
         return state
 

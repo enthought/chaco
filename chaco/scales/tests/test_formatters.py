@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 from chaco.scales.formatters import strftimeEx, TimeFormatter
 
@@ -42,7 +43,7 @@ def test_strftimeEx_04():
     # The format "%(ms_)" uses floor().
     result = strftimeEx(fmt, t)
     expected = "678.910ms"
-    print 'result = "%s"  expected = "%s"' % (result, expected)
+    print('result = "%s"  expected = "%s"' % (result, expected))
     assert result == expected
 
 def test_strftimeEx_05():
@@ -51,7 +52,7 @@ def test_strftimeEx_05():
     fmt = "%S %(ms_) %(us)"
     result = strftimeEx(fmt, t)
     expected = "08 000 000"
-    print 'result = "%s"  expected = "%s"' % (result, expected)
+    print('result = "%s"  expected = "%s"' % (result, expected))
     assert result == expected
 
 def test_strftimeEx_06():
@@ -60,7 +61,7 @@ def test_strftimeEx_06():
     fmt = "%S %(ms)"
     result = strftimeEx(fmt, t)
     expected = "08 000"
-    print 'result = "%s"  expected = "%s"' % (result, expected)
+    print('result = "%s"  expected = "%s"' % (result, expected))
     assert result == expected
 
 def test_strftimeEx_07():
@@ -69,7 +70,7 @@ def test_strftimeEx_07():
     fmt = "%S %(ms_)"
     result = strftimeEx(fmt, t)
     expected = "07 999"
-    print 'result = "%s"  expected = "%s"' % (result, expected)
+    print('result = "%s"  expected = "%s"' % (result, expected))
     assert result == expected
 
 #----------------------------------------------------------------
@@ -81,5 +82,5 @@ def test_time_formatter_01():
     ticks = [10.005, 10.0053, 10.0056]
     labels = tf.format(ticks, char_width=130)
     expected = ["5.000ms", "5.300ms", "5.600ms"]
-    print "labels =", labels, " expected =", expected
+    print("labels =", labels, " expected =", expected)
     assert labels == expected

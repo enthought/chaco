@@ -10,6 +10,8 @@
 #
 #------------------------------------------------------------------------------
 
+from __future__ import print_function
+
 import unittest
 
 import numpy as np
@@ -54,7 +56,7 @@ class DefaultColormapsTestCase(unittest.TestCase):
         x = np.array([2, 4, 0])
         datarange = DataRange1D(low_setting=0, high_setting=4)
         for cmap_func in default_colormaps.discrete_color_map_functions:
-            print cmap_func
+            print(cmap_func)
             cmapper = cmap_func(datarange)
             rgba = cmapper.map_screen(x)
             self.assertEqual(rgba.shape, (3, 4))

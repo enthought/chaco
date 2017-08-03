@@ -8,9 +8,9 @@ from numpy import array
 from traits.api import Constant, Instance, Tuple
 
 # Chaco imports
-from abstract_data_source import AbstractDataSource
-from array_data_source import ArrayDataSource
-from base import SortOrderTrait
+from .abstract_data_source import AbstractDataSource
+from .array_data_source import ArrayDataSource
+from .base import SortOrderTrait
 
 
 class GridDataSource(AbstractDataSource):

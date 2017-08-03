@@ -6,7 +6,8 @@ A plot that renders text values along one dimension
 
 from __future__ import absolute_import
 
-from itertools import izip
+
+import six.moves as sm
 
 from numpy import array, empty
 
@@ -105,7 +106,7 @@ class TextPlot1D(Base1DPlot):
     def _render(self, gc, pts, labels):
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
-            for pt, label in izip(pts, labels):
+            for pt, label in sm.zip(pts, labels):
                 with gc:
                     gc.translate_ctm(*pt)
                     label.draw(gc)

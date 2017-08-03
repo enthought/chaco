@@ -2,6 +2,8 @@
 Unit tests for utility functions in chaco.base
 """
 
+from __future__ import print_function
+
 import unittest
 from math import sqrt
 from numpy import arange, array, linspace, nan, ones
@@ -535,7 +537,7 @@ class IntersectRangeTestCase(unittest.TestCase):
         x = linspace(1, 2, 101)
         mask = (x <= 1.4) | (x >= 1.6)
         result = intersect_range(x, 0.0, 3.0, mask)
-        print mask ^ result
+        print(mask ^ result)
         assert_array_equal(result, mask)
 
 if __name__ == '__main__':

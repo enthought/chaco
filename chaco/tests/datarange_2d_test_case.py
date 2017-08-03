@@ -13,8 +13,8 @@ class DataRange2DTestCase(unittest.TestCase):
         r = DataRange2D()
         assert_ary_(r.low,array([-inf,-inf]))
         assert_ary_(r.high,array([inf,inf]))
-        self.assert_(r.low_setting == ('auto','auto'))
-        self.assert_(r.high_setting == ('auto', 'auto'))
+        self.assertTrue(r.low_setting == ('auto','auto'))
+        self.assertTrue(r.high_setting == ('auto', 'auto'))
         r.low  = array([5.0,5.0])
         r.high = array([10.0,10.0])
         assert_ary_(r.low_setting, array([5.0,5.0]))
@@ -46,7 +46,7 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.high, array([6.0,60.0]))
 
         r.low = ('auto', 'auto')
-        self.assert_(r.low_setting == ('auto', 'auto'))
+        self.assertTrue(r.low_setting == ('auto', 'auto'))
         assert_ary_(r.low, array([0.0,0.0]))
         return
 

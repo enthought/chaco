@@ -5,7 +5,7 @@ free-standing windows.
 from traits.api import Any, Dict, List, Str
 from chaco.shell.session import PlotSession
 
-from plot_editor import PlotEditor
+from .plot_editor import PlotEditor
 
 
 class WorkbenchSession(PlotSession):

@@ -6,7 +6,7 @@ from enable.tools.drag_tool import DragTool
 from traits.api import Bool, Enum, Float, Tuple
 
 # Chaco imports
-from better_zoom import BetterZoom
+from .better_zoom import BetterZoom
 
 
 class DragZoom(DragTool, BetterZoom):

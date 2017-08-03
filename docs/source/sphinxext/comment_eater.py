@@ -1,10 +1,11 @@
-from cStringIO import StringIO
+import six.moves as sm
+
 import compiler
 import inspect
 import textwrap
 import tokenize
 
-from compiler_unparse import unparse
+from .compiler_unparse import unparse
 
 
 class Comment(object):
@@ -76,7 +77,7 @@ class CommentBlocker(object):
     def process_file(self, file):
         """ Process a file object.
         """
-        for token in tokenize.generate_tokens(file.next):
+        for token in tokenize.generate_tokens(sm.next(file)):
             self.process_token(*token)
         self.make_index()
 
@@ -154,7 +155,7 @@ def get_class_traits(klass):
     # FIXME: gracefully handle errors here or in the caller?
     source = inspect.getsource(klass)
     cb = CommentBlocker()
-    cb.process_file(StringIO(source))
+    cb.process_file(sm.StringIO(source))
     mod_ast = compiler.parse(source)
     class_ast = mod_ast.node.nodes[0]
     for node in class_ast.code.nodes:

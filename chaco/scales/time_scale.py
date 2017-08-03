@@ -4,15 +4,18 @@ A scale for time and calendar intervals.
 
 from math import floor
 
-from scales import AbstractScale, ScaleSystem, frange, heckbert_interval
-from formatters import TimeFormatter
-from safetime import (safe_fromtimestamp, datetime, timedelta, EPOCH,
+import six
+import six.moves as sm
+
+from .scales import AbstractScale, ScaleSystem, frange, heckbert_interval
+from .formatters import TimeFormatter
+from .safetime import (safe_fromtimestamp, datetime, timedelta, EPOCH,
                       MINYEAR, MAXYEAR)
 
 # Labels for date and time units.
 datetime_scale = ["microsecond", "second", "minute", "hour",
                   "day", "month", "year"]
-datetime_zeros = zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1])
+datetime_zeros = list(sm.zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1]))
 
 
 __all__ = ["TimeScale", "CalendarScaleSystem", "HMSScales", "MDYScales",
@@ -66,7 +69,10 @@ def tfrac(t, **time_unit):
     =======
     A tuple: (aligned time as UNIX time, remainder in seconds)
     """
-    unit, period = time_unit.items()[0]
+    time_units = list(six.iteritems(time_unit))
+    if len(time_unit) > 1:
+        raise ValueError("tfrac() only takes one keyword argument, got %d" % len(time_units))
+    unit, period = time_units[0]
     if unit == "milliseconds":
         unit = "microsecond"
         period *= 1000
@@ -160,11 +166,13 @@ def trange(start, end, **time_unit):
     A list of times that nicely span the interval, or an empty list if *start*
     and *end* fall within the same interval.
     """
-    if len(time_unit) > 1:
-        raise ValueError("trange() only takes one keyword argument, got %d" % len(time_unit))
+    time_units = list(six.iteritems(time_unit))
+
+    if len(time_units) != 1:
+        raise ValueError("trange() only takes one keyword argument, got %d" % len(time_units))
 
     # Months and years are non-uniform, so we special-case them.
-    unit, value = time_unit.items()[0]
+    unit, value = time_units[0]
     if unit == 'months':
         return trange_months(start, end, value)
     elif unit == 'years':
@@ -226,7 +234,7 @@ class TimeScale(AbstractScale):
         """ Defines the time period that this scale uses.
         """
         self.formatter = kw_interval.pop("formatter", TimeFormatter())
-        unit, val = kw_interval.items()[0]
+        unit, val = list(kw_interval.items())[0]
         self.unit = unit
         if "_of_" in unit:
             # Calendar time interval - divide by the number of ticks per larger
@@ -298,11 +306,11 @@ class TimeScale(AbstractScale):
         # get range of years of interest
         # add 2 because of python ranges + guard against timezone shifts
         # eg. if 20000101 -> 19991231 because of local timezone, end is 1999+2
-        years = range(start_dt.year, min(end_dt.year+2, MAXYEAR+1))
+        years = sm.xrange(start_dt.year, min(end_dt.year+2, MAXYEAR+1))
         if self.unit == "day_of_month":
             # get naive datetimes for start of each day of each month
             # in range of years.  Excess will be discarded later.
-            months = range(1, 13)
+            months = sm.xrange(1, 13)
             dates = [datetime(year, month, i)
                      for year in years for month in months for i in self.vals]
 
@@ -328,8 +336,9 @@ class TimeScale(AbstractScale):
         Overrides AbstractScale.
         """
         ticks = self.ticks(start, end, numlabels)
-        labels = self.formatter.format(ticks, numlabels, char_width, ticker=self)
-        return zip(ticks, labels)
+        labels = self.formatter.format(ticks, numlabels, char_width,
+                                       ticker=self)
+        return list(sm.zip(ticks, labels))
 
     def label_width(self, start, end, numlabels=None, char_width=None):
         """ Returns an estimate of total number of characters used by the
@@ -351,11 +360,11 @@ HMSScales = [TimeScale(microseconds=1), TimeScale(milliseconds=1)] + \
             [TimeScale(hours=dt) for dt in (1, 2, 3, 4, 6, 12, 24)]
 
 # Default time scale for months, days, and years.
-MDYScales = [TimeScale(day_of_month=range(1,31,3)),
+MDYScales = [TimeScale(day_of_month=list(sm.xrange(1,31,3))),
              TimeScale(day_of_month=(1,8,15,22)),
              TimeScale(day_of_month=(1,15)),
-             TimeScale(month_of_year=range(1,13)),
-             TimeScale(month_of_year=range(1,13,3)),
+             TimeScale(month_of_year=list(sm.xrange(1,13))),
+             TimeScale(month_of_year=list(sm.range(1,13,3))),
              TimeScale(month_of_year=(1,7)),
              TimeScale(month_of_year=(1,)),] + \
             [TimeScale(years=dt) for dt in (1,2,5,10)]

@@ -1,6 +1,13 @@
+from __future__ import print_function
+
 import os
+
 import tempfile
 from contextlib import contextmanager
+
+import six
+
+import unittest
 
 import numpy as np
 
@@ -89,7 +96,7 @@ def verify_result_image(input_image, expected_image, **plot_kwargs):
     assert expected_image.dtype == np.uint8
     image_result = rendered_image_result(input_image, **plot_kwargs)
     rms = calculate_rms(image_result, expected_image)
-    print "RMS =", rms
+    print("RMS =", rms)
     assert rms < MAX_RMS_ERROR
 
 
@@ -108,34 +115,40 @@ def plot_comparison(input_image, expected_image, **plot_kwargs):
     plt.show()
 
 
+@unittest.skipIf(six.PY3, "Bug in the image plotter in python 3. See GH enthought/enable #95.")
 def test_horizontal_top_left():
     # Horizontal orientation with top left origin renders original image.
     verify_result_image(RGB, IMAGE, origin='top left')
 
 
+@unittest.skipIf(six.PY3, "Bug in the image plotter in python 3. See GH enthought/enable #95.")
 def test_horizontal_bottom_left():
     # Horizontal orientation with bottom left origin renders a vertically
     # flipped image.
     verify_result_image(RGB, IMAGE[::-1], origin='bottom left')
 
 
+@unittest.skipIf(six.PY3, "Bug in the image plotter in python 3. See GH enthought/enable #95.")
 def test_horizontal_top_right():
     # Horizontal orientation with top right origin renders a horizontally
     # flipped image.
     verify_result_image(RGB, IMAGE[:, ::-1], origin='top right')
 
 
+@unittest.skipIf(six.PY3, "Bug in the image plotter in python 3. See GH enthought/enable #95.")
 def test_horizontal_bottom_right():
     # Horizontal orientation with top right origin renders an image flipped
     # horizontally and vertically.
     verify_result_image(RGB, IMAGE[::-1, ::-1], origin='bottom right')
 
 
+@unittest.skipIf(six.PY3, "Bug in the image plotter in python 3. See GH enthought/enable #95.")
 def test_vertical_top_left():
     # Vertical orientation with top left origin renders transposed image.
     verify_result_image(RGB, IMAGE.T, origin='top left', orientation='v')
 
 
+@unittest.skipIf(six.PY3, "Bug in the image plotter in python 3. See GH enthought/enable #95.")
 def test_vertical_bottom_left():
     # Vertical orientation with bottom left origin renders transposed image
     # that is vertically flipped.
@@ -143,6 +156,7 @@ def test_vertical_bottom_left():
                         origin='bottom left', orientation='v')
 
 
+@unittest.skipIf(six.PY3, "Bug in the image plotter in python 3. See GH enthought/enable #95.")
 def test_vertical_top_right():
     # Vertical orientation with top right origin renders transposed image
     # that is horizontally flipped.
@@ -150,6 +164,7 @@ def test_vertical_top_right():
                         origin='top right', orientation='v')
 
 
+@unittest.skipIf(six.PY3, "Bug in the image plotter in python 3. See GH enthought/enable #95.")
 def test_vertical_bottom_right():
     # Vertical orientation with bottom right origin renders transposed image
     # that is flipped vertically and horizontally.

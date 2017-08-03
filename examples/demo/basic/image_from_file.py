@@ -140,20 +140,17 @@ class DemoView(HasTraits):
         plot_gc.save(self._save_file)
 
     def _load(self):
-        try:
-            # Load the image with the user supplied filename
-            image = ImageData.fromfile(self._load_file)
+        # Load the image with the user supplied filename
+        image = ImageData.fromfile(self._load_file)
 
-            # Update the plot data. NB we must extract _data from the image
-            # for the time being, until ImageData is made more friendly
-            self.pd.set_data("imagedata", image._data)
+        # Update the plot data. NB we must extract _data from the image
+        # for the time being, until ImageData is made more friendly
+        self.pd.set_data("imagedata", image._data)
 
-            # Set the title and redraw
-            self.plot.title = os.path.basename(self._load_file)
-            self.plot.request_redraw()
-        except:
-            # If loading fails, simply do nothing
-            pass
+        # Set the title and redraw
+        self.plot.title = os.path.basename(self._load_file)
+        self.plot.request_redraw()
+
 
 
 #-------------------------------------------------------------------------------

@@ -16,7 +16,7 @@ from chaco.api import Plot, PlotGraphicsContext
 
 class DrawBorderTestCase(unittest.TestCase):
     def assertRavelEqual(self, x, y):
-        self.assert_(alltrue(ravel(x) == ravel(y)), "\n%s\n !=\n%s" % (x, y))
+        self.assertTrue(alltrue(ravel(x) == ravel(y)), "\n%s\n !=\n%s" % (x, y))
 
     def test_draw_border_simple(self):
         """ Borders should have the correct height and width.

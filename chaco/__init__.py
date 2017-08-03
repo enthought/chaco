@@ -7,4 +7,5 @@ from ._version import full_version as __version__  # noqa
 
 __requires__ = [
    'enable',
+   'six'
 ]

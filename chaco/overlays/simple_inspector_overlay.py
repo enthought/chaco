@@ -12,7 +12,7 @@ from numpy import array
 
 from traits.api import Any, List, Callable, Enum, Bool
 
-from text_grid_overlay import TextGridOverlay
+from .text_grid_overlay import TextGridOverlay
 
 def basic_formatter(key, decimals):
     """Create a basic '<key>: <value>' formatting function

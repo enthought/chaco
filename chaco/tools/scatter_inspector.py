@@ -5,7 +5,7 @@
 from traits.api import Bool, Str
 
 # Local, relative imports
-from select_tool import SelectTool
+from .select_tool import SelectTool
 
 
 class ScatterInspector(SelectTool):

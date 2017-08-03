@@ -9,7 +9,7 @@ import numpy as np
 from traits.api import Bool, Float
 
 #Local relative imports
-from base_1d_mapper import Base1DMapper
+from .base_1d_mapper import Base1DMapper
 
 
 LOG_MINIMUM = 0.0

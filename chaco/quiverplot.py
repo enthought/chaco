@@ -8,8 +8,8 @@ from enable.api import ColorTrait
 from traits.api import Array, Enum, Float, Instance, Int
 
 # Chaco relative imports
-from abstract_data_source import AbstractDataSource
-from scatterplot import ScatterPlot
+from .abstract_data_source import AbstractDataSource
+from .scatterplot import ScatterPlot
 
 class QuiverPlot(ScatterPlot):
 

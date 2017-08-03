@@ -7,8 +7,8 @@ from enable.api import ColorTrait, KeySpec
 from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance, Property
 from traits.util.deprecated import deprecated
 
-from better_zoom import BetterZoom
-from tool_states import SelectedZoomState
+from .better_zoom import BetterZoom
+from .tool_states import SelectedZoomState
 
 class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     """ Zooming tool which allows the user to draw a box which defines the

@@ -1,3 +1,4 @@
+import six
 
 from numpy import array, isscalar, issubsctype, linspace, number
 
@@ -7,8 +8,8 @@ from traits.api import Bool, Instance, Int, List, Property, \
         Range, Str, Trait, Tuple
 
 # Local relative imports
-from base_2d_plot import Base2DPlot
-from color_mapper import ColorMapper
+from .base_2d_plot import Base2DPlot
+from .color_mapper import ColorMapper
 
 
 class BaseContourPlot(Base2DPlot):
@@ -100,7 +101,7 @@ class BaseContourPlot(Base2DPlot):
             self._colors = [self._color_map_trait_] * numcolors
 
         # If we are given a single color, apply it to all levels
-        elif isinstance(colors, basestring):
+        elif isinstance(colors, six.string_types):
             self._color_map_trait = colors
             self._colors = [self._color_map_trait_] * numcolors
 

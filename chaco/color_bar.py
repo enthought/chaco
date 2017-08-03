@@ -12,12 +12,12 @@ from traits.api import Any, Bool, Enum, Instance, Property, \
 from kiva.image import GraphicsContext
 
 # Local imports
-from base_xy_plot import BaseXYPlot
-from abstract_plot_renderer import AbstractPlotRenderer
-from abstract_mapper import AbstractMapper
-from array_data_source import ArrayDataSource
-from grid import PlotGrid
-from axis import PlotAxis
+from .base_xy_plot import BaseXYPlot
+from .abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_mapper import AbstractMapper
+from .array_data_source import ArrayDataSource
+from .grid import PlotGrid
+from .axis import PlotAxis
 
 
 class ColorBar(AbstractPlotRenderer):

@@ -13,7 +13,7 @@ think of this as a transpose about the origin.
 """
 
 # Major library imports
-from scipy.misc import lena
+from scipy.misc import face
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor
@@ -52,7 +52,7 @@ class Demo(HasTraits):
                         ('bottom right', 'v')]
         orientation_name = {'h': 'horizontal', 'v': 'vertical'}
 
-        pd = ArrayPlotData(image=lena())
+        pd = ArrayPlotData(image=face())
         # Plot some bessel functions and add the plots to our container
         for origin, orientation in arrangements:
             plot = Plot(pd, default_origin=origin, orientation=orientation)

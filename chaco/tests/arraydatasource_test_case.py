@@ -5,6 +5,10 @@ Tests of ArrayDataSource behavior.
 import pickle
 
 import unittest
+
+import six
+import six.moves as sm
+
 from numpy import arange, array, allclose, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal
 import numpy as np
@@ -173,7 +177,8 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.assertEqual(bounds, (-np.inf, np.inf))
 
     def test_bounds_non_numeric(self):
-        myarray = np.array([u'abc', u'foo', u'bar', u'def'], dtype=unicode)
+        myarray = np.array([u'abc', u'foo',
+                            u'bar', u'def'], dtype=six.text_type)
         data_source = ArrayDataSource(myarray)
         bounds = data_source.get_bounds()
         self.assertEqual(bounds, (u'abc', u'def'))
@@ -259,13 +264,13 @@ class PointDataTestCase(unittest.TestCase):
     # Since PointData is mostly the same as ScalarData, the key things to
     # test are functionality that use _compute_bounds() and reverse_map().
     def create_array(self):
-        return array(zip(range(10), range(0, 100, 10)))
+        return array(list(zip(list(sm.range(10)), list(sm.range(0, 100, 10)))))
 
     def test_basic_set_get(self):
         myarray = self.create_array()
         pd = PointDataSource(myarray)
         self.assertTrue(allclose(myarray, pd._data))
-        self.assert_(pd.value_dimension == "point")
+        self.assertTrue(pd.value_dimension == "point")
         return
 
     def test_bounds(self):

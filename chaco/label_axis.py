@@ -8,8 +8,8 @@ from numpy import array, float64, inf, searchsorted, take, unique
 from traits.api import ArrayOrNone, Str, List, Float
 
 # Local, relative imports
-from axis import PlotAxis
-from label import Label
+from .axis import PlotAxis
+from .label import Label
 
 
 class LabelAxis(PlotAxis):
@@ -80,7 +80,7 @@ class LabelAxis(PlotAxis):
         self._tick_label_list = take(self.labels, take(pos_index, tick_indices))
 
         if datalow > datahigh:
-            raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
+            raise RuntimeError("DataRange low is greater than high; unable to compute axis ticks.")
 
         mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
                                     (screenhigh-screenlow)) for pos in tick_positions]

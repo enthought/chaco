@@ -23,12 +23,11 @@ class BroadcasterTool(BaseTool):
         handled = False   # keeps track of whether any tool handled this event
 
         if event.window.mouse_owner == self:
-            tools = self.mouse_owners.keys()
+            tools = list(self.mouse_owners.keys())
             mouse_owned = True
         else:
             tools = self.tools
             mouse_owned = False
-
         for tool in tools:
             if mouse_owned:
                 event.window.set_mouse_owner(tool, self.mouse_owners[tool])
@@ -42,7 +41,6 @@ class BroadcasterTool(BaseTool):
                 # The tool owned the mouse before handling the previous event,
                 # and now doesn't, so remove it from the list of mouse_owners
                 del self.mouse_owners[tool]
-
             elif not mouse_owned and event.window.mouse_owner == tool:
                 # The tool is a new mouse owner
                 self.mouse_owners[tool] = event.window.mouse_owner_transform

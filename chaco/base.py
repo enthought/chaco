@@ -55,7 +55,7 @@ def n_gon(center, r, nsides, rot_degrees=0):
     rotation about the center may be specified with *rot_degrees*.
     """
     if nsides < 3:
-        raise ValueError, 'Must have at least 3 sides in a polygon'
+        raise ValueError('Must have at least 3 sides in a polygon')
     rotation = radians(rot_degrees)
     theta = (pi * 2) / nsides
     return [poly_point(center, r, i*theta+rotation) for i in range(nsides)]
@@ -122,10 +122,10 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
     elif sort_order == "descending":
         ndx = bin_search(data, pt, -1)
     else:
-        raise NotImplementedError, "reverse_map_1d() requires a sorted array"
+        raise NotImplementedError("reverse_map_1d() requires a sorted array")
 
     if ndx == -1:
-        raise IndexError, "value outside array data range"
+        raise IndexError("value outside array data range")
 
 
     # Now round the index to the closest matching index.  Do this
@@ -175,7 +175,7 @@ def sort_points(points, index=0):
     on their x-coordinate.
     """
     if points.ndim != 2:
-        raise RuntimeError, "sort_points(): Array of wrong shape."
+        raise RuntimeError("sort_points(): Array of wrong shape.")
     return points[argsort(points[:, index]), :]
 
 

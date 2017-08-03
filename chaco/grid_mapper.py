@@ -13,11 +13,11 @@ from numpy import column_stack, transpose
 from traits.api import Bool, DelegatesTo, Instance, Float, Property
 
 # Local relative imports
-from abstract_mapper import AbstractMapper
-from base_1d_mapper import Base1DMapper
-from data_range_2d import DataRange2D
-from linear_mapper import LinearMapper
-from log_mapper import LogMapper
+from .abstract_mapper import AbstractMapper
+from .base_1d_mapper import Base1DMapper
+from .data_range_2d import DataRange2D
+from .linear_mapper import LinearMapper
+from .log_mapper import LogMapper
 
 
 class GridMapper(AbstractMapper):

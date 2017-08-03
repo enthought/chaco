@@ -3,6 +3,8 @@ Allows isometric viewing of a 3D data cube.
 
 Click or click-drag in any data window to set the slice to view.
 """
+from __future__ import print_function
+import warnings
 
 # Outstanding TODOs:
 #  - need to add line inspectors to side and bottom plots, and synchronize
@@ -15,6 +17,8 @@ from numpy import amin, amax, zeros, fromfile, transpose, uint8
 
 # Standard library imports
 import os, sys, shutil
+
+import six.moves as sm
 
 # Major library imports
 from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
@@ -315,7 +319,7 @@ def download_data():
     print('Please enter the location of the "voldata" subdirectory containing')
     print('the data files for this demo, or enter a path to download to (7.8MB).')
     print('Press <ENTER> to download to the current directory.')
-    dl_path = input('Path: ').strip().rstrip("/").rstrip("\\")
+    dl_path = sm.input('Path: ').strip().rstrip("/").rstrip("\\")
 
     if not dl_path.endswith("voldata"):
         voldata_path = os.path.join(dl_path, 'voldata')
@@ -360,7 +364,7 @@ def download_data():
         try:
             open(tar_path, 'wb').write(opener.read())
         except:
-            print('Cannot write to the destination directory specified. ' \
+            print('Cannot write to the destination directory specified. '
                   'Opening backup data.')
             run_cleanup = False
             raise
@@ -379,7 +383,7 @@ def download_data():
 def cleanup_data():
     global dl_path
 
-    answer = input('Remove downloaded files? [Y/N]: ')
+    answer = sm.input('Remove downloaded files? [Y/N]: ')
     if answer.lower() == 'y':
         try:
             shutil.rmtree(os.path.join(dl_path, 'voldata'))
