@@ -5,18 +5,32 @@ Chaco CHANGELOG
 Release 4.7.0
 -------------
 
+New features/Improvements
+
+* Add DataFramePlotData class (PR#367).
+* Allow user control over axis title angle (PR#363).
+
 Fixes
 
-* Update raise statement to be Python 3 compatible (PR #360)
+* Update raise statement to be Python 3 compatible (PR#360).
+* Fix missing color bar when direction is flipped (PR#341).
+
+Maintenance
+
+* Support Python 3 without 2to3 (PR#369).
+* Update BarPlot documentation (PR#362).
+* Use EDM for CI testing (PR#365).
+* Address warnings coming from recent versions of Numpy (PR#350).
+
 
 Release 4.6.1
 -------------
 
 Fixes
 
- * Copy over HOME value to git environment. (PR#342)
- * Fix issue with setup.py that prevent correct versioning on non-git checkouts.
-   (PR#337)
+ * Copy over HOME value to git environment (PR#342).
+ * Fix issue with setup.py that prevent correct versioning on non-git checkouts
+   (PR#337).
 
 
 Release 4.6.0

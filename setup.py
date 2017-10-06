@@ -9,7 +9,7 @@ from setuptools import setup, Extension, find_packages
 
 MAJOR = 4
 MINOR = 7
-MICRO = 0
+MICRO = 1
 
 IS_RELEASED = False
 
