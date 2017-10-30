@@ -15,7 +15,7 @@ environment:
     - RUNTIME: '2.7'
       TOOLKIT: null
     - RUNTIME: '3.5'
-	  TOOLKIT: pyqt
+      TOOLKIT: pyqt
     - RUNTIME: '3.5'
       TOOLKIT: "null"
 
