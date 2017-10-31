@@ -81,11 +81,12 @@ def calculate_rms(image_result, expected_image):
     """
     # calculate the per-pixel errors, then compute the root mean square error
     num_values = np.prod(expected_image.shape)
-    # Cast to int64 to reduce likelihood of over-/under-flow.
-    abs_diff_image = abs(np.int64(expected_image) - np.int64(image_result))
+    # Images may be e.g. 8-bit unsigned integer; upcast to default integer size
+    # (32 or 64 bit) to reduce likelihood of over-/under-flow.
+    abs_diff_image = abs(np.int_(expected_image) - np.int_(image_result))
 
     histogram = np.bincount(abs_diff_image.ravel(), minlength=256)
-    sum_of_squares = np.sum(histogram * np.arange(len(histogram))**2)
+    sum_of_squares = np.sum(np.int64(histogram) * np.arange(len(histogram))**2)
     rms = np.sqrt(float(sum_of_squares) / num_values)
     return rms
 
