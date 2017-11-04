@@ -12,14 +12,11 @@
 """
 
 import sys
-
-import six
-import six.moves as sm
-
+import cStringIO
 from compiler.ast import Const, Name, Tuple, Div, Mul, Sub, Add
 
 def unparse(ast, single_line_functions=False):
-    s = sm.cStringIO.StringIO()
+    s = cStringIO.StringIO()
     UnparseCompilerAst(ast, s, single_line_functions)
     return s.getvalue().lstrip()
 

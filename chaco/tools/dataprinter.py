@@ -38,8 +38,8 @@ class DataPrinter(BaseTool):
                 y = plot.value.get_data()[ndx]
                 print(self.format % (x,y))
             else:
-                print("dataprinter: don't know how to handle plots of type", end=" ")
-                print(plot.__class__.__name__)
+                print("dataprinter: don't know how to handle plots of type {}".format(
+                    plot.__class__.__name__))
         return
 
 
