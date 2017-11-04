@@ -2,6 +2,14 @@
 Chaco CHANGELOG
 ===============
 
+Release 4.7.1
+-------------
+
+Fixes
+
+* Fix doc build (PR#384)
+* Upcast to int_ instead of int64 to avoid bincount issue (PR#383)
+
 Release 4.7.0
 -------------
 
