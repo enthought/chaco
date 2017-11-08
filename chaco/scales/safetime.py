@@ -12,7 +12,14 @@ __all__ = ([x for x in dir(stdlib_time) if not x.startswith('_')]
     + ['safe_fromtimestamp', 'datetime', 'timedelta', 'MINYEAR', 'MAXYEAR',
         'EPOCH'])
 
-EPOCH = datetime.fromtimestamp(0.0)
+
+# On Windows 10, datetime.fromtimestamp fails with an OSError for timestamps
+# less than 86400s (1 day). We work around this by initializing the epoch to
+# some time past that, and then going back that many seconds to arrive at "time
+# 0". See the discussion in GH #376 (as well as Python issue 29097).
+DAY_SECONDS = 24 * 60 * 60
+EPOCH = datetime.fromtimestamp(DAY_SECONDS) - timedelta(seconds=DAY_SECONDS)
+
 
 # Can't monkeypatch methods of anything in datetime, so we have to wrap them
 def safe_fromtimestamp(timestamp, *args, **kwds):
