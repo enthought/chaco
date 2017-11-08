@@ -7,6 +7,7 @@ Release 4.7.1
 
 Fixes
 
+* Avoid datetime issue on Windows 10 (PR#387)
 * Fix doc build (PR#384)
 * Upcast to int_ instead of int64 to avoid bincount issue (PR#383)
 
