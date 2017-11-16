@@ -1,16 +1,12 @@
 """Extract reference documentation from the NumPy source tree.
 
 """
-from __future__ import print_function
 
 import inspect
 import textwrap
 import re
-
-import six
-import six.moves as sm
-
 import pydoc
+from StringIO import StringIO
 from warnings import warn
 
 class Reader(object):
@@ -126,7 +122,7 @@ class NumpyDocString(object):
         return self._parsed_data[key]
 
     def __setitem__(self,key,val):
-        if key not in self._parsed_data:
+        if not self._parsed_data.has_key(key):
             warn("Unknown section %s" % key)
         else:
             self._parsed_data[key] = val
@@ -366,7 +362,7 @@ class NumpyDocString(object):
         idx = self['index']
         out = []
         out += ['.. index:: %s' % idx.get('default','')]
-        for section, references in six.iteritems(idx):
+        for section, references in idx.iteritems():
             if section == 'default':
                 continue
             out += ['   :%s: %s' % (section, ', '.join(references))]
@@ -404,12 +400,12 @@ class FunctionDoc(NumpyDocString):
         try:
             NumpyDocString.__init__(self,inspect.getdoc(func) or '')
         except ValueError as e:
-            print('*'*78)
-            print("ERROR: '%s' while parsing `%s`" % (e, self._f))
-            print('*'*78)
-            #print("Docstring follows:")
-            #print(doclines)
-            #print('='*78)
+            print '*'*78
+            print "ERROR: '%s' while parsing `%s`" % (e, self._f)
+            print '*'*78
+            #print "Docstring follows:"
+            #print doclines
+            #print '='*78
 
         if not self['Signature']:
             func, func_name = self.get_func()
@@ -442,7 +438,7 @@ class FunctionDoc(NumpyDocString):
 
         if self._role:
             if self._role not in roles:
-                print("Warning: invalid role %s" % self._role)
+                print "Warning: invalid role %s" % self._role
             out += '.. %s:: %s\n    \n\n' % (roles.get(self._role,''),
                                              func_name)
 
