@@ -1276,7 +1276,7 @@ class Plot(DataView):
                 if new is not None:
                     new.add(datasource)
         range_name = name + "_range"
-        for renderer in itertools.chain(six.itervalues(self.plots)):
+        for renderer in itertools.chain(*six.itervalues(self.plots)):
             if hasattr(renderer, range_name):
                 setattr(renderer, range_name, new)
 
