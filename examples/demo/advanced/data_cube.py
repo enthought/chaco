@@ -68,7 +68,7 @@ class Model(HasTraits):
         super(Model, self).__init__(*args, **kwargs)
         self.compute_model()
 
-    @on_trait_change("npts_+", "min_+", "max_+")
+    @on_trait_change("npts_+, min_+, max_+")
     def compute_model(self):
         def vfunc(x, y, z):
             return sin(x*z) * cos(y)*sin(z) + sin(0.5*z)
