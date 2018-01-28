@@ -2,7 +2,7 @@
 """
 
 # Enthought library imports
-from traits.api import Any, Bool, Event, HasStrictTraits, Str
+from traits.api import Any, Bool, Enum, Event, HasStrictTraits, Str
 
 # Local, relative imports
 from .select_tool import SelectTool
@@ -16,9 +16,9 @@ DESELECT_EVENT = "deselect"
 
 class ScatterInspectorEvent(HasStrictTraits):
     #: Is it a hover event or a selection event?
-    event_type = Str
+    event_type = Enum([HOVER_EVENT, SELECT_EVENT, DESELECT_EVENT])
 
-    #: What index was inspected?
+    #: What index was involved?
     event_index = Any
 
 
@@ -34,11 +34,11 @@ class ScatterInspector(SelectTool):
     """
 
     # If persistent_hover is False, then a point will be de-hovered as soon as
-    # the mouse leaves its hittesting area.  If persistent_hover is True, then
+    # the mouse leaves its hit-testing area. If persistent_hover is True, then
     # a point does no de-hover until another point get hover focus.
     persistent_hover = Bool(False)
 
-    # The names of the data source metadata for hover and selection.
+    # The names of the data source metadata for hover and selection events.
     hover_metadata_name = Str('hover')
     selection_metadata_name = Str('selections')
 
@@ -147,14 +147,16 @@ class ScatterInspector(SelectTool):
                         new_list = md[self.selection_metadata_name] + [index]
                         md[self.selection_metadata_name] = new_list
                         # Manually trigger the metadata_changed event on
-                        # the datasource.  Datasources only automatically
+                        # the datasource. Datasources only automatically
                         # fire notifications when the values inside the
                         # metadata dict change, but they do not listen
                         # for further changes on those values.
+                        # DEPRECATED: use self.inspector_event instead:
                         getattr(plot, name).metadata_changed = True
                 else:
                     md[self.selection_metadata_name] = [index]
 
+            # Test to only issue 1 event per selection, not 1 per axis:
             if name == 'index':
                 self.inspector_event = insp_event
 
