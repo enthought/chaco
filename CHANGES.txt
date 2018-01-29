@@ -5,6 +5,11 @@ Chaco CHANGELOG
 Release 4.7.1
 -------------
 
+New features/Improvements
+
+* Add a inspector_event attribute to ScatterInspector to get 
+  notifications when both (un)hovering or (de)selecting (PR#395).
+
 Fixes
 
 * Avoid datetime issue on Windows 10 (PR#387)
