@@ -125,7 +125,8 @@ class ArrayPlotData(AbstractPlotData):
         See Also
         --------
         update_data: Use if needing to set multiple ArrayPlotData entries at
-            once, for example because their dimension changes.
+            once, for example because new arrays' dimensions change and
+            updating one at a time would break an existing Plot.
         """
         if not self.writable:
             return None
@@ -142,8 +143,12 @@ class ArrayPlotData(AbstractPlotData):
         """ Updates any number of arrays before triggering a `data_changed`
         event.
 
-        Implements AbstractPlotData's update_data() method.  This method has
-        the same signature as the dictionary update() method.
+        Useful to set multiple ArrayPlotData entries at once, for example
+        because new arrays' dimensions change and updating one at a time would
+        break an existing Plot.
+
+        Note: Implements AbstractPlotData's update_data() method.  This method
+        has the same signature as the dictionary update() method.
 
         See Also
         --------
