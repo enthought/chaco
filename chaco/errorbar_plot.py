@@ -2,7 +2,7 @@
 from __future__ import with_statement
 
 import six
-import six.moves
+import six.moves as sm
 
 # Major library imports
 from numpy import column_stack, compress, invert, isnan, transpose
@@ -159,4 +159,3 @@ class ErrorBarPlot(LinePlot):
 
     def _render_icon(self, gc, x, y, width, height):
         pass
-
