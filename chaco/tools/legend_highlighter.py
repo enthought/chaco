@@ -1,10 +1,18 @@
-import operator
-
-import six.moves as sm
+from itertools import chain
 
 # ETS imports
 from chaco.tools.api import LegendTool
 from traits.api import List, Float
+
+concat = chain.from_iterable
+
+
+def _ensure_list(obj):
+    """ NOTE: The Legend stores plots in a dictionary with either single
+    renderers as values, or lists of renderers.
+    This function helps us assume we're always working with lists
+    """
+    return obj if isinstance(obj, list) else [obj]
 
 
 def get_hit_plots(legend, event):
@@ -26,7 +34,7 @@ def get_hit_plots(legend, event):
         ndx = legend._cached_labels.index(label)
         label_name = legend._cached_label_names[ndx]
         renderers = legend.plots[label_name]
-        return renderers
+        return _ensure_list(renderers)
     except (ValueError, KeyError):
         return []
 
@@ -54,35 +62,34 @@ class LegendHighlighter(LegendTool):
             return
 
         plots = get_hit_plots(self.component, event)
-
-        if len(plots) > 0:
-            plot = plots[0]
-
-            if event.shift_down:
-                # User in multi-select mode by using [shift] key.
+        if event.shift_down:
+            # User in multi-select mode by using [shift] key.
+            for plot in plots:
                 if plot in self._selected_renderers:
                     self._selected_renderers.remove(plot)
                 else:
                     self._selected_renderers.append(plot)
+        elif plots:
+            # User in single-select mode.
+            add_plot = any(plot not in self._selected_renderers
+                           for plot in plots)
+            self._selected_renderers = []
+            if add_plot:
+                self._selected_renderers.extend(plots)
 
-            else:
-                # User in single-select mode.
-                add_plot = plot not in self._selected_renderers
-                self._selected_renderers = []
-                if add_plot:
-                    self._selected_renderers.append(plot)
+        if self._selected_renderers:
+            self._set_states(self.component.plots)
+        else:
+            self._reset_selects(self.component.plots)
 
-            if self._selected_renderers:
-                self._set_states(self.component.plots)
-            else:
-                self._reset_selects(self.component.plots)
-            plot.request_redraw()
+        if plots:
+            plots[0].request_redraw()
 
         event.handled = True
 
     def _reset_selects(self, plots):
         """ Set all renderers to their default values. """
-        for plot in sm.reduce(operator.add, plots.values()):
+        for plot in concat(_ensure_list(p) for p in plots.values()):
             if not hasattr(plot, '_orig_alpha'):
                 plot._orig_alpha = plot.alpha
                 plot._orig_line_width = plot.line_width
@@ -92,7 +99,7 @@ class LegendHighlighter(LegendTool):
 
     def _set_states(self, plots):
         """ Decorates a plot to indicate it is selected """
-        for plot in sm.reduce(operator.add, plots.values()):
+        for plot in concat(_ensure_list(p) for p in plots.values()):
             if not hasattr(plot, '_orig_alpha'):
                 # FIXME: These attributes should be put into the class def.
                 plot._orig_alpha = plot.alpha
