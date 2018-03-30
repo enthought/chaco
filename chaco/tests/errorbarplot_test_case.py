@@ -23,7 +23,7 @@ class DrawErrorBarPlotCase(unittest.TestCase):
             index=ArrayDataSource(x),
             values=ArrayDataSource(y),
             index_mapper=LinearMapper(range=DataRange1D(low=0, high=3)),
-            value_mapper=LinearMapper(range=DataRange1D(tight_bounds=False)),
+            value_mapper=LinearMapper(range=DataRange1D(low=0, high=15)),
             value_low=low,
             value_high=high,
             color='blue',
