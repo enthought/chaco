@@ -1,6 +1,5 @@
 import operator
 
-import six
 import six.moves as sm
 
 # ETS imports
@@ -50,7 +49,8 @@ class LegendHighlighter(LegendTool):
     _selected_renderers = List
 
     def normal_left_down(self, event):
-        if not self.component.is_in(event.x, event.y):
+        if (not self.component.visible or
+                not self.component.is_in(event.x, event.y)):
             return
 
         plots = get_hit_plots(self.component, event)
