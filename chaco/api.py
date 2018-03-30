@@ -49,6 +49,11 @@ from .plot_containers import OverlayPlotContainer, HPlotContainer, VPlotContaine
                             GridPlotContainer
 GridContainer = GridPlotContainer
 
+try:
+    from .plot_containers import ConstraintsPlotContainer
+except ImportError:
+    pass
+
 from .label import Label
 from .plot_label import PlotLabel
 from .legend import Legend

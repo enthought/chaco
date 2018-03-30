@@ -5,9 +5,13 @@ from numpy import amax, any, arange, array, cumsum, hstack, sum, zeros, zeros_li
 
 # Enthought library imports
 from traits.api import Any, Array, Either, Enum, Float, Instance, \
-    List, Property, Trait, Tuple, Int
+    List, Property, String, Trait, Tuple, Int
 from enable.simple_layout import simple_container_get_preferred_size, \
                                             simple_container_do_layout
+try:
+    from enable.api import ConstraintsContainer
+except ImportError:
+    ConstraintsContainer = None
 
 # Local relative imports
 from .base_plot_container import BasePlotContainer
@@ -18,6 +22,21 @@ __all__ = ["OverlayPlotContainer", "HPlotContainer", "VPlotContainer", \
 
 DEFAULT_DRAWING_ORDER = ["background", "image", "underlay",      "plot",
                          "selection", "border", "annotation", "overlay"]
+
+
+# Enable constraints layout is only available if kiwisolver is installed!
+if ConstraintsContainer is not None:
+    class ConstraintsPlotContainer(ConstraintsContainer):
+        """ A Plot container that supports constraints-based layout
+        """
+        # !! Bits copied from BasePlotContainer !!
+        container_under_layers = Tuple("background", "image", "underlay", "plot")
+        draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
+        draw_layer = String('plot')
+        # !! Bits copied from BasePlotContainer !!
+
+    __all__.append('ConstraintsPlotContainer')
+
 
 class OverlayPlotContainer(BasePlotContainer):
     """
