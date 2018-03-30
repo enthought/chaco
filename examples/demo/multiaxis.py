@@ -25,8 +25,8 @@ from traitsui.api import Item, Group, View
 from chaco.api import create_line_plot, add_default_axes, \
                                 add_default_grids, OverlayPlotContainer, \
                                 PlotLabel, Legend, PlotAxis
-from chaco.tools.api import PanTool, LegendTool, TraitsTool, \
-                                      BroadcasterTool
+from chaco.tools.api import (PanTool, LegendTool, LegendHighlighter,
+                             TraitsTool, BroadcasterTool)
 
 #===============================================================================
 # # Create the Chaco plot.
@@ -76,6 +76,7 @@ def _create_plot_component():
 
     legend = Legend(component=container, padding=10, align="ur")
     legend.tools.append(LegendTool(legend, drag_button="right"))
+    legend.tools.append(LegendHighlighter(legend))
     container.overlays.append(legend)
 
     # Set the list of plots on the legend
