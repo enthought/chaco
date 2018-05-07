@@ -6,13 +6,17 @@ Defines basic traits and functions for the data model.
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, cos, diff, dot, empty, isfinite,
-                   nonzero, pi, searchsorted, seterr, sin, int8)
+from numpy import (
+    array, argsort, concatenate, cos, diff, dot, dtype, empty, float32,
+    isfinite, nonzero, pi, searchsorted, seterr, sin, int8
+)
 
 # Enthought library imports
 from traits.api import Enum, ArrayOrNone
 
 delta = {'ascending': 1, 'descending': -1, 'flat': 0}
+
+rgba_dtype = dtype([('r', float32), ('g', float32), ('b', float32), ('a', float32)])
 
 # Dimensions
 
