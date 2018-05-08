@@ -4,51 +4,62 @@ import numpy as np
 from enable.api import ColorTrait, LineStyle, black_color_trait
 from kiva.api import CAP_ROUND
 from traits.api import (
-    Array, Bool, Float, Instance, List, Property, Str, Tuple, cached_property,
+    Array, Bool, Enum, Float, Instance, Property, Str, cached_property,
     on_trait_change
 )
 
 from chaco.abstract_colormap import AbstractColormap
 from chaco.abstract_data_source import AbstractDataSource
 from chaco.abstract_mapper import AbstractMapper
-from chaco.base import rgba_dtype
+from chaco.base import point_dtype, rgba_dtype
 from chaco.base_xy_plot import BaseXYPlot
-
-
-point_dtype = np.dtype([('x', float), ('y', float)])
 
 
 class SegmentPlot(BaseXYPlot):
     """ Plot that draws a collection of line segments. """
 
-    # The single color to use when color_by_data is False.
+    #: The single color to use when color_by_data is False.
     color = black_color_trait(redraw=True)
 
-    # The thickness of the line.
+    #: The thickness of the line.
     line_width = Float(1.0, redraw=True)
 
-    # The line dash style.
+    #: The line dash style.
     line_style = LineStyle(redraw=True)
 
-    # Whether to draw segments using a constant color or colormapped data.
+    #: The rendering style of the segment plot.
+    #:
+    #: line
+    #:    "Normal" direct connection between start and end points.
+    #: orthogonal
+    #:    Connect the start and end points by two line segments in orthogonal
+    #:    directions.
+    #: cubic
+    #:    Connect the start and end points by a cubic Bezier curve.
+    render_style = Enum('line', 'orthogonal', 'quad', 'cubic')
+
+    #: When rendering certain styles, which orientation to prefer.
+    render_orientation = Enum('index', 'value')
+
+    #: Whether to draw segments using a constant color or colormapped data.
     color_by_data = Bool(False)
 
-    # The data to use for the segment color.  Used only when
-    # self.color_by_data is True.
+    #: The data to use for the segment color.  Used only when
+    #: self.color_by_data is True.
     color_data = Instance(AbstractDataSource, redraw=True)
 
-    # The color mapper to use for the segment data.  Used only when
-    # self.color_by_data is True.
+    #: The color mapper to use for the segment data.  Used only when
+    #: self.color_by_data is True.
     color_mapper = Instance(AbstractColormap, redraw=True)
 
-    # Whether to draw segments using a constant width or mapped width.
+    #: Whether to draw segments using a constant width or mapped width.
     width_by_data = Bool(False, redraw=True)
 
-    # The data to use for segment width.  Used only when self.color_by_width
-    # is True.
+    #: The data to use for segment width.  Used only when self.color_by_width
+    #: is True.
     width_data = Instance(AbstractDataSource, redraw=True)
 
-    # Whether to draw segments using a constant width or mapped width.
+    #: Whether to draw segments using a constant width or mapped width.
     width_mapper = Instance(AbstractMapper, redraw=True)
 
     #: Whether or not to shade selected segments.
@@ -66,17 +77,18 @@ class SegmentPlot(BaseXYPlot):
     #: The width multiple to use for non-selected segments.
     selection_width = Float(1.0)
 
-    # RGBA tuples for rendering individual segments, in the case where
-    # color_by_data is True.  We have one length-4 tuple for each triangle.
-    # These are computed using the current color mapper and color_data, with the
-    # global 'alpha' mixed in.
+    #: RGBA values for rendering individual segments, in the case where
+    #: color_by_data is True.  This is a length N array with the rgba_dtype
+    #: and are computed using the current color or color mapper and color_data,
+    #: with the global 'alpha' mixed in.
     effective_colors = Property(
         Array,
         depends_on=['color_by_data', 'alpha', 'color_mapper.updated',
                     'color_data.data_changed', 'alpha', 'selection_mask',
                     'selection_color', 'selection_alpha'])
 
-    # The widths of the individual lines in screen unis, if mapped to data.
+    #: The widths of the individual lines in screen units, if mapped to data.
+    #: The values are computed with the width mapper.
     screen_widths = Property(
         Array,
         depends_on=['width_mapper.updated', 'width_data.data_changed'])
@@ -136,23 +148,154 @@ class SegmentPlot(BaseXYPlot):
             gc.set_line_cap(CAP_ROUND)
             starts = segments[:, 0]
             ends = segments[:, 1]
-
-            if len(widths) == 1 and len(colors) == 1 and colors[0]['a'] == 1.0:
-                # no alpha, can draw a single unconnected path, faster
-                gc.set_line_width(widths[0])
-                gc.set_stroke_color(colors[0])
-                gc.line_set(starts, ends)
-                gc.stroke_path()
+            starts = starts.ravel().view(point_dtype)
+            ends = ends.ravel().view(point_dtype)
+            if self.render_style == 'orthogonal':
+                self._render_orthogonal(gc, starts, ends, colors, widths)
+            elif self.render_style == 'quad':
+                self._render_quad(gc, starts, ends, colors, widths)
+            elif self.render_style == 'cubic':
+                self._render_cubic(gc, starts, ends, colors, widths)
             else:
-                # draw each segment individually, slower
-                starts = starts.ravel().view(point_dtype)
-                ends = ends.ravel().view(point_dtype)
-                for color, width, start, end in np.broadcast(colors, widths, starts, ends):
-                    gc.set_stroke_color(color)
-                    gc.set_line_width(float(width))
-                    gc.move_to(start['x'], start['y'])
-                    gc.line_to(end['x'], end['y'])
-                    gc.stroke_path()
+                self._render_line(gc, starts, ends, colors, widths)
+
+    def _render_line(self, gc, starts, ends, colors, widths):
+        """ Render straight lines connecting the start point and end point. """
+        if len(widths) == 1 and len(colors) == 1 and colors[0]['a'] == 1.0:
+            # no alpha, can draw a single unconnected path, faster
+            gc.set_line_width(widths[0])
+            gc.set_stroke_color(colors[0])
+            gc.line_set(starts, ends)
+            gc.stroke_path()
+        else:
+            for color, width, start, end in np.broadcast(colors, widths, starts, ends):
+                gc.set_stroke_color(color)
+                gc.set_line_width(float(width))
+                gc.move_to(start['x'], start['y'])
+                gc.line_to(end['x'], end['y'])
+                gc.stroke_path()
+
+    def _render_orthogonal(self, gc, starts, ends, colors, widths):
+        """ Render orthogonal lines connecting the start point and end point.
+
+        Draw the orthogonal line in the direction determined by
+        """
+        mids = np.empty(len(starts), dtype=point_dtype)
+        if self.render_orientation == 'index':
+            if self.orientation == 'h':
+                mids['x'] = ends['x']
+                mids['y'] = starts['y']
+            else:
+                mids['x'] = starts['x']
+                mids['y'] = ends['y']
+        else:
+            if self.orientation == 'h':
+                mids['x'] = starts['x']
+                mids['y'] = ends['y']
+            else:
+                mids['x'] = ends['x']
+                mids['y'] = starts['y']
+
+        if len(widths) == 1 and len(colors) == 1 and colors[0]['a'] == 1.0:
+            # no alpha, can draw a single unconnected path, faster
+            gc.set_line_width(widths[0])
+            gc.set_stroke_color(colors[0])
+            gc.line_set(starts, mids)
+            gc.line_set(mids, ends)
+            gc.stroke_path()
+        else:
+            for color, width, start, end, mid in np.broadcast(colors, widths, starts, ends, mids):
+                gc.set_stroke_color(color)
+                gc.set_line_width(float(width))
+                gc.move_to(start['x'], start['y'])
+                gc.line_to(mid['x'], mid['y'])
+                gc.line_to(end['x'], end['y'])
+                gc.stroke_path()
+
+    def _render_quad(self, gc, starts, ends, colors, widths):
+        """ Render quadratic Bezier curves connecting the start and end points.
+
+        Draw the orthogonal line in the direction determined by
+        """
+        mids = np.empty(len(starts), dtype=point_dtype)
+        if self.render_orientation == 'index':
+            if self.orientation == 'h':
+                mids['x'] = ends['x']
+                mids['y'] = starts['y']
+            else:
+                mids['x'] = starts['x']
+                mids['y'] = ends['y']
+        else:
+            if self.orientation == 'h':
+                mids['x'] = starts['x']
+                mids['y'] = ends['y']
+            else:
+                mids['x'] = ends['x']
+                mids['y'] = starts['y']
+
+        if len(widths) == 1 and len(colors) == 1 and colors[0]['a'] == 1.0:
+            # no alpha, can draw a single unconnected path, faster
+            gc.set_line_width(widths[0])
+            gc.set_stroke_color(colors[0])
+            for start, end, mid in np.broadcast(starts, ends, mids):
+                gc.move_to(start['x'], start['y'])
+                gc.quad_curve_to(mid['x'], mid['y'], end['x'], end['y'])
+            gc.stroke_path()
+        else:
+            for color, width, start, end, mid in np.broadcast(colors, widths, starts, ends, mids):
+                gc.set_stroke_color(color)
+                gc.set_line_width(float(width))
+                gc.move_to(start['x'], start['y'])
+                gc.quad_curve_to(mid['x'], mid['y'], end['x'], end['y'])
+                gc.stroke_path()
+
+    def _render_cubic(self, gc, starts, ends, colors, widths):
+        """ Render quadratic Bezier curves connecting the start and end points.
+
+        Draw the orthogonal line in the direction determined by
+        """
+        mids_1 = np.empty(len(starts), dtype=point_dtype)
+        mids_2 = np.empty(len(starts), dtype=point_dtype)
+        if self.render_orientation == 'index':
+            if self.orientation == 'h':
+                mids_1['x'] = (starts['x'] + ends['x'])/2
+                mids_1['y'] = starts['y']
+                mids_2['x'] = mids_1['x']
+                mids_2['y'] = ends['y']
+            else:
+                mids_1['x'] = starts['x']
+                mids_1['y'] = (starts['y'] + ends['y'])/2
+                mids_2['x'] = ends['x']
+                mids_2['y'] = mids_1['y']
+        else:
+            if self.orientation == 'h':
+                mids_1['x'] = starts['x']
+                mids_1['y'] = (starts['y'] + ends['y'])/2
+                mids_2['x'] = ends['x']
+                mids_2['y'] = mids_1['y']
+            else:
+                mids_1['x'] = (starts['x'] + ends['x'])/2
+                mids_1['y'] = starts['y']
+                mids_2['x'] = mids_1['x']
+                mids_2['y'] = ends['y']
+
+        if len(widths) == 1 and len(colors) == 1 and colors[0]['a'] == 1.0:
+            # no alpha, can draw a single unconnected path, faster
+            gc.set_line_width(widths[0])
+            gc.set_stroke_color(colors[0])
+            for start, end, mid_1, mid_2 in np.broadcast(starts, ends, mids_1, mids_2):
+                gc.move_to(start['x'], start['y'])
+                gc.curve_to(mid_1['x'], mid_1['y'], mid_2['x'], mid_2['y'],
+                            end['x'], end['y'])
+            gc.stroke_path()
+        else:
+            for color, width, start, end, mid_1, mid_2 in np.broadcast(colors, widths, starts, ends, mids_1, mids_2):
+                gc.set_stroke_color(color)
+                gc.set_line_width(float(width))
+                gc.move_to(start['x'], start['y'])
+                gc.curve_to(mid_1['x'], mid_1['y'], mid_2['x'], mid_2['y'],
+                            end['x'], end['y'])
+                gc.stroke_path()
 
     def _render_icon(self, gc, x, y, width, height):
         """ Renders a representation of this plot as an icon into the box

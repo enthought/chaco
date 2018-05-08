@@ -53,6 +53,7 @@ def _create_plot_component():
               name="my_plot",
               color_mapper=viridis,
               border_visible=True,
+              render_style='cubic',
               bgcolor="white",
               size_min=0.5,
               size_max=5.0)

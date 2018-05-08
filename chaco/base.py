@@ -17,6 +17,7 @@ from traits.api import Enum, ArrayOrNone
 delta = {'ascending': 1, 'descending': -1, 'flat': 0}
 
 rgba_dtype = dtype([('r', float32), ('g', float32), ('b', float32), ('a', float32)])
+point_dtype = dtype([('x', float), ('y', float)])
 
 # Dimensions
 
