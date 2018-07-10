@@ -1,30 +1,51 @@
-language: python
-python:
-  - 2.7
-  - 2.6
-virtualenv:
-  # This allows installing PyQt using apt-get and being able to import it.
-  system_site_packages: true
+language: generic
+sudo: false
+
+addons:
+  apt:
+    packages:
+    - ccache
+    - cmake
+    - swig
+
+env:
+  global:
+    - INSTALL_EDM_VERSION=1.5.2
+      PYTHONUNBUFFERED="1"
+
+matrix:
+  include:
+  - env: RUNTIME=2.7 TOOLKIT=wx
+  - env: RUNTIME=2.7 TOOLKIT=pyqt
+  - env: RUNTIME=2.7 TOOLKIT=null
+  - env: RUNTIME=2.7 TOOLKIT=pyside
+  - env: RUNTIME=3.5 TOOLKIT=pyqt
+  - env: RUNTIME=3.5 TOOLKIT=null
+  fast_finish: true
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - $HOME/.cache
+    - $HOME/.ccache
+
 before_install:
-  # On Python 2.7 we install PyQt4 and run the UI tests.
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then source .travis_before_install; fi
+  - ccache -s
+  - mkdir -p "${HOME}/.cache/download"
+  - ci/install-edm.sh
+  - export PATH="${HOME}/edm/bin:/usr/lib/ccache:${PATH}"
+  - edm install -y wheel click coverage
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 install:
-  # nose is already installed
-  - pip install unittest2
-  - pip install cython
-  - sudo apt-get install python-numpy
-  - sudo apt-get install swig
-  # Test against the current master of traits, traitsui and enable
-  - pip install PIL --allow-external PIL --allow-unverified PIL
-  - pip install git+http://github.com/enthought/traits.git#egg=traits
-  - pip install git+http://github.com/enthought/traitsui.git#egg=traitsui
-  - pip install git+http://github.com/enthought/enable.git#egg=enable
-  - python setup.py develop
+  - edm run -- python ci/edmtool.py install --runtime=${RUNTIME} --toolkit=${TOOLKIT} 
 script:
-  # Running all tests in chaco/tests and chaco/tests2
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then nosetests -v chaco; fi
-  # FIXME: tricky to install PyQt for version <= 2.6, only running chaco/tests
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then nosetests -v chaco/tests; fi
-notifications:
-  email:
-    - travis-ci@enthought.com
+  - edm run -- python ci/edmtool.py test --runtime=${RUNTIME} --toolkit=${TOOLKIT}
+
+after_success:
+  - edm run -- coverage combine
+  - edm run -- pip install codecov
+  - edm run -- codecov

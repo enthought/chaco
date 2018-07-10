@@ -496,7 +496,7 @@ In summary, when a component gets an event, it dispatches it to:
 On each of these elements, Chaco looks for a method of the form
 ``{component_state}_{event_name}``. For example,
 in response to the user pressing the left mouse button
-on a tool in state ``normal`` (the default state, see :ref:`Tool states`),
+on a tool in state ``normal`` (the default state, see :ref:`Tool_States`),
 Chaco would look for a method called ``normal_left_down``.
 
 If this exists, the event is
@@ -563,5 +563,5 @@ but uses instead
 its own reference to the window, :attr:`self.window`.
 
 See also the `documentation of the enable library
-<http://github.enthought.com/enable/enable_concepts.html>`_, which gives
+<http://docs.enthought.com/enable/enable_concepts.html>`_, which gives
 more details about the event dispatching happening at that level.

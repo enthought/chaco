@@ -57,6 +57,28 @@ appending it to its underlays layer: ::
 
     plot.underlays.append(x_axis)
 
+Minor Axes Ticks
+----------------
+
+The Chaco overlay representing a *minor* plot axis is defined in the class
+:class:`~chaco.axis.MinorPlotAxis` (a subclass of
+:class:`~chaco.axis.PlotAxis`). This overlay adds minor tick marks to an axis.
+
+A :class:`~chaco.axis.MinorPlotAxis` should be added along with a
+:class:`~chaco.axis.PlotAxis`. For example, minor axis tick marks can be
+added with: ::
+
+    x_major_axis = PlotAxis(orientation='bottom',
+                      title='My x axis',
+                      mapper=plot.x_mapper,
+                      component=plot)
+    plot.underlays.append(x_major_axis)
+
+    x_minor_axis = MinorPlotAxis(orientation='bottom',
+                      mapper=plot.x_mapper,
+                      component=plot)
+    plot.underlays.append(x_minor_axis)
+
 Attributes
 ----------
 
@@ -66,6 +88,7 @@ These attributes control the appearance of the axis:
 :attr:`~chaco.axis.PlotAxis.title_font`,
 :attr:`~chaco.axis.PlotAxis.title_color`,
 :attr:`~chaco.axis.PlotAxis.title_spacing`
+:attr:`~chaco.axis.PlotAxis.title_angle`
 
   Define the axis label. :attr:`title` is a string or unicode object
   that is rendered using the given font and color. :attr:`title_font` is
@@ -73,7 +96,9 @@ These attributes control the appearance of the axis:
   'swiss family Arial' or 'default 12'; see
   :class:`~kiva.kiva_font_trait.TraitKivaFont` for details).
   Finally, :attr:`title_spacing` is the space between the axis line and the
-  title (either the number of pixels or 'auto', default).
+  title (either the number of pixels or 'auto', default) and
+  :attr:`title_angle` can be overridden to change the rotation angle (in deg,
+  wrt horizontal).
 
 
 :attr:`~chaco.axis.PlotAxis.tick_weight`,

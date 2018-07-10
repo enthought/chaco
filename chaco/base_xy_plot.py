@@ -13,14 +13,14 @@ from traits.api import Any, Array, Bool, Enum, Float, Instance, \
 
 
 # Local relative imports
-from abstract_mapper import AbstractMapper
-from abstract_plot_renderer import AbstractPlotRenderer
-from abstract_data_source import AbstractDataSource
-from array_data_source import ArrayDataSource
-from axis import PlotAxis
-from base import point_line_distance, reverse_map_1d
-from grid import PlotGrid
-from plot_label import PlotLabel
+from .abstract_mapper import AbstractMapper
+from .abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_data_source import AbstractDataSource
+from .array_data_source import ArrayDataSource
+from .axis import PlotAxis
+from .base import point_line_distance, reverse_map_1d
+from .grid import PlotGrid
+from .plot_label import PlotLabel
 
 
 class BaseXYPlot(AbstractPlotRenderer):
@@ -720,7 +720,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         state = super(BaseXYPlot,self).__getstate__()
         for key in ['_cache_valid', '_cached_data_pts', '_screen_cache_valid',
                     '_cached_screen_pts']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

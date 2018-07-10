@@ -5,10 +5,13 @@ special handling of time and calendar axes.
 
 from bisect import bisect
 from math import ceil, floor, log10
+
+import six.moves as sm
+
 from numpy import abs, argmin, array, isnan, linspace
 
 # Local imports
-from formatters import BasicFormatter
+from .formatters import BasicFormatter
 
 
 __all__ = ["AbstractScale", "DefaultScale", "FixedScale", "Pow10Scale",
@@ -83,7 +86,7 @@ class AbstractScale(object):
         """
         ticks = self.ticks(start, end, numlabels)
         labels = self.formatter.format(ticks, numlabels, char_width)
-        return zip(ticks, labels)
+        return list(sm.zip(ticks, labels))
 
     def label_width(self, start, end, numlabels=None, char_width=None):
         """ Returns an estimate of the total number of characters used by the
@@ -467,7 +470,7 @@ class ScaleSystem(object):
 
         # Check for insufficient arguments.
         if numlabels is None and char_width is None:
-            raise ValueError, "Either numlabels or char_width (or both) must be given."
+            raise ValueError("Either numlabels or char_width (or both) must be given.")
 
         if numlabels == 0 or char_width == 0 or isnan(start) or isnan(end):
             return []
@@ -506,7 +509,7 @@ class ScaleSystem(object):
                 else:
                     scales = self.scales
 
-            counts, widths = zip(*[s.label_width(start, end, char_width=char_width) \
+            counts, widths = sm.zip(*[s.label_width(start, end, char_width=char_width) \
                                       for s in scales])
             widths = array(widths)
             closest = argmin(abs(widths - char_width*self.fill_ratio))

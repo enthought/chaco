@@ -7,17 +7,17 @@ into a structured (gridded) 1-D output space.
 from contextlib import contextmanager
 
 # Major library imports
-from numpy import transpose
+from numpy import column_stack, transpose
 
 # Enthought library imports
 from traits.api import Bool, DelegatesTo, Instance, Float, Property
 
 # Local relative imports
-from abstract_mapper import AbstractMapper
-from base_1d_mapper import Base1DMapper
-from data_range_2d import DataRange2D
-from linear_mapper import LinearMapper
-from log_mapper import LogMapper
+from .abstract_mapper import AbstractMapper
+from .base_1d_mapper import Base1DMapper
+from .data_range_2d import DataRange2D
+from .linear_mapper import LinearMapper
+from .log_mapper import LogMapper
 
 
 class GridMapper(AbstractMapper):
@@ -119,7 +119,8 @@ class GridMapper(AbstractMapper):
         xs, ys = transpose(data_pts)
         screen_xs = self._xmapper.map_screen(xs)
         screen_ys = self._ymapper.map_screen(ys)
-        return zip(screen_xs, screen_ys)
+        screen_pts = column_stack([screen_xs, screen_ys])
+        return screen_pts
 
     def map_data(self, screen_pts):
         """ map_data(screen_pts) -> data_vals
@@ -129,7 +130,8 @@ class GridMapper(AbstractMapper):
         screen_xs, screen_ys = transpose(screen_pts)
         xs = self._xmapper.map_data(screen_xs)
         ys = self._ymapper.map_data(screen_ys)
-        return zip(xs, ys)
+        data_pts = column_stack([xs, ys])
+        return data_pts
 
     def map_data_array(self, screen_pts):
         return self.map_data(screen_pts)

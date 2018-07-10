@@ -6,7 +6,7 @@ Defines the base class for data ranges.
 from traits.api import Event, Float, HasTraits, Instance, List, Trait
 
 # Local relative imports
-from abstract_data_source import AbstractDataSource
+from .abstract_data_source import AbstractDataSource
 
 
 class AbstractDataRange(HasTraits):

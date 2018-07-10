@@ -5,22 +5,25 @@ function.
 # Standard library imports
 import itertools
 
+import six
+import six.moves as sm
+
 # Major library imports
-from numpy import abs, argmin, around, array, asarray, compress, invert, \
-        isnan, sqrt, sum, transpose, where, ndarray
+from numpy import around, array, asarray, column_stack, \
+    isfinite, isnan, nanargmin, ndarray, sqrt, sum, transpose, where
 
 # Enthought library imports
 from enable.api import black_color_trait, ColorTrait, AbstractMarker, \
-        CustomMarker, MarkerNameDict, MarkerTrait
+    CustomMarker, MarkerNameDict, MarkerTrait
 from kiva.constants import STROKE
-from traits.api import Any, Array, Bool, Float, Trait, Callable, Property, \
-        Tuple, Either, cached_property
+from traits.api import Any, Array, ArrayOrNone, Bool, Float, Callable, \
+    Property, Tuple, Either, cached_property
 from traitsui.api import View, VGroup, Item
 
 # Local relative imports
-from base_xy_plot import BaseXYPlot
-from speedups import scatterplot_gather_points
-from base import reverse_map_1d
+from .base_xy_plot import BaseXYPlot
+from .speedups import scatterplot_gather_points
+from .base import reverse_map_1d
 
 #------------------------------------------------------------------------------
 # Traits UI View for customizing a scatter plot.
@@ -78,7 +81,7 @@ def render_markers(gc, points, marker, marker_size,
         return
 
     # marker can be string, class, or instance
-    if isinstance(marker, basestring):
+    if isinstance(marker, six.string_types):
         marker = MarkerNameDict[marker]()
     elif issubclass(marker, AbstractMarker):
         marker = marker()
@@ -99,6 +102,31 @@ def render_markers(gc, points, marker, marker_size,
 
         gc.begin_path()
 
+        # try to invoke optimized routines if only one size and gc supports
+        if not isinstance(marker_size, ndarray):
+            # try fastest routine
+            if not isinstance(marker, CustomMarker):
+                # get fast renderer, or dummy if not implemented
+                renderer = getattr(gc, 'draw_marker_at_points', lambda *a: 0)
+                result = renderer(points, marker_size, marker.kiva_marker)
+                # it worked, we're done
+                if result != 0:
+                    return
+
+            # try next fastest routine
+            if hasattr(gc, 'draw_path_at_points'):
+                if not isinstance(marker, CustomMarker):
+                    path = gc.get_empty_path()
+                    marker.add_to_path(path, marker_size)
+                    mode = marker.draw_mode
+                else:
+                    path = custom_symbol
+                    mode = STROKE
+                if not marker.antialias:
+                    gc.set_antialias(False)
+                gc.draw_path_at_points(points, path, mode)
+                return
+
         if isinstance(marker_size, ndarray):
             if point_mask is not None:
                 marker_size = marker_size[point_mask]
@@ -108,7 +136,7 @@ def render_markers(gc, points, marker, marker_size,
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):
-            for pt,size in itertools.izip(points, marker_size):
+            for pt,size in sm.zip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -117,7 +145,7 @@ def render_markers(gc, points, marker, marker_size,
                     gc.draw_path(marker.draw_mode)
         else:
             path = custom_symbol
-            for pt,size in itertools.izip(points, marker_size):
+            for pt,size in sm.zip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -171,12 +199,12 @@ class ScatterPlot(BaseXYPlot):
 
     # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
     # It has the same RGB values as color_, and its alpha value is the alpha
-    # value of self.color multiplied by self.alpha. 
+    # value of self.color multiplied by self.alpha.
     effective_color = Property(Tuple, depends_on=['color', 'alpha'])
-    
+
     # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
     # It has the same RGB values as outline_color_, and its alpha value is the
-    # alpha value of self.outline_color multiplied by self.alpha.   
+    # alpha value of self.outline_color multiplied by self.alpha.
     effective_outline_color = Property(Tuple, depends_on=['outline_color', 'alpha'])
 
 
@@ -207,7 +235,7 @@ class ScatterPlot(BaseXYPlot):
     # Private traits
     #------------------------------------------------------------------------
 
-    _cached_selected_pts = Trait(None, None, Array)
+    _cached_selected_pts = ArrayOrNone
     _cached_selected_screen_pts = Array
     _cached_point_mask = Array
     _cached_selection_point_mask = Array
@@ -227,14 +255,6 @@ class ScatterPlot(BaseXYPlot):
         if len(data_array) == 0:
             return []
 
-        # XXX: For some reason, doing the tuple unpacking doesn't work:
-        #        x_ary, y_ary = transpose(data_array)
-        # There is a mysterious error "object of too small depth for
-        # desired array".  However, if you catch this exception and
-        # try to execute the very same line of code again, it works
-        # without any complaints.
-        #
-        # For now, we just use slicing to assign the X and Y arrays.
         data_array = asarray(data_array)
         if len(data_array.shape) == 1:
             x_ary = data_array[0]
@@ -246,9 +266,9 @@ class ScatterPlot(BaseXYPlot):
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
         if self.orientation == "h":
-            return transpose(array((sx,sy)))
+            return column_stack([sx, sy])
         else:
-            return transpose(array((sy,sx)))
+            return column_stack([sy, sx])
 
     def map_data(self, screen_pt, all_values=True):
         """ Maps a screen space point into the "index" space of the plot.
@@ -268,6 +288,12 @@ class ScatterPlot(BaseXYPlot):
 
         Overrides the BaseXYPlot implementation..
         """
+        index_data = self.index.get_data()
+        value_data = self.value.get_data()
+
+        if len(value_data) == 0 or len(index_data) == 0:
+            return None
+
         if index_only and self.index.sort_order != "none":
             data_pt = self.map_data(screen_pt)[0]
             # The rest of this was copied out of BaseXYPlot.
@@ -276,15 +302,10 @@ class ScatterPlot(BaseXYPlot):
             if ((data_pt < self.index_mapper.range.low) or \
                 (data_pt > self.index_mapper.range.high)) and outside_returns_none:
                 return None
-            index_data = self.index.get_data()
-            value_data = self.value.get_data()
-
-            if len(value_data) == 0 or len(index_data) == 0:
-                return None
 
             try:
                 ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
-            except IndexError, e:
+            except IndexError as e:
                 # if reverse_map raises this exception, it means that data_pt is
                 # outside the range of values in index_data.
                 if outside_returns_none:
@@ -310,7 +331,7 @@ class ScatterPlot(BaseXYPlot):
                 return None
         else:
             # Brute force implementation
-            all_data = transpose(array([self.index.get_data(), self.value.get_data()]))
+            all_data = transpose(array([index_data, value_data]))
             screen_points = around(self.map_screen(all_data))
             if len(screen_points) == 0:
                 return None
@@ -319,7 +340,7 @@ class ScatterPlot(BaseXYPlot):
             else:
                 delta = screen_points - array([screen_pt])
                 distances = sqrt(sum(delta*delta, axis=1))
-            closest_ndx = argmin(distances)
+            closest_ndx = nanargmin(distances)
             if distances[closest_ndx] <= threshold:
                 return closest_ndx
             else:
@@ -353,14 +374,17 @@ class ScatterPlot(BaseXYPlot):
         index_range_mask = self.index_mapper.range.mask_data(index)
         value_range_mask = self.value_mapper.range.mask_data(value)
 
-        nan_mask = invert(isnan(index)) & index_mask & \
-                   invert(isnan(value)) & value_mask
+        nan_mask = (isfinite(index) & index_mask &
+                    isfinite(value) & value_mask)
         point_mask = nan_mask & index_range_mask & value_range_mask
 
         if not self._cache_valid:
-            points = transpose(array((index,value)))
-            self._cached_data_pts = compress(point_mask, points, axis=0)
-            self._cached_point_mask = point_mask[:]
+            if not point_mask.all():
+                points = column_stack([index[point_mask], value[point_mask]])
+            else:
+                points = column_stack([index, value])
+            self._cached_data_pts = points
+            self._cached_point_mask = point_mask
             self._cache_valid = True
 
         if not self._selection_cache_valid:
@@ -371,20 +395,21 @@ class ScatterPlot(BaseXYPlot):
             # structured?  Hopefully, when we create the Selection objects,
             # we'll have to define a small algebra about how they are combined,
             # and this will fall out...
+            point_mask = point_mask.copy()
             for ds in (self.index, self.value):
                 if ds.metadata.get('selection_masks', None) is not None:
                     try:
                         for mask in ds.metadata['selection_masks']:
                             point_mask &= mask
                         indices = where(point_mask == True)
-                        points = transpose(array((index[indices], value[indices])))
+                        points = column_stack([index[indices], value[indices]])
                     except:
                         continue
                 elif ds.metadata.get('selections', None) is not None:
                     try:
                         indices = ds.metadata['selections']
                         point_mask = point_mask[indices]
-                        points = transpose(array((index[indices], value[indices])))
+                        points = column_stack([index[indices], value[indices]])
                     except:
                         continue
                 else:
@@ -505,9 +530,12 @@ class ScatterPlot(BaseXYPlot):
         self.request_redraw()
 
     def _either_metadata_changed(self):
-        self._selection_cache_valid = False
-        self.invalidate_draw()
-        self.request_redraw()
+        if self.show_selection:
+            # Only redraw when we are showing the selection. Otherwise, there
+            # is nothing to update in response to this event.
+            self._selection_cache_valid = False
+            self.invalidate_draw()
+            self.request_redraw()
 
     #------------------------------------------------------------------------
     # Defaults

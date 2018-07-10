@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 import unittest
 
@@ -52,7 +53,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(foo.range.low, -1.0)
         self.assertEqual(foo.range.high, 2.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated)
+        self.assertTrue(foo.range_updated)
 
     def test_set_bounds2(self):
         """Change only the high value with set_bounds()."""
@@ -67,7 +68,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(foo.range.low, 0.0)
         self.assertEqual(foo.range.high, 2.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated)
+        self.assertTrue(foo.range_updated)
 
     def test_set_bounds3(self):
         """Change only the low value with set_bounds()."""
@@ -82,7 +83,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(foo.range.low, 0.5)
         self.assertEqual(foo.range.high, 1.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated)
+        self.assertTrue(foo.range_updated)
 
     def test_set_bounds4(self):
         """Set set_bounds() with high='track'."""
@@ -95,12 +96,12 @@ class DataRangeTestCase(unittest.TestCase):
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(100.0, 'track')
-        print foo.range.low, foo.range.high
+        print(foo.range.low, foo.range.high)
         # Verify the values.
         self.assertEqual(foo.range.low, 100.0)
         self.assertEqual(foo.range.high, 101.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated)
+        self.assertTrue(foo.range_updated)
 
     def test_set_bounds5(self):
         """Set set_bounds() with low='track'."""
@@ -117,7 +118,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(foo.range.low, 99.0)
         self.assertEqual(foo.range.high, 100.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated)
+        self.assertTrue(foo.range_updated)
 
     def test_set_tracking_amount(self):
         """Test setting the tracking amount using the set_tracking_amount() method."""
@@ -134,7 +135,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(foo.range.low, -1.0)
         self.assertEqual(foo.range.high, 1.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated)
+        self.assertTrue(foo.range_updated)
 
     def test_scale_tracking_amount(self):
         """Test setting the tracking amount using the scale_tracking_amount() method."""
@@ -151,7 +152,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(foo.range.low, 0.5)
         self.assertEqual(foo.range.high, 1.0)
         # Verify that the `updated` event fired.
-        self.assert_(foo.range_updated)
+        self.assertTrue(foo.range_updated)
 
     def test_single_source(self):
         r = DataRange1D()

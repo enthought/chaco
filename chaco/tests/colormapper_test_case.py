@@ -27,7 +27,7 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
         expected = array([0.0, 0.5, 1.0])
 
         close = allclose(ravel(b[:,:1]), expected, atol=0.02)
-        self.assert_(close,
+        self.assertTrue(close,
             "Simple map failed.  Expected %s.  Got %s" % (expected, b[:,:1]))
 
         return
@@ -54,7 +54,7 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
         expected = array([0.0, 0.5, 1.0])
 
         close = allclose(ravel(b[:,:1]), expected, atol=0.02)
-        self.assert_(close,
+        self.assertTrue(close,
             "Changing min value broke map.  Expected %s.  Got %s" % (expected, b[:,:1]))
 
         # Update the max_value.
@@ -67,7 +67,7 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
         expected = array([0.0, 0.5, 1.0])
 
         close = allclose(ravel(b[:,:1]), expected, atol=0.02)
-        self.assert_(close,
+        self.assertTrue(close,
             "Changing min value broke map.  Expected %s.  Got %s" % (expected, b[:,:1]))
 
 

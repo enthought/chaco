@@ -12,10 +12,10 @@ from enable.api import black_color_trait
 from kiva.constants import FILL_STROKE
 
 # Local relative imports
-from chaco.abstract_plot_renderer import AbstractPlotRenderer
-from abstract_mapper import AbstractMapper
-from array_data_source import ArrayDataSource
-from base import reverse_map_1d
+from .abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_mapper import AbstractMapper
+from .array_data_source import ArrayDataSource
+from .base import reverse_map_1d
 
 
 logger = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ class BarPlot(AbstractPlotRenderer):
     # The data source to use as value points.
     value = Instance(ArrayDataSource)
 
-    # The data source to use as "starting" values for the bars.
+    # The data source to use as "starting" values for bars (along value axis).
     # For instance, if the values are [10, 20] and starting_value
     # is [3, 7], BarPlot will plot two bars, one  between 3 and 10, and
     # one between 7 and 20

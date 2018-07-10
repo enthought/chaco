@@ -112,11 +112,11 @@ Here is a simple example of the "script-oriented" approach for creating
 a static plot.  This is probably familiar to anyone who has used Gnuplot,
 MATLAB, or Matplotlib::
 
-    import numpy as np
+    from numpy import linspace, pi, sin
     from chaco.shell import *
 
-    x = np.linspace(-2*pi, 2*pi, 100)
-    y = np.sin(x)
+    x = linspace(-2*pi, 2*pi, 100)
+    y = sin(x)
 
     plot(x, y, "r-")
     title("First plot")
@@ -1173,7 +1173,7 @@ This can be done in just a few lines: ::
 
     class CustomTool(BaseTool):
         def normal_mouse_move(self, event):
-            print "Screen point:", event.x, event.y
+            print("Screen point:", event.x, event.y)
 
 :class:`BaseTool` is an abstract class that forms the interface for tools.
 It defines a set of methods that are called for the
@@ -1190,6 +1190,8 @@ just going to print it out.
 Other event callbacks correspond to mouse gestures (``mouse_enter``,
 ``mouse_leave``, ``mouse_wheel``), mouse clicks (``left_down``, ``left_up``,
 ``right_down``, ``right_up``), and key presses (``key_pressed``).
+
+.. _Tool_States:
 
 Stateful tools
 ==============
@@ -1208,7 +1210,7 @@ event, and we will exit that state when we detect a "left up" event: ::
         event_state = Enum("normal", "mousedown")
 
         def normal_mouse_move(self, event):
-            print "Screen:", event.x, event.y
+            print("Screen:", event.x, event.y)
 
         def normal_left_down(self, event):
             self.event_state = "mousedown"
@@ -1230,7 +1232,7 @@ data space:
 .. code-block:: python
 
         def mousedown_mouse_move(self, event):
-                print "Data:", self.component.map_data((event.x, event.y))
+                print("Data:", self.component.map_data((event.x, event.y)))
 
 The ``self.component`` attribute contains a reference to the underlying
 plot. This is why tools need to be given a reference to a plot when

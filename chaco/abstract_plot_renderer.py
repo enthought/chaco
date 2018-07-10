@@ -4,7 +4,7 @@
 from traits.api import Enum
 
 # Local relative imports
-from plot_component import PlotComponent
+from .plot_component import PlotComponent
 
 class AbstractPlotRenderer(PlotComponent):
     """ This is the minimal interface that all plot renderers must support.

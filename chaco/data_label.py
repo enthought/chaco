@@ -6,13 +6,13 @@ from numpy import array, asarray, inf
 from numpy.linalg import norm
 
 # Enthought library imports
-from traits.api import Any, Array, Bool, Enum, Float, Int, List, \
+from traits.api import Any, ArrayOrNone, Bool, Enum, Float, Int, List, \
      Str, Tuple, Trait, on_trait_change, Property
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
-from scatterplot import render_markers
-from tooltip import ToolTip
+from .scatterplot import render_markers
+from .tooltip import ToolTip
 
 
 # Specifies the position of a label relative to its target.  This can
@@ -163,7 +163,7 @@ class DataLabel(ToolTip):
     custom_symbol = Any
 
     # The point in data space where this label should anchor itself.
-    data_point = Trait(None, None, Tuple, List, Array)
+    data_point = ArrayOrNone()
 
     # The location of the data label relative to the data point.
     label_position = LabelPositionTrait
@@ -405,8 +405,8 @@ class DataLabel(ToolTip):
                     by = y2
                 else:
                     by = y
+            arrow_len = sqrt((px - bx)**2 + (py - by)**2)
 
-        arrow_len = sqrt((px - bx) ** 2 + (py - by) ** 2)
         arrow_visible = (self.arrow_visible and
                          (arrow_len >= self.arrow_min_length))
 

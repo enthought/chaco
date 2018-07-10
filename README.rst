@@ -2,11 +2,19 @@
 chaco: interactive 2-dimensional plotting
 =========================================
 
-http://github.enthought.com/chaco
+http://www.github.com/enthought/chaco
+
+http://docs.enthought.com/chaco
 
 .. image:: https://api.travis-ci.org/enthought/chaco.png?branch=master
    :target: https://travis-ci.org/enthought/chaco
    :alt: Build status
+
+
+.. image:: https://coveralls.io/repos/enthought/chaco/badge.png?branch=master
+  :target: https://coveralls.io/r/enthought/chaco?branch=master
+  :alt: Test coverage
+
 
 Chaco is a Python plotting application toolkit that facilitates writing
 plotting applications at all levels of complexity, from simple scripts with
@@ -34,9 +42,10 @@ Features
 
 Prerequisites
 -------------
+Chaco is only supported on Python 2.7.x and Python >= 3.4.
 You must have the following libraries installed before building or installing
 Chaco:
 
 * `Numpy <http://pypi.python.org/pypi/numpy>`_
-* `distribute <http://pypi.python.org/pypi/distribute>`_
+* `setuptools <http://pypi.python.org/pypi/setuptools>`_
 * `enable <https://github.com/enthought/enable>`_

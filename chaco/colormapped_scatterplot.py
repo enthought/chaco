@@ -3,20 +3,22 @@
 
 from __future__ import with_statement
 
+import six
+import six.moves as sm
 # Major library imports
 from numpy import argsort, array, concatenate, nonzero, invert, take, \
                   isnan, transpose, newaxis, zeros, ndarray
 
 # Enthought library imports
 from kiva.constants import STROKE
-from traits.api import Dict, Enum, Float, Instance
+from traits.api import Dict, Enum, Float, Instance, on_trait_change
 from traitsui.api import Item, RangeEditor
 
 # Local, relative imports
-from array_data_source import ArrayDataSource
-from base import left_shift, right_shift
-from color_mapper import ColorMapper
-from scatterplot import ScatterPlot, ScatterPlotView
+from .array_data_source import ArrayDataSource
+from .base import left_shift, right_shift
+from .abstract_colormap import AbstractColormap
+from .scatterplot import ScatterPlot, ScatterPlotView
 
 
 class ColormappedScatterPlotView(ScatterPlotView):
@@ -43,7 +45,7 @@ class ColormappedScatterPlot(ScatterPlot):
     color_data = Instance(ArrayDataSource)
 
     # Mapping for colors.
-    color_mapper = Instance(ColorMapper)
+    color_mapper = Instance(AbstractColormap)
 
     # The alpha value to apply to the result of the color-mapping process.
     # (This makes it easier to create color maps without having to worry
@@ -329,7 +331,7 @@ class ColormappedScatterPlot(ScatterPlot):
                                     self.outline_color_, self.line_width)
                 gc.draw_path_at_points(xy, path, mode)
         else:
-            raise RuntimeError, "Batch drawing requested on non-batch-capable GC."
+            raise RuntimeError("Batch drawing requested on non-batch-capable GC.")
         return
 
     def _render_bruteforce(self, gc, points):
@@ -413,6 +415,11 @@ class ColormappedScatterPlot(ScatterPlot):
         self.request_redraw()
 
         return
+
+    @on_trait_change('color_mapper:updated')
+    def _color_mapper_updated(self):
+        self.invalidate_draw()
+        self.request_redraw()
 
     def _fill_alpha_changed(self):
         self.invalidate_draw()

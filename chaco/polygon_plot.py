@@ -9,12 +9,12 @@ import numpy as np
 # Enthought library imports.
 from enable.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
-from kiva.agg import points_in_polygon
+from kiva.api import points_in_polygon
 from traits.api import Enum, Float, Tuple, Property, cached_property, \
                         on_trait_change
 
 # Local imports.
-from base_xy_plot import BaseXYPlot
+from .base_xy_plot import BaseXYPlot
 
 class PolygonPlot(BaseXYPlot):
     """ Plots a polygon in dataspace.
@@ -134,7 +134,7 @@ class PolygonPlot(BaseXYPlot):
         data_pt = self.map_data(screen_pt, all_values=True)
         index = self.index.get_data()
         value = self.value.get_data()
-        poly = np.vstack((index,value)).T
+        poly = np.column_stack((index, value))
         if points_in_polygon([data_pt], poly)[0] == 1:
             return True
         else:

@@ -4,8 +4,8 @@
 from numpy import array
 
 # Enthought library imports
-from traits.api import Any, Array, Bool, Enum, Event, Float, Int, Instance, \
-                         List, Property, Str, Trait, Tuple
+from traits.api import Any, Array, ArrayOrNone, Bool, Enum, Event, Float, \
+    Instance, Int, List, Property, Str, Trait
 from enable.api import KeySpec
 
 # Chaco imports
@@ -132,8 +132,8 @@ class RangeSelection(AbstractController):
     _axis_index = Trait(None, None, Int)
 
     # The data space start and end coordinates of the selected region,
-    # expressed as a list.
-    _selection = Trait(None, None, Tuple, List, Array)
+    # expressed as an array.
+    _selection = ArrayOrNone()
 
     # The selection in mask form.
     _selection_mask = Array
@@ -201,7 +201,7 @@ class RangeSelection(AbstractController):
         low = min(screen_bounds)
         high = max(screen_bounds)
         tmp = (event.x, event.y)
-        ndx = self._determine_axis()
+        ndx = self.axis_index
         mouse_coord = tmp[ndx]
 
         if self.enable_resize:
@@ -209,11 +209,11 @@ class RangeSelection(AbstractController):
                             (abs(mouse_coord - low) <= self.resize_margin):
                 return self.selected_right_down(event)
 
-        if tmp[self.axis_index] >= low and tmp[self.axis_index] <= high:
+        if low <= tmp[ndx] <= high:
             self.event_state = "moving"
             self._down_point = array([event.x, event.y])
             self._down_data_coord = \
-                self.mapper.map_data(self._down_point)[self.axis_index]
+                self.mapper.map_data(self._down_point)[ndx]
             self._original_selection = array(self.selection)
         elif self.allow_deselection:
             self.deselect(event)
@@ -240,7 +240,7 @@ class RangeSelection(AbstractController):
             if coords is not None:
                 start, end = coords
                 tmp = (event.x, event.y)
-                ndx = self._determine_axis()
+                ndx = self.axis_index
                 mouse_coord = tmp[ndx]
                 # We have to do a little swapping; the "end" point
                 # is always what gets updated, so if the user
@@ -283,7 +283,7 @@ class RangeSelection(AbstractController):
             if coords is not None:
                 start, end = coords
                 tmp = (event.x, event.y)
-                ndx = self._determine_axis()
+                ndx = self.axis_index
                 mouse_coord = tmp[ndx]
                 if abs(mouse_coord - end) <= self.resize_margin or \
                         abs(mouse_coord - start) <= self.resize_margin:
@@ -510,9 +510,16 @@ class RangeSelection(AbstractController):
 
         pos = self._get_axis_coord(event)
         if pos >= high:
-            selection_high = self.mapper.map_data(high)
+            # clip to the boundary appropriate for the mapper's orientation.
+            if self.mapper.sign == 1:
+                selection_high = self.mapper.map_data(high)
+            else:
+                selection_high = self.mapper.map_data(low)
         elif pos <= low:
-            selection_low = self.mapper.map_data(low)
+            if self.mapper.sign == 1:
+                selection_low = self.mapper.map_data(low)
+            else:
+                selection_low = self.mapper.map_data(high)
 
         self.selection = (selection_low, selection_high)
         event.window.set_pointer("arrow")

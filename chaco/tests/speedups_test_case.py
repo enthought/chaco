@@ -27,7 +27,7 @@ class GatherPointsBase(object):
         points, selection = self.func(index, 4.5, 14.5, value, -1.0, 2.4)
         desired = array([[5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
             [0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.8]]).T
-        self.assert_(selection == None)
+        self.assertTrue(selection == None)
         assert_close(desired, points)
 
     def test_masked(self):

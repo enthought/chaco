@@ -10,7 +10,7 @@ from enable.api import ColorTrait, LineStyle
 from traits.api import Float, Instance, Bool
 
 # Local imports
-from abstract_overlay import AbstractOverlay
+from .abstract_overlay import AbstractOverlay
 
 class LassoOverlay(AbstractOverlay):
     """ Draws a lasso selection region on top of a plot.

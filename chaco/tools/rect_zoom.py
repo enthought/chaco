@@ -1,6 +1,6 @@
 """ Defines the RectZoomTool class.
 """
-from zoom_tool import ZoomTool
+from .zoom_tool import ZoomTool
 
 class RectZoomTool(ZoomTool):
     """

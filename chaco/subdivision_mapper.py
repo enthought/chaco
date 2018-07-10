@@ -1,6 +1,10 @@
 """ Defines the SubdivisionDataMapper and SubdivisionLineDataMapper classes.
 """
 # Major library imports
+
+import six
+import six.moves as sm
+
 import math
 from numpy import array, arange, concatenate, searchsorted, nonzero, transpose, \
                   argsort, zeros, sort, vstack
@@ -10,10 +14,10 @@ import numpy
 from traits.api import List, Array, Tuple, Int, Float
 
 # Local, relative imports
-from datamapper import AbstractDataMapper, right_shift, left_shift, \
+from .datamapper import AbstractDataMapper, right_shift, left_shift, \
                        sort_points, ArraySortTrait, \
                        array_zip
-from subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
+from .subdivision_cells import AbstractCell, Cell, RangedCell, find_runs, \
                               arg_find_runs
 
 
@@ -160,12 +164,12 @@ class SubdivisionDataMapper(AbstractDataMapper):
         start_indices = concatenate([[0], diff_indices])
         end_indices = concatenate([diff_indices, [len(self._data)]])
 
-        for start,end in zip(start_indices, end_indices):
+        for start,end in sm.zip(start_indices, end_indices):
             gridx, gridy = cell_indices[start]  # can use 'end' here just as well
             if celltype == RangedCell:
                 self._cellgrid[gridx,gridy].add_ranges([(start,end)])
             else:
-                self._cellgrid[gridx,gridy].add_indices(range(start,end))
+                self._cellgrid[gridx,gridy].add_indices(list(sm.xrange(start,end)))
         return
 
     def _get_indices_for_points(self, pointlist):
@@ -196,7 +200,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
         row_end_indices = left_shift(row_start_indices, len(cells))
 
         rects = []
-        for rownum, start, end in zip(rownums, row_start_indices, row_end_indices):
+        for rownum, start, end in sm.zip(rownums, row_start_indices, row_end_indices):
             # y_sorted is sorted by the J (row) coordinate, so after we
             # extract the column indices, we need to sort them before
             # passing them to find_runs().
@@ -239,7 +243,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
                     #~ elif cell.sort_order == 'descending':
                         #~ cell.points = find_runs(sort_points(cellpts)[::-1], 'descending')
                     #~ else:
-                        #~ raise RuntimeError, "Invalid sort_order: " + cell.sort_order
+                        #~ raise RuntimeError("Invalid sort_order: " + cell.sort_order)
         #~ return
 
 class SubdivisionLineDataMapper(SubdivisionDataMapper):

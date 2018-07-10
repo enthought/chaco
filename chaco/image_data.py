@@ -1,14 +1,14 @@
 """ Defines the ImageData class.
 """
 # Standard library imports
-from numpy import nanmax, nanmin, swapaxes
+from numpy import fmax, fmin, swapaxes
 
 # Enthought library imports
 from traits.api import Bool, Int, Property, ReadOnly, Tuple
 
 # Local relative imports
-from base import DimensionTrait, ImageTrait
-from abstract_data_source import AbstractDataSource
+from .base import DimensionTrait, ImageTrait
+from .abstract_data_source import AbstractDataSource
 
 class ImageData(AbstractDataSource):
     """
@@ -149,10 +149,14 @@ class ImageData(AbstractDataSource):
         """
         if not self._bounds_cache_valid:
             if self.raw_value.size == 0:
-                self._cached_bounds = (0,0)
+                self._cached_bounds = (0, 0)
             else:
-                self._cached_bounds = (nanmin(self.raw_value),
-                                       nanmax(self.raw_value))
+                # nanmin and nanmax raise an annoying RuntimeWarning when
+                # all raw_value entries are NaN.  Use fmin.reduce and
+                # fmax.reduce to avoid this.
+                self._cached_bounds = (
+                    fmin.reduce(self.raw_value, axis=None),
+                    fmax.reduce(self.raw_value, axis=None))
             self._bounds_cache_valid = True
         return self._cached_bounds
 

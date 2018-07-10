@@ -18,7 +18,7 @@ from chaco.example_support import COLOR_PALETTE
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import Bool, HasTraits, Instance
-from traitsui.api import UItem, View
+from traitsui.api import Group, Item, UItem, View
 
 # Chaco imports
 from chaco.api import OverlayPlotContainer, create_line_plot, add_default_axes, \
@@ -30,9 +30,9 @@ from chaco.tools.api import RangeSelection, RangeSelectionOverlay, ZoomTool
 #===============================================================================
 
 # Do the plots use downsampling?
-use_downsampling = False
+use_downsampling = True
 
-def _create_plot_component(use_downsampling=False):
+def _create_plot_component(use_downsampling=True):
 
     container = OverlayPlotContainer(padding=40, bgcolor="lightgray",
                                      use_backbuffer = True,
@@ -86,21 +86,22 @@ title = "Million Point Plot"
 class Demo(HasTraits):
     plot = Instance(Component)
 
-    # FIXME: I am putting this in here just for consistency: however the plots
-    # in Chaco don't have an implementation for downsampling yet, and so, this
-    # trait is not exposed in the UI.
-    use_downsampling = Bool
+    use_downsampling = Bool(True)
 
-    traits_view = View(UItem('plot', editor=ComponentEditor()),
-                       width=size[0], height=size[1], resizable=True,
-                       title=title
-                       )
+    traits_view = View(
+        UItem('plot', editor=ComponentEditor()),
+        Group(Item('use_downsampling')),
+        width=size[0],
+        height=size[1],
+        resizable=True,
+        title=title
+    )
 
     def _plot_default(self):
         return _create_plot_component(self.use_downsampling)
 
-    def _use_downsampling_default(self):
-        return use_downsampling
+    def _use_downsampling_changed(self):
+        self.plot = _create_plot_component(self.use_downsampling)
 
 demo = Demo()
 

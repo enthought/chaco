@@ -1,16 +1,17 @@
+from __future__ import print_function
 
 from traits.testing.unittest_tools import unittest
 
 from numpy import array
 
-from formatters import BasicFormatter, OffsetFormatter
-from scales import Pow10Scale, FixedScale, LogScale, DefaultScale, ScaleSystem, frange
+from .formatters import BasicFormatter, OffsetFormatter
+from .scales import Pow10Scale, FixedScale, LogScale, DefaultScale, ScaleSystem, frange
 
 
 class TicksTestCase(unittest.TestCase):
     """ Base class for scale and scale system unit tests """
     def assert_empty(self, arg):
-        self.assert_(len(arg) == 0)
+        self.assertEqual(len(arg), 0)
 
     def check_ticks(self, ticks1, ticks2):
         self.assertEqual(len(ticks1),len(ticks2))
@@ -20,7 +21,7 @@ class TicksTestCase(unittest.TestCase):
     def check_labels(self, labels1, labels2):
         self.assertEqual(len(labels1),len(labels2))
         for t1, t2, in zip(labels1, labels2):
-            self.assert_(t1 == t2)
+            self.assertEqual(t1, t2)
 
 
 class ScalesTestCase(TicksTestCase):
@@ -148,7 +149,7 @@ class BasicFormatterTestCase(TicksTestCase):
             for mdigits, desired in lst[1:]:
                 s = fmt._nice_sci(val, mdigits)
                 if s != desired:
-                    print "Mismatch for", val, "; desired:", desired, "actual:", s
+                    print("Mismatch for", val, "; desired:", desired, "actual:", s)
 
 
     def test_estimate_default_scale(self):
@@ -176,11 +177,11 @@ class BasicFormatterTestCase(TicksTestCase):
         test_intervals = ((1, 100, 80),
                           (1, 100, 40),
                           (1, 100, 20),)
-        print
+        print()
         for start, end, width in test_intervals:
             labels = scale.labels(start, end, char_width=width)
-            print "(%d,%d)" % (start,end), " avail:", width,
-            print " used:", sum([len(x[1]) for x in labels])
+            print("(%d,%d)" % (start,end), " avail:", width, end=" ")
+            print(" used:", sum([len(x[1]) for x in labels]))
         return
 
     def test_scale_system(self):
@@ -199,12 +200,12 @@ class BasicFormatterTestCase(TicksTestCase):
                           (1, 10, 100),
                           (1, 10, 50),
                           (1, 10, 20),)
-        print
+        print()
         for start, end, width in test_intervals:
             labels = scale.labels(start, end, char_width=width)
-            print "(%d,%d)" % (start,end), " avail:", width,
-            print " used:", sum([len(x[1]) for x in labels]),
-            print zip(*labels)[1]
+            print("(%d,%d)" % (start,end), " avail:", width, end=" ")
+            print(" used:", sum([len(x[1]) for x in labels]), end=" ")
+            print(list(zip(*labels))[1])
         return
 
 class OffsetFormatterTestCase(TicksTestCase):
@@ -225,11 +226,11 @@ class OffsetFormatterTestCase(TicksTestCase):
             scale = FixedScale(resolution = resol)
             numlabels = 12
             ticks = scale.ticks(start, end, numlabels)
-            print "range:", start, end
+            print("range:", start, end)
             labels = fmt.format(ticks, numlabels, None)
-            print "Labels:", labels, "\n"
-            print "estimated width:", fmt.estimate_width(start, end, numlabels)
-            print "actual width:", sum(map(len, labels))
+            print("Labels:", labels)
+            print("estimated width:", fmt.estimate_width(start, end, numlabels))
+            print("actual width:", sum(map(len, labels)))
 
 
 

@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 from random import choice
 from traits.api import Any, Enum, HasTraits, Instance, Int, List, Str
@@ -36,7 +37,7 @@ class ButtonController(HasTraits):
         #control_down = getattr(event, self.modifier + "_down", False)
         control_down = True
         if DEBUG:
-            print "[notify]", button.plotname, type, "control:", control_down
+            print("[notify]", button.plotname, type, "control:", control_down)
         if type == "down":
             if control_down and button in self.active_buttons:
                 self.button_deselected(button)
@@ -54,8 +55,8 @@ class ButtonController(HasTraits):
 
     def button_selected(self, button):
         if DEBUG:
-            print "active:", [b.plotname for b in self.active_buttons]
-            print "new button selected:", button.plotname
+            print("active:", [b.plotname for b in self.active_buttons])
+            print("new button selected:", button.plotname)
         if button in self.active_buttons:
             return
         numbuttons = len(self.active_buttons)
@@ -79,8 +80,8 @@ class ButtonController(HasTraits):
 
     def button_deselected(self, button):
         if DEBUG:
-            print "active:", [b.plotname for b in self.active_buttons]
-            print "new button deselected:", button.plotname
+            print("active:", [b.plotname for b in self.active_buttons])
+            print("new button deselected:", button.plotname)
         if button not in self.active_buttons:
             button.button_state = "up"
             return
@@ -102,7 +103,7 @@ class ButtonController(HasTraits):
 
     def show_scatterplot(self, b1, b2):
         if len(self.plot.plots) > 0:
-            self.plot.delplot(*self.plot.plots.keys())
+            self.plot.delplot(*list(self.plot.plots.keys()))
 
         cur_plot = self.plot.plot((b1.plotname+"_y", b2.plotname+"_y"),
                                   name=self._scatterplot_name,

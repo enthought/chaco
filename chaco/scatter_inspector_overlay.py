@@ -9,8 +9,8 @@ from enable.api import ColorTrait, MarkerTrait
 from traits.api import Float, Int, Str, Trait
 
 # Local, relative imports
-from abstract_overlay import AbstractOverlay
-from scatterplot import render_markers
+from .abstract_overlay import AbstractOverlay
+from .scatterplot import render_markers
 
 class ScatterInspectorOverlay(AbstractOverlay):
     """

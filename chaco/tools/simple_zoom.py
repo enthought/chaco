@@ -14,8 +14,8 @@ from traits.api \
 
 # Chaco imports
 from chaco.abstract_overlay import AbstractOverlay
-from base_zoom_tool import BaseZoomTool
-from tool_history_mixin import ToolHistoryMixin
+from .base_zoom_tool import BaseZoomTool
+from .tool_history_mixin import ToolHistoryMixin
 
 class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     """ Selects a range along the index or value axis.
@@ -674,7 +674,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             '_screen_end']
         state = super(SimpleZoom,self).__getstate__()
         for key in dont_pickle:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

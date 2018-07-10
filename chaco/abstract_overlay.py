@@ -7,7 +7,7 @@ data-related plot items and the decorators on them.
 from enable.api import Component
 from traits.api import Instance
 
-from plot_component import PlotComponent
+from .plot_component import PlotComponent
 
 
 class AbstractOverlay(PlotComponent):

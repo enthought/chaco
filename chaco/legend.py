@@ -4,20 +4,23 @@ CompositeIconRenderer classes.
 
 from __future__ import with_statement
 
+import six
+import six.moves as sm
+
 from numpy import array, zeros_like
 
 from enable.api import black_color_trait, white_color_trait
 from enable.font_metrics_provider import font_metrics_provider
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Dict, Enum, Bool, HasTraits, Int, \
-                                 Instance, List, CList, Float, Str
+from traits.api import ArrayOrNone, Bool, CList, Dict, Enum, Float, \
+    HasTraits, Instance, Int, List, Str
 
 # Local relative imports
-from abstract_overlay import AbstractOverlay
-from label import Label
-from lineplot import LinePlot
-from plot_component import PlotComponent
-from scatterplot import ScatterPlot
+from .abstract_overlay import AbstractOverlay
+from .label import Label
+from .lineplot import LinePlot
+from .plot_component import PlotComponent
+from .scatterplot import ScatterPlot
 
 
 class AbstractCompositeIconRenderer(HasTraits):
@@ -36,7 +39,7 @@ class CompositeIconRenderer(AbstractCompositeIconRenderer):
     """
     def render_icon(self, plots, *render_args):
         """ Renders an icon for a list of plots. """
-        types = set(map(type, plots))
+        types = set(sm.map(type, plots))
         if types == set([ScatterPlot]):
             self._render_scatterplots(plots, *render_args)
         elif types == set([LinePlot]):
@@ -161,7 +164,7 @@ class Legend(AbstractOverlay):
     _cached_labels = List
 
     # A cached array of label sizes.
-    _cached_label_sizes = Any
+    _cached_label_sizes = ArrayOrNone()
 
     # A cached list of label names.
     _cached_label_names = CList
@@ -173,7 +176,7 @@ class Legend(AbstractOverlay):
     _cached_visible_plots = CList
 
     # A cached array of label positions relative to the legend's origin
-    _cached_label_positions = Any
+    _cached_label_positions = ArrayOrNone()
 
     def is_in(self, x, y):
         """ overloads from parent class because legend alignment
@@ -355,7 +358,7 @@ class Legend(AbstractOverlay):
         if len(self.plots) == 0:
             return [0, 0]
 
-        plot_names, visible_plots = map(list, zip(*sorted(self.plots.items())))
+        plot_names, visible_plots = list(sm.map(list, sm.zip(*sorted(self.plots.items()))))
         label_names = self.labels
         if len(label_names) == 0:
             if len(self.plots) > 0:

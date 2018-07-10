@@ -45,7 +45,7 @@ def sort_points(points, index=0):
     to their x-coordinate (index=0) or y-coordinate (index=1).
     """
     if len(points.shape) != 2 or (2 not in points.shape):
-        raise RuntimeError, "sort_points(): Array of wrong shape."
+        raise RuntimeError("sort_points(): Array of wrong shape.")
     return take( points, argsort(points[:,index]) )
 
 def array_zip(*arys):

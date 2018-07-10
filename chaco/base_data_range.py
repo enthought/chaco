@@ -3,7 +3,7 @@ Defines the BaseDataRange class.
 """
 
 # Local relative imports
-from abstract_data_range import AbstractDataRange
+from .abstract_data_range import AbstractDataRange
 
 
 class BaseDataRange(AbstractDataRange):

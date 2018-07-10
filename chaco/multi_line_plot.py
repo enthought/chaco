@@ -17,16 +17,16 @@ from traits.api import Float, List, Str, Trait, \
             Bool, Callable, Property, cached_property, Instance, Array
 from traitsui.api import Item, View, ScrubberEditor, HGroup
 
-from array_data_source import ArrayDataSource
-from base import arg_find_runs, bin_search
-from base_xy_plot import BaseXYPlot
+from .array_data_source import ArrayDataSource
+from .base import arg_find_runs, bin_search
+from .base_xy_plot import BaseXYPlot
 
 
 class MultiLinePlot(BaseXYPlot):
     """ A plot consisting of multiple lines.
 
     The data to be plotted must come from a two-dimensional array with shape M by N
-    stored in a TraceArrayDataSource object.  M is the number of lines to be plotted,
+    stored in a MultiArrayDataSource object.  M is the number of lines to be plotted,
     and N is the number of points in each line.
 
     Constructor Parameters
@@ -469,7 +469,7 @@ class MultiLinePlot(BaseXYPlot):
     def __getstate__(self):
         state = super(MultiLinePlot,self).__getstate__()
         for key in ['traits_view']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

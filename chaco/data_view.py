@@ -6,15 +6,15 @@ from numpy import array, transpose
 from traits.api import Bool, Enum, Instance, Property
 from enable.colors import color_table
 
-from abstract_overlay import AbstractOverlay
-from axis import PlotAxis
-from base_1d_mapper import Base1DMapper
-from base_2d_plot import Base2DPlot
-from data_range_2d import DataRange2D
-from grid import PlotGrid
-from linear_mapper import LinearMapper
-from log_mapper import LogMapper
-from plot_containers import OverlayPlotContainer
+from .abstract_overlay import AbstractOverlay
+from .axis import PlotAxis
+from .base_1d_mapper import Base1DMapper
+from .base_2d_plot import Base2DPlot
+from .data_range_2d import DataRange2D
+from .grid import PlotGrid
+from .linear_mapper import LinearMapper
+from .log_mapper import LogMapper
+from .plot_containers import OverlayPlotContainer
 
 
 #-----------------------------------------------------------------------------

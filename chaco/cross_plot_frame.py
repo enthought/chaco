@@ -9,12 +9,15 @@
 
 from __future__ import with_statement
 
+import six
+import six.moves as sm
+
 # Enthought library imports
 from traits.api import Bool, Float
 
 # Local, relative imports
-from base_plot_frame import BasePlotFrame
-from plot_containers import HPlotContainer, OverlayPlotContainer, VPlotContainer
+from .base_plot_frame import BasePlotFrame
+from .plot_containers import HPlotContainer, OverlayPlotContainer, VPlotContainer
 
 
 class CrossPlotFrame(BasePlotFrame):
@@ -52,10 +55,8 @@ class CrossPlotFrame(BasePlotFrame):
 
 
     def __init__(self, **kwtraits):
-        if kwtraits.has_key("bounds"):
-            bounds = kwtraits.pop("bounds")
-        else:
-            bounds = list(self.default_bounds)
+        bounds = kwtraits.pop("bounds", list(self.default_bounds))
+
         BasePlotFrame.__init__(self, **kwtraits)
 
         # Create our plot containers
@@ -167,7 +168,7 @@ class CrossPlotFrame(BasePlotFrame):
     def __getstate__(self):
         state = super(CrossPlotFrame,self).__getstate__()
         for key in ['_layout_needed']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

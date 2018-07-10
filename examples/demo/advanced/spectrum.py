@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-This plot displays the audio waveform, spectrum, and spectrogram from the 
+This plot displays the audio waveform, spectrum, and spectrogram from the
 microphone.
 
 Based on updating_plot.py
@@ -46,7 +46,7 @@ def _create_plot_component(obj):
                            color="red")
     obj.spectrum_plot.padding = 50
     obj.spectrum_plot.title = "Spectrum"
-    spec_range = obj.spectrum_plot.plots.values()[0][0].value_mapper.range
+    spec_range = list(obj.spectrum_plot.plots.values())[0][0].value_mapper.range
     spec_range.low = 0.0
     spec_range.high = 5.0
     obj.spectrum_plot.index_axis.title = 'Frequency (Hz)'
@@ -64,7 +64,7 @@ def _create_plot_component(obj):
     obj.time_plot.title = "Time"
     obj.time_plot.index_axis.title = 'Time (seconds)'
     obj.time_plot.value_axis.title = 'Amplitude'
-    time_range = obj.time_plot.plots.values()[0][0].value_mapper.range
+    time_range = list(obj.time_plot.plots.values())[0][0].value_mapper.range
     time_range.low = -0.2
     time_range.high = 0.2
 
@@ -101,7 +101,16 @@ def get_audio_data():
         pa = pyaudio.PyAudio()
         _stream = pa.open(format=pyaudio.paInt16, channels=1, rate=SAMPLING_RATE,
                      input=True, frames_per_buffer=NUM_SAMPLES)
-    audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
+    try:
+        audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
+    except IOError as e:
+        # Workaround "Input overflowed" issue on OS X, by restarting stream
+        if e.errno != "Input overflowed":
+            raise
+        audio_data = zeros((NUM_SAMPLES,))
+        _stream.stop_stream()
+        _stream.close()
+        _stream = None
     normalized_data = audio_data / 32768.0
     return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
 

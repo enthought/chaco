@@ -2,7 +2,7 @@
 
 This definition remains for backwards compatibility.
 """
-from chaco.scatterplot import ScatterPlot
+from .scatterplot import ScatterPlot
 
 
 # TODO: This should be officially deprecated.

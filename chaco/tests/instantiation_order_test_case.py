@@ -16,17 +16,17 @@ class DataPipelineTestCase(unittest.TestCase):
         ds.set_data(ary)
         r = DataRange1D()
         r.add(ds)
-        self.assert_(r.low_setting == "auto")
-        self.assert_(r.high_setting == "auto")
-        self.assert_(r.low == 1)
-        self.assert_(r.high == 7)
+        self.assertTrue(r.low_setting == "auto")
+        self.assertTrue(r.high_setting == "auto")
+        self.assertTrue(r.low == 1)
+        self.assertTrue(r.high == 7)
 
         mapper = LinearMapper()
         mapper.range = r
         mapper.low_pos = 1.0
         mapper.high_pos = 7.0
         screen_pts = mapper.map_screen(array([1,3,7]))
-        self.assert_(tuple(screen_pts) == (1.0, 3.0, 7.0))
+        self.assertTrue(tuple(screen_pts) == (1.0, 3.0, 7.0))
         return
 
     def test_reverse_construction(self):
@@ -41,10 +41,10 @@ class DataPipelineTestCase(unittest.TestCase):
         r.add(ds)
         ds.set_data(ary)
 
-        self.assert_(r.low == 1)
-        self.assert_(r.high == 7)
+        self.assertTrue(r.low == 1)
+        self.assertTrue(r.high == 7)
         screen_pts = mapper.map_screen(array([1,3,7]))
-        self.assert_(tuple(screen_pts) == (1.0, 3.0, 7.0))
+        self.assertTrue(tuple(screen_pts) == (1.0, 3.0, 7.0))
         return
 
 

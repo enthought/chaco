@@ -8,8 +8,8 @@ from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Any, Enum, Int, Str, Float, Trait, Bool
 
 # Local, relative imports
-from abstract_overlay import AbstractOverlay
-from label import Label
+from .abstract_overlay import AbstractOverlay
+from .label import Label
 
 
 class TextBoxOverlay(AbstractOverlay):

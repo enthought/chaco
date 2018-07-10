@@ -13,6 +13,8 @@ tick-related values (i.e., bounds and intervals).
 
 """
 # Major library imports
+import six
+
 from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
     float64, floor, linspace, log10, minimum, ndarray, newaxis, \
     putmask, shape
@@ -101,6 +103,19 @@ class ShowAllTickGenerator(AbstractTickGenerator):
         # ignore all the high, low, etc. data and just return every position
         return array(self.positions, float64)
 
+class MinorTickGenerator(DefaultTickGenerator):
+    """ An implementation of AbstractTickGenerator that extends DefaultTickGenerator,
+        but sets the tick interval to a smaller length.
+    """
+    def get_ticks(self, data_low, data_high, bounds_low, bounds_high,
+                          interval, use_endpoints=False, scale='linear'):
+        if interval == 'auto':
+            # for the default interval, generate a smaller tick interval
+            interval = auto_interval(0, auto_interval(data_low, data_high), max_ticks=5)
+        
+        return super(MinorTickGenerator, self).get_ticks(data_low, data_high,
+                                bounds_low, bounds_high, interval, use_endpoints, scale)
+
 #-------------------------------------------------------------------------------
 #  Code imported from plt/plot_utility.py:
 #-------------------------------------------------------------------------------
@@ -146,12 +161,12 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
     is_auto_low  = (bound_low  == 'auto')
     is_auto_high = (bound_high == 'auto')
 
-    if isinstance(bound_low, basestring):
+    if isinstance(bound_low, six.string_types):
         lower = data_low
     else:
         lower = float( bound_low )
 
-    if isinstance(bound_high, basestring):
+    if isinstance(bound_high, six.string_types):
         upper = data_high
     else:
         upper = float( bound_high )
@@ -163,13 +178,6 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
             tick_interval = 0.5
             lower         = data_low  - 0.5
             upper         = data_high + 0.5
-        elif is_base2( rng ) and is_base2( upper ) and rng > 4:
-            if rng == 2:
-                tick_interval = 1
-            elif rng == 4:
-                tick_interval = 4
-            else:
-                tick_interval = rng / 4   # maybe we want it 8?
         else:
             tick_interval = auto_interval( lower, upper )
     elif tick_interval < 0:
@@ -216,33 +224,6 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
 
     return [tick for tick in ticks if tick >= bound_low and tick <= bound_high]
 
-#--------------------------------------------------------------------------------
-#  Determine if a number is a power of 2:
-#--------------------------------------------------------------------------------
-
-def is_base2 ( range ):
-    """ Returns True if *range* is a positive base-2 number (2, 4, 8, 16, ...).
-    """
-    if range <= 0.0:
-        return False
-    else:
-        lg = log2( range )
-        return ((lg == floor( lg )) and (lg > 0.0))
-
-#--------------------------------------------------------------------------------
-#  Compute n log 2:
-#--------------------------------------------------------------------------------
-
-def log2 ( num ):
-    """ Returns the base 2 logarithm of a number (or array).
-
-    """
-    #    !! 1e-16 is here to prevent errors when log is 0
-    if num == 0.0:
-        num += 1.0e-16
-    elif type( num ) is ndarray:
-        putmask( num, equal( num, 0.0), 1.0e-16 )
-    return log10( num ) / log10( 2 )
 
 #--------------------------------------------------------------------------------
 #  Compute the best tick interval for a specified data range:
@@ -286,7 +267,7 @@ def _nice(x, round=False):
     return nf * pow(10, expv)
 
 
-def auto_interval ( data_low, data_high ):
+def auto_interval ( data_low, data_high, max_ticks=9 ):
     """ Calculates the tick interval for a range.
 
         The boundaries for the data to be plotted on the axis are::
@@ -294,7 +275,7 @@ def auto_interval ( data_low, data_high ):
             data_bounds = (data_low,data_high)
 
         The function chooses the number of tick marks, which can be between
-        3 and 9 marks (including end points), and chooses tick intervals at
+        3 and max_ticks marks (including end points), and chooses tick intervals at
         1, 2, 2.5, 5, 10, 20, ...
 
         Returns
@@ -307,7 +288,7 @@ def auto_interval ( data_low, data_high ):
     # We'll choose from between 2 and 8 tick marks.
     # Preference is given to more ticks:
     #   Note reverse order and see kludge below...
-    divisions = arange( 8.0, 2.0, -1.0 ) # ( 7, 6, ..., 3 )
+    divisions = arange( max_ticks-1, 2.0, -1.0 ) # for max_ticks=9, ( 7, 6, ..., 3 )
 
     # Calculate the intervals for the divisions:
     candidate_intervals = range / divisions

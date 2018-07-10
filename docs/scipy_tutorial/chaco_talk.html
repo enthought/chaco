@@ -293,7 +293,7 @@ class EventPrinter(AbstractController):
     def dispatch(self, event, suffix):
         # event' is a MouseEvent or KeyEvent object from the enable2
         # package, and suffix is a text string
-        print suffix, "event received at (%d,%d)" % (event.x, event.y)
+        print(suffix, "event received at (%d,%d)" % (event.x, event.y))
 
 
 from tutorial2 import myplot, PlotFrame, main
@@ -318,7 +318,7 @@ class DataPrinter(AbstractController):
         # We are assuming that self.component is an X-Y plot
         x = self.component.x_mapper.map_data(event.x)
         y = self.component.y_mapper.map_data(event.y)
-        print suffix, "event received at (%d,%d)" % (x, y)
+        print(suffix, "event received at (%d,%d)" % (x, y))
 
 
 from tutorial2 import myplot, PlotFrame, main

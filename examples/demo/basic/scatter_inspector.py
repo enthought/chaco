@@ -40,7 +40,8 @@ def _create_plot_component():
     plot.overlays.append(ZoomTool(plot))
 
     # Attach the inspector and its overlay
-    scatter.tools.append(ScatterInspector(scatter))
+    inspector = ScatterInspector(scatter)
+    scatter.tools.append(inspector)
     overlay = ScatterInspectorOverlay(scatter,
                     hover_color="red",
                     hover_marker_size=6,
@@ -49,6 +50,11 @@ def _create_plot_component():
                     selection_outline_color="purple",
                     selection_line_width=3)
     scatter.overlays.append(overlay)
+
+    # Optional: add a listener on inspector events:
+    def echo(new):
+        print("{} event on element {}".format(new.event_type, new.event_index))
+    inspector.on_trait_change(echo, "inspector_event")
 
     return plot
 

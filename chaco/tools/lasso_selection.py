@@ -2,12 +2,12 @@
 """
 # Major library imports
 import numpy
-from numpy import array, empty, sometrue, transpose, vstack, zeros
+from numpy import array, column_stack, empty, sometrue, vstack, zeros
 
 # Enthought library imports
 from traits.api import Any, Array, Enum, Event, Bool, Instance, \
                                  Property, Str, Trait, List
-from kiva.agg import points_in_polygon
+from kiva.api import points_in_polygon
 
 # Chaco imports
 from chaco.api import AbstractController, AbstractDataSource, \
@@ -254,7 +254,8 @@ class LassoSelection(AbstractController):
         if self.selection_datasource is None:
             return
 
-        selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.bool)
+        selected_mask = zeros(self.selection_datasource._data.shape,
+                              dtype=numpy.bool)
         data = self._get_data()
 
         # Compose the selection mask from the cached selections first, then
@@ -262,21 +263,25 @@ class LassoSelection(AbstractController):
         # for the active selection
 
         for selection in self._previous_selections:
-            selected_mask |= (points_in_polygon(data, selection, False))
+            selected_mask |= points_in_polygon(
+                data, selection, False).astype(bool, copy=False)
+
+        active_selection = points_in_polygon(
+            data, self._active_selection, False).astype(bool, copy=False)
 
         if self.selection_mode == 'exclude':
-            selected_mask |= (points_in_polygon(data, self._active_selection, False))
-            selected_mask = 1 - selected_mask
+            # XXX I think this should be "set difference"? - CJW
+            selected_mask |= active_selection
+            selected_mask = ~selected_mask
 
         elif self.selection_mode == 'invert':
-            selected_mask = -1 * (selected_mask -points_in_polygon(data, self._active_selection, False))
+            selected_mask ^= active_selection
         else:
-            selected_mask |= (points_in_polygon(data, self._active_selection, False))
+            selected_mask |= active_selection
 
         if sometrue(selected_mask != self.selection_datasource.metadata[self.metadata_name]):
             self.selection_datasource.metadata[self.metadata_name] = selected_mask
             self.selection_changed = True
-        return
 
     def _map_screen(self, points):
         """ Maps a point in data space to a point in screen space on the plot.
@@ -303,8 +308,8 @@ class LassoSelection(AbstractController):
     def _get_data(self):
         """ Returns the datapoints in the plot, as an Nx2 array of (x,y).
         """
-        return transpose(array((self.plot.index.get_data(), self.plot.value.get_data())))
-
+        return column_stack((self.plot.index.get_data(),
+                             self.plot.value.get_data()))
 
     #------------------------------------------------------------------------
     # Property getter/setters
@@ -319,5 +324,3 @@ class LassoSelection(AbstractController):
     def _set_plot(self, val):
         self._plot = val
         return
-
-

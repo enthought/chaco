@@ -13,8 +13,8 @@ class DataRange2DTestCase(unittest.TestCase):
         r = DataRange2D()
         assert_ary_(r.low,array([-inf,-inf]))
         assert_ary_(r.high,array([inf,inf]))
-        self.assert_(r.low_setting == ('auto','auto'))
-        self.assert_(r.high_setting == ('auto', 'auto'))
+        self.assertTrue(r.low_setting == ('auto','auto'))
+        self.assertTrue(r.high_setting == ('auto', 'auto'))
         r.low  = array([5.0,5.0])
         r.high = array([10.0,10.0])
         assert_ary_(r.low_setting, array([5.0,5.0]))
@@ -46,7 +46,7 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.high, array([6.0,60.0]))
 
         r.low = ('auto', 'auto')
-        self.assert_(r.low_setting == ('auto', 'auto'))
+        self.assertTrue(r.low_setting == ('auto', 'auto'))
         assert_ary_(r.low, array([0.0,0.0]))
         return
 
@@ -146,6 +146,25 @@ class DataRange2DTestCase(unittest.TestCase):
         r.set_bounds((-100,-100), (100,100))
         assert_ary_(r.low, array([-100,-100]))
         assert_ary_(r.high, array([100,100]))
+
+    def test_reset_bounds(self):
+        r = DataRange2D()
+
+        low = (13, 42)
+        high = (1337, 9001)
+
+        r.set_bounds(low, high)
+        self.assertEqual(r.low_setting, low)
+        self.assertEqual(r.high_setting, high)
+
+        r.reset()
+
+        self.assertEqual(r.low_setting, ('auto', 'auto'))
+        self.assertEqual(r.high_setting, ('auto', 'auto'))
+        self.assertEqual(r.x_range.low_setting, 'auto')
+        self.assertEqual(r.y_range.low_setting, 'auto')
+        self.assertEqual(r.x_range.high_setting, 'auto')
+        self.assertEqual(r.y_range.high_setting, 'auto')
 
 
     def test_clip_data(self):

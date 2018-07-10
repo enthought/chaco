@@ -3,6 +3,8 @@
 This demonstrates how to create a plot offscreen and save it to an image
 file on disk.
 """
+from __future__ import print_function
+
 # Standard library imports
 import os
 import sys
@@ -83,18 +85,19 @@ def draw_pdf(filename, size=(800, 600)):
 
 
 def get_directory(filename):
-    print 'Please enter a path in which to place generated plots.'
-    print 'Press <ENTER> to generate in the current directory.'
-    path = raw_input('Path: ').strip()
+    print('Please enter a path in which to place generated plots.')
+    print('Press <ENTER> to generate in the current directory.')
+    path = input('Path: ').strip()
 
     if len(path) > 0 and not os.path.exists(path):
-        print 'The given path does not exist.'
+        print('The given path does not exist.')
         sys.exit()
 
     if not os.path.isabs(path):
-        print 'Creating image: ' + os.path.join(os.getcwd(), path, filename)
+        print('Creating image: ' + os.path.join(os.getcwd(), path, filename))
+
     else:
-        print 'Creating image: ' + os.path.join(path, filename)
+        print('Creating image: ' + os.path.join(path, filename))
 
     return os.path.join(path, filename)
 
