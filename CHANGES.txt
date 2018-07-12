@@ -2,6 +2,18 @@
 Chaco CHANGELOG
 ===============
 
+Release 4.7.2
+-------------
+
+Fixes
+
+* FIX: Ensure contiguous inputs to points_in_polygon (#409 & #410)
+* FIX: Handle multiple plots in LegendHighlighter (#403)
+* FIX: alias six.moves as sm (#401)
+* FIX: Respect visibility in the LegendHighlighter (#402)
+* BUG: Fix use of itertools.chain() (#394)
+
+
 Release 4.7.1
 -------------
 
