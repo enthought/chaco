@@ -2,7 +2,7 @@
 """
 # Major library imports
 import numpy
-from numpy import array, empty, sometrue, transpose, vstack, zeros
+from numpy import array, column_stack, empty, sometrue, vstack, zeros
 
 # Enthought library imports
 from traits.api import Any, Array, Enum, Event, Bool, Instance, \
@@ -308,8 +308,8 @@ class LassoSelection(AbstractController):
     def _get_data(self):
         """ Returns the datapoints in the plot, as an Nx2 array of (x,y).
         """
-        return transpose(array((self.plot.index.get_data(), self.plot.value.get_data())))
-
+        return column_stack((self.plot.index.get_data(),
+                             self.plot.value.get_data()))
 
     #------------------------------------------------------------------------
     # Property getter/setters
