@@ -1,12 +1,18 @@
 import contextlib
-from traits.testing.unittest_tools import unittest
+import unittest
 
 import numpy as np
 from numpy.testing import assert_array_equal
-from pandas import DataFrame
 
 from chaco.api import DataFramePlotData
 from traits.api import HasTraits, Instance, List, on_trait_change
+
+try:
+    from pandas import DataFrame
+    pandas_imported = True
+
+except ImportError:
+    pandas_imported = False
 
 
 class DataFramePlotDataEventsCollector(HasTraits):
@@ -30,7 +36,7 @@ def monitor_events(plot_data):
 
 
 class DataFramePlotDataTestCase(unittest.TestCase):
-
+    @unittest.skipUnless(pandas_imported, "Requires pandas")
     def test_data_changed_events(self):
         # Test data.
         arr = np.zeros(16)
@@ -60,6 +66,7 @@ class DataFramePlotDataTestCase(unittest.TestCase):
             plot_data.del_data('arr')
             self.assertEqual(events, [{'removed': ['arr']}])
 
+    @unittest.skipUnless(pandas_imported, "Requires pandas")
     def test_no_index_column(self):
         # Test data.
         idx = np.arange(16)
@@ -80,6 +87,7 @@ class DataFramePlotDataTestCase(unittest.TestCase):
         with self.assertRaises(KeyError):
             plot_data.del_data('index')
 
+    @unittest.skipUnless(pandas_imported, "Requires pandas")
     def test_index_column(self):
         # Test data.
         idx = np.arange(16)
@@ -105,8 +113,3 @@ class DataFramePlotDataTestCase(unittest.TestCase):
             # event instead of a 'removed' event.
             self.assertEqual(events, [{'changed': ['index']}])
             assert_array_equal(plot_data.get_data('index'), df.index.values)
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()
