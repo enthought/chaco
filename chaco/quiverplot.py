@@ -69,6 +69,9 @@ class QuiverPlot(ScatterPlot):
 
 
     def _render(self, gc, points, icon_mode=False):
+        if len(points) < 1:
+            return
+
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
@@ -76,8 +79,6 @@ class QuiverPlot(ScatterPlot):
             gc.set_line_width(self.line_width)
 
             # Draw the body of the arrow
-            if len(points) < 1:
-                return
             starts = points
             ends = points + self._cached_vector_data
             gc.begin_path()
