@@ -12,7 +12,9 @@ from numpy import array, column_stack, empty, isfinite
 # Enthought library imports
 from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Bool, Enum, Float, Int, Instance, List, Tuple
+from traits.api import (
+    Bool, Enum, Float, Int, Instance, List, Tuple, on_trait_change
+)
 
 # local imports
 from .array_data_source import ArrayDataSource
