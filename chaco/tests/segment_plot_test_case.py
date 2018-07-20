@@ -1,7 +1,7 @@
 import unittest
 
 from numpy import alltrue, arange, array
-from numpy.testing import assert_almost_equal, assert_array_equal
+from numpy.testing import assert_array_equal
 
 # Chaco imports
 from chaco.api import (
