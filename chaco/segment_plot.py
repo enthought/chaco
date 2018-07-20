@@ -1,4 +1,3 @@
-
 import numpy as np
 
 from enable.api import ColorTrait, LineStyle, black_color_trait
@@ -55,7 +54,7 @@ class SegmentPlot(BaseXYPlot):
     #: Whether to draw segments using a constant width or mapped width.
     width_by_data = Bool(False, redraw=True)
 
-    #: The data to use for segment width.  Used only when self.color_by_width
+    #: The data to use for segment width.  Used only when self.width_by_data
     #: is True.
     width_data = Instance(AbstractDataSource, redraw=True)
 
@@ -83,19 +82,22 @@ class SegmentPlot(BaseXYPlot):
     #: with the global 'alpha' mixed in.
     effective_colors = Property(
         Array,
-        depends_on=['color_by_data', 'alpha', 'color_mapper.updated',
-                    'color_data.data_changed', 'alpha', 'selection_mask',
-                    'selection_color', 'selection_alpha'])
+        depends_on=[
+            'color_by_data', 'alpha', 'color_mapper.updated',
+            'color_data.data_changed', 'alpha', 'selection_mask',
+            'selection_color', 'selection_alpha'
+        ]
+    )
 
     #: The widths of the individual lines in screen units, if mapped to data.
     #: The values are computed with the width mapper.
     screen_widths = Property(
-        Array,
-        depends_on=['width_mapper.updated', 'width_data.data_changed'])
-
+        Array, depends_on=['width_mapper.updated', 'width_data.data_changed']
+    )
 
     selected_mask = Property(
-        depends_on=['selection_metadata_name', 'index.metadata_changed'])
+        depends_on=['selection_metadata_name', 'index.metadata_changed']
+    )
 
     # These BaseXYPlot methods either don't make sense or aren't currently
     # implemented for this plot type.
@@ -163,12 +165,16 @@ class SegmentPlot(BaseXYPlot):
         """ Render straight lines connecting the start point and end point. """
         if len(widths) == 1 and len(colors) == 1 and colors[0]['a'] == 1.0:
             # no alpha, can draw a single unconnected path, faster
+            starts = starts.view(float).reshape(-1, 2)
+            ends = ends.view(float).reshape(-1, 2)
             gc.set_line_width(widths[0])
             gc.set_stroke_color(colors[0])
             gc.line_set(starts, ends)
             gc.stroke_path()
         else:
-            for color, width, start, end in np.broadcast(colors, widths, starts, ends):
+            for color, width, start, end in np.broadcast(
+                colors, widths, starts, ends
+            ):
                 gc.set_stroke_color(color)
                 gc.set_line_width(float(width))
                 gc.move_to(start['x'], start['y'])
@@ -198,13 +204,18 @@ class SegmentPlot(BaseXYPlot):
 
         if len(widths) == 1 and len(colors) == 1 and colors[0]['a'] == 1.0:
             # no alpha, can draw a single unconnected path, faster
+            starts = starts.view(float).reshape(-1, 2)
+            mids = mids.view(float).reshape(-1, 2)
+            ends = ends.view(float).reshape(-1, 2)
             gc.set_line_width(widths[0])
             gc.set_stroke_color(colors[0])
             gc.line_set(starts, mids)
             gc.line_set(mids, ends)
             gc.stroke_path()
         else:
-            for color, width, start, end, mid in np.broadcast(colors, widths, starts, ends, mids):
+            for color, width, start, end, mid in np.broadcast(
+                colors, widths, starts, ends, mids
+            ):
                 gc.set_stroke_color(color)
                 gc.set_line_width(float(width))
                 gc.move_to(start['x'], start['y'])
@@ -242,7 +253,9 @@ class SegmentPlot(BaseXYPlot):
                 gc.quad_curve_to(mid['x'], mid['y'], end['x'], end['y'])
             gc.stroke_path()
         else:
-            for color, width, start, end, mid in np.broadcast(colors, widths, starts, ends, mids):
+            for color, width, start, end, mid in np.broadcast(
+                colors, widths, starts, ends, mids
+            ):
                 gc.set_stroke_color(color)
                 gc.set_line_width(float(width))
                 gc.move_to(start['x'], start['y'])
@@ -258,23 +271,23 @@ class SegmentPlot(BaseXYPlot):
         mids_2 = np.empty(len(starts), dtype=point_dtype)
         if self.render_orientation == 'index':
             if self.orientation == 'h':
-                mids_1['x'] = (starts['x'] + ends['x'])/2
+                mids_1['x'] = (starts['x'] + ends['x']) / 2
                 mids_1['y'] = starts['y']
                 mids_2['x'] = mids_1['x']
                 mids_2['y'] = ends['y']
             else:
                 mids_1['x'] = starts['x']
-                mids_1['y'] = (starts['y'] + ends['y'])/2
+                mids_1['y'] = (starts['y'] + ends['y']) / 2
                 mids_2['x'] = ends['x']
                 mids_2['y'] = mids_1['y']
         else:
             if self.orientation == 'h':
                 mids_1['x'] = starts['x']
-                mids_1['y'] = (starts['y'] + ends['y'])/2
+                mids_1['y'] = (starts['y'] + ends['y']) / 2
                 mids_2['x'] = ends['x']
                 mids_2['y'] = mids_1['y']
             else:
-                mids_1['x'] = (starts['x'] + ends['x'])/2
+                mids_1['x'] = (starts['x'] + ends['x']) / 2
                 mids_1['y'] = starts['y']
                 mids_2['x'] = mids_1['x']
                 mids_2['y'] = ends['y']
@@ -283,18 +296,26 @@ class SegmentPlot(BaseXYPlot):
             # no alpha, can draw a single unconnected path, faster
             gc.set_line_width(widths[0])
             gc.set_stroke_color(colors[0])
-            for start, end, mid_1, mid_2 in np.broadcast(starts, ends, mids_1, mids_2):
+            for start, end, mid_1, mid_2 in np.broadcast(
+                starts, ends, mids_1, mids_2
+            ):
                 gc.move_to(start['x'], start['y'])
-                gc.curve_to(mid_1['x'], mid_1['y'], mid_2['x'], mid_2['y'],
-                            end['x'], end['y'])
+                gc.curve_to(
+                    mid_1['x'], mid_1['y'], mid_2['x'], mid_2['y'], end['x'],
+                    end['y']
+                )
             gc.stroke_path()
         else:
-            for color, width, start, end, mid_1, mid_2 in np.broadcast(colors, widths, starts, ends, mids_1, mids_2):
+            for color, width, start, end, mid_1, mid_2 in np.broadcast(
+                colors, widths, starts, ends, mids_1, mids_2
+            ):
                 gc.set_stroke_color(color)
                 gc.set_line_width(float(width))
                 gc.move_to(start['x'], start['y'])
-                gc.curve_to(mid_1['x'], mid_1['y'], mid_2['x'], mid_2['y'],
-                            end['x'], end['y'])
+                gc.curve_to(
+                    mid_1['x'], mid_1['y'], mid_2['x'], mid_2['y'], end['x'],
+                    end['y']
+                )
                 gc.stroke_path()
 
     def _render_icon(self, gc, x, y, width, height):
@@ -311,8 +332,10 @@ class SegmentPlot(BaseXYPlot):
             gc.move_to(x, y)
             gc.line_to(width, height)
 
-    @on_trait_change('alpha, color_data:data_changed, color_mapper:updated, '
-                     'width_data:data_changed, width_mapper.updated, +redraw')
+    @on_trait_change(
+        'alpha, color_data:data_changed, color_mapper:updated, '
+        'width_data:data_changed, width_mapper.updated, +redraw'
+    )
     def _attributes_changed(self):
         self.invalidate_draw()
         self.request_redraw()
@@ -325,7 +348,8 @@ class SegmentPlot(BaseXYPlot):
         else:
             if self.selected_mask is not None:
                 colors = np.ones((len(self.selected_mask), 4))
-                colors[self.selected_mask, :len(self.selected_color_)] = self.selected_color_
+                colors[self.selected_mask, :len(self.selection_color_)
+                       ] = self.selection_color_
                 colors[~self.selected_mask, :len(self.color_)] = self.color_
             else:
                 colors = np.ones((1, 4))
@@ -334,13 +358,15 @@ class SegmentPlot(BaseXYPlot):
         if colors.shape[-1] == 4:
             colors[:, -1] *= self.alpha
         else:
-            colors = np.column_stack([colors, np.full(len(colors), self.alpha)])
+            colors = np.column_stack([
+                colors, np.full(len(colors), self.alpha)
+            ])
 
         if self.selected_mask is not None:
             colors[~self.selected_mask, -1] *= self.selection_alpha
 
         colors = colors.astype(np.float32).view(rgba_dtype)
-        colors.shape = (-1,)
+        colors.shape = (-1, )
 
         return colors
 

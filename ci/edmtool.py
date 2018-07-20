@@ -86,7 +86,8 @@ dependencies = {
     "pandas",
     "pygments",
     "pyparsing",
-    "cython"
+    "cython",
+    "swig"
 }
 
 extra_dependencies = {
