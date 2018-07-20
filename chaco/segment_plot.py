@@ -141,6 +141,10 @@ class SegmentPlot(BaseXYPlot):
         points as a collection of segments.
 
         """
+        if len(segments) == 0:
+            # nothing to plot
+            return
+
         colors = self.effective_colors
         widths = self.screen_widths
 

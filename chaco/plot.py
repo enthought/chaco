@@ -269,14 +269,16 @@ class Plot(DataView):
             two or more items: (line/scatter)
                 Interpreted as (index, value1, value2, ...).  Each index,value
                 pair forms a new plot of the type specified.
-            two items: (cmap_scatter, cmap_segment)
-                Interpreted as (value, color_values).  Uses **default_index**.
-            three or more items: (cmap_scatter, cmap_segment)
-                Interpreted as (index, val1, color_val1, val2, color_val2, ...)
+            three items: (cmap_scatter, cmap_segment)
+                Interpreted as (index, value, color)
+            four items: (cmap_segment)
+                Interpreted as (index, val1, color_val1, width)
+            three items: (text)
+                Interpreted as (index, value, text).
 
         type : comma-delimited string of plot type
             The types of plots to add.  One of "line", "scatter",
-            "cmap_scatter", "polygon", "bar", "filled_line", "segment"
+            "cmap_scatter", "polygon", "bar", "filled_line", "segment", "text"
         name : string
             The name of the plot.  If None, then a default one is created
             (usually "plotNNN").
