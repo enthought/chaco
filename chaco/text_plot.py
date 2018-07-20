@@ -3,9 +3,7 @@ A plot that renders text values in two dimensions
 
 """
 
-
 from __future__ import absolute_import
-
 
 import six.moves as sm
 
@@ -14,7 +12,7 @@ from numpy import array, column_stack, empty, isfinite
 # Enthought library imports
 from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Bool, Enum, Float, Int, Instance, List, Tuple, on_trait_change
+from traits.api import Bool, Enum, Float, Int, Instance, List, Tuple
 
 # local imports
 from .array_data_source import ArrayDataSource
@@ -75,9 +73,12 @@ class TextPlot(BaseXYPlot):
                 color=self.text_color,
                 rotate_angle=self.text_rotate_angle,
                 margin=self.text_margin
-            ) for text in self.text.get_data()]
-        self._label_box_cache = [array(label.get_bounding_box(gc), float)
-                                 for label in self._label_cache]
+            ) for text in self.text.get_data()
+        ]
+        self._label_box_cache = [
+            array(label.get_bounding_box(gc), float)
+            for label in self._label_cache
+        ]
         self._label_cache_valid = True
 
     def _gather_points(self):
@@ -102,8 +103,9 @@ class TextPlot(BaseXYPlot):
         index_range_mask = self.index_mapper.range.mask_data(index)
         value_range_mask = self.value_mapper.range.mask_data(value)
 
-        nan_mask = (isfinite(index) & index_mask &
-                    isfinite(value) & value_mask)
+        nan_mask = (
+            isfinite(index) & index_mask & isfinite(value) & value_mask
+        )
         point_mask = nan_mask & index_range_mask & value_range_mask
 
         if not self._cache_valid:
@@ -126,27 +128,27 @@ class TextPlot(BaseXYPlot):
         ]
         boxes = [
             label
-            for label, mask in zip(self._label_box_cache, self._cached_point_mask)
-            if mask
+            for label, mask in
+            zip(self._label_box_cache, self._cached_point_mask) if mask
         ]
-        offset = empty((2,), float)
+        offset = empty((2, ), float)
 
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             for pt, label, box in sm.zip(pts, labels, boxes):
                 with gc:
                     if self.h_position == "center":
-                        offset[0] = -box[0]/2 + self.text_offset[0]
+                        offset[0] = -box[0] / 2 + self.text_offset[0]
                     elif self.h_position == "right":
                         offset[0] = self.text_offset[0]
                     elif self.h_position == "left":
-                        offset[0] = -box[0]/2 + self.text_offset[0]
+                        offset[0] = -box[0] / 2 + self.text_offset[0]
                     if self.v_position == "center":
-                        offset[1] = -box[1]/2 + self.text_offset[1]
+                        offset[1] = -box[1] / 2 + self.text_offset[1]
                     elif self.v_position == "top":
                         offset[1] = self.text_offset[1]
                     elif self.v_position == "bottom":
-                        offset[1] = -box[1]/2 - self.text_offset[1]
+                        offset[1] = -box[1] / 2 - self.text_offset[1]
 
                     pt += offset
                     gc.translate_ctm(*pt)
