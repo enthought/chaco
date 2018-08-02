@@ -69,6 +69,9 @@ class QuiverPlot(ScatterPlot):
 
 
     def _render(self, gc, points, icon_mode=False):
+        if len(points) < 1:
+            return
+
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
