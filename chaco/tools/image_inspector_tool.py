@@ -100,10 +100,30 @@ class ImageInspectorOverlay(TextBoxOverlay):
     # tool's location, or whether it should be forced to be hidden or visible.
     visibility = Enum("auto", True, False)
 
+    # Private interface -------------------------------------------------------
+
+    def _build_text_from_event(self, d):
+        """ Create a formatted string to display from the mouse event data.
+        """
+        newstring = ""
+        if 'indices' in d:
+            newstring += '(%d, %d)\n' % d['indices']
+        if 'color_value' in d:
+            newstring += "(%d, %d, %d)\n" % tuple(
+                map(int, d['color_value'][:3]))
+        if 'data_value' in d:
+            newstring += str(d['data_value'])
+
+        return newstring
+
+    # Traits listeners --------------------------------------------------------
+
     def _image_inspector_changed(self, old, new):
         if old:
-            old.on_trait_event(self._new_value_updated, 'new_value', remove=True)
-            old.on_trait_change(self._tool_visible_changed, "visible", remove=True)
+            old.on_trait_event(self._new_value_updated, 'new_value',
+                               remove=True)
+            old.on_trait_change(self._tool_visible_changed, "visible",
+                                remove=True)
         if new:
             new.on_trait_event(self._new_value_updated, 'new_value')
             new.on_trait_change(self._tool_visible_changed, "visible")
@@ -123,16 +143,7 @@ class ImageInspectorOverlay(TextBoxOverlay):
         else:
             self.alternate_position = None
 
-        d = event
-        newstring = ""
-        if 'indices' in d:
-            newstring += '(%d, %d)' % d['indices'] + '\n'
-        if 'color_value' in d:
-            newstring += "(%d, %d, %d)" % tuple(map(int,d['color_value'][:3])) + "\n"
-        if 'data_value' in d:
-            newstring += str(d['data_value'])
-
-        self.text = newstring
+        self.text = self._build_text_from_event(event)
         self.component.request_redraw()
 
     def _visible_changed(self):
