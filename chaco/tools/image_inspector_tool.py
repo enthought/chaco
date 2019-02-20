@@ -109,13 +109,12 @@ class ImageInspectorOverlay(TextBoxOverlay):
         if 'indices' in d:
             newstring += '(%d, %d)' % d['indices']
         if 'color_value' in d:
-            if isinstance(d['color_value'], int):
-                # Gray scale image:
-                newstring += "\n%d" % d['color_value']
-            else:
-                # RGB(A) image:
+            try:
                 newstring += "\n(%d, %d, %d)" % tuple(
                     map(int, d['color_value'][:3]))
+            except IndexError:
+                # color value is an integer, for example if gray scale image
+                newstring += "\n%d" % d['color_value']
 
         if 'data_value' in d:
             newstring += "\n{}".format(d['data_value'])
