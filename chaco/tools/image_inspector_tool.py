@@ -67,15 +67,15 @@ class ImageInspectorTool(BaseTool):
                 if hasattr(plot, "_cached_mapped_image") and \
                        plot._cached_mapped_image is not None:
                     self.new_value = \
-                            dict(indices=ndx,
-                                 data_value=image_data.data[y_index, x_index],
-                                 color_value=plot._cached_mapped_image[y_index,
-                                                                       x_index])
+                        {"indices": ndx,
+                         "data_value": image_data.data[y_index, x_index],
+                         "color_value": plot._cached_mapped_image[y_index,
+                                                                  x_index]}
 
                 else:
                     self.new_value = \
-                        dict(indices=ndx,
-                             color_value=image_data.data[y_index, x_index])
+                        {"indices": ndx,
+                         "color_value": image_data.data[y_index, x_index]}
 
                 self.last_mouse_position = (event.x, event.y)
         return
@@ -107,12 +107,18 @@ class ImageInspectorOverlay(TextBoxOverlay):
         """
         newstring = ""
         if 'indices' in d:
-            newstring += '(%d, %d)\n' % d['indices']
+            newstring += '(%d, %d)' % d['indices']
         if 'color_value' in d:
-            newstring += "(%d, %d, %d)\n" % tuple(
-                map(int, d['color_value'][:3]))
+            if isinstance(d['color_value'], int):
+                # Gray scale image:
+                newstring += "\n%d" % d['color_value']
+            else:
+                # RGB(A) image:
+                newstring += "\n(%d, %d, %d)" % tuple(
+                    map(int, d['color_value'][:3]))
+
         if 'data_value' in d:
-            newstring += str(d['data_value'])
+            newstring += "\n{}".format(d['data_value'])
 
         return newstring
 
