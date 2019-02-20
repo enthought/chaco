@@ -18,6 +18,11 @@ def create_image_plot(img_values, **kwargs):
     return plot
 
 
+class CustomImageInspectorOverlay(ImageInspectorOverlay):
+    def _build_text_from_event(self, event):
+        return 'Position: (%d, %d)' % event['indices']
+
+
 class BaseImageInspectorTool(EnableTestAssistant, UnittestTools):
     def setUp(self):
         # Control the pixel size of the plot to know where the tiles are:
@@ -27,6 +32,8 @@ class BaseImageInspectorTool(EnableTestAssistant, UnittestTools):
         self.tool = ImageInspectorTool(component=renderer)
         self.overlay = ImageInspectorOverlay(component=renderer,
                                              image_inspector=self.tool)
+        self.overlay2 = CustomImageInspectorOverlay(component=renderer,
+                                                    image_inspector=self.tool)
         self.plot.active_tool = self.tool
         self.plot.do_layout()
 
@@ -49,6 +56,23 @@ class BaseImageInspectorTool(EnableTestAssistant, UnittestTools):
 
         self.mouse_leave(tool, 1000, 1000)
         self.assertEqual(tool.last_mouse_position, (10, 10))
+
+    def test_mouse_move_custom_overlay(self):
+        tool = self.tool
+
+        # Add a listener to catch the emitted event:
+        tool.on_trait_change(self.store_inspector_event, "new_value")
+        try:
+            self.assertIsNone(self.insp_event)
+
+            with self.assertTraitChanges(tool, "new_value", 1):
+                with self.assertTraitChanges(self.overlay2, "text", 1):
+                    self.mouse_move(tool, 0, 0)
+
+            self.assertEqual(self.overlay2.text, 'Position: (0, 0)')
+        finally:
+            tool.on_trait_change(self.store_inspector_event, "new_value",
+                                 remove=True)
 
     # Helper methods ----------------------------------------------------------
 
