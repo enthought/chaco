@@ -102,22 +102,22 @@ class ImageInspectorOverlay(TextBoxOverlay):
 
     # Private interface -------------------------------------------------------
 
-    def _build_text_from_event(self, d):
+    def _build_text_from_event(self, event):
         """ Create a formatted string to display from the mouse event data.
         """
         newstring = ""
-        if 'indices' in d:
-            newstring += '(%d, %d)' % d['indices']
-        if 'color_value' in d:
+        if 'indices' in event:
+            newstring += '(%d, %d)' % event['indices']
+        if 'color_value' in event:
             try:
                 newstring += "\n(%d, %d, %d)" % tuple(
-                    map(int, d['color_value'][:3]))
+                    map(int, event['color_value'][:3]))
             except IndexError:
                 # color value is an integer, for example if gray scale image
-                newstring += "\n%d" % d['color_value']
+                newstring += "\n%d" % event['color_value']
 
-        if 'data_value' in d:
-            newstring += "\n{}".format(d['data_value'])
+        if 'data_value' in event:
+            newstring += "\n{}".format(event['data_value'])
 
         return newstring
 
