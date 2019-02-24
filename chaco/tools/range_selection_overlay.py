@@ -165,8 +165,12 @@ class RangeSelectionOverlay(AbstractOverlay):
         return
 
     def _metadata_change_handler(self, event):
+        if self in self.component.underlays:
+            # Underlays should trigger a full repaint: when backbuffering is
+            # enabled, the plot + underlays are drawn from a cached image,
+            # which is stale if this underlay has changed in the meantime.
+            self.component.invalidate_draw()
         self.component.request_redraw()
-        return
 
     #------------------------------------------------------------------------
     # Default initializers
