@@ -1,4 +1,5 @@
-""" Makes a copy of the plot in the overlay and adds it to the canvas.
+"""
+Makes a copy of the plot in the overlay and adds it to the canvas.
 """
 
 

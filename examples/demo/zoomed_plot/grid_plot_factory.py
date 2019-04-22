@@ -1,7 +1,7 @@
 
 # Local relative imports
 from chaco.api import ArrayDataSource, DataRange1D, LinearMapper, LinePlot, \
-                                 ScatterPlot, PlotAxis, PlotGrid
+    ScatterPlot, PlotAxis, PlotGrid
 
 
 def create_gridded_line_plot(x, y, orientation="h", color="red", width=1.0,

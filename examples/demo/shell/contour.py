@@ -1,4 +1,5 @@
-"""This example demonstrates creating a contour plot using the chaco
+"""
+This example demonstrates creating a contour plot using the chaco
 shell subpackage.
 """
 
@@ -22,5 +23,5 @@ contour(x,y,z, bgcolor="black")
 # Add some titles
 title("contour line plot")
 
-#This command is only necessary if running from command line
+# This command is only necessary if running from command line
 show()

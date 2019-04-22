@@ -1,4 +1,5 @@
-"""This example demonstrates customizing a plot object with a plot tool
+"""
+This example demonstrates customizing a plot object with a plot tool
 using the chaco.shell subpackage.
 
 The functions in the chaco.shell package allow us to quickly generate plots
