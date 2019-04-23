@@ -19,33 +19,33 @@ class LineSegmentTool(AbstractOverlay):
     series of points connected by lines.
     """
 
-    # The component that this tool overlays
+    #: The component that this tool overlays
     component = Instance(Component)
 
-    # The current line segment being drawn.
+    #: The current line segment being drawn.
     line = Instance(Line, args=())
 
-    # A list of the points in data space as (index,value)
+    #: A list of the points in data space as (index,value)
     points = List
 
-    # The event states are:
-    #
-    # normal:
-    #     The user may have selected points, and is moving the cursor around.
-    # selecting:
-    #     The user has clicked down but hasn't let go of the button yet,
-    #     and can still drag the point around.
-    # dragging:
-    #     The user has clicked on an existing point and is dragging it
-    #     around.  When the user releases the mouse button, the tool returns
-    #     to the "normal" state
+    #: The event states are:
+    #:
+    #: normal:
+    #:     The user may have selected points, and is moving the cursor around.
+    #: selecting:
+    #:     The user has clicked down but hasn't let go of the button yet,
+    #:     and can still drag the point around.
+    #: dragging:
+    #:     The user has clicked on an existing point and is dragging it
+    #:     around.  When the user releases the mouse button, the tool returns
+    #:     to the "normal" state
     event_state = Enum("normal", "selecting", "dragging")
 
-    # The pixel distance from a vertex that is considered 'on' the vertex.
+    #: The pixel distance from a vertex that is considered 'on' the vertex.
     proximity_distance = Int(4)
 
-    # The data (index, value) position of the mouse cursor; this is used by various
-    # draw() routines.
+    #: The data (index, value) position of the mouse cursor; this is used by various
+    #: draw() routines.
     mouse_position = Trait(None, None, Tuple)
 
     # The index of the vertex being dragged, if any.
@@ -63,13 +63,13 @@ class LineSegmentTool(AbstractOverlay):
 
     # The cursor shapes to use for various modes
 
-    # Cursor shape for non-tool use.
+    #: Cursor shape for non-tool use.
     original_cursor = Pointer("arrow")
-    # Cursor shape for drawing.
+    #: Cursor shape for drawing.
     normal_cursor = Pointer("pencil")
-    # Cursor shape for deleting points.
+    #: Cursor shape for deleting points.
     delete_cursor = Pointer("bullseye")
-    # Cursor shape for moving points.
+    #: Cursor shape for moving points.
     move_cursor = Pointer("sizing")
 
 
@@ -77,7 +77,7 @@ class LineSegmentTool(AbstractOverlay):
     # Traits inherited from Component
     #------------------------------------------------------------------------
 
-    # The tool is initially invisible, because there is nothing to draw.
+    #: The tool is initially invisible, because there is nothing to draw.
     visible = Bool(False)
 
     #------------------------------------------------------------------------

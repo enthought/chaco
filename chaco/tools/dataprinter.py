@@ -16,13 +16,13 @@ class DataPrinter(BaseTool):
     point under the cursor.
     """
 
-    # This tool is a listener, and does not display anything (overrides BaseTool).
+    #: This tool is a listener, and does not display anything (overrides BaseTool).
     visible = False
 
-    # Turn off drawing, because the tool prints to stdout.
+    #: Turn off drawing, because the tool prints to stdout.
     draw_mode = "none"
 
-    # The string to format the (x,y) value in data space.
+    #: The string to format the (x,y) value in data space.
     format = Str("(%.3f, %.3f)")
 
     def normal_mouse_move(self, event):

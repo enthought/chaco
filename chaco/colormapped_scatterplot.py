@@ -41,34 +41,34 @@ class ColormappedScatterPlot(ScatterPlot):
     behaves like a normal ScatterPlot.
     """
 
-    # Source for color data.
+    #: Source for color data.
     color_data = Instance(ArrayDataSource)
 
-    # Mapping for colors.
+    #: Mapping for colors.
     color_mapper = Instance(AbstractColormap)
 
-    # The alpha value to apply to the result of the color-mapping process.
-    # (This makes it easier to create color maps without having to worry
-    # about alpha.)
+    #: The alpha value to apply to the result of the color-mapping process.
+    #: (This makes it easier to create color maps without having to worry
+    #: about alpha.)
     fill_alpha = Float(1.0)
 
-    # Determines what drawing approach to use:
-    #
-    # banded:
-    #     Draw the points color-band by color-band, thus reducing the number of
-    #     set_stroke_color() calls. Disadvantage is that some colors will
-    #     appear more prominently than others if there are a lot of
-    #     overlapping points.
-    # bruteforce:
-    #     Set the stroke color before drawing each marker.  Slower, but doesn't
-    #     produce the banding effect that puts some colors on top of others;
-    #     useful if there is a lot of overlap of the data.
-    # auto:
-    #     Determines which render method to use based on the number of points
-    #
-    # TODO: Based on preliminary results, "banded" isn't significantly
-    # more expensive than "bruteforce" for small datasets (<1000),
-    # so perhaps banded should be removed.
+    #: Determines what drawing approach to use:
+    #:
+    #: banded:
+    #:     Draw the points color-band by color-band, thus reducing the number of
+    #:     set_stroke_color() calls. Disadvantage is that some colors will
+    #:     appear more prominently than others if there are a lot of
+    #:     overlapping points.
+    #: bruteforce:
+    #:     Set the stroke color before drawing each marker.  Slower, but doesn't
+    #:     produce the banding effect that puts some colors on top of others;
+    #:     useful if there is a lot of overlap of the data.
+    #: auto:
+    #:     Determines which render method to use based on the number of points
+    #:
+    #: TODO: Based on preliminary results, "banded" isn't significantly
+    #: more expensive than "bruteforce" for small datasets (<1000),
+    #: so perhaps banded should be removed.
     render_method = Enum("auto", "banded", "bruteforce")
 
     # A dict mapping color-map indices to arrays of indices into self.data.
@@ -76,7 +76,7 @@ class ColormappedScatterPlot(ScatterPlot):
     # This mapping is only valid if **_cache_valid** is True.
     _index_bands = Dict()
 
-    # Traits UI View for customizing the plot. Overrides the ScatterPlot value.
+    #: Traits UI View for customizing the plot. Overrides the ScatterPlot value.
     traits_view = ColormappedScatterPlotView()
 
     #------------------------------------------------------------------------

@@ -17,23 +17,23 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     points to a very low alpha.
     """
 
-    # The ColormappedScatterPlot that this overlay is listening to.
-    # By default, it looks at self.component
+    #: The ColormappedScatterPlot that this overlay is listening to.
+    #: By default, it looks at self.component
     plot = Property
 
-    # The amount to fade the unselected points.
+    #: The amount to fade the unselected points.
     fade_alpha = Float(0.15)
 
-    # The minimum difference, in float percent, between the starting and ending
-    # selection values, if range selection mode is enabled
+    #: The minimum difference, in float percent, between the starting and ending
+    #: selection values, if range selection mode is enabled
     minimum_delta = Float(0.01)
 
-    # Outline width for selected points.
+    #: Outline width for selected points.
     selected_outline_width = Float(1.0)
-    # Outline width for unselected points.
+    #: Outline width for unselected points.
     unselected_outline_width = Float(0.0)
 
-    # The type of selection used by the data source.
+    #: The type of selection used by the data source.
     selection_type = Enum('range', 'mask')
 
     _plot = Instance(ColormappedScatterPlot)

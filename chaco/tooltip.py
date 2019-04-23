@@ -21,37 +21,37 @@ from .label import Label
 class ToolTip(AbstractOverlay):
     """ An overlay that is a toolip.
     """
-    # The font to render the tooltip.
+    #: The font to render the tooltip.
     font = KivaFont('modern 10')
 
-    # The color of the text in the tooltip
+    #: The color of the text in the tooltip
     text_color = black_color_trait
 
-    # The ammount of space between the border and the text.
+    #: The ammount of space between the border and the text.
     border_padding = Int(4)
 
-    # The number of pixels between lines.
+    #: The number of pixels between lines.
     line_spacing = Int(4)
 
-    # List of text strings to put in the tooltip.
+    #: List of text strings to put in the tooltip.
     lines = List
 
-    # Angle to rotate (counterclockwise) in degrees. NB this will *only*
-    # currently affect text, so probably only useful if borders and background
-    # are disabled
+    #: Angle to rotate (counterclockwise) in degrees. NB this will *only*
+    #: currently affect text, so probably only useful if borders and background
+    #: are disabled
     rotate_angle = Float(0.0)
 
-    # Should the tooltip automatically reposition itself to remain visible
-    # and unclipped on its overlaid component?
+    #: Should the tooltip automatically reposition itself to remain visible
+    #: and unclipped on its overlaid component?
     auto_adjust = Bool(True)
 
-    # The tooltip is a fixed size. (Overrides PlotComponent.)
+    #: The tooltip is a fixed size. (Overrides PlotComponent.)
     resizable = ""
 
-    # Use a visible border. (Overrides Enable Component.)
+    #: Use a visible border. (Overrides Enable Component.)
     border_visible = True
 
-    # Use a white background color (overrides AbstractOverlay).
+    #: Use a white background color (overrides AbstractOverlay).
     bgcolor = white_color_trait
 
     #----------------------------------------------------------------------

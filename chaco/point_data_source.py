@@ -26,25 +26,25 @@ class PointDataSource(ArrayDataSource):
     """
 
 
-    # The dimensionality of the indices into this data source (overrides
-    # ArrayDataSource).
+    #: The dimensionality of the indices into this data source (overrides
+    #: ArrayDataSource).
     index_dimension = ReadOnly('scalar')
 
-    # The dimensionality of the value at each index point (overrides
-    # ArrayDataSource).
+    #: The dimensionality of the value at each index point (overrides
+    #: ArrayDataSource).
     value_dimension = ReadOnly('point')
 
-    # The sort order of the data. Although sort order is less common with point
-    # data, it can be useful in case where the value data is sorted along some
-    # axis.  Note that **sort_index** is used only if **sort_order** is not
-    # 'none'.
+    #: The sort order of the data. Although sort order is less common with point
+    #: data, it can be useful in case where the value data is sorted along some
+    #: axis.  Note that **sort_index** is used only if **sort_order** is not
+    #: 'none'.
     sort_order = SortOrderTrait
 
-    # Which of the value axes the **sort_order** refers to.
-    # If **sort_order** is 'none', this attribute is ignored.
-    # In the unlikely event that the value data is sorted along both
-    # X and Y (i.e., monotonic in both axes), then set **sort_index** to
-    # whichever one has the best binary-search performance for hit-testing.
+    #: Which of the value axes the **sort_order** refers to.
+    #: If **sort_order** is 'none', this attribute is ignored.
+    #: In the unlikely event that the value data is sorted along both
+    #: X and Y (i.e., monotonic in both axes), then set **sort_index** to
+    #: whichever one has the best binary-search performance for hit-testing.
     sort_index = Enum(0, 1)
 
 

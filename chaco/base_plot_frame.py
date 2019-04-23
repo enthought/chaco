@@ -29,20 +29,20 @@ class BasePlotFrame(Container, PlotComponent):
     This class will be removed some time in the near future.
     """
 
-    # A named list of places/positions/"slots" on the frame where PlotComponents
-    # can place themselves.  Subclasses must redefine this trait with the
-    # appropriate values.  Note that by default, __getattr__ treats these
-    # slot names as attributes on the class so they can be directly accessed.
-    # This is a class attribute.
+    #: A named list of places/positions/"slots" on the frame where PlotComponents
+    #: can place themselves.  Subclasses must redefine this trait with the
+    #: appropriate values.  Note that by default, __getattr__ treats these
+    #: slot names as attributes on the class so they can be directly accessed.
+    #: This is a class attribute.
     slot_names = ()
 
-    # Dimensions in which this frame can resize to fit its components.
-    # This is similar to the **resizable** trait on PlotComponent. Chaco
-    # plot frames use this attribute in preference to the Enable
-    # **auto_size** attribute (which is overridden to be False by default).
+    #: Dimensions in which this frame can resize to fit its components.
+    #: This is similar to the **resizable** trait on PlotComponent. Chaco
+    #: plot frames use this attribute in preference to the Enable
+    #: **auto_size** attribute (which is overridden to be False by default).
     fit_components = Enum("", "h", "v", "hv")
 
-    # Overrides the Enable auto_size trait (which will be deprecated in the future)
+    #: Overrides the Enable auto_size trait (which will be deprecated in the future)
     auto_size = False
 
     draw_order = DEFAULT_DRAWING_ORDER

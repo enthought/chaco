@@ -29,45 +29,45 @@ class LinePlot(BaseXYPlot):
     you want can require some verbose code. The create_line_plot() function
     in plot_factory.py can hide some of this verbosity for common cases.
     """
-    # The color of the line.
+    #: The color of the line.
     color = black_color_trait
 
-    # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
-    # It has the same RGB values as color_, and its alpha value is the alpha
-    # value of self.color multiplied by self.alpha.
+    #: The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+    #: It has the same RGB values as color_, and its alpha value is the alpha
+    #: value of self.color multiplied by self.alpha.
     effective_color = Property(Tuple, depends_on=['color', 'alpha'])
 
-    # The color to use to highlight the line when selected.
+    #: The color to use to highlight the line when selected.
     selected_color = ColorTrait("lightyellow")
 
-    # The style of the selected line.
+    #: The style of the selected line.
     selected_line_style = LineStyle("solid")
 
-    # The name of the key in self.metadata that holds the selection mask
+    #: The name of the key in self.metadata that holds the selection mask
     metadata_name = Str("selections")
 
-    # The thickness of the line.
+    #: The thickness of the line.
     line_width = Float(1.0)
 
-    # The line dash style.
+    #: The line dash style.
     line_style = LineStyle
 
-    # The rendering style of the line plot.
-    #
-    # connectedpoints
-    #     "normal" style (default); each point is connected to subsequent and
-    #     prior points by line segments
-    # hold
-    #     each point is represented by a line segment parallel to the abscissa
-    #     (index axis) and spanning the length between the point and its
-    #     subsequent point.
-    # connectedhold
-    #     like "hold" style, but line segments are drawn at each point of the
-    #     plot to connect the hold lines of the prior point and the current
-    #     point.  Also called a "right angle plot".
+    #: The rendering style of the line plot.
+    #:
+    #: connectedpoints
+    #:     "normal" style (default); each point is connected to subsequent and
+    #:     prior points by line segments
+    #: hold
+    #:     each point is represented by a line segment parallel to the abscissa
+    #:     (index axis) and spanning the length between the point and its
+    #:     subsequent point.
+    #: connectedhold
+    #:     like "hold" style, but line segments are drawn at each point of the
+    #:     plot to connect the hold lines of the prior point and the current
+    #:     point.  Also called a "right angle plot".
     render_style = Enum("connectedpoints", "hold", "connectedhold")
 
-    # Traits UI View for customizing the plot.
+    #: Traits UI View for customizing the plot.
     traits_view = View(Item("color", style="custom"), "line_width", "line_style",
                        buttons=["OK", "Cancel"])
 

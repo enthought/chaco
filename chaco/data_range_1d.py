@@ -25,63 +25,63 @@ class DataRange1D(BaseDataRange):
     """ Represents a 1-D data range.
     """
 
-    # The actual value of the lower bound of this range (overrides
-    # AbstractDataRange). To set it, use **low_setting**.
+    #: The actual value of the lower bound of this range (overrides
+    #: AbstractDataRange). To set it, use **low_setting**.
     low = Property
-    # The actual value of the upper bound of this range (overrides
-    # AbstractDataRange). To set it, use **high_setting**.
+    #: The actual value of the upper bound of this range (overrides
+    #: AbstractDataRange). To set it, use **high_setting**.
     high = Property
 
-    # Property for the lower bound of this range (overrides AbstractDataRange).
-    #
-    # * 'auto': The lower bound is automatically set at or below the minimum
-    #   of the data.
-    # * 'track': The lower bound tracks the upper bound by **tracking_amount**.
-    # * CFloat: An explicit value for the lower bound
+    #: Property for the lower bound of this range (overrides AbstractDataRange).
+    #:
+    #: * 'auto': The lower bound is automatically set at or below the minimum
+    #:   of the data.
+    #: * 'track': The lower bound tracks the upper bound by **tracking_amount**.
+    #: * CFloat: An explicit value for the lower bound
     low_setting = Property(Trait('auto', 'auto', 'track', CFloat))
-    # Property for the upper bound of this range (overrides AbstractDataRange).
-    #
-    # * 'auto': The upper bound is automatically set at or above the maximum
-    #   of the data.
-    # * 'track': The upper bound tracks the lower bound by **tracking_amount**.
-    # * CFloat: An explicit value for the upper bound
+    #: Property for the upper bound of this range (overrides AbstractDataRange).
+    #:
+    #: * 'auto': The upper bound is automatically set at or above the maximum
+    #:   of the data.
+    #: * 'track': The upper bound tracks the lower bound by **tracking_amount**.
+    #: * CFloat: An explicit value for the upper bound
     high_setting = Property(Trait('auto', 'auto', 'track', CFloat))
 
-    # Do "auto" bounds imply an exact fit to the data? If False,
-    # they pad a little bit of margin on either side.
+    #: Do "auto" bounds imply an exact fit to the data? If False,
+    #: they pad a little bit of margin on either side.
     tight_bounds = Bool(True)
 
-    # A user supplied function returning the proper bounding interval.
-    # bounds_func takes (data_low, data_high, margin, tight_bounds)
-    # and returns (low, high)
+    #: A user supplied function returning the proper bounding interval.
+    #: bounds_func takes (data_low, data_high, margin, tight_bounds)
+    #: and returns (low, high)
     bounds_func = Callable
 
-    # The amount of margin to place on either side of the data, expressed as
-    # a percentage of the full data width
+    #: The amount of margin to place on either side of the data, expressed as
+    #: a percentage of the full data width
     margin = Float(0.05)
 
-    # The minimum percentage difference between low and high.  That is,
-    # (high-low) >= epsilon * low.
-    # Used to be 1.0e-20 but chaco cannot plot at such a precision!
+    #: The minimum percentage difference between low and high.  That is,
+    #: (high-low) >= epsilon * low.
+    #: Used to be 1.0e-20 but chaco cannot plot at such a precision!
     epsilon = CFloat(1.0e-10)
 
-    # When either **high** or **low** tracks the other, track by this amount.
+    #: When either **high** or **low** tracks the other, track by this amount.
     default_tracking_amount = CFloat(20.0)
 
-    # The current tracking amount. This value changes with zooming.
+    #: The current tracking amount. This value changes with zooming.
     tracking_amount = default_tracking_amount
 
-    # Default tracking state. This value is used when self.reset() is called.
-    #
-    # * 'auto': Both bounds reset to 'auto'.
-    # * 'high_track': The high bound resets to 'track', and the low bound
-    #   resets to 'auto'.
-    # * 'low_track': The low bound resets to 'track', and the high bound
-    #   resets to 'auto'.
+    #: Default tracking state. This value is used when self.reset() is called.
+    #:
+    #: * 'auto': Both bounds reset to 'auto'.
+    #: * 'high_track': The high bound resets to 'track', and the low bound
+    #:   resets to 'auto'.
+    #: * 'low_track': The low bound resets to 'track', and the high bound
+    #:   resets to 'auto'.
     default_state = Enum('auto', 'high_track', 'low_track')
 
-    # FIXME: this attribute is not used anywhere, is it safe to remove it?
-    # Is this range dependent upon another range?
+    #: FIXME: this attribute is not used anywhere, is it safe to remove it?
+    #: Is this range dependent upon another range?
     fit_to_subset = Bool(False)
 
     #------------------------------------------------------------------------

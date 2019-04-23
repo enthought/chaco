@@ -17,47 +17,47 @@ class LineInspector(BaseTool):
     This tool supports only plots with a 1-D index.
     """
 
-    # The axis that this tool is parallel to.
+    #: The axis that this tool is parallel to.
     axis = Enum("index", "value", "index_x", "index_y")
 
-    # The possible inspection modes of the tool.
-    #
-    # space:
-    #    The tool maps from screen space into the data space of the plot.
-    # indexed:
-    #    The tool maps from screen space to an index into the plot's index array.
+    #: The possible inspection modes of the tool.
+    #:
+    #: space:
+    #:    The tool maps from screen space into the data space of the plot.
+    #: indexed:
+    #:    The tool maps from screen space to an index into the plot's index array.
     inspect_mode = Enum("space", "indexed")
 
-    # Respond to user mouse events?
+    #: Respond to user mouse events?
     is_interactive = Bool(True)
 
-    # Does the tool respond to updates in the metadata on the data source
-    # and update its own position?
+    #: Does the tool respond to updates in the metadata on the data source
+    #: and update its own position?
     is_listener = Bool(False)
 
-    # If interactive, does the line inspector write the current data space point
-    # to the appropriate data source's metadata?
+    #: If interactive, does the line inspector write the current data space point
+    #: to the appropriate data source's metadata?
     write_metadata = Bool(False)
 
-    # The name of the metadata field to listen or write to.
+    #: The name of the metadata field to listen or write to.
     metadata_name = Str("selections")
 
     #------------------------------------------------------------------------
     # Override default values of inherited traits in BaseTool
     #------------------------------------------------------------------------
 
-    # This tool is visible (overrides BaseTool).
+    #: This tool is visible (overrides BaseTool).
     visible = True
-    # This tool is drawn as an overlay (overrides BaseTool).
+    #: This tool is drawn as an overlay (overrides BaseTool).
     draw_mode = "overlay"
 
     # TODO:STYLE
 
-    # Color of the line.
+    #: Color of the line.
     color = ColorTrait("black")
-    # Width in pixels of the line.
+    #: Width in pixels of the line.
     line_width = Float(1.0)
-    # Dash style of the line.
+    #: Dash style of the line.
     line_style = LineStyle("solid")
 
     # Last recorded position of the mouse

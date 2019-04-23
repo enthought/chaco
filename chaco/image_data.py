@@ -18,46 +18,46 @@ class ImageData(AbstractDataSource):
     dimensions.  The appropriate dimensionality of the value array depends
     on the context in which the ImageData instance will be used.
     """
-    # The dimensionality of the data.
+    #: The dimensionality of the data.
     dimension = ReadOnly(DimensionTrait('image'))
 
-    # Depth of the values at each i,j. Values that are used include:
-    #
-    # * 3: color images, without alpha channel
-    # * 4: color images, with alpha channel
+    #: Depth of the values at each i,j. Values that are used include:
+    #:
+    #: * 3: color images, without alpha channel
+    #: * 4: color images, with alpha channel
     value_depth = Int(1) # TODO: Modify ImageData to explicitly support scalar
                          # value arrays, as needed by CMapImagePlot
 
-    # Holds the grid data that forms the image.  The shape of the array is
-    # (N, M, D) where:
-    #
-    # * D is 1, 3, or 4.
-    # * N is the length of the y-axis.
-    # * M is the length of the x-axis.
-    #
-    # Thus, data[0,:,:] must be the first row of data.  If D is 1, then
-    # the array must be of type float; if D is 3 or 4, then the array
-    # must be of type uint8.
-    #
-    # NOTE: If this ImageData was constructed with a transposed data array,
-    # then internally it is still transposed (i.e., the x-axis is the first axis
-    # and the y-axis is the second), and the **data** array property might not be
-    # contiguous.  If contiguousness is required and calling copy() is too
-    # expensive, use the **raw_value** attribute. Also note that setting this
-    # trait does not change the value of **transposed**,
-    # so be sure to set it to its proper value when using the same ImageData
-    # instance interchangeably to store transposed and non-transposed data.
+    #: Holds the grid data that forms the image.  The shape of the array is
+    #: (N, M, D) where:
+    #:
+    #: * D is 1, 3, or 4.
+    #: * N is the length of the y-axis.
+    #: * M is the length of the x-axis.
+    #:
+    #: Thus, data[0,:,:] must be the first row of data.  If D is 1, then
+    #: the array must be of type float; if D is 3 or 4, then the array
+    #: must be of type uint8.
+    #:
+    #: NOTE: If this ImageData was constructed with a transposed data array,
+    #: then internally it is still transposed (i.e., the x-axis is the first axis
+    #: and the y-axis is the second), and the **data** array property might not be
+    #: contiguous.  If contiguousness is required and calling copy() is too
+    #: expensive, use the **raw_value** attribute. Also note that setting this
+    #: trait does not change the value of **transposed**,
+    #: so be sure to set it to its proper value when using the same ImageData
+    #: instance interchangeably to store transposed and non-transposed data.
     data = Property(ImageTrait)
 
-    # Is **raw_value**, the actual underlying image data
-    # array, transposed from **data**? (I.e., does the first axis correspond to
-    # the x-direction and the second axis correspond to the y-direction?)
-    #
-    # Rather than transposing or swapping axes on the data and destroying
-    # continuity, this class exposes the data as both **data** and **raw_value**.
+    #: Is **raw_value**, the actual underlying image data
+    #: array, transposed from **data**? (I.e., does the first axis correspond to
+    #: the x-direction and the second axis correspond to the y-direction?)
+    #:
+    #: Rather than transposing or swapping axes on the data and destroying
+    #: continuity, this class exposes the data as both **data** and **raw_value**.
     transposed = Bool(False)
 
-    # A read-only attribute that exposes the underlying array.
+    #: A read-only attribute that exposes the underlying array.
     raw_value = Property(ImageTrait)
 
 

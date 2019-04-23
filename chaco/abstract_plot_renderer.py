@@ -22,10 +22,10 @@ class AbstractPlotRenderer(PlotComponent):
     # Override default values of inherited traits PlotComponent
     #------------------------------------------------------------------------
 
-    # Overrides the default value inherited from PlotComponent.
+    #: Overrides the default value inherited from PlotComponent.
     bgcolor = "transparent"
 
-    # Overrides the default value inherited from PlotComponent.
+    #: Overrides the default value inherited from PlotComponent.
     resizable = "hv"
 
 
