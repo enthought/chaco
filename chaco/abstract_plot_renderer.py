@@ -65,13 +65,14 @@ class AbstractPlotRenderer(PlotComponent):
 
         Returns
         -------
-        An index into the plot's index array(s). Typically this index is just
-        an integer, but if the plot has a 2-D index dimension, then this method
-        returns a tuple of integers. If the input point cannot be mapped to an
-        index, then None is returned.
+        index : int
+            An index into the plot's index array(s). Typically this index is just
+            an integer, but if the plot has a 2-D index dimension, then this method
+            returns a tuple of integers. If the input point cannot be mapped to an
+            index, then None is returned.
 
-        If *screen_pt* corresponds to multiple indices, then only the first
-        index is returned.
+            If *screen_pt* corresponds to multiple indices, then only the first
+            index is returned.
         """
         raise NotImplementedError
 

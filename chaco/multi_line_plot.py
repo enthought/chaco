@@ -29,8 +29,8 @@ class MultiLinePlot(BaseXYPlot):
     stored in a MultiArrayDataSource object.  M is the number of lines to be plotted,
     and N is the number of points in each line.
 
-    Constructor Parameters
-    ----------------------
+    Parameters
+    ----------
     index : instance of an ArrayDataSource
         These are the 'x' or abscissa coordinates.
 

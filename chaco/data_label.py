@@ -195,7 +195,7 @@ class DataLabel(ToolTip):
     #: 'bubble' can be given rounded corners (by setting `corner_radius`), and
     #: the 'arrow' is a thin triangular wedge with its point at the data point.
     #: When label_style is 'bubble', the following traits are ignored:
-    #:    arrow_size, arrow_color, arrow_root, and arrow_max_length.
+    #: arrow_size, arrow_color, arrow_root, and arrow_max_length.
     label_style = Enum('box', 'bubble')
 
     #----------------------------------------------------------------------
