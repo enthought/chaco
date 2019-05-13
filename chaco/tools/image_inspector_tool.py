@@ -13,20 +13,20 @@ class ImageInspectorTool(BaseTool):
     """ A tool that captures the color and underlying values of an image plot.
     """
 
-    # This event fires whenever the mouse moves over a new image point.
-    # Its value is a dict with a key "color_value", and possibly a key
-    # "data_value" if the plot is a color-mapped image plot.
+    #: This event fires whenever the mouse moves over a new image point.
+    #: Its value is a dict with a key "color_value", and possibly a key
+    #: "data_value" if the plot is a color-mapped image plot.
     new_value = Event
 
-    # Indicates whether overlays listening to this tool should be visible.
+    #: Indicates whether overlays listening to this tool should be visible.
     visible = Bool(True)
 
-    # Stores the last mouse position.  This can be used by overlays to
-    # position themselves around the mouse.
+    #: Stores the last mouse position.  This can be used by overlays to
+    #: position themselves around the mouse.
     last_mouse_position = Tuple
 
-    # This key will show and hide any ImageInspectorOverlays associated
-    # with this tool.
+    #: This key will show and hide any ImageInspectorOverlays associated
+    #: with this tool.
     inspector_key = KeySpec('p')
 
     # Stores the value of self.visible when the mouse leaves the tool,
@@ -85,19 +85,19 @@ class ImageInspectorOverlay(TextBoxOverlay):
     """ An overlay that displays a box containing values from an
     ImageInspectorTool instance.
     """
-    # An instance of ImageInspectorTool; this overlay listens to the tool
-    # for changes, and updates its displayed text accordingly.
+    #: An instance of ImageInspectorTool; this overlay listens to the tool
+    #: for changes, and updates its displayed text accordingly.
     image_inspector = Any
 
-    # Anchor the text to the mouse?  (If False, then the text is in one of the
-    # corners.)  Use the **align** trait to determine which corner.
+    #: Anchor the text to the mouse?  (If False, then the text is in one of the
+    #: corners.)  Use the **align** trait to determine which corner.
     tooltip_mode = Bool(False)
 
-    # The default state of the overlay is invisible (overrides PlotComponent).
+    #: The default state of the overlay is invisible (overrides PlotComponent).
     visible = False
 
-    # Whether the overlay should auto-hide and auto-show based on the
-    # tool's location, or whether it should be forced to be hidden or visible.
+    #: Whether the overlay should auto-hide and auto-show based on the
+    #: tool's location, or whether it should be forced to be hidden or visible.
     visibility = Enum("auto", True, False)
 
     def _image_inspector_changed(self, old, new):

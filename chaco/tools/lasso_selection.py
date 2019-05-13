@@ -21,58 +21,58 @@ class LassoSelection(AbstractController):
     "Lassoing" means drawing an arbitrary selection region around the points
     by dragging the mouse along the outline of the region.
     """
-    # An Nx2 array of points in data space representing all selected points.
+    #: An Nx2 array of points in data space representing all selected points.
     dataspace_points = Property(Array)
 
-    # A list of all the selection polygons.
+    #: A list of all the selection polygons.
     disjoint_selections = Property(List)
 
-    # Fires whenever **dataspace_points** changes, necessitating a redraw of the
-    # selection region.
+    #: Fires whenever **dataspace_points** changes, necessitating a redraw of the
+    #: selection region.
     updated = Event
 
-    # Fires when the selection mask changes.
+    #: Fires when the selection mask changes.
     selection_changed = Event
 
-    # Fires when the user release the mouse button and finalizes the selection.
+    #: Fires when the user release the mouse button and finalizes the selection.
     selection_completed = Event
 
-    # If True, the selection mask is updated as the mouse moves, rather
-    # than only at the beginning and end of the selection operation.
+    #: If True, the selection mask is updated as the mouse moves, rather
+    #: than only at the beginning and end of the selection operation.
     incremental_select = Bool(False)
 
-    # The selection mode of the lasso pointer: "include", "exclude" or
-    # "invert" points from the selection. The "include" and "exclude"
-    # settings essentially invert the selection mask. The "invert" setting
-    # differs from "exclude" in that "invert" inverses the selection of all
-    # points the the lasso'ed polygon, while "exclude" operates only on
-    # points included in a previous selection.
+    #: The selection mode of the lasso pointer: "include", "exclude" or
+    #: "invert" points from the selection. The "include" and "exclude"
+    #: settings essentially invert the selection mask. The "invert" setting
+    #: differs from "exclude" in that "invert" inverses the selection of all
+    #: points the the lasso'ed polygon, while "exclude" operates only on
+    #: points included in a previous selection.
     selection_mode = Enum("include", "exclude", "invert")
 
-    # The data source that the mask of selected points is attached to.  Note
-    # that the indices in this data source must match the indices of the data
-    # in the plot.
+    #: The data source that the mask of selected points is attached to.  Note
+    #: that the indices in this data source must match the indices of the data
+    #: in the plot.
     selection_datasource = Instance(AbstractDataSource)
 
-    # The name of the metadata on the datasource that we will write
-    # the selection mask to
+    #: The name of the metadata on the datasource that we will write
+    #: the selection mask to
     metadata_name = Str("selection")
 
-    # Mapping from screen space to data space. By default, it is just
-    # self.component.
+    #: Mapping from screen space to data space. By default, it is just
+    #: self.component.
     plot = Property
 
-    # The button which this tool responds to
+    #: The button which this tool responds to
     drag_button = Enum("left", "right")
 
-    # The possible event states of this selection tool (overrides
-    # enable.Interactor).
-    #
-    # normal:
-    #     Nothing has been selected, and the user is not dragging the mouse.
-    # selecting:
-    #     The user is dragging the mouse and is actively changing the
-    #     selection region.
+    #: The possible event states of this selection tool (overrides
+    #: enable.Interactor).
+    #:
+    #: normal:
+    #:     Nothing has been selected, and the user is not dragging the mouse.
+    #: selecting:
+    #:     The user is dragging the mouse and is actively changing the
+    #:     selection region.
     event_state = Enum('normal', 'selecting')
 
     #----------------------------------------------------------------------

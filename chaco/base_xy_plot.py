@@ -36,63 +36,63 @@ class BaseXYPlot(AbstractPlotRenderer):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # The data source to use for the index coordinate.
+    #: The data source to use for the index coordinate.
     index = Instance(ArrayDataSource)
 
-    # The data source to use as value points.
+    #: The data source to use as value points.
     value = Instance(AbstractDataSource)
 
-    # Screen mapper for index data.
+    #: Screen mapper for index data.
     index_mapper = Instance(AbstractMapper)
-    # Screen mapper for value data
+    #: Screen mapper for value data
     value_mapper = Instance(AbstractMapper)
 
 
     # Convenience properties that correspond to either index_mapper or
     # value_mapper, depending on the orientation of the plot.
 
-    # Corresponds to either **index_mapper** or **value_mapper**, depending on
-    # the orientation of the plot.
+    #: Corresponds to either **index_mapper** or **value_mapper**, depending on
+    #: the orientation of the plot.
     x_mapper = Property
-    # Corresponds to either **value_mapper** or **index_mapper**, depending on
-    # the orientation of the plot.
+    #: Corresponds to either **value_mapper** or **index_mapper**, depending on
+    #: the orientation of the plot.
     y_mapper = Property
 
-    # Convenience property for accessing the index data range.
+    #: Convenience property for accessing the index data range.
     index_range = Property
-    # Convenience property for accessing the value data range.
+    #: Convenience property for accessing the value data range.
     value_range = Property
 
-    # The type of hit-testing that is appropriate for this renderer.
-    #
-    # * 'line': Computes Euclidean distance to the line between the
-    #   nearest adjacent points.
-    # * 'point': Checks for adjacency to a marker or point.
+    #: The type of hit-testing that is appropriate for this renderer.
+    #:
+    #: * 'line': Computes Euclidean distance to the line between the
+    #:   nearest adjacent points.
+    #: * 'point': Checks for adjacency to a marker or point.
     hittest_type = Enum("point", "line")
 
     #------------------------------------------------------------------------
     # Appearance-related traits
     #------------------------------------------------------------------------
 
-    # The orientation of the index axis.
+    #: The orientation of the index axis.
     orientation = Enum("h", "v")
 
-    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     alpha = Range(0.0, 1.0, 1.0)
 
     #------------------------------------------------------------------------
     # Convenience readonly properties for common annotations
     #------------------------------------------------------------------------
 
-    # Read-only property for horizontal grid.
+    #: Read-only property for horizontal grid.
     hgrid = Property
-    # Read-only property for vertical grid.
+    #: Read-only property for vertical grid.
     vgrid = Property
-    # Read-only property for x-axis.
+    #: Read-only property for x-axis.
     x_axis = Property
-    # Read-only property for y-axis.
+    #: Read-only property for y-axis.
     y_axis = Property
-    # Read-only property for labels.
+    #: Read-only property for labels.
     labels = Property
 
 
@@ -100,26 +100,26 @@ class BaseXYPlot(AbstractPlotRenderer):
     # Other public traits
     #------------------------------------------------------------------------
 
-    # Does the plot use downsampling?
-    # This is not used right now.  It needs an implementation of robust, fast
-    # downsampling, which does not exist yet.
+    #: Does the plot use downsampling?
+    #: This is not used right now.  It needs an implementation of robust, fast
+    #: downsampling, which does not exist yet.
     use_downsampling = Bool(False)
 
-    # Does the plot use a spatial subdivision structure for fast hit-testing?
-    # This makes data updates slower, but makes hit-tests extremely fast.
+    #: Does the plot use a spatial subdivision structure for fast hit-testing?
+    #: This makes data updates slower, but makes hit-tests extremely fast.
     use_subdivision = Bool(False)
 
-    # Overrides the default background color trait in PlotComponent.
+    #: Overrides the default background color trait in PlotComponent.
     bgcolor = "transparent"
 
     # This just turns on a simple drawing of the X and Y axes... not a long
     # term solution, but good for testing.
 
-    # Defines the origin axis color, for testing.
+    #: Defines the origin axis color, for testing.
     origin_axis_color = black_color_trait
-    # Defines a the origin axis width, for testing.
+    #: Defines a the origin axis width, for testing.
     origin_axis_width = Float(1.0)
-    # Defines the origin axis visibility, for testing.
+    #: Defines the origin axis visibility, for testing.
     origin_axis_visible = Bool(False)
 
     #------------------------------------------------------------------------

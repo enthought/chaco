@@ -19,22 +19,22 @@ class FilledLinePlot(PolygonPlot):
 
     fill_color = Alias("face_color")
 
-    # Direction to fill. Down is towards the origin, up is towards the max
+    #: Direction to fill. Down is towards the origin, up is towards the max
     fill_direction = Enum("down", "up")
 
-    # The rendering style of the line plot.
-    #
-    # connectedpoints
-    #     "normal" style (default); each point is connected to subsequent and
-    #     prior points by line segments
-    # hold
-    #     each point is represented by a line segment parallel to the abscissa
-    #     (index axis) and spanning the length between the point and its
-    #     subsequent point.
-    # connectedhold
-    #     like "hold" style, but line segments are drawn at each point of the
-    #     plot to connect the hold lines of the prior point and the current
-    #     point.  Also called a "right angle plot".
+    #: The rendering style of the line plot.
+    #:
+    #: connectedpoints
+    #:     "normal" style (default); each point is connected to subsequent and
+    #:     prior points by line segments
+    #: hold
+    #:     each point is represented by a line segment parallel to the abscissa
+    #:     (index axis) and spanning the length between the point and its
+    #:     subsequent point.
+    #: connectedhold
+    #:     like "hold" style, but line segments are drawn at each point of the
+    #:     plot to connect the hold lines of the prior point and the current
+    #:     point.  Also called a "right angle plot".
     render_style = Enum("connectedpoints", "hold", "connectedhold")
 
     def _render(self, gc, points):

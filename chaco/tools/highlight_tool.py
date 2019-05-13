@@ -16,23 +16,23 @@ class HighlightTool(BaseTool):
     graph by clicking on it.
     """
 
-    # The name of the data source metadata which controls selections.
+    #: The name of the data source metadata which controls selections.
     metadata_name = Str('selections')
 
-    # The mouse button that initiates the selection.
+    #: The mouse button that initiates the selection.
     drag_button = Enum("left", "right")
 
-    # Threshold distance for hit-testing.
+    #: Threshold distance for hit-testing.
     threshold = Float(20.0)
 
     #---------------------------------------------------------------------
     # Inherited BaseTool traits
     #---------------------------------------------------------------------
 
-    # This tool is not drawn. Overrides BaseTool.
+    #: This tool is not drawn. Overrides BaseTool.
     draw_mode = "none"
 
-    # This tool is not visible. Overrides BaseTool.
+    #: This tool is not visible. Overrides BaseTool.
     visible = False
 
     def normal_left_down(self, event):

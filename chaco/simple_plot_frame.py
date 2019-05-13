@@ -26,18 +26,18 @@ class SimplePlotFrame(BasePlotFrame):
     This class will be removed sometime in the future.
     """
 
-    # This frame has only one position for plot components. Overrides
-    # PlotFrame.
+    #: This frame has only one position for plot components. Overrides
+    #: PlotFrame.
     slot_names = ("center")
 
-    # Default width and height. Class attribute.
+    #: Default width and height. Class attribute.
     default_bounds = (500, 500)
 
-    # This frame does not resize to fit components. Overrides PlotFrame.
+    #: This frame does not resize to fit components. Overrides PlotFrame.
     fit_components = ""
 
-    # This frame maximizes itself within the window, if it is a top-level
-    # component. Overrides Enable Container.
+    #: This frame maximizes itself within the window, if it is a top-level
+    #: component. Overrides Enable Container.
     fit_window = True
 
     #------------------------------------------------------------------------

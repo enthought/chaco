@@ -50,17 +50,17 @@ class ImagePlot(Base2DPlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
-    # for full intensity.
+    #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    #: for full intensity.
     alpha = Trait(1.0, Range(0.0, 1.0))
 
-    # The interpolation method to use when rendering an image onto the GC.
+    #: The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
 
-    # Bool indicating whether x-axis is flipped.
+    #: Bool indicating whether x-axis is flipped.
     x_axis_is_flipped = Property(depends_on=['orientation', 'origin'])
 
-    # Bool indicating whether y-axis is flipped.
+    #: Bool indicating whether y-axis is flipped.
     y_axis_is_flipped = Property(depends_on=['orientation', 'origin'])
 
     #------------------------------------------------------------------------

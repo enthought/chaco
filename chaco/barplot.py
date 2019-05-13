@@ -27,68 +27,68 @@ class BarPlot(AbstractPlotRenderer):
     """
     A renderer for bar charts.
     """
-    # The data source to use for the index coordinate.
+    #: The data source to use for the index coordinate.
     index = Instance(ArrayDataSource)
 
-    # The data source to use as value points.
+    #: The data source to use as value points.
     value = Instance(ArrayDataSource)
 
-    # The data source to use as "starting" values for bars (along value axis).
-    # For instance, if the values are [10, 20] and starting_value
-    # is [3, 7], BarPlot will plot two bars, one  between 3 and 10, and
-    # one between 7 and 20
+    #: The data source to use as "starting" values for bars (along value axis).
+    #: For instance, if the values are [10, 20] and starting_value
+    #: is [3, 7], BarPlot will plot two bars, one  between 3 and 10, and
+    #: one between 7 and 20
     starting_value = Instance(ArrayDataSource)
 
-    # Labels for the indices.
+    #: Labels for the indices.
     index_mapper = Instance(AbstractMapper)
-    # Labels for the values.
+    #: Labels for the values.
     value_mapper = Instance(AbstractMapper)
 
-    # The orientation of the index axis.
+    #: The orientation of the index axis.
     orientation = Enum("h", "v")
 
-    # The direction of the index axis with respect to the graphics context's
-    # direction.
+    #: The direction of the index axis with respect to the graphics context's
+    #: direction.
     index_direction = Enum("normal", "flipped")
 
-    # The direction of the value axis with respect to the graphics context's
-    # direction.
+    #: The direction of the value axis with respect to the graphics context's
+    #: direction.
     value_direction = Enum("normal", "flipped")
 
-    # Type of width used for bars:
-    #
-    # 'data'
-    #     The width is in the units along the x-dimension of the data space.
-    # 'screen'
-    #     The width uses a fixed width of pixels.
+    #: Type of width used for bars:
+    #:
+    #: 'data'
+    #:     The width is in the units along the x-dimension of the data space.
+    #: 'screen'
+    #:     The width uses a fixed width of pixels.
     bar_width_type = Enum("data", "screen")
 
-    # Width of the bars, in data or screen space (determined by
-    # **bar_width_type**).
+    #: Width of the bars, in data or screen space (determined by
+    #: **bar_width_type**).
     bar_width = Float(10)
 
-    # Round on rectangle dimensions? This is not strictly an "antialias", but
-    # it has the same effect through exact pixel drawing.
+    #: Round on rectangle dimensions? This is not strictly an "antialias", but
+    #: it has the same effect through exact pixel drawing.
     antialias = Bool(True)
 
-    # Width of the border of the bars.
+    #: Width of the border of the bars.
     line_width = Float(1.0)
-    # Color of the border of the bars.
+    #: Color of the border of the bars.
     line_color = black_color_trait
-    # Color to fill the bars.
+    #: Color to fill the bars.
     fill_color = black_color_trait
 
-    # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
-    # It has the same RGB values as line_color_, and its alpha value is the
-    # alpha value of self.line_color multiplied by self.alpha. 
+    #: The RGBA tuple for rendering lines.  It is always a tuple of length 4.
+    #: It has the same RGB values as line_color_, and its alpha value is the
+    #: alpha value of self.line_color multiplied by self.alpha. 
     effective_line_color = Property(Tuple, depends_on=['line_color', 'alpha'])
     
-    # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
-    # It has the same RGB values as fill_color_, and its alpha value is the
-    # alpha value of self.fill_color multiplied by self.alpha.   
+    #: The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
+    #: It has the same RGB values as fill_color_, and its alpha value is the
+    #: alpha value of self.fill_color multiplied by self.alpha.   
     effective_fill_color = Property(Tuple, depends_on=['fill_color', 'alpha'])
 
-    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     alpha = Range(0.0, 1.0, 1.0)
 
 
@@ -97,23 +97,23 @@ class BarPlot(AbstractPlotRenderer):
     # Convenience properties that correspond to either index_mapper or
     # value_mapper, depending on the orientation of the plot.
 
-    # Corresponds to either **index_mapper** or **value_mapper**, depending on
-    # the orientation of the plot.
+    #: Corresponds to either **index_mapper** or **value_mapper**, depending on
+    #: the orientation of the plot.
     x_mapper = Property
-    # Corresponds to either **value_mapper** or **index_mapper**, depending on
-    # the orientation of the plot.
+    #: Corresponds to either **value_mapper** or **index_mapper**, depending on
+    #: the orientation of the plot.
     y_mapper = Property
 
-    # Corresponds to either **index_direction** or **value_direction**,
-    # depending on the orientation of the plot.
+    #: Corresponds to either **index_direction** or **value_direction**,
+    #: depending on the orientation of the plot.
     x_direction = Property
-    # Corresponds to either **value_direction** or **index_direction**,
-    # depending on the orientation of the plot
+    #: Corresponds to either **value_direction** or **index_direction**,
+    #: depending on the orientation of the plot
     y_direction = Property
 
-    # Convenience property for accessing the index data range.
+    #: Convenience property for accessing the index data range.
     index_range = Property
-    # Convenience property for accessing the value data range.
+    #: Convenience property for accessing the value data range.
     value_range = Property
 
 

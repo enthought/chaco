@@ -24,16 +24,16 @@ class ErrorBarPlot(LinePlot):
     """ Renders errorbars at various points.
     """
 
-    # The datasource containing the low values
+    #: The datasource containing the low values
     value_low = Instance(AbstractDataSource)
 
-    # The datasource containing the high values
+    #: The datasource containing the high values
     value_high = Instance(AbstractDataSource)
 
-    # The screen-space width of the endcap bars
+    #: The screen-space width of the endcap bars
     endcap_size = Float(5.0)
 
-    # The kind of encap to render on error bars
+    #: The kind of encap to render on error bars
     endcap_style = Enum("bar", "none", None)
 
     # Override the inherited trait definition

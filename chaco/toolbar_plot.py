@@ -4,7 +4,7 @@ from traits.api import Type, DelegatesTo, Instance, Enum, \
         on_trait_change
 
 class ToolbarPlot(Plot):
-    # Should we turn on the auto-hide feature on the toolbar?
+    #: Should we turn on the auto-hide feature on the toolbar?
     auto_hide = DelegatesTo('toolbar')
 
     toolbar = Instance(PlotToolbar)
@@ -12,11 +12,11 @@ class ToolbarPlot(Plot):
     toolbar_class = Type(PlotToolbar)
     toolbar_added = False
 
-    # Location of the default toolbar that is created if a toolbar
-    # is not specified with the `toolbar` attribute.  Changing this
-    # attribute after the ToolbarPlot instance is created has no effect;
-    # use obj.toolbar.location to dynamically change the location of the
-    # instance `obj`s toolbar.
+    #: Location of the default toolbar that is created if a toolbar
+    #: is not specified with the `toolbar` attribute.  Changing this
+    #: attribute after the ToolbarPlot instance is created has no effect;
+    #: use obj.toolbar.location to dynamically change the location of the
+    #: instance `obj`s toolbar.
     toolbar_location = Enum('top', 'right', 'bottom', 'left')
 
     def __init__(self, *args, **kw):

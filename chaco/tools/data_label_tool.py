@@ -15,11 +15,11 @@ class DataLabelTool(DragTool):
     to the DataLabel.
     """
 
-    # The mouse button that initiates the drag.
+    #: The mouse button that initiates the drag.
     drag_button = Enum("left", "right")
 
-    # Use the root of the label's arrow (if any) as the closest corner of the
-    # label?
+    #: Use the root of the label's arrow (if any) as the closest corner of the
+    #: label?
     auto_arrow_root = Bool(True)
 
     # The original position of the label with respect to the data point.

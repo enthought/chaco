@@ -28,24 +28,24 @@ class CMapImagePlot(ImagePlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # Maps from scalar data values in self.data.value to color tuples
+    #: Maps from scalar data values in self.data.value to color tuples
     value_mapper = Instance(AbstractColormap)
 
-    # Convenience property for value_mapper as color_mapper
+    #: Convenience property for value_mapper as color_mapper
     color_mapper = Property
 
-    # Convenience property for accessing the data range of the mapper.
+    #: Convenience property for accessing the data range of the mapper.
     value_range = Property
 
-    # alpha value to use to fade out unselected data points when there is an
-    # active selection
+    #: alpha value to use to fade out unselected data points when there is an
+    #: active selection
     fade_alpha = Float(0.3)
 
     #fade_background = Tuple((255,255,255))
-    # RGB color to use to fade out unselected points.
+    #: RGB color to use to fade out unselected points.
     fade_background = Tuple((0,0,0))
     
-    # whether to pre-compute the full colormapped RGB(A) image
+    #: whether to pre-compute the full colormapped RGB(A) image
     cache_full_map = Bool(True)
 
     #------------------------------------------------------------------------

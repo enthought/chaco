@@ -18,13 +18,13 @@ from chaco.tools.api import LassoSelection
 class RegressionLasso(LassoSelection):
     """ A controller for "lassoing" a selection of points in a regression plot.
     """
-    # The regression updates as more points are added (overrides LassoSelection).
+    #: The regression updates as more points are added (overrides LassoSelection).
     incremental_select = True
 
-    # Tuple (slope, intercept) of the line that fits the data.
+    #: Tuple (slope, intercept) of the line that fits the data.
     fit_params = Any
 
-    # The center point of the selected points, in data space.
+    #: The center point of the selected points, in data space.
     centroid = Any
 
     def _selection_changed_fired(self, event):

@@ -8,11 +8,11 @@ class BroadcasterTool(BaseTool):
     receives to all of the tools.
     """
 
-    # The tools to which this tool broadcasts events.
+    #: The tools to which this tool broadcasts events.
     tools = List
 
-    # Mapping from tools to transforms, for tools that can be mouse owners.
-    # (See enable.AbstractWindow.)
+    #: Mapping from tools to transforms, for tools that can be mouse owners.
+    #: (See enable.AbstractWindow.)
     mouse_owners = Dict
 
     def dispatch(self, event, suffix):

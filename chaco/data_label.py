@@ -158,106 +158,106 @@ class DataLabel(ToolTip):
     Optionally, an arrow is drawn to the point.
     """
 
-    # The symbol to use if **marker** is set to "custom". This attribute must
-    # be a compiled path for the given Kiva context.
+    #: The symbol to use if **marker** is set to "custom". This attribute must
+    #: be a compiled path for the given Kiva context.
     custom_symbol = Any
 
-    # The point in data space where this label should anchor itself.
+    #: The point in data space where this label should anchor itself.
     data_point = ArrayOrNone()
 
-    # The location of the data label relative to the data point.
+    #: The location of the data label relative to the data point.
     label_position = LabelPositionTrait
 
-    # The format string that determines the label's text.  This string is
-    # formatted using a dict containing the keys 'x' and 'y', corresponding to
-    # data space values.
+    #: The format string that determines the label's text.  This string is
+    #: formatted using a dict containing the keys 'x' and 'y', corresponding to
+    #: data space values.
     label_format = Str("(%(x)f, %(y)f)")
 
-    # The text to show on the label, or above the coordinates for the label, if
-    # show_label_coords is True
+    #: The text to show on the label, or above the coordinates for the label, if
+    #: show_label_coords is True
     label_text = Str
 
-    # Flag whether to show coordinates with the label or not.
+    #: Flag whether to show coordinates with the label or not.
     show_label_coords = Bool(True)
 
-    # Does the label clip itself against the main plot area?  If not, then
-    # the label draws into the padding area (where axes typically reside).
+    #: Does the label clip itself against the main plot area?  If not, then
+    #: the label draws into the padding area (where axes typically reside).
     clip_to_plot = Bool(True)
 
-    # The center x position (average of x and x2)
+    #: The center x position (average of x and x2)
     xmid = Property(Float, depends_on=['x', 'x2'])
 
-    # The center y position (average of y and y2)
+    #: The center y position (average of y and y2)
     ymid = Property(Float, depends_on=['y', 'y2'])
 
-    # 'box' is a simple rectangular box, with an arrow that is a single line
-    # with an arrowhead at the data point.
-    # 'bubble' can be given rounded corners (by setting `corner_radius`), and
-    # the 'arrow' is a thin triangular wedge with its point at the data point.
-    # When label_style is 'bubble', the following traits are ignored:
-    #    arrow_size, arrow_color, arrow_root, and arrow_max_length.
+    #: 'box' is a simple rectangular box, with an arrow that is a single line
+    #: with an arrowhead at the data point.
+    #: 'bubble' can be given rounded corners (by setting `corner_radius`), and
+    #: the 'arrow' is a thin triangular wedge with its point at the data point.
+    #: When label_style is 'bubble', the following traits are ignored:
+    #: arrow_size, arrow_color, arrow_root, and arrow_max_length.
     label_style = Enum('box', 'bubble')
 
     #----------------------------------------------------------------------
     # Marker traits
     #----------------------------------------------------------------------
 
-    # Mark the point on the data that this label refers to?
+    #: Mark the point on the data that this label refers to?
     marker_visible = Bool(True)
 
-    # The type of marker to use.  This is a mapped trait using strings as the
-    # keys.
+    #: The type of marker to use.  This is a mapped trait using strings as the
+    #: keys.
     marker = MarkerTrait
 
-    # The pixel size of the marker (doesn't include the thickness of the
-    # outline).
+    #: The pixel size of the marker (doesn't include the thickness of the
+    #: outline).
     marker_size = Int(4)
 
-    # The thickness, in pixels, of the outline to draw around the marker.
-    # If this is 0, no outline will be drawn.
+    #: The thickness, in pixels, of the outline to draw around the marker.
+    #: If this is 0, no outline will be drawn.
     marker_line_width = Float(1.0)
 
-    # The color of the inside of the marker.
+    #: The color of the inside of the marker.
     marker_color = ColorTrait("red")
 
-    # The color out of the border drawn around the marker.
+    #: The color out of the border drawn around the marker.
     marker_line_color = ColorTrait("black")
 
     #----------------------------------------------------------------------
     # Arrow traits
     #----------------------------------------------------------------------
 
-    # Draw an arrow from the label to the data point?  Only
-    # used if **data_point** is not None.
+    #: Draw an arrow from the label to the data point?  Only
+    #: used if **data_point** is not None.
     arrow_visible = Bool(True)   # FIXME: replace with some sort of ArrowStyle
 
-    # The length of the arrowhead, in screen points (e.g., pixels).
+    #: The length of the arrowhead, in screen points (e.g., pixels).
     arrow_size = Float(10)
 
-    # The color of the arrow.
+    #: The color of the arrow.
     arrow_color = ColorTrait("black")
 
-    # The position of the base of the arrow on the label.  If this
-    # is 'auto', then the label uses **label_position**.  Otherwise, it
-    # treats the label as if it were at the label position indicated by
-    # this attribute.
+    #: The position of the base of the arrow on the label.  If this
+    #: is 'auto', then the label uses **label_position**.  Otherwise, it
+    #: treats the label as if it were at the label position indicated by
+    #: this attribute.
     arrow_root = Trait("auto", "auto", "top left", "top right", "bottom left",
                        "bottom right", "top center", "bottom center",
                        "left center", "right center")
 
-    # The minimum length of the arrow before it will be drawn.  By default,
-    # the arrow will be drawn regardless of how short it is.
+    #: The minimum length of the arrow before it will be drawn.  By default,
+    #: the arrow will be drawn regardless of how short it is.
     arrow_min_length = Float(0)
 
-    # The maximum length of the arrow before it will be drawn.  By default,
-    # the arrow will be drawn regardless of how long it is.
+    #: The maximum length of the arrow before it will be drawn.  By default,
+    #: the arrow will be drawn regardless of how long it is.
     arrow_max_length = Float(inf)
 
     #----------------------------------------------------------------------
     # Bubble traits
     #----------------------------------------------------------------------
 
-    # The radius (in screen coordinates) of the curved corners of the "bubble".
+    #: The radius (in screen coordinates) of the curved corners of the "bubble".
     corner_radius = Float(10)
 
     #-------------------------------------------------------------------------
