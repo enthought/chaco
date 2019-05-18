@@ -1,6 +1,7 @@
 import unittest
 
 from traits.api import HasTraits, Instance
+from traits.etsconfig.api import ETSConfig
 from traitsui.api import Item, View
 from enable.component_editor import ComponentEditor
 
@@ -19,6 +20,8 @@ class MockEvent(HasTraits):
     pass
 
 
+@unittest.skipIf(
+    ETSConfig.toolkit=='null', "Skip on 'null' toolkit")
 class TestHighlightTool(unittest.TestCase):
 
     def test_highlight_on_log_plot(self):

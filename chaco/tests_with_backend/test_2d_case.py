@@ -3,6 +3,7 @@ import unittest
 from chaco.api import Plot, ArrayPlotData
 
 from traits.api import HasTraits, Instance
+from traits.etsconfig.api import ETSConfig
 from enable.component_editor import ComponentEditor
 from traitsui.api import Item, View
 
@@ -16,6 +17,8 @@ class PlotViewer(HasTraits):
     traits_view = View(Item('plot', editor=ComponentEditor()))
 
 
+@unittest.skipIf(
+    ETSConfig.toolkit=='null', "Skip on 'null' toolkit")
 class Test2DCase(unittest.TestCase):
 
     def test_bounds_2d_case(self):

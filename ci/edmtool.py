@@ -80,7 +80,6 @@ supported_combinations = {
 
 dependencies = {
     "six",
-    "nose",
     "mock",
     "numpy",
     "pandas",
@@ -144,8 +143,8 @@ def test(runtime, toolkit, environment):
     parameters = get_parameters(runtime, toolkit, environment)
     environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
-    commands_nobackend = [
-        "edm run -e {environment} -- coverage run -m nose.core chaco -v "
+    commands = [
+        "edm run -e {environment} -- coverage run -m unittest chaco -v "
     ]
 
     cwd = os.getcwd()
@@ -157,15 +156,7 @@ def test(runtime, toolkit, environment):
     click.echo("Running tests in '{environment}'".format(**parameters))
     with do_in_tempdir(files=['.coveragerc'], capture_files=['./.coverage*']):
         os.environ.update(environ)
-        execute(commands_nobackend, parameters)
-
-        if toolkit != 'null':
-            backend_tests = os.path.join(cwd, 'chaco/tests_with_backend')
-            commands_backend = [
-                ("edm run -e {{environment}} -- coverage run -a "
-                 "-m nose.core -v {}").format(backend_tests)
-            ]
-            execute(commands_backend, parameters)
+        execute(commands, parameters)
 
     click.echo('Done test')
 
