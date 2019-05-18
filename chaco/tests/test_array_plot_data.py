@@ -49,8 +49,3 @@ class ArrayPlotDataTestCase(unittest.TestCase):
         with self.monitor_events(plot_data) as events:
             plot_data.del_data('Grumpy')
             self.assertEqual(events, [{'removed': ['Grumpy']}])
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

@@ -72,8 +72,3 @@ class GridDataSourceTestCase(UnittestTools, unittest.TestCase):
     def test_metadata_items_changed(self):
         with self.assertTraitChanges(self.data_source, 'metadata_changed', count=1):
             self.data_source.metadata['new_metadata'] = True
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

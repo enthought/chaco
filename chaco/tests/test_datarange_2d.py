@@ -215,10 +215,3 @@ def assert_ary_(desired, actual):
         assert_equal(actual, 'auto')
     for d in range(len(desired)):
         assert_equal(desired[d], actual[d])
-    return
-
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

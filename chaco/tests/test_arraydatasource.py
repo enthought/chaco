@@ -271,15 +271,8 @@ class PointDataTestCase(unittest.TestCase):
         pd = PointDataSource(myarray)
         self.assertTrue(allclose(myarray, pd._data))
         self.assertTrue(pd.value_dimension == "point")
-        return
 
     def test_bounds(self):
         myarray = self.create_array()
         pd = PointDataSource(myarray)
         self.assertEqual(pd.get_bounds(), ((0, 0), (9, 90)))
-        return
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

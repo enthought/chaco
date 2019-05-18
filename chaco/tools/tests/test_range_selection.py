@@ -72,8 +72,3 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         tool.selection = (1.5, 3.5)
         tool.selection = [1.0, 2.0]
         tool.selection = None
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

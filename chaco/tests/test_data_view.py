@@ -37,7 +37,3 @@ class DataViewTestCase(unittest.TestCase):
         self.assertTrue(old_range.sources==[])
         self.assertTrue(dv.range2d.x_range is dv.index_mapper.range)
         self.assertTrue(dv.range2d.y_range is dv.value_mapper.range)
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

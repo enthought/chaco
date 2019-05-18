@@ -48,8 +48,3 @@ class GridMapperTestCase(unittest.TestCase):
         screen_ary = (60, 0)
         result = self.mapper.map_data(screen_ary)
         assert_equal(result, [[6.0, 1.0]])
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

@@ -290,8 +290,3 @@ class DataRangeTestCase(unittest.TestCase):
         r.sources.append(ds1)
         self.assertEqual(r.low, -inf)
         self.assertEqual(r.high, inf)
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()
