@@ -6,8 +6,10 @@ import subprocess
 
 from numpy import get_include
 from setuptools import setup, Extension, find_packages
+from setuptools.command.sdist import sdist
 
 from Cython.Distutils import build_ext
+from Cython.Build import cythonize
 
 
 MAJOR = 4
@@ -23,6 +25,18 @@ PKG_PATHNAME = 'chaco'
 
 # Name of the file containing the version information.
 _VERSION_FILENAME = os.path.join(PKG_PATHNAME, '_version.py')
+
+
+class cython_sdist(sdist):
+
+    def run(self):
+        # Make a pass with cythonize to generate C files, which
+        # will be included in the sdist.
+        ext_modules = self.distribution.ext_modules
+        if ext_modules:
+            cythonize(ext_modules, force=self.force)
+
+        super(cython_sdist, self).run()
 
 
 def read_version_py(path):
@@ -206,6 +220,7 @@ if __name__ == "__main__":
         zip_safe = False,
         use_2to3=False,
         cmdclass={
+            'sdist': cython_sdist,
             'build_ext': build_ext,
         }
     )
