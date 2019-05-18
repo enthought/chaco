@@ -4,8 +4,8 @@ from traits.testing.unittest_tools import unittest
 
 from numpy import array
 
-from .formatters import BasicFormatter, OffsetFormatter
-from .scales import Pow10Scale, FixedScale, LogScale, DefaultScale, ScaleSystem, frange
+from ..formatters import BasicFormatter, OffsetFormatter
+from ..scales import Pow10Scale, FixedScale, LogScale, DefaultScale, ScaleSystem, frange
 
 
 class TicksTestCase(unittest.TestCase):
