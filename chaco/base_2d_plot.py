@@ -86,7 +86,7 @@ class Base2DPlot(AbstractPlotRenderer):
         for trait_name in ("index", "value"):
             if trait_name in kwargs:
                 kwargs_tmp[trait_name] = kwargs.pop(trait_name)
-        self.set(**kwargs_tmp)
+        self.trait_set(**kwargs_tmp)
         super(Base2DPlot, self).__init__(**kwargs)
         if self.index is not None:
             self.index.on_trait_change(self._update_index_data,

@@ -97,8 +97,8 @@ class Base1DMapper(AbstractMapper):
             return
         if not self.stretch_data:
             self._adjust_range((self.low_pos, self.high_pos), new_bounds)
-        self.set(low_pos = new_bounds[0], trait_change_notify=False)
-        self.set(high_pos = new_bounds[1], trait_change_notify=False)
+        self.trait_setq(low_pos = new_bounds[0])
+        self.trait_setq(high_pos = new_bounds[1])
         self._cache_valid = False
         self._low_bound_initialized = True
         self._high_bound_initialized = True

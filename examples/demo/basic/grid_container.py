@@ -70,7 +70,8 @@ def _create_plot_component():
     # Set the upper-left plot to only be resizable vertically, and to have a
     # fixed horizontal width. This also constrains the width of the first column.
     ul_plot = container.components[0]
-    ul_plot.set(resizable="v", width=200)
+    ul_plot.resizable = "v"
+    ul_plot.width = 200
     ul_plot.overlays.append(PlotLabel("Not horizontally resizable",
                                       component=ul_plot))
 
@@ -78,7 +79,8 @@ def _create_plot_component():
     # This also constrains the height of the bottom row and the width of
     # the middle column.
     cplot = container.components[4]
-    cplot.set(resizable="", bounds=[400,400])
+    cplot.resizable = ""
+    cplot.bounds = [400,400]
     cplot.overlays.append(PlotLabel("Not resizable", component=cplot))
 
     container.padding_top = 50
