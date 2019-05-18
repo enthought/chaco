@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from traits.testing.unittest_tools import unittest
 
 from numpy import array
@@ -148,9 +146,7 @@ class BasicFormatterTestCase(TicksTestCase):
             val = lst[0]
             for mdigits, desired in lst[1:]:
                 s = fmt._nice_sci(val, mdigits)
-                if s != desired:
-                    print("Mismatch for", val, "; desired:", desired, "actual:", s)
-
+                self.assertEqual(s, desired)
 
     def test_estimate_default_scale(self):
         fmt = BasicFormatter()
@@ -177,12 +173,18 @@ class BasicFormatterTestCase(TicksTestCase):
         test_intervals = ((1, 100, 80),
                           (1, 100, 40),
                           (1, 100, 20),)
-        print()
-        for start, end, width in test_intervals:
+        res0 = [
+            (10.0, '10'), (20.0, '20'), (30.0, '30'), (40.0, '40'),
+            (50.0, '50'), (60.0, '60'), (70.0, '70'), (80.0, '80'),
+            (90.0, '90'), (100.0, '100')
+        ]
+        res1 = [(25.0, '25'), (50.0, '50'), (75.0, '75'), (100.0, '100')]
+        res2 = [(100.0, '100')]
+        all_expected = [res0, res1, res2]
+
+        for (start, end, width), expected in zip(test_intervals, all_expected):
             labels = scale.labels(start, end, char_width=width)
-            print("(%d,%d)" % (start,end), " avail:", width, end=" ")
-            print(" used:", sum([len(x[1]) for x in labels]))
-        return
+            self.assertEqual(labels, expected)
 
     def test_scale_system(self):
         scale = ScaleSystem(FixedScale(resolution = 1.0),
@@ -200,16 +202,14 @@ class BasicFormatterTestCase(TicksTestCase):
                           (1, 10, 100),
                           (1, 10, 50),
                           (1, 10, 20),)
-        print()
-        for start, end, width in test_intervals:
+        expected_lengths = [40, 10, 5, 5, 1, 10, 10, 4]
+
+        for (start, end, width), ll in zip(test_intervals, expected_lengths):
             labels = scale.labels(start, end, char_width=width)
-            print("(%d,%d)" % (start,end), " avail:", width, end=" ")
-            print(" used:", sum([len(x[1]) for x in labels]), end=" ")
-            print(list(zip(*labels))[1])
-        return
+            self.assertEqual(len(labels), ll)
+
 
 class OffsetFormatterTestCase(TicksTestCase):
-
 
     def test_format(self):
 
@@ -226,14 +226,5 @@ class OffsetFormatterTestCase(TicksTestCase):
             scale = FixedScale(resolution = resol)
             numlabels = 12
             ticks = scale.ticks(start, end, numlabels)
-            print("range:", start, end)
             labels = fmt.format(ticks, numlabels, None)
-            print("Labels:", labels)
-            print("estimated width:", fmt.estimate_width(start, end, numlabels))
-            print("actual width:", sum(map(len, labels)))
-
-
-
-if __name__ == "__main__":
-    import nose
-    nose.run()
+            self.assertEqual(len(ticks), len(labels))
