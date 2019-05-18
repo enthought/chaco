@@ -8,8 +8,13 @@ from numpy import get_include
 from setuptools import setup, Extension, find_packages
 from setuptools.command.sdist import sdist
 
-from Cython.Distutils import build_ext
-from Cython.Build import cythonize
+try:
+    from Cython.Distutils import build_ext
+    from Cython.Build import cythonize
+    CYTHON_AVAILABLE = True
+except ImportError:
+    from setuptools.command.build_ext import build_ext
+    CYTHON_AVAILABLE = False
 
 
 MAJOR = 4
@@ -33,10 +38,19 @@ class cython_sdist(sdist):
         # Make a pass with cythonize to generate C files, which
         # will be included in the sdist.
         ext_modules = self.distribution.ext_modules
-        if ext_modules:
+        if ext_modules and CYTHON_AVAILABLE:
             cythonize(ext_modules, force=self.force)
 
         super(cython_sdist, self).run()
+
+
+class CythonExtension(Extension):
+
+    def __init__(self, *args, **kw):
+        cython_sources = kw.pop('cython_sources', [])
+        if CYTHON_AVAILABLE:
+            kw['sources'] = cython_sources
+        super(CythonExtension, self).__init__(*args, **kw)
 
 
 def read_version_py(path):
@@ -158,15 +172,17 @@ if __name__ == "__main__":
         define_macros=[('NUMPY', None)],
     )
 
-    cython_speedups = Extension(
+    cython_speedups = CythonExtension(
         'chaco._cython_speedups',
-        sources=['chaco/_cython_speedups.pyx'],
+        sources=['chaco/_cython_speedups.c'],
+        cython_sources=['chaco/_cython_speedups.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
-    downsampling_lttb = Extension(
+    downsampling_lttb = CythonExtension(
         'chaco.downsample._lttb',
-        sources=['chaco/downsample/_lttb.pyx'],
+        sources=['chaco/downsample/_lttb.c'],
+        cython_sources=['chaco/downsample/_lttb.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
