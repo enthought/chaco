@@ -7,6 +7,9 @@ import subprocess
 from numpy import get_include
 from setuptools import setup, Extension, find_packages
 
+from Cython.Distutils import build_ext
+
+
 MAJOR = 4
 MINOR = 7
 MICRO = 1
@@ -143,13 +146,13 @@ if __name__ == "__main__":
 
     cython_speedups = Extension(
         'chaco._cython_speedups',
-        sources=['chaco/_cython_speedups.c'],
+        sources=['chaco/_cython_speedups.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
     downsampling_lttb = Extension(
         'chaco.downsample._lttb',
-        sources=['chaco/downsample/_lttb.c'],
+        sources=['chaco/downsample/_lttb.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
@@ -202,4 +205,7 @@ if __name__ == "__main__":
         platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
         zip_safe = False,
         use_2to3=False,
+        cmdclass={
+            'build_ext': build_ext,
+        }
     )

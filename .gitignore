@@ -6,6 +6,10 @@
 *~
 .DS_Store
 
+# Cython C artifacts
+chaco/_cython_speedups.c
+chaco/downsample/_lttb.c
+
 # ignore the build directories
 *.egg-info/
 build/
