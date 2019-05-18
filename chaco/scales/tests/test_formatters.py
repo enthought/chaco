@@ -82,5 +82,4 @@ class TestTimeFormatter(unittest.TestCase):
         ticks = [10.005, 10.0053, 10.0056]
         labels = tf.format(ticks, char_width=130)
         expected = ["5.000ms", "5.300ms", "5.600ms"]
-        print("labels =", labels, " expected =", expected)
         self.assertEqual(labels, expected)
