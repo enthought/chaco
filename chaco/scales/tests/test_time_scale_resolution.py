@@ -176,31 +176,10 @@ class TimeFormatterTestCase(TicksTestCase):
     def test_labels(self):
         fmt = TimeFormatter()
         scale = ScaleSystem(*HMSScales)
-        expected = [
-            (1110879000.0, '30m'),
-            (1110879060.0, '31m'),
-            (1110879120.0, '32m'),
-            (1110879180.0, '33m'),
-            (1110879240.0, '34m'),
-            (1110879300.0, '35m'),
-            (1110879360.0, '36m'),
-            (1110879420.0, '37m'),
-            (1110879480.0, '38m'),
-            (1110879540.0, '39m'),
-            (1110879600.0, '40m'),
-            (1110879660.0, '41m'),
-            (1110879720.0, '42m'),
-            (1110879780.0, '43m'),
-            (1110879840.0, '44m'),
-            (1110879900.0, '45m'),
-            (1110879960.0, '46m'),
-            (1110880020.0, '47m'),
-            (1110880080.0, '48m'),
-            (1110880140.0, '49m'),
-            (1110880200.0, '50m')]
+        expected_labels = ['{}m'.format(m) for n in range(30, 51)]
         
-        test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 150],
-                          )
+        test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 150])
         for start, end, width in test_intervals:
             labels = scale.labels(DTS(*start), DTS(*end), char_width=width)
-            self.assertEqual(labels, expected)
+            labels = [label for (_, label) in labels]
+            self.assertEqual(labels, expected_labels)
