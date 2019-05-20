@@ -15,11 +15,29 @@ env:
 matrix:
   include:
   - env: RUNTIME=2.7 TOOLKIT=wx
+  - os : osx
+    env: RUNTIME=2.7 TOOLKIT=wx
   - env: RUNTIME=2.7 TOOLKIT=pyqt
+  - os : osx
+    env: RUNTIME=2.7 TOOLKIT=pyqt
   - env: RUNTIME=2.7 TOOLKIT=null
+  - os : osx
+    env: RUNTIME=2.7 TOOLKIT=null
   - env: RUNTIME=2.7 TOOLKIT=pyside
+  - os : osx
+    env: RUNTIME=2.7 TOOLKIT=pyside
   - env: RUNTIME=3.5 TOOLKIT=pyqt
+  - os : osx
+    env: RUNTIME=3.5 TOOLKIT=pyqt
   - env: RUNTIME=3.5 TOOLKIT=null
+  - os : osx
+    env: RUNTIME=3.5 TOOLKIT=null
+  - env: RUNTIME=3.6 TOOLKIT=pyqt
+  - os : osx
+    env: RUNTIME=3.6 TOOLKIT=pyqt
+  - env: RUNTIME=3.6 TOOLKIT=null
+  - os : osx
+    env: RUNTIME=3.6 TOOLKIT=null
   fast_finish: true
 
 branches:
@@ -34,11 +52,12 @@ cache:
 before_install:
   - ccache -s
   - mkdir -p "${HOME}/.cache/download"
-  - ci/install-edm.sh
-  - export PATH="${HOME}/edm/bin:/usr/lib/ccache:${PATH}"
-  - edm install -y wheel click coverage
   - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]] ; then sh -e /etc/init.d/xvfb start; fi
+  - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then ./ci/install-edm-linux.sh; export PATH="${HOME}/edm/bin:${PATH}"; fi
+  - if [[ ${TRAVIS_OS_NAME} == 'osx' ]]; then ./ci/install-edm-osx.sh; export PATH="${PATH}:/usr/local/bin"; fi
+  - edm install -y wheel click coverage
+  - export PATH="${HOME}/edm/bin:/usr/lib/ccache:${PATH}"
 install:
   - edm run -- python ci/edmtool.py install --runtime=${RUNTIME} --toolkit=${TOOLKIT} 
 script:
