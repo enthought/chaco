@@ -1,3 +1,5 @@
+.. _data_ranges:
+
 ===========
 Data ranges
 ===========
@@ -138,7 +140,7 @@ for 2D ranges:
 :class:`~chaco.data_range_2d.DataRange2D`
 
   :class:`~chaco.data_range_2d.DataRange2D` represents a 2D data range.
-  Under the hood, it is implemented using two
+  Internally, it is implemented using two
   :class:`~chaco.data_range_1d.DataRange1D` objects,
   one for each dimension,
   which are stored in the

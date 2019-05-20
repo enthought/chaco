@@ -1,3 +1,5 @@
+.. _how_do_i:
+
 ############
 How Do I...?
 ############
@@ -75,7 +77,7 @@ be set to 'wx'.
     class MyPlot(HasTraits):
         plot = Instance(Plot)
 
-        traits_view = View(Item('plot', editor=ComponentEditor())) 
+        traits_view = View(Item('plot', editor=ComponentEditor()))
 
         def __init__(self, index, data_series, **kw):
             super(MyPlot, self).__init__(**kw)
@@ -117,7 +119,7 @@ be set to 'wx'.
 ::
 
     def copy_to_clipboard(plot):
-        # WX specific, though QT implementation is similar using 
+        # WX specific, though QT implementation is similar using
         # QImage and QClipboard
         import wx
 
@@ -126,10 +128,10 @@ be set to 'wx'.
         gc = PlotGraphicsContext((width, height), dpi=72)
         gc.render_component(plot_component)
 
-        # Create a bitmap the same size as the plot 
+        # Create a bitmap the same size as the plot
         # and copy the plot data to it
 
-        bitmap = wx.BitmapFromBufferRGBA(width+1, height+1, 
+        bitmap = wx.BitmapFromBufferRGBA(width+1, height+1,
                                      gc.bmp_array.flatten())
         data = wx.BitmapDataObject()
         data.SetBitmap(bitmap)
@@ -160,7 +162,7 @@ Layout and Rendering
     def change_bgcolor(plot):
         plot.bgcolor = 'black'
 
-* turn off borders? 
+* turn off borders?
 
 ::
 
@@ -183,7 +185,7 @@ Writing Components
 * write a custom renderer?
 * write a custom overlay/underlay?
 * write a custom tool?
-* write a new container? 
+* write a new container?
 
 
 Advanced
@@ -194,5 +196,5 @@ Advanced
 * properly change/override draw dispatch?
 * modify event dispatch?
 * customize backbuffering?
-* embed custom/native WX widgets on the plot? 
+* embed custom/native WX widgets on the plot?
 

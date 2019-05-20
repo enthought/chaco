@@ -1,5 +1,3 @@
-.. highlight:: python
-   :linenothreshold: 10
 
 *********************
 Containers and Layout

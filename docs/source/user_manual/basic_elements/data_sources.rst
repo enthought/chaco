@@ -1,4 +1,7 @@
-Data sources
+.. _data_sources:
+
+============
+Data Sources
 ============
 
 A data source is a wrapper object for the actual data that the plot will be

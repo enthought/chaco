@@ -2,7 +2,6 @@
 Quickstart
 ##########
 
-
 +----------------------------------------+--------------------------------------+
 |.. image::  images/simple_line.png      |.. image::  images/scalar_function.png|
 |   :height: 300 px                      |   :height: 300 px                    |
@@ -11,91 +10,6 @@ Quickstart
 
 This section is meant to help users on well-supported platforms and common
 Python environments get started using Chaco as quickly as possible.
-
-Installation
-============
-
-There are several ways to get Chaco. The easiest way is through `Enthought
-Canopy (Canopy) <https://www.enthought.com/products/canopy>`_ (formerly EPD)
-which is available for Windows, Linux and Mac OSX and also provides many other
-useful packages. Chaco may also be available through a package manager on your
-platform, such as apt on Ubuntu, yum on Redhat or
-`MacPorts <http://www.macports.org/>`_ on OS X.  You can also build Chaco from
-its `source code <https://github.com/enthought/chaco>`_, but because of the
-dependencies, the easiest way by far is to install Canopy.
-
-.. _dependencies:
-
-Dependencies
-------------
-
-* `Python <https://www.python.org>`_ 2.7 or later
-
-* `Traits <https://github.com/enthought/traits>`_, an event notification
-  framework
-
-* `Kiva <https://github.com/enthought/enable>`_, part of the enable project,
-  for rendering 2-D graphics to a variety of backends across platforms
-
-* `Enable <https://github.com/enthought/enable/>`_, a framework for writing
-  interactive visual components, and for abstracting away GUI-toolkit-specific
-  details of mouse and keyboard handling.
-
-* `NumPy <http://numpy.scipy.org/>`_, for dealing efficiently with large
-  datasets
-
-* Either `wxPython <http://www.wxpython.org/>`_, `PyQt
-  <http://www.riverbankcomputing.co.uk/software/pyqt/intro>`_ (GPL or
-  Commercial license) or `PySide <http://www.pyside.org/>`_ (LGPL license) to
-  display interactive plots.
-
-Installing Chaco with Canopy
-----------------------------
-
-Chaco, the rest of the `Enthought Tool Suite <http://code.enthought.com/>`_,
-and a lot more are bundled with Enthought Canopy (formerly EPD).  Getting
-Canopy gives you a one-click install of Chaco
-and all its dependencies at once; however, these packages will be linked to a
-new instance of Python. Canopy Express is free for all users and
-contains all that you need to use Chaco.
-
-To get Canopy, go to the `Canopy download page
-<http://store.enthought.com/>`_, select the desired bundle (Express, Full,
-TriplePlay) and get the appropriate version for your platform.  After running
-the installer, you will have a working version of Chaco and several examples.
-
-Building Chaco
----------------
-
-Building Chaco on your machine requires you to build Chaco and each of its
-dependencies, but it has the advantage of installing Chaco on top of the Python
-instance you already have installed.  The build process may be challenging and
-will require you to have a C compiler, SWIG, Cython and several development
-libraries installed.
-
-To do this, you can either:
-
-1. Install Chaco and its :ref:`dependencies` from `PyPI
-   <http://pypi.python.org/pypi>`_ using
-   `pip <http://www.pip-installer.org/en/latest/>`_ or using `easy_install
-   <http://packages.python.org/distribute/easy_install.html>`_ (part of
-   setuptools). For example
-
-   :command:`pip install chaco`
-
-.. note::
-   If you have already installed Chaco and just want to update to the newest
-   version, use
-
-        :command:`pip install --upgrade chaco`
-
-2. Or, download the source from the `Chaco GitHub repository
-   <https://github.com/enthought/chaco>`_ or alternatively as a part of the
-   full `Enthought Tool Suite <https://github.com/enthought/ets>`_.
-
-.. Please refer to the :ref:`installation` section for more detailed
-.. instructions.
-.. TODO This 'installation' section does not currently exist
 
 
 Built-in Examples
@@ -272,7 +186,7 @@ Chaco plot embedded in a Traits application
 ===========================================
 
 The previous section showed how Chaco can be used interactively similarly to
-`Matlab` or Matplotlib's `pyplot` package
+`Matlab` or Matplotlib's `pyplot` package.
 
 Now, let's create, from scratch, the simplest possible Chaco plot which is
 embedded inside a `Traits`_ application. This will require more work but will
@@ -281,11 +195,11 @@ client application. this is really what Chaco has been written for.
 
 First, some imports to bring in necessary components::
 
-  from chaco.api import ArrayPlotData, Plot
-  from enable.component_editor import ComponentEditor
+    from chaco.api import ArrayPlotData, Plot
+    from enable.component_editor import ComponentEditor
 
-  from traits.api import HasTraits, Instance
-  from traitsui.api import View, Item
+    from traits.api import HasTraits, Instance
+    from traitsui.api import View, Item
 
 The imports from :mod:`chaco` and :mod:`enable` support the creation of the
 plot.  The imports from :mod:`traits` bring in components to embed the plot
@@ -295,11 +209,19 @@ interactive application using Traits.) Now let's create a Traits class with a
 view that contains only one element: a Chaco plot inside a slightly customized
 window::
 
-  class MyPlot(HasTraits):
-      plot = Instance(Plot)
-      traits_view = View(Item('plot', editor = ComponentEditor(), show_label = False),
-                         width = 500, height = 500,
-                         resizable = True, title = "My line plot")
+    class MyPlot(HasTraits):
+        plot = Instance(Plot)
+        traits_view = View(
+            Item(
+                'plot',
+                editor=ComponentEditor(),
+                show_label=False
+            ),
+            width=500,
+            height=500,
+            resizable=True,
+            title="My line plot"
+        )
 
 A few options have been set to control the window containing the plot.  Now,
 when the plot is created, we would like to pass in our data. Let's assume the
@@ -307,19 +229,27 @@ data is a set of points with coordinates contained in two NumPy arrays ``x``
 and `y`.  So, adding an ``__init__`` method to create the Plot object looks as
 follows::
 
-  class MyPlot(HasTraits):
-      plot = Instance(Plot)
-      traits_view = View(Item('plot', editor = ComponentEditor(), show_label = False),
-                         width = 500, height = 500,
-                         resizable = True, title = "My line plot")
+    class MyPlot(HasTraits):
+        plot = Instance(Plot)
+        traits_view = View(
+            Item(
+                'plot',
+                editor=ComponentEditor(),
+                show_label=False
+            ),
+            width=500,
+            height=500,
+            resizable=True,
+            title="My line plot"
+        )
 
-      def __init__(self, x, y, *args, **kw):
-          super(MyPlot, self).__init__(*args, **kw)
-          plotdata = ArrayPlotData(x=x,y=y)
-          plot = Plot(plotdata)
-          plot.plot(("x","y"), type = "line", color = "blue")
-          plot.title = "sin(x)*x**3"
-          self.plot = plot
+        def __init__(self, x, y, *args, **kw):
+            super(MyPlot, self).__init__(*args, **kw)
+            plotdata = ArrayPlotData(x=x,y=y)
+            plot = Plot(plotdata)
+            plot.plot(("x","y"), type = "line", color = "blue")
+            plot.title = "sin(x)*x**3"
+            self.plot = plot
 
 Since it inherits from HasTraits, the new class can use all the power of
 Traits, and the call to super() in its ``__init__`` method makes sure this
@@ -327,11 +257,11 @@ object possesses the attributes and methods of its parent class.  Now let's use
 our Traits object. Below, we generate some data, pass it to an instance of
 MyPlot and call configure_traits to create the UI::
 
-  import numpy as np
-  x = np.linspace(-14,14,100)
-  y = np.sin(x)*x**3
-  lineplot = MyPlot(x,y)
-  lineplot.configure_traits()
+    import numpy as np
+    x = np.linspace(-14,14,100)
+    y = np.sin(x)*x**3
+    lineplot = MyPlot(x,y)
+    lineplot.configure_traits()
 
 The result should look like
 
@@ -344,7 +274,6 @@ create controls for your plot at a very high level, add these controls to the
 UI with very little work, and add listeners to update the plot when the data
 changes.  Chaco also allows you to create custom tools to interact with the
 plot and overlays that make these tools intuitive and visually appealing.
-
 
 .. rubric:: Footnotes
 
