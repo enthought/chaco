@@ -76,6 +76,7 @@ import click
 supported_combinations = {
     '2.7': {'pyqt', 'pyside', 'wx', 'null'},
     '3.5': {'pyqt', 'null'},
+    '3.6': {'pyqt', 'null'},
 }
 
 dependencies = {
@@ -86,7 +87,15 @@ dependencies = {
     "pandas",
     "pygments",
     "pyparsing",
-    "cython"
+    "cython",
+    # Needed to install enable from source
+    "swig",
+    # Install enable dependencies explicitly
+    "fonttools",
+    "pillow",
+    "pyface",
+    "traitsui",
+
 }
 
 extra_dependencies = {
@@ -126,8 +135,8 @@ def install(runtime, toolkit, environment):
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
         ("edm run -e {environment} -- "
-         "pip install git+https://git@github.com/enthought/enable.git"),
-        "edm run -e {environment} -- python setup.py install",
+         "pip install git+https://git@github.com/enthought/enable.git --no-deps"),
+        "edm run -e {environment} -- pip install . --no-deps",
     ]
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
