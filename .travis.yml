@@ -9,7 +9,7 @@ addons:
 
 env:
   global:
-    - INSTALL_EDM_VERSION=1.5.2
+    - INSTALL_EDM_VERSION=1.11.0
       PYTHONUNBUFFERED="1"
 
 matrix:
