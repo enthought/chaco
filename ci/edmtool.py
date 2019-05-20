@@ -90,12 +90,6 @@ dependencies = {
     "cython",
     # Needed to install enable from source
     "swig",
-    # Install enable dependencies explicitly
-    "fonttools",
-    "pillow",
-    "pyface",
-    "traitsui",
-
 }
 
 extra_dependencies = {
@@ -134,8 +128,9 @@ def install(runtime, toolkit, environment):
         "edm install -y -e {environment} {packages}",
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
+        # Note that enable dependencies will be installed implicitly using pip
         ("edm run -e {environment} -- "
-         "pip install git+https://git@github.com/enthought/enable.git --no-deps"),
+         "pip install git+https://git@github.com/enthought/enable.git"),
         "edm run -e {environment} -- pip install . --no-deps",
     ]
     click.echo("Creating environment '{environment}'".format(**parameters))
