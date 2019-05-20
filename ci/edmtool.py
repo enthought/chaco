@@ -144,7 +144,7 @@ def test(runtime, toolkit, environment):
     environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
     commands = [
-        "edm run -e {environment} -- coverage run -m unittest chaco -v "
+        "edm run -e {environment} -- coverage run -m unittest discover -v chaco"
     ]
 
     cwd = os.getcwd()
