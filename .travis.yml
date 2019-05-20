@@ -38,6 +38,9 @@ matrix:
   - env: RUNTIME=3.6 TOOLKIT=null
   - os : osx
     env: RUNTIME=3.6 TOOLKIT=null
+  allow_failures:
+    - os: osx
+      env: RUNTIME=2.7 TOOLKIT=wx
   fast_finish: true
 
 branches:
@@ -61,8 +64,8 @@ before_install:
        ./ci/install-edm-osx.sh;
        export PATH="${PATH}:/usr/local/bin";
     fi
-  - edm install -y wheel click coverage
   - export PATH="${HOME}/edm/bin:/usr/lib/ccache:${PATH}"
+  - edm install -y wheel click coverage
 install:
   - edm run -- python ci/edmtool.py install --runtime=${RUNTIME} --toolkit=${TOOLKIT} 
 script:
