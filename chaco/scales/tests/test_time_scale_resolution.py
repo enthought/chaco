@@ -176,9 +176,9 @@ class TimeFormatterTestCase(TicksTestCase):
     def test_labels(self):
         fmt = TimeFormatter()
         scale = ScaleSystem(*HMSScales)
-        expected_labels = ['{}m'.format(m) for n in range(30, 51)]
+        expected_labels = ['{}m'.format(m) for m in range(30, 51)]
         
-        test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 150])
+        test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 150],)
         for start, end, width in test_intervals:
             labels = scale.labels(DTS(*start), DTS(*end), char_width=width)
             labels = [label for (_, label) in labels]
