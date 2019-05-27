@@ -38,9 +38,6 @@ matrix:
   - env: RUNTIME=3.6 TOOLKIT=null
   - os : osx
     env: RUNTIME=3.6 TOOLKIT=null
-  allow_failures:
-    - os: osx
-      env: RUNTIME=2.7 TOOLKIT=wx
   fast_finish: true
 
 branches:

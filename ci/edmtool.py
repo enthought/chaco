@@ -147,6 +147,12 @@ def test(runtime, toolkit, environment):
     """
     parameters = get_parameters(runtime, toolkit, environment)
     environ = environment_vars.get(toolkit, {}).copy()
+    # FIXME : See discussion on https://github.com/enthought/chaco/pull/442
+    # Note that we are overriding the existing definition of `ETS_TOOLKIT`
+    # in the `environment_vars` dictionary.
+    if sys.platform == 'darwin' and runtime == '2.7' and toolkit == 'wx':
+        environ['ETS_TOOLKIT'] = 'wx.image'
+
     environ['PYTHONUNBUFFERED'] = "1"
     commands_nobackend = [
         "edm run -e {environment} -- coverage run -m nose.core chaco -v "
