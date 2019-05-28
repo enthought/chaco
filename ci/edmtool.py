@@ -76,6 +76,7 @@ import click
 supported_combinations = {
     '2.7': {'pyqt', 'pyside', 'wx', 'null'},
     '3.5': {'pyqt', 'null'},
+    '3.6': {'pyqt', 'null'},
 }
 
 dependencies = {
@@ -86,7 +87,9 @@ dependencies = {
     "pandas",
     "pygments",
     "pyparsing",
-    "cython"
+    "cython",
+    # Needed to install enable from source
+    "swig",
 }
 
 extra_dependencies = {
@@ -125,9 +128,10 @@ def install(runtime, toolkit, environment):
         "edm install -y -e {environment} {packages}",
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
+        # Note that enable dependencies will be installed implicitly using pip
         ("edm run -e {environment} -- "
          "pip install git+https://git@github.com/enthought/enable.git"),
-        "edm run -e {environment} -- python setup.py install",
+        "edm run -e {environment} -- pip install . --no-deps",
     ]
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
@@ -143,6 +147,12 @@ def test(runtime, toolkit, environment):
     """
     parameters = get_parameters(runtime, toolkit, environment)
     environ = environment_vars.get(toolkit, {}).copy()
+    # FIXME : See discussion on https://github.com/enthought/chaco/pull/442
+    # Note that we are overriding the existing definition of `ETS_TOOLKIT`
+    # in the `environment_vars` dictionary.
+    if sys.platform == 'darwin' and runtime == '2.7' and toolkit == 'wx':
+        environ['ETS_TOOLKIT'] = 'wx.image'
+
     environ['PYTHONUNBUFFERED'] = "1"
     commands_nobackend = [
         "edm run -e {environment} -- coverage run -m nose.core chaco -v "
