@@ -61,15 +61,15 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         renderer = plot.plot(('x', 'y'))[0]
         tool = RangeSelection(renderer)
         with warnings.catch_warnings(record=True) as w:
+            # Ignore warnings coming from Traits
+            warnings.filterwarnings(
+                "ignore", 'elementwise == comparison failed'
+            )
             tool.selection = np.array([2.0, 3.0])
+
         self.assertEqual(w, [])
 
         # Accept tuples and lists and None
         tool.selection = (1.5, 3.5)
         tool.selection = [1.0, 2.0]
         tool.selection = None
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()
