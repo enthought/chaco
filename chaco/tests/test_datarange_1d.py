@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import unittest
 
 from numpy import arange, array, zeros, inf
@@ -96,7 +94,6 @@ class DataRangeTestCase(unittest.TestCase):
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
         foo.range.set_bounds(100.0, 'track')
-        print(foo.range.low, foo.range.high)
         # Verify the values.
         self.assertEqual(foo.range.low, 100.0)
         self.assertEqual(foo.range.high, 101.0)
@@ -293,8 +290,3 @@ class DataRangeTestCase(unittest.TestCase):
         r.sources.append(ds1)
         self.assertEqual(r.low, -inf)
         self.assertEqual(r.high, inf)
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

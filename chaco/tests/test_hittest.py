@@ -64,7 +64,3 @@ class HittestTestCase(unittest.TestCase):
         self.assertEqual(x, result[0])
         self.assertEqual(y, result[1])
         self.assertTrue(d < threshold)
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

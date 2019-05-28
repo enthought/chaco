@@ -27,7 +27,6 @@ class DataPipelineTestCase(unittest.TestCase):
         mapper.high_pos = 7.0
         screen_pts = mapper.map_screen(array([1,3,7]))
         self.assertTrue(tuple(screen_pts) == (1.0, 3.0, 7.0))
-        return
 
     def test_reverse_construction(self):
         mapper = LinearMapper()
@@ -45,9 +44,3 @@ class DataPipelineTestCase(unittest.TestCase):
         self.assertTrue(r.high == 7)
         screen_pts = mapper.map_screen(array([1,3,7]))
         self.assertTrue(tuple(screen_pts) == (1.0, 3.0, 7.0))
-        return
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

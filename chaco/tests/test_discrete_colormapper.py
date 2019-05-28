@@ -132,6 +132,3 @@ class DiscreteColormapTestCase(unittest.TestCase):
         for i in range(4):
             assert_array_almost_equal(b[:, i], array([0.0, 0.5, 0.75]))
 
-if __name__ == '__main__':
-    import nose
-    nose.run()

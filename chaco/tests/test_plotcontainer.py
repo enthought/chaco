@@ -1,8 +1,6 @@
 import sys
 import unittest
 
-import six.moves as sm
-
 from chaco.api import HPlotContainer, OverlayPlotContainer, \
                                 PlotComponent, VPlotContainer, GridContainer
 from traits.api import Any, Tuple
@@ -13,7 +11,7 @@ SizePrefs = GridContainer.SizePrefs
 class ContainerTestCase(unittest.TestCase):
     def assert_tuple(self, t1, t2):
         self.assertEqual(len(t1), len(t2))
-        for i in sm.xrange(len(t1)):
+        for i in range(len(t1)):
             self.assertEqual(t1[i], t2[i])
 
 
@@ -644,7 +642,3 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(ll.bounds, (100,100))
         self.assert_tuple(lr.position, (160,20))
         self.assert_tuple(lr.bounds, (100,100))
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

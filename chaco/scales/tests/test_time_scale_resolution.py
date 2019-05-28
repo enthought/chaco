@@ -1,13 +1,11 @@
-from __future__ import print_function
-
 from itertools import starmap
 from datetime import datetime as DT
 
-from .scales import ScaleSystem
-from .time_scale import dt_to_sec, trange, TimeScale, HMSScales
-from .formatters import TimeFormatter
+from ..scales import ScaleSystem
+from ..time_scale import dt_to_sec, trange, TimeScale, HMSScales
+from ..formatters import TimeFormatter
 
-from .scales_test_case import TicksTestCase
+from .test_scales import TicksTestCase
 
 
 def DTS(*args, **kw):
@@ -50,13 +48,10 @@ class TRangeTestCase(TicksTestCase):
         # so an increment of, say, 3 microseconds is only about a factor of 10
         # more than machine precision.
         base = DTS(2005, 3, 15, 10, 45, 10)
-        print("base: ", base)
         start = base + 0.0000027
         end   = base + 0.0000177
         ticks = trange(start, end, microseconds=5)
         desired = [base+i for i in (5e-6, 10e-6, 15e-6)]
-        print("ticks:   ", ticks)
-        print("desired: ", desired)
         self.check_ticks(ticks, desired)
 
     def test_milliseconds(self):
@@ -74,8 +69,6 @@ class TRangeTestCase(TicksTestCase):
         secs_per_day = 24*3600
         ticks = trange(base, base + secs_per_day*5, days=1)
         desired = [base+i*secs_per_day for i in range(6)]
-        print("ticks:   ", ticks)
-        print("desired: ", desired)
         self.check_ticks(ticks, desired)
 
     def test_daily_leap(self):
@@ -96,13 +89,10 @@ class TRangeTestCase(TicksTestCase):
         start = DTS(2005, 1, 1)
         ticks = trange(start, start + 9*24*3600, days=3)
         desired = [start+i*3*24*3600 for i in range(4)]
-        print("ticks: ", ticks, " desired: ", desired)
         self.check_ticks(ticks, desired)
 
 
-
 class TimeScaleTestCase(TicksTestCase):
-    """ This exercises a single TimeScale set at various resolutions """
 
     def test_hourly(self):
         ts = TimeScale(hours=1)
@@ -152,15 +142,12 @@ class TimeScaleTestCase(TicksTestCase):
         end = base + 9.2e-6
         ticks = ts.ticks(start, end)
         desired = [base+i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6, 9e-6)]
-        print("ticks:   ", ticks)
-        print("desired: ", desired)
         self.check_ticks(ticks, desired)
 
 
 class CalendarScaleSystemTestCase(TicksTestCase):
-    """ This exercises the ability of multiple TimeScale objects to play well
-    within a single ScaleSystem.
-    """
+    # This exercises the ability of multiple TimeScale objects to play well
+    # within a single ScaleSystem.
 
     def test_hourly_scales(self):
         scales = [TimeScale(seconds=dt) for dt in (1, 5, 15, 30)] + \
@@ -180,30 +167,19 @@ class TimeFormatterTestCase(TicksTestCase):
     def test_widths(self):
         fmt = TimeFormatter()
         scale = TimeScale(minutes = 5)
-        test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 50],
-                          )
-        print()
+        test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 50],)
+        expected = (4.0, 12.0)
         for start, end, width in test_intervals:
             est_width = scale.label_width(DTS(*start), DTS(*end), char_width=width)
-            print(start, end, end=" ")
-            print(" avail:", width, "est:", est_width[1], "numlabels:", est_width[0])
-        return
+            self.assertEqual(est_width, expected)
 
     def test_labels(self):
         fmt = TimeFormatter()
         scale = ScaleSystem(*HMSScales)
-
-        test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 150],
-                          )
-        print()
+        expected_labels = ['{}m'.format(m) for m in range(30, 51)]
+        
+        test_intervals = ([(2005,3,15,10,30), (2005,3,15,10,50), 150],)
         for start, end, width in test_intervals:
             labels = scale.labels(DTS(*start), DTS(*end), char_width=width)
-            print(start, end, " avail:", width, end=" ")
-            print(" used:", sum([len(x[1]) for x in labels]), end=" ")
-            print(labels)
-        return
-
-
-if __name__ == "__main__":
-    import nose
-    nose.run()
+            labels = [label for (_, label) in labels]
+            self.assertEqual(labels, expected_labels)
