@@ -655,7 +655,7 @@ def yaxis(**kwds):
     p = curplot()
     if p:
         if kwds:
-            p.y_axis.trait_setq(**kwds)
+            p.y_axis.trait_set(**kwds)
         else:
             p.y_axis.visible ^= True
         p.request_redraw()
