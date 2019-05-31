@@ -20,10 +20,7 @@
 
 from traitsui.extras.demo import demo
 
-# Uncomment the config_filename portion to see a tree editor based on the
-# examples.cfg file.
-demo(use_files=True,
-     config_filename='demo.cfg',
-     title = 'Chaco Demos'
-    )
+demo(
+    title='Chaco Demos'
+)
 

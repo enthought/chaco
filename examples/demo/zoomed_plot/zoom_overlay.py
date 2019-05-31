@@ -1,6 +1,3 @@
-
-
-
 from numpy import array, amax, amin
 
 from enable.api import ColorTrait, Component
