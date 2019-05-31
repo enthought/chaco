@@ -104,9 +104,8 @@ class PlotScrollBar(NativeScrollBar):
             ticksize = 1
         foo = (totalmin, totalmax, view, ticksize)
         print("scrollrange:", foo)
-        self.set(range = foo,
-                 scroll_position = max(min(self.scroll_position, totalmax-view), totalmin),
-                 trait_change_notify=False)
+        self.trait_setq(range = foo,
+                        scroll_position = max(min(self.scroll_position, totalmax-view), totalmin))
         self._scroll_updated = True
         self.request_redraw()
         return

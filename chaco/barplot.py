@@ -147,7 +147,7 @@ class BarPlot(AbstractPlotRenderer):
         super(BarPlot, self).__init__(*args, **kw)
 
         # Set any keyword Traits that were postponed.
-        self.set(**postponed)
+        self.trait_set(**postponed)
 
 
     def map_screen(self, data_array):

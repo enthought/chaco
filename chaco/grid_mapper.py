@@ -210,10 +210,10 @@ class GridMapper(AbstractMapper):
         # TODO: figure out a way to not need to do this check:
         if self.screen_bounds == new_bounds:
             return
-        self.set(x_low_pos=new_bounds[0], trait_change_notify=False)
-        self.set(x_high_pos=new_bounds[1], trait_change_notify=False)
-        self.set(y_low_pos=new_bounds[2], trait_change_notify=False)
-        self.set(y_high_pos=new_bounds[3], trait_change_notify=False)
+        self.trait_setq(x_low_pos=new_bounds[0])
+        self.trait_setq(x_high_pos=new_bounds[1])
+        self.trait_setq(y_low_pos=new_bounds[2])
+        self.trait_setq(y_high_pos=new_bounds[3])
         self._update_bounds()
 
     def _get_screen_bounds(self):

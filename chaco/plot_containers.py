@@ -722,7 +722,7 @@ class GridPlotContainer(BasePlotContainer):
                     component.container.remove(component)
                 component.container = self
 
-        self.set(shape=grid.shape, trait_change_notify=False)
+        self.trait_setq(shape=grid.shape)
         self._components = list(grid.flatten())
 
         if self._should_compact():
