@@ -15,9 +15,6 @@ environment:
     - RUNTIME: '3.6'
       TOOLKITS: "null pyqt"
 
-matrix:
-  fast_finish: true
-
 branches:
   only:
     - master
