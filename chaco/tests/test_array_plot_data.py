@@ -1,5 +1,5 @@
 import contextlib
-from traits.testing.unittest_tools import unittest
+import unittest
 
 import numpy
 
