@@ -21,16 +21,16 @@ class DataRange2D(BaseDataRange):
     class supports only rectangular regions for now.
     """
 
-    # The actual value of the lower bound of this range. To set it, use
-    # **low_setting**.
+    #: The actual value of the lower bound of this range. To set it, use
+    #: **low_setting**.
     low = Property  # (2,) array of lower-left x,y
-    # The actual value of the upper bound of this range. To set it, use
-    # **high_setting**.
+    #: The actual value of the upper bound of this range. To set it, use
+    #: **high_setting**.
     high = Property  # (2,) array of upper-right x,y
 
-    # Property for the lower bound of this range (overrides AbstractDataRange).
+    #: Property for the lower bound of this range (overrides AbstractDataRange).
     low_setting = Property
-    # Property for the upper bound of this range (overrides AbstractDataRange).
+    #: Property for the upper bound of this range (overrides AbstractDataRange).
     high_setting = Property
 
     # The 2-D grid range is actually implemented as two 1-D ranges, which can
@@ -38,17 +38,17 @@ class DataRange2D(BaseDataRange):
     # instances; in that case, the DataRange2D's sources are removed from
     # its old 1-D dataranges and added to the new one.
 
-    # Property for the range in the x-dimension.
+    #: Property for the range in the x-dimension.
     x_range = Property
-    # Property for the range in the y-dimension.
+    #: Property for the range in the y-dimension.
     y_range = Property
 
-    # Do "auto" bounds imply an exact fit to the data? (One Boolean per
-    # dimension) If False, the bounds pad a little bit of margin on either
-    # side.
+    #: Do "auto" bounds imply an exact fit to the data? (One Boolean per
+    #: dimension) If False, the bounds pad a little bit of margin on either
+    #: side.
     tight_bounds = Tuple(Bool(True), Bool(True))
-    # The minimum percentage difference between low and high for each
-    # dimension. That is, (high-low) >= epsilon * low.
+    #: The minimum percentage difference between low and high for each
+    #: dimension. That is, (high-low) >= epsilon * low.
     epsilon = Tuple(CFloat(1.0e-4), CFloat(1.0e-4))
 
     #------------------------------------------------------------------------

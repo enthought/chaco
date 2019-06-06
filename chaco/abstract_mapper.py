@@ -12,16 +12,16 @@ class AbstractMapper(HasTraits):
     region in output space.
     """
 
-    # A generic "update" event that generally means that anything that relies
-    # on this mapper for visual output should do a redraw or repaint.
+    #: A generic "update" event that generally means that anything that relies
+    #: on this mapper for visual output should do a redraw or repaint.
     updated = Event
 
     # FIXME: domain_limits is never used
 
-    # A tuple representing the minimum and maximum values of the domain (data
-    # space).  The dimensionality of each value varies depending on the
-    # dimensions of the mapper, so for 1D mappers these will be scalars, for
-    # image and 2D mappers these will be tuples.
+    #: A tuple representing the minimum and maximum values of the domain (data
+    #: space).  The dimensionality of each value varies depending on the
+    #: dimensions of the mapper, so for 1D mappers these will be scalars, for
+    #: image and 2D mappers these will be tuples.
     domain_limits = Tuple(None, None)
 
     def map_screen(self, data_array):

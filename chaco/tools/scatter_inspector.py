@@ -33,26 +33,26 @@ class ScatterInspector(SelectTool):
     "hover" key in metadata, and the index of a clicked point to "selection".
     """
 
-    # If persistent_hover is False, then a point will be de-hovered as soon as
-    # the mouse leaves its hit-testing area. If persistent_hover is True, then
-    # a point does no de-hover until another point get hover focus.
+    #: If persistent_hover is False, then a point will be de-hovered as soon as
+    #: the mouse leaves its hit-testing area. If persistent_hover is True, then
+    #: a point does no de-hover until another point get hover focus.
     persistent_hover = Bool(False)
 
-    # The names of the data source metadata for hover and selection events.
+    #: The names of the data source metadata for hover and selection events.
     hover_metadata_name = Str('hover')
     selection_metadata_name = Str('selections')
 
-    # This tool emits events when hover or selection changes
+    #: This tool emits events when hover or selection changes
     inspector_event = Event(ScatterInspectorEvent)
 
     # -------------------------------------------------------------------------
     # Override/configure inherited traits
     # -------------------------------------------------------------------------
 
-    # This tool is not visible
+    #: This tool is not visible
     visible = False
 
-    # This tool does not have a visual representation
+    #: This tool does not have a visual representation
     draw_mode = "none"
 
     def normal_mouse_move(self, event):

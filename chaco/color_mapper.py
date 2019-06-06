@@ -24,13 +24,13 @@ class ColorMapTemplate(HasTraits):
     A class representing the state of a ColorMapper, for use when persisting
     plots.
     """
-    # The segment data of the color map.
+    #: The segment data of the color map.
     segment_map = Any
-    # The number of steps in the color map.
+    #: The number of steps in the color map.
     steps = Int(256)
-    # Low end of the color map range.
+    #: Low end of the color map range.
     range_low_setting = Trait('auto', 'auto', Float)
-    # High end of the color map range.
+    #: High end of the color map range.
     range_high_setting = Trait('auto', 'auto', Float)
 
     def __init__(self, colormap=None, **kwtraits):
@@ -77,22 +77,22 @@ class ColorMapper(AbstractColormap):
     ColorMapper constructor.
     """
 
-    # The color table.
+    #: The color table.
     color_bands = Property(Array)
 
-    # The total number of color steps in the map.
+    #: The total number of color steps in the map.
     steps = Int(256)
 
-    # The name of this color map.
+    #: The name of this color map.
     name = Str
 
-    # Not used.
+    #: Not used.
     low_pos = None
-    # Not used.
+    #: Not used.
     high_pos = None
 
-    # A generic "update" event that generally means that anything that relies
-    # on this mapper for visual output should do a redraw or repaint.
+    #: A generic "update" event that generally means that anything that relies
+    #: on this mapper for visual output should do a redraw or repaint.
     updated = Event
 
     # Are the mapping arrays out of date?

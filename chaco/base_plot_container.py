@@ -25,15 +25,15 @@ class BasePlotContainer(Container):
     the visual results will probably be incorrect.
     """
 
-    # Redefine the container layers to name the main layer as "plot" instead
-    # of the Enable default of "mainlayer"
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
     container_under_layers = Tuple("background", "image", "underlay", "plot")
 
-    #------------------------------------------------------------------------
-    # Duplicate trait declarations from PlotComponent.  We don't subclass
-    # PlotComponent to avoid MRO complications with trait handlers and property
-    # getters/setters.
-    #------------------------------------------------------------------------
+    #:------------------------------------------------------------------------
+    #: Duplicate trait declarations from PlotComponent.  We don't subclass
+    #: PlotComponent to avoid MRO complications with trait handlers and property
+    #: getters/setters.
+    #:------------------------------------------------------------------------
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     draw_layer = Str("plot")
@@ -42,11 +42,11 @@ class BasePlotContainer(Container):
     # Deprecated traits
     #------------------------------------------------------------------------
 
-    # Deprecated flag to indicate that a component needed to do old-style
-    # drawing.  Unused by any recent Chaco component.
+    #: Deprecated flag to indicate that a component needed to do old-style
+    #: drawing.  Unused by any recent Chaco component.
     use_draw_order = Bool(True)
 
-    # Deprecated property for accessing the components in the container.
+    #: Deprecated property for accessing the components in the container.
     plot_components = Property
 
     def _get_plot_components(self):

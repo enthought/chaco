@@ -15,11 +15,11 @@ class DrawPointsTool(BaseTool):
     """ A tool that draws points onto a rectangular plot as they are clicked.
     """
 
-    # A data source for the x-dimension of the drawn points.
+    #: A data source for the x-dimension of the drawn points.
     xdata = Instance(ArrayDataSource)
-    # A data source for the y-dimension of the drawn points.
+    #: A data source for the y-dimension of the drawn points.
     ydata = Instance(ArrayDataSource)
-    # Is this the active tool?
+    #: Is this the active tool?
     activated = Bool(True)
 
     #It would be nice to set the pointer to a cross

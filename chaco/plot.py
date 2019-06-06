@@ -81,29 +81,29 @@ class Plot(DataView):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # The PlotData instance that drives this plot.
+    #: The PlotData instance that drives this plot.
     data = Instance(AbstractPlotData)
 
-    # Mapping of data names from self.data to their respective datasources.
+    #: Mapping of data names from self.data to their respective datasources.
     datasources = Dict(Str, Instance(AbstractDataSource))
 
     #------------------------------------------------------------------------
     # General plotting traits
     #------------------------------------------------------------------------
 
-    # Mapping of plot names to *lists* of plot renderers.
+    #: Mapping of plot names to *lists* of plot renderers.
     plots = Dict(Str, List)
 
-    # The default index to use when adding new subplots.
+    #: The default index to use when adding new subplots.
     default_index = Instance(AbstractDataSource)
 
-    # Optional mapper for the color axis.  Not instantiated until first use;
-    # destroyed if no color plots are on the plot.
+    #: Optional mapper for the color axis.  Not instantiated until first use;
+    #: destroyed if no color plots are on the plot.
     color_mapper = Instance(AbstractColormap)
 
-    # List of colors to cycle through when auto-coloring is requested. Picked
-    # and ordered to be red-green color-blind friendly, though should not
-    # be an issue for blue-yellow.
+    #: List of colors to cycle through when auto-coloring is requested. Picked
+    #: and ordered to be red-green color-blind friendly, though should not
+    #: be an issue for blue-yellow.
     auto_colors = List(["green", "lightgreen", "blue", "lightblue", "red",
                         "pink", "darkgray", "silver"])
 
@@ -112,9 +112,9 @@ class Plot(DataView):
     _auto_edge_color_idx = Int(-1)
     _auto_face_color_idx = Int(-1)
 
-    # Mapping of renderer type string to renderer class
-    # This can be overriden to customize what renderer type the Plot
-    # will instantiate for its various plotting methods.
+    #: Mapping of renderer type string to renderer class
+    #: This can be overriden to customize what renderer type the Plot
+    #: will instantiate for its various plotting methods.
     renderer_map = Dict(dict(line = LinePlot,
                              bar = BarPlot,
                              scatter = ScatterPlot,
@@ -139,17 +139,17 @@ class Plot(DataView):
     # Annotations and decorations
     #------------------------------------------------------------------------
 
-    # The title of the plot.
+    #: The title of the plot.
     title = Property()
 
-    # The font to use for the title.
+    #: The font to use for the title.
     title_font = Property()
 
-    # Convenience attribute for title.overlay_position; can be "top",
-    # "bottom", "left", or "right".
+    #: Convenience attribute for title.overlay_position; can be "top",
+    #: "bottom", "left", or "right".
     title_position = Property()
 
-    # Use delegates to expose the other PlotLabel attributes of the plot title
+    #: Use delegates to expose the other PlotLabel attributes of the plot title
     title_text = Delegate("_title", prefix="text", modify=True)
     title_color = Delegate("_title", prefix="color", modify=True)
     title_angle = Delegate("_title", prefix="angle", modify=True)
@@ -157,10 +157,10 @@ class Plot(DataView):
     # The PlotLabel object that contains the title.
     _title = Instance(PlotLabel)
 
-    # The legend on the plot.
+    #: The legend on the plot.
     legend = Instance(Legend)
 
-    # Convenience attribute for legend.align; can be "ur", "ul", "ll", "lr".
+    #: Convenience attribute for legend.align; can be "ur", "ul", "ll", "lr".
     legend_alignment = Property
 
     #------------------------------------------------------------------------
