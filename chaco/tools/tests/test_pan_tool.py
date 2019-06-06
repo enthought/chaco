@@ -33,9 +33,3 @@ class PanToolTestCase(EnableTestAssistant, unittest.TestCase):
         self.mouse_up(interactor=tool, x=1.0, y=1.0)
         self.assertEqual((x_range.low, x_range.high), x_bounds)
         self.assertEqual((y_range.low, y_range.high), y_bounds)
-
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

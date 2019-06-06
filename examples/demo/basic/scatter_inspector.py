@@ -33,7 +33,8 @@ def _create_plot_component():
     scatter = plot.plot(("x", "y"), type="scatter", color="lightblue")[0]
 
     # Tweak some of the plot properties
-    plot.set(title="Scatter Inspector Demo", padding=50)
+    plot.title = "Scatter Inspector Demo"
+    plot.padding = 50
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot))

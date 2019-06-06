@@ -289,9 +289,3 @@ class LinearMapperTestCase(unittest.TestCase):
         mapper.high_pos = 100.0
         result = mapper.map_screen(ary)
         assert_array_almost_equal(result, array([50, 60, 70, 80, 90, 100]))
-
-
-
-if __name__ == '__main__':
-    import nose
-    nose.run()

@@ -1,7 +1,4 @@
-
 import unittest
-
-import six
 
 import numpy as np
 from numpy.testing.utils import assert_almost_equal
@@ -16,7 +13,6 @@ class MakeDataSourcesTestCase(unittest.TestCase):
         sources = make_data_sources(session, "none", ary)
         assert_almost_equal(sources[0][0].get_data(), np.arange(len(ary)))
         assert_almost_equal(sources[0][1].get_data(), ary)
-        return
 
     def test_1d_multiple(self):
         session = None
@@ -31,10 +27,4 @@ class MakeDataSourcesTestCase(unittest.TestCase):
         assert_almost_equal(sources[0][1].get_data(), s)
         assert_almost_equal(sources[1][1].get_data(), c)
         assert_almost_equal(sources[2][1].get_data(), t)
-        return
 
-
-if __name__ == "__main__":
-    unittest.main()
-
-# EOF

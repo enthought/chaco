@@ -183,7 +183,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         for trait_name in ("index", "value", "index_mapper", "value_mapper"):
             if trait_name in kwtraits:
                 kwargs_tmp[trait_name] = kwtraits.pop(trait_name)
-        self.set(**kwargs_tmp)
+        self.trait_set(**kwargs_tmp)
         AbstractPlotRenderer.__init__(self, **kwtraits)
         if self.index is not None:
             self.index.on_trait_change(self._either_data_changed, "data_changed")
