@@ -33,8 +33,14 @@ class SegmentPlot(BaseXYPlot):
     #: orthogonal
     #:    Connect the start and end points by two line segments in orthogonal
     #:    directions.
+    #: quad
+    #:    Connect the start and end points by a quadratic Bezier curve.
     #: cubic
     #:    Connect the start and end points by a cubic Bezier curve.
+    #:
+    #: For non-linear segments, the tangent at the start matches the
+    #: orientation of the plot (ie. horizontal orientation means
+    #: a horizontal tangent).
     render_style = Enum('line', 'orthogonal', 'quad', 'cubic')
 
     #: When rendering certain styles, which orientation to prefer.
@@ -188,7 +194,10 @@ class SegmentPlot(BaseXYPlot):
     def _render_orthogonal(self, gc, starts, ends, colors, widths):
         """ Render orthogonal lines connecting the start point and end point.
 
-        Draw the orthogonal line in the direction determined by
+        Draw the orthogonal line in the direction determined by the
+        orientation.  For horizontal orientation, the horizontal segment is
+        drawn first; for vertical orientation the vertical segment is drawn
+        first.
         """
         mids = np.empty(len(starts), dtype=point_dtype)
         if self.render_orientation == 'index':
@@ -230,7 +239,10 @@ class SegmentPlot(BaseXYPlot):
     def _render_quad(self, gc, starts, ends, colors, widths):
         """ Render quadratic Bezier curves connecting the start and end points.
 
-        Draw the orthogonal line in the direction determined by
+        Draw the orthogonal line in the direction determined by the plot
+        orientation.  For horizontal orientation, the start point tangent is
+        horizontal; for vertical orientation the start point tangent is
+        vertical.
         """
         mids = np.empty(len(starts), dtype=point_dtype)
         if self.render_orientation == 'index':
@@ -269,7 +281,10 @@ class SegmentPlot(BaseXYPlot):
     def _render_cubic(self, gc, starts, ends, colors, widths):
         """ Render quadratic Bezier curves connecting the start and end points.
 
-        Draw the orthogonal line in the direction determined by
+        Draw the orthogonal line in the direction determined by the plot
+        orientation.  For horizontal orientation, the start point and end
+        point tangents is are horizontal; for vertical orientation the start
+        and end point tangents are vertical.
         """
         mids_1 = np.empty(len(starts), dtype=point_dtype)
         mids_2 = np.empty(len(starts), dtype=point_dtype)

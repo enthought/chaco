@@ -262,19 +262,22 @@ class Plot(DataView):
             The data to be plotted. The type of plot and the number of
             arguments determines how the arguments are interpreted:
 
-            one item: (line/scatter)
+            one item: (line, scatter, segment)
                 The data is treated as the value and self.default_index is
                 used as the index.  If **default_index** does not exist, one is
                 created from arange(len(*data*))
-            two or more items: (line/scatter)
+            two or more items: (line, scatter, segment)
                 Interpreted as (index, value1, value2, ...).  Each index,value
                 pair forms a new plot of the type specified.
             three items: (cmap_scatter, cmap_segment)
                 Interpreted as (index, value, color)
-            four items: (cmap_segment)
-                Interpreted as (index, val1, color_val1, width)
             three items: (text)
                 Interpreted as (index, value, text).
+            four items: (cmap_segment)
+                Interpreted as (index, val1, color_val1, width)
+
+            For segment plots index and value arrays alternate between
+            coordinates for the start and end points of segments.
 
         type : comma-delimited string of plot type
             The types of plots to add.  One of "line", "scatter",

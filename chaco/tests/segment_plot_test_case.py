@@ -56,10 +56,10 @@ class SegmentPlotTest(unittest.TestCase):
 
     def test_segment(self):
         self.assertEqual(self.segment_plot.origin, 'bottom left')
-        self.assertEqual(
+        self.assertIs(
             self.segment_plot.x_mapper, self.segment_plot.index_mapper
         )
-        self.assertEqual(
+        self.assertIs(
             self.segment_plot.y_mapper, self.segment_plot.value_mapper
         )
 
@@ -72,10 +72,10 @@ class SegmentPlotTest(unittest.TestCase):
         self.segment_plot.render_style = 'orthogonal'
 
         self.assertEqual(self.segment_plot.origin, 'bottom left')
-        self.assertEqual(
+        self.assertIs(
             self.segment_plot.x_mapper, self.segment_plot.index_mapper
         )
-        self.assertEqual(
+        self.assertIs(
             self.segment_plot.y_mapper, self.segment_plot.value_mapper
         )
 
@@ -88,10 +88,10 @@ class SegmentPlotTest(unittest.TestCase):
         self.segment_plot.render_style = 'quad'
 
         self.assertEqual(self.segment_plot.origin, 'bottom left')
-        self.assertEqual(
+        self.assertIs(
             self.segment_plot.x_mapper, self.segment_plot.index_mapper
         )
-        self.assertEqual(
+        self.assertIs(
             self.segment_plot.y_mapper, self.segment_plot.value_mapper
         )
 
@@ -104,10 +104,10 @@ class SegmentPlotTest(unittest.TestCase):
         self.segment_plot.render_style = 'cubic'
 
         self.assertEqual(self.segment_plot.origin, 'bottom left')
-        self.assertEqual(
+        self.assertIs(
             self.segment_plot.x_mapper, self.segment_plot.index_mapper
         )
-        self.assertEqual(
+        self.assertIs(
             self.segment_plot.y_mapper, self.segment_plot.value_mapper
         )
 

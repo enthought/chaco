@@ -183,7 +183,7 @@ def _create_plot_component():
     temp_plot.x_grid = None
     temp_plot.x_axis = None
     temp_plot.y_axis.orientation = 'right'
-    temp_plot.y_axis.title = u'Temp (°C)'
+    temp_plot.y_axis.title = u'Temp (°Re)'
     temp_plot.plot(
         ('temp_lon', 'temp'),
         type='line',
@@ -220,8 +220,8 @@ def _create_plot_component():
     return container
 
 
-size=(1280, 720)
-title="Minard's Map of Napoleon's Russian Campaign"
+size = (1280, 720)
+title = "Minard's Map of Napoleon's Russian Campaign"
 
 
 class Demo(HasTraits):
@@ -229,12 +229,15 @@ class Demo(HasTraits):
     plot = Instance(Component)
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
 
     traits_view = View(
-        Item('plot', editor=ComponentEditor(size=size),
-                show_label=False),
-        title=title
+        Item(
+            'plot',
+            editor=ComponentEditor(size=size),
+            show_label=False,
+        ),
+        title=title,
     )
 
 demo = Demo()
