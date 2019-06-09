@@ -1,4 +1,4 @@
-""" Tests for the ScatterInspector Chaco tool
+""" Tests for the ImageInspectorTool and ImageInspectorOverlay tools.
 """
 
 from unittest import TestCase
@@ -20,7 +20,7 @@ def create_image_plot(img_values, **kwargs):
 
 class CustomImageInspectorOverlay(ImageInspectorOverlay):
     def _build_text_from_event(self, event):
-        return 'Position: (%d, %d)' % event['indices']
+        return 'Position: ({}, {})'.format(*event['indices'])
 
 
 class BaseImageInspectorTool(EnableTestAssistant, UnittestTools):
@@ -38,10 +38,6 @@ class BaseImageInspectorTool(EnableTestAssistant, UnittestTools):
         self.plot.do_layout()
 
         self.insp_event = None
-
-    def tearDown(self):
-        del self.tool
-        del self.plot
 
     def test_mouse_move_records_last_position(self):
         tool = self.tool
