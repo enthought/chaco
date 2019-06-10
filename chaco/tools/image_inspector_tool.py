@@ -67,15 +67,15 @@ class ImageInspectorTool(BaseTool):
                 if hasattr(plot, "_cached_mapped_image") and \
                        plot._cached_mapped_image is not None:
                     self.new_value = \
-                            dict(indices=ndx,
-                                 data_value=image_data.data[y_index, x_index],
-                                 color_value=plot._cached_mapped_image[y_index,
-                                                                       x_index])
+                        {"indices": ndx,
+                         "data_value": image_data.data[y_index, x_index],
+                         "color_value": plot._cached_mapped_image[y_index,
+                                                                  x_index]}
 
                 else:
                     self.new_value = \
-                        dict(indices=ndx,
-                             color_value=image_data.data[y_index, x_index])
+                        {"indices": ndx,
+                         "color_value": image_data.data[y_index, x_index]}
 
                 self.last_mouse_position = (event.x, event.y)
         return
@@ -100,10 +100,35 @@ class ImageInspectorOverlay(TextBoxOverlay):
     #: tool's location, or whether it should be forced to be hidden or visible.
     visibility = Enum("auto", True, False)
 
+    # Private interface -------------------------------------------------------
+
+    def _build_text_from_event(self, event):
+        """ Create a formatted string to display from the mouse event data.
+        """
+        newstring = ""
+        if 'indices' in event:
+            newstring += '(%d, %d)' % event['indices']
+        if 'color_value' in event:
+            try:
+                newstring += "\n(%d, %d, %d)" % tuple(
+                    map(int, event['color_value'][:3]))
+            except IndexError:
+                # color value is an integer, for example if gray scale image
+                newstring += "\n%d" % event['color_value']
+
+        if 'data_value' in event:
+            newstring += "\n{}".format(event['data_value'])
+
+        return newstring
+
+    # Traits listeners --------------------------------------------------------
+
     def _image_inspector_changed(self, old, new):
         if old:
-            old.on_trait_event(self._new_value_updated, 'new_value', remove=True)
-            old.on_trait_change(self._tool_visible_changed, "visible", remove=True)
+            old.on_trait_event(self._new_value_updated, 'new_value',
+                               remove=True)
+            old.on_trait_change(self._tool_visible_changed, "visible",
+                                remove=True)
         if new:
             new.on_trait_event(self._new_value_updated, 'new_value')
             new.on_trait_change(self._tool_visible_changed, "visible")
@@ -123,16 +148,7 @@ class ImageInspectorOverlay(TextBoxOverlay):
         else:
             self.alternate_position = None
 
-        d = event
-        newstring = ""
-        if 'indices' in d:
-            newstring += '(%d, %d)' % d['indices'] + '\n'
-        if 'color_value' in d:
-            newstring += "(%d, %d, %d)" % tuple(map(int,d['color_value'][:3])) + "\n"
-        if 'data_value' in d:
-            newstring += str(d['data_value'])
-
-        self.text = newstring
+        self.text = self._build_text_from_event(event)
         self.component.request_redraw()
 
     def _visible_changed(self):
