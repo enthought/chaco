@@ -75,11 +75,11 @@ the data as an overlay.
 
 To use it, as for other tools, you need to:
 
-    1. create a tool object and append it to the list of tools,
-    2. create an overlay object and append it to the list of overlays.
+    1. create a tool object and append it to the **renderer**'s list of tools,
+    2. create an overlay object and append it to the **renderer**'s list of
+       overlays.
 
-To illustrate this, let's assume we are building a method to build the `Plot`
-object that will be displayed in the application::
+For example, a method to build a `Plot` object with that tool would look like::
 
     def build_plot(self, img):
         plot = Plot(data=ArrayPlotData(img=img))
@@ -99,12 +99,11 @@ code to be inserted would look something like this::
 
     img_plot.overlays.append(overlay)
 
-Note 2 important connections that are made for the tool/overlay to work
+Note the two important connections that are made for the tool/overlay to work
 correctly. The first one is that the component that is passed is the chaco
 renderer rather than the `Plot` object, since it has access to the data being
 displayed. Also, for the overlay to update when the tool catches a mouse event,
-the overlay needs to be created being provided the tool as its
-:attr:`image_inspector` attribute.
+it needs to be provided the tool as its :attr:`image_inspector` attribute.
 
 In addition to the background color and :attr:`border_visible`, other
 interesting overlay attributes to consider overriding include
@@ -113,7 +112,7 @@ interesting overlay attributes to consider overriding include
 
 Finally, the overlay's :meth:`_build_text_from_event` method can be overwritten
 to customize the actual text content. The method should receive a single
-attribute, the event data (dictionary), and return the desired text to display.
+argument, the event data (dictionary), and return the desired text to display.
 The event data contains 3 keys: `indices` with the 2D coordinates of the mouse
 in data space, `color_value` containing the color of the tile where the mouse
 is, and `data_value` with the scalar value being displayed in that tile.
