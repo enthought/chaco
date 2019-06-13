@@ -142,7 +142,8 @@ demo = Demo()
 if __name__ == "__main__":
 
     filled, horizon = _create_plot_components()
-    demo.set(horizon=horizon, filled=filled)
+    demo.horizon = horizon
+    demo.filled = filled
     demo.configure_traits()
 
 #--EOF---

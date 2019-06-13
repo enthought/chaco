@@ -724,16 +724,16 @@ and a corresponding ``Item`` in the Traits UI View ::
 
 By default, an ``Enum`` trait will be displayed as a drop-down. In the
 constructor, we create a dictionary that maps the data names to actual
-numpy arrays: ::
+numpy arrays::
 
     # jn is the Bessel function
-    self.data = {“jn0”: jn(0, x),
-                 “jn1”: jn(1, x),
-                 “jn2”: jn(2, x)}
+    self.data = {"jn0": jn(0, x),
+                 "jn1": jn(1, x),
+                 "jn2": jn(2, x)}
 
-When we initialize the ArrayPlotData, we’ll set ``y`` to the ``jn0`` array. ::
+When we initialize the ArrayPlotData, we’ll set ``y`` to the ``jn0`` array::
 
-    self.plotdata = ArrayPlotData(x = x, y = self.data[“jn0”])
+    self.plotdata = ArrayPlotData(x = x, y = self.data["jn0"])
     plot = Plot(self.plotdata)
 
 Note that we are storing a reference to the ``plotdata`` object.
@@ -1173,7 +1173,7 @@ This can be done in just a few lines: ::
 
     class CustomTool(BaseTool):
         def normal_mouse_move(self, event):
-            print "Screen point:", event.x, event.y
+            print("Screen point:", event.x, event.y)
 
 :class:`BaseTool` is an abstract class that forms the interface for tools.
 It defines a set of methods that are called for the
@@ -1210,7 +1210,7 @@ event, and we will exit that state when we detect a "left up" event: ::
         event_state = Enum("normal", "mousedown")
 
         def normal_mouse_move(self, event):
-            print "Screen:", event.x, event.y
+            print("Screen:", event.x, event.y)
 
         def normal_left_down(self, event):
             self.event_state = "mousedown"
@@ -1232,7 +1232,7 @@ data space:
 .. code-block:: python
 
         def mousedown_mouse_move(self, event):
-                print "Data:", self.component.map_data((event.x, event.y))
+                print("Data:", self.component.map_data((event.x, event.y)))
 
 The ``self.component`` attribute contains a reference to the underlying
 plot. This is why tools need to be given a reference to a plot when

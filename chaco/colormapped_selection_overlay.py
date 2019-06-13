@@ -1,13 +1,15 @@
 """ Defines the ColormappedSelectionOverlay class.
 """
+import six.moves as sm
+
 from numpy import logical_and
 
 # Enthought library imports
 from traits.api import Any, Bool, Float, Instance, Property, Enum
 
 # Local imports
-from abstract_overlay import AbstractOverlay
-from colormapped_scatterplot import ColormappedScatterPlot
+from .abstract_overlay import AbstractOverlay
+from .colormapped_scatterplot import ColormappedScatterPlot
 
 class ColormappedSelectionOverlay(AbstractOverlay):
     """
@@ -15,23 +17,23 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     points to a very low alpha.
     """
 
-    # The ColormappedScatterPlot that this overlay is listening to.
-    # By default, it looks at self.component
+    #: The ColormappedScatterPlot that this overlay is listening to.
+    #: By default, it looks at self.component
     plot = Property
 
-    # The amount to fade the unselected points.
+    #: The amount to fade the unselected points.
     fade_alpha = Float(0.15)
 
-    # The minimum difference, in float percent, between the starting and ending
-    # selection values, if range selection mode is enabled
+    #: The minimum difference, in float percent, between the starting and ending
+    #: selection values, if range selection mode is enabled
     minimum_delta = Float(0.01)
 
-    # Outline width for selected points.
+    #: Outline width for selected points.
     selected_outline_width = Float(1.0)
-    # Outline width for unselected points.
+    #: Outline width for unselected points.
     unselected_outline_width = Float(0.0)
 
-    # The type of selection used by the data source.
+    #: The type of selection used by the data source.
     selection_type = Enum('range', 'mask')
 
     _plot = Instance(ColormappedScatterPlot)
@@ -74,7 +76,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             mask = (data_pts >= low) & (data_pts <= high)
 
         elif self.selection_type == 'mask':
-            mask = reduce(logical_and, datasource.metadata["selection_masks"])
+            mask = sm.reduce(logical_and, datasource.metadata["selection_masks"])
             if sum(mask)<2:
                 return
 

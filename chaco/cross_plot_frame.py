@@ -9,12 +9,15 @@
 
 from __future__ import with_statement
 
+import six
+import six.moves as sm
+
 # Enthought library imports
 from traits.api import Bool, Float
 
 # Local, relative imports
-from base_plot_frame import BasePlotFrame
-from plot_containers import HPlotContainer, OverlayPlotContainer, VPlotContainer
+from .base_plot_frame import BasePlotFrame
+from .plot_containers import HPlotContainer, OverlayPlotContainer, VPlotContainer
 
 
 class CrossPlotFrame(BasePlotFrame):
@@ -29,22 +32,22 @@ class CrossPlotFrame(BasePlotFrame):
     This class will be removed sometime in the future.
     """
 
-    # Slots or positions on the frame where plot components can place themselves.
-    # Overrides PlotFrame.
+    #: Slots or positions on the frame where plot components can place themselves.
+    #: Overrides PlotFrame.
     slot_names = ("center", "left", "right", "top", "bottom")
 
-    # Default width and height. Class attribute.
+    #: Default width and height. Class attribute.
     default_bounds = (500,500)
 
     # The sizes of the various areas
 
-    # Width of the left slot.
+    #: Width of the left slot.
     left_width = Float(50.0)
-    # Width of the right slot.
+    #: Width of the right slot.
     right_width = Float(50.0)
-    # Height of the top slot.
+    #: Height of the top slot.
     top_height = Float(50.0)
-    # Height of the bottom slot.
+    #: Height of the bottom slot.
     bottom_height = Float(50.0)
 
     # Does the component need to do a layout call?
@@ -52,10 +55,8 @@ class CrossPlotFrame(BasePlotFrame):
 
 
     def __init__(self, **kwtraits):
-        if kwtraits.has_key("bounds"):
-            bounds = kwtraits.pop("bounds")
-        else:
-            bounds = list(self.default_bounds)
+        bounds = kwtraits.pop("bounds", list(self.default_bounds))
+
         BasePlotFrame.__init__(self, **kwtraits)
 
         # Create our plot containers
@@ -167,7 +168,7 @@ class CrossPlotFrame(BasePlotFrame):
     def __getstate__(self):
         state = super(CrossPlotFrame,self).__getstate__()
         for key in ['_layout_needed']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

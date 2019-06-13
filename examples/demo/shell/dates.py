@@ -1,4 +1,5 @@
-"""This example demonstrates using dates as labels for the axis ticks using
+"""
+This example demonstrates using dates as labels for the axis ticks using
 the chaco shell subpackage.
 
 Try zooming in and out using the mouse wheel and see the resolution of
@@ -32,6 +33,6 @@ title("Plotting Dates")
 # Set the plot's horizontal axis to be a time scale
 curplot().x_axis.tick_generator.scale = CalendarScaleSystem()
 
-#This command is only necessary if running from command line
+# This command is only necessary if running from command line
 show()
 

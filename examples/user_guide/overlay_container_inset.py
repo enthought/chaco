@@ -38,11 +38,10 @@ class OverlayContainerExample(HasTraits):
         # Create a second inset plot, not resizable, not zoom-able
         inset_plot = Plot(pd)
         inset_plot.plot(('index', 'value'), color='blue')
-        inset_plot.set(resizable = '',
-                       bounds = [250, 150],
-                       position = [450, 350],
-                       border_visible = True
-                       )
+        inset_plot.resizable = ''
+        inset_plot.bounds = [250, 150]
+        inset_plot.position = [450, 350]
+        inset_plot.border_visible = True
 
         # Create a container and add our plots
         container = OverlayPlotContainer()

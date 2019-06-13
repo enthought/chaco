@@ -8,8 +8,8 @@ import numpy as np
 from traits.api import Any, Constant, Int, Tuple
 
 # Chaco imports
-from base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
-from abstract_data_source import AbstractDataSource
+from .base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
+from .abstract_data_source import AbstractDataSource
 
 
 def bounded_nanargmin(arr):
@@ -63,17 +63,17 @@ class ArrayDataSource(AbstractDataSource):
     # AbstractDataSource traits
     #------------------------------------------------------------------------
 
-    # The dimensionality of the indices into this data source (overrides
-    # AbstractDataSource).
+    #: The dimensionality of the indices into this data source (overrides
+    #: AbstractDataSource).
     index_dimension = Constant('scalar')
 
-    # The dimensionality of the value at each index point (overrides
-    # AbstractDataSource).
+    #: The dimensionality of the value at each index point (overrides
+    #: AbstractDataSource).
     value_dimension = Constant('scalar')
 
-    # The sort order of the data.
-    # This is a specialized optimization for 1-D arrays, but it's an important
-    # one that's used everywhere.
+    #: The sort order of the data.
+    #: This is a specialized optimization for 1-D arrays, but it's an important
+    #: one that's used everywhere.
     sort_order = SortOrderTrait
 
 

@@ -42,9 +42,10 @@ Features
 
 Prerequisites
 -------------
+Chaco is only supported on Python 2.7.x and Python >= 3.4.
 You must have the following libraries installed before building or installing
 Chaco:
 
 * `Numpy <http://pypi.python.org/pypi/numpy>`_
-* `distribute <http://pypi.python.org/pypi/distribute>`_
+* `setuptools <http://pypi.python.org/pypi/setuptools>`_
 * `enable <https://github.com/enthought/enable>`_

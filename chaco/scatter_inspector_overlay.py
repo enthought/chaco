@@ -9,8 +9,8 @@ from enable.api import ColorTrait, MarkerTrait
 from traits.api import Float, Int, Str, Trait
 
 # Local, relative imports
-from abstract_overlay import AbstractOverlay
-from scatterplot import render_markers
+from .abstract_overlay import AbstractOverlay
+from .scatterplot import render_markers
 
 class ScatterInspectorOverlay(AbstractOverlay):
     """
@@ -21,7 +21,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
     Used in conjuction with ScatterInspector.
     """
 
-    # The style to use when a point is hovered over
+    #: The style to use when a point is hovered over
     hover_metadata_name = Str('hover')
     hover_marker = Trait(None, None, MarkerTrait)
     hover_marker_size = Trait(None, None, Int)
@@ -29,7 +29,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
     hover_color = Trait(None, None, ColorTrait)
     hover_outline_color = Trait(None, None, ColorTrait)
 
-    # The style to use when a point has been selected by a click
+    #: The style to use when a point has been selected by a click
     selection_metadata_name = Str('selections')
     selection_marker = Trait(None, None, MarkerTrait)
     selection_marker_size = Trait(None, None, Int)

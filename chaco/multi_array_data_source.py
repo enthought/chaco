@@ -1,5 +1,7 @@
 """ Defines the MultiArrayDataSource class.
 """
+import warnings
+
 # Major package imports
 from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
 
@@ -7,8 +9,8 @@ from numpy import nanmax, nanmin, array, shape, ones, bool, newaxis, nan_to_num
 from traits.api import Any, Int, Tuple
 
 # Chaco imports
-from base import NumericalSequenceTrait, SortOrderTrait
-from abstract_data_source import AbstractDataSource
+from .base import NumericalSequenceTrait, SortOrderTrait
+from .abstract_data_source import AbstractDataSource
 
 
 class MultiArrayDataSource(AbstractDataSource):
@@ -27,17 +29,17 @@ class MultiArrayDataSource(AbstractDataSource):
     # AbstractDataSource traits
     #------------------------------------------------------------------------
 
-    # The dimensionality of the indices into this data source (overrides
-    # AbstractDataSource).
+    #: The dimensionality of the indices into this data source (overrides
+    #: AbstractDataSource).
     index_dimension = Int(0)
 
-    # The dimensionality of the value at each index point (overrides
-    # AbstractDataSource).
+    #: The dimensionality of the value at each index point (overrides
+    #: AbstractDataSource).
     value_dimension = Int(1)
 
-    # The sort order of the data.
-    # This is a specialized optimization for 1-D arrays, but it's an important
-    # one that's used everywhere.
+    #: The sort order of the data.
+    #: This is a specialized optimization for 1-D arrays, but it's an important
+    #: one that's used everywhere.
     sort_order = SortOrderTrait
 
 
@@ -179,8 +181,11 @@ class MultiArrayDataSource(AbstractDataSource):
                 mini = nanmin(self._data[::, index])
         else:
             # value is None and index is None:
-            maxi = nanmax(self._data)
-            mini = nanmin(self._data)
+            with warnings.catch_warnings():
+                warnings.filterwarnings(
+                    'ignore', "All-NaN (slice|axis) encountered", RuntimeWarning)
+                maxi = nanmax(self._data)
+                mini = nanmin(self._data)
 
         return (mini, maxi)
 
@@ -213,7 +218,7 @@ class MultiArrayDataSource(AbstractDataSource):
         if len(value.shape) != 2:
             msg = 'Input is %d dimensional, but it must be 1 or 2' \
                   'dimensional.' % len(value.shape)
-            raise ValueError, msg
+            raise ValueError(msg)
 
         self._data = value
 

@@ -11,6 +11,8 @@ thread and interrupts the movement of the slider.
 # Major library imports
 from numpy import ogrid, pi, sin
 
+import six.moves as sm
+
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import (Array, Bool, DelegatesTo, HasTraits, Instance, Range,
@@ -155,7 +157,7 @@ def blur_image(image, blur_level):
     """ Blur the image using a potentially time-consuming algorithm """
 
     blurred_image = image.copy()
-    for _ in xrange(blur_level**2):
+    for _ in sm.xrange(blur_level**2):
         blurred_image[1:-1, 1:-1] += (
             blurred_image[:-2, 1:-1] +  # top
             blurred_image[2:, 1:-1] +  # bottom

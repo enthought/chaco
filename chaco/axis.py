@@ -11,14 +11,14 @@ from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
 from enable.api import ColorTrait, LineStyle
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Any, Float, Int, Str, Trait, Unicode, \
-     Bool, Event, List, Array, Instance, Enum, Callable
+     Bool, Event, List, Array, Instance, Enum, Callable, ArrayOrNone
 
 # Local relative imports
-from ticks import AbstractTickGenerator, DefaultTickGenerator, MinorTickGenerator
-from abstract_mapper import AbstractMapper
-from abstract_overlay import AbstractOverlay
-from label import Label
-from log_mapper import LogMapper
+from .ticks import AbstractTickGenerator, DefaultTickGenerator, MinorTickGenerator
+from .abstract_mapper import AbstractMapper
+from .abstract_overlay import AbstractOverlay
+from .label import Label
+from .log_mapper import LogMapper
 
 
 def DEFAULT_TICK_FORMATTER(val):
@@ -34,111 +34,114 @@ class PlotAxis(AbstractOverlay):
     the component.
     """
 
-    # The mapper that drives this axis.
+    #: The mapper that drives this axis.
     mapper = Instance(AbstractMapper)
 
-    # Keep an origin for plots that aren't attached to a component
+    #: Keep an origin for plots that aren't attached to a component
     origin = Enum("bottom left", "top left", "bottom right", "top right")
 
-    # The text of the axis title.
+    #: The text of the axis title.
     title = Trait('', Str, Unicode) #May want to add PlotLabel option
 
-    # The font of the title.
+    #: The font of the title.
     title_font = KivaFont('modern 12')
 
-    # The spacing between the axis line and the title
+    #: The spacing between the axis line and the title
     title_spacing = Trait('auto', 'auto', Float)
 
-    # The color of the title.
+    #: The color of the title.
     title_color = ColorTrait("black")
 
-    # The thickness (in pixels) of each tick.
+    #: The angle of the title, in degrees, from horizontal line
+    title_angle = Float(0.)
+
+    #: The thickness (in pixels) of each tick.
     tick_weight = Float(1.0)
 
-    # The color of the ticks.
+    #: The color of the ticks.
     tick_color = ColorTrait("black")
 
-    # The font of the tick labels.
+    #: The font of the tick labels.
     tick_label_font = KivaFont('modern 10')
 
-    # The color of the tick labels.
+    #: The color of the tick labels.
     tick_label_color = ColorTrait("black")
 
-    # The rotation of the tick labels.
+    #: The rotation of the tick labels.
     tick_label_rotate_angle = Float(0)
 
-    # Whether to align to corners or edges (corner is better for 45 degree rotation)
+    #: Whether to align to corners or edges (corner is better for 45 degree rotation)
     tick_label_alignment = Enum('edge', 'corner')
 
-    # The margin around the tick labels.
+    #: The margin around the tick labels.
     tick_label_margin = Int(2)
 
-    # The distance of the tick label from the axis.
+    #: The distance of the tick label from the axis.
     tick_label_offset = Float(8.)
 
-    # Whether the tick labels appear to the inside or the outside of the plot area
+    #: Whether the tick labels appear to the inside or the outside of the plot area
     tick_label_position = Enum("outside", "inside")
 
-    # A callable that is passed the numerical value of each tick label and
-    # that returns a string.
+    #: A callable that is passed the numerical value of each tick label and
+    #: that returns a string.
     tick_label_formatter = Callable(DEFAULT_TICK_FORMATTER)
 
-    # The number of pixels by which the ticks extend into the plot area.
+    #: The number of pixels by which the ticks extend into the plot area.
     tick_in = Int(5)
 
-    # The number of pixels by which the ticks extend into the label area.
+    #: The number of pixels by which the ticks extend into the label area.
     tick_out = Int(5)
 
-    # Are ticks visible at all?
+    #: Are ticks visible at all?
     tick_visible = Bool(True)
 
-    # The dataspace interval between ticks.
+    #: The dataspace interval between ticks.
     tick_interval = Trait('auto', 'auto', Float)
 
-    # A callable that implements the AbstractTickGenerator interface.
+    #: A callable that implements the AbstractTickGenerator interface.
     tick_generator = Instance(AbstractTickGenerator)
 
-    # The location of the axis relative to the plot.  This determines where
-    # the axis title is located relative to the axis line.
+    #: The location of the axis relative to the plot.  This determines where
+    #: the axis title is located relative to the axis line.
     orientation = Enum("top", "bottom", "left", "right")
 
-    # Is the axis line visible?
+    #: Is the axis line visible?
     axis_line_visible = Bool(True)
 
-    # The color of the axis line.
+    #: The color of the axis line.
     axis_line_color = ColorTrait("black")
 
-    # The line thickness (in pixels) of the axis line.
+    #: The line thickness (in pixels) of the axis line.
     axis_line_weight = Float(1.0)
 
-    # The dash style of the axis line.
+    #: The dash style of the axis line.
     axis_line_style = LineStyle('solid')
 
-    # A special version of the axis line that is more useful for geophysical
-    # plots.
+    #: A special version of the axis line that is more useful for geophysical
+    #: plots.
     small_haxis_style = Bool(False)
 
-    # Does the axis ensure that its end labels fall within its bounding area?
+    #: Does the axis ensure that its end labels fall within its bounding area?
     ensure_labels_bounded = Bool(False)
 
-    # Does the axis prevent the ticks from being rendered outside its bounds?
-    # This flag is off by default because the standard axis *does* render ticks
-    # that encroach on the plot area.
+    #: Does the axis prevent the ticks from being rendered outside its bounds?
+    #: This flag is off by default because the standard axis *does* render ticks
+    #: that encroach on the plot area.
     ensure_ticks_bounded = Bool(False)
 
-    # Fired when the axis's range bounds change.
+    #: Fired when the axis's range bounds change.
     updated = Event
 
     #------------------------------------------------------------------------
     # Override default values of inherited traits
     #------------------------------------------------------------------------
 
-    # Background color (overrides AbstractOverlay). Axes usually let the color of
-    # the container show through.
+    #: Background color (overrides AbstractOverlay). Axes usually let the color of
+    #: the container show through.
     bgcolor = ColorTrait("transparent")
 
-    # Dimensions that the axis is resizable in (overrides PlotComponent).
-    # Typically, axes are resizable in both dimensions.
+    #: Dimensions that the axis is resizable in (overrides PlotComponent).
+    #: Typically, axes are resizable in both dimensions.
     resizable = "hv"
 
     #------------------------------------------------------------------------
@@ -148,9 +151,9 @@ class PlotAxis(AbstractOverlay):
     # Cached position calculations
 
     _tick_list = List  # These are caches of their respective positions
-    _tick_positions = Any #List
-    _tick_label_list = Any
-    _tick_label_positions = Any
+    _tick_positions = ArrayOrNone()
+    _tick_label_list = ArrayOrNone()
+    _tick_label_positions = ArrayOrNone()
     _tick_label_bounding_boxes = List
     _major_axis_size = Float
     _minor_axis_size = Float
@@ -193,7 +196,7 @@ class PlotAxis(AbstractOverlay):
         called automatically be the Traits framework when .edit_traits() is
         invoked.
         """
-        from axis_view import AxisView
+        from .axis_view import AxisView
         return AxisView
 
 
@@ -460,7 +463,7 @@ class PlotAxis(AbstractOverlay):
             return
 
         if datalow > datahigh:
-            raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
+            raise RuntimeError("DataRange low is greater than high; unable to compute axis ticks.")
 
         if not self.tick_generator:
             return
@@ -535,7 +538,6 @@ class PlotAxis(AbstractOverlay):
             self._minor_axis_size = self.bounds[1]
             self._major_axis = array([1., 0.])
             self._title_orientation = array([0.,1.])
-            self.title_angle = 0.0
             if self.orientation == 'top':
                 self._origin_point = array(self.position)
                 self._inside_vector = array([0.,-1.])
@@ -553,11 +555,9 @@ class PlotAxis(AbstractOverlay):
             if self.orientation == 'left':
                 self._origin_point = array(self.position) + array([self.bounds[0], 0.])
                 self._inside_vector = array([1., 0.])
-                self.title_angle = 90.0
             else: #self.orientation == 'right'
                 self._origin_point = array(self.position)
                 self._inside_vector = array([-1., 0.])
-                self.title_angle = 270.0
             if "top" in origin:
                 screenlow, screenhigh = screenhigh, screenlow
 
@@ -584,7 +584,6 @@ class PlotAxis(AbstractOverlay):
             self._minor_axis_size = overlay_component.bounds[1]
             self._major_axis = array([1., 0.])
             self._title_orientation = array([0.,1.])
-            self.title_angle = 0.0
             if self.orientation == 'top':
                 self._origin_point = array([overlay_component.x, overlay_component.y2])
                 self._inside_vector = array([0.0, -1.0])
@@ -602,11 +601,9 @@ class PlotAxis(AbstractOverlay):
             if self.orientation == 'left':
                 self._origin_point = array([overlay_component.x, overlay_component.y])
                 self._inside_vector = array([1.0, 0.0])
-                self.title_angle = 90.0
             else:
                 self._origin_point = array([overlay_component.x2, overlay_component.y])
                 self._inside_vector = array([-1.0, 0.0])
-                self.title_angle = 270.0
             if "top" in component_origin:
                 screenlow, screenhigh = screenhigh, screenlow
 
@@ -728,6 +725,7 @@ class PlotAxis(AbstractOverlay):
             'title_font',
             'title_spacing',
             'title_color',
+            'title_angle',
             'tick_weight',
             'tick_color',
             'tick_label_font',
@@ -756,6 +754,18 @@ class PlotAxis(AbstractOverlay):
         if name in invalidate_traits:
             self._invalidate()
 
+    # ------------------------------------------------------------------------
+    # Initialization-related methods
+    # ------------------------------------------------------------------------
+
+    def _title_angle_default(self):
+        if self.orientation == 'left':
+            return 90.0
+        if self.orientation == 'right':
+            return 270.0
+        # Then self.orientation in {'top', 'bottom'}
+        return 0.0
+
     #------------------------------------------------------------------------
     # Persistence-related methods
     #------------------------------------------------------------------------
@@ -783,7 +793,7 @@ class PlotAxis(AbstractOverlay):
 
         state = super(PlotAxis,self).__getstate__()
         for key in dont_pickle:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state
@@ -795,12 +805,13 @@ class PlotAxis(AbstractOverlay):
         self._cache_valid = False
         return
 
+
 class MinorPlotAxis(PlotAxis):
     """
     The MinorPlotAxis is a PlotAxis which draws ticks with a smaller interval,
     smaller tick sizes, and no tick labels.
     """
-    
+
     def __init__(self, *args, **kwargs):
         super(MinorPlotAxis, self).__init__(*args, **kwargs)
 

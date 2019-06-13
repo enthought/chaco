@@ -1,4 +1,5 @@
-"""This example shows how to create a semi-log plot using the `shell` package.
+"""
+This example shows how to create a semi-log plot using the `shell` package.
 """
 
 # Major library imports
@@ -20,6 +21,6 @@ semilogy(x, x, "g-", name="y=x")
 # Add some titles
 title("simple semilog plots")
 
-#This command is only necessary if running from command line
+# This command is only necessary if running from command line
 show()
 

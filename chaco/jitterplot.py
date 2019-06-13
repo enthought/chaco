@@ -1,8 +1,9 @@
-
 from __future__ import absolute_import
 
-from itertools import izip
 from math import sqrt
+
+import six.moves as sm
+
 import numpy as np
 
 from traits.api import Any, Int
@@ -60,7 +61,7 @@ class JitterPlot(ScatterPlot1D):
             return np.vstack((ys, xs)).T
 
     def _make_jitter_vals(self, data_array):
-        random_state = np.random.RandomState(data_array[:100])
+        random_state = np.random.RandomState(data_array[:100].astype(int))
         numpts = len(data_array)
         vals = random_state.uniform(0, self.jitter_width, numpts)
         vals += self._marker_position
@@ -122,9 +123,9 @@ class JitterPlot(ScatterPlot1D):
             self._gather_points()
             pts = self.map_screen(self._cached_data)
             if self.orientation == "h":
-                self._cached_screen_map = dict((x,y) for x,y in izip(pts[:,0], pts[:,1]))
+                self._cached_screen_map = dict((x,y) for x,y in sm.zip(pts[:,0], pts[:,1]))
             else:
-                self._cached_screen_map = dict((y,x) for x,y in izip(pts[:,0], pts[:,1]))
+                self._cached_screen_map = dict((y,x) for x,y in sm.zip(pts[:,0], pts[:,1]))
             self._cached_screen_pts = pts
             self._screen_cache_valid = True
             self._cached_data_pts_sorted = None

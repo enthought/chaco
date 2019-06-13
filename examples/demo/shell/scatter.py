@@ -1,4 +1,5 @@
-"""This example shows how to create a scatter plot using the `shell` package.
+"""
+This example shows how to create a scatter plot using the `shell` package.
 """
 
 # Major library imports

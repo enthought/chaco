@@ -5,7 +5,7 @@ Defines the AbstractDataSource class.
 from traits.api import Bool, Dict, Event, HasTraits
 
 # Local relative imports
-from base import DimensionTrait
+from .base import DimensionTrait
 
 class AbstractDataSource(HasTraits):
     """ This abstract interface must be implemented by any class supplying data
@@ -22,34 +22,34 @@ class AbstractDataSource(HasTraits):
     possible, domain classes (or an adapter) must implement AbstractDataSource.
     """
 
-    # The dimensionality of the value at each index point.
-    # Subclasses re-declare this trait as a read-only trait with
-    # the right default value.
+    #: The dimensionality of the value at each index point.
+    #: Subclasses re-declare this trait as a read-only trait with
+    #: the right default value.
     value_dimension = DimensionTrait
 
-    # The dimensionality of the indices into this data source.
-    # Subclasses re-declare this trait as a read-only trait with
-    # the right default value.
+    #: The dimensionality of the indices into this data source.
+    #: Subclasses re-declare this trait as a read-only trait with
+    #: the right default value.
     index_dimension = DimensionTrait
 
-    # A dictionary keyed on strings.  In general, it maps to indices (or tuples
-    # of indices, depending on **value_dimension**), as in the case of
-    # selections and annotations.  Applications and renderers can add their own
-    # custom metadata, but must avoid using keys that might result in name
-    # collision.
+    #: A dictionary keyed on strings.  In general, it maps to indices (or tuples
+    #: of indices, depending on **value_dimension**), as in the case of
+    #: selections and annotations.  Applications and renderers can add their own
+    #: custom metadata, but must avoid using keys that might result in name
+    #: collision.
     metadata = Dict
 
-    # Event that fires when the data values change.
+    #: Event that fires when the data values change.
     data_changed = Event
 
-    # Event that fires when just the bounds change.
+    #: Event that fires when just the bounds change.
     bounds_changed = Event
 
-    # Event that fires when metadata structure is changed.
+    #: Event that fires when metadata structure is changed.
     metadata_changed = Event
 
-    # Should the data that this datasource refers to be serialized when
-    # the datasource is serialized?
+    #: Should the data that this datasource refers to be serialized when
+    #: the datasource is serialized?
     persist_data = Bool(True)
 
     #------------------------------------------------------------------------
@@ -124,7 +124,7 @@ class AbstractDataSource(HasTraits):
 
         # everything but 'metadata'
         for key in ['value_dimension', 'index_dimension', 'persist_data']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

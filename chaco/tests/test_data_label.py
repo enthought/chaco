@@ -1,4 +1,7 @@
 import unittest
+
+import six.moves as sm
+
 from chaco.api import create_scatter_plot, PlotGraphicsContext, DataLabel
 
 
@@ -10,7 +13,8 @@ class DataLabelTestCase(unittest.TestCase):
         # arrow_visible=False in the DataLabel constructor) would raise an
         # exception because of an undefined reference.
         size = (50, 50)
-        plot = create_scatter_plot(data=[range(10), range(10)])
+        plot = create_scatter_plot(data=[list(sm.xrange(10)),
+                                         list(sm.xrange(10))])
         label = DataLabel(component=plot,
                           data_point=(4, 4),
                           marker_color="red",

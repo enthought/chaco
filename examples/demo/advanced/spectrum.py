@@ -38,7 +38,7 @@ def _create_plot_component(obj):
     # Setup the spectrum plot
     frequencies = linspace(0.0, float(SAMPLING_RATE)/2, num=NUM_SAMPLES/2)
     obj.spectrum_data = ArrayPlotData(frequency=frequencies)
-    empty_amplitude = zeros(NUM_SAMPLES/2)
+    empty_amplitude = zeros(NUM_SAMPLES//2)
     obj.spectrum_data.set_data('amplitude', empty_amplitude)
 
     obj.spectrum_plot = Plot(obj.spectrum_data)
@@ -69,7 +69,7 @@ def _create_plot_component(obj):
     time_range.high = 0.2
 
     # Spectrogram plot
-    spectrogram_data = zeros(( NUM_SAMPLES/2, SPECTROGRAM_LENGTH))
+    spectrogram_data = zeros(( NUM_SAMPLES//2, SPECTROGRAM_LENGTH))
     obj.spectrogram_plotdata = ArrayPlotData()
     obj.spectrogram_plotdata.set_data('imagedata', spectrogram_data)
     spectrogram_plot = Plot(obj.spectrogram_plotdata)
@@ -112,7 +112,7 @@ def get_audio_data():
         _stream.close()
         _stream = None
     normalized_data = audio_data / 32768.0
-    return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
+    return (abs(fft(normalized_data))[:NUM_SAMPLES//2], normalized_data)
 
 
 # HasTraits class that supplies the callable for the timer event.

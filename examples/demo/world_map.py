@@ -12,7 +12,7 @@ negative values.
 
 # Standard library imports
 import os.path
-import urllib.request, urllib.parse, urllib.error
+from six.moves.urllib import request
 
 # Major library imports
 import numpy
@@ -109,7 +109,7 @@ class WorldMapPlot(HasTraits):
 
         if not os.path.exists(self.image_path):
             print("Downloading map image")
-            urllib.request.urlretrieve(self.image_url, self.image_path)
+            request.urlretrieve(self.image_url, self.image_path)
 
 #===============================================================================
 # demo object that is used by the demo.py application.

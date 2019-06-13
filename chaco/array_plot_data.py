@@ -1,6 +1,7 @@
 """ Defines ArrayPlotData.
 """
-
+import six
+import six.moves as sm
 from numpy import array, ndarray
 
 # Enthought library imports
@@ -23,14 +24,14 @@ class ArrayPlotData(AbstractPlotData):
     # Public traits
     #-------------------------------------------------------------------------
 
-    # Map of names to arrays.  Although there is no restriction on the array
-    # dimensions, each array must correspond to a single plot item; that
-    # is, a single name must not map to a multi-dimensional array unless
-    # the array is being used for an image plot or for something that can handle
-    # multi-dimensional input data.
+    #: Map of names to arrays.  Although there is no restriction on the array
+    #: dimensions, each array must correspond to a single plot item; that
+    #: is, a single name must not map to a multi-dimensional array unless
+    #: the array is being used for an image plot or for something that can handle
+    #: multi-dimensional input data.
     arrays = Dict
 
-    # Consumers can write data to this object (overrides AbstractPlotData).
+    #: Consumers can write data to this object (overrides AbstractPlotData).
     writable = True
 
     def __init__(self, *data, **kw):
@@ -62,7 +63,7 @@ class ArrayPlotData(AbstractPlotData):
         """
         super(AbstractPlotData, self).__init__()
         self._update_data(kw)
-        data = dict(zip(self._generate_names(len(data)), data))
+        data = dict(sm.zip(self._generate_names(len(data)), data))
         self._update_data(data)
 
 
@@ -73,7 +74,7 @@ class ArrayPlotData(AbstractPlotData):
     def list_data(self):
         """ Returns a list of the names of the arrays managed by this instance.
         """
-        return self.arrays.keys()
+        return list(self.arrays.keys())
 
 
     def get_data(self, name):
@@ -121,6 +122,11 @@ class ArrayPlotData(AbstractPlotData):
         -------
         The name under which the array was set.
 
+        See Also
+        --------
+        update_data: Use if needing to set multiple ArrayPlotData entries at
+            once, for example because new arrays' dimensions change and
+            updating one at a time would break an existing Plot.
         """
         if not self.writable:
             return None
@@ -134,12 +140,19 @@ class ArrayPlotData(AbstractPlotData):
 
 
     def update_data(self, *args, **kwargs):
-        """ Sets the specified array as the value for either the specified
-        name or a generated name.
+        """ Updates any number of arrays before triggering a `data_changed`
+        event.
 
-        Implements AbstractPlotData's update_data() method.  This method has
-        the same signature as the dictionary update() method.
+        Useful to set multiple ArrayPlotData entries at once, for example
+        because new arrays' dimensions change and updating one at a time would
+        break an existing Plot.
 
+        Note: Implements AbstractPlotData's update_data() method.  This method
+        has the same signature as the dictionary update() method.
+
+        See Also
+        --------
+        set_data: Simpler interface to set only 1 entry at a time.
         """
         if not self.writable:
             return None
@@ -189,7 +202,7 @@ class ArrayPlotData(AbstractPlotData):
         """
         # note that this call modifies data, but that's OK since the callers
         # all create the dictionary that they pass in
-        for name, value in data.items():
+        for name, value in list(data.items()):
             if not isinstance(value, (ndarray, AbstractDataSource)):
                 data[name] = array(value)
             else:

@@ -12,64 +12,64 @@ from traits.api import Any, Bool, Enum, Instance, Property, \
 from kiva.image import GraphicsContext
 
 # Local imports
-from base_xy_plot import BaseXYPlot
-from abstract_plot_renderer import AbstractPlotRenderer
-from abstract_mapper import AbstractMapper
-from array_data_source import ArrayDataSource
-from grid import PlotGrid
-from axis import PlotAxis
+from .base_xy_plot import BaseXYPlot
+from .abstract_plot_renderer import AbstractPlotRenderer
+from .abstract_mapper import AbstractMapper
+from .array_data_source import ArrayDataSource
+from .grid import PlotGrid
+from .axis import PlotAxis
 
 
 class ColorBar(AbstractPlotRenderer):
     """ A color bar for a color-mapped plot.
     """
-    # Screen mapper for index data.
+    #: Screen mapper for index data.
     index_mapper = Instance(AbstractMapper)
 
-    # Screen mapper for color data
+    #: Screen mapper for color data
     color_mapper = Property #Instance(ColorMapper)
 
-    # Screen mapper for value data (synonym for color_mapper)
+    #: Screen mapper for value data (synonym for color_mapper)
     value_mapper = Property(depends_on='color_mapper')
 
-    # Optional index data source for generic tools to attach metadata to.
+    #: Optional index data source for generic tools to attach metadata to.
     index = Property
 
-    # Optional color-mapped plot that this color bar references.  If specified,
-    # the plot must have a **color_mapper** attribute.
+    #: Optional color-mapped plot that this color bar references.  If specified,
+    #: the plot must have a **color_mapper** attribute.
     plot = Any
 
-    # Is there a visible grid on the colorbar?
+    #: Is there a visible grid on the colorbar?
     grid_visible = Bool(True)
 
-    # Is there a visible axis on the colorbar?
+    #: Is there a visible axis on the colorbar?
     axis_visible = Bool(True)
 
-    # Corresponds to either **index_mapper** or None, depending on
-    # the orientation of the plot.
+    #: Corresponds to either **index_mapper** or None, depending on
+    #: the orientation of the plot.
     x_mapper = Property
-    # Corresponds to either **index_mapper** or None, depending on
-    # the orientation of the plot.
+    #: Corresponds to either **index_mapper** or None, depending on
+    #: the orientation of the plot.
     y_mapper = Property
 
     #------------------------------------------------------------------------
     # Override default values of inherited traits
     #------------------------------------------------------------------------
 
-    # The border is visible (overrides enable.Component).
+    #: The border is visible (overrides enable.Component).
     border_visible = True
-    # The orientation of the index axis.
+    #: The orientation of the index axis.
     orientation = Enum('v', 'h')
-    # Should the bar go left-to-right or bottom-to-top (normal) or the reverse?
+    #: Should the bar go left-to-right or bottom-to-top (normal) or the reverse?
     direction = Enum('normal', 'flipped')
-    # Overrides the default background color trait in PlotComponent.
+    #: Overrides the default background color trait in PlotComponent.
     bgcolor = 'transparent'
-    # Draw layers in "draw order"
+    #: Draw layers in "draw order"
     use_draw_order = True
-    # Default width is 40 pixels (overrides enable.CoordinateBox)
+    #: Default width is 40 pixels (overrides enable.CoordinateBox)
     width = 40
 
-    # Faux origin for the axis to look at
+    #: Faux origin for the axis to look at
     origin = Enum('bottom left', 'top left', 'bottom right', 'top right')
 
     #------------------------------------------------------------------------
@@ -140,7 +140,11 @@ class ColorBar(AbstractPlotRenderer):
 
             mapper = self.index_mapper
 
-            scrn_points = arange(mapper.low_pos, mapper.high_pos+1)
+            low = mapper.low_pos
+            high = mapper.high_pos
+            if self.direction == 'flipped':
+                low, high = high, low
+            scrn_points = arange(low, high + 1)
 
             # Get the data values associated with the list of screen points.
             if mapper.range.low == mapper.range.high:
@@ -149,9 +153,6 @@ class ColorBar(AbstractPlotRenderer):
                 data_points = array([mapper.range.high])
             else:
                 data_points = mapper.map_data(scrn_points)
-
-            if self.direction == 'flipped':
-                data_points = data_points[::-1]
 
             # Get the colors associated with the data points.
             colors = self.color_mapper.map_screen(data_points)

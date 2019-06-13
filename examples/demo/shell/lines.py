@@ -1,4 +1,5 @@
-"""This example displays some line plots in different colors and styles using
+"""
+This example displays some line plots in different colors and styles using
 the chaco.shell subpackage.
 
 The functions in the chaco.shell package allow us to quickly generate plots

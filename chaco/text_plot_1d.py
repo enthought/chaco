@@ -6,17 +6,19 @@ A plot that renders text values along one dimension
 
 from __future__ import absolute_import
 
-from itertools import izip
+
+import six.moves as sm
 
 from numpy import array, empty
 
 # Enthought library imports
-from chaco.api import ArrayDataSource, Label
 from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Bool, Enum, Float, Int, Instance, List, on_trait_change
 
 # local imports
+from .array_data_source import ArrayDataSource
+from .label import Label
 from .base_1d_plot import Base1DPlot
 
 
@@ -43,6 +45,10 @@ class TextPlot1D(Base1DPlot):
 
     #: alignment of text relative to non-index direction
     alignment = Enum("center", "left", "right", "top", "bottom")
+
+    #: alignment of text relative to index direction and centered around the
+    #: provided value point
+    index_alignment = Enum("right", "center", "left", "top", "bottom")
 
     #: offset of text relative to non-index direction in pixels
     text_offset = Float
@@ -104,10 +110,33 @@ class TextPlot1D(Base1DPlot):
     def _render(self, gc, pts, labels):
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
-            for pt, label in izip(pts, labels):
+            for pt, label in sm.zip(pts, labels):
                 with gc:
-                    gc.translate_ctm(*pt)
+                    x, y = self._get_index_text_position(gc, pt, label)
+                    gc.translate_ctm(x, y)
                     label.draw(gc)
+
+    def _get_index_text_position(self, gc, pt, label):
+        """ Compute the text label position in the index direction """
+        x, y = pt
+        width, height = label.get_bounding_box(gc)
+
+        if self.orientation == 'v':
+            position, width = y, height
+        else:
+            position = x
+
+        if self.index_alignment == 'center':
+            position -= width/2.0
+        elif self.index_alignment in ['left', 'bottom']:
+            position -= width
+        # If alignment is 'right' or 'top' we do nothing as that already
+        # matches the default behavior
+
+        if self.orientation == 'v':
+            return x, position
+        else:
+            return position, y
 
     def _get_text_position(self):
         """ Compute the text label position in the non-index direction """

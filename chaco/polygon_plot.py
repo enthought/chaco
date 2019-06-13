@@ -9,12 +9,12 @@ import numpy as np
 # Enthought library imports.
 from enable.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
-from kiva.agg import points_in_polygon
+from kiva.api import points_in_polygon
 from traits.api import Enum, Float, Tuple, Property, cached_property, \
                         on_trait_change
 
 # Local imports.
-from base_xy_plot import BaseXYPlot
+from .base_xy_plot import BaseXYPlot
 
 class PolygonPlot(BaseXYPlot):
     """ Plots a polygon in dataspace.
@@ -37,29 +37,29 @@ class PolygonPlot(BaseXYPlot):
     the line as small as possible while still putting ink on the page.
     """
 
-    # The color of the line on the edge of the polygon.
+    #: The color of the line on the edge of the polygon.
     edge_color = black_color_trait
 
-    # The thickness of the edge of the polygon.
+    #: The thickness of the edge of the polygon.
     edge_width = Float(1.0)
 
-    # The line dash style for the edge of the polygon.
+    #: The line dash style for the edge of the polygon.
     edge_style = LineStyle
 
-    # The color of the face of the polygon.
+    #: The color of the face of the polygon.
     face_color = transparent_color_trait
 
-    # Override the hittest_type trait inherited from BaseXYPlot
+    #: Override the hittest_type trait inherited from BaseXYPlot
     hittest_type = Enum("poly", "point", "line")
     
-    # The RGBA tuple for rendering edges.  It is always a tuple of length 4.
-    # It has the same RGB values as edge_color_, and its alpha value is the
-    # alpha value of self.edge_color multiplied by self.alpha. 
+    #: The RGBA tuple for rendering edges.  It is always a tuple of length 4.
+    #: It has the same RGB values as edge_color_, and its alpha value is the
+    #: alpha value of self.edge_color multiplied by self.alpha.
     effective_edge_color = Property(Tuple, depends_on=['edge_color', 'alpha'])
     
-    # The RGBA tuple for rendering the face.  It is always a tuple of length 4.
-    # It has the same RGB values as face_color_, and its alpha value is the
-    # alpha value of self.face_color multiplied by self.alpha.   
+    #: The RGBA tuple for rendering the face.  It is always a tuple of length 4.
+    #: It has the same RGB values as face_color_, and its alpha value is the
+    #: alpha value of self.face_color multiplied by self.alpha.
     effective_face_color = Property(Tuple, depends_on=['face_color', 'alpha'])
 
     #----------------------------------------------------------------------
@@ -134,7 +134,7 @@ class PolygonPlot(BaseXYPlot):
         data_pt = self.map_data(screen_pt, all_values=True)
         index = self.index.get_data()
         value = self.value.get_data()
-        poly = np.vstack((index,value)).T
+        poly = np.column_stack((index, value))
         if points_in_polygon([data_pt], poly)[0] == 1:
             return True
         else:

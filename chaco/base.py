@@ -6,27 +6,32 @@ Defines basic traits and functions for the data model.
 from math import radians, sqrt
 
 # Major library imports
-from numpy import (array, argsort, concatenate, cos, diff, dot, empty, isfinite,
-                   nonzero, pi, searchsorted, seterr, sin)
+from numpy import (
+    array, argsort, concatenate, cos, diff, dot, dtype, empty, float32,
+    isfinite, nonzero, pi, searchsorted, seterr, sin, int8
+)
 
 # Enthought library imports
-from traits.api import CArray, Enum, Trait
+from traits.api import Enum, ArrayOrNone
 
 delta = {'ascending': 1, 'descending': -1, 'flat': 0}
+
+rgba_dtype = dtype([('r', float32), ('g', float32), ('b', float32), ('a', float32)])
+point_dtype = dtype([('x', float), ('y', float)])
 
 # Dimensions
 
 # A single array of numbers.
-NumericalSequenceTrait = Trait(None, None, CArray(value=empty(0)))
+NumericalSequenceTrait = ArrayOrNone()
 
 # A sequence of pairs of numbers, i.e., an Nx2 array.
-PointTrait = Trait(None, None, CArray(value=empty(0)))
+PointTrait = ArrayOrNone(shape=(None, 2))
 
-# An NxM array of numbers.
-ImageTrait = Trait(None, None, CArray(value=empty(0)))
+# An NxM array of numbers or NxMxRGB(A) array of colors.
+ImageTrait = ArrayOrNone()
 
 # An 3D array of numbers of shape (Nx, Ny, Nz)
-CubeTrait = Trait(None, None, CArray(value=empty(0)))
+CubeTrait = ArrayOrNone(shape=(None, None, None))
 
 
 # This enumeration lists the fundamental mathematical coordinate types that
@@ -55,7 +60,7 @@ def n_gon(center, r, nsides, rot_degrees=0):
     rotation about the center may be specified with *rot_degrees*.
     """
     if nsides < 3:
-        raise ValueError, 'Must have at least 3 sides in a polygon'
+        raise ValueError('Must have at least 3 sides in a polygon')
     rotation = radians(rot_degrees)
     theta = (pi * 2) / nsides
     return [poly_point(center, r, i*theta+rotation) for i in range(nsides)]
@@ -122,10 +127,10 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
     elif sort_order == "descending":
         ndx = bin_search(data, pt, -1)
     else:
-        raise NotImplementedError, "reverse_map_1d() requires a sorted array"
+        raise NotImplementedError("reverse_map_1d() requires a sorted array")
 
     if ndx == -1:
-        raise IndexError, "value outside array data range"
+        raise IndexError("value outside array data range")
 
 
     # Now round the index to the closest matching index.  Do this
@@ -175,7 +180,7 @@ def sort_points(points, index=0):
     on their x-coordinate.
     """
     if points.ndim != 2:
-        raise RuntimeError, "sort_points(): Array of wrong shape."
+        raise RuntimeError("sort_points(): Array of wrong shape.")
     return points[argsort(points[:, index]), :]
 
 
@@ -220,7 +225,7 @@ def arg_true_runs(bool_array):
     """ Find runs where array is True """
     if len(bool_array) == 0:
         return []
-    runs = arg_find_runs(bool_array, 'flat')
+    runs = arg_find_runs(bool_array.view(int8), 'flat')
     # runs have to alternate true and false
     if bool_array[0]:
         # even runs are true

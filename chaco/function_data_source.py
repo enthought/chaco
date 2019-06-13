@@ -8,9 +8,9 @@ from numpy import array
 from traits.api import Callable, Instance, on_trait_change
 
 # Local, relative imports
-from abstract_data_source import AbstractDataSource
-from array_data_source import ArrayDataSource
-from data_range_1d import DataRange1D
+from .abstract_data_source import AbstractDataSource
+from .array_data_source import ArrayDataSource
+from .data_range_1d import DataRange1D
 
 
 class FunctionDataSource(ArrayDataSource):

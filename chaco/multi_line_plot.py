@@ -17,9 +17,9 @@ from traits.api import Float, List, Str, Trait, \
             Bool, Callable, Property, cached_property, Instance, Array
 from traitsui.api import Item, View, ScrubberEditor, HGroup
 
-from array_data_source import ArrayDataSource
-from base import arg_find_runs, bin_search
-from base_xy_plot import BaseXYPlot
+from .array_data_source import ArrayDataSource
+from .base import arg_find_runs, bin_search
+from .base_xy_plot import BaseXYPlot
 
 
 class MultiLinePlot(BaseXYPlot):
@@ -29,8 +29,8 @@ class MultiLinePlot(BaseXYPlot):
     stored in a MultiArrayDataSource object.  M is the number of lines to be plotted,
     and N is the number of points in each line.
 
-    Constructor Parameters
-    ----------------------
+    Parameters
+    ----------
     index : instance of an ArrayDataSource
         These are the 'x' or abscissa coordinates.
 
@@ -82,51 +82,51 @@ class MultiLinePlot(BaseXYPlot):
 
     """
 
-    # M and N appearing in the comments are as defined in the docstring.
+    #: M and N appearing in the comments are as defined in the docstring.
 
     yindex = Instance(ArrayDataSource)
 
     # amplitude = Float(0.0)
 
-    # `scale` and `offset` provide a more general transformation, but are currently
-    # untested.
+    #: `scale` and `offset` provide a more general transformation, but are currently
+    #: untested.
     scale = Float(1.0)
     offset = Float(0.0)
 
     fast_clip = Bool(False)
 
-    # The color of the lines.
+    #: The color of the lines.
     color = black_color_trait
 
-    # A function that returns the color of lines.  Overrides `color` if not None.
+    #: A function that returns the color of lines.  Overrides `color` if not None.
     color_func = Trait(None, None, Callable)
 
-    # The color to use to highlight the line when selected.
+    #: The color to use to highlight the line when selected.
     selected_color = ColorTrait("lightyellow")
 
-    # The style of the selected line.
+    #: The style of the selected line.
     selected_line_style = LineStyle("solid")
 
-    # The name of the key in self.metadata that holds the selection mask
+    #: The name of the key in self.metadata that holds the selection mask
     metadata_name = Str("selections")
 
-    # The thickness of the line.
+    #: The thickness of the line.
     line_width = Float(1.0)
 
-    # The line dash style.
+    #: The line dash style.
     line_style = LineStyle
 
     use_global_bounds = Bool(True)
 
-    # Minimum value in the `value` data source.  This must be provided
-    # in the call to the constructor.
+    #: Minimum value in the `value` data source.  This must be provided
+    #: in the call to the constructor.
     global_min = Float
 
-    # Maximum value in the `value` data source.  This must be provided
-    # in the call to the constructor.
+    #: Maximum value in the `value` data source.  This must be provided
+    #: in the call to the constructor.
     global_max = Float
 
-    # Normalized amplitude is the value exposed to the user.
+    #: Normalized amplitude is the value exposed to the user.
     normalized_amplitude = Float(-0.5)
 
     amplitude_scale = Property(Float, depends_on=['global_min', 'global_max', 'data',
@@ -469,7 +469,7 @@ class MultiLinePlot(BaseXYPlot):
     def __getstate__(self):
         state = super(MultiLinePlot,self).__getstate__()
         for key in ['traits_view']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

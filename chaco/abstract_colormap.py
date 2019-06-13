@@ -2,7 +2,7 @@
 """
 from traits.api import Enum, Event, HasTraits, Instance
 
-from data_range_1d import DataRange1D
+from .data_range_1d import DataRange1D
 
 class AbstractColormap(HasTraits):
     """

@@ -15,6 +15,9 @@ from __future__ import with_statement
 from math import ceil, floor, pi
 from contextlib import contextmanager
 
+import six
+import six.moves as sm
+
 import numpy as np
 
 # Enthought library imports.
@@ -23,8 +26,8 @@ from traits.api import (Bool, Either, Enum, Instance, List, Range, Trait,
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
-from base_2d_plot import Base2DPlot
-from image_utils import trim_screen_rect
+from .base_2d_plot import Base2DPlot
+from .image_utils import trim_screen_rect
 
 try:
     # InterpolationQuality required for Quartz backend only (requires OSX).
@@ -47,17 +50,17 @@ class ImagePlot(Base2DPlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
-    # for full intensity.
+    #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    #: for full intensity.
     alpha = Trait(1.0, Range(0.0, 1.0))
 
-    # The interpolation method to use when rendering an image onto the GC.
+    #: The interpolation method to use when rendering an image onto the GC.
     interpolation = Enum("nearest", "bilinear", "bicubic")
 
-    # Bool indicating whether x-axis is flipped.
+    #: Bool indicating whether x-axis is flipped.
     x_axis_is_flipped = Property(depends_on=['orientation', 'origin'])
 
-    # Bool indicating whether y-axis is flipped.
+    #: Bool indicating whether y-axis is flipped.
     y_axis_is_flipped = Property(depends_on=['orientation', 'origin'])
 
     #------------------------------------------------------------------------
@@ -326,7 +329,7 @@ class ImagePlot(Base2DPlot):
             col_max = array_width - col_max
             col_min, col_max = col_max, col_min
 
-        index_bounds = map(int, [col_min, col_max, row_min, row_max])
+        index_bounds = list(sm.map(int, [col_min, col_max, row_min, row_max]))
         screen_rect = [x_min, y_min, x_max - x_min, y_max - y_min]
         return index_bounds, screen_rect
 

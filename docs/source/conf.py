@@ -24,17 +24,12 @@ def get_build_docset():
 
 BUILD_DOCSET = get_build_docset()
 
-# If your extensions are in another directory, add it here. If the directory
-# is relative to the documentation root, use os.path.abspath to make it
-# absolute, like shown here.
-sys.path.append(os.path.abspath('sphinxext'))
-
 # General configuration
 # ---------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'traitsdoc']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'traits.util.trait_documenter']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -47,12 +42,13 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'chaco'
-copyright = '2008-2016, Enthought, Inc.'
+copyright = '2008-2019, Enthought, Inc.'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 d = {}
-execfile(os.path.join('..', '..', 'chaco', '_version.py'), d)
+chaco_version_file = os.path.join('..', '..', 'chaco', '_version.py')
+exec(compile(open(chaco_version_file).read(), chaco_version_file, 'exec'), d)
 release = d['version']
 version = '.'.join(release.split('.',2)[:2])
 

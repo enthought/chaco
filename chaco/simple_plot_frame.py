@@ -14,8 +14,8 @@ from __future__ import with_statement
 from traits.api import Bool
 
 # Local, relative imports
-from base_plot_frame import BasePlotFrame
-from plot_containers import OverlayPlotContainer
+from .base_plot_frame import BasePlotFrame
+from .plot_containers import OverlayPlotContainer
 
 class SimplePlotFrame(BasePlotFrame):
     """
@@ -26,18 +26,18 @@ class SimplePlotFrame(BasePlotFrame):
     This class will be removed sometime in the future.
     """
 
-    # This frame has only one position for plot components. Overrides
-    # PlotFrame.
+    #: This frame has only one position for plot components. Overrides
+    #: PlotFrame.
     slot_names = ("center")
 
-    # Default width and height. Class attribute.
+    #: Default width and height. Class attribute.
     default_bounds = (500, 500)
 
-    # This frame does not resize to fit components. Overrides PlotFrame.
+    #: This frame does not resize to fit components. Overrides PlotFrame.
     fit_components = ""
 
-    # This frame maximizes itself within the window, if it is a top-level
-    # component. Overrides Enable Container.
+    #: This frame maximizes itself within the window, if it is a top-level
+    #: component. Overrides Enable Container.
     fit_window = True
 
     #------------------------------------------------------------------------
@@ -50,10 +50,8 @@ class SimplePlotFrame(BasePlotFrame):
 
     def __init__(self, **kwtraits):
         # Delay setting the bounds until after base class initialization
-        if kwtraits.has_key("bounds"):
-            bounds = kwtraits.pop("bounds")
-        else:
-            bounds = list(self.default_bounds)
+        bounds = kwtraits.pop("bounds", list(self.default_bounds))
+
         BasePlotFrame.__init__(self, **kwtraits)
         self.set_slot("center", OverlayPlotContainer(resizable="hv"))
         self.bounds = bounds
@@ -141,7 +139,7 @@ class SimplePlotFrame(BasePlotFrame):
     def __getstate__(self):
         state = super(SimplePlotFrame,self).__getstate__()
         for key in ['_layout_needed']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
 
         return state

@@ -8,9 +8,9 @@ from numpy import array
 from traits.api import Constant, Instance, Tuple
 
 # Chaco imports
-from abstract_data_source import AbstractDataSource
-from array_data_source import ArrayDataSource
-from base import SortOrderTrait
+from .abstract_data_source import AbstractDataSource
+from .array_data_source import ArrayDataSource
+from .base import SortOrderTrait
 
 
 class GridDataSource(AbstractDataSource):
@@ -22,17 +22,17 @@ class GridDataSource(AbstractDataSource):
     # AbstractDataSource traits
     #------------------------------------------------------------------------
 
-    # The dimensionality of the indices into this data source (overrides
-    # AbstractDataSource).
+    #: The dimensionality of the indices into this data source (overrides
+    #: AbstractDataSource).
     index_dimension = Constant('image')
 
-    # The dimensionality of the value at each index point (overrides
-    # AbstractDataSource).
+    #: The dimensionality of the value at each index point (overrides
+    #: AbstractDataSource).
     value_dimension = Constant('scalar')
 
-    # The sort order of the data (overrides AbstractDataSource). There is no
-    # overall sort order on 2-D data, but for gridded 2-D data, each axis can
-    # have a sort order.
+    #: The sort order of the data (overrides AbstractDataSource). There is no
+    #: overall sort order on 2-D data, but for gridded 2-D data, each axis can
+    #: have a sort order.
     sort_order =Tuple(SortOrderTrait, SortOrderTrait)
 
     #------------------------------------------------------------------------

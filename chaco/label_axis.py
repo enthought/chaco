@@ -5,25 +5,25 @@ from traceback import print_exc
 from numpy import array, float64, inf, searchsorted, take, unique
 
 # Enthought library imports
-from traits.api import Any, Str, List, Float
+from traits.api import ArrayOrNone, Str, List, Float
 
 # Local, relative imports
-from axis import PlotAxis
-from label import Label
+from .axis import PlotAxis
+from .label import Label
 
 
 class LabelAxis(PlotAxis):
     """ An axis whose ticks are labeled with text instead of numbers.
     """
 
-    # List of labels to use on tick marks.
+    #: List of labels to use on tick marks.
     labels = List(Str)
 
-    # The angle of rotation of the label. Only multiples of 90 are supported.
+    #: The angle of rotation of the label.
     label_rotation = Float(0)
 
-    # List of indices of ticks
-    positions = Any  # List(Float), Array
+    #: List of indices of ticks
+    positions = ArrayOrNone()
 
     def _compute_tick_positions(self, gc, component=None):
         """ Calculates the positions for the tick marks.
@@ -80,7 +80,7 @@ class LabelAxis(PlotAxis):
         self._tick_label_list = take(self.labels, take(pos_index, tick_indices))
 
         if datalow > datahigh:
-            raise RuntimeError, "DataRange low is greater than high; unable to compute axis ticks."
+            raise RuntimeError("DataRange low is greater than high; unable to compute axis ticks.")
 
         mapped_label_positions = [((self.mapper.map_screen(pos)-screenlow) / \
                                     (screenhigh-screenlow)) for pos in tick_positions]

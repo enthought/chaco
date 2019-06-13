@@ -1,6 +1,11 @@
 import os
+
 import tempfile
 from contextlib import contextmanager
+
+import six
+
+import unittest
 
 import numpy as np
 
@@ -74,23 +79,14 @@ def calculate_rms(image_result, expected_image):
     """
     # calculate the per-pixel errors, then compute the root mean square error
     num_values = np.prod(expected_image.shape)
-    # Cast to int64 to reduce likelihood of over-/under-flow.
-    abs_diff_image = abs(np.int64(expected_image) - np.int64(image_result))
+    # Images may be e.g. 8-bit unsigned integer; upcast to default integer size
+    # (32 or 64 bit) to reduce likelihood of over-/under-flow.
+    abs_diff_image = abs(np.int_(expected_image) - np.int_(image_result))
 
     histogram = np.bincount(abs_diff_image.ravel(), minlength=256)
-    sum_of_squares = np.sum(histogram * np.arange(len(histogram))**2)
+    sum_of_squares = np.sum(np.int64(histogram) * np.arange(len(histogram))**2)
     rms = np.sqrt(float(sum_of_squares) / num_values)
     return rms
-
-
-def verify_result_image(input_image, expected_image, **plot_kwargs):
-    # These tests were written assuming uint8 inputs.
-    assert input_image.dtype == np.uint8
-    assert expected_image.dtype == np.uint8
-    image_result = rendered_image_result(input_image, **plot_kwargs)
-    rms = calculate_rms(image_result, expected_image)
-    print "RMS =", rms
-    assert rms < MAX_RMS_ERROR
 
 
 def plot_comparison(input_image, expected_image, **plot_kwargs):
@@ -108,54 +104,53 @@ def plot_comparison(input_image, expected_image, **plot_kwargs):
     plt.show()
 
 
-def test_horizontal_top_left():
-    # Horizontal orientation with top left origin renders original image.
-    verify_result_image(RGB, IMAGE, origin='top left')
+class TestResultImage(unittest.TestCase):
 
+    def verify_result_image(self, input_image, expected_image, **plot_kwargs):
+        # These tests were written assuming uint8 inputs.
+        self.assertEqual(input_image.dtype, np.uint8)
+        self.assertEqual(expected_image.dtype, np.uint8)
+        image_result = rendered_image_result(input_image, **plot_kwargs)
+        rms = calculate_rms(image_result, expected_image)
+        self.assertLess(rms, MAX_RMS_ERROR)
 
-def test_horizontal_bottom_left():
-    # Horizontal orientation with bottom left origin renders a vertically
-    # flipped image.
-    verify_result_image(RGB, IMAGE[::-1], origin='bottom left')
+    def test_horizontal_top_left(self):
+        # Horizontal orientation with top left origin renders original image.
+        self.verify_result_image(RGB, IMAGE, origin='top left')
 
+    def test_horizontal_bottom_left(self):
+        # Horizontal orientation with bottom left origin renders a vertically
+        # flipped image.
+        self.verify_result_image(RGB, IMAGE[::-1], origin='bottom left')
 
-def test_horizontal_top_right():
-    # Horizontal orientation with top right origin renders a horizontally
-    # flipped image.
-    verify_result_image(RGB, IMAGE[:, ::-1], origin='top right')
+    def test_horizontal_top_right(self):
+        # Horizontal orientation with top right origin renders a horizontally
+        # flipped image.
+        self.verify_result_image(RGB, IMAGE[:, ::-1], origin='top right')
 
+    def test_horizontal_bottom_right(self):
+        # Horizontal orientation with top right origin renders an image flipped
+        # horizontally and vertically.
+        self.verify_result_image(RGB, IMAGE[::-1, ::-1], origin='bottom right')
 
-def test_horizontal_bottom_right():
-    # Horizontal orientation with top right origin renders an image flipped
-    # horizontally and vertically.
-    verify_result_image(RGB, IMAGE[::-1, ::-1], origin='bottom right')
+    def test_vertical_top_left(self):
+        # Vertical orientation with top left origin renders transposed image.
+        self.verify_result_image(RGB, IMAGE.T, origin='top left', orientation='v')
 
+    def test_vertical_bottom_left(self):
+        # Vertical orientation with bottom left origin renders transposed image
+        # that is vertically flipped.
+        self.verify_result_image(RGB, (IMAGE.T)[::-1],
+                                 origin='bottom left', orientation='v')
 
-def test_vertical_top_left():
-    # Vertical orientation with top left origin renders transposed image.
-    verify_result_image(RGB, IMAGE.T, origin='top left', orientation='v')
+    def test_vertical_top_right(self):
+        # Vertical orientation with top right origin renders transposed image
+        # that is horizontally flipped.
+        self.verify_result_image(RGB, (IMAGE.T)[:, ::-1],
+                                 origin='top right', orientation='v')
 
-
-def test_vertical_bottom_left():
-    # Vertical orientation with bottom left origin renders transposed image
-    # that is vertically flipped.
-    verify_result_image(RGB, (IMAGE.T)[::-1],
-                        origin='bottom left', orientation='v')
-
-
-def test_vertical_top_right():
-    # Vertical orientation with top right origin renders transposed image
-    # that is horizontally flipped.
-    verify_result_image(RGB, (IMAGE.T)[:, ::-1],
-                        origin='top right', orientation='v')
-
-
-def test_vertical_bottom_right():
-    # Vertical orientation with bottom right origin renders transposed image
-    # that is flipped vertically and horizontally.
-    verify_result_image(RGB, (IMAGE.T)[::-1, ::-1],
-                        origin='bottom right', orientation='v')
-
-
-if __name__ == "__main__":
-    np.testing.run_module_suite()
+    def test_vertical_bottom_right(self):
+        # Vertical orientation with bottom right origin renders transposed image
+        # that is flipped vertically and horizontally.
+        self.verify_result_image(RGB, (IMAGE.T)[::-1, ::-1],
+                                 origin='bottom right', orientation='v')

@@ -1,61 +1,59 @@
-language: python
-sudo: false
-python:
-  - 2.7_with_system_site_packages
-  - 3.4
-  - 3.5
-env:
-  - ETS_TOOLKIT='qt4'
-  - ETS_TOOLKIT='wx'
-  - ETS_TOOLKIT='null'
-matrix:
-  exclude:
-    - python: 3.4
-      env: ETS_TOOLKIT='wx'
-    - python: 3.5
-      env: ETS_TOOLKIT='wx'
-    - python: 3.5
-      env: ETS_TOOLKIT='qt4'
-cache:
-  - pip
-  - ccache
+language: generic
+
 addons:
   apt:
     packages:
-    - python-qt4
-    - python-qt4-gl
-    - python-qt4-dev
-    - python-wxtools
-    - python-numpy
-    - libjpeg8-dev
-    - zlib1g-dev
-    - libpng-dev
-    - libfreetype36-dev
-    - python-cairo
+    - ccache
     - cmake
     - swig
-    - ccache
+
+env:
+  global:
+    - INSTALL_EDM_VERSION=1.11.0
+      PYTHONUNBUFFERED="1"
+
+matrix:
+  include:
+  - env: RUNTIME=2.7 TOOLKITS="null pyqt pyside wx"
+  - os : osx
+    env: RUNTIME=2.7 TOOLKITS="null pyqt pyside wx"
+  - env: RUNTIME=3.5 TOOLKITS="null pyqt"
+  - os : osx
+    env: RUNTIME=3.5 TOOLKITS="null pyqt"
+  - env: RUNTIME=3.6 TOOLKITS="null pyqt"
+  - os : osx
+    env: RUNTIME=3.6 TOOLKITS="null pyqt"
+  fast_finish: true
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - $HOME/.cache
+    - $HOME/.ccache
+
 before_install:
-  - ccache -s
-  - pip install --upgrade pip
-  - if [[ ${TRAVIS_PYTHON_VERSION} == "3.4" && ${ETS_TOOLKIT} == "qt4" ]]; then ./build_pyside_wheel.sh; fi
-  - export PATH=/usr/lib/ccache:${PATH}
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - mkdir -p "${HOME}/.cache/download"
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]] ; then
+       export DISPLAY=:99.0;
+       ccache -s;
+       sh -e /etc/init.d/xvfb start;
+       ./ci/install-edm-linux.sh;
+       export PATH="${HOME}/edm/bin:/usr/lib/ccache:${PATH}";
+    else
+       ./ci/install-edm-osx.sh;
+       export PATH="${PATH}:/usr/local/bin";
+    fi
+
+  - edm install -y wheel click coverage
 install:
-  - pip install cython
-  - pip install -r travis-ci-requirements.txt
-  - git clone https://github.com/enthought/enable.git --depth 1
-  - cd enable
-  - pip install -r travis-ci-requirements
-  - python setup.py develop
-  - cd ..
-  - python setup.py develop
-  - mkdir testing_dir
-  - cd testing_dir
+  - for toolkit in ${TOOLKITS}; do edm run -- python ci/edmtool.py install --runtime=${RUNTIME} --toolkit=${toolkit} || exit; done
 script:
-  - coverage run -m nose.core -v chaco --exclude-dir=../chaco/tests_with_backend
-  - if [[ $ETS_TOOLKIT != 'null' ]]; then coverage run -a -m nose.core -v ../chaco/tests_with_backend; fi
+  - for toolkit in ${TOOLKITS}; do edm run -- python ci/edmtool.py test --runtime=${RUNTIME} --toolkit=${toolkit} || exit; done
+
 after_success:
-  - pip install codecov
-  - codecov
+  - edm run -- coverage combine
+  - edm run -- pip install codecov
+  - edm run -- codecov

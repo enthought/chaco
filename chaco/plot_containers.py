@@ -5,12 +5,16 @@ from numpy import amax, any, arange, array, cumsum, hstack, sum, zeros, zeros_li
 
 # Enthought library imports
 from traits.api import Any, Array, Either, Enum, Float, Instance, \
-    List, Property, Trait, Tuple, Int
+    List, Property, String, Trait, Tuple, Int
 from enable.simple_layout import simple_container_get_preferred_size, \
                                             simple_container_do_layout
+try:
+    from enable.api import ConstraintsContainer
+except ImportError:
+    ConstraintsContainer = None
 
 # Local relative imports
-from base_plot_container import BasePlotContainer
+from .base_plot_container import BasePlotContainer
 
 
 __all__ = ["OverlayPlotContainer", "HPlotContainer", "VPlotContainer", \
@@ -18,6 +22,21 @@ __all__ = ["OverlayPlotContainer", "HPlotContainer", "VPlotContainer", \
 
 DEFAULT_DRAWING_ORDER = ["background", "image", "underlay",      "plot",
                          "selection", "border", "annotation", "overlay"]
+
+
+# Enable constraints layout is only available if kiwisolver is installed!
+if ConstraintsContainer is not None:
+    class ConstraintsPlotContainer(ConstraintsContainer):
+        """ A Plot container that supports constraints-based layout
+        """
+        # !! Bits copied from BasePlotContainer !!
+        container_under_layers = Tuple("background", "image", "underlay", "plot")
+        draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
+        draw_layer = String('plot')
+        # !! Bits copied from BasePlotContainer !!
+
+    __all__.append('ConstraintsPlotContainer')
+
 
 class OverlayPlotContainer(BasePlotContainer):
     """
@@ -27,7 +46,7 @@ class OverlayPlotContainer(BasePlotContainer):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    # Do not use an off-screen backbuffer.
+    #: Do not use an off-screen backbuffer.
     use_backbuffer = False
 
     # Cache (width, height) of the container's preferred size.
@@ -220,7 +239,7 @@ class StackedPlotContainer(BasePlotContainer):
     def __getstate__(self):
         state = super(StackedPlotContainer,self).__getstate__()
         for key in ['stack_dimension', 'other_dimension', 'stack_index']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
         return state
 
@@ -235,13 +254,13 @@ class HPlotContainer(StackedPlotContainer):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    # The order in which components in the plot container are laid out.
+    #: The order in which components in the plot container are laid out.
     stack_order = Enum("left_to_right", "right_to_left")
 
-    # The amount of space to put between components.
+    #: The amount of space to put between components.
     spacing = Float(0.0)
 
-    # The vertical alignment of objects that don't span the full height.
+    #: The vertical alignment of objects that don't span the full height.
     valign = Enum("bottom", "top", "center")
 
     _cached_preferred_size = Tuple
@@ -269,7 +288,7 @@ class HPlotContainer(StackedPlotContainer):
     def __getstate__(self):
         state = super(HPlotContainer,self).__getstate__()
         for key in ['_cached_preferred_size']:
-            if state.has_key(key):
+            if key in state:
                 del state[key]
         return state
 
@@ -282,22 +301,22 @@ class VPlotContainer(StackedPlotContainer):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    # Overrides StackedPlotContainer.
+    #: Overrides StackedPlotContainer.
     stack_dimension = "v"
-    # Overrides StackedPlotContainer.
+    #: Overrides StackedPlotContainer.
     other_dimension = "h"
-    # Overrides StackedPlotContainer.
+    #: Overrides StackedPlotContainer.
     stack_index = 1
 
     # VPlotContainer attributes
 
-    # The horizontal alignment of objects that don't span the full width.
+    #: The horizontal alignment of objects that don't span the full width.
     halign = Enum("left", "right", "center")
 
-    # The order in which components in the plot container are laid out.
+    #: The order in which components in the plot container are laid out.
     stack_order = Enum("bottom_to_top", "top_to_bottom")
 
-    # The amount of space to put between components.
+    #: The amount of space to put between components.
     spacing = Float(0.0)
 
     def _do_layout(self):
@@ -330,30 +349,30 @@ class GridPlotContainer(BasePlotContainer):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
-    # The amount of space to put on either side of each component, expressed
-    # as a tuple (h_spacing, v_spacing).
+    #: The amount of space to put on either side of each component, expressed
+    #: as a tuple (h_spacing, v_spacing).
     spacing = Either(Tuple, List, Array)
 
-    # The vertical alignment of objects that don't span the full height.
+    #: The vertical alignment of objects that don't span the full height.
     valign = Enum("bottom", "top", "center")
 
-    # The horizontal alignment of objects that don't span the full width.
+    #: The horizontal alignment of objects that don't span the full width.
     halign = Enum("left", "right", "center")
 
-    # The shape of this container, i.e, (rows, columns).  The items in
-    # **components** are shuffled appropriately to match this
-    # specification.  If there are fewer components than cells, the remaining
-    # cells are filled in with spaces.  If there are more components than cells,
-    # the remainder wrap onto new rows as appropriate.
+    #: The shape of this container, i.e, (rows, columns).  The items in
+    #: **components** are shuffled appropriately to match this
+    #: specification.  If there are fewer components than cells, the remaining
+    #: cells are filled in with spaces.  If there are more components than cells,
+    #: the remainder wrap onto new rows as appropriate.
     shape = Trait((0,0), Either(Tuple, List, Array))
 
-    # This property exposes the underlying grid structure of the container,
-    # and is the preferred way of setting and reading its contents.
-    # When read, this property returns a Numpy array with dtype=object; values
-    # for setting it can be nested tuples, lists, or 2-D arrays.
-    # The array is in row-major order, so that component_grid[0] is the first
-    # row, and component_grid[:,0] is the first column.  The rows are ordered
-    # from top to bottom.
+    #: This property exposes the underlying grid structure of the container,
+    #: and is the preferred way of setting and reading its contents.
+    #: When read, this property returns a Numpy array with dtype=object; values
+    #: for setting it can be nested tuples, lists, or 2-D arrays.
+    #: The array is in row-major order, so that component_grid[0] is the first
+    #: row, and component_grid[:,0] is the first column.  The rows are ordered
+    #: from top to bottom.
     component_grid = Property
 
     # The internal component grid, in row-major order.  This gets updated
@@ -703,7 +722,7 @@ class GridPlotContainer(BasePlotContainer):
                     component.container.remove(component)
                 component.container = self
 
-        self.set(shape=grid.shape, trait_change_notify=False)
+        self.trait_setq(shape=grid.shape)
         self._components = list(grid.flatten())
 
         if self._should_compact():

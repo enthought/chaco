@@ -3,6 +3,8 @@
 This demonstrates how to create a plot offscreen and save it to an image
 file on disk.
 """
+from __future__ import print_function
+
 # Standard library imports
 import os
 import sys
@@ -93,6 +95,7 @@ def get_directory(filename):
 
     if not os.path.isabs(path):
         print('Creating image: ' + os.path.join(os.getcwd(), path, filename))
+
     else:
         print('Creating image: ' + os.path.join(path, filename))
 

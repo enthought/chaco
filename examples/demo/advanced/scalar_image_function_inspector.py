@@ -101,7 +101,7 @@ class Model(HasTraits):
             self.model_changed = True
             self._function = self.function
         except:
-            self.set(function = self._function, trait_change_notify=False)
+            self.trait_setq(function=self._function)
 
     def _anytrait_changed(self, name, value):
         if name in ['function', 'npts_x', 'npts_y',
