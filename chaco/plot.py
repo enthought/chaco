@@ -27,9 +27,10 @@ from .contour_poly_plot import ContourPolyPlot
 from .cmap_image_plot import CMapImagePlot
 from .data_range_1d import DataRange1D
 from .data_view import DataView
-from .default_colormaps import Spectral
+from .default_colormaps import viridis
 from .grid_data_source import GridDataSource
 from .grid_mapper import GridMapper
+from .grid_vertex_plot import GridVertexPlot
 from .image_data import ImageData
 from .image_plot import ImagePlot
 from .legend import Legend
@@ -126,6 +127,7 @@ class Plot(DataView):
                              cmap_img_plot = CMapImagePlot,
                              contour_line_plot = ContourLinePlot,
                              contour_poly_plot = ContourPolyPlot,
+                             grid_vertex_plot = GridVertexPlot,
                              candle = CandlePlot,
                              quiver = QuiverPlot,
                              scatter_1d = ScatterPlot1D,
@@ -664,6 +666,45 @@ class Plot(DataView):
             Attributes and values that apply to one or more of the
             plot types requested, e.g.,'line_color' or 'line_width'.
         """
+        type = 'contour_'+type
+        self.grid_plot(data, type, name, poly_cmap, xbounds, ybounds,
+                       origin, hide_grids, **styles)
+
+
+    def grid_plot(self, data, type="grid_vertex", name=None, poly_cmap=None,
+                     xbounds=None, ybounds=None, origin=None, hide_grids=True, **styles):
+        """ Adds contour plots to this Plot object.
+
+        Parameters
+        ----------
+        data : string
+            The name of the data array in self.plot_data, which must be
+            floating point data.
+        type : comma-delimited string of "line", "poly"
+            The type of contour plot to add. If the value is "poly"
+            and no colormap is provided via the *poly_cmap* argument, then
+            a default colormap of 'Spectral' is used.
+        name : string
+            The name of the plot; if omitted, then a name is generated.
+        poly_cmap : string
+            The name of the color-map function to call (in
+            chaco.default_colormaps) or an AbstractColormap instance
+            to use for contour poly plots (ignored for contour line plots)
+        xbounds, ybounds : string, tuple, or ndarray
+            Bounds where this image resides. Bound may be: a) names of
+            data in the plot data; b) tuples of (low, high) in data space,
+            c) 1D arrays of values representing the pixel boundaries (must
+            be 1 element larger than underlying data), or
+            d) 2D arrays as obtained from a meshgrid operation
+        origin : string
+            Which corner the origin of this plot should occupy:
+                "bottom left", "top left", "bottom right", "top right"
+        hide_grids : bool, default True
+            Whether or not to automatically hide the grid lines on the plot
+        styles : series of keyword arguments
+            Attributes and values that apply to one or more of the
+            plot types requested, e.g.,'line_color' or 'line_width'.
+        """
         if name is None:
             name = self._make_new_plot_name()
         if origin is None:
@@ -672,7 +713,7 @@ class Plot(DataView):
         value = self._get_or_create_datasource(data)
         if value.value_depth != 1:
             raise ValueError("Contour plots require 2D scalar field")
-        if type == "line":
+        if type == "contour_line":
             cls = self.renderer_map["contour_line_plot"]
             kwargs = dict(**styles)
             # if colors is given as a factory func, use it to make a
@@ -683,14 +724,23 @@ class Plot(DataView):
                     kwargs["colors"] = cmap(DataRange1D(value))
                 elif getattr(cmap, 'range', 'dummy') is None:
                     cmap.range = DataRange1D(value)
-        elif type == "poly":
+        elif type == "contour_poly":
             if poly_cmap is None:
-                poly_cmap = Spectral(DataRange1D(value))
+                poly_cmap = viridis(DataRange1D(value))
             elif isinstance(poly_cmap, FunctionType):
                 poly_cmap = poly_cmap(DataRange1D(value))
             elif getattr(poly_cmap, 'range', 'dummy') is None:
                 poly_cmap.range = DataRange1D(value)
             cls = self.renderer_map["contour_poly_plot"]
+            kwargs = dict(color_mapper=poly_cmap, **styles)
+        elif type == "grid_vertex":
+            if poly_cmap is None:
+                poly_cmap = viridis(DataRange1D(value))
+            elif isinstance(poly_cmap, FunctionType):
+                poly_cmap = poly_cmap(DataRange1D(value))
+            elif getattr(poly_cmap, 'range', 'dummy') is None:
+                poly_cmap.range = DataRange1D(value)
+            cls = self.renderer_map["grid_vertex_plot"]
             kwargs = dict(color_mapper=poly_cmap, **styles)
         else:
             raise ValueError("Unhandled contour plot type: " + type)

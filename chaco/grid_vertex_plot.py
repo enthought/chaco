@@ -23,7 +23,6 @@ from kiva.agg import GraphicsContextArray
 from chaco.downsample._aggregate import reduce_slices_2d_float
 from chaco.abstract_colormap import AbstractColormap
 from chaco.base_2d_plot import Base2DPlot
-from chaco.image_utils import trim_screen_rect
 
 try:
     # InterpolationQuality required for Quartz backend only (requires OSX).
@@ -318,3 +317,9 @@ class GridVertexPlot(Base2DPlot):
     def _get_y_axis_is_flipped(self):
         return ((self.orientation == 'h' and 'top' in self.origin) or
                 (self.orientation == 'v' and 'right' in self.origin))
+
+    def _get_color_mapper(self):
+        return self.value_mapper
+
+    def _set_color_mapper(self, value):
+        self.value_mapper = value

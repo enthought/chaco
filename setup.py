@@ -153,6 +153,12 @@ if __name__ == "__main__":
         include_dirs=[numpy_include_dir],
     )
 
+    aggregation_speedups = Extension(
+        'chaco.downsample._aggregate',
+        sources=['chaco/downsample/_aggregate.c'],
+        include_dirs=[numpy_include_dir],
+    )
+
     # Commenting this out for now, until we get the module fully tested and
     # working
     #speedups = Extension(
@@ -194,7 +200,12 @@ if __name__ == "__main__":
         },
         description = 'interactive 2-dimensional plotting',
         long_description = open('README.rst').read(),
-        ext_modules = [contour, cython_speedups, downsampling_lttb],
+        ext_modules = [
+            contour,
+            cython_speedups,
+            downsampling_lttb,
+            aggregation_speedups,
+        ],
         include_package_data = True,
         install_requires = __requires__,
         license = 'BSD',

@@ -41,27 +41,27 @@ def _create_plot_component():
     # Create the plot
     plot = Plot(pd)
     plot.bgcolor = 'black'
-    img_plot = plot.img_plot("imagedata", plot_type='grid_vertex_plot',
-                             xbounds=x,
-                             ybounds=y,
-                             resolution=(5, 5),
-                             colormap=jet)[0]
+
+    grid_plot = plot.grid_plot("imagedata",
+                       type="grid_vertex",
+                       xbounds=xs,
+                       ybounds=ys)[0]
 
     # Tweak some of the plot properties
-    plot.title = "My First Image Plot"
+    plot.title = "My First Grid Vertex Plot"
     plot.padding = 50
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot))
-    zoom = ZoomTool(component=img_plot, tool_mode="box", always_on=False)
-    img_plot.overlays.append(zoom)
+    zoom = ZoomTool(component=grid_plot, tool_mode="box", always_on=False)
+    grid_plot.overlays.append(zoom)
     return plot
 
 
 #===============================================================================
 # Attributes to use for the plot view.
 size=(800,600)
-title="Basic Colormapped Image Plot"
+title="Basic Grid Vertex Plot"
 
 #===============================================================================
 # # Demo class that is used by the demo.py application.
