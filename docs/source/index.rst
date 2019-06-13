@@ -54,7 +54,7 @@ tricks that help when building Chaco applications.
 For comprehensive documentation, we have:
 
 * :ref:`User Reference <user_guide>`
-* Developer Reference
+* :ref:`Developer Reference <developer_reference>`
 * :ref:`search`
 
 Reporting bugs and contributing

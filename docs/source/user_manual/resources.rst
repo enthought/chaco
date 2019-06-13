@@ -59,7 +59,7 @@ each webinar covering Chaco.
 * The first one (April 2010) demoes how to use Chaco as your plotting
   tool (https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/ ).
 
-* The seconds (October 2010) illustrates how to building interactive 2D visualization (see
+* The second (October 2010) illustrates how to building interactive 2D visualization (see
   https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/ ).
 
 

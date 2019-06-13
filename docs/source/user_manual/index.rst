@@ -18,7 +18,7 @@ of the Chaco API, refer to the Chaco API documentation.
     installation.rst
     plots.rst
     containers.rst
-    fundamentals.rst
+
     basic_elements/data_sources.rst
     basic_elements/data_mappers.rst
     basic_elements/data_ranges.rst

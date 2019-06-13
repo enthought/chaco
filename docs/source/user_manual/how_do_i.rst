@@ -35,30 +35,38 @@ Basics
     from enable.api import Window
 
     class PlotFrame(wx.Frame):
-	def __init__(self, *args, **kw):
-	    kw["size"] = (850, 550)
-	    wx.Frame.__init__( *(self,) + args, **kw )
-	    self.plot_window = Window(self, component=self._create_plot())
-	    sizer = wx.BoxSizer(wx.HORIZONTAL)
-	    sizer.Add(self.plot_window.control, 1, wx.EXPAND)
-	    self.SetSizer(sizer)
-	    self.SetAutoLayout(True)
-	    self.Show(True)
-	    return
 
-	def _create_plot(self):
-	    x = arange(-5.0, 15.0, 20.0/100)
-	    y = jn(0, x)
-	    plot = create_line_plot((x,y), bgcolor="white",
-					add_grid=True, add_axis=True)
-	    container = HPlotContainer(spacing=20, padding=50, bgcolor="lightgray")
-	    container.add(plot)
-	    return container
+        def __init__(self, *args, **kw):
+            kw["size"] = (850, 550)
+            super(PlotFrame, self).__init__(*args, **kw)
+            self.plot_window = Window(self, component=self._create_plot())
+            sizer = wx.BoxSizer(wx.HORIZONTAL)
+            sizer.Add(self.plot_window.control, 1, wx.EXPAND)
+            self.SetSizer(sizer)
+            self.SetAutoLayout(True)
+            self.Show(True)
+
+        def _create_plot(self):
+            x = arange(-5.0, 15.0, 20.0/100)
+            y = jn(0, x)
+            plot = create_line_plot(
+                (x,y),
+                bgcolor="white",
+                add_grid=True,
+                add_axis=True,
+            )
+            container = HPlotContainer(
+                spacing=20,
+                padding=50,
+                bgcolor="lightgray",
+            )
+            container.add(plot)
+            return container
 
     if __name__ == "__main__":
-	app = wx.PySimpleApp()
-	frame = PlotFrame(None)
-	app.MainLoop()
+        app = wx.PySimpleApp()
+        frame = PlotFrame(None)
+        app.MainLoop()
 
 Note that this will require for the ETS_TOOLKIT environment variable to
 be set to 'wx'.

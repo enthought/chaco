@@ -742,4 +742,19 @@ example, the following Enable tools may be of use:
     which sets the values of attributes on an object as the
     mouse moves, which is a common use case.
 
+Overlays and Underlays
+----------------------
+
+In some instances you want to render additional decorations that are
+independent of the plot type.  In a similar fashion to the Tool classes
+auxilliary renderers can be attached to plots as "overlays" (and using
+the same mechanism, just rendering into a different layer, as
+"underlays").  Common use cases for overlays include cursor lines,
+selection regions, hover text, legends and other annotations.  Overlays
+are frequently designed to work together with a particular Tool or class
+of tools, but can frequently be used independently if desired.
+
+Overlays and underlays which need to render relative to points in
+data space will frequently want to make use of the plot mappers to know
+where in screen space to perform their drawing operations..
 

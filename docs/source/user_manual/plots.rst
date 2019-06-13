@@ -250,5 +250,3 @@ to use "index" and "value" as this takes into account the orientation of the
 plot. Axes and grids can be removed by setting their visibility to False,
 or setting the appropriate trait to None.  Axes and grids have many
 configuration options, detailed in their documentation.
-
-
