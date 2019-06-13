@@ -1,4 +1,7 @@
 language: generic
+dist: xenial
+services:
+  - xvfb
 
 addons:
   apt:
@@ -6,6 +9,7 @@ addons:
     - ccache
     - cmake
     - swig
+    - libglu1-mesa
 
 env:
   global:
@@ -37,9 +41,7 @@ cache:
 before_install:
   - mkdir -p "${HOME}/.cache/download"
   - if [[ ${TRAVIS_OS_NAME} == "linux" ]] ; then
-       export DISPLAY=:99.0;
        ccache -s;
-       sh -e /etc/init.d/xvfb start;
        ./ci/install-edm-linux.sh;
        export PATH="${HOME}/edm/bin:/usr/lib/ccache:${PATH}";
     else
