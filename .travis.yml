@@ -9,7 +9,7 @@ addons:
     - ccache
     - cmake
     - swig
-    - libglu1-mesa
+    - libglu1-mesa-dev
 
 env:
   global:
