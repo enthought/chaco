@@ -48,7 +48,7 @@ def _create_plot_component():
                        ybounds=ys)[0]
 
     # Tweak some of the plot properties
-    plot.title = "My First Grid Vertex Plot"
+    plot.title = "Grid Vertex Plot (10 million data points)"
     plot.padding = 50
 
     # Attach some tools to the plot
