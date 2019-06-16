@@ -69,9 +69,9 @@ ImageInspectorTool
 The `ImageInspectorTool` is designed to work with an `ImagePlot` renderer to
 display the data space coordinates and data value of the displayed 2D array.
 The tool is designed to be used in conjunction with the
-:class:`ImageInspectorOverlay`: the tool collects mouse position and data
-values and triggers `Event`, and the overlay catches these events and displays
-the data as an overlay.
+:class:`chaco.tools.api.ImageInspectorOverlay`: the tool collects mouse
+position and data values and triggers `Event`, and the overlay catches these
+events and displays the data as an overlay.
 
 To use it, as for other tools, you need to:
 
@@ -88,9 +88,9 @@ For example, a method to build a `Plot` object with that tool would look like::
         # Tool code to be added here...
         return plot
 
-Note that unlike other :class:`ImagePlot` examples, the renderer returned by the
-:meth:`Plot.img_plot` call is captured since the tool will need it. The tool
-code to be inserted would look something like this::
+Note that unlike other :class:`chaco.api.ImagePlot` examples, the renderer
+returned by the :meth:`Plot.img_plot` call is captured since the tool will need
+it. The tool code to be inserted would look something like this::
 
     imgtool = ImageInspectorTool(component=img_plot)
     img_plot.tools.append(imgtool)
@@ -100,7 +100,7 @@ code to be inserted would look something like this::
     img_plot.overlays.append(overlay)
 
 Note the two important connections that are made for the tool/overlay to work
-correctly. The first one is that the component that is passed is the chaco
+correctly. The first one is that the component that is passed is the Chaco
 renderer rather than the `Plot` object, since it has access to the data being
 displayed. Also, for the overlay to update when the tool catches a mouse event,
 it needs to be provided the tool as its :attr:`image_inspector` attribute.
@@ -108,7 +108,7 @@ it needs to be provided the tool as its :attr:`image_inspector` attribute.
 In addition to the background color and :attr:`border_visible`, other
 interesting overlay attributes to consider overriding include
 :attr:`tooltip_mode` to control the location of the text box and all of the
-:class:`TextBoxOverlay` attributes (see below).
+:class:`chaco.tools.api.TextBoxOverlay` attributes (see below).
 
 Finally, the overlay's :meth:`_build_text_from_event` method can be overwritten
 to customize the actual text content. The method should receive a single
@@ -117,7 +117,8 @@ The event data contains 3 keys: `indices` with the 2D coordinates of the mouse
 in data space, `color_value` containing the color of the tile where the mouse
 is, and `data_value` with the scalar value being displayed in that tile.
 
-For a complete example, see :file:`examples/demo/basic/image_inspector.py`.
+For a complete example, see :download:`examples/demo/basic/image_inspector.py
+<../../../examples/demo/basic/image_inspector.py>`.
 
 TraitsTool
 ==========
@@ -179,7 +180,7 @@ DataBox
 
 TextBoxOverlay
 ==============
-The :class:`chaco.text_box_overlay.TextBoxOverlay` is the base class of
+The :class:`chaco.tools.api.TextBoxOverlay` is the base class of
 the overlay component of several inspector type tools (see above). It is
 designed to draw a text box over the plots to display custom information.
 
