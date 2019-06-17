@@ -66,12 +66,12 @@ HighlightTool
 
 ImageInspectorTool
 ==================
-The `ImageInspectorTool` is designed to work with an `ImagePlot` renderer to
-display the data space coordinates and data value of the displayed 2D array.
-The tool is designed to be used in conjunction with the
-:class:`chaco.tools.api.ImageInspectorOverlay`: the tool collects mouse
-position and data values and triggers `Event`, and the overlay catches these
-events and displays the data as an overlay.
+The :class:`chaco.tools.api.ImageInspectorTool` is designed to work with an
+:class:`chaco.api.ImagePlot` renderer to display the data space coordinates and
+data value of the displayed 2D array. The tool is designed to be used in
+conjunction with the :class:`chaco.overlays.api.ImageInspectorOverlay`: the
+tool collects mouse position and data values and triggers `Event` emissions,
+and the overlay catches these events and displays the data as an overlay.
 
 To use it, as for other tools, you need to:
 
@@ -79,7 +79,8 @@ To use it, as for other tools, you need to:
     2. create an overlay object and append it to the **renderer**'s list of
        overlays.
 
-For example, a method to build a `Plot` object with that tool would look like::
+For example, a method to build a :class:`chaco.api.Plot` object with that tool
+could look like::
 
     def build_plot(self, img):
         plot = Plot(data=ArrayPlotData(img=img))
@@ -88,9 +89,9 @@ For example, a method to build a `Plot` object with that tool would look like::
         # Tool code to be added here...
         return plot
 
-Note that unlike other :class:`chaco.api.ImagePlot` examples, the renderer
-returned by the :meth:`Plot.img_plot` call is captured since the tool will need
-it. The tool code to be inserted would look something like this::
+Note that unlike other `ImagePlot` examples, the renderer returned by the
+:meth:`chaco.api.Plot.img_plot` call is captured since the tool
+will need it. The tool code to be inserted would look something like this::
 
     imgtool = ImageInspectorTool(component=img_plot)
     img_plot.tools.append(imgtool)
@@ -102,13 +103,14 @@ it. The tool code to be inserted would look something like this::
 Note the two important connections that are made for the tool/overlay to work
 correctly. The first one is that the component that is passed is the Chaco
 renderer rather than the `Plot` object, since it has access to the data being
-displayed. Also, for the overlay to update when the tool catches a mouse event,
-it needs to be provided the tool as its :attr:`image_inspector` attribute.
+displayed. The second connection is that, for the overlay to update when the
+tool catches a mouse event, it needs to be provided the tool instance as its
+:attr:`image_inspector` attribute.
 
 In addition to the background color and :attr:`border_visible`, other
 interesting overlay attributes to consider overriding include
 :attr:`tooltip_mode` to control the location of the text box and all of the
-:class:`chaco.tools.api.TextBoxOverlay` attributes (see below).
+:class:`chaco.overlays.api.TextBoxOverlay` attributes (see below).
 
 Finally, the overlay's :meth:`_build_text_from_event` method can be overwritten
 to customize the actual text content. The method should receive a single
@@ -180,7 +182,7 @@ DataBox
 
 TextBoxOverlay
 ==============
-The :class:`chaco.tools.api.TextBoxOverlay` is the base class of
+The :class:`chaco.overlays.api.TextBoxOverlay` is the base class of
 the overlay component of several inspector type tools (see above). It is
 designed to draw a text box over the plots to display custom information.
 
