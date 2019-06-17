@@ -57,6 +57,47 @@ LineInspector
 
 ScatterInspector
 ================
+The `ScatterInspector` tool is designed to work with a `ScatterPlot` renderer
+to emit an event when a scatter marker is either hovered over, or clicked. It
+is designed to work with `ScatterInspectorOverlay` to respond to events by
+drawing circles around clicked points or with the
+
+The tool is designed to be used in conjunction with the
+:class:`ImageInspectorOverlay`: the tool collects mouse position and data
+values and triggers `Event`, and the overlay catches these events and displays
+the data as an overlay.
+
+To use it, as for other tools, you need to:
+
+    1. create a tool object and append it to the **renderer**'s list of tools,
+    2. create an overlay object and append it to the **renderer**'s list of
+       overlays.
+
+For example, a method to build a `Plot` object with that tool would look like::
+
+    def build_plot(self, img):
+        plot = Plot(data=ArrayPlotData(img=img))
+        # Capture the renderer object to pass it to the tool
+        img_plot = plot.img_plot("img")[0]
+        # Tool code to be added here...
+        return plot
+
+Note that unlike other :class:`ImagePlot` examples, the renderer returned by the
+:meth:`Plot.img_plot` call is captured since the tool will need it. The tool
+code to be inserted would look something like this::
+
+    imgtool = ImageInspectorTool(component=img_plot)
+    img_plot.tools.append(imgtool)
+    overlay = ImageInspectorOverlay(component=img_plot, image_inspector=imgtool,
+                                    bgcolor="white", border_visible=True)
+
+    img_plot.overlays.append(overlay)
+
+Note the two important connections that are made for the tool/overlay to work
+correctly. The first one is that the component that is passed is the chaco
+renderer rather than the `Plot` object, since it has access to the data being
+displayed. Also, for the overlay to update when the tool catches a mouse event,
+it needs to be provided the tool as its :attr:`image_inspector` attribute.
 
 CursorTool
 ==========
@@ -192,7 +233,17 @@ The rendering of the text can be customized with the following attributes:
       box,
     * :attr:`alpha` to control the transparency of the text box,
     * :attr:`text_color` and :attr:`font` to control how the text looks like,
+    * :attr:`align` to control what corner of the plot the text box should
+      appear,
     * ...
+
+.. note:: The overlay can also be used directly by any custom tool that needs
+          to display information upon an event. It should be done by
+          subclassing the overlay and defining a listener on the inspector's
+          state which will modify the overlay's :attr:`text` (and optionally
+          visibility) attribute(s). After a `text` update, the component's
+          :meth:`request_redraw` should be called. Good examples include
+          :class:`chaco.overlays.api.ImageInspectorOverlay`.
 
 
 ToolTip
