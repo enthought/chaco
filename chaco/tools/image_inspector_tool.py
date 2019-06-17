@@ -75,7 +75,7 @@ class ImageInspectorTool(BaseTool):
                 else:
                     self.new_value = \
                         {"indices": ndx,
-                         "color_value": image_data.data[y_index, x_index]}
+                         "data_value": image_data.data[y_index, x_index]}
 
                 self.last_mouse_position = (event.x, event.y)
         return
