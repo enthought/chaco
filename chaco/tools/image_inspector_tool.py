@@ -64,19 +64,14 @@ class ImageInspectorTool(BaseTool):
 
                 x_index, y_index = ndx
                 image_data = plot.value
+                new_value = {"indices": ndx,
+                             "data_value": image_data.data[y_index, x_index])
                 if hasattr(plot, "_cached_mapped_image") and \
                        plot._cached_mapped_image is not None:
-                    self.new_value = \
-                        {"indices": ndx,
-                         "data_value": image_data.data[y_index, x_index],
-                         "color_value": plot._cached_mapped_image[y_index,
-                                                                  x_index]}
+                    new_value["color_value"] = \
+                        plot._cached_mapped_image[y_index, x_index]
 
-                else:
-                    self.new_value = \
-                        {"indices": ndx,
-                         "data_value": image_data.data[y_index, x_index]}
-
+                self.new_value = new_value
                 self.last_mouse_position = (event.x, event.y)
         return
 
