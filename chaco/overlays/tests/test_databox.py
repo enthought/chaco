@@ -17,9 +17,9 @@ class TestDataBox(unittest.TestCase, UnittestTools):
         xs = np.arange(0, 5)
         ys = np.arange(0, 5)
 
+        # Add some fake 2D data for the box's component
         index = GridDataSource(
             xdata=xs, ydata=ys, sort_order=('ascending', 'ascending'))
-
         index_mapper = GridMapper(range=DataRange2D(index))
 
         color_source = ImageData(data=np.ones(shape=(5, 5)), depth=1)
@@ -28,8 +28,6 @@ class TestDataBox(unittest.TestCase, UnittestTools):
             index=index,
             index_mapper=index_mapper,
             value=color_source,
-            orientation='h',
-            origin='top left',
         )
 
         self.databox = DataBox(
@@ -50,7 +48,7 @@ class TestDataBox(unittest.TestCase, UnittestTools):
             self.databox.position = [1, 1]
 
             # Without moving the DataBox, data_position trait defaults
-            # to [0.0, 0.0]
+            # to  the list [0.0, 0.0]
             starting_position = [0.0, 0.0]
             expected = (
                 self.databox,
