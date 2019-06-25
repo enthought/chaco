@@ -1,7 +1,6 @@
 import numpy as np
 import unittest
 
-from traits.api import List
 from traits.testing.api import UnittestTools
 
 from chaco.api import (
