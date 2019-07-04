@@ -76,7 +76,11 @@ class ErrorBarPlot(LinePlot):
 
         l1, l2, l3 = sm.map(len, (index, value_low, value_high))
         if 0 in (l1, l2, l3) or not (l1 == l2 == l3):
-            logger.warn("Chaco: using empty dataset; index_len=%d, value_low_len=%d, value_high_len=%d." % (l1,l2,l3))
+            logger.warning(
+                "Chaco: using empty dataset; index_len=%d, "
+                "value_low_len=%d, value_high_len=%d."
+                % (l1,l2,l3)
+            )
             self._cached_data_pts = []
             self._cache_valid = True
             return

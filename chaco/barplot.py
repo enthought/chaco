@@ -230,8 +230,9 @@ class BarPlot(AbstractPlotRenderer):
             return
 
         if len(index) == 0 or len(value) == 0 or len(index) != len(value):
-            logger.warn("Chaco: using empty dataset; index_len=%d, value_len=%d." \
-                                % (len(index), len(value)))
+            logger.warning(
+                "Chaco: using empty dataset; index_len=%d, value_len=%d."
+                % (len(index), len(value)))
             self._cached_data_pts = array([])
             self._cache_valid = True
             return
