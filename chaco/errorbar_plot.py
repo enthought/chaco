@@ -79,8 +79,7 @@ class ErrorBarPlot(LinePlot):
             logger.warning(
                 "Chaco: using empty dataset; index_len=%d, "
                 "value_low_len=%d, value_high_len=%d."
-                % (l1,l2,l3)
-            )
+                % (l1,l2,l3))
             self._cached_data_pts = []
             self._cache_valid = True
             return
