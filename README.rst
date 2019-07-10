@@ -49,3 +49,10 @@ Chaco:
 * `Numpy <http://pypi.python.org/pypi/numpy>`_
 * `setuptools <http://pypi.python.org/pypi/setuptools>`_
 * `enable <https://github.com/enthought/enable>`_
+
+Mailing list
+------------
+To monitor discussions about Chaco, as well as the rest of the
+`Enthought Tool Suite <http://code.enthought.com/>`_ (Traits, TraitsUI, Chaco,
+Mayavi, ...), please refer to the `ets-users`
+`google group <https://groups.google.com/forum/#!forum/ets-users>`_ .
