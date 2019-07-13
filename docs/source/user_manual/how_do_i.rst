@@ -7,13 +7,14 @@ How Do I...?
 .. note::
 
     This section is currently under active development.
+    
+.. contents::
 
 Basics
 ======
 
-*How do I...*
-
-* render data to an image file?
+Render data to an image file?
+-----------------------------
 
 ::
 
@@ -24,7 +25,8 @@ Basics
         gc.render_component(plot)
         gc.save(filename)
 
-* integrate a Chaco plot into my WX app?
+Integrate a Chaco plot into my WX app?
+--------------------------------------
 
 ::
 
@@ -72,7 +74,9 @@ Note that this will require for the ETS_TOOLKIT environment variable to
 be set to 'wx'.
 
 * integrate a Chaco plot into my QT app?
-* integrate a Chaco plot into my Traits UI?
+
+Integrate a Chaco plot into my Traits UI?
+-----------------------------------------
 
 ::
 
@@ -102,7 +106,8 @@ be set to 'wx'.
     my_plot.configure_traits()
 
 
-* make an application to render many streams of data?
+Make an application to render many streams of data?
+---------------------------------------------------
 
 ::
 
@@ -115,14 +120,16 @@ be set to 'wx'.
             plot_data.set_data(series_name, data_series)
             plot.plot(('index', series_name))
 
-* make a plot the right size?
+Make a plot the right size?
+---------------------------
 
 ::
 
     def resize_plot(plot, width, height):
         plot.outer_bounds = [width, height]
 
-* copy a plot the the clipboard?
+Copy a plot the the clipboard?
+------------------------------
 
 ::
 
@@ -157,7 +164,9 @@ Layout and Rendering
 *How do I...*
 
 * put multiple plots in a single window?
-* change the background color?
+
+Change the background color?
+----------------------------
 
 ::
 
@@ -170,7 +179,8 @@ Layout and Rendering
     def change_bgcolor(plot):
         plot.bgcolor = 'black'
 
-* turn off borders?
+Turn off borders?
+-----------------
 
 ::
 
