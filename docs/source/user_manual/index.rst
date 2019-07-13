@@ -31,6 +31,7 @@ of the Chaco API, refer to the Chaco API documentation.
     plot_types.rst
     basic_elements/overlays.rst
     common_patterns.rst
+    tutorials_and_examples.rst
     how_do_i.rst
     faq.rst
     annotated_examples.rst

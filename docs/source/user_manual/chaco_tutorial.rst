@@ -1,3 +1,4 @@
+:orphan:
 
 .. highlight:: python
    :linenothreshold: 10
