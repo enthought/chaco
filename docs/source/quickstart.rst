@@ -23,40 +23,20 @@ you may or may not have the examples already.
 Location
 --------
 
-1. If you installed Chaco as part of Canopy, the location of the examples depends
-   on your platform:
+The examples are located in the :file:`examples/` subdirectory inside the root
+of the Chaco source tree, next to :file:`docs/` and the :file:`chaco/`
+directories. You can download the source code available on 
+`Github <https://github.com/enthought/chaco>`_ or download a source
+distribution from PyPi. If you don't want a local copy of the Chaco codebase,
+you can browse the  
+`examples on GitHub <https://github.com/enthought/chaco/tree/master/examples>`_.
 
-   * On Windows, they are in the Examples\\ subdirectory of your installation
-     location. This is typically
-     :file:`C:\\Users\\<username>\\AppData\\Local\\Enthought\\Canopy\\User\\Examples\\Chaco-<version>`.
-     These examples can be browsed from the start menu, by clicking
-     :menuselection:`Start --> Applications --> Enthought Canopy --> Example Browser`.
-
-   * On Linux, they are in the
-     :file:`Enthought/Canopy_XXbit/User/Examples/Chaco-<version>`
-     subdirectory of your installation location.
-
-   * On Mac OS X, they are in the
-     :file:`/Library/Enthought/Canopy_XXbit/User/Examples/chaco-<version>`
-     directory.
-
-2. If you downloaded and installed Chaco from source (from GitHub or via the
-   PyPI tar.gz file), the examples are located in the :file:`examples/`
-   subdirectory inside the root of the Chaco source tree, next to :file:`docs/`
-   and the :file:`chaco/` directories.
-
-3. If you don't know how Chaco was installed, you can download the latest
-   versions of examples individually from github:
-
-     https://github.com/enthought/chaco/tree/master/examples
-
-Chaco examples can be found in the :file:`examples/demo/` and
-:file:`examples/tutorials/` directories. Some are classified by themes and
+In the :file:`examples/demo/` directory, examples are classified by themes and
 located in separate directories.  Almost all of the Chaco examples are
 standalone files that can be run individually. We will first show how to
 execute them from the command line, and then we will show how to run Chaco in
 an interactive way from IPython. This "shell" mode will be more familiar to
-Matplotlib or Matlab users.
+Matplotlib or MATLAB users.
 
 .. note::
    Some of these examples can be visualized in our
@@ -66,9 +46,9 @@ Matplotlib or Matlab users.
 First plots from the command line
 ---------------------------------
 
-From the :file:`examples/demo` directory, run the ``simple_line`` example:
+From the :file:`examples/demo` directory, run the ``simple_line`` example::
 
-  :command:`python simple_line.py`
+    python simple_line.py
 
 This opens a plot of several Bessel functions with a legend.
 
@@ -133,9 +113,9 @@ command-line plotting like Matlab or Matplotlib.  The examples in the
 particularly amenable to exploration with IPython.
 
 The first example we'll look at is the :file:`lines.py` example.  First, we'll
-run it using the standard Python interpreter:
+run it using the standard Python interpreter::
 
-    :command:`python lines.py`
+    python lines.py
 
 This shows two overlapping line plots.
 
@@ -144,9 +124,9 @@ This shows two overlapping line plots.
 You can interact with this plot just as in the previous section.
 
 Now close the plot, and start IPython with the ``--gui=qt`` [#guiqt]_ or
-``--gui=wx`` option:
+``--gui=wx`` option::
 
-    :command:`ipython --gui=qt`
+    ipython --gui=qt
 
 This tells IPython to start a Qt or Wx mainloop in a background thread.  Now
 run the previous example again::
@@ -189,9 +169,10 @@ The previous section showed how Chaco can be used interactively similarly to
 `Matlab` or Matplotlib's `pyplot` package.
 
 Now, let's create, from scratch, the simplest possible Chaco plot which is
-embedded inside a `Traits <http://docs.enthought.com/traits/>`_ application. This will require more work but will
-represent the basis for a potential large-scale, custom and powerful rich
-client application. this is really what Chaco has been written for.
+embedded inside a `Traits <http://docs.enthought.com/traits/>`_ application.
+This will require more work but will represent the basis for a potential
+large-scale, custom and powerful rich client application. this is really what
+Chaco has been written for.
 
 First, some imports to bring in necessary components::
 
@@ -203,11 +184,11 @@ First, some imports to bring in necessary components::
 
 The imports from :mod:`chaco` and :mod:`enable` support the creation of the
 plot.  The imports from :mod:`traits` bring in components to embed the plot
-inside a Traits application. (Refer to the `Traits documentation
-<http://github.enthought.com/traits/>`_ for more details about building an
-interactive application using Traits.) Now let's create a Traits class with a
-view that contains only one element: a Chaco plot inside a slightly customized
-window::
+inside a Traits application. (Refer to the 
+`Traits documentation <http://github.enthought.com/traits/>`_ for more details
+about building an interactive application using Traits.) Now let's create a
+Traits class with a view that contains only one element: a Chaco plot inside a
+slightly customized window::
 
     class MyPlot(HasTraits):
         plot = Instance(Plot)

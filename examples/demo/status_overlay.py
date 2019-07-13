@@ -1,4 +1,6 @@
-
+"""
+Displays a plot with a few buttons to control which overlay to display
+"""
 import numpy
 
 from chaco.api import Plot, ArrayPlotData
