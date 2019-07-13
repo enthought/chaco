@@ -20,7 +20,7 @@ of the Chaco API, refer to the Chaco API documentation.
     containers.rst
 
     basic_elements/data_sources.rst
-    basic_elements/data_mappers.rst
+    basic_elements/mappers.rst
     basic_elements/data_ranges.rst
     basic_elements/plot_renderers.rst
     tools.rst
