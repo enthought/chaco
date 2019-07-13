@@ -122,16 +122,4 @@ List of Chaco data mappers
     :class:`~chaco.grid_mapper.GridMapper(x_type="linear", y_type="linear", range=None, **kwargs)`
 
   ``x_type`` and ``y_type`` can be either 'linear' or 'log', which will
-  create a corresponding :class:`LinearMapper` or :class:`LogMapper` classes.
-
-
-:class:`~chaco.polar_mapper.PolarMapper`
-
-  This class should map data polar coordinates to screen cartesian coordinates,
-  to use for example with a :class:`~chaco.polar_line_renderer.PolarLineRenderer`,
-  but at the moment it is a copy of :class:`~chaco.linear_mapper.LinearMapper`.
-
-  .. warning::
-
-    The implementation of this mapper is under construction.
-
+  create a corresponding :class:`~.LinearMapper` or :class:`~.LogMapper` classes.
