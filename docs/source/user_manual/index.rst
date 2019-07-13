@@ -1,7 +1,7 @@
 .. _user_guide:
 
 ===========
-User guide
+User Guide
 ===========
 
 This guide is designed to act as a conceptual guide to Chaco, an open-source
