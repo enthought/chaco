@@ -13,10 +13,9 @@ class ToolbarPlot(Plot):
     toolbar_added = False
 
     #: Location of the default toolbar that is created if a toolbar
-    #: is not specified with the `toolbar` attribute.  Changing this
+    #: is not specified with the :attr:`toolbar` attribute.  Changing this
     #: attribute after the ToolbarPlot instance is created has no effect;
-    #: use obj.toolbar.location to dynamically change the location of the
-    #: instance `obj`s toolbar.
+    #: use obj.toolbar.location to dynamically change toolbar's location.
     toolbar_location = Enum('top', 'right', 'bottom', 'left')
 
     def __init__(self, *args, **kw):
