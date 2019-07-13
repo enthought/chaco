@@ -47,22 +47,6 @@ Finally, it is recommended to explore the examples
 changes and recommended ways to use Chaco.
 
 
-.. _chaco_webinars:
-
-Enthought webinars
-------------------
-The video webinars given in  as part of the Enthought webinar
-series cover building interactive plotting using Chaco. If you are an
-EPD user, you can find the video, the slides, and the demo code for
-each webinar covering Chaco.
-
-* The first one (April 2010) demoes how to use Chaco as your plotting
-  tool (https://www.enthought.com/repo/epd/webinars/2010-04InteractiveChaco/ ).
-
-* The second (October 2010) illustrates how to building interactive 2D visualization (see
-  https://www.enthought.com/repo/epd/webinars/2010-10Building2DInteractiveVisualizations/ ).
-
-
 .. _chaco_presentations:
 
 
