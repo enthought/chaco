@@ -103,13 +103,13 @@ Renderers
     :show-inheritance:
 
 :class:`SegmentPlot`
-===================
+====================
 .. autoclass:: SegmentPlot
     :members:
     :show-inheritance:
 
 :class:`TextPlot`
-===================
+=================
 .. autoclass:: TextPlot
     :members:
     :show-inheritance:
