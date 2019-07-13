@@ -161,8 +161,9 @@ This is a list of all concrete implementations of data sources in Chaco:
   Noteworthy methods of this class are:
 
   :attr:`~chaco.image_data.ImageData.fromfile(filename)`
-    Factory method that creates an :class:`ImageData` instance from an image
-    file. *filename* can be either a file path or a file object.
+    Factory method that creates an :class:`~chaco.image_data.ImageData` 
+    instance from an image file. *filename* can be either a file path or a file 
+    object.
 
   :meth:`~chaco.image_data.ImageData.get_width`, :meth:`~chaco.image_data.ImageData.get_height`
     Return the width or the height of the image (takes the value
@@ -186,13 +187,13 @@ This is a list of all concrete implementations of data sources in Chaco:
 :class:`~chaco.grid_data_source.GridDataSource`
   Data source representing the coordinates of a 2D grid.
   It is used, for example, as a source for the index data in an
-  :class:`ImagePlot`.
+  :class:`~.ImagePlot`.
 
   It defines these attributes:
 
   :attr:`~chaco.abstract_data_source.GridDataSource.sort_order`
     Similar to the :attr:`sort_order` attribute for the
-    :class:`ArrayDataSource` class above, but this is a tuple
+    :class:`~.ArrayDataSource` class above, but this is a tuple
     with two elements, one per dimension.
 
   .. note::
@@ -216,13 +217,13 @@ This is a list of all concrete implementations of data sources in Chaco:
   or to represent multiple values
   for each index (as in :class:`~chaco.multi_line_plot.MultiLinePlot`).
 
-  As :class:`ArrayDataSource`, this data source defines a
+  As :class:`~.ArrayDataSource`, this data source defines a
   :attr:`~chaco.abstract_data_source.MultiArrayDataSource.sort_order`
   attribute for its index dimension.
 
   .. warning::
 
-     In :class:`MultiArrayDataSource`,
+     In :class:`~.MultiArrayDataSource`,
      the :attr:`index_dimension` and :attr:`value_dimension` attributes
      are integers that define which dimension of the data array
      correspond to indices and which
@@ -240,7 +241,7 @@ This is a list of all concrete implementations of data sources in Chaco:
 :class:`~chaco.point_data_source.PointDataSource`
   A data source representing a set of (X,Y) points.
 
-  This is a subclass of :class:`ArrayDataSource`, and inherits its methods
+  This is a subclass of :class:`~.ArrayDataSource`, and inherits its methods
   and attributes. The attribute
   :attr:`~chaco.point_data_source.PointDataSource.sort_index` defines
   whether the data is sorted along the X's or the Y's (as specified
