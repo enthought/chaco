@@ -19,6 +19,9 @@ of the Chaco API, refer to the Chaco API documentation.
     :maxdepth: 2
 
     installation.rst
+    introduction.rst
+    architecture_overview
+    modules_and_classes
     plots.rst
     containers.rst
 
