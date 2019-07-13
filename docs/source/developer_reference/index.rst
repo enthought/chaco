@@ -15,4 +15,5 @@ to use, refer to the Chaco API documentation.
     :maxdepth: 2
 
     fundamentals.rst
+    architecture_overview
 

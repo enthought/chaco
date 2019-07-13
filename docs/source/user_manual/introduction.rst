@@ -46,9 +46,9 @@ tool that will be familiar to users of matplotlib.
 
 .. _basic_elements:
 
-==============
-Basic elements
-==============
+==========
+Core Ideas
+==========
 
 To venture deeper in Chaco's architecture it is useful to understand a few
 basic ideas on which Chaco is based:
@@ -81,6 +81,20 @@ basic ideas on which Chaco is based:
   interactive tools that add graphical elements to a plot without
   having to modify the drawing logic.
 
+* **Modular design and extensible classes**
+
+  Chaco is meant to be used for writing tools and applications, and code
+  reuse and good class design are important. We use the math behind the
+  data and visualizations to give us architectural direction and conceptual
+  modularity. The Traits framework allows us to use events to couple
+  disjoint components at another level of modularity.
+
+  Also, rather than building super-flexible core objects with myriad
+  configuration attributes, Chaco's classes are written with subclassing in
+  mind.  While they are certainly configurable, the classes themselves are
+  written in a modular way so that subclasses can easily customize
+  particular aspects of a visual component's appearance or a tool's
+  behavior.
 
 These pages describe in detail the basic building blocks of
 Chaco plots, and the classes that implement them:
@@ -96,11 +110,11 @@ Chaco plots, and the classes that implement them:
   basic_elements/overlays.rst
 
 
-TODO: find out how the selection features are organized
+.. comment: TODO: find out how the selection features are organized
 
-TODO: to see how these elements collaborate to build an interactive plot,
-give complete low-level example of line plot with simple tool and
-describe the exchange of information
+.. comment: TODO: to see how these elements collaborate to build an interactive 
+   plot, give complete low-level example of line plot with simple tool and
+   describe the exchange of information
 
 
 Tools
@@ -135,8 +149,6 @@ Low-level Chaco plotting
    plots multiple curves on the same element
 
 Plots can be rendered in a traitsui, wx, or qt window
-
-
 
 
 .. _embedding:
