@@ -33,7 +33,7 @@ EPD):
    edm install chaco pyqt
 
 For full installation options, including installation from source, see the
-:ref:`installation instructions <installation>`
+:ref:`installation instructions <installation>`.
 
 Documentation
 -------------
