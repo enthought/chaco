@@ -126,23 +126,23 @@ Renderers
     :members:
     :show-inheritance:
 
-..:class:`JitterPlot`
-..===================
-.... autoclass:: JitterPlot
-..    :members:
-..    :show-inheritance:
+:class:`JitterPlot`
+=====================
+.. autoclass:: JitterPlot
+    :members:
+    :show-inheritance:
 
-..:class:`LineScatterPlot1D`
-..===================
-.... autoclass:: LineScatterPlot1D
-..    :members:
-..    :show-inheritance:
+:class:`LineScatterPlot1D`
+============================
+.. autoclass:: LineScatterPlot1D
+    :members:
+    :show-inheritance:
 
-..:class:`TextPlot1D`
-..===================
-.... autoclass:: TextPlot1D
-..    :members:
-..    :show-inheritance:
+:class:`TextPlot1D`
+=====================
+.. autoclass:: TextPlot1D
+    :members:
+    :show-inheritance:
 
 :class:`VariableSizeScatterPlot`
 ================================
