@@ -1,3 +1,6 @@
+.. _quickstart:
+
+
 ##########
 Quickstart
 ##########
@@ -52,7 +55,7 @@ From the :file:`examples/demo` directory, run the ``simple_line`` example::
 
 This opens a plot of several Bessel functions with a legend.
 
-  .. image:: images/simple_line.png
+.. image:: images/simple_line.png
 
 You can interact with the plot in several ways:
 
