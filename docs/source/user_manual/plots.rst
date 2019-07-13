@@ -112,7 +112,7 @@ origin
     corner of the plot where the origin is located when looking
     at data in the first quadrant (positive x and y).
 
-**styles
+\*\*styles
     Keyword arguments that are passed directly through to the
     plot renderer, most commonly used to set things like colors,
     line styles, marker types, and so on.

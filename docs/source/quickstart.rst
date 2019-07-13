@@ -189,7 +189,7 @@ The previous section showed how Chaco can be used interactively similarly to
 `Matlab` or Matplotlib's `pyplot` package.
 
 Now, let's create, from scratch, the simplest possible Chaco plot which is
-embedded inside a `Traits`_ application. This will require more work but will
+embedded inside a `Traits <http://docs.enthought.com/traits/>`_ application. This will require more work but will
 represent the basis for a potential large-scale, custom and powerful rich
 client application. this is really what Chaco has been written for.
 
