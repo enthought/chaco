@@ -75,7 +75,7 @@ screenshots of the issue or the fix.
 License
 -------
 
-As part of the `Enthought Tool Suite <http://code.enthought.com/>`_, Chaco is
+As part of the `Enthought Tool Suite <http://docs.enthought.com/ets>`_, Chaco is
 free and open source under a BSD license:
 
 .. include:: ../../LICENSE.txt

@@ -60,7 +60,7 @@ Matplotlib or Matlab users.
 
 .. note::
    Some of these examples can be visualized in our
-   `Chaco gallery <http://code.enthought.com/projects/chaco/gallery.php>`_.
+   :ref:`annotated examples <examples>`.
 
 
 First plots from the command line
@@ -292,7 +292,7 @@ applications with custom visualizations, consider going over the
 License
 =======
 
-As part of the `Enthought Tool Suite <http://code.enthought.com/>`_, Chaco is
+As part of the `Enthought Tool Suite <http://docs.enthought.com/ets>`_, Chaco is
 free and open source under the BSD license.
 
 Reporting bugs and contributing
