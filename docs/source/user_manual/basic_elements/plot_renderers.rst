@@ -159,29 +159,29 @@ The default drawing order is defined in
 :attr:`~chaco.plot_component.PlotComponent.draw_order` as a list
 of the names of the layers. The definition of the layers is as follows:
 
-1. 'background': Background image, shading, and borders
+1. **background**: Background image, shading, and borders
 
-2. 'image': A special layer for plots that render as images.  This is in a
-    separate layer since these plots must all render before non-image plots
+2. **image**: A special layer for plots that render as images. This is in a
+   separate layer since these plots must all render before non-image plots
 
-3. 'underlay': Axes and grids
+3. **underlay**: Axes and grids
 
-4. 'plot': The main plot area itself
+4. **plot**: The main plot area itself
 
-5. 'annotation': Lines and text that are conceptually part of the "plot" but
-    need to be rendered on top of everything else in the plot.
+5. **annotation**: Lines and text that are conceptually part of the "plot" but
+   need to be rendered on top of everything else in the plot.
 
-6. 'selection': Selected content are rendered above normal plot elements to
-    make them stand out. This can be disabled by setting :attr:`use_selection`
-    to False (default).
+6. **selection**: Selected content are rendered above normal plot elements to
+   make them stand out. This can be disabled by setting :attr:`use_selection`
+   to False (default).
 
-7. 'border': Plot borders
+7. **border**: Plot borders
 
-8. 'annotation': Lines and text that are conceptually part of the "plot" but
-    need to be rendered on top of everything else in the plot
+8. **annotation**: Lines and text that are conceptually part of the "plot" but
+   need to be rendered on top of everything else in the plot
 
-9. 'overlay': Legends, selection regions, and other tool-drawn visual
-    elements
+9. **overlay**: Legends, selection regions, and other tool-drawn visual
+   elements
 
 Concrete plot renderers set their default draw layer in
 :attr:`~chaco.plot_component.PlotComponent.draw_layer` (default is 'plot').
@@ -202,7 +202,7 @@ as such are able to react to keyboard and mouse events. However, interactions
 are usually defined as tools and overlays. Therefore, this part of the
 interface is described at those pages.
 
-TODO: add reference to interaction interface
+.. TODO: add reference to interaction interface
 
 Context
 -------
@@ -258,18 +258,16 @@ data space:
 Others
 ------
 
-    :attr:`use_backbuffer`
+:attr:`use_backbuffer`
+  If True, the plot renders itself to an
+  offscreen buffer that is cached for later use. If False (default), then
+  the component will *never* render itself back-buffered, even if asked
+  to do so.
 
-      If True, the plot renders itself to an
-      offscreen buffer that is cached for later use. If False (default), then
-      the component will *never* render itself back-buffered, even if asked
-      to do so.
-
-    :attr:`invalidate_and_redraw()`
-
-      Convenience method to invalidate our contents and request redraw.
-      This method is sometimes useful when modifying a Chaco plot in an
-      ipython shell.
+:meth:`invalidate_and_redraw`
+  Convenience method to invalidate our contents and request redraw.
+  This method is sometimes useful when modifying a Chaco plot in an
+  ipython shell.
 
 
 .. _xy_plots:
@@ -316,27 +314,22 @@ Axis, labels, and grids
 shortcuts to find axis and grid objects in the
 :ref:`underlays and overlays layers <plot_layers>` of the plot:
 
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.hgrid`,
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.vgrid`
+:attr:`~chaco.base_xy_plot.BaseXYPlot.hgrid`, :attr:`~chaco.base_xy_plot.BaseXYPlot.vgrid`
+  Look into the underlays and overlays layers (in this order) for a
+  :class:`PlotGrid` object of horizontals / vertical orientation and return
+  it. Return None if none is found.
 
-      Look into the underlays and overlays layers (in this order) for a
-      :class:`PlotGrid` object of horizontals / vertical orientation and return
-      it. Return None if none is found.
+:attr:`~chaco.base_xy_plot.BaseXYPlot.x_axis`, :attr:`~chaco.base_xy_plot.BaseXYPlot.y_axis`
+  Look into the underlays and overlays layers (in this order) for a
+  :class:`PlotAxis` object positioned to the bottom or top, or to the
+  left or right of plot, respectively. Return the axis, or None if
+  none is found.
 
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.x_axis`,
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.y_axis`
+:attr:`~chaco.base_xy_plot.BaseXYPlot.labels`
+  Return a list of all :class:`PlotLabel` objects in the
+  overlays and underlays layers.
 
-      Look into the underlays and overlays layers (in this order) for a
-      :class:`PlotAxis` object positioned to the bottom or top, or to the
-      left or right of plot, respectively. Return the axis, or None if
-      none is found.
-
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.labels`
-
-      Return a list of all :class:`PlotLabel` objects in the
-      overlays and underlays layers.
-
-TODO: add links to axis and grid documentation
+.. TODO: add links to axis and grid documentation
 
 Hittest
 -------
@@ -359,8 +352,8 @@ which is one of 'point' (default), or 'line'.
 If the closest point or line is further than :attr:`threshold` pixels
 away, the methods returns None.
 
-Alternatively, users may call the methods :attr:`get_closest_point`
-and :attr:`get_closest_line`.
+Alternatively, users may call the methods :meth:`get_closest_point`
+and :meth:`get_closest_line`.
 
 Others
 ------
@@ -368,12 +361,10 @@ Others
 Two more attributes are worth mentioning:
 
 :attr:`~chaco.base_xy_plot.BaseXYPlot.bgcolor`
-
   This is inherited from the AbstractPlotRenderer interface, but is now
-  set to 'transparent` by default.
+  set to 'transparent' by default.
 
 :attr:`~chaco.base_xy_plot.BaseXYPlot.use_downsampling`
-
   If this attribute is True, the plot uses downsampling for faster display
   (default is False). In other words, the number of display points depends
   on the plot size and range, and not on the total number of data points
