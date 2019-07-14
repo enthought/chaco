@@ -11,6 +11,11 @@ Axis and Grid
     :members:
     :show-inheritance:
 
+:class:`MinorPlotAxis`
+==========================
+.. autoclass:: MinorPlotAxis
+    :members:
+    :show-inheritance:
 .. currentmodule:: chaco.label_axis
 
 :class:`LabelAxis`
