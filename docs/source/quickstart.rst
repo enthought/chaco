@@ -66,18 +66,18 @@ You can interact with the plot in several ways:
 
 * To zoom the plot:
 
-    * Mouse wheel: scroll up to zoom in, and scroll down to zoom out (or the
-      reverse you're on a version of OS X with 'natural scrolling').
+  * Mouse wheel: scroll up to zoom in, and scroll down to zoom out (or the
+    reverse you're on a version of OS X with 'natural scrolling').
 
-    * Zoom box: Press :kbd:`z`, and then draw a box region to zoom in on.
-      (There is no box-based zoom out.) Press :kbd:`Ctrl-Left` and
-      :kbd:`Ctrl-Right` to go back and forward in your zoom box history.
+  * Zoom box: Press :kbd:`z`, and then draw a box region to zoom in on.
+    (There is no box-based zoom out.) Press :kbd:`Ctrl-Left` and
+    :kbd:`Ctrl-Right` to go back and forward in your zoom box history.
 
-    * Drag: hold down the right mouse button and drag the mouse up or down. Up
-      zooms in, and down zooms out.
+  * Drag: hold down the right mouse button and drag the mouse up or down. Up
+    zooms in, and down zooms out.
 
-    * For any of the above, press :kbd:`Escape` to reset the zoom to the
-      original view.
+  * For any of the above, press :kbd:`Escape` to reset the zoom to the
+    original view.
 
 * To move the legend, hold down the right mouse button inside the legend and
   drag it around. Note that you can move the legend outside of the plot area.
