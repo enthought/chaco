@@ -90,6 +90,14 @@ Visual Components
 .. autoclass:: Legend
     :members:
     :show-inheritance:
+    
+.. currentmodule:: chaco.selectable_legend
+
+:class:`SelectableLegend`
+=========================
+.. autoclass:: SelectableLegend
+    :members:
+    :show-inheritance:
 
 .. currentmodule:: chaco.tooltip
 
