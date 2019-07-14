@@ -3,7 +3,7 @@
 Plot Factories
 --------------
 
-.. currentmodule:: chaco.api
+.. currentmodule:: chaco.plot_factory
 
 `create_bar_plot`
 =================
@@ -30,11 +30,15 @@ Plot Factories
 .. autofunction:: add_default_grids
 
 
+.. currentmodule:: chaco.abstract_plot_data
+
 :class:`AbstractPlotData`
 =========================
 .. autoclass:: AbstractPlotData
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.array_plot_data
 
 :class:`ArrayPlotData`
 ======================
@@ -42,11 +46,15 @@ Plot Factories
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.plot
+
 :class:`Plot`
 =============
 .. autoclass:: Plot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.toolbar_plot
 
 :class:`ToolbarPlot`
 ====================
