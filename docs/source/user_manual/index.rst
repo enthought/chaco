@@ -19,7 +19,7 @@ of the Chaco API, refer to the Chaco API documentation.
     :maxdepth: 2
 
     installation.rst
-    quickstart
+    ../quickstart.rst
     introduction.rst
     modules_and_classes
     plots.rst
