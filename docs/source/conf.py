@@ -33,6 +33,7 @@ extensions = [
   'sphinx.ext.autodoc',
   'sphinx.ext.napoleon',
   'sphinx.ext.graphviz',
+  'sphinx.ext.intersphinx',
   'traits.util.trait_documenter',
 ]
 
@@ -214,3 +215,8 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+
+intersphinx_mapping = {
+    'enable': ('http://docs.enthought.com/enable', None)
+}
