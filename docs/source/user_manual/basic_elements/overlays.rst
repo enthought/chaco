@@ -1,5 +1,5 @@
 ==================================
-Overlays: axis, legend, grid, etc.
+Overlays: axis, and, grid, etc.
 ==================================
 
 Overlays are elements that decorate plots, like for example
