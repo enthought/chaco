@@ -281,4 +281,26 @@ Tools
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.tools.cursor_tool
 
+:class:`BaseCursorTool`
+==========================
+.. autoclass:: BaseCursorTool
+    :members:
+    :show-inheritance:
+
+`CursorTool`
+============
+.. autofunction:: CursorTool
+
+:class:`CursorTool1D`
+==========================
+.. autoclass:: CursorTool1D
+    :members:
+    :show-inheritance:
+
+:class:`CursorTool2D`
+==========================
+.. autoclass:: CursorTool2D
+    :members:
+    :show-inheritance:
