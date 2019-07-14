@@ -1,5 +1,5 @@
 
-.. _data_ranges:
+.. _data_ranges_api:
 
 Data Ranges
 -----------
