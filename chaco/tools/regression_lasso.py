@@ -12,7 +12,7 @@ from traits.api import Any, Float, Instance
 
 # Chaco imports
 from chaco.api import LassoOverlay, Label
-from chaco.tools.api import LassoSelection
+from .lasso_selection import LassoSelection
 
 
 class RegressionLasso(LassoSelection):
