@@ -37,7 +37,7 @@ Maintenance
 * Update unittest imports (PR #446)
 * Address DeprecationWarnings (PR #441)
 * Use unittest-style tests (PR #440)
-* Run testsuite on mac OS and Python 3.6 (PR #442)
+* Run testsuite on macOS and Python 3.6 (PR #442)
 * Use standard Sphinx extensions for trait documenting (PR #436)
 * Update Cython generated code to support Python 3.7 (PR #433)
 * Skip DataFramePlotData tests if Pandas not installed (PR #422)
