@@ -7,7 +7,7 @@ Release 4.8.0
 
 New features/Improvements
 
-* Refactor DataPrinter to add `_build_text_from_event` method (PR #450)
+* Refactor DataPrinter to add _build_text_from_event method (PR #450)
 * Simplify controlling text of ImageInspectorOverlay (PR #431)
 * 2D segment and text scatter plot types (PR #407)
 * Set up Windows testing under AppVeyor (PR #445)
@@ -37,7 +37,7 @@ Maintenance
 * Update unittest imports (PR #446)
 * Address DeprecationWarnings (PR #441)
 * Use unittest-style tests (PR #440)
-* Run testsuite on OSX and Python 3.6 (PR #442)
+* Run testsuite on mac OS and Python 3.6 (PR #442)
 * Use standard Sphinx extensions for trait documenting (PR #436)
 * Update Cython generated code to support Python 3.7 (PR #433)
 * Skip DataFramePlotData tests if Pandas not installed (PR #422)
@@ -50,7 +50,7 @@ Fixes
 
 * Ensure contiguous inputs to points_in_polygon (#409 & #410)
 * Handle multiple plots in LegendHighlighter (#403)
-* alias six.moves as sm (#401)
+* Alias six.moves as sm (#401)
 * Respect visibility in the LegendHighlighter (#402)
 * Fix use of itertools.chain() (#394)
 
