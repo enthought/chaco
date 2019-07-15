@@ -130,7 +130,10 @@ def install(runtime, toolkit, environment):
         # Note that enable dependencies will be installed implicitly using pip
         ("edm run -e {environment} -- "
          "pip install git+https://git@github.com/enthought/enable.git"),
-        "edm run -e {environment} -- pip install . --no-deps",
+        # Use --no-build-isolation to avoid trying to build using a different
+        # NumPy version from the one currently installed.
+        ("edm run -e {environment} -- "
+         "pip install . --no-build-isolation --no-dependencies"),
     ]
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
