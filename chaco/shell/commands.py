@@ -12,10 +12,11 @@ except ImportError:
     GetApp = lambda: None
 
 from chaco.plot import Plot
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.pan_tool import PanTool
+from chaco.tools.zoom_tool import ZoomTool
 
 # Note: these are imported to be exposed in the namespace.
-from chaco.scales.api import (FixedScale, Pow10Scale, LogScale,
+from chaco.scales.scales import (FixedScale, Pow10Scale, LogScale,
     CalendarScaleSystem)
 from chaco.default_colormaps import *
 

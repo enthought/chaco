@@ -2,7 +2,8 @@
 from traits.api import List
 from chaco.plot import Plot
 from chaco.plot_containers import VPlotContainer
-from chaco.tools.api import PanTool, ZoomTool
+from chaco.tools.pan_tool import PanTool
+from chaco.tools.zoom_tool import ZoomTool
 from chaco.ui.plot_window import PlotWindow
 
 from traitsui.wx.constants import WindowColor

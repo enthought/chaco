@@ -17,7 +17,7 @@ from chaco.plot_factory import (create_line_plot, create_scatter_plot)
 from chaco.array_data_source import ArrayDataSource
 from chaco.image_data import ImageData
 
-from chaco.tools.api import HighlightTool
+from chaco.tools.highlight_tool import HighlightTool
 
 
 

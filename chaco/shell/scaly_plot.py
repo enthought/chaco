@@ -9,7 +9,7 @@ from chaco.grid import PlotGrid
 from chaco.linear_mapper import LinearMapper
 from chaco.log_mapper import LogMapper
 from chaco.plot import Plot
-from chaco.scales.api import DefaultScale, LogScale, ScaleSystem
+from chaco.scales.scales import DefaultScale, LogScale, ScaleSystem
 from chaco.scales_tick_generator import ScalesTickGenerator
 
 
