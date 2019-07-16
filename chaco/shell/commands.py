@@ -11,8 +11,7 @@ try:
 except ImportError:
     GetApp = lambda: None
 
-from chaco.api import Plot, color_map_name_dict
-from chaco.scales.api import ScaleSystem
+from chaco.plot import Plot
 from chaco.tools.api import PanTool, ZoomTool
 
 # Note: these are imported to be exposed in the namespace.
@@ -797,7 +796,7 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
         print("Saved to", filename)
 
     elif ext in [".bmp", ".png", ".jpg"]:
-        from chaco.api import PlotGraphicsContext
+        from chaco.plot_graphics_context import PlotGraphicsContext
         gc = PlotGraphicsContext(tuple(p.outer_bounds), dpi=dpi)
 
         # temporarily turn off the backbuffer for offscreen rendering
