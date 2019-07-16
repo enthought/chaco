@@ -1,7 +1,7 @@
 # Enthought library imports
 from traits.api import List
-from chaco.api import VPlotContainer
 from chaco.plot import Plot
+from chaco.plot_containers import VPlotContainer
 from chaco.tools.api import PanTool, ZoomTool
 from chaco.ui.plot_window import PlotWindow
 

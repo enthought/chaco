@@ -56,7 +56,7 @@ class SaveTool(BaseTool):
     def _save_raster(self):
         """ Saves an image of the component.
         """
-        from chaco.api import PlotGraphicsContext
+        from chaco.plot_graphics_context import PlotGraphicsContext
         gc = PlotGraphicsContext((int(self.component.outer_width), int(self.component.outer_height)))
         self.component.draw(gc, mode="normal")
         gc.save(self.filename)

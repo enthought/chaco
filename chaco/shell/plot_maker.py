@@ -13,8 +13,9 @@ import six
 from numpy import all, array, arange, asarray, reshape, shape, transpose
 
 # Chaco imports
-from chaco.api import (create_line_plot, create_scatter_plot,
-    ArrayDataSource, ImageData)
+from chaco.plot_factory import (create_line_plot, create_scatter_plot)
+from chaco.array_data_source import ArrayDataSource
+from chaco.image_data import ImageData
 
 from chaco.tools.api import HighlightTool
 
