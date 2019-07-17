@@ -16,8 +16,8 @@ from chaco.tools.pan_tool import PanTool
 from chaco.tools.zoom_tool import ZoomTool
 
 # Note: these are imported to be exposed in the namespace.
-from chaco.scales.scales import (FixedScale, Pow10Scale, LogScale,
-    CalendarScaleSystem)
+from chaco.scales.scales import (FixedScale, Pow10Scale, LogScale)
+from chaco.scales.time_scale import CalendarScaleSystem
 from chaco.default_colormaps import *
 
 from . import plot_maker
