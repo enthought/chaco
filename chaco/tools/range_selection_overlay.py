@@ -9,7 +9,10 @@ from numpy import arange, array
 from enable.api import ColorTrait, LineStyle
 from traits.api import Enum, Float, Property, Str, Instance, \
         cached_property
-from chaco.api import AbstractOverlay, arg_find_runs, GridMapper, AbstractMapper
+from chaco.abstract_overlay import AbstractOverlay
+from chaco.base import arg_find_runs
+from chaco.grid_mapper import GridMapper
+from chaco.abstract_mapper import AbstractMapper
 
 
 class RangeSelectionOverlay(AbstractOverlay):

@@ -10,8 +10,10 @@ from traits.api import Any, Array, Enum, Event, Bool, Instance, \
 from kiva.api import points_in_polygon
 
 # Chaco imports
-from chaco.api import AbstractController, AbstractDataSource, \
-        BaseXYPlot, Base2DPlot
+from chaco.abstract_controller import AbstractController
+from chaco.abstract_data_source import AbstractDataSource
+from chaco.base_xy_plot import BaseXYPlot
+from chaco.base_2d_plot import Base2DPlot
 
 
 class LassoSelection(AbstractController):

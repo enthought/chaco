@@ -1,7 +1,7 @@
 """ Defines the TrackingPanTool class.
 """
 # Chaco imports
-from chaco.tools.api import PanTool
+from .pan_tool import PanTool
 
 class TrackingPanTool(PanTool):
     """ Allows the user to pan around a plot.
