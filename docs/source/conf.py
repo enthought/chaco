@@ -93,12 +93,6 @@ pygments_style = 'sphinx'
 # Options for HTML output
 # -----------------------
 
-# When using docset browsers like Dash and Zeal the side bar is redundant.
-if BUILD_DOCSET:
-    html_theme_options = {
-        'nosidebar': 'true'
-    }
-
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
 # given in html_static_path.
@@ -168,6 +162,11 @@ try:
 
     html_theme_path = [enthought_sphinx_theme.theme_path]
     html_theme = 'enthought'
+    # When using docset browsers like Dash and Zeal the side bar is redundant.
+    if BUILD_DOCSET:
+        html_theme_options = {
+            'sidebar': 'none'
+        }
 except ImportError as exc:
     import warnings
     msg = '''Can't find Enthought Sphinx Theme, using default.
@@ -181,6 +180,10 @@ except ImportError as exc:
     html_favicon = "et.png"
     html_style = 'default.css'
     html_theme = 'classic'
+    if BUILD_DOCSET:
+        html_theme_options = {
+            'nosidebar': 'true'
+        }
 
 
 # Options for LaTeX output
