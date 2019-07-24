@@ -30,7 +30,6 @@ of the Chaco API, refer to the Chaco API documentation.
     basic_elements/data_ranges.rst
     basic_elements/plot_renderers.rst
     tools.rst
-    basic_elements/plot_renderers.rst
     plot_types.rst
     basic_elements/overlays.rst
     common_patterns.rst
