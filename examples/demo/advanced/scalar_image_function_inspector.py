@@ -91,17 +91,28 @@ class Model(HasTraits):
         gridx = linspace(self.min_x+xstep/2, self.max_x-xstep/2, self.npts_x+1)
         gridy = linspace(self.min_y+ystep/2, self.max_y-ystep/2, self.npts_y+1)
         x, y = meshgrid(gridx, gridy)
+
+        d = dict(x=x, y=y)
+        exec("from scipy import *", d)
+        exec("from scipy.special import *", d)
         try:
-            d = dict(x=x, y=y)
-            exec("from scipy import *", d)
-            exec("from scipy.special import *", d)
             self.zs = eval(self.function, d)
+        except NameError:
+            # Raised if the function(s) is not available in scipy context (d)
+            print("The function name {0} is invalid".format(self.function))
+            self.trait_setq(_function=self.function)
+        except SyntaxError:
+            print("The function signature is not valid Python syntax")
+            self.trait_setq(_function=self.function)
+        except Exception as e:
+            err_msg = "The following error occured when using the function {}"
+            print(err_msg.format(e))
+            self.trait_setq(_function=self.function)
+        else:
             self.minz = nanmin(self.zs)
             self.maxz = nanmax(self.zs)
             self.model_changed = True
             self._function = self.function
-        except:
-            self.trait_setq(_function=self.function)
 
     def _anytrait_changed(self, name, value):
         if name in ['function', 'npts_x', 'npts_y',
