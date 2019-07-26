@@ -87,9 +87,9 @@ class Model(HasTraits):
         # is located at cell centers, so use halfsteps from the
         # min/max values (which are edges)
         xstep = (self.max_x - self.min_x) / self.npts_x
-        #ystep = (self.max_y - self.min_y) / self.npts_y
-        gridx = linspace(self.min_x+xstep/2, self.max_x-xstep/2, self.npts_x)
-        gridy = linspace(self.min_y+xstep/2, self.max_y-xstep/2, self.npts_y)
+        ystep = (self.max_y - self.min_y) / self.npts_y
+        gridx = linspace(self.min_x+xstep/2, self.max_x-xstep/2, self.npts_x+1)
+        gridy = linspace(self.min_y+ystep/2, self.max_y-ystep/2, self.npts_y+1)
         x, y = meshgrid(gridx, gridy)
         try:
             d = dict(x=x, y=y)
@@ -101,7 +101,7 @@ class Model(HasTraits):
             self.model_changed = True
             self._function = self.function
         except:
-            self.trait_setq(function=self._function)
+            self.trait_setq(_function=self.function)
 
     def _anytrait_changed(self, name, value):
         if name in ['function', 'npts_x', 'npts_y',
