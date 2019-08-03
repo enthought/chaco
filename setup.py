@@ -8,10 +8,10 @@ from numpy import get_include
 from setuptools import setup, Extension, find_packages
 
 MAJOR = 4
-MINOR = 7
-MICRO = 1
+MINOR = 8
+MICRO = 0
 
-IS_RELEASED = False
+IS_RELEASED = True
 
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
