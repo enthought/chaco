@@ -2,6 +2,61 @@
 Chaco CHANGELOG
 ===============
 
+Release 4.8.0
+-------------
+
+New features/Improvements
+
+* Refactor DataPrinter to add _build_text_from_event method (PR #450)
+* Simplify controlling text of ImageInspectorOverlay (PR #431)
+* 2D segment and text scatter plot types (PR #407)
+* Set up Windows testing under AppVeyor (PR #445)
+* Add option for aligning label in index direction in TextPlot1D (PR #430)
+
+Fixes
+
+* Fix a test that fails with NumPy 1.16.x (PR #471)
+* Fix missing imports of SegmentPlot and TextPlot (PR #470)
+* Fix circular imports in toolbar_plot, transform_color_mapper (PR #469)
+* Fix deprecated logger.warn uses (PR #458)
+* Fix DataBox resizing bug (PR #456)
+* Do not render quiver if there is no point (PR #424)
+* Use single comma-separated trait names in on_trait_change, not multiple
+  arguments (PR #397)
+
+Documentation/examples
+
+* Add documentation for some tools (PR #451)
+* Remove erroneous `label_rotation` comment (PR #447)
+* Add scatter inspector example (PR #434)
+* Fix float indices in Spectrum demo (PR #427)
+* Fix world_map demo (PR #423)
+* Fix up create_plot_snapshots script (PR #421)
+* Docstring for ArrayPlotData.{set_data,update_data} (PR #399)
+
+Maintenance
+
+* Fix test that fails with Numpy 1.16 (PR #471)
+* Update Travis CI configuration to be compatible with Ubuntu Xenial (PR #452)
+* Update unittest imports (PR #446)
+* Address DeprecationWarnings (PR #441)
+* Use unittest-style tests (PR #440)
+* Run testsuite on macOS and Python 3.6 (PR #442)
+* Use standard Sphinx extensions for trait documenting (PR #436)
+* Update Cython generated code to support Python 3.7 (PR #433)
+* Skip DataFramePlotData tests if Pandas not installed (PR #422)
+
+Release 4.7.2
+-------------
+
+Fixes
+
+* Ensure contiguous inputs to points_in_polygon (#409 & #410)
+* Handle multiple plots in LegendHighlighter (#403)
+* Alias six.moves as sm (#401)
+* Respect visibility in the LegendHighlighter (#402)
+* Fix use of itertools.chain() (#394)
+
 Release 4.7.1
 -------------
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2015 by Enthought, Inc.
+# Copyright (c) 2008-2019 by Enthought, Inc.
 # All rights reserved.
 import os
 import re
@@ -8,7 +8,7 @@ from numpy import get_include
 from setuptools import setup, Extension, find_packages
 
 MAJOR = 4
-MINOR = 7
+MINOR = 8
 MICRO = 1
 
 IS_RELEASED = False
