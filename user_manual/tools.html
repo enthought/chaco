@@ -1,36 +1,25 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Tools and Overlays &#8212; Chaco 4.6</title>
-    
+    <meta charset="utf-8" />
+    <title>Tools and Overlays &#8212; Chaco 4.8</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '4.6.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
     <link rel="shortcut icon" href="../_static/et.ico"/>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Common Usages" href="common_patterns.html" />
     <link rel="prev" title="Containers and Layout" href="containers.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,7 +29,7 @@
         <li class="right" >
           <a href="containers.html" title="Containers and Layout"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">User guide</a> &#187;</li>
   
     <li><a href="#">Tools and Overlays</a></li>
@@ -111,6 +100,58 @@
 </div>
 <div class="section" id="imageinspectortool">
 <h3>ImageInspectorTool<a class="headerlink" href="#imageinspectortool" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../api/tools.html#chaco.tools.api.ImageInspectorTool" title="chaco.tools.api.ImageInspectorTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.api.ImageInspectorTool</span></code></a> is designed to work with an
+<a class="reference internal" href="../api/renderers.html#chaco.api.ImagePlot" title="chaco.api.ImagePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.api.ImagePlot</span></code></a> renderer to display the data space coordinates and
+data value of the displayed 2D array. The tool is designed to be used in
+conjunction with the <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.api.ImageInspectorOverlay</span></code>: the
+tool collects mouse position and data values and triggers <cite>Event</cite> emissions,
+and the overlay catches these events and displays the data as an overlay.</p>
+<p>To use it, as for other tools, you need to:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>create a tool object and append it to the <strong>renderer</strong>’s list of tools,</p></li>
+<li><p>create an overlay object and append it to the <strong>renderer</strong>’s list of
+overlays.</p></li>
+</ol>
+</div></blockquote>
+<p>For example, a method to build a <a class="reference internal" href="../api/plot_factories.html#chaco.api.Plot" title="chaco.api.Plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.api.Plot</span></code></a> object with that tool
+could look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">img</span><span class="o">=</span><span class="n">img</span><span class="p">))</span>
+    <span class="c1"># Capture the renderer object to pass it to the tool</span>
+    <span class="n">img_plot</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">img_plot</span><span class="p">(</span><span class="s2">&quot;img&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Tool code to be added here...</span>
+    <span class="k">return</span> <span class="n">plot</span>
+</pre></div>
+</div>
+<p>Note that unlike other <cite>ImagePlot</cite> examples, the renderer returned by the
+<a class="reference internal" href="../api/plot_factories.html#chaco.api.Plot.img_plot" title="chaco.api.Plot.img_plot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">chaco.api.Plot.img_plot()</span></code></a> call is captured since the tool
+will need it. The tool code to be inserted would look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">imgtool</span> <span class="o">=</span> <span class="n">ImageInspectorTool</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">img_plot</span><span class="p">)</span>
+<span class="n">img_plot</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imgtool</span><span class="p">)</span>
+<span class="n">overlay</span> <span class="o">=</span> <span class="n">ImageInspectorOverlay</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">img_plot</span><span class="p">,</span> <span class="n">image_inspector</span><span class="o">=</span><span class="n">imgtool</span><span class="p">,</span>
+                                <span class="n">bgcolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">border_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">img_plot</span><span class="o">.</span><span class="n">overlays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">overlay</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note the two important connections that are made for the tool/overlay to work
+correctly. The first one is that the component that is passed is the Chaco
+renderer rather than the <cite>Plot</cite> object, since it has access to the data being
+displayed. The second connection is that, for the overlay to update when the
+tool catches a mouse event, it needs to be provided the tool instance as its
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">image_inspector</span></code> attribute.</p>
+<p>In addition to the background color and <code class="xref py py-attr docutils literal notranslate"><span class="pre">border_visible</span></code>, other
+interesting overlay attributes to consider overriding include
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">tooltip_mode</span></code> to control the location of the text box and all of the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.api.TextBoxOverlay</span></code> attributes (see below).</p>
+<p>Finally, the overlay’s <code class="xref py py-meth docutils literal notranslate"><span class="pre">_build_text_from_event()</span></code> method can be overwritten
+to customize the actual text content. The method should receive a single
+argument, the event data (dictionary), and return the desired text to display.
+The event data contains 3 keys: <cite>indices</cite> with the 2D coordinates of the mouse
+in data space, <cite>color_value</cite> containing the color of the tile where the mouse
+is, and <cite>data_value</cite> with the scalar value being displayed in that tile.</p>
+<p>For a complete example, see <a class="reference download internal" download="" href="../_downloads/adc79864e59576875b1390bb460bf4b6/image_inspector.py"><code class="xref download docutils literal notranslate"><span class="pre">examples/demo/basic/image_inspector.py</span></code></a>.</p>
 </div>
 <div class="section" id="traitstool">
 <h3>TraitsTool<a class="headerlink" href="#traitstool" title="Permalink to this headline">¶</a></h3>
@@ -158,7 +199,32 @@
 <h3>DataBox<a class="headerlink" href="#databox" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="textboxoverlay">
-<h3>TextBoxOverlay<a class="headerlink" href="#textboxoverlay" title="Permalink to this headline">¶</a></h3>
+<span id="tools-text-box-overlay"></span><h3>TextBoxOverlay<a class="headerlink" href="#textboxoverlay" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.api.TextBoxOverlay</span></code> is the base class of
+the overlay component of several inspector type tools (see above). It is
+designed to draw a text box over the plots to display custom information.</p>
+<p>The rendering of the text can be customized with the following attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">bgcolor</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">border_visible</span></code> to control the styling of the
+box,</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">alpha</span></code> to control the transparency of the text box,</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_color</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">font</span></code> to control how the text looks like,</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">align</span></code> to control what corner of the plot the text box should
+appear,</p></li>
+<li><p>…</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The overlay can also be used directly by any custom tool that needs
+to display information upon an event. It should be done by
+subclassing the overlay and defining a listener on the inspector’s
+state which will modify the overlay’s <code class="xref py py-attr docutils literal notranslate"><span class="pre">text</span></code> (and optionally
+visibility) attribute(s). After a <cite>text</cite> update, the component’s
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">request_redraw()</span></code> should be called. Good examples include
+<code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.overlays.api.ImageInspectorOverlay</span></code>.</p>
+</div>
 </div>
 <div class="section" id="tooltip">
 <h3>ToolTip<a class="headerlink" href="#tooltip" title="Permalink to this headline">¶</a></h3>
@@ -178,8 +244,8 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
             </a></p>
-<h3>Page Contents</h3>
-<ul>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
 <li><a class="reference internal" href="#">Tools and Overlays</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a><ul>
 <li><a class="reference internal" href="#chaco-enable-and-event-dispatch">Chaco, Enable, and Event Dispatch</a></li>
@@ -236,6 +302,12 @@
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="containers.html"
+                        title="previous chapter">Containers and Layout</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="common_patterns.html"
+                        title="next chapter">Common Usages</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -244,13 +316,13 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -266,7 +338,7 @@
         <li class="right" >
           <a href="containers.html" title="Containers and Layout"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >User guide</a> &#187;</li>
   
     <li><a href="#">Tools and Overlays</a></li>
@@ -275,9 +347,9 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2016, Enthought, Inc..
-      Last updated on Mar 31, 2017.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 05, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>
