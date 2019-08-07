@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Exploring Chaco with IPython &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+  
+    <li><a href="#">Exploring Chaco with IPython</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="exploring-chaco-with-ipython">
+<span id="tutorial-ipython"></span><h1>Exploring Chaco with IPython<a class="headerlink" href="#exploring-chaco-with-ipython" title="Permalink to this headline">¶</a></h1>
+<p>Chaco has an interactive plotting mode similar to, but currently more limited
+than matplotlib’s.  This plotting mode is also available as an Envisage plugin,
+and so can be made available within end-user applications that feature an
+Envisage-based Python prompt.</p>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>To get started, you need to run iPython with the <code class="docutils literal notranslate"><span class="pre">--gui=wx</span></code> option enabled,
+so that the iPython and wx event loops interact correctly <a class="footnote-reference brackets" href="#guiqt" id="id1">1</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ipython</span> <span class="o">--</span><span class="n">gui</span><span class="o">=</span><span class="n">wx</span>
+</pre></div>
+</div>
+<p>You could instead start in <code class="docutils literal notranslate"><span class="pre">-pylab</span></code> mode if you prefer, which has the advantage of
+pre-loading numpy and some other useful libraries.
+Once you have the iPython prompt, you can accesss the Chaco shell mode commands
+via:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">chaco.shell</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>We’ll start by creating some data that we want to plot:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="o">*</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/ipython_basic.png" src="../_images/ipython_basic.png" />
+<p>If you experiment with the plot, you’ll see that it has the standard
+Chaco pan and zoom tools enabled.  As with Matplotlib, you can specify
+options for the display of the plot as additional arguments and keyword
+arguments to the plot command.  The most important of these is is the
+format string argument, which resembles the Matplotlib format strings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;g:&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This creates a green, dotted line plot of the data.  You could instead
+create a red scatter plot of the data with circles for markers using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You’ll notice that each of these plot commands replaces the current plot
+with the new plot.  If you want to overlay the plots, you need to instruct
+Chaco to <code class="docutils literal notranslate"><span class="pre">hold()</span></code> the plots:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="n">hold</span><span class="p">()</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b-&#39;</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;y^&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/ipython_multi.png" src="../_images/ipython_multi.png" />
+<p>Calling <code class="docutils literal notranslate"><span class="pre">hold()</span></code> again will toggle back to the previous
+behaviour:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">11</span><span class="p">]:</span> <span class="n">hold</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can also plot multiple curves with one plot command.  The following
+single plot call is equivalent to the above three:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;y^&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="types-of-plots">
+<h2>Types of Plots<a class="headerlink" href="#types-of-plots" title="Permalink to this headline">¶</a></h2>
+<p>The Chaco shell interface supports a subset of the standard Chaco plots.
+You can do line, scatter, image, pseudocolor, and contour plots.</p>
+<p>To illustrate some of these different plot types, let’s create a couple
+of 2D gaussians and plot them:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">13</span><span class="p">]:</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">14</span><span class="p">]:</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">-</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">15</span><span class="p">]:</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span> <span class="p">,</span><span class="mf">0.25</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">16</span><span class="p">]:</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">17</span><span class="p">]:</span> <span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We’ll now create a kernel density estimator for the combined data set,
+and plot that:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">18</span><span class="p">]:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">))</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">19</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">))</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">20</span><span class="p">]:</span> <span class="n">dataset</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">21</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">scipy.stats</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">22</span><span class="p">]:</span> <span class="n">kde</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now that we have the distribution, we sample it at a bunch of points on a grid:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">23</span><span class="p">]:</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">24</span><span class="p">]:</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">25</span><span class="p">]:</span> <span class="n">xpoints</span><span class="p">,</span> <span class="n">ypoints</span> <span class="o">=</span> <span class="n">meshgrid</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">26</span><span class="p">]:</span> <span class="n">points</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="n">xpoints</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">ypoints</span><span class="o">.</span><span class="n">flatten</span><span class="p">()])</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">27</span><span class="p">]:</span> <span class="n">z</span> <span class="o">=</span> <span class="n">kde</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">28</span><span class="p">]:</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, we can plot the contours.  For grid-based plots like contours and images,
+we need to supply the x- and y-coordinates of the edges of the pixels, rather than
+the centers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">29</span><span class="p">]:</span> <span class="n">xedges</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">4.06125</span><span class="p">,</span> <span class="mf">4.06125</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">30</span><span class="p">]:</span> <span class="n">yedges</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">4.06125</span><span class="p">,</span> <span class="mf">4.06125</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">31</span><span class="p">]:</span> <span class="n">hold</span><span class="p">()</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">32</span><span class="p">]:</span> <span class="n">contour</span><span class="p">(</span><span class="n">xedges</span><span class="p">,</span> <span class="n">yedges</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/ipython_kde.png" src="../_images/ipython_kde.png" />
+<p>Other related plotting commands which are available include <code class="docutils literal notranslate"><span class="pre">imshow()</span></code>, <code class="docutils literal notranslate"><span class="pre">contourf()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">pshow()</span></code>.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">33</span><span class="p">]:</span> <span class="n">pshow</span><span class="p">(</span><span class="n">xedges</span><span class="p">,</span> <span class="n">yedges</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will plot a pseudo-color image of our sampling of the KDE.</p>
+</div>
+<div class="section" id="making-things-pretty">
+<h2>Making Things Pretty<a class="headerlink" href="#making-things-pretty" title="Permalink to this headline">¶</a></h2>
+<p>You can add plot and axis titles to your plot easily:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">34</span><span class="p">]:</span> <span class="n">title</span><span class="p">(</span><span class="s1">&#39;The Kernel Density Estimator&#39;</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">35</span><span class="p">]:</span> <span class="n">xtitle</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">36</span><span class="p">]:</span> <span class="n">ytitle</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and you can toggle whether or not grids are drawn by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="n">xgrid</span><span class="p">()</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">38</span><span class="p">]:</span> <span class="n">ygrid</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>and similarly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">39</span><span class="p">]:</span> <span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>toggles the display of the legend.  These toggling commands can optionally take a
+boolean value which instead of toggling the display will either always show or hide
+the grid or legend.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">40</span><span class="p">]:</span> <span class="n">legend</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will ensure that the legend is hidden.  You can toggle the axes completely with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">41</span><span class="p">]:</span> <span class="n">xaxis</span><span class="p">()</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">42</span><span class="p">]:</span> <span class="n">yaxis</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>but you can additionally gain quite fine-grained control over display of the axes
+by passing keyword arguments to these commands.  For example, to display the y-axis
+on the right instead of the left, you would do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">43</span><span class="p">]:</span> <span class="n">yaxis</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can see the complete set of available keyword arguments via ipython’s help:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>In [44]: yaxis?
+Base Class:       &lt;type &#39;function&#39;&gt;
+String Form:   &lt;function yaxis at 0x1e4e25f0&gt;
+Namespace:        Interactive
+File:             /Users/cwebster/src/ets/chaco/enthought/chaco/shell/commands.py
+Definition:       yaxis(**kwds)
+Docstring:
+    Configures the y-axis.
+
+    Usage
+    -----
+    * ``yaxis()``: toggles the vertical axis on or off.
+    * ``yaxis(**kwds)``: set parameters of the vertical axis.
+
+    Parameters
+    ----------
+    title : str
+        The text of the title
+    title_font : KivaFont(&#39;modern 12&#39;)
+        The font in which to render the title
+    title_color : color (&#39;color_name&#39; or (red, green, blue, [alpha]) tuple)
+        The color in which to render the title
+    tick_weight : float
+...
+</pre></div>
+</div>
+<p>If you have a plot in a state that you are happy with, you can save the current
+image with the <code class="docutils literal notranslate"><span class="pre">save()</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="n">save</span><span class="p">(</span><span class="s1">&#39;my_plot.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-plots-and-time-series">
+<h2>Log Plots and Time-Series<a class="headerlink" href="#log-plots-and-time-series" title="Permalink to this headline">¶</a></h2>
+<p>The Chaco ipython shell can create plots with logarithmic axes.  If you know at the time
+that you create the plot that you want log axes, you can use one of the commands
+<code class="docutils literal notranslate"><span class="pre">semilogx()</span></code>, <code class="docutils literal notranslate"><span class="pre">semilogy()</span></code> or <code class="docutils literal notranslate"><span class="pre">loglog()</span></code> as you would the usual <code class="docutils literal notranslate"><span class="pre">plot()</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">46</span><span class="p">]:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">47</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">48</span><span class="p">]:</span> <span class="n">semilogy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have already created a plot, and you decide that it would be clearer with a
+logarithmic scale on an axis, you can set this with the <cite>xscale()</cite> and <cite>yscale()</cite>
+commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">49</span><span class="p">]:</span> <span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can set it back to a linear scale in the same way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">50</span><span class="p">]:</span> <span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Time axes are handled in a similar way.  Chaco expects times to be represented as
+floating point numbers giving seconds since the epoch, the same as <code class="docutils literal notranslate"><span class="pre">time.time()</span></code>.
+Given a plot with a set of index values expressed as times in this fashion, you
+can specify the scale as <code class="docutils literal notranslate"><span class="pre">'time'</span></code> and Chaco will display tick marks on the axis
+appropriately:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">51</span><span class="p">]:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">+</span><span class="mi">7</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">52</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">360</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">53</span><span class="p">]:</span> <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">54</span><span class="p">]:</span> <span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plot-management">
+<h2>Plot Management<a class="headerlink" href="#plot-management" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the <code class="docutils literal notranslate"><span class="pre">hold()</span></code> command discussed earlier, there are several commands
+that you can use to control the creation of new Chaco windows for plotting in to,
+and determining which one is currently active:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">55</span><span class="p">]:</span> <span class="n">figure</span><span class="p">(</span><span class="s1">&#39;fig2&#39;</span><span class="p">,</span> <span class="s1">&#39;My Second Plot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>creates a new window with the identifier <code class="docutils literal notranslate"><span class="pre">'fig2'</span></code> which will have “My Second Plot”
+displayed as the title of the window.  Any new plots after this command will appear
+in this window.  You can switch to an existing window using the <code class="docutils literal notranslate"><span class="pre">activate()</span></code> command,
+referring to the window either by index or name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">56</span><span class="p">]:</span> <span class="n">activate</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will make the original plot window the current window, while:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">57</span><span class="p">]:</span> <span class="n">activate</span><span class="p">(</span><span class="s1">&#39;fig2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will switch back to our second window.</p>
+<p>For advanced users, you can get a reference to the current Chaco plot object using the
+<code class="docutils literal notranslate"><span class="pre">curplot()</span></code> command.  When you have this, you then have full access to the programatic
+Chaco plot API described elsewhere.</p>
+<p>Finally, you can use the <code class="docutils literal notranslate"><span class="pre">chaco.shell</span></code> API from Python scripts instead of interactively
+if you prefer.  In this case, because you do not have ipython around to set up the GUI
+mainloop with the <code class="docutils literal notranslate"><span class="pre">--gui=wx</span></code> option, you need to use the <code class="docutils literal notranslate"><span class="pre">show()</span></code>
+command to start the GUI mainloop and display the windows that you have created.</p>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="guiqt"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Starting from IPython 0.12, it is possible to use the Qt backend
+with <code class="docutils literal notranslate"><span class="pre">--gui=qt</span></code>. Make sure that the environment variable <code class="docutils literal notranslate"><span class="pre">QT_API</span></code>
+is set correctly, as described <a class="reference external" href="http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside">here</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Exploring Chaco with IPython</a><ul>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#types-of-plots">Types of Plots</a></li>
+<li><a class="reference internal" href="#making-things-pretty">Making Things Pretty</a></li>
+<li><a class="reference internal" href="#log-plots-and-time-series">Log Plots and Time-Series</a></li>
+<li><a class="reference internal" href="#plot-management">Plot Management</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_manual/tutorial_ipython.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+  
+    <li><a href="#">Exploring Chaco with IPython</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1653 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Visual Components &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Renderers" href="renderers.html" />
+    <link rel="prev" title="Containers" href="containers.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="renderers.html" title="Renderers"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="containers.html" title="Containers"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" accesskey="U">Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Visual Components</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="visual-components">
+<span id="id1"></span><h1>Visual Components<a class="headerlink" href="#visual-components" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abstractplotrenderer">
+<h2><a class="reference internal" href="#chaco.api.AbstractPlotRenderer" title="chaco.api.AbstractPlotRenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code></a><a class="headerlink" href="#abstractplotrenderer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.AbstractPlotRenderer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">AbstractPlotRenderer</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_component.PlotComponent</span></code></p>
+<p>This is the minimal interface that all plot renderers must support.</p>
+<p>Higher-dimensionality plot renderers can implement a richer subclass of
+this abstract class.</p>
+<p>This interface exists mostly to support the development of generic
+interactors and plot tools.</p>
+<dl class="attribute">
+<dt id="chaco.api.AbstractPlotRenderer.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = &quot;transparent&quot;</em><a class="headerlink" href="#chaco.api.AbstractPlotRenderer.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the default value inherited from PlotComponent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractPlotRenderer.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotRenderer.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point (sx, sy) to the “index” space of the plot.</p>
+<p>Returns a floating point number, <em>not</em> an integer index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractPlotRenderer.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em>, <em class="sig-param">threshold=0.0</em>, <em class="sig-param">outside_returns_none=True</em>, <em class="sig-param">index_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotRenderer.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point to an index into the plot’s index array(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>screen_pt</strong> (<em>(</em><em>x</em><em>,</em><em>y</em><em>)</em>) – The screen space point to map.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Optional screen-space distance allowed between <em>screen_pt</em> and the
+plot; if non-zero, then a <em>screen_pt</em> within this distance is
+mapped to the neared plot index. (This feature is useful for sparse
+2-D data.)</p></li>
+<li><p><strong>outside_returns_none</strong> (<em>Boolean</em>) – If True, then if <em>screen_pt</em> is outside the range of the data, the
+method returns None. If False, it returns the nearest end index in
+such a case.</p></li>
+<li><p><strong>index_only</strong> (<em>Boolean</em>) – If True, then this method maps based only on the index coordinate
+of <em>screen_pt</em>, and ignores the value coordinate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><strong>index</strong> – An index into the plot’s index array(s). Typically this index is just
+an integer, but if the plot has a 2-D index dimension, then this method
+returns a tuple of integers. If the input point cannot be mapped to an
+index, then None is returned.</p>
+<p>If <em>screen_pt</em> corresponds to multiple indices, then only the first
+index is returned.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractPlotRenderer.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractPlotRenderer.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data points to screen space and returns an array
+of screen space points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractPlotRenderer.resizable">
+<code class="sig-name descname">resizable</code><em class="property"> = &quot;hv&quot;</em><a class="headerlink" href="#chaco.api.AbstractPlotRenderer.resizable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the default value inherited from PlotComponent.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="abstractoverlay">
+<h2><a class="reference internal" href="#chaco.api.AbstractOverlay" title="chaco.api.AbstractOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractOverlay</span></code></a><a class="headerlink" href="#abstractoverlay" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.AbstractOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">AbstractOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_component.PlotComponent</span></code></p>
+<p>The base class for overlays and underlays of the plot area.</p>
+<p>The only default additional feature of an overlay is that it implements
+an overlay() drawing method that overlays this component on top of
+another, without the components necessarily having an object
+containment-ownership relationship.</p>
+<dl class="attribute">
+<dt id="chaco.api.AbstractOverlay.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = &quot;transparent&quot;</em><a class="headerlink" href="#chaco.api.AbstractOverlay.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background color (overrides PlotComponent).
+Typically, an overlay does not render a background.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractOverlay.component">
+<code class="sig-name descname">component</code><em class="property"> = Instance(Component)</em><a class="headerlink" href="#chaco.api.AbstractOverlay.component" title="Permalink to this definition">¶</a></dt>
+<dd><p>The component that this object overlays. This can be None. By default, if
+this object is called to draw(), it tries to render onto this component.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractOverlay.draw_layer">
+<code class="sig-name descname">draw_layer</code><em class="property"> = &quot;overlay&quot;</em><a class="headerlink" href="#chaco.api.AbstractOverlay.draw_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default layer that this component draws into.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractOverlay.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">other_component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractOverlay.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="baseplotframe">
+<h2><a class="reference internal" href="#chaco.api.BasePlotFrame" title="chaco.api.BasePlotFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotFrame</span></code></a><a class="headerlink" href="#baseplotframe" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.BasePlotFrame">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">BasePlotFrame</code><span class="sig-paren">(</span><em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BasePlotFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.container.Container</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_component.PlotComponent</span></code></p>
+<p>Base class for plot frames.  Primarily defines the basic functionality
+of managing slots (sub-containers) within the plot frame.</p>
+<p>NOTE: PlotFrames are deprecated. There is no need to use them any more.
+This class will be removed some time in the near future.</p>
+<dl class="method">
+<dt id="chaco.api.BasePlotFrame.add_to_slot">
+<code class="sig-name descname">add_to_slot</code><span class="sig-paren">(</span><em class="sig-param">slot</em>, <em class="sig-param">component</em>, <em class="sig-param">stack='overlay'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BasePlotFrame.add_to_slot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a component to the named slot using the given stacking mode.
+The valid modes are: ‘overlay’, ‘left’, ‘right’, ‘top’, ‘bottom’.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.BasePlotFrame.auto_size">
+<code class="sig-name descname">auto_size</code><em class="property"> = False</em><a class="headerlink" href="#chaco.api.BasePlotFrame.auto_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the Enable auto_size trait (which will be deprecated in the future)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.BasePlotFrame.do_layout">
+<code class="sig-name descname">do_layout</code><span class="sig-paren">(</span><em class="sig-param">size=None</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BasePlotFrame.do_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells this frame to do layout at a given size.</p>
+<p>Overrides PlotComponent. If this frame needs to fit components in at
+least one dimension, then it checks whether any of them need to do
+layout; if so, the frame needs to do layout also.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.BasePlotFrame.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BasePlotFrame.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the plot frame.</p>
+<p>Frames are the topmost Chaco component that knows about layout, and they
+are the start of the layout pipeline.  When they are asked to draw,
+they can assume that their own size has been set properly and this in
+turn drives the layout of the contained components within the trame.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.BasePlotFrame.fit_components">
+<code class="sig-name descname">fit_components</code><em class="property"> = Enum(&quot;&quot;, &quot;h&quot;, &quot;v&quot;, &quot;hv&quot;)</em><a class="headerlink" href="#chaco.api.BasePlotFrame.fit_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dimensions in which this frame can resize to fit its components.
+This is similar to the <strong>resizable</strong> trait on PlotComponent. Chaco
+plot frames use this attribute in preference to the Enable
+<strong>auto_size</strong> attribute (which is overridden to be False by default).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.BasePlotFrame.get_slot">
+<code class="sig-name descname">get_slot</code><span class="sig-paren">(</span><em class="sig-param">slotname</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BasePlotFrame.get_slot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the container in the named slot.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.BasePlotFrame.set_slot">
+<code class="sig-name descname">set_slot</code><span class="sig-paren">(</span><em class="sig-param">slotname</em>, <em class="sig-param">container</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BasePlotFrame.set_slot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the named slot to use the given container. <em>container</em> can be None.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.BasePlotFrame.slot_names">
+<code class="sig-name descname">slot_names</code><em class="property"> = ()</em><a class="headerlink" href="#chaco.api.BasePlotFrame.slot_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>A named list of places/positions/”slots” on the frame where PlotComponents
+can place themselves.  Subclasses must redefine this trait with the
+appropriate values.  Note that by default, __getattr__ treats these
+slot names as attributes on the class so they can be directly accessed.
+This is a class attribute.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="crossplotframe">
+<h2><a class="reference internal" href="#chaco.api.CrossPlotFrame" title="chaco.api.CrossPlotFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossPlotFrame</span></code></a><a class="headerlink" href="#crossplotframe" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.CrossPlotFrame">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">CrossPlotFrame</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.CrossPlotFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_plot_frame.BasePlotFrame</span></code></p>
+<p>A simple, box-layout based plotframe.</p>
+<p>This class supports a central plot area with optional axes on the top, bottom,
+and sides.  The legend can be placed to the bottom, left, right, or
+inside the plot area.  The title can be placed along any of the four
+edges.</p>
+<p>NOTE: PlotFrames are deprecated.  There is no need to use them any more.
+This class will be removed sometime in the future.</p>
+<dl class="attribute">
+<dt id="chaco.api.CrossPlotFrame.bottom_height">
+<code class="sig-name descname">bottom_height</code><em class="property"> = Float(50.0)</em><a class="headerlink" href="#chaco.api.CrossPlotFrame.bottom_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Height of the bottom slot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.CrossPlotFrame.default_bounds">
+<code class="sig-name descname">default_bounds</code><em class="property"> = (500, 500)</em><a class="headerlink" href="#chaco.api.CrossPlotFrame.default_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default width and height. Class attribute.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.CrossPlotFrame.left_width">
+<code class="sig-name descname">left_width</code><em class="property"> = Float(50.0)</em><a class="headerlink" href="#chaco.api.CrossPlotFrame.left_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of the left slot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.CrossPlotFrame.right_width">
+<code class="sig-name descname">right_width</code><em class="property"> = Float(50.0)</em><a class="headerlink" href="#chaco.api.CrossPlotFrame.right_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of the right slot.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.CrossPlotFrame.set_visible_slots">
+<code class="sig-name descname">set_visible_slots</code><span class="sig-paren">(</span><em class="sig-param">*names</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.CrossPlotFrame.set_visible_slots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to set the named slots to visible, while setting
+all others to not visible.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.CrossPlotFrame.slot_names">
+<code class="sig-name descname">slot_names</code><em class="property"> = ('center', 'left', 'right', 'top', 'bottom')</em><a class="headerlink" href="#chaco.api.CrossPlotFrame.slot_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slots or positions on the frame where plot components can place themselves.
+Overrides PlotFrame.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.CrossPlotFrame.top_height">
+<code class="sig-name descname">top_height</code><em class="property"> = Float(50.0)</em><a class="headerlink" href="#chaco.api.CrossPlotFrame.top_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Height of the top slot.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dataview">
+<h2><a class="reference internal" href="#chaco.api.DataView" title="chaco.api.DataView"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataView</span></code></a><a class="headerlink" href="#dataview" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.DataView">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">DataView</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.DataView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_containers.OverlayPlotContainer</span></code></p>
+<p>Represents a mapping from 2-D data space into 2-D screen space.</p>
+<p>It can house renderers and other plot components, and otherwise behaves
+just like a normal PlotContainer.</p>
+<dl class="attribute">
+<dt id="chaco.api.DataView.auto_axis">
+<code class="sig-name descname">auto_axis</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.DataView.auto_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to automatically create the x_axis and y_axis if they were not
+already set by the caller.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.auto_grid">
+<code class="sig-name descname">auto_grid</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.DataView.auto_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to automatically create the x_grid and y_grid if they were not
+already set by the caller.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = &quot;white&quot;</em><a class="headerlink" href="#chaco.api.DataView.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background color (overrides Enable Component)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.default_origin">
+<code class="sig-name descname">default_origin</code><em class="property"> = Enum(&quot;bottom left&quot;, &quot;top left&quot;, …</em><a class="headerlink" href="#chaco.api.DataView.default_origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default location of the origin  for new plots</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.index_axis">
+<code class="sig-name descname">index_axis</code><em class="property"> = AxisProperty</em><a class="headerlink" href="#chaco.api.DataView.index_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the index axis, which can be X or Y,
+depending on <strong>orientation</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.index_grid">
+<code class="sig-name descname">index_grid</code><em class="property"> = GridProperty</em><a class="headerlink" href="#chaco.api.DataView.index_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the index grid, which can be horizontal
+or vertical, depending on <strong>orientation</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.index_mapper">
+<code class="sig-name descname">index_mapper</code><em class="property"> = Instance(Base1DMapper)</em><a class="headerlink" href="#chaco.api.DataView.index_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper to use for the index data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.index_range">
+<code class="sig-name descname">index_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.DataView.index_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>The range used for the index data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.index_scale">
+<code class="sig-name descname">index_scale</code><em class="property"> = Enum(&quot;linear&quot;, &quot;log&quot;)</em><a class="headerlink" href="#chaco.api.DataView.index_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>For x-y plots, the scale of the index axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.DataView.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pt</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.DataView.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps a screen space point into the 2D data space of this plot.
+(Note that this differs from the BaseXYPlot implementation, which by
+default only maps into the 1D index space.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.DataView.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.DataView.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data points to screen space and returns an array
+of screen space points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum(&quot;h&quot;, &quot;v&quot;)</em><a class="headerlink" href="#chaco.api.DataView.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the index axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.origin">
+<code class="sig-name descname">origin</code><em class="property"> = Property(depends_on='default_origin')</em><a class="headerlink" href="#chaco.api.DataView.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The origin reported to axes, etc</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.padding_top">
+<code class="sig-name descname">padding_top</code><em class="property"> = 50</em><a class="headerlink" href="#chaco.api.DataView.padding_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>Padding defaults.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.range2d">
+<code class="sig-name descname">range2d</code><em class="property"> = Instance(DataRange2D)</em><a class="headerlink" href="#chaco.api.DataView.range2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>The 2-D data range whose x- and y-ranges are exposed as the
+<strong>index_range</strong> and <strong>value_range</strong> property traits. This allows
+supporting both XY plots and 2-D (image) plots.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.value_axis">
+<code class="sig-name descname">value_axis</code><em class="property"> = AxisProperty</em><a class="headerlink" href="#chaco.api.DataView.value_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the value axis, which can be Y or X,
+depending on <strong>orientation</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.value_grid">
+<code class="sig-name descname">value_grid</code><em class="property"> = GridProperty</em><a class="headerlink" href="#chaco.api.DataView.value_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for accessing the value grid, which can be vertical
+or horizontal, depending on <strong>orientation</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.value_mapper">
+<code class="sig-name descname">value_mapper</code><em class="property"> = Instance(Base1DMapper)</em><a class="headerlink" href="#chaco.api.DataView.value_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper to use for value data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.value_range">
+<code class="sig-name descname">value_range</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.DataView.value_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>The range used for the value data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.value_scale">
+<code class="sig-name descname">value_scale</code><em class="property"> = Enum(&quot;linear&quot;, &quot;log&quot;)</em><a class="headerlink" href="#chaco.api.DataView.value_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>For x-y plots, the scale of the index axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.x_axis">
+<code class="sig-name descname">x_axis</code><em class="property"> = Instance(AbstractOverlay)</em><a class="headerlink" href="#chaco.api.DataView.x_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The horizontal axis.  Its position relative to the plot
+area can be “top”, “bottom”, or “float”.  The default position for a new
+x-axis is “bottom”.</p>
+<p>TODO: For now, this is an instance of AbstractOverlay instead of PlotAxis
+because scales_axis.PlotAxis doesn’t inherit from PlotAxis, but instead is a
+semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis
+inherit a concrete class, I chose to loosen this trait by specifying
+a more general base class of PlotAxis.  This incurs lower risk of subtle
+and difficult-to-catch bugs being introduced by changes to the
+axis.PlotAxis class.  This same comment applies to the y_axis trait
+below.  –pwang
+x_axis = Instance(PlotAxis)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.x_grid">
+<code class="sig-name descname">x_grid</code><em class="property"> = Instance(PlotGrid)</em><a class="headerlink" href="#chaco.api.DataView.x_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The grid that intersects the x-axis, i.e., a set of vertical lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.x_mapper">
+<code class="sig-name descname">x_mapper</code><em class="property"> = OrientedMapperProperty</em><a class="headerlink" href="#chaco.api.DataView.x_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property that offers access to whatever mapper corresponds
+to the X-axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.y_axis">
+<code class="sig-name descname">y_axis</code><em class="property"> = Instance(AbstractOverlay)</em><a class="headerlink" href="#chaco.api.DataView.y_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The vertical axis.  Its position relative to the plot
+area can be “left”, “right”, or “float”.  The default position for a new
+y-axis is “left”.
+y_axis = Instance(PlotAxis)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.y_grid">
+<code class="sig-name descname">y_grid</code><em class="property"> = Instance(PlotGrid)</em><a class="headerlink" href="#chaco.api.DataView.y_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The grid that intersects the y-axis, i.e., a set of horizontal lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataView.y_mapper">
+<code class="sig-name descname">y_mapper</code><em class="property"> = OrientedMapperProperty</em><a class="headerlink" href="#chaco.api.DataView.y_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property that offers access to whatever mapper corresponds
+to the Y-axis</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="simpleplotframe">
+<h2><a class="reference internal" href="#chaco.api.SimplePlotFrame" title="chaco.api.SimplePlotFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimplePlotFrame</span></code></a><a class="headerlink" href="#simpleplotframe" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.SimplePlotFrame">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">SimplePlotFrame</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.SimplePlotFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_plot_frame.BasePlotFrame</span></code></p>
+<p>A plot frame with just a single, center container that takes up the entire
+frame.</p>
+<p>NOTE: PlotFrames are deprecated.  There is no need to use them any more.
+This class will be removed sometime in the future.</p>
+<dl class="attribute">
+<dt id="chaco.api.SimplePlotFrame.default_bounds">
+<code class="sig-name descname">default_bounds</code><em class="property"> = (500, 500)</em><a class="headerlink" href="#chaco.api.SimplePlotFrame.default_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default width and height. Class attribute.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SimplePlotFrame.fit_components">
+<code class="sig-name descname">fit_components</code><em class="property"> = &quot;&quot;</em><a class="headerlink" href="#chaco.api.SimplePlotFrame.fit_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>This frame does not resize to fit components. Overrides PlotFrame.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SimplePlotFrame.fit_window">
+<code class="sig-name descname">fit_window</code><em class="property"> = True</em><a class="headerlink" href="#chaco.api.SimplePlotFrame.fit_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>This frame maximizes itself within the window, if it is a top-level
+component. Overrides Enable Container.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.SimplePlotFrame.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.SimplePlotFrame.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size (width,height) that is preferred for this component.</p>
+<p>Overrides PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SimplePlotFrame.slot_names">
+<code class="sig-name descname">slot_names</code><em class="property"> = 'center'</em><a class="headerlink" href="#chaco.api.SimplePlotFrame.slot_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>This frame has only one position for plot components. Overrides
+PlotFrame.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="plotcomponent">
+<h2><a class="reference internal" href="#chaco.api.PlotComponent" title="chaco.api.PlotComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotComponent</span></code></a><a class="headerlink" href="#plotcomponent" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.PlotComponent">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">PlotComponent</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.component.Component</span></code></p>
+<p>PlotComponent is the base class for all plot-related visual components.
+It defines the various methods related to layout and tool handling,
+which virtually every subclass uses or needs to be aware of.</p>
+<p>Several of these top-level layout and draw methods have implementations
+that must not be overridden; instead, subclasses implement various
+protected stub methods.</p>
+<dl class="attribute">
+<dt id="chaco.api.PlotComponent.draw_layer">
+<code class="sig-name descname">draw_layer</code><em class="property"> = Str(&quot;plot&quot;)</em><a class="headerlink" href="#chaco.api.PlotComponent.draw_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default draw layer for Chaco plot components is the “plot” layer</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotComponent.draw_order">
+<code class="sig-name descname">draw_order</code><em class="property"> = Instance(list, args=(DEFAULT_DRAWING_ORDER,))</em><a class="headerlink" href="#chaco.api.PlotComponent.draw_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The order in which various rendering classes on this component are drawn.
+Note that if this component is placed in a container, in most cases
+the container’s draw order is used, since the container calls
+each of its contained components for each rendering pass.
+Typically, the definitions of the layers are:</p>
+<ol class="arabic simple">
+<li><p>‘background’: Background image, shading</p></li>
+<li><dl class="simple">
+<dt>‘image’: A special layer for plots that render as images.  This is in</dt><dd><p>a separate layer since these plots must all render before non-image
+plots.</p>
+</dd>
+</dl>
+</li>
+<li><p>‘underlay’: Axes and grids</p></li>
+<li><p>‘plot’: The main plot area itself</p></li>
+<li><dl class="simple">
+<dt>‘selection’: Selected content are rendered above normal plot elements</dt><dd><p>to make them stand out</p>
+</dd>
+</dl>
+</li>
+<li><p>‘border’: Plot borders</p></li>
+<li><p>‘annotation’: Lines and text that are conceptually part of the “plot”
+but need to be rendered on top of everything else in the plot</p></li>
+<li><p>‘overlay’: Legends, selection regions, and other tool-drawn visual
+elements</p></li>
+</ol>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotComponent.use_draw_order">
+<code class="sig-name descname">use_draw_order</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.PlotComponent.use_draw_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw layers in <strong>draw_order</strong>? If False, use _do_draw() (for backwards
+compatibility).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="plotgraphicscontext">
+<h2><a class="reference internal" href="#chaco.api.PlotGraphicsContext" title="chaco.api.PlotGraphicsContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGraphicsContext</span></code></a><a class="headerlink" href="#plotgraphicscontext" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.PlotGraphicsContext">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">PlotGraphicsContext</code><span class="sig-paren">(</span><em class="sig-param">size_or_ary</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotGraphicsContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_graphics_context.PlotGraphicsContextMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">kiva.agg.agg.GraphicsContextArray</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="label">
+<h2><a class="reference internal" href="#chaco.api.Label" title="chaco.api.Label"><code class="xref py py-class docutils literal notranslate"><span class="pre">Label</span></code></a><a class="headerlink" href="#label" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.Label">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">Label</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>A label used by overlays.</p>
+<p>Label is not a Component; it’s just an object encapsulating text settings
+and appearance attributes.  It can be used by components that need text
+labels to store state, perform layout, and render the text.</p>
+<dl class="attribute">
+<dt id="chaco.api.Label.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = transparent_color_trait</em><a class="headerlink" href="#chaco.api.Label.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background color of the label.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.border_color">
+<code class="sig-name descname">border_color</code><em class="property"> = black_color_trait</em><a class="headerlink" href="#chaco.api.Label.border_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the border.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.border_visible">
+<code class="sig-name descname">border_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.Label.border_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the border is visible</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.border_width">
+<code class="sig-name descname">border_width</code><em class="property"> = Int(0)</em><a class="headerlink" href="#chaco.api.Label.border_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the label border. If it is 0, then it is not shown.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.color">
+<code class="sig-name descname">color</code><em class="property"> = black_color_trait</em><a class="headerlink" href="#chaco.api.Label.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the label text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Label.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Label.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the label.</p>
+<p>This method assumes the graphics context has been translated to the
+correct position such that the origin is at the lower left-hand corner
+of this text label’s box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.font">
+<code class="sig-name descname">font</code><em class="property"> = KivaFont(&quot;modern 10&quot;)</em><a class="headerlink" href="#chaco.api.Label.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font of the label text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Label.get_bounding_box">
+<code class="sig-name descname">get_bounding_box</code><span class="sig-paren">(</span><em class="sig-param">gc</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Label.get_bounding_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a rectangular bounding box for the Label as (width,height).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Label.get_bounding_poly">
+<code class="sig-name descname">get_bounding_poly</code><span class="sig-paren">(</span><em class="sig-param">gc</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Label.get_bounding_poly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list [(x0,y0), (x1,y1),…] of tuples representing a
+polygon that bounds the label.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Label.get_width_height">
+<code class="sig-name descname">get_width_height</code><span class="sig-paren">(</span><em class="sig-param">gc</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Label.get_width_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the width and height of the label, in the rotated frame of
+reference.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.line_spacing">
+<code class="sig-name descname">line_spacing</code><em class="property"> = Int(5)</em><a class="headerlink" href="#chaco.api.Label.line_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of pixels of spacing between lines of text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.margin">
+<code class="sig-name descname">margin</code><em class="property"> = Int(2)</em><a class="headerlink" href="#chaco.api.Label.margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of pixels of margin around the label, for both X and Y dimensions.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.max_width">
+<code class="sig-name descname">max_width</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.Label.max_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of pixels to limit the width of the label to. Lines which are
+too long will be broken to fit on word boundaries. Line width is
+calculated without considering the value of <cite>margin</cite>.
+A <cite>max_width</cite> of 0.0 means that lines will not be broken.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.rotate_angle">
+<code class="sig-name descname">rotate_angle</code><em class="property"> = Float(0)</em><a class="headerlink" href="#chaco.api.Label.rotate_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The angle of rotation of the label.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Label.text">
+<code class="sig-name descname">text</code><em class="property"> = Str</em><a class="headerlink" href="#chaco.api.Label.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label text.  Carriage returns (n) are always connverted into
+line breaks.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="plotlabel">
+<h2><a class="reference internal" href="#chaco.api.PlotLabel" title="chaco.api.PlotLabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotLabel</span></code></a><a class="headerlink" href="#plotlabel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.PlotLabel">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">PlotLabel</code><span class="sig-paren">(</span><em class="sig-param">text=''</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
+<p>A label used by plots.</p>
+<p>This class wraps a simple Label instance, and delegates some traits to it.</p>
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.angle">
+<code class="sig-name descname">angle</code><em class="property"> = DelegatesTo(&quot;_label&quot;, &quot;rotate_angle&quot;)</em><a class="headerlink" href="#chaco.api.PlotLabel.angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The angle of rotation of the label.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.color">
+<code class="sig-name descname">color</code><em class="property"> = DelegatesTo(&quot;_label&quot;)</em><a class="headerlink" href="#chaco.api.PlotLabel.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the label text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.PlotLabel.do_layout">
+<code class="sig-name descname">do_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotLabel.do_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells this component to do layout.</p>
+<p>Overrides PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.draw_layer">
+<code class="sig-name descname">draw_layer</code><em class="property"> = &quot;plot&quot;</em><a class="headerlink" href="#chaco.api.PlotLabel.draw_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>By default, this acts like a component and will render on the main
+“plot” layer unless its <strong>component</strong> attribute gets set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.font">
+<code class="sig-name descname">font</code><em class="property"> = LabelDelegate</em><a class="headerlink" href="#chaco.api.PlotLabel.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font for the label text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.PlotLabel.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotLabel.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the label’s preferred size.</p>
+<p>Overrides PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.hjustify">
+<code class="sig-name descname">hjustify</code><em class="property"> = Enum(&quot;center&quot;, &quot;left&quot;, &quot;right&quot;)</em><a class="headerlink" href="#chaco.api.PlotLabel.hjustify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Horizontal justification used if the label has more horizontal space
+than it needs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.PlotLabel.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PlotLabel.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this label overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.overlay_position">
+<code class="sig-name descname">overlay_position</code><em class="property"> = Trait(&quot;outside top&quot;, Str, None)</em><a class="headerlink" href="#chaco.api.PlotLabel.overlay_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of this label relative to the object it is overlaying.
+Can be “top”, “left”, “right”, “bottom”, and optionally can be preceeded
+by the words “inside” or “outside”, separated by a space.  If “inside”
+and “outside” are not provided, then defaults to “outside”.
+.. rubric:: Examples</p>
+<p>inside top
+outside right</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.resizable">
+<code class="sig-name descname">resizable</code><em class="property"> = &quot;h&quot;</em><a class="headerlink" href="#chaco.api.PlotLabel.resizable" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label has a fixed height and can be resized horizontally. (Overrides
+PlotComponent.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.text">
+<code class="sig-name descname">text</code><em class="property"> = LabelDelegate</em><a class="headerlink" href="#chaco.api.PlotLabel.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text of the label.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PlotLabel.vjustify">
+<code class="sig-name descname">vjustify</code><em class="property"> = Enum(&quot;center&quot;, &quot;bottom&quot;, &quot;top&quot;)</em><a class="headerlink" href="#chaco.api.PlotLabel.vjustify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vertical justification used if the label has more vertical space than it
+needs.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="legend">
+<h2><a class="reference internal" href="#chaco.api.Legend" title="chaco.api.Legend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code></a><a class="headerlink" href="#legend" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.Legend">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">Legend</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Legend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
+<p>A legend for a plot.</p>
+<dl class="attribute">
+<dt id="chaco.api.Legend.align">
+<code class="sig-name descname">align</code><em class="property"> = Enum(&quot;ur&quot;, &quot;ul&quot;, &quot;ll&quot;, &quot;lr&quot;)</em><a class="headerlink" href="#chaco.api.Legend.align" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of the legend with respect to its overlaid component.  (This
+attribute applies only if the legend is used as an overlay.)</p>
+<ul class="simple">
+<li><p>ur = Upper Right</p></li>
+<li><p>ul = Upper Left</p></li>
+<li><p>ll = Lower Left</p></li>
+<li><p>lr = Lower Right</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = white_color_trait</em><a class="headerlink" href="#chaco.api.Legend.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background color of the legend (overrides AbstractOverlay).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.border_padding">
+<code class="sig-name descname">border_padding</code><em class="property"> = Int(10)</em><a class="headerlink" href="#chaco.api.Legend.border_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of space between the content of the legend and the border.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.border_visible">
+<code class="sig-name descname">border_visible</code><em class="property"> = True</em><a class="headerlink" href="#chaco.api.Legend.border_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>The border is visible (overrides Enable Component).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.clip_to_component">
+<code class="sig-name descname">clip_to_component</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.api.Legend.clip_to_component" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the legend clip to the bounds it needs, or to its parent?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.color">
+<code class="sig-name descname">color</code><em class="property"> = black_color_trait</em><a class="headerlink" href="#chaco.api.Legend.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the text labels</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.composite_icon_renderer">
+<code class="sig-name descname">composite_icon_renderer</code><em class="property"> = Instance(AbstractCompositeIconRenderer)</em><a class="headerlink" href="#chaco.api.Legend.composite_icon_renderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The renderer that draws the icons for the legend.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.draw_layer">
+<code class="sig-name descname">draw_layer</code><em class="property"> = &quot;overlay&quot;</em><a class="headerlink" href="#chaco.api.Legend.draw_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The legend is drawn on the overlay layer of its parent (overrides
+PlotComponent).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.error_icon">
+<code class="sig-name descname">error_icon</code><em class="property"> = Enum(&quot;skip&quot;, &quot;blank&quot;, &quot;questionmark&quot;)</em><a class="headerlink" href="#chaco.api.Legend.error_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Action that the legend takes when it encounters a plot whose icon it
+cannot render:</p>
+<ul class="simple">
+<li><p>‘skip’: skip it altogether and don’t render its name</p></li>
+<li><p>‘blank’: render the name but leave the icon blank (color=self.bgcolor)</p></li>
+<li><p>‘questionmark’: render a “question mark” icon</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.font">
+<code class="sig-name descname">font</code><em class="property"> = KivaFont(&quot;modern 12&quot;)</em><a class="headerlink" href="#chaco.api.Legend.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font to use for the legend text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Legend.get_label_at">
+<code class="sig-name descname">get_label_at</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Legend.get_label_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the label object at (x,y)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Legend.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Legend.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the size and position of the legend based on the maximum size of
+the labels, the alignment, and position of the component to overlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.hide_invisible_plots">
+<code class="sig-name descname">hide_invisible_plots</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.Legend.hide_invisible_plots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not to hide plots that are not visible.  (This is checked during
+layout.)  This option <em>will</em> filter out the items in <strong>labels</strong> above, so
+if you absolutely, positively want to set the items that will always
+display in the legend, regardless of anything else, then you should turn
+this option off.  Otherwise, it usually makes sense that a plot renderer
+that is not visible will also not be in the legend.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.icon_bounds">
+<code class="sig-name descname">icon_bounds</code><em class="property"> = List([24, 24])</em><a class="headerlink" href="#chaco.api.Legend.icon_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the icon or marker area drawn next to the label.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.icon_spacing">
+<code class="sig-name descname">icon_spacing</code><em class="property"> = Int(5)</em><a class="headerlink" href="#chaco.api.Legend.icon_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Amount of spacing between each label and its icon.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.invisible_plot_alpha">
+<code class="sig-name descname">invisible_plot_alpha</code><em class="property"> = Float(0.33)</em><a class="headerlink" href="#chaco.api.Legend.invisible_plot_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>If hide_invisible_plots is False, we can still choose to render the names
+of invisible plots with an alpha.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Legend.is_in">
+<code class="sig-name descname">is_in</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Legend.is_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>overloads from parent class because legend alignment
+and padding does not cooperatate with the basic implementation</p>
+<p>This may just be caused byt a questionable implementation of the
+legend tool, but it works by adjusting the padding. The Component
+class implementation of is_in uses the outer positions which
+includes the padding</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.labels">
+<code class="sig-name descname">labels</code><em class="property"> = List</em><a class="headerlink" href="#chaco.api.Legend.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of labels to show and the order to show them in.  If this
+list is blank, then the keys of self.plots is used and displayed in
+alphabetical order.  Otherwise, only the items in the <strong>labels</strong>
+list are drawn in the legend.  Labels are ordered from top to bottom.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.line_spacing">
+<code class="sig-name descname">line_spacing</code><em class="property"> = Int(3)</em><a class="headerlink" href="#chaco.api.Legend.line_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of space between legend items.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.Legend.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.Legend.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Implements AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.plots">
+<code class="sig-name descname">plots</code><em class="property"> = Dict</em><a class="headerlink" href="#chaco.api.Legend.plots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map of labels (strings) to plot instances or lists of plot instances.  The
+Legend determines the appropriate rendering of each plot’s marker/line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.resizable">
+<code class="sig-name descname">resizable</code><em class="property"> = &quot;hv&quot;</em><a class="headerlink" href="#chaco.api.Legend.resizable" title="Permalink to this definition">¶</a></dt>
+<dd><p>The legend is not resizable (overrides PlotComponent).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.title">
+<code class="sig-name descname">title</code><em class="property"> = Str('')</em><a class="headerlink" href="#chaco.api.Legend.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional title string to show on the legend.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.title_at_top">
+<code class="sig-name descname">title_at_top</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.Legend.title_at_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, title is at top, if False then at bottom.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Legend.unified_draw">
+<code class="sig-name descname">unified_draw</code><em class="property"> = True</em><a class="headerlink" href="#chaco.api.Legend.unified_draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>The legend draws itself as in one pass when its parent is drawing
+the <strong>draw_layer</strong> (overrides PlotComponent).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tooltip">
+<h2><a class="reference internal" href="#chaco.api.ToolTip" title="chaco.api.ToolTip"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolTip</span></code></a><a class="headerlink" href="#tooltip" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ToolTip">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">ToolTip</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ToolTip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
+<p>An overlay that is a toolip.</p>
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.auto_adjust">
+<code class="sig-name descname">auto_adjust</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.ToolTip.auto_adjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the tooltip automatically reposition itself to remain visible
+and unclipped on its overlaid component?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = white_color_trait</em><a class="headerlink" href="#chaco.api.ToolTip.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a white background color (overrides AbstractOverlay).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.border_padding">
+<code class="sig-name descname">border_padding</code><em class="property"> = Int(4)</em><a class="headerlink" href="#chaco.api.ToolTip.border_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ammount of space between the border and the text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.border_visible">
+<code class="sig-name descname">border_visible</code><em class="property"> = True</em><a class="headerlink" href="#chaco.api.ToolTip.border_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a visible border. (Overrides Enable Component.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ToolTip.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ToolTip.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the plot component.</p>
+<p>Overrides PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.font">
+<code class="sig-name descname">font</code><em class="property"> = KivaFont('modern 10')</em><a class="headerlink" href="#chaco.api.ToolTip.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font to render the tooltip.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.line_spacing">
+<code class="sig-name descname">line_spacing</code><em class="property"> = Int(4)</em><a class="headerlink" href="#chaco.api.ToolTip.line_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of pixels between lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.lines">
+<code class="sig-name descname">lines</code><em class="property"> = List</em><a class="headerlink" href="#chaco.api.ToolTip.lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of text strings to put in the tooltip.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ToolTip.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ToolTip.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the tooltip overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.resizable">
+<code class="sig-name descname">resizable</code><em class="property"> = &quot;&quot;</em><a class="headerlink" href="#chaco.api.ToolTip.resizable" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tooltip is a fixed size. (Overrides PlotComponent.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.rotate_angle">
+<code class="sig-name descname">rotate_angle</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.ToolTip.rotate_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Angle to rotate (counterclockwise) in degrees. NB this will <em>only</em>
+currently affect text, so probably only useful if borders and background
+are disabled</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ToolTip.text_color">
+<code class="sig-name descname">text_color</code><em class="property"> = black_color_trait</em><a class="headerlink" href="#chaco.api.ToolTip.text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the text in the tooltip</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="datalabel">
+<h2><a class="reference internal" href="#chaco.api.DataLabel" title="chaco.api.DataLabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabel</span></code></a><a class="headerlink" href="#datalabel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.DataLabel">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">DataLabel</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.DataLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tooltip.ToolTip</span></code></p>
+<p>A label on a point in data space.</p>
+<p>Optionally, an arrow is drawn to the point.</p>
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.arrow_color">
+<code class="sig-name descname">arrow_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.api.DataLabel.arrow_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the arrow.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.arrow_max_length">
+<code class="sig-name descname">arrow_max_length</code><em class="property"> = Float(inf)</em><a class="headerlink" href="#chaco.api.DataLabel.arrow_max_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum length of the arrow before it will be drawn.  By default,
+the arrow will be drawn regardless of how long it is.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.arrow_min_length">
+<code class="sig-name descname">arrow_min_length</code><em class="property"> = Float(0)</em><a class="headerlink" href="#chaco.api.DataLabel.arrow_min_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum length of the arrow before it will be drawn.  By default,
+the arrow will be drawn regardless of how short it is.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.arrow_root">
+<code class="sig-name descname">arrow_root</code><em class="property"> = Trait(&quot;auto&quot;, &quot;auto&quot;, &quot;top left&quot;, &quot;top right&quot;, &quot;bottom left&quot;, …</em><a class="headerlink" href="#chaco.api.DataLabel.arrow_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of the base of the arrow on the label.  If this
+is ‘auto’, then the label uses <strong>label_position</strong>.  Otherwise, it
+treats the label as if it were at the label position indicated by
+this attribute.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.arrow_size">
+<code class="sig-name descname">arrow_size</code><em class="property"> = Float(10)</em><a class="headerlink" href="#chaco.api.DataLabel.arrow_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The length of the arrowhead, in screen points (e.g., pixels).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.arrow_visible">
+<code class="sig-name descname">arrow_visible</code><em class="property"> = Bool(True)   # FIXME: replace with some sort of ArrowStyle</em><a class="headerlink" href="#chaco.api.DataLabel.arrow_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw an arrow from the label to the data point?  Only
+used if <strong>data_point</strong> is not None.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.clip_to_plot">
+<code class="sig-name descname">clip_to_plot</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.DataLabel.clip_to_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the label clip itself against the main plot area?  If not, then
+the label draws into the padding area (where axes typically reside).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.corner_radius">
+<code class="sig-name descname">corner_radius</code><em class="property"> = Float(10)</em><a class="headerlink" href="#chaco.api.DataLabel.corner_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>The radius (in screen coordinates) of the curved corners of the “bubble”.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.custom_symbol">
+<code class="sig-name descname">custom_symbol</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.api.DataLabel.custom_symbol" title="Permalink to this definition">¶</a></dt>
+<dd><p>The symbol to use if <strong>marker</strong> is set to “custom”. This attribute must
+be a compiled path for the given Kiva context.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.data_point">
+<code class="sig-name descname">data_point</code><em class="property"> = ArrayOrNone()</em><a class="headerlink" href="#chaco.api.DataLabel.data_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>The point in data space where this label should anchor itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.label_format">
+<code class="sig-name descname">label_format</code><em class="property"> = Str(&quot;(%(x)f, %(y)f)&quot;)</em><a class="headerlink" href="#chaco.api.DataLabel.label_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>The format string that determines the label’s text.  This string is
+formatted using a dict containing the keys ‘x’ and ‘y’, corresponding to
+data space values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.label_position">
+<code class="sig-name descname">label_position</code><em class="property"> = LabelPositionTrait</em><a class="headerlink" href="#chaco.api.DataLabel.label_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The location of the data label relative to the data point.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.label_style">
+<code class="sig-name descname">label_style</code><em class="property"> = Enum('box', 'bubble')</em><a class="headerlink" href="#chaco.api.DataLabel.label_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘box’ is a simple rectangular box, with an arrow that is a single line
+with an arrowhead at the data point.
+‘bubble’ can be given rounded corners (by setting <cite>corner_radius</cite>), and
+the ‘arrow’ is a thin triangular wedge with its point at the data point.
+When label_style is ‘bubble’, the following traits are ignored:
+arrow_size, arrow_color, arrow_root, and arrow_max_length.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.label_text">
+<code class="sig-name descname">label_text</code><em class="property"> = Str</em><a class="headerlink" href="#chaco.api.DataLabel.label_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text to show on the label, or above the coordinates for the label, if
+show_label_coords is True</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.marker">
+<code class="sig-name descname">marker</code><em class="property"> = MarkerTrait</em><a class="headerlink" href="#chaco.api.DataLabel.marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of marker to use.  This is a mapped trait using strings as the
+keys.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.marker_color">
+<code class="sig-name descname">marker_color</code><em class="property"> = ColorTrait(&quot;red&quot;)</em><a class="headerlink" href="#chaco.api.DataLabel.marker_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the inside of the marker.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.marker_line_color">
+<code class="sig-name descname">marker_line_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.api.DataLabel.marker_line_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color out of the border drawn around the marker.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.marker_line_width">
+<code class="sig-name descname">marker_line_width</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.api.DataLabel.marker_line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness, in pixels, of the outline to draw around the marker.
+If this is 0, no outline will be drawn.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.marker_size">
+<code class="sig-name descname">marker_size</code><em class="property"> = Int(4)</em><a class="headerlink" href="#chaco.api.DataLabel.marker_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pixel size of the marker (doesn’t include the thickness of the
+outline).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.marker_visible">
+<code class="sig-name descname">marker_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.DataLabel.marker_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark the point on the data that this label refers to?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.DataLabel.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.DataLabel.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the tooltip overlaid on another component.</p>
+<p>Overrides and extends ToolTip.overlay()</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.show_label_coords">
+<code class="sig-name descname">show_label_coords</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.DataLabel.show_label_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag whether to show coordinates with the label or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.xmid">
+<code class="sig-name descname">xmid</code><em class="property"> = Property(Float, depends_on=['x', 'x2'])</em><a class="headerlink" href="#chaco.api.DataLabel.xmid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The center x position (average of x and x2)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.DataLabel.ymid">
+<code class="sig-name descname">ymid</code><em class="property"> = Property(Float, depends_on=['y', 'y2'])</em><a class="headerlink" href="#chaco.api.DataLabel.ymid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The center y position (average of y and y2)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lassooverlay">
+<h2><a class="reference internal" href="#chaco.api.LassoOverlay" title="chaco.api.LassoOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">LassoOverlay</span></code></a><a class="headerlink" href="#lassooverlay" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.LassoOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">LassoOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.LassoOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
+<p>Draws a lasso selection region on top of a plot.</p>
+<p>LassoOverlay gets its data from a LassoSelection.</p>
+<dl class="attribute">
+<dt id="chaco.api.LassoOverlay.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = 'clear'</em><a class="headerlink" href="#chaco.api.LassoOverlay.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background color (overrides AbstractOverlay).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.LassoOverlay.lasso_selection">
+<code class="sig-name descname">lasso_selection</code><em class="property"> = Instance('chaco.tools.lasso_selection.LassoSelection')</em><a class="headerlink" href="#chaco.api.LassoOverlay.lasso_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The LassoSelection that provides the data for this overlay.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.LassoOverlay.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">other_component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.LassoOverlay.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Implements AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.LassoOverlay.selection_alpha">
+<code class="sig-name descname">selection_alpha</code><em class="property"> = Float(0.8)</em><a class="headerlink" href="#chaco.api.LassoOverlay.selection_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transparency level for the selection fill color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.LassoOverlay.selection_border_color">
+<code class="sig-name descname">selection_border_color</code><em class="property"> = ColorTrait('dodgerblue')</em><a class="headerlink" href="#chaco.api.LassoOverlay.selection_border_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The border color for the selection region.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.LassoOverlay.selection_border_dash">
+<code class="sig-name descname">selection_border_dash</code><em class="property"> = LineStyle</em><a class="headerlink" href="#chaco.api.LassoOverlay.selection_border_dash" title="Permalink to this definition">¶</a></dt>
+<dd><p>The line style of the selection border.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.LassoOverlay.selection_border_width">
+<code class="sig-name descname">selection_border_width</code><em class="property"> = Float(2.0)</em><a class="headerlink" href="#chaco.api.LassoOverlay.selection_border_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the selection border.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.LassoOverlay.selection_fill_color">
+<code class="sig-name descname">selection_fill_color</code><em class="property"> = ColorTrait('lightskyblue')</em><a class="headerlink" href="#chaco.api.LassoOverlay.selection_fill_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The fill color for the selection region.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="colorbar">
+<h2><a class="reference internal" href="#chaco.api.ColorBar" title="chaco.api.ColorBar"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorBar</span></code></a><a class="headerlink" href="#colorbar" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ColorBar">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">ColorBar</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_plot_renderer.AbstractPlotRenderer</span></code></p>
+<p>A color bar for a color-mapped plot.</p>
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.axis_visible">
+<code class="sig-name descname">axis_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.ColorBar.axis_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is there a visible axis on the colorbar?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = 'transparent'</em><a class="headerlink" href="#chaco.api.ColorBar.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the default background color trait in PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.border_visible">
+<code class="sig-name descname">border_visible</code><em class="property"> = True</em><a class="headerlink" href="#chaco.api.ColorBar.border_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>The border is visible (overrides enable.Component).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.color_mapper">
+<code class="sig-name descname">color_mapper</code><em class="property"> = Property #Instance(ColorMapper)</em><a class="headerlink" href="#chaco.api.ColorBar.color_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen mapper for color data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.direction">
+<code class="sig-name descname">direction</code><em class="property"> = Enum('normal', 'flipped')</em><a class="headerlink" href="#chaco.api.ColorBar.direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the bar go left-to-right or bottom-to-top (normal) or the reverse?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.grid_visible">
+<code class="sig-name descname">grid_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.ColorBar.grid_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is there a visible grid on the colorbar?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.index">
+<code class="sig-name descname">index</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.ColorBar.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional index data source for generic tools to attach metadata to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.index_mapper">
+<code class="sig-name descname">index_mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.api.ColorBar.index_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen mapper for index data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.orientation">
+<code class="sig-name descname">orientation</code><em class="property"> = Enum('v', 'h')</em><a class="headerlink" href="#chaco.api.ColorBar.orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The orientation of the index axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.origin">
+<code class="sig-name descname">origin</code><em class="property"> = Enum('bottom left', 'top left', 'bottom right', 'top right')</em><a class="headerlink" href="#chaco.api.ColorBar.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Faux origin for the axis to look at</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.plot">
+<code class="sig-name descname">plot</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.api.ColorBar.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional color-mapped plot that this color bar references.  If specified,
+the plot must have a <strong>color_mapper</strong> attribute.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.use_draw_order">
+<code class="sig-name descname">use_draw_order</code><em class="property"> = True</em><a class="headerlink" href="#chaco.api.ColorBar.use_draw_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw layers in “draw order”</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.value_mapper">
+<code class="sig-name descname">value_mapper</code><em class="property"> = Property(depends_on='color_mapper')</em><a class="headerlink" href="#chaco.api.ColorBar.value_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen mapper for value data (synonym for color_mapper)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.width">
+<code class="sig-name descname">width</code><em class="property"> = 40</em><a class="headerlink" href="#chaco.api.ColorBar.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default width is 40 pixels (overrides enable.CoordinateBox)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.x_mapper">
+<code class="sig-name descname">x_mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.ColorBar.x_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>index_mapper</strong> or None, depending on
+the orientation of the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorBar.y_mapper">
+<code class="sig-name descname">y_mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.ColorBar.y_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to either <strong>index_mapper</strong> or None, depending on
+the orientation of the plot.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="textboxoverlay">
+<h2><a class="reference internal" href="#chaco.api.TextBoxOverlay" title="chaco.api.TextBoxOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBoxOverlay</span></code></a><a class="headerlink" href="#textboxoverlay" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.TextBoxOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">TextBoxOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TextBoxOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
+<p>Draws a box with text in it.</p>
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.align">
+<code class="sig-name descname">align</code><em class="property"> = Enum(&quot;ur&quot;, &quot;ul&quot;, &quot;ll&quot;, &quot;lr&quot;)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.align" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alignment of the text in the box:</p>
+<ul class="simple">
+<li><p>“ur”: upper right</p></li>
+<li><p>“ul”: upper left</p></li>
+<li><p>“ll”: lower left</p></li>
+<li><p>“lr”: lower right</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Trait(1.0, None, Float)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The alpha value to apply to <strong>bgcolor</strong></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.alternate_position">
+<code class="sig-name descname">alternate_position</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.alternate_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>This allows subclasses to specify an alternate position for the root
+of the text box.  Must be a sequence of length 2.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.bgcolor">
+<code class="sig-name descname">bgcolor</code><em class="property"> = ColorTrait(&quot;transparent&quot;)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.bgcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background color for the box (overrides AbstractOverlay).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.border_color">
+<code class="sig-name descname">border_color</code><em class="property"> = ColorTrait(&quot;dodgerblue&quot;)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.border_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the outside box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.border_size">
+<code class="sig-name descname">border_size</code><em class="property"> = Int(1)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.border_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness of box border.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.border_visible">
+<code class="sig-name descname">border_visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.border_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>The border visibility. Defaults to true to duplicate previous behavior.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.font">
+<code class="sig-name descname">font</code><em class="property"> = KivaFont(&quot;modern 12&quot;)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font to use for the text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.max_text_width">
+<code class="sig-name descname">max_text_width</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.max_text_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum width of the displayed text. This affects the width of the
+text only, not the text box, which includes margins around the text and
+<cite>padding</cite>.
+A <cite>max_text_width</cite> of 0.0 means that the width will not be restricted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.TextBoxOverlay.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TextBoxOverlay.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the box overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.padding">
+<code class="sig-name descname">padding</code><em class="property"> = Int(5)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of pixels of padding around the text within the box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.text">
+<code class="sig-name descname">text</code><em class="property"> = Str</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text to display in the box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.TextBoxOverlay.text_color">
+<code class="sig-name descname">text_color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.api.TextBoxOverlay.text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the text.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="scatterinspectoroverlay">
+<h2><a class="reference internal" href="#chaco.api.ScatterInspectorOverlay" title="chaco.api.ScatterInspectorOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterInspectorOverlay</span></code></a><a class="headerlink" href="#scatterinspectoroverlay" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ScatterInspectorOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">ScatterInspectorOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ScatterInspectorOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
+<p>Highlights points on a scatterplot as the mouse moves over them.
+Can render the points in a different style, as well as display a
+DataLabel.</p>
+<p>Used in conjuction with ScatterInspector.</p>
+<dl class="attribute">
+<dt id="chaco.api.ScatterInspectorOverlay.hover_metadata_name">
+<code class="sig-name descname">hover_metadata_name</code><em class="property"> = Str('hover')</em><a class="headerlink" href="#chaco.api.ScatterInspectorOverlay.hover_metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The style to use when a point is hovered over</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ScatterInspectorOverlay.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ScatterInspectorOverlay.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ScatterInspectorOverlay.selection_metadata_name">
+<code class="sig-name descname">selection_metadata_name</code><em class="property"> = Str('selections')</em><a class="headerlink" href="#chaco.api.ScatterInspectorOverlay.selection_metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The style to use when a point has been selected by a click</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Visual Components</a><ul>
+<li><a class="reference internal" href="#abstractplotrenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code></a></li>
+<li><a class="reference internal" href="#abstractoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractOverlay</span></code></a></li>
+<li><a class="reference internal" href="#baseplotframe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotFrame</span></code></a></li>
+<li><a class="reference internal" href="#crossplotframe"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossPlotFrame</span></code></a></li>
+<li><a class="reference internal" href="#dataview"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataView</span></code></a></li>
+<li><a class="reference internal" href="#simpleplotframe"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimplePlotFrame</span></code></a></li>
+<li><a class="reference internal" href="#plotcomponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotComponent</span></code></a></li>
+<li><a class="reference internal" href="#plotgraphicscontext"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGraphicsContext</span></code></a></li>
+<li><a class="reference internal" href="#label"><code class="xref py py-class docutils literal notranslate"><span class="pre">Label</span></code></a></li>
+<li><a class="reference internal" href="#plotlabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotLabel</span></code></a></li>
+<li><a class="reference internal" href="#legend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code></a></li>
+<li><a class="reference internal" href="#tooltip"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolTip</span></code></a></li>
+<li><a class="reference internal" href="#datalabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabel</span></code></a></li>
+<li><a class="reference internal" href="#lassooverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">LassoOverlay</span></code></a></li>
+<li><a class="reference internal" href="#colorbar"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorBar</span></code></a></li>
+<li><a class="reference internal" href="#textboxoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBoxOverlay</span></code></a></li>
+<li><a class="reference internal" href="#scatterinspectoroverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterInspectorOverlay</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="containers.html"
+                        title="previous chapter">Containers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="renderers.html"
+                        title="next chapter">Renderers</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/visual_components.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="renderers.html" title="Renderers"
+             >next</a></li>
+        <li class="right" >
+          <a href="containers.html" title="Containers"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" >Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Visual Components</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

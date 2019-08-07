@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Quickstart &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="_static/et.ico"/>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials, webinars, and examples" href="user_manual/tutorials_and_examples.html" />
+    <link rel="prev" title="Chaco 4.8" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user_manual/tutorials_and_examples.html" title="Tutorials, webinars, and examples"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index.html" title="Chaco 4.8"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Chaco 4.8</a> &#187;</li>
+  
+    <li><a href="#">Quickstart</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 51%" />
+<col style="width: 49%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/simple_line.png"><img alt="_images/simple_line.png" class="align-center" src="_images/simple_line.png" style="height: 300px;" /></a>
+</td>
+<td><a class="reference internal image-reference" href="_images/scalar_function.png"><img alt="_images/scalar_function.png" class="align-center" src="_images/scalar_function.png" style="height: 300px;" /></a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This section is meant to help users on well-supported platforms and common
+Python environments get started using Chaco as quickly as possible.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>There are several ways to get Chaco. The easiest way is through <a class="reference external" href="https://www.enthought.com/products/canopy">Enthought
+Canopy (Canopy)</a> (formerly EPD)
+which is available for Windows, Linux and Mac OSX and also provides many other
+useful packages. Chaco may also be available through a package manager on your
+platform, such as apt on Ubuntu, yum on Redhat or
+<a class="reference external" href="http://www.macports.org/">MacPorts</a> on OS X.  You can also build Chaco from
+its <a class="reference external" href="https://github.com/enthought/chaco">source code</a>, but because of the
+dependencies, the easiest way by far is to install Canopy.</p>
+<div class="section" id="dependencies">
+<span id="id1"></span><h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.python.org">Python</a> 2.7 or later</p></li>
+<li><p><a class="reference external" href="https://github.com/enthought/traits">Traits</a>, an event notification
+framework</p></li>
+<li><p><a class="reference external" href="https://github.com/enthought/enable">Kiva</a>, part of the enable project,
+for rendering 2-D graphics to a variety of backends across platforms</p></li>
+<li><p><a class="reference external" href="https://github.com/enthought/enable/">Enable</a>, a framework for writing
+interactive visual components, and for abstracting away GUI-toolkit-specific
+details of mouse and keyboard handling.</p></li>
+<li><p><a class="reference external" href="http://numpy.scipy.org/">NumPy</a>, for dealing efficiently with large
+datasets</p></li>
+<li><p>Either <a class="reference external" href="http://www.wxpython.org/">wxPython</a>, <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/intro">PyQt</a> (GPL or
+Commercial license) or <a class="reference external" href="http://www.pyside.org/">PySide</a> (LGPL license) to
+display interactive plots.</p></li>
+</ul>
+</div>
+<div class="section" id="installing-chaco-with-canopy">
+<h3>Installing Chaco with Canopy<a class="headerlink" href="#installing-chaco-with-canopy" title="Permalink to this headline">¶</a></h3>
+<p>Chaco, the rest of the <a class="reference external" href="http://code.enthought.com/">Enthought Tool Suite</a>,
+and a lot more are bundled with Enthought Canopy (formerly EPD).  Getting
+Canopy gives you a one-click install of Chaco
+and all its dependencies at once; however, these packages will be linked to a
+new instance of Python. Canopy Express is free for all users and
+contains all that you need to use Chaco.</p>
+<p>To get Canopy, go to the <a class="reference external" href="http://store.enthought.com/">Canopy download page</a>, select the desired bundle (Express, Full,
+TriplePlay) and get the appropriate version for your platform.  After running
+the installer, you will have a working version of Chaco and several examples.</p>
+</div>
+<div class="section" id="building-chaco">
+<h3>Building Chaco<a class="headerlink" href="#building-chaco" title="Permalink to this headline">¶</a></h3>
+<p>Building Chaco on your machine requires you to build Chaco and each of its
+dependencies, but it has the advantage of installing Chaco on top of the Python
+instance you already have installed.  The build process may be challenging and
+will require you to have a C compiler, SWIG, Cython and several development
+libraries installed.</p>
+<p>To do this, you can either:</p>
+<ol class="arabic">
+<li><p>Install Chaco and its <a class="reference internal" href="#dependencies"><span class="std std-ref">Dependencies</span></a> from <a class="reference external" href="http://pypi.python.org/pypi">PyPI</a> using
+<a class="reference external" href="http://www.pip-installer.org/en/latest/">pip</a> or using <a class="reference external" href="http://packages.python.org/distribute/easy_install.html">easy_install</a> (part of
+setuptools). For example</p>
+<p><strong class="command">pip install chaco</strong></p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have already installed Chaco and just want to update to the newest
+version, use</p>
+<blockquote>
+<div><p><strong class="command">pip install --upgrade chaco</strong></p>
+</div></blockquote>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Or, download the source from the <a class="reference external" href="https://github.com/enthought/chaco">Chaco GitHub repository</a> or alternatively as a part of the
+full <a class="reference external" href="https://github.com/enthought/ets">Enthought Tool Suite</a>.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="built-in-examples">
+<h2>Built-in Examples<a class="headerlink" href="#built-in-examples" title="Permalink to this headline">¶</a></h2>
+<p>Chaco ships with several examples for testing your installation and to show you
+what Chaco can do. Almost all of the examples are stand-alone files that you
+can run individually, from any location. Depending on how you installed Chaco,
+you may or may not have the examples already.</p>
+<div class="section" id="location">
+<h3>Location<a class="headerlink" href="#location" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>If you installed Chaco as part of Canopy, the location of the examples depends
+on your platform:</p>
+<ul class="simple">
+<li><p>On Windows, they are in the Examples\ subdirectory of your installation
+location. This is typically
+<code class="file docutils literal notranslate"><span class="pre">C:\Users\&lt;username&gt;\AppData\Local\Enthought\Canopy\User\Examples\Chaco-&lt;version&gt;</span></code>.
+These examples can be browsed from the start menu, by clicking
+<span class="menuselection">Start ‣ Applications ‣ Enthought Canopy ‣ Example Browser</span>.</p></li>
+<li><p>On Linux, they are in the
+<code class="file docutils literal notranslate"><span class="pre">Enthought/Canopy_XXbit/User/Examples/Chaco-&lt;version&gt;</span></code>
+subdirectory of your installation location.</p></li>
+<li><p>On Mac OS X, they are in the
+<code class="file docutils literal notranslate"><span class="pre">/Library/Enthought/Canopy_XXbit/User/Examples/chaco-&lt;version&gt;</span></code>
+directory.</p></li>
+</ul>
+</li>
+<li><p>If you downloaded and installed Chaco from source (from GitHub or via the
+PyPI tar.gz file), the examples are located in the <code class="file docutils literal notranslate"><span class="pre">examples/</span></code>
+subdirectory inside the root of the Chaco source tree, next to <code class="file docutils literal notranslate"><span class="pre">docs/</span></code>
+and the <code class="file docutils literal notranslate"><span class="pre">chaco/</span></code> directories.</p></li>
+<li><p>If you don’t know how Chaco was installed, you can download the latest
+versions of examples individually from github:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples">https://github.com/enthought/chaco/tree/master/examples</a></p>
+</div></blockquote>
+</li>
+</ol>
+<p>Chaco examples can be found in the <code class="file docutils literal notranslate"><span class="pre">examples/demo/</span></code> and
+<code class="file docutils literal notranslate"><span class="pre">examples/tutorials/</span></code> directories. Some are classified by themes and
+located in separate directories.  Almost all of the Chaco examples are
+standalone files that can be run individually. We will first show how to
+execute them from the command line, and then we will show how to run Chaco in
+an interactive way from IPython. This “shell” mode will be more familiar to
+Matplotlib or Matlab users.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some of these examples can be visualized in our
+<a class="reference external" href="http://code.enthought.com/projects/chaco/gallery.php">Chaco gallery</a>.</p>
+</div>
+</div>
+<div class="section" id="first-plots-from-the-command-line">
+<h3>First plots from the command line<a class="headerlink" href="#first-plots-from-the-command-line" title="Permalink to this headline">¶</a></h3>
+<p>From the <code class="file docutils literal notranslate"><span class="pre">examples/demo</span></code> directory, run the <code class="docutils literal notranslate"><span class="pre">simple_line</span></code> example:</p>
+<blockquote>
+<div><p><strong class="command">python simple_line.py</strong></p>
+</div></blockquote>
+<p>This opens a plot of several Bessel functions with a legend.</p>
+<blockquote>
+<div><img alt="_images/simple_line.png" src="_images/simple_line.png" />
+</div></blockquote>
+<p>You can interact with the plot in several ways:</p>
+<ul>
+<li><p>To pan the plot, hold down the left mouse button inside the plot area (but
+not on the legend) and drag the mouse.</p></li>
+<li><p>To zoom the plot:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Mouse wheel: scroll up to zoom in, and scroll down to zoom out (or the
+reverse you’re on a version of OS X with ‘natural scrolling’).</p></li>
+<li><p>Zoom box: Press <kbd class="kbd docutils literal notranslate">z</kbd>, and then draw a box region to zoom in on.
+(There is no box-based zoom out.) Press <kbd class="kbd docutils literal notranslate">Ctrl-Left</kbd> and
+<kbd class="kbd docutils literal notranslate">Ctrl-Right</kbd> to go back and forward in your zoom box history.</p></li>
+<li><p>Drag: hold down the right mouse button and drag the mouse up or down. Up
+zooms in, and down zooms out.</p></li>
+<li><p>For any of the above, press <kbd class="kbd docutils literal notranslate">Escape</kbd> to reset the zoom to the
+original view.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>To move the legend, hold down the right mouse button inside the legend and
+drag it around. Note that you can move the legend outside of the plot area.</p></li>
+<li><p>To exit the plot, click the “close window” button on the window frame or (on
+Mac) choose the Quit option on the Python menu.  Alternatively, can you press
+<kbd class="kbd docutils literal notranslate">Ctrl-C</kbd> in the terminal.</p></li>
+</ul>
+<p>You can run most of the examples in the the <code class="file docutils literal notranslate"><span class="pre">examples/demo/basic/</span></code>
+directory and the <code class="file docutils literal notranslate"><span class="pre">examples/demo/shell/</span></code> directory.  The
+<code class="file docutils literal notranslate"><span class="pre">examples/demo/advanced/</span></code> directory has some examples that require
+additional data or packages. In particular,</p>
+<ul class="simple">
+<li><p><code class="file docutils literal notranslate"><span class="pre">spectrum.py</span></code> requires that you have PyAudio installed and a working
+microphone.</p></li>
+<li><p><code class="file docutils literal notranslate"><span class="pre">data_cube.py</span></code> needs to download about 7.3mb of data from the Internet
+the first time it is executed, so you must have a working Internet
+connection. Once the data is downloaded, you can save it so you can run the
+example offline in the future.</p></li>
+</ul>
+<p>For detailed information about each built-in example, see the <a class="reference internal" href="user_manual/annotated_examples.html#examples"><span class="std std-ref">Annotated Examples</span></a>
+section.</p>
+</div>
+<div class="section" id="first-plots-from-ipython">
+<h3>First plots from IPython<a class="headerlink" href="#first-plots-from-ipython" title="Permalink to this headline">¶</a></h3>
+<p>While all of the Chaco examples can be launched from the command line using the
+standard Python interpreter, if you have IPython installed, you can poke around
+them in a more interactive fashion.</p>
+<p>Chaco provides a subpackage, currently named the “Chaco Shell”, for doing
+command-line plotting like Matlab or Matplotlib.  The examples in the
+<code class="file docutils literal notranslate"><span class="pre">examples/demo/shell/</span></code> directory use this subpackage, and they are
+particularly amenable to exploration with IPython.</p>
+<p>The first example we’ll look at is the <code class="file docutils literal notranslate"><span class="pre">lines.py</span></code> example.  First, we’ll
+run it using the standard Python interpreter:</p>
+<blockquote>
+<div><p><strong class="command">python lines.py</strong></p>
+</div></blockquote>
+<p>This shows two overlapping line plots.</p>
+<img alt="_images/lines.png" src="_images/lines.png" />
+<p>You can interact with this plot just as in the previous section.</p>
+<p>Now close the plot, and start IPython with the <code class="docutils literal notranslate"><span class="pre">--gui=qt</span></code> <a class="footnote-reference brackets" href="#guiqt" id="id3">1</a> or
+<code class="docutils literal notranslate"><span class="pre">--gui=wx</span></code> option:</p>
+<blockquote>
+<div><p><strong class="command">ipython --gui=qt</strong></p>
+</div></blockquote>
+<p>This tells IPython to start a Qt or Wx mainloop in a background thread.  Now
+run the previous example again:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">run</span> <span class="n">lines</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>This displays the plot window, but gives you another IPython prompt.  You can
+now use various commands from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">chaco.shell</span></code> package to interact with
+the plot.</p>
+<p>Import the shell commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">chaco.shell</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Set the X-axis title:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">xtitle</span><span class="p">(</span><span class="s2">&quot;X data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Toggle the legend:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>After running these commands, your plot looks like this:</p>
+<img alt="_images/lines_final.png" src="_images/lines_final.png" />
+<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">chaco_commands()</span></code> function display a list of commands with brief
+descriptions.</p>
+<p>You can explore the Chaco object hierarchy, as well. The <code class="xref py py-mod docutils literal notranslate"><span class="pre">chaco.shell</span></code>
+commands are just convenience functions that wrap a rich object hierarchy that
+comprise the actual plot. See the <a class="reference internal" href="user_manual/tutorial_ipython.html#tutorial-ipython"><span class="std std-ref">Exploring Chaco with IPython</span></a> section for
+information on all you can do with Chaco from within IPython.</p>
+</div>
+</div>
+<div class="section" id="chaco-plot-embedded-in-a-traits-application">
+<h2>Chaco plot embedded in a Traits application<a class="headerlink" href="#chaco-plot-embedded-in-a-traits-application" title="Permalink to this headline">¶</a></h2>
+<p>The previous section showed how Chaco can be used interactively similarly to
+<cite>Matlab</cite> or Matplotlib’s <cite>pyplot</cite> package</p>
+<p>Now, let’s create, from scratch, the simplest possible Chaco plot which is
+embedded inside a <a class="reference external" href="https://github.com/enthought/traits">Traits</a> application. This will require more work but will
+represent the basis for a potential large-scale, custom and powerful rich
+client application. this is really what Chaco has been written for.</p>
+<p>First, some imports to bring in necessary components:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">chaco.api</span> <span class="k">import</span> <span class="n">ArrayPlotData</span><span class="p">,</span> <span class="n">Plot</span>
+<span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="k">import</span> <span class="n">ComponentEditor</span>
+
+<span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
+</pre></div>
+</div>
+<p>The imports from <code class="xref py py-mod docutils literal notranslate"><span class="pre">chaco</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">enable</span></code> support the creation of the
+plot.  The imports from <code class="xref py py-mod docutils literal notranslate"><span class="pre">traits</span></code> bring in components to embed the plot
+inside a Traits application. (Refer to the <a class="reference external" href="http://github.enthought.com/traits/">Traits documentation</a> for more details about building an
+interactive application using Traits.) Now let’s create a Traits class with a
+view that contains only one element: a Chaco plot inside a slightly customized
+window:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyPlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span> <span class="o">=</span> <span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span> <span class="o">=</span> <span class="kc">False</span><span class="p">),</span>
+                       <span class="n">width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+                       <span class="n">resizable</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;My line plot&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A few options have been set to control the window containing the plot.  Now,
+when the plot is created, we would like to pass in our data. Let’s assume the
+data is a set of points with coordinates contained in two NumPy arrays <code class="docutils literal notranslate"><span class="pre">x</span></code>
+and <cite>y</cite>.  So, adding an <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method to create the Plot object looks as
+follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyPlot</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">Instance</span><span class="p">(</span><span class="n">Plot</span><span class="p">)</span>
+    <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span> <span class="o">=</span> <span class="n">ComponentEditor</span><span class="p">(),</span> <span class="n">show_label</span> <span class="o">=</span> <span class="kc">False</span><span class="p">),</span>
+                       <span class="n">width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+                       <span class="n">resizable</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;My line plot&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plotdata</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;sin(x)*x**3&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span> <span class="o">=</span> <span class="n">plot</span>
+</pre></div>
+</div>
+<p>Since it inherits from HasTraits, the new class can use all the power of
+Traits, and the call to super() in its <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method makes sure this
+object possesses the attributes and methods of its parent class.  Now let’s use
+our Traits object. Below, we generate some data, pass it to an instance of
+MyPlot and call configure_traits to create the UI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">lineplot</span> <span class="o">=</span> <span class="n">MyPlot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">lineplot</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The result should look like</p>
+<img alt="_images/mylineplot.png" src="_images/mylineplot.png" />
+<p>This might look like a lot of code to visualize a function, but this is a
+relatively simple basis on top of which we can build full-featured applications
+with custom UIs and custom tools. For example, the Traits object allows you to
+create controls for your plot at a very high level, add these controls to the
+UI with very little work, and add listeners to update the plot when the data
+changes.  Chaco also allows you to create custom tools to interact with the
+plot and overlays that make these tools intuitive and visually appealing.</p>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="guiqt"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>Starting from IPython 0.12, it is possible to use the Qt backend
+with <code class="docutils literal notranslate"><span class="pre">--gui=qt</span></code>. Make sure that the environment variable <code class="docutils literal notranslate"><span class="pre">QT_API</span></code>
+is set correctly, as described <a class="reference external" href="http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside">here</a></p>
+</dd>
+</dl>
+</div>
+<div class="section" id="where-to-learn-more">
+<h2>Where to learn more?<a class="headerlink" href="#where-to-learn-more" title="Permalink to this headline">¶</a></h2>
+<p>To learn more about the power of Chaco and to build powerful rich client
+applications with custom visualizations, consider going over the
+<a class="reference internal" href="user_manual/tutorials_and_examples.html#tutorials"><span class="std std-ref">Tutorials, webinars, and examples</span></a> section or learning from the <a class="reference internal" href="user_manual/index.html#user-guide"><span class="std std-ref">User guide</span></a>.</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>As part of the <a class="reference external" href="http://code.enthought.com/">Enthought Tool Suite</a>, Chaco is
+free and open source under the BSD license.</p>
+</div>
+<div class="section" id="reporting-bugs-and-contributing">
+<h2>Reporting bugs and contributing<a class="headerlink" href="#reporting-bugs-and-contributing" title="Permalink to this headline">¶</a></h2>
+<p>Since Chaco is open source and hosted on
+<a class="reference external" href="https://github.com/enthought/chaco">Github</a>, the development version can
+always be checked out from Github, forked, and modified at will. When a bug is
+found, please submit an issue in the
+<a class="reference external" href="https://github.com/enthought/chaco/issues">issue page</a>. If you would like to
+share a bug fix or a new feature, simply submit a Pull Request from your fork.
+Don’t forget to specify very clearly what code to run to reproduce the issue,
+what the logic of the fix is and to add one or more unit tests to ensure future
+stability. The Pull Request description can and often needs to contain
+screenshots of the issue or the fix.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Quickstart</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#installing-chaco-with-canopy">Installing Chaco with Canopy</a></li>
+<li><a class="reference internal" href="#building-chaco">Building Chaco</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#built-in-examples">Built-in Examples</a><ul>
+<li><a class="reference internal" href="#location">Location</a></li>
+<li><a class="reference internal" href="#first-plots-from-the-command-line">First plots from the command line</a></li>
+<li><a class="reference internal" href="#first-plots-from-ipython">First plots from IPython</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chaco-plot-embedded-in-a-traits-application">Chaco plot embedded in a Traits application</a></li>
+<li><a class="reference internal" href="#where-to-learn-more">Where to learn more?</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#reporting-bugs-and-contributing">Reporting bugs and contributing</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Chaco 4.8</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="user_manual/tutorials_and_examples.html"
+                        title="next chapter">Tutorials, webinars, and examples</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/quickstart.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user_manual/tutorials_and_examples.html" title="Tutorials, webinars, and examples"
+             >next</a></li>
+        <li class="right" >
+          <a href="index.html" title="Chaco 4.8"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Chaco 4.8</a> &#187;</li>
+  
+    <li><a href="#">Quickstart</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

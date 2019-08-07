@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Data Sources &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Data Ranges" href="data_ranges.html" />
+    <link rel="prev" title="Commonly Used Modules and Classes" href="../modules_and_classes.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="data_ranges.html" title="Data Ranges"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../modules_and_classes.html" title="Commonly Used Modules and Classes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" accesskey="U">Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Data Sources</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-sources">
+<span id="id1"></span><h1>Data Sources<a class="headerlink" href="#data-sources" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abstractdatasource">
+<h2><a class="reference internal" href="#chaco.api.AbstractDataSource" title="chaco.api.AbstractDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code></a><a class="headerlink" href="#abstractdatasource" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.AbstractDataSource">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">AbstractDataSource</code><a class="headerlink" href="#chaco.api.AbstractDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>This abstract interface must be implemented by any class supplying data
+to Chaco.</p>
+<p>Chaco does not have a notion of a “data format”. For the most part, a data
+source looks like an array of values with an optional mask and metadata.
+If you implement this interface, you are responsible for adapting your
+domain-specific or application-specific data to meet this interface.</p>
+<p>Chaco provides some basic data source implementations. In most cases, the
+easiest strategy is to create one of these basic data source with the
+numeric data from a domain model. In cases when this strategy is not
+possible, domain classes (or an adapter) must implement AbstractDataSource.</p>
+<dl class="attribute">
+<dt id="chaco.api.AbstractDataSource.bounds_changed">
+<code class="sig-name descname">bounds_changed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.api.AbstractDataSource.bounds_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event that fires when just the bounds change.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractDataSource.data_changed">
+<code class="sig-name descname">data_changed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.api.AbstractDataSource.data_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event that fires when the data values change.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractDataSource.get_bounds">
+<code class="sig-name descname">get_bounds</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; tuple(min</em>, <em class="sig-param">max</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple (min, max) of the bounding values for the data source.
+In the case of 2-D data, min and max are 2-D points that represent the
+bounding corners of a rectangle enclosing the data set.  Note that
+these values are not view-dependent, but represent intrinsic properties
+of the data source.</p>
+<p>If data is the empty set, then the min and max vals are 0.0.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractDataSource.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; data_array<a class="headerlink" href="#chaco.api.AbstractDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a data array of the dimensions of the data source. This data
+array must not be altered in-place, and the caller must assume it is
+read-only.  This data is contiguous and not masked.</p>
+<p>In the case of structured (gridded) 2-D data, this method may return
+two 1-D ArrayDataSources as an optimization.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractDataSource.get_data_mask">
+<code class="sig-name descname">get_data_mask</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; (data_array</em>, <em class="sig-param">mask_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.AbstractDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the full, raw, source data array and a corresponding binary
+mask array.  Treat both arrays as read-only.</p>
+<p>The mask is a superposition of the masks of all upstream data sources.
+The length of the returned array may be much larger than what
+get_size() returns; the unmasked portion, however, matches what
+get_size() returns.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractDataSource.get_size">
+<code class="sig-name descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#chaco.api.AbstractDataSource.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an integer estimate or the exact size of the dataset that
+get_data() returns for this object.  This method is useful for
+down-sampling.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractDataSource.index_dimension">
+<code class="sig-name descname">index_dimension</code><em class="property"> = DimensionTrait</em><a class="headerlink" href="#chaco.api.AbstractDataSource.index_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the indices into this data source.
+Subclasses re-declare this trait as a read-only trait with
+the right default value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractDataSource.is_masked">
+<code class="sig-name descname">is_masked</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#chaco.api.AbstractDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this data source’s data uses a mask. In this case,
+to retrieve the data, call get_data_mask() instead of get_data().
+If you call get_data() for this data source, it returns data, but that
+data might not be the expected data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractDataSource.metadata">
+<code class="sig-name descname">metadata</code><em class="property"> = Dict</em><a class="headerlink" href="#chaco.api.AbstractDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary keyed on strings.  In general, it maps to indices (or tuples
+of indices, depending on <strong>value_dimension</strong>), as in the case of
+selections and annotations.  Applications and renderers can add their own
+custom metadata, but must avoid using keys that might result in name
+collision.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractDataSource.metadata_changed">
+<code class="sig-name descname">metadata_changed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.api.AbstractDataSource.metadata_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event that fires when metadata structure is changed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractDataSource.persist_data">
+<code class="sig-name descname">persist_data</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.AbstractDataSource.persist_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the data that this datasource refers to be serialized when
+the datasource is serialized?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractDataSource.value_dimension">
+<code class="sig-name descname">value_dimension</code><em class="property"> = DimensionTrait</em><a class="headerlink" href="#chaco.api.AbstractDataSource.value_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the value at each index point.
+Subclasses re-declare this trait as a read-only trait with
+the right default value.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="arraydatasource">
+<h2><a class="reference internal" href="#chaco.api.ArrayDataSource" title="chaco.api.ArrayDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code></a><a class="headerlink" href="#arraydatasource" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ArrayDataSource">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">ArrayDataSource</code><span class="sig-paren">(</span><em class="sig-param">data=array([]</em>, <em class="sig-param">dtype=float64)</em>, <em class="sig-param">sort_order='none'</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></code></p>
+<p>A data source representing a single, continuous array of numerical data.</p>
+<p>This class does not listen to the array for value changes; if you need that
+behavior, create a subclass that hooks up the appropriate listeners.</p>
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.get_bounds">
+<code class="sig-name descname">get_bounds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the minimum and maximum values of the data source’s data.</p>
+<p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data for this data source, or 0.0 if it has no data.</p>
+<p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.get_data_mask">
+<code class="sig-name descname">get_data_mask</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; (data_array</em>, <em class="sig-param">mask_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.get_size">
+<code class="sig-name descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#chaco.api.ArrayDataSource.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ArrayDataSource.index_dimension">
+<code class="sig-name descname">index_dimension</code><em class="property"> = Constant('scalar')</em><a class="headerlink" href="#chaco.api.ArrayDataSource.index_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the indices into this data source (overrides
+AbstractDataSource).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.is_masked">
+<code class="sig-name descname">is_masked</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#chaco.api.ArrayDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.remove_mask">
+<code class="sig-name descname">remove_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayDataSource.remove_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the mask on this data source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.reverse_map">
+<code class="sig-name descname">reverse_map</code><span class="sig-paren">(</span><em class="sig-param">pt</em>, <em class="sig-param">index=0</em>, <em class="sig-param">outside_returns_none=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayDataSource.reverse_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the index of <em>pt</em> in the data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pt</strong> (<em>scalar value</em>) – value to find</p></li>
+<li><p><strong>index</strong> – ignored for data series with 1-D indices</p></li>
+<li><p><strong>outside_returns_none</strong> (<em>Boolean</em>) – Whether the method returns None if <em>pt</em> is outside the range of
+the data source; if False, the method returns the value of the
+bound that <em>pt</em> is outside of.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">newdata</em>, <em class="sig-param">sort_order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayDataSource.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the data, and optionally the sort order, for this data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>newdata</strong> (<em>array</em>) – The data to use.</p></li>
+<li><p><strong>sort_order</strong> (<em>SortOrderTrait</em>) – The sort order of the data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ArrayDataSource.set_mask">
+<code class="sig-name descname">set_mask</code><span class="sig-paren">(</span><em class="sig-param">mask</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ArrayDataSource.set_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the mask for this data source.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ArrayDataSource.sort_order">
+<code class="sig-name descname">sort_order</code><em class="property"> = SortOrderTrait</em><a class="headerlink" href="#chaco.api.ArrayDataSource.sort_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sort order of the data.
+This is a specialized optimization for 1-D arrays, but it’s an important
+one that’s used everywhere.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ArrayDataSource.value_dimension">
+<code class="sig-name descname">value_dimension</code><em class="property"> = Constant('scalar')</em><a class="headerlink" href="#chaco.api.ArrayDataSource.value_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the value at each index point (overrides
+AbstractDataSource).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="multiarraydatasource">
+<h2><a class="reference internal" href="#chaco.api.MultiArrayDataSource" title="chaco.api.MultiArrayDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArrayDataSource</span></code></a><a class="headerlink" href="#multiarraydatasource" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.MultiArrayDataSource">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">MultiArrayDataSource</code><span class="sig-paren">(</span><em class="sig-param">data=array([]</em>, <em class="sig-param">dtype=float64)</em>, <em class="sig-param">sort_order='ascending'</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.MultiArrayDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></code></p>
+<p>A data source representing a single, continuous array of
+multidimensional numerical data.</p>
+<p>It is useful, for example, to define 2D vector data at each point of
+a scatter plot (as in QuiverPlot), or to represent multiple values
+for each index (as in MultiLinePlot).</p>
+<p>This class does not listen to the array for value changes;  To implement
+such behavior, define a subclass that hooks up the appropriate listeners.</p>
+<dl class="method">
+<dt id="chaco.api.MultiArrayDataSource.get_bounds">
+<code class="sig-name descname">get_bounds</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; tuple(min</em>, <em class="sig-param">max</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple (min, max) of the bounding values for the data source.
+In the case of 2-D data, min and max are 2-D points that represent the
+bounding corners of a rectangle enclosing the data set.  Note that
+these values are not view-dependent, but represent intrinsic properties
+of the data source.</p>
+<p>If data is the empty set, then the min and max vals are 0.0.</p>
+<p>If <em>value</em> and <em>index</em> are both None, then the method returns the
+global minimum and maximum for the entire data set.
+If <em>value</em> is an integer, then the method returns the minimum and
+maximum along the <em>value</em> slice in the <strong>value_dimension</strong>.
+If <em>index</em> is an integer, then the method returns the minimum and
+maximum along the <em>index</em> slice in the <strong>index_direction</strong>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.MultiArrayDataSource.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; data_array<a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>If called with no arguments, this method returns a data array.
+Treat this data array as read-only, and do not alter it in-place.
+This data is contiguous and not masked.</p>
+<p>If <em>axes</em> is an integer or tuple, this method returns the data array,
+sliced along the <strong>index_dimension</strong>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.MultiArrayDataSource.get_data_mask">
+<code class="sig-name descname">get_data_mask</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; (data_array</em>, <em class="sig-param">mask_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_data_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.MultiArrayDataSource.get_shape">
+<code class="sig-name descname">get_shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape of the multi-dimensional data source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.MultiArrayDataSource.get_size">
+<code class="sig-name descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource. Returns an integer estimate, or the
+exact size, of the dataset that get_data() returns. This method is
+useful for downsampling.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.MultiArrayDataSource.get_value_size">
+<code class="sig-name descname">get_value_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; size<a class="headerlink" href="#chaco.api.MultiArrayDataSource.get_value_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size along the value dimension.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.MultiArrayDataSource.index_dimension">
+<code class="sig-name descname">index_dimension</code><em class="property"> = Int(0)</em><a class="headerlink" href="#chaco.api.MultiArrayDataSource.index_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the indices into this data source (overrides
+AbstractDataSource).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.MultiArrayDataSource.is_masked">
+<code class="sig-name descname">is_masked</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#chaco.api.MultiArrayDataSource.is_masked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this data source’s data uses a mask. In this case,
+retrieve the data using get_data_mask() instead of get_data().
+If you call get_data() for this data source, it returns data, but that
+data may not be the expected data.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.MultiArrayDataSource.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.MultiArrayDataSource.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the data for this data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>array</em>) – The data to use.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.MultiArrayDataSource.sort_order">
+<code class="sig-name descname">sort_order</code><em class="property"> = SortOrderTrait</em><a class="headerlink" href="#chaco.api.MultiArrayDataSource.sort_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sort order of the data.
+This is a specialized optimization for 1-D arrays, but it’s an important
+one that’s used everywhere.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.MultiArrayDataSource.value_dimension">
+<code class="sig-name descname">value_dimension</code><em class="property"> = Int(1)</em><a class="headerlink" href="#chaco.api.MultiArrayDataSource.value_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the value at each index point (overrides
+AbstractDataSource).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pointdatasource">
+<h2><a class="reference internal" href="#chaco.api.PointDataSource" title="chaco.api.PointDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDataSource</span></code></a><a class="headerlink" href="#pointdatasource" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.PointDataSource">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">PointDataSource</code><span class="sig-paren">(</span><em class="sig-param">data=array([]</em>, <em class="sig-param">shape=(0</em>, <em class="sig-param">2)</em>, <em class="sig-param">dtype=float64)</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PointDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.array_data_source.ArrayDataSource</span></code></p>
+<p>A data source representing a (possibly unordered) set of (X,Y) points.</p>
+<p>This is internally always represented by an Nx2 array, so that data[i]
+refers to a single point (represented as a length-2 array).</p>
+<p>Most of the traits and methods of ArrayDataSeries work for the
+PointDataSeries as well, since its data is linear.  This class
+overrides only the methods and traits that are different.</p>
+<dl class="method">
+<dt id="chaco.api.PointDataSource.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PointDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data for this data source, or (0.0, 0.0) if it has no
+data.</p>
+<p>Overrides ArryDataSource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PointDataSource.index_dimension">
+<code class="sig-name descname">index_dimension</code><em class="property"> = ReadOnly('scalar')</em><a class="headerlink" href="#chaco.api.PointDataSource.index_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the indices into this data source (overrides
+ArrayDataSource).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.PointDataSource.reverse_map">
+<code class="sig-name descname">reverse_map</code><span class="sig-paren">(</span><em class="sig-param">pt</em>, <em class="sig-param">index=0</em>, <em class="sig-param">outside_returns_none=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.PointDataSource.reverse_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the index of <em>pt</em> in the data source.</p>
+<p>Overrides ArrayDataSource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pt</strong> (<em>(</em><em>x</em><em>, </em><em>y</em><em>)</em>) – value to find</p></li>
+<li><p><strong>index</strong> (<em>0</em><em> or </em><em>1</em>) – Which of the axes of <em>pt</em> the <em>sort_order</em> refers to.</p></li>
+<li><p><strong>outside_returns_none</strong> (<em>Boolean</em>) – Whether the method returns None if <em>pt</em> is outside the range of
+the data source; if False, the method returns the value of the
+bound that <em>pt</em> is outside of, in the <em>index</em> dimension.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PointDataSource.sort_index">
+<code class="sig-name descname">sort_index</code><em class="property"> = Enum(0, 1)</em><a class="headerlink" href="#chaco.api.PointDataSource.sort_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Which of the value axes the <strong>sort_order</strong> refers to.
+If <strong>sort_order</strong> is ‘none’, this attribute is ignored.
+In the unlikely event that the value data is sorted along both
+X and Y (i.e., monotonic in both axes), then set <strong>sort_index</strong> to
+whichever one has the best binary-search performance for hit-testing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PointDataSource.sort_order">
+<code class="sig-name descname">sort_order</code><em class="property"> = SortOrderTrait</em><a class="headerlink" href="#chaco.api.PointDataSource.sort_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sort order of the data. Although sort order is less common with point
+data, it can be useful in case where the value data is sorted along some
+axis.  Note that <strong>sort_index</strong> is used only if <strong>sort_order</strong> is not
+‘none’.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.PointDataSource.value_dimension">
+<code class="sig-name descname">value_dimension</code><em class="property"> = ReadOnly('point')</em><a class="headerlink" href="#chaco.api.PointDataSource.value_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the value at each index point (overrides
+ArrayDataSource).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="griddatasource">
+<h2><a class="reference internal" href="#chaco.api.GridDataSource" title="chaco.api.GridDataSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code></a><a class="headerlink" href="#griddatasource" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.GridDataSource">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">GridDataSource</code><span class="sig-paren">(</span><em class="sig-param">xdata=array([]</em>, <em class="sig-param">dtype=float64)</em>, <em class="sig-param">ydata=array([]</em>, <em class="sig-param">dtype=float64)</em>, <em class="sig-param">sort_order=('none'</em>, <em class="sig-param">'none')</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></code></p>
+<p>Implements a structured gridded 2-D data source (suitable as an index
+for an image, for example).</p>
+<dl class="method">
+<dt id="chaco.api.GridDataSource.get_bounds">
+<code class="sig-name descname">get_bounds</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; ((LLx</em>, <em class="sig-param">LLy)</em>, <em class="sig-param">(URx</em>, <em class="sig-param">URy)</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridDataSource.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource. Returns two 2-D points, min and max, that
+represent the bounding corners of a rectangle enclosing the data set.
+Note that these values are not view-dependent, but represent intrinsic
+properties of the DataSource.</p>
+<p>If data axis is the empty set, then the min and max valuess are 0.0.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.GridDataSource.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param">) -&gt; (xdata</em>, <em class="sig-param">ydata</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridDataSource.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource. Because this class uses structured
+(gridded) data, this method returns the pair of data axes, instead of,
+for example, a full mesh-grid. This behavious differs from
+other data sources.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridDataSource.index_dimension">
+<code class="sig-name descname">index_dimension</code><em class="property"> = Constant('image')</em><a class="headerlink" href="#chaco.api.GridDataSource.index_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the indices into this data source (overrides
+AbstractDataSource).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.GridDataSource.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">xdata</em>, <em class="sig-param">ydata</em>, <em class="sig-param">sort_order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridDataSource.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the data, and optionally the sort order, for this data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ydata</strong> (<em>xdata</em><em>,</em>) – The data to use.</p></li>
+<li><p><strong>sort_order</strong> (<em>SortOrderTrait</em>) – The sort order of the data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridDataSource.sort_order">
+<code class="sig-name descname">sort_order</code><em class="property"> = Tuple(SortOrderTrait, SortOrderTrait)</em><a class="headerlink" href="#chaco.api.GridDataSource.sort_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sort order of the data (overrides AbstractDataSource). There is no
+overall sort order on 2-D data, but for gridded 2-D data, each axis can
+have a sort order.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridDataSource.value_dimension">
+<code class="sig-name descname">value_dimension</code><em class="property"> = Constant('scalar')</em><a class="headerlink" href="#chaco.api.GridDataSource.value_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the value at each index point (overrides
+AbstractDataSource).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imagedata">
+<h2><a class="reference internal" href="#chaco.api.ImageData" title="chaco.api.ImageData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code></a><a class="headerlink" href="#imagedata" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ImageData">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">ImageData</code><a class="headerlink" href="#chaco.api.ImageData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_data_source.AbstractDataSource</span></code></p>
+<p>Represents a grid of data to be plotted using a Numpy 2-D grid.</p>
+<p>The data array has dimensions NxM, but it may have more than just 2
+dimensions.  The appropriate dimensionality of the value array depends
+on the context in which the ImageData instance will be used.</p>
+<dl class="attribute">
+<dt id="chaco.api.ImageData.data">
+<code class="sig-name descname">data</code><em class="property"> = Property(ImageTrait)</em><a class="headerlink" href="#chaco.api.ImageData.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds the grid data that forms the image.  The shape of the array is
+(N, M, D) where:</p>
+<ul class="simple">
+<li><p>D is 1, 3, or 4.</p></li>
+<li><p>N is the length of the y-axis.</p></li>
+<li><p>M is the length of the x-axis.</p></li>
+</ul>
+<p>Thus, data[0,:,:] must be the first row of data.  If D is 1, then
+the array must be of type float; if D is 3 or 4, then the array
+must be of type uint8.</p>
+<p>NOTE: If this ImageData was constructed with a transposed data array,
+then internally it is still transposed (i.e., the x-axis is the first axis
+and the y-axis is the second), and the <strong>data</strong> array property might not be
+contiguous.  If contiguousness is required and calling copy() is too
+expensive, use the <strong>raw_value</strong> attribute. Also note that setting this
+trait does not change the value of <strong>transposed</strong>,
+so be sure to set it to its proper value when using the same ImageData
+instance interchangeably to store transposed and non-transposed data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ImageData.dimension">
+<code class="sig-name descname">dimension</code><em class="property"> = ReadOnly(DimensionTrait('image'))</em><a class="headerlink" href="#chaco.api.ImageData.dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensionality of the data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.fromfile">
+<em class="property">classmethod </em><code class="sig-name descname">fromfile</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImageData.fromfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alternate constructor to create an ImageData from an image file
+on disk. ‘filename’ may be a file path or a file object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.get_array_bounds">
+<code class="sig-name descname">get_array_bounds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImageData.get_array_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Always returns ((0, width), (0, height)) for x-bounds and y-bounds.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.get_bounds">
+<code class="sig-name descname">get_bounds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImageData.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the minimum and maximum values of the data source’s data.</p>
+<p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImageData.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data for this data source.</p>
+<p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.get_height">
+<code class="sig-name descname">get_height</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImageData.get_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape of the y-axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.get_size">
+<code class="sig-name descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#chaco.api.ImageData.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.get_width">
+<code class="sig-name descname">get_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImageData.get_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape of the x-axis.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.is_masked">
+<code class="sig-name descname">is_masked</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; False<a class="headerlink" href="#chaco.api.ImageData.is_masked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements AbstractDataSource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ImageData.raw_value">
+<code class="sig-name descname">raw_value</code><em class="property"> = Property(ImageTrait)</em><a class="headerlink" href="#chaco.api.ImageData.raw_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A read-only attribute that exposes the underlying array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ImageData.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ImageData.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the data for this data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>array</em>) – The data to use.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ImageData.transposed">
+<code class="sig-name descname">transposed</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.api.ImageData.transposed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is <strong>raw_value</strong>, the actual underlying image data
+array, transposed from <strong>data</strong>? (I.e., does the first axis correspond to
+the x-direction and the second axis correspond to the y-direction?)</p>
+<p>Rather than transposing or swapping axes on the data and destroying
+continuity, this class exposes the data as both <strong>data</strong> and <strong>raw_value</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ImageData.value_depth">
+<code class="sig-name descname">value_depth</code><em class="property"> = Int(1) # TODO: Modify ImageData to explicitly support scalar</em><a class="headerlink" href="#chaco.api.ImageData.value_depth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Depth of the values at each i,j. Values that are used include:</p>
+<ul class="simple">
+<li><p>3: color images, without alpha channel</p></li>
+<li><p>4: color images, with alpha channel</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Sources</a><ul>
+<li><a class="reference internal" href="#abstractdatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code></a></li>
+<li><a class="reference internal" href="#arraydatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code></a></li>
+<li><a class="reference internal" href="#multiarraydatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArrayDataSource</span></code></a></li>
+<li><a class="reference internal" href="#pointdatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDataSource</span></code></a></li>
+<li><a class="reference internal" href="#griddatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code></a></li>
+<li><a class="reference internal" href="#imagedata"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../modules_and_classes.html"
+                        title="previous chapter">Commonly Used Modules and Classes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="data_ranges.html"
+                        title="next chapter">Data Ranges</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/data_sources.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="data_ranges.html" title="Data Ranges"
+             >next</a></li>
+        <li class="right" >
+          <a href="../modules_and_classes.html" title="Commonly Used Modules and Classes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" >Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Data Sources</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

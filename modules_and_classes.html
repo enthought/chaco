@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Commonly Used Modules and Classes &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="_static/et.ico"/>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data Sources" href="api/data_sources.html" />
+    <link rel="prev" title="Architecture Overview" href="architecture_overview.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="api/data_sources.html" title="Data Sources"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="architecture_overview.html" title="Architecture Overview"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="programmers_reference.html" accesskey="U">Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Commonly Used Modules and Classes</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="commonly-used-modules-and-classes">
+<span id="modules-and-classes"></span><h1>Commonly Used Modules and Classes<a class="headerlink" href="#commonly-used-modules-and-classes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="base-classes">
+<h2>Base Classes<a class="headerlink" href="#base-classes" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Plot Component</p>
+<p>All visual components in Chaco subclass from <code class="xref py py-class docutils literal notranslate"><span class="pre">PlotComponent</span></code>. It defines
+all of the common visual attributes like background color, border styles and
+color, and whether the component is visible. (Actually, most of these visual
+attributes are inherited from the Enable drawing framework.) More importantly,
+it provides the base behaviors for participating in layout, handling event
+dispatch to tools and overlays, and drawing various layers in the correct order.
+Subclasses almost never need to override or customize these base behaviors, but
+if they do, there are several easy extension points.</p>
+<p>PlotComponent is a subclass of Enable <code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code>. It has its
+own default drawing order. It redefines the inherited traits <code class="xref py py-attr docutils literal notranslate"><span class="pre">draw_order</span></code>
+and <code class="xref py py-attr docutils literal notranslate"><span class="pre">draw_layer</span></code>, but it doesn’t define any new traits. Therefore, you
+may need to refer to the API documentation for Enable Component,
+even when you have subclassed Chaco PlotComponent.</p>
+<p>If you subclass PlotComponent, you need to implement <code class="xref py py-meth docutils literal notranslate"><span class="pre">do_layout()</span></code>,
+if you want to size the component correctly.</p>
+</div>
+<div class="section" id="data-objects">
+<h2>Data Objects<a class="headerlink" href="#data-objects" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">Data Source</p>
+<p>A data source is a wrapper object for the actual data that it will be
+handling. It provides methods for retrieving data, estimating a size of the
+dataset, indications about the dimensionality of the data, a place for metadata
+(such as selections and annotations), and events that fire when the data gets
+changed. There are two primary reasons for a data source class:</p>
+<ul>
+<li><p>It provides a way for different plotting objects to reference the same data.</p></li>
+<li><p>It defines the interface for embedding Chaco into an existing application.
+In most cases, the standard ArrayDataSource will suffice.</p>
+<blockquote>
+<div><p><em>Interface:</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code></p>
+<p><em>Subclasses:</em> <code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArrayDataSource</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">PointDataSource</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code></p>
+</div></blockquote>
+</li>
+</ul>
+<p class="rubric">Data Range</p>
+<p>A data range expresses bounds on data space of some dimensionality. The simplest
+data range is just a set of two scalars representing (low, high) bounds in 1-D.
+One of the important aspects of data ranges is that their bounds can be set to
+<code class="docutils literal notranslate"><span class="pre">auto</span></code>, which means that they automatically scale to fit their associated
+datasources. (Each data source can be associated with multiple ranges,
+and each data range can be associated with multiple data sources.)</p>
+<blockquote>
+<div><p><em>Interface</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataRange</span></code></p>
+<p><em>Subclasses</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataRange</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange1D</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange2D</span></code></p>
+</div></blockquote>
+<p class="rubric">Data Source</p>
+<p>A data source is an object that supplies data to Chaco. For the most part, a
+data source looks like an array of values, with an optional mask and metadata.</p>
+<blockquote>
+<div><p><em>Interface</em>: :class:AbstractDataSource`</p>
+<p><em>Subclasses</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataContextDataSource</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArrayDataSource</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">PointDataSource</span></code></p>
+</div></blockquote>
+<p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> trait attribute is a dictionary where you can stick
+stuff for other tools to find, without inserting it in the actual data.</p>
+<p>Events that are fired on data sources are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_changed</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds_changed</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata_changed</span></code></p></li>
+</ul>
+</div></blockquote>
+<p class="rubric">Mapper</p>
+<p>Mappers perform the job of mapping a data space region to screen space, and
+vice versa. Bounds on mappers are set by data range objects.</p>
+<blockquote>
+<div><p><em>Interface</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></p>
+<p><em>Subclasses</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PolarMapper</span></code></p>
+</div></blockquote>
+</div>
+<div class="section" id="containers">
+<h2>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h2>
+<p class="rubric">PlotContainer</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotContainer</span></code> is Chaco’s way of handling layout. Because it logically
+partitions the screen space, it also serves as a way for efficient event
+dispatch. It is very similar to sizers or layout grids in GUI toolkits like
+WX. Containers are subclasses of PlotComponent, thus allowing them to
+be nested. <code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotContainer</span></code> implements the logic to correctly render
+and dispatch events to sub-components, while its subclasses implement the
+different layout calculations.</p>
+<p>A container gets the preferred size from its components, and tries to allocate
+space for them. Non-resizeable components get their required size; whatever is
+left over is divided among the resizeable components.</p>
+<p>Chaco currently has three types of containers,
+described in the following sections.</p>
+<blockquote>
+<div><p><em>Interface</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotContainer</span></code></p>
+<p><em>Subclasses</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">OverlayPlotContainer</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">HPlotContainer</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">VPlotContainer</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GridPlotContainer</span></code></p>
+</div></blockquote>
+<p>The listed subclasses are defined in the module
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">chaco.plot_containers</span></code>.</p>
+</div>
+<div class="section" id="renderers">
+<h2>Renderers<a class="headerlink" href="#renderers" title="Permalink to this headline">¶</a></h2>
+<p>Plot renderers are the classes that actually draw a type of plot.</p>
+<blockquote>
+<div><p><em>Interface</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code>
+<em>Subclasses</em>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BarPlot</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Base2DPlot</span></code></p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ContourLinePlot</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ContourPolyPlot</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ImagePlot</span></code>: displays an image file, or color-maps scalar
+data to make an image</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CMapImagePlot</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseXYPlot</span></code>: This class is often emulated by writers of other
+plot renderers, but renderers don’t <em>need</em> to be structured this way.
+By convention, many have a <code class="xref py py-meth docutils literal notranslate"><span class="pre">hittest()</span></code> method. They <em>do</em> need
+to implement <code class="xref py py-meth docutils literal notranslate"><span class="pre">map_screen()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">map_data()</span></code>, and <code class="xref py py-meth docutils literal notranslate"><span class="pre">map_index()</span></code>
+from <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code>.</p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LinePlot</span></code></p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorBarPlot</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PolygonPlot</span></code></p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">FilledLinePlot</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterPlot</span></code></p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ColormappedScatterPlot</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorBar</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PolarLineRenderer</span></code>: NOTE: doesn’t play well with others</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p>You can use these classes to compose more interesting plots.</p>
+<p>The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">chaco.plot_factory</span></code> contains various convenience
+functions for creating plots, which simplify the set-up.</p>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot.Plot</span></code> class (called “capital P Plot” when
+speaking) represents what the user usually thinks of as a “plot”: a set of data,
+renderers, and axes in a single screen region. It is a subclass of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DataView</span></code>.</p>
+</div>
+<div class="section" id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<p>Tools attach to a component, which gives events to the tool.</p>
+<p>All tools subclass from Enable’s <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTool</span></code>, which is in turn an Enable
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Interactor</span></code>.  Do not try to make tools that draw: use an overlay for
+that.</p>
+<p>Some tool subclasses exist in both Enable and Chaco, because they were created
+first in Chaco, and then moved into Enable.</p>
+<blockquote>
+<div><p><em>Interface</em>: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTool</span></code>
+<em>Subclasses</em>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BroadcasterTool</span></code>: Keeps a list of other tools, and broadcasts
+events it receives to all those tools.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataPrinter</span></code>: Prints the data-space position of the point
+under the cursor.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.api.DragTool</span></code>: Enable base class
+for tools that do dragging.</p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MoveTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResizeTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ViewportPanTool</span></code></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="api/tools.html#chaco.tools.api.DragTool" title="chaco.tools.api.DragTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.api.DragTool</span></code></a>: Chaco base class
+for tools that do dragging.</p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCursorTool</span></code></p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorTool1D</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorTool2D</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabelTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DragZoom</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LegendTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MoveTool</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DrawPointsTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">HighlightTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">HoverTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInspectorTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LineInspector</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PanTool</span></code></p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackingPanTool</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PointMarker</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SaveTool</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectTool</span></code></p>
+<ul>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterInspector</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectableLegend</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.api.TraitsTool</span></code></p></li>
+<li><p><a class="reference internal" href="api/tools.html#chaco.tools.api.TraitsTool" title="chaco.tools.api.TraitsTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.api.TraitsTool</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p>DragTool is a base class for tools that do dragging.</p>
+<p>Other tools do things like panning, moving, highlighting, line segments, range selection, drag zoom, move data labels, scatter inspection, Traits UI.</p>
+</div>
+<div class="section" id="overlays">
+<h2>Overlays<a class="headerlink" href="#overlays" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Commonly Used Modules and Classes</a><ul>
+<li><a class="reference internal" href="#base-classes">Base Classes</a></li>
+<li><a class="reference internal" href="#data-objects">Data Objects</a></li>
+<li><a class="reference internal" href="#containers">Containers</a></li>
+<li><a class="reference internal" href="#renderers">Renderers</a></li>
+<li><a class="reference internal" href="#tools">Tools</a></li>
+<li><a class="reference internal" href="#overlays">Overlays</a></li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="architecture_overview.html"
+                        title="previous chapter">Architecture Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api/data_sources.html"
+                        title="next chapter">Data Sources</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/modules_and_classes.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="api/data_sources.html" title="Data Sources"
+             >next</a></li>
+        <li class="right" >
+          <a href="architecture_overview.html" title="Architecture Overview"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="programmers_reference.html" >Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Commonly Used Modules and Classes</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

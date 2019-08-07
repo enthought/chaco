@@ -1,0 +1,624 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mappers &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Containers" href="containers.html" />
+    <link rel="prev" title="Data Ranges" href="data_ranges.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="containers.html" title="Containers"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="data_ranges.html" title="Data Ranges"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" accesskey="U">Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Mappers</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mappers">
+<span id="id1"></span><h1>Mappers<a class="headerlink" href="#mappers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abstractmapper">
+<h2><a class="reference internal" href="#chaco.api.AbstractMapper" title="chaco.api.AbstractMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></a><a class="headerlink" href="#abstractmapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.AbstractMapper">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">AbstractMapper</code><a class="headerlink" href="#chaco.api.AbstractMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>Defines an abstract mapping from a region in input space to a
+region in output space.</p>
+<dl class="attribute">
+<dt id="chaco.api.AbstractMapper.domain_limits">
+<code class="sig-name descname">domain_limits</code><em class="property"> = Tuple(None, None)</em><a class="headerlink" href="#chaco.api.AbstractMapper.domain_limits" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple representing the minimum and maximum values of the domain (data
+space).  The dimensionality of each value varies depending on the
+dimensions of the mapper, so for 1D mappers these will be scalars, for
+image and 2D mappers these will be tuples.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractMapper.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_val</em><span class="sig-paren">)</span> &#x2192; data_val<a class="headerlink" href="#chaco.api.AbstractMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps values from screen space into data space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractMapper.map_data_array">
+<code class="sig-name descname">map_data_array</code><span class="sig-paren">(</span><em class="sig-param">screen_vals</em><span class="sig-paren">)</span> &#x2192; data_vals<a class="headerlink" href="#chaco.api.AbstractMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of values from screen space into data space.
+By default, this method just loops over the points, calling map_data()
+on each one.  For vectorizable mapping functions, override this
+implmentation with a faster one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.AbstractMapper.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span> &#x2192; screen_array<a class="headerlink" href="#chaco.api.AbstractMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps values from data space into screen space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.AbstractMapper.updated">
+<code class="sig-name descname">updated</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.api.AbstractMapper.updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic “update” event that generally means that anything that relies
+on this mapper for visual output should do a redraw or repaint.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="base1dmapper">
+<h2><a class="reference internal" href="#chaco.api.Base1DMapper" title="chaco.api.Base1DMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a><a class="headerlink" href="#base1dmapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.Base1DMapper">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">Base1DMapper</code><a class="headerlink" href="#chaco.api.Base1DMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_mapper.AbstractMapper</span></code></p>
+<p>Defines an abstract mapping from a 1-D region in input space to a 1-D
+region in output space.</p>
+<dl class="attribute">
+<dt id="chaco.api.Base1DMapper.high_pos">
+<code class="sig-name descname">high_pos</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.api.Base1DMapper.high_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The screen space position of the upper bound of the data space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DMapper.low_pos">
+<code class="sig-name descname">low_pos</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.Base1DMapper.low_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The screen space position of the lower bound of the data space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DMapper.range">
+<code class="sig-name descname">range</code><em class="property"> = Instance(DataRange1D)</em><a class="headerlink" href="#chaco.api.Base1DMapper.range" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data-space bounds of the mapper.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DMapper.screen_bounds">
+<code class="sig-name descname">screen_bounds</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.Base1DMapper.screen_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property to get low and high positions in one structure.
+Must be a tuple (low_pos, high_pos).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DMapper.sign">
+<code class="sig-name descname">sign</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.Base1DMapper.sign" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sign of the mapping: 1 if deltas match sign, -1 if opposite sign</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.Base1DMapper.stretch_data">
+<code class="sig-name descname">stretch_data</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.Base1DMapper.stretch_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the mapper stretch the dataspace when its screen space bounds are
+modified (default), or should it preserve the screen-to-data ratio and
+resize the data bounds?  If the latter, it will only try to preserve
+the ratio if both screen and data space extents are non-zero.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="linearmapper">
+<h2><a class="reference internal" href="#chaco.api.LinearMapper" title="chaco.api.LinearMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a><a class="headerlink" href="#linearmapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.LinearMapper">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">LinearMapper</code><a class="headerlink" href="#chaco.api.LinearMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_1d_mapper.Base1DMapper</span></code></p>
+<p>Maps a 1-D data space to and from screen space by specifying a range in
+data space and a corresponding fixed line in screen space.</p>
+<p>This class concerns itself only with metric and not with orientation. So, to
+“flip” the screen space orientation, simply swap the values for <strong>low_pos</strong>
+and <strong>high_pos</strong>.</p>
+<dl class="method">
+<dt id="chaco.api.LinearMapper.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_val</em><span class="sig-paren">)</span> &#x2192; data_val<a class="headerlink" href="#chaco.api.LinearMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides AbstractMapper. Maps values from screen space into data space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.LinearMapper.map_data_array">
+<code class="sig-name descname">map_data_array</code><span class="sig-paren">(</span><em class="sig-param">screen_vals</em><span class="sig-paren">)</span> &#x2192; data_vals<a class="headerlink" href="#chaco.api.LinearMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides AbstractMapper. Maps an array of values from screen space
+into data space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.LinearMapper.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span> &#x2192; screen_array<a class="headerlink" href="#chaco.api.LinearMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides AbstractMapper. Maps values from data space into screen space.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="logmapper">
+<h2><a class="reference internal" href="#chaco.api.LogMapper" title="chaco.api.LogMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code></a><a class="headerlink" href="#logmapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.LogMapper">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">LogMapper</code><a class="headerlink" href="#chaco.api.LogMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_1d_mapper.Base1DMapper</span></code></p>
+<p>Defines a 1-D logarithmic scale mapping from a 1-D region in input
+space to a 1-D region in output space.</p>
+<dl class="attribute">
+<dt id="chaco.api.LogMapper.fill_value">
+<code class="sig-name descname">fill_value</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.api.LogMapper.fill_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value to map when asked to map values &lt;= LOG_MINIMUM to screen space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.LogMapper.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_val</em><span class="sig-paren">)</span> &#x2192; data_val<a class="headerlink" href="#chaco.api.LogMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides Abstract Mapper. Maps values from screen space into data space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.LogMapper.map_data_array">
+<code class="sig-name descname">map_data_array</code><span class="sig-paren">(</span><em class="sig-param">screen_vals</em><span class="sig-paren">)</span> &#x2192; data_vals<a class="headerlink" href="#chaco.api.LogMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of values from screen space into data space.
+By default, this method just loops over the points, calling map_data()
+on each one.  For vectorizable mapping functions, override this
+implmentation with a faster one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.LogMapper.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span> &#x2192; screen_array<a class="headerlink" href="#chaco.api.LogMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides AbstractMapper. Maps values from data space to screen space.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="gridmapper">
+<h2><a class="reference internal" href="#chaco.api.GridMapper" title="chaco.api.GridMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code></a><a class="headerlink" href="#gridmapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.GridMapper">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">GridMapper</code><span class="sig-paren">(</span><em class="sig-param">x_type='linear'</em>, <em class="sig-param">y_type='linear'</em>, <em class="sig-param">range=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_mapper.AbstractMapper</span></code></p>
+<p>Maps a 2-D data space to and from screen space by specifying a 2-tuple in
+data space or by specifying a pair of screen coordinates.</p>
+<p>The mapper concerns itself only with metric and not with orientation. So,
+to “flip” a screen space orientation, swap the appropriate screen space
+values for <strong>x_low_pos</strong>, <strong>x_high_pos</strong>, <strong>y_low_pos</strong>, and
+<strong>y_high_pos</strong>.</p>
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.aspect_ratio">
+<code class="sig-name descname">aspect_ratio</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.api.GridMapper.aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>The aspect ratio that we wish to maintain</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.maintain_aspect_ratio">
+<code class="sig-name descname">maintain_aspect_ratio</code><em class="property"> = Bool</em><a class="headerlink" href="#chaco.api.GridMapper.maintain_aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the mapper try to maintain a fixed aspect ratio between x and y</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.GridMapper.map_data">
+<code class="sig-name descname">map_data</code><span class="sig-paren">(</span><em class="sig-param">screen_pts</em><span class="sig-paren">)</span> &#x2192; data_vals<a class="headerlink" href="#chaco.api.GridMapper.map_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps values from screen space into data space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.GridMapper.map_data_array">
+<code class="sig-name descname">map_data_array</code><span class="sig-paren">(</span><em class="sig-param">screen_vals</em><span class="sig-paren">)</span> &#x2192; data_vals<a class="headerlink" href="#chaco.api.GridMapper.map_data_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of values from screen space into data space.
+By default, this method just loops over the points, calling map_data()
+on each one.  For vectorizable mapping functions, override this
+implmentation with a faster one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.GridMapper.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_pts</em><span class="sig-paren">)</span> &#x2192; screen_array<a class="headerlink" href="#chaco.api.GridMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps values from data space into screen space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.range">
+<code class="sig-name descname">range</code><em class="property"> = Instance(DataRange2D)</em><a class="headerlink" href="#chaco.api.GridMapper.range" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data-space bounds of the mapper.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.screen_bounds">
+<code class="sig-name descname">screen_bounds</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.GridMapper.screen_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for low and high positions in one structure.
+Must be a tuple (x_low_pos, x_high_pos, y_low_pos, y_high_pos).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.stretch_data_x">
+<code class="sig-name descname">stretch_data_x</code><em class="property"> = DelegatesTo(&quot;_xmapper&quot;, prefix=&quot;stretch_data&quot;)</em><a class="headerlink" href="#chaco.api.GridMapper.stretch_data_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the mapper stretch the dataspace when its screen space bounds are
+modified (default), or should it preserve the screen-to-data ratio and
+resize the data bounds?  If the latter, it will only try to preserve
+the ratio if both screen and data space extents are non-zero.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.x_high_pos">
+<code class="sig-name descname">x_high_pos</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.api.GridMapper.x_high_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The screen space position of the upper bound of the horizontal axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.x_low_pos">
+<code class="sig-name descname">x_low_pos</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.GridMapper.x_low_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The screen space position of the lower bound of the horizontal axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.y_high_pos">
+<code class="sig-name descname">y_high_pos</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.api.GridMapper.y_high_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The screen space position of the upper bound of the vertical axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridMapper.y_low_pos">
+<code class="sig-name descname">y_low_pos</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.GridMapper.y_low_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The screen space position of the lower bound of the vertical axis.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="colormapper">
+<h2><a class="reference internal" href="#chaco.api.ColorMapper" title="chaco.api.ColorMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapper</span></code></a><a class="headerlink" href="#colormapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ColorMapper">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">ColorMapper</code><span class="sig-paren">(</span><em class="sig-param">segmentdata</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_colormap.AbstractColormap</span></code></p>
+<p>Represents a simple band-of-colors style of color map.</p>
+<p>The look-up transfer function is a simple linear function between defined
+intensities.  There is no limit to the number of steps that can be
+defined. If the segment intervals contain very few array
+locations, quantization errors will occur.</p>
+<p>Construction of a ColorMapper can be done through the factory methods
+from_palette_array() and from_segment_map(). Do not make direct calls to the
+ColorMapper constructor.</p>
+<dl class="attribute">
+<dt id="chaco.api.ColorMapper.color_bands">
+<code class="sig-name descname">color_bands</code><em class="property"> = Property(Array)</em><a class="headerlink" href="#chaco.api.ColorMapper.color_bands" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.from_file">
+<em class="property">classmethod </em><code class="sig-name descname">from_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapper.from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a ColorMapper from a file.</p>
+<p>The <em>filename</em> parameter is the name of a file whose lines each contain
+4 or 5 float values between 0.0 and 1.0. The first value is an offset in
+the range [0..1], and the remaining 3 or 4 values are red, green, blue,
+and optionally alpha values for the color corresponding to that offset.</p>
+<p>The first line is assumed to contain the name of the colormap.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.from_palette_array">
+<em class="property">classmethod </em><code class="sig-name descname">from_palette_array</code><span class="sig-paren">(</span><em class="sig-param">palette</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapper.from_palette_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a ColorMapper from a palette array.</p>
+<p>The palette colors are linearly interpolated across the range of
+mapped values.</p>
+<p>The <em>palette</em> parameter is a Nx3 or Nx4 array of intensity values, where
+N &gt; 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="n">R0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">B0</span><span class="p">],</span> <span class="o">...</span> <span class="p">[</span><span class="n">R</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">G</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">B</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)]]</span>
+
+<span class="p">[[</span><span class="n">R0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">B0</span><span class="p">,</span> <span class="n">A0</span><span class="p">],</span> <span class="o">...</span> <span class="p">[</span><span class="n">R</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">G</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">B</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">A</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.from_segment_map">
+<em class="property">classmethod </em><code class="sig-name descname">from_segment_map</code><span class="sig-paren">(</span><em class="sig-param">segment_map</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapper.from_segment_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Colormapper from a segment map.</p>
+<p>The <em>segment_map</em> parameter is a dictionary with ‘red’, ‘green’, and
+‘blue’ (and optionally ‘alpha’) entries.  Each entry is a list of
+(x, y0, y1) tuples:</p>
+<ul class="simple">
+<li><p>x: an offset in [0..1] (offsets within the list must be in ascending order)</p></li>
+<li><p>y0: value for the color channel for values less than or equal to x</p></li>
+<li><p>y1: value for the color channel for values greater than x</p></li>
+</ul>
+<p>When a data value gets mapped to a color, it will be normalized to be
+within [0..1]. For each RGB(A) component, the two adjacent values will
+be found in the segment_map. The mapped component value will be found by
+linearly interpolating the two values.</p>
+<p>Generally, y0==y1. Colormaps with sharp transitions will have y0!=y1 at
+the transitions.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapper.high_pos">
+<code class="sig-name descname">high_pos</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.ColorMapper.high_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapper.low_pos">
+<code class="sig-name descname">low_pos</code><em class="property"> = None</em><a class="headerlink" href="#chaco.api.ColorMapper.low_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">ary</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapper.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of values to their corresponding color band index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data values to an array of colors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.map_uint8">
+<code class="sig-name descname">map_uint8</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapper.map_uint8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data values to an array of colors.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapper.name">
+<code class="sig-name descname">name</code><em class="property"> = Str</em><a class="headerlink" href="#chaco.api.ColorMapper.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of this color map.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapper.reverse_colormap">
+<code class="sig-name descname">reverse_colormap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapper.reverse_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reverses the color bands of this colormap.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapper.steps">
+<code class="sig-name descname">steps</code><em class="property"> = Int(256)</em><a class="headerlink" href="#chaco.api.ColorMapper.steps" title="Permalink to this definition">¶</a></dt>
+<dd><p>The total number of color steps in the map.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapper.updated">
+<code class="sig-name descname">updated</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.api.ColorMapper.updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic “update” event that generally means that anything that relies
+on this mapper for visual output should do a redraw or repaint.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="colormaptemplate">
+<h2><a class="reference internal" href="#chaco.api.ColorMapTemplate" title="chaco.api.ColorMapTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapTemplate</span></code></a><a class="headerlink" href="#colormaptemplate" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.ColorMapTemplate">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">ColorMapTemplate</code><span class="sig-paren">(</span><em class="sig-param">colormap=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>A class representing the state of a ColorMapper, for use when persisting
+plots.</p>
+<dl class="method">
+<dt id="chaco.api.ColorMapTemplate.from_colormap">
+<code class="sig-name descname">from_colormap</code><span class="sig-paren">(</span><em class="sig-param">colormap</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapTemplate.from_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates this template from a color map.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapTemplate.range_high_setting">
+<code class="sig-name descname">range_high_setting</code><em class="property"> = Trait('auto', 'auto', Float)</em><a class="headerlink" href="#chaco.api.ColorMapTemplate.range_high_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>High end of the color map range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapTemplate.range_low_setting">
+<code class="sig-name descname">range_low_setting</code><em class="property"> = Trait('auto', 'auto', Float)</em><a class="headerlink" href="#chaco.api.ColorMapTemplate.range_low_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Low end of the color map range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapTemplate.segment_map">
+<code class="sig-name descname">segment_map</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.api.ColorMapTemplate.segment_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>The segment data of the color map.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.ColorMapTemplate.steps">
+<code class="sig-name descname">steps</code><em class="property"> = Int(256)</em><a class="headerlink" href="#chaco.api.ColorMapTemplate.steps" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of steps in the color map.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.ColorMapTemplate.to_colormap">
+<code class="sig-name descname">to_colormap</code><span class="sig-paren">(</span><em class="sig-param">range=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.ColorMapTemplate.to_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ColorMapper instance from this template.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="transformcolormapper">
+<h2><a class="reference internal" href="#chaco.api.TransformColorMapper" title="chaco.api.TransformColorMapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformColorMapper</span></code></a><a class="headerlink" href="#transformcolormapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.TransformColorMapper">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">TransformColorMapper</code><span class="sig-paren">(</span><em class="sig-param">segmentdata</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TransformColorMapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.color_mapper.ColorMapper</span></code></p>
+<p>This class adds arbitrary data transformations to a ColorMapper.</p>
+<p>The default ColorMapper is basically a linear mapper from data space to
+color space.  A TransformColorMapper allows a nonlinear mapper to be
+created.</p>
+<p>A ColorMapper works by linearly transforming the data from data space to the
+unit interval [0,1], and then linearly mapping that interval to the color
+space.</p>
+<p>A TransformColorMapper allows an arbitrary transform to be inserted at two
+places in this process.  First, an initial transformation, <cite>data_func</cite> can
+be applied to the data <em>before</em> is it mapped to [0,1].  Then another
+function, <cite>unit_func</cite>, can be applied to the transformed data on [0,1]
+before it is mapped to color space.  Normally, a <cite>unit_func</cite> is map of the
+unit interval [0,1] to itself (e.g. x^2 or sin(pi*x/2)).</p>
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.factory_from_color_map">
+<em class="property">classmethod </em><code class="sig-name descname">factory_from_color_map</code><span class="sig-paren">(</span><em class="sig-param">color_map</em>, <em class="sig-param">data_func=None</em>, <em class="sig-param">unit_func=None</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TransformColorMapper.factory_from_color_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TransformColorMapper factory function from a standard colormap
+factory function.</p>
+<p>WARNING: This function is untested; I realized I didn’t need it shortly
+after writing it, so I haven’t tried it yet. –WW</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.from_color_map">
+<em class="property">classmethod </em><code class="sig-name descname">from_color_map</code><span class="sig-paren">(</span><em class="sig-param">color_map</em>, <em class="sig-param">data_func=None</em>, <em class="sig-param">unit_func=None</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TransformColorMapper.from_color_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TransformColorMapper from a colormap generator function.</p>
+<p>The return value is an instance of TransformColorMapper, <em>not</em> a factory
+function, so this does not provide a direct replacement for a standard
+colormap factory function.  For that, use the class method
+TransoformColorMapper.factory_from_color_map().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.from_color_mapper">
+<em class="property">classmethod </em><code class="sig-name descname">from_color_mapper</code><span class="sig-paren">(</span><em class="sig-param">color_mapper</em>, <em class="sig-param">data_func=None</em>, <em class="sig-param">unit_func=None</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TransformColorMapper.from_color_mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TransformColorMapper from an existing ColorMapper instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.map_index">
+<code class="sig-name descname">map_index</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TransformColorMapper.map_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of values to their corresponding color band index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.map_screen">
+<code class="sig-name descname">map_screen</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TransformColorMapper.map_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data values to an array of colors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.TransformColorMapper.map_uint8">
+<code class="sig-name descname">map_uint8</code><span class="sig-paren">(</span><em class="sig-param">data_array</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.TransformColorMapper.map_uint8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps an array of data values to an array of colors.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mappers</a><ul>
+<li><a class="reference internal" href="#abstractmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></a></li>
+<li><a class="reference internal" href="#base1dmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a></li>
+<li><a class="reference internal" href="#linearmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a></li>
+<li><a class="reference internal" href="#logmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code></a></li>
+<li><a class="reference internal" href="#gridmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code></a></li>
+<li><a class="reference internal" href="#colormapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapper</span></code></a></li>
+<li><a class="reference internal" href="#colormaptemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapTemplate</span></code></a></li>
+<li><a class="reference internal" href="#transformcolormapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformColorMapper</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="data_ranges.html"
+                        title="previous chapter">Data Ranges</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="containers.html"
+                        title="next chapter">Containers</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/mappers.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="containers.html" title="Containers"
+             >next</a></li>
+        <li class="right" >
+          <a href="data_ranges.html" title="Data Ranges"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" >Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Mappers</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

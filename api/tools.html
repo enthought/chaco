@@ -1,0 +1,2538 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tools &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tech Notes" href="../tech_notes.html" />
+    <link rel="prev" title="Axis and Grid" href="axis.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../tech_notes.html" title="Tech Notes"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="axis.html" title="Axis and Grid"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" accesskey="U">Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Tools</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tools">
+<span id="id1"></span><h1>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="betterzoom">
+<h2><a class="reference internal" href="#chaco.tools.api.BetterZoom" title="chaco.tools.api.BetterZoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">BetterZoom</span></code></a><a class="headerlink" href="#betterzoom" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.BetterZoom">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">BetterZoom</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterZoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.tool_history_mixin.ToolHistoryMixin</span></code></p>
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.axis">
+<code class="sig-name descname">axis</code><em class="property"> = Enum(&quot;both&quot;, &quot;index&quot;, &quot;value&quot;)</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The axis to which the selection made by this tool is perpendicular. This
+only applies in ‘range’ mode.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.enable_wheel">
+<code class="sig-name descname">enable_wheel</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.enable_wheel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the mousewheel for zooming?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.keys_zoom_to_mouse">
+<code class="sig-name descname">keys_zoom_to_mouse</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.keys_zoom_to_mouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>if the mouse pointer should be used to control the center
+of the zoom action even for key events based zoom</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.next_state_key">
+<code class="sig-name descname">next_state_key</code><em class="property"> = Instance(KeySpec, args=(&quot;y&quot;, &quot;control&quot;))</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.next_state_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Key to go to the next state in the history.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterZoom.normal_key_pressed">
+<code class="sig-name descname">normal_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterZoom.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a key being pressed when the tool is in the ‘normal’
+state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterZoom.normal_mouse_enter">
+<code class="sig-name descname">normal_mouse_enter</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterZoom.normal_mouse_enter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to set the focus to the window when the mouse enters, otherwise
+the keypress events will not be triggered.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.position">
+<code class="sig-name descname">position</code><em class="property"> = Tuple(Float, Float)</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>: the position to zoom on (usually the mouse location)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.prev_state_key">
+<code class="sig-name descname">prev_state_key</code><em class="property"> = Instance(KeySpec, args=(&quot;z&quot;, &quot;control&quot;))</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.prev_state_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Key to go to the previous state in the history.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.x_max_zoom_factor">
+<code class="sig-name descname">x_max_zoom_factor</code><em class="property"> = Float(1e5)</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.x_max_zoom_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum ratio between the original data space bounds and the
+zoomed-in data space bounds.  If No limit is desired, set to inf</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.x_min_zoom_factor">
+<code class="sig-name descname">x_min_zoom_factor</code><em class="property"> = Float(1e-5)</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.x_min_zoom_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum ratio between the zoomed-out data space bounds and the
+original bounds.  If No limit is desired, set to -inf</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.zoom_factor">
+<code class="sig-name descname">zoom_factor</code><em class="property"> = Float(2.0)</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.zoom_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount to zoom in by. The zoom out will be inversely proportional</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.zoom_in_key">
+<code class="sig-name descname">zoom_in_key</code><em class="property"> = Instance(KeySpec, args=(&quot;+&quot;,), kw={'ignore': ['shift']})</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.zoom_in_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys to zoom in/out</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.zoom_in_x_key">
+<code class="sig-name descname">zoom_in_x_key</code><em class="property"> = Instance(KeySpec, args=(&quot;Right&quot;, &quot;shift&quot;))</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.zoom_in_x_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys to zoom in/out in x direction only</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.zoom_in_y_key">
+<code class="sig-name descname">zoom_in_y_key</code><em class="property"> = Instance(KeySpec, args=(&quot;Up&quot;, &quot;shift&quot;))</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.zoom_in_y_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys to zoom in/out in y direction only</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterZoom.zoom_to_mouse">
+<code class="sig-name descname">zoom_to_mouse</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.BetterZoom.zoom_to_mouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>if the mouse pointer should be used to control the center
+of the zoom action</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="betterselectingzoom">
+<h2><a class="reference internal" href="#chaco.tools.api.BetterSelectingZoom" title="chaco.tools.api.BetterSelectingZoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">BetterSelectingZoom</span></code></a><a class="headerlink" href="#betterselectingzoom" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.BetterSelectingZoom">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">BetterSelectingZoom</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.better_zoom.BetterZoom</span></code></p>
+<p>Zooming tool which allows the user to draw a box which defines the
+desired region to zoom in to</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Trait(0.4, None, Float)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The alpha value to apply to <strong>color</strong> when filling in the selection
+region.  Because it is almost certainly useless to have an opaque zoom
+rectangle, but it’s also extremely useful to be able to use the normal
+named colors from Enable, this attribute allows the specification of a
+separate alpha value that replaces the alpha value of <strong>color</strong> at draw
+time.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.always_on">
+<code class="sig-name descname">always_on</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.always_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the tool always “on”? If True, left-clicking always initiates
+a zoom operation; if False, the user must press a key to enter zoom mode.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.always_on_modifier">
+<code class="sig-name descname">always_on_modifier</code><em class="property"> = Enum('control', 'shift', 'control', 'alt')</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.always_on_modifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a meta-key, that works with always_on to set the zoom mode. This
+is useful when the zoom tool is used in conjunction with the pan tool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.border_color">
+<code class="sig-name descname">border_color</code><em class="property"> = ColorTrait(&quot;dodgerblue&quot;)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.border_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the outside selection rectangle.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.border_size">
+<code class="sig-name descname">border_size</code><em class="property"> = Int(1)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.border_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thickness of selection rectangle border.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.color">
+<code class="sig-name descname">color</code><em class="property"> = ColorTrait(&quot;lightskyblue&quot;)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the selection box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.disable_on_complete">
+<code class="sig-name descname">disable_on_complete</code><em class="property"> = Property()</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.disable_on_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable the tool after the zoom is completed?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;, None)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mouse button that initiates the drag.  If “None”, then the tool
+will not respond to drag.  (It can still respond to mousewheel events.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.enter_zoom_key">
+<code class="sig-name descname">enter_zoom_key</code><em class="property"> = Instance(KeySpec, args=(&quot;z&quot;,))</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.enter_zoom_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The key press to enter zoom mode, if <strong>always_on</strong> is False.  Has no effect
+if <strong>always_on</strong> is True.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.event_state">
+<code class="sig-name descname">event_state</code><em class="property"> = Enum(&quot;normal&quot;, &quot;selecting&quot;, &quot;pre_selecting&quot;)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.event_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The possible event states of this zoom tool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.exit_zoom_key">
+<code class="sig-name descname">exit_zoom_key</code><em class="property"> = Instance(KeySpec, args=(&quot;z&quot;,))</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.exit_zoom_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The key press to leave zoom mode, if <strong>always_on</strong> is False.  Has no effect
+if <strong>always_on</strong> is True.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.minimum_screen_delta">
+<code class="sig-name descname">minimum_screen_delta</code><em class="property"> = Int(10)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.minimum_screen_delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum amount of screen space the user must select in order for
+the tool to actually take effect.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.normal_key_pressed">
+<code class="sig-name descname">normal_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a key being pressed when the tool is in the ‘normal’
+state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.normal_left_down">
+<code class="sig-name descname">normal_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed while the tool is
+in the ‘normal’ state.</p>
+<p>If the tool is enabled or always on, it starts selecting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.normal_right_down">
+<code class="sig-name descname">normal_right_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.normal_right_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button being pressed while the tool is
+in the ‘normal’ state.</p>
+<p>If the tool is enabled or always on, it starts selecting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.pointer">
+<code class="sig-name descname">pointer</code><em class="property"> = &quot;magnifier&quot;</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pointer to use when drawing a zoom box.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.pre_selecting_key_pressed">
+<code class="sig-name descname">pre_selecting_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.pre_selecting_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle key presses, specifically the exit zoom key</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.pre_selecting_left_down">
+<code class="sig-name descname">pre_selecting_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.pre_selecting_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>The user pressed the key to turn on the zoom mode,
+now handle the click to start the select mode</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the tool to normal state, with no start or end position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.selecting_key_pressed">
+<code class="sig-name descname">selecting_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.selecting_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle key presses, specifically the exit zoom key</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.selecting_left_up">
+<code class="sig-name descname">selecting_left_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.selecting_left_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being released when the tool is in
+the ‘selecting’ state.</p>
+<p>Finishes selecting and does the zoom.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.selecting_mouse_leave">
+<code class="sig-name descname">selecting_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.selecting_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot when the tool is in the
+‘selecting’ state.</p>
+<p>Ends the selection operation without zooming.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.selecting_mouse_move">
+<code class="sig-name descname">selecting_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.selecting_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse moving when the tool is in the ‘selecting’ state.</p>
+<p>The selection is extended to the current mouse position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.BetterSelectingZoom.selecting_right_up">
+<code class="sig-name descname">selecting_right_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.selecting_right_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button being released when the tool is in
+the ‘selecting’ state.</p>
+<p>Finishes selecting and does the zoom.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.tool_mode">
+<code class="sig-name descname">tool_mode</code><em class="property"> = Enum(&quot;box&quot;, &quot;range&quot;)</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.tool_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The selection mode:</p>
+<dl class="simple">
+<dt>range:</dt><dd><p>Select a range across a single index or value axis.</p>
+</dd>
+<dt>box:</dt><dd><p>Perform a “box” selection on two axes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BetterSelectingZoom.wheel_zoom_step">
+<code class="sig-name descname">wheel_zoom_step</code><em class="property"> = Property(Float, depends_on='zoom_factor')</em><a class="headerlink" href="#chaco.tools.api.BetterSelectingZoom.wheel_zoom_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conversion ratio from wheel steps to zoom factors.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="broadcastertool">
+<h2><a class="reference internal" href="#chaco.tools.api.BroadcasterTool" title="chaco.tools.api.BroadcasterTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">BroadcasterTool</span></code></a><a class="headerlink" href="#broadcastertool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.BroadcasterTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">BroadcasterTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BroadcasterTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>A simple tool that keeps a list of other tools, and broadcasts events it
+receives to all of the tools.</p>
+<dl class="method">
+<dt id="chaco.tools.api.BroadcasterTool.dispatch">
+<code class="sig-name descname">dispatch</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">suffix</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.BroadcasterTool.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatches a mouse event based on the current event state.</p>
+<p>Overrides BaseTool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BroadcasterTool.mouse_owners">
+<code class="sig-name descname">mouse_owners</code><em class="property"> = Dict</em><a class="headerlink" href="#chaco.tools.api.BroadcasterTool.mouse_owners" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping from tools to transforms, for tools that can be mouse owners.
+(See enable.AbstractWindow.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.BroadcasterTool.tools">
+<code class="sig-name descname">tools</code><em class="property"> = List</em><a class="headerlink" href="#chaco.tools.api.BroadcasterTool.tools" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tools to which this tool broadcasts events.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dataprinter">
+<h2><a class="reference internal" href="#chaco.tools.api.DataPrinter" title="chaco.tools.api.DataPrinter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataPrinter</span></code></a><a class="headerlink" href="#dataprinter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.DataPrinter">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">DataPrinter</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DataPrinter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>Simple listener tool that prints the (x,y) data space position of the
+point under the cursor.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.DataPrinter.draw_mode">
+<code class="sig-name descname">draw_mode</code><em class="property"> = &quot;none&quot;</em><a class="headerlink" href="#chaco.tools.api.DataPrinter.draw_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off drawing, because the tool prints to stdout.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DataPrinter.format">
+<code class="sig-name descname">format</code><em class="property"> = Str(&quot;(%.3f, %.3f)&quot;)</em><a class="headerlink" href="#chaco.tools.api.DataPrinter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>The string to format the (x,y) value in data space.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DataPrinter.normal_mouse_move">
+<code class="sig-name descname">normal_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DataPrinter.normal_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse being moved in the ‘normal’ state.</p>
+<p>Prints the data space position of the current mouse position.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DataPrinter.visible">
+<code class="sig-name descname">visible</code><em class="property"> = False</em><a class="headerlink" href="#chaco.tools.api.DataPrinter.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is a listener and does not display anything</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="datalabeltool">
+<h2><a class="reference internal" href="#chaco.tools.api.DataLabelTool" title="chaco.tools.api.DataLabelTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabelTool</span></code></a><a class="headerlink" href="#datalabeltool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.DataLabelTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">DataLabelTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DataLabelTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.drag_tool.DragTool</span></code></p>
+<p>A tool for dragging a data label.</p>
+<p>Attach this tool to a DataLabel object by setting the tool’s <strong>component</strong>
+to the DataLabel.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.DataLabelTool.auto_arrow_root">
+<code class="sig-name descname">auto_arrow_root</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.DataLabelTool.auto_arrow_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the root of the label’s arrow (if any) as the closest corner of the
+label?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DataLabelTool.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;)</em><a class="headerlink" href="#chaco.tools.api.DataLabelTool.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mouse button that initiates the drag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DataLabelTool.drag_end">
+<code class="sig-name descname">drag_end</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DataLabelTool.drag_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when a mouse event causes the drag operation to end.</p>
+<p>Implements DragTool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DataLabelTool.drag_start">
+<code class="sig-name descname">drag_start</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DataLabelTool.drag_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the drag operation starts.</p>
+<p>Implements DragTool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DataLabelTool.dragging">
+<code class="sig-name descname">dragging</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DataLabelTool.dragging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for every mouse_move event that the tool
+receives while the user is dragging the mouse.</p>
+<p>Implements DragTool. Moves and redraws the label.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DataLabelTool.is_draggable">
+<code class="sig-name descname">is_draggable</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DataLabelTool.is_draggable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the (x,y) position is in a region that is OK to
+drag.</p>
+<p>Overrides DragTool.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dragtool">
+<h2><a class="reference internal" href="#chaco.tools.api.DragTool" title="chaco.tools.api.DragTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DragTool</span></code></a><a class="headerlink" href="#dragtool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.DragTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">DragTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>Base class for tools that are activated by a drag operation.</p>
+<p>This tool insulates the drag operation from double clicks and the like, and
+gracefully manages the transition into and out of drag mode.</p>
+<dl class="method">
+<dt id="chaco.tools.api.DragTool.drag_cancel">
+<code class="sig-name descname">drag_cancel</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragTool.drag_cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the drag is cancelled.</p>
+<p>A drag is usually cancelled by receiving a mouse_leave event when
+end_drag_on_leave is True, or by the user pressing any of the
+<strong>cancel_keys</strong>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DragTool.drag_end">
+<code class="sig-name descname">drag_end</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragTool.drag_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when a mouse event causes the drag operation to end.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DragTool.drag_start">
+<code class="sig-name descname">drag_start</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragTool.drag_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the drag operation starts.</p>
+<p>The <em>event</em> parameter is the mouse event that established the drag
+operation; its <strong>x</strong> and <strong>y</strong> attributes correspond to the current
+location of the mouse, and not to the position of the mouse when the
+initial left_down or right_down event happened.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DragTool.dragging">
+<code class="sig-name descname">dragging</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragTool.dragging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for every mouse_move event that the tool
+receives while the user is dragging the mouse.</p>
+<p>It is recommended that subclasses do most of their work in this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DragTool.is_draggable">
+<code class="sig-name descname">is_draggable</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragTool.is_draggable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the (x,y) position is in a region that is OK to
+drag.</p>
+<p>Used by the tool to determine when to start a drag.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="drawpointstool">
+<h2><a class="reference internal" href="#chaco.tools.api.DrawPointsTool" title="chaco.tools.api.DrawPointsTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DrawPointsTool</span></code></a><a class="headerlink" href="#drawpointstool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.DrawPointsTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">DrawPointsTool</code><span class="sig-paren">(</span><em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DrawPointsTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>A tool that draws points onto a rectangular plot as they are clicked.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.DrawPointsTool.activated">
+<code class="sig-name descname">activated</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.DrawPointsTool.activated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this the active tool?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DrawPointsTool.normal_left_down">
+<code class="sig-name descname">normal_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DrawPointsTool.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being clicked when the tool is in the
+‘normal’ state.</p>
+<p>Maps the event position into data space, adds the point to the points
+for this tool, and redraws.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DrawPointsTool.xdata">
+<code class="sig-name descname">xdata</code><em class="property"> = Instance(ArrayDataSource)</em><a class="headerlink" href="#chaco.tools.api.DrawPointsTool.xdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>A data source for the x-dimension of the drawn points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DrawPointsTool.ydata">
+<code class="sig-name descname">ydata</code><em class="property"> = Instance(ArrayDataSource)</em><a class="headerlink" href="#chaco.tools.api.DrawPointsTool.ydata" title="Permalink to this definition">¶</a></dt>
+<dd><p>A data source for the y-dimension of the drawn points.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dragzoom">
+<h2><a class="reference internal" href="#chaco.tools.api.DragZoom" title="chaco.tools.api.DragZoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">DragZoom</span></code></a><a class="headerlink" href="#dragzoom" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.DragZoom">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">DragZoom</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragZoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.drag_tool.DragTool</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.better_zoom.BetterZoom</span></code></p>
+<p>A zoom tool that zooms continuously with a mouse drag movement, instead
+of using a zoom box or range.</p>
+<p>By default, the tool maintains aspect ratio and zooms the plot’s X and Y
+axes by the same amount as the user drags up and down.  (In this default
+configuration, the horizontal position of the drag motion has no effect.)</p>
+<p>By setting <strong>maintain_aspect_ratio</strong> to False, this tool will separably zoom
+the X and Y axis ranges by the (possibly different) horizontal and vertical
+drag motions.  This is similar to the drag zoom interaction in Matplotlib.</p>
+<p>By setting single_axis to True, dragging will only zoom in the axis specified
+by the axis attribute.</p>
+<p>By setting restrict_domain to True, the zoom will be limited to the domain
+of the axis mappers.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.DragZoom.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;, &quot;middle&quot;)</em><a class="headerlink" href="#chaco.tools.api.DragZoom.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mouse button that initiates the drag</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DragZoom.drag_end">
+<code class="sig-name descname">drag_end</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragZoom.drag_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when a mouse event causes the drag operation to end.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DragZoom.drag_pointer">
+<code class="sig-name descname">drag_pointer</code><em class="property"> = 'magnifier'</em><a class="headerlink" href="#chaco.tools.api.DragZoom.drag_pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pointer to use when we’re in the act of zooming</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DragZoom.drag_start">
+<code class="sig-name descname">drag_start</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">capture_mouse=True</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragZoom.drag_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the drag operation starts.</p>
+<p>The <em>event</em> parameter is the mouse event that established the drag
+operation; its <strong>x</strong> and <strong>y</strong> attributes correspond to the current
+location of the mouse, and not to the position of the mouse when the
+initial left_down or right_down event happened.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.DragZoom.dragging">
+<code class="sig-name descname">dragging</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.DragZoom.dragging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for every mouse_move event that the tool
+receives while the user is dragging the mouse.</p>
+<p>It is recommended that subclasses do most of their work in this method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DragZoom.maintain_aspect_ratio">
+<code class="sig-name descname">maintain_aspect_ratio</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.DragZoom.maintain_aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not to preserve the aspect ratio of X to Y while zooming in.
+(See class docstring for more info.)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DragZoom.restrict_domain">
+<code class="sig-name descname">restrict_domain</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.DragZoom.restrict_domain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to restrict zoom to the domain of the mappers</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DragZoom.single_axis">
+<code class="sig-name descname">single_axis</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.DragZoom.single_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not to zoom in one axis only</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.DragZoom.speed">
+<code class="sig-name descname">speed</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.tools.api.DragZoom.speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scaling factor on the zoom “speed”.  A speed of 1.0 implies a zoom rate of
+5% for every 10 pixels.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="highlighttool">
+<h2><a class="reference internal" href="#chaco.tools.api.HighlightTool" title="chaco.tools.api.HighlightTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">HighlightTool</span></code></a><a class="headerlink" href="#highlighttool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.HighlightTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">HighlightTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.HighlightTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>A tool that enables the user to select a plot to be highlighted on the
+graph by clicking on it.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.HighlightTool.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;)</em><a class="headerlink" href="#chaco.tools.api.HighlightTool.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mouse button that initiates the selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.HighlightTool.draw_mode">
+<code class="sig-name descname">draw_mode</code><em class="property"> = &quot;none&quot;</em><a class="headerlink" href="#chaco.tools.api.HighlightTool.draw_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is not drawn. Overrides BaseTool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.HighlightTool.metadata_name">
+<code class="sig-name descname">metadata_name</code><em class="property"> = Str('selections')</em><a class="headerlink" href="#chaco.tools.api.HighlightTool.metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the data source metadata which controls selections.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.HighlightTool.normal_left_down">
+<code class="sig-name descname">normal_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.HighlightTool.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed.</p>
+<p>If the left mouse button initiates the selection, this method does so.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.HighlightTool.normal_right_down">
+<code class="sig-name descname">normal_right_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.HighlightTool.normal_right_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button being pressed.</p>
+<p>If the right mouse button initiates the selection, this method does so.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.HighlightTool.threshold">
+<code class="sig-name descname">threshold</code><em class="property"> = Float(20.0)</em><a class="headerlink" href="#chaco.tools.api.HighlightTool.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Threshold distance for hit-testing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.HighlightTool.visible">
+<code class="sig-name descname">visible</code><em class="property"> = False</em><a class="headerlink" href="#chaco.tools.api.HighlightTool.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is not visible. Overrides BaseTool.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imageinspectortool">
+<h2><a class="reference internal" href="#chaco.tools.api.ImageInspectorTool" title="chaco.tools.api.ImageInspectorTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInspectorTool</span></code></a><a class="headerlink" href="#imageinspectortool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.ImageInspectorTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">ImageInspectorTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.ImageInspectorTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>A tool that captures the color and underlying values of an image plot.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.ImageInspectorTool.inspector_key">
+<code class="sig-name descname">inspector_key</code><em class="property"> = &lt;enable.base_tool.KeySpec object&gt;</em><a class="headerlink" href="#chaco.tools.api.ImageInspectorTool.inspector_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>This key will show and hide any ImageInspectorOverlays associated
+with this tool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ImageInspectorTool.last_mouse_position">
+<code class="sig-name descname">last_mouse_position</code><em class="property"> = Tuple</em><a class="headerlink" href="#chaco.tools.api.ImageInspectorTool.last_mouse_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the last mouse position.  This can be used by overlays to
+position themselves around the mouse.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ImageInspectorTool.new_value">
+<code class="sig-name descname">new_value</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.api.ImageInspectorTool.new_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>This event fires whenever the mouse moves over a new image point.
+Its value is a dict with a key “color_value”, and possibly a key
+“data_value” if the plot is a color-mapped image plot.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.ImageInspectorTool.normal_mouse_move">
+<code class="sig-name descname">normal_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.ImageInspectorTool.normal_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse being moved.</p>
+<p>Fires the <strong>new_value</strong> event with the data (if any) from the event’s
+position.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ImageInspectorTool.visible">
+<code class="sig-name descname">visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.ImageInspectorTool.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether overlays listening to this tool should be visible.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imageinspectoroverlay">
+<h2><a class="reference internal" href="#chaco.tools.api.ImageInspectorOverlay" title="chaco.tools.api.ImageInspectorOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInspectorOverlay</span></code></a><a class="headerlink" href="#imageinspectoroverlay" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.ImageInspectorOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">ImageInspectorOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.ImageInspectorOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.text_box_overlay.TextBoxOverlay</span></code></p>
+<p>An overlay that displays a box containing values from an
+ImageInspectorTool instance.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.ImageInspectorOverlay.image_inspector">
+<code class="sig-name descname">image_inspector</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.tools.api.ImageInspectorOverlay.image_inspector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of ImageInspectorTool; this overlay listens to the tool
+for changes, and updates its displayed text accordingly.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ImageInspectorOverlay.tooltip_mode">
+<code class="sig-name descname">tooltip_mode</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.ImageInspectorOverlay.tooltip_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Anchor the text to the mouse?  (If False, then the text is in one of the
+corners.)  Use the <strong>align</strong> trait to determine which corner.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ImageInspectorOverlay.visibility">
+<code class="sig-name descname">visibility</code><em class="property"> = Enum(&quot;auto&quot;, True, False)</em><a class="headerlink" href="#chaco.tools.api.ImageInspectorOverlay.visibility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the overlay should auto-hide and auto-show based on the
+tool’s location, or whether it should be forced to be hidden or visible.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ImageInspectorOverlay.visible">
+<code class="sig-name descname">visible</code><em class="property"> = False</em><a class="headerlink" href="#chaco.tools.api.ImageInspectorOverlay.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default state of the overlay is invisible (overrides PlotComponent).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lassoselection">
+<h2><a class="reference internal" href="#chaco.tools.api.LassoSelection" title="chaco.tools.api.LassoSelection"><code class="xref py py-class docutils literal notranslate"><span class="pre">LassoSelection</span></code></a><a class="headerlink" href="#lassoselection" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.LassoSelection">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">LassoSelection</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LassoSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_controller.AbstractController</span></code></p>
+<p>A controller that represents the interaction of “lassoing” a set of
+points.</p>
+<p>“Lassoing” means drawing an arbitrary selection region around the points
+by dragging the mouse along the outline of the region.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.dataspace_points">
+<code class="sig-name descname">dataspace_points</code><em class="property"> = Property(Array)</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.dataspace_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>An Nx2 array of points in data space representing all selected points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.disjoint_selections">
+<code class="sig-name descname">disjoint_selections</code><em class="property"> = Property(List)</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.disjoint_selections" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of all the selection polygons.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;)</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The button which this tool responds to</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.event_state">
+<code class="sig-name descname">event_state</code><em class="property"> = Enum('normal', 'selecting')</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.event_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The possible event states of this selection tool (overrides
+enable.Interactor).</p>
+<dl class="simple">
+<dt>normal:</dt><dd><p>Nothing has been selected, and the user is not dragging the mouse.</p>
+</dd>
+<dt>selecting:</dt><dd><p>The user is dragging the mouse and is actively changing the
+selection region.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.incremental_select">
+<code class="sig-name descname">incremental_select</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.incremental_select" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the selection mask is updated as the mouse moves, rather
+than only at the beginning and end of the selection operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.metadata_name">
+<code class="sig-name descname">metadata_name</code><em class="property"> = Str(&quot;selection&quot;)</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the metadata on the datasource that we will write
+the selection mask to</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LassoSelection.normal_key_pressed">
+<code class="sig-name descname">normal_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LassoSelection.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the user pressing a key in the ‘normal’ state.</p>
+<p>If the user presses the Escape key, the tool is reset.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LassoSelection.normal_mouse_down">
+<code class="sig-name descname">normal_mouse_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LassoSelection.normal_mouse_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed while the tool is
+in the ‘normal’ state.</p>
+<p>Puts the tool into ‘selecting’ mode, and starts defining the selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.plot">
+<code class="sig-name descname">plot</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping from screen space to data space. By default, it is just
+self.component.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LassoSelection.selecting_mouse_leave">
+<code class="sig-name descname">selecting_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LassoSelection.selecting_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot when the tool is in the
+‘selecting’ state.</p>
+<p>Ends the selection operation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LassoSelection.selecting_mouse_move">
+<code class="sig-name descname">selecting_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LassoSelection.selecting_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse moving when the tool is in the ‘selecting’ state.</p>
+<p>The selection is extended to the current mouse position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LassoSelection.selecting_mouse_up">
+<code class="sig-name descname">selecting_mouse_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LassoSelection.selecting_mouse_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse button coming up in the ‘selecting’ state.</p>
+<p>Completes the selection and switches to the ‘normal’ state.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.selection_changed">
+<code class="sig-name descname">selection_changed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.selection_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires when the selection mask changes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.selection_completed">
+<code class="sig-name descname">selection_completed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.selection_completed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires when the user release the mouse button and finalizes the selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.selection_datasource">
+<code class="sig-name descname">selection_datasource</code><em class="property"> = Instance(AbstractDataSource)</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.selection_datasource" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data source that the mask of selected points is attached to.  Note
+that the indices in this data source must match the indices of the data
+in the plot.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.selection_mode">
+<code class="sig-name descname">selection_mode</code><em class="property"> = Enum(&quot;include&quot;, &quot;exclude&quot;, &quot;invert&quot;)</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.selection_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The selection mode of the lasso pointer: “include”, “exclude” or
+“invert” points from the selection. The “include” and “exclude”
+settings essentially invert the selection mask. The “invert” setting
+differs from “exclude” in that “invert” inverses the selection of all
+points the the lasso’ed polygon, while “exclude” operates only on
+points included in a previous selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LassoSelection.updated">
+<code class="sig-name descname">updated</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.api.LassoSelection.updated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires whenever <strong>dataspace_points</strong> changes, necessitating a redraw of the
+selection region.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="legendtool">
+<h2><a class="reference internal" href="#chaco.tools.api.LegendTool" title="chaco.tools.api.LegendTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">LegendTool</span></code></a><a class="headerlink" href="#legendtool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.LegendTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">LegendTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LegendTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.drag_tool.DragTool</span></code></p>
+<p>A tool for interacting with legends.</p>
+<p>Attach this tool to a legend by setting the tool’s <strong>component</strong>
+to the legend.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.LegendTool.auto_align">
+<code class="sig-name descname">auto_align</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.LegendTool.auto_align" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to change the legend’s <strong>align</strong> property in accord with
+the quadrant into which it is dropped.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LegendTool.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;)</em><a class="headerlink" href="#chaco.tools.api.LegendTool.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mouse button that initiates the drag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LegendTool.drag_end">
+<code class="sig-name descname">drag_end</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LegendTool.drag_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when a mouse event causes the drag operation to end.</p>
+<p>Implements DragTool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LegendTool.drag_start">
+<code class="sig-name descname">drag_start</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LegendTool.drag_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the drag operation starts.</p>
+<p>Implements DragTool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LegendTool.dragging">
+<code class="sig-name descname">dragging</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LegendTool.dragging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for every mouse_move event that the tool
+receives while the user is dragging the mouse.</p>
+<p>Implements DragTool. Moves the legend by aligning it to a corner of its
+overlay component.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LegendTool.is_draggable">
+<code class="sig-name descname">is_draggable</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LegendTool.is_draggable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the (x,y) position is in a region that is OK to
+drag.</p>
+<p>Overrides DragTool.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="legendhighlighter">
+<h2><a class="reference internal" href="#chaco.tools.api.LegendHighlighter" title="chaco.tools.api.LegendHighlighter"><code class="xref py py-class docutils literal notranslate"><span class="pre">LegendHighlighter</span></code></a><a class="headerlink" href="#legendhighlighter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.LegendHighlighter">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">LegendHighlighter</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LegendHighlighter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.legend_tool.LegendTool</span></code></p>
+<p>A tool for legends that allows clicking on the legend to show
+or hide certain plots.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.LegendHighlighter.dim_factor">
+<code class="sig-name descname">dim_factor</code><em class="property"> = Float(3.0)</em><a class="headerlink" href="#chaco.tools.api.LegendHighlighter.dim_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>What to divide the alpha value by when plot is not selected</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LegendHighlighter.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = &quot;right&quot;</em><a class="headerlink" href="#chaco.tools.api.LegendHighlighter.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Which mousebutton to use to move the legend</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LegendHighlighter.line_scale">
+<code class="sig-name descname">line_scale</code><em class="property"> = Float(2.0)</em><a class="headerlink" href="#chaco.tools.api.LegendHighlighter.line_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>How much to scale the line when it is selected or deselected</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lineinspector">
+<h2><a class="reference internal" href="#chaco.tools.api.LineInspector" title="chaco.tools.api.LineInspector"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineInspector</span></code></a><a class="headerlink" href="#lineinspector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.LineInspector">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">LineInspector</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineInspector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>A simple tool to draw a line parallel to the index or the value axis of
+an X-Y plot.</p>
+<p>This tool supports only plots with a 1-D index.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.axis">
+<code class="sig-name descname">axis</code><em class="property"> = Enum(&quot;index&quot;, &quot;value&quot;, &quot;index_x&quot;, &quot;index_y&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The axis that this tool is parallel to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.color">
+<code class="sig-name descname">color</code><em class="property"> = ColorTrait(&quot;black&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color of the line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineInspector.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineInspector.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this tool on a graphics context.</p>
+<p>Overrides BaseTool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.draw_mode">
+<code class="sig-name descname">draw_mode</code><em class="property"> = &quot;overlay&quot;</em><a class="headerlink" href="#chaco.tools.api.LineInspector.draw_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is drawn as an overlay (overrides BaseTool).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.inspect_mode">
+<code class="sig-name descname">inspect_mode</code><em class="property"> = Enum(&quot;space&quot;, &quot;indexed&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.inspect_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The possible inspection modes of the tool.</p>
+<dl class="simple">
+<dt>space:</dt><dd><p>The tool maps from screen space into the data space of the plot.</p>
+</dd>
+<dt>indexed:</dt><dd><p>The tool maps from screen space to an index into the plot’s index array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.is_interactive">
+<code class="sig-name descname">is_interactive</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.is_interactive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Respond to user mouse events?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.is_listener">
+<code class="sig-name descname">is_listener</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.is_listener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the tool respond to updates in the metadata on the data source
+and update its own position?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.line_style">
+<code class="sig-name descname">line_style</code><em class="property"> = LineStyle(&quot;solid&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.line_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dash style of the line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.line_width">
+<code class="sig-name descname">line_width</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width in pixels of the line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.metadata_name">
+<code class="sig-name descname">metadata_name</code><em class="property"> = Str(&quot;selections&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the metadata field to listen or write to.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineInspector.normal_mouse_leave">
+<code class="sig-name descname">normal_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineInspector.normal_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineInspector.normal_mouse_move">
+<code class="sig-name descname">normal_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineInspector.normal_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse being moved.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineInspector.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineInspector.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on a graphics context.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.visible">
+<code class="sig-name descname">visible</code><em class="property"> = True</em><a class="headerlink" href="#chaco.tools.api.LineInspector.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is visible (overrides BaseTool).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineInspector.write_metadata">
+<code class="sig-name descname">write_metadata</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.LineInspector.write_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>If interactive, does the line inspector write the current data space point
+to the appropriate data source’s metadata?</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="linesegmenttool">
+<h2><a class="reference internal" href="#chaco.tools.api.LineSegmentTool" title="chaco.tools.api.LineSegmentTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineSegmentTool</span></code></a><a class="headerlink" href="#linesegmenttool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.LineSegmentTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">LineSegmentTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
+<p>The base class for tools that allow the user to draw a
+series of points connected by lines.</p>
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.add_point">
+<code class="sig-name descname">add_point</code><span class="sig-paren">(</span><em class="sig-param">point</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.add_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a screen-space <em>point</em> (x,y), adds the corresponding data
+space point to the list for this tool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.component">
+<code class="sig-name descname">component</code><em class="property"> = Instance(Component)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.component" title="Permalink to this definition">¶</a></dt>
+<dd><p>The component that this tool overlays</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.delete_cursor">
+<code class="sig-name descname">delete_cursor</code><em class="property"> = Pointer(&quot;bullseye&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.delete_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cursor shape for deleting points.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.dragging_draw">
+<code class="sig-name descname">dragging_draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.dragging_draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the polygon in the ‘dragging’ state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.dragging_key_pressed">
+<code class="sig-name descname">dragging_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.dragging_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a key being pressed in the ‘dragging’ state.</p>
+<p>If the key is “Esc”, the drag operation is canceled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.dragging_left_up">
+<code class="sig-name descname">dragging_left_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.dragging_left_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse coming up in the ‘dragging’ state.</p>
+<p>Switches to ‘normal’ state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.dragging_mouse_leave">
+<code class="sig-name descname">dragging_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.dragging_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the tool area in the ‘dragging’ state.</p>
+<p>The drag is canceled and the cursor changes to an arrow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.dragging_mouse_move">
+<code class="sig-name descname">dragging_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.dragging_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the user moving the mouse while in the ‘dragging’ state.</p>
+<p>The screen is updated to show the new mouse position as the end of the
+line segment being drawn.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.event_state">
+<code class="sig-name descname">event_state</code><em class="property"> = Enum(&quot;normal&quot;, &quot;selecting&quot;, &quot;dragging&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.event_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The event states are:</p>
+<dl class="simple">
+<dt>normal:</dt><dd><p>The user may have selected points, and is moving the cursor around.</p>
+</dd>
+<dt>selecting:</dt><dd><p>The user has clicked down but hasn’t let go of the button yet,
+and can still drag the point around.</p>
+</dd>
+<dt>dragging:</dt><dd><p>The user has clicked on an existing point and is dragging it
+around.  When the user releases the mouse button, the tool returns
+to the “normal” state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.get_point">
+<code class="sig-name descname">get_point</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.get_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the indexed point and returns its screen space value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.line">
+<code class="sig-name descname">line</code><em class="property"> = Instance(Line, args=())</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.line" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current line segment being drawn.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.mouse_position">
+<code class="sig-name descname">mouse_position</code><em class="property"> = Trait(None, None, Tuple)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.mouse_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data (index, value) position of the mouse cursor; this is used by various
+draw() routines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.move_cursor">
+<code class="sig-name descname">move_cursor</code><em class="property"> = Pointer(&quot;sizing&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.move_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cursor shape for moving points.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.normal_cursor">
+<code class="sig-name descname">normal_cursor</code><em class="property"> = Pointer(&quot;pencil&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.normal_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cursor shape for drawing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.normal_draw">
+<code class="sig-name descname">normal_draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.normal_draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.normal_key_pressed">
+<code class="sig-name descname">normal_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the user pressing a key in the ‘normal’ state.</p>
+<p>If the user presses the Enter key, the tool is reset.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.normal_left_down">
+<code class="sig-name descname">normal_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed while the tool is
+in the ‘normal’ state.</p>
+<p>For an existing point, if the user is pressing the Control key, the
+point is deleted. Otherwise, the user can drag the point.</p>
+<p>For a new point, the point is added, and the user can drag it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.normal_mouse_leave">
+<code class="sig-name descname">normal_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.normal_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the user moving the cursor away from the tool area.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.normal_mouse_move">
+<code class="sig-name descname">normal_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.normal_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the user moving the mouse in the ‘normal’ state.</p>
+<p>When the user moves the cursor over an existing point, if the Control
+key is pressed, the cursor changes to the <strong>delete_cursor</strong>, indicating
+that the point can be deleted. Otherwise, the cursor changes to the
+<strong>move_cursor</strong>, indicating that the point can be moved.</p>
+<p>When the user moves the cursor over any other point, the cursor
+changes to (or stays) the <strong>normal_cursor</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.original_cursor">
+<code class="sig-name descname">original_cursor</code><em class="property"> = Pointer(&quot;arrow&quot;)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.original_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cursor shape for non-tool use.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Implements AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.points">
+<code class="sig-name descname">points</code><em class="property"> = List</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.points" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the points in data space as (index,value)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.proximity_distance">
+<code class="sig-name descname">proximity_distance</code><em class="property"> = Int(4)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.proximity_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pixel distance from a vertex that is considered ‘on’ the vertex.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.remove_point">
+<code class="sig-name descname">remove_point</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.remove_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the point for a given <em>index</em> from this tool’s list of
+points.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.request_redraw">
+<code class="sig-name descname">request_redraw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.request_redraw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requests that the component redraw itself.</p>
+<p>Overrides Enable Component.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the tool, throwing away any points, and making the tool
+invisible.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.LineSegmentTool.set_point">
+<code class="sig-name descname">set_point</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">point</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.set_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the data-space <em>index</em> for a screen-space <em>point</em>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.LineSegmentTool.visible">
+<code class="sig-name descname">visible</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.LineSegmentTool.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tool is initially invisible, because there is nothing to draw.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="movetool">
+<h2><a class="reference internal" href="#chaco.tools.api.MoveTool" title="chaco.tools.api.MoveTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">MoveTool</span></code></a><a class="headerlink" href="#movetool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.MoveTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">MoveTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.MoveTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.tools.drag_tool.DragTool</span></code></p>
+<p>A tool for moving a plot component.</p>
+<dl class="method">
+<dt id="chaco.tools.api.MoveTool.drag_start">
+<code class="sig-name descname">drag_start</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.MoveTool.drag_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the drag operation starts.</p>
+<p>Implements DragTool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.MoveTool.dragging">
+<code class="sig-name descname">dragging</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.MoveTool.dragging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for every mouse_move event that the tool
+receives while the user is dragging the mouse.</p>
+<p>Implements DragTool. Moves the component.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pantool">
+<h2><a class="reference internal" href="#chaco.tools.api.PanTool" title="chaco.tools.api.PanTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">PanTool</span></code></a><a class="headerlink" href="#pantool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.PanTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">PanTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>A tool that enables the user to pan a plot by clicking a mouse
+button and dragging.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.constrain">
+<code class="sig-name descname">constrain</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.PanTool.constrain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constrain the panning to one direction?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.constrain_direction">
+<code class="sig-name descname">constrain_direction</code><em class="property"> = Enum(None, &quot;x&quot;, &quot;y&quot;)</em><a class="headerlink" href="#chaco.tools.api.PanTool.constrain_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>The direction of constrained draw. A value of None means that the user
+has initiated the drag and pressed the constrain_key, but hasn’t moved
+the mouse yet; the magnitude of the components of the next mouse_move
+event will determine the constrain_direction.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.constrain_key">
+<code class="sig-name descname">constrain_key</code><em class="property"> = Enum(None, &quot;shift&quot;, &quot;control&quot;, &quot;alt&quot;)</em><a class="headerlink" href="#chaco.tools.api.PanTool.constrain_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The modifier key that, if depressed when the drag is initiated, constrains
+the panning to happen in the only direction of largest initial motion.
+It is possible to permanently restrict this tool to always drag along one
+direction.  To do so, set constrain=True, constrain_key=None, and
+constrain_direction to the desired direction.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.drag_button">
+<code class="sig-name descname">drag_button</code><em class="property"> = Enum(&quot;left&quot;, &quot;middle&quot;, &quot;right&quot;)</em><a class="headerlink" href="#chaco.tools.api.PanTool.drag_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mouse button that initiates the drag operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.drag_pointer">
+<code class="sig-name descname">drag_pointer</code><em class="property"> = Pointer(&quot;hand&quot;)</em><a class="headerlink" href="#chaco.tools.api.PanTool.drag_pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The cursor to use when panning.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.draw_mode">
+<code class="sig-name descname">draw_mode</code><em class="property"> = &quot;none&quot;</em><a class="headerlink" href="#chaco.tools.api.PanTool.draw_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tool does not have a visual representation (overrides
+BaseTool).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.event_state">
+<code class="sig-name descname">event_state</code><em class="property"> = Enum(&quot;normal&quot;, &quot;panning&quot;)</em><a class="headerlink" href="#chaco.tools.api.PanTool.event_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The possible event states of this tool (overrides enable.Interactor).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.normal_key_pressed">
+<code class="sig-name descname">normal_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a key being pressed when the tool is in the ‘normal’
+state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.normal_left_down">
+<code class="sig-name descname">normal_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed when the tool is in
+the ‘normal’ state.</p>
+<p>Starts panning if the left mouse button is the drag button.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.normal_middle_down">
+<code class="sig-name descname">normal_middle_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.normal_middle_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the middle mouse button being pressed when the tool is in
+the ‘normal’ state.</p>
+<p>Starts panning if the middle mouse button is the drag button.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.normal_right_down">
+<code class="sig-name descname">normal_right_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.normal_right_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button being pressed when the tool is in
+the ‘normal’ state.</p>
+<p>Starts panning if the right mouse button is the drag button.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.pan_keys_step">
+<code class="sig-name descname">pan_keys_step</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.tools.api.PanTool.pan_keys_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of pixels the keys should pan
+disabled if 0.0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.pan_right_key">
+<code class="sig-name descname">pan_right_key</code><em class="property"> = Instance(KeySpec, args=(&quot;Right&quot;,))</em><a class="headerlink" href="#chaco.tools.api.PanTool.pan_right_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys to Pan via keyboard</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.panning_left_up">
+<code class="sig-name descname">panning_left_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.panning_left_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button coming up when the tool is in the
+‘panning’ state.</p>
+<p>Stops panning if the left mouse button is the drag button.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.panning_middle_up">
+<code class="sig-name descname">panning_middle_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.panning_middle_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the middle mouse button coming up when the tool is in the
+‘panning’ state.</p>
+<p>Stops panning if the middle mouse button is the drag button.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.panning_mouse_leave">
+<code class="sig-name descname">panning_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.panning_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot when the tool is in the ‘panning’
+state.</p>
+<p>Ends panning.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.panning_mouse_move">
+<code class="sig-name descname">panning_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.panning_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse being moved when the tool is in the ‘panning’
+state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PanTool.panning_right_up">
+<code class="sig-name descname">panning_right_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanTool.panning_right_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button coming up when the tool is in the
+‘panning’ state.</p>
+<p>Stops panning if the right mouse button is the drag button.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.restrict_to_data">
+<code class="sig-name descname">restrict_to_data</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.PanTool.restrict_to_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict to the bounds of the plot data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.speed">
+<code class="sig-name descname">speed</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.tools.api.PanTool.speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scaling factor on the panning “speed”.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PanTool.visible">
+<code class="sig-name descname">visible</code><em class="property"> = False</em><a class="headerlink" href="#chaco.tools.api.PanTool.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tool is not visible (overrides BaseTool).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pointmarker">
+<h2><a class="reference internal" href="#chaco.tools.api.PointMarker" title="chaco.tools.api.PointMarker"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointMarker</span></code></a><a class="headerlink" href="#pointmarker" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.PointMarker">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">PointMarker</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PointMarker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>This tool looks at an XY plot’s index data source and draws a
+line corresponding to the index indicated by the “selections” metadata.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.PointMarker.axis">
+<code class="sig-name descname">axis</code><em class="property"> = Enum(&quot;index&quot;, &quot;value&quot;)</em><a class="headerlink" href="#chaco.tools.api.PointMarker.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The axis that this tool is parallel to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PointMarker.color">
+<code class="sig-name descname">color</code><em class="property"> = ColorTrait(&quot;red&quot;)</em><a class="headerlink" href="#chaco.tools.api.PointMarker.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.PointMarker.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PointMarker.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this tool on a graphics context.</p>
+<p>Implements BaseTool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PointMarker.draw_mode">
+<code class="sig-name descname">draw_mode</code><em class="property"> = &quot;overlay&quot;</em><a class="headerlink" href="#chaco.tools.api.PointMarker.draw_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is drawn as an overlay (overrides BaseTool).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PointMarker.line_width">
+<code class="sig-name descname">line_width</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.tools.api.PointMarker.line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the line, in pixels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.PointMarker.visible">
+<code class="sig-name descname">visible</code><em class="property"> = True</em><a class="headerlink" href="#chaco.tools.api.PointMarker.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is visible (overrides BaseTool).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rangeselection">
+<h2><a class="reference internal" href="#chaco.tools.api.RangeSelection" title="chaco.tools.api.RangeSelection"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelection</span></code></a><a class="headerlink" href="#rangeselection" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.RangeSelection">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">RangeSelection</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_controller.AbstractController</span></code></p>
+<p>Selects a range along the index or value axis.</p>
+<p>The user right-click-drags to select a region, which stays selected until
+the user left-clicks to deselect.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.allow_deselection">
+<code class="sig-name descname">allow_deselection</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.allow_deselection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow the tool to be put into the deselected state via mouse clicks</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.append_key">
+<code class="sig-name descname">append_key</code><em class="property"> = Instance(KeySpec, args=(None, &quot;control&quot;))</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.append_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The key which, if held down while the mouse is being dragged, will
+indicate that the selection should be appended to an existing selection
+as opposed to overwriting it.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.axis">
+<code class="sig-name descname">axis</code><em class="property"> = Enum(&quot;index&quot;, &quot;value&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The axis to which this tool is perpendicular.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.axis_index">
+<code class="sig-name descname">axis_index</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.axis_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The index to use for <strong>axis</strong>. By default, this is self.plot.orientation,
+but it can be overriden and set to 0 or 1.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.deselect">
+<code class="sig-name descname">deselect</code><span class="sig-paren">(</span><em class="sig-param">event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.deselect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deselects the highlighted region.</p>
+<p>This method essentially resets the tool. It takes the event causing the
+deselection as an optional argument.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.disable_left_mouse">
+<code class="sig-name descname">disable_left_mouse</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.disable_left_mouse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable all left-mouse button interactions?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.enable_resize">
+<code class="sig-name descname">enable_resize</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.enable_resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can the user resize the selection once it has been drawn?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.event_state">
+<code class="sig-name descname">event_state</code><em class="property"> = Enum(&quot;normal&quot;, &quot;selecting&quot;, &quot;selected&quot;, &quot;moving&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.event_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The possible event states of this selection tool (overrides
+enable.Interactor).</p>
+<dl class="simple">
+<dt>normal:</dt><dd><p>Nothing has been selected, and the user is not dragging the mouse.</p>
+</dd>
+<dt>selecting:</dt><dd><p>The user is dragging the mouse and actively changing the
+selection region; resizing of an existing selection also
+uses this mode.</p>
+</dd>
+<dt>selected:</dt><dd><p>The user has released the mouse and a selection has been
+finalized.  The selection remains until the user left-clicks
+or self.deselect() is called.</p>
+</dd>
+<dt>moving:</dt><dd><p>The user moving (not resizing) the selection range.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.left_button_selects">
+<code class="sig-name descname">left_button_selects</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.left_button_selects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow the left button begin a selection?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.listeners">
+<code class="sig-name descname">listeners</code><em class="property"> = List</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.listeners" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of listeners that listen to selection events.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.mapper">
+<code class="sig-name descname">mapper</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper for associated with this tool. By default, this is the mapper
+on <strong>plot</strong> that corresponds to <strong>axis</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.mask_metadata_name">
+<code class="sig-name descname">mask_metadata_name</code><em class="property"> = Str(&quot;selection_masks&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.mask_metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the metadata on the datasource that we will set to a numpy
+boolean array for masking the datasource’s data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.metadata_name">
+<code class="sig-name descname">metadata_name</code><em class="property"> = Str(&quot;selections&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the metadata on the datasource that we will write
+self.selection to</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.minimum_selection">
+<code class="sig-name descname">minimum_selection</code><em class="property"> = Int(5)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.minimum_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum span, in pixels, of a selection region.  Any attempt to
+select a region smaller than this will be treated as a deselection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.moving_left_up">
+<code class="sig-name descname">moving_left_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.moving_left_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button coming up when the tool is in the
+‘moving’ state.</p>
+<p>Switches the tool to the ‘selected’ state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.moving_mouse_leave">
+<code class="sig-name descname">moving_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.moving_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot while the tool is in the
+‘moving’ state.</p>
+<p>If the mouse was within the selection region when it left, the method
+does nothing.</p>
+<p>If the mouse was outside the selection region whe it left, the event is
+treated as moving the selection to the minimum or maximum.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.moving_mouse_move">
+<code class="sig-name descname">moving_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.moving_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse moving when the tool is in the ‘moving’ state.</p>
+<p>Moves the selection range by an amount corresponding to the amount
+that the mouse has moved since its button was pressed. If the new
+selection range overlaps the endpoints of the data, it is truncated to
+that endpoint.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.normal_left_down">
+<code class="sig-name descname">normal_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed when the tool is in
+the ‘normal’ state.</p>
+<p>If the tool allows the left mouse button to start a selection, then
+it does so.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.normal_right_down">
+<code class="sig-name descname">normal_right_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.normal_right_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button being pressed when the tool is in
+the ‘normal’ state.</p>
+<p>Puts the tool into ‘selecting’ mode, changes the cursor to show that it
+is selecting, and starts defining the selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.plot">
+<code class="sig-name descname">plot</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>The plot associated with this tool By default, this is just
+self.component.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.resize_margin">
+<code class="sig-name descname">resize_margin</code><em class="property"> = Int(7)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.resize_margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pixel distance between the mouse event and a selection endpoint at
+which the user action will be construed as a resize operation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selected_left_down">
+<code class="sig-name descname">selected_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selected_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed when the tool is in
+the ‘selected’ state.</p>
+<p>If the user is allowed to resize the selection, and the event occurred
+within the resize margin of an endpoint, then the tool switches to the
+‘selecting’ state so that the user can resize the selection.</p>
+<p>If the event is within the bounds of the selection region, then the
+tool switches to the ‘moving’ states.</p>
+<p>Otherwise, the selection becomes deselected.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selected_mouse_leave">
+<code class="sig-name descname">selected_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selected_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot when the tool is in the
+‘selected’ state.</p>
+<p>Sets the cursor to an arrow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selected_mouse_move">
+<code class="sig-name descname">selected_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selected_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse moving when the tool is in the ‘selected’ srate.</p>
+<p>If the user is allowed to resize the selection, and the event
+occurred within the resize margin of an endpoint, then the cursor
+changes to indicate that the selection could be resized.</p>
+<p>Otherwise, the cursor is set to an arrow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selected_right_down">
+<code class="sig-name descname">selected_right_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selected_right_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button being pressed when the tool is in
+the ‘selected’ state.</p>
+<p>If the user is allowed to resize the selection, and the event occurred
+within the resize margin of an endpoint, then the tool switches to the
+‘selecting’ state so that the user can resize the selection.</p>
+<p>Otherwise, the selection becomes deselected, and a new selection is
+started..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selecting_left_up">
+<code class="sig-name descname">selecting_left_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selecting_left_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button coming up when the tool is in the
+‘selecting’ state.</p>
+<p>Switches the tool to the ‘selected’ state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selecting_mouse_enter">
+<code class="sig-name descname">selecting_mouse_enter</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selecting_mouse_enter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse entering the plot when the tool is in the
+‘selecting’ state.</p>
+<p>If the mouse does not have the right mouse button down, this event
+is treated as if the right mouse button was released. Otherwise,
+the method sets the cursor to show that it is selecting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selecting_mouse_leave">
+<code class="sig-name descname">selecting_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selecting_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot when the tool is in the
+‘selecting’ state.</p>
+<p>Determines whether the event’s position is outside the component’s
+bounds, and if so, clips the selection. Sets the cursor to an arrow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selecting_mouse_move">
+<code class="sig-name descname">selecting_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selecting_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse being moved when the tool is in the ‘selecting’
+state.</p>
+<p>Expands the selection range at the appropriate end, based on the new
+mouse position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection.selecting_right_up">
+<code class="sig-name descname">selecting_right_up</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection.selecting_right_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button coming up when the tool is in the
+‘selecting’ state.</p>
+<p>Switches the tool to the ‘selected’ state and completes the selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.selection">
+<code class="sig-name descname">selection</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The selected region, expressed as a tuple in data space.  This updates
+and fires change-events as the user is dragging.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.selection_completed">
+<code class="sig-name descname">selection_completed</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.selection_completed" title="Permalink to this definition">¶</a></dt>
+<dd><p>This event is fired whenever the user completes the selection, or when a
+finalized selection gets modified.  The value of the event is the data
+space range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelection.selection_mode_metadata_name">
+<code class="sig-name descname">selection_mode_metadata_name</code><em class="property"> = Str(&quot;selection_mode&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelection.selection_mode_metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Either “set” or “append”, depending on whether self.append_key was
+held down</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rangeselection2d">
+<h2><a class="reference internal" href="#chaco.tools.api.RangeSelection2D" title="chaco.tools.api.RangeSelection2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelection2D</span></code></a><a class="headerlink" href="#rangeselection2d" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.RangeSelection2D">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">RangeSelection2D</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.range_selection.RangeSelection</span></code></p>
+<dl class="simple">
+<dt>Selects a range along the index or value axis for plots on 2D data,</dt><dd><p>such as image plots</p>
+</dd>
+</dl>
+<p>The user right-click-drags to select a region, which stays selected until
+the user left-clicks to deselect.</p>
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection2D.moving_mouse_move">
+<code class="sig-name descname">moving_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection2D.moving_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse moving when the tool is in the ‘moving’ state.</p>
+<p>Moves the selection range by an amount corresponding to the amount
+that the mouse has moved since its button was pressed. If the new
+selection range overlaps the endpoints of the data, it is truncated to
+that endpoint.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection2D.normal_right_down">
+<code class="sig-name descname">normal_right_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection2D.normal_right_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button being pressed when the tool is in
+the ‘normal’ state.</p>
+<p>Puts the tool into ‘selecting’ mode, changes the cursor to show that it
+is selecting, and starts defining the selection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection2D.selected_left_down">
+<code class="sig-name descname">selected_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection2D.selected_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed when the tool is in
+the ‘selected’ state.</p>
+<p>If the user is allowed to resize the selection, and the event occurred
+within the resize margin of an endpoint, then the tool switches to the
+‘selecting’ state so that the user can resize the selection.</p>
+<p>If the event is within the bounds of the selection region, then the tool
+switches to the ‘moving’ states.</p>
+<p>Otherwise, the selection becomes deselected.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection2D.selected_mouse_move">
+<code class="sig-name descname">selected_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection2D.selected_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse moving when the tool is in the ‘selected’ state.</p>
+<p>If the user is allowed to resize the selection, and the event
+occurred within the resize margin of an endpoint, then the cursor
+changes to indicate that the selection could be resized.</p>
+<p>Otherwise, the cursor is set to an arrow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection2D.selected_right_down">
+<code class="sig-name descname">selected_right_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection2D.selected_right_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the right mouse button being pressed when the tool is in
+the ‘selected’ state.</p>
+<p>If the user is allowed to resize the selection, and the event occurred
+within the resize margin of an endpoint, then the tool switches to the
+‘selecting’ state so that the user can resize the selection.</p>
+<p>Otherwise, the selection becomes deselected, and a new selection is
+started..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection2D.selecting_mouse_leave">
+<code class="sig-name descname">selecting_mouse_leave</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection2D.selecting_mouse_leave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse leaving the plot when the tool is in the
+‘selecting’ state.</p>
+<p>Determines whether the event’s position is outside the component’s
+bounds, and if so, clips the selection. Sets the cursor to an arrow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelection2D.selecting_mouse_move">
+<code class="sig-name descname">selecting_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelection2D.selecting_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse being moved when the tool is in the ‘selecting’
+state.</p>
+<p>Expands the selection range at the appropriate end, based on the new
+mouse position.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rangeselectionoverlay">
+<h2><a class="reference internal" href="#chaco.tools.api.RangeSelectionOverlay" title="chaco.tools.api.RangeSelectionOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelectionOverlay</span></code></a><a class="headerlink" href="#rangeselectionoverlay" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.RangeSelectionOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">RangeSelectionOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.abstract_overlay.AbstractOverlay</span></code></p>
+<p>Highlights the selection region on a component.</p>
+<p>Looks at a given metadata field of self.component for regions to draw as
+selected.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.alpha">
+<code class="sig-name descname">alpha</code><em class="property"> = Float(0.3)</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transparency of the fill color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.axis">
+<code class="sig-name descname">axis</code><em class="property"> = Enum(&quot;index&quot;, &quot;value&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>The axis to which this tool is perpendicular.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.axis_index">
+<code class="sig-name descname">axis_index</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.axis_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The element of an (x,y) tuple that corresponds to the axis index.
+By default, this is set based on self.asix and self.plot.orientation,
+but it can be overriden and set to 0 or 1.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.border_color">
+<code class="sig-name descname">border_color</code><em class="property"> = ColorTrait(&quot;dodgerblue&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.border_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the selection border line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.border_style">
+<code class="sig-name descname">border_style</code><em class="property"> = LineStyle(&quot;solid&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.border_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The line style of the selection border line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.border_width">
+<code class="sig-name descname">border_width</code><em class="property"> = Float(1.0)</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.border_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width, in pixels, of the selection border line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.fill_color">
+<code class="sig-name descname">fill_color</code><em class="property"> = ColorTrait(&quot;lightskyblue&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.fill_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color to fill the selection region.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.mapper">
+<code class="sig-name descname">mapper</code><em class="property"> = Instance(AbstractMapper)</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.mapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mapper (and associated range) that drive this RangeSelectionOverlay.
+By default, this is the mapper on self.plot that corresponds to self.axis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.metadata_name">
+<code class="sig-name descname">metadata_name</code><em class="property"> = Str(&quot;selections&quot;)</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the metadata to look at for dataspace bounds. The metadata
+can be either a tuple (dataspace_start, dataspace_end) in “selections” or
+a boolean array mask of seleted dataspace points with any other name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.RangeSelectionOverlay.overlay">
+<code class="sig-name descname">overlay</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">gc</em>, <em class="sig-param">view_bounds=None</em>, <em class="sig-param">mode='normal'</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.overlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws this component overlaid on another component.</p>
+<p>Overrides AbstractOverlay.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RangeSelectionOverlay.plot">
+<code class="sig-name descname">plot</code><em class="property"> = Property(depends_on='component')</em><a class="headerlink" href="#chaco.tools.api.RangeSelectionOverlay.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping from screen space to data space. By default, it is just
+self.component.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="regressionlasso">
+<h2><a class="reference internal" href="#chaco.tools.api.RegressionLasso" title="chaco.tools.api.RegressionLasso"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionLasso</span></code></a><a class="headerlink" href="#regressionlasso" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.RegressionLasso">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">RegressionLasso</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RegressionLasso" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.lasso_selection.LassoSelection</span></code></p>
+<p>A controller for “lassoing” a selection of points in a regression plot.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.RegressionLasso.centroid">
+<code class="sig-name descname">centroid</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.tools.api.RegressionLasso.centroid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The center point of the selected points, in data space.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RegressionLasso.fit_params">
+<code class="sig-name descname">fit_params</code><em class="property"> = Any</em><a class="headerlink" href="#chaco.tools.api.RegressionLasso.fit_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tuple (slope, intercept) of the line that fits the data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.RegressionLasso.incremental_select">
+<code class="sig-name descname">incremental_select</code><em class="property"> = True</em><a class="headerlink" href="#chaco.tools.api.RegressionLasso.incremental_select" title="Permalink to this definition">¶</a></dt>
+<dd><p>The regression updates as more points are added (overrides LassoSelection).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="regressionoverlay">
+<h2><a class="reference internal" href="#chaco.tools.api.RegressionOverlay" title="chaco.tools.api.RegressionOverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionOverlay</span></code></a><a class="headerlink" href="#regressionoverlay" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.RegressionOverlay">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">RegressionOverlay</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.RegressionOverlay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.lasso_overlay.LassoOverlay</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="savetool">
+<h2><a class="reference internal" href="#chaco.tools.api.SaveTool" title="chaco.tools.api.SaveTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SaveTool</span></code></a><a class="headerlink" href="#savetool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.SaveTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">SaveTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.SaveTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>This tool allows the user to press Ctrl+S to save a snapshot image of
+the plot component.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.SaveTool.draw_mode">
+<code class="sig-name descname">draw_mode</code><em class="property"> = &quot;none&quot;</em><a class="headerlink" href="#chaco.tools.api.SaveTool.draw_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool does not have a visual representation (overrides BaseTool).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SaveTool.filename">
+<code class="sig-name descname">filename</code><em class="property"> = Str(&quot;saved_plot.png&quot;)</em><a class="headerlink" href="#chaco.tools.api.SaveTool.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>The file that the image is saved in.  The format will be deduced from
+the extension.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.SaveTool.normal_key_pressed">
+<code class="sig-name descname">normal_key_pressed</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.SaveTool.normal_key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a key-press when the tool is in the ‘normal’ state.</p>
+<p>Saves an image of the plot if the keys pressed are Control and S.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SaveTool.visible">
+<code class="sig-name descname">visible</code><em class="property"> = False</em><a class="headerlink" href="#chaco.tools.api.SaveTool.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is not visible (overrides BaseTool).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="scatterinspector">
+<h2><a class="reference internal" href="#chaco.tools.api.ScatterInspector" title="chaco.tools.api.ScatterInspector"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterInspector</span></code></a><a class="headerlink" href="#scatterinspector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.ScatterInspector">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">ScatterInspector</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.ScatterInspector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.select_tool.SelectTool</span></code></p>
+<p>A tool for inspecting scatter plots.</p>
+<p>It writes the index of the point under the cursor to the metadata of the
+index and value data sources, and allows clicking to select the point.
+Other components can listen for metadata updates on the data sources.</p>
+<p>By default, it writes the index of the point under the cursor to the
+“hover” key in metadata, and the index of a clicked point to “selection”.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.ScatterInspector.draw_mode">
+<code class="sig-name descname">draw_mode</code><em class="property"> = &quot;none&quot;</em><a class="headerlink" href="#chaco.tools.api.ScatterInspector.draw_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool does not have a visual representation</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ScatterInspector.hover_metadata_name">
+<code class="sig-name descname">hover_metadata_name</code><em class="property"> = Str('hover')</em><a class="headerlink" href="#chaco.tools.api.ScatterInspector.hover_metadata_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The names of the data source metadata for hover and selection events.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ScatterInspector.inspector_event">
+<code class="sig-name descname">inspector_event</code><em class="property"> = Event(ScatterInspectorEvent)</em><a class="headerlink" href="#chaco.tools.api.ScatterInspector.inspector_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool emits events when hover or selection changes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.ScatterInspector.normal_mouse_move">
+<code class="sig-name descname">normal_mouse_move</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.ScatterInspector.normal_mouse_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse moving when the tool is in the ‘normal’ state.</p>
+<p>If the cursor is within <strong>threshold</strong> of a data point, the method
+writes the index to the plot’s data sources’ “hover” metadata.</p>
+<p>This method emits a ScatterInspectorEvent when a new scatter point is
+hovered over and when the mouse leaves that point.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ScatterInspector.persistent_hover">
+<code class="sig-name descname">persistent_hover</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.tools.api.ScatterInspector.persistent_hover" title="Permalink to this definition">¶</a></dt>
+<dd><p>If persistent_hover is False, then a point will be de-hovered as soon as
+the mouse leaves its hit-testing area. If persistent_hover is True, then
+a point does no de-hover until another point get hover focus.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.ScatterInspector.visible">
+<code class="sig-name descname">visible</code><em class="property"> = False</em><a class="headerlink" href="#chaco.tools.api.ScatterInspector.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is not visible</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="selecttool">
+<h2><a class="reference internal" href="#chaco.tools.api.SelectTool" title="chaco.tools.api.SelectTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectTool</span></code></a><a class="headerlink" href="#selecttool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.SelectTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">SelectTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.SelectTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>Base class for tools that handle some level of click-to-select
+interaction.  Handles the logic of different kinds of selection
+modes.  Subclasses only need to implement a few concrete methods
+to handle actual selection/deselection.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.SelectTool.multiselect_modifier">
+<code class="sig-name descname">multiselect_modifier</code><em class="property"> = Instance(KeySpec, args=(None, &quot;control&quot;), allow_none=True)</em><a class="headerlink" href="#chaco.tools.api.SelectTool.multiselect_modifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>The modifier key to use to multi-select points.  Only used in <strong>toggle</strong>
+and <strong>multi</strong> selection modes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.SelectTool.normal_left_down">
+<code class="sig-name descname">normal_left_down</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.SelectTool.normal_left_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the left mouse button being pressed when the tool is in the
+‘normal’ state.</p>
+<p>If selecting is enabled and the cursor is within <strong>threshold</strong> of a
+data point, the method calls the subclass’s _select” or _deselect
+methods to perform the appropriate action, given the current
+selection_mode.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SelectTool.selection_mode">
+<code class="sig-name descname">selection_mode</code><em class="property"> = Enum(&quot;toggle&quot;, &quot;multi&quot;, &quot;single&quot;, &quot;off&quot;)</em><a class="headerlink" href="#chaco.tools.api.SelectTool.selection_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>How selections are handled:</p>
+<dl class="simple">
+<dt>“toggle”</dt><dd><p>The user clicks on points (while optionally holding down a modifier
+key) to select or deselect them. If the point is already selected,
+clicking it again deselects it. The modifier key to use is set by
+<strong>multiselect_modifier</strong>. The only way to deselect points is by
+clicking on them; clicking on a screen space outside of the plot does
+not deselect points.</p>
+</dd>
+<dt>“multi”</dt><dd><p>Like <strong>toggle</strong> mode, except that the user can deselect all points
+at once by clicking on the plot area away from a point.</p>
+</dd>
+<dt>“single”</dt><dd><p>The user can only select a single point at a time.</p>
+</dd>
+<dt>“off”</dt><dd><p>The user cannot select points via clicking.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SelectTool.threshold">
+<code class="sig-name descname">threshold</code><em class="property"> = Float(5.0)</em><a class="headerlink" href="#chaco.tools.api.SelectTool.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>The threshold, in pixels, around the cursor location to search for points.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="simpleinspectortool">
+<h2><a class="reference internal" href="#chaco.tools.api.SimpleInspectorTool" title="chaco.tools.api.SimpleInspectorTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleInspectorTool</span></code></a><a class="headerlink" href="#simpleinspectortool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.SimpleInspectorTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">SimpleInspectorTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.SimpleInspectorTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>Simple inspector tool for plots</p>
+<p>This is a simple tool that reports the data-space coordinates of the
+current mouse cursor position in a plot.</p>
+<p>Interested overlays and other objects can listen for new_value events,
+which is a dictionary of data about the current location in data space,
+and can look at the last_mouse_position trait which holds the mouse
+position in screen space.</p>
+<p>The tool also provides a visible trait which listeners can use to hide
+themselves.  By default the ‘p’ key toggles this.</p>
+<p>Instances can provide a value_generator function that performs computations
+to generate additional values in the dictionary that is passed to the
+new_value event.  Subclasses can override gather_values() to similar
+effect.</p>
+<dl class="method">
+<dt id="chaco.tools.api.SimpleInspectorTool.gather_values">
+<code class="sig-name descname">gather_values</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.SimpleInspectorTool.gather_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the values for the new_value dictionary.</p>
+<p>By default this returns a dictionary with keys “x”, “y”, “index” and
+“value”.  If there is a value_generator callable, this will be called
+to modify the dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>event</strong> – The mouse_move event.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SimpleInspectorTool.inspector_key">
+<code class="sig-name descname">inspector_key</code><em class="property"> = &lt;enable.base_tool.KeySpec object&gt;</em><a class="headerlink" href="#chaco.tools.api.SimpleInspectorTool.inspector_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>This key will show and hide any overlays listening to this tool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SimpleInspectorTool.last_mouse_position">
+<code class="sig-name descname">last_mouse_position</code><em class="property"> = Tuple</em><a class="headerlink" href="#chaco.tools.api.SimpleInspectorTool.last_mouse_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the last mouse position.  This can be used by overlays to
+position themselves around the mouse.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.tools.api.SimpleInspectorTool.map_to_data">
+<code class="sig-name descname">map_to_data</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.SimpleInspectorTool.map_to_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data space coordinates of the given x and y.</p>
+<p>Takes into account orientation of the plot and the axis setting.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SimpleInspectorTool.new_value">
+<code class="sig-name descname">new_value</code><em class="property"> = Event</em><a class="headerlink" href="#chaco.tools.api.SimpleInspectorTool.new_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>This event fires whenever the mouse moves over a new image point.
+Its value is a dict with default keys “x”, “y”, “index” and “value”.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SimpleInspectorTool.value_generator">
+<code class="sig-name descname">value_generator</code><em class="property"> = Callable</em><a class="headerlink" href="#chaco.tools.api.SimpleInspectorTool.value_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callable that computes other values for the new_value event
+this takes a dictionary as an argument, and returns a dictionary</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.SimpleInspectorTool.visible">
+<code class="sig-name descname">visible</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.tools.api.SimpleInspectorTool.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether overlays listening to this tool should be visible.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="zoomstate">
+<h2><a class="reference internal" href="#chaco.tools.api.ZoomState" title="chaco.tools.api.ZoomState"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoomState</span></code></a><a class="headerlink" href="#zoomstate" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.ZoomState">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">ZoomState</code><span class="sig-paren">(</span><em class="sig-param">prev</em>, <em class="sig-param">next</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.ZoomState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.tool_states.ToolState</span></code></p>
+<p>A zoom state which can be applied and reverted.</p>
+<p>This class exists so that subclasses can introduce new types
+of events which can be applied and reverted in the same manner.
+This greatly eases the code for managing history</p>
+</dd></dl>
+
+</div>
+<div class="section" id="panstate">
+<h2><a class="reference internal" href="#chaco.tools.api.PanState" title="chaco.tools.api.PanState"><code class="xref py py-class docutils literal notranslate"><span class="pre">PanState</span></code></a><a class="headerlink" href="#panstate" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.PanState">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">PanState</code><span class="sig-paren">(</span><em class="sig-param">prev</em>, <em class="sig-param">next</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.PanState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.tool_states.ToolState</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="groupedtoolstate">
+<h2><a class="reference internal" href="#chaco.tools.api.GroupedToolState" title="chaco.tools.api.GroupedToolState"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupedToolState</span></code></a><a class="headerlink" href="#groupedtoolstate" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.GroupedToolState">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">GroupedToolState</code><span class="sig-paren">(</span><em class="sig-param">states</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.GroupedToolState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.tool_states.ToolState</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="selectedzoomstate">
+<h2><a class="reference internal" href="#chaco.tools.api.SelectedZoomState" title="chaco.tools.api.SelectedZoomState"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectedZoomState</span></code></a><a class="headerlink" href="#selectedzoomstate" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.SelectedZoomState">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">SelectedZoomState</code><span class="sig-paren">(</span><em class="sig-param">prev</em>, <em class="sig-param">next</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.SelectedZoomState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.tool_states.ZoomState</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="trackingpantool">
+<h2><a class="reference internal" href="#chaco.tools.api.TrackingPanTool" title="chaco.tools.api.TrackingPanTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackingPanTool</span></code></a><a class="headerlink" href="#trackingpantool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.TrackingPanTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">TrackingPanTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.TrackingPanTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.pan_tool.PanTool</span></code></p>
+<p>Allows the user to pan around a plot.</p>
+<p>The user clicks a mouse button and drags to pan; the tool then returns to
+a tracking state.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="trackingzoom">
+<h2><a class="reference internal" href="#chaco.tools.api.TrackingZoom" title="chaco.tools.api.TrackingZoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackingZoom</span></code></a><a class="headerlink" href="#trackingzoom" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.TrackingZoom">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">TrackingZoom</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.TrackingZoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.better_selecting_zoom.BetterSelectingZoom</span></code></p>
+<p>Allows the user to zoom in or out on a plot that is using tracking.</p>
+<p>The <strong>default_state</strong> of the data range determines the tracking behavior.
+For example, if the data range’s <strong>default_state</strong> is “low_track”,
+the range’s high value snaps to the right edge and the tracking, low, value
+follows it by the data range’s <strong>tracking_amount</strong> value (and vice versa
+for “high_track”).</p>
+<dl class="method">
+<dt id="chaco.tools.api.TrackingZoom.normal_mouse_wheel">
+<code class="sig-name descname">normal_mouse_wheel</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.TrackingZoom.normal_mouse_wheel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the mouse wheel being used when the tool is in the ‘normal’
+state.</p>
+<p>Overrides ZoomTool</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="traitstool">
+<h2><a class="reference internal" href="#chaco.tools.api.TraitsTool" title="chaco.tools.api.TraitsTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitsTool</span></code></a><a class="headerlink" href="#traitstool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.tools.api.TraitsTool">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">TraitsTool</code><span class="sig-paren">(</span><em class="sig-param">component=None</em>, <em class="sig-param">**kwtraits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.tools.api.TraitsTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.base_tool.BaseTool</span></code></p>
+<p>Tool to edit the traits of plots, grids, and axes.</p>
+<dl class="attribute">
+<dt id="chaco.tools.api.TraitsTool.classes">
+<code class="sig-name descname">classes</code><em class="property"> = List([PlotAxis, ColorBar])</em><a class="headerlink" href="#chaco.tools.api.TraitsTool.classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>The classes of components that should trigger a traits view</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.TraitsTool.draw_mode">
+<code class="sig-name descname">draw_mode</code><em class="property"> = &quot;none&quot;</em><a class="headerlink" href="#chaco.tools.api.TraitsTool.draw_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool does not have a visual representation (overrides BaseTool).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.TraitsTool.event">
+<code class="sig-name descname">event</code><em class="property"> = Str('left_dclick')</em><a class="headerlink" href="#chaco.tools.api.TraitsTool.event" title="Permalink to this definition">¶</a></dt>
+<dd><p>The event to trigger the edit on</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.TraitsTool.views">
+<code class="sig-name descname">views</code><em class="property"> = Dict</em><a class="headerlink" href="#chaco.tools.api.TraitsTool.views" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict of Class : View providing alternate views for a particular component</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.tools.api.TraitsTool.visible">
+<code class="sig-name descname">visible</code><em class="property"> = False</em><a class="headerlink" href="#chaco.tools.api.TraitsTool.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tool is not visible (overrides BaseTool).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="zoomtool">
+<h2><a class="reference internal" href="#chaco.tools.api.ZoomTool" title="chaco.tools.api.ZoomTool"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoomTool</span></code></a><a class="headerlink" href="#zoomtool" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="chaco.tools.api.ZoomTool">
+<code class="sig-prename descclassname">chaco.tools.api.</code><code class="sig-name descname">ZoomTool</code><a class="headerlink" href="#chaco.tools.api.ZoomTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.tools.better_selecting_zoom.BetterSelectingZoom</span></code></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tools</a><ul>
+<li><a class="reference internal" href="#betterzoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">BetterZoom</span></code></a></li>
+<li><a class="reference internal" href="#betterselectingzoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">BetterSelectingZoom</span></code></a></li>
+<li><a class="reference internal" href="#broadcastertool"><code class="xref py py-class docutils literal notranslate"><span class="pre">BroadcasterTool</span></code></a></li>
+<li><a class="reference internal" href="#dataprinter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataPrinter</span></code></a></li>
+<li><a class="reference internal" href="#datalabeltool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabelTool</span></code></a></li>
+<li><a class="reference internal" href="#dragtool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DragTool</span></code></a></li>
+<li><a class="reference internal" href="#drawpointstool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DrawPointsTool</span></code></a></li>
+<li><a class="reference internal" href="#dragzoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">DragZoom</span></code></a></li>
+<li><a class="reference internal" href="#highlighttool"><code class="xref py py-class docutils literal notranslate"><span class="pre">HighlightTool</span></code></a></li>
+<li><a class="reference internal" href="#imageinspectortool"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInspectorTool</span></code></a></li>
+<li><a class="reference internal" href="#imageinspectoroverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInspectorOverlay</span></code></a></li>
+<li><a class="reference internal" href="#lassoselection"><code class="xref py py-class docutils literal notranslate"><span class="pre">LassoSelection</span></code></a></li>
+<li><a class="reference internal" href="#legendtool"><code class="xref py py-class docutils literal notranslate"><span class="pre">LegendTool</span></code></a></li>
+<li><a class="reference internal" href="#legendhighlighter"><code class="xref py py-class docutils literal notranslate"><span class="pre">LegendHighlighter</span></code></a></li>
+<li><a class="reference internal" href="#lineinspector"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineInspector</span></code></a></li>
+<li><a class="reference internal" href="#linesegmenttool"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineSegmentTool</span></code></a></li>
+<li><a class="reference internal" href="#movetool"><code class="xref py py-class docutils literal notranslate"><span class="pre">MoveTool</span></code></a></li>
+<li><a class="reference internal" href="#pantool"><code class="xref py py-class docutils literal notranslate"><span class="pre">PanTool</span></code></a></li>
+<li><a class="reference internal" href="#pointmarker"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointMarker</span></code></a></li>
+<li><a class="reference internal" href="#rangeselection"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelection</span></code></a></li>
+<li><a class="reference internal" href="#rangeselection2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelection2D</span></code></a></li>
+<li><a class="reference internal" href="#rangeselectionoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelectionOverlay</span></code></a></li>
+<li><a class="reference internal" href="#regressionlasso"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionLasso</span></code></a></li>
+<li><a class="reference internal" href="#regressionoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionOverlay</span></code></a></li>
+<li><a class="reference internal" href="#savetool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SaveTool</span></code></a></li>
+<li><a class="reference internal" href="#scatterinspector"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterInspector</span></code></a></li>
+<li><a class="reference internal" href="#selecttool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectTool</span></code></a></li>
+<li><a class="reference internal" href="#simpleinspectortool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleInspectorTool</span></code></a></li>
+<li><a class="reference internal" href="#zoomstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoomState</span></code></a></li>
+<li><a class="reference internal" href="#panstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">PanState</span></code></a></li>
+<li><a class="reference internal" href="#groupedtoolstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupedToolState</span></code></a></li>
+<li><a class="reference internal" href="#selectedzoomstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectedZoomState</span></code></a></li>
+<li><a class="reference internal" href="#trackingpantool"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackingPanTool</span></code></a></li>
+<li><a class="reference internal" href="#trackingzoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackingZoom</span></code></a></li>
+<li><a class="reference internal" href="#traitstool"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitsTool</span></code></a></li>
+<li><a class="reference internal" href="#zoomtool"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoomTool</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="axis.html"
+                        title="previous chapter">Axis and Grid</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../tech_notes.html"
+                        title="next chapter">Tech Notes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/tools.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../tech_notes.html" title="Tech Notes"
+             >next</a></li>
+        <li class="right" >
+          <a href="axis.html" title="Axis and Grid"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" >Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Tools</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

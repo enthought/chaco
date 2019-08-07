@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Programmer’s Reference &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="_static/et.ico"/>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Architecture Overview" href="architecture_overview.html" />
+    <link rel="prev" title="Other Chaco resources" href="user_manual/resources.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="architecture_overview.html" title="Architecture Overview"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="user_manual/resources.html" title="Other Chaco resources"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Chaco 4.8</a> &#187;</li>
+  
+    <li><a href="#">Programmer’s Reference</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="programmer-s-reference">
+<span id="programmers-reference"></span><h1>Programmer’s Reference<a class="headerlink" href="#programmer-s-reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture_overview.html">Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture_overview.html#core-ideas">Core Ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture_overview.html#the-relationship-between-chaco-enable-and-kiva">The Relationship Between Chaco, Enable, and Kiva</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture_overview.html#chaco">Chaco</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_and_classes.html">Commonly Used Modules and Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#base-classes">Base Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#data-objects">Data Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#containers">Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#renderers">Renderers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#tools">Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#overlays">Overlays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_and_classes.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/data_sources.html">Data Sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/data_sources.html#abstractdatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_sources.html#arraydatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_sources.html#multiarraydatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArrayDataSource</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_sources.html#pointdatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDataSource</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_sources.html#griddatasource"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_sources.html#imagedata"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/data_ranges.html">Data Ranges</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/data_ranges.html#abstractdatarange"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataRange</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_ranges.html#basedatarange"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataRange</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_ranges.html#datarange1d"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange1D</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/data_ranges.html#datarange2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataRange2D</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/mappers.html">Mappers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html#abstractmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html#base1dmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DMapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html#linearmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearMapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html#logmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogMapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html#gridmapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridMapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html#colormapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html#colormaptemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorMapTemplate</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/mappers.html#transformcolormapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformColorMapper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/containers.html">Containers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/containers.html#baseplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotContainer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/containers.html#overlayplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">OverlayPlotContainer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/containers.html#hplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPlotContainer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/containers.html#vplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">VPlotContainer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/containers.html#gridplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridPlotContainer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/containers.html#selectableoverlayplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectableOverlayPlotContainer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/visual_components.html">Visual Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#abstractplotrenderer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotRenderer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#abstractoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractOverlay</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#baseplotframe"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotFrame</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#crossplotframe"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossPlotFrame</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#dataview"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataView</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#simpleplotframe"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimplePlotFrame</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#plotcomponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotComponent</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#plotgraphicscontext"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGraphicsContext</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#label"><code class="xref py py-class docutils literal notranslate"><span class="pre">Label</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#plotlabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotLabel</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#legend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#tooltip"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolTip</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#datalabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabel</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#lassooverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">LassoOverlay</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#colorbar"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorBar</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#textboxoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextBoxOverlay</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/visual_components.html#scatterinspectoroverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterInspectorOverlay</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/renderers.html">Renderers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#barplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#base1dplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base1DPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#base2dplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Base2DPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#basexyplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseXYPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#scatterplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#imageplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImagePlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#cmapimageplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">CMapImagePlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#contourlineplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContourLinePlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#lineplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinePlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#colormappedscatterplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColormappedScatterPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#colormappedselectionoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColormappedSelectionOverlay</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#polygonplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolygonPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#errorbarplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ErrorBarPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#filledlineplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilledLinePlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#quiverplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuiverPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#candleplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">CandlePlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#multilineplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiLinePlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#scatterplot1d"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterPlot1D</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#variablesizescatterplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">VariableSizeScatterPlot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/renderers.html#horizonplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">HorizonPlot</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/plot_factories.html">Plot Factories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#create-bar-plot"><cite>create_bar_plot</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#create-line-plot"><cite>create_line_plot</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#create-scatter-plot"><cite>create_scatter_plot</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#create-polar-plot"><cite>create_polar_plot</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#add-default-axes"><cite>add_default_axes</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#add-default-grids"><cite>add_default_grids</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#abstractplotdata"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlotData</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#arrayplotdata"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayPlotData</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plot_factories.html#toolbarplot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ToolbarPlot</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/axis.html">Axis and Grid</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#plotaxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotAxis</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#labelaxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelAxis</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#plotgrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotGrid</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#abstracttickgenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTickGenerator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#defaulttickgenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultTickGenerator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#auto-ticks"><cite>auto_ticks</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#auto-interval"><cite>auto_interval</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#tick-intervals"><cite>tick_intervals</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#log-auto-ticks"><cite>log_auto_ticks</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#auto-bounds"><cite>auto_bounds</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/axis.html#calc-bound"><cite>calc_bound</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/tools.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#betterzoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">BetterZoom</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#betterselectingzoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">BetterSelectingZoom</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#broadcastertool"><code class="xref py py-class docutils literal notranslate"><span class="pre">BroadcasterTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#dataprinter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataPrinter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#datalabeltool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabelTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#dragtool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DragTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#drawpointstool"><code class="xref py py-class docutils literal notranslate"><span class="pre">DrawPointsTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#dragzoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">DragZoom</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#highlighttool"><code class="xref py py-class docutils literal notranslate"><span class="pre">HighlightTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#imageinspectortool"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInspectorTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#imageinspectoroverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageInspectorOverlay</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#lassoselection"><code class="xref py py-class docutils literal notranslate"><span class="pre">LassoSelection</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#legendtool"><code class="xref py py-class docutils literal notranslate"><span class="pre">LegendTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#legendhighlighter"><code class="xref py py-class docutils literal notranslate"><span class="pre">LegendHighlighter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#lineinspector"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineInspector</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#linesegmenttool"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineSegmentTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#movetool"><code class="xref py py-class docutils literal notranslate"><span class="pre">MoveTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#pantool"><code class="xref py py-class docutils literal notranslate"><span class="pre">PanTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#pointmarker"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointMarker</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#rangeselection"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelection</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#rangeselection2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelection2D</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#rangeselectionoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeSelectionOverlay</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#regressionlasso"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionLasso</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#regressionoverlay"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionOverlay</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#savetool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SaveTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#scatterinspector"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScatterInspector</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#selecttool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#simpleinspectortool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleInspectorTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#zoomstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoomState</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#panstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">PanState</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#groupedtoolstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroupedToolState</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#selectedzoomstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectedZoomState</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#trackingpantool"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackingPanTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#trackingzoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackingZoom</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#traitstool"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraitsTool</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/tools.html#zoomtool"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZoomTool</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="user_manual/resources.html"
+                        title="previous chapter">Other Chaco resources</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="architecture_overview.html"
+                        title="next chapter">Architecture Overview</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/programmers_reference.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="architecture_overview.html" title="Architecture Overview"
+             >next</a></li>
+        <li class="right" >
+          <a href="user_manual/resources.html" title="Other Chaco resources"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Chaco 4.8</a> &#187;</li>
+  
+    <li><a href="#">Programmer’s Reference</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

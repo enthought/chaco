@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Data sources &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/et.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data ranges" href="data_ranges.html" />
+    <link rel="prev" title="Introduction" href="../introduction.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="data_ranges.html" title="Data ranges"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >User guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../introduction.html" accesskey="U">Introduction</a> &#187;</li>
+  
+    <li><a href="#">Data sources</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-sources">
+<h1>Data sources<a class="headerlink" href="#data-sources" title="Permalink to this headline">¶</a></h1>
+<p>A data source is a wrapper object for the actual data that the plot will be
+handling. For the most part, a data source looks like an array of values,
+with an optional mask and metadata.</p>
+<p>The <a class="reference internal" href="#data-source-interface"><span class="std std-ref">data source interface</span></a>
+provides methods for retrieving data,
+estimating a size of the dataset,
+indications about the dimensionality of the data, a place for metadata
+(such as selections and annotations), and events that fire when the data gets
+changed.</p>
+<p>There are two primary reasons for a data source class:</p>
+<ul class="simple">
+<li><p>It provides a way for different plotting objects to reference the same data.</p></li>
+<li><p>It defines the interface to expose data from existing applications to Chaco.</p></li>
+</ul>
+<p>In most cases, the standard <code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code>
+will suffice.</p>
+<div class="section" id="interface">
+<span id="data-source-interface"></span><h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<p>The basic interface for data sources is defined in
+<code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code>.
+Here is a summary of the most important attributes and methods
+(see the docstrings of this class for more details):</p>
+<blockquote>
+<div><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">value_dimension</span></code></p>
+<blockquote>
+<div><p>The dimensionality of the data value at each point. It is defined
+as a <code class="xref py py-class docutils literal notranslate"><span class="pre">DimensionTrait</span></code>, i.e., one of
+“scalar”, “point”, “image”, or “cube”. For example,
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code> represents data in a 2D array and thus its
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">value_dimension</span></code> is “scalar”.</p>
+</div></blockquote>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_dimension</span></code></p>
+<blockquote>
+<div><p>The dimensionality of the data value at each point. It is defined
+as a <code class="xref py py-class docutils literal notranslate"><span class="pre">DimensionTrait</span></code>, i.e., one of
+“scalar”, “point”, “image”, or “cube”. For example,
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code> represents data in a 2D array and thus its
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">index_dimension</span></code> is “image”.</p>
+</div></blockquote>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></p>
+<blockquote>
+<div><p>A dictionary that maps strings to arbitrary data. Usually, the mapped
+data is a set of indices, as in the case of selections and annotations.
+By default, <code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> contains the keys <em>“selections”</em> (representing
+indices that are currently selected by some tool)
+and <em>“annotations”</em>, both initialized to an empty list.</p>
+</div></blockquote>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">persist_data</span></code></p>
+<blockquote>
+<div><p>If True (default), the data that this data source refers to is serialized
+when the data source is.</p>
+</div></blockquote>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></p>
+<blockquote>
+<div><p>Returns a data array containing the data referred to by the data source.
+Treat the returned array as read-only.</p>
+</div></blockquote>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_masked()</span></code></p>
+<blockquote>
+<div><p>Returns True if this data source’s data uses a mask. In this case,
+to retrieve the data, call <code class="docutils literal notranslate"><span class="pre">get_data_mask()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">get_data()</span></code>.</p>
+</div></blockquote>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data_mask()</span></code></p>
+<blockquote>
+<div><p>Returns the full, raw, source data array and a corresponding binary
+mask array.  Treat both arrays as read-only.</p>
+</div></blockquote>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_size()</span></code></p>
+<blockquote>
+<div><p>Returns the size of the data.</p>
+</div></blockquote>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_bounds()</span></code></p>
+<blockquote>
+<div><p>Returns a tuple (min, max) of the bounding values for the data source.
+In the case of 2-D data, min and max are 2-D points that represent the
+bounding corners of a rectangle enclosing the data set.
+If data is the empty set, then the min and max vals are 0.0.</p>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractDataSource</span></code> defines three events
+that can be used in Traits applications to react to changes in the data source:</p>
+<blockquote>
+<div><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">data_changed</span></code></p>
+<blockquote>
+<div><p>Fired when the data values change.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The majority of concrete data sources do not fire this event when
+the data values change. Rather, the event is usually fired when new
+data or a new mask is assigned through setter methods (see
+notes below).</p>
+</div>
+</div></blockquote>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds_changed</span></code></p>
+<blockquote>
+<div><p>Fired when the data bounds change.</p>
+</div></blockquote>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata_changed</span></code></p>
+<blockquote>
+<div><p>Fired when the content of <code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> changes (both the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code> dictionary object or any of its items).</p>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="list-of-chaco-data-sources">
+<h2>List of Chaco data sources<a class="headerlink" href="#list-of-chaco-data-sources" title="Permalink to this headline">¶</a></h2>
+<p>This is a list of all concrete implementations of data sources in Chaco:</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code></p>
+<blockquote>
+<div><p>A data source representing a single, continuous array of numerical data.
+This is the most common data source for Chaco plots.</p>
+<p>This subclass adds the following attributes and methods to the basic
+interface:</p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">sort_order</span></code></p>
+<blockquote>
+<div><p>The sort order of the data, one of ‘ascending’, ‘descending’, or ‘none’.
+If the underlying data is sorted, and this attribute is set appropriately,
+Chaco is able to use shortcuts and optimizations in many places.</p>
+</div></blockquote>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">reverse_map(pt)</span></code></p>
+<blockquote>
+<div><p>Returns the index of <em>pt</em> in the data source (optimized if
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">sort_order</span></code> is set).</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class does not listen to the array for changes in the data values.
+The
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">data_changed</span></code> event is fired only when the data or the mask
+are set with the methods <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_mask()</span></code>,
+or <code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_mask()</span></code>.</p>
+</div>
+</div></blockquote>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code></p>
+<blockquote>
+<div><p>Represents a 2D grid of image data.</p>
+<p>The underlying data array is 3D, where the third dimension is either
+1 (one scalar value at each point of the grid), 3 (one RGB vector at each
+point), or 4 (one RGBa vector at each point). The depth of the
+array is defined in the attribute
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">value_depth</span></code>.</p>
+<p>Access to the image data is controlled by three properties:
+The boolean attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">transposed</span></code>
+defines whether the data array stored by this class is to be interpreted
+as transposed; <code class="xref py py-attr docutils literal notranslate"><span class="pre">raw_value</span></code> returns the
+underlying data array as-is, ignoring <code class="xref py py-attr docutils literal notranslate"><span class="pre">transposed</span></code>;
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code> returns the data array or its
+transposed depending on the value of <code class="xref py py-attr docutils literal notranslate"><span class="pre">transposed</span></code>.</p>
+<p>The correct usage pattern of these attributes is to give to the class
+contiguous image data, and assign <code class="xref py py-attr docutils literal notranslate"><span class="pre">transposed</span></code> if the
+two axis should be swapped. Functions that would benefit from working on
+contiguous data can then use <code class="xref py py-attr docutils literal notranslate"><span class="pre">raw_value</span></code> directly. (See the
+class docstrings for more details, and some caveats.)</p>
+<p>Noteworthy methods of this class are:</p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">fromfile(filename)</span></code></p>
+<blockquote>
+<div><p>Factory method that creates an <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code> instance from an image
+file. <em>filename</em> can be either a file path or a file object.</p>
+</div></blockquote>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_width()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">get_height()</span></code></p>
+<blockquote>
+<div><p>Return the width or the height of the image (takes the value
+of <code class="xref py py-attr docutils literal notranslate"><span class="pre">transposed</span></code> into account).</p>
+</div></blockquote>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_array_bounds()</span></code></p>
+<blockquote>
+<div><p>Return ((0, width), (0, height)).</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class does not implement the methods
+related to masking, and it does not fire <code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds_changed</span></code> events.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class does not listen to the array for changes in the data values.
+The <code class="xref py py-attr docutils literal notranslate"><span class="pre">data_changed</span></code> event is fired only when the data
+are set with the method <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data()</span></code>.</p>
+</div>
+</div></blockquote>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">GridDataSource</span></code></p>
+<blockquote>
+<div><p>Data source representing the coordinates of a 2D grid.
+It is used, for example, as a source for the index data in an
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ImagePlot</span></code>.</p>
+<p>It defines these attributes:</p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">sort_order</span></code></p>
+<blockquote>
+<div><p>Similar to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">sort_order</span></code> attribute for the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code> class above, but this is a tuple
+with two elements, one per dimension.</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class does not implement the methods
+related to masking, and it does not fire <code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds_changed</span></code> events.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class does not listen to the array for changes in the data values.
+The <code class="xref py py-attr docutils literal notranslate"><span class="pre">data_changed</span></code> event is fired only when the data
+is set with the method <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data()</span></code>.</p>
+</div>
+</div></blockquote>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArrayDataSource</span></code></p>
+<blockquote>
+<div><p>A data source representing a single, continuous array of
+multidimensional numerical data.</p>
+<p>It is useful, for example, to define 2D vector data at each point of
+a scatter plot (as in <code class="xref py py-class docutils literal notranslate"><span class="pre">QuiverPlot</span></code>),
+or to represent multiple values
+for each index (as in <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiLinePlot</span></code>).</p>
+<p>As <code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code>, this data source defines a
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">sort_order</span></code>
+attribute for its index dimension.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiArrayDataSource</span></code>,
+the <code class="xref py py-attr docutils literal notranslate"><span class="pre">index_dimension</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">value_dimension</span></code> attributes
+are integers that define which dimension of the data array
+correspond to indices and which
+to values (default is 0 and 1, respectively). This is different from
+the same attributes in the interface, which are strings describing the
+<em>dimensionality</em> of index and value.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class does not listen to the array for changes in the data values.
+The <code class="xref py py-attr docutils literal notranslate"><span class="pre">data_changed</span></code> event is fired only when the data or the mask
+are set with the method <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data()</span></code>.</p>
+</div>
+</div></blockquote>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDataSource</span></code></p>
+<blockquote>
+<div><p>A data source representing a set of (X,Y) points.</p>
+<p>This is a subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code>, and inherits its methods
+and attributes. The attribute
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">sort_index</span></code> defines
+whether the data is sorted along the X’s or the Y’s (as specified
+in <code class="xref py py-attr docutils literal notranslate"><span class="pre">sort_order</span></code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class does not listen to the array for changes in the data values.
+The <code class="xref py py-attr docutils literal notranslate"><span class="pre">data_changed</span></code> event is fired only when the data or the mask
+are set with the method <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data()</span></code>.</p>
+</div>
+</div></blockquote>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionDataSource</span></code></p>
+<blockquote>
+<div><p>A subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayDataSource</span></code> that
+sets the values of the underlying data array based on a function
+(defined in the callable attribute
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">func</span></code>)
+evaluated on a 1D data range (defined in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">data_range</span></code>).</p>
+</div></blockquote>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionImageData</span></code></p>
+<blockquote>
+<div><p>A subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">ImageData</span></code> that
+sets the values of the underlying data array based on a 2D function
+(defined in the callable attribute
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">func</span></code>)
+evaluated on a 2D data range (defined in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">data_range</span></code>).</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data sources</a><ul>
+<li><a class="reference internal" href="#interface">Interface</a></li>
+<li><a class="reference internal" href="#events">Events</a></li>
+<li><a class="reference internal" href="#list-of-chaco-data-sources">List of Chaco data sources</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="data_ranges.html"
+                        title="next chapter">Data ranges</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/user_manual/basic_elements/data_sources.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="data_ranges.html" title="Data ranges"
+             >next</a></li>
+        <li class="right" >
+          <a href="../introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >User guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../introduction.html" >Introduction</a> &#187;</li>
+  
+    <li><a href="#">Data sources</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

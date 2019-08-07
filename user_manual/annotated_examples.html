@@ -1,0 +1,532 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Annotated Examples &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Other Chaco resources" href="resources.html" />
+    <link rel="prev" title="Frequently Asked Questions" href="faq.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="resources.html" title="Other Chaco resources"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently Asked Questions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">User guide</a> &#187;</li>
+  
+    <li><a href="#">Annotated Examples</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="annotated-examples">
+<span id="examples"></span><h1>Annotated Examples<a class="headerlink" href="#annotated-examples" title="Permalink to this headline">¶</a></h1>
+<p>This section describes each of the examples provided with Chaco.  Each example
+is designed to be a stand-alone demonstration of some of Chaco’s features.
+Though they are simple, many of the examples have capabilities that are
+difficult to find in other plotting packages.</p>
+<p>Extensibility is a core design goal of Chaco, and many people have used the
+examples as starting points for their own applications.</p>
+<div class="section" id="bar-plot-stacked-py">
+<h2><code class="docutils literal notranslate"><span class="pre">bar_plot_stacked.py</span></code><a class="headerlink" href="#bar-plot-stacked-py" title="Permalink to this headline">¶</a></h2>
+<p>An example showing Chaco’s BarPlot class.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/bar_plot_stacked.py">bar_plot_stacked.py</a></p>
+<img alt="../_images/bar_plot.png" src="../_images/bar_plot.png" />
+</div>
+<div class="section" id="bigdata-py">
+<h2><code class="docutils literal notranslate"><span class="pre">bigdata.py</span></code><a class="headerlink" href="#bigdata-py" title="Permalink to this headline">¶</a></h2>
+<p>Demonstrates chaco performance with large datasets.</p>
+<p>There are 10 plots with 100,000 points each.  Right-click and drag to
+create a range selection region.  The region can be moved around and
+resized (drag the edges).  These interactions are very fast because
+of the backbuffering built into chaco.</p>
+<p>Zooming with the mousewheel and the zoombox (as described in simple_line.py)
+is also available, but panning is not.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/bigdata.py">bigdata.py</a></p>
+<img alt="../_images/bigdata.png" src="../_images/bigdata.png" />
+</div>
+<div class="section" id="cursor-tool-demo-py">
+<h2><code class="docutils literal notranslate"><span class="pre">cursor_tool_demo.py</span></code><a class="headerlink" href="#cursor-tool-demo-py" title="Permalink to this headline">¶</a></h2>
+<p>A Demonstration of the CursorTool functionality</p>
+<p>Left-button drag to move the cursors round.
+Right-drag to pan the plots. ‘z’-key to Zoom</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/cursor_tool_demo.py">cursor_tool_demo.py</a></p>
+<img alt="../_images/cursor_tool_demo.png" src="../_images/cursor_tool_demo.png" />
+</div>
+<div class="section" id="data-labels-py">
+<h2><code class="docutils literal notranslate"><span class="pre">data_labels.py</span></code><a class="headerlink" href="#data-labels-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a line plot with several points labelled.  Demonstrates how to annotate
+plots.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/data_labels.py">data_labels.py</a></p>
+<img alt="../_images/data_labels.png" src="../_images/data_labels.png" />
+</div>
+<div class="section" id="data-view-py">
+<h2><code class="docutils literal notranslate"><span class="pre">data_view.py</span></code><a class="headerlink" href="#data-view-py" title="Permalink to this headline">¶</a></h2>
+<p>Example of how to use a DataView and bare renderers to create plots.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/data_view.py">data_view.py</a></p>
+<img alt="../_images/data_view.png" src="../_images/data_view.png" />
+</div>
+<div class="section" id="edit-line-py">
+<h2><code class="docutils literal notranslate"><span class="pre">edit_line.py</span></code><a class="headerlink" href="#edit-line-py" title="Permalink to this headline">¶</a></h2>
+<p>Allows editing of a line plot.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/edit_line.py">edit_line.py</a></p>
+<img alt="../_images/edit_line.png" src="../_images/edit_line.png" />
+</div>
+<div class="section" id="financial-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">financial_plot.py</span></code><a class="headerlink" href="#financial-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of a standard financial plot visualization using Chaco renderers
+and scales. Right-clicking and selecting an area in the top window zooms in
+the corresponding area in the lower window.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/financial_plot.py">financial_plot.py</a></p>
+<img alt="../_images/financial_plot.png" src="../_images/financial_plot.png" />
+</div>
+<div class="section" id="financial-plot-dates-py">
+<h2><code class="docutils literal notranslate"><span class="pre">financial_plot_dates.py</span></code><a class="headerlink" href="#financial-plot-dates-py" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of a standard financial plot visualization using Chaco renderers
+and scales. Right-clicking and selecting an area in the top window zooms in
+the corresopnding area in the lower window.
+This differs from the financial_plot.py example in that it uses a date-oriented
+axis.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/financial_plot_dates.py">financial_plot_dates.py</a></p>
+<img alt="../_images/financial_plot_dates.png" src="../_images/financial_plot_dates.png" />
+</div>
+<div class="section" id="multiaxis-py">
+<h2><code class="docutils literal notranslate"><span class="pre">multiaxis.py</span></code><a class="headerlink" href="#multiaxis-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws several overlapping line plots like simple_line.py, but uses a separate
+Y range for each plot.  Also has a second Y-axis on the right hand side.
+Demonstrates use of the BroadcasterTool.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/multiaxis.py">multiaxis.py</a></p>
+<img alt="../_images/multiaxis.png" src="../_images/multiaxis.png" />
+</div>
+<div class="section" id="multiaxis-using-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">multiaxis_using_Plot.py</span></code><a class="headerlink" href="#multiaxis-using-plot-py" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>Draws some x-y line and scatter plots. On the left hand plot:</dt><dd><ul class="simple">
+<li><p>Left-drag pans the plot.</p></li>
+<li><p>Mousewheel up and down zooms the plot in and out.</p></li>
+<li><p>Pressing “z” opens the Zoom Box, and you can click-drag a rectangular
+region to zoom. If you use a sequence of zoom boxes, pressing alt-left-arrow
+and alt-right-arrow moves you forwards and backwards through the “zoom
+history”.</p></li>
+</ul>
+</dd>
+</dl>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/multiaxis_using_Plot.py">multiaxis_using_Plot.py</a></p>
+<img alt="../_images/multiaxis_using_Plot.png" src="../_images/multiaxis_using_Plot.png" />
+</div>
+<div class="section" id="noninteractive-py">
+<h2><code class="docutils literal notranslate"><span class="pre">noninteractive.py</span></code><a class="headerlink" href="#noninteractive-py" title="Permalink to this headline">¶</a></h2>
+<p>This demonstrates how to create a plot offscreen and save it to an image file
+on disk. The image is what is saved.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/noninteractive.py">noninteractive.py</a></p>
+<img alt="../_images/noninteractive.png" src="../_images/noninteractive.png" />
+</div>
+<div class="section" id="range-selection-demo-py">
+<h2><code class="docutils literal notranslate"><span class="pre">range_selection_demo.py</span></code><a class="headerlink" href="#range-selection-demo-py" title="Permalink to this headline">¶</a></h2>
+<p>Demo of the RangeSelection on a line plot.  Left-click and drag creates a
+horizontal range selection; this selection can then be dragged around, or
+resized by dragging its edges.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/range_selection_demo.py">range_selection_demo.py</a></p>
+<img alt="../_images/range_selection_demo.png" src="../_images/range_selection_demo.png" />
+</div>
+<div class="section" id="scales-test-py">
+<h2><code class="docutils literal notranslate"><span class="pre">scales_test.py</span></code><a class="headerlink" href="#scales-test-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws several overlapping line plots.</p>
+<p>Double-clicking on line or scatter plots opens a Traits editor for the plot.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/scales_test.py">scales_test.py</a></p>
+<img alt="../_images/scales_test.png" src="../_images/scales_test.png" />
+</div>
+<div class="section" id="simple-line-py">
+<h2><code class="docutils literal notranslate"><span class="pre">simple_line.py</span></code><a class="headerlink" href="#simple-line-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws several overlapping line plots.</p>
+<p>Double-clicking on line or scatter plots opens a Traits editor for the plot.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/simple_line.py">simple_line.py</a></p>
+<img alt="../_images/simple_line1.png" src="../_images/simple_line1.png" />
+</div>
+<div class="section" id="tornado-py">
+<h2><code class="docutils literal notranslate"><span class="pre">tornado.py</span></code><a class="headerlink" href="#tornado-py" title="Permalink to this headline">¶</a></h2>
+<p>Tornado plot example from Brennan Williams.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/tornado.py">tornado.py</a></p>
+<img alt="../_images/tornado.png" src="../_images/tornado.png" />
+</div>
+<div class="section" id="two-plots-py">
+<h2><code class="docutils literal notranslate"><span class="pre">two_plots.py</span></code><a class="headerlink" href="#two-plots-py" title="Permalink to this headline">¶</a></h2>
+<p>Demonstrates plots sharing datasources, ranges, etc…</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/two_plots.py">two_plots.py</a></p>
+<img alt="../_images/two_plots.png" src="../_images/two_plots.png" />
+</div>
+<div class="section" id="vertical-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">vertical_plot.py</span></code><a class="headerlink" href="#vertical-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a static plot of bessel functions, oriented vertically, side-by-side.</p>
+<p>You can experiment with using different containers (uncomment lines 32-33)
+or different orientations on the plots (comment out line 43 and uncomment 44).</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/vertical_plot.py">vertical_plot.py</a></p>
+<img alt="../_images/vertical_plot.png" src="../_images/vertical_plot.png" />
+</div>
+<div class="section" id="data-cube-py">
+<h2><code class="docutils literal notranslate"><span class="pre">data_cube.py</span></code><a class="headerlink" href="#data-cube-py" title="Permalink to this headline">¶</a></h2>
+<p>Allows isometric viewing of a 3-D data cube (downloads the necessary data, about 7.8 MB)</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/advanced/data_cube.py">data_cube.py</a></p>
+<img alt="../_images/data_cube.png" src="../_images/data_cube.png" />
+</div>
+<div class="section" id="data-stream-py">
+<h2><code class="docutils literal notranslate"><span class="pre">data_stream.py</span></code><a class="headerlink" href="#data-stream-py" title="Permalink to this headline">¶</a></h2>
+<p>This demo shows how Chaco and Traits can be used to easily build a data
+acquisition and visualization system.</p>
+<p>Two frames are opened: one has the plot and allows configuration of
+various plot properties, and one which simulates controls for the hardware
+device from which the data is being acquired; in this case, it is a mockup
+random number generator whose mean and standard deviation can be controlled
+by the user.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/advanced/data_stream.py">data_stream.py</a></p>
+<img alt="../_images/data_stream.png" src="../_images/data_stream.png" />
+</div>
+<div class="section" id="scalar-image-function-inspector-py">
+<h2><code class="docutils literal notranslate"><span class="pre">scalar_image_function_inspector.py</span></code><a class="headerlink" href="#scalar-image-function-inspector-py" title="Permalink to this headline">¶</a></h2>
+<p>Renders a colormapped image of a scalar value field, and a cross section
+chosen by a line interactor.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/advanced/scalar_image_function_inspector.py">scalar_image_function_inspector.py</a></p>
+<img alt="../_images/scalar_image_function_inspector.png" src="../_images/scalar_image_function_inspector.png" />
+</div>
+<div class="section" id="spectrum-py">
+<h2><code class="docutils literal notranslate"><span class="pre">spectrum.py</span></code><a class="headerlink" href="#spectrum-py" title="Permalink to this headline">¶</a></h2>
+<p>This plot displays the audio spectrum from the microphone.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/advanced/spectrum.py">spectrum.py</a></p>
+<img alt="../_images/spectrum.png" src="../_images/spectrum.png" />
+</div>
+<div class="section" id="cmap-image-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">cmap_image_plot.py</span></code><a class="headerlink" href="#cmap-image-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a colormapped image plot.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/cmap_image_plot.py">cmap_image_plot.py</a></p>
+<img alt="../_images/cmap_image_plot.png" src="../_images/cmap_image_plot.png" />
+</div>
+<div class="section" id="cmap-image-select-py">
+<h2><code class="docutils literal notranslate"><span class="pre">cmap_image_select.py</span></code><a class="headerlink" href="#cmap-image-select-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a colormapped image plot. Selecting colors in the spectrum on the right
+highlights the corresponding colors in the color map.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/cmap_image_select.py">cmap_image_select.py</a></p>
+<img alt="../_images/cmap_image_select.png" src="../_images/cmap_image_select.png" />
+</div>
+<div class="section" id="cmap-scatter-py">
+<h2><code class="docutils literal notranslate"><span class="pre">cmap_scatter.py</span></code><a class="headerlink" href="#cmap-scatter-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a colormapped scatterplot of some random data. Selection works the same as in cmap_image_select.py.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/cmap_scatter.py">cmap_scatter.py</a></p>
+<img alt="../_images/cmap_scatter.png" src="../_images/cmap_scatter.png" />
+</div>
+<div class="section" id="contour-cmap-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">contour_cmap_plot.py</span></code><a class="headerlink" href="#contour-cmap-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>Renders some contoured and colormapped images of a scalar value field.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/contour_cmap_plot.py">countour_cmap_plot.py</a></p>
+<img alt="../_images/contour_cmap_plot.png" src="../_images/contour_cmap_plot.png" />
+</div>
+<div class="section" id="contour-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">contour_plot.py</span></code><a class="headerlink" href="#contour-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws an contour polygon plot with a contour line plot on top.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/contour_plot.py">countour_plot.py</a></p>
+<img alt="../_images/contour_plot.png" src="../_images/contour_plot.png" />
+</div>
+<div class="section" id="grid-container-py">
+<h2><code class="docutils literal notranslate"><span class="pre">grid_container.py</span></code><a class="headerlink" href="#grid-container-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws several overlapping line plots.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/grid_container.py">grid_container.py</a></p>
+<img alt="../_images/grid_container.png" src="../_images/grid_container.png" />
+</div>
+<div class="section" id="grid-container-aspect-ratio">
+<h2><code class="docutils literal notranslate"><span class="pre">grid_container_aspect_ratio</span></code><a class="headerlink" href="#grid-container-aspect-ratio" title="Permalink to this headline">¶</a></h2>
+<p>Similar to grid_container.py, but demonstrates Chaco’s capability to used a
+fixed screen space aspect ratio for plot components.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/grid_container_aspect_ratio.py">grid_container_aspect_ratio.py</a></p>
+<img alt="../_images/grid_container_aspect_ratio.png" src="../_images/grid_container_aspect_ratio.png" />
+</div>
+<div class="section" id="image-from-file-py">
+<h2><code class="docutils literal notranslate"><span class="pre">image_from_file.py</span></code><a class="headerlink" href="#image-from-file-py" title="Permalink to this headline">¶</a></h2>
+<p>Loads and saves RGB images from disk.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/image_from_file.py">image_from_file.py</a></p>
+<img alt="../_images/image_from_file.png" src="../_images/image_from_file.png" />
+</div>
+<div class="section" id="image-inspector-py">
+<h2><code class="docutils literal notranslate"><span class="pre">image_inspector.py</span></code><a class="headerlink" href="#image-inspector-py" title="Permalink to this headline">¶</a></h2>
+<p>Demonstrates the ImageInspectorTool and overlay on a colormapped image plot.
+The underlying plot is similar to the one in cmap_image_plot.py.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/image_inspector.py">image_inspector.py</a></p>
+<img alt="../_images/image_inspector.png" src="../_images/image_inspector.png" />
+</div>
+<div class="section" id="image-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">image_plot.py</span></code><a class="headerlink" href="#image-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a simple RGB image</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/image_plot.py">image_plot.py</a></p>
+<img alt="../_images/image_plot.png" src="../_images/image_plot.png" />
+</div>
+<div class="section" id="inset-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">inset_plot.py</span></code><a class="headerlink" href="#inset-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>A modification of line_plot1.py that shows the second plot as a subwindow of
+the first.  You can pan and zoom the second plot just like the first, and you
+can move it around my right-click and dragging in the smaller plot.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/inset_plot.py">inset_plot.py</a></p>
+<img alt="../_images/inset_plot.png" src="../_images/inset_plot.png" />
+</div>
+<div class="section" id="line-drawing-py">
+<h2><code class="docutils literal notranslate"><span class="pre">line_drawing.py</span></code><a class="headerlink" href="#line-drawing-py" title="Permalink to this headline">¶</a></h2>
+<p>Demonstrates using a line segment drawing tool on top of the scatter plot from
+simple_scatter.py.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/line_drawing.py">line_drawing.py</a></p>
+<img alt="../_images/line_drawing.png" src="../_images/line_drawing.png" />
+</div>
+<div class="section" id="line-plot1-py">
+<h2><code class="docutils literal notranslate"><span class="pre">line_plot1.py</span></code><a class="headerlink" href="#line-plot1-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws some x-y line and scatter plots.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/line_plot1.py">line_plot1.py</a></p>
+<img alt="../_images/line_plot1.png" src="../_images/line_plot1.png" />
+</div>
+<div class="section" id="line-plot-hold-py">
+<h2><code class="docutils literal notranslate"><span class="pre">line_plot_hold.py</span></code><a class="headerlink" href="#line-plot-hold-py" title="Permalink to this headline">¶</a></h2>
+<p>Demonstrates the different ‘hold’ styles of LinePlot.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/line_plot_hold.py">line_plot_hold.py</a></p>
+<img alt="../_images/line_plot_hold.png" src="../_images/line_plot_hold.png" />
+</div>
+<div class="section" id="log-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">log_plot.py</span></code><a class="headerlink" href="#log-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws some x-y log plots. (No Tools).</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/log_plot.py">log_plot.py</a></p>
+<img alt="../_images/log_plot.png" src="../_images/log_plot.png" />
+</div>
+<div class="section" id="nans-plot-py">
+<h2><code class="docutils literal notranslate"><span class="pre">nans_plot.py</span></code><a class="headerlink" href="#nans-plot-py" title="Permalink to this headline">¶</a></h2>
+<p>This plot displays chaco’s ability to handle data interlaced with NaNs.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/nans_plot.py">nans_plot.py</a></p>
+<img alt="../_images/nans_plot.png" src="../_images/nans_plot.png" />
+</div>
+<div class="section" id="polygon-plot-demo-py">
+<h2><code class="docutils literal notranslate"><span class="pre">polygon_plot_demo.py</span></code><a class="headerlink" href="#polygon-plot-demo-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws some different polygons.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/polygon_plot_demo.py">polygon_plot_demo.py</a></p>
+<img alt="../_images/polygon_plot.png" src="../_images/polygon_plot.png" />
+</div>
+<div class="section" id="polygon-move-py">
+<h2><code class="docutils literal notranslate"><span class="pre">polygon_move.py</span></code><a class="headerlink" href="#polygon-move-py" title="Permalink to this headline">¶</a></h2>
+<p>Shares same basic interactions as polygon_plot.py, but adds a new one:
+right-click and drag to move a polygon around.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/polygon_move.py">polygon_move.py</a></p>
+<img alt="../_images/polygon_move.png" src="../_images/polygon_move.png" />
+</div>
+<div class="section" id="regression-py">
+<h2><code class="docutils literal notranslate"><span class="pre">regression.py</span></code><a class="headerlink" href="#regression-py" title="Permalink to this headline">¶</a></h2>
+<p>Demonstrates the Regression Selection tool.</p>
+<p>Hold down the left mouse button to use the mouse to draw a selection region
+around some points, and a line fit is drawn through the center of the points.
+The parameters of the line are displayed at the bottom of the plot region.  You
+can do this repeatedly to draw different regions.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/regression.py">regression.py</a></p>
+<img alt="../_images/regression.png" src="../_images/regression.png" />
+</div>
+<div class="section" id="scatter-py">
+<h2><code class="docutils literal notranslate"><span class="pre">scatter.py</span></code><a class="headerlink" href="#scatter-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a simple scatterplot of a set of random points.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/scatter.py">scatter.py</a></p>
+<img alt="../_images/scatter.png" src="../_images/scatter.png" />
+</div>
+<div class="section" id="scatter-inspector-py">
+<h2><code class="docutils literal notranslate"><span class="pre">scatter_inspector.py</span></code><a class="headerlink" href="#scatter-inspector-py" title="Permalink to this headline">¶</a></h2>
+<p>Example of using tooltips on Chaco plots.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/scatter_inspector.py">scatter_inspector.py</a></p>
+<img alt="../_images/scatter_inspector.png" src="../_images/scatter_inspector.png" />
+</div>
+<div class="section" id="scatter-select-py">
+<h2><code class="docutils literal notranslate"><span class="pre">scatter_select.py</span></code><a class="headerlink" href="#scatter-select-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a simple scatterplot of random data.  The only interaction available is
+the lasso selector, which allows you to circle a set of points.  Upon
+completion of the lasso operation, the indices of the selected points are
+printed to the console.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/scatter_select.py">scatter_select.py</a></p>
+<img alt="../_images/scatter_select.png" src="../_images/scatter_select.png" />
+<p>console output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">New</span> <span class="n">selection</span><span class="p">:</span>
+    <span class="p">[</span><span class="mi">789</span>  <span class="mi">799</span>  <span class="mi">819</span>  <span class="mi">830</span>  <span class="mi">835</span>  <span class="mi">836</span>  <span class="mi">851</span>  <span class="mi">867</span>  <span class="mi">892</span>  <span class="mi">901</span>  <span class="mi">902</span>  <span class="mi">909</span>  <span class="mi">913</span>  <span class="mi">924</span>  <span class="mi">929</span>
+     <span class="mi">931</span>  <span class="mi">933</span>  <span class="mi">938</span>  <span class="mi">956</span>  <span class="mi">971</span>  <span class="mi">972</span>  <span class="mi">975</span>  <span class="mi">976</span>  <span class="mi">996</span>  <span class="mi">999</span> <span class="mi">1011</span> <span class="mi">1014</span> <span class="mi">1016</span> <span class="mi">1021</span> <span class="mi">1030</span>
+     <span class="mi">1045</span> <span class="mi">1049</span> <span class="mi">1058</span> <span class="mi">1061</span> <span class="mi">1073</span> <span class="mi">1086</span> <span class="mi">1087</span> <span class="mi">1088</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scrollbar-py">
+<h2><code class="docutils literal notranslate"><span class="pre">scrollbar.py</span></code><a class="headerlink" href="#scrollbar-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws some x-y line and scatter plots.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/scrollbar.py">scrollbar.py</a></p>
+<img alt="../_images/scrollbar.png" src="../_images/scrollbar.png" />
+</div>
+<div class="section" id="tabbed-plots-py">
+<h2><code class="docutils literal notranslate"><span class="pre">tabbed_plots.py</span></code><a class="headerlink" href="#tabbed-plots-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws some x-y line and scatter plots.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/tabbed_plots.py">tabbed_plots.py</a></p>
+<img alt="../_images/tabbed_plots1.png" src="../_images/tabbed_plots1.png" />
+<img alt="../_images/tabbed_plots2.png" src="../_images/tabbed_plots2.png" />
+</div>
+<div class="section" id="traits-editor-py">
+<h2><code class="docutils literal notranslate"><span class="pre">traits_editor.py</span></code><a class="headerlink" href="#traits-editor-py" title="Permalink to this headline">¶</a></h2>
+<p>This example creates a simple 1-D function examiner, illustrating the use of
+ChacoPlotEditors for displaying simple plot relations, as well as Traits UI
+integration. Any 1-D numpy/scipy.special function works in the function
+text box.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/traits_editor.py">traits_editor.py</a></p>
+<img alt="../_images/traits_editor.png" src="../_images/traits_editor.png" />
+</div>
+<div class="section" id="zoomable-colorbar-py">
+<h2><code class="docutils literal notranslate"><span class="pre">zoomable_colorbar.py</span></code><a class="headerlink" href="#zoomable-colorbar-py" title="Permalink to this headline">¶</a></h2>
+<p>Draws a colormapped scatterplot of some random data.</p>
+<p>Interactions on the plot are the same as for simple_line.py, and additionally,
+pan and zoom are available on the colorbar.</p>
+<p>Left-click pans the colorbar’s data region.  Right-click-drag
+selects a zoom range.  Mousewheel up and down zoom in and out on
+the data bounds of the color bar.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/basic/zoomable_colorbar.py">zoomable_colorbar.py</a></p>
+<img alt="../_images/zoomable_colorbar.png" src="../_images/zoomable_colorbar.png" />
+</div>
+<div class="section" id="zoomed-plot">
+<h2><code class="docutils literal notranslate"><span class="pre">zoomed_plot</span></code><a class="headerlink" href="#zoomed-plot" title="Permalink to this headline">¶</a></h2>
+<p>The main executable file for the zoom_plot demo.</p>
+<p>Right-click and drag on the upper plot to select a region to view in detail
+in the lower plot.  The selected region can be moved around by dragging,
+or resized by clicking on one of its edges and dragging.</p>
+<p>source: <a class="reference external" href="https://github.com/enthought/chaco/tree/master/examples/demo/zoomed_plot/">zoomed_plot</a></p>
+<img alt="../_images/zoomed_plot.png" src="../_images/zoomed_plot.png" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Annotated Examples</a><ul>
+<li><a class="reference internal" href="#bar-plot-stacked-py"><code class="docutils literal notranslate"><span class="pre">bar_plot_stacked.py</span></code></a></li>
+<li><a class="reference internal" href="#bigdata-py"><code class="docutils literal notranslate"><span class="pre">bigdata.py</span></code></a></li>
+<li><a class="reference internal" href="#cursor-tool-demo-py"><code class="docutils literal notranslate"><span class="pre">cursor_tool_demo.py</span></code></a></li>
+<li><a class="reference internal" href="#data-labels-py"><code class="docutils literal notranslate"><span class="pre">data_labels.py</span></code></a></li>
+<li><a class="reference internal" href="#data-view-py"><code class="docutils literal notranslate"><span class="pre">data_view.py</span></code></a></li>
+<li><a class="reference internal" href="#edit-line-py"><code class="docutils literal notranslate"><span class="pre">edit_line.py</span></code></a></li>
+<li><a class="reference internal" href="#financial-plot-py"><code class="docutils literal notranslate"><span class="pre">financial_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#financial-plot-dates-py"><code class="docutils literal notranslate"><span class="pre">financial_plot_dates.py</span></code></a></li>
+<li><a class="reference internal" href="#multiaxis-py"><code class="docutils literal notranslate"><span class="pre">multiaxis.py</span></code></a></li>
+<li><a class="reference internal" href="#multiaxis-using-plot-py"><code class="docutils literal notranslate"><span class="pre">multiaxis_using_Plot.py</span></code></a></li>
+<li><a class="reference internal" href="#noninteractive-py"><code class="docutils literal notranslate"><span class="pre">noninteractive.py</span></code></a></li>
+<li><a class="reference internal" href="#range-selection-demo-py"><code class="docutils literal notranslate"><span class="pre">range_selection_demo.py</span></code></a></li>
+<li><a class="reference internal" href="#scales-test-py"><code class="docutils literal notranslate"><span class="pre">scales_test.py</span></code></a></li>
+<li><a class="reference internal" href="#simple-line-py"><code class="docutils literal notranslate"><span class="pre">simple_line.py</span></code></a></li>
+<li><a class="reference internal" href="#tornado-py"><code class="docutils literal notranslate"><span class="pre">tornado.py</span></code></a></li>
+<li><a class="reference internal" href="#two-plots-py"><code class="docutils literal notranslate"><span class="pre">two_plots.py</span></code></a></li>
+<li><a class="reference internal" href="#vertical-plot-py"><code class="docutils literal notranslate"><span class="pre">vertical_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#data-cube-py"><code class="docutils literal notranslate"><span class="pre">data_cube.py</span></code></a></li>
+<li><a class="reference internal" href="#data-stream-py"><code class="docutils literal notranslate"><span class="pre">data_stream.py</span></code></a></li>
+<li><a class="reference internal" href="#scalar-image-function-inspector-py"><code class="docutils literal notranslate"><span class="pre">scalar_image_function_inspector.py</span></code></a></li>
+<li><a class="reference internal" href="#spectrum-py"><code class="docutils literal notranslate"><span class="pre">spectrum.py</span></code></a></li>
+<li><a class="reference internal" href="#cmap-image-plot-py"><code class="docutils literal notranslate"><span class="pre">cmap_image_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#cmap-image-select-py"><code class="docutils literal notranslate"><span class="pre">cmap_image_select.py</span></code></a></li>
+<li><a class="reference internal" href="#cmap-scatter-py"><code class="docutils literal notranslate"><span class="pre">cmap_scatter.py</span></code></a></li>
+<li><a class="reference internal" href="#contour-cmap-plot-py"><code class="docutils literal notranslate"><span class="pre">contour_cmap_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#contour-plot-py"><code class="docutils literal notranslate"><span class="pre">contour_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#grid-container-py"><code class="docutils literal notranslate"><span class="pre">grid_container.py</span></code></a></li>
+<li><a class="reference internal" href="#grid-container-aspect-ratio"><code class="docutils literal notranslate"><span class="pre">grid_container_aspect_ratio</span></code></a></li>
+<li><a class="reference internal" href="#image-from-file-py"><code class="docutils literal notranslate"><span class="pre">image_from_file.py</span></code></a></li>
+<li><a class="reference internal" href="#image-inspector-py"><code class="docutils literal notranslate"><span class="pre">image_inspector.py</span></code></a></li>
+<li><a class="reference internal" href="#image-plot-py"><code class="docutils literal notranslate"><span class="pre">image_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#inset-plot-py"><code class="docutils literal notranslate"><span class="pre">inset_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#line-drawing-py"><code class="docutils literal notranslate"><span class="pre">line_drawing.py</span></code></a></li>
+<li><a class="reference internal" href="#line-plot1-py"><code class="docutils literal notranslate"><span class="pre">line_plot1.py</span></code></a></li>
+<li><a class="reference internal" href="#line-plot-hold-py"><code class="docutils literal notranslate"><span class="pre">line_plot_hold.py</span></code></a></li>
+<li><a class="reference internal" href="#log-plot-py"><code class="docutils literal notranslate"><span class="pre">log_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#nans-plot-py"><code class="docutils literal notranslate"><span class="pre">nans_plot.py</span></code></a></li>
+<li><a class="reference internal" href="#polygon-plot-demo-py"><code class="docutils literal notranslate"><span class="pre">polygon_plot_demo.py</span></code></a></li>
+<li><a class="reference internal" href="#polygon-move-py"><code class="docutils literal notranslate"><span class="pre">polygon_move.py</span></code></a></li>
+<li><a class="reference internal" href="#regression-py"><code class="docutils literal notranslate"><span class="pre">regression.py</span></code></a></li>
+<li><a class="reference internal" href="#scatter-py"><code class="docutils literal notranslate"><span class="pre">scatter.py</span></code></a></li>
+<li><a class="reference internal" href="#scatter-inspector-py"><code class="docutils literal notranslate"><span class="pre">scatter_inspector.py</span></code></a></li>
+<li><a class="reference internal" href="#scatter-select-py"><code class="docutils literal notranslate"><span class="pre">scatter_select.py</span></code></a></li>
+<li><a class="reference internal" href="#scrollbar-py"><code class="docutils literal notranslate"><span class="pre">scrollbar.py</span></code></a></li>
+<li><a class="reference internal" href="#tabbed-plots-py"><code class="docutils literal notranslate"><span class="pre">tabbed_plots.py</span></code></a></li>
+<li><a class="reference internal" href="#traits-editor-py"><code class="docutils literal notranslate"><span class="pre">traits_editor.py</span></code></a></li>
+<li><a class="reference internal" href="#zoomable-colorbar-py"><code class="docutils literal notranslate"><span class="pre">zoomable_colorbar.py</span></code></a></li>
+<li><a class="reference internal" href="#zoomed-plot"><code class="docutils literal notranslate"><span class="pre">zoomed_plot</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="faq.html"
+                        title="previous chapter">Frequently Asked Questions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="resources.html"
+                        title="next chapter">Other Chaco resources</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_manual/annotated_examples.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="resources.html" title="Other Chaco resources"
+             >next</a></li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently Asked Questions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >User guide</a> &#187;</li>
+  
+    <li><a href="#">Annotated Examples</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Frequently Asked Questions &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Annotated Examples" href="annotated_examples.html" />
+    <link rel="prev" title="How Do I…?" href="how_do_i.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="annotated_examples.html" title="Annotated Examples"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="how_do_i.html" title="How Do I…?"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">User guide</a> &#187;</li>
+  
+    <li><a href="#">Frequently Asked Questions</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="frequently-asked-questions">
+<h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="where-does-the-name-chaco-come-from">
+<h2>Where does the name “Chaco” come from?<a class="headerlink" href="#where-does-the-name-chaco-come-from" title="Permalink to this headline">¶</a></h2>
+<p>It is named after <a class="reference external" href="http://www.nps.gov/chcu/">Chaco Canyon</a>, which had
+astronomical markings that served as an observatory for Native Americans. The
+original version of Chaco was built as part of a project for the <a class="reference external" href="http://www.stsci.edu/resources/">Space
+Telescope Science Institute</a>. This is also
+the origin of the name “Kiva” for our vector graphics layer that Chaco uses for
+rendering.</p>
+</div>
+<div class="section" id="what-are-the-pros-and-cons-of-chaco-vs-matplotlib">
+<h2>What are the pros and cons of Chaco vs. matplotlib?<a class="headerlink" href="#what-are-the-pros-and-cons-of-chaco-vs-matplotlib" title="Permalink to this headline">¶</a></h2>
+<p>This question comes up quite a bit.  The bottom line is that the two projects
+initially set out to do different things, and although each project has grown a
+lot of overlapping features, the different original charters are reflected in
+the capabilities and feature sets of the two projects.</p>
+<p>Here is an <a class="reference external" href="http://thread.gmane.org/gmane.comp.python.enthought.devel/5220/focus=5221">excerpt from a thread about this question</a> on
+the enthought-dev mailing list.</p>
+<p>Gael Varoquaux’s response:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>On Fri, May 11, 2007 at 10:03:21PM +0900, Bill Baxter wrote:
+
+&gt; Just curious.  What are the pros and cons of chaco vs matplotlib?
+
+To me it seem the big pro of chaco is that it is much easier to use in a
+&quot;programatic way&quot; (I have no clue this means something in English). It is
+fully traited and rely quite a lot on inversion of control (sorry, I love
+this concept, so it has become my new buzz-word). You can make very nice
+object oriented interactive code.
+
+Another nice aspect is that it is much faster than MPL.
+
+The cons are that it is not as fully featured as MPL, that it does not
+has an as nice interactively useable functional interface (ie chaco.shell
+vs pylab) and that it is not as well documented and does not have the
+same huge community.
+
+I would say that the codebase of chaco is nicer, but than if you are not
+developping interactive application, it is MPL is currently an option
+that is lickely to get you where you want to go quicker. Not that I
+wouldn&#39;t like to see chaco building up a bit more and becoming **the** reference.
+
+Developers, if you want chaco to pick up momentum, give it a pylab-like
+interface (as close as you can to pylab) !
+
+My 2 cents,
+Gael
+</pre></div>
+</div>
+<p>Peter Wang’s response (excerpt):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    On May 11, 2007, at 8:03 AM, Bill Baxter wrote:
+
+&gt; Just curious.  What are the pros and cons of chaco vs matplotlib?
+
+You had to go and ask, didn&#39;t you? :)  There are many more folks here
+who have used MPL more extensively than myself, so I&#39;ll defer the
+comparisons to them.  (Gael, as always, thanks for your comments and
+feedback!)  I can comment, however, on the key goals of Chaco.
+
+Chaco is a plotting toolkit targeted towards developers for building
+interactive visualizations.  You hook up pieces to build a plot that
+is then easy to inspect, interact with, add configuration UIs for
+(using Traits UI), etc.  The layout of plot areas, the multiplicity
+and types of renderers within those windows, the appearance and
+locations of axes, etc. are all completely configurable since these
+are all first-class objects participating in a visual canvas.  They
+can all receive mouse and keyboard events, and it&#39;s easy to subclass
+them (or attach tools to them) to achieve new kinds of behavior.
+We&#39;ve tried to make all the plot renderers adhere to a standard
+interface, so that tools and interactors can easily inspect data and
+map between screen space and data space.  Once these are all hooked
+up, you can swap out or update the data independently of the plots.
+
+One of the downsides we had a for a while was that this rich set of
+objects required the programmer to put several different classes
+together just to make a basic plot.  To solve this problem, we&#39;ve
+assembled some higher-level classes that have the most common
+behaviors built-in by default, but which can still be easily
+customized or extended.  It&#39;s clear to me that this is a good general
+approach to preserving flexibility while reducing verbosity.
+
+At this point, Chaco is definitely capable of handling a large number
+of different plotting tasks, and a lot of them don&#39;t require too much
+typing or hacking skills.  (Folks will probably require more
+documentation, however, but I&#39;m working on that. :)  I linked to the
+source for all of the screenshots in the gallery to demonstrate that
+you can do a lot of things with Chaco in a few dozen lines of code.
+(For instance, the audio spectrogram at the bottom of the gallery is
+just a little over 100 lines.)
+
+Fundamentally, I like the Chaco model of plots as compositions of
+interactive components.  This really helps me think about
+visualization apps in a modular way, and it &quot;fits my head&quot;.  (Of
+course, the fact that I wrote much of it might have something to do
+with that as well. ;)  The goal is to have data-related operations
+clearly happen in one set of objects, the view layout and
+configuration happen in another, and the interaction controls fit
+neatly into a third.  IMHO a good toolkit should help me design/
+architect my application better, and we definitely aspire to make
+Chaco meet that criterion.
+
+Finally, one major perk is that since Chaco is built completely on
+top of traits and its event-based component model, you can call
+edit_traits() on any visual component from within your app (or
+ipython) and get a live GUI that lets you tweak all of its various
+parameters in realtime.  This applies to the axis, grid, renderers,
+etc.  This seems so natural to me that I sometimes forget what an
+awesome feature it is. :)
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Frequently Asked Questions</a><ul>
+<li><a class="reference internal" href="#where-does-the-name-chaco-come-from">Where does the name “Chaco” come from?</a></li>
+<li><a class="reference internal" href="#what-are-the-pros-and-cons-of-chaco-vs-matplotlib">What are the pros and cons of Chaco vs. matplotlib?</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="how_do_i.html"
+                        title="previous chapter">How Do I…?</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="annotated_examples.html"
+                        title="next chapter">Annotated Examples</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_manual/faq.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="annotated_examples.html" title="Annotated Examples"
+             >next</a></li>
+        <li class="right" >
+          <a href="how_do_i.html" title="How Do I…?"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >User guide</a> &#187;</li>
+  
+    <li><a href="#">Frequently Asked Questions</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

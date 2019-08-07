@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Containers &#8212; Chaco 4.8</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Visual Components" href="visual_components.html" />
+    <link rel="prev" title="Mappers" href="mappers.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="visual_components.html" title="Visual Components"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="mappers.html" title="Mappers"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" accesskey="U">Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Containers</a></li>
+  
+
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="containers">
+<span id="id1"></span><h1>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="baseplotcontainer">
+<h2><a class="reference internal" href="#chaco.api.BasePlotContainer" title="chaco.api.BasePlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotContainer</span></code></a><a class="headerlink" href="#baseplotcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.BasePlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">BasePlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.BasePlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enable.container.Container</span></code></p>
+<p>A container for PlotComponents that conforms to being laid out by
+PlotFrames.  Serves as the base class for other PlotContainers.</p>
+<p>PlotContainers define a layout, i.e., a spatial relationship between
+their contained components.  (BasePlotContainer doesn’t define one,
+but its various subclasses do.)</p>
+<p>BasePlotContainer is a subclass of Enable Container, so it is possible to
+insert Enable-level components into it.  However, because Enable
+components don’t have the correct interfaces to participate in layout,
+the visual results will probably be incorrect.</p>
+<dl class="attribute">
+<dt id="chaco.api.BasePlotContainer.container_under_layers">
+<code class="sig-name descname">container_under_layers</code><em class="property"> = Tuple(&quot;background&quot;, &quot;image&quot;, &quot;underlay&quot;, &quot;plot&quot;)</em><a class="headerlink" href="#chaco.api.BasePlotContainer.container_under_layers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redefine the container layers to name the main layer as “plot” instead
+of the Enable default of “mainlayer”</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.BasePlotContainer.plot_components">
+<code class="sig-name descname">plot_components</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.BasePlotContainer.plot_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated property for accessing the components in the container.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.BasePlotContainer.use_draw_order">
+<code class="sig-name descname">use_draw_order</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#chaco.api.BasePlotContainer.use_draw_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deprecated flag to indicate that a component needed to do old-style
+drawing.  Unused by any recent Chaco component.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="overlayplotcontainer">
+<h2><a class="reference internal" href="#chaco.api.OverlayPlotContainer" title="chaco.api.OverlayPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">OverlayPlotContainer</span></code></a><a class="headerlink" href="#overlayplotcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.OverlayPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">OverlayPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.OverlayPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_plot_container.BasePlotContainer</span></code></p>
+<p>A plot container that stretches all its components to fit within its
+space.  All of its components must therefore be resizable.</p>
+<dl class="method">
+<dt id="chaco.api.OverlayPlotContainer.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><em class="sig-param">components=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.OverlayPlotContainer.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size (width,height) that is preferred for this component.</p>
+<p>Overrides PlotComponent</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.OverlayPlotContainer.use_backbuffer">
+<code class="sig-name descname">use_backbuffer</code><em class="property"> = False</em><a class="headerlink" href="#chaco.api.OverlayPlotContainer.use_backbuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not use an off-screen backbuffer.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="hplotcontainer">
+<h2><a class="reference internal" href="#chaco.api.HPlotContainer" title="chaco.api.HPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPlotContainer</span></code></a><a class="headerlink" href="#hplotcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.HPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">HPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.HPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_containers.StackedPlotContainer</span></code></p>
+<p>A plot container that stacks all of its components horizontally. Resizable
+components share the free space evenly. All components are stacked from
+according to <strong>stack_order* in the same order that they appear in the
+**components</strong> list.</p>
+<dl class="attribute">
+<dt id="chaco.api.HPlotContainer.spacing">
+<code class="sig-name descname">spacing</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.HPlotContainer.spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of space to put between components.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.HPlotContainer.stack_order">
+<code class="sig-name descname">stack_order</code><em class="property"> = Enum(&quot;left_to_right&quot;, &quot;right_to_left&quot;)</em><a class="headerlink" href="#chaco.api.HPlotContainer.stack_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The order in which components in the plot container are laid out.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.HPlotContainer.valign">
+<code class="sig-name descname">valign</code><em class="property"> = Enum(&quot;bottom&quot;, &quot;top&quot;, &quot;center&quot;)</em><a class="headerlink" href="#chaco.api.HPlotContainer.valign" title="Permalink to this definition">¶</a></dt>
+<dd><p>The vertical alignment of objects that don’t span the full height.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="vplotcontainer">
+<h2><a class="reference internal" href="#chaco.api.VPlotContainer" title="chaco.api.VPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">VPlotContainer</span></code></a><a class="headerlink" href="#vplotcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.VPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">VPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.VPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_containers.StackedPlotContainer</span></code></p>
+<p>A plot container that stacks plot components vertically.</p>
+<dl class="attribute">
+<dt id="chaco.api.VPlotContainer.halign">
+<code class="sig-name descname">halign</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;, &quot;center&quot;)</em><a class="headerlink" href="#chaco.api.VPlotContainer.halign" title="Permalink to this definition">¶</a></dt>
+<dd><p>The horizontal alignment of objects that don’t span the full width.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.VPlotContainer.other_dimension">
+<code class="sig-name descname">other_dimension</code><em class="property"> = &quot;h&quot;</em><a class="headerlink" href="#chaco.api.VPlotContainer.other_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides StackedPlotContainer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.VPlotContainer.spacing">
+<code class="sig-name descname">spacing</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.VPlotContainer.spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of space to put between components.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.VPlotContainer.stack_dimension">
+<code class="sig-name descname">stack_dimension</code><em class="property"> = &quot;v&quot;</em><a class="headerlink" href="#chaco.api.VPlotContainer.stack_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides StackedPlotContainer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.VPlotContainer.stack_index">
+<code class="sig-name descname">stack_index</code><em class="property"> = 1</em><a class="headerlink" href="#chaco.api.VPlotContainer.stack_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides StackedPlotContainer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.VPlotContainer.stack_order">
+<code class="sig-name descname">stack_order</code><em class="property"> = Enum(&quot;bottom_to_top&quot;, &quot;top_to_bottom&quot;)</em><a class="headerlink" href="#chaco.api.VPlotContainer.stack_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>The order in which components in the plot container are laid out.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="gridplotcontainer">
+<h2><a class="reference internal" href="#chaco.api.GridPlotContainer" title="chaco.api.GridPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridPlotContainer</span></code></a><a class="headerlink" href="#gridplotcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.GridPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">GridPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.base_plot_container.BasePlotContainer</span></code></p>
+<p>A GridPlotContainer consists of rows and columns in a tabular format.</p>
+<p>Each cell’s width is the same as all other cells in its column, and each
+cell’s height is the same as all other cells in its row.</p>
+<p>Although grid layout requires more layout information than a simple
+ordered list, this class keeps components as a simple list and exposes a
+<strong>shape</strong> trait.</p>
+<dl class="class">
+<dt id="chaco.api.GridPlotContainer.SizePrefs">
+<em class="property">class </em><code class="sig-name descname">SizePrefs</code><span class="sig-paren">(</span><em class="sig-param">length</em>, <em class="sig-param">direction</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridPlotContainer.SizePrefs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Object to hold size preferences across spans in a particular
+dimension.  For instance, if SizePrefs is being used for the row
+axis, then each element in the arrays below express sizing information
+about the corresponding column.</p>
+<dl class="method">
+<dt id="chaco.api.GridPlotContainer.SizePrefs.compute_size_array">
+<code class="sig-name descname">compute_size_array</code><span class="sig-paren">(</span><em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridPlotContainer.SizePrefs.compute_size_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a length along the axis corresponding to this SizePref,
+returns an array of lengths to assign each cell, taking into account
+resizability and preferred sizes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridPlotContainer.SizePrefs.fixed_lengths">
+<code class="sig-name descname">fixed_lengths</code><a class="headerlink" href="#chaco.api.GridPlotContainer.SizePrefs.fixed_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_numeric.Array</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridPlotContainer.SizePrefs.resizable_lengths">
+<code class="sig-name descname">resizable_lengths</code><a class="headerlink" href="#chaco.api.GridPlotContainer.SizePrefs.resizable_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.trait_numeric.Array</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.GridPlotContainer.SizePrefs.update_from_component">
+<code class="sig-name descname">update_from_component</code><span class="sig-paren">(</span><em class="sig-param">component</em>, <em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridPlotContainer.SizePrefs.update_from_component" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a component at a particular index along this SizePref’s
+axis, integrates the component’s resizability and sizing information
+into self.fixed_lengths and self.resizable_lengths.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridPlotContainer.component_grid">
+<code class="sig-name descname">component_grid</code><em class="property"> = Property</em><a class="headerlink" href="#chaco.api.GridPlotContainer.component_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property exposes the underlying grid structure of the container,
+and is the preferred way of setting and reading its contents.
+When read, this property returns a Numpy array with dtype=object; values
+for setting it can be nested tuples, lists, or 2-D arrays.
+The array is in row-major order, so that component_grid[0] is the first
+row, and component_grid[:,0] is the first column.  The rows are ordered
+from top to bottom.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="chaco.api.GridPlotContainer.get_preferred_size">
+<code class="sig-name descname">get_preferred_size</code><span class="sig-paren">(</span><em class="sig-param">components=None</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.GridPlotContainer.get_preferred_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size (width,height) that is preferred for this component.</p>
+<p>Overrides PlotComponent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridPlotContainer.halign">
+<code class="sig-name descname">halign</code><em class="property"> = Enum(&quot;left&quot;, &quot;right&quot;, &quot;center&quot;)</em><a class="headerlink" href="#chaco.api.GridPlotContainer.halign" title="Permalink to this definition">¶</a></dt>
+<dd><p>The horizontal alignment of objects that don’t span the full width.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridPlotContainer.shape">
+<code class="sig-name descname">shape</code><em class="property"> = Trait((0,0), Either(Tuple, List, Array))</em><a class="headerlink" href="#chaco.api.GridPlotContainer.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>The shape of this container, i.e, (rows, columns).  The items in
+<strong>components</strong> are shuffled appropriately to match this
+specification.  If there are fewer components than cells, the remaining
+cells are filled in with spaces.  If there are more components than cells,
+the remainder wrap onto new rows as appropriate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridPlotContainer.spacing">
+<code class="sig-name descname">spacing</code><em class="property"> = Either(Tuple, List, Array)</em><a class="headerlink" href="#chaco.api.GridPlotContainer.spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of space to put on either side of each component, expressed
+as a tuple (h_spacing, v_spacing).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.GridPlotContainer.valign">
+<code class="sig-name descname">valign</code><em class="property"> = Enum(&quot;bottom&quot;, &quot;top&quot;, &quot;center&quot;)</em><a class="headerlink" href="#chaco.api.GridPlotContainer.valign" title="Permalink to this definition">¶</a></dt>
+<dd><p>The vertical alignment of objects that don’t span the full height.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="selectableoverlayplotcontainer">
+<h2><a class="reference internal" href="#chaco.api.SelectableOverlayPlotContainer" title="chaco.api.SelectableOverlayPlotContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectableOverlayPlotContainer</span></code></a><a class="headerlink" href="#selectableoverlayplotcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="chaco.api.SelectableOverlayPlotContainer">
+<em class="property">class </em><code class="sig-prename descclassname">chaco.api.</code><code class="sig-name descname">SelectableOverlayPlotContainer</code><span class="sig-paren">(</span><em class="sig-param">*components</em>, <em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">chaco.plot_containers.OverlayPlotContainer</span></code></p>
+<p>An OverlayPlotContainer that can show a selection region on top of it.</p>
+<dl class="attribute">
+<dt id="chaco.api.SelectableOverlayPlotContainer.selection_active">
+<code class="sig-name descname">selection_active</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer.selection_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is there an active selection?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SelectableOverlayPlotContainer.selection_alpha">
+<code class="sig-name descname">selection_alpha</code><em class="property"> = Float(0.3)</em><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer.selection_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transparency of the <strong>selection_fill_color</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SelectableOverlayPlotContainer.selection_border_color">
+<code class="sig-name descname">selection_border_color</code><em class="property"> = ColorTrait('dodgerblue')</em><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer.selection_border_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color to use to draw the border of the selected region.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SelectableOverlayPlotContainer.selection_direction">
+<code class="sig-name descname">selection_direction</code><em class="property"> = Enum('v', 'h')</em><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer.selection_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>The direction of the selection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SelectableOverlayPlotContainer.selection_fill_color">
+<code class="sig-name descname">selection_fill_color</code><em class="property"> = ColorTrait('lightskyblue')</em><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer.selection_fill_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color to use to fill the selected region.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SelectableOverlayPlotContainer.selection_screen_end">
+<code class="sig-name descname">selection_screen_end</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer.selection_screen_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen position of the end of the selection, which can be in the x- or
+y-dimension, depending on <strong>selection_direction</strong>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="chaco.api.SelectableOverlayPlotContainer.selection_screen_start">
+<code class="sig-name descname">selection_screen_start</code><em class="property"> = Float(0.0)</em><a class="headerlink" href="#chaco.api.SelectableOverlayPlotContainer.selection_screen_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Screen position of the start of the selection, which can be in the x- or
+y-dimension, depending on <strong>selection_direction</strong>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Containers</a><ul>
+<li><a class="reference internal" href="#baseplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePlotContainer</span></code></a></li>
+<li><a class="reference internal" href="#overlayplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">OverlayPlotContainer</span></code></a></li>
+<li><a class="reference internal" href="#hplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPlotContainer</span></code></a></li>
+<li><a class="reference internal" href="#vplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">VPlotContainer</span></code></a></li>
+<li><a class="reference internal" href="#gridplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridPlotContainer</span></code></a></li>
+<li><a class="reference internal" href="#selectableoverlayplotcontainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectableOverlayPlotContainer</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mappers.html"
+                        title="previous chapter">Mappers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="visual_components.html"
+                        title="next chapter">Visual Components</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/containers.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="visual_components.html" title="Visual Components"
+             >next</a></li>
+        <li class="right" >
+          <a href="mappers.html" title="Mappers"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../programmers_reference.html" >Programmer’s Reference</a> &#187;</li>
+  
+    <li><a href="#">Containers</a></li>
+  
+
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>
