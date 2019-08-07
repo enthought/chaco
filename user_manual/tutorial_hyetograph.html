@@ -1,27 +1,38 @@
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <title>Creating an interactive Hyetograph with Chaco and Traits &#8212; Chaco 4.8</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Creating an interactive Hyetograph with Chaco and Traits &#8212; Chaco 4.6</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.6.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    
     <link rel="shortcut icon" href="../_static/et.ico"/>
     <link rel="search" title="Search" href="../search.html" /> 
-  </head><body>
+  </head>
+  <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &#187;</li>
   
     <li><a href="#">Creating an interactive Hyetograph with Chaco and Traits</a></li>
   
@@ -55,26 +66,26 @@ the soil) a plot shows the intensity vs. time hyetograph plots.</p>
 <p>To run this demo you must have Chaco and its dependencies installed,</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>Traits</p></li>
-<li><p>TraitsGUI</p></li>
-<li><p>Enable</p></li>
+<li>Traits</li>
+<li>TraitsGUI</li>
+<li>Enable</li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="why-use-traits-for-this-application">
 <h2>Why use Traits for this application?<a class="headerlink" href="#why-use-traits-for-this-application" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li><p><strong>Event notification</strong> Every time that a trait is changed it sends
+<li><strong>Event notification</strong> Every time that a trait is changed it sends
 out notification to all listening functions.  This means when a
 trait is changed in places such as the UI the program will then
-notify other traits or functions automatically.</p></li>
-<li><p><strong>Typing</strong> Within traits you are allowed to define trats as certain
+notify other traits or functions automatically.</li>
+<li><strong>Typing</strong> Within traits you are allowed to define trats as certain
 types.  Say you have a trait named Name, you can then define it to
 be a string.  Then when you visualize it using the UI, it will
-interprit the data as a string.</p></li>
-<li><p><strong>UI-Generation</strong> After setting up your traits and performing all
-the calculations, the Trait’s will automatically generate a GUI
-view without needing any additional programming.</p></li>
+interprit the data as a string.</li>
+<li><strong>UI-Generation</strong> After setting up your traits and performing all
+the calculations, the Trait&#8217;s will automatically generate a GUI
+view without needing any additional programming.</li>
 </ol>
 </div>
 <div class="section" id="importing-the-necessary-functions">
@@ -83,7 +94,7 @@ view without needing any additional programming.</p></li>
 In calling your function you want to specify where the function is and
 then import it.  The following code snippet imports all the names that
 will be used for our application.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
     <span class="kn">import</span> <span class="nn">HasTraits</span><span class="o">,</span> <span class="nn">Int</span><span class="o">,</span> <span class="nn">Range</span><span class="o">,</span> <span class="nn">Array</span><span class="o">,</span> <span class="nn">Enum</span><span class="o">,</span> <span class="nn">on_trait_change</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
 <span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="k">import</span> <span class="n">ChacoPlotItem</span>
@@ -94,13 +105,13 @@ will be used for our application.</p>
 <h2>Trait Definitions<a class="headerlink" href="#trait-definitions" title="Permalink to this headline">¶</a></h2>
 <p>This application only requires one class that will contain the Traits
 and mathematical calculations together.  Classes that contain Traits
-must inherit from the HasTraits function.  Python’s multiple
+must inherit from the HasTraits function.  Python&#8217;s multiple
 inheritance allows for mixing HasTraits objects with other class
 hierarchies if needed.</p>
 <p>Within this class we define all the class variables using Traits types
 which will later be used in the UI.  These traits are set to equal
 their type similar to many typed languages.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Creates a simple hyetograph demo. &quot;&quot;&quot;</span>
     <span class="n">timeline</span> <span class="o">=</span> <span class="n">Array</span>
     <span class="n">intensity</span> <span class="o">=</span> <span class="n">Array</span>
@@ -115,35 +126,35 @@ their type similar to many typed languages.</p>
 <p>The above code snippet shows a number of Traits features,</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><p>The naming convention with traits is that types are capitalized.</p></li>
-<li><p>An Array is an array, an Int is an integer, an Enum is a single
+<li>The naming convention with traits is that types are capitalized.</li>
+<li>An Array is an array, an Int is an integer, an Enum is a single
 value from a list of options, and a Range is a value between
-two numbers.</p></li>
-<li><p>All traits get a default value, such as whats done in the
+two numbers.</li>
+<li>All traits get a default value, such as whats done in the
 Arrays, or they can be assigned an initial value as is done in
-the duration trait.</p></li>
-<li><p>Descriptions can be added to traits, such as is done in
+the duration trait.</li>
+<li>Descriptions can be added to traits, such as is done in
 duration.  This description is not visible except when viewing
 the trait in a TraitsUI view, and then the description is seen
-when the mouse hovers over the variable.</p></li>
-<li><p>Traits are always contained within the class definition, and
-each instance of the class will have a unique copy of the traits.</p></li>
+when the mouse hovers over the variable.</li>
+<li>Traits are always contained within the class definition, and
+each instance of the class will have a unique copy of the traits.</li>
 </ol>
 </div></blockquote>
 <p>The Traits API Reference contains more information about the standard
-Trait types; see the <code class="xref py py-mod docutils literal notranslate"><span class="pre">trait_types</span></code> module in the <a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/traits.trait_types.html">Traits API Reference</a>.</p>
+Trait types; see the <code class="xref py py-mod docutils literal"><span class="pre">trait_types</span></code> module in the <a class="reference external" href="http://code.enthought.com/projects/files/ETS3_API/traits.trait_types.html">Traits API Reference</a>.</p>
 </div>
 <div class="section" id="setting-up-the-user-interface-ui">
 <h2>Setting up the User Interface (UI)<a class="headerlink" href="#setting-up-the-user-interface-ui" title="Permalink to this headline">¶</a></h2>
 <p>HasTraits classes will automatically generate a view that contains an
 editable entry for each trait within the class.  But a user-defined
-view usually looks better, so we’ll use View and Items to change the
+view usually looks better, so we&#8217;ll use View and Items to change the
 default class view.  Changing the default UI is done by creating a
 trait on the class that is of the View type.  Multiple View traits can
-be defined and used, with the one named <code class="docutils literal notranslate"><span class="pre">traits_view</span></code> being used as
+be defined and used, with the one named <code class="docutils literal"><span class="pre">traits_view</span></code> being used as
 the default.</p>
 <p>Continuing with our application, here is the View definition.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hyetograph</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
 
     <span class="o">&lt;...</span> <span class="n">snip</span> <span class="o">...&gt;</span>
 
@@ -181,14 +192,14 @@ the default.</p>
 <p>Views generally contain Item objects and named parameters.  Views can
 also contain Groups of Items as well as many other types of layout
 features not covered here.  By default, Item objects take a string of
-the trait to edit.  For example, the <code class="docutils literal notranslate"><span class="pre">Item(name='county')</span></code> will
+the trait to edit.  For example, the <code class="docutils literal"><span class="pre">Item(name='county')</span></code> will
 create a pull-down menu in the UI showing the four valid counties that
 the user can select from.</p>
 <p>There are three important observations to be seen in the above view
 definition.  First, there are two Chaco plot items embedded in the
 view.  The top plot is the intensity versus time and the bottom is
 nrcs versus time.  Second, default window will be sized at 800 by 800
-pixels, but the option <code class="docutils literal notranslate"><span class="pre">resizable</span> <span class="pre">=</span> <span class="pre">True</span></code> will allow the user to
+pixels, but the option <code class="docutils literal"><span class="pre">resizable</span> <span class="pre">=</span> <span class="pre">True</span></code> will allow the user to
 change the size of the window.  And third, the traits are split up so
 3 of them are displayed below the first plot and only 1 is displayed
 below the second.  Here is a snapshot of what our application will
@@ -200,11 +211,11 @@ traits</p>
 <h2>Performing the Hyetograph Calculations<a class="headerlink" href="#performing-the-hyetograph-calculations" title="Permalink to this headline">¶</a></h2>
 <p>The UI for the application is complete, however there is no data.
 Changing the traits within the GUI by moving the sliders and typing in
-numbers does nothing because they’re hooked up to nothing and there
-are no listeners on the trait event notifications.  So , next we’ll
+numbers does nothing because they&#8217;re hooked up to nothing and there
+are no listeners on the trait event notifications.  So , next we&#8217;ll
 add some hyetograph calculations that modify the intensity and nrcs
 Array traits.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_intensity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_intensity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The Hyetograph calculations. &quot;&quot;&quot;</span>
     <span class="c1"># Assigning A, B, and C values based on year, storm, and county</span>
     <span class="n">counties</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Brazos&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Dallas&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;El Paso&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;Harris&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
@@ -271,23 +282,23 @@ specific convention.  Alternatively, a dynamic handler is set up by
 calling a function at runtime, providing for on-the-fly event
 processing.  Below is a function that calls the two calculation
 functions.  The interesting line is the decorator,
-<code class="docutils literal notranslate"><span class="pre">&#64;on_trait_change</span></code> that tells Traits to call the function whenever
+<code class="docutils literal"><span class="pre">&#64;on_trait_change</span></code> that tells Traits to call the function whenever
 any of the values within the list of traits change.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@on_trait_change</span><span class="p">(</span><span class="s1">&#39;duration, year_storm, county, curve_number&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nd">@on_trait_change</span><span class="p">(</span><span class="s1">&#39;duration, year_storm, county, curve_number&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_perform_calculations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">calculate_intensity</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">calculate_runoff</span><span class="p">()</span>
 </pre></div>
 </div>
-<dl class="simple">
-<dt>So now when the application is run, when the <code class="docutils literal notranslate"><span class="pre">duration</span></code> trait is</dt><dd><p>changed or any of the four listed traits change, the calculation
+<dl class="docutils">
+<dt>So now when the application is run, when the <code class="docutils literal"><span class="pre">duration</span></code> trait is</dt>
+<dd>changed or any of the four listed traits change, the calculation
 functions are automatically called and the data changes.  And these
 traits will automatically change when the user adjusts the widgets
-in the UI.  So when the user changes the <code class="docutils literal notranslate"><span class="pre">duration</span></code> in the UI
+in the UI.  So when the user changes the <code class="docutils literal"><span class="pre">duration</span></code> in the UI
 from 12 hours to 24 hours this will automatically effect both of
 the plots since the listeners force a recalculation of both of the
-functions.</p>
-</dd>
+functions.</dd>
 </dl>
 </div>
 <div class="section" id="showing-the-display">
@@ -295,8 +306,8 @@ functions.</p>
 <p>In order to start the GUI application an instance of the class must be
 instantiated, and then a configure_traits() call is done.  However we
 must first call the data calculation functions from within the class
-to initialize the data arrays.  Here’s the last piece of the program.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+to initialize the data arrays.  Here&#8217;s the last piece of the program.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_perform_calculations</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 
@@ -315,7 +326,7 @@ the following image,</p>
 <div class="section" id="source-code">
 <h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>The final version of the program, <cite>hyetograph.py</cite>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
     <span class="kn">import</span> <span class="nn">HasTraits</span><span class="o">,</span> <span class="nn">Int</span><span class="o">,</span> <span class="nn">Range</span><span class="o">,</span> <span class="nn">Array</span><span class="o">,</span> <span class="nn">Enum</span><span class="o">,</span> <span class="nn">on_trait_change</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
 <span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="k">import</span> <span class="n">ChacoPlotItem</span>
@@ -442,8 +453,8 @@ the following image,</p>
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
             </a></p>
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+<h3>Page Contents</h3>
+<ul>
 <li><a class="reference internal" href="#">Creating an interactive Hyetograph with Chaco and Traits</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#development-setup">Development Setup</a></li>
@@ -467,13 +478,13 @@ the following image,</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -483,7 +494,7 @@ the following image,</p>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &#187;</li>
   
     <li><a href="#">Creating an interactive Hyetograph with Chaco and Traits</a></li>
   
@@ -491,9 +502,9 @@ the following image,</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2019, Enthought, Inc..
-      Last updated on Aug 05, 2019.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+        &#169; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Mar 31, 2017.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
     </div>
   </body>
 </html>

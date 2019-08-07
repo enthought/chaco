@@ -1,29 +1,40 @@
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <title>Modeling Van der Waal’s Equation With Chaco and Traits &#8212; Chaco 4.8</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modeling Van der Waal’s Equation With Chaco and Traits &#8212; Chaco 4.6</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.6.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    
     <link rel="shortcut icon" href="../_static/et.ico"/>
     <link rel="search" title="Search" href="../search.html" /> 
-  </head><body>
+  </head>
+  <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &#187;</li>
   
-    <li><a href="#">Modeling Van der Waal’s Equation With Chaco and Traits</a></li>
+    <li><a href="#">Modeling Van der Waal&#8217;s Equation With Chaco and Traits</a></li>
   
 
       </ul>
@@ -35,11 +46,11 @@
           <div class="body" role="main">
             
   <div class="section" id="modeling-van-der-waal-s-equation-with-chaco-and-traits">
-<span id="tutorial-van-der-waal"></span><h1>Modeling Van der Waal’s Equation With Chaco and Traits<a class="headerlink" href="#modeling-van-der-waal-s-equation-with-chaco-and-traits" title="Permalink to this headline">¶</a></h1>
+<span id="tutorial-van-der-waal"></span><h1>Modeling Van der Waal&#8217;s Equation With Chaco and Traits<a class="headerlink" href="#modeling-van-der-waal-s-equation-with-chaco-and-traits" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>This tutorial walks through the creation of an example program that plots a
-scientific equation.  In particular, we will model <a class="reference external" href="http://en.wikipedia.org/wiki/Van_der_Waals_equation">Van Der Waal’s Equation</a>, which is a
+scientific equation.  In particular, we will model <a class="reference external" href="http://en.wikipedia.org/wiki/Van_der_Waals_equation">Van Der Waal&#8217;s Equation</a>, which is a
 modification to the ideal gas law that takes into account the nonzero size of
 molecules and the attraction to each other that they experience.</p>
 </div>
@@ -53,9 +64,9 @@ packages and can be found on the
 includes features, technical notes, cookbooks, FAQ and more.</p>
 <p>You must have Chaco and its dependencies installed:</p>
 <ul class="simple">
-<li><p>Traits</p></li>
-<li><p>TraitsGUI</p></li>
-<li><p>Enable</p></li>
+<li>Traits</li>
+<li>TraitsGUI</li>
+<li>Enable</li>
 </ul>
 </div>
 <div class="section" id="writing-the-program">
@@ -64,14 +75,14 @@ includes features, technical notes, cookbooks, FAQ and more.</p>
 the task.  The following Traits class is made for the Van Der Waal
 equation, whose variables can be viewed on
 <a class="reference external" href="http://en.wikipedia.org/wiki/Van_der_Waals_equation">this wiki page</a>.  The
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">volume</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> attributes hold lists of our X- and
+<code class="xref py py-attr docutils literal"><span class="pre">volume</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> attributes hold lists of our X- and
 Y-coordinates, respectively, and are defined as arrays. The attributes
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">attraction</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">totVolume</span></code> are  input parameters specified by the
+<code class="xref py py-attr docutils literal"><span class="pre">attraction</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">totVolume</span></code> are  input parameters specified by the
 user.  The type of the variables dictates their appearance in the GUI.  For
-example, <code class="xref py py-attr docutils literal notranslate"><span class="pre">attraction</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">totVolume</span></code> are defined as Ranges, so they
-show up as slider bars.  Likewise, <code class="xref py py-attr docutils literal notranslate"><span class="pre">plot_type</span></code> is shown as a drop-down
+example, <code class="xref py py-attr docutils literal"><span class="pre">attraction</span></code> and <code class="xref py py-attr docutils literal"><span class="pre">totVolume</span></code> are defined as Ranges, so they
+show up as slider bars.  Likewise, <code class="xref py py-attr docutils literal"><span class="pre">plot_type</span></code> is shown as a drop-down
 list, since it is defined as an Enum.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ll also import a few things to be used later.</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ll also import a few things to be used later.</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> \
     <span class="kn">import</span> <span class="nn">HasTraits</span><span class="o">,</span> <span class="nn">Array</span><span class="o">,</span> <span class="nn">Range</span><span class="o">,</span> <span class="nn">Float</span><span class="o">,</span> <span class="nn">Enum</span><span class="o">,</span> <span class="nn">on_trait_change</span><span class="o">,</span> <span class="nn">Property</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
@@ -93,21 +104,21 @@ list, since it is defined as an Enum.</p>
 </div>
 <div class="section" id="creating-the-view">
 <h2>Creating the View<a class="headerlink" href="#creating-the-view" title="Permalink to this headline">¶</a></h2>
-<p>The main GUI window is created by defining a Traits <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code> instance.
+<p>The main GUI window is created by defining a Traits <code class="xref py py-class docutils literal"><span class="pre">View</span></code> instance.
 This View contains all of the GUI elements, including the plot.  To
 link a variable with a widget element on the GUI, we create a Traits
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code> instance with the same name as the variable and pass it as an
+<code class="xref py py-class docutils literal"><span class="pre">Item</span></code> instance with the same name as the variable and pass it as an
 argument of the Traits View instance declaration.  The
 <a class="reference external" href="https://svn.enthought.com/svn/enthought/Traits/tags/traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf">Traits UI User Guide</a>
 discusses the View and Item objects in depth. In order to
 embed a Chaco plot into a Traits View, you need to import the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">ChacoPlotItem</span></code> class, which can be passed as a parameter to View just
+<code class="xref py py-class docutils literal"><span class="pre">ChacoPlotItem</span></code> class, which can be passed as a parameter to View just
 like the Item objects. The first two arguments to ChacoPlotItem are the
-lists of X- and Y-coordinates for the graph.  The attributes <code class="xref py py-attr docutils literal notranslate"><span class="pre">volume</span></code> and
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> hold the lists of X- and Y-coordinates, and therefore are the
+lists of X- and Y-coordinates for the graph.  The attributes <code class="xref py py-attr docutils literal"><span class="pre">volume</span></code> and
+<code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> hold the lists of X- and Y-coordinates, and therefore are the
 first two arguments to Chaco2PlotItem.  Other parameters have been
 provided to the plot for additional customization:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="o">....</span>
 
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">ChacoPlotItem</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
@@ -144,24 +155,24 @@ provided to the plot for additional customization:</p>
 whenever the X- or Y-arrays are changed.  So, we need a function to
 re-calculate the X- and Y-coordinate lists whenever the input
 parameters are changed by the user moving the sliders in the GUI.</p>
-<p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">volume</span></code> attribute is the independent variable and <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> is
+<p>The <code class="xref py py-attr docutils literal"><span class="pre">volume</span></code> attribute is the independent variable and <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> is
 the dependent variable. The relationship between pressure and volume, as derived
 from the equation found on the wiki page, is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>            <span class="n">r_constant</span> <span class="o">*</span> <span class="n">Temperature</span>       <span class="n">attraction</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>            <span class="n">r_constant</span> <span class="o">*</span> <span class="n">Temperature</span>       <span class="n">attraction</span>
 <span class="n">Pressure</span> <span class="o">=</span>  <span class="o">------------------------</span>   <span class="o">-</span>   <span class="o">----------</span>
                <span class="n">Volume</span> <span class="o">-</span> <span class="n">totVolume</span>          <span class="n">Volume</span><span class="o">**</span><span class="mi">2</span>
 </pre></div>
 </div>
 <p>Next, there are two programing tasks to complete:</p>
 <ol class="arabic simple">
-<li><p>Define trait listener methods for your input parameters. These
+<li>Define trait listener methods for your input parameters. These
 methods are automatically called whenever the parameters are
-changed, since it will be time to recalculate the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> array.</p></li>
-<li><p>Write a calculation method that updates your lists of X- and
-Y-coordinates for your plot.</p></li>
+changed, since it will be time to recalculate the <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> array.</li>
+<li>Write a calculation method that updates your lists of X- and
+Y-coordinates for your plot.</li>
 </ol>
 <p>The following is the code for these two needs:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Re-calculate when attraction, totVolume, or temperature are changed.</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Re-calculate when attraction, totVolume, or temperature are changed.</span>
 <span class="nd">@on_trait_change</span><span class="p">(</span><span class="s1">&#39;attraction, totVolume, temperature&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Update the data based on the numbers specified by the user. &quot;&quot;&quot;</span>
@@ -172,19 +183,19 @@ Y-coordinates for your plot.</p></li>
     <span class="k">return</span>
 </pre></div>
 </div>
-<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">calc()</span></code> function computes the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> array using the current
+<p>The <code class="xref py py-func docutils literal"><span class="pre">calc()</span></code> function computes the <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> array using the current
 values of the independent variables.  Meanwhile, the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;on_trait_change()</span></code> decorator (provided by Traits) tells Python to call
-<code class="xref py py-func docutils literal notranslate"><span class="pre">calc()</span></code> whenever any of the attributes <code class="xref py py-attr docutils literal notranslate"><span class="pre">attraction</span></code>,
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">totVolume</span></code>, or <code class="xref py py-attr docutils literal notranslate"><span class="pre">temperature</span></code> changes.</p>
+<code class="xref py py-func docutils literal"><span class="pre">&#64;on_trait_change()</span></code> decorator (provided by Traits) tells Python to call
+<code class="xref py py-func docutils literal"><span class="pre">calc()</span></code> whenever any of the attributes <code class="xref py py-attr docutils literal"><span class="pre">attraction</span></code>,
+<code class="xref py py-attr docutils literal"><span class="pre">totVolume</span></code>, or <code class="xref py py-attr docutils literal"><span class="pre">temperature</span></code> changes.</p>
 </div>
 <div class="section" id="testing-your-program">
 <h2>Testing your Program<a class="headerlink" href="#testing-your-program" title="Permalink to this headline">¶</a></h2>
 <p>The application is complete, and can be tested by instantiating a copy
 of the class and then creating the view by calling the
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_traits()</span></code> method on the class.  For a simple test, run these
+<code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code> method on the class.  For a simple test, run these
 lines from an interpreter or a separate module:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vanderwaals</span> <span class="k">import</span> <span class="n">Data</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vanderwaals</span> <span class="k">import</span> <span class="n">Data</span>
 <span class="n">viewer</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
 <span class="n">viewer</span><span class="o">.</span><span class="n">calc</span><span class="p">()</span>            <span class="c1"># Must calculate the initial (x,y) lists</span>
 <span class="n">viewer</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
@@ -199,30 +210,30 @@ data array, and causes the plot to update, showing the new values.</p>
 <img alt="../_images/vanderwaals.png" src="../_images/vanderwaals.png" />
 </div>
 <div class="section" id="but-it-could-be-better">
-<h2>But it could be better….<a class="headerlink" href="#but-it-could-be-better" title="Permalink to this headline">¶</a></h2>
+<h2>But it could be better....<a class="headerlink" href="#but-it-could-be-better" title="Permalink to this headline">¶</a></h2>
 <p>It seems inconvenient to have to call a calculation function manually
-before we call <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_traits()</span></code>.  Also, the pressure equation depends on
+before we call <code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code>.  Also, the pressure equation depends on
 the values of other variables. It would be nice to make the
 relationship between the dependant and independent variables clearer.
 There is another way we could define our variables that is easier for
 the user to understand, and provides better source documentation.</p>
 <p>Since our X-values remain constant in this example, it is wasteful to
-keep recreating the <code class="xref py py-attr docutils literal notranslate"><span class="pre">volume</span></code> array.  The Y-array, <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code>, is the
+keep recreating the <code class="xref py py-attr docutils literal"><span class="pre">volume</span></code> array.  The Y-array, <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code>, is the
 single array that needs to be updated when the independent variables
-change. So, instead of defining <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> as an <code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code>, we define
-it as a <code class="xref py py-class docutils literal notranslate"><span class="pre">Property</span></code>. Property is a Traits type that allows you to define
+change. So, instead of defining <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> as an <code class="xref py py-class docutils literal"><span class="pre">Array</span></code>, we define
+it as a <code class="xref py py-class docutils literal"><span class="pre">Property</span></code>. Property is a Traits type that allows you to define
 a variable whose value is recalculated whenever it is requested. In
 addition, when the <em>depends_on</em> argument of a Property constructor is
-set to list of traits in your <code class="xref py py-class docutils literal notranslate"><span class="pre">HasTraits</span></code> class, the property’s trait
-events fire whenever any of the dependent trait’s change events
-fire. This means that the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> attribute fires a trait change
+set to list of traits in your <code class="xref py py-class docutils literal"><span class="pre">HasTraits</span></code> class, the property&#8217;s trait
+events fire whenever any of the dependent trait&#8217;s change events
+fire. This means that the <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> attribute fires a trait change
 whenever our <em>depends_on</em> traits are changed. Meanwhile, the Chaco plot
-is automatically listening to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> attribute, so the plot
-display gets the new value of <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressure</span></code> whenever someone changes
+is automatically listening to the <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> attribute, so the plot
+display gets the new value of <code class="xref py py-attr docutils literal"><span class="pre">pressure</span></code> whenever someone changes
 the input parameters!</p>
 <p>When the value of a Property trait is requested, the
-<code class="samp docutils literal notranslate"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></code> method is called to calculate and return its
-current value. So we define use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_pressure()</span></code> method as our new
+<code class="samp docutils literal"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></code> method is called to calculate and return its
+current value. So we define use the <code class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></code> method as our new
 calculation method.  It is important to note that this implementation
 does have a weakness.  Since we are calculating new pressures each
 time someone changes the value of the input variables, this could slow
@@ -231,19 +242,19 @@ slider widget, each stopping point along the slider requests a
 recompute.</p>
 <p>For the new implementation, these are the necessary changes:</p>
 <ol class="arabic simple">
-<li><p>Define the Y-coordinate array variable as a Property instead of an
-Array.</p></li>
-<li><p>Perform the calculations in the <code class="samp docutils literal notranslate"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></code> method for the
-Y-coordinate array variable, which is <code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_pressure()</span></code> in this
-example.</p></li>
-<li><p>Define the <code class="samp docutils literal notranslate"><span class="pre">_</span><em><span class="pre">trait</span></em><span class="pre">_default</span></code> method to set the initial value of
-the X-coordinate array, so <code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_pressure()</span></code> does not have to keep
-recalculating it.</p></li>
-<li><p>Remove the previous <code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;on_trait_change()</span></code> decorator and calculation
-method.</p></li>
+<li>Define the Y-coordinate array variable as a Property instead of an
+Array.</li>
+<li>Perform the calculations in the <code class="samp docutils literal"><span class="pre">_get_</span><em><span class="pre">trait_name</span></em></code> method for the
+Y-coordinate array variable, which is <code class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></code> in this
+example.</li>
+<li>Define the <code class="samp docutils literal"><span class="pre">_</span><em><span class="pre">trait</span></em><span class="pre">_default</span></code> method to set the initial value of
+the X-coordinate array, so <code class="xref py py-meth docutils literal"><span class="pre">_get_pressure()</span></code> does not have to keep
+recalculating it.</li>
+<li>Remove the previous <code class="xref py py-func docutils literal"><span class="pre">&#64;on_trait_change()</span></code> decorator and calculation
+method.</li>
 </ol>
 <p>The new pieces of code to add to the Data class are:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">HasTraits</span><span class="p">):</span>
     <span class="o">...</span>
     <span class="n">pressure</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="n">Array</span><span class="p">,</span> <span class="n">depends_on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span>
                                            <span class="s1">&#39;attraction&#39;</span><span class="p">,</span>
@@ -262,12 +273,12 @@ method.</p></li>
 </pre></div>
 </div>
 <p>You now no longer have to call an inconvenient calculation function
-before the first call to <code class="xref py py-meth docutils literal notranslate"><span class="pre">configure_traits()</span></code>!</p>
+before the first call to <code class="xref py py-meth docutils literal"><span class="pre">configure_traits()</span></code>!</p>
 </div>
 <div class="section" id="source-code">
 <h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>The final version on the program, <cite>vanderwaals.py</cite></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.api</span> \
     <span class="kn">import</span> <span class="nn">HasTraits</span><span class="o">,</span> <span class="nn">Array</span><span class="o">,</span> <span class="nn">Range</span><span class="o">,</span> <span class="nn">Float</span><span class="o">,</span> <span class="nn">Enum</span><span class="o">,</span> <span class="nn">on_trait_change</span><span class="o">,</span> <span class="nn">Property</span>
 <span class="kn">from</span> <span class="nn">traitsui.api</span> <span class="k">import</span> <span class="n">View</span><span class="p">,</span> <span class="n">Item</span>
 <span class="kn">from</span> <span class="nn">chaco.chaco_plot_editor</span> <span class="k">import</span> <span class="n">ChacoPlotItem</span>
@@ -319,7 +330,7 @@ before the first call to <code class="xref py py-meth docutils literal notransla
               <span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">totVolume</span><span class="p">)</span>
              <span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attraction</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)))</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">viewer</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
     <span class="n">viewer</span><span class="o">.</span><span class="n">configure_traits</span><span class="p">()</span>
 </pre></div>
@@ -336,9 +347,9 @@ before the first call to <code class="xref py py-meth docutils literal notransla
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
             </a></p>
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Modeling Van der Waal’s Equation With Chaco and Traits</a><ul>
+<h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Modeling Van der Waal&#8217;s Equation With Chaco and Traits</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#development-setup">Development Setup</a></li>
 <li><a class="reference internal" href="#writing-the-program">Writing the Program</a></li>
@@ -346,7 +357,7 @@ before the first call to <code class="xref py py-meth docutils literal notransla
 <li><a class="reference internal" href="#updating-the-plot">Updating the Plot</a></li>
 <li><a class="reference internal" href="#testing-your-program">Testing your Program</a></li>
 <li><a class="reference internal" href="#screenshots">Screenshots</a></li>
-<li><a class="reference internal" href="#but-it-could-be-better">But it could be better….</a></li>
+<li><a class="reference internal" href="#but-it-could-be-better">But it could be better....</a></li>
 <li><a class="reference internal" href="#source-code">Source Code</a></li>
 </ul>
 </li>
@@ -360,13 +371,13 @@ before the first call to <code class="xref py py-meth docutils literal notransla
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -376,17 +387,17 @@ before the first call to <code class="xref py py-meth docutils literal notransla
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
-        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &#187;</li>
   
-    <li><a href="#">Modeling Van der Waal’s Equation With Chaco and Traits</a></li>
+    <li><a href="#">Modeling Van der Waal&#8217;s Equation With Chaco and Traits</a></li>
   
 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2019, Enthought, Inc..
-      Last updated on Aug 05, 2019.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+        &#169; Copyright 2008-2016, Enthought, Inc..
+      Last updated on Mar 31, 2017.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
     </div>
   </body>
 </html>
