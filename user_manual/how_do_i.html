@@ -1,36 +1,25 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>How Do I...? &#8212; Chaco 4.6</title>
-    
+    <meta charset="utf-8" />
+    <title>How Do I…? &#8212; Chaco 4.8</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '4.6.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
     <link rel="shortcut icon" href="../_static/et.ico"/>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Frequently Asked Questions" href="faq.html" />
     <link rel="prev" title="Common Usages" href="common_patterns.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -40,10 +29,10 @@
         <li class="right" >
           <a href="common_patterns.html" title="Common Usages"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">User guide</a> &#187;</li>
   
-    <li><a href="#">How Do I...?</a></li>
+    <li><a href="#">How Do I…?</a></li>
   
 
       </ul>
@@ -55,18 +44,18 @@
           <div class="body" role="main">
             
   <div class="section" id="how-do-i">
-<h1>How Do I...?<a class="headerlink" href="#how-do-i" title="Permalink to this headline">¶</a></h1>
+<h1>How Do I…?<a class="headerlink" href="#how-do-i" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This section is currently under active development.</p>
+<p class="admonition-title">Note</p>
+<p>This section is currently under active development.</p>
 </div>
 <div class="section" id="basics">
 <h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
-<p><em>How do I...</em></p>
+<p><em>How do I…</em></p>
 <ul class="simple">
-<li>render data to an image file?</li>
+<li><p>render data to an image file?</p></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">save_plot</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">save_plot</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
     <span class="n">plot</span><span class="o">.</span><span class="n">outer_bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">]</span>
     <span class="n">plot</span><span class="o">.</span><span class="n">do_layout</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">gc</span> <span class="o">=</span> <span class="n">PlotGraphicsContext</span><span class="p">((</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">72</span><span class="p">)</span>
@@ -75,9 +64,9 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li>integrate a Chaco plot into my WX app?</li>
+<li><p>integrate a Chaco plot into my WX app?</p></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">wx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">wx</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">arange</span>
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="k">import</span> <span class="n">jn</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="k">import</span> <span class="n">HPlotContainer</span><span class="p">,</span> <span class="n">create_line_plot</span>
@@ -86,7 +75,7 @@
 <span class="k">class</span> <span class="nc">PlotFrame</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="n">kw</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">850</span><span class="p">,</span> <span class="mi">550</span><span class="p">)</span>
-        <span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span> <span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span> <span class="p">)</span>
+        <span class="n">wx</span><span class="o">.</span><span class="n">Frame</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span> <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span> <span class="o">=</span> <span class="n">Window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_plot</span><span class="p">())</span>
         <span class="n">sizer</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">BoxSizer</span><span class="p">(</span><span class="n">wx</span><span class="o">.</span><span class="n">HORIZONTAL</span><span class="p">)</span>
         <span class="n">sizer</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="o">.</span><span class="n">control</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">wx</span><span class="o">.</span><span class="n">EXPAND</span><span class="p">)</span>
@@ -104,19 +93,19 @@
         <span class="n">container</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">container</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">wx</span><span class="o">.</span><span class="n">PySimpleApp</span><span class="p">()</span>
     <span class="n">frame</span> <span class="o">=</span> <span class="n">PlotFrame</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Note that this will require for the ETS_TOOLKIT environment variable to
-be set to &#8216;wx&#8217;.</p>
+be set to ‘wx’.</p>
 <ul class="simple">
-<li>integrate a Chaco plot into my QT app?</li>
-<li>integrate a Chaco plot into my Traits UI?</li>
+<li><p>integrate a Chaco plot into my QT app?</p></li>
+<li><p>integrate a Chaco plot into my Traits UI?</p></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">chaco.api</span> <span class="k">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">ArrayPlotData</span>
 <span class="kn">from</span> <span class="nn">enable.component_editor</span> <span class="k">import</span> <span class="n">ComponentEditor</span>
 <span class="kn">from</span> <span class="nn">traits.api</span> <span class="k">import</span> <span class="n">HasTraits</span><span class="p">,</span> <span class="n">Instance</span>
@@ -128,7 +117,7 @@ be set to &#8216;wx&#8217;.</p>
     <span class="n">traits_view</span> <span class="o">=</span> <span class="n">View</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">,</span> <span class="n">editor</span><span class="o">=</span><span class="n">ComponentEditor</span><span class="p">()))</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data_series</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MyPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
         <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
         <span class="n">plot_data</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s1">&#39;data_series&#39;</span><span class="p">,</span> <span class="n">data_series</span><span class="p">)</span>
@@ -143,9 +132,9 @@ be set to &#8216;wx&#8217;.</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li>make an application to render many streams of data?</li>
+<li><p>make an application to render many streams of data?</p></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_several_series</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">series_list</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_several_series</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">series_list</span><span class="p">):</span>
     <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">)</span>
 
@@ -156,16 +145,16 @@ be set to &#8216;wx&#8217;.</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li>make a plot the right size?</li>
+<li><p>make a plot the right size?</p></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">resize_plot</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">resize_plot</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
     <span class="n">plot</span><span class="o">.</span><span class="n">outer_bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">]</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>copy a plot the the clipboard?</li>
+<li><p>copy a plot the the clipboard?</p></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">copy_to_clipboard</span><span class="p">(</span><span class="n">plot</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">copy_to_clipboard</span><span class="p">(</span><span class="n">plot</span><span class="p">):</span>
     <span class="c1"># WX specific, though QT implementation is similar using</span>
     <span class="c1"># QImage and QClipboard</span>
     <span class="kn">import</span> <span class="nn">wx</span>
@@ -193,12 +182,12 @@ be set to &#8216;wx&#8217;.</p>
 </div>
 <div class="section" id="layout-and-rendering">
 <h2>Layout and Rendering<a class="headerlink" href="#layout-and-rendering" title="Permalink to this headline">¶</a></h2>
-<p><em>How do I...</em></p>
+<p><em>How do I…</em></p>
 <ul class="simple">
-<li>put multiple plots in a single window?</li>
-<li>change the background color?</li>
+<li><p>put multiple plots in a single window?</p></li>
+<li><p>change the background color?</p></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_black_plot</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data_series</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_black_plot</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data_series</span><span class="p">):</span>
     <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
     <span class="n">plot_data</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s1">&#39;data_series&#39;</span><span class="p">,</span> <span class="n">data_series</span><span class="p">)</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
@@ -209,9 +198,9 @@ be set to &#8216;wx&#8217;.</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li>turn off borders?</li>
+<li><p>turn off borders?</p></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_borderless_plot</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data_series</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_borderless_plot</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">data_series</span><span class="p">):</span>
     <span class="n">plot_data</span> <span class="o">=</span> <span class="n">ArrayPlotData</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
     <span class="n">plot_data</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="s1">&#39;data_series&#39;</span><span class="p">,</span> <span class="n">data_series</span><span class="p">)</span>
     <span class="n">plot</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">border_visible</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -224,23 +213,23 @@ be set to &#8216;wx&#8217;.</p>
 </div>
 <div class="section" id="writing-components">
 <h2>Writing Components<a class="headerlink" href="#writing-components" title="Permalink to this headline">¶</a></h2>
-<p><em>How do I...</em></p>
+<p><em>How do I…</em></p>
 <ul class="simple">
-<li>compose multiple renderers?</li>
-<li>write a custom renderer?</li>
-<li>write a custom overlay/underlay?</li>
-<li>write a custom tool?</li>
-<li>write a new container?</li>
+<li><p>compose multiple renderers?</p></li>
+<li><p>write a custom renderer?</p></li>
+<li><p>write a custom overlay/underlay?</p></li>
+<li><p>write a custom tool?</p></li>
+<li><p>write a new container?</p></li>
 </ul>
 </div>
 <div class="section" id="advanced">
 <h2>Advanced<a class="headerlink" href="#advanced" title="Permalink to this headline">¶</a></h2>
-<p><em>How do I...</em></p>
+<p><em>How do I…</em></p>
 <ul class="simple">
-<li>properly change/override draw dispatch?</li>
-<li>modify event dispatch?</li>
-<li>customize backbuffering?</li>
-<li>embed custom/native WX widgets on the plot?</li>
+<li><p>properly change/override draw dispatch?</p></li>
+<li><p>modify event dispatch?</p></li>
+<li><p>customize backbuffering?</p></li>
+<li><p>embed custom/native WX widgets on the plot?</p></li>
 </ul>
 </div>
 </div>
@@ -254,9 +243,9 @@ be set to &#8216;wx&#8217;.</p>
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
             </a></p>
-<h3>Page Contents</h3>
-<ul>
-<li><a class="reference internal" href="#">How Do I...?</a><ul>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How Do I…?</a><ul>
 <li><a class="reference internal" href="#basics">Basics</a></li>
 <li><a class="reference internal" href="#layout-and-rendering">Layout and Rendering</a></li>
 <li><a class="reference internal" href="#writing-components">Writing Components</a></li>
@@ -265,6 +254,12 @@ be set to &#8216;wx&#8217;.</p>
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="common_patterns.html"
+                        title="previous chapter">Common Usages</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="faq.html"
+                        title="next chapter">Frequently Asked Questions</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -273,13 +268,13 @@ be set to &#8216;wx&#8217;.</p>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -295,18 +290,18 @@ be set to &#8216;wx&#8217;.</p>
         <li class="right" >
           <a href="common_patterns.html" title="Common Usages"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.6</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Chaco 4.8</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >User guide</a> &#187;</li>
   
-    <li><a href="#">How Do I...?</a></li>
+    <li><a href="#">How Do I…?</a></li>
   
 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2008-2016, Enthought, Inc..
-      Last updated on Mar 31, 2017.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+        &#169; Copyright 2008-2019, Enthought, Inc..
+      Last updated on Aug 07, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>
