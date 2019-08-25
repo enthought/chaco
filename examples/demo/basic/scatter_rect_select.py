@@ -1,14 +1,11 @@
 """
-Lasso selection of data points
+Rectangular selection of data points
 
-Draws a simple scatterplot of random data.  Drag the mouse to use the lasso
-selector, which allows you to circle all the points in a region.
+Draws a simple scatterplot of random data.  Drag the mouse to use the
+selector, which allows you to select points via a bounding box.
 
-Upon completion of the lasso operation, the indices of the selected points are
-printed to the console.
-
-Uncomment 'lasso_selection.incremental_select' line (line 74) to see the
-indices of the selected points computed in real time.
+Upon completion of the selection operation, the indices of the selected
+points are printed to the console and highlighted visually.
 """
 
 import sys
@@ -64,16 +61,17 @@ def _create_plot_component():
     my_plot = plot.plots["my_plot"][0]
 
     # Attach some tools to the plot
-    lasso_selection = RectangularSelection(
+    rect_selection = RectangularSelection(
         component=my_plot,
         selection_datasource=my_plot.index,
         drag_button="left",
         metadata_name='selections',
     )
-    my_plot.tools.append(lasso_selection)
+    my_plot.tools.append(rect_selection)
     my_plot.tools.append(ScatterInspector(my_plot, selection_mode='toggle'))
-    my_plot.active_tool = lasso_selection
-    lasso_overlay = LassoOverlay(lasso_selection=lasso_selection,
+    my_plot.active_tool = rect_selection
+
+    lasso_overlay = LassoOverlay(lasso_selection=rect_selection,
                                  component=my_plot)
     my_plot.overlays.append(lasso_overlay)
 
@@ -84,9 +82,6 @@ def _create_plot_component():
         selection_marker='circle'
     )
     my_plot.overlays.append(scatter_overlay)
-
-    # Uncomment this if you would like to see incremental updates:
-    # lasso_selection.incremental_select = True
 
     return plot
 
@@ -122,14 +117,14 @@ class Demo(HasTraits):
     def _plot_default(self):
         plot = _create_plot_component()
 
-        # Retrieve the plot hooked to the LassoSelection tool.
+        # Retrieve the plot hooked to the RectangularSelection tool.
         my_plot = plot.plots["my_plot"][0]
-        lasso_selection = my_plot.active_tool
+        rect_selection = my_plot.active_tool
 
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        lasso_selection.on_trait_change(self._selection_changed,
-                                        'selection_changed')
+        rect_selection.on_trait_change(self._selection_changed,
+                                       'selection_changed')
 
         return plot
 

@@ -1,11 +1,5 @@
-#
-# Enthought product code
-#
-# (C) Copyright 2019 Enthought, Inc., Austin, TX
-# All rights reserved.
-#
-# This file is confidential and NOT open source.  Do not distribute.
-#
+""" Defines the RectangularSelection controller class.
+"""
 import numpy as np
 
 from chaco.tools.api import LassoSelection
