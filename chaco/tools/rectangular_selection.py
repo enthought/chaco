@@ -2,7 +2,7 @@
 """
 import numpy as np
 
-from chaco.tools.api import LassoSelection
+from chaco.tools.lasso_selection import LassoSelection
 from traits.api import ArrayOrNone
 
 
