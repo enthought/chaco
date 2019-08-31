@@ -32,7 +32,7 @@ class RectangularSelection(LassoSelection):
         self.trait_property_changed("disjoint_selections", None)
 
     def selecting_mouse_up(self, event):
-        super().selecting_mouse_up(event)
+        super(RectangularSelection, self).selecting_mouse_up(event)
         # Clear the first click
         self.first_corner = None
 
