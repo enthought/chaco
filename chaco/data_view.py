@@ -89,111 +89,111 @@ class DataView(OverlayPlotContainer):
     just like a normal PlotContainer.
     """
 
-    # The orientation of the index axis.
+    #: The orientation of the index axis.
     orientation = Enum("h", "v")
 
-    # The default location of the origin  for new plots
+    #: The default location of the origin  for new plots
     default_origin = Enum("bottom left", "top left",
                           "bottom right", "top right")
 
-    # The origin reported to axes, etc
+    #: The origin reported to axes, etc
     origin = Property(depends_on='default_origin')
 
     # Whether our map_screen and map_data should treat screen-space
     # coords as being in our coordinate space or in our contained
     # coordinate space.
 
-    # The mapper to use for the index data.
+    #: The mapper to use for the index data.
     index_mapper = Instance(Base1DMapper)
 
-    # The mapper to use for value data.
+    #: The mapper to use for value data.
     value_mapper = Instance(Base1DMapper)
 
-    # For x-y plots, the scale of the index axis.
+    #: For x-y plots, the scale of the index axis.
     index_scale = Enum("linear", "log")
 
-    # For x-y plots, the scale of the index axis.
+    #: For x-y plots, the scale of the index axis.
     value_scale = Enum("linear", "log")
 
-    # The range used for the index data.
+    #: The range used for the index data.
     index_range = Property
 
-    # The range used for the value data.
+    #: The range used for the value data.
     value_range = Property
 
-    # The 2-D data range whose x- and y-ranges are exposed as the
-    # **index_range** and **value_range** property traits. This allows
-    # supporting both XY plots and 2-D (image) plots.
+    #: The 2-D data range whose x- and y-ranges are exposed as the
+    #: **index_range** and **value_range** property traits. This allows
+    #: supporting both XY plots and 2-D (image) plots.
     range2d = Instance(DataRange2D)
 
-    # Convenience property that offers access to whatever mapper corresponds
-    # to the X-axis.
+    #: Convenience property that offers access to whatever mapper corresponds
+    #: to the X-axis.
     x_mapper = OrientedMapperProperty
 
-    # Convenience property that offers access to whatever mapper corresponds
-    # to the Y-axis
+    #: Convenience property that offers access to whatever mapper corresponds
+    #: to the Y-axis
     y_mapper = OrientedMapperProperty
 
     #------------------------------------------------------------------------
     # Axis and Grids
     #------------------------------------------------------------------------
 
-    # The horizontal axis.  Its position relative to the plot
-    # area can be "top", "bottom", or "float".  The default position for a new
-    # x-axis is "bottom".
-    #
-    # TODO: For now, this is an instance of AbstractOverlay instead of PlotAxis
-    # because scales_axis.PlotAxis doesn't inherit from PlotAxis, but instead is a
-    # semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis
-    # inherit a concrete class, I chose to loosen this trait by specifying
-    # a more general base class of PlotAxis.  This incurs lower risk of subtle
-    # and difficult-to-catch bugs being introduced by changes to the
-    # axis.PlotAxis class.  This same comment applies to the y_axis trait
-    # below.  --pwang
-    #x_axis = Instance(PlotAxis)
+    #: The horizontal axis.  Its position relative to the plot
+    #: area can be "top", "bottom", or "float".  The default position for a new
+    #: x-axis is "bottom".
+    #:
+    #: TODO: For now, this is an instance of AbstractOverlay instead of PlotAxis
+    #: because scales_axis.PlotAxis doesn't inherit from PlotAxis, but instead is a
+    #: semi-reimplementation.  Thus, rather than making scales_axis.PlotAxis
+    #: inherit a concrete class, I chose to loosen this trait by specifying
+    #: a more general base class of PlotAxis.  This incurs lower risk of subtle
+    #: and difficult-to-catch bugs being introduced by changes to the
+    #: axis.PlotAxis class.  This same comment applies to the y_axis trait
+    #: below.  --pwang
+    #:x_axis = Instance(PlotAxis)
     x_axis = Instance(AbstractOverlay)
 
-    # The vertical axis.  Its position relative to the plot
-    # area can be "left", "right", or "float".  The default position for a new
-    # y-axis is "left".
-    #y_axis = Instance(PlotAxis)
+    #: The vertical axis.  Its position relative to the plot
+    #: area can be "left", "right", or "float".  The default position for a new
+    #: y-axis is "left".
+    #:y_axis = Instance(PlotAxis)
     y_axis = Instance(AbstractOverlay)
 
-    # The grid that intersects the x-axis, i.e., a set of vertical lines.
+    #: The grid that intersects the x-axis, i.e., a set of vertical lines.
     x_grid = Instance(PlotGrid)
 
-    # The grid that intersects the y-axis, i.e., a set of horizontal lines.
+    #: The grid that intersects the y-axis, i.e., a set of horizontal lines.
     y_grid = Instance(PlotGrid)
 
-    # Whether to automatically create the x_axis and y_axis if they were not
-    # already set by the caller.
+    #: Whether to automatically create the x_axis and y_axis if they were not
+    #: already set by the caller.
     auto_axis = Bool(True)
 
-    # Whether to automatically create the x_grid and y_grid if they were not
-    # already set by the caller.
+    #: Whether to automatically create the x_grid and y_grid if they were not
+    #: already set by the caller.
     auto_grid = Bool(True)
 
-    # Convenience property for accessing the index axis, which can be X or Y,
-    # depending on **orientation**.
+    #: Convenience property for accessing the index axis, which can be X or Y,
+    #: depending on **orientation**.
     index_axis = AxisProperty
-    # Convenience property for accessing the value axis, which can be Y or X,
-    # depending on **orientation**.
+    #: Convenience property for accessing the value axis, which can be Y or X,
+    #: depending on **orientation**.
     value_axis = AxisProperty
-    # Convenience property for accessing the index grid, which can be horizontal
-    # or vertical, depending on **orientation**.
+    #: Convenience property for accessing the index grid, which can be horizontal
+    #: or vertical, depending on **orientation**.
     index_grid = GridProperty
-    # Convenience property for accessing the value grid, which can be vertical
-    # or horizontal, depending on **orientation**.
+    #: Convenience property for accessing the value grid, which can be vertical
+    #: or horizontal, depending on **orientation**.
     value_grid = GridProperty
 
     #------------------------------------------------------------------------
     # Appearance
     #------------------------------------------------------------------------
 
-    # Background color (overrides Enable Component)
+    #: Background color (overrides Enable Component)
     bgcolor = "white"
 
-    # Padding defaults.
+    #: Padding defaults.
     padding_top = 50
     padding_bottom = 50
     padding_left = 50

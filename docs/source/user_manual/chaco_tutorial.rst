@@ -724,16 +724,16 @@ and a corresponding ``Item`` in the Traits UI View ::
 
 By default, an ``Enum`` trait will be displayed as a drop-down. In the
 constructor, we create a dictionary that maps the data names to actual
-numpy arrays: ::
+numpy arrays::
 
     # jn is the Bessel function
-    self.data = {“jn0”: jn(0, x),
-                 “jn1”: jn(1, x),
-                 “jn2”: jn(2, x)}
+    self.data = {"jn0": jn(0, x),
+                 "jn1": jn(1, x),
+                 "jn2": jn(2, x)}
 
-When we initialize the ArrayPlotData, we’ll set ``y`` to the ``jn0`` array. ::
+When we initialize the ArrayPlotData, we’ll set ``y`` to the ``jn0`` array::
 
-    self.plotdata = ArrayPlotData(x = x, y = self.data[“jn0”])
+    self.plotdata = ArrayPlotData(x = x, y = self.data["jn0"])
     plot = Plot(self.plotdata)
 
 Note that we are storing a reference to the ``plotdata`` object.

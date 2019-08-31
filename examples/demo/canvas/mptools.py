@@ -1,4 +1,5 @@
-""" A collection of Chaco tools that respond to a multi-pointer interface
+"""
+A collection of Chaco tools that respond to a multi-pointer interface.
 """
 from numpy import asarray, dot, sqrt
 

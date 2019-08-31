@@ -63,73 +63,73 @@ class PlotGrid(AbstractOverlay):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # The mapper (and associated range) that drive this PlotGrid.
+    #: The mapper (and associated range) that drive this PlotGrid.
     mapper = Instance(AbstractMapper)
 
-    # The dataspace interval between grid lines.
+    #: The dataspace interval between grid lines.
     grid_interval = Trait('auto', 'auto', Float)
 
-    # The dataspace value at which to start this grid.  If None, then
-    # uses the mapper.range.low.
+    #: The dataspace value at which to start this grid.  If None, then
+    #: uses the mapper.range.low.
     data_min = Trait(None, None, Float)
 
-    # The dataspace value at which to end this grid.  If None, then uses
-    # the mapper.range.high.
+    #: The dataspace value at which to end this grid.  If None, then uses
+    #: the mapper.range.high.
     data_max = Trait(None, None, Float)
 
-    # A callable that implements the AbstractTickGenerator Interface.
+    #: A callable that implements the AbstractTickGenerator Interface.
     tick_generator = Instance(AbstractTickGenerator)
 
     #------------------------------------------------------------------------
     # Layout traits
     #------------------------------------------------------------------------
 
-    # The orientation of the grid lines.  "horizontal" means that the grid
-    # lines are parallel to the X axis and the ticker and grid interval
-    # refer to the Y axis.
+    #: The orientation of the grid lines.  "horizontal" means that the grid
+    #: lines are parallel to the X axis and the ticker and grid interval
+    #: refer to the Y axis.
     orientation = Enum('horizontal', 'vertical')
 
-    # Draw the ticks starting at the end of the mapper range? If False, the
-    # ticks are drawn starting at 0. This setting can be useful to keep the
-    # grid from from "flashing" as the user resizes the plot area.
+    #: Draw the ticks starting at the end of the mapper range? If False, the
+    #: ticks are drawn starting at 0. This setting can be useful to keep the
+    #: grid from from "flashing" as the user resizes the plot area.
     flip_axis = Bool(False)
 
-    # Optional specification of the grid bounds in the dimension transverse
-    # to the ticking/gridding dimension, i.e. along the direction specified
-    # by self.orientation.  If this is specified but transverse_mapper is
-    # not specified, then there is no effect.
-    #
-    #   None : use self.bounds or self.component.bounds (if overlay)
-    #   Tuple : (low, high) extents, used for every grid line
-    #   Callable : Function that takes an array of dataspace grid ticks
-    #              and returns either an array of shape (N,2) of (starts,ends)
-    #              for each grid point or a single tuple (low, high)
+    #: Optional specification of the grid bounds in the dimension transverse
+    #: to the ticking/gridding dimension, i.e. along the direction specified
+    #: by self.orientation.  If this is specified but transverse_mapper is
+    #: not specified, then there is no effect.
+    #:
+    #:   None : use self.bounds or self.component.bounds (if overlay)
+    #:   Tuple : (low, high) extents, used for every grid line
+    #:   Callable : Function that takes an array of dataspace grid ticks
+    #:              and returns either an array of shape (N,2) of (starts,ends)
+    #:              for each grid point or a single tuple (low, high)
     transverse_bounds = Trait(None, Tuple, Callable)
 
-    # Mapper in the direction corresponding to self.orientation, i.e. transverse
-    # to the direction of self.mapper.  This is used to compute the screen
-    # position of transverse_bounds.  If this is not specified, then
-    # transverse_bounds has no effect, and vice versa.
+    #: Mapper in the direction corresponding to self.orientation, i.e. transverse
+    #: to the direction of self.mapper.  This is used to compute the screen
+    #: position of transverse_bounds.  If this is not specified, then
+    #: transverse_bounds has no effect, and vice versa.
     transverse_mapper = Instance(AbstractMapper)
 
-    # Dimensions that the grid is resizable in (overrides PlotComponent).
+    #: Dimensions that the grid is resizable in (overrides PlotComponent).
     resizable = "hv"
 
     #------------------------------------------------------------------------
     # Appearance traits
     #------------------------------------------------------------------------
 
-    # The color of the grid lines.
+    #: The color of the grid lines.
     line_color = black_color_trait
 
-    # The style (i.e., dash pattern) of the grid lines.
+    #: The style (i.e., dash pattern) of the grid lines.
     line_style = LineStyle('solid')
 
-    # The thickness, in pixels, of the grid lines.
+    #: The thickness, in pixels, of the grid lines.
     line_width = CInt(1)
     line_weight = Alias("line_width")
 
-    # Default Traits UI View for modifying grid attributes.
+    #: Default Traits UI View for modifying grid attributes.
     traits_view = GridView
 
     #------------------------------------------------------------------------

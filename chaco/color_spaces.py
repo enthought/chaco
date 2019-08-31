@@ -79,11 +79,11 @@ def separate_colors(xyz, axis=-1):
         axis = n + axis
     slices = makeslices(n)
     slices[axis] = 0
-    x = xyz[slices]
+    x = xyz[tuple(slices)]
     slices[axis] = 1
-    y = xyz[slices]
+    y = xyz[tuple(slices)]
     slices[axis] = 2
-    z = xyz[slices]
+    z = xyz[tuple(slices)]
 
     return x, y, z, axis
 

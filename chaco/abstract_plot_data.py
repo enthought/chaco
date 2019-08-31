@@ -12,9 +12,9 @@ class AbstractPlotData(HasTraits):
     # Events that consumers of this data should use
     #-------------------------------------------------------------------------
 
-    # Indicates that some of the data has changed.  The event object must
-    # be a dict with keys "added", "removed", "changed" and values that are
-    # lists of strings. This event is used by consumers of this data.
+    #: Indicates that some of the data has changed.  The event object must
+    #: be a dict with keys "added", "removed", "changed" and values that are
+    #: lists of strings. This event is used by consumers of this data.
     data_changed = Event
 
 
@@ -23,11 +23,11 @@ class AbstractPlotData(HasTraits):
     # interact with it.  (Typically "consumers" just refers to Plots.)
     #-------------------------------------------------------------------------
 
-    # Can consumers (Plots) write data back through this interface using
-    # set_data()?
+    #: Can consumers (Plots) write data back through this interface using
+    #: set_data()?
     writable = Bool(True)
 
-    # Can consumers (Plots) set selections?
+    #: Can consumers (Plots) set selections?
     selectable = Bool(True)
 
 

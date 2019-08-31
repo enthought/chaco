@@ -32,41 +32,41 @@ class Label(HasTraits):
     #anchor = Enum("left", "right", "top", "bottom", "center",
     #              "top left", "top right", "bottom left", "bottom right")
 
-    # The label text.  Carriage returns (\n) are always connverted into
-    # line breaks.
+    #: The label text.  Carriage returns (\n) are always connverted into
+    #: line breaks.
     text = Str
 
-    # The angle of rotation of the label.
+    #: The angle of rotation of the label.
     rotate_angle = Float(0)
 
-    # The color of the label text.
+    #: The color of the label text.
     color = black_color_trait
 
-    # The background color of the label.
+    #: The background color of the label.
     bgcolor = transparent_color_trait
 
-    # The width of the label border. If it is 0, then it is not shown.
+    #: The width of the label border. If it is 0, then it is not shown.
     border_width = Int(0)
 
-    # The color of the border.
+    #: The color of the border.
     border_color = black_color_trait
 
-    # Whether or not the border is visible
+    #: Whether or not the border is visible
     border_visible = Bool(True)
 
-    # The font of the label text.
+    #: The font of the label text.
     font = KivaFont("modern 10")
 
-    # Number of pixels of margin around the label, for both X and Y dimensions.
+    #: Number of pixels of margin around the label, for both X and Y dimensions.
     margin = Int(2)
 
-    # Number of pixels of spacing between lines of text.
+    #: Number of pixels of spacing between lines of text.
     line_spacing = Int(5)
 
-    # Number of pixels to limit the width of the label to. Lines which are
-    # too long will be broken to fit on word boundaries. Line width is
-    # calculated without considering the value of `margin`.
-    # A `max_width` of 0.0 means that lines will not be broken.
+    #: Number of pixels to limit the width of the label to. Lines which are
+    #: too long will be broken to fit on word boundaries. Line width is
+    #: calculated without considering the value of `margin`.
+    #: A `max_width` of 0.0 means that lines will not be broken.
     max_width = Float(0.0)
 
     #------------------------------------------------------------------------

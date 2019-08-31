@@ -32,11 +32,11 @@ class HorizonPlot(BaseXYPlot):
 
     mirror = Bool(False)
 
-    # FIXME There should be a way to automatically detect whether the data has
-    # negative bands
+    #: FIXME There should be a way to automatically detect whether the data has
+    #: negative bands
     negative_bands = Bool(True)
 
-    # Override parent traits
+    #: Override parent traits
 
     orientation = 'h'
 

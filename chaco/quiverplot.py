@@ -13,29 +13,29 @@ from .scatterplot import ScatterPlot
 
 class QuiverPlot(ScatterPlot):
 
-    # Determines how to interpret the data in the **vectors** data source.
-    #   "vector": each tuple is a (dx, dy)
-    #   "radial": each tuple is an (r, theta)
+    #: Determines how to interpret the data in the **vectors** data source.
+    #:   "vector": each tuple is a (dx, dy)
+    #:   "radial": each tuple is an (r, theta)
     data_type = Enum("vector", "radial") # TODO: implement "radial"
 
-    # A datasource that returns an Nx2 array array indicating directions
-    # of the vectors.  The interpretation of this array is dependent on
-    # the setting of the **data_type** attribute.
-    #
-    # Usually this will be a MultiArrayDataSource.
+    #: A datasource that returns an Nx2 array array indicating directions
+    #: of the vectors.  The interpretation of this array is dependent on
+    #: the setting of the **data_type** attribute.
+    #:
+    #: Usually this will be a MultiArrayDataSource.
     vectors = Instance(AbstractDataSource)
 
     #------------------------------------------------------------------------
     # Visual attributes of the vector
     #------------------------------------------------------------------------
 
-    # The color of the lines
+    #: The color of the lines
     line_color = ColorTrait("black")
 
-    # The width of the lines
+    #: The width of the lines
     line_width = Float(1.0)
 
-    # The length, in pixels, of the arrowhead
+    #: The length, in pixels, of the arrowhead
     arrow_size = Int(5)
 
     #------------------------------------------------------------------------

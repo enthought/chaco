@@ -1,4 +1,5 @@
-"""This example demonstrates creating a filled contour plot using the chaco
+"""
+This example demonstrates creating a filled contour plot using the chaco
 shell subpackage.
 """
 
@@ -23,5 +24,5 @@ colormap(jet)
 # Add some titles
 title("filled contour plot")
 
-#This command is only necessary if running from command line
+# This command is only necessary if running from command line
 show()

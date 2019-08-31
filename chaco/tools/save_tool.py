@@ -14,14 +14,14 @@ class SaveTool(BaseTool):
     the plot component.
     """
 
-    # The file that the image is saved in.  The format will be deduced from
-    # the extension.
+    #: The file that the image is saved in.  The format will be deduced from
+    #: the extension.
     filename = Str("saved_plot.png")
 
-    #-------------------------------------------------------------------------
-    # PDF format options
-    # This mirror the traits in PdfPlotGraphicsContext.
-    #-------------------------------------------------------------------------
+    #:-------------------------------------------------------------------------
+    #: PDF format options
+    #: This mirror the traits in PdfPlotGraphicsContext.
+    #:-------------------------------------------------------------------------
 
     pagesize = Enum("letter", "A4")
     dest_box = Tuple((0.5, 0.5, -0.5, -0.5))
@@ -31,10 +31,10 @@ class SaveTool(BaseTool):
     # Override default trait values inherited from BaseTool
     #-------------------------------------------------------------------------
 
-    # This tool does not have a visual representation (overrides BaseTool).
+    #: This tool does not have a visual representation (overrides BaseTool).
     draw_mode = "none"
 
-    # This tool is not visible (overrides BaseTool).
+    #: This tool is not visible (overrides BaseTool).
     visible = False
 
     def normal_key_pressed(self, event):
@@ -56,7 +56,7 @@ class SaveTool(BaseTool):
     def _save_raster(self):
         """ Saves an image of the component.
         """
-        from chaco.api import PlotGraphicsContext
+        from chaco.plot_graphics_context import PlotGraphicsContext
         gc = PlotGraphicsContext((int(self.component.outer_width), int(self.component.outer_height)))
         self.component.draw(gc, mode="normal")
         gc.save(self.filename)

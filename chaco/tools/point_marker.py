@@ -15,19 +15,19 @@ class PointMarker(BaseTool):
     line corresponding to the index indicated by the "selections" metadata.
     """
 
-    # The axis that this tool is parallel to.
+    #: The axis that this tool is parallel to.
     axis = Enum("index", "value")
 
-    # This tool is visible (overrides BaseTool).
+    #: This tool is visible (overrides BaseTool).
     visible = True
-    # This tool is drawn as an overlay (overrides BaseTool).
+    #: This tool is drawn as an overlay (overrides BaseTool).
     draw_mode = "overlay"
 
     # TODO:STYLE
 
-    # The color of the line.
+    #: The color of the line.
     color = ColorTrait("red")
-    # The width of the line, in pixels.
+    #: The width of the line, in pixels.
     line_width = Float(1.0)
 
     def draw(self, gc, view_bounds=None):

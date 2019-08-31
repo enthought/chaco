@@ -1,4 +1,5 @@
-"""This example displays a pseudo-color map using the chaco.shell subpackage.
+"""
+This example displays a pseudo-color map using the chaco.shell subpackage.
 
 The functions in the chaco.shell package allow us to quickly generate plots
 with some basic interactivity without using the object-oriented core of Chaco.

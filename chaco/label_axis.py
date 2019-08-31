@@ -16,13 +16,13 @@ class LabelAxis(PlotAxis):
     """ An axis whose ticks are labeled with text instead of numbers.
     """
 
-    # List of labels to use on tick marks.
+    #: List of labels to use on tick marks.
     labels = List(Str)
 
-    # The angle of rotation of the label. Only multiples of 90 are supported.
+    #: The angle of rotation of the label.
     label_rotation = Float(0)
 
-    # List of indices of ticks
+    #: List of indices of ticks
     positions = ArrayOrNone()
 
     def _compute_tick_positions(self, gc, component=None):

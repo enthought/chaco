@@ -34,114 +34,114 @@ class PlotAxis(AbstractOverlay):
     the component.
     """
 
-    # The mapper that drives this axis.
+    #: The mapper that drives this axis.
     mapper = Instance(AbstractMapper)
 
-    # Keep an origin for plots that aren't attached to a component
+    #: Keep an origin for plots that aren't attached to a component
     origin = Enum("bottom left", "top left", "bottom right", "top right")
 
-    # The text of the axis title.
+    #: The text of the axis title.
     title = Trait('', Str, Unicode) #May want to add PlotLabel option
 
-    # The font of the title.
+    #: The font of the title.
     title_font = KivaFont('modern 12')
 
-    # The spacing between the axis line and the title
+    #: The spacing between the axis line and the title
     title_spacing = Trait('auto', 'auto', Float)
 
-    # The color of the title.
+    #: The color of the title.
     title_color = ColorTrait("black")
 
-    # The angle of the title, in degrees, from horizontal line
+    #: The angle of the title, in degrees, from horizontal line
     title_angle = Float(0.)
 
-    # The thickness (in pixels) of each tick.
+    #: The thickness (in pixels) of each tick.
     tick_weight = Float(1.0)
 
-    # The color of the ticks.
+    #: The color of the ticks.
     tick_color = ColorTrait("black")
 
-    # The font of the tick labels.
+    #: The font of the tick labels.
     tick_label_font = KivaFont('modern 10')
 
-    # The color of the tick labels.
+    #: The color of the tick labels.
     tick_label_color = ColorTrait("black")
 
-    # The rotation of the tick labels.
+    #: The rotation of the tick labels.
     tick_label_rotate_angle = Float(0)
 
-    # Whether to align to corners or edges (corner is better for 45 degree rotation)
+    #: Whether to align to corners or edges (corner is better for 45 degree rotation)
     tick_label_alignment = Enum('edge', 'corner')
 
-    # The margin around the tick labels.
+    #: The margin around the tick labels.
     tick_label_margin = Int(2)
 
-    # The distance of the tick label from the axis.
+    #: The distance of the tick label from the axis.
     tick_label_offset = Float(8.)
 
-    # Whether the tick labels appear to the inside or the outside of the plot area
+    #: Whether the tick labels appear to the inside or the outside of the plot area
     tick_label_position = Enum("outside", "inside")
 
-    # A callable that is passed the numerical value of each tick label and
-    # that returns a string.
+    #: A callable that is passed the numerical value of each tick label and
+    #: that returns a string.
     tick_label_formatter = Callable(DEFAULT_TICK_FORMATTER)
 
-    # The number of pixels by which the ticks extend into the plot area.
+    #: The number of pixels by which the ticks extend into the plot area.
     tick_in = Int(5)
 
-    # The number of pixels by which the ticks extend into the label area.
+    #: The number of pixels by which the ticks extend into the label area.
     tick_out = Int(5)
 
-    # Are ticks visible at all?
+    #: Are ticks visible at all?
     tick_visible = Bool(True)
 
-    # The dataspace interval between ticks.
+    #: The dataspace interval between ticks.
     tick_interval = Trait('auto', 'auto', Float)
 
-    # A callable that implements the AbstractTickGenerator interface.
+    #: A callable that implements the AbstractTickGenerator interface.
     tick_generator = Instance(AbstractTickGenerator)
 
-    # The location of the axis relative to the plot.  This determines where
-    # the axis title is located relative to the axis line.
+    #: The location of the axis relative to the plot.  This determines where
+    #: the axis title is located relative to the axis line.
     orientation = Enum("top", "bottom", "left", "right")
 
-    # Is the axis line visible?
+    #: Is the axis line visible?
     axis_line_visible = Bool(True)
 
-    # The color of the axis line.
+    #: The color of the axis line.
     axis_line_color = ColorTrait("black")
 
-    # The line thickness (in pixels) of the axis line.
+    #: The line thickness (in pixels) of the axis line.
     axis_line_weight = Float(1.0)
 
-    # The dash style of the axis line.
+    #: The dash style of the axis line.
     axis_line_style = LineStyle('solid')
 
-    # A special version of the axis line that is more useful for geophysical
-    # plots.
+    #: A special version of the axis line that is more useful for geophysical
+    #: plots.
     small_haxis_style = Bool(False)
 
-    # Does the axis ensure that its end labels fall within its bounding area?
+    #: Does the axis ensure that its end labels fall within its bounding area?
     ensure_labels_bounded = Bool(False)
 
-    # Does the axis prevent the ticks from being rendered outside its bounds?
-    # This flag is off by default because the standard axis *does* render ticks
-    # that encroach on the plot area.
+    #: Does the axis prevent the ticks from being rendered outside its bounds?
+    #: This flag is off by default because the standard axis *does* render ticks
+    #: that encroach on the plot area.
     ensure_ticks_bounded = Bool(False)
 
-    # Fired when the axis's range bounds change.
+    #: Fired when the axis's range bounds change.
     updated = Event
 
     #------------------------------------------------------------------------
     # Override default values of inherited traits
     #------------------------------------------------------------------------
 
-    # Background color (overrides AbstractOverlay). Axes usually let the color of
-    # the container show through.
+    #: Background color (overrides AbstractOverlay). Axes usually let the color of
+    #: the container show through.
     bgcolor = ColorTrait("transparent")
 
-    # Dimensions that the axis is resizable in (overrides PlotComponent).
-    # Typically, axes are resizable in both dimensions.
+    #: Dimensions that the axis is resizable in (overrides PlotComponent).
+    #: Typically, axes are resizable in both dimensions.
     resizable = "hv"
 
     #------------------------------------------------------------------------

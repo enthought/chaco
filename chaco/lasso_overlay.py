@@ -18,20 +18,20 @@ class LassoOverlay(AbstractOverlay):
     LassoOverlay gets its data from a LassoSelection.
     """
 
-    # The LassoSelection that provides the data for this overlay.
+    #: The LassoSelection that provides the data for this overlay.
     lasso_selection = Instance('chaco.tools.lasso_selection.LassoSelection')
-    # The fill color for the selection region.
+    #: The fill color for the selection region.
     selection_fill_color = ColorTrait('lightskyblue')
-    # The border color for the selection region.
+    #: The border color for the selection region.
     selection_border_color = ColorTrait('dodgerblue')
-    # The transparency level for the selection fill color.
+    #: The transparency level for the selection fill color.
     selection_alpha = Float(0.8)
-    # The width of the selection border.
+    #: The width of the selection border.
     selection_border_width = Float(2.0)
-    # The line style of the selection border.
+    #: The line style of the selection border.
     selection_border_dash = LineStyle
 
-    # The background color (overrides AbstractOverlay).
+    #: The background color (overrides AbstractOverlay).
     bgcolor = 'clear'
 
     # Whether to draw the lasso

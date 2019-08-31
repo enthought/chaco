@@ -15,30 +15,30 @@ class AbstractDataRange(HasTraits):
     They support "autoscaling" by querying their associated data sources.
     """
 
-    # The list of data sources to which this range responds.
+    #: The list of data sources to which this range responds.
     sources = List(Instance(AbstractDataSource))
 
-    # The actual value of the lower bound of this range. To set it, use
-    # low_setting. (Setting this attribute directly just calls the setter for
-    # low_setting.) Although the default value is specified as 0.0, subclasses
-    # can redefine the default. Also, subclasses can redefined the type to
-    # correspond to their dimensionality.
+    #: The actual value of the lower bound of this range. To set it, use
+    #: low_setting. (Setting this attribute directly just calls the setter for
+    #: low_setting.) Although the default value is specified as 0.0, subclasses
+    #: can redefine the default. Also, subclasses can redefined the type to
+    #: correspond to their dimensionality.
     low = Float(0.0)
 
-    # The actual value of the upper bound of this range. To set it, use
-    # high_setting. (Setting this attribute directly just calls the setter for
-    # high_setting.) Although the default value is specified as 1.0, subclasses
-    # can redefine the default. Also, subclasses can redefined the type to
-    # correspond to their dimensionality.
+    #: The actual value of the upper bound of this range. To set it, use
+    #: high_setting. (Setting this attribute directly just calls the setter for
+    #: high_setting.) Although the default value is specified as 1.0, subclasses
+    #: can redefine the default. Also, subclasses can redefined the type to
+    #: correspond to their dimensionality.
     high = Float(1.0)
 
-    # Setting for the lower bound of this range.
+    #: Setting for the lower bound of this range.
     low_setting = Trait('auto', 'auto', Float)
-    # Setting for the upper bound of this range.
+    #: Setting for the upper bound of this range.
     high_setting = Trait('auto', 'auto', Float)
 
-    # Event that is fired when the actual bounds values change; the value
-    # of the event is a tuple (low_bound, high_bound)
+    #: Event that is fired when the actual bounds values change; the value
+    #: of the event is a tuple (low_bound, high_bound)
     updated = Event
 
     #------------------------------------------------------------------------

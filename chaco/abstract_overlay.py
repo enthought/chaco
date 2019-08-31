@@ -19,15 +19,15 @@ class AbstractOverlay(PlotComponent):
     containment-ownership relationship.
     """
 
-    # The component that this object overlays. This can be None. By default, if
-    # this object is called to draw(), it tries to render onto this component.
+    #: The component that this object overlays. This can be None. By default, if
+    #: this object is called to draw(), it tries to render onto this component.
     component = Instance(Component)
 
-    # The default layer that this component draws into.
+    #: The default layer that this component draws into.
     draw_layer = "overlay"
 
-    # The background color (overrides PlotComponent).
-    # Typically, an overlay does not render a background.
+    #: The background color (overrides PlotComponent).
+    #: Typically, an overlay does not render a background.
     bgcolor = "transparent"
 
     def __init__(self, component=None, *args, **kw):

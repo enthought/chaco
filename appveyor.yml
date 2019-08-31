@@ -1,0 +1,35 @@
+build: false
+shallow_clone: false
+skip_branch_with_pr: true
+environment:
+
+  global:
+    PYTHONUNBUFFERED: "1"
+    INSTALL_EDM_VERSION: "1.11.0"
+
+  matrix:
+    - RUNTIME: '2.7'
+      TOOLKITS: "null pyqt pyside wx"
+    - RUNTIME: '3.5'
+      TOOLKITS: "null pyqt"
+    - RUNTIME: '3.6'
+      TOOLKITS: "null pyqt"
+
+branches:
+  only:
+    - master
+
+cache:
+  - C:\Users\appveyor\.cache -> appveyor-clean-cache.txt
+  - C:\Users\appveyor\AppData\Local\pip\Cache -> appveyor-clean-cache.txt
+
+init:
+  - ps: $Env:path = "C:/Enthought/edm;" + $Env:path
+  - ps: md C:/Users/appveyor/.cache -Force
+
+install:
+  - install-edm-windows.cmd
+  - edm install -y wheel click coverage
+  - appveyor-run.cmd install %runtime% %toolkits%
+test_script:
+  - appveyor-run.cmd test %runtime% %toolkits%
