@@ -25,8 +25,11 @@ matrix:
   - os : osx
     env: RUNTIME=3.5 TOOLKITS="null pyqt"
   - env: RUNTIME=3.6 TOOLKITS="null pyqt"
+  - env: RUNTIME=3.6 TOOLKITS="pyside2"
   - os : osx
     env: RUNTIME=3.6 TOOLKITS="null pyqt"
+  - os : osx
+    env: RUNTIME=3.6 TOOLKITS="pyside2"
   fast_finish: true
 
 branches:
@@ -44,6 +47,7 @@ before_install:
        ccache -s;
        ./ci/install-edm-linux.sh;
        export PATH="${HOME}/edm/bin:/usr/lib/ccache:${PATH}";
+       sudo apt-get install -y libdbus-1-3 libxkbcommon-x11-0
     else
        ./ci/install-edm-osx.sh;
        export PATH="${PATH}:/usr/local/bin";

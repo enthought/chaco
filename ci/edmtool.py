@@ -76,7 +76,7 @@ import click
 supported_combinations = {
     '2.7': {'pyqt', 'pyside', 'wx', 'null'},
     '3.5': {'pyqt', 'null'},
-    '3.6': {'pyqt', 'null'},
+    '3.6': {'pyqt', 'pyside2', 'null'},
 }
 
 dependencies = {
@@ -94,6 +94,7 @@ dependencies = {
 extra_dependencies = {
     'pyside': {'pyside'},
     'pyqt': {'pyqt'},
+    'pyside2': {'libpng'},
     'wx': {'wxpython'},
     'null': set()
 }
@@ -101,6 +102,7 @@ extra_dependencies = {
 environment_vars = {
     'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
+    'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
     'wx': {'ETS_TOOLKIT': 'wx'},
     'null': {'ETS_TOOLKIT': 'null.image'},
 }
@@ -132,6 +134,10 @@ def install(runtime, toolkit, environment):
          "pip install git+https://git@github.com/enthought/enable.git"),
         "edm run -e {environment} -- pip install . --no-deps",
     ]
+
+    if toolkit == 'pyside2':
+        commands.append("edm run -e {environment} -- pip install pyside2 shiboken2")
+
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
     click.echo('Done install')
