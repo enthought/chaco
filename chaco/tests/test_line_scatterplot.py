@@ -29,6 +29,8 @@ class LineScatterPlot1DTest(unittest.TestCase):
         self.assertIsNone(self.scatterplot.x_mapper)
         self.assertEqual(self.scatterplot.y_mapper,
                          self.scatterplot.index_mapper)
+        self.assertIs(self.scatterplot.index_range,
+                      self.scatterplot.index_mapper.range)
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
