@@ -33,7 +33,7 @@ class Base1DPlot(AbstractPlotRenderer):
     index_mapper = Instance(AbstractMapper)
 
     #: Convenience property for accessing the data range of the mapper.
-    index_range = Property
+    index_range = Property(depends_on="index_mapper.range")
 
     #: Corresponds to either **index_mapper** or None, depending on
     #: the orientation of the plot.
