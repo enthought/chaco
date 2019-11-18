@@ -2,7 +2,9 @@ import unittest
 
 from numpy import alltrue, arange, array
 from numpy.testing import assert_almost_equal
+
 from enable.compiled_path import CompiledPath
+from traits.testing.unittest_tools import UnittestTools
 
 # Chaco imports
 from chaco.api import (ArrayDataSource, DataRange1D, LinearMapper,
@@ -10,7 +12,7 @@ from chaco.api import (ArrayDataSource, DataRange1D, LinearMapper,
 from chaco.scatterplot_1d import ScatterPlot1D
 
 
-class Scatterplot1DTest(unittest.TestCase):
+class Scatterplot1DTest(UnittestTools, unittest.TestCase):
 
     def setUp(self):
         self.size = (250, 250)
@@ -167,17 +169,7 @@ class Scatterplot1DTest(unittest.TestCase):
     def test_scatter_1d_set_index_mapper_notifies_index_range(self):
         new_range = DataRange1D(low=0.42, high=1.42)
 
-        # Given
-        self.notification_has_fired = False
+        with self.assertTraitChanges(self.scatterplot, "index_range", count=1):
+            self.scatterplot.index_mapper = LinearMapper(range=new_range)
 
-        def _listener():
-            self.notification_has_fired = True
-
-        self.scatterplot.on_trait_change(_listener, "index_range")
-
-        # When
-        self.scatterplot.index_mapper = LinearMapper(range=new_range)
-
-        # Then
-        self.assertTrue(self.notification_has_fired)
         self.assertIs(self.scatterplot.index_range, new_range)

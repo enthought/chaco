@@ -3,13 +3,15 @@ import unittest
 from numpy import alltrue, arange, array
 from numpy.testing import assert_almost_equal
 
+from traits.testing.unittest_tools import UnittestTools
+
 # Chaco imports
 from chaco.api import (ArrayDataSource, DataRange1D, LinearMapper,
                        PlotGraphicsContext)
 from chaco.text_plot_1d import TextPlot1D
 
 
-class TextPlot1DTest(unittest.TestCase):
+class TextPlot1DTest(UnittestTools, unittest.TestCase):
 
     def setUp(self):
         self.size = (250, 250)
@@ -119,17 +121,7 @@ class TextPlot1DTest(unittest.TestCase):
     def test_text_1d_set_index_mapper_notifies_index_range(self):
         new_range = DataRange1D(low=0.42, high=1.42)
 
-        # Given
-        self.notification_has_fired = False
+        with self.assertTraitChanges(self.textplot, "index_range", count=1):
+            self.textplot.index_mapper = LinearMapper(range=new_range)
 
-        def _listener():
-            self.notification_has_fired = True
-
-        self.textplot.on_trait_change(_listener, "index_range")
-
-        # When
-        self.textplot.index_mapper = LinearMapper(range=new_range)
-
-        # Then
-        self.assertTrue(self.notification_has_fired)
         self.assertIs(self.textplot.index_range, new_range)
