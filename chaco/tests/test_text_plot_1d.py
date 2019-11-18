@@ -110,3 +110,26 @@ class TextPlot1DTest(unittest.TestCase):
         points = array([[0, 124.5], [124.5, 0]])
         assert_almost_equal(self.scatterplot.map_data(points),
                             array([9.0, 4.5]))
+
+    def test_scatter_1d_set_index_range(self):
+        new_range = DataRange1D(low=0.42, high=1.42)
+        self.scatterplot.index_range = new_range
+        self.assertEqual(self.scatterplot.index_mapper.range, new_range)
+
+    def test_scatter_1d_set_index_mapper_notifies_index_range(self):
+        new_range = DataRange1D(low=0.42, high=1.42)
+
+        # Given
+        self.notification_has_fired = False
+
+        def _listener():
+            self.notification_has_fired = True
+
+        self.scatterplot.on_trait_change(_listener, "index_range")
+
+        # When
+        self.scatterplot.index_mapper = LinearMapper(range=new_range)
+
+        # Then
+        self.assertTrue(self.notification_has_fired)
+        self.assertIs(self.scatterplot.index_range, new_range)
