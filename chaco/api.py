@@ -13,6 +13,7 @@ from .abstract_data_source import AbstractDataSource
 from .array_data_source import ArrayDataSource
 from .grid_data_source import GridDataSource
 from .image_data import ImageData
+from .lod_image_source import LODDataBase, LODImageSource
 from .multi_array_data_source import MultiArrayDataSource
 from .point_data_source import PointDataSource
 from .abstract_data_range import AbstractDataRange
@@ -71,6 +72,7 @@ from .base_2d_plot import Base2DPlot
 from .base_xy_plot import BaseXYPlot
 from .scatterplot import ScatterPlot, render_markers
 from .image_plot import ImagePlot
+from .lod_image_plot import LODImagePlot
 from .cmap_image_plot import CMapImagePlot
 from .contour_line_plot import ContourLinePlot
 from .contour_poly_plot import ContourPolyPlot
