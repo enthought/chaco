@@ -5,7 +5,8 @@ import numpy as np
 from enable.base import intersect_bounds
 from kiva.quartz.ABCGI import InterpolationQuality
 from traits.api import (
-    Event, Instance, Int, List, Property, cached_property, on_trait_change
+    Bool, Event, Instance, Int, List, Property,
+    cached_property, on_trait_change
 )
 from encore.concurrent.futures.serializer import Serializer
 from encore.concurrent.futures.enhanced_thread_pool_executor import \
@@ -50,9 +51,17 @@ class LODImagePlot(ImagePlot):
     # event
     new_cache_ready = Event
 
-    _executor = Instance(EnhancedThreadPoolExecutor)
+    executor = Instance(EnhancedThreadPoolExecutor)
 
     _serializer = Instance(Serializer)
+
+    #------------------------------------------------------------------------
+    # Defaults
+    #------------------------------------------------------------------------
+
+    def __serializer_default(self):
+        return Serializer(name='Cache Computation Serializer',
+                          executor=self.executor)
 
     #------------------------------------------------------------------------
     # Properties
@@ -311,11 +320,5 @@ class LODImagePlot(ImagePlot):
         screen_rect = self.draw_bounds
         return index_bounds, screen_rect
 
-    #: Traits defaults
-    def __executor_default(self):
-        return EnhancedThreadPoolExecutor(name='TestSerializerExecutor',
-                                          max_workers=1)
 
-    def __serializer_default(self):
-        return Serializer(name='Cache Computation Serializer',
-                          executor=self._executor)
+

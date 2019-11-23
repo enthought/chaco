@@ -85,10 +85,14 @@ def _create_lod_plot():
     index_mapper = GridMapper(
         range=DataRange2D(low=(0, 0), high=(h-1, w-1))
     )
-    renderer = LODImagePlot(value=zps,
-                            index=index,
-                            index_mapper=index_mapper,
-                            maximum_lod=5)
+    renderer = LODImagePlot(
+        value=zps,
+        index=index,
+        index_mapper=index_mapper,
+        maximum_lod=5,
+        executor=EnhancedThreadPoolExecutor(name='ImageCacheComputation',
+                                            max_workers=1),
+    )
     container = HPlotContainer(bounds=(1200, 1000))
     container.add(renderer)
     return container
