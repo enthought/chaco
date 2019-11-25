@@ -13,7 +13,6 @@ from traitsui.api import Item, View
 try:
     from encore.concurrent.futures.enhanced_thread_pool_executor import \
         EnhancedThreadPoolExecutor
-    from encore.concurrent.futures.asynchronizer import Asynchronizer
 except ImportError:
     import sys
     sys.exit('You need futures and encore installed to run this demo.')

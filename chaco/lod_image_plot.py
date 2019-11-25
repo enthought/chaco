@@ -8,9 +8,14 @@ from traits.api import (
     Bool, Event, Instance, Int, List, Property,
     cached_property, on_trait_change
 )
-from encore.concurrent.futures.serializer import Serializer
-from encore.concurrent.futures.enhanced_thread_pool_executor import \
-    EnhancedThreadPoolExecutor
+
+try:
+    from encore.concurrent.futures.serializer import Serializer
+    from encore.concurrent.futures.enhanced_thread_pool_executor import \
+        EnhancedThreadPoolExecutor
+except ImportError:
+    import sys
+    sys.exit('encore must be installed to use LODImagePlot')
 
 from .lod_image_source import LODImageSource
 from .image_plot import ImagePlot
