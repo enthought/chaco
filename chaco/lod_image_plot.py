@@ -27,37 +27,38 @@ KIVA_INTERP_QUALITY = {"nearest": InterpolationQuality.none,
 
 
 class LODImagePlot(ImagePlot):
-    """ Cached image is invalidated and recomputed upon new view bounds
-    """
-    """Image renderer using data sources that don't directly expose their data.
-
-    This may be a future replacement for chaco's `ImagePlot`, but currently, it
-    breaks compatibility with `CMapImagePlot`, which passes numpy arrays to
-    `_compute_cached_image` instead of data sources.
+    """Image renderer using data sources that don't directly expose their data
+    and has pre-calculated LOD images.
+    Cached image is invalidated upon new drawing bounds and computed with
+    decreasing level of detail (LOD) number (increasing resolution).
     """
 
-    # The data source to use as value points.
+    #: The data source to use as value points.
     value = Instance(LODImageSource)
 
-    # in fact, view position + view bounds
+    #: Draw position and draw bounds
     draw_bounds = List
 
+    #: Draw bounds
     draw_size = List
 
-    # LOD for rendering
+    #: Current rendering LOD
     lod = Int
 
-    # minimum lod
+    #: Minimum LOD necessary so that loaded image's resolution is high enough
+    #: for the drawing area
     necessary_lod = Property(Int, depends_on="draw_size[]")
 
-    # maximum lod
+    #: Maximum LOD allowed
     maximum_lod = Int(9)
 
-    # event
+    #: Event that a new image cache is computed
     new_cache_ready = Event
 
+    #: The executor to compute cache images
     executor = Instance(EnhancedThreadPoolExecutor)
 
+    #: The serializer to serialize cache computation jobs
     _serializer = Instance(Serializer)
 
     #------------------------------------------------------------------------
@@ -74,6 +75,9 @@ class LODImagePlot(ImagePlot):
 
     @cached_property
     def _get_necessary_lod(self):
+        """ Calculates the largest LOD that the corresponding LOD image has
+        more pixes in both x and y than the screen area.
+        """
         image_rect = self._calc_virtual_screen_bbox()
         index_bounds, screen_rect = self._calc_zoom_coords(image_rect)
         screen_size = screen_rect[2:]
@@ -94,6 +98,7 @@ class LODImagePlot(ImagePlot):
     @on_trait_change("draw_bounds[]")
     def handle_draw_bounds_change(self):
         self.lod = self.maximum_lod
+        # Skip jobs in the serializer which all have outdated draw bounds
         self._serializer._pending_operations.clear()
         self.invalidate_draw()
 
@@ -103,6 +108,9 @@ class LODImagePlot(ImagePlot):
 
     @on_trait_change("new_cache_ready", dispatch="ui")
     def handle_new_cached(self):
+        """ Adds request redraw into the UI event loop to render the newly
+        cached image.
+        """
         self.request_redraw()
 
     #------------------------------------------------------------------------
@@ -114,9 +122,12 @@ class LODImagePlot(ImagePlot):
         super(LODImagePlot, self).invalidate_draw()
 
     def _render(self, gc):
-        """ Draw the plot to screen.
+        """ Submits a job to compute cached image if current cache is invalid
+        and renders the current cached image regardless of its validity.
 
-        Implements the Base2DPlot interface.
+        Cache image computation can be time consuming, thus is submitted to the
+        serializer to avoid blocking. Once new cache is computed, new request
+        to redraw will be added to the GUI event loop by traits notifications.
         """
         if not self._image_cache_valid:
             self._serializer.submit(self._compute_cached_image)
@@ -126,7 +137,7 @@ class LODImagePlot(ImagePlot):
                                        self._cached_dest_rect)
 
     def _draw_image(self, gc, view_bounds, mode="normal"):
-        # Intercept the view bounds info here
+        # Intercept the view bounds info here to update draw bounds
         new_bounds = list(
             intersect_bounds(self.position + self.bounds, view_bounds)
         )
@@ -152,56 +163,19 @@ class LODImagePlot(ImagePlot):
         virtual_rect = self._calc_virtual_screen_bbox()
         index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect)
 
-        data = self._get_data_slice(index_bounds, screen_rect, mapper)
+        data = self._get_data_slice(index_bounds, mapper)
 
         # Update cached image and rectangle.
         self._cached_image = self._kiva_array_from_numpy_array(data)
         self._cached_dest_rect = screen_rect
         self._image_cache_valid = True
+        # Update the event so its handler will add redraw request to
+        # the GUI event loop
         self.new_cache_ready = True
 
+        # Next time compute image cache with higher resolution
         if self.lod > self.necessary_lod:
             self.lod -= 1
-
-    def _array_bounds_from_screen_rect(self, image_rect):
-        """ Transform virtual-image rectangle into array indices.
-
-        The virtual-image rectangle is in screen coordinates and can be outside
-        the plot bounds. This method converts the rectangle into array indices
-        and clips to the plot bounds.
-        """
-        # Plot dimensions are independent of orientation and origin, but data
-        # dimensions vary with orientation. Flip plot dimensions to match data
-        # since outputs will be in data space.
-        if self.orientation == "h":
-            x_min, y_min = self.position
-            plot_width, plot_height = self.bounds
-        else:
-            y_min, x_min = self.position
-            plot_height, plot_width = self.bounds
-
-        ix, iy, image_width, image_height = image_rect
-        # Screen coordinates of virtual-image that fit into plot window.
-        x_min -= ix
-        y_min -= iy
-        x_max = x_min + plot_width
-        y_max = y_min + plot_height
-
-        array_width = self.value.get_width()
-        array_height = self.value.get_height()
-        # Convert screen coordinates to array indexes
-        col_min = np.floor(float(x_min) / image_width * array_width)
-        col_max = np.ceil(float(x_max) / image_width * array_width)
-        row_min = np.floor(float(y_min) / image_height * array_height)
-        row_max = np.ceil(float(y_max) / image_height * array_height)
-
-        # Clip index bounds to the array bounds.
-        col_min = max(col_min, 0)
-        col_max = min(col_max, array_width)
-        row_min = max(row_min, 0)
-        row_max = min(row_max, array_height)
-
-        return col_min, col_max, row_min, row_max
 
     #------------------------------------------------------------------------
     # Private methods
@@ -260,10 +234,26 @@ class LODImagePlot(ImagePlot):
             finally:
                 set_interp(old_interp)
 
-    def _get_data_slice(self, index_bounds, screen_rect, mapper):
-        screen_size = screen_rect[2:]
+    def _get_data_slice(self, index_bounds, mapper):
+        """ Gets data by nominal index bounds
+
+        Parameters
+        ----------
+        index_bounds : 4-tuple
+            Column and row indices (col_min, col_max, row_min, row_max)
+            representing desired slices into the data. If None, return sensible
+            default.
+        mapper : function
+            Allows subclasses to transform the displayed values for the visible
+            region. This may be used to adapt grayscale images to RGB(A)
+            images.
+
+        Returns
+        -------
+
+        """
         data = self.value.get_data_bounded(
-            index_bounds, self.lod, screen_size)
+            index_bounds, self.lod)
 
         if mapper is not None and data.size > 0:
             data = mapper(data)
@@ -271,7 +261,7 @@ class LODImagePlot(ImagePlot):
         return data
 
     def _calc_zoom_coords(self, image_rect):
-        """ Calculates the coordinates of a zoomed sub-image.
+        """ Calculates the coordinates of the current zoomed sub-image.
 
         Because of floating point limitations, it is not advisable to request a
         extreme level of zoom, e.g., idx or idy > 10^10.
@@ -293,6 +283,9 @@ class LODImagePlot(ImagePlot):
             the image will be rendered in the plot.
         """
         sub_x, sub_y, sub_width, sub_height = self.draw_bounds
+        if 0 in (sub_width, sub_height) or 0 in self.bounds:
+            return None, None
+
         image_x, image_y, image_width, image_height = image_rect
         array_width = self.value.get_width() - 1
         array_height = self.value.get_height() - 1

@@ -1,10 +1,11 @@
-import numpy as np
+"""
+Renders high resolution image based on user interactions while keeping the GUI
+responsive.
 
-try:
-    import zarr
-except ImportError:
-    import sys
-    sys.exit('You need zarr installed to run this demo')
+Move the scrollbar to move around the image. Note the scrollbar stays
+responsive even though the high resolution image may take longer to load.
+"""
+import numpy as np
 
 from enable.api import ComponentEditor, Container, Scrolled
 from traits.api import Dict, HasTraits, Instance
@@ -26,6 +27,7 @@ LOD_PATH = "LOD_{}"
 
 
 def mandelbrot_set(xmin, xmax, ymin, ymax, xn, yn, maxiter, horizon):
+    """ Generates Mandelbrot dataset. """
     X = np.linspace(xmin, xmax, xn).astype(np.float32)
     Y = np.linspace(ymin, ymax, yn).astype(np.float32)
     C = X + Y[:, None] * 1j
@@ -41,8 +43,8 @@ def mandelbrot_set(xmin, xmax, ymin, ymax, xn, yn, maxiter, horizon):
 
 def sample_big_data():
     """ Generates the Mandelbrot fractal with different resolutions stored as
-        multiple LOD images
-        Ref: https://matplotlib.org/examples/showcase/mandelbrot.html
+    multiple LOD images
+    Ref: https://matplotlib.org/examples/showcase/mandelbrot.html
     """
     xmin, xmax = -2.25, +0.75
     ymin, ymax = -1.25, +1.25
@@ -68,7 +70,8 @@ def sample_big_data():
 
 
 class SampleLOD(LODDataBase):
-
+    """ Setup sample data source as a dict of arrays
+    """
     data_entry = Dict
 
     def get_lod_image(self, lod):
@@ -76,16 +79,16 @@ class SampleLOD(LODDataBase):
 
 
 def _create_lod_plot():
-    z = SampleLOD(data_entry=sample_big_data())
-    zps = LODImageSource(data=z)
-    h = zps.get_height()
-    w = zps.get_width()
+    s = SampleLOD(data_entry=sample_big_data())
+    image_source = LODImageSource(data=s)
+    h = image_source.get_height()
+    w = image_source.get_width()
     index = GridDataSource(np.arange(h), np.arange(w))
     index_mapper = GridMapper(
         range=DataRange2D(low=(0, 0), high=(h-1, w-1))
     )
     renderer = LODImagePlot(
-        value=zps,
+        value=image_source,
         index=index,
         index_mapper=index_mapper,
         maximum_lod=5,
@@ -120,6 +123,6 @@ class LODImageDemo(HasTraits):
 
 
 if __name__ == "__main__":
-    plot_component = _create_lod_plot()
-    lod_demo = LODImageDemo(plot_container=plot_component)
+    plot_container = _create_lod_plot()
+    lod_demo = LODImageDemo(plot_container=plot_container)
     lod_demo.configure_traits()
