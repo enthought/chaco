@@ -1,14 +1,19 @@
 from contextlib import contextmanager
 
-import numpy as np
-
 from enable.base import intersect_bounds
-from kiva.quartz.ABCGI import InterpolationQuality
 from traits.api import (
-    Bool, Event, Instance, Int, List, Property,
+    Event, Instance, Int, List, Property,
     cached_property, on_trait_change
 )
-
+try:
+    # InterpolationQuality required for Quartz backend only (requires OSX).
+    from kiva.quartz.ABCGI import InterpolationQuality
+except ImportError:
+    pass
+else:
+    KIVA_INTERP_QUALITY = {"nearest": InterpolationQuality.none,
+                           "bilinear": InterpolationQuality.low,
+                           "bicubic": InterpolationQuality.high}
 try:
     from encore.concurrent.futures.serializer import Serializer
     from encore.concurrent.futures.enhanced_thread_pool_executor import \
@@ -19,11 +24,6 @@ except ImportError:
 
 from .lod_image_source import LODImageSource
 from .image_plot import ImagePlot
-
-
-KIVA_INTERP_QUALITY = {"nearest": InterpolationQuality.none,
-                       "bilinear": InterpolationQuality.low,
-                       "bicubic": InterpolationQuality.high}
 
 
 class LODImagePlot(ImagePlot):
