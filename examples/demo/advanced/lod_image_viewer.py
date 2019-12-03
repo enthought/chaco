@@ -19,9 +19,10 @@ except ImportError:
     sys.exit('You need futures and encore installed to run this demo.')
 
 from chaco.api import (
-    DataRange2D, GridDataSource, GridMapper, HPlotContainer, LODDataBase,
-    LODImagePlot, LODImageSource
+    DataRange2D, GridDataSource, GridMapper, HPlotContainer
 )
+from chaco.lod_image_source import LODDataBase, LODImageSource
+from chaco.lod_image_plot import LODImagePlot
 
 LOD_PATH = "LOD_{}"
 
