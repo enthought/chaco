@@ -112,7 +112,7 @@ class ImageData(AbstractDataSource):
     def get_width(self, lod=None):
         """ Returns the shape of the x-axis.
         """
-        data = self.get_data(lod)
+        data = self.get_data(lod, transpose_inplace=False)
         if self.transposed:
             return data.shape[0]
         else:
@@ -121,7 +121,7 @@ class ImageData(AbstractDataSource):
     def get_height(self, lod=None):
         """ Returns the shape of the y-axis.
         """
-        data = self.get_data(lod)
+        data = self.get_data(lod, transpose_inplace=False)
         if self.transposed:
             return data.shape[1]
         else:
@@ -130,7 +130,7 @@ class ImageData(AbstractDataSource):
     def get_array_bounds(self, lod=None):
         """ Always returns ((0, width), (0, height)) for x-bounds and y-bounds.
         """
-        data = self.get_data(lod)
+        data = self.get_data(lod, transpose_inplace=False)
         if self.transposed:
             b = ((0, data.shape[0]), (0, data.shape[1]))
         else:
@@ -141,15 +141,31 @@ class ImageData(AbstractDataSource):
     # Datasource interface
     #------------------------------------------------------------------------
 
-    def get_data(self, lod=None):
-        """ Returns the data for this data source without transposing.
+    def get_data(self, lod=None, transpose_inplace=True):
+        """ Returns the data for this data source.
 
         Implements AbstractDataSource.
+
+        Parameters
+        ----------
+        lod : int
+            Level of detail for data to retrieve. If None, use the in-memory
+            `self._data`
+        transpose_inplace : bool
+            Whether to transpose the data before returning it when the raw data
+            stored is transposed.
+
+        Returns
+        -------
+        data : array-like
+            Requested image data
         """
         if lod is None:
             data = self._data
         else:
             data = self.get_lod_data(lod)
+        if self.transposed and transpose_inplace:
+            data = swapaxes(data, 0, 1)
         return data
 
     def is_masked(self):

@@ -89,6 +89,7 @@ dependencies = {
     "cython",
     # Needed to install enable from source
     "swig",
+    "traits_futures"
 }
 
 extra_dependencies = {

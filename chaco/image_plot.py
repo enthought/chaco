@@ -23,10 +23,7 @@ import numpy as np
 # Enthought library imports.
 from traits.api import (Bool, Either, Enum, Instance, List, Range, Trait,
                         Tuple, Property, cached_property, on_trait_change)
-try:
-    from traits_futures.api import CallFuture, TraitsExecutor
-except ImportError:
-    pass
+from traits_futures.api import CallFuture, TraitsExecutor
 from kiva.agg import GraphicsContextArray
 from traitsui.api import Handler
 
@@ -294,7 +291,8 @@ class ImagePlot(Base2DPlot, Handler):
             (x, y, width, height) rectangle describing the pixels bounds where
             the image will be rendered in the plot
         """
-        data = self.value.get_data(lod=lod)
+        # Not to transpose the full matrix ahead in case it is too large
+        data = self.value.get_data(lod=lod, transpose_inplace=False)
 
         virtual_rect = self._calc_virtual_screen_bbox()
         index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect, lod=lod)
