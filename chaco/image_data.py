@@ -214,7 +214,7 @@ class ImageData(AbstractDataSource):
             The data to use.
         """
         self._set_data(data)
-        
+
     def get_lod_data(self, lod):
         if not self.lod_key_pattern:
             key = str(lod)
@@ -239,7 +239,6 @@ class ImageData(AbstractDataSource):
 
     def _get_raw_value(self):
         return self._data
-
 
     #------------------------------------------------------------------------
     # Event handlers

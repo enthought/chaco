@@ -11,13 +11,6 @@ from enable.api import ComponentEditor, Container
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 
-try:
-    from encore.concurrent.futures.enhanced_thread_pool_executor import \
-        EnhancedThreadPoolExecutor
-except ImportError:
-    import sys
-    sys.exit('You need futures and encore installed to run this demo.')
-
 from chaco.api import (
     DataRange2D, GridDataSource, GridMapper, HPlotContainer,
     ImageData, ImagePlot

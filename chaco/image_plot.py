@@ -15,7 +15,6 @@ from __future__ import with_statement
 from math import ceil, floor, pi
 from contextlib import contextmanager
 
-import six
 import six.moves as sm
 
 import numpy as np
@@ -295,7 +294,8 @@ class ImagePlot(Base2DPlot, Handler):
         data = self.value.get_data(lod=lod, transpose_inplace=False)
 
         virtual_rect = self._calc_virtual_screen_bbox()
-        index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect, lod=lod)
+        index_bounds, screen_rect = self._calc_zoom_coords(virtual_rect,
+                                                           lod=lod)
         col_min, col_max, row_min, row_max = index_bounds
 
         view_rect = self.position + self.bounds
@@ -420,8 +420,6 @@ class ImagePlot(Base2DPlot, Handler):
         row_max = min(row_max, array_height)
 
         return col_min, col_max, row_min, row_max
-
-
 
     def _calculate_necessary_lod(self):
         """ Computes the necessary lod so that array has more pixels than
