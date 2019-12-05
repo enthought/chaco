@@ -56,7 +56,7 @@ class AbstractDataSource(HasTraits):
     # Abstract methods
     #------------------------------------------------------------------------
 
-    def get_data(self):
+    def get_data(self, lod=None):
         """get_data() -> data_array
 
         Returns a data array of the dimensions of the data source. This data

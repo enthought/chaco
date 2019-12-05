@@ -4,11 +4,12 @@
 from numpy import fmax, fmin, swapaxes
 
 # Enthought library imports
-from traits.api import Bool, Int, Property, ReadOnly, Tuple
+from traits.api import Any, Bool, Int, Property, ReadOnly, Tuple, Unicode
 
 # Local relative imports
-from .base import DimensionTrait, ImageTrait
 from .abstract_data_source import AbstractDataSource
+from .base import DimensionTrait, ImageTrait
+
 
 class ImageData(AbstractDataSource):
     """
@@ -60,6 +61,15 @@ class ImageData(AbstractDataSource):
     #: A read-only attribute that exposes the underlying array.
     raw_value = Property(ImageTrait)
 
+    #: Flag that data source support retrieving data with specified
+    #: level of details (LOD)
+    support_downsampling = Bool(False)
+
+    #: An entry point to the LOD data which maps LOD to corresponding data
+    lod_data_entry = Any
+
+    #: Key pattern for lod data stored in the **lod_data_entry**
+    lod_key_pattern = Unicode
 
     #------------------------------------------------------------------------
     # Private traits
@@ -99,41 +109,48 @@ class ImageData(AbstractDataSource):
                              (filename, fmt))
         return imgdata
 
-    def get_width(self):
+    def get_width(self, lod=None):
         """ Returns the shape of the x-axis.
         """
+        data = self.get_data(lod)
         if self.transposed:
-            return self._data.shape[0]
+            return data.shape[0]
         else:
-            return self._data.shape[1]
+            return data.shape[1]
 
-    def get_height(self):
+    def get_height(self, lod=None):
         """ Returns the shape of the y-axis.
         """
+        data = self.get_data(lod)
         if self.transposed:
-            return self._data.shape[1]
+            return data.shape[1]
         else:
-            return self._data.shape[0]
+            return data.shape[0]
 
-    def get_array_bounds(self):
+    def get_array_bounds(self, lod=None):
         """ Always returns ((0, width), (0, height)) for x-bounds and y-bounds.
         """
+        data = self.get_data(lod)
         if self.transposed:
-            b = ((0,self._data.shape[0]), (0,self._data.shape[1]))
+            b = ((0, data.shape[0]), (0, data.shape[1]))
         else:
-            b = ((0,self._data.shape[1]), (0,self._data.shape[0]))
+            b = ((0, data.shape[1]), (0, data.shape[0]))
         return b
 
     #------------------------------------------------------------------------
     # Datasource interface
     #------------------------------------------------------------------------
 
-    def get_data(self):
-        """ Returns the data for this data source.
+    def get_data(self, lod=None):
+        """ Returns the data for this data source without transposing.
 
         Implements AbstractDataSource.
         """
-        return self.data
+        if lod is None:
+            data = self._data
+        else:
+            data = self.get_lod_data(lod)
+        return data
 
     def is_masked(self):
         """is_masked() -> False
@@ -160,13 +177,15 @@ class ImageData(AbstractDataSource):
             self._bounds_cache_valid = True
         return self._cached_bounds
 
-    def get_size(self):
+    def get_size(self, lod=None):
         """get_size() -> int
 
         Implements AbstractDataSource.
         """
-        if self._data is not None and self._data.shape[0] != 0:
-            return self._data.shape[0] * self._data.shape[1]
+        image = self.get_data(lod)
+
+        if image is not None and image.shape[0] != 0:
+            return image.shape[0] * image.shape[1]
         else:
             return 0
 
@@ -179,6 +198,13 @@ class ImageData(AbstractDataSource):
             The data to use.
         """
         self._set_data(data)
+        
+    def get_lod_data(self, lod):
+        if not self.lod_key_pattern:
+            key = str(lod)
+        else:
+            key = self.lod_key_pattern.format(lod)
+        return self.lod_data_entry[key]
 
     #------------------------------------------------------------------------
     # Private methods
@@ -208,8 +234,6 @@ class ImageData(AbstractDataSource):
 
     def _metadata_items_changed(self, event):
         self.metadata_changed = True
-
-
 
 
 # EOF

@@ -7,8 +7,8 @@ responsive even though the high resolution image may take longer to load.
 """
 import numpy as np
 
-from enable.api import ComponentEditor, Container, Scrolled
-from traits.api import Dict, HasTraits, Instance
+from enable.api import ComponentEditor, Container
+from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 
 try:
@@ -19,10 +19,11 @@ except ImportError:
     sys.exit('You need futures and encore installed to run this demo.')
 
 from chaco.api import (
-    DataRange2D, GridDataSource, GridMapper, HPlotContainer
+    DataRange2D, GridDataSource, GridMapper, HPlotContainer,
+    ImageData, ImagePlot
 )
-from chaco.lod_image_source import LODDataBase, LODImageSource
-from chaco.lod_image_plot import LODImagePlot
+from chaco.tools.api import PanTool, ZoomTool
+
 
 LOD_PATH = "LOD_{}"
 
@@ -70,34 +71,32 @@ def sample_big_data():
     return sample
 
 
-class SampleLOD(LODDataBase):
-    """ Setup sample data source as a dict of arrays
-    """
-    data_entry = Dict
-
-    def get_lod_image(self, lod):
-        return self.data_entry[LOD_PATH.format(lod)]
-
-
 def _create_lod_plot():
-    s = SampleLOD(data_entry=sample_big_data())
-    image_source = LODImageSource(data=s)
-    h = image_source.get_height()
-    w = image_source.get_width()
+    sample = sample_big_data()
+    sample_image_data = ImageData(data=sample[LOD_PATH.format(5)],
+                                  support_downsampling=True,
+                                  lod_data_entry=sample,
+                                  lod_key_pattern=LOD_PATH,
+                                  transposed=False)
+
+    h = sample_image_data.get_height(lod=0)
+    w = sample_image_data.get_width(lod=0)
     index = GridDataSource(np.arange(h), np.arange(w))
     index_mapper = GridMapper(
         range=DataRange2D(low=(0, 0), high=(h-1, w-1))
     )
-    renderer = LODImagePlot(
-        value=image_source,
+    renderer = ImagePlot(
+        value=sample_image_data,
         index=index,
         index_mapper=index_mapper,
-        maximum_lod=5,
-        executor=EnhancedThreadPoolExecutor(name='ImageCacheComputation',
-                                            max_workers=1),
+        use_downsampling=True,
     )
+
     container = HPlotContainer(bounds=(1200, 1000))
     container.add(renderer)
+    renderer.tools.append(PanTool(renderer, constrain_key="shift"))
+    renderer.overlays.append(ZoomTool(component=renderer,
+                                      tool_mode="box", always_on=False))
     return container
 
 
@@ -105,25 +104,16 @@ class LODImageDemo(HasTraits):
 
     plot_container = Instance(Container)
 
-    scrolled = Instance(Scrolled)
-
     traits_view = View(
         Item(
-            'scrolled',
-            editor=ComponentEditor(size=(500, 500)),
+            'plot_container',
+            editor=ComponentEditor(size=(600, 500)),
             show_label=False,
         ),
         resizable=True,
     )
 
-    def _scrolled_default(self):
-        c = Scrolled(
-            self.plot_container,
-        )
-        return c
-
 
 if __name__ == "__main__":
-    plot_container = _create_lod_plot()
-    lod_demo = LODImageDemo(plot_container=plot_container)
+    lod_demo = LODImageDemo(plot_container=_create_lod_plot())
     lod_demo.configure_traits()
