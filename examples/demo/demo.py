@@ -21,6 +21,7 @@
 from traitsui.extras.demo import demo
 
 demo(
+    use_files=True,
     title='Chaco Demos'
 )
 
