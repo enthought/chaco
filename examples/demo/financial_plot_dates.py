@@ -86,6 +86,7 @@ def _create_plot_component():
                                           tool_mode="range",
                                           axis="index",
                                           max_zoom_out_factor=10.0,
+                                          x_min_zoom_factor=float(1e-3),
                                          ))
 
     vol_plot = BarPlot(index = time_ds, value = vol_ds,
