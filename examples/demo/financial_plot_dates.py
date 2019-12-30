@@ -80,7 +80,8 @@ def _create_plot_component():
     vgrid.tick_generator = bottom_axis.tick_generator
 
     price_plot.tools.append(PanTool(price_plot, constrain=True,
-                                    constrain_direction="x"))
+                                    constrain_direction="x",
+                                    restrict_to_data=True))
     price_plot.overlays.append(ZoomTool(price_plot, drag_button="right",
                                           always_on=True,
                                           tool_mode="range",
