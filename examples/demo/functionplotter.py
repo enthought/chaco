@@ -31,16 +31,26 @@ class PlotExample(HasTraits):
             Item('plot', editor=ComponentEditor(), show_label=False),
             HGroup(
                 HGroup(
-                    Item('object.plot.x_mapper.range.low_setting', label='Low', editor=TextEditor(), visible_when='object.low_mode == "value" ', ),
+                    Item('object.plot.x_mapper.range.low_setting', label='Low',
+                         editor=TextEditor(),
+                         visible_when='object.low_mode == "value" ', ),
                     Item('low_mode', label='Low Mode'),
-                    Item('object.plot.x_mapper.range.high_setting', label='High', editor=TextEditor(), visible_when='object.high_mode == "value" '),
+                    Item('object.plot.x_mapper.range.high_setting',
+                         label='High', editor=TextEditor(),
+                         visible_when='object.high_mode == "value" '),
                     Item('high_mode', label='High Mode'),
-                    Item('object.plot.x_mapper.range.tracking_amount', label='Tracking Amount', editor=TextEditor(read_only=True), visible_when='object.high_mode == "track" or object.low_mode == "track"'),
+                    Item('object.plot.x_mapper.range.tracking_amount',
+                         label='Tracking Amount',
+                         editor=TextEditor(read_only=True),
+                         visible_when='object.high_mode == "track" or '
+                                      'object.low_mode == "track"'),
                     label='X', show_border=True
                 ),
                 HGroup(
-                    Item('object.plot.y_mapper.range.low_setting', label='Low', editor=TextEditor()),
-                    Item('object.plot.y_mapper.range.high_setting', label='High', editor=TextEditor()),
+                    Item('object.plot.y_mapper.range.low_setting',
+                         label='Low', editor=TextEditor()),
+                    Item('object.plot.y_mapper.range.high_setting',
+                         label='High', editor=TextEditor()),
                     label='Y', show_border=True
                 ),
             ),
@@ -93,7 +103,8 @@ class PlotExample(HasTraits):
                         color = "lightgray")
 
         container.add(plot2, plot)
-        plot.tools.append(PanTool(plot, constrain_direction="x", constrain=True))
+        plot.tools.append(PanTool(plot, constrain_direction="x",
+                                  constrain=True))
         plot.tools.append(ZoomTool(plot, axis="index", tool_mode="range"))
 
         return container
