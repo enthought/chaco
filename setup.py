@@ -6,6 +6,7 @@ import subprocess
 
 from numpy import get_include
 from setuptools import setup, Extension, find_packages
+from Cython.Build import cythonize
 
 MAJOR = 4
 MINOR = 8
@@ -143,15 +144,18 @@ if __name__ == "__main__":
 
     cython_speedups = Extension(
         'chaco._cython_speedups',
-        sources=['chaco/_cython_speedups.c'],
+        sources=['chaco/_cython_speedups.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
     downsampling_lttb = Extension(
         'chaco.downsample._lttb',
-        sources=['chaco/downsample/_lttb.c'],
+        sources=['chaco/downsample/_lttb.pyx'],
         include_dirs=[numpy_include_dir],
     )
+
+    cython_extensions = cythonize([cython_speedups, downsampling_lttb])
+    extensions = [contour] + cython_extensions
 
     # Commenting this out for now, until we get the module fully tested and
     # working
@@ -194,7 +198,7 @@ if __name__ == "__main__":
         },
         description = 'interactive 2-dimensional plotting',
         long_description = open('README.rst').read(),
-        ext_modules = [contour, cython_speedups, downsampling_lttb],
+        ext_modules = extensions,
         include_package_data = True,
         install_requires = __requires__,
         license = 'BSD',
