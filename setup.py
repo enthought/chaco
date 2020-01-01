@@ -153,15 +153,6 @@ if __name__ == "__main__":
         include_dirs=[numpy_include_dir],
     )
 
-    # Commenting this out for now, until we get the module fully tested and
-    # working
-    #speedups = Extension(
-    #    'chaco._speedups',
-    #    sources = ['chaco/_speedups.cpp'],
-    #    include_dirs = [get_include()],
-    #    define_macros=[('NUMPY', None)],
-    #)
-
     setup(
         name = 'chaco',
         version = __version__,
