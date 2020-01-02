@@ -153,6 +153,7 @@ class BaseContourPlot(Base2DPlot):
     def _index_mapper_changed_fired(self):
         # If the index mapper has changed, then we need to redraw
         self.invalidate_draw()
+        self.request_redraw()
 
     def _update_color_mapper(self):
         # If the color mapper has changed, then we need to recompute the
