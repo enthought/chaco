@@ -22,6 +22,10 @@ class PlotExample(HasTraits):
     def __init__(self, index, series_a, series_b, series_c, **kw):
         super(PlotExample, self).__init__(**kw)
 
+        # Stack them up
+        series_c = series_c + series_b + series_a
+        series_b = series_b + series_a
+
         plot_data = ArrayPlotData(index=index)
         plot_data.set_data('series_a', series_a)
         plot_data.set_data('series_b', series_b)
@@ -47,7 +51,7 @@ class PlotExample(HasTraits):
 
 
 index = numpy.array([1,2,3,4,5])
-demo = PlotExample(index, index*10, index*15, index*17)
+demo = PlotExample(index, index*10, index*5, index*2)
 
 if __name__ == "__main__":
     demo.configure_traits()
