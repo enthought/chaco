@@ -157,15 +157,6 @@ if __name__ == "__main__":
     cython_extensions = cythonize([cython_speedups, downsampling_lttb])
     extensions = [contour] + cython_extensions
 
-    # Commenting this out for now, until we get the module fully tested and
-    # working
-    #speedups = Extension(
-    #    'chaco._speedups',
-    #    sources = ['chaco/_speedups.cpp'],
-    #    include_dirs = [get_include()],
-    #    define_macros=[('NUMPY', None)],
-    #)
-
     setup(
         name = 'chaco',
         version = __version__,
