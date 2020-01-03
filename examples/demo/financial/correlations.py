@@ -96,8 +96,8 @@ class PlotApp(HasTraits):
         renderer.tools.append(RangeSelection(renderer, left_button_selects = False,
             auto_handle_event = False))
         plot.tools.append(PanTool(plot, drag_button="left", constrain=True,
-            constrain_direction="x"))
-        plot.overlays.append(ZoomTool(plot, tool_mode="range", max_zoom_out=1.0))
+            constrain_direction="x", restrict_to_data=True))
+        plot.overlays.append(ZoomTool(plot, tool_mode="range", max_zoom_out=1.0, x_min_zoom_factor=float(1e-3)))
         # Attach the range selection to the last renderer; any one will do
         self._range_selection_overlay = RangeSelectionOverlay(renderer,
                                     metadata_name="selections")
