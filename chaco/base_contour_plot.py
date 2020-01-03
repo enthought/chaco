@@ -142,13 +142,13 @@ class BaseContourPlot(Base2DPlot):
         # If the index data has changed, the reset the levels cache (which
         # also triggers all the other caches to reset).
         self._level_cache_valid = False
-        self.invalidate_draw()
+        self.invalidate_and_redraw()
 
     def _value_data_changed_fired(self):
         # If the index data has changed, the reset the levels cache (which
         # also triggers all the other caches to reset).
         self._level_cache_valid = False
-        self.invalidate_draw()
+        self.invalidate_and_redraw()
 
     def _index_mapper_changed_fired(self):
         # If the index mapper has changed, then we need to redraw
@@ -158,17 +158,16 @@ class BaseContourPlot(Base2DPlot):
         # If the color mapper has changed, then we need to recompute the
         # levels and cached data associated with that.
         self._level_cache_valid = False
-        self.invalidate_draw()
+        self.invalidate_and_redraw()
 
     def _levels_changed(self):
         self._update_levels()
-        self.invalidate_draw()
-        self.request_redraw()
+        self.invalidate_and_redraw()
 
     def _colors_changed(self):
         if self._level_cache_valid:
             self._update_colors()
-            self.invalidate_draw()
+            self.invalidate_and_redraw()
 
     #------------------------------------------------------------------------
     # Trait properties
