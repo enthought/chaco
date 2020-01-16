@@ -1,8 +1,7 @@
 from chaco.api import PlotComponent
 from chaco.data_view import DataView
 from enable.component_editor import ComponentEditor
-from traits.api import HasTraits, Instance
-from traits.has_traits import on_trait_change
+from traits.api import HasTraits, Instance, on_trait_change
 from traitsui.api import Item, View
 
 class PlotWindow(HasTraits):
