@@ -65,6 +65,12 @@ class AbstractDataSource(HasTraits):
 
         In the case of structured (gridded) 2-D data, this method may return
         two 1-D ArrayDataSources as an optimization.
+
+        Parameters
+        ----------
+        lod : int
+            Level of detail for data to retrieve. if None, then return the
+            orignal data without downsampling.
         """
         raise NotImplementedError
 
