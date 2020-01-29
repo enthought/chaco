@@ -152,7 +152,6 @@ class ColormappedScatterPlot(ScatterPlot):
             else:
                 color_data = self.color_data.get_data()
 
-            #color_nan_mask = isreal(color_data)
             color_nan_mask = invert(isnan(color_data))
 
             point_mask = point_mask & color_nan_mask
