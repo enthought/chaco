@@ -44,7 +44,7 @@ else:
 KIVA_DEPTH_MAP = {3: "rgb24", 4: "rgba32"}
 
 
-class ImagePlot(Base2DPlot, Handler):
+class ImagePlot(Base2DPlot):
     """ A plot based on an image.
     """
     #------------------------------------------------------------------------
@@ -137,12 +137,12 @@ class ImagePlot(Base2DPlot, Handler):
         self.request_redraw()
 
     #------------------------------------------------------------------------
-    # Hander interface
+    # Component interface
     #------------------------------------------------------------------------
 
-    def closed(self, info, is_ok):
+    def cleanup(self, window):
         self._traits_executor.stop()
-        super(ImagePlot, self).closed(info, is_ok)
+        super(ImagePlot, self).cleanup(window)
 
     #------------------------------------------------------------------------
     # Base2DPlot interface
