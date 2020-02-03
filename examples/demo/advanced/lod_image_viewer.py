@@ -10,6 +10,7 @@ import numpy as np
 from enable.api import ComponentEditor, Container
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
+from traits_futures.api import TraitsExecutor
 
 from chaco.api import (
     DataRange2D, GridDataSource, GridMapper, HPlotContainer,
@@ -64,7 +65,7 @@ def sample_big_data():
     return sample
 
 
-def _create_lod_plot():
+def _create_lod_plot(executor):
     sample = sample_big_data()
     sample_image_data = ImageData(data=sample[LOD_PATH.format(5)],
                                   support_downsampling=True,
@@ -83,6 +84,7 @@ def _create_lod_plot():
         index=index,
         index_mapper=index_mapper,
         use_downsampling=True,
+        traits_executor=executor
     )
 
     container = HPlotContainer(bounds=(1200, 1000))
@@ -108,5 +110,7 @@ class LODImageDemo(HasTraits):
 
 
 if __name__ == "__main__":
-    lod_demo = LODImageDemo(plot_container=_create_lod_plot())
+    executor = TraitsExecutor()
+    lod_demo = LODImageDemo(plot_container=_create_lod_plot(executor))
     lod_demo.configure_traits()
+    executor.stop()

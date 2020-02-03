@@ -67,6 +67,10 @@ class ImagePlot(Base2DPlot):
     #: Does the plot use downsampling?
     use_downsampling = Bool(False)
 
+    #: The Traits executor for the background jobs.
+    #: Required if **use_downsampling** is True.
+    traits_executor = Either(None, TraitsExecutor)
+
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
@@ -84,9 +88,6 @@ class ImagePlot(Base2DPlot):
     # Bool indicating whether the origin is top-left or bottom-right.
     # The name "principal diagonal" is borrowed from linear algebra.
     _origin_on_principal_diagonal = Property(depends_on='origin')
-
-    #: The Traits executor for the background jobs.
-    _traits_executor = Instance(TraitsExecutor, ())
 
     #: Submitted job. Only keeping track of the last submitted one.
     _future = Instance(CallFuture)
@@ -125,8 +126,12 @@ class ImagePlot(Base2DPlot):
     def _update_lod_cache_image(self):
         if not self.use_downsampling:
             return
+        if self.traits_executor is None:
+            msg = "A traits_futures.TraitsExecutor is required to update" \
+                  "the plot at higher resolutions as a background job."
+            raise RuntimeError(msg)
         lod = self._calculate_necessary_lod()
-        self._future = self._traits_executor.submit_call(
+        self._future = self.traits_executor.submit_call(
             self._compute_cached_image, lod=lod
         )
 
@@ -135,14 +140,6 @@ class ImagePlot(Base2DPlot):
         self._cached_image, self._cached_dest_rect = self._future.result
         self._image_cache_valid = True
         self.request_redraw()
-
-    #------------------------------------------------------------------------
-    # Component interface
-    #------------------------------------------------------------------------
-
-    def cleanup(self, window):
-        self._traits_executor.stop()
-        super(ImagePlot, self).cleanup(window)
 
     #------------------------------------------------------------------------
     # Base2DPlot interface
