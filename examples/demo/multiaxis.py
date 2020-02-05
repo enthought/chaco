@@ -8,7 +8,8 @@ Left-drag pans the plot.
 
 Right-click and dragging on the legend allows you to reposition the legend.
 
-Double-clicking on line or scatter plots brings up a traits editor for the plot.
+Double-clicking on line or scatter plots brings up a traits editor for the
+plot.
 """
 
 # Major library imports
@@ -19,7 +20,7 @@ from chaco.example_support import COLOR_PALETTE
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
-from traitsui.api import Item, Group, View
+from traitsui.api import Item, VGroup, View
 
 # Chaco imports
 from chaco.api import create_line_plot, add_default_axes, \
@@ -35,7 +36,7 @@ from chaco.tools.api import (PanTool, LegendTool, LegendHighlighter,
 
 def _create_plot_component():
 
-    container = OverlayPlotContainer(padding=60, fill_padding = True,
+    container = OverlayPlotContainer(padding=60, fill_padding=True,
                                      bgcolor="lightgray", use_backbuffer=True)
 
     # Create the initial X-series of data
@@ -121,13 +122,11 @@ class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
+                    VGroup(
                         Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
+                             show_label=False)),
                     resizable=True, title=title,
-                    width=size[0], height=size[1]
-                    )
+                    width=size[0], height=size[1])
 
     def _plot_default(self):
         return _create_plot_component()
