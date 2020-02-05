@@ -26,15 +26,17 @@ from chaco.api import create_line_plot, add_default_axes, \
                                 add_default_grids, OverlayPlotContainer, \
                                 PlotLabel, Legend, PlotAxis
 from chaco.tools.api import (PanTool, LegendTool, LegendHighlighter,
-                             TraitsTool, BroadcasterTool)
+                             TraitsTool, BroadcasterTool, ZoomTool)
 
-#===============================================================================
-# # Create the Chaco plot.
-#===============================================================================
+# =============================================================================
+# Create the Chaco plot.
+# =============================================================================
+
+
 def _create_plot_component():
 
-    container = OverlayPlotContainer(padding = 50, fill_padding = True,
-                                     bgcolor = "lightgray", use_backbuffer=True)
+    container = OverlayPlotContainer(padding=60, fill_padding = True,
+                                     bgcolor="lightgray", use_backbuffer=True)
 
     # Create the initial X-series of data
     numpoints = 100
@@ -53,7 +55,8 @@ def _create_plot_component():
         plot.border_visible = True
         if i == 0:
             add_default_grids(plot)
-            add_default_axes(plot)
+            left_axis, _ = add_default_axes(plot)
+            left_axis.title = "Bessel j0, j2, j3"
 
         # Create a pan tool and give it a reference to the plot it should
         # manipulate, but don't attach it to the plot.  Instead, attach it to
@@ -61,14 +64,18 @@ def _create_plot_component():
         pan = PanTool(plot)
         broadcaster.tools.append(pan)
 
+        zoom = ZoomTool(component=plot)
+        broadcaster.tools.append(zoom)
+
         container.add(plot)
-        plots["Bessel j_%d"%i] = plot
+        plots["Bessel j_%d" % i] = plot
 
     # Add an axis on the right-hand side that corresponds to the second plot.
     # Note that it uses plot.value_mapper instead of plot0.value_mapper.
     plot1 = plots["Bessel j_1"]
     axis = PlotAxis(plot1, orientation="right")
     plot1.underlays.append(axis)
+    axis.title = "Bessel j1"
 
     # Add the broadcast tool to the container, instead of to an
     # individual plot
@@ -85,7 +92,7 @@ def _create_plot_component():
     # Add the title at the top
     container.overlays.append(PlotLabel("Bessel functions",
                               component=container,
-                              font = "swiss 16",
+                              font="swiss 16",
                               overlay_position="top"))
 
     # Add the traits inspector tool to the container
@@ -93,14 +100,17 @@ def _create_plot_component():
 
     return container
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(800,700)
-title="Multi-Y plot"
 
-#===============================================================================
-# # Demo class that is used by the demo.py application.
-#===============================================================================
+# =============================================================================
+# Attributes to use for the plot view.
+size = (800, 700)
+title = "Multi-Y plot"
+
+# =============================================================================
+# Demo class that is used by the demo.py application.
+# =============================================================================
+
+
 class Demo(HasTraits):
     plot = Instance(Component)
 
@@ -116,9 +126,8 @@ class Demo(HasTraits):
     def _plot_default(self):
         return _create_plot_component()
 
+
 demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-#--EOF---
