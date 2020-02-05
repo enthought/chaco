@@ -49,7 +49,8 @@ def _create_plot_component():
     broadcaster = BroadcasterTool()
     for i in range(4):
         y = jn(i, x)
-        plot = create_line_plot((x,y), color=tuple(COLOR_PALETTE[i]), width=2.0)
+        plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[i]),
+                                width=2.0)
         plot.index.sort_order = "ascending"
         plot.bgcolor = "white"
         plot.border_visible = True
@@ -57,6 +58,11 @@ def _create_plot_component():
             add_default_grids(plot)
             left_axis, _ = add_default_axes(plot)
             left_axis.title = "Bessel j0, j2, j3"
+        elif i != 1:
+            # For the new plot to be mapped correctly on the first plot's axis:
+            plot0 = plots["Bessel j_0"]
+            plot.value_mapper = plot0.value_mapper
+            plot0.value_mapper.range.add(plot.value)
 
         # Create a pan tool and give it a reference to the plot it should
         # manipulate, but don't attach it to the plot.  Instead, attach it to
