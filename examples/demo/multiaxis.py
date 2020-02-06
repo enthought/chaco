@@ -36,7 +36,7 @@ from chaco.tools.api import (PanTool, LegendTool, LegendHighlighter,
 def _create_plot_component():
 
     container = OverlayPlotContainer(padding=60, fill_padding=True,
-                                     bgcolor="lightgray", use_backbuffer=True)
+                                     use_backbuffer=True, border_visible=True)
 
     # Create the initial X-series of data
     numpoints = 100
@@ -51,9 +51,6 @@ def _create_plot_component():
         y = jn(i, x)
         plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[i]),
                                 width=2.0)
-        plot.index.sort_order = "ascending"
-        plot.bgcolor = "white"
-        plot.border_visible = True
         if i == 0:
             add_default_grids(plot)
             left_axis, _ = add_default_axes(plot)
