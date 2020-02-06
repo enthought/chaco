@@ -56,7 +56,7 @@ def _create_plot_component():
             left_axis, _ = add_default_axes(plot)
             left_axis.title = "Bessel j0, j2, j3"
         elif i != 1:
-            # For the new plot to be mapped correctly on the first plot's axis:
+            # Map correctly j2 and j3 on the first plot's axis:
             plot0 = plots["Bessel j_0"]
             plot.index_mapper = plot0.index_mapper
             plot.value_mapper = plot0.value_mapper
