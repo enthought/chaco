@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 """
 Draws several overlapping line plots like simple_line.py, but uses a separate
-Y range for each plot.  Also has a second Y-axis on the right hand side.
-Demonstrates use of the BroadcasterTool.
+Y range for j1 compared to the other 3 curves. Also has a second Y-axis on the
+right hand side for j1. Demonstrates use of the BroadcasterTool.
 
-Left-drag pans the plot.
-
-Right-click and dragging on the legend allows you to reposition the legend.
-
-Double-clicking on line or scatter plots brings up a traits editor for the
-plot.
+Interactive behavior:
+* Left-drag pans the plot.
+* Right-click and dragging on the legend allows you to reposition the legend.
+* Double-clicking on line or scatter plots brings up a traits editor for the
+  plot.
 """
 
 # Major library imports
@@ -62,17 +61,19 @@ def _create_plot_component():
         elif i != 1:
             # For the new plot to be mapped correctly on the first plot's axis:
             plot0 = plots["Bessel j_0"]
+            plot.index_mapper = plot0.index_mapper
             plot.value_mapper = plot0.value_mapper
             plot0.value_mapper.range.add(plot.value)
 
-        # Create a pan tool and give it a reference to the plot it should
-        # manipulate, but don't attach it to the plot.  Instead, attach it to
-        # the broadcaster.
-        pan = PanTool(plot)
-        broadcaster.tools.append(pan)
+        # Create a pan/zoom tool and give it a reference to the plot it should
+        # manipulate, but don't attach it to the plot. Instead, attach it to
+        # the broadcaster. Do it only for each independent set of axis_mappers:
+        if i in [0, 1]:
+            pan = PanTool(component=plot)
+            broadcaster.tools.append(pan)
 
-        zoom = ZoomTool(component=plot)
-        broadcaster.tools.append(zoom)
+            zoom = ZoomTool(component=plot)
+            broadcaster.tools.append(zoom)
 
         container.add(plot)
         plots["Bessel j_%d" % i] = plot
@@ -84,15 +85,16 @@ def _create_plot_component():
     plot1.underlays.append(axis)
     axis.title = "Bessel j1"
 
-    # Add the broadcast tool to the container, instead of to an
-    # individual plot
-    container.tools.append(broadcaster)
+    # Add the broadcast tool to one of the renderers: adding it to the
+    # container instead breaks the box mode of the ZoomTool:
+    plot0 = plots["Bessel j_0"]
+    plot0.tools.append(broadcaster)
 
+    # Create a legend, with tools to move it around and highlight renderers:
     legend = Legend(component=container, padding=10, align="ur")
     legend.tools.append(LegendTool(legend, drag_button="right"))
     legend.tools.append(LegendHighlighter(legend))
     container.overlays.append(legend)
-
     # Set the list of plots on the legend
     legend.plots = plots
 
