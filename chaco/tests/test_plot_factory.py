@@ -5,6 +5,7 @@ import numpy as np
 from chaco.plot_factory import create_bar_plot, create_line_plot, \
     create_polar_plot, create_scatter_plot
 from chaco.api import BarPlot, LinePlot, PlotAxis, PlotGrid, ScatterPlot
+from chaco.polar_line_renderer import PolarLineRenderer
 
 x = np.array([1, 2, 3, 4])
 
@@ -28,7 +29,7 @@ class BaseTestRenderer(object):
             self.assertIsInstance(underlay, PlotAxis)
 
     def test_create_renderer_add_grids(self):
-        renderer = self.factory((x, y), add_grids=True)
+        renderer = self.factory((x, y), add_grid=True)
         self.assertIsInstance(renderer, self.renderer_klass)
         self.assertEqual(len(renderer.underlays), 2)
         for underlay in renderer.underlays:
@@ -51,3 +52,17 @@ class TestCreateBarRenderer(BaseTestRenderer, TestCase):
     def setUp(self):
         self.factory = create_bar_plot
         self.renderer_klass = BarPlot
+
+
+class TestCreatePolarRenderer(BaseTestRenderer, TestCase):
+    def setUp(self):
+        self.factory = create_polar_plot
+        self.renderer_klass = PolarLineRenderer
+
+    def test_create_renderer_add_grids(self):
+        # Unsupported option
+        pass
+
+    def test_create_renderer_add_axis(self):
+        # Unsupported option
+        pass
