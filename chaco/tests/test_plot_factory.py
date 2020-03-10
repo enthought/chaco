@@ -12,7 +12,7 @@ x = np.array([1, 2, 3, 4])
 y = np.array([1, 2, 3, 4])
 
 
-class BaseTestRenderer(object):
+class BaseTestRenderer:
     def test_create_renderer_default(self):
         renderer = self.factory((x, y))
         self.assertIsInstance(renderer, self.renderer_klass)
