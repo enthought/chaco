@@ -24,7 +24,6 @@ from traits.api import (Bool, Either, Enum, Instance, List, Range, Trait,
                         Tuple, Property, cached_property, on_trait_change)
 from traits_futures.api import CallFuture, TraitsExecutor
 from kiva.agg import GraphicsContextArray
-from traitsui.api import Handler
 
 # Local relative imports
 from .base_2d_plot import Base2DPlot
@@ -131,6 +130,11 @@ class ImagePlot(Base2DPlot):
                   "the plot at higher resolutions as a background job."
             raise RuntimeError(msg)
         lod = self._calculate_necessary_lod()
+        # Only keep the most recent job as bounds have been changed
+        # FIXME: call a public method of TraitExecutor to clean previous jobs
+        for future in self.traits_executor._futures:
+            if future.cancellable:
+                future.cancel()
         self._future = self.traits_executor.submit_call(
             self._compute_cached_image, lod=lod
         )
