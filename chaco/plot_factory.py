@@ -46,10 +46,9 @@ def create_scatter_plot(data=[], index_bounds=None, value_bounds=None,
                         bgcolor="transparent", outline_color="black",
                         border_visible=True,
                         add_grid=False, add_axis=False,
-                        index_sort="none"):
-    """
-    Creates a ScatterPlot from a single Nx2 data array or a tuple of
-    two length-N 1-D arrays.  The data must be sorted on the index if any
+                        index_sort="none", **renderer_traits):
+    """ Creates a ScatterPlot renderer from a single Nx2 data array or a tuple
+    of two length-N 1-D arrays.  The data must be sorted on the index if any
     reverse-mapping tools are to be used.
 
     Pre-existing "index" and "value" datasources can be passed in.
@@ -80,7 +79,7 @@ def create_scatter_plot(data=[], index_bounds=None, value_bounds=None,
                          color=color,
                          bgcolor=bgcolor,
                          outline_color=outline_color,
-                         border_visible=border_visible,)
+                         border_visible=border_visible, **renderer_traits)
 
     if add_grid:
         add_default_grids(plot, orientation)
@@ -94,8 +93,13 @@ def create_line_plot(data=[], index_bounds=None, value_bounds=None,
                      dash="solid", value_mapper_class=LinearMapper,
                      bgcolor="transparent", border_visible=False,
                      add_grid=False, add_axis=False,
-                     index_sort="none"):
+                     index_sort="none", **renderer_traits):
+    """ Creates a LinePlot renderer from a single Nx2 data array or a tuple of
+    two length-N 1-D arrays.  The data must be sorted on the index if any
+    reverse-mapping tools are to be used.
 
+    Pre-existing "index" and "value" datasources can be passed in.
+    """
     index, value = _create_data_sources(data, index_sort)
 
     if index_bounds is not None:
@@ -120,7 +124,7 @@ def create_line_plot(data=[], index_bounds=None, value_bounds=None,
                     bgcolor = bgcolor,
                     line_width = width,
                     line_style = dash,
-                    border_visible=border_visible)
+                    border_visible=border_visible, **renderer_traits)
 
     if add_grid:
         add_default_grids(plot, orientation)
@@ -136,8 +140,13 @@ def create_bar_plot(data=[], index_bounds=None, value_bounds=None,
                      fill_color="red", line_width=1,
                      bgcolor="transparent", border_visible=False,
                      antialias=True,
-                     add_grid=False, add_axis=False):
+                     add_grid=False, add_axis=False, **renderer_traits):
+    """ Creates a BarPlot renderer from a single Nx2 data array or a tuple of
+    two length-N 1-D arrays.  The data must be sorted on the index if any
+    reverse-mapping tools are to be used.
 
+    Pre-existing "index" and "value" datasources can be passed in.
+    """
     index, value = _create_data_sources(data)
 
     if index_bounds is not None:
@@ -164,7 +173,7 @@ def create_bar_plot(data=[], index_bounds=None, value_bounds=None,
                     fill_color=fill_color,
                     line_width=line_width,
                     bar_width=bar_width,
-                    antialias=antialias,)
+                    antialias=antialias, **renderer_traits)
 
     if add_grid:
         add_default_grids(plot, orientation)
@@ -174,7 +183,14 @@ def create_bar_plot(data=[], index_bounds=None, value_bounds=None,
 
 
 def create_polar_plot(data, orientation='h', color='black', width=1.0,
-                      dash="solid", grid="dot", value_mapper_class=PolarMapper):
+                      dash="solid", grid="dot", value_mapper_class=PolarMapper,
+                      **renderer_traits):
+    """ Creates a polar plot renderer from a single Nx2 data array or a tuple
+    of two length-N 1-D arrays.  The data must be sorted on the index if any
+    reverse-mapping tools are to be used.
+
+    Pre-existing "index" and "value" datasources can be passed in.
+    """
     if (type(data) != ndarray) and (len(data) == 2):
         data = transpose(array(data))
 
@@ -201,7 +217,7 @@ def create_polar_plot(data, orientation='h', color='black', width=1.0,
                     color = color,
                     line_width = width,
                     line_style = dash,
-                    grid_style = grid)
+                    grid_style = grid, **renderer_traits)
 
     return plot
 

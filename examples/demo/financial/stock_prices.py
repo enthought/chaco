@@ -67,12 +67,14 @@ class PlotFrame(DemoFrame):
 
         # Add pan and zoom
         price_plot.tools.append(PanTool(price_plot, constrain=True,
-                                        constrain_direction="x"))
+                                        constrain_direction="x",
+                                        restrict_to_data=True))
         price_plot.overlays.append(ZoomTool(price_plot, drag_button="right",
                                               always_on=True,
                                               tool_mode="range",
                                               axis="index",
                                               max_zoom_out_factor=1.0,
+                                              x_min_zoom_factor=float(1e-3)
                                              ))
 
         # Create the miniplot

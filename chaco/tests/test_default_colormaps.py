@@ -15,7 +15,7 @@ import numpy as np
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
 from chaco.api import DataRange1D
-from .. import default_colormaps
+from chaco import default_colormaps
 
 
 class DefaultColormapsTestCase(unittest.TestCase):

@@ -4,7 +4,7 @@ into a 1-D output space.
 """
 
 # Major library imports
-from numpy import array, empty, ndarray
+from numpy import array, float64, full_like, ndarray
 
 # Enthought library imports
 from traits.api import Bool, Float
@@ -45,9 +45,7 @@ class LinearMapper(Base1DMapper):
         self._compute_scale()
         if self._null_data_range:
             if isinstance(data_array, (tuple, list, ndarray)):
-                x = empty(data_array.shape)
-                x.fill(self.low_pos)
-                return x
+                return full_like(data_array, self.low_pos, dtype=float64)
             else:
                 return array([self.low_pos])
         else:

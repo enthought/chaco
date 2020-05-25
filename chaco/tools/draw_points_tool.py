@@ -8,7 +8,7 @@ from traits.api import Instance, Bool
 from enable.api import BaseTool
 
 # Chaco import
-from chaco.api import ArrayDataSource
+from chaco.array_data_source import ArrayDataSource
 
 
 class DrawPointsTool(BaseTool):

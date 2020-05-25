@@ -1,5 +1,5 @@
 
-from chaco.tools.api import SelectTool
+from chaco.tools.select_tool import SelectTool
 from traits.api import List
 
 from .legend import Legend

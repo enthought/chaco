@@ -30,8 +30,14 @@ plot(dates, y1, "b-", bgcolor="white")
 # Add some titles
 title("Plotting Dates")
 
+current_plot = curplot()
 # Set the plot's horizontal axis to be a time scale
-curplot().x_axis.tick_generator.scale = CalendarScaleSystem()
+current_plot.x_axis.tick_generator.scale = CalendarScaleSystem()
+zoom_tool = current_plot.overlays[2]
+pan_tool = current_plot.tools[0]
+zoom_tool.x_min_zoom_factor = float(1e-3)
+pan_tool.restrict_to_data = True
+
 
 # This command is only necessary if running from command line
 show()

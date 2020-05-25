@@ -1,6 +1,6 @@
 
 import unittest
-from numpy import array
+from numpy import array, ndarray
 from numpy.testing import assert_array_almost_equal, assert_equal
 
 
@@ -289,3 +289,27 @@ class LinearMapperTestCase(unittest.TestCase):
         mapper.high_pos = 100.0
         result = mapper.map_screen(ary)
         assert_array_almost_equal(result, array([50, 60, 70, 80, 90, 100]))
+
+    def test_map_screen_with_null_data_range(self):
+        r = DataRange1D()
+        mapper = LinearMapper(range=r)
+        low_pos = mapper.low_pos
+
+        data = array([5.6])
+        result = mapper.map_screen(data)
+        self.assertIsInstance(result, ndarray)
+        self.assertEqual(result.shape, (1,))
+        assert_array_almost_equal(result, array([low_pos]))
+
+        # Test support for lists and tuples
+        data = [5.6]
+        result = mapper.map_screen(data)
+        self.assertIsInstance(result, ndarray)
+        self.assertEqual(result.shape, (1,))
+        assert_array_almost_equal(result, array([low_pos]))
+
+        data = (5.6,)
+        result = mapper.map_screen(data)
+        self.assertIsInstance(result, ndarray)
+        self.assertEqual(result.shape, (1,))
+        assert_array_almost_equal(result, array([low_pos]))

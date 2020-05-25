@@ -61,9 +61,10 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         renderer = plot.plot(('x', 'y'))[0]
         tool = RangeSelection(renderer)
         with warnings.catch_warnings(record=True) as w:
-            # Ignore warnings coming from Traits
+            # Ignore warnings coming from any package other than Chaco
             warnings.filterwarnings(
-                "ignore", 'elementwise == comparison failed'
+                "ignore",
+                module="(?!chaco)",
             )
             tool.selection = np.array([2.0, 3.0])
 

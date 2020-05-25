@@ -1,6 +1,7 @@
 from numpy import array
 from traits.api import Instance, Callable, on_trait_change
-from chaco.api import DataRange2D, ImageData
+from .data_range_2d import DataRange2D
+from .image_data import ImageData
 
 # Adapted (ie. copied and modified) from function_data_source.
 

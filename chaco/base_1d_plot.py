@@ -32,6 +32,9 @@ class Base1DPlot(AbstractPlotRenderer):
     #: Screen mapper for index data.
     index_mapper = Instance(AbstractMapper)
 
+    #: Convenience property for accessing the data range of the mapper.
+    index_range = Property(depends_on="index_mapper.range")
+
     #: Corresponds to either **index_mapper** or None, depending on
     #: the orientation of the plot.
     x_mapper = Property(depends_on=['orientation', 'index_mapper'])
@@ -268,6 +271,12 @@ class Base1DPlot(AbstractPlotRenderer):
     #------------------------------------------------------------------------
     # Property setters and getters
     #------------------------------------------------------------------------
+
+    def _get_index_range(self):
+        return self.index_mapper.range
+
+    def _set_index_range(self, val):
+        self.index_mapper.range = val
 
     @cached_property
     def _get_x_mapper(self):

@@ -3,10 +3,14 @@
 
 from traits.api import Any
 
-from chaco.api import (DataRange2D, LinearMapper, LogMapper,
-    PlotGrid, Plot, PlotAxis)
+from chaco.axis import PlotAxis
+from chaco.data_range_2d import DataRange2D
+from chaco.grid import PlotGrid
+from chaco.linear_mapper import LinearMapper
+from chaco.log_mapper import LogMapper
+from chaco.plot import Plot
+from chaco.scales.scales import DefaultScale, LogScale, ScaleSystem
 from chaco.scales_tick_generator import ScalesTickGenerator
-from chaco.scales.api import DefaultScale, LogScale, ScaleSystem
 
 
 def add_default_axes(plot, orientation="normal", vtitle="", htitle=""):

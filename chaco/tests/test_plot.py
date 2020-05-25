@@ -22,14 +22,17 @@ class PlotTestCase(unittest.TestCase):
         arr = arange(10)
         data = ArrayPlotData(x=arr, y=arr)
         plot = Plot(data)
-        renderer = plot.plot(('x', 'y'))[0]
+        renderer_2d = plot.plot(('x', 'y'))[0]
+        renderer_1d = plot.plot_1d(('x'))[0]
         new_range = DataRange1D()
         old_range = plot.index_range
         self.assertIsNot(old_range, new_range)
-        self.assertIs(renderer.index_range, old_range)
+        self.assertIs(renderer_2d.index_range, old_range)
+        self.assertIs(renderer_1d.index_range, old_range)
         plot.index_range = new_range
         self.assertIs(plot.index_range, new_range)
-        self.assertIs(renderer.index_range, new_range)
+        self.assertIs(renderer_2d.index_range, new_range)
+        self.assertIs(renderer_1d.index_range, new_range)
 
     def test_segment_plot(self):
         x = arange(10)

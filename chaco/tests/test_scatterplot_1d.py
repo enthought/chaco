@@ -2,7 +2,9 @@ import unittest
 
 from numpy import alltrue, arange, array
 from numpy.testing import assert_almost_equal
+
 from enable.compiled_path import CompiledPath
+from traits.testing.unittest_tools import UnittestTools
 
 # Chaco imports
 from chaco.api import (ArrayDataSource, DataRange1D, LinearMapper,
@@ -10,7 +12,7 @@ from chaco.api import (ArrayDataSource, DataRange1D, LinearMapper,
 from chaco.scatterplot_1d import ScatterPlot1D
 
 
-class Scatterplot1DTest(unittest.TestCase):
+class Scatterplot1DTest(UnittestTools, unittest.TestCase):
 
     def setUp(self):
         self.size = (250, 250)
@@ -30,6 +32,8 @@ class Scatterplot1DTest(unittest.TestCase):
         self.assertIsNone(self.scatterplot.x_mapper)
         self.assertEqual(self.scatterplot.y_mapper,
                          self.scatterplot.index_mapper)
+        self.assertIs(self.scatterplot.index_range,
+                      self.scatterplot.index_mapper.range)
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
@@ -156,3 +160,16 @@ class Scatterplot1DTest(unittest.TestCase):
         gc.render_component(self.scatterplot)
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
+
+    def test_scatter_1d_set_index_range(self):
+        new_range = DataRange1D(low=0.42, high=1.42)
+        self.scatterplot.index_range = new_range
+        self.assertEqual(self.scatterplot.index_mapper.range, new_range)
+
+    def test_scatter_1d_set_index_mapper_notifies_index_range(self):
+        new_range = DataRange1D(low=0.42, high=1.42)
+
+        with self.assertTraitChanges(self.scatterplot, "index_range", count=1):
+            self.scatterplot.index_mapper = LinearMapper(range=new_range)
+
+        self.assertIs(self.scatterplot.index_range, new_range)

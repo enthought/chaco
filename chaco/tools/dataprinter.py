@@ -8,7 +8,7 @@ from traits.api import Str
 from enable.api import BaseTool
 
 # Chaco imports
-from chaco.api import BaseXYPlot
+from chaco.base_xy_plot import BaseXYPlot
 
 
 class DataPrinter(BaseTool):
