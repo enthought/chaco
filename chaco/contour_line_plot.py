@@ -27,20 +27,20 @@ class ContourLinePlot(BaseContourPlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # The thickness(es) of the contour lines.
-    # It can be either a scalar value, valid for all contour lines, or a list
-    # of widths. If the list is too short with respect to then number of
-    # contour lines, the values are repeated from the beginning of the list.
-    # Widths are associated with levels of increasing value.
+    #: The thickness(es) of the contour lines.
+    #: It can be either a scalar value, valid for all contour lines, or a list
+    #: of widths. If the list is too short with respect to then number of
+    #: contour lines, the values are repeated from the beginning of the list.
+    #: Widths are associated with levels of increasing value.
     widths = Trait(1.0, Float, List)
 
-    # The line dash style(s).
+    #: The line dash style(s).
     styles = Trait("signed", Str, List)
 
-    # Line style for positive levels.
+    #: Line style for positive levels.
     positive_style = LineStyle("solid")
 
-    # Line style for negative levels.
+    #: Line style for negative levels.
     negative_style = LineStyle("dash")
 
     #------------------------------------------------------------------------

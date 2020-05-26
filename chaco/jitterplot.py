@@ -1,9 +1,7 @@
-
 from __future__ import absolute_import
 
 from math import sqrt
 
-import six
 import six.moves as sm
 
 import numpy as np
@@ -63,7 +61,7 @@ class JitterPlot(ScatterPlot1D):
             return np.vstack((ys, xs)).T
 
     def _make_jitter_vals(self, data_array):
-        random_state = np.random.RandomState(data_array[:100])
+        random_state = np.random.RandomState(data_array[:100].astype(int))
         numpts = len(data_array)
         vals = random_state.uniform(0, self.jitter_width, numpts)
         vals += self._marker_position

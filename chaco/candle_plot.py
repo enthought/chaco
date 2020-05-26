@@ -41,25 +41,25 @@ class CandlePlot(BaseCandlePlot):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # The minimum values at each index point.  If None, then no stem and no
-    # endcap line will be drawn below each bar.
+    #: The minimum values at each index point.  If None, then no stem and no
+    #: endcap line will be drawn below each bar.
     min_values = Instance(AbstractDataSource)
 
-    # The "lower" extent of the "bar", i.e. the value closest to the
-    # corresponding value in min_values at each index.
+    #: The "lower" extent of the "bar", i.e. the value closest to the
+    #: corresponding value in min_values at each index.
     bar_min = Instance(AbstractDataSource)
 
-    # Values that appear inside the bar, between bar_min and bar_max.  These
-    # Are usually mean or median values, and are rendered with a solid line
-    # of a different color than the bar fill color.  This can be None.
+    #: Values that appear inside the bar, between bar_min and bar_max.  These
+    #: Are usually mean or median values, and are rendered with a solid line
+    #: of a different color than the bar fill color.  This can be None.
     center_values = Instance(AbstractDataSource)
 
-    # The "upper" extent of the "bar", i.e. the value closest to the
-    # corresponding value in max_values at each index.
+    #: The "upper" extent of the "bar", i.e. the value closest to the
+    #: corresponding value in max_values at each index.
     bar_max = Instance(AbstractDataSource)
 
-    # The maximum value at each index point.  If None, then no stem and no
-    # endcap line will be drawn above each bar.
+    #: The maximum value at each index point.  If None, then no stem and no
+    #: endcap line will be drawn above each bar.
     max_values = Instance(AbstractDataSource)
 
     value = Property

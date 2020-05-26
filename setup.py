@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2015 by Enthought, Inc.
+# Copyright (c) 2008-2019 by Enthought, Inc.
 # All rights reserved.
 import os
 import re
@@ -6,9 +6,10 @@ import subprocess
 
 from numpy import get_include
 from setuptools import setup, Extension, find_packages
+from Cython.Build import cythonize
 
 MAJOR = 4
-MINOR = 7
+MINOR = 8
 MICRO = 1
 
 IS_RELEASED = False
@@ -143,24 +144,18 @@ if __name__ == "__main__":
 
     cython_speedups = Extension(
         'chaco._cython_speedups',
-        sources=['chaco/_cython_speedups.c'],
+        sources=['chaco/_cython_speedups.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
     downsampling_lttb = Extension(
         'chaco.downsample._lttb',
-        sources=['chaco/downsample/_lttb.c'],
+        sources=['chaco/downsample/_lttb.pyx'],
         include_dirs=[numpy_include_dir],
     )
 
-    # Commenting this out for now, until we get the module fully tested and
-    # working
-    #speedups = Extension(
-    #    'chaco._speedups',
-    #    sources = ['chaco/_speedups.cpp'],
-    #    include_dirs = [get_include()],
-    #    define_macros=[('NUMPY', None)],
-    #)
+    cython_extensions = cythonize([cython_speedups, downsampling_lttb])
+    extensions = [contour] + cython_extensions
 
     setup(
         name = 'chaco',
@@ -194,7 +189,7 @@ if __name__ == "__main__":
         },
         description = 'interactive 2-dimensional plotting',
         long_description = open('README.rst').read(),
-        ext_modules = [contour, cython_speedups, downsampling_lttb],
+        ext_modules = extensions,
         include_package_data = True,
         install_requires = __requires__,
         license = 'BSD',

@@ -8,7 +8,7 @@ from __future__ import with_statement
 
 from traits.api import Instance, Float, Array
 from enable.api import black_color_trait, LineStyle, Component
-from chaco.api import AbstractOverlay
+from chaco.abstract_overlay import AbstractOverlay
 
 
 class CoordinateLineOverlay(AbstractOverlay):

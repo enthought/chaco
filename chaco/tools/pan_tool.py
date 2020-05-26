@@ -13,42 +13,42 @@ class PanTool(BaseTool):
     button and dragging.
     """
 
-    # The mouse button that initiates the drag operation.
+    #: The mouse button that initiates the drag operation.
     drag_button = Enum("left", "middle", "right")
 
-    # The cursor to use when panning.
+    #: The cursor to use when panning.
     drag_pointer = Pointer("hand")
 
-    # Scaling factor on the panning "speed".
+    #: Scaling factor on the panning "speed".
     speed = Float(1.0)
 
-    # The modifier key that, if depressed when the drag is initiated, constrains
-    # the panning to happen in the only direction of largest initial motion.
-    # It is possible to permanently restrict this tool to always drag along one
-    # direction.  To do so, set constrain=True, constrain_key=None, and
-    # constrain_direction to the desired direction.
+    #: The modifier key that, if depressed when the drag is initiated, constrains
+    #: the panning to happen in the only direction of largest initial motion.
+    #: It is possible to permanently restrict this tool to always drag along one
+    #: direction.  To do so, set constrain=True, constrain_key=None, and
+    #: constrain_direction to the desired direction.
     constrain_key = Enum(None, "shift", "control", "alt")
 
-    # Keys to Pan via keyboard
+    #: Keys to Pan via keyboard
     pan_right_key = Instance(KeySpec, args=("Right",))
     pan_left_key = Instance(KeySpec, args=("Left",))
     pan_up_key = Instance(KeySpec, args=("Up",))
     pan_down_key = Instance(KeySpec, args=("Down",))
 
-    # number of pixels the keys should pan
-    # disabled if 0.0
+    #: number of pixels the keys should pan
+    #: disabled if 0.0
     pan_keys_step = Float(0.0)
 
-    # Constrain the panning to one direction?
+    #: Constrain the panning to one direction?
     constrain = Bool(False)
 
-    # The direction of constrained draw. A value of None means that the user
-    # has initiated the drag and pressed the constrain_key, but hasn't moved
-    # the mouse yet; the magnitude of the components of the next mouse_move
-    # event will determine the constrain_direction.
+    #: The direction of constrained draw. A value of None means that the user
+    #: has initiated the drag and pressed the constrain_key, but hasn't moved
+    #: the mouse yet; the magnitude of the components of the next mouse_move
+    #: event will determine the constrain_direction.
     constrain_direction = Enum(None, "x", "y")
 
-    # Restrict to the bounds of the plot data
+    #: Restrict to the bounds of the plot data
     restrict_to_data = Bool(False)
 
     # (x,y) of the point where the mouse button was pressed.
@@ -67,14 +67,14 @@ class PanTool(BaseTool):
     # Inherited BaseTool traits
     #------------------------------------------------------------------------
 
-    # The tool does not have a visual representation (overrides
-    # BaseTool).
+    #: The tool does not have a visual representation (overrides
+    #: BaseTool).
     draw_mode = "none"
 
-    # The tool is not visible (overrides BaseTool).
+    #: The tool is not visible (overrides BaseTool).
     visible = False
 
-    # The possible event states of this tool (overrides enable.Interactor).
+    #: The possible event states of this tool (overrides enable.Interactor).
     event_state = Enum("normal", "panning")
 
     def normal_key_pressed(self, event):

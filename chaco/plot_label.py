@@ -18,13 +18,13 @@ class PlotLabel(AbstractOverlay):
     This class wraps a simple Label instance, and delegates some traits to it.
     """
 
-    # The text of the label.
+    #: The text of the label.
     text = LabelDelegate
-    # The color of the label text.
+    #: The color of the label text.
     color = DelegatesTo("_label")
-    # The font for the label text.
+    #: The font for the label text.
     font = LabelDelegate
-    # The angle of rotation of the label.
+    #: The angle of rotation of the label.
     angle = DelegatesTo("_label", "rotate_angle")
 
     bgcolor = LabelDelegate
@@ -38,21 +38,21 @@ class PlotLabel(AbstractOverlay):
     # Layout-related traits
     #------------------------------------------------------------------------
 
-    # Horizontal justification used if the label has more horizontal space
-    # than it needs.
+    #: Horizontal justification used if the label has more horizontal space
+    #: than it needs.
     hjustify = Enum("center", "left", "right")
 
-    # Vertical justification used if the label has more vertical space than it
-    # needs.
+    #: Vertical justification used if the label has more vertical space than it
+    #: needs.
     vjustify = Enum("center", "bottom", "top")
 
-    # The position of this label relative to the object it is overlaying.
-    # Can be "top", "left", "right", "bottom", and optionally can be preceeded
-    # by the words "inside" or "outside", separated by a space.  If "inside"
-    # and "outside" are not provided, then defaults to "outside".
-    # Examples:
-    #     inside top
-    #     outside right
+    #: The position of this label relative to the object it is overlaying.
+    #: Can be "top", "left", "right", "bottom", and optionally can be preceeded
+    #: by the words "inside" or "outside", separated by a space.  If "inside"
+    #: and "outside" are not provided, then defaults to "outside".
+    #: Examples:
+    #:     inside top
+    #:     outside right
     overlay_position = Trait("outside top", Str, None)
 
     # Should this PlotLabel modify the padding on its underlying component
@@ -60,16 +60,16 @@ class PlotLabel(AbstractOverlay):
     # FIXME: This could cause cycles in layout, so not implemented for now
     #modify_component = Bool(True)
 
-    # By default, this acts like a component and will render on the main
-    # "plot" layer unless its **component** attribute gets set.
+    #: By default, this acts like a component and will render on the main
+    #: "plot" layer unless its **component** attribute gets set.
     draw_layer = "plot"
 
     #------------------------------------------------------------------------
     # Private traits
     #------------------------------------------------------------------------
 
-    # The label has a fixed height and can be resized horizontally. (Overrides
-    # PlotComponent.)
+    #: The label has a fixed height and can be resized horizontally. (Overrides
+    #: PlotComponent.)
     resizable = "h"
 
     # The Label instance this plot label is wrapping.

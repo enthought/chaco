@@ -47,13 +47,13 @@ def _create_plot_component():
     # range to the first plot
     plot2 = Plot(pd, range2d=plot1.range2d, padding=50)
     plot2.plot(('index', 'y3'), type="scatter", color="blue", marker="circle")
-    plot2.set(resizable = "",
-              bounds = [250, 250],
-              position = [550,150],
-              bgcolor = "white",
-              border_visible = True,
-              unified_draw = True
-              )
+    plot2.resizable = ""
+    plot2.bounds = [250, 250]
+    plot2.position = [550,150]
+    plot2.bgcolor = "white"
+    plot2.border_visible = True
+    plot2.unified_draw = True
+
     plot2.tools.append(PanTool(plot2))
     plot2.tools.append(MoveTool(plot2, drag_button="right"))
     zoom = ZoomTool(component=plot2, tool_mode="box", always_on=False)

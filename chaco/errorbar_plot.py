@@ -24,16 +24,16 @@ class ErrorBarPlot(LinePlot):
     """ Renders errorbars at various points.
     """
 
-    # The datasource containing the low values
+    #: The datasource containing the low values
     value_low = Instance(AbstractDataSource)
 
-    # The datasource containing the high values
+    #: The datasource containing the high values
     value_high = Instance(AbstractDataSource)
 
-    # The screen-space width of the endcap bars
+    #: The screen-space width of the endcap bars
     endcap_size = Float(5.0)
 
-    # The kind of encap to render on error bars
+    #: The kind of encap to render on error bars
     endcap_style = Enum("bar", "none", None)
 
     # Override the inherited trait definition
@@ -76,7 +76,10 @@ class ErrorBarPlot(LinePlot):
 
         l1, l2, l3 = sm.map(len, (index, value_low, value_high))
         if 0 in (l1, l2, l3) or not (l1 == l2 == l3):
-            logger.warn("Chaco: using empty dataset; index_len=%d, value_low_len=%d, value_high_len=%d." % (l1,l2,l3))
+            logger.warning(
+                "Chaco: using empty dataset; index_len=%d, "
+                "value_low_len=%d, value_high_len=%d."
+                % (l1,l2,l3))
             self._cached_data_pts = []
             self._cache_valid = True
             return

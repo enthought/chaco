@@ -9,7 +9,7 @@ from traits.api import Any, Array, ArrayOrNone, Bool, Enum, Event, Float, \
 from enable.api import KeySpec
 
 # Chaco imports
-from chaco.api import AbstractController
+from chaco.abstract_controller import AbstractController
 
 
 class RangeSelection(AbstractController):
@@ -19,47 +19,47 @@ class RangeSelection(AbstractController):
     the user left-clicks to deselect.
     """
 
-    # The axis to which this tool is perpendicular.
+    #: The axis to which this tool is perpendicular.
     axis = Enum("index", "value")
 
-    # The selected region, expressed as a tuple in data space.  This updates
-    # and fires change-events as the user is dragging.
+    #: The selected region, expressed as a tuple in data space.  This updates
+    #: and fires change-events as the user is dragging.
     selection = Property
 
     selection_mode = Enum("set", "append")
 
-    # This event is fired whenever the user completes the selection, or when a
-    # finalized selection gets modified.  The value of the event is the data
-    # space range.
+    #: This event is fired whenever the user completes the selection, or when a
+    #: finalized selection gets modified.  The value of the event is the data
+    #: space range.
     selection_completed = Event
 
-    # The name of the metadata on the datasource that we will write
-    # self.selection to
+    #: The name of the metadata on the datasource that we will write
+    #: self.selection to
     metadata_name = Str("selections")
 
-    # Either "set" or "append", depending on whether self.append_key was
-    # held down
+    #: Either "set" or "append", depending on whether self.append_key was
+    #: held down
     selection_mode_metadata_name = Str("selection_mode")
 
-    # The name of the metadata on the datasource that we will set to a numpy
-    # boolean array for masking the datasource's data
+    #: The name of the metadata on the datasource that we will set to a numpy
+    #: boolean array for masking the datasource's data
     mask_metadata_name = Str("selection_masks")
 
-    # The possible event states of this selection tool (overrides
-    # enable.Interactor).
-    #
-    # normal:
-    #     Nothing has been selected, and the user is not dragging the mouse.
-    # selecting:
-    #     The user is dragging the mouse and actively changing the
-    #     selection region; resizing of an existing selection also
-    #     uses this mode.
-    # selected:
-    #     The user has released the mouse and a selection has been
-    #     finalized.  The selection remains until the user left-clicks
-    #     or self.deselect() is called.
-    # moving:
-    #   The user moving (not resizing) the selection range.
+    #: The possible event states of this selection tool (overrides
+    #: enable.Interactor).
+    #:
+    #: normal:
+    #:     Nothing has been selected, and the user is not dragging the mouse.
+    #: selecting:
+    #:     The user is dragging the mouse and actively changing the
+    #:     selection region; resizing of an existing selection also
+    #:     uses this mode.
+    #: selected:
+    #:     The user has released the mouse and a selection has been
+    #:     finalized.  The selection remains until the user left-clicks
+    #:     or self.deselect() is called.
+    #: moving:
+    #:   The user moving (not resizing) the selection range.
     event_state = Enum("normal", "selecting", "selected", "moving")
 
     #------------------------------------------------------------------------
@@ -72,48 +72,48 @@ class RangeSelection(AbstractController):
     # behavior, assign "None" to them.
     #------------------------------------------------------------------------
 
-    # The plot associated with this tool By default, this is just
-    # self.component.
+    #: The plot associated with this tool By default, this is just
+    #: self.component.
     plot = Property
 
-    # The mapper for associated with this tool. By default, this is the mapper
-    # on **plot** that corresponds to **axis**.
+    #: The mapper for associated with this tool. By default, this is the mapper
+    #: on **plot** that corresponds to **axis**.
     mapper = Property
 
-    # The index to use for **axis**. By default, this is self.plot.orientation,
-    # but it can be overriden and set to 0 or 1.
+    #: The index to use for **axis**. By default, this is self.plot.orientation,
+    #: but it can be overriden and set to 0 or 1.
     axis_index = Property
 
-    # List of listeners that listen to selection events.
+    #: List of listeners that listen to selection events.
     listeners = List
 
     #------------------------------------------------------------------------
     # Configuring interaction control
     #------------------------------------------------------------------------
 
-    # Can the user resize the selection once it has been drawn?
+    #: Can the user resize the selection once it has been drawn?
     enable_resize = Bool(True)
 
-    # The pixel distance between the mouse event and a selection endpoint at
-    # which the user action will be construed as a resize operation.
+    #: The pixel distance between the mouse event and a selection endpoint at
+    #: which the user action will be construed as a resize operation.
     resize_margin = Int(7)
 
-    # Allow the left button begin a selection?
+    #: Allow the left button begin a selection?
     left_button_selects = Bool(False)
 
-    # Disable all left-mouse button interactions?
+    #: Disable all left-mouse button interactions?
     disable_left_mouse = Bool(False)
 
-    # Allow the tool to be put into the deselected state via mouse clicks
+    #: Allow the tool to be put into the deselected state via mouse clicks
     allow_deselection = Bool(True)
 
-    # The minimum span, in pixels, of a selection region.  Any attempt to
-    # select a region smaller than this will be treated as a deselection.
+    #: The minimum span, in pixels, of a selection region.  Any attempt to
+    #: select a region smaller than this will be treated as a deselection.
     minimum_selection = Int(5)
 
-    # The key which, if held down while the mouse is being dragged, will
-    # indicate that the selection should be appended to an existing selection
-    # as opposed to overwriting it.
+    #: The key which, if held down while the mouse is being dragged, will
+    #: indicate that the selection should be appended to an existing selection
+    #: as opposed to overwriting it.
     append_key = Instance(KeySpec, args=(None, "control"))
 
     #------------------------------------------------------------------------

@@ -243,7 +243,7 @@ else:
     class PlotWindow(object):
 
         def __init__(self, *args, **kwargs):
-            raise NotImplmentedError(
+            raise NotImplementedError(
                 'PlotWindow not implemented for `null` toolkit')
 
 # EOF

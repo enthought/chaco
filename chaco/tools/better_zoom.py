@@ -19,53 +19,53 @@ from .tool_states import ZoomState, PanState, GroupedToolState, ToolState
 
 class BetterZoom(BaseTool, ToolHistoryMixin):
 
-    # Keys to zoom in/out
+    #: Keys to zoom in/out
     zoom_in_key = Instance(KeySpec, args=("+",), kw={'ignore': ['shift']})
     zoom_out_key = Instance(KeySpec, args=("-",))
 
-    # Keys to zoom in/out in x direction only
+    #: Keys to zoom in/out in x direction only
     zoom_in_x_key = Instance(KeySpec, args=("Right", "shift"))
     zoom_out_x_key = Instance(KeySpec, args=("Left", "shift"))
 
-    # Keys to zoom in/out in y direction only
+    #: Keys to zoom in/out in y direction only
     zoom_in_y_key = Instance(KeySpec, args=("Up", "shift"))
     zoom_out_y_key = Instance(KeySpec, args=("Down", "shift"))
 
-    # Key to go to the previous state in the history.
+    #: Key to go to the previous state in the history.
     prev_state_key = Instance(KeySpec, args=("z", "control"))
 
-    # Key to go to the next state in the history.
+    #: Key to go to the next state in the history.
     next_state_key = Instance(KeySpec, args=("y", "control"))
 
-    # Enable the mousewheel for zooming?
+    #: Enable the mousewheel for zooming?
     enable_wheel = Bool(True)
 
-    # if the mouse pointer should be used to control the center
-    # of the zoom action
+    #: if the mouse pointer should be used to control the center
+    #: of the zoom action
     zoom_to_mouse = Bool(True)
 
-    # if the mouse pointer should be used to control the center
-    # of the zoom action even for key events based zoom
+    #: if the mouse pointer should be used to control the center
+    #: of the zoom action even for key events based zoom
     keys_zoom_to_mouse = Bool(True)
 
-    # The axis to which the selection made by this tool is perpendicular. This
-    # only applies in 'range' mode.
+    #: The axis to which the selection made by this tool is perpendicular. This
+    #: only applies in 'range' mode.
     axis = Enum("both", "index", "value")
 
-    # The maximum ratio between the original data space bounds and the
-    # zoomed-in data space bounds.  If No limit is desired, set to inf
+    #: The maximum ratio between the original data space bounds and the
+    #: zoomed-in data space bounds.  If No limit is desired, set to inf
     x_max_zoom_factor = Float(1e5)
     y_max_zoom_factor = Float(1e5)
 
-    # The maximum ratio between the zoomed-out data space bounds and the
-    # original bounds.  If No limit is desired, set to -inf
+    #: The maximum ratio between the zoomed-out data space bounds and the
+    #: original bounds.  If No limit is desired, set to -inf
     x_min_zoom_factor = Float(1e-5)
     y_min_zoom_factor = Float(1e-5)
 
-    # The amount to zoom in by. The zoom out will be inversely proportional
+    #: The amount to zoom in by. The zoom out will be inversely proportional
     zoom_factor = Float(2.0)
 
-    #: the position to zoom on (usually the mouse location)
+    #:: the position to zoom on (usually the mouse location)
     position = Tuple(Float, Float)
 
     # The zoom factor on each axis

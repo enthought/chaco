@@ -31,36 +31,36 @@ class GridMapper(AbstractMapper):
     **y_high_pos**.
     """
 
-    # The data-space bounds of the mapper.
+    #: The data-space bounds of the mapper.
     range = Instance(DataRange2D)
 
-    # The screen space position of the lower bound of the horizontal axis.
+    #: The screen space position of the lower bound of the horizontal axis.
     x_low_pos = Float(0.0)
 
-    # The screen space position of the upper bound of the horizontal axis.
+    #: The screen space position of the upper bound of the horizontal axis.
     x_high_pos = Float(1.0)
 
-    # The screen space position of the lower bound of the vertical axis.
+    #: The screen space position of the lower bound of the vertical axis.
     y_low_pos = Float(0.0)
 
-    # The screen space position of the upper bound of the vertical axis.
+    #: The screen space position of the upper bound of the vertical axis.
     y_high_pos = Float(1.0)
 
-    # Convenience property for low and high positions in one structure.
-    # Must be a tuple (x_low_pos, x_high_pos, y_low_pos, y_high_pos).
+    #: Convenience property for low and high positions in one structure.
+    #: Must be a tuple (x_low_pos, x_high_pos, y_low_pos, y_high_pos).
     screen_bounds = Property
 
-    # Should the mapper stretch the dataspace when its screen space bounds are
-    # modified (default), or should it preserve the screen-to-data ratio and
-    # resize the data bounds?  If the latter, it will only try to preserve
-    # the ratio if both screen and data space extents are non-zero.
+    #: Should the mapper stretch the dataspace when its screen space bounds are
+    #: modified (default), or should it preserve the screen-to-data ratio and
+    #: resize the data bounds?  If the latter, it will only try to preserve
+    #: the ratio if both screen and data space extents are non-zero.
     stretch_data_x = DelegatesTo("_xmapper", prefix="stretch_data")
     stretch_data_y = DelegatesTo("_ymapper", prefix="stretch_data")
 
-    # Should the mapper try to maintain a fixed aspect ratio between x and y
+    #: Should the mapper try to maintain a fixed aspect ratio between x and y
     maintain_aspect_ratio = Bool
 
-    # The aspect ratio that we wish to maintain
+    #: The aspect ratio that we wish to maintain
     aspect_ratio = Float(1.0)
 
     #------------------------------------------------------------------------
@@ -210,10 +210,10 @@ class GridMapper(AbstractMapper):
         # TODO: figure out a way to not need to do this check:
         if self.screen_bounds == new_bounds:
             return
-        self.set(x_low_pos=new_bounds[0], trait_change_notify=False)
-        self.set(x_high_pos=new_bounds[1], trait_change_notify=False)
-        self.set(y_low_pos=new_bounds[2], trait_change_notify=False)
-        self.set(y_high_pos=new_bounds[3], trait_change_notify=False)
+        self.trait_setq(x_low_pos=new_bounds[0])
+        self.trait_setq(x_high_pos=new_bounds[1])
+        self.trait_setq(y_low_pos=new_bounds[2])
+        self.trait_setq(y_high_pos=new_bounds[3])
         self._update_bounds()
 
     def _get_screen_bounds(self):

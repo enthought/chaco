@@ -37,13 +37,15 @@ def _create_plot_component():
     plot.y_grid.line_color = "black"
     xmin, xmax = 1.0, 6.0
     ymin, ymax = 0.2, 0.80001
-    plot.x_grid.set(data_min = xmin, data_max = xmax,
-            transverse_bounds = (ymin, ymax),
-            transverse_mapper = plot.y_mapper)
+    plot.x_grid.data_min = xmin
+    plot.x_grid.data_max = xmax
+    plot.x_grid.transverse_bounds = (ymin, ymax)
+    plot.x_grid.transverse_mapper = plot.y_mapper
 
-    plot.y_grid.set(data_min = ymin, data_max = ymax,
-            transverse_bounds = (xmin, xmax),
-            transverse_mapper = plot.x_mapper)
+    plot.y_grid.data_min = ymin
+    plot.y_grid.data_max = ymax
+    plot.y_grid.transverse_bounds = (xmin, xmax)
+    plot.y_grid.transverse_mapper = plot.x_mapper
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot))
@@ -58,9 +60,9 @@ def _create_plot_component():
 
     func_plot = Plot(pd, padding=50, border_visible=True)
     func_plot.plot(("index", "y3"), color="red")
-    func_plot.x_grid.set(transverse_bounds = my_bounds_func,
-                    transverse_mapper = func_plot.y_mapper,
-                    line_color="black")
+    func_plot.x_grid.transverse_bounds = my_bounds_func
+    func_plot.x_grid.transverse_mapper = func_plot.y_mapper
+    func_plot.x_grid.line_color = "black"
     func_plot.tools.append(PanTool(func_plot))
 
     container = HPlotContainer()

@@ -4,7 +4,7 @@ from __future__ import with_statement
 from traits.api import (Bool, Enum, Float, Int, CList, Property, Trait,
         on_trait_change)
 from enable.api import ColorTrait
-from chaco.api import AbstractOverlay
+from chaco.abstract_overlay import AbstractOverlay
 
 
 class DataBox(AbstractOverlay):
@@ -146,8 +146,8 @@ class DataBox(AbstractOverlay):
         if self._updating:
             return
         tmp = self.component.map_data(self.position)
-        if len(tmp.shape) == 2:
-            tmp = tmp.T[0]
+        if tmp.ndim == 2:
+            tmp = tmp[0]
         self._data_position = tmp
         self.trait_property_changed("data_position", self._data_position)
 

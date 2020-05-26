@@ -23,53 +23,53 @@ from .axis import PlotAxis
 class ColorBar(AbstractPlotRenderer):
     """ A color bar for a color-mapped plot.
     """
-    # Screen mapper for index data.
+    #: Screen mapper for index data.
     index_mapper = Instance(AbstractMapper)
 
-    # Screen mapper for color data
+    #: Screen mapper for color data
     color_mapper = Property #Instance(ColorMapper)
 
-    # Screen mapper for value data (synonym for color_mapper)
+    #: Screen mapper for value data (synonym for color_mapper)
     value_mapper = Property(depends_on='color_mapper')
 
-    # Optional index data source for generic tools to attach metadata to.
+    #: Optional index data source for generic tools to attach metadata to.
     index = Property
 
-    # Optional color-mapped plot that this color bar references.  If specified,
-    # the plot must have a **color_mapper** attribute.
+    #: Optional color-mapped plot that this color bar references.  If specified,
+    #: the plot must have a **color_mapper** attribute.
     plot = Any
 
-    # Is there a visible grid on the colorbar?
+    #: Is there a visible grid on the colorbar?
     grid_visible = Bool(True)
 
-    # Is there a visible axis on the colorbar?
+    #: Is there a visible axis on the colorbar?
     axis_visible = Bool(True)
 
-    # Corresponds to either **index_mapper** or None, depending on
-    # the orientation of the plot.
+    #: Corresponds to either **index_mapper** or None, depending on
+    #: the orientation of the plot.
     x_mapper = Property
-    # Corresponds to either **index_mapper** or None, depending on
-    # the orientation of the plot.
+    #: Corresponds to either **index_mapper** or None, depending on
+    #: the orientation of the plot.
     y_mapper = Property
 
     #------------------------------------------------------------------------
     # Override default values of inherited traits
     #------------------------------------------------------------------------
 
-    # The border is visible (overrides enable.Component).
+    #: The border is visible (overrides enable.Component).
     border_visible = True
-    # The orientation of the index axis.
+    #: The orientation of the index axis.
     orientation = Enum('v', 'h')
-    # Should the bar go left-to-right or bottom-to-top (normal) or the reverse?
+    #: Should the bar go left-to-right or bottom-to-top (normal) or the reverse?
     direction = Enum('normal', 'flipped')
-    # Overrides the default background color trait in PlotComponent.
+    #: Overrides the default background color trait in PlotComponent.
     bgcolor = 'transparent'
-    # Draw layers in "draw order"
+    #: Draw layers in "draw order"
     use_draw_order = True
-    # Default width is 40 pixels (overrides enable.CoordinateBox)
+    #: Default width is 40 pixels (overrides enable.CoordinateBox)
     width = 40
 
-    # Faux origin for the axis to look at
+    #: Faux origin for the axis to look at
     origin = Enum('bottom left', 'top left', 'bottom right', 'top right')
 
     #------------------------------------------------------------------------

@@ -67,7 +67,7 @@ def create_plot():
     # Set colors
     #plot.title_color = "white"
     #for axis in plot.x_axis, plot.y_axis:
-    #    axis.set(title_color="white", tick_label_color="white")
+    #    axis.trait_set(title_color="white", tick_label_color="white")
 
     # Right now, some of the tools are a little invasive, and we need the
     # actual ColomappedScatterPlot object to give to them

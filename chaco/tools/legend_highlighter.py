@@ -1,7 +1,7 @@
 from itertools import chain
 
 # ETS imports
-from chaco.tools.api import LegendTool
+from .legend_tool import LegendTool
 from traits.api import List, Float
 
 concat = chain.from_iterable

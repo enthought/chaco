@@ -22,57 +22,57 @@ class Base2DPlot(AbstractPlotRenderer):
     # Data-related traits
     #------------------------------------------------------------------------
 
-    # The data source to use for the index coordinate.
+    #: The data source to use for the index coordinate.
     index = Instance(GridDataSource)
 
-    # The data source to use as value points.
+    #: The data source to use as value points.
     value = Instance(ImageData)
 
-    # Screen mapper for 2-D structured (gridded) index data.
+    #: Screen mapper for 2-D structured (gridded) index data.
     index_mapper = Instance(GridMapper)
 
-    # Convenience property for accessing the data range of the mapper.
+    #: Convenience property for accessing the data range of the mapper.
     index_range = Property
 
-    # Convenience property for accessing the plots labels.
+    #: Convenience property for accessing the plots labels.
     labels = Property
 
-    # The direction that the first array returned by self.index.get_data()
-    # maps to.
-    #
-    # * 'h': index maps to x-direction
-    # * 'v': index maps to y-direction
+    #: The direction that the first array returned by self.index.get_data()
+    #: maps to.
+    #:
+    #: * 'h': index maps to x-direction
+    #: * 'v': index maps to y-direction
     orientation = Enum("h", "v")
 
-    # Overrides PlotComponent; 2-D plots draw on the 'image' layer,
-    # underneath all decorations and annotations, and above only the background
-    # fill color.
+    #: Overrides PlotComponent; 2-D plots draw on the 'image' layer,
+    #: underneath all decorations and annotations, and above only the background
+    #: fill color.
     draw_layer = "image"
 
-    # Convenience property for accessing the x-direction mappers regardless
-    # of orientation.  This provides compatibility with a number of tools.
+    #: Convenience property for accessing the x-direction mappers regardless
+    #: of orientation.  This provides compatibility with a number of tools.
     x_mapper = Property
-    # Convenience property for accessing the y-direction mappers regardless
-    # of orientation.  This provides compatibility with a number of tools.
+    #: Convenience property for accessing the y-direction mappers regardless
+    #: of orientation.  This provides compatibility with a number of tools.
     y_mapper = Property
 
-    # Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
-    # for full intensity.
+    #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
+    #: for full intensity.
     alpha = Trait(1.0, Range(0.0, 1.0))
 
-    # Event fired when the index data changes. Subclasses can listen for this
-    # event and take appropriate steps (except for requesting a redraw, which
-    # is done in this class).
+    #: Event fired when the index data changes. Subclasses can listen for this
+    #: event and take appropriate steps (except for requesting a redraw, which
+    #: is done in this class).
     index_data_changed = Event
 
-    # Event fired when the index mapper changes. Subclasses can listen for this
-    # event and take appropriate steps (except for requesting a redraw, which
-    # is done in this class).
+    #: Event fired when the index mapper changes. Subclasses can listen for this
+    #: event and take appropriate steps (except for requesting a redraw, which
+    #: is done in this class).
     index_mapper_changed = Event
 
-    # Event fired when the value data changes. Subclasses can listen for this
-    # event and take appropriate steps (except for requesting a redraw, which
-    # is done in this class).
+    #: Event fired when the value data changes. Subclasses can listen for this
+    #: event and take appropriate steps (except for requesting a redraw, which
+    #: is done in this class).
     value_data_changed = Event
 
     #------------------------------------------------------------------------
@@ -86,7 +86,7 @@ class Base2DPlot(AbstractPlotRenderer):
         for trait_name in ("index", "value"):
             if trait_name in kwargs:
                 kwargs_tmp[trait_name] = kwargs.pop(trait_name)
-        self.set(**kwargs_tmp)
+        self.trait_set(**kwargs_tmp)
         super(Base2DPlot, self).__init__(**kwargs)
         if self.index is not None:
             self.index.on_trait_change(self._update_index_data,
