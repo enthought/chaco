@@ -71,89 +71,89 @@ class CompositeIconRenderer(AbstractCompositeIconRenderer):
 class Legend(AbstractOverlay):
     """ A legend for a plot.
     """
-    # The font to use for the legend text.
+    #: The font to use for the legend text.
     font = KivaFont("modern 12")
 
-    # The amount of space between the content of the legend and the border.
+    #: The amount of space between the content of the legend and the border.
     border_padding = Int(10)
 
-    # The border is visible (overrides Enable Component).
+    #: The border is visible (overrides Enable Component).
     border_visible = True
 
-    # The color of the text labels
+    #: The color of the text labels
     color = black_color_trait
 
-    # The background color of the legend (overrides AbstractOverlay).
+    #: The background color of the legend (overrides AbstractOverlay).
     bgcolor = white_color_trait
 
-    # The position of the legend with respect to its overlaid component.  (This
-    # attribute applies only if the legend is used as an overlay.)
-    #
-    # * ur = Upper Right
-    # * ul = Upper Left
-    # * ll = Lower Left
-    # * lr = Lower Right
+    #: The position of the legend with respect to its overlaid component.  (This
+    #: attribute applies only if the legend is used as an overlay.)
+    #:
+    #: * ur = Upper Right
+    #: * ul = Upper Left
+    #: * ll = Lower Left
+    #: * lr = Lower Right
     align = Enum("ur", "ul", "ll", "lr")
 
-    # The amount of space between legend items.
+    #: The amount of space between legend items.
     line_spacing = Int(3)
 
-    # The size of the icon or marker area drawn next to the label.
+    #: The size of the icon or marker area drawn next to the label.
     icon_bounds = List([24, 24])
 
-    # Amount of spacing between each label and its icon.
+    #: Amount of spacing between each label and its icon.
     icon_spacing = Int(5)
 
-    # Map of labels (strings) to plot instances or lists of plot instances.  The
-    # Legend determines the appropriate rendering of each plot's marker/line.
+    #: Map of labels (strings) to plot instances or lists of plot instances.  The
+    #: Legend determines the appropriate rendering of each plot's marker/line.
     plots = Dict
 
-    # The list of labels to show and the order to show them in.  If this
-    # list is blank, then the keys of self.plots is used and displayed in
-    # alphabetical order.  Otherwise, only the items in the **labels**
-    # list are drawn in the legend.  Labels are ordered from top to bottom.
+    #: The list of labels to show and the order to show them in.  If this
+    #: list is blank, then the keys of self.plots is used and displayed in
+    #: alphabetical order.  Otherwise, only the items in the **labels**
+    #: list are drawn in the legend.  Labels are ordered from top to bottom.
     labels = List
 
-    # Whether or not to hide plots that are not visible.  (This is checked during
-    # layout.)  This option *will* filter out the items in **labels** above, so
-    # if you absolutely, positively want to set the items that will always
-    # display in the legend, regardless of anything else, then you should turn
-    # this option off.  Otherwise, it usually makes sense that a plot renderer
-    # that is not visible will also not be in the legend.
+    #: Whether or not to hide plots that are not visible.  (This is checked during
+    #: layout.)  This option *will* filter out the items in **labels** above, so
+    #: if you absolutely, positively want to set the items that will always
+    #: display in the legend, regardless of anything else, then you should turn
+    #: this option off.  Otherwise, it usually makes sense that a plot renderer
+    #: that is not visible will also not be in the legend.
     hide_invisible_plots = Bool(True)
 
-    # If hide_invisible_plots is False, we can still choose to render the names
-    # of invisible plots with an alpha.
+    #: If hide_invisible_plots is False, we can still choose to render the names
+    #: of invisible plots with an alpha.
     invisible_plot_alpha = Float(0.33)
 
-    # The renderer that draws the icons for the legend.
+    #: The renderer that draws the icons for the legend.
     composite_icon_renderer = Instance(AbstractCompositeIconRenderer)
 
-    # Action that the legend takes when it encounters a plot whose icon it
-    # cannot render:
-    #
-    # * 'skip': skip it altogether and don't render its name
-    # * 'blank': render the name but leave the icon blank (color=self.bgcolor)
-    # * 'questionmark': render a "question mark" icon
+    #: Action that the legend takes when it encounters a plot whose icon it
+    #: cannot render:
+    #:
+    #: * 'skip': skip it altogether and don't render its name
+    #: * 'blank': render the name but leave the icon blank (color=self.bgcolor)
+    #: * 'questionmark': render a "question mark" icon
     error_icon = Enum("skip", "blank", "questionmark")
 
-    # Should the legend clip to the bounds it needs, or to its parent?
+    #: Should the legend clip to the bounds it needs, or to its parent?
     clip_to_component = Bool(False)
 
-    # The legend is not resizable (overrides PlotComponent).
+    #: The legend is not resizable (overrides PlotComponent).
     resizable = "hv"
 
-    # An optional title string to show on the legend.
+    #: An optional title string to show on the legend.
     title = Str('')
 
-    # If True, title is at top, if False then at bottom.
+    #: If True, title is at top, if False then at bottom.
     title_at_top = Bool(True)
 
-    # The legend draws itself as in one pass when its parent is drawing
-    # the **draw_layer** (overrides PlotComponent).
+    #: The legend draws itself as in one pass when its parent is drawing
+    #: the **draw_layer** (overrides PlotComponent).
     unified_draw = True
-    # The legend is drawn on the overlay layer of its parent (overrides
-    # PlotComponent).
+    #: The legend is drawn on the overlay layer of its parent (overrides
+    #: PlotComponent).
     draw_layer = "overlay"
 
     #------------------------------------------------------------------------

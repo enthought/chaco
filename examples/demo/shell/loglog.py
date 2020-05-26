@@ -1,5 +1,7 @@
-"""This example shows how to createa log-log plot using the chaco
-`shell` subpackage."""
+"""
+This example shows how to createa log-log plot using the chaco
+`shell` subpackage.
+"""
 
 # Major library imports
 from numpy import linspace, exp
@@ -21,5 +23,5 @@ loglog(x, x, "m--", name="y=x", bgcolor="white")
 # Add some titles
 title("simple loglog plots")
 
-#This command is only necessary if running from command line
+# This command is only necessary if running from command line
 show()

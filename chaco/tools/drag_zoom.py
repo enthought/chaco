@@ -28,24 +28,24 @@ class DragZoom(DragTool, BetterZoom):
     of the axis mappers.
     """
 
-    # The mouse button that initiates the drag
+    #: The mouse button that initiates the drag
     drag_button = Enum("left", "right", "middle")
 
-    # Scaling factor on the zoom "speed".  A speed of 1.0 implies a zoom rate of
-    # 5% for every 10 pixels.
+    #: Scaling factor on the zoom "speed".  A speed of 1.0 implies a zoom rate of
+    #: 5% for every 10 pixels.
     speed = Float(1.0)
 
-    # Whether or not to preserve the aspect ratio of X to Y while zooming in.
-    # (See class docstring for more info.)
+    #: Whether or not to preserve the aspect ratio of X to Y while zooming in.
+    #: (See class docstring for more info.)
     maintain_aspect_ratio = Bool(True)
 
-    # The pointer to use when we're in the act of zooming
+    #: The pointer to use when we're in the act of zooming
     drag_pointer = "magnifier"
 
-    # Whether or not to zoom in one axis only
+    #: Whether or not to zoom in one axis only
     single_axis = Bool(False)
 
-    # Whether to restrict zoom to the domain of the mappers
+    #: Whether to restrict zoom to the domain of the mappers
     restrict_domain = Bool(False)
 
     zoom_to_mouse = Bool(False)

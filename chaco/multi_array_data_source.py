@@ -29,17 +29,17 @@ class MultiArrayDataSource(AbstractDataSource):
     # AbstractDataSource traits
     #------------------------------------------------------------------------
 
-    # The dimensionality of the indices into this data source (overrides
-    # AbstractDataSource).
+    #: The dimensionality of the indices into this data source (overrides
+    #: AbstractDataSource).
     index_dimension = Int(0)
 
-    # The dimensionality of the value at each index point (overrides
-    # AbstractDataSource).
+    #: The dimensionality of the value at each index point (overrides
+    #: AbstractDataSource).
     value_dimension = Int(1)
 
-    # The sort order of the data.
-    # This is a specialized optimization for 1-D arrays, but it's an important
-    # one that's used everywhere.
+    #: The sort order of the data.
+    #: This is a specialized optimization for 1-D arrays, but it's an important
+    #: one that's used everywhere.
     sort_order = SortOrderTrait
 
 

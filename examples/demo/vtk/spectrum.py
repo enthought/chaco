@@ -134,16 +134,19 @@ def main():
     specplot, timeplot, spectrogram = plots
 
     for i, p in enumerate(plots):
-        p.set(resizable = "", bounds = [200,200], outer_x = 0,
-                bgcolor = "transparent",
-                )
+        p.resizable = ""
+        p.bgcolor = "transparent"
+        p.bounds = [200,200]
+        p.outer_x = 0
         p.outer_y = i*250
         p.tools.append(MoveTool(p, drag_button="right"))
         p.tools.append(PanTool(p))
         p.tools.append(ZoomTool(p))
 
-    spectrogram.tools[-1].set(tool_mode="range", axis="value")
-    spectrogram.tools[-2].set(constrain=True, constrain_direction="y")
+    spectrogram.tools[-1].tool_mode = "range"
+    spectrogram.tools[-1].axis = "value"
+    spectrogram.tools[-2].constrain = True
+    spectrogram.tools[-2].constrain_direction = "y"
 
     container = OverlayPlotContainer(bgcolor = "transparent",
                     fit_window = True)

@@ -13,26 +13,26 @@ class Base1DMapper(AbstractMapper):
     region in output space.
     """
 
-    # The data-space bounds of the mapper.
+    #: The data-space bounds of the mapper.
     range = Instance(DataRange1D)
 
-    # The screen space position of the lower bound of the data space.
+    #: The screen space position of the lower bound of the data space.
     low_pos = Float(0.0)
 
-    # The screen space position of the upper bound of the data space.
+    #: The screen space position of the upper bound of the data space.
     high_pos  = Float(1.0)
 
-    # Convenience property to get low and high positions in one structure.
-    # Must be a tuple (low_pos, high_pos).
+    #: Convenience property to get low and high positions in one structure.
+    #: Must be a tuple (low_pos, high_pos).
     screen_bounds = Property
 
-    # Should the mapper stretch the dataspace when its screen space bounds are
-    # modified (default), or should it preserve the screen-to-data ratio and
-    # resize the data bounds?  If the latter, it will only try to preserve
-    # the ratio if both screen and data space extents are non-zero.
+    #: Should the mapper stretch the dataspace when its screen space bounds are
+    #: modified (default), or should it preserve the screen-to-data ratio and
+    #: resize the data bounds?  If the latter, it will only try to preserve
+    #: the ratio if both screen and data space extents are non-zero.
     stretch_data = Bool(True)
 
-    # The sign of the mapping: 1 if deltas match sign, -1 if opposite sign
+    #: The sign of the mapping: 1 if deltas match sign, -1 if opposite sign
     sign = Property
 
     # If the subclass uses a cache, _cache_valid is maintained to
@@ -97,8 +97,8 @@ class Base1DMapper(AbstractMapper):
             return
         if not self.stretch_data:
             self._adjust_range((self.low_pos, self.high_pos), new_bounds)
-        self.set(low_pos = new_bounds[0], trait_change_notify=False)
-        self.set(high_pos = new_bounds[1], trait_change_notify=False)
+        self.trait_setq(low_pos = new_bounds[0])
+        self.trait_setq(high_pos = new_bounds[1])
         self._cache_valid = False
         self._low_bound_initialized = True
         self._high_bound_initialized = True

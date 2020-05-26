@@ -13,11 +13,11 @@ class LegendTool(DragTool):
     to the legend.
     """
 
-    # The mouse button that initiates the drag.
+    #: The mouse button that initiates the drag.
     drag_button = Enum("left", "right")
 
-    # Whether to change the legend's **align** property in accord with
-    # the quadrant into which it is dropped.
+    #: Whether to change the legend's **align** property in accord with
+    #: the quadrant into which it is dropped.
     auto_align = Bool(True)
 
 

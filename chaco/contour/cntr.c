@@ -1338,7 +1338,7 @@ build_cntr_list_v(long *np, double *xp, double *yp, int nparts, long ntotal)
 {
     PyObject *point, *all_contours;
     PyArrayObject *xv, *yv;
-    int dims[1];
+    npy_intp dims[1];
     int i;
     long j, k;
 
@@ -1348,8 +1348,8 @@ build_cntr_list_v(long *np, double *xp, double *yp, int nparts, long ntotal)
     for (i = 0; i < nparts; i++)
     {
         dims[0] = np[i];
-        xv = (PyArrayObject *) PyArray_FromDims(1, dims, 'd');
-        yv = (PyArrayObject *) PyArray_FromDims(1, dims, 'd');
+        xv = (PyArrayObject *) PyArray_SimpleNew(1, dims, NPY_DOUBLE);
+        yv = (PyArrayObject *) PyArray_SimpleNew(1, dims, NPY_DOUBLE);
         if (xv == NULL || yv == NULL)  goto error;
         for (j = 0; j < dims[0]; j++)
         {

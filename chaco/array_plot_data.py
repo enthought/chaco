@@ -24,14 +24,14 @@ class ArrayPlotData(AbstractPlotData):
     # Public traits
     #-------------------------------------------------------------------------
 
-    # Map of names to arrays.  Although there is no restriction on the array
-    # dimensions, each array must correspond to a single plot item; that
-    # is, a single name must not map to a multi-dimensional array unless
-    # the array is being used for an image plot or for something that can handle
-    # multi-dimensional input data.
+    #: Map of names to arrays.  Although there is no restriction on the array
+    #: dimensions, each array must correspond to a single plot item; that
+    #: is, a single name must not map to a multi-dimensional array unless
+    #: the array is being used for an image plot or for something that can handle
+    #: multi-dimensional input data.
     arrays = Dict
 
-    # Consumers can write data to this object (overrides AbstractPlotData).
+    #: Consumers can write data to this object (overrides AbstractPlotData).
     writable = True
 
     def __init__(self, *data, **kw):

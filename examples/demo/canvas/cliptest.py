@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-The main app for the PlotCanvas application
+The main app for the Cliptest application
 """
 
 

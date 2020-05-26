@@ -1,5 +1,4 @@
 numpy
-nose-exclude
 coverage
 pillow
 git+http://github.com/nucleic/kiwi.git#egg=kiwi

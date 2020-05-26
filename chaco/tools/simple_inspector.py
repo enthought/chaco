@@ -29,22 +29,22 @@ class SimpleInspectorTool(BaseTool):
     effect.
     """
 
-    # This event fires whenever the mouse moves over a new image point.
-    # Its value is a dict with default keys "x", "y", "index" and "value".
+    #: This event fires whenever the mouse moves over a new image point.
+    #: Its value is a dict with default keys "x", "y", "index" and "value".
     new_value = Event
 
-    # Indicates whether overlays listening to this tool should be visible.
+    #: Indicates whether overlays listening to this tool should be visible.
     visible = Bool(True)
 
-    # Stores the last mouse position.  This can be used by overlays to
-    # position themselves around the mouse.
+    #: Stores the last mouse position.  This can be used by overlays to
+    #: position themselves around the mouse.
     last_mouse_position = Tuple
 
-    # This key will show and hide any overlays listening to this tool.
+    #: This key will show and hide any overlays listening to this tool.
     inspector_key = KeySpec('p')
 
-    # A callable that computes other values for the new_value event
-    # this takes a dictionary as an argument, and returns a dictionary
+    #: A callable that computes other values for the new_value event
+    #: this takes a dictionary as an argument, and returns a dictionary
     value_generator = Callable
 
     # Private Trails ########################################################

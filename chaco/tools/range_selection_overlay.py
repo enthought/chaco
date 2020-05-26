@@ -9,7 +9,10 @@ from numpy import arange, array
 from enable.api import ColorTrait, LineStyle
 from traits.api import Enum, Float, Property, Str, Instance, \
         cached_property
-from chaco.api import AbstractOverlay, arg_find_runs, GridMapper, AbstractMapper
+from chaco.abstract_overlay import AbstractOverlay
+from chaco.base import arg_find_runs
+from chaco.grid_mapper import GridMapper
+from chaco.abstract_mapper import AbstractMapper
 
 
 class RangeSelectionOverlay(AbstractOverlay):
@@ -19,40 +22,40 @@ class RangeSelectionOverlay(AbstractOverlay):
     selected.
     """
 
-    # The axis to which this tool is perpendicular.
+    #: The axis to which this tool is perpendicular.
     axis = Enum("index", "value")
 
-    # Mapping from screen space to data space. By default, it is just
-    # self.component.
+    #: Mapping from screen space to data space. By default, it is just
+    #: self.component.
     plot = Property(depends_on='component')
 
-    # The mapper (and associated range) that drive this RangeSelectionOverlay.
-    # By default, this is the mapper on self.plot that corresponds to self.axis.
+    #: The mapper (and associated range) that drive this RangeSelectionOverlay.
+    #: By default, this is the mapper on self.plot that corresponds to self.axis.
     mapper = Instance(AbstractMapper)
 
-    # The element of an (x,y) tuple that corresponds to the axis index.
-    # By default, this is set based on self.asix and self.plot.orientation,
-    # but it can be overriden and set to 0 or 1.
+    #: The element of an (x,y) tuple that corresponds to the axis index.
+    #: By default, this is set based on self.asix and self.plot.orientation,
+    #: but it can be overriden and set to 0 or 1.
     axis_index = Property
 
-    # The name of the metadata to look at for dataspace bounds. The metadata
-    # can be either a tuple (dataspace_start, dataspace_end) in "selections" or
-    # a boolean array mask of seleted dataspace points with any other name
+    #: The name of the metadata to look at for dataspace bounds. The metadata
+    #: can be either a tuple (dataspace_start, dataspace_end) in "selections" or
+    #: a boolean array mask of seleted dataspace points with any other name
     metadata_name = Str("selections")
 
     #------------------------------------------------------------------------
     # Appearance traits
     #------------------------------------------------------------------------
 
-    # The color of the selection border line.
+    #: The color of the selection border line.
     border_color = ColorTrait("dodgerblue")
-    # The width, in pixels, of the selection border line.
+    #: The width, in pixels, of the selection border line.
     border_width = Float(1.0)
-    # The line style of the selection border line.
+    #: The line style of the selection border line.
     border_style = LineStyle("solid")
-    # The color to fill the selection region.
+    #: The color to fill the selection region.
     fill_color = ColorTrait("lightskyblue")
-    # The transparency of the fill color.
+    #: The transparency of the fill color.
     alpha = Float(0.3)
 
     #------------------------------------------------------------------------

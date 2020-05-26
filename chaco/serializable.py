@@ -71,8 +71,8 @@ class Serializable(object):
         because we need Serializable's implementation to call _post_load() after
         all the _do_setstate() have returned.)
         """
-        # Quietly all the attributes
-        self.set(trait_change_notify=False, **state)
+        # Quietly set all the attributes
+        self.trait_setq(**state)
         return
 
     #------------------------------------------------------------------------

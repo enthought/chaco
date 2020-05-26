@@ -6,7 +6,8 @@ from enable.api import BaseTool, Container
 from traits.api import List, Dict, Str
 
 # Chaco imports
-from chaco.api import PlotAxis, ColorBar
+from chaco.axis import PlotAxis
+from chaco.color_bar import ColorBar
 
 
 class Fifo(object):
@@ -66,18 +67,18 @@ class TraitsTool(BaseTool):
     """ Tool to edit the traits of plots, grids, and axes.
     """
 
-    # This tool does not have a visual representation (overrides BaseTool).
+    #: This tool does not have a visual representation (overrides BaseTool).
     draw_mode = "none"
-    # This tool is not visible (overrides BaseTool).
+    #: This tool is not visible (overrides BaseTool).
     visible = False
 
-    # The classes of components that should trigger a traits view
+    #: The classes of components that should trigger a traits view
     classes = List([PlotAxis, ColorBar])
 
-    # A dict of Class : View providing alternate views for a particular component
+    #: A dict of Class : View providing alternate views for a particular component
     views = Dict
 
-    # The event to trigger the edit on
+    #: The event to trigger the edit on
     event = Str('left_dclick')
 
     def _dispatch_stateful_event(self, event, suffix):

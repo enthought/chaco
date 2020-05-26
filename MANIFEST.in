@@ -5,6 +5,7 @@ include chaco/tools/toolbars/images*.png
 include chaco/tools/toolbars/images*.svg
 include chaco/tools/toolbars/images*.txt
 include chaco/layers/data/*.svg
+recursive-include chaco *.pyx
 graft examples
 recursive-exclude examples *.pyc
 include README.rst

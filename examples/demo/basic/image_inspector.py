@@ -57,7 +57,7 @@ def _create_plot_component():# Create a scalar field to colormap
     plot.tools.append(PanTool(plot))
     zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
-    imgtool = ImageInspectorTool(img_plot)
+    imgtool = ImageInspectorTool(component=img_plot)
     img_plot.tools.append(imgtool)
     overlay = ImageInspectorOverlay(component=img_plot, image_inspector=imgtool,
                                     bgcolor="white", border_visible=True)

@@ -22,7 +22,7 @@ class LogMapper(Base1DMapper):
     space to a 1-D region in output space.
     """
 
-    # The value to map when asked to map values <= LOG_MINIMUM to screen space.
+    #: The value to map when asked to map values <= LOG_MINIMUM to screen space.
     fill_value = Float(1.0)
 
     #------------------------------------------------------------------------

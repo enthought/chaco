@@ -40,21 +40,24 @@ def _create_plot_component():
         y_name = "struve" + str(i)
         pd.set_data(y_name, struve(i, x))
         renderer = plot.plot(("x", y_name), color="blue", name=y_name, line_width=2)[0]
-        renderer.set(draw_layer = "struve", unified_draw=True)
+        renderer.draw_layer = "struve"
+        renderer.unified_draw = True
 
     # Draw bessels
     for i in range(3):
         y_name = "bessel" + str(i)
         pd.set_data(y_name, jn(i,x))
         renderer = plot.plot(("x", y_name), color="green", name=y_name, line_width=2)[0]
-        renderer.set(draw_layer = "bessel", unified_draw=True)
+        renderer.draw_layer = "bessel"
+        renderer.unified_draw = True
 
     # Draw sines
     for i in range(3):
         y_name = "sine" + str(i)
         pd.set_data(y_name, sin(x * (i+1) / 1.5))
         renderer = plot.plot(("x", y_name), color="red", name=y_name, line_width=2)[0]
-        renderer.set(draw_layer="sine", unified_draw=True)
+        renderer.draw_layer = "sine"
+        renderer.unified_draw = True
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot))

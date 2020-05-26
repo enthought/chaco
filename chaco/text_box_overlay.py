@@ -18,49 +18,49 @@ class TextBoxOverlay(AbstractOverlay):
 
     #### Configuration traits #################################################
 
-    # The text to display in the box.
+    #: The text to display in the box.
     text = Str
 
-    # The font to use for the text.
+    #: The font to use for the text.
     font = KivaFont("modern 12")
 
-    # The background color for the box (overrides AbstractOverlay).
+    #: The background color for the box (overrides AbstractOverlay).
     bgcolor = ColorTrait("transparent")
 
-    # The alpha value to apply to **bgcolor**
+    #: The alpha value to apply to **bgcolor**
     alpha = Trait(1.0, None, Float)
 
-    # The color of the outside box.
+    #: The color of the outside box.
     border_color = ColorTrait("dodgerblue")
 
-    # The color of the text.
+    #: The color of the text.
     text_color = ColorTrait("black")
 
-    # The thickness of box border.
+    #: The thickness of box border.
     border_size = Int(1)
 
-    # The border visibility. Defaults to true to duplicate previous behavior.
+    #: The border visibility. Defaults to true to duplicate previous behavior.
     border_visible = Bool(True)
 
-    # Number of pixels of padding around the text within the box.
+    #: Number of pixels of padding around the text within the box.
     padding = Int(5)
 
-    # The maximum width of the displayed text. This affects the width of the
-    # text only, not the text box, which includes margins around the text and
-    # `padding`.
-    # A `max_text_width` of 0.0 means that the width will not be restricted.
+    #: The maximum width of the displayed text. This affects the width of the
+    #: text only, not the text box, which includes margins around the text and
+    #: `padding`.
+    #: A `max_text_width` of 0.0 means that the width will not be restricted.
     max_text_width = Float(0.0)
 
-    # Alignment of the text in the box:
-    #
-    # * "ur": upper right
-    # * "ul": upper left
-    # * "ll": lower left
-    # * "lr": lower right
+    #: Alignment of the text in the box:
+    #:
+    #: * "ur": upper right
+    #: * "ul": upper left
+    #: * "ll": lower left
+    #: * "lr": lower right
     align = Enum("ur", "ul", "ll", "lr")
 
-    # This allows subclasses to specify an alternate position for the root
-    # of the text box.  Must be a sequence of length 2.
+    #: This allows subclasses to specify an alternate position for the root
+    #: of the text box.  Must be a sequence of length 2.
     alternate_position = Any
 
     #### Public 'AbstractOverlay' interface ###################################
