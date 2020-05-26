@@ -1,7 +1,7 @@
 from chaco.api import (ArrayPlotData, HPlotContainer, Plot)
 from chaco.tools.api import RectangleSelection
 from enable.api import ComponentEditor
-from scipy.misc import lena
+from scipy.misc import face
 from traits.api import (Any, Array, cached_property, HasTraits, Instance,
                         Property)
 from traitsui.api import View, Item
@@ -27,7 +27,7 @@ class RectSelectionDemo(HasTraits):
         return self.img
 
     def _img_default(self):
-        return lena()
+        return face()
 
     def _img_plot_default(self):
         img_plot = Plot(self.plot_data)
