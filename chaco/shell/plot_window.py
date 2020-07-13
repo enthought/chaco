@@ -137,9 +137,14 @@ elif ETSConfig.toolkit == "qt4":
         def __init__(self, is_image=False, bgcolor="white",
                      image_default_origin="top left", *args, **kw):
 
+            size = kw.pop("size", None)
+            if isinstance(size, tuple):
+                size = QtCore.QSize(*size)
+            
             super(PlotWindow, self).__init__(None, *args, **kw )
-            if 'size' in kw and isinstance(kw['size'], tuple):
-                self.resize(*kw['size'])
+
+            if size is not None:
+                self.resize(size)
 
             # Some defaults which should be overridden by preferences.
             self.bgcolor = bgcolor
