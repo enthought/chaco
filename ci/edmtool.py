@@ -71,7 +71,7 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '3.6': {'pyqt', 'pyqt5', 'null'},
+    '3.6': {'pyside2', 'pyqt', 'pyqt5', 'null'},
 }
 
 dependencies = {
@@ -87,6 +87,7 @@ dependencies = {
 }
 
 extra_dependencies = {
+    'pyside2': set(),
     'pyside': {'pyside'},
     'pyqt': {'pyqt'},
     'pyqt5': {'pyqt5'},
@@ -95,6 +96,7 @@ extra_dependencies = {
 }
 
 environment_vars = {
+    'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
     'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
     'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
@@ -129,6 +131,12 @@ def install(runtime, toolkit, environment):
          "pip install git+https://git@github.com/enthought/enable.git"),
         "edm run -e {environment} -- pip install . --no-deps",
     ]
+    # pip install pyside2, because we don't have them in EDM yet
+    if toolkit == 'pyside2':
+        commands.append(
+            "edm run -e {environment} -- pip install pyside2==5.11"
+        )
+    
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
     click.echo('Done install')
