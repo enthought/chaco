@@ -43,7 +43,7 @@ you can run tests in all supported runtimes and toolkits (with cleanup)
 using::
     python edmtool.py test_all
 
-Currently supported runtime values are ``2.7`` and ``3.5``, and currently
+Currently supported runtime values are ``3.6``, and currently
 supported toolkits are ``null``, ``pyqt``, ``pyside``, and ``wx``.  Not all
 combinations of toolkits and runtimes will work, but the tasks will fail with
 a clear error if that is the case. Tests can still be run via the usual means
@@ -60,9 +60,6 @@ Other changes to commands should be a straightforward change to the listed
 commands for each task. See the EDM documentation for more information about
 how to run commands within an EDM enviornment.
 """
-
-from __future__ import print_function
-
 import glob
 import os
 import subprocess
@@ -74,8 +71,6 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '2.7': {'pyqt', 'pyside', 'wx', 'null'},
-    '3.5': {'pyqt', 'null'},
     '3.6': {'pyqt', 'null'},
 }
 
@@ -112,7 +107,7 @@ def cli():
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def install(runtime, toolkit, environment):
@@ -138,7 +133,7 @@ def install(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def test(runtime, toolkit, environment):
@@ -172,7 +167,7 @@ def test(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def cleanup(runtime, toolkit, environment):
@@ -189,7 +184,7 @@ def cleanup(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 def test_clean(runtime, toolkit):
     """ Run tests in a clean environment, cleaning up afterwards
@@ -204,7 +199,7 @@ def test_clean(runtime, toolkit):
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def update(runtime, toolkit, environment):

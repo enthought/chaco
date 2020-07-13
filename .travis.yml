@@ -18,12 +18,6 @@ env:
 
 matrix:
   include:
-  - env: RUNTIME=2.7 TOOLKITS="null pyqt pyside wx"
-  - os : osx
-    env: RUNTIME=2.7 TOOLKITS="null pyqt pyside wx"
-  - env: RUNTIME=3.5 TOOLKITS="null pyqt"
-  - os : osx
-    env: RUNTIME=3.5 TOOLKITS="null pyqt"
   - env: RUNTIME=3.6 TOOLKITS="null pyqt"
   - os : osx
     env: RUNTIME=3.6 TOOLKITS="null pyqt"
