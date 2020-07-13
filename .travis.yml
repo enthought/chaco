@@ -9,6 +9,7 @@ addons:
     - ccache
     - cmake
     - swig
+    - libxkbcommon-x11-0
     - libglu1-mesa-dev
     - libxcb-icccm4
     - libxcb-image0
