@@ -244,9 +244,12 @@ def get_parameters(runtime, toolkit, environment):
     parameters = {'runtime': runtime, 'toolkit': toolkit,
                   'environment': environment}
     if toolkit not in supported_combinations[runtime]:
-        msg = ("Python {runtime}, toolkit {toolkit}, "
-               "not supported by test environments")
-        raise RuntimeError(msg.format(**parameters))
+        msg = ("Python {runtime!r}, toolkit {toolkit!r}, "
+               "not supported by test environments ({available})")
+        available = ", ".join(
+            repr(tk) for tk in sorted(supported_combinations[runtime])
+        )
+        raise RuntimeError(msg.format(available=available, **parameters))
     if environment is None:
         tmpl = 'chaco-test-{runtime}-{toolkit}'
         environment = tmpl.format(**parameters)
