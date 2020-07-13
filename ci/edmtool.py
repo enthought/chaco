@@ -71,7 +71,7 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '3.6': {'pyqt', 'null'},
+    '3.6': {'pyqt', 'pyqt5', 'null'},
 }
 
 dependencies = {
@@ -89,6 +89,7 @@ dependencies = {
 extra_dependencies = {
     'pyside': {'pyside'},
     'pyqt': {'pyqt'},
+    'pyqt5': {'pyqt5'},
     'wx': {'wxpython'},
     'null': set()
 }
@@ -96,6 +97,7 @@ extra_dependencies = {
 environment_vars = {
     'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
+    'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
     'wx': {'ETS_TOOLKIT': 'wx'},
     'null': {'ETS_TOOLKIT': 'null.image'},
 }

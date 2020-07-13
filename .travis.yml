@@ -18,9 +18,9 @@ env:
 
 matrix:
   include:
-  - env: RUNTIME=3.6 TOOLKITS="null pyqt"
+  - env: RUNTIME=3.6 TOOLKITS="null pyqt pyqt5"
   - os : osx
-    env: RUNTIME=3.6 TOOLKITS="null pyqt"
+    env: RUNTIME=3.6 TOOLKITS="null pyqt pyqt5"
   fast_finish: true
 
 branches:
