@@ -43,8 +43,8 @@ you can run tests in all supported runtimes and toolkits (with cleanup)
 using::
     python edmtool.py test_all
 
-Currently supported runtime values are ``2.7`` and ``3.5``, and currently
-supported toolkits are ``null``, ``pyqt``, ``pyside``, and ``wx``.  Not all
+Currently supported runtime values are ``3.6``, and currently
+supported toolkits are ``null``, ``pyqt``, ``pyqt5`` and ``pyside2``.  Not all
 combinations of toolkits and runtimes will work, but the tasks will fail with
 a clear error if that is the case. Tests can still be run via the usual means
 in other environments if that suits a developer's purpose.
@@ -60,9 +60,6 @@ Other changes to commands should be a straightforward change to the listed
 commands for each task. See the EDM documentation for more information about
 how to run commands within an EDM enviornment.
 """
-
-from __future__ import print_function
-
 import glob
 import os
 import subprocess
@@ -74,9 +71,7 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '2.7': {'pyqt', 'pyside', 'wx', 'null'},
-    '3.5': {'pyqt', 'null'},
-    '3.6': {'pyqt', 'null'},
+    '3.6': {'pyside2', 'pyqt', 'pyqt5', 'null'},
 }
 
 dependencies = {
@@ -92,16 +87,16 @@ dependencies = {
 }
 
 extra_dependencies = {
-    'pyside': {'pyside'},
+    'pyside2': set(),  # pyside2 is pip-installed during the install step
     'pyqt': {'pyqt'},
-    'wx': {'wxpython'},
+    'pyqt5': {'pyqt5'},
     'null': set()
 }
 
 environment_vars = {
-    'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
+    'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
-    'wx': {'ETS_TOOLKIT': 'wx'},
+    'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
     'null': {'ETS_TOOLKIT': 'null.image'},
 }
 
@@ -112,7 +107,7 @@ def cli():
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def install(runtime, toolkit, environment):
@@ -132,13 +127,19 @@ def install(runtime, toolkit, environment):
          "pip install git+https://git@github.com/enthought/enable.git"),
         "edm run -e {environment} -- pip install . --no-deps",
     ]
+    # pip install pyside2, because we don't have it in EDM yet
+    if toolkit == 'pyside2':
+        commands.append(
+            "edm run -e {environment} -- pip install pyside2==5.11"
+        )
+    
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
     click.echo('Done install')
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def test(runtime, toolkit, environment):
@@ -146,11 +147,6 @@ def test(runtime, toolkit, environment):
     """
     parameters = get_parameters(runtime, toolkit, environment)
     environ = environment_vars.get(toolkit, {}).copy()
-    # FIXME : See discussion on https://github.com/enthought/chaco/pull/442
-    # Note that we are overriding the existing definition of `ETS_TOOLKIT`
-    # in the `environment_vars` dictionary.
-    if sys.platform == 'darwin' and runtime == '2.7' and toolkit == 'wx':
-        environ['ETS_TOOLKIT'] = 'wx.image'
 
     environ['PYTHONUNBUFFERED'] = "1"
     commands = [
@@ -172,7 +168,7 @@ def test(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def cleanup(runtime, toolkit, environment):
@@ -189,7 +185,7 @@ def cleanup(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 def test_clean(runtime, toolkit):
     """ Run tests in a clean environment, cleaning up afterwards
@@ -204,7 +200,7 @@ def test_clean(runtime, toolkit):
 
 
 @cli.command()
-@click.option('--runtime', default='3.5')
+@click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 def update(runtime, toolkit, environment):
@@ -239,9 +235,12 @@ def get_parameters(runtime, toolkit, environment):
     parameters = {'runtime': runtime, 'toolkit': toolkit,
                   'environment': environment}
     if toolkit not in supported_combinations[runtime]:
-        msg = ("Python {runtime}, toolkit {toolkit}, "
-               "not supported by test environments")
-        raise RuntimeError(msg.format(**parameters))
+        msg = ("Python {runtime!r}, toolkit {toolkit!r}, "
+               "not supported by test environments ({available})")
+        available = ", ".join(
+            repr(tk) for tk in sorted(supported_combinations[runtime])
+        )
+        raise RuntimeError(msg.format(available=available, **parameters))
     if environment is None:
         tmpl = 'chaco-test-{runtime}-{toolkit}'
         environment = tmpl.format(**parameters)
