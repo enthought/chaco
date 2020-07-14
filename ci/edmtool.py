@@ -87,7 +87,7 @@ dependencies = {
 }
 
 extra_dependencies = {
-    'pyside2': set(),  # pyside2 is pip installed during the install step
+    'pyside2': set(),  # pyside2 is pip-installed during the install step
     'pyqt': {'pyqt'},
     'pyqt5': {'pyqt5'},
     'null': set()
@@ -127,7 +127,7 @@ def install(runtime, toolkit, environment):
          "pip install git+https://git@github.com/enthought/enable.git"),
         "edm run -e {environment} -- pip install . --no-deps",
     ]
-    # pip install pyside2, because we don't have them in EDM yet
+    # pip install pyside2, because we don't have it in EDM yet
     if toolkit == 'pyside2':
         commands.append(
             "edm run -e {environment} -- pip install pyside2==5.11"
