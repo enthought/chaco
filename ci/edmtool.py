@@ -44,7 +44,7 @@ using::
     python edmtool.py test_all
 
 Currently supported runtime values are ``3.6``, and currently
-supported toolkits are ``null``, ``pyqt``, and ``pyqt5``.  Not all
+supported toolkits are ``null``, ``pyqt``, ``pyqt5`` and ``pyside2``.  Not all
 combinations of toolkits and runtimes will work, but the tasks will fail with
 a clear error if that is the case. Tests can still be run via the usual means
 in other environments if that suits a developer's purpose.
@@ -87,20 +87,16 @@ dependencies = {
 }
 
 extra_dependencies = {
-    'pyside2': set(),
-    'pyside': {'pyside'},
+    'pyside2': set(),  # pyside2 is pip installed during the install step
     'pyqt': {'pyqt'},
     'pyqt5': {'pyqt5'},
-    'wx': {'wxpython'},
     'null': set()
 }
 
 environment_vars = {
     'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
-    'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
     'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
-    'wx': {'ETS_TOOLKIT': 'wx'},
     'null': {'ETS_TOOLKIT': 'null.image'},
 }
 
@@ -151,11 +147,6 @@ def test(runtime, toolkit, environment):
     """
     parameters = get_parameters(runtime, toolkit, environment)
     environ = environment_vars.get(toolkit, {}).copy()
-    # FIXME : See discussion on https://github.com/enthought/chaco/pull/442
-    # Note that we are overriding the existing definition of `ETS_TOOLKIT`
-    # in the `environment_vars` dictionary.
-    if sys.platform == 'darwin' and runtime == '2.7' and toolkit == 'wx':
-        environ['ETS_TOOLKIT'] = 'wx.image'
 
     environ['PYTHONUNBUFFERED'] = "1"
     commands = [
