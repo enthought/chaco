@@ -79,12 +79,26 @@ dependencies = {
     "mock",
     "numpy",
     "pandas",
+    "pyface",
     "pygments",
     "pyparsing",
+    "traits",
+    "traitsui",
     "cython",
+    "enable",
     # Needed to install enable from source
     "swig",
 }
+
+# Dependencies we install from source for cron tests
+source_dependencies = {
+    "enable",
+    "pyface",
+    "traits",
+    "traitsui",
+}
+
+github_url_fmt = "git+http://github.com/enthought/{0}.git#egg={0}"
 
 extra_dependencies = {
     'pyside2': set(),  # pyside2 is pip-installed during the install step
@@ -114,7 +128,12 @@ def cli():
 @click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
-def install(runtime, toolkit, environment):
+@click.option(
+    "--source/--no-source",
+    default=False,
+    help="Install ETS packages from source",
+)
+def install(runtime, toolkit, environment, source):
     """ Install project and dependencies into a clean EDM environment.
     """
     parameters = get_parameters(runtime, toolkit, environment)
@@ -126,9 +145,6 @@ def install(runtime, toolkit, environment):
         "edm install -y -e {environment} {packages}",
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
-        # Note that enable dependencies will be installed implicitly using pip
-        ("edm run -e {environment} -- "
-         "pip install git+https://git@github.com/enthought/enable.git"),
         "edm run -e {environment} -- pip install . --no-deps",
     ]
     # pip install pyside2, because we don't have it in EDM yet
@@ -139,6 +155,26 @@ def install(runtime, toolkit, environment):
     
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
+
+    if source:
+        # Remove EDM ETS packages and install them from source
+        cmd_fmt = (
+            "edm plumbing remove-package "
+            "--environment {environment} --force "
+        )
+        commands = [cmd_fmt + source_pkg for source_pkg in source_dependencies]
+        execute(commands, parameters)
+        source_pkgs = [
+            github_url_fmt.format(pkg) for pkg in source_dependencies
+        ]
+        commands = [
+            "python -m pip install {pkg} --no-deps".format(pkg=pkg)
+            for pkg in source_pkgs
+        ]
+        commands = [
+            "edm run -e {environment} -- " + command for command in commands
+        ]
+        execute(commands, parameters)
     click.echo('Done install')
 
 
