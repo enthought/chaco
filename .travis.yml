@@ -23,6 +23,7 @@ env:
     - INSTALL_EDM_VERSION=2.0.0
       PYTHONUNBUFFERED="1"
       QT_DEBUG_PLUGINS="1"
+    - TRAVIS_EVENT_TYPE='cron'
 
 matrix:
   include:
