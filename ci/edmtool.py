@@ -101,7 +101,7 @@ source_dependencies = {
 github_url_fmt = "git+http://github.com/enthought/{0}.git#egg={0}"
 
 extra_dependencies = {
-    'pyside2': set(),  # pyside2 is pip-installed during the install step
+    'pyside2': {'pyside2'},
     'pyqt': {'pyqt'},
     'pyqt5': {'pyqt5'},
     'null': set()
@@ -147,11 +147,6 @@ def install(runtime, toolkit, environment, source):
          " --no-dependencies"),
         "edm run -e {environment} -- pip install . --no-deps",
     ]
-    # pip install pyside2, because we don't have it in EDM yet
-    if toolkit == 'pyside2':
-        commands.append(
-            "edm run -e {environment} -- pip install pyside2==5.11"
-        )
     
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
