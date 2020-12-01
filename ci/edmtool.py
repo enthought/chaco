@@ -91,12 +91,14 @@ dependencies = {
 }
 
 # Dependencies we install from source for cron tests
-source_dependencies = {
+# Order from packages with the most dependencies to one with the least
+# dependencies. Packages are forced re-installed in this order.
+source_dependencies = [
     "enable",
+    "traitsui",
     "pyface",
     "traits",
-    "traitsui",
-}
+]
 
 github_url_fmt = "git+http://github.com/enthought/{0}.git#egg={0}"
 
@@ -151,9 +153,8 @@ def install(runtime, toolkit, environment, source):
         "edm install -y -e {environment} {packages} " + additional_repositories,
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
-        "edm run -e {environment} -- pip install . --no-deps",
     ]
-    
+
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
 
@@ -168,14 +169,25 @@ def install(runtime, toolkit, environment, source):
         source_pkgs = [
             github_url_fmt.format(pkg) for pkg in source_dependencies
         ]
+        # Without the --no-dependencies flag such that new dependencies on
+        # master are brought in.
         commands = [
-            "python -m pip install {pkg} --no-deps".format(pkg=pkg)
+            "python -m pip install --force-reinstall {pkg} ".format(pkg=pkg)
             for pkg in source_pkgs
         ]
         commands = [
             "edm run -e {environment} -- " + command for command in commands
         ]
         execute(commands, parameters)
+
+    # Always install local source again with no dependencies
+    # to mitigate risk of testing against a distributed release.
+    install_local = (
+        "edm run -e {environment} -- "
+        "pip install --force-reinstall --no-dependencies ."
+    )
+    execute([install_local], parameters)
+
     click.echo('Done install')
 
 
