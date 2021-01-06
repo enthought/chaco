@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+
 
 from traits.api import (Bool, Enum, Float, Int, CList, Property, Trait,
         on_trait_change)

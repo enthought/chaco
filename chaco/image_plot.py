@@ -9,7 +9,7 @@
 """ Defines the ImagePlot class.
 """
 
-from __future__ import with_statement
+
 
 # Standard library imports
 from math import ceil, floor, pi

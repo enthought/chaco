@@ -2,7 +2,7 @@
 function.
 """
 
-from __future__ import with_statement
+
 
 from numpy import around, array, asarray, column_stack, float64, inf, zeros, zeros_like
 

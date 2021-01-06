@@ -1,8 +1,5 @@
 """ Defines the BarPlot class.
 """
-
-from __future__ import with_statement
-
 import logging
 
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros

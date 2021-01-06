@@ -3,7 +3,7 @@
 This demonstrates how to create a plot offscreen and save it to an image
 file on disk.
 """
-from __future__ import print_function
+
 
 # Standard library imports
 import os

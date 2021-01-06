@@ -1,7 +1,7 @@
 """ Defines the Label class.
 """
 
-from __future__ import with_statement
+
 
 # Major library imports
 from math import cos, sin, pi

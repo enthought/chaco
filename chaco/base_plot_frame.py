@@ -8,8 +8,6 @@
 #
 #################################################################################
 
-from __future__ import with_statement
-
 # Enthought library imports
 from enable.api import Container
 from traits.api import Enum

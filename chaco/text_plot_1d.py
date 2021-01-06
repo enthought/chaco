@@ -4,7 +4,7 @@ A plot that renders text values along one dimension
 """
 
 
-from __future__ import absolute_import
+
 
 from numpy import array, empty
 

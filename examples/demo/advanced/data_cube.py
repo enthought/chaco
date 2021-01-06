@@ -3,7 +3,7 @@ Allows isometric viewing of a 3D data cube.
 
 Click or click-drag in any data window to set the slice to view.
 """
-from __future__ import print_function
+
 import warnings
 
 # Outstanding TODOs:

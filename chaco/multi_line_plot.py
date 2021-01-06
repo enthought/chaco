@@ -1,7 +1,7 @@
 """ Defines the MultiLinePlot class.
 """
 
-from __future__ import with_statement
+
 
 # Standard library imports
 import warnings

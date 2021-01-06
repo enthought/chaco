@@ -10,7 +10,7 @@ select or unselect them.
     - Mouse wheel to zoom
 
 """
-from __future__ import print_function
+
 
 # FIXME: the 'z' zoom interaction is ill-behaved.
 

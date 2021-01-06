@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+
 
 # Major library imports
 from numpy import column_stack, compress, invert, isnan, transpose

@@ -1,7 +1,7 @@
 """ Defines commands for the Chaco shell.
 """
 
-from __future__ import print_function
+
 
 try:
     from wx import GetApp

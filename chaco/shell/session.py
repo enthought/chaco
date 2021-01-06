@@ -1,7 +1,7 @@
 """ Defines the PlotSession class.
 """
 
-from __future__ import print_function
+
 
 # Enthoght library imports
 from chaco.array_plot_data import ArrayPlotData

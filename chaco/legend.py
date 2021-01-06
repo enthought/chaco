@@ -2,7 +2,7 @@
 CompositeIconRenderer classes.
 """
 
-from __future__ import with_statement
+
 
 from numpy import array, zeros_like
 

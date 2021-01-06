@@ -1,4 +1,4 @@
-from __future__ import with_statement
+
 
 from numpy import array, float64, full_like, ndarray, transpose
 from traits.api import Instance, DelegatesTo, Bool, Int

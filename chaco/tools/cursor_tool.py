@@ -13,7 +13,7 @@ TODO:
     plot component
 
 """
-from __future__ import with_statement
+
 
 # Major library imports
 import numpy
