@@ -137,7 +137,7 @@ class TextPlot(BaseXYPlot):
 
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
-            for pt, label, box in sm.zip(pts, labels, boxes):
+            for pt, label, box in zip(pts, labels, boxes):
                 with gc:
                     if self.h_position == "center":
                         offset[0] = -box[0] / 2 + self.text_offset[0]

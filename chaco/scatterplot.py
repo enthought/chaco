@@ -81,7 +81,7 @@ def render_markers(gc, points, marker, marker_size,
         return
 
     # marker can be string, class, or instance
-    if isinstance(marker, six.string_types):
+    if isinstance(marker, str):
         marker = MarkerNameDict[marker]()
     elif issubclass(marker, AbstractMarker):
         marker = marker()
@@ -136,7 +136,7 @@ def render_markers(gc, points, marker, marker_size,
         if not marker.antialias:
             gc.set_antialias(False)
         if not isinstance(marker, CustomMarker):
-            for pt,size in sm.zip(points, marker_size):
+            for pt,size in zip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)
@@ -145,7 +145,7 @@ def render_markers(gc, points, marker, marker_size,
                     gc.draw_path(marker.draw_mode)
         else:
             path = custom_symbol
-            for pt,size in sm.zip(points, marker_size):
+            for pt,size in zip(points, marker_size):
                 sx, sy = pt
                 with gc:
                     gc.translate_ctm(sx, sy)

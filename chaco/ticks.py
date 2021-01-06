@@ -161,12 +161,12 @@ def auto_ticks ( data_low, data_high, bound_low, bound_high, tick_interval,
     is_auto_low  = (bound_low  == 'auto')
     is_auto_high = (bound_high == 'auto')
 
-    if isinstance(bound_low, six.string_types):
+    if isinstance(bound_low, str):
         lower = data_low
     else:
         lower = float( bound_low )
 
-    if isinstance(bound_high, six.string_types):
+    if isinstance(bound_high, str):
         upper = data_high
     else:
         upper = float( bound_high )

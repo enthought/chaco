@@ -15,7 +15,7 @@ from .safetime import (safe_fromtimestamp, datetime, timedelta, EPOCH,
 # Labels for date and time units.
 datetime_scale = ["microsecond", "second", "minute", "hour",
                   "day", "month", "year"]
-datetime_zeros = list(sm.zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1]))
+datetime_zeros = list(zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1]))
 
 
 __all__ = ["TimeScale", "CalendarScaleSystem", "HMSScales", "MDYScales",
@@ -338,7 +338,7 @@ class TimeScale(AbstractScale):
         ticks = self.ticks(start, end, numlabels)
         labels = self.formatter.format(ticks, numlabels, char_width,
                                        ticker=self)
-        return list(sm.zip(ticks, labels))
+        return list(zip(ticks, labels))
 
     def label_width(self, start, end, numlabels=None, char_width=None):
         """ Returns an estimate of total number of characters used by the

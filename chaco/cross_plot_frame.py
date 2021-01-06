@@ -9,9 +9,6 @@
 
 from __future__ import with_statement
 
-import six
-import six.moves as sm
-
 # Enthought library imports
 from traits.api import Bool, Float
 

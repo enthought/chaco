@@ -4,8 +4,6 @@
 import itertools
 import warnings
 
-import six
-import six.moves as sm
 from numpy import arange, array, ndarray, linspace
 from types import FunctionType
 
@@ -315,7 +313,7 @@ class Plot(DataView):
         if len(data) == 0:
             return
 
-        if isinstance(data, six.string_types):
+        if isinstance(data, str):
             data = (data,)
 
         self.index_scale = index_scale
@@ -774,12 +772,12 @@ class Plot(DataView):
         array_data = value_ds.get_data()
 
         # process bounds to get linspaces
-        if isinstance(xbounds, six.string_types):
+        if isinstance(xbounds, str):
             xbounds = self._get_or_create_datasource(xbounds).get_data()
 
         xs = self._process_2d_bounds(xbounds, array_data, 1, cell_plot)
 
-        if isinstance(ybounds, six.string_types):
+        if isinstance(ybounds, str):
             ybounds = self._get_or_create_datasource(ybounds).get_data()
 
         ys = self._process_2d_bounds(ybounds, array_data, 0, cell_plot)
@@ -879,24 +877,24 @@ class Plot(DataView):
 
         # Create the datasources
         if len(data) == 3:
-            index, bar_min, bar_max = sm.map(self._get_or_create_datasource, data)
+            index, bar_min, bar_max = map(self._get_or_create_datasource, data)
             self.value_range.add(bar_min, bar_max)
             center = None
             min = None
             max = None
         elif len(data) == 4:
-            index, bar_min, center, bar_max = sm.map(self._get_or_create_datasource, data)
+            index, bar_min, center, bar_max = map(self._get_or_create_datasource, data)
             self.value_range.add(bar_min, center, bar_max)
             min = None
             max = None
         elif len(data) == 5:
             index, min, bar_min, bar_max, max = \
-                sm.map(self._get_or_create_datasource, data)
+                map(self._get_or_create_datasource, data)
             self.value_range.add(min, bar_min, bar_max, max)
             center = None
         elif len(data) == 6:
             index, min, bar_min, center, bar_max, max = \
-                sm.map(self._get_or_create_datasource, data)
+                map(self._get_or_create_datasource, data)
             self.value_range.add(min, bar_min, center, bar_max, max)
         self.index_range.add(index)
 
@@ -975,7 +973,7 @@ class Plot(DataView):
         if origin is None:
             origin = self.default_origin
 
-        index, value, vectors = list(sm.map(self._get_or_create_datasource, data))
+        index, value, vectors = list(map(self._get_or_create_datasource, data))
 
         self.index_range.add(index)
         self.value_range.add(value)
@@ -1034,7 +1032,7 @@ class Plot(DataView):
         if len(data) == 0:
             return
 
-        if isinstance(data, six.string_types):
+        if isinstance(data, str):
             data = (data,)
 
         # TODO: support lists of plot types
@@ -1348,7 +1346,7 @@ class Plot(DataView):
                 if new is not None:
                     new.add(datasource)
         range_name = name + "_range"
-        for renderer in itertools.chain(*six.itervalues(self.plots)):
+        for renderer in itertools.chain(*self.plots.values()):
             if hasattr(renderer, range_name):
                 setattr(renderer, range_name, new)
 
