@@ -1,8 +1,6 @@
 """ Defines the ScalesTickGenerator class.
 """
 
-import six.moves as sm
-
 from numpy import array
 
 from traits.api import Any

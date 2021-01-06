@@ -12,7 +12,7 @@ negative values.
 
 # Standard library imports
 import os.path
-from six.moves.urllib import request
+from urllib import request
 
 # Major library imports
 import numpy

@@ -3,9 +3,6 @@
 
 from __future__ import print_function
 
-import six
-import six.moves as sm
-
 try:
     from wx import GetApp
 except ImportError:

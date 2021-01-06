@@ -6,9 +6,6 @@ A plot that renders text values along one dimension
 
 from __future__ import absolute_import
 
-
-import six.moves as sm
-
 from numpy import array, empty
 
 # Enthought library imports

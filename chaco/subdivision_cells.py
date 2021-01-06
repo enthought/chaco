@@ -2,8 +2,6 @@
 """
 import itertools
 
-import six.moves as sm
-
 from numpy import take, array, concatenate, nonzero
 
 from traits.api import HasStrictTraits, Instance, Delegate, Array, List, \
@@ -220,7 +218,7 @@ class RangedCell(AbstractCell):
         return
 
     def _get_indices(self):
-        list_of_indices = [sm.xrange(i, j) for (i, j) in self._ranges]
+        list_of_indices = [range(i, j) for (i, j) in self._ranges]
         return list(itertools.chain(*list_of_indices))
 
 

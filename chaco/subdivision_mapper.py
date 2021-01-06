@@ -2,9 +2,6 @@
 """
 # Major library imports
 
-import six
-import six.moves as sm
-
 import math
 from numpy import array, arange, concatenate, searchsorted, nonzero, transpose, \
                   argsort, zeros, sort, vstack
@@ -169,7 +166,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
             if celltype == RangedCell:
                 self._cellgrid[gridx,gridy].add_ranges([(start,end)])
             else:
-                self._cellgrid[gridx,gridy].add_indices(list(sm.xrange(start,end)))
+                self._cellgrid[gridx,gridy].add_indices(list(range(start,end)))
         return
 
     def _get_indices_for_points(self, pointlist):

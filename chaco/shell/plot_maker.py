@@ -7,8 +7,6 @@ from a set of user-supplied arguments.
 import io
 import re
 
-import six
-
 # Major library imports
 from numpy import all, array, arange, asarray, reshape, shape, transpose
 

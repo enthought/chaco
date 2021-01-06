@@ -3,8 +3,6 @@
 
 from __future__ import print_function
 
-import six
-
 # Enthoght library imports
 from chaco.array_plot_data import ArrayPlotData
 from chaco.default_colormaps import *

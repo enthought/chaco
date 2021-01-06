@@ -5,8 +5,6 @@ A plot that renders text values in two dimensions
 
 from __future__ import absolute_import
 
-import six.moves as sm
-
 from numpy import array, column_stack, empty, isfinite
 
 # Enthought library imports

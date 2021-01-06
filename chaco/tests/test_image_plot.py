@@ -3,8 +3,6 @@ import os
 import tempfile
 from contextlib import contextmanager
 
-import six
-
 import unittest
 
 import numpy as np

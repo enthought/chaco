@@ -6,8 +6,6 @@ special handling of time and calendar axes.
 from bisect import bisect
 from math import ceil, floor, log10
 
-import six.moves as sm
-
 from numpy import abs, argmin, array, isnan, linspace
 
 # Local imports

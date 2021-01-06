@@ -1,7 +1,5 @@
 from __future__ import print_function
 
-import six.moves as sm
-
 from traits.api import Any, Enum, Int, Property, Trait
 
 from enable.api import NativeScrollBar

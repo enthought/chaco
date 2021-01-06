@@ -13,7 +13,6 @@ tick-related values (i.e., bounds and intervals).
 
 """
 # Major library imports
-import six
 
 from numpy import arange, argsort, array, ceil, concatenate, equal, finfo, \
     float64, floor, linspace, log10, minimum, ndarray, newaxis, \

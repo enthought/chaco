@@ -1,6 +1,5 @@
 import warnings
 
-import six.moves as sm
 import unittest
 
 # pickling child classes doesn't work well in the unittest framework unless

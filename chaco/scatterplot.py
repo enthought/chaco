@@ -5,9 +5,6 @@ function.
 # Standard library imports
 import itertools
 
-import six
-import six.moves as sm
-
 # Major library imports
 from numpy import around, array, asarray, column_stack, \
     isfinite, isnan, nanargmin, ndarray, sqrt, sum, transpose, where
