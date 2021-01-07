@@ -88,7 +88,6 @@ class PlotScrollBar(NativeScrollBar):
         dmin = min(mins)
         dmax = max(maxes)
 
-        #import pdb; pdb.set_trace()
         view = float(range.high - range.low)
 
         # Take into account the range's current low/high and the data bounds

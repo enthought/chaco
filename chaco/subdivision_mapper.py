@@ -205,8 +205,6 @@ class SubdivisionDataMapper(AbstractDataMapper):
             # extract the column indices, we need to sort them before
             # passing them to find_runs().
             grid_column_indices = sort(y_sorted[start:end][:,0])
-            #pdb.set_trace()
-            #print grid_column_indices.shape
             for span in find_runs(grid_column_indices):
                 x = self._cell_lefts[span[0]]
                 y = self._cell_bottoms[rownum]
@@ -215,41 +213,8 @@ class SubdivisionDataMapper(AbstractDataMapper):
                 rects.append((x,y,w,h))
         return rects
 
-    #~ def _array_insertion(self, celltype):
-        #~ # use searchsorted() to determine where the borders split the
-        #~ # data array
-        #~ x_bins = searchsorted(data[:,0], self._cell_lefts[1:])
-        #~ x_bins_rshift = right_shift(x_bins, 0)
-        #~ grid_x = 0
-        #~ for x_index_range in zip(x_bins_rshift, x_bins):
-            #~ # now do the same thing in y; the tricky part is remembering
-            #~ # to use axis=1 since everything happens on the y-coordinate
-            #~ columnpoints = data[x_index_range[0] : x_index_range[1]]
-            #~ columnpoints = take(columnpoints, argsort(columnpoints[:,1]))
-
-            #~ # use searchsorted() to determine where the cell bottoms split the
-            #~ # set of column points.
-            #~ y_bins = searchsorted(columnpoints[:,1], self._cell_bottoms)
-            #~ y_bins_rshift = right_shift(y_bins, 0)
-            #~ grid_y = 0
-            #~ for startndx, endndx in zip(y_bins_rshift, y_bins):
-                #~ if startndx != endndx:
-                    #~ cell = self._cellgrid[grid_x, grid_y]
-                    #~ cellpts = columnpoints[startndx:endndx]
-                    #~ if cell.sort_order == 'none':
-                        #~ cell.points = cellpts
-                    #~ elif cell.sort_order == 'ascending':
-                        #~ cell.points = find_runs(sort_points(cellpts))
-                    #~ elif cell.sort_order == 'descending':
-                        #~ cell.points = find_runs(sort_points(cellpts)[::-1], 'descending')
-                    #~ else:
-                        #~ raise RuntimeError("Invalid sort_order: " + cell.sort_order)
-        #~ return
 
 class SubdivisionLineDataMapper(SubdivisionDataMapper):
     """ A subdivision data mapper that uses ranged cells.
     """
     celltype = RangedCell
-
-
-#EOF

@@ -431,7 +431,6 @@ class RangeSelection(AbstractController):
             tmp = self._get_axis_coord(event)
             if tmp >= low and tmp <= high:
                 new_edge = self.mapper.map_data(self._get_axis_coord(event))
-                #new_edge = self._map_data(self._get_axis_coord(event))
                 if self._drag_edge == "high":
                     low_val = self.selection[0]
                     if new_edge >= low_val:

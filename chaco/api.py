@@ -111,10 +111,6 @@ from .ticks import AbstractTickGenerator, DefaultTickGenerator, auto_ticks, auto
 # Grid
 from .grid import PlotGrid
 
-# Style stuff
-#from stylable import Stylable
-#from stylesheets import Style, StyleSheet
-
 # Tools
 from .abstract_controller import AbstractController
 

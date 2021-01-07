@@ -280,7 +280,6 @@ class Legend(AbstractOverlay):
 
                 # Try to render the icon
                 icon_y = y + (label_height - icon_height) / 2
-                #plots = self.plots[label_name]
                 plots = self._cached_visible_plots[i]
                 render_args = (gc, icon_x, icon_y, icon_width, icon_height)
 
