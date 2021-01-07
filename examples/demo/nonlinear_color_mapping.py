@@ -16,7 +16,7 @@ from traitsui.api import Item, UItem, HGroup, View, RangeEditor
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, ColorBar, HPlotContainer, \
                       LinearMapper, LogMapper, CMapImagePlot, \
-                      TransformColorMapper, jet
+                      TransformColorMapper, viridis
 from chaco.tools.api import PanTool, ZoomTool
 
 
@@ -103,7 +103,7 @@ def _create_plot_component(model):
     plot = Plot(pd, padding=50)
 
     # Use a TransformColorMapper for the color map.
-    tcm = TransformColorMapper.from_color_map(jet)
+    tcm = TransformColorMapper.from_color_map(viridis)
 
     # Create the image plot renderer in the main plot.
     renderer = plot.img_plot("imagedata", 

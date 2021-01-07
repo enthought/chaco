@@ -10,7 +10,7 @@ from numpy import linspace, meshgrid, sin
 
 # Enthought library imports
 from chaco.shell import show, title, pcolor, colormap
-from chaco.default_colormaps import jet
+from chaco.default_colormaps import viridis
 
 
 # Crate some scalar data
@@ -23,7 +23,7 @@ z = sin(x) * y
 pcolor(x,y,z)
 
 #change the color mapping
-colormap(jet)
+colormap(viridis)
 
 # Add some titles
 title("pseudo colormap image plot")

@@ -1,7 +1,7 @@
 
 from numpy import linspace, meshgrid, exp
 
-from chaco.api import ArrayPlotData, Plot, jet
+from chaco.api import ArrayPlotData, Plot, viridis
 from enable.component_editor import ComponentEditor
 from traits.api import Enum, HasTraits, Instance
 from traitsui.api import Group, Item, View
@@ -33,7 +33,7 @@ class ImagePlotTraits(HasTraits):
         plot = Plot(plotdata)
         # Create an image plot in the Plot
         self.renderer = plot.img_plot("imagedata", name="plot1",
-                                      xbounds=xgrid, ybounds=ygrid, colormap=jet)[0]
+                                      xbounds=xgrid, ybounds=ygrid, colormap=viridis)[0]
         self.plot = plot
 
     def _origin_changed(self):

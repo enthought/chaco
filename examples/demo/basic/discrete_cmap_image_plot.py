@@ -18,7 +18,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, jet, Plot
+from chaco.api import ArrayPlotData, viridis, Plot
 from chaco.default_colormaps import accent
 from chaco.tools.api import PanTool, ZoomTool
 

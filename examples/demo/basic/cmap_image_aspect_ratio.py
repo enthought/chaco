@@ -18,7 +18,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, jet, Plot
+from chaco.api import ArrayPlotData, viridis, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
@@ -40,7 +40,7 @@ def _create_plot_component():
     img_plot = plot.img_plot("imagedata",
                              xbounds=(0, 10),
                              ybounds=(0, 5),
-                             colormap=jet)[0]
+                             colormap=viridis)[0]
     img_plot.index_mapper.aspect_ratio = 0.5
     img_plot.index_mapper.maintain_aspect_ratio = True
 

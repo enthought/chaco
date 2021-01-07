@@ -182,7 +182,7 @@ class PlotFrame(DemoFrame):
     # Private Traits
     #---------------------------------------------------------------------------
 
-    _cmap = Trait(jet, Callable)
+    _cmap = Trait(viridis, Callable)
 
     def _index_callback(self, tool, x_index, y_index):
         plane = tool.token
@@ -226,15 +226,8 @@ class PlotFrame(DemoFrame):
 
     def _create_window(self):
         # Create the model
-        #try:
-        #    self.model = model = BrainModel()
-        #    cmap = bone
-        #except SystemExit:
-        #    sys.exit()
-        #except:
-        #    print "Unable to load BrainModel, using generated data cube."
         self.model = model = Model()
-        cmap = jet
+        cmap = viridis
         self._update_model(cmap)
 
         datacube = self.colorcube
