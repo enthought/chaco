@@ -118,7 +118,6 @@ class LineSegmentTool(AbstractOverlay):
         Called by a PlotComponent when this is no longer the active tool.
         """
         self.reset()
-        #self.component.window.set_pointer("arrow")
         return
 
     #------------------------------------------------------------------------

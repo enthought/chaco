@@ -66,7 +66,6 @@ class MultiArrayDataSource(AbstractDataSource):
         super(MultiArrayDataSource, self).__init__(**traits)
         self._set_data(data)
         self.sort_order = sort_order
-        #self._compute_bounds()
         self.data_changed = True
         return
 

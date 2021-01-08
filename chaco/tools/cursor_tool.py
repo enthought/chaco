@@ -102,8 +102,6 @@ class BaseCursorTool(LineInspector, DragTool):
             # The second fastest method - draw the path into a compiled path, then
             # draw the compiled path at each point
             elif hasattr(gc, 'draw_path_at_points'):
-                #if debug:
-                #    import pdb; pdb.set_trace()
                 path = gc.get_empty_path()
                 marker.add_to_path(path, marker_size)
                 mode = marker.draw_mode

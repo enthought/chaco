@@ -58,9 +58,6 @@ class PanTool(DragTool):
     # The tool is not visible (overrides BaseTool).
     visible = False
 
-    # The possible event states of this tool (overrides enable.Interactor).
-    #event_state = Enum("normal", "panning")
-
 
     def drag_start(self, event):
         """ Called when the drag operation starts """
