@@ -19,7 +19,6 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, viridis, Plot
-from chaco.default_colormaps import accent
 from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
@@ -41,7 +40,7 @@ def _create_plot_component():
     img_plot = plot.img_plot("imagedata",
                              xbounds=(0, 10),
                              ybounds=(0, 5),
-                             colormap=accent)[0]
+                             colormap=viridis)[0]
 
     # Tweak some of the plot properties
     plot.title = "My First Image Plot"
