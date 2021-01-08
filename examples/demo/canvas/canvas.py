@@ -25,7 +25,7 @@ from traits.api import Any, Bool, Enum, Float, HasTraits, Instance, \
 
 # Chaco imports
 from chaco.api import AbstractOverlay, ArrayPlotData, \
-        Plot, jet, ScatterPlot, LinePlot, LinearMapper
+        Plot, ScatterPlot, LinePlot, LinearMapper
 from chaco.tools.api import PanTool, ZoomTool , LegendTool
 
 # Canvas imports

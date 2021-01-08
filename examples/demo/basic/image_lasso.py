@@ -16,7 +16,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, jet, Plot, LassoOverlay
+from chaco.api import ArrayPlotData, viridis, Plot, LassoOverlay
 from chaco.tools.api import LassoSelection, LassoSelection
 
 #===============================================================================
@@ -55,7 +55,7 @@ def _create_plot_component():# Create a scalar field to colormap
     img_plot = plot.img_plot("imagedata",
                              xbounds=xbounds[:2],
                              ybounds=ybounds[:2],
-                             colormap=jet)[0]
+                             colormap=viridis)[0]
 
     # Tweak some of the plot properties
     plot.title = "Image Plot with Lasso"

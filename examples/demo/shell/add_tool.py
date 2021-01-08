@@ -11,7 +11,7 @@ from numpy import linspace, meshgrid, sin
 
 # Enthought library imports
 from chaco.shell import show, title, pcolor, colormap, curplot
-from chaco.default_colormaps import jet
+from chaco.default_colormaps import viridis
 
 # Crate some scalar data
 xs = linspace(0,10,200)
@@ -23,7 +23,7 @@ z = sin(x)*y
 pcolor(x, y, z, name='sin_x_times_y')
 
 # Change the color mapping
-colormap(jet)
+colormap(viridis)
 
 # Add some titles
 title("pseudo colormap image plot")

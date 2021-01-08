@@ -123,7 +123,7 @@ class PlotUI(HasTraits):
     _image_index = Instance(GridDataSource)
     _image_value = Instance(ImageData)
 
-    _cmap = Trait(jet, Callable)
+    _cmap = Trait(viridis, Callable)
 
     #---------------------------------------------------------------------------
     # Public View interface
@@ -396,7 +396,7 @@ class ModelView(HasTraits):
         if self.model is not None and self.view is not None:
             self.view.update(self.model)
 
-options_dict = {'colormap' : "jet",
+options_dict = {'colormap' : "viridis",
                 'num_levels' : 15,
                 'function' : "tanh(x**2+y)*cos(y)*jn(0,x+y*2)"}
 model=Model(**options_dict)
@@ -418,7 +418,7 @@ def main(argv=None):
     parser = OptionParser(usage=usage, version="%prog 1.0")
 
     parser.add_option("-c", "--colormap",
-                  action="store", type="string", dest="colormap", default="jet",
+                  action="store", type="string", dest="colormap", default="viridis",
                   metavar="CMAP", help="choose a default colormapper")
 
     parser.add_option("-n", "--nlevels",

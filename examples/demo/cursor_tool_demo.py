@@ -14,7 +14,7 @@ import numpy
 
 # Enthought library imports
 from chaco.api import create_line_plot, OverlayPlotContainer, \
-             HPlotContainer, Plot, ArrayPlotData, jet
+             HPlotContainer, Plot, ArrayPlotData, viridis
 from chaco.tools.api import PanTool, ZoomTool
 from chaco.tools.cursor_tool import CursorTool, BaseCursorTool
 from enable.component_editor import ComponentEditor
@@ -81,7 +81,7 @@ class CursorTest(HasTraits):
         cmapImgPlot = img.img_plot("img",
                      xbounds = xy_range,
                      ybounds = xy_range,
-                     colormap = jet)[0]
+                     colormap = viridis)[0]
 
         container.add(img)
 

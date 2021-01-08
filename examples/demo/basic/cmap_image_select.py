@@ -19,7 +19,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, ColorBar, HPlotContainer, jet, \
+from chaco.api import ArrayPlotData, ColorBar, HPlotContainer, viridis, \
                                  LinearMapper, Plot
 from chaco.tools.api import PanTool, RangeSelection, \
                                        RangeSelectionOverlay, ZoomTool
@@ -46,7 +46,7 @@ def _create_plot_component():
                   name="my_plot",
                   xbounds=xbounds[:2],
                   ybounds=ybounds[:2],
-                  colormap=jet)
+                  colormap=viridis)
 
     # Tweak some of the plot properties
     plot.title = "Selectable Image Plot"
