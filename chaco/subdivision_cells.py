@@ -2,8 +2,6 @@
 """
 import itertools
 
-import six.moves as sm
-
 from numpy import take, array, concatenate, nonzero
 
 from traits.api import HasStrictTraits, Instance, Delegate, Array, List, \
@@ -52,7 +50,7 @@ def arg_find_runs(int_array, order='ascending'):
     rshifted = right_shift(int_array, int_array[0]-increment)
     start_indices = concatenate([[0], nonzero(int_array - (rshifted+increment))[0]])
     end_indices = left_shift(start_indices, len(int_array))
-    return list(sm.zip(start_indices, end_indices))
+    return list(zip(start_indices, end_indices))
 
 
 class AbstractCell(HasStrictTraits):
@@ -220,7 +218,7 @@ class RangedCell(AbstractCell):
         return
 
     def _get_indices(self):
-        list_of_indices = [sm.xrange(i, j) for (i, j) in self._ranges]
+        list_of_indices = [range(i, j) for (i, j) in self._ranges]
         return list(itertools.chain(*list_of_indices))
 
 

@@ -1,7 +1,7 @@
 """ Defines the LassoOverlay class.
 """
 
-from __future__ import with_statement
+
 
 from numpy import concatenate, newaxis
 

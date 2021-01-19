@@ -75,7 +75,6 @@ supported_combinations = {
 }
 
 dependencies = {
-    "six",
     "mock",
     "numpy",
     "pandas",

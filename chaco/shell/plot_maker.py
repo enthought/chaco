@@ -7,8 +7,6 @@ from a set of user-supplied arguments.
 import io
 import re
 
-import six
-
 # Major library imports
 from numpy import all, array, arange, asarray, reshape, shape, transpose
 
@@ -216,7 +214,7 @@ def _process_group(group, plot_data=None):
         # with a format string, or an x and y were provided.  If PlotData
         # was provided, use that to disambiguate; otherwise, assume that the
         # second string is a format string.
-        if isinstance(group[1], six.string_types):
+        if isinstance(group[1], str):
             if plot_data and group[1] in plot_data.list_data():
                 x = group[0]
                 y = group[1]
@@ -256,7 +254,7 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
     groups = []
     valid_names = plotdata.list_data()
     for arg in data_and_formats:
-        if not isinstance(arg, six.string_types):
+        if not isinstance(arg, str):
             # an array was passed in
             cur_group.append(plotdata.set_data("", arg, generate_name=True))
         elif arg in valid_names:
@@ -312,7 +310,7 @@ def do_imread(*data, **kwargs):
     """ Returns image file as array. """
 
     # Check to see if the data given is either a file path or a file object
-    if isinstance(data[0], six.string_types) or isinstance(data[0], io.IOBase):
+    if isinstance(data[0], str) or isinstance(data[0], io.IOBase):
         return ImageData.fromfile(data[0])
     else:
         raise ValueError("do_imread takes a string filename")
@@ -405,7 +403,7 @@ def _get_or_create_plot_data(data, plotdata):
     """
     valid_names = plotdata.list_data()
 
-    if not isinstance(data, six.string_types):
+    if not isinstance(data, str):
         name = plotdata.set_data("", data, generate_name=True)
     else:
         if data not in valid_names:

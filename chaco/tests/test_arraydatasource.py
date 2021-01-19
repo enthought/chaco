@@ -6,9 +6,6 @@ import pickle
 
 import unittest
 
-import six
-import six.moves as sm
-
 from numpy import arange, array, allclose, empty, isnan, nan, ones
 from numpy.testing import assert_array_equal
 import numpy as np
@@ -178,7 +175,7 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
 
     def test_bounds_non_numeric(self):
         myarray = np.array([u'abc', u'foo',
-                            u'bar', u'def'], dtype=six.text_type)
+                            u'bar', u'def'], dtype=str)
         data_source = ArrayDataSource(myarray)
         bounds = data_source.get_bounds()
         self.assertEqual(bounds, (u'abc', u'def'))
@@ -264,7 +261,7 @@ class PointDataTestCase(unittest.TestCase):
     # Since PointData is mostly the same as ScalarData, the key things to
     # test are functionality that use _compute_bounds() and reverse_map().
     def create_array(self):
-        return array(list(zip(list(sm.range(10)), list(sm.range(0, 100, 10)))))
+        return array(list(zip(list(range(10)), list(range(0, 100, 10)))))
 
     def test_basic_set_get(self):
         myarray = self.create_array()

@@ -3,7 +3,7 @@ Scatterplot in one dimension only
 """
 
 
-from __future__ import absolute_import
+
 
 from numpy import empty
 

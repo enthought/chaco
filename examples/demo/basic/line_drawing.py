@@ -16,7 +16,7 @@ Line segment drawing:
       drawn points will be reset.  By default, _finalize_selection() does nothing,
       but subclasses can customize this.
 """
-from __future__ import print_function
+
 
 # Major library imports
 from numpy import sort

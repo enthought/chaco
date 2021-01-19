@@ -8,7 +8,7 @@
 #
 #################################################################################
 
-from __future__ import with_statement
+
 
 # Enthought library imports
 from traits.api import Bool

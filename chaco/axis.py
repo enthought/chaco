@@ -1,8 +1,5 @@
 """ Defines the PlotAxis class, and associated validator and UI.
 """
-
-from __future__ import with_statement
-
 # Major library import
 from numpy import array, around, absolute, cos, dot, float64, inf, pi, \
                   sqrt, sin, transpose

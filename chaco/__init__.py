@@ -10,6 +10,5 @@ __requires__ = [
    'traitsui',
    'pyface',
    'numpy',
-   'enable',
-   'six'
+   'enable'
 ]

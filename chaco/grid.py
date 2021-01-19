@@ -2,9 +2,7 @@
 function.
 """
 
-from __future__ import with_statement
 
-import six
 
 from numpy import around, array, asarray, column_stack, float64, inf, zeros, zeros_like
 
@@ -30,7 +28,7 @@ def float_or_auto(val):
     try:
         return float(val)
     except:
-        if isinstance(val, six.string_types) and val == "auto":
+        if isinstance(val, str) and val == "auto":
             return val
     raise TraitError("Tick interval must be a number or 'auto'.")
 

@@ -2,9 +2,6 @@
 """
 # Major library imports
 
-import six
-import six.moves as sm
-
 import math
 from numpy import array, arange, concatenate, searchsorted, nonzero, transpose, \
                   argsort, zeros, sort, vstack
@@ -164,12 +161,12 @@ class SubdivisionDataMapper(AbstractDataMapper):
         start_indices = concatenate([[0], diff_indices])
         end_indices = concatenate([diff_indices, [len(self._data)]])
 
-        for start,end in sm.zip(start_indices, end_indices):
+        for start,end in zip(start_indices, end_indices):
             gridx, gridy = cell_indices[start]  # can use 'end' here just as well
             if celltype == RangedCell:
                 self._cellgrid[gridx,gridy].add_ranges([(start,end)])
             else:
-                self._cellgrid[gridx,gridy].add_indices(list(sm.xrange(start,end)))
+                self._cellgrid[gridx,gridy].add_indices(list(range(start,end)))
         return
 
     def _get_indices_for_points(self, pointlist):
@@ -200,7 +197,7 @@ class SubdivisionDataMapper(AbstractDataMapper):
         row_end_indices = left_shift(row_start_indices, len(cells))
 
         rects = []
-        for rownum, start, end in sm.zip(rownums, row_start_indices, row_end_indices):
+        for rownum, start, end in zip(rownums, row_start_indices, row_end_indices):
             # y_sorted is sorted by the J (row) coordinate, so after we
             # extract the column indices, we need to sort them before
             # passing them to find_runs().

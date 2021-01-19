@@ -1,7 +1,5 @@
 """ Defines ArrayPlotData.
 """
-import six
-import six.moves as sm
 from numpy import array, ndarray
 
 # Enthought library imports
@@ -63,7 +61,7 @@ class ArrayPlotData(AbstractPlotData):
         """
         super(AbstractPlotData, self).__init__()
         self._update_data(kw)
-        data = dict(sm.zip(self._generate_names(len(data)), data))
+        data = dict(zip(self._generate_names(len(data)), data))
         self._update_data(data)
 
 

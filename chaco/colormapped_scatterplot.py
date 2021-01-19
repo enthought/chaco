@@ -3,8 +3,6 @@
 
 from __future__ import with_statement
 
-import six
-import six.moves as sm
 # Major library imports
 from numpy import argsort, array, concatenate, nonzero, invert, take, \
                   isnan, transpose, newaxis, zeros, ndarray

@@ -1,7 +1,7 @@
 """ Defines the PlotLabel class.
 """
 
-from __future__ import with_statement
+
 
 from enable.font_metrics_provider import font_metrics_provider
 from traits.api import DelegatesTo, Enum, Instance, Str, Trait

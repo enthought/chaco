@@ -1,7 +1,7 @@
 """ Defines the ToolTip class.
 """
 
-from __future__ import with_statement
+
 
 from numpy import array
 

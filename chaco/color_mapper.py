@@ -1,7 +1,5 @@
 """ Defines the ColorMapper and ColorMapTemplate classes.
 """
-import six
-import six.moves as sm
 
 # Major library imports
 from numpy import arange, array, asarray, clip, divide, float32, int8, isinf, \
@@ -135,7 +133,7 @@ class ColorMapper(AbstractColormap):
         # From the offsets and the color data, generate a segment map.
         segment_map = {}
         red_values = palette[:,0]
-        segment_map['red'] = list(sm.zip(offsets, red_values, red_values))
+        segment_map['red'] = list(zip(offsets, red_values, red_values))
         green_values = palette[:,1]
         segment_map['green'] = list(zip(offsets, green_values, green_values))
         blue_values = palette[:,2]
@@ -305,7 +303,7 @@ class ColorMapper(AbstractColormap):
         if self.color_depth is 'rgba':
             luts.append(self._alpha_lut)
 
-        result = list(sm.zip(*luts))
+        result = list(zip(*luts))
 
         return result
 

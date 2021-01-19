@@ -2,7 +2,7 @@
 
 We write an interactor tha prints out all the events it receives.
 """
-from __future__ import print_function
+
 
 from chaco.api import AbstractController
 

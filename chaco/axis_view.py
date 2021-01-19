@@ -1,7 +1,4 @@
 """ Defines the Traits UI view for a PlotAxis """
-
-import six
-
 from traits.api import TraitError
 from traitsui.api import View, HGroup, Group, VGroup, Item, TextEditor
 
@@ -14,7 +11,7 @@ def float_or_auto(val):
     try:
         return float(val)
     except:
-        if isinstance(val, six.string_types) and val == "auto":
+        if isinstance(val, str) and val == "auto":
             return val
     raise TraitError("Tick interval must be a number or 'auto'.")
 
@@ -32,11 +29,8 @@ AxisView = View(VGroup(
                     label="Main"),
                 Group(
                     Item("tick_color", label="Color", style="custom"),
-                         #editor=EnableRGBAColorEditor()),
                     Item("tick_weight", label="Thickness"),
-                    #Item("tick_label_font", label="Font"),
                     Item("tick_label_color", label="Label color", style="custom"),
-                         #editor=EnableRGBAColorEditor()),
                     HGroup(
                         Item("tick_in", label="Tick in"),
                         Item("tick_out", label="Tick out"),
@@ -45,7 +39,6 @@ AxisView = View(VGroup(
                     label="Ticks"),
                 Group(
                     Item("axis_line_color", label="Color", style="custom"),
-                         #editor=EnableRGBAColorEditor()),
                     Item("axis_line_weight", label="Thickness"),
                     Item("axis_line_visible", label="Visible"),
                     label="Line"),

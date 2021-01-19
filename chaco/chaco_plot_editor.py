@@ -2,8 +2,6 @@
 Traits UI editor for WX, based on the Chaco1 PlotEditor in
 traits.ui.wx.plot_editor.
 """
-import six
-import six.moves as sm
 # Enthought library imports
 from traits.etsconfig.api import ETSConfig
 from enable.api import black_color_trait, LineStyle, ColorTrait,\

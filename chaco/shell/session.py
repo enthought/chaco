@@ -1,9 +1,7 @@
 """ Defines the PlotSession class.
 """
 
-from __future__ import print_function
 
-import six
 
 # Enthoght library imports
 from chaco.array_plot_data import ArrayPlotData
@@ -82,7 +80,7 @@ class PlotSession(HasTraits):
 
     def get_window(self, ident):
         """ Retrieves a window either by index or by name """
-        if isinstance(ident, six.string_types):
+        if isinstance(ident, str):
             return self.window_map.get(ident, None)
         elif type(ident) == int and ident < len(self.windows):
             return self.windows[ident]
@@ -98,7 +96,7 @@ class PlotSession(HasTraits):
             The name of the window in **window_map**, or the index of the
             window in **windows**.
         """
-        if isinstance(ident, six.string_types):
+        if isinstance(ident, str):
             if ident in self.window_map:
                 win = self.window_map[ident]
                 del self.window_map[ident]
@@ -149,7 +147,7 @@ class PlotSession(HasTraits):
                 p.invalidate_draw()
                 p.request_redraw()
             elif hasattr(p, "colors"):
-                if isinstance(p.colors, six.string_types) or \
+                if isinstance(p.colors, str) or \
                    isinstance(p.colors, AbstractColormap):
                     p.colors = color_map_dict[self.colormap]
 

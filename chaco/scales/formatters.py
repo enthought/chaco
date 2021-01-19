@@ -4,9 +4,6 @@ Classes for formatting labels for values or times.
 
 from math import ceil, floor, fmod, log10
 
-import six
-import six.moves as sm
-
 from numpy import abs, all, array, asarray, amax, amin
 from .safetime import strftime, time, safe_fromtimestamp, localtime
 import warnings
@@ -132,9 +129,9 @@ class BasicFormatter(object):
         else:
             # For decimal mode,
             if not (ticks % 1).any():
-                labels = list(sm.map(str, ticks.astype(int)))
+                labels = list(map(str, ticks.astype(int)))
             else:
-                labels = list(sm.map(str, ticks))
+                labels = list(map(str, ticks))
 
         return labels
 
@@ -213,7 +210,7 @@ class BasicFormatter(object):
             return 0, 0
 
         # use the start and end points as ticks and average their label sizes
-        labelsizes = sm.map(len, self.format([start, end]))
+        labelsizes = map(len, self.format([start, end]))
         avg_size = sum(labelsizes) / 2.0
 
         if ticker:
@@ -240,7 +237,7 @@ class IntegerFormatter(BasicFormatter):
     def format(self, ticks, numlabels=None, char_width=None, fill_ratio=0.3):
         """ Formats integer tick labels.
         """
-        return list(sm.map(str, sm.map(int, ticks)))
+        return list(map(str, map(int, ticks)))
 
 
 class OffsetFormatter(BasicFormatter):
@@ -367,7 +364,7 @@ class OffsetFormatter(BasicFormatter):
         elif char_width:
             est_ticks = round(fill_ratio * char_width / avg_size)
 
-        start, mid, end = sm.map(len, self.format([start, (start+end)/2.0, end]))
+        start, mid, end = map(len, self.format([start, (start+end)/2.0, end]))
         if est_ticks > 2:
             size = start + end + (est_ticks-2) * mid
         else:

@@ -1,7 +1,7 @@
 """ Defines the LinePlot class.
 """
 
-from __future__ import with_statement
+
 
 # Standard library imports
 import warnings

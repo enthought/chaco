@@ -1,5 +1,3 @@
-import six
-
 from numpy import array, isscalar, issubsctype, linspace, number
 
 # Enthought library imports
@@ -101,7 +99,7 @@ class BaseContourPlot(Base2DPlot):
             self._colors = [self._color_map_trait_] * numcolors
 
         # If we are given a single color, apply it to all levels
-        elif isinstance(colors, six.string_types):
+        elif isinstance(colors, str):
             self._color_map_trait = colors
             self._colors = [self._color_map_trait_] * numcolors
 

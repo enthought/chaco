@@ -6,9 +6,6 @@ Defines the DataRange1D class.
 # Major library imports
 from math import ceil, floor, log
 
-import six
-import six.moves as sm
-
 from numpy import compress, inf, isinf, isnan, ndarray
 
 # Enthought library imports
@@ -342,7 +339,7 @@ class DataRange1D(BaseDataRange):
                 self._high_value = self._high_setting
             return
         else:
-            mins, maxes = sm.zip(*bounds_list)
+            mins, maxes = zip(*bounds_list)
 
             low_start, high_start = \
                      calc_bounds(self._low_setting, self._high_setting,

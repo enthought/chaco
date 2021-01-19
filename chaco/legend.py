@@ -2,10 +2,7 @@
 CompositeIconRenderer classes.
 """
 
-from __future__ import with_statement
 
-import six
-import six.moves as sm
 
 from numpy import array, zeros_like
 
@@ -39,7 +36,7 @@ class CompositeIconRenderer(AbstractCompositeIconRenderer):
     """
     def render_icon(self, plots, *render_args):
         """ Renders an icon for a list of plots. """
-        types = set(sm.map(type, plots))
+        types = set(map(type, plots))
         if types == set([ScatterPlot]):
             self._render_scatterplots(plots, *render_args)
         elif types == set([LinePlot]):
@@ -357,7 +354,7 @@ class Legend(AbstractOverlay):
         if len(self.plots) == 0:
             return [0, 0]
 
-        plot_names, visible_plots = list(sm.map(list, sm.zip(*sorted(self.plots.items()))))
+        plot_names, visible_plots = list(map(list, zip(*sorted(self.plots.items()))))
         label_names = self.labels
         if len(label_names) == 0:
             if len(self.plots) > 0:
