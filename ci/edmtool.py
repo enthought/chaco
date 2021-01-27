@@ -99,7 +99,7 @@ source_dependencies = [
     "traits",
 ]
 
-github_url_fmt = "git+http://github.com/enthought/{0}.git#egg={0}"
+github_url_fmt = "git+http://github.com/enthought/{0}.git@refactor/split-gl-backend#egg={0}"
 
 extra_dependencies = {
     'pyside2': {'pyside2'},
@@ -155,6 +155,13 @@ def install(runtime, toolkit, environment, source):
     ]
 
     click.echo("Creating environment '{environment}'".format(**parameters))
+    execute(commands, parameters)
+
+    enable_source = github_url_fmt.format("enable")
+    commands = [
+        "edm plumbing remove-package --environment {environment} --force enable",
+        "edm run -e {environment} -- " + "python -m pip install --force-reinstall {0}".format(enable_source),
+    ]
     execute(commands, parameters)
 
     if source:
