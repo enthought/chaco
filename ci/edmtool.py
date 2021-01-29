@@ -99,7 +99,7 @@ source_dependencies = [
     "traits",
 ]
 
-github_url_fmt = "git+http://github.com/enthought/{0}.git@refactor/split-gl-backend#egg={0}"
+github_url_fmt = "git+http://github.com/enthought/{0}.git@deps/system-freetype#egg={0}"
 
 extra_dependencies = {
     'pyside2': {'pyside2'},
