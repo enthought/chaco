@@ -29,7 +29,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
 
     #: Defines a meta-key, that works with always_on to set the zoom mode. This
     #: is useful when the zoom tool is used in conjunction with the pan tool.
-    always_on_modifier = Enum('control', 'shift', 'control', 'alt')
+    always_on_modifier = Enum('control', 'shift', 'alt')
 
     #: The mouse button that initiates the drag.  If "None", then the tool
     #: will not respond to drag.  (It can still respond to mousewheel events.)
