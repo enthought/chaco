@@ -1,3 +1,7 @@
+"""
+Plot where depth is the index such that the plot is vertical and the origin is 
+the upper left
+"""
 import numpy
 from chaco.api import ToolbarPlot, ArrayPlotData
 from chaco.tools.api import LineInspector

@@ -75,14 +75,14 @@ class BarPlot(AbstractPlotRenderer):
     #: Color to fill the bars.
     fill_color = black_color_trait
 
-    #: The RGBA tuple for rendering lines.  It is always a tuple of length 4.
-    #: It has the same RGB values as line_color_, and its alpha value is the
-    #: alpha value of self.line_color multiplied by self.alpha. 
+    #: The RGBA tuple for rendering lines. It is always a tuple of length 4.
+    #: It has the same RGB values as :attr:`line_color`, and its alpha value
+    #: is the alpha value of self.line_color multiplied by self.alpha.
     effective_line_color = Property(Tuple, depends_on=['line_color', 'alpha'])
-    
-    #: The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
-    #: It has the same RGB values as fill_color_, and its alpha value is the
-    #: alpha value of self.fill_color multiplied by self.alpha.   
+
+    #: The RGBA tuple for rendering the fill. It is always a tuple of length
+    #: 4. It has the same RGB values as :attr:`fill_color`, and its alpha
+    #: value is the alpha value of self.fill_color multiplied by self.alpha.
     effective_fill_color = Property(Tuple, depends_on=['fill_color', 'alpha'])
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0

@@ -1,3 +1,7 @@
+""" Displays a plot with a few buttons to control which overlay
+    to display
+"""
+
 import numpy as np
 
 from chaco.api import LinearMapper, Plot, ArrayDataSource, DataRange1D

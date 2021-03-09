@@ -1,3 +1,8 @@
+"""
+Domain Limits
+=============
+"""
+
 import numpy
 
 from chaco.plot import Plot, ArrayPlotData
