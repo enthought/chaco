@@ -133,5 +133,6 @@ doctest:
 docset:
 	BUILD_DOCSET=1 $(SPHINXBUILD) -b html -c source/ $(ALLSPHINXOPTS) $(BUILDDIR)/docset_html
 	@echo "Creating docset with doc2dash"
-	doc2dash -f -d $(BUILDDIR) -i $(BUILDDIR)/docset_html/_static/e-logo-rev.png -n Chaco $(BUILDDIR)/docset_html
+	doc2dash -f -d $(BUILDDIR) -i $(BUILDDIR)/docset_html/_static/e-logo-rev.png -u 'http://docs.enthought.com/chaco/' -I index.html -n Chaco $(BUILDDIR)/docset_html
+	
 	@echo "Chaco docset is available in $(BUILDDIR)/Chaco.docset"

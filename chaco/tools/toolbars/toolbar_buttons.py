@@ -1,5 +1,3 @@
-import six
-
 import numpy
 
 from traits.etsconfig.api import ETSConfig

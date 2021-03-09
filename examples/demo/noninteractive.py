@@ -3,7 +3,7 @@
 This demonstrates how to create a plot offscreen and save it to an image
 file on disk.
 """
-from __future__ import print_function
+
 
 # Standard library imports
 import os
@@ -88,13 +88,7 @@ def get_directory(filename):
     print('Please enter a path in which to place generated plots.')
     print('Press <ENTER> to generate in the current directory.')
 
-    # If python 2.7, use raw_input to parse empty string correctly
-    try:
-        get_input = raw_input
-    except NameError:
-        get_input = input
-
-    path = get_input('Path: ').strip()
+    path = input('Path: ').strip()
 
     if len(path) > 0 and not os.path.exists(path):
         print('The given path does not exist.')

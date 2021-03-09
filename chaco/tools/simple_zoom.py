@@ -1,6 +1,6 @@
 """ Defines the SimpleZoom class.
 """
-from __future__ import with_statement
+
 
 import warnings
 warnings.warn("SimpleZoom has been deprecated, use ZoomTool", DeprecationWarning)

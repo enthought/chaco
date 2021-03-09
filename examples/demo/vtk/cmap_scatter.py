@@ -22,7 +22,7 @@ from enable.vtk_backend.vtk_window import EnableVTKWindow
 # Chaco imports
 from chaco.api import ArrayPlotData, ColorBar, \
     ColormappedSelectionOverlay, OverlayPlotContainer, \
-    jet, LinearMapper, Plot
+    viridis, LinearMapper, Plot
 from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
     RangeSelectionOverlay, MoveTool
 
@@ -48,7 +48,7 @@ def create_plot():
     plot.plot(("index", "value", "color"),
               type="cmap_scatter",
               name="my_plot",
-              color_mapper=jet,
+              color_mapper=viridis,
               marker = "square",
               fill_alpha = 0.5,
               marker_size = 6,

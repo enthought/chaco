@@ -3,7 +3,7 @@ A 1D scatterplot that draws lines across the renderer at the index values
 
 """
 
-from __future__ import absolute_import
+
 
 from numpy import empty
 

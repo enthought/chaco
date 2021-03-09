@@ -1,6 +1,6 @@
 """ Defines the LineSegmentTool class.
 """
-from __future__ import with_statement
+
 
 # Major library imports
 from numpy import array
@@ -118,7 +118,6 @@ class LineSegmentTool(AbstractOverlay):
         Called by a PlotComponent when this is no longer the active tool.
         """
         self.reset()
-        #self.component.window.set_pointer("arrow")
         return
 
     #------------------------------------------------------------------------

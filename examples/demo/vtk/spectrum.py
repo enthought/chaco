@@ -11,7 +11,7 @@ from numpy import zeros, linspace, short, fromstring, hstack, transpose
 from scipy import fft
 
 # Enthought library imports
-from chaco.default_colormaps import jet
+from chaco.default_colormaps import viridis
 from traits.api import HasTraits, Any
 
 # Chaco imports
@@ -72,7 +72,7 @@ def create_plot_component(obj):
                               name='Spectrogram',
                               xbounds=xbounds,
                               ybounds=ybounds,
-                              colormap=jet,
+                              colormap=viridis,
                               )
     range_obj = spectrogram_plot.plots['Spectrogram'][0].value_mapper.range
     range_obj.high = 5

@@ -19,7 +19,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, jet, Plot
+from chaco.api import ArrayPlotData, viridis, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
@@ -49,7 +49,7 @@ def _create_plot_component():
     plot = Plot(pd, default_origin="bottom left")
     plot.contour_plot("imagedata",
                       type="poly",
-                      poly_cmap=jet,
+                      poly_cmap=viridis,
                       xbounds=x,
                       ybounds=y)
 

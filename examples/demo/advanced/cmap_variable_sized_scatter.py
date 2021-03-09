@@ -19,7 +19,7 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, ColormappedScatterPlot, \
-        LinearMapper, ArrayDataSource, jet, DataRange1D
+        LinearMapper, ArrayDataSource, viridis, DataRange1D
 from chaco.tools.api import PanTool, ZoomTool
 
 #===============================================================================
@@ -61,7 +61,7 @@ def _create_plot_component():
                     index=index_ds,
                     value=value_ds,
                     color_data=color_ds,
-                    color_mapper=jet(range=DataRange1D(low=0.0, high=1.0)),
+                    color_mapper=viridis(range=DataRange1D(low=0.0, high=1.0)),
                     fill_alpha=0.4,
                     index_mapper = imapper,
                     value_mapper = vmapper,

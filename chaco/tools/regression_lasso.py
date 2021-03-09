@@ -1,6 +1,6 @@
 """ Defines the RegressionLasso class.
 """
-from __future__ import with_statement
+
 
 # Major library imports
 from numpy import compress, polyfit

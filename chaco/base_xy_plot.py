@@ -1,8 +1,5 @@
 """ Defines the base class for XY plots.
 """
-
-from __future__ import with_statement
-
 from math import sqrt
 from numpy import around, array, isnan, transpose
 

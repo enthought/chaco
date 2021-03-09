@@ -41,7 +41,6 @@ class CMapImagePlot(ImagePlot):
     #: active selection
     fade_alpha = Float(0.3)
 
-    #fade_background = Tuple((255,255,255))
     #: RGB color to use to fade out unselected points.
     fade_background = Tuple((0,0,0))
     

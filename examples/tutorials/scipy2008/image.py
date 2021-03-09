@@ -1,7 +1,7 @@
 
 from numpy import linspace, meshgrid, exp
 
-from chaco.api import ArrayPlotData, Plot, jet
+from chaco.api import ArrayPlotData, Plot, viridis
 from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
@@ -27,7 +27,7 @@ class ImagePlot(HasTraits):
         # Create a Plot and associate it with the PlotData
         plot = Plot(plotdata)
         # Create an image plot in the Plot
-        plot.img_plot("imagedata", colormap=jet)
+        plot.img_plot("imagedata", colormap=viridis)
         self.plot = plot
 
 #===============================================================================

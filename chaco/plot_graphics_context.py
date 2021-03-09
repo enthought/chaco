@@ -1,7 +1,7 @@
 """ Defines the PlotGraphicsContext class.
 """
 
-from __future__ import with_statement
+
 
 from enable.kiva_graphics_context import GraphicsContext
 

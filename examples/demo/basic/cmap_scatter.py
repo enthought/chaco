@@ -21,7 +21,7 @@ from traitsui.api import Item, VGroup, View, Label
 # Chaco imports
 from chaco.api import ArrayPlotData, ColorBar, \
                                  ColormappedSelectionOverlay, HPlotContainer, \
-                                 jet, LinearMapper, Plot
+                                 viridis, LinearMapper, Plot
 from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
                                        RangeSelectionOverlay
 
@@ -47,7 +47,7 @@ def _create_plot_component():
     plot.plot(("index", "value", "color"),
               type="cmap_scatter",
               name="my_plot",
-              color_mapper=jet,
+              color_mapper=viridis,
               marker = "square",
               fill_alpha = 0.5,
               marker_size = 6,

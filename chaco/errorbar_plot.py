@@ -1,8 +1,5 @@
 
-from __future__ import with_statement
 
-import six
-import six.moves as sm
 
 # Major library imports
 from numpy import column_stack, compress, invert, isnan, transpose
@@ -74,7 +71,7 @@ class ErrorBarPlot(LinePlot):
         value_high, value_high_mask = self.value_high.get_data_mask()
         value_mask = value_low_mask & value_high_mask
 
-        l1, l2, l3 = sm.map(len, (index, value_low, value_high))
+        l1, l2, l3 = map(len, (index, value_low, value_high))
         if 0 in (l1, l2, l3) or not (l1 == l2 == l3):
             logger.warning(
                 "Chaco: using empty dataset; index_len=%d, "

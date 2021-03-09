@@ -1,6 +1,6 @@
 """ Defines the ColormappedSelectionOverlay class.
 """
-import six.moves as sm
+import functools
 
 from numpy import logical_and
 
@@ -76,7 +76,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             mask = (data_pts >= low) & (data_pts <= high)
 
         elif self.selection_type == 'mask':
-            mask = sm.reduce(logical_and, datasource.metadata["selection_masks"])
+            mask = functools.reduce(logical_and, datasource.metadata["selection_masks"])
             if sum(mask)<2:
                 return
 

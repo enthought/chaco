@@ -2,7 +2,7 @@
 
 Relies on sklearn for the datasets.
 """
-from __future__ import print_function
+
 
 import argparse
 from functools import partial

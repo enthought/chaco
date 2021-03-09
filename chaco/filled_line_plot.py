@@ -1,5 +1,5 @@
 
-from __future__ import with_statement
+
 
 from numpy import empty
 from traits.api import Property, Enum

@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 
 from random import choice
 from traits.api import Any, Enum, HasTraits, Instance, Int, List, Str

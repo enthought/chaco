@@ -1,4 +1,4 @@
-from chaco.api import ArrayPlotData, HPlotContainer, Plot, jet, ColorBar
+from chaco.api import ArrayPlotData, HPlotContainer, Plot, viridis, ColorBar
 from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
@@ -27,7 +27,7 @@ class ColorbarExample(HasTraits):
         # Create the plot
         plot = Plot(data)
         plot.plot(("index", "value", "color"), type="cmap_scatter",
-                  color_mapper=jet)
+                  color_mapper=viridis)
 
         # Create the colorbar, handing in the appropriate range and colormap
         colormap = plot.color_mapper

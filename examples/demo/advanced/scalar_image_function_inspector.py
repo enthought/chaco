@@ -157,7 +157,7 @@ class PlotUI(HasTraits):
     _image_index = Instance(GridDataSource)
     _image_value = Instance(ImageData)
 
-    _cmap = Trait(default_colormaps.jet, Callable)
+    _cmap = Trait(default_colormaps.viridis, Callable)
 
     #---------------------------------------------------------------------------
     # Public View interface
@@ -542,7 +542,7 @@ def main(argv=None):
     parser = OptionParser(usage=usage, version="%prog 1.0")
 
     parser.add_option("-c", "--colormap",
-                  action="store", type="string", dest="colormap", default="jet",
+                  action="store", type="string", dest="colormap", default="viridis",
                   metavar="CMAP", help="choose a default colormapper")
 
     parser.add_option("-n", "--nlevels",

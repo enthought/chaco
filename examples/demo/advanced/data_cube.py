@@ -3,7 +3,7 @@ Allows isometric viewing of a 3D data cube.
 
 Click or click-drag in any data window to set the slice to view.
 """
-from __future__ import print_function
+
 import warnings
 
 # Outstanding TODOs:
@@ -17,8 +17,6 @@ from numpy import amin, amax, zeros, fromfile, transpose, uint8
 
 # Standard library imports
 import os, sys, shutil
-
-import six.moves as sm
 
 # Major library imports
 from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
@@ -182,7 +180,7 @@ class PlotFrame(DemoFrame):
     # Private Traits
     #---------------------------------------------------------------------------
 
-    _cmap = Trait(jet, Callable)
+    _cmap = Trait(viridis, Callable)
 
     def _index_callback(self, tool, x_index, y_index):
         plane = tool.token
@@ -226,15 +224,8 @@ class PlotFrame(DemoFrame):
 
     def _create_window(self):
         # Create the model
-        #try:
-        #    self.model = model = BrainModel()
-        #    cmap = bone
-        #except SystemExit:
-        #    sys.exit()
-        #except:
-        #    print "Unable to load BrainModel, using generated data cube."
         self.model = model = Model()
-        cmap = jet
+        cmap = viridis
         self._update_model(cmap)
 
         datacube = self.colorcube
@@ -319,7 +310,7 @@ def download_data():
     print('Please enter the location of the "voldata" subdirectory containing')
     print('the data files for this demo, or enter a path to download to (7.8MB).')
     print('Press <ENTER> to download to the current directory.')
-    dl_path = sm.input('Path: ').strip().rstrip("/").rstrip("\\")
+    dl_path = input('Path: ').strip().rstrip("/").rstrip("\\")
 
     if not dl_path.endswith("voldata"):
         voldata_path = os.path.join(dl_path, 'voldata')
@@ -383,7 +374,7 @@ def download_data():
 def cleanup_data():
     global dl_path
 
-    answer = sm.input('Remove downloaded files? [Y/N]: ')
+    answer = input('Remove downloaded files? [Y/N]: ')
     if answer.lower() == 'y':
         try:
             shutil.rmtree(os.path.join(dl_path, 'voldata'))

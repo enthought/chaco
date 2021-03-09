@@ -9,14 +9,11 @@
 """ Defines the ImagePlot class.
 """
 
-from __future__ import with_statement
+
 
 # Standard library imports
 from math import ceil, floor, pi
 from contextlib import contextmanager
-
-import six
-import six.moves as sm
 
 import numpy as np
 
@@ -329,7 +326,7 @@ class ImagePlot(Base2DPlot):
             col_max = array_width - col_max
             col_min, col_max = col_max, col_min
 
-        index_bounds = list(sm.map(int, [col_min, col_max, row_min, row_max]))
+        index_bounds = list(map(int, [col_min, col_max, row_min, row_max]))
         screen_rect = [x_min, y_min, x_max - x_min, y_max - y_min]
         return index_bounds, screen_rect
 

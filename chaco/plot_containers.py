@@ -213,13 +213,9 @@ class StackedPlotContainer(BasePlotContainer):
                 # If the component is resizable in the other dimension or it exceeds the
                 # container bounds, set it to the maximum size of the container
 
-                #component.set_outer_position(other_ndx, 0)
-                #component.set_outer_bounds(other_ndx, size[other_ndx])
                 position[other_ndx] = 0
                 bounds[other_ndx] = size[other_ndx]
             else:
-                #component.set_outer_position(other_ndx, 0)
-                #old_coord = component.outer_position[other_ndx]
                 position[other_ndx] = 0
                 if align == "min":
                     pass
@@ -283,7 +279,6 @@ class HPlotContainer(StackedPlotContainer):
         return self._do_stack_layout(components, align)
 
     ### Persistence ###########################################################
-    #_pickles = ("stack_order", "spacing")
 
     def __getstate__(self):
         state = super(HPlotContainer,self).__getstate__()

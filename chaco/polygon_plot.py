@@ -1,7 +1,7 @@
 """ Defines the PolygonPlot class.
 """
 
-from __future__ import with_statement
+
 
 # Major library imports
 import numpy as np

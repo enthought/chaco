@@ -125,6 +125,11 @@ class ScatterInspector(SelectTool):
                 # Only issue 1 event:
                 if name == 'index':
                     self.inspector_event = insp_event
+            elif index is None:
+                md[self.selection_metadata_name] = []
+                # Only issue 1 event:
+                if name == 'index':
+                    self.inspector_event = insp_event
         return
 
     def _select(self, index, append=True):

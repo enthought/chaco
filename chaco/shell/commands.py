@@ -1,10 +1,7 @@
 """ Defines commands for the Chaco shell.
 """
 
-from __future__ import print_function
 
-import six
-import six.moves as sm
 
 try:
     from wx import GetApp
@@ -230,7 +227,7 @@ def colormap(map):
          The color map to use; if it is a string, it is the name of a default
          colormap; if it is a callable, it must return an AbstractColorMap.
     """
-    if isinstance(map, six.string_types):
+    if isinstance(map, str):
         session.colormap = color_map_name_dict[map]
     else:
         session.colormap = map
@@ -696,7 +693,7 @@ def _set_scale(axis, system):
             ticks = p.y_ticks
         if system == 'time':
             system = CalendarScaleSystem()
-        if isinstance(system, six.string_types):
+        if isinstance(system, str):
             setattr(p, log_linear_trait, system)
         else:
             if system is None:

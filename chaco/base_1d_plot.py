@@ -1,9 +1,6 @@
 """
 Abstract base class for 1-D plots which only use one axis
 """
-
-from __future__ import absolute_import
-
 # Standard library imports
 from numpy import argsort, asarray
 
