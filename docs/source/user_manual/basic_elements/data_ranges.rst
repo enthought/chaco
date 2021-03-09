@@ -1,3 +1,5 @@
+.. _data_ranges:
+
 ===========
 Data ranges
 ===========
@@ -23,70 +25,62 @@ and
 This is a summary of the most important attributes and methods
 (see the docstrings of this class for more details):
 
-**Attributes**
+Attributes
+^^^^^^^^^^
 
-    :attr:`~chaco.abstract_data_range.AbstractDataRange.sources`
+:attr:`~chaco.abstract_data_range.AbstractDataRange.sources`
+  A list of data sources associated to the data range. Concrete implementations
+  of data range listen to the event
+  :attr:`~chaco.abstract_data_source.AbstractDataSource.data_changed`
+  and refresh their bounds as appropriate (e.g., when the bounds are
+  set to ``auto``).
 
-      A list of data sources associated to the data range. Concrete implementations
-      of data range listen to the event
-      :attr:`~chaco.abstract_data_source.AbstractDataSource.data_changed`
-      and refresh their bounds as appropriate (e.g., when the bounds are
-      set to ``auto``).
+:attr:`~chaco.abstract_data_range.AbstractDataRange.low`
+  The actual value of the lower bounds of the range. The correct way
+  to set it is to use the :attr:`low_setting` attribute.
 
-    :attr:`~chaco.abstract_data_range.AbstractDataRange.low`
+:attr:`~chaco.abstract_data_range.AbstractDataRange.high`
+  The actual value of the upper bounds of the range. The correct way
+  to set it is to use the :attr:`high_setting` attribute.
 
-      The actual value of the lower bounds of the range. The correct way
-      to set it is to use the :attr:`low_setting` attribute.
+:attr:`~chaco.abstract_data_range.AbstractDataRange.low_setting`
+  Setting for the lower bound of the range. This can either be a valid
+  lower bound value, or ``auto`` (default), in which case the
+  lower bound is set automatically from the associated data sources.
 
-    :attr:`~chaco.abstract_data_range.AbstractDataRange.high`
-
-      The actual value of the upper bounds of the range. The correct way
-      to set it is to use the :attr:`high_setting` attribute.
-
-    :attr:`~chaco.abstract_data_range.AbstractDataRange.low_setting`
-
-      Setting for the lower bound of the range. This can either be a valid
-      lower bound value, or ``auto`` (default), in which case the
-      lower bound is set automatically from the associated data sources.
-
-    :attr:`~chaco.abstract_data_range.AbstractDataRange.high_setting`
-
-      Setting for the upper bound of the range. This can either be a valid
-      upper bound value, or ``auto`` (default), in which case the
-      upper bound is set automatically from the associated data sources.
+:attr:`~chaco.abstract_data_range.AbstractDataRange.high_setting`
+  Setting for the upper bound of the range. This can either be a valid
+  upper bound value, or ``auto`` (default), in which case the
+  upper bound is set automatically from the associated data sources.
 
 
-**Methods**
+Methods
+^^^^^^^
 
-    :attr:`~chaco.base_data_range.BaseDataRange.add(*datasources)`
+:meth:`~chaco.base_data_range.BaseDataRange.add`
+  Convenience method to associate one or more data sources to the range.
+  The method avoids adding the same data source twice.
 
-      Convenience method to associate one or more data sources to the range.
-      The method avoids adding the same data source twice.
+:meth:`~chaco.base_data_range.BaseDataRange.remove`
+  Convenience method to remove one or more data sources from the range.
+  If one of the data sources is not associated with the range,
+  it is ignored.
 
-    :attr:`~chaco.base_data_range.BaseDataRange.remove(*datasources)`
+:meth:`~chaco.abstract_data_range.AbstractDataRange.clip_data`
+  Given an array of data values of the same dimensionality as the range,
+  return a list of data values that are inside the range.
 
-      Convenience method to remove one or more data sources from the range.
-      If one of the data sources is not associated with the range,
-      it is ignored.
+:meth:`~chaco.abstract_data_range.AbstractDataRange.mask_data`
+  Given an array of data values of the same dimensionality as the range,
+  this method returns a mask array of the same length as data, filled
+  with 1s and 0s corresponding to whether the data value at that index
+  is inside or outside the range.
 
-    :attr:`~chaco.abstract_data_range.AbstractDataRange.clip_data(data)`
-
-      Given an array of data values of the same dimensionality as the range,
-      return a list of data values that are inside the range.
-
-    :attr:`~chaco.abstract_data_range.AbstractDataRange.mask_data(data)`
-
-        Given an array of data values of the same dimensionality as the range,
-        this method returns a mask array of the same length as data, filled
-        with 1s and 0s corresponding to whether the data value at that index
-        is inside or outside the range.
-
-    :attr:`~chaco.abstract_data_range.AbstractDataRange.bound_data(data)`
-
-        Given an array of *monotonic* data values of the same dimensionality
-        as the range,
-        returns a tuple of indices (start, end) corresponding to the first and
-        last elements that fall within the range.
+:meth:`~chaco.abstract_data_range.AbstractDataRange.bound_data`
+  Given an array of *monotonic* data values of the same dimensionality
+  as the range,
+  returns a tuple of indices (start, end) corresponding to the first and
+  last elements that fall within the range.
 
 
 Events
@@ -104,7 +98,6 @@ There are two data range implementations in Chaco, one for 1D and one
 for 2D ranges:
 
 :class:`~chaco.data_range_1d.DataRange1D`
-
   :class:`~chaco.data_range_1d.DataRange1D` represents a 1D data range. This
   subclass adds several more ways to control the bound of the range given
   the associated data sources.
@@ -136,9 +129,8 @@ for 2D ranges:
 
 
 :class:`~chaco.data_range_2d.DataRange2D`
-
   :class:`~chaco.data_range_2d.DataRange2D` represents a 2D data range.
-  Under the hood, it is implemented using two
+  Internally, it is implemented using two
   :class:`~chaco.data_range_1d.DataRange1D` objects,
   one for each dimension,
   which are stored in the

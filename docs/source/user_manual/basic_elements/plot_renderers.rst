@@ -58,86 +58,64 @@ that includes the padding and border area.
 The properties of the boxes are controlled by
 these attributes:
 
-    :attr:`position`
+:attr:`position`
+  Position of the internal box relative to its container,
+  given as a list [x,y].
+  If there is no container, this is set to [0, 0].
+  "Absolute" coordinates of point (i.e., relative to top-level parent
+  :class:`Window` object) can be obtained using
+  :attr:`get_absolute_coords(*coords)`.
 
-      Position of the internal box relative to its container,
-      given as a list [x,y].
-      If there is no container, this is set to [0, 0].
-      "Absolute" coordinates of point (i.e., relative to top-level parent
-      :class:`Window` object) can be obtained using
-      :attr:`get_absolute_coords(*coords)`.
+:attr:`x`, :attr:`y`, :attr:`x2`, :attr:`y2`
+  Coordinates of the lower-left (x,y) and upper-right (x2,y2)
+  pixel of the internal box, relative to its container.
 
-    :attr:`x`, :attr:`y`, :attr:`x2`, :attr:`y2`
-
-      Coordinates of the lower-left (x,y) and upper-right (x2,y2)
-      pixel of the internal box, relative to its container.
-
-    :attr:`bounds`,
-    :attr:`width`, :attr:`height`
-
-      Bounds of the internal box, in pixels.
-      :attr:`bounds` is a list [width, height].
+:attr:`bounds`, :attr:`width`, :attr:`height`
+  Bounds of the internal box, in pixels.
+  :attr:`bounds` is a list [width, height].
 
 
-    :attr:`outer_position`,
-    :attr:`outer_x`, :attr:`outer_y`, :attr:`outer_x2`, :attr:`outer_y2`,
-    :attr:`outer_bounds`,
-    :attr:`outer_width`, :attr:`outer_height`,
-    :attr:`set_outer_position(index, value)`,
-    :attr:`set_outer_bounds(index, value)`
-
-      Attributes for the outer box equivalent to those defined above for the
-      inner box. Modifying the outer position attributes is
-      the right way to move the plot without changing its padding or bounds.
-      Similarly, modifying the outer bounds attributes leaves the
-      lower-left position and the padding unchanged.
+:attr:`outer_position`, :attr:`outer_x`, :attr:`outer_y`, :attr:`outer_x2`, :attr:`outer_y2`, :attr:`outer_bounds`, :attr:`outer_width`, :attr:`outer_height`, :meth:`set_outer_position`, :meth:`set_outer_bounds`
+  Attributes for the outer box equivalent to those defined above for the
+  inner box. Modifying the outer position attributes is
+  the right way to move the plot without changing its padding or bounds.
+  Similarly, modifying the outer bounds attributes leaves the
+  lower-left position and the padding unchanged.
 
 
-    :attr:`resizable`,
-    :attr:`fixed_preferred_size`
+:attr:`resizable`, :attr:`fixed_preferred_size`
+  String that defines in which dimensions the component is resizable.
+  One of '' (not resizable), 'v' (resizable vertically), 'h'
+  (resizable horizontally), 'hv' (resizable in both directions, default).
+  If the component is resizable, :attr:`fixed_preferred_size`
+  can be used to specify the
+  amount of space that the component would like to get in each dimension,
+  as a tuple (width, height). In this case, width and height have to be
+  understood as relative sized: if one component in a container
+  specifies, say, a fixed preferred width of 50 and another one
+  specifies a fixed preferred width of 100, then the latter component will
+  always be twice as wide as the former.
 
-      String that defines in which dimensions the component is resizable.
-      One of '' (not resizable), 'v' (resizable vertically), 'h'
-      (resizable horizontally), 'hv' (resizable in both directions, default).
-      If the component is resizable, :attr:`fixed_preferred_size`
-      can be used to specify the
-      amount of space that the component would like to get in each dimension,
-      as a tuple (width, height). In this case, width and height have to be
-      understood as relative sized: if one component in a container
-      specifies, say, a fixed preferred width of 50 and another one
-      specifies a fixed preferred width of 100, then the latter component will
-      always be twice as wide as the former.
+:attr:`aspect_ratio`, :attr:`auto_center`
+  Ratio of the component's width to its height. This is used to maintain
+  a fixed ratio between bounds when thet are changed independently,
+  for example when resizing the window. :attr:`auto_center`
+  specifies if the component should center itself in any space
+  that is left empty (default is True).
 
-    :attr:`aspect_ratio`,
-    :attr:`auto_center`
+:attr:`padding_left`, :attr:`padding_right`, :attr:`padding_top`, :attr:`padding_bottom`, :attr:`padding`, :attr:`hpadding`, :attr:`vpadding`
+  Padding space (in pixels). :attr:`padding` is a convenience property
+  that returns a tuple of (left, right, top, bottom) padding. It can
+  also be set to a single integer, in which case all four padding
+  attributes are set to the same value.
 
-      Ratio of the component's width to its height. This is used to maintain
-      a fixed ratio between bounds when thet are changed independently,
-      for example when resizing the window. :attr:`auto_center`
-      specifies if the component should center itself in any space
-      that is left empty (default is True).
+  :attr:`hpadding` and :attr:`vpadding` are read-only properties that return
+  the total amount of horizontal and vertical padding (including
+  the border width if the border is visible).
 
-    :attr:`padding_left`,
-    :attr:`padding_right`,
-    :attr:`padding_top`,
-    :attr:`padding_bottom`,
-    :attr:`padding`,
-    :attr:`hpadding`,
-    :attr:`vpadding`
-
-      Padding space (in pixels). :attr:`padding` is a convenience property
-      that returns a tuple of (left, right, top, bottom) padding. It can
-      also be set to a single integer, in which case all four padding
-      attributes are set to the same value.
-
-      :attr:`hpadding` and :attr:`vpadding` are read-only properties that return
-      the total amount of horizontal and vertical padding (including
-      the border width if the border is visible).
-
-    :attr:`get_absolute_coords(*coords)`
-
-      Transform coordinates relative to this component's origin to
-      "absolute" coordinates, relative to top-level container.
+:attr:`get_absolute_coords(*coords)`
+  Transform coordinates relative to this component's origin to
+  "absolute" coordinates, relative to top-level container.
 
 Aspect properties
 -----------------
@@ -145,33 +123,27 @@ Aspect properties
 These attributes control the aspect (e.g. color) of padding, background,
 and borders:
 
-    :attr:`bgcolor`
+:attr:`bgcolor`
+  The background color of this component (default is white). This can be
+  set to "transparent" or "none" if the component should be see-through.
+  The color can be specified as a string or as an RGB or RGBa tuple.
 
-      The background color of this component (default is white). This can be
-      set to "transparent" or "none" if the component should be see-through.
-      The color can be specified as a string or as an RGB or RGBa tuple.
+:attr:`fill_padding`
+  If True (default), fill the padding area with the background color.
 
-    :attr:`fill_padding`
+:attr:`border_visible`
+  Determines if the border is visible (default is False).
 
-      If True (default), fill the padding area with the background color.
+:attr:`border_width`
+  Thickness of the border around the component in pixels (default is 1).
 
-    :attr:`border_visible`
+:attr:`border_dash`
+  Style of the lines tracing the border. One of 'solid' (default),
+  'dot dash', 'dash', 'dot', or 'long dash'.
 
-      Determines if the border is visible (default is False).
-
-    :attr:`border_width`
-
-      Thickness of the border around the component in pixels (default is 1).
-
-    :attr:`border_dash`
-
-      Style of the lines tracing the border. One of 'solid' (default),
-      'dot dash', 'dash', 'dot', or 'long dash'.
-
-    :attr:`border_color`
-
-      Color of the border.
-      The color can be specified as a string or as an RGB or RGBa tuple.
+:attr:`border_color`
+  Color of the border.
+  The color can be specified as a string or as an RGB or RGBa tuple.
 
 
 .. _plot_layers:
@@ -187,29 +159,29 @@ The default drawing order is defined in
 :attr:`~chaco.plot_component.PlotComponent.draw_order` as a list
 of the names of the layers. The definition of the layers is as follows:
 
-  1. 'background': Background image, shading, and borders
+1. **background**: Background image, shading, and borders
 
-  2. 'image': A special layer for plots that render as images.  This is in a
-     separate layer since these plots must all render before non-image plots
+2. **image**: A special layer for plots that render as images. This is in a
+   separate layer since these plots must all render before non-image plots
 
-  3. 'underlay': Axes and grids
+3. **underlay**: Axes and grids
 
-  4. 'plot': The main plot area itself
+4. **plot**: The main plot area itself
 
-  5. 'annotation': Lines and text that are conceptually part of the "plot" but
-     need to be rendered on top of everything else in the plot.
+5. **annotation**: Lines and text that are conceptually part of the "plot" but
+   need to be rendered on top of everything else in the plot.
 
-  6. 'selection': Selected content are rendered above normal plot elements to
-     make them stand out. This can be disabled by setting :attr:`use_selection`
-     to False (default).
+6. **selection**: Selected content are rendered above normal plot elements to
+   make them stand out. This can be disabled by setting :attr:`use_selection`
+   to False (default).
 
-  7. 'border': Plot borders
+7. **border**: Plot borders
 
-  8. 'annotation': Lines and text that are conceptually part of the "plot" but
-     need to be rendered on top of everything else in the plot
+8. **annotation**: Lines and text that are conceptually part of the "plot" but
+   need to be rendered on top of everything else in the plot
 
-  9. 'overlay': Legends, selection regions, and other tool-drawn visual
-     elements
+9. **overlay**: Legends, selection regions, and other tool-drawn visual
+   elements
 
 Concrete plot renderers set their default draw layer in
 :attr:`~chaco.plot_component.PlotComponent.draw_layer` (default is 'plot').
@@ -230,7 +202,7 @@ as such are able to react to keyboard and mouse events. However, interactions
 are usually defined as tools and overlays. Therefore, this part of the
 interface is described at those pages.
 
-TODO: add reference to interaction interface
+.. TODO: add reference to interaction interface
 
 Context
 -------
@@ -238,18 +210,15 @@ Context
 Since plot renderers take care of displaying graphics, they keep references
 to the larger graphical context:
 
-    :attr:`container`
+:attr:`container`
+  Reference to a container object (None if no container is defined).
+  The renderer defines its position relative to this.
 
-      Reference to a container object (None if no container is defined).
-      The renderer defines its position relative to this.
+:attr:`window`
+  Reference to the top-level enable Window.
 
-    :attr:`window`
-
-      Reference to the top-level enable Window.
-
-    :attr:`viewports`
-
-      List of viewport that are viewing this component
+:attr:`viewports`
+  List of viewport that are viewing this component
 
 Screen and Data Mapping
 -----------------------
@@ -258,52 +227,47 @@ All :class:`~chaco.abstract_plot_renderer.AbstractPlotRenderer` subclasses are
 expected to provide three methods for mapping to and from screen space and
 data space:
 
-    .. :py:method:: map_screen(data_array)
+.. :py:method:: map_screen(data_array)
 
-    :map_screen:
+:map_screen:
+    This is expected to take an array of points (as columns) in
+    the appropriate data coordinates, and return the corresponding points
+    in screen pixel coordinates (measured from the bottom left of the
+    plot component).
 
-        This is expected to take an array of points (as columns) in
-        the appropriate data coordinates, and return the corresponding points
-        in screen pixel coordinates (measured from the bottom left of the
-        plot component).
+.. :py:method: map_data(screen_pt)
 
-    .. :py:method: map_data(screen_pt)
+:map_data:
+    This is the reverse of map_screen, and takes an array of
+    points (as columns) screen pixel coordinates relative to the renderer
+    component and return the corresponding points in screen data
+    coordinates.
 
-    :map_data:
+.. :py:method:map_index(screen_pt,
+                        threshold=0.0,
+                        outside_returns_none=True,
+                        index_only=False)
 
-        This is the reverse of map_screen, and takes an array of
-        points (as columns) screen pixel coordinates relative to the renderer
-        component and return the corresponding points in screen data
-        coordinates.
-
-    .. :py:method:map_index(screen_pt,
-                            threshold=0.0,
-                            outside_returns_none=True,
-                            index_only=False)
-
-    :map_index:
-
-        This method takes a point in screen pixel coordinates and returns an
-        appropriate index value that can be used to index into data.  This can
-        be used by hit-testing methods (see below), and provides optional
-        arguments such as threshold distances.  Not every renderer implements
-        this, and some data sets may not be amenable to this method, either.
+:map_index:
+    This method takes a point in screen pixel coordinates and returns an
+    appropriate index value that can be used to index into data.  This can
+    be used by hit-testing methods (see below), and provides optional
+    arguments such as threshold distances.  Not every renderer implements
+    this, and some data sets may not be amenable to this method, either.
 
 Others
 ------
 
-    :attr:`use_backbuffer`
+:attr:`use_backbuffer`
+  If True, the plot renders itself to an
+  offscreen buffer that is cached for later use. If False (default), then
+  the component will *never* render itself back-buffered, even if asked
+  to do so.
 
-      If True, the plot renders itself to an
-      offscreen buffer that is cached for later use. If False (default), then
-      the component will *never* render itself back-buffered, even if asked
-      to do so.
-
-    :attr:`invalidate_and_redraw()`
-
-      Convenience method to invalidate our contents and request redraw.
-      This method is sometimes useful when modifying a Chaco plot in an
-      ipython shell.
+:meth:`invalidate_and_redraw`
+  Convenience method to invalidate our contents and request redraw.
+  This method is sometimes useful when modifying a Chaco plot in an
+  ipython shell.
 
 
 .. _xy_plots:
@@ -350,27 +314,22 @@ Axis, labels, and grids
 shortcuts to find axis and grid objects in the
 :ref:`underlays and overlays layers <plot_layers>` of the plot:
 
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.hgrid`,
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.vgrid`
+:attr:`~chaco.base_xy_plot.BaseXYPlot.hgrid`, :attr:`~chaco.base_xy_plot.BaseXYPlot.vgrid`
+  Look into the underlays and overlays layers (in this order) for a
+  :class:`PlotGrid` object of horizontals / vertical orientation and return
+  it. Return None if none is found.
 
-      Look into the underlays and overlays layers (in this order) for a
-      :class:`PlotGrid` object of horizontals / vertical orientation and return
-      it. Return None if none is found.
+:attr:`~chaco.base_xy_plot.BaseXYPlot.x_axis`, :attr:`~chaco.base_xy_plot.BaseXYPlot.y_axis`
+  Look into the underlays and overlays layers (in this order) for a
+  :class:`PlotAxis` object positioned to the bottom or top, or to the
+  left or right of plot, respectively. Return the axis, or None if
+  none is found.
 
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.x_axis`,
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.y_axis`
+:attr:`~chaco.base_xy_plot.BaseXYPlot.labels`
+  Return a list of all :class:`PlotLabel` objects in the
+  overlays and underlays layers.
 
-      Look into the underlays and overlays layers (in this order) for a
-      :class:`PlotAxis` object positioned to the bottom or top, or to the
-      left or right of plot, respectively. Return the axis, or None if
-      none is found.
-
-    :attr:`~chaco.base_xy_plot.BaseXYPlot.labels`
-
-      Return a list of all :class:`PlotLabel` objects in the
-      overlays and underlays layers.
-
-TODO: add links to axis and grid documentation
+.. TODO: add links to axis and grid documentation
 
 Hittest
 -------
@@ -393,8 +352,8 @@ which is one of 'point' (default), or 'line'.
 If the closest point or line is further than :attr:`threshold` pixels
 away, the methods returns None.
 
-Alternatively, users may call the methods :attr:`get_closest_point`
-and :attr:`get_closest_line`.
+Alternatively, users may call the methods :meth:`get_closest_point`
+and :meth:`get_closest_line`.
 
 Others
 ------
@@ -402,12 +361,10 @@ Others
 Two more attributes are worth mentioning:
 
 :attr:`~chaco.base_xy_plot.BaseXYPlot.bgcolor`
-
   This is inherited from the AbstractPlotRenderer interface, but is now
-  set to 'transparent` by default.
+  set to 'transparent' by default.
 
 :attr:`~chaco.base_xy_plot.BaseXYPlot.use_downsampling`
-
   If this attribute is True, the plot uses downsampling for faster display
   (default is False). In other words, the number of display points depends
   on the plot size and range, and not on the total number of data points
