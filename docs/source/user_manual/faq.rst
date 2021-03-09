@@ -1,3 +1,5 @@
+.. _faq:
+
 ##########################
 Frequently Asked Questions
 ##########################
@@ -63,61 +65,61 @@ Peter Wang's response (excerpt)::
 	On May 11, 2007, at 8:03 AM, Bill Baxter wrote:
 
     > Just curious.  What are the pros and cons of chaco vs matplotlib?
-	
-    You had to go and ask, didn't you? :)  There are many more folks here  
-    who have used MPL more extensively than myself, so I'll defer the  
-    comparisons to them.  (Gael, as always, thanks for your comments and  
+
+    You had to go and ask, didn't you? :)  There are many more folks here
+    who have used MPL more extensively than myself, so I'll defer the
+    comparisons to them.  (Gael, as always, thanks for your comments and
     feedback!)  I can comment, however, on the key goals of Chaco.
 
-    Chaco is a plotting toolkit targeted towards developers for building  
-    interactive visualizations.  You hook up pieces to build a plot that  
-    is then easy to inspect, interact with, add configuration UIs for  
-    (using Traits UI), etc.  The layout of plot areas, the multiplicity  
-    and types of renderers within those windows, the appearance and  
-    locations of axes, etc. are all completely configurable since these  
-    are all first-class objects participating in a visual canvas.  They  
-    can all receive mouse and keyboard events, and it's easy to subclass  
-    them (or attach tools to them) to achieve new kinds of behavior.   
-    We've tried to make all the plot renderers adhere to a standard  
-    interface, so that tools and interactors can easily inspect data and  
-    map between screen space and data space.  Once these are all hooked  
+    Chaco is a plotting toolkit targeted towards developers for building
+    interactive visualizations.  You hook up pieces to build a plot that
+    is then easy to inspect, interact with, add configuration UIs for
+    (using Traits UI), etc.  The layout of plot areas, the multiplicity
+    and types of renderers within those windows, the appearance and
+    locations of axes, etc. are all completely configurable since these
+    are all first-class objects participating in a visual canvas.  They
+    can all receive mouse and keyboard events, and it's easy to subclass
+    them (or attach tools to them) to achieve new kinds of behavior.
+    We've tried to make all the plot renderers adhere to a standard
+    interface, so that tools and interactors can easily inspect data and
+    map between screen space and data space.  Once these are all hooked
     up, you can swap out or update the data independently of the plots.
 
-    One of the downsides we had a for a while was that this rich set of  
-    objects required the programmer to put several different classes  
-    together just to make a basic plot.  To solve this problem, we've  
-    assembled some higher-level classes that have the most common  
-    behaviors built-in by default, but which can still be easily  
-    customized or extended.  It's clear to me that this is a good general  
+    One of the downsides we had a for a while was that this rich set of
+    objects required the programmer to put several different classes
+    together just to make a basic plot.  To solve this problem, we've
+    assembled some higher-level classes that have the most common
+    behaviors built-in by default, but which can still be easily
+    customized or extended.  It's clear to me that this is a good general
     approach to preserving flexibility while reducing verbosity.
 
-    At this point, Chaco is definitely capable of handling a large number  
-    of different plotting tasks, and a lot of them don't require too much  
-    typing or hacking skills.  (Folks will probably require more  
-    documentation, however, but I'm working on that. :)  I linked to the  
-    source for all of the screenshots in the gallery to demonstrate that  
-    you can do a lot of things with Chaco in a few dozen lines of code.   
-    (For instance, the audio spectrogram at the bottom of the gallery is  
+    At this point, Chaco is definitely capable of handling a large number
+    of different plotting tasks, and a lot of them don't require too much
+    typing or hacking skills.  (Folks will probably require more
+    documentation, however, but I'm working on that. :)  I linked to the
+    source for all of the screenshots in the gallery to demonstrate that
+    you can do a lot of things with Chaco in a few dozen lines of code.
+    (For instance, the audio spectrogram at the bottom of the gallery is
     just a little over 100 lines.)
 
-    Fundamentally, I like the Chaco model of plots as compositions of  
-    interactive components.  This really helps me think about  
-    visualization apps in a modular way, and it "fits my head".  (Of  
-    course, the fact that I wrote much of it might have something to do  
-    with that as well. ;)  The goal is to have data-related operations  
-    clearly happen in one set of objects, the view layout and  
-    configuration happen in another, and the interaction controls fit  
-    neatly into a third.  IMHO a good toolkit should help me design/ 
-    architect my application better, and we definitely aspire to make  
+    Fundamentally, I like the Chaco model of plots as compositions of
+    interactive components.  This really helps me think about
+    visualization apps in a modular way, and it "fits my head".  (Of
+    course, the fact that I wrote much of it might have something to do
+    with that as well. ;)  The goal is to have data-related operations
+    clearly happen in one set of objects, the view layout and
+    configuration happen in another, and the interaction controls fit
+    neatly into a third.  IMHO a good toolkit should help me design/
+    architect my application better, and we definitely aspire to make
     Chaco meet that criterion.
 
-    Finally, one major perk is that since Chaco is built completely on  
-    top of traits and its event-based component model, you can call  
-    edit_traits() on any visual component from within your app (or  
-    ipython) and get a live GUI that lets you tweak all of its various  
-    parameters in realtime.  This applies to the axis, grid, renderers,  
-    etc.  This seems so natural to me that I sometimes forget what an  
-    awesome feature it is. :)  
+    Finally, one major perk is that since Chaco is built completely on
+    top of traits and its event-based component model, you can call
+    edit_traits() on any visual component from within your app (or
+    ipython) and get a live GUI that lets you tweak all of its various
+    parameters in realtime.  This applies to the axis, grid, renderers,
+    etc.  This seems so natural to me that I sometimes forget what an
+    awesome feature it is. :)
 
 
 

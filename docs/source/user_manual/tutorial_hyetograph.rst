@@ -1,3 +1,4 @@
+:orphan:
 
 .. _tutorial_hyetograph:
 
@@ -112,7 +113,7 @@ The above code snippet shows a number of Traits features,
 
 The Traits API Reference contains more information about the standard
 Trait types; see the :mod:`trait_types` module in the `Traits API Reference 
-<http://code.enthought.com/projects/files/ETS3_API/traits.trait_types.html>`_.
+<http://docs.enthought.com/traits/traits_api_reference/trait_types.html>`_.
 
 
 Setting up the User Interface (UI)

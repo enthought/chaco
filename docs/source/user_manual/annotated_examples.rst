@@ -110,9 +110,9 @@ source: `multiaxis.py <https://github.com/enthought/chaco/tree/master/examples/d
 Draws some x-y line and scatter plots. On the left hand plot:
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
- - Pressing "z" opens the Zoom Box, and you can click-drag a rectangular 
+ - Pressing "z" opens the Zoom Box, and you can click-drag a rectangular
    region to zoom. If you use a sequence of zoom boxes, pressing alt-left-arrow
-   and alt-right-arrow moves you forwards and backwards through the "zoom 
+   and alt-right-arrow moves you forwards and backwards through the "zoom
    history".
 
 source: `multiaxis_using_Plot.py <https://github.com/enthought/chaco/tree/master/examples/demo/multiaxis_using_Plot.py>`_
@@ -379,7 +379,7 @@ source: `polygon_plot_demo.py <https://github.com/enthought/chaco/tree/master/ex
 
 ``polygon_move.py``
 -------------------
-Shares same basic interactions as polygon_plot.py, but adds a new one: 
+Shares same basic interactions as polygon_plot.py, but adds a new one:
 right-click and drag to move a polygon around.
 
 source: `polygon_move.py <https://github.com/enthought/chaco/tree/master/examples/demo/basic/polygon_move.py>`_
@@ -428,7 +428,7 @@ source: `scatter_select.py <https://github.com/enthought/chaco/tree/master/examp
 
 console output::
 
-    New selection: 
+    New selection:
         [789  799  819  830  835  836  851  867  892  901  902  909  913  924  929
          931  933  938  956  971  972  975  976  996  999 1011 1014 1016 1021 1030
          1045 1049 1058 1061 1073 1086 1087 1088]
@@ -465,10 +465,10 @@ source: `traits_editor.py <https://github.com/enthought/chaco/tree/master/exampl
 ------------------------
 Draws a colormapped scatterplot of some random data.
 
-Interactions on the plot are the same as for simple_line.py, and additionally, 
-pan and zoom are available on the colorbar. 
+Interactions on the plot are the same as for simple_line.py, and additionally,
+pan and zoom are available on the colorbar.
 
-Left-click pans the colorbar's data region.  Right-click-drag 
+Left-click pans the colorbar's data region.  Right-click-drag
 selects a zoom range.  Mousewheel up and down zoom in and out on
 the data bounds of the color bar.
 
@@ -479,7 +479,7 @@ source: `zoomable_colorbar.py <https://github.com/enthought/chaco/tree/master/ex
 ``zoomed_plot``
 ------------------------
 The main executable file for the zoom_plot demo.
- 
+
 Right-click and drag on the upper plot to select a region to view in detail
 in the lower plot.  The selected region can be moved around by dragging,
 or resized by clicking on one of its edges and dragging.
