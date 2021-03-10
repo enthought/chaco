@@ -1,3 +1,4 @@
+:orphan:
 
 .. _tutorial_ipython:
 

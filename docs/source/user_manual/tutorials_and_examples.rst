@@ -1,8 +1,8 @@
 
 .. _tutorials:
 
-Tutorials, webinars, and examples
-=================================
+Tutorials and examples
+=======================
 
 Tutorials
 ---------
