@@ -3,7 +3,7 @@
 Axis and Grid
 --------------
 
-.. currentmodule:: chaco.api
+.. currentmodule:: chaco.axis
 
 :class:`PlotAxis`
 ==========================
@@ -11,17 +11,28 @@ Axis and Grid
     :members:
     :show-inheritance:
 
+:class:`MinorPlotAxis`
+==========================
+.. autoclass:: MinorPlotAxis
+    :members:
+    :show-inheritance:
+.. currentmodule:: chaco.label_axis
+
 :class:`LabelAxis`
 ==========================
 .. autoclass:: LabelAxis
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.grid
+
 :class:`PlotGrid`
 ==========================
 .. autoclass:: PlotGrid
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.ticks
 
 :class:`AbstractTickGenerator`
 ===============================
