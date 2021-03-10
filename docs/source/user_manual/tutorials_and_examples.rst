@@ -1,8 +1,8 @@
 
 .. _tutorials:
 
-Tutorials, and examples
-=======================
+Tutorials and examples
+======================
 
 Tutorials
 ---------
