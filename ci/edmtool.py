@@ -302,9 +302,6 @@ def docs(runtime, toolkit, environment):
         "Regenerating API docs in  '{environment}'".format(**parameters)
     )
     api_path = os.path.join("docs", "source", "api")
-    if os.path.exists(api_path):
-        rmtree(api_path)
-    os.makedirs(api_path)
     commands = [
         "edm run -e {environment} -- sphinx-apidoc -e -M --no-toc -o "
         + api_path
