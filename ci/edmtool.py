@@ -108,6 +108,15 @@ extra_dependencies = {
     'null': set()
 }
 
+doc_dependencies = {
+    "sphinx",
+    "enthought_sphinx_theme"
+}
+
+doc_ignore = {
+    "*/tests",
+}
+
 environment_vars = {
     'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
@@ -265,6 +274,58 @@ def update(runtime, toolkit, environment):
     click.echo("Re-installing in  '{environment}'".format(**parameters))
     execute(commands, parameters)
     click.echo('Done update')
+
+
+@cli.command()
+@click.option("--runtime", default="3.6", help="Python version to use")
+@click.option("--toolkit", default="null", help="Toolkit and API to use")
+@click.option("--environment", default=None, help="EDM environment to use")
+def docs(runtime, toolkit, environment):
+    """ Autogenerate documentation
+
+    """
+    parameters = get_parameters(runtime, toolkit, environment)
+    packages = " ".join(doc_dependencies)
+    ignore = " ".join(doc_ignore)
+    commands = [
+        "edm install -y -e {environment} " + packages,
+    ]
+    click.echo(
+        "Installing documentation tools in  '{environment}'".format(
+            **parameters
+        )
+    )
+    execute(commands, parameters)
+    click.echo("Done installing documentation tools")
+
+    click.echo(
+        "Regenerating API docs in  '{environment}'".format(**parameters)
+    )
+    api_path = os.path.join("docs", "source", "api")
+    commands = [
+        "edm run -e {environment} -- sphinx-apidoc -e -M --no-toc -o "
+        + api_path
+        + " chaco "
+        + ignore
+    ]
+    execute(commands, parameters)
+    click.echo("Done regenerating API docs")
+
+    os.chdir("docs")
+    command = (
+        "edm run -e {environment} -- sphinx-build -b html "
+        "-d build/doctrees "
+        "source "
+        "build/html"
+    )
+    click.echo(
+        "Building documentation in  '{environment}'".format(**parameters)
+    )
+    try:
+        execute([command], parameters)
+    finally:
+        os.chdir("..")
+    click.echo("Done building documentation")
 
 
 @cli.command()
