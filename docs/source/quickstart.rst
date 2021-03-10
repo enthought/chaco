@@ -188,7 +188,7 @@ First, some imports to bring in necessary components::
 The imports from :mod:`chaco` and :mod:`enable` support the creation of the
 plot.  The imports from :mod:`traits` bring in components to embed the plot
 inside a Traits application. (Refer to the 
-`Traits documentation <http://github.enthought.com/traits/>`_ for more details
+`Traits documentation <https://docs.enthought.com/traits/>`_ for more details
 about building an interactive application using Traits.) Now let's create a
 Traits class with a view that contains only one element: a Chaco plot inside a
 slightly customized window::
@@ -210,7 +210,7 @@ slightly customized window::
 A few options have been set to control the window containing the plot.  Now,
 when the plot is created, we would like to pass in our data. Let's assume the
 data is a set of points with coordinates contained in two NumPy arrays ``x``
-and `y`.  So, adding an ``__init__`` method to create the Plot object looks as
+and ``y``.  So, adding an ``__init__`` method to create the Plot object looks as
 follows::
 
     class MyPlot(HasTraits):

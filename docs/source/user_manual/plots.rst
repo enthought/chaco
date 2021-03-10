@@ -42,9 +42,9 @@ sides which do not have labels.
 
 Similarly, this means that you can use a plot in the same way that you would
 any other Enable component, and it will work with Enable tools.  So you could
-have multiple :py:class:`~chaco.plot.Plots` inside an enable
+have multiple :py:class:`~chaco.plot.Plot`s inside an enable
 :py:class:`~enable.container.Container` or :py:class:`~chaco.canvas.Canvas`
-and attache :py:class:`~enable.tools.move_tool.MoveTool` and
+and attach :py:class:`~enable.tools.move_tool.MoveTool` and
 :py:class:`~enable.tools.resize_tool.ResizeTool` to them to allow the user
 complete control over the location and size of the plots.
 
@@ -166,7 +166,7 @@ The plot factory methods are:
     It is up to the calling code to correctly derive the data
     arrays: no aggregation is performed by the plot.
 
-:py:meth:`~chaco.plot.Plot.quiver_plot`
+:py:meth:`~chaco.plot.Plot.quiverplot`
     The method creates a plot that places arrows at locations
     determined by a list of x and y points.  It expects three
     data values: two arrays of length N for the points, and
@@ -181,7 +181,7 @@ The plot factory methods are:
 
 
 The plot renderers for a :py:class:`~chaco.plot.Plot` instance are
-available via the :py:attr:`~chaco.plot.Plot.plot` attribute, which
+available via the :py:attr:`~chaco.plot.Plot.plots` attribute, which
 is a dictionary mapping plot names to a list of plots that match
 that name.  Once obtained, they can have styling attributes changed
 or otherwise be manipulated.  In particular, since the plot renderers

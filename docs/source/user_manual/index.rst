@@ -7,7 +7,7 @@
 User Guide
 ===========
 
-This guide is designed to act as a conceptual guide to Chaco, an open-source
+This guide is designed to act as a conceptual overview of Chaco, an open-source
 data visualization library built and maintained by Enthought, Inc.  Chaco is
 a set of interactive visualization tools built on top of the Enable and Kiva
 2D drawing libraries and designed to complement other Enthought rapid

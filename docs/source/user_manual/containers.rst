@@ -32,7 +32,7 @@ a common interface:
   them.
 
 :py:meth:`add`:
-  Append ore or more plots to the ones already present in the
+  Append one or more plots to the ones already present in the
   container. For example, this is equivalent to the code above::
 
       container = HPlotContainer(spacing=100)

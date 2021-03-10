@@ -7,8 +7,8 @@ Installation
 There are several ways to get Chaco. The easiest way is through `Enthought
 Deployment Manager <https://www.enthought.com/product/enthought-deployment-manager/>`_ (formerly EPD)
 which provides environment management and package installation tools for
-Windows, Linux and Mac OS.  Chaco may also be available through a package manager on your
-platform, such as apt on Ubuntu, yum on Redhat or
+Windows, Linux and MacOS.  Chaco may also be available through a package manager
+on your platform, such as apt on Ubuntu, yum on Redhat or
 `MacPorts <http://www.macports.org/>`_ on OS X.  You can also build Chaco from
 its `source code <https://github.com/enthought/chaco>`_, but because of the
 dependencies, the easiest way by far is to install EDM.
@@ -131,7 +131,7 @@ Extension Modules
 =================
 
 Chaco contains a number of C extension modules used mainly for speed.  In the
-current version of Chaco, there following extension modules are currently used:
+current version of Chaco, the following extension modules are currently used:
 
 ``chaco/_cython_speedups.pyx``
     This is a Cython extension which speeds up a number of standard operations,

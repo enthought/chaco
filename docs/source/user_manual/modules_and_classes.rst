@@ -19,11 +19,11 @@ and overlays, and drawing various layers in the correct order. Subclasses
 almost never need to override or customize these base behaviors, but if they
 do, there are several easy extension points.
 
-PlotComponent is a subclass of Enable :class:`~enable.api.Component`. It has its
-own default drawing order. It redefines the inherited traits :attr:`draw_order`
-and :attr:`draw_layer`, but it doesn't define any new traits. Therefore, you
-may need to refer to the API documentation for Enable Component,
-even when you have subclassed Chaco PlotComponent.
+PlotComponent is a subclass of Enable :class:`~enable.component.Component`. It
+has its own default drawing order. It redefines the inherited traits
+:attr:`draw_order` and :attr:`draw_layer`, but it doesn't define any new
+traits. Therefore, you may need to refer to the API documentation for Enable
+Component, even when you have subclassed Chaco PlotComponent.
 
 If you subclass PlotComponent, you need to implement :meth:`do_layout`,
 if you want to size the component correctly.
@@ -186,9 +186,9 @@ Tools
 
 Tools attach to a component, which gives events to the tool.
 
-All tools subclass from Enable's :class:`~.BaseTool`, which is in turn an Enable
-:class:`Interactor`.  Do not try to make tools that draw: use an overlay for
-that.
+All tools subclass from Enable's :py:class:`~enable.base_tool.BaseTool`, which
+is in turn an Enable :py:class:`~enable.interactor.Interactor`.  Do not try to
+make tools that draw: use an overlay for that.
 
 Some tool subclasses exist in both Enable and Chaco, because they were created
 first in Chaco, and then moved into Enable.
