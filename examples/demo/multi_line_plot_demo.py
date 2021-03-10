@@ -1,3 +1,10 @@
+"""
+Demonstrates the MultiLinePlot.
+
+This demo assumes that 'model', an instance of DataModel containing the 2D
+data to be plotted, will be given to the constructor, and will not change
+later.
+"""
 import numpy as np
 
 from traits.api import Instance, HasTraits, Range, Array
@@ -24,12 +31,6 @@ class DataModel(HasTraits):
 
 
 class MultiLinePlotDemo(HasTraits):
-    """Demonstrates the MultiLinePlot.
-
-    This demo assumes that 'model', an instance of DataModel containing the 2D
-    data to be plotted, will be given to the constructor, and will not change
-    later.
-    """
 
     model = Instance(DataModel)
 

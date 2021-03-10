@@ -1,3 +1,6 @@
+"""
+VTK Example
+"""
 
 from numpy import linspace
 from scipy.special import jn
