@@ -1,5 +1,5 @@
 ==================================
-Overlays: axis, legend, grid, etc.
+Overlays: Axis, Grid, etc.
 ==================================
 
 Overlays are elements that decorate plots, like for example
@@ -84,12 +84,7 @@ Attributes
 
 These attributes control the appearance of the axis:
 
-:attr:`~chaco.axis.PlotAxis.title`,
-:attr:`~chaco.axis.PlotAxis.title_font`,
-:attr:`~chaco.axis.PlotAxis.title_color`,
-:attr:`~chaco.axis.PlotAxis.title_spacing`
-:attr:`~chaco.axis.PlotAxis.title_angle`
-
+:attr:`~chaco.axis.PlotAxis.title`, :attr:`~chaco.axis.PlotAxis.title_font`, :attr:`~chaco.axis.PlotAxis.title_color`, :attr:`~chaco.axis.PlotAxis.title_spacing` :attr:`~chaco.axis.PlotAxis.title_angle`
   Define the axis label. :attr:`title` is a string or unicode object
   that is rendered using the given font and color. :attr:`title_font` is
   a string describing a font (e.g. '12 pt bold italic',
@@ -101,12 +96,7 @@ These attributes control the appearance of the axis:
   wrt horizontal).
 
 
-:attr:`~chaco.axis.PlotAxis.tick_weight`,
-:attr:`~chaco.axis.PlotAxis.tick_color`,
-:attr:`~chaco.axis.PlotAxis.tick_in`,
-:attr:`~chaco.axis.PlotAxis.tick_out`,
-:attr:`~chaco.axis.PlotAxis.tick_visible`,
-
+:attr:`~chaco.axis.PlotAxis.tick_weight`, :attr:`~chaco.axis.PlotAxis.tick_color`, :attr:`~chaco.axis.PlotAxis.tick_in`, :attr:`~chaco.axis.PlotAxis.tick_out`, :attr:`~chaco.axis.PlotAxis.tick_visible`,
   These attributes control the aspect of the ticks on the axis.
   If :attr:`tick_visible` is True, ticks are represented as lines of
   color :attr:`tick_color` (default is black) and thickness
@@ -115,14 +105,7 @@ These attributes control the appearance of the axis:
   :attr:`tick_out` pixels (default is 5).
 
 
-:attr:`~chaco.axis.PlotAxis.tick_label_font`,
-:attr:`~chaco.axis.PlotAxis.tick_label_color`,
-:attr:`~chaco.axis.PlotAxis.tick_label_rotate_angle`,
-:attr:`~chaco.axis.PlotAxis.tick_label_alignment`,
-:attr:`~chaco.axis.PlotAxis.tick_label_margin`,
-:attr:`~chaco.axis.PlotAxis.tick_label_offset`,
-:attr:`~chaco.axis.PlotAxis.tick_label_position`,
-
+:attr:`~chaco.axis.PlotAxis.tick_label_font`, :attr:`~chaco.axis.PlotAxis.tick_label_color`, :attr:`~chaco.axis.PlotAxis.tick_label_rotate_angle`, :attr:`~chaco.axis.PlotAxis.tick_label_alignment`, :attr:`~chaco.axis.PlotAxis.tick_label_margin`, :attr:`~chaco.axis.PlotAxis.tick_label_offset`, :attr:`~chaco.axis.PlotAxis.tick_label_position`,
   These attributes allow to fine-tune the aspect of the tick labels:
   first of all, the font (e.g. '12 pt bold italic') and color of the
   labels. The position and orientation of the label can be also be
@@ -139,7 +122,6 @@ These attributes control the appearance of the axis:
 
 
 :attr:`~chaco.axis.PlotAxis.tick_label_formatter`
-
   By default, tick labels are assumed to be floating point numbers, and are
   displayed as such after removing trailing zeros and the decimal dot if
   necessary (e.g., '10.000' will be displayed as '10', and '21.10' as '21.1').
@@ -148,9 +130,7 @@ These attributes control the appearance of the axis:
   formatted string.
 
 
-:attr:`~chaco.axis.PlotAxis.tick_interval`,
-:attr:`~chaco.axis.PlotAxis.tick_generator`,
-
+:attr:`~chaco.axis.PlotAxis.tick_interval`, :attr:`~chaco.axis.PlotAxis.tick_generator`,
   Locations and distances of ticks are controlled by the attribute
   :attr:`tick_generator`
 
@@ -162,9 +142,8 @@ These attributes control the appearance of the axis:
 Events
 ------
 
-updated
-
-Fired when the axis's range bounds change.
+:attr:`~chaco.axis.PlotAxis.updated`
+  Fired when the axis's range bounds change.
 
 .. _legend:
 
@@ -175,4 +154,3 @@ Legend
 
 Grid
 ====
-
