@@ -19,9 +19,9 @@ visualizations, as well as new tools, overlays and plot renderers.
 Traits
 ------
 
-Chaco is written using `Traits <docs.enthought.com/traits>`_ which not
-only provides basic type-checking of data, particularly provides attribute
-change notification which is key to the interactive updating of Chaco.
+Chaco is written using `Traits <https://docs.enthought.com/traits/>`_ which not
+only provides basic type-checking of data, but also attribute change
+notification which is key to the interactive updating of Chaco.
 
 You should be comfortable with Traits when writing any significant
 Chaco-based application or when extending Chaco's capabilities.
@@ -29,8 +29,8 @@ Chaco-based application or when extending Chaco's capabilities.
 TraitsUI
 --------
 
-`TraitsUI <docs.enthought.com/traitsui>`_ is a rapid GUI application
-development library build on top of Traits.  While it is not required for
+`TraitsUI <https://docs.enthought.com/traitsui/>`_ is a rapid GUI application
+development library built on top of Traits.  While it is not required for
 the development of applications that use Chaco, it is the most natural way
 of providing other UI elements for your users to interact with your
 visualizations; or alternatively the most natural environment for writing
@@ -43,14 +43,14 @@ use cases.
 Kiva
 ----
 
-`Kiva <docs.enthought.com/enable/kiva>`_ provides an abstracted 2D drawing
+`Kiva <https://docs.enthought.com/enable/kiva>`_ provides an abstracted 2D drawing
 API and a number of back-end implementations.  This permits writing of
 drawing code that can be used almost un-modified when rendering to a screen,
 to a vector document format (such as PDF or PostScript), or to a raster file
 format (such as PNG).
 
 The core object for Kiva code is the "graphics context" which represents a
-a 2D drawing surface and the current state of the drawing environment.  When
+2D drawing surface and the current state of the drawing environment.  When
 Chaco classes need to do any drawing they will usually be supplied with an
 appropriate graphics context to render into, but very occasionally (such as
 when saving a plot out to a file) you may want to create your own context to
@@ -62,7 +62,7 @@ an understanding of Kiva.
 Enable
 ------
 
-`Enable <docs.enthought.com/enable/enable>`_ provides interactivity and layout
+`Enable <https://docs.enthought.com/enable/>`_ provides interactivity and layout
 on top of the Kiva drawing library.  Enable is the library that handles the
 interface between Chaco plots and the OS/windowing system, as well as the
 basic hierarchical layout and layering of visible components of a plot.
@@ -82,7 +82,7 @@ code:
     across a number of layers, so that overlays, underlays, borders and
     background can be rendered in a coherent manner.
 
-:py:class:`~enable.tools.base_tool.BaseTool`
+:py:class:`~enable.base_tool.BaseTool`
     An object that handles a particular type of user interaction (eg. mouse
     events or key presses).  Each tool is a state machine and so the
     interactions can vary depending on the state that the tool is in (eg.
@@ -125,7 +125,7 @@ Data sources
 
     Examples: :py:class:`~chaco.array_data_source.ArrayDataSource`,
     :py:class:`~chaco.image_data.ImageData`,
-    :py:class:`~chaco.grid_data_source.GridData`.
+    :py:class:`~chaco.grid_data_source.GridDataSource`.
 
 Ranges
     These hold a range of displayed data values and can be updated either
@@ -160,7 +160,7 @@ Axes and Grids
 
     Examples: :py:class:`~chaco.axis.PlotAxis`,
     :py:class:`~chaco.label_axis.LabelAxis`,
-    :py:class:`~chaco.grid.Grid`.
+    :py:class:`~chaco.grid.PlotGrid`.
 
 Pan and Zoom
     These are pan and zoom commands that come from user interactions, such as
@@ -442,15 +442,15 @@ all common use cases.  In most cases where you need to work with an
 :py:class:`~chaco.array_data_source.ArrayDataSource` you call
 :py:meth:`~chaco.array_data_source.ArrayDataSource.set_data` to change the
 stored data, listen to the
-:py:attr:`~chaco.array_data_source.ArrayDataSource.data_changed` event trait
-for when the data changes and call
+:py:attr:`~chaco.abstract_data_source.AbstractDataSource.data_changed` event
+trait for when the data changes and call
 :py:meth:`~chaco.array_data_source.ArrayDataSource.get_data` to get the
 current value of the data.
 
 Some users of a data source only care about the range of values that are
 contained in that data.  In this case the data source API provides a
-:py:attr:`~chaco.array_data_source.ArrayDataSource.bounds_changed` trait that
-indicates that the maximum or minimum value of the data has changed, and
+:py:attr:`~chaco.abstract_data_source.AbstractDataSource.bounds_changed` trait
+that indicates that the maximum or minimum value of the data has changed, and
 those values can be efficiently retrieved via the
 :py:meth:`~chaco.array_data_source.ArrayDataSource.get_bounds` trait.
 
@@ -507,7 +507,7 @@ mapping screen values back to data values, and
 :py:meth:`~chaco.abstract_mapper.AbstractMapper.map_data_array`
 for mapping a collection of screen values to data values.  Perhaps
 most importantly, the mapper fires the
-:py:attr:`~chaco.abstract_mapper.AbstractMapper.updated`
+:py:attr:`~chaco.abstract_mapper.AbstractMapper.updated` event.
 
 Chaco provides a number of sub-classes of the base class for various
 use-cases.  The most commonly used is the
@@ -515,12 +515,12 @@ use-cases.  The most commonly used is the
 dimensional linear transformation between data space and screen space,
 but there is also :py:class:`~chaco.log_mapper.LogMapper` which provides
 one dimensional logarithmic transformation, and
-:py:class:`~chaco.grid_mapper.GridMapper` which provides a mapping form
+:py:class:`~chaco.grid_mapper.GridMapper` which provides a mapping frrom
 a two dimensional data source to a point in screen (x, y) coordinates
 using a combination of two one dimensional mappers.
 
 For mapping of values to colors, there is the
-:py:class:`~chaco.abstract_color_mapper.AbstractColorMapper` class and
+:py:class:`~chaco.abstract_colormap.AbstractColorMap` class and
 the two sub-classes :py:class:`~chaco.color_mapper.ColorMapper` and
 :py:class:`~chaco.discrete_color_mapper.DiscreteColorMapper`.  These have
 the same base API as
@@ -577,7 +577,7 @@ Axes and Grids
 
 Axes and grids are auxilliary objects that draw plot decorations.
 They are underlays (and so inherit from
-:py:class:`~chaco.abstract_underlay.AbstractOverlay`) and are
+:py:class:`~chaco.abstract_overlay.AbstractOverlay`) and are
 usually drawn into the underlay layer of a :py:class:`~chaco.plot.Plot`
 but they are also able to be used as stand-alone components if needed
 (for example to create multi-axis plots).
@@ -728,13 +728,13 @@ example, the following Enable tools may be of use:
     A tool which opens a TraitsUI dialog when a component is
     double-clicked.
 
-:py:class:`enable.tools.pyface.base_drop_tool.BaseDropTool`
+:py:class:`enable.tools.base_drop_tool.BaseDropTool`
     A base tool which responds to operating system drag and drop.
     Must be subclassed to implement methods that indicate whether
     a type of object can be dropped, and what to do if they are
     dropped.
 
-:py:class:`enable.tools.pyface.value_drag_tool.ValueDragTool`
+:py:class:`enable.tools.value_drag_tool.ValueDragTool`
     A base tool which changes a numeric value as the user
     drags the mouse.  Must be subclassed to provide methods to
     get and set the value.  There is a subclass
