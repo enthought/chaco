@@ -30,7 +30,7 @@ EPD):
 
 .. code-block:: console
 
-   edm install chaco pyqt
+   edm install chaco pyqt5
 
 For full installation options, including installation from source, see the
 :ref:`installation instructions <installation>`.
