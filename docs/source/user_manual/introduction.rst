@@ -7,7 +7,7 @@ data visualization library built and maintained by Enthought, Inc.  Chaco is
 a set of interactive visualization tools built on top of the Enable and Kiva
 2D drawing libraries and designed to complement other Enthought rapid
 application development tools including Traits and TraitsUI.  This guide
-discussed many, but not all of the features of Chaco.  For complete details
+discusses many, but not all of the features of Chaco.  For complete details
 of the Chaco API, refer to the Chaco API documentation.
 
 ==============
