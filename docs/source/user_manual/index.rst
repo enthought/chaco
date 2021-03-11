@@ -18,20 +18,20 @@ of the Chaco API, refer to the Chaco API documentation.
 .. toctree::
     :maxdepth: 2
 
+    introduction.rst
     installation.rst
     ../quickstart.rst
-    introduction.rst
     modules_and_classes
     plots.rst
     containers.rst
 
     basic_elements/data_sources.rst
-    basic_elements/mappers.rst
     basic_elements/data_ranges.rst
+    basic_elements/mappers.rst
     basic_elements/plot_renderers.rst
     tools.rst
-    plot_types.rst
     basic_elements/overlays.rst
+    plot_types.rst
     common_patterns.rst
     tutorials_and_examples.rst
     how_do_i.rst
