@@ -54,7 +54,7 @@ for your platform and then do (from the command line)
 
 .. code-block:: console
 
-   edm install chaco pyqt
+   edm install chaco pyqt5
 
 to install Chaco, PyQt, and their dependencies and then
 
@@ -64,8 +64,8 @@ to install Chaco, PyQt, and their dependencies and then
 
 to enter the Python environment with these packages installed.
 
-If you do not wish to use the PyQt backend then under Python 2.7 you can either
-install PySide or WxPython 3.
+PyQt5 is one of multiple supported backends. Other options include PyQt,
+Pyside2, or wxPython.
 
 Installing Chaco from Source
 ============================
@@ -116,16 +116,14 @@ installation process.
 Developer Live Installation
 ---------------------------
 
-On Python 2.7 it is possible to install a live-editable source installation
+It is also possible to install a live-editable source installation
 using
 
 .. code-block:: console
 
    $ pip install -e .
 
-at the top level of the Chaco source code.  Unfortunately, this doesn't work
-on Python 3 as Chaco currently uses 2to3 to convert the code from Python 2 to
-Python 3.
+at the top level of the Chaco source code.
 
 Extension Modules
 =================

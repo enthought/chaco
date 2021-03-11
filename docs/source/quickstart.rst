@@ -272,23 +272,3 @@ Where to learn more?
 To learn more about the power of Chaco and to build powerful rich client
 applications with custom visualizations, consider going over the
 :ref:`tutorials` section or learning from the :ref:`user_guide`.
-
-License
-=======
-
-As part of the `Enthought Tool Suite <http://docs.enthought.com/ets>`_, Chaco is
-free and open source under the BSD license.
-
-Reporting bugs and contributing
-===============================
-
-Since Chaco is open source and hosted on
-`Github <https://github.com/enthought/chaco>`_, the development version can
-always be checked out from Github, forked, and modified at will. When a bug is
-found, please submit an issue in the
-`issue page <https://github.com/enthought/chaco/issues>`_. If you would like to
-share a bug fix or a new feature, simply submit a Pull Request from your fork.
-Don't forget to specify very clearly what code to run to reproduce the issue,
-what the logic of the fix is and to add one or more unit tests to ensure future
-stability. The Pull Request description can and often needs to contain
-screenshots of the issue or the fix.

@@ -98,7 +98,7 @@ Chaco Object Model
 
 The :py:class:`~.chaco.plot.Plot` class provides a fairly simple API for
 creating a plot in an application, but beneath that lies a set of classes
-that handle converting the numbers into the numpy arrays into pixels on the
+that handle converting the numbers in the numpy arrays into pixels on the
 screen.  Between the :py:class:`~.chaco.array_plot_data.ArrayPlotData` and the
 :py:class:`~.chaco.plot.Plot` are a series of classes which hold state for
 various operations and transformations.
