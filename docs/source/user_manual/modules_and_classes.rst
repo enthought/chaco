@@ -193,7 +193,7 @@ make tools that draw: use an overlay for that.
 Some tool subclasses exist in both Enable and Chaco, because they were created
 first in Chaco, and then moved into Enable.
 
-*Interface*: :class:`BaseTool`
+*Interface*: :py:class:`~enable.base_tool.BaseTool`
 
 *Subclasses*:
 
@@ -201,12 +201,12 @@ first in Chaco, and then moved into Enable.
   events it receives to all those tools.
 * :class:`~.DataPrinter`: Prints the data-space position of the point
   under the cursor.
-* :class:`enable.tools.api.DragTool`: Enable base class
+* :class:`enable.tools.drag_tool.DragTool`: Enable base class
   for tools that do dragging.
 
   * :class:`~chaco.tools.move_tool.MoveTool`
-  * :class:`enable.tools.api.ResizeTool`
-  * :class:`enable.tools.api.ViewportPanTool`
+  * :class:`enable.tools.resize_tool.ResizeTool`
+  * :class:`enable.tools.viewport_pan_tool.ViewportPanTool`
 
 * :class:`~.chaco.tools.drag_tool.DragTool`: Chaco base class
   for tools that do dragging.
@@ -223,7 +223,7 @@ first in Chaco, and then moved into Enable.
 
 * :class:`~.DrawPointsTool`
 * :class:`~.HighlightTool`
-* :class:`~.HoverTool`
+* :class:`enable.tools.hover_tool.HoverTool`
 * :class:`~.ImageInspectorTool`
 * :class:`~.LineInspector`
 * :class:`~.PanTool`
@@ -237,7 +237,7 @@ first in Chaco, and then moved into Enable.
   * :class:`~.ScatterInspector`
   * :class:`~.SelectableLegend`
 
-* :class:`enable.tools.api.TraitsTool`
+* :class:`enable.tools.traits_tool.TraitsTool`
 
   * :class:`~chaco.tools.traits_tool.TraitsTool`
 

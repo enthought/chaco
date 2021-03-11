@@ -520,7 +520,7 @@ a two dimensional data source to a point in screen (x, y) coordinates
 using a combination of two one dimensional mappers.
 
 For mapping of values to colors, there is the
-:py:class:`~chaco.abstract_colormap.AbstractColorMap` class and
+:py:class:`~chaco.abstract_colormap.AbstractColormap` class and
 the two sub-classes :py:class:`~chaco.color_mapper.ColorMapper` and
 :py:class:`~chaco.discrete_color_mapper.DiscreteColorMapper`.  These have
 the same base API as
@@ -738,7 +738,7 @@ example, the following Enable tools may be of use:
     A base tool which changes a numeric value as the user
     drags the mouse.  Must be subclassed to provide methods to
     get and set the value.  There is a subclass
-    :py:class:`enable.tools.pyface.value_drag_tool.AttributeDragTool`
+    :py:class:`enable.tools.value_drag_tool.AttributeDragTool`
     which sets the values of attributes on an object as the
     mouse moves, which is a common use case.
 
