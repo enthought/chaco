@@ -106,7 +106,7 @@ Chaco plots, and the classes that implement them:
   basic_elements/data_ranges.rst
   basic_elements/mappers.rst
   basic_elements/plot_renderers.rst
-  tools.rst
+  basic_elements/tools.rst
   basic_elements/overlays.rst
   plot_types.rst
 
