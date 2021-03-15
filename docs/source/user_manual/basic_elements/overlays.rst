@@ -1,6 +1,6 @@
-==========================
+##########################
 Overlays: Axis, Grid, etc.
-==========================
+##########################
 
 Overlays are elements that decorate plots, like for example
 axes, legends, grids, etc.
