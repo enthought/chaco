@@ -25,7 +25,6 @@ User Guide
     basic_elements/overlays.rst
     plot_types.rst
     common_patterns.rst
-    tutorials_and_examples.rst
     how_do_i.rst
     faq.rst
     annotated_examples.rst

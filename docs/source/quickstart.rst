@@ -265,10 +265,3 @@ plot and overlays that make these tools intuitive and visually appealing.
     with ``--gui=qt``. Make sure that the environment variable ``QT_API``
     is set correctly, as described `here
     <http://ipython.org/ipython-doc/dev/interactive/reference.html?highlight=qt_api#pyqt-and-pyside>`_
-
-Where to learn more?
-====================
-
-To learn more about the power of Chaco and to build powerful rich client
-applications with custom visualizations, consider going over the
-:ref:`tutorials` section or learning from the :ref:`user_guide`.
