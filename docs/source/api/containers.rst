@@ -35,10 +35,3 @@ Containers
 .. autoclass:: GridPlotContainer
     :members:
     :show-inheritance:
-
-:class:`SelectableOverlayPlotContainer`
-=======================================
-.. autoclass:: SelectableOverlayPlotContainer
-    :members:
-    :show-inheritance:
-
