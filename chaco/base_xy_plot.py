@@ -496,14 +496,6 @@ class BaseXYPlot(AbstractPlotRenderer):
                     gc.stroke_path()
         return
 
-    def _post_load(self):
-        super(BaseXYPlot, self)._post_load()
-        self._update_mappers()
-        self.invalidate_draw()
-        self._cache_valid = False
-        self._screen_cache_valid = False
-        return
-
     def _update_subdivision(self):
 
         return

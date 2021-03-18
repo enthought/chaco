@@ -239,23 +239,6 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
                     "_max_index"]:
             self.assertIn(key, state)
 
-    @unittest.skip("I think this is just broken")
-    def test_serialization_post_load(self):
-        self.data_source.set_mask(self.mymask)
-
-        pickled_data_source = pickle.dumps(self.data_source)
-        unpickled_data_source = pickle.loads(pickled_data_source)
-        unpickled_data_source._post_load()
-
-        self.assertEqual(unpickled_data_source._cached_bounds, ())
-        self.assertEqual(unpickled_data_source._cached_mask, None)
-
-        assert_array_equal(self.data_source.get_data(),
-                           unpickled_data_source.get_data())
-
-        mask = unpickled_data_source.get_data_mask()[1]
-        assert_array_equal(mask, ones(10))
-
 
 class PointDataTestCase(unittest.TestCase):
     # Since PointData is mostly the same as ScalarData, the key things to

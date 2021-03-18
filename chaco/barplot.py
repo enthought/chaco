@@ -329,11 +329,6 @@ class BarPlot(AbstractPlotRenderer):
             gc.rect(x+width/4, y+height/4, width/2, height/2)
             gc.draw_path(FILL_STROKE)
 
-    def _post_load(self):
-        super(BarPlot, self)._post_load()
-        return
-
-
     #------------------------------------------------------------------------
     # Properties
     #------------------------------------------------------------------------

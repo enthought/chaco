@@ -313,11 +313,4 @@ class ArrayDataSource(AbstractDataSource):
             state.pop("_max_index", None)
         return state
 
-    def _post_load(self):
-        super(ArrayDataSource, self)._post_load()
-        self._cached_bounds = ()
-        self._cached_mask = None
-        return
-
-
 # EOF

@@ -387,13 +387,6 @@ class DataRange1D(BaseDataRange):
         for source in new:
             source.on_trait_change(self.refresh, "data_changed")
 
-    #------------------------------------------------------------------------
-    # Serialization interface
-    #------------------------------------------------------------------------
-
-    def _post_load(self):
-        self._sources_changed(None, self.sources)
-
 
 ###### method to calculate bounds for a given 1-dimensional set of data
 def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,

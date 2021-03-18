@@ -60,9 +60,4 @@ class AbstractMapper(HasTraits):
 
         return state
 
-    def _post_load(self):
-        self._cache_valid = False
-        self._range_changed(None, self.range)
-        return
-
 # EOF
