@@ -1,7 +1,7 @@
 """ Defines the ArrayDataSource class."""
 
 # Major library imports
-from numpy import array, isfinite, ones, ndarray
+from numpy import array, empty, isfinite, ones, ndarray
 import numpy as np
 
 # Enthought library imports
@@ -153,7 +153,7 @@ class ArrayDataSource(AbstractDataSource):
         if self._data is not None:
             return self._data
         else:
-            return 0.0
+            return empty(shape=(0,))
 
     def get_data_mask(self):
         """get_data_mask() -> (data_array, mask_array)
