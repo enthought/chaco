@@ -248,11 +248,8 @@ class ArrayDataSource(AbstractDataSource):
             #data = self._data
             data = self.get_data()
 
-        data_len = 0
-        try:
-            data_len = len(data)
-        except Exception:
-            pass
+        data_len = len(data)
+
         if data_len == 0:
             self._min_index = 0
             self._max_index = 0
