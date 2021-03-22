@@ -70,6 +70,3 @@ class SVGGraphicsContext(GraphicsContext):
         Overrides Kiva GraphicsContext.
         """
         GraphicsContext.clip_to_rect(self, x-0.5, y-0.5, width+1, height+1)
-
-# EOF
-

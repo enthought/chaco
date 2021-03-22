@@ -446,6 +446,3 @@ def _t_to_point(t, p1, p2):
     on the line going between p1 and p2'''
     return ( p1[0]*(1-t) + p2[0]*t,
              p1[1]*(1-t) + p2[1]*t )
-
-
-# EOF

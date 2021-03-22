@@ -143,6 +143,3 @@ class SimplePlotFrame(BasePlotFrame):
                 del state[key]
 
         return state
-
-
-# EOF

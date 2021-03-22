@@ -297,5 +297,3 @@ class BruteForceDataMapper(AbstractDataMapper):
             else:
                 self._data = sort_points(self._data)[::-1]
         return
-
-#EOF

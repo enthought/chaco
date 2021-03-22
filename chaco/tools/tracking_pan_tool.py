@@ -50,5 +50,3 @@ class TrackingPanTool(PanTool):
 
         event.handled = True
         return
-
-# EOF

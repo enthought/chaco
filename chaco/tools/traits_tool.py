@@ -120,7 +120,3 @@ class TraitsTool(BaseTool):
             item.request_redraw()
 
         return
-
-
-
-# EOF

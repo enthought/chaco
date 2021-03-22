@@ -293,6 +293,3 @@ class ColorBar(AbstractPlotRenderer):
 
     def _set_index(self, val):
         self._index = val
-
-
-# EOF

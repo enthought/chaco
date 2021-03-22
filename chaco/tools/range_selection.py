@@ -691,6 +691,3 @@ class RangeSelection(AbstractController):
             self.plot.on_trait_change(self.__mapper_changed,
                                       old + "_mapper", remove=True)
         return
-
-
-# EOF

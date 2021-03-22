@@ -220,5 +220,3 @@ class MultiArrayDataSource(AbstractDataSource):
             raise ValueError(msg)
 
         self._data = value
-
-# EOF

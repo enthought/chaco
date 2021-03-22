@@ -166,6 +166,3 @@ class ScatterInspector(SelectTool):
                 self.inspector_event = insp_event
 
         return
-
-
-# EOF

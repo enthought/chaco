@@ -166,6 +166,3 @@ class BasePlotFrame(Container, PlotComponent):
         for slot in self._frame_slots.values():
             slot.post_load(path)
         return
-
-
-# EOF

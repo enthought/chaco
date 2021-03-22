@@ -22,5 +22,3 @@ class Poly(Shape):
     numsides = Int(5)
     length = Float(5.0)
     _pickles = ("numsides", "length")
-
-# EOF

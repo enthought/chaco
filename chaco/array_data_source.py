@@ -318,6 +318,3 @@ class ArrayDataSource(AbstractDataSource):
         self._cached_bounds = ()
         self._cached_mask = None
         return
-
-
-# EOF

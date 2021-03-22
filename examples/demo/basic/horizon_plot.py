@@ -145,5 +145,3 @@ if __name__ == "__main__":
     demo.horizon = horizon
     demo.filled = filled
     demo.configure_traits()
-
-#--EOF---

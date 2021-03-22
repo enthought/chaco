@@ -617,4 +617,3 @@ if __name__ == "__main__":
         main(embedded=True)
     else:
         main(embedded=False)
-#-- eof -----------------------------------------------------------------------

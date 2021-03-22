@@ -88,6 +88,3 @@ class PolarMapper(AbstractMapper):
 
         self._cache_valid = True
         return
-
-
-# EOF

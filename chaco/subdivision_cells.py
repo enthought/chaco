@@ -242,4 +242,3 @@ class RangedCell(AbstractCell):
         else:
             self._ranges = ranges
         return
-#EOF

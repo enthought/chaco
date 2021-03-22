@@ -221,6 +221,3 @@ class CodeTemplate(PlotTemplate):
         Returns the actual name that was created.
         """
         pass
-
-
-# EOF

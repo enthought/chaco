@@ -118,5 +118,3 @@ from .abstract_controller import AbstractController
 # compatibility.  New code should directly import from Enable.
 from enable.base_tool import BaseTool, KeySpec
 from enable.markers import marker_trait
-
-#EOF

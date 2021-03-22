@@ -57,8 +57,3 @@ class DrawPointsTool(BaseTool):
         newdata = hstack((olddata, data))
         datasource.set_data(newdata)
         return
-
-
-#EOF
-
-
