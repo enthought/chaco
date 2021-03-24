@@ -90,7 +90,3 @@ class PlotTestCase(unittest.TestCase):
         gc.render_component(plot)
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
-
-
-if __name__ == "__main__":
-    unittest.main()

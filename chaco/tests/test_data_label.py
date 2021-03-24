@@ -26,7 +26,3 @@ class DataLabelTestCase(unittest.TestCase):
         plot.outer_bounds = list(size)
         gc = PlotGraphicsContext(size)
         gc.render_component(plot)
-
-
-if __name__ == "__main__":
-    unittest.main()

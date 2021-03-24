@@ -64,8 +64,3 @@ class BackgroundColorTestCase(EnableTestAssistant, TestCase):
 
         self.assertEqual(gc.set_fill_color.call_args,
                          mock.call([1.0, 0.0, 0.0, 0.3]))
-
-
-if __name__ == '__main__':
-    from unittest import main
-    main()
