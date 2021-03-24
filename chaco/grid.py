@@ -424,6 +424,3 @@ class PlotGrid(AbstractOverlay):
         self._reset_cache()
         self._cache_valid = False
         return
-
-
-# EOF

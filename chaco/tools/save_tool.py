@@ -70,5 +70,3 @@ class SaveTool(BaseTool):
                 dest_box_units = self.dest_box_units)
         gc.render_component(self.component)
         gc.save()
-
-# EOF

@@ -232,7 +232,3 @@ class PlotLabel(AbstractOverlay):
         else:
             self.draw_layer = "plot"
         return
-
-
-
-# EOF

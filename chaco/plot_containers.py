@@ -725,7 +725,3 @@ class GridPlotContainer(BasePlotContainer):
 
         self.invalidate_draw()
         return
-
-
-### EOF
-

@@ -23,6 +23,3 @@ class AbstractController(Interactor):
         longer the active tool.
         """
         pass
-
-
-# EOF

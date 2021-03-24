@@ -128,7 +128,3 @@ class AbstractDataSource(HasTraits):
                 del state[key]
 
         return state
-
-
-
-# EOF

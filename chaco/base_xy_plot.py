@@ -734,7 +734,3 @@ class BaseXYPlot(AbstractPlotRenderer):
         self._screen_cache_valid = False
         self._update_mappers()
         return
-
-
-
-# EOF

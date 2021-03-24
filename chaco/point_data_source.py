@@ -164,5 +164,3 @@ class PointDataSource(ArrayDataSource):
 
     def _get__ydata(self):
         return ArrayDataSource(self._data[:,1])
-
-# EOF

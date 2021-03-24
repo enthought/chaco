@@ -422,6 +422,3 @@ class ColormappedScatterPlot(ScatterPlot):
         self.invalidate_draw()
         self.request_redraw()
         return
-
-
-# EOF

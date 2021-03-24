@@ -810,7 +810,3 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
         print("Format not yet supported:", ext)
         print("Currently supported formats are: bmp, png, jpg.")
     return
-
-
-
-# EOF

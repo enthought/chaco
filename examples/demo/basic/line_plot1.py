@@ -89,5 +89,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-#--EOF---

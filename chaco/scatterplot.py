@@ -562,5 +562,3 @@ class ScatterPlot(BaseXYPlot):
             edge_alpha = 1.0
         c = self.outline_color_[:3] + (edge_alpha * self.alpha,)
         return c
-
-# EOF

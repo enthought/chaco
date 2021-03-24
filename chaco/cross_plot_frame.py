@@ -169,6 +169,3 @@ class CrossPlotFrame(BasePlotFrame):
                 del state[key]
 
         return state
-
-
-# EOF

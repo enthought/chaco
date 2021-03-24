@@ -208,8 +208,3 @@ class ImageData(AbstractDataSource):
 
     def _metadata_items_changed(self, event):
         self.metadata_changed = True
-
-
-
-
-# EOF

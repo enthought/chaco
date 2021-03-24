@@ -386,6 +386,3 @@ class LineSegmentTool(AbstractOverlay):
         if new:
             self.container = new
         return
-
-
-# EOF

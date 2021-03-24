@@ -413,6 +413,3 @@ def _get_or_create_plot_data(data, plotdata):
         name = data
 
     return name
-
-
-# EOF
