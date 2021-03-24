@@ -108,7 +108,3 @@ class TestAutoInterval(unittest.TestCase):
             num_ticks = int((data_high - data_low) / interval)
             self.assertGreaterEqual(num_ticks, 3)
             self.assertLessEqual(num_ticks, max_ticks)
-
-
-if __name__ == "__main__":
-    unittest.main()

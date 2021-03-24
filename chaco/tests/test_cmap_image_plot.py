@@ -40,6 +40,3 @@ class TestCMapImagePlot(unittest.TestCase):
 
         # Then
         window.redraw.assert_called_once_with()
-
-if __name__ == "__main__":
-    unittest.main()
