@@ -14,21 +14,6 @@ from numpy import array
 from traits.etsconfig.api import ETSConfig
 
 
-# Set up the debug logger for all chaco examples.
-# We don't want users to go digging around for the default Enthought logfile
-# in ~/envisage.log, so we add a handler to the global logger for a file
-# "chaco.log" in the current directory.
-
-#import logging, logging.handlers
-#try:
-#    chaco_handler = logging.handlers.RotatingFileHandler("chaco.log",
-#                        maxBytes=1000000, backupCount=0)
-#    logging.getLogger().addHandler(chaco_handler)
-#except:
-#    # If we can't override the default handler, it's OK.
-#    pass
-
-
 # Import a default palette for backwards compatibility
 from .default_colors import cbrewer as COLOR_PALETTE
 
@@ -37,7 +22,6 @@ from .default_colors import cbrewer as COLOR_PALETTE
 # PyQt/traits problem (see below) we can't because it would drag in traits too
 # early.  Until it is fixed we just assume wx if we can import it.
 # Force the selection of a valid toolkit.
-#import enable.toolkit
 if not ETSConfig.toolkit:
     for toolkit, toolkit_module in (('wx', 'wx'), ('qt4', 'pyface.qt')):
         try:

@@ -98,9 +98,6 @@ class DataRange1D(BaseDataRange):
     # The actual numerical value for the high setting.
     _high_value = CFloat(inf)
 
-    # A list of attributes to persist
-    # _pickle_attribs = ("_low_setting", "_high_setting")
-
     #------------------------------------------------------------------------
     # AbstractRange interface
     #------------------------------------------------------------------------
