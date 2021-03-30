@@ -10,8 +10,7 @@ import numpy as np
 from enable.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
 from kiva.api import points_in_polygon
-from traits.api import Enum, Float, Tuple, Property, cached_property, \
-                        on_trait_change
+from traits.api import Enum, Float, Tuple, Property, cached_property, observe
 
 # Local imports.
 from .base_xy_plot import BaseXYPlot
@@ -144,8 +143,8 @@ class PolygonPlot(BaseXYPlot):
     # Event handlers
     #------------------------------------------------------------------------
 
-    @on_trait_change('edge_color, edge_width, edge_style, face_color, alpha')
-    def _attributes_changed(self):
+    @observe('edge_color, edge_width, edge_style, face_color, alpha')
+    def _attributes_changed(self, event):
         self.invalidate_draw()
         self.request_redraw()
 
