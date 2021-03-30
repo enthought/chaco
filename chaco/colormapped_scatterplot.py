@@ -1,15 +1,13 @@
 """ Defines the ColormappedScatterPlot and ColormappedScatterPlotView classes.
 """
 
-from __future__ import with_statement
-
 # Major library imports
 from numpy import argsort, array, concatenate, nonzero, invert, take, \
                   isnan, transpose, newaxis, zeros, ndarray
 
 # Enthought library imports
 from kiva.constants import STROKE
-from traits.api import Dict, Enum, Float, Instance, on_trait_change
+from traits.api import Dict, Enum, Float, Instance, observe
 from traitsui.api import Item, RangeEditor
 
 # Local, relative imports
@@ -413,8 +411,8 @@ class ColormappedScatterPlot(ScatterPlot):
 
         return
 
-    @on_trait_change('color_mapper:updated')
-    def _color_mapper_updated(self):
+    @observe('color_mapper:updated')
+    def _color_mapper_updated(self, event):
         self.invalidate_draw()
         self.request_redraw()
 
