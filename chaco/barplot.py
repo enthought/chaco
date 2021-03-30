@@ -4,7 +4,7 @@ import logging
 
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
 from traits.api import Any, Bool, Enum, Float, Instance, Property, \
-        Range, Tuple, cached_property, on_trait_change
+        Range, Tuple, cached_property, observe
 from enable.api import black_color_trait
 from kiva.constants import FILL_STROKE
 
@@ -415,8 +415,8 @@ class BarPlot(AbstractPlotRenderer):
         self.invalidate_draw()
         self._cache_valid = False
 
-    @on_trait_change('line_color, line_width, fill_color, alpha')
-    def _attributes_changed(self):
+    @observe('line_color, line_width, fill_color, alpha')
+    def _attributes_changed(self, event):
         self.invalidate_draw()
         self.request_redraw()
 
