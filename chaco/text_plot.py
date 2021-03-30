@@ -11,7 +11,7 @@ from numpy import array, column_stack, empty, isfinite
 from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import (
-    Bool, Enum, Float, Int, Instance, List, Tuple, on_trait_change
+    Bool, Enum, Float, Int, Instance, List, Tuple, observe
 )
 
 # local imports
@@ -159,12 +159,12 @@ class TextPlot(BaseXYPlot):
     # Trait events
     #------------------------------------------------------------------------
 
-    @on_trait_change("index.data_changed")
-    def _invalidate(self):
+    @observe("index.data_changed")
+    def _invalidate(self, event):
         self._cache_valid = False
         self._screen_cache_valid = False
         self._label_cache_valid = False
 
-    @on_trait_change("value.data_changed")
-    def _invalidate_labels(self):
+    @observe("value.data_changed")
+    def _invalidate_labels(self, event):
         self._label_cache_valid = False
