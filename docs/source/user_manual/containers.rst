@@ -1,5 +1,3 @@
-.. highlight:: python
-   :linenothreshold: 10
 
 *********************
 Containers and Layout
@@ -21,7 +19,7 @@ All containers are derived from the base class
 :class:`~chaco.base_plot_container.​BasePlotContainer`, and share
 a common interface:
 
-* ``__init__(*components, **parameters)`` (constructor of the container object):
+:py:meth:`__init__`:
   The constructor of a plot container takes a sequence of
   components, which are added to the container itself,
   and a set of keyword arguments, which are used to initialize the
@@ -33,45 +31,43 @@ a common interface:
   (``scatter_plot`` and ``line_plot``), with a spacing of 100 pixels between
   them.
 
-* ``add(*components)``: Append ore or more plots to the ones already present in the
+:py:meth:`add`:
+  Append one or more plots to the ones already present in the
   container. For example, this is equivalent to the code above::
 
       container = HPlotContainer(spacing=100)
       container.add(line_plot, scatter_plot)
 
-* ``remove(self, *components)``: Remove a sequence of components from the
-  container
+:py:meth:`remove`:
+  Remove a sequence of components from the container
 
-* ``insert(index, component)``: Inserts a component at a specific position
-  in the components list
+:py:meth:`insert`:
+  Inserts a component at a specific position in the components list
 
-.. note::
+**Each plot can have only one container**, so adding the same plot to
+a second container will remove it from the first one. In the same way,
+adding the same plot multiple times will not have create multiple
+copies. Instead, one should create multiple plots objects.
 
-    **Each plot can have only one container**, so adding the same plot to
-    a second container will remove it from the first one. In the same way,
-    adding the same plot multiple times will not have create multiple
-    copies. Instead, one should create multiple plots objects.
+E.g., this code::
 
-    E.g., this code::
+        # Create a vertical container containing two horizontal containers
+        h_container1 = HPlotContainer()
+        h_container2 = HPlotContainer()
+        outer_container = VPlotContainer(h_container1, h_container2,
+                                            stack_order="top_to_bottom")
 
-            # Create a vertical container containing two horizontal containers
-            h_container1 = HPlotContainer()
-            h_container2 = HPlotContainer()
-            outer_container = VPlotContainer(h_container1, h_container2,
-                                             stack_order="top_to_bottom")
+        # Add the three plots to the first container
+        h_container1.add(scatter_plot, line_plot1, line_plot2)
 
-            # Add the three plots to the first container
-            h_container1.add(scatter_plot, line_plot1, line_plot2)
+        # Now add the first line plot to the second container => it is removed
+        # from the first, as each plot can only have one container
+        h_container2.add(line_plot1)
 
-            # Now add the first line plot to the second container => it is removed
-            # from the first, as each plot can only have one container
-            h_container2.add(line_plot1)
+results in this layout:
 
-    results in this layout:
-
-      .. image:: images/user_guide/one_container_per_plot.png
-          :height: 200pt
-
+    .. image:: images/user_guide/one_container_per_plot.png
+        :height: 200pt
 
 
 .. _hv-plot-container:
@@ -149,18 +145,18 @@ HPlotContainer parameters
 This is a list of parameters that are specific to
 :class:`~chaco.plot_containers.HPlotContainer`
 
-* ``stack_order``:
+:py:attr:`stack_order`:
   The order in which components in the plot container are laid out. The
   default behavior is left-to-right. ::
 
       stack_order = Enum("left_to_right", "right_to_left")
 
-* ``spacing``:
+:py:attr:`spacing`:
   The amount of space to put between components. ::
 
       spacing = Float(0.0)
 
-* ``valign``:
+:py:attr:`valign`:
   The vertical alignment of objects that don't span the full height. ::
 
       valign = Enum("bottom", "top", "center")
@@ -172,18 +168,18 @@ VPlotContainer parameters
 This is a list of parameters that are specific to
 :class:`~chaco.plot_containers.VPlotContainer`
 
-* ``stack_order``:
+:py:attr:`stack_order`:
   The order in which components in the plot container are laid out. The
   default behavior is bottom-to-top. ::
 
       stack_order = Enum("bottom_to_top", "top_to_bottom")
 
-* ``spacing``:
+:py:attr:`spacing`:
   The amount of space to put between components.::
 
       spacing = Float(0.0)
 
-* ``halign``:
+:py:attr:`halign`:
   The horizontal alignment of objects that don't span the full width.::
 
     halign = Enum("left", "right", "center")
@@ -270,18 +266,19 @@ GridPlotContainer parameters
 This is a list of parameters that are specific to
 :class:`~chaco.plot_containers.GridPlotContainer`
 
-* ``valign``:
+:py:attr:`valign`:
   The vertical alignment of objects that don't span the full height.::
 
     valign = Enum("bottom", "top", "center")
 
 
-* ``halign``:
+:py:attr:`halign`:
   The horizontal alignment of objects that don't span the full width.::
 
     halign = Enum("left", "right", "center")
 
-* ``spacing``: A tuple or list of ``(h_spacing, v_spacing)``,
+:py:attr:`spacing`:
+  A tuple or list of ``(h_spacing, v_spacing)``,
   giving spacing values
   for the horizontal and vertical direction. Default is (0, 0).
 
@@ -379,22 +376,26 @@ their container to set their final aspect.
 
 The basic traits that control the layout preferences of a component are:
 
-* :attr:`resizable`, a string indicating in which directions the component
+:attr:`resizable`:
+  A string indicating in which directions the component
   can be resized. Its value is one of ``''`` (not resizable), ``'h'``
   (resizable in the horizontal direction), ``'v'`` (resizable in the
   vertical direction), ``'hv'`` (resizable in both, default).
-* :attr:`aspect_ratio`, the ratio of the component's width to its height.
+:attr:`aspect_ratio`:
+  The ratio of the component's width to its height.
   This is used by the component itself to maintain bounds when the bounds
   are changed independently. Default is ``None``, meaning that the aspect
   ratio is not enforced.
-* :attr:`padding_left`, :attr:`padding_right`,
-  :attr:`padding_top`, :attr:`padding_bottom` set the amount of padding space
+:attr:`padding_left`, :attr:`padding_right`, :attr:`padding_top`, :attr:`padding_bottom`:
+  Set the amount of padding space
   to leave around the component (default is 0). The property :attr:`padding`
   allows to set all of them as a tuple (left, right, top, bottom).
-* :attr:`auto_center`, controls the behavior when the component's bounds are
+:attr:`auto_center`:
+  Controls the behavior when the component's bounds are
   set to a value that does not conform its aspect ratio. If ``True``
   (default), the component centers itself in the free space.
-* :attr:`fixed_preferred_size`: If the component is resizable, this attribute
+:attr:`fixed_preferred_size`:
+  If the component is resizable, this attribute
   specifies the amount of space that the component would like to get in each
   dimension, as a tuple (width, height). This attribute can be used to
   establish
@@ -403,18 +404,17 @@ The basic traits that control the layout preferences of a component are:
   specifies a fixed preferred width of 100, then the latter component will
   always be twice as wide as the former.
 
-You can get access to the actual bounds of the component, (including
-padding and border) using the
-``outer`` properties:
+You can get access to the actual bounds of the component, (including padding and border)
+using the ``outer`` properties:
 
-* :attr:`outer_position`, the x,y point of the lower left corner of the
+:attr:`outer_position`:
+  The x,y point of the lower left corner of the
   padding outer box around
   the component. Use :meth:`set_outer_position` to change these values.
-* :attr:`outer_bounds`,
-  the number of horizontal and vertical pixels in the padding outer box.
+:attr:`outer_bounds`:
+  The number of horizontal and vertical pixels in the padding outer box.
   Use :meth:`set_outer_bounds` to change these values.
-* :attr:`outer_x`, :attr:`outer_y`, :attr:`outer_x2`, :attr:`outer_y2:,
-  :attr:`outer_width`, :attr:`outer_height`:
+:attr:`outer_x`, :attr:`outer_y`, :attr:`outer_x2`, :attr:`outer_y2:, :attr:`outer_width`, :attr:`outer_height`:
   coordinates of lower-left pixel of the box,
   coordinates of the upper-right pixel of the box,
   width and height of the outer box in pixels

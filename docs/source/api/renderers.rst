@@ -4,7 +4,7 @@
 Renderers
 ----------
 
-.. currentmodule:: chaco.api
+.. currentmodule:: chaco.barplot
 
 :class:`BarPlot`
 ================
@@ -12,11 +12,15 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.base_1d_plot
+
 :class:`Base1DPlot`
 ===================
 .. autoclass:: Base1DPlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.base_2d_plot
 
 :class:`Base2DPlot`
 ===================
@@ -24,11 +28,15 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.base_xy_plot
+
 :class:`BaseXYPlot`
 ===================
 .. autoclass:: BaseXYPlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.scatterplot
 
 :class:`ScatterPlot`
 ====================
@@ -36,11 +44,15 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.image_plot
+
 :class:`ImagePlot`
 ==================
 .. autoclass:: ImagePlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.cmap_image_plot
 
 :class:`CMapImagePlot`
 ======================
@@ -48,11 +60,15 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.contour_line_plot
+
 :class:`ContourLinePlot`
 ========================
 .. autoclass:: ContourLinePlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.lineplot
 
 :class:`LinePlot`
 ========================
@@ -60,11 +76,15 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.colormapped_scatterplot
+
 :class:`ColormappedScatterPlot`
 ===============================
 .. autoclass:: ColormappedScatterPlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.colormapped_selection_overlay
 
 :class:`ColormappedSelectionOverlay`
 ====================================
@@ -72,11 +92,15 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.polygon_plot
+
 :class:`PolygonPlot`
 ====================
 .. autoclass:: PolygonPlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.errorbar_plot
 
 :class:`ErrorBarPlot`
 =====================
@@ -84,11 +108,15 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.filled_line_plot
+
 :class:`FilledLinePlot`
 =======================
 .. autoclass:: FilledLinePlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.quiverplot
 
 :class:`QuiverPlot`
 ===================
@@ -96,11 +124,31 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.candle_plot
+
 :class:`CandlePlot`
 ===================
 .. autoclass:: CandlePlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.segment_plot
+
+:class:`SegmentPlot`
+====================
+.. autoclass:: SegmentPlot
+    :members:
+    :show-inheritance:
+
+.. currentmodule:: chaco.text_plot
+
+:class:`TextPlot`
+=================
+.. autoclass:: TextPlot
+    :members:
+    :show-inheritance:
+
+.. currentmodule:: chaco.multi_line_plot
 
 :class:`MultiLinePlot`
 ======================
@@ -108,35 +156,47 @@ Renderers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.scatterplot_1d
+
 :class:`ScatterPlot1D`
 ======================
-.. autoclass:: ScatterPlot
+.. autoclass:: ScatterPlot1D
     :members:
     :show-inheritance:
 
-..:class:`JitterPlot`
-..===================
-.... autoclass:: JitterPlot
-..    :members:
-..    :show-inheritance:
+.. currentmodule:: chaco.jitterplot
 
-..:class:`LineScatterPlot1D`
-..===================
-.... autoclass:: LineScatterPlot1D
-..    :members:
-..    :show-inheritance:
+:class:`JitterPlot`
+=====================
+.. autoclass:: JitterPlot
+    :members:
+    :show-inheritance:
 
-..:class:`TextPlot1D`
-..===================
-.... autoclass:: TextPlot1D
-..    :members:
-..    :show-inheritance:
+.. currentmodule:: chaco.line_scatterplot_1d
+
+:class:`LineScatterPlot1D`
+============================
+.. autoclass:: LineScatterPlot1D
+    :members:
+    :show-inheritance:
+
+.. currentmodule:: chaco.text_plot_1d
+
+:class:`TextPlot1D`
+=====================
+.. autoclass:: TextPlot1D
+    :members:
+    :show-inheritance:
+
+.. currentmodule:: chaco.variable_size_scatterplot
 
 :class:`VariableSizeScatterPlot`
 ================================
 .. autoclass:: VariableSizeScatterPlot
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.horizon_plot
 
 :class:`HorizonPlot`
 ====================

@@ -1,3 +1,5 @@
+.. _how_do_i:
+
 ############
 How Do I...?
 ############
@@ -5,13 +7,14 @@ How Do I...?
 .. note::
 
     This section is currently under active development.
+    
+.. contents::
 
 Basics
 ======
 
-*How do I...*
-
-* render data to an image file?
+Render data to an image file?
+-----------------------------
 
 ::
 
@@ -22,7 +25,8 @@ Basics
         gc.render_component(plot)
         gc.save(filename)
 
-* integrate a Chaco plot into my WX app?
+Integrate a Chaco plot into my WX app?
+--------------------------------------
 
 ::
 
@@ -33,36 +37,46 @@ Basics
     from enable.api import Window
 
     class PlotFrame(wx.Frame):
-	def __init__(self, *args, **kw):
-	    kw["size"] = (850, 550)
-	    wx.Frame.__init__( *(self,) + args, **kw )
-	    self.plot_window = Window(self, component=self._create_plot())
-	    sizer = wx.BoxSizer(wx.HORIZONTAL)
-	    sizer.Add(self.plot_window.control, 1, wx.EXPAND)
-	    self.SetSizer(sizer)
-	    self.SetAutoLayout(True)
-	    self.Show(True)
-	    return
 
-	def _create_plot(self):
-	    x = arange(-5.0, 15.0, 20.0/100)
-	    y = jn(0, x)
-	    plot = create_line_plot((x,y), bgcolor="white",
-					add_grid=True, add_axis=True)
-	    container = HPlotContainer(spacing=20, padding=50, bgcolor="lightgray")
-	    container.add(plot)
-	    return container
+        def __init__(self, *args, **kw):
+            kw["size"] = (850, 550)
+            super(PlotFrame, self).__init__(*args, **kw)
+            self.plot_window = Window(self, component=self._create_plot())
+            sizer = wx.BoxSizer(wx.HORIZONTAL)
+            sizer.Add(self.plot_window.control, 1, wx.EXPAND)
+            self.SetSizer(sizer)
+            self.SetAutoLayout(True)
+            self.Show(True)
+
+        def _create_plot(self):
+            x = arange(-5.0, 15.0, 20.0/100)
+            y = jn(0, x)
+            plot = create_line_plot(
+                (x,y),
+                bgcolor="white",
+                add_grid=True,
+                add_axis=True,
+            )
+            container = HPlotContainer(
+                spacing=20,
+                padding=50,
+                bgcolor="lightgray",
+            )
+            container.add(plot)
+            return container
 
     if __name__ == "__main__":
-	app = wx.PySimpleApp()
-	frame = PlotFrame(None)
-	app.MainLoop()
+        app = wx.PySimpleApp()
+        frame = PlotFrame(None)
+        app.MainLoop()
 
 Note that this will require for the ETS_TOOLKIT environment variable to
 be set to 'wx'.
 
 * integrate a Chaco plot into my QT app?
-* integrate a Chaco plot into my Traits UI?
+
+Integrate a Chaco plot into my Traits UI?
+-----------------------------------------
 
 ::
 
@@ -75,7 +89,7 @@ be set to 'wx'.
     class MyPlot(HasTraits):
         plot = Instance(Plot)
 
-        traits_view = View(Item('plot', editor=ComponentEditor())) 
+        traits_view = View(Item('plot', editor=ComponentEditor()))
 
         def __init__(self, index, data_series, **kw):
             super(MyPlot, self).__init__(**kw)
@@ -92,7 +106,8 @@ be set to 'wx'.
     my_plot.configure_traits()
 
 
-* make an application to render many streams of data?
+Make an application to render many streams of data?
+---------------------------------------------------
 
 ::
 
@@ -105,19 +120,21 @@ be set to 'wx'.
             plot_data.set_data(series_name, data_series)
             plot.plot(('index', series_name))
 
-* make a plot the right size?
+Make a plot the right size?
+---------------------------
 
 ::
 
     def resize_plot(plot, width, height):
         plot.outer_bounds = [width, height]
 
-* copy a plot the the clipboard?
+Copy a plot the the clipboard?
+------------------------------
 
 ::
 
     def copy_to_clipboard(plot):
-        # WX specific, though QT implementation is similar using 
+        # WX specific, though QT implementation is similar using
         # QImage and QClipboard
         import wx
 
@@ -126,10 +143,10 @@ be set to 'wx'.
         gc = PlotGraphicsContext((width, height), dpi=72)
         gc.render_component(plot_component)
 
-        # Create a bitmap the same size as the plot 
+        # Create a bitmap the same size as the plot
         # and copy the plot data to it
 
-        bitmap = wx.BitmapFromBufferRGBA(width+1, height+1, 
+        bitmap = wx.BitmapFromBufferRGBA(width+1, height+1,
                                      gc.bmp_array.flatten())
         data = wx.BitmapDataObject()
         data.SetBitmap(bitmap)
@@ -147,7 +164,9 @@ Layout and Rendering
 *How do I...*
 
 * put multiple plots in a single window?
-* change the background color?
+
+Change the background color?
+----------------------------
 
 ::
 
@@ -160,7 +179,8 @@ Layout and Rendering
     def change_bgcolor(plot):
         plot.bgcolor = 'black'
 
-* turn off borders? 
+Turn off borders?
+-----------------
 
 ::
 
@@ -183,7 +203,7 @@ Writing Components
 * write a custom renderer?
 * write a custom overlay/underlay?
 * write a custom tool?
-* write a new container? 
+* write a new container?
 
 
 Advanced
@@ -194,5 +214,5 @@ Advanced
 * properly change/override draw dispatch?
 * modify event dispatch?
 * customize backbuffering?
-* embed custom/native WX widgets on the plot? 
+* embed custom/native WX widgets on the plot?
 
