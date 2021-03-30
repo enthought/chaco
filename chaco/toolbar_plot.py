@@ -1,7 +1,6 @@
 from chaco.plot import Plot
 from chaco.tools.toolbars.plot_toolbar import PlotToolbar
-from traits.api import Type, DelegatesTo, Instance, Enum, \
-        on_trait_change
+from traits.api import Type, DelegatesTo, Instance, Enum, observe
 
 class ToolbarPlot(Plot):
     #: Should we turn on the auto-hide feature on the toolbar?
@@ -51,12 +50,13 @@ class ToolbarPlot(Plot):
         self.toolbar.do_layout(force=True)
         super(ToolbarPlot, self)._bounds_changed(old, new)
 
-    @on_trait_change('toolbar')
-    def _toolbar_changed(self, name, obj, old, new):
+    @observe('toolbar')
+    def _on_toolbar_changed(self, event):
+
         if self.toolbar_added:
             # fixup the new toolbar's component to match the old one
-            new.component = old.component
+            event.new.component = event.old.component
 
-            self.overlays.remove(old)
+            self.overlays.remove(event.old)
             self.toolbar_added = False
             self.add_toolbar()
