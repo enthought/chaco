@@ -3,8 +3,7 @@
 import pandas as pd
 import numpy as np
 
-from traits.api import Callable, Enum, HasTraits, Instance, on_trait_change, \
-    Str
+from traits.api import Callable, Enum, HasTraits, Instance, observe, Str
 from traitsui.api import View, Item
 from enable.api import ComponentEditor
 from chaco.api import Plot, ArrayPlotData, ScatterInspectorOverlay, \
@@ -27,9 +26,10 @@ class DataframeScatterOverlay(TextBoxOverlay):
     #: Function which takes and index and returns an info string.
     message_for_data = Callable
 
-    @on_trait_change('inspector:inspector_event')
+    @observe('inspector:inspector_event')
     def scatter_point_found(self, event):
-        data_idx = event.event_index
+        inspector_event = event.new 
+        data_idx = inspector_event.event_index
         if data_idx is not None:
             self.text = self.message_for_data(data_idx)
         else:
