@@ -159,12 +159,12 @@ class ToolTip(AbstractOverlay):
     def __font_metrics_provider_default(self):
         return font_metrics_provider()
 
-    @observe("font,text_color,lines:items")
+    @observe("font,text_color,lines.items")
     def _invalidate_text_props(self, event):
         self._text_props_valid = False
         self._layout_needed = True
 
-    @observe("border_padding,line_spacing,lines:items,padding")
+    @observe("border_padding,line_spacing,lines.items,padding")
     def _invalidate_layout(self, event):
         self._layout_needed = True
         self.request_redraw()

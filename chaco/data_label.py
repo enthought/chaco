@@ -549,7 +549,7 @@ class DataLabel(ToolTip):
         self._cached_arrow = None
         self._layout_needed = True
 
-    @observe("label_position,position:items,bounds:items")
+    @observe("label_position,position.items,bounds.items")
     def _invalidate_layout(self, event):
         self._layout_needed = True
 

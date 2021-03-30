@@ -156,7 +156,7 @@ class PlotGrid(AbstractOverlay):
         self.bgcolor = "none" #make sure we're transparent
         return
 
-    @observe("bounds:items,position:items")
+    @observe("bounds.items,position.items")
     def invalidate(self, event=None):
         """ Invalidate cached information about the grid.
         """
