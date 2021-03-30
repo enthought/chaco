@@ -11,8 +11,9 @@ from numpy import array, dot
 from enable.api import black_color_trait, transparent_color_trait
 from kiva.constants import FILL
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import (Any, Bool, Float, HasTraits, Int, List, Str,
-                        on_trait_change)
+from traits.api import (
+    Any, Bool, Float, HasTraits, Int, List, Str, observe
+)
 
 
 class Label(HasTraits):
@@ -192,8 +193,8 @@ class Label(HasTraits):
     def _text_changed(self):
         self._text_needs_fitting = (self.max_width > 0.0)
 
-    @on_trait_change("font,margin,text,rotate_angle")
-    def _invalidate_position_cache(self):
+    @observe("font,margin,text,rotate_angle")
+    def _invalidate_position_cache(self, event):
         self._position_cache_valid = False
 
     #------------------------------------------------------------------------
