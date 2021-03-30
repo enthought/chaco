@@ -432,6 +432,3 @@ class ChacoPlotEditor ( Editor ):
 
         plot.request_redraw()
         return
-
-
-# EOF

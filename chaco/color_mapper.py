@@ -440,7 +440,3 @@ class ColorMapper(AbstractColormap):
     def _range_change_handler(self, obj, name, new):
         "Handles the range changing; dynamically attached to our ranges"
         self.updated = obj
-
-
-
-# EOF

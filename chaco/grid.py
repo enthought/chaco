@@ -407,8 +407,6 @@ class PlotGrid(AbstractOverlay):
 
 
     ### Persistence ###########################################################
-    #_pickles = ("orientation", "line_color", "line_style", "line_weight",
-    #            "grid_interval", "mapper")
 
     def __getstate__(self):
         state = super(PlotGrid,self).__getstate__()
@@ -424,6 +422,3 @@ class PlotGrid(AbstractOverlay):
         self._reset_cache()
         self._cache_valid = False
         return
-
-
-# EOF

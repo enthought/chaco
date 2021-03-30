@@ -47,6 +47,3 @@ class Preferences(HasTraits):
         """ Saves the preferences to *filename*.
         """
         pass
-
-
-# EOF

@@ -66,5 +66,3 @@ class BasePlotContainer(Container):
         if new == False:
             raise RuntimeError("The old-style drawing mechanism is no longer " \
                     "supported in Chaco.")
-
-# EOF

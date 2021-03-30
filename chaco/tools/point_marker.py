@@ -82,7 +82,3 @@ class PointMarker(BaseTool):
                 gc.line_to(self.component.x2, int(pt[1])+0.5)
             gc.stroke_path()
         return
-
-
-
-# EOF

@@ -92,5 +92,3 @@ class HighlightTool(BaseTool):
                 if cpoint is not None:
                     return p
         return None
-
-#EOF

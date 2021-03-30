@@ -83,6 +83,3 @@ class AbstractPlotRenderer(PlotComponent):
         as an icon into the box defined by the given coordinates.
         """
         pass
-
-
-# EOF

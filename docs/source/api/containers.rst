@@ -51,4 +51,3 @@ Containers
 .. autoclass:: SelectableOverlayPlotContainer
     :members:
     :show-inheritance:
-

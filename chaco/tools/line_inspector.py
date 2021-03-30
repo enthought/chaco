@@ -280,7 +280,3 @@ class LineInspector(BaseTool):
             gc.line_to(self.component.x2, sy)
             gc.stroke_path()
         return
-
-
-
-# EOF

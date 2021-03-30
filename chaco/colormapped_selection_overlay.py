@@ -168,6 +168,3 @@ class ColormappedSelectionOverlay(AbstractOverlay):
 
     def _set_plot(self, val):
         self._plot = val
-
-
-# EOF

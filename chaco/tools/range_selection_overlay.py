@@ -200,5 +200,3 @@ class RangeSelectionOverlay(AbstractOverlay):
     @cached_property
     def _get_axis_index(self):
         return self._determine_axis()
-
-# EOF

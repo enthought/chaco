@@ -509,6 +509,3 @@ class BarPlot(AbstractPlotRenderer):
             fill_alpha = 1.0
         c = self.fill_color_[:3] + (fill_alpha * self.alpha,)
         return c
-
-
-### EOF ####################################################################

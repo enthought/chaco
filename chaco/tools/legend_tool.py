@@ -118,5 +118,3 @@ class LegendTool(DragTool):
             event.handled = True
             legend.request_redraw()
         return
-
-# EOF

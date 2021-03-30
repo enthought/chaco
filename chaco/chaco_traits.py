@@ -18,5 +18,3 @@ box_position_enum = Enum("T", "B", "L", "R", "TL", "TR", "BL", "BR")
 # For backwards compatibility, import LineStyle & LineStyleEditor from enable.
 # (They used to be defined here.)
 from enable.api import LineStyle, LineStyleEditor
-
-# EOF

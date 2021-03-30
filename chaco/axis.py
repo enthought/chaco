@@ -822,5 +822,3 @@ class MinorPlotAxis(PlotAxis):
             self.tick_out = 2
         if 'axis_line_visible' not in kwargs:
             self.axis_line_visible = False
-
-# EOF ########################################################################

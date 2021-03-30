@@ -134,8 +134,3 @@ class ToolHistoryMixin(HasTraits):
             event.handled = True
         else:
             return
-
-
-
-
-# EOF

@@ -111,6 +111,3 @@ class Serializable(object):
         #~ self._do_setstate(state)
         #~ self._post_load()
         #~ return
-
-
-# EOF

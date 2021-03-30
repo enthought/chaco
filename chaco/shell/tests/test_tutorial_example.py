@@ -21,6 +21,3 @@ class InteractiveTestCase(unittest.TestCase):
         plot(x, y, "r-")
         title("First plot")
         ytitle("sin(x)")
-
-if __name__ == "__main__":
-    unittest.main()

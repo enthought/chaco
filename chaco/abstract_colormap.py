@@ -66,7 +66,3 @@ class AbstractColormap(HasTraits):
         """
         # default implementation (not efficient)
         return (self.map_screen(val)*255.0).astype('uint8')
-
-
-
-# EOF
