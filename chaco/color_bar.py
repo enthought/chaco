@@ -220,7 +220,7 @@ class ColorBar(AbstractPlotRenderer):
         self._update_mappers()
 
     @observe(parse('[index_mapper,color_mapper]').match(lambda n, t: True))
-    def _either_mapper_changed(self, event=None):
+    def _either_mapper_updated(self, event=None):
         self.invalidate_draw()
         self.request_redraw()
 
@@ -230,10 +230,10 @@ class ColorBar(AbstractPlotRenderer):
             self._grid.mapper = self.index_mapper
         if self._axis is not None:
             self._axis.mapper = self.index_mapper
-        self._either_mapper_changed()
+        self._either_mapper_updated()
 
     def _color_mapper_changed(self):
-        self._either_mapper_changed()
+        self._either_mapper_updated()
 
     def _value_mapper_changed(self):
         self._color_mapper_changed()
