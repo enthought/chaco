@@ -37,16 +37,16 @@ class PolygonPlot(BaseXYPlot):
     """
 
     #: The color of the line on the edge of the polygon.
-    edge_color = black_color_trait
+    edge_color = black_color_trait(requires_redraw=True)
 
     #: The thickness of the edge of the polygon.
-    edge_width = Float(1.0)
+    edge_width = Float(1.0, requires_redraw=True)
 
     #: The line dash style for the edge of the polygon.
-    edge_style = LineStyle
+    edge_style = LineStyle(requires_redraw=True)
 
     #: The color of the face of the polygon.
-    face_color = transparent_color_trait
+    face_color = transparent_color_trait(requires_redraw=True)
 
     #: Override the hittest_type trait inherited from BaseXYPlot
     hittest_type = Enum("poly", "point", "line")
@@ -138,15 +138,6 @@ class PolygonPlot(BaseXYPlot):
             return True
         else:
             return False
-
-    #------------------------------------------------------------------------
-    # Event handlers
-    #------------------------------------------------------------------------
-
-    @observe('edge_color, edge_width, edge_style, face_color, alpha')
-    def _attributes_changed(self, event):
-        self.invalidate_draw()
-        self.request_redraw()
 
     #------------------------------------------------------------------------
     # Property getters
