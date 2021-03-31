@@ -76,7 +76,7 @@ class Model(HasTraits):
                 )
             )
     )
-    def compute_model(self):
+    def compute_model(self, event=None):
         def vfunc(x, y, z):
             return sin(x*z) * cos(y)*sin(z) + sin(0.5*z)
 
@@ -396,4 +396,3 @@ if __name__ == "__main__":
     demo = demo_main(PlotFrame, size=(800,700), title="Cube analyzer")
     if run_cleanup:
         cleanup_data()
-
