@@ -245,11 +245,11 @@ class ChacoPlotEditor ( Editor ):
         object = self.object
         if USE_DATA_UPDATE == 1:
             for name in (plotitem.index, plotitem.value):
-                object.on_trait_change( self._update_data, name)
+                object.observe( self._update_data, name)
         for name in (plotitem.x_label_trait, plotitem.y_label_trait):
-            object.on_trait_change(lambda s: self._update_axis_grids(), name)
+            object.observe(lambda s: self._update_axis_grids(), name)
         if plotitem.type_trait not in ("", None):
-            object.on_trait_change(self.update_editor, plotitem.type_trait)
+            object.observe(self.update_editor, plotitem.type_trait)
         return
 
     #---------------------------------------------------------------------------
@@ -264,9 +264,9 @@ class ChacoPlotEditor ( Editor ):
 
         if USE_DATA_UPDATE == 1:
             for name in (plotitem.index, plotitem.value):
-                object.on_trait_change( self._update_data, name, remove = True )
+                object.observe( self._update_data, name, remove = True )
         for name in (plotitem.type_trait,):
-            object.on_trait_change( self.update_editor, name, remove = True )
+            object.observe( self.update_editor, name, remove = True )
         self._destroy_plot()
         super(ChacoPlotEditor, self).dispose()
 
@@ -287,7 +287,7 @@ class ChacoPlotEditor ( Editor ):
     #  Updates the editor when the object trait changes externally to the editor:
     #---------------------------------------------------------------------------
 
-    def update_editor(self):
+    def update_editor(self, event=None):
         """ Updates the editor when the object trait changes externally to the
             editor.
         """
@@ -345,7 +345,7 @@ class ChacoPlotEditor ( Editor ):
         self._container.request_redraw()
         return
 
-    def _update_data(self):
+    def _update_data(self, event):
         """ Updates the editor when the object trait changes externally to the
             editor.
         """
