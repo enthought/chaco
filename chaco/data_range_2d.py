@@ -228,5 +228,5 @@ class DataRange2D(BaseDataRange):
         self.refresh()
 
     @observe("_xrange.updated,_yrange.updated")
-    def _subranges_updated(self, event):
+    def _set_updated(self, event):
         self.updated = True
