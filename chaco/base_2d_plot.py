@@ -325,10 +325,10 @@ class Base2DPlot(AbstractPlotRenderer):
 
     def _value_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._update_value_data,
+            old.observe(self._update_value_data,
                                 "data_changed", remove=True)
         if new is not None:
-            new.on_trait_change(self._update_value_data, "data_changed")
+            new.observe(self._update_value_data, "data_changed")
         self._update_value_data()
 
     def _index_mapper_changed(self, old, new):
