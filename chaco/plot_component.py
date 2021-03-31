@@ -3,7 +3,7 @@
 # Enthought library imports
 from enable.api import Component
 from enable.kiva_graphics_context import GraphicsContext
-from traits.api import Bool, Instance, Str
+from traits.api import Bool, Instance, observe, Str
 
 
 DEFAULT_DRAWING_ORDER = ["background", "image", "underlay",      "plot",
@@ -61,4 +61,6 @@ class PlotComponent(Component):
             raise RuntimeError("The old-style drawing mechanism is no longer " \
                     "supported in Chaco.")
 
-
+    @observe('+requires_redraw')
+    def _plot_component_invalidated(self, event):
+        self.invalidate_and_redraw()
