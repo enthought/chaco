@@ -354,7 +354,7 @@ class SegmentPlot(BaseXYPlot):
         'alpha, color_data:data_changed, color_mapper:updated, '
         'width_data:data_changed, width_mapper.updated, +redraw'
     )
-    def _attributes_changed(self, event):
+    def _attributes_updated(self, event):
         self.invalidate_draw()
         self.request_redraw()
 
