@@ -166,6 +166,7 @@ class TestResultImage(unittest.TestCase):
                                  origin='bottom right', orientation='v')
 
     # regression test for enthought/chaco#528
+    @unittest.skipIf(ETSConfig.toolkit=='null', "Skip on 'null' toolkit")
     def test_resize_to_zero(self):
         class TestResize(HasTraits):
             plot = Instance(Component)
