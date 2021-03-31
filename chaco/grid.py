@@ -355,13 +355,13 @@ class PlotGrid(AbstractOverlay):
 
     def _mapper_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self.mapper_updated, "updated", remove=True)
+            old.observe(self.mapper_updated, "updated", remove=True)
         if new is not None:
-            new.on_trait_change(self.mapper_updated, "updated")
+            new.observe(self.mapper_updated, "updated")
         self.invalidate()
         return
 
-    def mapper_updated(self):
+    def mapper_updated(self, event):
         """
         Event handler that is bound to this mapper's **updated** event.
         """
