@@ -64,10 +64,10 @@ class CMapImagePlot(ImagePlot):
     def __init__(self, **kwargs):
         super(CMapImagePlot, self).__init__(**kwargs)
         if self.value_mapper:
-            self.value_mapper.on_trait_change(self._update_value_mapper,
+            self.value_mapper.observe(self._update_value_mapper,
                                               "updated")
         if self.value:
-            self.value.on_trait_change(self._update_selections,
+            self.value.observe(self._update_selections,
                                        "metadata_changed")
 
     def set_value_selection(self, val):
@@ -139,12 +139,12 @@ class CMapImagePlot(ImagePlot):
             ImagePlot._compute_cached_image(self, self.value.data, mapper=lambda data:
                 self._cmap_values(data))
             
-    def _update_value_mapper(self):
+    def _update_value_mapper(self, event=None):
         self._mapped_image_cache_valid = False
         self._image_cache_valid = False
         self.invalidate_and_redraw()
 
-    def _update_selections(self):
+    def _update_selections(self, event=None):
         self._mapped_image_cache_valid = False
         self._image_cache_valid = False
         self.invalidate_and_redraw()
@@ -171,10 +171,10 @@ class CMapImagePlot(ImagePlot):
 
     def _value_mapper_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._update_value_mapper,
+            old.observe(self._update_value_mapper,
                                 "updated", remove=True)
         if new is not None:
-            new.on_trait_change(self._update_value_mapper, "updated")
+            new.observe(self._update_value_mapper, "updated")
 
         if old and new:
             if new.range is None and old.range is not None:
