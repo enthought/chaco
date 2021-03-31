@@ -282,11 +282,11 @@ class PlotToolbar(Container, AbstractOverlay):
             self.request_redraw()
 
     @observe('hiding')
-    def _on_hiding_changed(self, event):
+    def _set_layout_needed_and_redraw(self, event):
         self._layout_needed = True
         self.request_redraw()
 
     @observe('auto_hide')
-    def _on_auto_hide_changed(self, event):
+    def _set_hiding_and_redraw(self, event):
         self.hiding = self.auto_hide
         self.request_redraw()
