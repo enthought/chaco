@@ -146,7 +146,7 @@ class GridMapper(AbstractMapper):
             self._ymapper.screen_bounds = (self.y_low_pos, self.y_high_pos)
         self.updated = True
 
-    def _update_range(self):
+    def _update_range(self, event=None):
         self.updated = True
 
     def _update_aspect_x(self):
@@ -185,9 +185,9 @@ class GridMapper(AbstractMapper):
 
     def _range_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._update_range, "updated", remove=True)
+            old.observe(self._update_range, "updated", remove=True)
         if new is not None:
-            new.on_trait_change(self._update_range, "updated")
+            new.observe(self._update_range, "updated")
             if self._xmapper is not None:
                 self._xmapper.range = new.x_range
             if self._ymapper is not None:
