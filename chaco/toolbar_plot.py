@@ -51,12 +51,13 @@ class ToolbarPlot(Plot):
         super(ToolbarPlot, self)._bounds_changed(old, new)
 
     @observe('toolbar')
-    def _on_toolbar_changed(self, event):
+    def _update_toolbar(self, event):
+        new, old = event.new, event.old
 
         if self.toolbar_added:
             # fixup the new toolbar's component to match the old one
-            event.new.component = event.old.component
+            new.component = old.component
 
-            self.overlays.remove(event.old)
+            self.overlays.remove(old)
             self.toolbar_added = False
             self.add_toolbar()
