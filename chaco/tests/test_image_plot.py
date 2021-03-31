@@ -2,7 +2,6 @@ import os
 
 import tempfile
 from contextlib import contextmanager
-from scipy.misc import face
 
 import unittest
 
@@ -181,7 +180,7 @@ class TestResultImage(unittest.TestCase):
             )
 
             def _plot_default(self):
-                pd = ArrayPlotData(image=face())
+                pd = ArrayPlotData(image=RGB)
                 plot = Plot(pd)
                 plot.img_plot('image')
 
