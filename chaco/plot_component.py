@@ -19,6 +19,11 @@ class PlotComponent(Component):
     Several of these top-level layout and draw methods have implementations
     that must not be overridden; instead, subclasses implement various
     protected stub methods.
+
+    Additionally, this class sets up the machinery for having changes to
+    specific traits trigger a call to the invalidate_and_redraw method (defined
+    on the Component base class).  To use this, simply set the metadata
+    requires_redraw=True in the definition of the trait.
     """
 
     #------------------------------------------------------------------------
