@@ -148,9 +148,10 @@ class ScatterInspectorOverlay(AbstractOverlay):
         return
 
     def _ds_changed(self, event):
-        if event.old:
+        old, new = event.old, event.new
+        if old:
             old.observe(self.metadata_changed, 'metadata_changed', remove=True)
-        if event.new:
+        if new:
             new.observe(self.metadata_changed, 'metadata_changed')
         return
 
