@@ -8,8 +8,7 @@ from chaco.tools.toolbars.toolbar_buttons import ToolbarButton, \
         CopyToClipboardButton, ZoomResetButton, ExportDataToClipboardButton
 from enable.api import Container
 from enable.tools.api import HoverTool
-from traits.api import Bool, Float, on_trait_change, List, \
-        Tuple, Type, Enum
+from traits.api import Bool, Float, observe, List, Tuple, Type, Enum
 
 
 class PlotToolbarHover(HoverTool):
@@ -260,8 +259,8 @@ class PlotToolbar(Container, AbstractOverlay):
     # Trait handlers
     ############################################################
 
-    @on_trait_change('components, location')
-    def _calculate_width(self):
+    @observe('components, location')
+    def _calculate_width(self, event=None):
         if self.location in ['top', 'bottom']:
             width = self.horizontal_padding * 2
             for button in self.components:
@@ -271,8 +270,8 @@ class PlotToolbar(Container, AbstractOverlay):
             self._layout_needed = True
             self.request_redraw()
 
-    @on_trait_change('components, location')
-    def _calculate_height(self):
+    @observe('components, location')
+    def _calculate_height(self, event=None):
         if self.location in ['left', 'right']:
             height = self.vertical_padding * 2
             for button in self.components:
@@ -282,12 +281,12 @@ class PlotToolbar(Container, AbstractOverlay):
             self._layout_needed = True
             self.request_redraw()
 
-    @on_trait_change('hiding')
-    def _hiding_changed(self):
+    @observe('hiding')
+    def _set_layout_needed_and_redraw(self, event):
         self._layout_needed = True
         self.request_redraw()
 
-    @on_trait_change('auto_hide')
-    def _auto_hide_changed(self):
+    @observe('auto_hide')
+    def _set_hiding_and_redraw(self, event):
         self.hiding = self.auto_hide
         self.request_redraw()

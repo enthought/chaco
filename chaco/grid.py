@@ -9,7 +9,7 @@ from numpy import around, array, asarray, column_stack, float64, inf, zeros, zer
 # Enthought library imports
 from enable.api import black_color_trait, LineStyle
 from traits.api import Any, Bool, Callable, Enum, Float, Instance, \
-        CInt, Trait, Property, TraitError, Tuple, on_trait_change
+        CInt, Trait, Property, TraitError, Tuple, observe
 from traitsui.api import HGroup, Item, VGroup, View, TextEditor
 
 # Local, relative imports
@@ -156,8 +156,8 @@ class PlotGrid(AbstractOverlay):
         self.bgcolor = "none" #make sure we're transparent
         return
 
-    @on_trait_change("bounds,bounds_items,position,position_items")
-    def invalidate(self):
+    @observe("bounds.items,position.items")
+    def invalidate(self, event=None):
         """ Invalidate cached information about the grid.
         """
         self._reset_cache()
@@ -384,8 +384,8 @@ class PlotGrid(AbstractOverlay):
     # Event handlers for visual attributes.  These mostly just call request_redraw()
     #------------------------------------------------------------------------
 
-    @on_trait_change("visible,line_color,line_style,line_weight")
-    def visual_attr_changed(self):
+    @observe("visible,line_color,line_style,line_weight")
+    def visual_attr_changed(self, event=None):
         """ Called when an attribute that affects the appearance of the grid
         is changed.
         """

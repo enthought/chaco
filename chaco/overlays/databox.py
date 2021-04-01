@@ -1,8 +1,4 @@
-
-
-
-from traits.api import (Bool, Enum, Float, Int, CList, Property, Trait,
-        on_trait_change)
+from traits.api import Bool, Enum, Float, Int, CList, Property, Trait, observe
 from enable.api import ColorTrait
 from chaco.abstract_overlay import AbstractOverlay
 
@@ -141,8 +137,8 @@ class DataBox(AbstractOverlay):
         self._bounds_valid = False
         self.trait_property_changed("data_bounds", self._data_bounds)
 
-    @on_trait_change('position,position_items')
-    def _update_position(self):
+    @observe('position.items')
+    def _update_position(self, event=None):
         if self._updating:
             return
         tmp = self.component.map_data(self.position)
@@ -151,8 +147,8 @@ class DataBox(AbstractOverlay):
         self._data_position = tmp
         self.trait_property_changed("data_position", self._data_position)
 
-    @on_trait_change('bounds,bounds_items')
-    def _update_bounds(self):
+    @observe('bounds.items')
+    def _update_bounds(self, event=None):
         if self._updating:
             return
         data_x2, data_y2 = self.component.map_data((self.x2, self.y2))

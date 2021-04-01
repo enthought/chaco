@@ -4,8 +4,10 @@
 from numpy import array, arange, ascontiguousarray, ones, transpose, uint8
 
 # Enthought library imports
-from traits.api import Any, Bool, Enum, Instance, Property, \
-                                 cached_property, on_trait_change
+from traits.api import (
+    Any, Bool, Enum, Instance, Property, cached_property, observe
+)
+from traits.observation.api import parse
 from kiva.image import GraphicsContext
 
 # Local imports
@@ -217,8 +219,8 @@ class ColorBar(AbstractPlotRenderer):
     def _updated_changed_for_color_mapper(self):
         self._update_mappers()
 
-    @on_trait_change('[index_mapper,color_mapper].+')
-    def _either_mapper_changed(self):
+    @observe(parse('[index_mapper,color_mapper]').match(lambda n, t: True))
+    def _either_mapper_updated(self, event=None):
         self.invalidate_draw()
         self.request_redraw()
 
@@ -228,10 +230,10 @@ class ColorBar(AbstractPlotRenderer):
             self._grid.mapper = self.index_mapper
         if self._axis is not None:
             self._axis.mapper = self.index_mapper
-        self._either_mapper_changed()
+        self._either_mapper_updated()
 
     def _color_mapper_changed(self):
-        self._either_mapper_changed()
+        self._either_mapper_updated()
 
     def _value_mapper_changed(self):
         self._color_mapper_changed()

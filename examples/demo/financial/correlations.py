@@ -5,7 +5,7 @@ import time
 # ETS imports (non-chaco)
 from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance, Int, List, Str, Enum, \
-        on_trait_change, Any, DelegatesTo
+        observe, Any, DelegatesTo
 from traitsui.api import Item, View, HSplit, VGroup, EnumEditor
 
 # Chaco imports
@@ -141,8 +141,8 @@ class PlotApp(HasTraits):
             corr_index.metadata["selections"] = arange(low_ndx, high_ndx+1, 1, dtype=int)
             self.corr_plot.request_redraw()
 
-    @on_trait_change("sym1,sym2")
-    def _update_corr_symbols(self):
+    @observe("sym1,sym2")
+    def _update_corr_symbols(self, event):
         plot = self.corr_plot
         if self.corr_renderer is not None:
             # Remove the old one

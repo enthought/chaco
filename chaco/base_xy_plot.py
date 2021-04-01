@@ -75,7 +75,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     orientation = Enum("h", "v")
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
-    alpha = Range(0.0, 1.0, 1.0)
+    alpha = Range(0.0, 1.0, 1.0, requires_redraw=True)
 
     #------------------------------------------------------------------------
     # Convenience readonly properties for common annotations

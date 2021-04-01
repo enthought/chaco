@@ -6,7 +6,7 @@ from numpy import compress, inf, transpose
 
 # Enthought library imports
 from traits.api import Any, Bool, CFloat, Instance, Property, Trait, \
-    Tuple, on_trait_change
+    Tuple, observe
 
 # Local relative imports
 from .base_data_range import BaseDataRange
@@ -227,6 +227,6 @@ class DataRange2D(BaseDataRange):
         self._yrange.sources = [s._ydata for s in self.sources]
         self.refresh()
 
-    @on_trait_change("_xrange.updated,_yrange.updated")
-    def _subranges_updated(self):
+    @observe("_xrange.updated,_yrange.updated")
+    def _set_updated(self, event):
         self.updated = True

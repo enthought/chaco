@@ -23,7 +23,7 @@ from chaco.tools.api import LineInspector, PanTool, RangeSelection, \
                                    RangeSelectionOverlay, ZoomTool
 from enable.api import Window
 from traits.api import Any, Array, Callable, CFloat, CInt, Enum, Event, Float, HasTraits, \
-                             Int, Instance, Str, Trait, on_trait_change
+                             Int, Instance, Str, Trait, observe
 from traitsui.api import Group, Handler, HGroup, Item, View
 from traitsui.menu import Action, CloseAction, Menu, \
                                      MenuBar, NoButtons, Separator
@@ -391,8 +391,8 @@ class ModelView(HasTraits):
                        title = "Function Inspector",
                        resizable=True)
 
-    @on_trait_change('model, view')
-    def update_view(self):
+    @observe('model, view')
+    def update_view(self, event):
         if self.model is not None and self.view is not None:
             self.view.update(self.model)
 

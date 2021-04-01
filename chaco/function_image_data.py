@@ -1,5 +1,5 @@
 from numpy import array
-from traits.api import Instance, Callable, on_trait_change
+from traits.api import Instance, Callable, observe
 from .data_range_2d import DataRange2D
 from .image_data import ImageData
 
@@ -31,8 +31,8 @@ class FunctionImageData(ImageData):
         # Explicitly construct the initial data set for ImageData
         self.recalculate()
 
-    @on_trait_change('data_range.updated')
-    def recalculate(self):
+    @observe('data_range.updated')
+    def recalculate(self, event=None):
         if self.func is not None and self.data_range is not None:
             newarray = self.func(
                 self.data_range.x_range.low,

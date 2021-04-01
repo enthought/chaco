@@ -9,7 +9,7 @@ from numpy import array
 from enable.api import black_color_trait, white_color_trait
 from enable.font_metrics_provider import font_metrics_provider
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Bool, List, Int, Float, on_trait_change
+from traits.api import Any, Bool, List, Int, Float, observe
 
 
 # Local imports
@@ -159,12 +159,12 @@ class ToolTip(AbstractOverlay):
     def __font_metrics_provider_default(self):
         return font_metrics_provider()
 
-    @on_trait_change("font,text_color,lines,lines_items")
-    def _invalidate_text_props(self):
+    @observe("font,text_color,lines.items")
+    def _invalidate_text_props(self, event):
         self._text_props_valid = False
         self._layout_needed = True
 
-    @on_trait_change("border_padding,line_spacing,lines,lines_items,padding")
-    def _invalidate_layout(self):
+    @observe("border_padding,line_spacing,lines.items,padding")
+    def _invalidate_layout(self, event):
         self._layout_needed = True
         self.request_redraw()

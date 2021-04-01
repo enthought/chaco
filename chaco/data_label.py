@@ -7,7 +7,7 @@ from numpy.linalg import norm
 
 # Enthought library imports
 from traits.api import Any, ArrayOrNone, Bool, Enum, Float, Int, List, \
-     Str, Tuple, Trait, on_trait_change, Property
+     Str, Tuple, Trait, observe, Property
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
@@ -544,15 +544,13 @@ class DataLabel(ToolTip):
         # 'updated' event.
         self._layout_needed = True
 
-    @on_trait_change("arrow_size,arrow_root,arrow_min_length," +
-                     "arrow_max_length")
-    def _invalidate_arrow(self):
+    @observe("arrow_size,arrow_root,arrow_min_length,arrow_max_length")
+    def _invalidate_arrow(self, event):
         self._cached_arrow = None
         self._layout_needed = True
 
-    @on_trait_change("label_position,position,position_items,bounds," +
-                     "bounds_items")
-    def _invalidate_layout(self):
+    @observe("label_position,position.items,bounds.items")
+    def _invalidate_layout(self, event):
         self._layout_needed = True
 
     def _get_xmid(self):
