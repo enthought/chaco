@@ -5,11 +5,11 @@
 Quickstart
 ##########
 
-+----------------------------------------+--------------------------------------+
-|.. image::  images/simple_line.png      |.. image::  images/scalar_function.png|
-|   :height: 300 px                      |   :height: 300 px                    |
-|   :align: center                       |   :align: center                     |
-+----------------------------------------+--------------------------------------+
++--------------------------------------+------------------------------------------+
+|.. image::  ../images/simple_line.png |.. image::  ../images/scalar_function.png |
+|   :height: 300 px                    |   :height: 300 px                        |
+|   :align: center                     |   :align: center                         |
++--------------------------------------+------------------------------------------+
 
 This section is meant to help users on well-supported platforms and common
 Python environments get started using Chaco as quickly as possible.
@@ -122,7 +122,7 @@ run it using the standard Python interpreter::
 
 This shows two overlapping line plots.
 
-.. image:: images/lines.png
+.. image:: ../images/lines.png
 
 You can interact with this plot just as in the previous section.
 
@@ -154,7 +154,7 @@ Toggle the legend::
 
 After running these commands, your plot looks like this:
 
-.. image:: images/lines_final.png
+.. image:: ../images/lines_final.png
 
 The :func:`chaco_commands` function display a list of commands with brief
 descriptions.
@@ -249,7 +249,7 @@ MyPlot and call configure_traits to create the UI::
 
 The result should look like
 
-.. image:: images/mylineplot.png
+.. image:: ../images/mylineplot.png
 
 This might look like a lot of code to visualize a function, but this is a
 relatively simple basis on top of which we can build full-featured applications
