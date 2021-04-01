@@ -93,26 +93,28 @@ class PlotFrame(DemoFrame):
         miniplot.tools.append(range_tool)
         range_overlay = RangeSelectionOverlay(miniplot, metadata_name="selections")
         miniplot.overlays.append(range_overlay)
-        range_tool.on_trait_change(self._range_selection_handler, "selection")
+        range_tool.observe(self._range_selection_handler, "selection")
 
         # Attach a handler that sets the tool when the plot's index range changes
         self.range_tool = range_tool
-        price_plot.index_range.on_trait_change(self._plot_range_handler, "updated")
+        price_plot.index_range.observe(self._plot_range_handler, "updated")
 
         return price_plot, miniplot
 
 
     def _range_selection_handler(self, event):
+        range_selection_event = event.new
         # The event obj should be a tuple (low, high) in data space
-        if event is not None:
-            low, high = event
+        if range_selection_event is not None:
+            low, high = range_selection_event
             self.price_plot.index_range.low = low
             self.price_plot.index_range.high = high
         else:
             self.price_plot.index_range.set_bounds("auto", "auto")
 
     def _plot_range_handler(self, event):
-        if event is not None:
+        plot_range_event = event.new
+        if plot_range_event is not None:
             low, high = event
             if "auto" not in (low, high):
                 self.range_tool.selection = (low, high)
@@ -136,7 +138,7 @@ class PlotFrame(DemoFrame):
                                       constrain_direction="x"))
         return vol_plot
 
-    def _create_window(self):
+    def _create_component(self):
 
         # Create the data and datasource objects
         # In order for the date axis to work, the index data points need to
@@ -179,7 +181,7 @@ class PlotFrame(DemoFrame):
                                    fill_padding=False)
         container.add(mini_plot, vol_plot, price_plot)
 
-        return Window(self, -1, component=container)
+        return container
 
 if __name__ == "__main__":
     # Save demo so that it doesn't get garbage collected when run within
