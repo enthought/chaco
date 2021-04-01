@@ -64,11 +64,9 @@ class CMapImagePlot(ImagePlot):
     def __init__(self, **kwargs):
         super(CMapImagePlot, self).__init__(**kwargs)
         if self.value_mapper:
-            self.value_mapper.observe(self._update_value_mapper,
-                                              "updated")
+            self.value_mapper.observe(self._update_value_mapper, "updated")
         if self.value:
-            self.value.observe(self._update_selections,
-                                       "metadata_changed")
+            self.value.observe(self._update_selections, "metadata_changed")
 
     def set_value_selection(self, val):
         """ Sets a range of values in the value data source as selected.
@@ -171,8 +169,7 @@ class CMapImagePlot(ImagePlot):
 
     def _value_mapper_changed(self, old, new):
         if old is not None:
-            old.observe(self._update_value_mapper,
-                                "updated", remove=True)
+            old.observe(self._update_value_mapper, "updated", remove=True)
         if new is not None:
             new.observe(self._update_value_mapper, "updated")
 
@@ -194,4 +191,3 @@ class CMapImagePlot(ImagePlot):
     def _cache_full_map_changed(self):
         self._mapped_image_cache_valid = False
         
-

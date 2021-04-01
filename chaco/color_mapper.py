@@ -430,8 +430,7 @@ class ColorMapper(AbstractColormap):
 
     def _range_changed(self, old, new):
         if old is not None:
-            old.observe(self._range_change_handler, "updated",
-                                remove = True)
+            old.observe(self._range_change_handler, "updated", remove=True)
         if new is not None:
             new.observe(self._range_change_handler, "updated")
 

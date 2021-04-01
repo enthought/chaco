@@ -1244,8 +1244,7 @@ class Plot(DataView):
 
     def _data_changed(self, old, new):
         if old:
-            old.observe(self._data_update_handler, "data_changed",
-                                remove=True)
+            old.observe(self._data_update_handler, "data_changed", remove=True)
         if new:
             new.observe(self._data_update_handler, "data_changed")
 

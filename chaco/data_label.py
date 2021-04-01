@@ -535,8 +535,7 @@ class DataLabel(ToolTip):
 
     def _modify_mapper_listeners(self, mapper, attach=True):
         if mapper is not None:
-            mapper.observe(self._handle_mapper, 'updated',
-                                   remove=not attach)
+            mapper.observe(self._handle_mapper, 'updated', remove=not attach)
         return
 
     def _handle_mapper(self, event):

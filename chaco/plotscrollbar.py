@@ -153,9 +153,9 @@ class PlotScrollBar(NativeScrollBar):
         else:
             remove=True
         plot.observe(self._component_bounds_handler,
-                             "bounds.items", remove=remove)
+                     "bounds.items", remove=remove)
         plot.observe(self._component_pos_handler,
-                             "position.items", remove=remove)
+                     "position.items", remove=remove)
         return
 
     def _component_bounds_handler(self, event):

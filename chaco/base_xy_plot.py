@@ -622,7 +622,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         if old is not None:
             old.observe(self._either_data_updated, "data_changed", remove=True)
             old.observe(self._either_metadata_updated, "metadata_changed",
-                                remove=True)
+                        remove=True)
         if new is not None:
             new.observe(self._either_data_updated, "data_changed")
             new.observe(self._either_metadata_updated, "metadata_changed")
@@ -644,7 +644,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         if old is not None:
             old.observe(self._either_data_updated, "data_changed", remove=True)
             old.observe(self._either_metadata_updated, "metadata_changed",
-                                remove=True)
+                        remove=True)
         if new is not None:
             new.observe(self._either_data_updated, "data_changed")
             new.observe(self._either_metadata_updated, "metadata_changed")

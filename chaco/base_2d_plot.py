@@ -89,14 +89,11 @@ class Base2DPlot(AbstractPlotRenderer):
         self.trait_set(**kwargs_tmp)
         super(Base2DPlot, self).__init__(**kwargs)
         if self.index is not None:
-            self.index.observe(self._update_index_data,
-                                       "data_changed")
+            self.index.observe(self._update_index_data, "data_changed")
         if self.index_mapper:
-            self.index_mapper.observe(self._update_index_mapper,
-                                              "updated")
+            self.index_mapper.observe(self._update_index_mapper, "updated")
         if self.value is not None:
-            self.value.observe(self._update_value_data,
-                                       "data_changed")
+            self.value.observe(self._update_value_data, "data_changed")
         # If we are not resizable, we will not get a bounds update upon layout,
         # so we have to manually update our mappers
         if self.resizable == "":
@@ -317,25 +314,21 @@ class Base2DPlot(AbstractPlotRenderer):
 
     def _index_changed(self, old, new):
         if old is not None:
-            old.obseve(self._update_index_data,
-                                "data_changed", remove=True)
+            old.obseve(self._update_index_data, "data_changed", remove=True)
         if new is not None:
             new.obseve(self._update_index_data, "data_changed")
         self._update_index_data()
 
     def _value_changed(self, old, new):
         if old is not None:
-            old.observe(self._update_value_data,
-                                "data_changed", remove=True)
+            old.observe(self._update_value_data, "data_changed", remove=True)
         if new is not None:
             new.observe(self._update_value_data, "data_changed")
         self._update_value_data()
 
     def _index_mapper_changed(self, old, new):
         if old is not None:
-            old.observe(self._update_index_mapper,
-                                "updated", remove=True)
+            old.observe(self._update_index_mapper, "updated", remove=True)
         if new is not None:
             new.observe(self._update_index_mapper, "updated")
         self._update_index_mapper()
-

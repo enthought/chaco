@@ -361,7 +361,7 @@ class PlotGrid(AbstractOverlay):
         self.invalidate()
         return
 
-    def mapper_updated(self, event):
+    def mapper_updated(self, event=None):
         """
         Event handler that is bound to this mapper's **updated** event.
         """

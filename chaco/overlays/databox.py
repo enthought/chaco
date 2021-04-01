@@ -158,7 +158,7 @@ class DataBox(AbstractOverlay):
         self._data_bounds = [data_x2 - data_pos[0], data_y2 - data_pos[1]]
         self.trait_property_changed("data_bounds", self._data_bounds)
 
-    def my_component_moved(self, event):
+    def my_component_moved(self, event=None):
         if self.affinity == "screen":
             # If we have screen affinity, then we need to take our current position
             # and map that back down into data coords
@@ -167,9 +167,8 @@ class DataBox(AbstractOverlay):
         self._bounds_valid = False
         self._position_valid = False
 
-    def my_component_resized(self, event):
+    def my_component_resized(self, event=None):
         self._bounds_valid = False
         self._position_valid = False
-
 
 

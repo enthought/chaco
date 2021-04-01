@@ -635,7 +635,7 @@ class PlotAxis(AbstractOverlay):
             new.observe(self.mapper_updated, "updated")
         self._invalidate()
 
-    def mapper_updated(self, event):
+    def mapper_updated(self, event=None):
         """
         Event handler that is bound to this axis's mapper's **updated** event
         """
