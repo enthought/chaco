@@ -184,12 +184,12 @@ class BaseXYPlot(AbstractPlotRenderer):
         AbstractPlotRenderer.__init__(self, **kwtraits)
         if self.index is not None:
             self.index.observe(self._either_data_updated, "data_changed")
-            self.index.observe(self._either_metadata_updated, "metadata_changed")
+            self.index.observe(self._either_metadata_updated, "metadata.items")
         if self.index_mapper:
             self.index_mapper.observe(self._mapper_updated_handler, "updated")
         if self.value is not None:
             self.value.observe(self._either_data_updated, "data_changed")
-            self.value.observe(self._either_metadata_updated, "metadata_changed")
+            self.value.observe(self._either_metadata_updated, "metadata.items")
         if self.value_mapper:
             self.value_mapper.observe(self._mapper_updated_handler, "updated")
 
@@ -615,11 +615,11 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _index_changed(self, old, new):
         if old is not None:
             old.observe(self._either_data_updated, "data_changed", remove=True)
-            old.observe(self._either_metadata_updated, "metadata_changed",
+            old.observe(self._either_metadata_updated, "metadata.items",
                         remove=True)
         if new is not None:
             new.observe(self._either_data_updated, "data_changed")
-            new.observe(self._either_metadata_updated, "metadata_changed")
+            new.observe(self._either_metadata_updated, "metadata.items")
         self._either_data_updated()
 
     def _either_data_updated(self, event=None):
@@ -635,11 +635,11 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _value_changed(self, old, new):
         if old is not None:
             old.observe(self._either_data_updated, "data_changed", remove=True)
-            old.observe(self._either_metadata_updated, "metadata_changed",
+            old.observe(self._either_metadata_updated, "metadata.items",
                         remove=True)
         if new is not None:
             new.observe(self._either_data_updated, "data_changed")
-            new.observe(self._either_metadata_updated, "metadata_changed")
+            new.observe(self._either_metadata_updated, "metadata.items")
         self._either_data_updated()
 
     def _origin_changed(self, old, new):
