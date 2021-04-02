@@ -117,7 +117,7 @@ class DataRange2D(BaseDataRange):
         self.low_setting = ('auto', 'auto')
         self.refresh()
 
-    def refresh(self):
+    def refresh(self, event=None):
         """ If any of the bounds is 'auto', this method refreshes the actual
         low and high values from the set of the view filters' data sources.
         """
@@ -204,9 +204,9 @@ class DataRange2D(BaseDataRange):
 
     def _sources_items_changed(self, event):
         for source in event.removed:
-            source.on_trait_change(self.refresh, "data_changed", remove=True)
+            source.observe(self.refresh, "data_changed", remove=True)
         for source in event.added:
-            source.on_trait_change(self.refresh, "data_changed")
+            source.observe(self.refresh, "data_changed")
         # the _xdata and _ydata of the sources may be created anew on every
         # access, so we can't just add/delete from _xrange and _yrange sources
         # based on object identity. So recreate lists each time:
@@ -216,9 +216,9 @@ class DataRange2D(BaseDataRange):
 
     def _sources_changed(self, old, new):
         for source in old:
-            source.on_trait_change(self.refresh, "data_changed", remove=True)
+            source.observe(self.refresh, "data_changed", remove=True)
         for source in new:
-            source.on_trait_change(self.refresh, "data_changed")
+            source.observe(self.refresh, "data_changed")
         # the _xdata and _ydata of the sources may be created anew on every
         # access, so we can't just add/delete from _xrange and _yrange sources
         # based on object identity. So recreate lists each time:

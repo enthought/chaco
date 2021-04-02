@@ -148,20 +148,16 @@ class PlotScrollBar(NativeScrollBar):
             remove=False
         else:
             remove=True
-        plot.on_trait_change(self._component_bounds_handler,
-                             "bounds", remove=remove)
-        plot.on_trait_change(self._component_bounds_handler,
-                             "bounds_items", remove=remove)
-        plot.on_trait_change(self._component_pos_handler,
-                             "position", remove=remove)
-        plot.on_trait_change(self._component_pos_handler,
-                             "position_items", remove=remove)
+        plot.observe(self._component_bounds_handler,
+                     "bounds.items", remove=remove)
+        plot.observe(self._component_pos_handler,
+                     "position.items", remove=remove)
 
-    def _component_bounds_handler(self):
+    def _component_bounds_handler(self, event):
         self._handle_dataspace_update()
         self._widget_moved = True
 
-    def _component_pos_handler(self):
+    def _component_pos_handler(self, event):
         self._handle_dataspace_update()
         self._widget_moved = True
 

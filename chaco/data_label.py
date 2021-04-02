@@ -533,10 +533,9 @@ class DataLabel(ToolTip):
 
     def _modify_mapper_listeners(self, mapper, attach=True):
         if mapper is not None:
-            mapper.on_trait_change(self._handle_mapper, 'updated',
-                                   remove=not attach)
+            mapper.observe(self._handle_mapper, 'updated', remove=not attach)
 
-    def _handle_mapper(self):
+    def _handle_mapper(self, event):
         # This gets fired whenever a mapper on our plot fires its
         # 'updated' event.
         self._layout_needed = True

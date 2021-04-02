@@ -423,10 +423,10 @@ class BarPlot(AbstractPlotRenderer):
 
     def _index_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._either_data_changed, "data_changed", remove=True)
+            old.observe(self._either_data_updated, "data_changed", remove=True)
         if new is not None:
-            new.on_trait_change(self._either_data_changed, "data_changed")
-        self._either_data_changed()
+            new.observe(self._either_data_updated, "data_changed")
+        self._either_data_updated()
 
     def _index_direction_changed(self):
         m = self.index_mapper
@@ -438,17 +438,17 @@ class BarPlot(AbstractPlotRenderer):
         m.low_pos, m.high_pos = m.high_pos, m.low_pos
         self.invalidate_draw()
 
-    def _either_data_changed(self):
+    def _either_data_updated(self, event=None):
         self.invalidate_draw()
         self._cache_valid = False
         self.request_redraw()
 
     def _value_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._either_data_changed, "data_changed", remove=True)
+            old.observe(self._either_data_updated, "data_changed", remove=True)
         if new is not None:
-            new.on_trait_change(self._either_data_changed, "data_changed")
-        self._either_data_changed()
+            new.observe(self._either_data_updated, "data_changed")
+        self._either_data_updated()
 
     def _index_mapper_changed(self, old, new):
         return self._either_mapper_changed(old, new)
@@ -458,12 +458,12 @@ class BarPlot(AbstractPlotRenderer):
 
     def _either_mapper_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._mapper_updated_handler, "updated", remove=True)
+            old.observe(self._mapper_updated_handler, "updated", remove=True)
         if new is not None:
-            new.on_trait_change(self._mapper_updated_handler, "updated")
+            new.observe(self._mapper_updated_handler, "updated")
         self.invalidate_draw()
 
-    def _mapper_updated_handler(self):
+    def _mapper_updated_handler(self, event):
         self._cache_valid = False
         self.invalidate_draw()
         self.request_redraw()

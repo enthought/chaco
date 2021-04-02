@@ -155,7 +155,8 @@ class SimpleInspectorOverlay(TextGridOverlay):
         return [[basic_formatter('x', 2)], [basic_formatter('y', 2)]]
 
     def _new_value_updated(self, event):
-        if event is None:
+        new_value_event = event.new
+        if new_value_event is None:
             self.text_grid = array()
             if self.visibility == "auto":
                 self.visibility = False
@@ -165,7 +166,7 @@ class SimpleInspectorOverlay(TextGridOverlay):
         if self.tooltip_mode:
             self.alternate_position = self.inspector.last_mouse_position
 
-        d = event
+        d = new_value_event
         text = []
         self.text_grid.string_array = array([[formatter(**d) for formatter in row]
             for row in self.field_formatters])
@@ -178,14 +179,14 @@ class SimpleInspectorOverlay(TextGridOverlay):
 
     def _inspector_changed(self, old, new):
         if old:
-            old.on_trait_event(self._new_value_updated, 'new_value', remove=True)
-            old.on_trait_change(self._tool_visible_changed, "visible", remove=True)
+            old.observe(self._new_value_updated, 'new_value', remove=True)
+            old.observe(self._tool_visible_changed, "visible", remove=True)
         if new:
-            new.on_trait_event(self._new_value_updated, 'new_value')
-            new.on_trait_change(self._tool_visible_changed, "visible")
+            new.observe(self._new_value_updated, 'new_value')
+            new.observe(self._tool_visible_changed, "visible")
             self._tool_visible_changed()
 
-    def _tool_visible_changed(self):
+    def _tool_visible_changed(self, event=None):
         self.visibility = self.inspector.visible
         if self.visibility != "auto":
             self.visible = self.visibility

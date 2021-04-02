@@ -384,10 +384,10 @@ class ColormappedScatterPlot(ScatterPlot):
 
     def _color_data_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._either_data_changed, "data_changed", remove=True)
+            old.observe(self._either_data_updated, "data_changed", remove=True)
         if new is not None:
-            new.on_trait_change(self._either_data_changed, "data_changed")
-        self._either_data_changed()
+            new.observe(self._either_data_updated, "data_changed")
+        self._either_data_updated()
 
     def _color_mapper_changed(self, old, new):
         self._cache_valid = False

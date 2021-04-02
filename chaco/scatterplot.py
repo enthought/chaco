@@ -521,7 +521,7 @@ class ScatterPlot(BaseXYPlot):
         self.invalidate_draw()
         self.request_redraw()
 
-    def _either_metadata_changed(self):
+    def _either_metadata_updated(self, event):
         if self.show_selection:
             # Only redraw when we are showing the selection. Otherwise, there
             # is nothing to update in response to this event.

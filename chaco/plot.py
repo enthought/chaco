@@ -1238,24 +1238,25 @@ class Plot(DataView):
 
     def _data_changed(self, old, new):
         if old:
-            old.on_trait_change(self._data_update_handler, "data_changed",
-                                remove=True)
+            old.observe(self._data_update_handler, "data_changed", remove=True)
         if new:
-            new.on_trait_change(self._data_update_handler, "data_changed")
+            new.observe(self._data_update_handler, "data_changed")
 
-    def _data_update_handler(self, name, event):
+    def _data_update_handler(self, event):
+        name = event.name
+        data_changed_event = event.new
         # event should be a dict with keys "added", "removed", and "changed",
         # per the comments in AbstractPlotData.
-        if "removed" in event:
-            for name in event["removed"]:
+        if "removed" in data_changed_event:
+            for name in data_changed_event["removed"]:
                 del self.datasources[name]
 
-        if "added" in event:
-            for name in event["added"]:
+        if "added" in data_changed_event:
+            for name in data_changed_event["added"]:
                 self._get_or_create_datasource(name)
 
-        if "changed" in event:
-            for name in event["changed"]:
+        if "changed" in data_changed_event:
+            for name in data_changed_event["changed"]:
                 if name in self.datasources:
                     source = self.datasources[name]
                     source.set_data(self.data.get_data(name))

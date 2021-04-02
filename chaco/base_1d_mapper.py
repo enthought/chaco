@@ -64,18 +64,17 @@ class Base1DMapper(AbstractMapper):
 
     def _range_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._range_change_handler, "updated",
-                                remove = True)
+            old.observe(self._range_change_handler, "updated", remove=True)
         if new is not None:
-            new.on_trait_change(self._range_change_handler, "updated")
+            new.observe(self._range_change_handler, "updated")
 
         self._cache_valid = False
         self.updated = new
 
-    def _range_change_handler(self, obj, name, new):
+    def _range_change_handler(self, event):
         "Handles the range changing; dynamically attached to our ranges"
         self._cache_valid = False
-        self.updated = obj
+        self.updated = event.object
 
     def _get_screen_bounds(self):
         return (self.low_pos, self.high_pos)
