@@ -103,7 +103,7 @@ class TestScatterInspectorTool(EnableTestAssistant, TestCase, UnittestTools):
         tool = self.tool
 
         # Add a listener to catch the emitted event:
-        tool.on_trait_change(self.store_inspector_event, "inspector_event")
+        tool.observe(self.store_inspector_event, "inspector_event")
         try:
             self.assertIsNone(self.insp_event)
 
@@ -131,14 +131,14 @@ class TestScatterInspectorTool(EnableTestAssistant, TestCase, UnittestTools):
                 self.assertEqual(self.insp_event.event_type, "hover")
                 self.assertEqual(self.insp_event.event_index, 1)
         finally:
-            tool.on_trait_change(self.store_inspector_event, "inspector_event",
+            tool.observe(self.store_inspector_event, "inspector_event",
                                  remove=True)
 
     def test_select_triggers_event(self):
         tool = self.tool
 
         # Add a listener to catch the emitted event:
-        tool.on_trait_change(self.store_inspector_event, "inspector_event")
+        tool.observe(self.store_inspector_event, "inspector_event")
         try:
             self.assertIsNone(self.insp_event)
 
@@ -162,10 +162,11 @@ class TestScatterInspectorTool(EnableTestAssistant, TestCase, UnittestTools):
                 self.assertEqual(self.insp_event.event_type, "deselect")
                 self.assertEqual(self.insp_event.event_index, 1)
         finally:
-            tool.on_trait_change(self.store_inspector_event, "inspector_event",
-                                 remove=True)
+            tool.observe(
+                self.store_inspector_event, "inspector_event", remove=True
+            )
 
     # Helper methods ----------------------------------------------------------
 
     def store_inspector_event(self, event):
-        self.insp_event = event
+        self.insp_event = event.new

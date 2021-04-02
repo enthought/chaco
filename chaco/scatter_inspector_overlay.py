@@ -7,6 +7,7 @@ from numpy import array, asarray
 # Enthought library imports
 from enable.api import ColorTrait, MarkerTrait
 from traits.api import Float, Int, Str, Trait
+from traits.observation.events import TraitChangeEvent
 
 # Local, relative imports
 from .abstract_overlay import AbstractOverlay
@@ -41,7 +42,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
     # using a series of trait change handlers (defined at the end of the
     # class)
     #@on_trait_change('component.index.metadata_changed,component.value.metadata_changed')
-    def metadata_changed(self, object, name, old, new):
+    def metadata_updated(self, event):
         if self.component is not None:
             self.component.request_redraw()
 
@@ -125,19 +126,27 @@ class ScatterInspectorOverlay(AbstractOverlay):
 
     def _component_changed(self, old, new):
         if old:
-            old.on_trait_change(self._ds_changed, 'index', remove=True)
+            old.observe(self._ds_changed, 'index', remove=True)
             if hasattr(old, "value"):
-                old.on_trait_change(self._ds_changed, 'value', remove=True)
+                old.observe(self._ds_changed, 'value', remove=True)
         if new:
             for dsname in ("index", "value"):
                 if not hasattr(new, dsname):
                     continue
-                new.on_trait_change(self._ds_changed, dsname)
+                new.observe(self._ds_changed, dsname)
                 if getattr(new, dsname):
-                    self._ds_changed(new, dsname, None, getattr(new,dsname))
+                    self._ds_changed(
+                        TraitChangeEvent(
+                            object=new,
+                            name=dsname,
+                            old=None,
+                            new=getattr(new, dsname)
+                        )
+                    )
 
-    def _ds_changed(self, object, name, old, new):
+    def _ds_changed(self, event):
+        old, new = event.old, event.new
         if old:
-            old.on_trait_change(self.metadata_changed, 'metadata_changed', remove=True)
+            old.observe(self.metadata_updated, 'metadata_changed', remove=True)
         if new:
-            new.on_trait_change(self.metadata_changed, 'metadata_changed')
+            new.observe(self.metadata_updated, 'metadata_changed')

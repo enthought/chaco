@@ -104,7 +104,7 @@ class Demo(HasTraits):
                     resizable=True, title=title
                     )
 
-    def _metadata_handler(self):
+    def _metadata_handler(self, event):
         sel_indices = self.index_datasource.metadata.get('selections', [])
         print("Selection indices:", sel_indices)
 
@@ -119,8 +119,9 @@ class Demo(HasTraits):
 
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        self.index_datasource.on_trait_change(self._metadata_handler,
-                                              "metadata_changed")
+        self.index_datasource.observe(
+            self._metadata_handler, "metadata_changed"
+        )
 
         return plot
 

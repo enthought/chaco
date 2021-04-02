@@ -126,17 +126,18 @@ class ImageInspectorOverlay(TextBoxOverlay):
 
     def _image_inspector_changed(self, old, new):
         if old:
-            old.on_trait_event(self._new_value_updated, 'new_value',
+            old.observe(self._new_value_updated, 'new_value',
                                remove=True)
-            old.on_trait_change(self._tool_visible_changed, "visible",
+            old.observe(self._tool_visible_updated, "visible",
                                 remove=True)
         if new:
-            new.on_trait_event(self._new_value_updated, 'new_value')
-            new.on_trait_change(self._tool_visible_changed, "visible")
-            self._tool_visible_changed()
+            new.observe(self._new_value_updated, 'new_value')
+            new.observe(self._tool_visible_updated, "visible")
+            self._tool_visible_updated()
 
     def _new_value_updated(self, event):
-        if event is None:
+        new_value_event = event.new
+        if new_value_event is None:
             self.text = ""
             if self.visibility == "auto":
                 self.visible = False
@@ -149,13 +150,13 @@ class ImageInspectorOverlay(TextBoxOverlay):
         else:
             self.alternate_position = None
 
-        self.text = self._build_text_from_event(event)
+        self.text = self._build_text_from_event(new_value_event)
         self.component.request_redraw()
 
     def _visible_changed(self):
         self.component.request_redraw()
 
-    def _tool_visible_changed(self):
+    def _tool_visible_updated(self, event=None):
         self.visibility = self.image_inspector.visible
         if self.visibility != "auto":
             self.visible = self.visibility

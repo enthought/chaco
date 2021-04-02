@@ -53,9 +53,10 @@ def _create_plot_component():
     scatter.overlays.append(overlay)
 
     # Optional: add a listener on inspector events:
-    def echo(new):
+    def echo(event):
+        new = event.new
         print("{} event on element {}".format(new.event_type, new.event_index))
-    inspector.on_trait_change(echo, "inspector_event")
+    inspector.observe(echo, "inspector_event")
 
     return plot
 

@@ -149,7 +149,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             self._orig_low_setting = (x_range.low_setting, y_range.low_setting)
             self._orig_high_setting = \
                 (x_range.high_setting, y_range.high_setting)
-        component.on_trait_change(self._reset_state_to_current,
+        component.observe(self._reset_state_to_current,
                                   "index_data_changed")
 
     def enable(self, event=None):
@@ -571,7 +571,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     # implementations of abstract methods on ToolHistoryMixin
     #------------------------------------------------------------------------
 
-    def _reset_state_to_current(self):
+    def _reset_state_to_current(self, event=None):
         """ Clears the tool history, and sets the current state to be the
         first state in the history.
         """

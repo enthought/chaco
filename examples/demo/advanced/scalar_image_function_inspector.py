@@ -178,8 +178,7 @@ class PlotUI(HasTraits):
                                           array([]),
                                           sort_order=("ascending","ascending"))
         image_index_range = DataRange2D(self._image_index)
-        self._image_index.on_trait_change(self._metadata_changed,
-                                          "metadata_changed")
+        self._image_index.observe(self._metadata_changed, "metadata_changed")
 
         self._image_value = ImageData(data=array([]), value_depth=1)
         image_value_range = DataRange1D(self._image_value)
@@ -323,7 +322,8 @@ class PlotUI(HasTraits):
     # Event handlers
     #---------------------------------------------------------------------------
 
-    def _metadata_changed(self, old, new):
+    def _metadata_changed(self, event):
+        old, new = event.old, event.new
         """ This function takes out a cross section from the image data, based
         on the line inspector selections, and updates the line and scatter
         plots."""
