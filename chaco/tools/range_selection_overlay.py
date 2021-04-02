@@ -160,10 +160,10 @@ class RangeSelectionOverlay(AbstractOverlay):
         datasource = getattr(self.plot, self.axis)
         if old:
             datasource.observe(
-                self._metadata_change_handler, "metadata_changed", remove=True
+                self._metadata_change_handler, "metadata.items", remove=True
             )
         if new:
-            datasource.observe(self._metadata_change_handler, "metadata_changed")
+            datasource.observe(self._metadata_change_handler, "metadata.items")
 
     def _metadata_change_handler(self, event):
         self.component.request_redraw()
