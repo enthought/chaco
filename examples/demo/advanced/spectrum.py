@@ -128,7 +128,6 @@ class TimerController(HasTraits):
 
         self.spectrogram_plotdata.set_data('imagedata', spectrogram_data)
         self.spectrum_plot.request_redraw()
-        return
 
 #============================================================================
 # Attributes to use for the plot view.
@@ -147,7 +146,7 @@ class DemoHandler(Handler):
         """
 
         info.object.timer.Stop()
-        return
+
 
 class Demo(HasTraits):
 

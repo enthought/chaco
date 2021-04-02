@@ -200,7 +200,6 @@ class PlotFrame(DemoFrame):
         self.center.invalidate_and_redraw()
         self.right.invalidate_and_redraw()
         self.bottom.invalidate_and_redraw()
-        return
 
     def _wheel_callback(self, tool, wheelamt):
         plane_slice_dict = {"xy": ("slice_z", 2),
@@ -220,7 +219,6 @@ class PlotFrame(DemoFrame):
         self.center.invalidate_and_redraw()
         self.right.invalidate_and_redraw()
         self.bottom.invalidate_and_redraw()
-        return
 
     def _create_window(self):
         # Create the model

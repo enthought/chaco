@@ -48,7 +48,6 @@ class WaterfallRenderer(LinePlot):
 
             self._cached_data_pts = [transpose(array((index, v))) for v in values]
             self._cache_value = True
-        return
 
     def get_screen_points(self):
         self._gather_points()
@@ -160,7 +159,7 @@ class TimerController(HasTraits):
         spec_data = self.spectrogram_plot.values[1:] + [spectrum]
         self.spectrogram_plot.values = spec_data
         self.spectrum_plot.request_redraw()
-        return
+
 
 #============================================================================
 # Attributes to use for the plot view.
@@ -179,7 +178,7 @@ class DemoHandler(Handler):
         """
 
         info.object.timer.Stop()
-        return
+
 
 class Demo(HasTraits):
 

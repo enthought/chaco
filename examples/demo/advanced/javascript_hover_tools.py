@@ -583,7 +583,7 @@ def main(embedded=False):
         print('Browser did not open properly.  Exception %s.  The results' \
               'can be viewed with the file plot_hover_coords.html.' % str(e))
         raise
-    return
+
 
 #===============================================================================
 # # Demo class that is used by the demo.py application.

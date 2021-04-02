@@ -255,7 +255,6 @@ class MPLegendTool(LegendTool):
             self.mouse_down_position = (event.x,event.y)
             self.event_state = "dragging"
             event.handled = True
-        return
 
     def drag_end(self, event):
         if hasattr(event, "bid"):

@@ -72,8 +72,6 @@ class PlotApp(HasTraits):
         if len(self.symbols) > 1:
             self.sym2 = self.symbols[1]
 
-        return
-
     def _create_returns_plot(self):
         plot = Plot(self.plotdata)
         plot.legend.visible = True

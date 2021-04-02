@@ -78,8 +78,6 @@ class ZoomOverlay(AbstractOverlay):
             gc.lines(right_line)
             gc.stroke_path()
 
-        return
-
     def _get_selection_screencoords(self):
         """
         Returns a tuple of (x1, x2) screen space coordinates of the start
@@ -103,7 +101,6 @@ class ZoomOverlay(AbstractOverlay):
                                            remove=True)
         if new is not None and new.controller is not None:
             new.controller.on_trait_change(self._selection_update_handler, "selection")
-        return
 
     def _selection_update_handler(self, value):
         if value is not None and self.destination is not None:
@@ -114,4 +111,3 @@ class ZoomOverlay(AbstractOverlay):
 
         self.source.request_redraw()
         self.destination.request_redraw()
-        return
