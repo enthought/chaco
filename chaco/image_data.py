@@ -4,7 +4,7 @@
 from numpy import fmax, fmin, swapaxes
 
 # Enthought library imports
-from traits.api import Bool, Int, Property, ReadOnly, Tuple
+from traits.api import Bool, Int, Property, ReadOnly, observe, Tuple
 
 # Local relative imports
 from .base import DimensionTrait, ImageTrait
@@ -203,8 +203,12 @@ class ImageData(AbstractDataSource):
     # Event handlers
     #------------------------------------------------------------------------
 
-    def _metadata_changed(self, event):
-        self.metadata_changed = True
+    #def _metadata_changed(self, event):
+    #    self.metadata_changed = True
 
-    def _metadata_items_changed(self, event):
+    #def _metadata_items_changed(self, event):
+    #    self.metadata_changed = True
+
+    @observe("metadata.items")
+    def something(self, event):
         self.metadata_changed = True
