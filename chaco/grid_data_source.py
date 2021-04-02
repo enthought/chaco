@@ -137,22 +137,3 @@ class GridDataSource(AbstractDataSource):
         ybds = ydata.get_bounds()
 
         self._cached_bounds = ((xbds[0], ybds[0]), (xbds[1], ybds[1]))
-
-    #------------------------------------------------------------------------
-    # Event handlers
-    #------------------------------------------------------------------------
-
-    #def _metadata_changed(self, event):
-    #    self.metadata_changed = True
-
-    #def _metadata_items_changed(self, event):
-    #    self.metadata_changed = True
-
-    @observe("metadata.items")
-    def something(self, event):
-        self.metadata_changed = True
-
-
-
-
-

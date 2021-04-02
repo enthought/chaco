@@ -285,20 +285,6 @@ class ArrayDataSource(AbstractDataSource):
                                data[self._max_index])
 
     #------------------------------------------------------------------------
-    # Event handlers
-    #------------------------------------------------------------------------
-
-    #def _metadata_changed(self, event):
-    #    self.metadata_changed = True
-
-    #def _metadata_items_changed(self, event):
-    #    self.metadata_changed = True
-
-    @observe("metadata.items")
-    def something(self, event):
-        self.metadata_changed = True
-
-    #------------------------------------------------------------------------
     # Persistence-related methods
     #------------------------------------------------------------------------
 

@@ -197,18 +197,3 @@ class ImageData(AbstractDataSource):
 
     def _get_raw_value(self):
         return self._data
-
-
-    #------------------------------------------------------------------------
-    # Event handlers
-    #------------------------------------------------------------------------
-
-    #def _metadata_changed(self, event):
-    #    self.metadata_changed = True
-
-    #def _metadata_items_changed(self, event):
-    #    self.metadata_changed = True
-
-    @observe("metadata.items")
-    def something(self, event):
-        self.metadata_changed = True

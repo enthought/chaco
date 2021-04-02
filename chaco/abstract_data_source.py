@@ -45,9 +45,6 @@ class AbstractDataSource(HasTraits):
     #: Event that fires when just the bounds change.
     bounds_changed = Event
 
-    #: Event that fires when metadata structure is changed.
-    metadata_changed = Event
-
     #: Should the data that this datasource refers to be serialized when
     #: the datasource is serialized?
     persist_data = Bool(True)
