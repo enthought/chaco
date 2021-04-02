@@ -103,7 +103,7 @@ class PlotApp(HasTraits):
         # Grab a reference to the Time axis datasource and add a listener to its
         # selections metadata
         self.times_ds = renderer.index
-        self.times_ds.observe(self._selections_updated, 'metadata_changed')
+        self.times_ds.observe(self._selections_updated, 'metadata:items')
         self.returns_plot = plot
 
     def _create_corr_plot(self):
@@ -122,14 +122,13 @@ class PlotApp(HasTraits):
         self.plotdata = plotdata
 
     def _selections_updated(self, event):
-        metadata_changed_event = event.new
+        new_metadata = event.object
         if self.corr_renderer is None:
             return
-        if not isinstance(metadata_changed_event, dict) \
-                or "selections" not in metadata_changed_event:
+        if "selections" not in new_metadata:
             return
         corr_index = self.corr_renderer.index
-        selections = metadata_changed_event["selections"]
+        selections = new_metadata["selections"]
         if selections is None:
             corr_index.metadata.pop("selections", None)
             return
