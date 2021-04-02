@@ -21,7 +21,6 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_ary_(r.high_setting, array([10.0,10.0]))
         assert_ary_(r.low,array([5.0,5.0]))
         assert_ary_(r.high, array([10.0,10.0]))
-        return
 
     def test_single_source(self):
         r = DataRange2D()
@@ -48,7 +47,6 @@ class DataRange2DTestCase(unittest.TestCase):
         r.low = ('auto', 'auto')
         self.assertTrue(r.low_setting == ('auto', 'auto'))
         assert_ary_(r.low, array([0.0,0.0]))
-        return
 
     def test_constant_values(self):
         r = DataRange2D()
@@ -77,8 +75,6 @@ class DataRange2DTestCase(unittest.TestCase):
         r.add(ds)
         assert_ary_(r.low, array([-0.25, -0.25]))
         assert_ary_(r.high, array([0.0, 0.0]))
-        return
-
 
     def test_multi_source(self):
         x = arange(10.)
@@ -90,7 +86,6 @@ class DataRange2DTestCase(unittest.TestCase):
         r = DataRange2D(ds1, ds2)
         assert_ary_(r.low, [0.0,0.0])
         assert_ary_(r.high, [90.,90.])
-        return
 
     def test_grid_source(self):
         test_xd1 = array([1,2,3])
@@ -181,8 +176,6 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_equal(r.clip_data(ary) , array([[16.,12.],[18.,16.],[20.,20.]]))
         assert_equal(r.clip_data(ary[::-1]) , array([[20,20], [18,16], [16,12]]))
 
-        return
-
     def test_mask_data(self):
         r = DataRange2D(low=[2.0,5.0], high=[10.0,18.0])
         x = array([1, 3, 4, 9.8, 10.2, 12])
@@ -200,7 +193,7 @@ class DataRange2DTestCase(unittest.TestCase):
 
         r = DataRange2D(low=[2.0,5.0], high=[2.5,9.0])
         assert_equal(r.mask_data(ary) , zeros(len(ary)))
-        return
+
 
 def assert_close_(desired,actual):
     diff_allowed = 1e-5

@@ -64,7 +64,6 @@ class ReverseMap1DTestCase(unittest.TestCase):
         self.assertEqual(rmap(3.4), 3)
         self.assertEqual(rmap(3.5), 3)
         self.assertEqual(rmap(3.6), 4)
-        return
 
     def test_ascending_floor(self):
         ary = arange(10.0)
@@ -74,7 +73,6 @@ class ReverseMap1DTestCase(unittest.TestCase):
         self.assertEqual(rmap(3.4), 3)
         self.assertEqual(rmap(3.5), 3)
         self.assertEqual(rmap(3.6), 3)
-        return
 
     def test_descending(self):
         ary = arange(10.0, 0.0, -1.0)
@@ -93,7 +91,6 @@ class ReverseMap1DTestCase(unittest.TestCase):
         self.assertEqual(rmap(8.6), 1)
         self.assertEqual(rmap(8.5), 1)
         self.assertEqual(rmap(8.4), 2)
-        return
 
     def test_descending_floor(self):
         ary = arange(10.0, 0.0, -1.0)
@@ -103,7 +100,6 @@ class ReverseMap1DTestCase(unittest.TestCase):
         self.assertEqual(rmap(8.6), 1)
         self.assertEqual(rmap(8.5), 1)
         self.assertEqual(rmap(8.4), 1)
-        return
 
 
 class FindRunsTestCase(unittest.TestCase):
