@@ -213,7 +213,6 @@ def clone_plot(clonetool, drop_position):
     newplot.invalidate_draw()
     newplot.request_redraw()
     canvas.request_redraw()
-    return
 
 
 def make_toolbar(canvas):

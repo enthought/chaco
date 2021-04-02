@@ -36,7 +36,6 @@ class MPViewportPanTool(ViewportPanTool):
             self.event_state = "dragging"
             event.handled = True
             ViewportPanTool.drag_start(self, event)
-        return
 
     def drag_end(self, event):
         event.x, event.y = self._last_blob_pos
