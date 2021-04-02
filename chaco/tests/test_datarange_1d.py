@@ -36,7 +36,6 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(r.high_setting, 10.0)
         self.assertEqual(r.low, 5.0)
         self.assertEqual(r.high, 10.0)
-        return
 
     def test_set_bounds1(self):
         """Change both low and high with set_bounds()."""
@@ -175,7 +174,6 @@ class DataRangeTestCase(unittest.TestCase):
         r.low = "auto"
         self.assertEqual(r.low_setting, "auto")
         self.assertEqual(r.low, 0.0)
-        return
 
     def test_constant_value(self):
         r = DataRange1D()
@@ -204,8 +202,6 @@ class DataRangeTestCase(unittest.TestCase):
         r.add(ds)
         self.assertEqual(r.low, -0.25)
         self.assertEqual(r.high, 0.0)
-        return
-
 
     def test_multi_source(self):
         ds1 = ArrayDataSource(array([3, 4, 5, 6, 7]))
@@ -213,7 +209,6 @@ class DataRangeTestCase(unittest.TestCase):
         r = DataRange1D(ds1, ds2)
         self.assertEqual(r.low, 3.0)
         self.assertEqual(r.high, 20.0)
-        return
 
     def test_clip_data(self):
         r = DataRange1D(low=2.0, high=10.0)
@@ -227,7 +222,6 @@ class DataRangeTestCase(unittest.TestCase):
 
         r = DataRange1D(low=2.0, high=2.5)
         assert_equal(len(r.clip_data(ary)) , 0)
-        return
 
     def test_mask_data(self):
         r = DataRange1D(low=2.0, high=10.0)
@@ -242,7 +236,6 @@ class DataRangeTestCase(unittest.TestCase):
 
         r = DataRange1D(low=2.0, high=2.5)
         assert_equal(r.mask_data(ary) , zeros(len(ary)))
-        return
 
     def test_bound_data(self):
         r = DataRange1D(low=2.9, high=6.1)
@@ -253,7 +246,6 @@ class DataRangeTestCase(unittest.TestCase):
         ary = array([-5,-4,-7,-8,-2,1,2,3,4,5,4,3,8,9,10,9,8])
         bounds = r.bound_data(ary)
         assert_equal(bounds , (7,11))
-        return
 
     def test_custom_bounds_func(self):
         def custom_func(low, high, margin, tight_bounds):

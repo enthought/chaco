@@ -165,7 +165,6 @@ class BasicFormatterTestCase(TicksTestCase):
             actual = sum(map(len, labels))
             err = abs(estimate - actual) / actual
             self.assertLess(err, 0.5)
-        return
 
     def test_width_based_default_scale(self):
         scale = ScaleSystem()

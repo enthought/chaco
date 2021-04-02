@@ -30,8 +30,6 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
         self.assertTrue(close,
             "Simple map failed.  Expected %s.  Got %s" % (expected, b[:,:1]))
 
-        return
-
     def test_change_min_max(self):
         """ Test that changing min_value and max_value does not break map. """
 
@@ -70,9 +68,6 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
         self.assertTrue(close,
             "Changing min value broke map.  Expected %s.  Got %s" % (expected, b[:,:1]))
 
-
-        return
-
     def test_array_factory(self):
         """ Test that the array factory creates valid colormap. """
 
@@ -89,8 +84,6 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
 
         self.assertTrue(allclose(ravel(b[:,:1]), expected, atol=0.02),
             "Array factory failed.  Expected %s.  Got %s" % (expected, b[:,:1]))
-
-        return
 
     def test_alpha_palette(self):
         """ Create a colormap with a varying alpha channel from a palette array.

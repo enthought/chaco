@@ -23,7 +23,6 @@ class StaticPlotComponent(PlotComponent):
         if "resizable" not in kw:
             kw["resizable"] = ""
         PlotComponent.__init__(self, *args, **kw)
-        return
 
 class ResizablePlotComponent(PlotComponent):
     """ A resizable PlotComponent with a fixed preferred size. """
@@ -55,7 +54,6 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         self.assertEqual(container._layout_needed, True)
         container.do_layout()
         self.assertEqual(container._layout_needed, False)
-        return
 
     def test_fixed_size_component(self):
         container = OverlayPlotContainer(resizable='', bounds=[200.0,300.0])
@@ -72,7 +70,6 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(container.get_preferred_size(), (200.0,300.0))
         self.assert_tuple(component.position, (50.0,60.0))
         self.assert_tuple(component.bounds, (100.0,110.0))
-        return
 
     def test_resizable_component(self):
         container = OverlayPlotContainer(resizable='', bounds=[200.0,300.0])
@@ -93,7 +90,6 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         container.do_layout()
         self.assert_tuple(comp3.position, (30.0, 0.0))
         self.assert_tuple(comp3.bounds, (100,300))
-        return
 
     def test_min_size(self):
         container = OverlayPlotContainer(resizable='', bounds=[50.0,50.0])
@@ -103,7 +99,6 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         container.do_layout()
         self.assert_tuple(component.position, (50.0,60.0))
         self.assert_tuple(component.bounds, (100.0,110.0))
-        return
 
     def test_multiple_min_size(self):
         comp1 = StaticPlotComponent([200, 50])
@@ -115,7 +110,7 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(container.get_preferred_size(), (200,300))
         self.assert_tuple(comp1.bounds, (200,50))
         self.assert_tuple(comp2.bounds, (60,300))
-        return
+
 
 class HPlotContainerTestCase(ContainerTestCase):
 
@@ -132,7 +127,6 @@ class HPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp1.position, (0,0))
         self.assert_tuple(comp2.position, (100,0))
         self.assert_tuple(comp3.position, (190,0))
-        return
 
     def test_stack_one_resize(self):
         "Checks stacking with 1 resizable component thrown in"
@@ -149,7 +143,6 @@ class HPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp2.position, (100,0))
         self.assert_tuple(comp3.position, (190,0))
         self.assert_tuple(comp4.position, (260,0))
-        return
 
     def test_valign(self):
         container = HPlotContainer(bounds=[300,200], valign="center")
@@ -160,7 +153,6 @@ class HPlotContainerTestCase(ContainerTestCase):
         container.valign="top"
         container.do_layout(force=True)
         self.assertEqual(comp1.position, [0,100])
-        return
 
 
 class VPlotContainerTestCase(ContainerTestCase):
@@ -178,7 +170,6 @@ class VPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp1.position, (0,0))
         self.assert_tuple(comp2.position, (0,100))
         self.assert_tuple(comp3.position, (0,190))
-        return
 
     def test_stack_one_resize(self):
         "Checks stacking with 1 resizable component thrown in"
@@ -195,7 +186,6 @@ class VPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(comp2.position, (0,100))
         self.assert_tuple(comp3.position, (0,190))
         self.assert_tuple(comp4.position, (0,260))
-        return
 
     def test_halign(self):
         container = VPlotContainer(bounds=[200,300], halign="center")
@@ -206,7 +196,6 @@ class VPlotContainerTestCase(ContainerTestCase):
         container.halign="right"
         container.do_layout(force=True)
         self.assertEqual(comp1.position, [100,0])
-        return
 
     def test_fit_components(self):
         container = VPlotContainer(bounds=[200,300], resizable="v", fit_components="v")
@@ -400,7 +389,6 @@ class GridContainerTestCase(ContainerTestCase):
         cont = GridContainer(shape=(1,1))
         cont.bounds = [100,100]
         cont.do_layout()
-        return
 
     def test_all_empty_cells(self):
         cont = GridContainer(shape=(2,2), spacing=(0,0))
@@ -409,7 +397,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(size, (0,0))
         cont.bounds = (100,100)
         cont.do_layout()
-        return
 
     def test_some_empty_cells(self):
         cont = GridContainer(shape=(2,2), spacing=(0,0))
@@ -434,7 +421,6 @@ class GridContainerTestCase(ContainerTestCase):
         # assert failures, maybe using Pypy?
         self.assert_tuple(comp1.position, (0,0))
         self.assert_tuple(comp1.bounds, (200,300))
-        return
 
     def test_nonresizable_container(self):
         cont = GridContainer(shape=(1,1), resizable="")
@@ -443,7 +429,6 @@ class GridContainerTestCase(ContainerTestCase):
         cont.do_layout()
         self.assert_tuple(comp1.position, (0,0))
         self.assert_tuple(comp1.bounds, (200,300))
-        return
 
     def test_row(self):
         cont = GridContainer(shape=(1,3), halign="center", valign="center")
@@ -468,7 +453,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(c2.bounds, (30,30))
         self.assert_tuple(c3.position, (80,0))
         self.assert_tuple(c3.bounds, (20,50))
-        return
 
     def test_two_by_two(self):
         """ Tests a 2x2 grid of components """
@@ -488,7 +472,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(left.bounds, (50,100))
         self.assert_tuple(lr.position, (50,0))
         self.assert_tuple(lr.bounds, (100,100))
-        return
 
     def test_spacing(self):
         cont = GridContainer(shape=(2,2), spacing=(10,10),
@@ -508,7 +491,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(left.bounds, (50,100))
         self.assert_tuple(lr.position, (80,10))
         self.assert_tuple(lr.bounds, (100,100))
-        return
 
     def test_resizable(self):
         cont = GridContainer(shape=(2,2), spacing=(0,0),
@@ -528,7 +510,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(left.bounds, (100,100))
         self.assert_tuple(lr.position, (100,0))
         self.assert_tuple(lr.bounds, (100,100))
-        return
 
     def test_resizable2(self):
         # Tests a resizable component that also has a preferred size
@@ -569,7 +550,6 @@ class GridContainerTestCase(ContainerTestCase):
         self.assert_tuple(left.bounds, (100,100))
         self.assert_tuple(lr.position, (130,10))
         self.assert_tuple(lr.bounds, (100,100))
-        return
 
     def test_resizable_mixed2(self):
         # Tests laying out resizable components with preferred

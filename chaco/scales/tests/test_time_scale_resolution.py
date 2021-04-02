@@ -41,7 +41,6 @@ class TRangeTestCase(TicksTestCase):
             )
         for start, end, kw in ranges:
             self.assert_empty(trange(DTS(*start), DTS(*end), **kw))
-        return
 
     def test_microseconds(self):
         # Testing the microsecond scale is dicey--`base` is a 10 digit integer,
