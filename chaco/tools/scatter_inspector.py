@@ -148,13 +148,6 @@ class ScatterInspector(SelectTool):
                     if index not in md[self.selection_metadata_name]:
                         new_list = md[self.selection_metadata_name] + [index]
                         md[self.selection_metadata_name] = new_list
-                        # Manually trigger the metadata_changed event on
-                        # the datasource. Datasources only automatically
-                        # fire notifications when the values inside the
-                        # metadata dict change, but they do not listen
-                        # for further changes on those values.
-                        # DEPRECATED: use self.inspector_event instead:
-                        getattr(plot, name).metadata_changed = True
                 else:
                     md[self.selection_metadata_name] = [index]
 
