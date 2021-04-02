@@ -41,7 +41,6 @@ class ScatterInspectorOverlay(AbstractOverlay):
     # For now, implement the equivalent of this Traits 3 feature manually
     # using a series of trait change handlers (defined at the end of the
     # class)
-    #@on_trait_change('component.index.metadata_changed,component.value.metadata_changed')
     def metadata_updated(self, event):
         if self.component is not None:
             self.component.request_redraw()
@@ -147,6 +146,6 @@ class ScatterInspectorOverlay(AbstractOverlay):
     def _ds_changed(self, event):
         old, new = event.old, event.new
         if old:
-            old.observe(self.metadata_updated, 'metadata_changed', remove=True)
+            old.observe(self.metadata_updated, 'metadata.items', remove=True)
         if new:
-            new.observe(self.metadata_updated, 'metadata_changed')
+            new.observe(self.metadata_updated, 'metadata.items')
