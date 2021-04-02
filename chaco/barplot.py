@@ -260,7 +260,6 @@ class BarPlot(AbstractPlotRenderer):
         self._cached_data_pts = compress(point_mask, points, axis=0)
 
         self._cache_valid = True
-        return
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """ Draws the 'plot' layer.
@@ -320,8 +319,6 @@ class BarPlot(AbstractPlotRenderer):
                     gc.line_to(int(end[0])+0.5, int(end[1])+0.5)
                     gc.stroke_path()
 
-        return
-
     def _render_icon(self, gc, x, y, width, height):
         with gc:
             gc.set_fill_color(self.effective_fill_color)
@@ -331,8 +328,6 @@ class BarPlot(AbstractPlotRenderer):
 
     def _post_load(self):
         super(BarPlot, self)._post_load()
-        return
-
 
     #------------------------------------------------------------------------
     # Properties

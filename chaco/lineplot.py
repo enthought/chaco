@@ -334,7 +334,6 @@ class LinePlot(BaseXYPlot):
                 gc.begin_path()
                 gc.lines(ary)
                 gc.stroke_path()
-        return
 
     @classmethod
     def _render_hold(cls, gc, points, orientation):
@@ -347,7 +346,6 @@ class LinePlot(BaseXYPlot):
             gc.begin_path()
             gc.line_set(starts[:-1], ends)
             gc.stroke_path()
-        return
 
     @classmethod
     def _render_connected_hold(cls, gc, points, orientation):
@@ -361,7 +359,6 @@ class LinePlot(BaseXYPlot):
             gc.line_set(starts[:-1], ends)
             gc.line_set(ends, starts[1:])
             gc.stroke_path()
-        return
 
     def _render_icon(self, gc, x, y, width, height):
         with gc:
@@ -372,7 +369,6 @@ class LinePlot(BaseXYPlot):
             gc.move_to(x, y+height/2)
             gc.line_to(x+width, y+height/2)
             gc.stroke_path()
-        return
 
     def _downsample_vectorized(self):
         """
@@ -390,27 +386,22 @@ class LinePlot(BaseXYPlot):
         z = abs(pts - pts2)
         d = z[:,0] + z[:,1]
         #... TODO ...
-        return
 
     def _alpha_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _color_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _line_style_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _line_width_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def __getstate__(self):
         state = super(LinePlot,self).__getstate__()

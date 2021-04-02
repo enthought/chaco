@@ -91,7 +91,6 @@ class LineSegmentTool(AbstractOverlay):
         self.component = component
         self.reset()
         self.line.line_dash = (4.0, 2.0)
-        return
 
     #------------------------------------------------------------------------
     # Drawing tool methods
@@ -105,7 +104,6 @@ class LineSegmentTool(AbstractOverlay):
         self.event_state = "normal"
         self.visible = False
         self.request_redraw()
-        return
 
     def _activate(self):
         """
@@ -118,7 +116,6 @@ class LineSegmentTool(AbstractOverlay):
         Called by a PlotComponent when this is no longer the active tool.
         """
         self.reset()
-        return
 
     #------------------------------------------------------------------------
     # PointLine methods
@@ -129,7 +126,6 @@ class LineSegmentTool(AbstractOverlay):
         space point to the list for this tool.
         """
         self.points.append(self._map_data(point))
-        return
 
     def get_point(self, index):
         """ Retrieves the indexed point and returns its screen space value.
@@ -140,14 +136,12 @@ class LineSegmentTool(AbstractOverlay):
         """ Sets the data-space *index* for a screen-space *point*.
         """
         self.points[index] = self._map_data(point)
-        return
 
     def remove_point(self, index):
         """ Removes the point for a given *index* from this tool's list of
         points.
         """
         del self.points[index]
-        return
 
     #------------------------------------------------------------------------
     # "normal" state
@@ -183,7 +177,6 @@ class LineSegmentTool(AbstractOverlay):
             self.visible = True
             self.event_state = "dragging"
             self.dragging_mouse_move(event)
-        return
 
     def normal_mouse_move(self, event):
         """ Handles the user moving the mouse in the 'normal' state.
@@ -208,14 +201,12 @@ class LineSegmentTool(AbstractOverlay):
             event.handled = False
             event.window.set_pointer(self.normal_cursor)
         self.request_redraw()
-        return
 
     def normal_draw(self, gc):
         """ Draws the line.
         """
         self.line.points = list(self.component.map_screen(array(self.points)))
         self.line._draw(gc)
-        return
 
     def normal_key_pressed(self, event):
         """ Handles the user pressing a key in the 'normal' state.
@@ -225,13 +216,11 @@ class LineSegmentTool(AbstractOverlay):
         if event.character == "Enter":
             self._finalize_selection()
             self.reset()
-        return
 
     def normal_mouse_leave(self, event):
         """ Handles the user moving the cursor away from the tool area.
         """
         event.window.set_pointer("arrow")
-        return
 
     #------------------------------------------------------------------------
     # "dragging" state
@@ -246,13 +235,11 @@ class LineSegmentTool(AbstractOverlay):
         self.points[self._dragged] = mouse_position
         self.line.points = list(self.component.map_screen(array(self.points)))
         self.request_redraw()
-        return
 
     def dragging_draw(self, gc):
         """ Draws the polygon in the 'dragging' state.
         """
         self.line._draw(gc)
-        return
 
     def dragging_left_up(self, event):
         """ Handles the left mouse coming up in the 'dragging' state.
@@ -262,7 +249,6 @@ class LineSegmentTool(AbstractOverlay):
         self.event_state = "normal"
         self._dragged = None
         self.updated = self
-        return
 
     def dragging_key_pressed(self, event):
         """ Handles a key being pressed in the 'dragging' state.
@@ -271,7 +257,6 @@ class LineSegmentTool(AbstractOverlay):
         """
         if event.character == "Esc":
             self._cancel_drag()
-        return
 
     def dragging_mouse_leave(self, event):
         """ Handles the mouse leaving the tool area in the 'dragging' state.
@@ -280,7 +265,6 @@ class LineSegmentTool(AbstractOverlay):
         """
         self._cancel_drag()
         event.window.set_pointer("arrow")
-        return
 
     def _cancel_drag(self):
         """ Cancels a drag operation.
@@ -293,7 +277,6 @@ class LineSegmentTool(AbstractOverlay):
         self.mouse_position = None
         self.event_state = "normal"
         self.request_redraw()
-        return
 
     #------------------------------------------------------------------------
     # override AbstractOverlay methods
@@ -309,7 +292,6 @@ class LineSegmentTool(AbstractOverlay):
             with gc:
                 gc.clip_to_rect(component.x, component.y, component.width-1, component.height-1)
                 draw_func(gc)
-        return
 
     def request_redraw(self):
         """ Requests that the component redraw itself.
@@ -318,7 +300,6 @@ class LineSegmentTool(AbstractOverlay):
         """
         self.component.invalidate_draw()
         self.component.request_redraw()
-        return
 
     #------------------------------------------------------------------------
     # Private methods
@@ -385,4 +366,3 @@ class LineSegmentTool(AbstractOverlay):
     def _component_changed(self, old, new):
         if new:
             self.container = new
-        return

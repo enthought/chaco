@@ -57,11 +57,9 @@ class PolarLineRenderer(AbstractPlotRenderer):
         points = transpose(array((sx,sy)))
         self._cached_data_pts = points
         self._cache_valid = True
-        return
 
     def _data_changed(self):
         self._cache_valid = False
-        return
 
     def _update_mappers(self):
         #Dunno if there is anything else to do here
@@ -83,8 +81,6 @@ class PolarLineRenderer(AbstractPlotRenderer):
                 gc.begin_path()
                 gc.lines(points)
                 gc.stroke_path()
-
-        return
 
     def map_screen(self, data_array):
         """ Maps an array of data points into screen space and returns it as
@@ -168,7 +164,6 @@ class PolarLineRenderer(AbstractPlotRenderer):
                     gc.move_to(int(start[0]), int(start[1]))
                     gc.line_to(int(end[0]), int(end[1]))
                     gc.stroke_path()
-        return
 
     def _draw_default_grid(self,gc):
         if not self.grid_visible:
@@ -186,5 +181,3 @@ class PolarLineRenderer(AbstractPlotRenderer):
                 r = rad*r_part/4
                 gc.arc(x_center, y_center, r, 0, 2*pi)
                 gc.stroke_path()
-
-        return

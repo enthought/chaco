@@ -25,7 +25,6 @@ class SVGGraphicsContext(GraphicsContext):
         super(SVGGraphicsContext, self).__init__(size_or_ary, *args, **kw)
         self.translate_ctm(0.5, 0.5)
         self.scale_ctm(scale, scale)
-        return
 
     def render_component(self, component, container_coords=False):
         """ Renders the given component.
@@ -61,7 +60,6 @@ class SVGGraphicsContext(GraphicsContext):
             self.translate_ctm(x, y)
             self.scale_ctm(width_scale, height_scale)
             component.draw(self, view_bounds=(0, 0, width, height))
-        return
 
     def clip_to_rect(self, x, y, width, height):
         """ Offsets the coordinate frame by (0.5, 0.5) and increases the actual

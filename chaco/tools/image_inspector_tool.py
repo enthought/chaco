@@ -80,7 +80,6 @@ class ImageInspectorTool(BaseTool):
                          "color_value": image_data.data[y_index, x_index]}
 
                 self.last_mouse_position = (event.x, event.y)
-        return
 
 
 class ImageInspectorOverlay(TextBoxOverlay):

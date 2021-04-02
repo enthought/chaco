@@ -154,15 +154,12 @@ class PlotGrid(AbstractOverlay):
         self.tick_generator = DefaultTickGenerator()
         super(PlotGrid, self).__init__(**traits)
         self.bgcolor = "none" #make sure we're transparent
-        return
 
     @observe("bounds.items,position.items")
     def invalidate(self, event=None):
         """ Invalidate cached information about the grid.
         """
         self._reset_cache()
-        return
-
 
     #------------------------------------------------------------------------
     # PlotComponent and AbstractOverlay interface
@@ -177,7 +174,6 @@ class PlotGrid(AbstractOverlay):
             self._layout_as_overlay(*args, **kw)
         else:
             super(PlotGrid, self).do_layout(*args, **kw)
-        return
 
     #------------------------------------------------------------------------
     # Private methods
@@ -188,7 +184,6 @@ class PlotGrid(AbstractOverlay):
 
         Overrides PlotComponent.
         """
-        return
 
     def _layout_as_overlay(self, size=None, force=False):
         """ Lays out the axis as an overlay on another component.
@@ -196,7 +191,6 @@ class PlotGrid(AbstractOverlay):
         if self.component is not None:
             self.position = self.component.position
             self.bounds = self.component.bounds
-        return
 
     def _reset_cache(self):
         """ Clears the cached tick positions.
@@ -204,7 +198,6 @@ class PlotGrid(AbstractOverlay):
         self._tick_positions = array([], dtype=float)
         self._tick_extents = array([], dtype=float)
         self._cache_valid = False
-        return
 
     def _compute_ticks(self, component=None):
         """ Calculates the positions for the grid lines.
@@ -293,7 +286,6 @@ class PlotGrid(AbstractOverlay):
         Overrides PlotComponent.
         """
         self._draw_component(gc, view_bounds, mode)
-        return
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
@@ -305,7 +297,6 @@ class PlotGrid(AbstractOverlay):
         self._compute_ticks(other_component)
         self._draw_component(gc, view_bounds, mode)
         self._cache_valid = False
-        return
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
         """ Draws the component.
@@ -351,7 +342,6 @@ class PlotGrid(AbstractOverlay):
                 starts, ends = ends, starts
             gc.line_set(starts, ends)
             gc.stroke_path()
-        return
 
     def _mapper_changed(self, old, new):
         if old is not None:
@@ -359,14 +349,12 @@ class PlotGrid(AbstractOverlay):
         if new is not None:
             new.on_trait_change(self.mapper_updated, "updated")
         self.invalidate()
-        return
 
     def mapper_updated(self):
         """
         Event handler that is bound to this mapper's **updated** event.
         """
         self.invalidate()
-        return
 
     def _position_changed_for_component(self):
         self.invalidate()
@@ -403,8 +391,6 @@ class PlotGrid(AbstractOverlay):
     def _orientation_changed(self):
         self.invalidate()
         self.visual_attr_changed()
-        return
-
 
     ### Persistence ###########################################################
 
@@ -421,4 +407,3 @@ class PlotGrid(AbstractOverlay):
         self._mapper_changed(None, self.mapper)
         self._reset_cache()
         self._cache_valid = False
-        return

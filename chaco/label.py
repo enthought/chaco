@@ -84,7 +84,6 @@ class Label(HasTraits):
     def __init__(self, **traits):
         super(Label, self).__init__(**traits)
         self._bounding_box = [0, 0]
-        return
 
     def get_width_height(self, gc):
         """ Returns the width and height of the label, in the rotated frame of
@@ -280,4 +279,3 @@ class Label(HasTraits):
             self._bounding_box[1] = prev_y_pos + prev_y_height + margin \
                 + 2*border_width
             self._position_cache_valid = True
-        return

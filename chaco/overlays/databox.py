@@ -115,8 +115,6 @@ class DataBox(AbstractOverlay):
                 gc.rect(*rect)
                 gc.stroke_path()
 
-        return
-
     #-------------------------------------------------------------------------
     # Property setters/getters, event handlers
     #-------------------------------------------------------------------------

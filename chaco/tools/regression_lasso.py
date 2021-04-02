@@ -42,7 +42,6 @@ class RegressionLasso(LassoSelection):
         else:
             self.fit_params = None
             self.centroid = None
-        return
 
 
 class RegressionOverlay(LassoOverlay):
@@ -97,5 +96,3 @@ class RegressionOverlay(LassoOverlay):
                 gc.move_to(*left_pt)
                 gc.line_to(*right_pt)
                 gc.stroke_path()
-
-        return

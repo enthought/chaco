@@ -262,8 +262,6 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
 
         ToolHistoryMixin.normal_key_pressed(self, event)
 
-        return
-
     def normal_mouse_wheel(self, event):
         if not self.enable_wheel:
             return

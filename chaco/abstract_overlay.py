@@ -51,7 +51,6 @@ class AbstractOverlay(PlotComponent):
             self.overlay(self.component, gc, view_bounds, mode)
         else:
             super(AbstractOverlay, self)._draw(gc, view_bounds, mode)
-        return
 
     def _request_redraw(self):
         """ Overrides Enable Component.
@@ -59,4 +58,3 @@ class AbstractOverlay(PlotComponent):
         if self.component is not None:
             self.component.request_redraw()
         super(AbstractOverlay, self)._request_redraw()
-        return

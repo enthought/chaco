@@ -243,7 +243,6 @@ class TimeScale(AbstractScale):
         else:
             self.val = val
             self.resolution = val * self.SECS_PER_UNIT[unit]
-        return
 
     def num_ticks(self, start, end, desired_ticks=None):
         """ Returns an approximate number of ticks that this scale

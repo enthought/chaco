@@ -213,7 +213,6 @@ class DataView(OverlayPlotContainer):
         # so we have to manually update our mappers
         if self.resizable == "":
             self._update_mappers()
-        return
 
     def map_screen(self, data_array):
         """ Maps an array of data points to screen space and returns an array
@@ -318,7 +317,6 @@ class DataView(OverlayPlotContainer):
                 self.y_mapper.high_pos = y
 
         self.invalidate_draw()
-        return
 
     def _bounds_changed(self, old, new):
         super(DataView, self)._bounds_changed(old, new)
@@ -356,7 +354,6 @@ class DataView(OverlayPlotContainer):
         for renderer in self.components:
             if hasattr(renderer, "orientation"):
                 renderer.orientation = self.orientation
-        return
 
     def _index_mapper_changed(self, old, new):
         if new is not None:
@@ -433,7 +430,6 @@ class DataView(OverlayPlotContainer):
                     setattr(renderer, 'index_range', self.index_range)
                 if hasattr(renderer, 'value_range'):
                     setattr(renderer, 'value_range', self.value_range)
-        return
 
     def _range2d_default(self):
         """ Default trait initializer for the range2d trait """

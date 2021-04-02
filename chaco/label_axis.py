@@ -87,8 +87,6 @@ class LabelAxis(PlotAxis):
         self._tick_positions = [self._axis_vector*tickpos + self._origin_point \
                                  for tickpos in mapped_label_positions]
         self._tick_label_positions = self._tick_positions
-        return
-
 
     def _compute_labels(self, gc):
         """Generates the labels for tick marks.
@@ -106,5 +104,3 @@ class LabelAxis(PlotAxis):
             self._tick_label_bounding_boxes = [array(ticklabel.get_bounding_box(gc), float64) for ticklabel in self.ticklabel_cache]
         except:
             print_exc()
-        return
-

@@ -156,8 +156,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             self._start_select(event)
             event.handled = True
 
-        return
-
     def normal_right_down(self, event):
         """ Handles the right mouse button being pressed while the tool is
         in the 'normal' state.
@@ -167,8 +165,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         if self._is_enabling_event(event):
             self._start_select(event)
             event.handled = True
-
-        return
 
     def pre_selecting_left_down(self, event):
         """ The user pressed the key to turn on the zoom mode,
@@ -222,7 +218,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             self._screen_end = (event.x, event.y)
         self.component.request_redraw()
         event.handled = True
-        return
 
     def selecting_left_up(self, event):
         """ Handles the left mouse button being released when the tool is in
@@ -232,7 +227,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         """
         if self.drag_button in ("left", None):
             self._end_select(event)
-        return
 
     def selecting_right_up(self, event):
         """ Handles the right mouse button being released when the tool is in
@@ -242,7 +236,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         """
         if self.drag_button == "right":
             self._end_select(event)
-        return
 
     def selecting_mouse_leave(self, event):
         """ Handles the mouse leaving the plot when the tool is in the
@@ -251,7 +244,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         Ends the selection operation without zooming.
         """
         self._end_selecting(event)
-        return
 
     #--------------------------------------------------------------------------
     #  AbstractOverlay interface
@@ -267,7 +259,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                 self._overlay_range(component, gc)
             else:
                 self._overlay_box(component, gc)
-        return
 
     #--------------------------------------------------------------------------
     #  private interface
@@ -321,7 +312,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         event.window.set_pointer(self.pointer)
         event.window.set_mouse_owner(self, event.net_transform())
         self.selecting_mouse_move(event)
-        return
 
     def _end_select(self, event):
         """ Ends selection of the zoom region, adds the new zoom range to
@@ -362,7 +352,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
 
         self._end_selecting(event)
         event.handled = True
-        return
 
     def _end_selecting(self, event=None):
         """ Ends selection of zoom region, without zooming.
@@ -377,7 +366,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         self.component.request_redraw()
         if event and event.window.mouse_owner == self:
             event.window.set_mouse_owner(None)
-        return
 
     def _overlay_box(self, component, gc):
         """ Draws the overlay as a box.
@@ -398,7 +386,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                 else:
                     gc.rect(*rect)
                     gc.stroke_path()
-        return
 
     def _overlay_range(self, component, gc):
         """ Draws the overlay as a range.
@@ -418,8 +405,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             gc.set_stroke_color(self.border_color_)
             gc.clip_to_rect(component.x, component.y, component.width, component.height)
             gc.draw_rect((lower_left[0], lower_left[1], upper_right[0], upper_right[1]))
-
-        return
 
     def _get_fill_color(self):
         """Get the fill color based on the alpha and the color property

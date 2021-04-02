@@ -374,8 +374,6 @@ class MultiLinePlot(BaseXYPlot):
 
         self._cached_data_pts = line_points
         self._cache_valid = True
-        return
-
 
     # See base_xy_plot.py for:
     ## def _downsample(self):
@@ -426,8 +424,6 @@ class MultiLinePlot(BaseXYPlot):
                 gc.begin_path()
                 gc.lines(ary)
                 gc.stroke_path()
-        return
-
 
     def _render_icon(self, gc, x, y, width, height):
         with gc:
@@ -443,28 +439,23 @@ class MultiLinePlot(BaseXYPlot):
     def _alpha_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _color_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _line_style_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _line_width_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _amplitude_changed(self):
         self.value.data_changed = True
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def __getstate__(self):
         state = super(MultiLinePlot,self).__getstate__()

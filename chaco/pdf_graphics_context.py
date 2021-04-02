@@ -181,7 +181,6 @@ if Canvas is not None:
             component.use_backbuffer = False
             component.draw(self, view_bounds=(0, 0, width, height))
             component.use_backbuffer = old_bb_setting
-            return
 
         def save(self, filename=None):
             self.gc.save()

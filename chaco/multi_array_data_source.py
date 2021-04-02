@@ -67,7 +67,6 @@ class MultiArrayDataSource(AbstractDataSource):
         self._set_data(data)
         self.sort_order = sort_order
         self.data_changed = True
-        return
 
     def get_data(self, axes = None, remove_nans=False):
         """get_data() -> data_array
@@ -203,7 +202,6 @@ class MultiArrayDataSource(AbstractDataSource):
         """
         self._set_data(value)
         self.data_changed = True
-        return
 
     def _set_data(self, value):
         """ Forces 1-D data to 2-D.

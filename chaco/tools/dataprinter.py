@@ -38,7 +38,6 @@ class DataPrinter(BaseTool):
             else:
                 msg = "dataprinter: don't know how to handle plots of type {}"
                 print(msg.format(plot.__class__.__name__))
-        return
 
     def _build_text_from_event(self, event):
         """ Build the text to display from the mouse event.

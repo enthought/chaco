@@ -46,7 +46,6 @@ class BasePlotFrame(Container, PlotComponent):
     def __init__(self, **kw):
         self._frame_slots = {}
         super(BasePlotFrame, self).__init__(**kw)
-        return
 
     def add_to_slot(self, slot, component, stack="overlay"):
         """
@@ -54,7 +53,6 @@ class BasePlotFrame(Container, PlotComponent):
         The valid modes are: 'overlay', 'left', 'right', 'top', 'bottom'.
         """
         self.frame_slots[slot].add_plot_component(component, stack)
-        return
 
     def set_slot(self, slotname, container):
         """
@@ -66,7 +64,6 @@ class BasePlotFrame(Container, PlotComponent):
         if container is not None:
             self._frame_slots[slotname] = container
             Container.add(self, container)
-        return
 
     def get_slot(self, slotname):
         """ Returns the container in the named slot. """
@@ -94,7 +91,6 @@ class BasePlotFrame(Container, PlotComponent):
                 PlotComponent.draw(self, gc, view_bounds, "interactive")
         else:
             super(BasePlotFrame, self).draw(gc, view_bounds, mode)
-        return
 
     def do_layout(self, size=None, force=False):
         """ Tells this frame to do layout at a given size.
@@ -117,7 +113,6 @@ class BasePlotFrame(Container, PlotComponent):
         PlotComponent version of _draw().
         """
         PlotComponent._draw(self, *args, **kw)
-        return
 
     def _dispatch_to_enable(self, event, suffix):
         """ Calls Enable-level event handlers.
@@ -125,7 +120,6 @@ class BasePlotFrame(Container, PlotComponent):
         Overrides PlotComponent.
         """
         Container.dispatch(self, event, suffix)
-        return
 
     #------------------------------------------------------------------------
     # Event handlers, properties
@@ -156,7 +150,6 @@ class BasePlotFrame(Container, PlotComponent):
             self.set_slot(name, value)
         else:
             super(BasePlotFrame, self).__setattr__(name, value)
-        return
 
     ### Persistence ###########################################################
 #    _pickles = ("_frame_slots", "_components", "fit_components", "fit_window")
@@ -165,4 +158,3 @@ class BasePlotFrame(Container, PlotComponent):
         super(BasePlotFrame, self).post_load(path)
         for slot in self._frame_slots.values():
             slot.post_load(path)
-        return

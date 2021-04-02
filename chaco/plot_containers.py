@@ -63,7 +63,7 @@ class OverlayPlotContainer(BasePlotContainer):
         """ Actually performs a layout (called by do_layout()).
         """
         simple_container_do_layout(self)
-        return
+
 
 class StackedPlotContainer(BasePlotContainer):
     """
@@ -227,7 +227,6 @@ class StackedPlotContainer(BasePlotContainer):
             component.outer_position = position
             component.outer_bounds = bounds
             component.do_layout()
-        return
 
     ### Persistence ###########################################################
 
@@ -415,7 +414,6 @@ class GridPlotContainer(BasePlotContainer):
                 self.index = 0
             else:
                 self.index = 1
-            return
 
         def update_from_component(self, component, index):
             """ Given a component at a particular index along this SizePref's
@@ -432,7 +430,6 @@ class GridPlotContainer(BasePlotContainer):
             else:
                 if pref_length > self.fixed_lengths[index]:
                     self.fixed_lengths[index] = pref_length
-            return
 
         def get_preferred_size(self):
             return amax((self.fixed_lengths, self.resizable_lengths), axis=0)
@@ -668,9 +665,6 @@ class GridPlotContainer(BasePlotContainer):
                 component.outer_bounds = bounds
                 component.do_layout()
 
-        return
-
-
     def _reflow_layout(self):
         """ Re-computes self._grid based on self.components and self.shape.
         Adjusts self.shape accordingly.
@@ -684,7 +678,6 @@ class GridPlotContainer(BasePlotContainer):
         grid[grid==0] = None
         self._grid = grid
         self._layout_needed = True
-        return
 
     def _shape_changed(self, old, new):
         self._reflow_layout()
@@ -724,4 +717,3 @@ class GridPlotContainer(BasePlotContainer):
             self.compact()
 
         self.invalidate_draw()
-        return

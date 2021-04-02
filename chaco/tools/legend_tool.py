@@ -44,8 +44,6 @@ class LegendTool(DragTool):
             self.original_padding = self.component.padding
             event.window.set_mouse_owner(self, event.net_transform())
             event.handled = True
-        return
-
 
     def dragging(self, event):
         """ This method is called for every mouse_move event that the tool
@@ -78,8 +76,6 @@ class LegendTool(DragTool):
 
             event.handled = True
             legend.request_redraw()
-        return
-
 
     def drag_end(self, event):
         """ Called when a mouse event causes the drag operation to end.
@@ -117,4 +113,3 @@ class LegendTool(DragTool):
                 event.window.set_mouse_owner(None)
             event.handled = True
             legend.request_redraw()
-        return
