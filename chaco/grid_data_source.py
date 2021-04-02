@@ -5,7 +5,7 @@
 from numpy import array
 
 # Enthougth library imports
-from traits.api import Constant, Instance, Tuple
+from traits.api import Constant, Instance, observe, Tuple
 
 # Chaco imports
 from .abstract_data_source import AbstractDataSource
@@ -142,10 +142,14 @@ class GridDataSource(AbstractDataSource):
     # Event handlers
     #------------------------------------------------------------------------
 
-    def _metadata_changed(self, event):
-        self.metadata_changed = True
+    #def _metadata_changed(self, event):
+    #    self.metadata_changed = True
 
-    def _metadata_items_changed(self, event):
+    #def _metadata_items_changed(self, event):
+    #    self.metadata_changed = True
+
+    @observe("metadata.items")
+    def something(self, event):
         self.metadata_changed = True
 
 
