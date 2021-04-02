@@ -7,7 +7,7 @@ from numpy.linalg import norm
 
 # Enthought library imports
 from traits.api import Any, ArrayOrNone, Bool, Enum, Float, Int, List, \
-     Str, Tuple, Trait, on_trait_change, Property
+     Str, Tuple, Trait, observe, Property
 from enable.api import ColorTrait, MarkerTrait
 
 # Local, relative imports
@@ -498,7 +498,6 @@ class DataLabel(ToolTip):
             self.y = sy + self.label_position[1]
 
         self._cached_arrow = None
-        return
 
     def _data_point_changed(self, old, new):
         if new is not None:
@@ -531,28 +530,23 @@ class DataLabel(ToolTip):
                 if hasattr(comp, 'value_mapper'):
                     self._modify_mapper_listeners(comp.value_mapper,
                                                   attach=attach)
-        return
 
     def _modify_mapper_listeners(self, mapper, attach=True):
         if mapper is not None:
-            mapper.on_trait_change(self._handle_mapper, 'updated',
-                                   remove=not attach)
-        return
+            mapper.observe(self._handle_mapper, 'updated', remove=not attach)
 
-    def _handle_mapper(self):
+    def _handle_mapper(self, event):
         # This gets fired whenever a mapper on our plot fires its
         # 'updated' event.
         self._layout_needed = True
 
-    @on_trait_change("arrow_size,arrow_root,arrow_min_length," +
-                     "arrow_max_length")
-    def _invalidate_arrow(self):
+    @observe("arrow_size,arrow_root,arrow_min_length,arrow_max_length")
+    def _invalidate_arrow(self, event):
         self._cached_arrow = None
         self._layout_needed = True
 
-    @on_trait_change("label_position,position,position_items,bounds," +
-                     "bounds_items")
-    def _invalidate_layout(self):
+    @observe("label_position,position.items,bounds.items")
+    def _invalidate_layout(self, event):
         self._layout_needed = True
 
     def _get_xmid(self):

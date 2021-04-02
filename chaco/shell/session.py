@@ -150,6 +150,3 @@ class PlotSession(HasTraits):
                 if isinstance(p.colors, str) or \
                    isinstance(p.colors, AbstractColormap):
                     p.colors = color_map_dict[self.colormap]
-
-
-# EOF

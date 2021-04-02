@@ -150,8 +150,6 @@ def render_markers(gc, points, marker, marker_size,
                     gc.add_path(path)
                     gc.draw_path(STROKE)
 
-    return
-
 #------------------------------------------------------------------------------
 # The scatter plot
 #------------------------------------------------------------------------------
@@ -420,8 +418,6 @@ class ScatterPlot(BaseXYPlot):
                 self._cached_selected_pts = None
                 self._selection_cache_valid = True
 
-        return
-
     def _gather_points_fast(self):
         if self._cache_valid and self._selection_cache_valid:
             return
@@ -496,7 +492,6 @@ class ScatterPlot(BaseXYPlot):
     def _render_icon(self, gc, x, y, width, height):
         point = array([x+width/2, y+height/2])
         self._render(gc, [point], icon_mode=True)
-        return
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -526,7 +521,7 @@ class ScatterPlot(BaseXYPlot):
         self.invalidate_draw()
         self.request_redraw()
 
-    def _either_metadata_changed(self):
+    def _either_metadata_updated(self, event):
         if self.show_selection:
             # Only redraw when we are showing the selection. Otherwise, there
             # is nothing to update in response to this event.
@@ -562,5 +557,3 @@ class ScatterPlot(BaseXYPlot):
             edge_alpha = 1.0
         c = self.outline_color_[:3] + (edge_alpha * self.alpha,)
         return c
-
-# EOF

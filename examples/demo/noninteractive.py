@@ -53,7 +53,6 @@ def draw_plot(filename, size=(800, 600)):
     gc = PlotGraphicsContext(size, dpi=DPI)
     gc.render_component(container)
     gc.save(filename)
-    return
 
 
 def draw_svg(filename, size=(800, 600)):
@@ -112,5 +111,3 @@ if __name__ == "__main__":
         draw_pdf(get_directory('noninteractive.pdf'))
     else:
         draw_plot(get_directory('noninteractive.png'), size=(800, 600))
-
-# EOF

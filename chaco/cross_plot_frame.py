@@ -64,7 +64,6 @@ class CrossPlotFrame(BasePlotFrame):
         self.set_slot("bottom", VPlotContainer(resizable="h"))
 
         self.bounds = bounds
-        return
 
     def set_visible_slots(self, *names):
         """
@@ -76,8 +75,6 @@ class CrossPlotFrame(BasePlotFrame):
                 self.get_slot(slot).visible = True
             else:
                 self.get_slot(slot).visible = False
-        return
-
 
     #------------------------------------------------------------------------
     # Protected methods
@@ -95,7 +92,6 @@ class CrossPlotFrame(BasePlotFrame):
                 if getattr(self, slotname).visible:
                     with gc:
                         self.get_slot(slotname).draw(gc, view_bounds, mode)
-        return
 
     def _do_layout(self):
         """
@@ -155,9 +151,6 @@ class CrossPlotFrame(BasePlotFrame):
                     slot.outer_height = preferred_size[1]
                 slot.do_layout()
 
-        return
-
-
     ### Persistence ###########################################################
 
     #_pickles = ("left_width", "right_width", "top_height", "bottom_height")
@@ -169,6 +162,3 @@ class CrossPlotFrame(BasePlotFrame):
                 del state[key]
 
         return state
-
-
-# EOF

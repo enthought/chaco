@@ -1,6 +1,6 @@
-******************
-Tools and Overlays
-******************
+*****
+Tools
+*****
 
 ================================================================
 Overview
@@ -151,66 +151,3 @@ DrawPointsTool
 
 LineSegmentTool
 ===============
-
-
-================================================================
-Core Overlays
-================================================================
-
-Axis
-====
-
-Grid
-====
-
-Legend
-======
-
-
-================================================================
-Annotation Overlays
-================================================================
-
-PointMarker
-===========
-
-DataBox
-=======
-
-
-.. _tools/text_box_overlay:
-
-TextBoxOverlay
-==============
-The :class:`chaco.overlays.api.TextBoxOverlay` is the base class of
-the overlay component of several inspector type tools (see above). It is
-designed to draw a text box over the plots to display custom information.
-
-The rendering of the text can be customized with the following attributes:
-
-    * :attr:`bgcolor` and :attr:`border_visible` to control the styling of the
-      box,
-    * :attr:`alpha` to control the transparency of the text box,
-    * :attr:`text_color` and :attr:`font` to control how the text looks like,
-    * :attr:`align` to control what corner of the plot the text box should
-      appear,
-    * ...
-
-.. note:: The overlay can also be used directly by any custom tool that needs
-          to display information upon an event. It should be done by
-          subclassing the overlay and defining a listener on the inspector's
-          state which will modify the overlay's :attr:`text` (and optionally
-          visibility) attribute(s). After a `text` update, the component's
-          :meth:`request_redraw` should be called. Good examples include
-          :class:`chaco.overlays.api.ImageInspectorOverlay`.
-
-
-ToolTip
-=======
-
-PlotLabel
-=========
-
-
-
-

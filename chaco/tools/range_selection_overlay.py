@@ -147,11 +147,9 @@ class RangeSelectionOverlay(AbstractOverlay):
 
     def _component_changed(self, old, new):
         self._attach_metadata_handler(old, new)
-        return
 
     def _axis_changed(self, old, new):
         self._attach_metadata_handler(old, new)
-        return
 
     def _attach_metadata_handler(self, old, new):
         # This is used to attach a listener to the datasource so that when
@@ -161,15 +159,14 @@ class RangeSelectionOverlay(AbstractOverlay):
 
         datasource = getattr(self.plot, self.axis)
         if old:
-            datasource.on_trait_change(self._metadata_change_handler, "metadata_changed",
-                                        remove=True)
+            datasource.observe(
+                self._metadata_change_handler, "metadata_changed", remove=True
+            )
         if new:
-            datasource.on_trait_change(self._metadata_change_handler, "metadata_changed")
-        return
+            datasource.observe(self._metadata_change_handler, "metadata_changed")
 
     def _metadata_change_handler(self, event):
         self.component.request_redraw()
-        return
 
     #------------------------------------------------------------------------
     # Default initializers
@@ -200,5 +197,3 @@ class RangeSelectionOverlay(AbstractOverlay):
     @cached_property
     def _get_axis_index(self):
         return self._determine_axis()
-
-# EOF

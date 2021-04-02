@@ -275,7 +275,3 @@ def add_default_grids(plot, orientation="normal"):
     plot.underlays.append(vgrid)
     plot.underlays.append(hgrid)
     return hgrid, vgrid
-
-
-
-# EOF

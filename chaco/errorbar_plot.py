@@ -93,7 +93,6 @@ class ErrorBarPlot(LinePlot):
 
         self._cached_data_pts = compress(point_mask, points, axis=0)
         self._cache_valid = True
-        return
 
     def _render(self, gc, points, icon_mode=False):
         if len(points) == 0:
@@ -131,8 +130,6 @@ class ErrorBarPlot(LinePlot):
 
         if not icon_mode:
             self._draw_default_axes(gc)
-        return
-
 
     def _render_bar_endcap(self, gc, start, end, low, high, axis):
         """ Renders the endcaps for endcap_style == "bar".  start and end are
@@ -154,8 +151,6 @@ class ErrorBarPlot(LinePlot):
         end[:,1-axis] = high
         gc.line_set(start, end)
         gc.stroke_path()
-        return
-
 
     def _render_icon(self, gc, x, y, width, height):
         pass

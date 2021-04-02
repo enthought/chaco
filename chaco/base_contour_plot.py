@@ -65,8 +65,7 @@ class BaseContourPlot(Base2DPlot):
     def __init__(self, *args, **kwargs):
         super(BaseContourPlot, self).__init__(*args, **kwargs)
         if self.color_mapper:
-            self.color_mapper.on_trait_change(self._update_color_mapper, "updated")
-        return
+            self.color_mapper.observe(self._update_color_mapper, "updated")
 
     def _update_levels(self):
         """ Updates the levels cache.  """
@@ -129,8 +128,6 @@ class BaseContourPlot(Base2DPlot):
                     self._colors.append(self._color_map_trait_)
 
         self._colors_cache_valid = True
-        return
-
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -152,7 +149,7 @@ class BaseContourPlot(Base2DPlot):
         # If the index mapper has changed, then we need to redraw
         self.invalidate_and_redraw()
 
-    def _update_color_mapper(self):
+    def _update_color_mapper(self, event=None):
         # If the color mapper has changed, then we need to recompute the
         # levels and cached data associated with that.
         self._level_cache_valid = False
@@ -180,7 +177,7 @@ class BaseContourPlot(Base2DPlot):
     def _set_color_mapper(self, color_mapper):
         # Remove the dynamic event handler from the old color mapper
         if self.colors is not None and isinstance(self.colors, ColorMapper):
-            self.colors.on_trait_change(self._update_color_mapper, "updated", remove=True)
+            self.colors.observe(self._update_color_mapper, "updated", remove=True)
 
             # Check to see if we should copy over the range as well
             if color_mapper is not None:
@@ -189,7 +186,7 @@ class BaseContourPlot(Base2DPlot):
 
         # Attach the dynamic event handler to the new color mapper
         if color_mapper is not None:
-            color_mapper.on_trait_change(self._update_color_mapper, "updated")
+            color_mapper.observe(self._update_color_mapper, "updated")
 
         self.colors = color_mapper
         self._update_color_mapper()

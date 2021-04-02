@@ -107,7 +107,7 @@ class Demo(HasTraits):
         resizable=True, title=title
     )
 
-    def _selection_changed(self):
+    def _selection_changed(self, event):
         mask = self.index_datasource.metadata['selections']
         print("New selection: ")
         print(compress(mask, arange(len(mask))))
@@ -123,8 +123,7 @@ class Demo(HasTraits):
 
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        rect_selection.on_trait_change(self._selection_changed,
-                                       'selection_changed')
+        rect_selection.observe(self._selection_changed, 'selection_changed')
 
         return plot
 

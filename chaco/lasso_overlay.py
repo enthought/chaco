@@ -49,7 +49,6 @@ class LassoOverlay(AbstractOverlay):
             c = other_component
             gc.clip_to_rect(c.x, c.y, c.width, c.height)
             self._draw_component(gc, view_bounds, mode)
-        return
 
     def _updated_changed_for_lasso_selection(self):
         self.component.invalidate_draw()

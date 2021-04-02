@@ -23,7 +23,11 @@ from chaco.tools.api import LassoSelection, LassoSelection
 # # Create the Chaco plot.
 #===============================================================================
 
-def lasso_updated(lasso_tool, name, old, new_selections):
+def lasso_updated(event):
+    lasso_tool = event.object
+    name = event.name
+    old = event.old
+    new_selections = event.new
     # new_selections is a list of arrays of coordinates in dataspace.  It is a
     # list because the LassoSelection supports multiple, disjoint selection regions.
     for i, selection in enumerate(new_selections):
@@ -36,7 +40,7 @@ def lasso_updated(lasso_tool, name, old, new_selections):
         # Now map each point into the grid index
         for x, y in screen_pts:
             print("\t", lasso_tool.plot.map_index((x, y)))
-    return
+
 
 def _create_plot_component():# Create a scalar field to colormap
     xbounds = (-2*pi, 2*pi, 600)
@@ -62,7 +66,7 @@ def _create_plot_component():# Create a scalar field to colormap
     plot.padding = 50
 
     lasso_selection = LassoSelection(component=img_plot)
-    lasso_selection.on_trait_change(lasso_updated, "disjoint_selections")
+    lasso_selection.observe(lasso_updated, "disjoint_selections")
     lasso_overlay = LassoOverlay(lasso_selection = lasso_selection, component=img_plot)
     img_plot.tools.append(lasso_selection)
     img_plot.overlays.append(lasso_overlay)
@@ -94,5 +98,3 @@ demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-
-# EOF

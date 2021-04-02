@@ -9,7 +9,7 @@ from numpy import around, array, asarray, column_stack, float64, inf, zeros, zer
 # Enthought library imports
 from enable.api import black_color_trait, LineStyle
 from traits.api import Any, Bool, Callable, Enum, Float, Instance, \
-        CInt, Trait, Property, TraitError, Tuple, on_trait_change
+        CInt, Trait, Property, TraitError, Tuple, observe
 from traitsui.api import HGroup, Item, VGroup, View, TextEditor
 
 # Local, relative imports
@@ -154,15 +154,12 @@ class PlotGrid(AbstractOverlay):
         self.tick_generator = DefaultTickGenerator()
         super(PlotGrid, self).__init__(**traits)
         self.bgcolor = "none" #make sure we're transparent
-        return
 
-    @on_trait_change("bounds,bounds_items,position,position_items")
-    def invalidate(self):
+    @observe("bounds.items,position.items")
+    def invalidate(self, event=None):
         """ Invalidate cached information about the grid.
         """
         self._reset_cache()
-        return
-
 
     #------------------------------------------------------------------------
     # PlotComponent and AbstractOverlay interface
@@ -177,7 +174,6 @@ class PlotGrid(AbstractOverlay):
             self._layout_as_overlay(*args, **kw)
         else:
             super(PlotGrid, self).do_layout(*args, **kw)
-        return
 
     #------------------------------------------------------------------------
     # Private methods
@@ -188,7 +184,6 @@ class PlotGrid(AbstractOverlay):
 
         Overrides PlotComponent.
         """
-        return
 
     def _layout_as_overlay(self, size=None, force=False):
         """ Lays out the axis as an overlay on another component.
@@ -196,7 +191,6 @@ class PlotGrid(AbstractOverlay):
         if self.component is not None:
             self.position = self.component.position
             self.bounds = self.component.bounds
-        return
 
     def _reset_cache(self):
         """ Clears the cached tick positions.
@@ -204,7 +198,6 @@ class PlotGrid(AbstractOverlay):
         self._tick_positions = array([], dtype=float)
         self._tick_extents = array([], dtype=float)
         self._cache_valid = False
-        return
 
     def _compute_ticks(self, component=None):
         """ Calculates the positions for the grid lines.
@@ -293,7 +286,6 @@ class PlotGrid(AbstractOverlay):
         Overrides PlotComponent.
         """
         self._draw_component(gc, view_bounds, mode)
-        return
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
@@ -305,7 +297,6 @@ class PlotGrid(AbstractOverlay):
         self._compute_ticks(other_component)
         self._draw_component(gc, view_bounds, mode)
         self._cache_valid = False
-        return
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
         """ Draws the component.
@@ -351,22 +342,19 @@ class PlotGrid(AbstractOverlay):
                 starts, ends = ends, starts
             gc.line_set(starts, ends)
             gc.stroke_path()
-        return
 
     def _mapper_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self.mapper_updated, "updated", remove=True)
+            old.observe(self.mapper_updated, "updated", remove=True)
         if new is not None:
-            new.on_trait_change(self.mapper_updated, "updated")
+            new.observe(self.mapper_updated, "updated")
         self.invalidate()
-        return
 
-    def mapper_updated(self):
+    def mapper_updated(self, event=None):
         """
         Event handler that is bound to this mapper's **updated** event.
         """
         self.invalidate()
-        return
 
     def _position_changed_for_component(self):
         self.invalidate()
@@ -384,8 +372,8 @@ class PlotGrid(AbstractOverlay):
     # Event handlers for visual attributes.  These mostly just call request_redraw()
     #------------------------------------------------------------------------
 
-    @on_trait_change("visible,line_color,line_style,line_weight")
-    def visual_attr_changed(self):
+    @observe("visible,line_color,line_style,line_weight")
+    def visual_attr_changed(self, event=None):
         """ Called when an attribute that affects the appearance of the grid
         is changed.
         """
@@ -403,8 +391,6 @@ class PlotGrid(AbstractOverlay):
     def _orientation_changed(self):
         self.invalidate()
         self.visual_attr_changed()
-        return
-
 
     ### Persistence ###########################################################
 
@@ -415,5 +401,3 @@ class PlotGrid(AbstractOverlay):
                 del state[key]
 
         return state
-
-# EOF

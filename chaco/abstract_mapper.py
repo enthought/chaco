@@ -29,14 +29,12 @@ class AbstractMapper(HasTraits):
 
         Maps values from data space into screen space.
         """
-        return
 
     def map_data(self, screen_val):
         """ map_data(screen_val) -> data_val
 
         Maps values from screen space into data space.
         """
-        return
 
     def map_data_array(self, screen_vals):
         """ map_data_array(screen_vals) -> data_vals
@@ -59,5 +57,3 @@ class AbstractMapper(HasTraits):
                 del state[key]
 
         return state
-
-# EOF

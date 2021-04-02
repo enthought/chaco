@@ -9,7 +9,7 @@ from numpy import array
 from enable.api import black_color_trait, white_color_trait
 from enable.font_metrics_provider import font_metrics_provider
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Any, Bool, List, Int, Float, on_trait_change
+from traits.api import Any, Bool, List, Int, Float, observe
 
 
 # Local imports
@@ -72,7 +72,6 @@ class ToolTip(AbstractOverlay):
         Overrides PlotComponent.
         """
         self.overlay(self, gc, view_bounds=view_bounds, mode='normal')
-        return
 
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
         """ Draws the tooltip overlaid on another component.
@@ -81,7 +80,6 @@ class ToolTip(AbstractOverlay):
         """
         self.do_layout()
         PlotComponent._draw(self, gc, view_bounds, mode)
-        return
 
     def _draw_overlay(self, gc, view_bounds=None, mode='normal'):
         """ Draws the overlay layer of a component.
@@ -99,8 +97,6 @@ class ToolTip(AbstractOverlay):
                 label.draw(gc)
                 gc.translate_ctm(0,-y)
                 y -= self.line_spacing
-        return
-
 
     def _do_layout(self):
         """Computes the size of the tooltip, and creates the label objects
@@ -154,17 +150,16 @@ class ToolTip(AbstractOverlay):
         self._total_line_height = sum(line_sizes[:,1]) + \
                                   len(line_sizes-1)*self.line_spacing
         self._layout_needed = True
-        return
 
     def __font_metrics_provider_default(self):
         return font_metrics_provider()
 
-    @on_trait_change("font,text_color,lines,lines_items")
-    def _invalidate_text_props(self):
+    @observe("font,text_color,lines.items")
+    def _invalidate_text_props(self, event):
         self._text_props_valid = False
         self._layout_needed = True
 
-    @on_trait_change("border_padding,line_spacing,lines,lines_items,padding")
-    def _invalidate_layout(self):
+    @observe("border_padding,line_spacing,lines.items,padding")
+    def _invalidate_layout(self, event):
         self._layout_needed = True
         self.request_redraw()

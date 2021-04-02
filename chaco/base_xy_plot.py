@@ -75,7 +75,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     orientation = Enum("h", "v")
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
-    alpha = Range(0.0, 1.0, 1.0)
+    alpha = Range(0.0, 1.0, 1.0, requires_redraw=True)
 
     #------------------------------------------------------------------------
     # Convenience readonly properties for common annotations
@@ -183,21 +183,20 @@ class BaseXYPlot(AbstractPlotRenderer):
         self.trait_set(**kwargs_tmp)
         AbstractPlotRenderer.__init__(self, **kwtraits)
         if self.index is not None:
-            self.index.on_trait_change(self._either_data_changed, "data_changed")
-            self.index.on_trait_change(self._either_metadata_changed, "metadata_changed")
+            self.index.observe(self._either_data_updated, "data_changed")
+            self.index.observe(self._either_metadata_updated, "metadata_changed")
         if self.index_mapper:
-            self.index_mapper.on_trait_change(self._mapper_updated_handler, "updated")
+            self.index_mapper.observe(self._mapper_updated_handler, "updated")
         if self.value is not None:
-            self.value.on_trait_change(self._either_data_changed, "data_changed")
-            self.value.on_trait_change(self._either_metadata_changed, "metadata_changed")
+            self.value.observe(self._either_data_updated, "data_changed")
+            self.value.observe(self._either_metadata_updated, "metadata_changed")
         if self.value_mapper:
-            self.value_mapper.on_trait_change(self._mapper_updated_handler, "updated")
+            self.value_mapper.observe(self._mapper_updated_handler, "updated")
 
         # If we are not resizable, we will not get a bounds update upon layout,
         # so we have to manually update our mappers
         if self.resizable == "":
             self._update_mappers()
-        return
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
         """ Performs proximity testing between a given screen point and the
@@ -461,7 +460,6 @@ class BaseXYPlot(AbstractPlotRenderer):
         """ Draws the 'plot' layer.
         """
         self._draw_component(gc, view_bounds, mode)
-        return
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
         # This method should be folded into self._draw_plot(), but is here for
@@ -469,7 +467,6 @@ class BaseXYPlot(AbstractPlotRenderer):
 
         pts = self.get_screen_points()
         self._render(gc, pts)
-        return
 
     def _draw_default_axes(self, gc):
         if not self.origin_axis_visible:
@@ -494,11 +491,9 @@ class BaseXYPlot(AbstractPlotRenderer):
                     gc.move_to(int(start[0]), int(start[1]))
                     gc.line_to(int(end[0]), int(end[1]))
                     gc.stroke_path()
-        return
 
     def _update_subdivision(self):
-
-        return
+        pass
 
     #------------------------------------------------------------------------
     # Properties
@@ -612,36 +607,33 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def _index_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._either_data_changed, "data_changed", remove=True)
-            old.on_trait_change(self._either_metadata_changed, "metadata_changed",
-                                remove=True)
+            old.observe(self._either_data_updated, "data_changed", remove=True)
+            old.observe(self._either_metadata_updated, "metadata_changed",
+                        remove=True)
         if new is not None:
-            new.on_trait_change(self._either_data_changed, "data_changed")
-            new.on_trait_change(self._either_metadata_changed, "metadata_changed")
-        self._either_data_changed()
-        return
+            new.observe(self._either_data_updated, "data_changed")
+            new.observe(self._either_metadata_updated, "metadata_changed")
+        self._either_data_updated()
 
-    def _either_data_changed(self):
+    def _either_data_updated(self, event=None):
         self.invalidate_draw()
         self._cache_valid = False
         self._screen_cache_valid = False
         self.request_redraw()
-        return
 
-    def _either_metadata_changed(self):
+    def _either_metadata_updated(self, event):
         # By default, don't respond to metadata change events.
         pass
 
     def _value_changed(self, old, new):
         if old is not None:
-            old.on_trait_change(self._either_data_changed, "data_changed", remove=True)
-            old.on_trait_change(self._either_metadata_changed, "metadata_changed",
-                                remove=True)
+            old.observe(self._either_data_updated, "data_changed", remove=True)
+            old.observe(self._either_metadata_updated, "metadata_changed",
+                        remove=True)
         if new is not None:
-            new.on_trait_change(self._either_data_changed, "data_changed")
-            new.on_trait_change(self._either_metadata_changed, "metadata_changed")
-        self._either_data_changed()
-        return
+            new.observe(self._either_data_updated, "data_changed")
+            new.observe(self._either_metadata_updated, "metadata_changed")
+        self._either_data_updated()
 
     def _origin_changed(self, old, new):
         # origin switch from left to right or vice versa?
@@ -655,7 +647,6 @@ class BaseXYPlot(AbstractPlotRenderer):
 
         self.invalidate_draw()
         self._screen_cache_valid = False
-        return
 
     def _index_mapper_changed(self, old, new):
         self._either_mapper_changed(self, "index_mapper", old, new)
@@ -663,7 +654,6 @@ class BaseXYPlot(AbstractPlotRenderer):
             self.trait_property_changed("x_mapper", old, new)
         else:
             self.trait_property_changed("y_mapper", old, new)
-        return
 
     def _value_mapper_changed(self, old, new):
         self._either_mapper_changed(self, "value_mapper", old, new)
@@ -671,23 +661,20 @@ class BaseXYPlot(AbstractPlotRenderer):
             self.trait_property_changed("y_mapper", old, new)
         else:
             self.trait_property_changed("x_mapper", old, new)
-        return
 
     def _either_mapper_changed(self, obj, name, old, new):
         if old is not None:
-            old.on_trait_change(self._mapper_updated_handler, "updated", remove=True)
+            old.observe(self._mapper_updated_handler, "updated", remove=True)
         if new is not None:
-            new.on_trait_change(self._mapper_updated_handler, "updated")
+            new.observe(self._mapper_updated_handler, "updated")
         self.invalidate_draw()
         self._screen_cache_valid = False
-        return
 
-    def _mapper_updated_handler(self):
+    def _mapper_updated_handler(self, event):
         self._cache_valid = False
         self._screen_cache_valid = False
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _visible_changed(self, old, new):
         if new:
@@ -699,7 +686,6 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _use_subdivision_changed(self, old, new):
         if new:
             self._set_up_subdivision()
-        return
 
     #------------------------------------------------------------------------
     # Persistence
@@ -717,16 +703,11 @@ class BaseXYPlot(AbstractPlotRenderer):
     def __setstate__(self, state):
         super(BaseXYPlot, self).__setstate__(state)
         if self.index is not None:
-            self.index.on_trait_change(self._either_data_changed, "data_changed")
+            self.index.observe(self._either_data_updated, "data_changed")
         if self.value is not None:
-            self.value.on_trait_change(self._either_data_changed, "data_changed")
+            self.value.observe(self._either_data_updated, "data_changed")
 
         self.invalidate_draw()
         self._cache_valid = False
         self._screen_cache_valid = False
         self._update_mappers()
-        return
-
-
-
-# EOF

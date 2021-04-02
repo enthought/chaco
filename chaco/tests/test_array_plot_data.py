@@ -4,7 +4,7 @@ import unittest
 import numpy
 
 from chaco.api import ArrayPlotData
-from traits.api import HasTraits, Instance, List, on_trait_change
+from traits.api import HasTraits, Instance, List, observe
 
 
 class ArrayPlotDataEventsCollector(HasTraits):
@@ -12,9 +12,9 @@ class ArrayPlotDataEventsCollector(HasTraits):
 
     data_changed_events = List
 
-    @on_trait_change('plot_data:data_changed')
+    @observe('plot_data:data_changed')
     def _got_data_changed_event(self, event):
-        self.data_changed_events.append(event)
+        self.data_changed_events.append(event.new)
 
 
 class ArrayPlotDataTestCase(unittest.TestCase):

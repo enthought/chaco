@@ -4,7 +4,7 @@
 Mappers
 -------
 
-.. currentmodule:: chaco.api
+.. currentmodule:: chaco.abstract_mapper
 
 :class:`AbstractMapper`
 =======================
@@ -12,11 +12,15 @@ Mappers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.base_1d_mapper
+
 :class:`Base1DMapper`
 =====================
 .. autoclass:: Base1DMapper
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.linear_mapper
 
 :class:`LinearMapper`
 =====================
@@ -24,11 +28,15 @@ Mappers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.log_mapper
+
 :class:`LogMapper`
 ==================
 .. autoclass:: LogMapper
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.grid_mapper
 
 :class:`GridMapper`
 ===================
@@ -36,11 +44,15 @@ Mappers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.color_mapper
+
 :class:`ColorMapper`
 ====================
 .. autoclass:: ColorMapper
     :members:
     :show-inheritance:
+
+.. currentmodule:: chaco.color_mapper
 
 :class:`ColorMapTemplate`
 =========================
@@ -48,9 +60,10 @@ Mappers
     :members:
     :show-inheritance:
 
+.. currentmodule:: chaco.transform_color_mapper
+
 :class:`TransformColorMapper`
 =============================
 .. autoclass:: TransformColorMapper
     :members:
     :show-inheritance:
-

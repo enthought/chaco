@@ -48,7 +48,7 @@ class ScatterPlotHandler(Handler):
 
     def object_edit_overlay_changed(self, info):
         info.object.plot.overlays[-1].edit_traits(parent=info.ui.control)
-        return
+
 
 class ScatterPlot(HasTraits):
 

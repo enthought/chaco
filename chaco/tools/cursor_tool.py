@@ -119,7 +119,6 @@ class BaseCursorTool(LineInspector, DragTool):
                         # Kiva GCs have a path-drawing interface
                         marker.add_to_path(gc, marker_size)
                         gc.draw_path(marker.draw_mode)
-        return
 
     def normal_mouse_move(self, event):
         """ Handles the mouse being moved.

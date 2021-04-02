@@ -5,7 +5,7 @@ import time
 # ETS imports (non-chaco)
 from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance, Int, List, Str, Enum, \
-        on_trait_change, Any, DelegatesTo
+        observe, Any, DelegatesTo
 from traitsui.api import Item, View, HSplit, VGroup, EnumEditor
 
 # Chaco imports
@@ -72,8 +72,6 @@ class PlotApp(HasTraits):
         if len(self.symbols) > 1:
             self.sym2 = self.symbols[1]
 
-        return
-
     def _create_returns_plot(self):
         plot = Plot(self.plotdata)
         plot.legend.visible = True
@@ -105,7 +103,7 @@ class PlotApp(HasTraits):
         # Grab a reference to the Time axis datasource and add a listener to its
         # selections metadata
         self.times_ds = renderer.index
-        self.times_ds.on_trait_change(self._selections_changed, 'metadata_changed')
+        self.times_ds.observe(self._selections_updated, 'metadata_changed')
         self.returns_plot = plot
 
     def _create_corr_plot(self):
@@ -123,13 +121,15 @@ class PlotApp(HasTraits):
             plotdata.set_data(name, cumprod(random.lognormal(0.0, 0.04, size=numpoints)))
         self.plotdata = plotdata
 
-    def _selections_changed(self, event):
+    def _selections_updated(self, event):
+        metadata_changed_event = event.new
         if self.corr_renderer is None:
             return
-        if not isinstance(event, dict) or "selections" not in event:
+        if not isinstance(metadata_changed_event, dict) \
+                or "selections" not in metadata_changed_event:
             return
         corr_index = self.corr_renderer.index
-        selections = event["selections"]
+        selections = metadata_changed_event["selections"]
         if selections is None:
             corr_index.metadata.pop("selections", None)
             return
@@ -138,11 +138,13 @@ class PlotApp(HasTraits):
             data = self.times_ds.get_data()
             low_ndx = data.searchsorted(low)
             high_ndx = data.searchsorted(high)
-            corr_index.metadata["selections"] = arange(low_ndx, high_ndx+1, 1, dtype=int)
+            corr_index.metadata["selections"] = arange(
+                low_ndx, high_ndx+1, 1, dtype=int
+            )
             self.corr_plot.request_redraw()
 
-    @on_trait_change("sym1,sym2")
-    def _update_corr_symbols(self):
+    @observe("sym1,sym2")
+    def _update_corr_symbols(self, event):
         plot = self.corr_plot
         if self.corr_renderer is not None:
             # Remove the old one

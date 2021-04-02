@@ -118,9 +118,3 @@ class TraitsTool(BaseTool):
             event.handled = True
             self.component.active_tool = None
             item.request_redraw()
-
-        return
-
-
-
-# EOF

@@ -96,7 +96,6 @@ class AxisTool(BaseTool):
         axis.request_redraw()
         plot._debug = True
         event.handled = True
-        return
 
     def normal_left_up(self, event):
         if self.component is None:
@@ -122,7 +121,6 @@ class AxisTool(BaseTool):
 
         axis.request_redraw()
         event.handled = True
-        return
 
 
 class MPAxisTool(AxisTool):

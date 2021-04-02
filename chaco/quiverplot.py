@@ -65,8 +65,6 @@ class QuiverPlot(ScatterPlot):
             self._selected_vector_data = compress(indices, vectors, axis=0)
         else:
             self._selected_vector_data = None
-        return
-
 
     def _render(self, gc, points, icon_mode=False):
         if len(points) < 1:

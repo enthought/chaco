@@ -6,7 +6,7 @@ from numpy import compress, inf, transpose
 
 # Enthought library imports
 from traits.api import Any, Bool, CFloat, Instance, Property, Trait, \
-    Tuple, on_trait_change
+    Tuple, observe
 
 # Local relative imports
 from .base_data_range import BaseDataRange
@@ -117,7 +117,7 @@ class DataRange2D(BaseDataRange):
         self.low_setting = ('auto', 'auto')
         self.refresh()
 
-    def refresh(self):
+    def refresh(self, event=None):
         """ If any of the bounds is 'auto', this method refreshes the actual
         low and high values from the set of the view filters' data sources.
         """
@@ -197,7 +197,6 @@ class DataRange2D(BaseDataRange):
                     oldrange.remove(source1d)
                 if newrange:
                     newrange.add(source1d)
-        return
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -205,9 +204,9 @@ class DataRange2D(BaseDataRange):
 
     def _sources_items_changed(self, event):
         for source in event.removed:
-            source.on_trait_change(self.refresh, "data_changed", remove=True)
+            source.observe(self.refresh, "data_changed", remove=True)
         for source in event.added:
-            source.on_trait_change(self.refresh, "data_changed")
+            source.observe(self.refresh, "data_changed")
         # the _xdata and _ydata of the sources may be created anew on every
         # access, so we can't just add/delete from _xrange and _yrange sources
         # based on object identity. So recreate lists each time:
@@ -217,9 +216,9 @@ class DataRange2D(BaseDataRange):
 
     def _sources_changed(self, old, new):
         for source in old:
-            source.on_trait_change(self.refresh, "data_changed", remove=True)
+            source.observe(self.refresh, "data_changed", remove=True)
         for source in new:
-            source.on_trait_change(self.refresh, "data_changed")
+            source.observe(self.refresh, "data_changed")
         # the _xdata and _ydata of the sources may be created anew on every
         # access, so we can't just add/delete from _xrange and _yrange sources
         # based on object identity. So recreate lists each time:
@@ -227,6 +226,6 @@ class DataRange2D(BaseDataRange):
         self._yrange.sources = [s._ydata for s in self.sources]
         self.refresh()
 
-    @on_trait_change("_xrange.updated,_yrange.updated")
-    def _subranges_updated(self):
+    @observe("_xrange.updated,_yrange.updated")
+    def _set_updated(self, event):
         self.updated = True

@@ -35,7 +35,3 @@ class DrawBorderTestCase(unittest.TestCase):
 
         actual = gc.bmp_array[:,:,0]
         self.assertRavelEqual(actual, desired)
-
-
-if __name__ == "__main__":
-    unittest.main()

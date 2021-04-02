@@ -125,7 +125,7 @@ class IntervalEditorImpl(Editor):
         # Do not allow the user to reset the range
         range_selection.event_state = "selected"
         range_selection.deselect = lambda x: None
-        range_selection.on_trait_change(self.update_interval, 'selection')
+        range_selection.observe(self.update_interval, 'selection')
 
         plot.tools.append(range_selection)
         plot.overlays.append(RangeKnobsOverlay(plot))
@@ -143,7 +143,8 @@ class IntervalEditorImpl(Editor):
         else:
             self.control.setMaximumSize(factory.width, factory.height)
 
-    def update_interval(self, value):
+    def update_interval(self, event):
+        value = event.new
         low, high = value
 
         low = max(low, 0)

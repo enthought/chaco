@@ -81,7 +81,3 @@ class TestColormappedScatterplot(unittest.TestCase):
         """ If colormapper updated then we need to redraw """
         self.color_mapper.updated = True
         self.assertFalse(self.scatterplot.draw_valid)
-
-
-if __name__ == "__main__":
-    unittest.main()

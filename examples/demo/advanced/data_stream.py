@@ -104,7 +104,6 @@ class Controller(HasTraits):
 
         self.viewer.index = new_index
         self.viewer.data = new_data
-        return
 
     def _distribution_type_changed(self):
         # This listens for a change in the type of distribution to use.
@@ -122,7 +121,6 @@ class DemoHandler(Handler):
         """
 
         info.object.timer.Stop()
-        return
 
 
 class Demo(HasTraits):

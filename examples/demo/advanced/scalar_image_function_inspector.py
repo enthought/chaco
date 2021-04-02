@@ -30,7 +30,7 @@ from chaco import default_colormaps
 from enable.component_editor import ComponentEditor
 from chaco.tools.api import LineInspector, PanTool, ZoomTool
 from traits.api import Array, Callable, CFloat, CInt, Enum, Event, Float, \
-    HasTraits, Int, Instance, Str, Trait, on_trait_change, Button, Bool, \
+    HasTraits, Int, Instance, Str, Trait, observe, Button, Bool, \
     DelegatesTo
 from traitsui.api import Group, HGroup, Item, View, UItem, spring
 
@@ -178,8 +178,7 @@ class PlotUI(HasTraits):
                                           array([]),
                                           sort_order=("ascending","ascending"))
         image_index_range = DataRange2D(self._image_index)
-        self._image_index.on_trait_change(self._metadata_changed,
-                                          "metadata_changed")
+        self._image_index.observe(self._metadata_changed, "metadata_changed")
 
         self._image_value = ImageData(data=array([]), value_depth=1)
         image_value_range = DataRange1D(self._image_value)
@@ -323,7 +322,8 @@ class PlotUI(HasTraits):
     # Event handlers
     #---------------------------------------------------------------------------
 
-    def _metadata_changed(self, old, new):
+    def _metadata_changed(self, event):
+        old, new = event.old, event.new
         """ This function takes out a cross section from the image data, based
         on the line inspector selections, and updates the line and scatter
         plots."""
@@ -500,8 +500,8 @@ class ModelView(HasTraits):
                        title = "Function Inspector",
                        resizable=True)
 
-    @on_trait_change('model, model.model_changed, view')
-    def update_view(self):
+    @observe('model, model.model_changed, view')
+    def update_view(self, event):
         if self.model is not None and self.view is not None:
             self.view.update(self.model)
             

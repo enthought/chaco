@@ -98,9 +98,6 @@ class DataRange1D(BaseDataRange):
     # The actual numerical value for the high setting.
     _high_value = CFloat(inf)
 
-    # A list of attributes to persist
-    # _pickle_attribs = ("_low_setting", "_high_setting")
-
     #------------------------------------------------------------------------
     # AbstractRange interface
     #------------------------------------------------------------------------
@@ -192,7 +189,7 @@ class DataRange1D(BaseDataRange):
         self._refresh_bounds()
         self.tracking_amount = self.default_tracking_amount
 
-    def refresh(self):
+    def refresh(self, event=None):
         """ If any of the bounds is 'auto', this method refreshes the actual
         low and high values from the set of the view filters' data sources.
         """
@@ -352,7 +349,6 @@ class DataRange1D(BaseDataRange):
             self._low_value = low_start
             self._high_value = high_start
             self.updated = (self._low_value, self._high_value)
-        return
 
     def _do_track(self):
         changed = False
@@ -376,16 +372,16 @@ class DataRange1D(BaseDataRange):
     def _sources_items_changed(self, event):
         self.refresh()
         for source in event.removed:
-            source.on_trait_change(self.refresh, "data_changed", remove=True)
+            source.observe(self.refresh, "data_changed", remove=True)
         for source in event.added:
-            source.on_trait_change(self.refresh, "data_changed")
+            source.observe(self.refresh, "data_changed")
 
     def _sources_changed(self, old, new):
         self.refresh()
         for source in old:
-            source.on_trait_change(self.refresh, "data_changed", remove=True)
+            source.observe(self.refresh, "data_changed", remove=True)
         for source in new:
-            source.on_trait_change(self.refresh, "data_changed")
+            source.observe(self.refresh, "data_changed")
 
 
 ###### method to calculate bounds for a given 1-dimensional set of data

@@ -1,8 +1,4 @@
-
-
-
-from traits.api import (Bool, Enum, Float, Int, CList, Property, Trait,
-        on_trait_change)
+from traits.api import Bool, Enum, Float, Int, CList, Property, Trait, observe
 from enable.api import ColorTrait
 from chaco.abstract_overlay import AbstractOverlay
 
@@ -62,16 +58,14 @@ class DataBox(AbstractOverlay):
     def __init__(self, *args, **kw):
         super(DataBox, self).__init__(*args, **kw)
         if hasattr(self.component, "range2d"):
-            self.component.range2d._xrange.on_trait_change(self.my_component_moved, "updated")
-            self.component.range2d._yrange.on_trait_change(self.my_component_moved, "updated")
+            self.component.range2d._xrange.observe(self.my_component_moved, "updated")
+            self.component.range2d._yrange.observe(self.my_component_moved, "updated")
         elif hasattr(self.component, "x_mapper") and hasattr(self.component, "y_mapper"):
-            self.component.x_mapper.range.on_trait_change(self.my_component_moved, "updated")
-            self.component.y_mapper.range.on_trait_change(self.my_component_moved, "updated")
+            self.component.x_mapper.range.observe(self.my_component_moved, "updated")
+            self.component.y_mapper.range.observe(self.my_component_moved, "updated")
         else:
             raise RuntimeError("DataBox cannot find a suitable mapper on its component.")
-        self.component.on_trait_change(self.my_component_resized, "bounds")
-        self.component.on_trait_change(self.my_component_resized, "bounds_items")
-
+        self.component.observe(self.my_component_resized, "bounds.items")
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         if not self._position_valid:
@@ -119,8 +113,6 @@ class DataBox(AbstractOverlay):
                 gc.rect(*rect)
                 gc.stroke_path()
 
-        return
-
     #-------------------------------------------------------------------------
     # Property setters/getters, event handlers
     #-------------------------------------------------------------------------
@@ -141,8 +133,8 @@ class DataBox(AbstractOverlay):
         self._bounds_valid = False
         self.trait_property_changed("data_bounds", self._data_bounds)
 
-    @on_trait_change('position,position_items')
-    def _update_position(self):
+    @observe('position.items')
+    def _update_position(self, event=None):
         if self._updating:
             return
         tmp = self.component.map_data(self.position)
@@ -151,8 +143,8 @@ class DataBox(AbstractOverlay):
         self._data_position = tmp
         self.trait_property_changed("data_position", self._data_position)
 
-    @on_trait_change('bounds,bounds_items')
-    def _update_bounds(self):
+    @observe('bounds.items')
+    def _update_bounds(self, event=None):
         if self._updating:
             return
         data_x2, data_y2 = self.component.map_data((self.x2, self.y2))
@@ -160,7 +152,7 @@ class DataBox(AbstractOverlay):
         self._data_bounds = [data_x2 - data_pos[0], data_y2 - data_pos[1]]
         self.trait_property_changed("data_bounds", self._data_bounds)
 
-    def my_component_moved(self):
+    def my_component_moved(self, event=None):
         if self.affinity == "screen":
             # If we have screen affinity, then we need to take our current position
             # and map that back down into data coords
@@ -169,9 +161,8 @@ class DataBox(AbstractOverlay):
         self._bounds_valid = False
         self._position_valid = False
 
-    def my_component_resized(self):
+    def my_component_resized(self, event=None):
         self._bounds_valid = False
         self._position_valid = False
-
 
 
