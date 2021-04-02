@@ -2,7 +2,6 @@
 """
 
 
-
 from numpy import concatenate, newaxis
 
 # Enthought library imports
@@ -12,18 +11,19 @@ from traits.api import Float, Instance, Bool
 # Local imports
 from .abstract_overlay import AbstractOverlay
 
+
 class LassoOverlay(AbstractOverlay):
-    """ Draws a lasso selection region on top of a plot.
+    """Draws a lasso selection region on top of a plot.
 
     LassoOverlay gets its data from a LassoSelection.
     """
 
     #: The LassoSelection that provides the data for this overlay.
-    lasso_selection = Instance('chaco.tools.lasso_selection.LassoSelection')
+    lasso_selection = Instance("chaco.tools.lasso_selection.LassoSelection")
     #: The fill color for the selection region.
-    selection_fill_color = ColorTrait('lightskyblue')
+    selection_fill_color = ColorTrait("lightskyblue")
     #: The border color for the selection region.
-    selection_border_color = ColorTrait('dodgerblue')
+    selection_border_color = ColorTrait("dodgerblue")
     #: The transparency level for the selection fill color.
     selection_alpha = Float(0.8)
     #: The width of the selection border.
@@ -32,14 +32,14 @@ class LassoOverlay(AbstractOverlay):
     selection_border_dash = LineStyle
 
     #: The background color (overrides AbstractOverlay).
-    bgcolor = 'clear'
+    bgcolor = "clear"
 
     # Whether to draw the lasso
     # depends on the state of the lasso tool
     _draw_selection = Bool(False)
 
     def overlay(self, other_component, gc, view_bounds=None, mode="normal"):
-        """ Draws this component overlaid on another component.
+        """Draws this component overlaid on another component.
 
         Implements AbstractOverlay.
         """
@@ -55,12 +55,12 @@ class LassoOverlay(AbstractOverlay):
         self.component.request_redraw()
 
     def _event_state_fired_for_lasso_selection(self, val):
-        self._draw_selection = val == 'selecting'
+        self._draw_selection = val == "selecting"
         self.component.invalidate_draw()
         self.component.request_redraw()
 
-    def _draw_component(self, gc, view_bounds=None, mode='normal'):
-        """ Draws the component.
+    def _draw_component(self, gc, view_bounds=None, mode="normal"):
+        """Draws the component.
 
         This method is preserved for backwards compatibility with _old_draw().
         Overrides PlotComponent.

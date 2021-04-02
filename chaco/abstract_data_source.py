@@ -7,8 +7,9 @@ from traits.api import Bool, Dict, Event, HasTraits
 # Local relative imports
 from .base import DimensionTrait
 
+
 class AbstractDataSource(HasTraits):
-    """ This abstract interface must be implemented by any class supplying data
+    """This abstract interface must be implemented by any class supplying data
     to Chaco.
 
     Chaco does not have a notion of a "data format". For the most part, a data
@@ -52,9 +53,9 @@ class AbstractDataSource(HasTraits):
     #: the datasource is serialized?
     persist_data = Bool(True)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Abstract methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def get_data(self):
         """get_data() -> data_array
@@ -113,17 +114,16 @@ class AbstractDataSource(HasTraits):
         """
         raise NotImplementedError
 
-
     ### Persistence ###########################################################
 
     def _metadata_default(self):
-        return {"selections":[], "annotations":[]}
+        return {"selections": [], "annotations": []}
 
     def __getstate__(self):
-        state = super(AbstractDataSource,self).__getstate__()
+        state = super(AbstractDataSource, self).__getstate__()
 
         # everything but 'metadata'
-        for key in ['value_dimension', 'index_dimension', 'persist_data']:
+        for key in ["value_dimension", "index_dimension", "persist_data"]:
             if key in state:
                 del state[key]
 

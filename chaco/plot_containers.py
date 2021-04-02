@@ -4,10 +4,25 @@
 from numpy import amax, any, arange, array, cumsum, hstack, sum, zeros, zeros_like
 
 # Enthought library imports
-from traits.api import Any, Array, Either, Enum, Float, Instance, \
-    List, Property, String, Trait, Tuple, Int
-from enable.simple_layout import simple_container_get_preferred_size, \
-                                            simple_container_do_layout
+from traits.api import (
+    Any,
+    Array,
+    Either,
+    Enum,
+    Float,
+    Instance,
+    List,
+    Property,
+    String,
+    Trait,
+    Tuple,
+    Int,
+)
+from enable.simple_layout import (
+    simple_container_get_preferred_size,
+    simple_container_do_layout,
+)
+
 try:
     from enable.api import ConstraintsContainer
 except ImportError:
@@ -17,25 +32,38 @@ except ImportError:
 from .base_plot_container import BasePlotContainer
 
 
-__all__ = ["OverlayPlotContainer", "HPlotContainer", "VPlotContainer", \
-           "GridPlotContainer"]
+__all__ = [
+    "OverlayPlotContainer",
+    "HPlotContainer",
+    "VPlotContainer",
+    "GridPlotContainer",
+]
 
-DEFAULT_DRAWING_ORDER = ["background", "image", "underlay",      "plot",
-                         "selection", "border", "annotation", "overlay"]
+DEFAULT_DRAWING_ORDER = [
+    "background",
+    "image",
+    "underlay",
+    "plot",
+    "selection",
+    "border",
+    "annotation",
+    "overlay",
+]
 
 
 # Enable constraints layout is only available if kiwisolver is installed!
 if ConstraintsContainer is not None:
+
     class ConstraintsPlotContainer(ConstraintsContainer):
-        """ A Plot container that supports constraints-based layout
-        """
+        """A Plot container that supports constraints-based layout"""
+
         # !! Bits copied from BasePlotContainer !!
         container_under_layers = Tuple("background", "image", "underlay", "plot")
         draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-        draw_layer = String('plot')
+        draw_layer = String("plot")
         # !! Bits copied from BasePlotContainer !!
 
-    __all__.append('ConstraintsPlotContainer')
+    __all__.append("ConstraintsPlotContainer")
 
 
 class OverlayPlotContainer(BasePlotContainer):
@@ -53,15 +81,14 @@ class OverlayPlotContainer(BasePlotContainer):
     _cached_preferred_size = Tuple
 
     def get_preferred_size(self, components=None):
-        """ Returns the size (width,height) that is preferred for this component.
+        """Returns the size (width,height) that is preferred for this component.
 
         Overrides PlotComponent
         """
         return simple_container_get_preferred_size(self, components=components)
 
     def _do_layout(self):
-        """ Actually performs a layout (called by do_layout()).
-        """
+        """Actually performs a layout (called by do_layout())."""
         simple_container_do_layout(self)
 
 
@@ -85,7 +112,7 @@ class StackedPlotContainer(BasePlotContainer):
     stack_index = 0
 
     def get_preferred_size(self, components=None):
-        """ Returns the size (width,height) that is preferred for this component.
+        """Returns the size (width,height) that is preferred for this component.
 
         Overrides PlotComponent.
         """
@@ -120,31 +147,35 @@ class StackedPlotContainer(BasePlotContainer):
         if total_size >= self.spacing:
             total_size -= self.spacing
 
-        if (self.stack_dimension not in self.resizable) and \
-           (self.stack_dimension not in self.fit_components):
+        if (self.stack_dimension not in self.resizable) and (
+            self.stack_dimension not in self.fit_components
+        ):
             total_size = self.bounds[ndx]
         elif no_visible_components or (total_size == 0):
             total_size = self.default_size[ndx]
 
-        if (self.other_dimension not in self.resizable) and \
-           (self.other_dimension not in self.fit_components):
+        if (self.other_dimension not in self.resizable) and (
+            self.other_dimension not in self.fit_components
+        ):
             max_other_size = self.bounds[other_ndx]
         elif no_visible_components or (max_other_size == 0):
             max_other_size = self.default_size[other_ndx]
 
         if ndx == 0:
-            self._cached_preferred_size = (total_size + self.hpadding,
-                                           max_other_size + self.vpadding)
+            self._cached_preferred_size = (
+                total_size + self.hpadding,
+                max_other_size + self.vpadding,
+            )
         else:
-            self._cached_preferred_size = (max_other_size + self.hpadding,
-                                           total_size + self.vpadding)
+            self._cached_preferred_size = (
+                max_other_size + self.hpadding,
+                total_size + self.vpadding,
+            )
 
         return self._cached_preferred_size
 
-
     def _do_stack_layout(self, components, align):
-        """ Helper method that does the actual work of layout.
-        """
+        """Helper method that does the actual work of layout."""
 
         size = list(self.bounds)
         if self.fit_components != "":
@@ -208,8 +239,9 @@ class StackedPlotContainer(BasePlotContainer):
             bounds = new_bounds_dict.get(component, list(component.outer_bounds))
             cur_pos += bounds[ndx] + self.spacing
 
-            if (bounds[other_ndx] > size[other_ndx]) or \
-                    (other_dim in component.resizable):
+            if (bounds[other_ndx] > size[other_ndx]) or (
+                other_dim in component.resizable
+            ):
                 # If the component is resizable in the other dimension or it exceeds the
                 # container bounds, set it to the maximum size of the container
 
@@ -232,8 +264,8 @@ class StackedPlotContainer(BasePlotContainer):
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
     def __getstate__(self):
-        state = super(StackedPlotContainer,self).__getstate__()
-        for key in ['stack_dimension', 'other_dimension', 'stack_index']:
+        state = super(StackedPlotContainer, self).__getstate__()
+        for key in ["stack_dimension", "other_dimension", "stack_index"]:
             if key in state:
                 del state[key]
         return state
@@ -261,8 +293,7 @@ class HPlotContainer(StackedPlotContainer):
     _cached_preferred_size = Tuple
 
     def _do_layout(self):
-        """ Actually performs a layout (called by do_layout()).
-        """
+        """Actually performs a layout (called by do_layout())."""
         if self.stack_order == "left_to_right":
             components = self.components
         else:
@@ -280,12 +311,11 @@ class HPlotContainer(StackedPlotContainer):
     ### Persistence ###########################################################
 
     def __getstate__(self):
-        state = super(HPlotContainer,self).__getstate__()
-        for key in ['_cached_preferred_size']:
+        state = super(HPlotContainer, self).__getstate__()
+        for key in ["_cached_preferred_size"]:
             if key in state:
                 del state[key]
         return state
-
 
 
 class VPlotContainer(StackedPlotContainer):
@@ -314,8 +344,7 @@ class VPlotContainer(StackedPlotContainer):
     spacing = Float(0.0)
 
     def _do_layout(self):
-        """ Actually performs a layout (called by do_layout()).
-        """
+        """Actually performs a layout (called by do_layout())."""
         if self.stack_order == "bottom_to_top":
             components = self.components
         else:
@@ -331,7 +360,7 @@ class VPlotContainer(StackedPlotContainer):
 
 
 class GridPlotContainer(BasePlotContainer):
-    """ A GridPlotContainer consists of rows and columns in a tabular format.
+    """A GridPlotContainer consists of rows and columns in a tabular format.
 
     Each cell's width is the same as all other cells in its column, and each
     cell's height is the same as all other cells in its row.
@@ -358,7 +387,7 @@ class GridPlotContainer(BasePlotContainer):
     #: specification.  If there are fewer components than cells, the remaining
     #: cells are filled in with spaces.  If there are more components than cells,
     #: the remainder wrap onto new rows as appropriate.
-    shape = Trait((0,0), Either(Tuple, List, Array))
+    shape = Trait((0, 0), Either(Tuple, List, Array))
 
     #: This property exposes the underlying grid structure of the container,
     #: and is the preferred way of setting and reading its contents.
@@ -378,7 +407,7 @@ class GridPlotContainer(BasePlotContainer):
     _v_size_prefs = Any
 
     class SizePrefs(object):
-        """ Object to hold size preferences across spans in a particular
+        """Object to hold size preferences across spans in a particular
         dimension.  For instance, if SizePrefs is being used for the row
         axis, then each element in the arrays below express sizing information
         about the corresponding column.
@@ -405,8 +434,8 @@ class GridPlotContainer(BasePlotContainer):
         index = Int(0)
 
         def __init__(self, length, direction):
-            """ Initializes this prefs object with empty arrays of the given
-            length and with the given direction. """
+            """Initializes this prefs object with empty arrays of the given
+            length and with the given direction."""
             self.fixed_lengths = zeros(length)
             self.resizable_lengths = zeros(length)
             self.direction = direction
@@ -416,9 +445,9 @@ class GridPlotContainer(BasePlotContainer):
                 self.index = 1
 
         def update_from_component(self, component, index):
-            """ Given a component at a particular index along this SizePref's
+            """Given a component at a particular index along this SizePref's
             axis, integrates the component's resizability and sizing information
-            into self.fixed_lengths and self.resizable_lengths. """
+            into self.fixed_lengths and self.resizable_lengths."""
             resizable = self.direction in component.resizable
             pref_size = component.get_preferred_size()
             self.update_from_pref_size(pref_size[self.index], index, resizable)
@@ -435,7 +464,7 @@ class GridPlotContainer(BasePlotContainer):
             return amax((self.fixed_lengths, self.resizable_lengths), axis=0)
 
         def compute_size_array(self, size):
-            """ Given a length along the axis corresponding to this SizePref,
+            """Given a length along the axis corresponding to this SizePref,
             returns an array of lengths to assign each cell, taking into account
             resizability and preferred sizes.
             """
@@ -469,9 +498,10 @@ class GridPlotContainer(BasePlotContainer):
             fixed_size = sum(fixed_lengths)
             fixed_length_indices = fixed_lengths > resizable_lengths
             resizable_indices = resizable_lengths > fixed_lengths
-            fully_resizable_indices = (resizable_lengths + fixed_lengths == 0)
-            preferred_size = sum(fixed_lengths[fixed_length_indices]) + \
-                                    sum(resizable_lengths[~fixed_length_indices])
+            fully_resizable_indices = resizable_lengths + fixed_lengths == 0
+            preferred_size = sum(fixed_lengths[fixed_length_indices]) + sum(
+                resizable_lengths[~fixed_length_indices]
+            )
 
             # Regardless of the relationship between available space and
             # resizable preferred sizes, columns/rows where the non-resizable
@@ -503,14 +533,17 @@ class GridPlotContainer(BasePlotContainer):
                 # room for them and no fully resizable components to take up
                 # the extra space, then we just scale the resizable components
                 # up or down based on the amount of extra space available.
-                delta_lengths = resizable_lengths[resizable_indices] - \
-                                        fixed_lengths[resizable_indices]
+                delta_lengths = (
+                    resizable_lengths[resizable_indices]
+                    - fixed_lengths[resizable_indices]
+                )
                 desired_space = sum(delta_lengths)
                 if desired_space > 0:
-                    avail_space = size - sum(fixed_lengths) #[fixed_length_indices])
+                    avail_space = size - sum(fixed_lengths)  # [fixed_length_indices])
                     scale = avail_space / desired_space
-                    return_lengths[resizable_indices] = (fixed_lengths[resizable_indices] + \
-                            scale * delta_lengths).astype(int)
+                    return_lengths[resizable_indices] = (
+                        fixed_lengths[resizable_indices] + scale * delta_lengths
+                    ).astype(int)
 
             elif fully_resizable_indices.any():
                 # We have enough room to fit all the non-resizable components
@@ -529,9 +562,8 @@ class GridPlotContainer(BasePlotContainer):
 
             return return_lengths
 
-
     def get_preferred_size(self, components=None):
-        """ Returns the size (width,height) that is preferred for this component.
+        """Returns the size (width,height) that is preferred for this component.
 
         Overrides PlotComponent.
         """
@@ -571,12 +603,13 @@ class GridPlotContainer(BasePlotContainer):
             spacing = zeros(2)
         else:
             spacing = array(self.spacing)
-        total_spacing = array(components.shape[::-1]) * spacing * 2 * (total_size>0)
+        total_spacing = array(components.shape[::-1]) * spacing * 2 * (total_size > 0)
         total_size += total_spacing
 
         for orientation, ndx in (("h", 0), ("v", 1)):
-            if (orientation not in self.resizable) and \
-               (orientation not in self.fit_components):
+            if (orientation not in self.resizable) and (
+                orientation not in self.fit_components
+            ):
                 total_size[ndx] = self.outer_bounds[ndx]
             elif no_visible_components or (total_size[ndx] == 0):
                 total_size[ndx] = self.default_size[ndx]
@@ -608,7 +641,7 @@ class GridPlotContainer(BasePlotContainer):
         # the bounds and positions of all the components.
         shape = array(self._grid.shape).transpose()
         if self.spacing is None:
-            spacing = array([0,0])
+            spacing = array([0, 0])
         else:
             spacing = array(self.spacing)
         total_spacing = spacing * 2 * shape
@@ -623,8 +656,12 @@ class GridPlotContainer(BasePlotContainer):
         # to be aligned in H and V.
         summed_widths = cumsum(hstack(([0], widths[:-1])))
         summed_heights = cumsum(hstack(([0], heights[-1:0:-1])))
-        h_positions = (2*(arange(self._grid.shape[1])+1) - 1) * spacing[0] + summed_widths
-        v_positions = (2*(arange(self._grid.shape[0])+1) - 1) * spacing[1] + summed_heights
+        h_positions = (2 * (arange(self._grid.shape[1]) + 1) - 1) * spacing[
+            0
+        ] + summed_widths
+        v_positions = (2 * (arange(self._grid.shape[0]) + 1) - 1) * spacing[
+            1
+        ] + summed_heights
         v_positions = v_positions[::-1]
 
         # Loop over all rows and columns, assigning position, setting bounds for
@@ -655,7 +692,7 @@ class GridPlotContainer(BasePlotContainer):
                     elif halign == "center":
                         x += (w - component.outer_width) / 2
 
-                component.outer_position = [x,y]
+                component.outer_position = [x, y]
                 bounds = list(component.outer_bounds)
                 if "h" in r:
                     bounds[0] = w
@@ -666,7 +703,7 @@ class GridPlotContainer(BasePlotContainer):
                 component.do_layout()
 
     def _reflow_layout(self):
-        """ Re-computes self._grid based on self.components and self.shape.
+        """Re-computes self._grid based on self.components and self.shape.
         Adjusts self.shape accordingly.
         """
         numcells = self.shape[0] * self.shape[1]
@@ -675,7 +712,7 @@ class GridPlotContainer(BasePlotContainer):
             self.shape = (numrows, numcols)
         grid = array(self.components, dtype=object)
         grid.resize(self.shape)
-        grid[grid==0] = None
+        grid[grid == 0] = None
         self._grid = grid
         self._layout_needed = True
 

@@ -2,7 +2,6 @@
 """
 
 
-
 from enable.font_metrics_provider import font_metrics_provider
 from traits.api import DelegatesTo, Enum, Instance, Str, Trait
 
@@ -12,8 +11,9 @@ from .label import Label
 
 LabelDelegate = DelegatesTo("_label")
 
+
 class PlotLabel(AbstractOverlay):
-    """ A label used by plots.
+    """A label used by plots.
 
     This class wraps a simple Label instance, and delegates some traits to it.
     """
@@ -34,9 +34,9 @@ class PlotLabel(AbstractOverlay):
     margin = LabelDelegate
     line_spacing = LabelDelegate
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Layout-related traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: Horizontal justification used if the label has more horizontal space
     #: than it needs.
@@ -58,15 +58,15 @@ class PlotLabel(AbstractOverlay):
     # Should this PlotLabel modify the padding on its underlying component
     # if there is not enough room to lay out the text?
     # FIXME: This could cause cycles in layout, so not implemented for now
-    #modify_component = Bool(True)
+    # modify_component = Bool(True)
 
     #: By default, this acts like a component and will render on the main
     #: "plot" layer unless its **component** attribute gets set.
     draw_layer = "plot"
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The label has a fixed height and can be resized horizontally. (Overrides
     #: PlotComponent.)
@@ -75,20 +75,19 @@ class PlotLabel(AbstractOverlay):
     # The Label instance this plot label is wrapping.
     _label = Instance(Label, args=())
 
-
     def __init__(self, text="", *args, **kw):
         super(PlotLabel, self).__init__(*args, **kw)
         self.text = text
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draws this label overlaid on another component.
+        """Draws this label overlaid on another component.
 
         Overrides AbstractOverlay.
         """
         self._draw_overlay(gc, view_bounds, mode)
 
     def get_preferred_size(self):
-        """ Returns the label's preferred size.
+        """Returns the label's preferred size.
 
         Overrides PlotComponent.
         """
@@ -97,7 +96,7 @@ class PlotLabel(AbstractOverlay):
         return size
 
     def do_layout(self):
-        """ Tells this component to do layout.
+        """Tells this component to do layout.
 
         Overrides PlotComponent.
         """
@@ -107,7 +106,7 @@ class PlotLabel(AbstractOverlay):
             self._layout_as_component()
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
-        """ Draws the overlay layer of a component.
+        """Draws the overlay layer of a component.
 
         Overrides PlotComponent.
         """
@@ -130,7 +129,7 @@ class PlotLabel(AbstractOverlay):
 
         with gc:
             # XXX: Uncomment this after we fix kiva GL backend's clip stack
-            #gc.clip_to_rect(self.x, self.y, self.width, self.height)
+            # gc.clip_to_rect(self.x, self.y, self.width, self.height)
 
             # We have to translate to our position because the label
             # tries to draw at (0,0).
@@ -147,8 +146,7 @@ class PlotLabel(AbstractOverlay):
         pass
 
     def _layout_as_overlay(self, size=None, force=False):
-        """ Lays out the label as an overlay on another component.
-        """
+        """Lays out the label as an overlay on another component."""
         if self.component is not None:
             orientation = self.overlay_position
             outside = True

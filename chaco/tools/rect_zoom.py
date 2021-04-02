@@ -2,6 +2,7 @@
 """
 from .zoom_tool import ZoomTool
 
+
 class RectZoomTool(ZoomTool):
     """
     Allows the user to drag a zoom box around a region of the plot.
@@ -16,4 +17,3 @@ class RectZoomTool(ZoomTool):
     # The tool is always on; left-clicking initiates a zoom (overrides
     # SimpleZoom).
     always_on = True
-

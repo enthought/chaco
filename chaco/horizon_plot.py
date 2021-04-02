@@ -1,5 +1,3 @@
-
-
 from numpy import array, float64, full_like, ndarray, transpose
 from traits.api import Instance, DelegatesTo, Bool, Int
 
@@ -7,6 +5,7 @@ from enable.api import transparent_color_trait
 from chaco.color_mapper import ColorMapper
 from chaco.base_xy_plot import BaseXYPlot
 from chaco.linear_mapper import LinearMapper
+
 
 class BandedMapper(LinearMapper):
     bands = Int(4)
@@ -21,11 +20,14 @@ class BandedMapper(LinearMapper):
                 return array([self.low_pos])
         else:
             # Scale the data by the number of bands
-            return (data_array*self.bands - self.range.low) * self._scale + self.low_pos
+            return (
+                data_array * self.bands - self.range.low
+            ) * self._scale + self.low_pos
+
 
 class HorizonPlot(BaseXYPlot):
 
-    bands = DelegatesTo('value_mapper')
+    bands = DelegatesTo("value_mapper")
     color_mapper = Instance(ColorMapper)
 
     mirror = Bool(False)
@@ -36,17 +38,17 @@ class HorizonPlot(BaseXYPlot):
 
     #: Override parent traits
 
-    orientation = 'h'
+    orientation = "h"
 
     def _color_mapper_changed(self, new):
         # change the number of steps to match the number of bands
         if not self.negative_bands:
-            new.steps = self.bands+1
+            new.steps = self.bands + 1
         else:
-            new.steps = self.bands*2+1
+            new.steps = self.bands * 2 + 1
 
     def _gather_points(self):
-        """ Collects the data points that are within the bounds of the plot and
+        """Collects the data points that are within the bounds of the plot and
         caches them.
         """
         if self._cache_valid:
@@ -63,7 +65,7 @@ class HorizonPlot(BaseXYPlot):
             self._cache_valid = True
             return
 
-        points = transpose(array((index,value)))
+        points = transpose(array((index, value)))
         self._cached_data_pts = points
 
         self._cache_valid = True
@@ -72,7 +74,7 @@ class HorizonPlot(BaseXYPlot):
         if len(points) == 0:
             return
 
-        ox, oy = self.map_screen([[0,0]])[0]
+        ox, oy = self.map_screen([[0, 0]])[0]
         ylow, yhigh = self.value_mapper.screen_bounds
 
         y_plus_height = yhigh - oy
@@ -84,28 +86,30 @@ class HorizonPlot(BaseXYPlot):
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             # draw positive bands
             inc = -1 * array([0, y_plus_height])
-            if self.negative_bands: render_bands = bands[self.bands+1:]
-            else: render_bands = bands[1:]
+            if self.negative_bands:
+                render_bands = bands[self.bands + 1 :]
+            else:
+                render_bands = bands[1:]
             for i, col in enumerate(render_bands):
-                self._render_fill(gc, col, points+i*inc, ox, oy)
+                self._render_fill(gc, col, points + i * inc, ox, oy)
 
             # draw negative bands
             if self.negative_bands:
                 if self.mirror:
-                    points[:,1] = oy - points[:,1]
+                    points[:, 1] = oy - points[:, 1]
                     zeroy = oy
                 else:
-                    points[:,1] += y_plus_height
+                    points[:, 1] += y_plus_height
                     inc *= -1
                     zeroy = int(yhigh) + 2
-                for i, col in enumerate(bands[self.bands-1::-1]):
-                    self._render_fill(gc, col, points+i*inc, ox, zeroy)
+                for i, col in enumerate(bands[self.bands - 1 :: -1]):
+                    self._render_fill(gc, col, points + i * inc, ox, zeroy)
 
-            gc.set_stroke_color((.75, .75, .75))
+            gc.set_stroke_color((0.75, 0.75, 0.75))
             gc.set_line_width(2)
             gc.begin_path()
             gc.move_to(self.x, self.y)
-            gc.line_to(self.x+self.width, self.y)
+            gc.line_to(self.x + self.width, self.y)
             gc.stroke_path()
 
     def _render_fill(self, gc, face_col, points, ox, oy):

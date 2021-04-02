@@ -6,18 +6,23 @@ import numpy
 
 from enable.api import AbstractWindow
 from chaco.api import (
-    CMapImagePlot, DataRange1D, DataRange2D, GridDataSource, GridMapper,
-    ImageData)
+    CMapImagePlot,
+    DataRange1D,
+    DataRange2D,
+    GridDataSource,
+    GridMapper,
+    ImageData,
+)
 from chaco.default_colormaps import Spectral
 
-class TestCMapImagePlot(unittest.TestCase):
 
+class TestCMapImagePlot(unittest.TestCase):
     def test_redraw_on_color_mapper_update(self):
         # regression check for https://github.com/enthought/chaco/issues/220
         npoints = 200
 
         xs = numpy.linspace(-2 * numpy.pi, +2 * numpy.pi, npoints)
-        ys = numpy.linspace(-1.5*numpy.pi, +1.5*numpy.pi, npoints)
+        ys = numpy.linspace(-1.5 * numpy.pi, +1.5 * numpy.pi, npoints)
         x, y = numpy.meshgrid(xs, ys)
         z = y * x
 
@@ -35,7 +40,7 @@ class TestCMapImagePlot(unittest.TestCase):
         )
         cmap_plot._window = window = mock.Mock(spec=AbstractWindow)
 
-        #when
+        # when
         cmap_plot.color_mapper.updated = True
 
         # Then

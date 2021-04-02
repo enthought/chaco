@@ -2,8 +2,6 @@
 """
 
 
-
-
 class Serializable(object):
     """
     Mix-in class to help serialization.  Serializes just the attributes in
@@ -26,7 +24,7 @@ class Serializable(object):
     #
     # This is a double-underscore variable so that Python's attribute name
     # will shield base class
-#    __pickle_parents = None
+    #    __pickle_parents = None
 
     def _get_pickle_parents(self):
         """
@@ -58,7 +56,7 @@ class Serializable(object):
         you want post_load() to happen in the same order as MRO, which super()
         does automatically.
         """
-        print('Serializable._post_load')
+        print("Serializable._post_load")
         pass
 
     def _do_setstate(self, state):
@@ -73,9 +71,10 @@ class Serializable(object):
         # Quietly set all the attributes
         self.trait_setq(**state)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
+
 
 #    def __getstate__(self):
 #        #idstring = self.__class__.__name__ + " id=" + str(id(self))
@@ -104,8 +103,8 @@ class Serializable(object):
 #
 #        return state
 
-    #~ def __setstate__(self, state):
-        #~ idstring = self.__class__.__name__ + " id=" + str(id(self))
-        #~ self._do_setstate(state)
-        #~ self._post_load()
-        #~ return
+# ~ def __setstate__(self, state):
+# ~ idstring = self.__class__.__name__ + " id=" + str(id(self))
+# ~ self._do_setstate(state)
+# ~ self._post_load()
+# ~ return

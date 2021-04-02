@@ -5,8 +5,9 @@ from traits.api import Enum, Any
 
 from .container_overlay import ContainerOverlay
 
+
 class AlignedContainerOverlay(ContainerOverlay):
-    """ Container overlay that aligns itself to the plot
+    """Container overlay that aligns itself to the plot
 
     This overlay takes an alignment which specifies which corner of its
     container it should align itself with ("ur", "ul", "ll", or "lr").
@@ -14,6 +15,7 @@ class AlignedContainerOverlay(ContainerOverlay):
     can be specified which gives the point to draw the component at, and
     the align is use to lay the container out relative to that position.
     """
+
     # XXX allow 'c' for center as an alignment option?
     # XXX make this alignment stuff a Container subclass?  A generic mixin?
 
@@ -36,8 +38,7 @@ class AlignedContainerOverlay(ContainerOverlay):
     # XXX should this method really be _do_layout?
 
     def _compute_position(self, component):
-        """ Given the alignment and size of the overlay, position it.
-        """
+        """Given the alignment and size of the overlay, position it."""
         if self.layout_needed:
             self.do_layout()
         valign, halign = self.align

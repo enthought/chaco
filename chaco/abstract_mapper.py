@@ -8,7 +8,7 @@ from traits.api import Event, HasTraits, Tuple
 
 
 class AbstractMapper(HasTraits):
-    """ Defines an abstract mapping from a region in input space to a
+    """Defines an abstract mapping from a region in input space to a
     region in output space.
     """
 
@@ -25,19 +25,19 @@ class AbstractMapper(HasTraits):
     domain_limits = Tuple(None, None)
 
     def map_screen(self, data_array):
-        """ map_screen(data_array) -> screen_array
+        """map_screen(data_array) -> screen_array
 
         Maps values from data space into screen space.
         """
 
     def map_data(self, screen_val):
-        """ map_data(screen_val) -> data_val
+        """map_data(screen_val) -> data_val
 
         Maps values from screen space into data space.
         """
 
     def map_data_array(self, screen_vals):
-        """ map_data_array(screen_vals) -> data_vals
+        """map_data_array(screen_vals) -> data_vals
 
         Maps an array of values from screen space into data space.
         By default, this method just loops over the points, calling map_data()
@@ -46,13 +46,12 @@ class AbstractMapper(HasTraits):
         """
         return array([self.map_data(v) for v in screen_vals])
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Persistence-related methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     def __getstate__(self):
-        state = super(AbstractMapper,self).__getstate__()
-        for key in ['_cache_valid']:
+        state = super(AbstractMapper, self).__getstate__()
+        for key in ["_cache_valid"]:
             if key in state:
                 del state[key]
 

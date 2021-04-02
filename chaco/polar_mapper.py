@@ -24,21 +24,21 @@ class PolarMapper(AbstractMapper):
     "flip" the screen space orientation, swap the values for **low_pos**
     and **high_pos**.
     """
-    #------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
-
-    _scale = Float(1.0)   # number of screen space units per data space unit
+    _scale = Float(1.0)  # number of screen space units per data space unit
     _null_screen_range = Bool(False)
     _null_data_range = Bool(False)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def map_screen(self, data_array):
-        """ map_screen(data_array) -> screen_array
+        """map_screen(data_array) -> screen_array
 
         Converts radius and theta values from *data_array*
         to x and y values and then maps
@@ -51,7 +51,7 @@ class PolarMapper(AbstractMapper):
             return (data_array - self.range.low) * self._scale + self.low_pos
 
     def map_data(self, screen_val):
-        """ map_data(screen_val) -> data_val
+        """map_data(screen_val) -> data_val
 
         Maps values from screen space into data space.
         """
@@ -61,9 +61,9 @@ class PolarMapper(AbstractMapper):
         else:
             return (screen_val - self.low_pos) / self._scale + self.range.low
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _compute_scale(self):
         if self._cache_valid:

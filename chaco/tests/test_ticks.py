@@ -4,14 +4,13 @@ from chaco.ticks import DefaultTickGenerator, MinorTickGenerator, auto_interval
 
 
 class TestDefaultTickGenerator(unittest.TestCase):
-
     def setUp(self):
         self.tick_generator = DefaultTickGenerator()
 
     def test_default_tick_generator(self):
 
-        high = 1.
-        low = 0.
+        high = 1.0
+        low = 0.0
         interval = 0.1
         ticks = self.tick_generator.get_ticks(
             data_low=0,
@@ -25,7 +24,6 @@ class TestDefaultTickGenerator(unittest.TestCase):
 
 
 class TestMinorTickGenerator(unittest.TestCase):
-
     def setUp(self):
         self.tick_generator = MinorTickGenerator()
 
@@ -71,14 +69,14 @@ class TestMinorTickGenerator(unittest.TestCase):
             data_high=1,
             bounds_low=low,
             bounds_high=high,
-            interval='auto',
+            interval="auto",
         )
         ticksDefault = self.default_tick_generator.get_ticks(
             data_low=0,
             data_high=1,
             bounds_low=low,
             bounds_high=high,
-            interval='auto',
+            interval="auto",
         )
 
         self.assertGreater(len(ticksMinor), len(ticksDefault))
@@ -91,20 +89,21 @@ class TestAutoInterval(unittest.TestCase):
         By default, the interval tries to pick eye-friendly intervals so that
         there are between 2 and 8 tick marks.
         """
-        data_low = 0.
+        data_low = 0.0
         for i in range(30):
-            data_high = 10. ** (i / 10.)
+            data_high = 10.0 ** (i / 10.0)
             interval = auto_interval(data_low=data_low, data_high=data_high)
             num_ticks = int((data_high - data_low) / interval)
             self.assertGreaterEqual(num_ticks, 3)
             self.assertLessEqual(num_ticks, 8)
 
     def test_auto_interval_max_ticks(self):
-        data_low = 0.
-        data_high = 100.
+        data_low = 0.0
+        data_high = 100.0
         for max_ticks in range(4, 11):
-            interval = auto_interval(data_low=data_low, data_high=data_high,
-                                     max_ticks=max_ticks)
+            interval = auto_interval(
+                data_low=data_low, data_high=data_high, max_ticks=max_ticks
+            )
             num_ticks = int((data_high - data_low) / interval)
             self.assertGreaterEqual(num_ticks, 3)
             self.assertLessEqual(num_ticks, max_ticks)
