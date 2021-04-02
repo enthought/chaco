@@ -130,7 +130,6 @@ class PanTool(DragTool):
 
         self._original_xy = (event.x, event.y)
         plot.request_redraw()
-        return
 
     def drag_cancel(self, event):
         # We don't do anything for "cancelling" of the drag event because its
@@ -153,7 +152,6 @@ class PanTool(DragTool):
             event.window.set_pointer(self.drag_pointer)
             event.window.set_mouse_owner(self, event.net_transform())
         event.handled = True
-        return
 
     def _end_pan(self, event):
         if self._auto_constrain:
@@ -164,6 +162,3 @@ class PanTool(DragTool):
         if event.window.mouse_owner == self:
             event.window.set_mouse_owner(None)
         event.handled = True
-        return
-
-

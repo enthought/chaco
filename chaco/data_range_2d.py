@@ -197,7 +197,6 @@ class DataRange2D(BaseDataRange):
                     oldrange.remove(source1d)
                 if newrange:
                     newrange.add(source1d)
-        return
 
     #------------------------------------------------------------------------
     # Event handlers

@@ -94,8 +94,6 @@ class DragZoom(DragTool, BetterZoom):
         self.zoom_in_x(zoom_x)
         self.zoom_in_y(zoom_y)
 
-        return
-
     def drag_start(self, event, capture_mouse=True):
         self._original_xy = (event.x, event.y)
         c = self.component
@@ -107,14 +105,12 @@ class DragZoom(DragTool, BetterZoom):
             event.window.set_pointer(self.drag_pointer)
             event.window.set_mouse_owner(self, event.net_transform())
         event.handled = True
-        return
 
     def drag_end(self, event):
         event.window.set_pointer("arrow")
         if event.window.mouse_owner == self:
             event.window.set_mouse_owner(None)
         event.handled = True
-        return
 
     def _calc_zoom(self, original, clicked):
         """ Returns the amount to scale the range based on the original

@@ -42,7 +42,6 @@ class HighlightTool(BaseTool):
         """
         if self.drag_button == "left":
             self._highlight(event)
-        return
 
     def normal_right_down(self, event):
         """ Handles the right mouse button being pressed.
@@ -51,7 +50,6 @@ class HighlightTool(BaseTool):
         """
         if self.drag_button == "right":
             self._highlight(event)
-        return
 
     def _highlight(self, event):
         if isinstance(self.component, BasePlotContainer):
@@ -81,7 +79,6 @@ class HighlightTool(BaseTool):
                 self.component.request_redraw()
 
         event.handled = True
-        return
 
 
     def _find_curve(self, plots, event):

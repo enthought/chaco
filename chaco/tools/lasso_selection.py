@@ -154,7 +154,6 @@ class LassoSelection(AbstractController):
             else:
                 self.selection_mode = "include"
         self.trait_property_changed("disjoint_selections", [], self.disjoint_selections)
-        return
 
     def selecting_left_up(self, event):
         if self.drag_button == "left":
@@ -175,7 +174,6 @@ class LassoSelection(AbstractController):
 
         self._previous_selections.append(self._active_selection)
         self._active_selection = empty((0,2), dtype=numpy.bool)
-        return
 
     def selecting_mouse_move(self, event):
         """ Handles the mouse moving when the tool is in the 'selecting' state.
@@ -192,7 +190,6 @@ class LassoSelection(AbstractController):
             self._update_selection()
         # Report None for the previous selections
         self.trait_property_changed("disjoint_selections", None)
-        return
 
     def selecting_mouse_leave(self, event):
         """ Handles the mouse leaving the plot when the tool is in the
@@ -217,7 +214,6 @@ class LassoSelection(AbstractController):
             self.selecting_mouse_up(None)
             self.selection_mode = 'invert'
             self._select_all()
-        return
 
     #----------------------------------------------------------------------
     # Protected Methods
@@ -325,4 +321,3 @@ class LassoSelection(AbstractController):
 
     def _set_plot(self, val):
         self._plot = val
-        return

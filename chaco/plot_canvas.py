@@ -78,5 +78,3 @@ class PlotCanvas(Canvas):
 
         for component in self.components + self.underlays + self.overlays:
             component.do_layout()
-        return
-

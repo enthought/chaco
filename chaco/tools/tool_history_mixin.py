@@ -73,7 +73,6 @@ class ToolHistoryMixin(HasTraits):
         """
         self._history = [state]
         self._history_index = 0
-        return
 
     def _append_state(self, state, set_index=True):
         """ Clears the history after the current **_history_index**, and
@@ -87,7 +86,6 @@ class ToolHistoryMixin(HasTraits):
         self._history = new_history
         if set_index:
             self._history_index = len(self._history) - 1
-        return
 
     def _pop_state(self):
         """ Pops the most last state off the history stack.
@@ -115,7 +113,6 @@ class ToolHistoryMixin(HasTraits):
         one of the history keys defined for this class.
         """
         self._history_handle_key(event)
-        return
 
     def _history_handle_key(self, event):
         if self.reset_state_key is not None and self.reset_state_key.match(event):

@@ -117,7 +117,6 @@ class PolygonPlot(BaseXYPlot):
             if hasattr(self, 'line_style_'):
                 gc.set_line_dash(self.line_style_)
             gc.draw_rect((x,y,width,height))
-        return
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
         """ Performs point-in-polygon testing or point/line proximity testing.

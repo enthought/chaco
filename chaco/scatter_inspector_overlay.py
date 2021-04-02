@@ -45,7 +45,6 @@ class ScatterInspectorOverlay(AbstractOverlay):
     def metadata_updated(self, event):
         if self.component is not None:
             self.component.request_redraw()
-        return
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         plot = self.component
@@ -84,7 +83,6 @@ class ScatterInspectorOverlay(AbstractOverlay):
                     else:
                         prefix = "hover"
                     self._render_at_indices(gc, screen_pts, prefix)
-        return
 
     def _render_at_indices(self, gc, screen_pts, inspect_type):
         """ screen_pt should always be a list """
@@ -145,7 +143,6 @@ class ScatterInspectorOverlay(AbstractOverlay):
                             new=getattr(new, dsname)
                         )
                     )
-        return
 
     def _ds_changed(self, event):
         old, new = event.old, event.new
@@ -153,6 +150,3 @@ class ScatterInspectorOverlay(AbstractOverlay):
             old.observe(self.metadata_updated, 'metadata_changed', remove=True)
         if new:
             new.observe(self.metadata_updated, 'metadata_changed')
-        return
-
-

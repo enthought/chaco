@@ -123,7 +123,6 @@ class ColorBar(AbstractPlotRenderer):
         # Now that we have a grid and an axis, we can safely set the visibility
         self.grid_visible = grid_visible
         self.axis_visible = axis_visible
-        return
 
     def _draw_plot(self, gc, view_bounds=None, mode='normal'):
         """ Draws the 'plot' layer.

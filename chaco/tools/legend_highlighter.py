@@ -95,7 +95,6 @@ class LegendHighlighter(LegendTool):
                 plot._orig_line_width = plot.line_width
             plot.alpha = plot._orig_alpha
             plot.line_width = plot._orig_line_width
-        return
 
     def _set_states(self, plots):
         """ Decorates a plot to indicate it is selected """

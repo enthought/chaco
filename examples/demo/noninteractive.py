@@ -53,7 +53,6 @@ def draw_plot(filename, size=(800, 600)):
     gc = PlotGraphicsContext(size, dpi=DPI)
     gc.render_component(container)
     gc.save(filename)
-    return
 
 
 def draw_svg(filename, size=(800, 600)):

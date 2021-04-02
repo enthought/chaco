@@ -79,7 +79,6 @@ class PlotLabel(AbstractOverlay):
     def __init__(self, text="", *args, **kw):
         super(PlotLabel, self).__init__(*args, **kw)
         self.text = text
-        return
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws this label overlaid on another component.
@@ -87,7 +86,6 @@ class PlotLabel(AbstractOverlay):
         Overrides AbstractOverlay.
         """
         self._draw_overlay(gc, view_bounds, mode)
-        return
 
     def get_preferred_size(self):
         """ Returns the label's preferred size.
@@ -107,7 +105,6 @@ class PlotLabel(AbstractOverlay):
             self._layout_as_overlay()
         else:
             self._layout_as_component()
-        return
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
         """ Draws the overlay layer of a component.
@@ -139,8 +136,6 @@ class PlotLabel(AbstractOverlay):
             # tries to draw at (0,0).
             gc.translate_ctm(self.x + x_offset, self.y + y_offset)
             self._label.draw(gc)
-
-        return
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         if self.component is None:
@@ -206,22 +201,18 @@ class PlotLabel(AbstractOverlay):
             else:
                 # Leave the position alone
                 pass
-        return
 
     def _text_changed(self, old, new):
         self._label.text = new
         self.do_layout()
-        return
 
     def _font_changed(self, old, new):
         self._label.font = new
         self.do_layout()
-        return
 
     def _angle_changed(self, old, new):
         self._label.rotate_angle = new
         self.do_layout()
-        return
 
     def _overlay_position_changed(self):
         self.do_layout()
@@ -231,4 +222,3 @@ class PlotLabel(AbstractOverlay):
             self.draw_layer = "overlay"
         else:
             self.draw_layer = "plot"
-        return

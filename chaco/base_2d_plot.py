@@ -101,7 +101,6 @@ class Base2DPlot(AbstractPlotRenderer):
         # so we have to manually update our mappers
         if self.resizable == "":
             self._update_mappers()
-        return
 
     #------------------------------------------------------------------------
     # AbstractPlotRenderer interface
@@ -202,7 +201,6 @@ class Base2DPlot(AbstractPlotRenderer):
         Used by the PlotComponent interface.
         """
         self._render(gc)
-        return
 
     #------------------------------------------------------------------------
     # Abstract methods that subclasses must implement

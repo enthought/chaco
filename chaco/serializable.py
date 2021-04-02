@@ -49,7 +49,6 @@ class Serializable(object):
         Called before __getstate__ to give the object a chance to tidy up
         and get ready to be saved.  This usually also calls the superclass.
         """
-        return
 
     def _post_load(self):
         """
@@ -73,7 +72,6 @@ class Serializable(object):
         """
         # Quietly set all the attributes
         self.trait_setq(**state)
-        return
 
     #------------------------------------------------------------------------
     # Private methods

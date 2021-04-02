@@ -115,7 +115,7 @@ class TimerController(HasTraits):
 
         self.spectrogram_plotdata.set_data('imagedata', spectrogram_data)
         self.spectrum_plot.request_redraw()
-        return
+
 
 def main():
     from tvtk.api import tvtk

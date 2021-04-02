@@ -59,7 +59,6 @@ class PointMarker(BaseTool):
                     self._draw_horizontal_lines(gc, screen_pts)
                 else:
                     self._draw_vertical_lines(gc, screen_pts)
-        return
 
     #------------------------------------------------------------------------
     # Private methods
@@ -72,7 +71,6 @@ class PointMarker(BaseTool):
                 gc.move_to(int(pt[0])+0.5, self.component.y)
                 gc.line_to(int(pt[0])+0.5, self.component.y2)
             gc.stroke_path()
-        return
 
     def _draw_horizontal_lines(self, gc, points):
         with gc:
@@ -81,4 +79,3 @@ class PointMarker(BaseTool):
                 gc.move_to(self.component.x, int(pt[1])+0.5)
                 gc.line_to(self.component.x2, int(pt[1])+0.5)
             gc.stroke_path()
-        return
