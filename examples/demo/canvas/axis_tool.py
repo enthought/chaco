@@ -1,6 +1,6 @@
-
 from enable.api import BaseTool, ColorTrait
 from traits.api import Any, Bool, Dict, Enum, HasTraits, Int, List, Trait, Tuple
+
 
 class RangeController(HasTraits):
 
@@ -63,8 +63,14 @@ class AxisTool(BaseTool):
     _cached_border_visible = Bool(True)
     _cached_border_color = ColorTrait
 
-    attr_list = ("tick_color", "axis_line_color", "tick_label_color", "bgcolor",
-                 "border_visible", "border_color")
+    attr_list = (
+        "tick_color",
+        "axis_line_color",
+        "tick_label_color",
+        "bgcolor",
+        "border_visible",
+        "border_color",
+    )
 
     def normal_left_down(self, event):
         if self.component is None:
@@ -132,8 +138,7 @@ class MPAxisTool(AxisTool):
         if self.cur_bid == -1:
             self.cur_bid = event.bid
             if hasattr(event, "bid"):
-                event.window.capture_blob(self, event.bid,
-                                          event.net_transform())
+                event.window.capture_blob(self, event.bid, event.net_transform())
             self.normal_left_down(event)
             self._last_blob_pos = (event.x, event.y)
 
@@ -145,4 +150,3 @@ class MPAxisTool(AxisTool):
             self.cur_bid = -1
             event.x, event.y = self._last_blob_pos
             self.normal_left_up(event)
-

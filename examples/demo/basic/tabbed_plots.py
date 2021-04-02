@@ -39,15 +39,16 @@ class TabbedPlots(HasTraits):
     view = View(
         VGroup(
             # UItem is an unlabeled item
-            UItem('plot_sin', editor=ComponentEditor(), dock='tab'),
+            UItem("plot_sin", editor=ComponentEditor(), dock="tab"),
             Tabbed(
-                UItem('plot_tan', editor=ComponentEditor(), dock='tab'),
-                UItem('plot_mixed', editor=ComponentEditor(), dock='tab'))
+                UItem("plot_tan", editor=ComponentEditor(), dock="tab"),
+                UItem("plot_mixed", editor=ComponentEditor(), dock="tab"),
             ),
-        title='Tabbed plots with shared data ranges',
+        ),
+        title="Tabbed plots with shared data ranges",
         width=0.67,
         height=0.4,
-        resizable=True
+        resizable=True,
     )
 
     def create_plot(self, data, name, color):
@@ -67,9 +68,9 @@ class TabbedPlots(HasTraits):
         # initial value, we will use the range of the mixed plot, whose y-range
         # is auto-set to slightly larger than that of the sin plot.
         self.plot_sin.range2d = self.plot_mixed.range2d
-        
+
         # The sin & mixed plots will share only their x range with the tan plot.
-        # Again, this x-axis range is a single object shared by all 3 plots. 
+        # Again, this x-axis range is a single object shared by all 3 plots.
         # It is contained within the 2d range shared by the sin and mixed plots.
         # (The independent variable, in this case x, is called "index" in chaco.
         # The dependent variable is called "value".)
@@ -79,15 +80,13 @@ class TabbedPlots(HasTraits):
         self.create_plots()
 
 
-#===============================================================================
+# ===============================================================================
 # # demo object that is used by the demo.py application.
-#===============================================================================
-x = linspace(-2*pi, 2*pi, 100)
+# ===============================================================================
+x = linspace(-2 * pi, 2 * pi, 100)
 demo = TabbedPlots(
-            data = ArrayPlotData(x=x, 
-                                 ysin=sin(x), 
-                                 ytan=tan(x),
-                                 ymix=sin(x)**2 + cos(x)))
+    data=ArrayPlotData(x=x, ysin=sin(x), ytan=tan(x), ymix=sin(x) ** 2 + cos(x))
+)
 
 if __name__ == "__main__":
     demo.configure_traits()

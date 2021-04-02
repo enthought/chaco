@@ -15,9 +15,10 @@ from traitsui.api import Item, Group, View
 from chaco.api import DataFramePlotData, Plot
 
 
-#==============================================================================
+# ==============================================================================
 # # Demo class that is used by the demo.py application.
-#==============================================================================
+# ==============================================================================
+
 
 class Demo(HasTraits):
 
@@ -27,15 +28,11 @@ class Demo(HasTraits):
 
     traits_view = View(
         Group(
-            Item(
-                'plot',
-                editor=ComponentEditor(size=(900, 500)),
-                show_label=False
-            ),
+            Item("plot", editor=ComponentEditor(size=(900, 500)), show_label=False),
             orientation="vertical",
         ),
         resizable=True,
-        title="pandas data example"
+        title="pandas data example",
     )
 
     def _plot_data_default(self):
