@@ -101,7 +101,7 @@ class SegmentPlot(BaseXYPlot):
     )
 
     selected_mask = Property(
-        depends_on=['selection_metadata_name', 'index.metadata_changed']
+        observe=['selection_metadata_name', 'index.metadata.items']
     )
 
     # These BaseXYPlot methods either don't make sense or aren't currently
