@@ -140,8 +140,7 @@ class PlotUI(HasTraits):
                                           array([]),
                                           sort_order=("ascending","ascending"))
         image_index_range = DataRange2D(self._image_index)
-        self._image_index.observe(self._metadata_changed,
-                                          "metadata_changed")
+        self._image_index.observe(self._metadata_changed, "metadata_changed")
 
         self._image_value = ImageData(data=array([]), value_depth=1)
         image_value_range = DataRange1D(self._image_value)

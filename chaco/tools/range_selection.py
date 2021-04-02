@@ -685,9 +685,9 @@ class RangeSelection(AbstractController):
 
     def _axis_changed(self, old, new):
         if old is not None:
-            self.plot.observe(self.__mapper_changed,
-                                      old + "_mapper", remove=True)
+            self.plot.observe(
+                self.__mapper_changed, old + "_mapper", remove=True
+            )
         if new is not None:
-            self.plot.observe(self.__mapper_changed,
-                                      new + "_mapper")
+            self.plot.observe(self.__mapper_changed, new + "_mapper")
         return

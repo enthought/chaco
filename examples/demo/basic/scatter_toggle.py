@@ -119,8 +119,9 @@ class Demo(HasTraits):
 
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        self.index_datasource.observe(self._metadata_handler,
-                                              "metadata_changed")
+        self.index_datasource.observe(
+            self._metadata_handler, "metadata_changed"
+        )
 
         return plot
 

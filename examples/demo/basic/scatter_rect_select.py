@@ -123,8 +123,7 @@ class Demo(HasTraits):
 
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        rect_selection.observe(self._selection_changed,
-                                       'selection_changed')
+        rect_selection.observe(self._selection_changed, 'selection_changed')
 
         return plot
 
