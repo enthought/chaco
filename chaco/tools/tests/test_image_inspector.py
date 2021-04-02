@@ -57,7 +57,7 @@ class BaseImageInspectorTool(EnableTestAssistant, UnittestTools):
         tool = self.tool
 
         # Add a listener to catch the emitted event:
-        tool.on_trait_change(self.store_inspector_event, "new_value")
+        tool.observe(self.store_inspector_event, "new_value")
         try:
             self.assertIsNone(self.insp_event)
 
@@ -67,13 +67,13 @@ class BaseImageInspectorTool(EnableTestAssistant, UnittestTools):
 
             self.assertEqual(self.overlay2.text, 'Position: (0, 0)')
         finally:
-            tool.on_trait_change(self.store_inspector_event, "new_value",
+            tool.observe(self.store_inspector_event, "new_value",
                                  remove=True)
 
     # Helper methods ----------------------------------------------------------
 
     def store_inspector_event(self, event):
-        self.insp_event = event
+        self.insp_event = event.new
 
 
 class TestImageInspectorToolGray(BaseImageInspectorTool, TestCase):
@@ -89,7 +89,7 @@ class TestImageInspectorToolGray(BaseImageInspectorTool, TestCase):
         tool = self.tool
 
         # Add a listener to catch the emitted event:
-        tool.on_trait_change(self.store_inspector_event, "new_value")
+        tool.observe(self.store_inspector_event, "new_value")
         try:
             self.assertIsNone(self.insp_event)
 
@@ -136,7 +136,7 @@ class TestImageInspectorToolGray(BaseImageInspectorTool, TestCase):
                     self.assertEqual(self.overlay.text, '(1, 1)\n3')
 
         finally:
-            tool.on_trait_change(self.store_inspector_event, "new_value",
+            tool.observe(self.store_inspector_event, "new_value",
                                  remove=True)
 
 
@@ -153,7 +153,7 @@ class TestImageInspectorToolRGB(BaseImageInspectorTool, TestCase):
         tool = self.tool
 
         # Add a listener to catch the emitted event:
-        tool.on_trait_change(self.store_inspector_event, "new_value")
+        tool.observe(self.store_inspector_event, "new_value")
         try:
             self.assertIsNone(self.insp_event)
 
@@ -205,5 +205,5 @@ class TestImageInspectorToolRGB(BaseImageInspectorTool, TestCase):
                     self.assertEqual(self.overlay.text, '(1, 1)\n(9, 10, 11)')
 
         finally:
-            tool.on_trait_change(self.store_inspector_event, "new_value",
+            tool.observe(self.store_inspector_event, "new_value",
                                  remove=True)
