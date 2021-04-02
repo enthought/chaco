@@ -429,7 +429,9 @@ def write_hover_coords(container, array_id, script_filename=None):
         if not isinstance(renderer, LinePlot):
             data_points = [data_points]
         for segment in data_points:
-            segment_data.append(get_pixel_data(segment, renderer, screen_width))
+            segment_data.append(
+                get_pixel_data(segment, renderer, screen_width)
+            )
         colors.append(renderer.color_)
 
     if len(segment_data) > 0:
@@ -529,7 +531,9 @@ def make_palettized_png_str(gc):
     format = gc.format()[:-2].upper()
     if format != "RGBA":
         gc = gc.convert_pixel_format("rgba32")
-    img = Image.fromstring("RGBA", (gc.width(), gc.height()), gc.bmp_array.tostring())
+    img = Image.fromstring(
+        "RGBA", (gc.width(), gc.height()), gc.bmp_array.tostring()
+    )
     img2 = img.convert("P")
     output_buf = io.StringIO()
     img2.save(output_buf, "png")

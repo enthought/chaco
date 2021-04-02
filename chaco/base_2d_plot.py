@@ -122,7 +122,11 @@ class Base2DPlot(AbstractPlotRenderer):
         return self.index_mapper.map_data(screen_pts)
 
     def map_index(
-        self, screen_pt, threshold=2.0, outside_returns_none=True, index_only=False
+        self,
+        screen_pt,
+        threshold=2.0,
+        outside_returns_none=True,
+        index_only=False,
     ):
         """Maps a screen space point to an index into the plot's index arrays.
 
@@ -188,7 +192,9 @@ class Base2DPlot(AbstractPlotRenderer):
             return None, None
 
         sx, sy = self.map_screen([(x, y)])[0]
-        if (screen_pt[0] - sx) ** 2 + (screen_pt[1] - sy) ** 2 < threshold ** 2:
+        if (screen_pt[0] - sx) ** 2 + (
+            screen_pt[1] - sy
+        ) ** 2 < threshold ** 2:
             return x_ndx, y_ndx
         else:
             return None, None
@@ -272,9 +278,19 @@ class Base2DPlot(AbstractPlotRenderer):
 
         if self.index_mapper is not None:
             if self.orientation == "h":
-                self.index_mapper.screen_bounds = (x_low, x_high, y_low, y_high)
+                self.index_mapper.screen_bounds = (
+                    x_low,
+                    x_high,
+                    y_low,
+                    y_high,
+                )
             else:
-                self.index_mapper.screen_bounds = (y_low, y_high, x_low, x_high)
+                self.index_mapper.screen_bounds = (
+                    y_low,
+                    y_high,
+                    x_low,
+                    x_high,
+                )
             self.index_mapper_changed = True
             self.invalidate_draw()
 

@@ -33,11 +33,18 @@ class TrackingZoom(ZoomTool):
             # then zoom in while trying to maintain the mouse screen coordinates
             # in the new range.
             c = self.component
-            low_pt, high_pt = self._map_coordinate_box((c.x, c.y), (c.x2, c.y2))
-            mouse_pos = (c.x_mapper.map_data(event.x), c.y_mapper.map_data(event.y))
+            low_pt, high_pt = self._map_coordinate_box(
+                (c.x, c.y), (c.x2, c.y2)
+            )
+            mouse_pos = (
+                c.x_mapper.map_data(event.x),
+                c.y_mapper.map_data(event.y),
+            )
 
             if self.tool_mode == "range":
-                datarange_list = [(self._determine_axis(), self._get_mapper().range)]
+                datarange_list = [
+                    (self._determine_axis(), self._get_mapper().range)
+                ]
             else:
                 datarange_list = [(0, c.x_mapper.range), (1, c.y_mapper.range)]
 
@@ -57,7 +64,12 @@ class TrackingZoom(ZoomTool):
                     return
 
                 if datarange.default_state == "low_track":
-                    hi = max([source.get_bounds()[1] for source in datarange.sources])
+                    hi = max(
+                        [
+                            source.get_bounds()[1]
+                            for source in datarange.sources
+                        ]
+                    )
                     # is hi in the current view?
                     if hi >= low_pt[ndx] and hi <= high_pt[ndx]:
                         datarange.scale_tracking_amount(zoom)
@@ -65,7 +77,12 @@ class TrackingZoom(ZoomTool):
                         newlow = "track"
 
                 elif datarange.default_state == "high_track":
-                    lo = min([source.get_bounds()[0] for source in datarange.sources])
+                    lo = min(
+                        [
+                            source.get_bounds()[0]
+                            for source in datarange.sources
+                        ]
+                    )
                     # is lo in the current view?
                     if lo >= low_pt[ndx] and lo <= high_pt[ndx]:
                         datarange.scale_tracking_amount(zoom)

@@ -54,7 +54,11 @@ class GridDataSource(AbstractDataSource):
     # ------------------------------------------------------------------------
 
     def __init__(
-        self, xdata=array([]), ydata=array([]), sort_order=("none", "none"), **kwargs
+        self,
+        xdata=array([]),
+        ydata=array([]),
+        sort_order=("none", "none"),
+        **kwargs
     ):
         super(GridDataSource, self).__init__(**kwargs)
         self.set_data(xdata, ydata, sort_order)

@@ -4,7 +4,13 @@ Test cases for the LinePlot's hittest() function
 
 import unittest
 from numpy import arange, array, linalg
-from chaco.api import ArrayDataSource, ArrayPlotData, Plot, LinearMapper, DataRange1D
+from chaco.api import (
+    ArrayDataSource,
+    ArrayPlotData,
+    Plot,
+    LinearMapper,
+    DataRange1D,
+)
 
 
 class HittestTestCase(unittest.TestCase):

@@ -194,7 +194,9 @@ class SegmentPlot(BaseXYPlot):
             gc.line_set(starts, ends)
             gc.stroke_path()
         else:
-            for color, width, start, end in np.broadcast(colors, widths, starts, ends):
+            for color, width, start, end in np.broadcast(
+                colors, widths, starts, ends
+            ):
                 gc.set_stroke_color(color)
                 gc.set_line_width(float(width))
                 gc.move_to(start["x"], start["y"])
@@ -325,10 +327,17 @@ class SegmentPlot(BaseXYPlot):
             # no alpha, can draw a single unconnected path, faster
             gc.set_line_width(widths[0])
             gc.set_stroke_color(colors[0])
-            for start, end, mid_1, mid_2 in np.broadcast(starts, ends, mids_1, mids_2):
+            for start, end, mid_1, mid_2 in np.broadcast(
+                starts, ends, mids_1, mids_2
+            ):
                 gc.move_to(start["x"], start["y"])
                 gc.curve_to(
-                    mid_1["x"], mid_1["y"], mid_2["x"], mid_2["y"], end["x"], end["y"]
+                    mid_1["x"],
+                    mid_1["y"],
+                    mid_2["x"],
+                    mid_2["y"],
+                    end["x"],
+                    end["y"],
                 )
             gc.stroke_path()
         else:
@@ -339,7 +348,12 @@ class SegmentPlot(BaseXYPlot):
                 gc.set_line_width(float(width))
                 gc.move_to(start["x"], start["y"])
                 gc.curve_to(
-                    mid_1["x"], mid_1["y"], mid_2["x"], mid_2["y"], end["x"], end["y"]
+                    mid_1["x"],
+                    mid_1["y"],
+                    mid_2["x"],
+                    mid_2["y"],
+                    end["x"],
+                    end["y"],
                 )
                 gc.stroke_path()
 
@@ -384,7 +398,9 @@ class SegmentPlot(BaseXYPlot):
         if colors.shape[-1] == 4:
             colors[:, -1] *= self.alpha
         else:
-            colors = np.column_stack([colors, np.full(len(colors), self.alpha)])
+            colors = np.column_stack(
+                [colors, np.full(len(colors), self.alpha)]
+            )
 
         if self.selected_mask is not None:
             colors[~self.selected_mask, -1] *= self.selection_alpha

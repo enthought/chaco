@@ -125,7 +125,9 @@ class MPDragZoom(DragZoom):
     def normal_blob_down(self, event):
         if len(self._blobs) < 2:
             self._blobs[event.bid] = (event.x, event.y)
-            event.window.capture_blob(self, event.bid, transform=event.net_transform())
+            event.window.capture_blob(
+                self, event.bid, transform=event.net_transform()
+            )
             event.handled = True
 
     def normal_blob_up(self, event):
@@ -167,7 +169,10 @@ class MPDragZoom(DragZoom):
 
         for ndx in (0, 1):
             if self._zoom_limit_reached(
-                orig_screen_low[ndx], orig_screen_high[ndx], new_low[ndx], new_high[ndx]
+                orig_screen_low[ndx],
+                orig_screen_high[ndx],
+                new_low[ndx],
+                new_high[ndx],
             ):
                 return
 
@@ -265,7 +270,9 @@ class MPLegendTool(LegendTool):
         if self.component:
             self.original_padding = self.component.padding
             if hasattr(event, "bid"):
-                event.window.capture_blob(self, event.bid, event.net_transform())
+                event.window.capture_blob(
+                    self, event.bid, event.net_transform()
+                )
             else:
                 event.window.set_mouse_owner(self, event.net_transform())
             self.mouse_down_position = (event.x, event.y)
@@ -314,7 +321,9 @@ class MPRangeSelection(RangeSelection):
     def normal_blob_down(self, event):
         if len(self._blobs) < 2:
             self._blobs[event.bid] = (event.x, event.y)
-            event.window.capture_blob(self, event.bid, transform=event.net_transform())
+            event.window.capture_blob(
+                self, event.bid, transform=event.net_transform()
+            )
             event.handled = True
 
     def normal_blob_up(self, event):
@@ -363,7 +372,9 @@ class MPRangeSelection(RangeSelection):
     def selected_blob_down(self, event):
         if len(self._blobs) < 2:
             self._blobs[event.bid] = (event.x, event.y)
-            event.window.capture_blob(self, event.bid, transform=event.net_transform())
+            event.window.capture_blob(
+                self, event.bid, transform=event.net_transform()
+            )
             event.handled = True
 
     def selected_blob_move(self, event):

@@ -7,7 +7,12 @@ from enable.compiled_path import CompiledPath
 from traits.testing.unittest_tools import UnittestTools
 
 # Chaco imports
-from chaco.api import ArrayDataSource, DataRange1D, LinearMapper, PlotGraphicsContext
+from chaco.api import (
+    ArrayDataSource,
+    DataRange1D,
+    LinearMapper,
+    PlotGraphicsContext,
+)
 from chaco.scatterplot_1d import ScatterPlot1D
 
 
@@ -28,8 +33,12 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
     def test_scatter_1d(self):
         self.assertEqual(self.scatterplot.origin, "bottom left")
         self.assertIsNone(self.scatterplot.x_mapper)
-        self.assertEqual(self.scatterplot.y_mapper, self.scatterplot.index_mapper)
-        self.assertIs(self.scatterplot.index_range, self.scatterplot.index_mapper.range)
+        self.assertEqual(
+            self.scatterplot.y_mapper, self.scatterplot.index_mapper
+        )
+        self.assertIs(
+            self.scatterplot.index_range, self.scatterplot.index_mapper.range
+        )
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
@@ -40,7 +49,9 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         self.scatterplot.orientation = "h"
 
         self.assertEqual(self.scatterplot.origin, "bottom left")
-        self.assertEqual(self.scatterplot.x_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(
+            self.scatterplot.x_mapper, self.scatterplot.index_mapper
+        )
         self.assertIsNone(self.scatterplot.y_mapper)
 
         gc = PlotGraphicsContext(self.size)
@@ -53,7 +64,9 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
 
         self.assertEqual(self.scatterplot.origin, "top left")
         self.assertIsNone(self.scatterplot.x_mapper)
-        self.assertEqual(self.scatterplot.y_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(
+            self.scatterplot.y_mapper, self.scatterplot.index_mapper
+        )
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.scatterplot)
@@ -65,7 +78,9 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
         self.scatterplot.orientation = "h"
 
         self.assertEqual(self.scatterplot.origin, "bottom right")
-        self.assertEqual(self.scatterplot.x_mapper, self.scatterplot.index_mapper)
+        self.assertEqual(
+            self.scatterplot.x_mapper, self.scatterplot.index_mapper
+        )
         self.assertIsNone(self.scatterplot.y_mapper)
 
         gc = PlotGraphicsContext(self.size)
@@ -107,13 +122,17 @@ class Scatterplot1DTest(UnittestTools, unittest.TestCase):
     def test_scatter_1d_map_data_flipped(self):
         self.scatterplot.direction = "flipped"
         points = array([[0, 124.5], [124.5, 0]])
-        assert_almost_equal(self.scatterplot.map_data(points), array([4.5, 9.0]))
+        assert_almost_equal(
+            self.scatterplot.map_data(points), array([4.5, 9.0])
+        )
 
     def test_scatter_1d_map_data_horizontal_flipped(self):
         self.scatterplot.direction = "flipped"
         self.scatterplot.orientation = "h"
         points = array([[0, 124.5], [124.5, 0]])
-        assert_almost_equal(self.scatterplot.map_data(points), array([9.0, 4.5]))
+        assert_almost_equal(
+            self.scatterplot.map_data(points), array([9.0, 4.5])
+        )
 
     def test_scatter_1d_selection(self):
         # select a single point

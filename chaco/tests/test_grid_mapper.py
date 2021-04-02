@@ -19,7 +19,9 @@ class GridMapperTestCase(unittest.TestCase):
         self.mapper.y_low_pos = 0
         self.mapper.y_high_pos = 10
         result = self.mapper.map_screen(transpose((self.x_ary, self.y_ary)))
-        assert_equal(result, [(50, 0), (60, 0), (70, 5), (80, 5), (90, 10), (100, 10)])
+        assert_equal(
+            result, [(50, 0), (60, 0), (70, 5), (80, 5), (90, 10), (100, 10)]
+        )
 
     def test_map_screen_scalar(self):
         self.mapper.x_low_pos = 50
@@ -34,7 +36,9 @@ class GridMapperTestCase(unittest.TestCase):
         self.mapper.x_high_pos = 100
         self.mapper.y_low_pos = 0
         self.mapper.y_high_pos = 10
-        screen_ary = array([(50, 0), (60, 0), (70, 5), (80, 5), (90, 10), (100, 10)])
+        screen_ary = array(
+            [(50, 0), (60, 0), (70, 5), (80, 5), (90, 10), (100, 10)]
+        )
         result = self.mapper.map_data(screen_ary)
         assert_equal(result, transpose((self.x_ary, self.y_ary)))
 

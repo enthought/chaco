@@ -36,7 +36,9 @@ class ColormappedScatterPlotView(ScatterPlotView):
         vgroup = self.content
         vgroup.content[0].content.append(
             Item(
-                "fill_alpha", label="Fill alpha", editor=RangeEditor(low=0.0, high=1.0)
+                "fill_alpha",
+                label="Fill alpha",
+                editor=RangeEditor(low=0.0, high=1.0),
             )
         )
 
@@ -119,7 +121,9 @@ class ColormappedScatterPlot(ScatterPlot):
             # Take into account fill_alpha even if we are rendering with only two values
             old_color = self.color
             self.color = tuple(self.fill_alpha * array(self.color_))
-            super(ColormappedScatterPlot, self)._draw_component(gc, view_bounds, mode)
+            super(ColormappedScatterPlot, self)._draw_component(
+                gc, view_bounds, mode
+            )
             self.color = old_color
         else:
             colors = self._cached_data_pts[:, 2]
@@ -151,7 +155,11 @@ class ColormappedScatterPlot(ScatterPlot):
         value_range_mask = self.value_mapper.range.mask_data(value)
         nan_mask = invert(isnan(index_mask)) & invert(isnan(value_mask))
         point_mask = (
-            index_mask & value_mask & nan_mask & index_range_mask & value_range_mask
+            index_mask
+            & value_mask
+            & nan_mask
+            & index_range_mask
+            & value_range_mask
         )
 
         if self.color_data is not None:
@@ -183,7 +191,9 @@ class ColormappedScatterPlot(ScatterPlot):
             return super(ColormappedScatterPlot, self)._render(gc, points)
 
         # If the GC doesn't have draw_*_at_points, then use bruteforce
-        if hasattr(gc, "draw_marker_at_points") or hasattr(gc, "draw_path_at_points"):
+        if hasattr(gc, "draw_marker_at_points") or hasattr(
+            gc, "draw_path_at_points"
+        ):
             batch_capable = True
         else:
             batch_capable = False
@@ -239,7 +249,9 @@ class ColormappedScatterPlot(ScatterPlot):
             # Now we want to determine where the continuous bands are.  We do
             # this by right-shifting the sorted_color_indices array, subtracting
             # it from the original, and looking for all the nonzero points.
-            shifted = right_shift(sorted_color_indices, sorted_color_indices[0])
+            shifted = right_shift(
+                sorted_color_indices, sorted_color_indices[0]
+            )
             start_indices = concatenate(
                 [[0], nonzero(sorted_color_indices - shifted)[0]]
             )
@@ -263,7 +275,9 @@ class ColormappedScatterPlot(ScatterPlot):
         else:
             return "bruteforce"
 
-    def _set_draw_info(self, gc, mode, color, outline_color=None, outline_weight=None):
+    def _set_draw_info(
+        self, gc, mode, color, outline_color=None, outline_weight=None
+    ):
         """Sets the stroke color, fill color, and line width on the graphics
         context.
         """
@@ -321,7 +335,9 @@ class ColormappedScatterPlot(ScatterPlot):
             for color_index in index_bands.keys():
                 self._set_draw_info(gc, mode, color_bands[color_index])
                 gc.draw_marker_at_points(
-                    xy_points[index_bands[color_index]], size, marker.kiva_marker
+                    xy_points[index_bands[color_index]],
+                    size,
+                    marker.kiva_marker,
                 )
 
         elif hasattr(gc, "draw_path_at_points"):
@@ -350,7 +366,9 @@ class ColormappedScatterPlot(ScatterPlot):
                 )
                 gc.draw_path_at_points(xy, path, mode)
         else:
-            raise RuntimeError("Batch drawing requested on non-batch-capable GC.")
+            raise RuntimeError(
+                "Batch drawing requested on non-batch-capable GC."
+            )
 
     def _render_bruteforce(self, gc, points):
         """Draws the points, setting the stroke color for each one."""
@@ -368,12 +386,17 @@ class ColormappedScatterPlot(ScatterPlot):
 
             marker_cls = self.marker_
             marker_size = self.marker_size
-            if isinstance(marker_size, ndarray) and self._cached_point_mask is not None:
+            if (
+                isinstance(marker_size, ndarray)
+                and self._cached_point_mask is not None
+            ):
                 marker_size = marker_size[self._cached_point_mask]
             mode = marker_cls.draw_mode
 
             if marker_cls != "custom":
-                if hasattr(gc, "draw_marker_at_points") and self.marker not in (
+                if hasattr(
+                    gc, "draw_marker_at_points"
+                ) and self.marker not in (
                     "custom",
                     "circle",
                     "diamond",

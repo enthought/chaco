@@ -290,7 +290,9 @@ class ColorMapper(AbstractColormap):
             self._recalculate()
 
         indices = (
-            (ary - self.range.low) / (self.range.high - self.range.low) * self.steps
+            (ary - self.range.low)
+            / (self.range.high - self.range.low)
+            * self.steps
         )
 
         return clip(indices.astype(int), 0, self.steps - 1)
@@ -342,11 +344,15 @@ class ColorMapper(AbstractColormap):
     def _recalculate(self):
         """Recalculates the mapping arrays."""
 
-        self._red_lut = self._make_mapping_array(self.steps, self._segmentdata["red"])
+        self._red_lut = self._make_mapping_array(
+            self.steps, self._segmentdata["red"]
+        )
         self._green_lut = self._make_mapping_array(
             self.steps, self._segmentdata["green"]
         )
-        self._blue_lut = self._make_mapping_array(self.steps, self._segmentdata["blue"])
+        self._blue_lut = self._make_mapping_array(
+            self.steps, self._segmentdata["blue"]
+        )
         self._alpha_lut = self._make_mapping_array(
             self.steps, self._segmentdata["alpha"]
         )
@@ -397,7 +403,9 @@ class ColorMapper(AbstractColormap):
                 "data mapping points must start with x=0. and end with x=1"
             )
         if sometrue(sort(x) - x):
-            raise ValueError("data mapping points must have x in increasing order")
+            raise ValueError(
+                "data mapping points must have x in increasing order"
+            )
         # begin generation of lookup table
         x = x * (n - 1)
         lut = zeros((n,), float32)

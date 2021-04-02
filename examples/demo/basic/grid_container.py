@@ -80,7 +80,9 @@ def _create_plot_component():
     ul_plot = container.components[0]
     ul_plot.resizable = "v"
     ul_plot.width = 200
-    ul_plot.overlays.append(PlotLabel("Not horizontally resizable", component=ul_plot))
+    ul_plot.overlays.append(
+        PlotLabel("Not horizontally resizable", component=ul_plot)
+    )
 
     # Set the bottom center plot to have a fixed width and height.
     # This also constrains the height of the bottom row and the width of
@@ -93,7 +95,8 @@ def _create_plot_component():
     container.padding_top = 50
     container.overlays.append(
         PlotLabel(
-            "Resize the window - some plots resize, others cannot " "(see source code)",
+            "Resize the window - some plots resize, others cannot "
+            "(see source code)",
             component=container,
             font="swiss 16",
             overlay_position="top",

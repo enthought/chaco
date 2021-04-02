@@ -29,7 +29,8 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
 
         close = allclose(ravel(b[:, :1]), expected, atol=0.02)
         self.assertTrue(
-            close, "Simple map failed.  Expected %s.  Got %s" % (expected, b[:, :1])
+            close,
+            "Simple map failed.  Expected %s.  Got %s" % (expected, b[:, :1]),
         )
 
     def test_change_min_max(self):
@@ -92,7 +93,8 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
 
         self.assertTrue(
             allclose(ravel(b[:, :1]), expected, atol=0.02),
-            "Array factory failed.  Expected %s.  Got %s" % (expected, b[:, :1]),
+            "Array factory failed.  Expected %s.  Got %s"
+            % (expected, b[:, :1]),
         )
 
     def test_alpha_palette(self):

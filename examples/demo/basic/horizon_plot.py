@@ -73,7 +73,9 @@ def _create_plot_components():
     value_ds = ArrayDataSource(changes, sort_order="none")
     value_range = DataRange1D(value_ds, low=-high, high=high)
 
-    index_mapper = LinearMapper(range=DataRange1D(index_ds), stretch_data=False)
+    index_mapper = LinearMapper(
+        range=DataRange1D(index_ds), stretch_data=False
+    )
 
     horizon = HorizonPlot(
         bands=4,
@@ -83,7 +85,9 @@ def _create_plot_components():
         value_mapper=BandedMapper(range=DataRange1D(low=0, high=high)),
         color_mapper=cmap(range=value_range),
     )
-    horizon.tools.append(PanTool(horizon, constrain=True, constrain_direction="x"))
+    horizon.tools.append(
+        PanTool(horizon, constrain=True, constrain_direction="x")
+    )
     axis = PlotAxis(
         mapper=horizon.value_mapper,
         component=horizon,
@@ -107,7 +111,9 @@ def _create_plot_components():
         fill_color=(0.81960784, 0.89803922, 0.94117647),
         edge_color="transparent",
     )
-    filled.tools.append(PanTool(filled, constrain=True, constrain_direction="x"))
+    filled.tools.append(
+        PanTool(filled, constrain=True, constrain_direction="x")
+    )
     axis = PlotAxis(
         mapper=filled.value_mapper,
         component=filled,
@@ -136,7 +142,9 @@ def _create_plot_components():
     )
 
     padding = (40, 20, 0, 0)
-    over1 = HPlotContainer(use_backbuffer=True, padding=padding, padding_top=20)
+    over1 = HPlotContainer(
+        use_backbuffer=True, padding=padding, padding_top=20
+    )
     over1.add(filled)
     over1.add(colorbar)
 
@@ -159,9 +167,15 @@ class Demo(HasTraits):
 
     traits_view = View(
         Group(
-            Item("filled", editor=ComponentEditor(size=filled_size), show_label=False),
             Item(
-                "horizon", editor=ComponentEditor(size=horizon_size), show_label=False
+                "filled",
+                editor=ComponentEditor(size=filled_size),
+                show_label=False,
+            ),
+            Item(
+                "horizon",
+                editor=ComponentEditor(size=horizon_size),
+                show_label=False,
             ),
             orientation="vertical",
         ),

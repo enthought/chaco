@@ -36,7 +36,11 @@ class ImagePlotTraits(HasTraits):
         plot = Plot(plotdata)
         # Create an image plot in the Plot
         self.renderer = plot.img_plot(
-            "imagedata", name="plot1", xbounds=xgrid, ybounds=ygrid, colormap=viridis
+            "imagedata",
+            name="plot1",
+            xbounds=xgrid,
+            ybounds=ygrid,
+            colormap=viridis,
         )[0]
         self.plot = plot
 

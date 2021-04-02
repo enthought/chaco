@@ -28,7 +28,11 @@ class Demo(HasTraits):
 
     traits_view = View(
         Group(
-            Item("plot", editor=ComponentEditor(size=(900, 500)), show_label=False),
+            Item(
+                "plot",
+                editor=ComponentEditor(size=(900, 500)),
+                show_label=False,
+            ),
             orientation="vertical",
         ),
         resizable=True,

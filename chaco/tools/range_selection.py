@@ -341,7 +341,9 @@ class RangeSelection(AbstractController):
         cur_point = array([event.x, event.y])
         cur_data_point = self.mapper.map_data(cur_point)[self.axis_index]
         original_selection = self._original_selection
-        new_selection = original_selection + (cur_data_point - self._down_data_coord)
+        new_selection = original_selection + (
+            cur_data_point - self._down_data_coord
+        )
         selection_data_width = original_selection[1] - original_selection[0]
 
         range = self.mapper.range
@@ -601,7 +603,9 @@ class RangeSelection(AbstractController):
                     break
 
             # Set the selection mode on the datasource
-            datasource.metadata[self.selection_mode_metadata_name] = self.selection_mode
+            datasource.metadata[
+                self.selection_mode_metadata_name
+            ] = self.selection_mode
 
             if val is not None:
                 low, high = val
@@ -678,6 +682,8 @@ class RangeSelection(AbstractController):
 
     def _axis_changed(self, old, new):
         if old is not None:
-            self.plot.observe(self.__mapper_changed, old + "_mapper", remove=True)
+            self.plot.observe(
+                self.__mapper_changed, old + "_mapper", remove=True
+            )
         if new is not None:
             self.plot.observe(self.__mapper_changed, new + "_mapper")

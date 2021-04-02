@@ -20,7 +20,12 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, Plot, LassoOverlay, ScatterInspectorOverlay
+from chaco.api import (
+    ArrayPlotData,
+    Plot,
+    LassoOverlay,
+    ScatterInspectorOverlay,
+)
 from chaco.tools.api import RectangularSelection, ScatterInspector
 
 
@@ -71,7 +76,9 @@ def _create_plot_component():
     my_plot.tools.append(ScatterInspector(my_plot, selection_mode="toggle"))
     my_plot.active_tool = rect_selection
 
-    lasso_overlay = LassoOverlay(lasso_selection=rect_selection, component=my_plot)
+    lasso_overlay = LassoOverlay(
+        lasso_selection=rect_selection, component=my_plot
+    )
     my_plot.overlays.append(lasso_overlay)
 
     scatter_overlay = ScatterInspectorOverlay(

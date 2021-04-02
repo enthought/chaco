@@ -83,7 +83,11 @@ class ErrorBarPlot(LinePlot):
 
         nan_mask = invert(isnan(index_mask) | isnan(value_mask))
         point_mask = (
-            index_mask & value_mask & nan_mask & index_range_mask & value_range_mask
+            index_mask
+            & value_mask
+            & nan_mask
+            & index_range_mask
+            & value_range_mask
         )
 
         points = column_stack((index, value_low, value_high))

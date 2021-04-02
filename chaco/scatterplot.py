@@ -240,7 +240,9 @@ class ScatterPlot(BaseXYPlot):
     # The RGBA tuple for rendering the fill.  It is always a tuple of length 4.
     # It has the same RGB values as outline_color_, and its alpha value is the
     # alpha value of self.outline_color multiplied by self.alpha.
-    effective_outline_color = Property(Tuple, depends_on=["outline_color", "alpha"])
+    effective_outline_color = Property(
+        Tuple, depends_on=["outline_color", "alpha"]
+    )
 
     # Traits UI View for customizing the plot.
     traits_view = ScatterPlotView()
@@ -313,10 +315,16 @@ class ScatterPlot(BaseXYPlot):
         x, y = screen_pt
         if self.orientation == "v":
             x, y = y, x
-        return array((self.index_mapper.map_data(x), self.value_mapper.map_data(y)))
+        return array(
+            (self.index_mapper.map_data(x), self.value_mapper.map_data(y))
+        )
 
     def map_index(
-        self, screen_pt, threshold=0.0, outside_returns_none=True, index_only=False
+        self,
+        screen_pt,
+        threshold=0.0,
+        outside_returns_none=True,
+        index_only=False,
     ):
         """Maps a screen space point to an index into the plot's index array(s).
 
@@ -340,7 +348,9 @@ class ScatterPlot(BaseXYPlot):
                 return None
 
             try:
-                ndx = reverse_map_1d(index_data, data_pt, self.index.sort_order)
+                ndx = reverse_map_1d(
+                    index_data, data_pt, self.index.sort_order
+                )
             except IndexError as e:
                 # if reverse_map raises this exception, it means that data_pt is
                 # outside the range of values in index_data.
@@ -529,7 +539,10 @@ class ScatterPlot(BaseXYPlot):
             point_mask=self._cached_point_mask,
         )
 
-        if self._cached_selected_pts is not None and len(self._cached_selected_pts) > 0:
+        if (
+            self._cached_selected_pts is not None
+            and len(self._cached_selected_pts) > 0
+        ):
             sel_pts = self.map_screen(self._cached_selected_pts)
             self.render_markers_func(
                 gc,

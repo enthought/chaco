@@ -120,7 +120,9 @@ class MPPlotCloneTool(PlotCloneTool):
         if self.component:
             self.original_padding = self.component.padding
             if hasattr(event, "bid"):
-                event.window.capture_blob(self, event.bid, event.net_transform())
+                event.window.capture_blob(
+                    self, event.bid, event.net_transform()
+                )
             else:
                 event.window.set_mouse_owner(self, event.net_transform())
             self.mouse_down_position = (event.x, event.y)
@@ -137,6 +139,10 @@ class MPPlotCloneTool(PlotCloneTool):
             drop_position = self._last_blob_pos
             if len(drop_position) == 2:
                 self.plot_cloner(
-                    self, (drop_position[0] - offset[0], drop_position[1] - offset[1])
+                    self,
+                    (
+                        drop_position[0] - offset[0],
+                        drop_position[1] - offset[1],
+                    ),
                 )
         self._offset = None

@@ -2,7 +2,17 @@ from numpy import array, isscalar, issubsctype, linspace, number
 
 # Enthought library imports
 from enable.api import ColorTrait
-from traits.api import Bool, Instance, Int, List, Property, Range, Str, Trait, Tuple
+from traits.api import (
+    Bool,
+    Instance,
+    Int,
+    List,
+    Property,
+    Range,
+    Str,
+    Trait,
+    Tuple,
+)
 
 # Local relative imports
 from .base_2d_plot import Base2DPlot
@@ -176,11 +186,16 @@ class BaseContourPlot(Base2DPlot):
     def _set_color_mapper(self, color_mapper):
         # Remove the dynamic event handler from the old color mapper
         if self.colors is not None and isinstance(self.colors, ColorMapper):
-            self.colors.observe(self._update_color_mapper, "updated", remove=True)
+            self.colors.observe(
+                self._update_color_mapper, "updated", remove=True
+            )
 
             # Check to see if we should copy over the range as well
             if color_mapper is not None:
-                if color_mapper.range is None and self.colors.range is not None:
+                if (
+                    color_mapper.range is None
+                    and self.colors.range is not None
+                ):
                     color_mapper.range = self.colors.range
 
         # Attach the dynamic event handler to the new color mapper

@@ -74,7 +74,8 @@ class TextPlot(BaseXYPlot):
             for text in self.text.get_data()
         ]
         self._label_box_cache = [
-            array(label.get_bounding_box(gc), float) for label in self._label_cache
+            array(label.get_bounding_box(gc), float)
+            for label in self._label_cache
         ]
         self._label_cache_valid = True
 
@@ -123,7 +124,9 @@ class TextPlot(BaseXYPlot):
         ]
         boxes = [
             label
-            for label, mask in zip(self._label_box_cache, self._cached_point_mask)
+            for label, mask in zip(
+                self._label_box_cache, self._cached_point_mask
+            )
             if mask
         ]
         offset = empty((2,), float)

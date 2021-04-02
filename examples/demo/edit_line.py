@@ -79,7 +79,10 @@ class PointDraggingTool(DragTool):
         if ndx is None:
             return
         self._drag_index = ndx
-        self._orig_value = (plot.index.get_data()[ndx], plot.value.get_data()[ndx])
+        self._orig_value = (
+            plot.index.get_data()[ndx],
+            plot.value.get_data()[ndx],
+        )
 
     def dragging(self, event):
         plot = self.component
@@ -125,7 +128,9 @@ class PointDraggingTool(DragTool):
 
         if hasattr(self.component, "get_closest_point"):
             # This is on BaseXYPlots
-            return self.component.get_closest_point((x, y), threshold=self.threshold)
+            return self.component.get_closest_point(
+                (x, y), threshold=self.threshold
+            )
 
         return None
 
@@ -146,7 +151,9 @@ def _create_plot_component():
     x = linspace(low, high, numpoints)
     y = jn(0, x)
 
-    lineplot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[0]), width=2.0)
+    lineplot = create_line_plot(
+        (x, y), color=tuple(COLOR_PALETTE[0]), width=2.0
+    )
     lineplot.selected_color = "none"
     scatter = ScatterPlot(
         index=lineplot.index,
@@ -179,7 +186,10 @@ def _create_plot_component():
     # Add the title at the top
     container.overlays.append(
         PlotLabel(
-            "Line Editor", component=container, font="swiss 16", overlay_position="top"
+            "Line Editor",
+            component=container,
+            font="swiss 16",
+            overlay_position="top",
         )
     )
 

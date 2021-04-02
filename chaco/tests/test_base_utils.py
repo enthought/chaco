@@ -139,7 +139,8 @@ class FindRunsTestCase(unittest.TestCase):
     def test_find_runs_descending(self):
         x = array([30, 41, 40, 39, 38, 37, 12])
         assert_equal(
-            find_runs(x, order="descending"), [[30], [41, 40, 39, 38, 37], [12]]
+            find_runs(x, order="descending"),
+            [[30], [41, 40, 39, 38, 37], [12]],
         )
 
     def test_find_runs_flat(self):
@@ -152,7 +153,9 @@ class FindRunsTestCase(unittest.TestCase):
 class ArgFindRunsTestCase(unittest.TestCase):
     def test_arg_find_runs_middle(self):
         x = array([0, 8, 7, 8, 9, 2, 3, 4, 10])
-        assert_equal(arg_find_runs(x), [[0, 1], [1, 2], [2, 5], [5, 8], [8, 9]])
+        assert_equal(
+            arg_find_runs(x), [[0, 1], [1, 2], [2, 5], [5, 8], [8, 9]]
+        )
 
     def test_arg_find_runs_start(self):
         x = array([3, 4, 5, 12, 9, 17])
@@ -178,7 +181,9 @@ class ArgFindRunsTestCase(unittest.TestCase):
 
     def test_arg_find_runs_descending(self):
         x = array([30, 41, 40, 39, 38, 37, 12])
-        assert_equal(arg_find_runs(x, order="descending"), [[0, 1], [1, 6], [6, 7]])
+        assert_equal(
+            arg_find_runs(x, order="descending"), [[0, 1], [1, 6], [6, 7]]
+        )
 
     def test_arg_find_runs_flat(self):
         x = array([0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0])

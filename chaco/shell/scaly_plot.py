@@ -99,9 +99,13 @@ class ScalyPlot(Plot):
             self.value_mapper = vmap
 
         if self.x_ticks is None:
-            self.x_ticks = ScalesTickGenerator(scale=self._make_scale(self.index_scale))
+            self.x_ticks = ScalesTickGenerator(
+                scale=self._make_scale(self.index_scale)
+            )
         if self.y_ticks is None:
-            self.y_ticks = ScalesTickGenerator(scale=self._make_scale(self.value_scale))
+            self.y_ticks = ScalesTickGenerator(
+                scale=self._make_scale(self.value_scale)
+            )
 
         if self.x_grid is None:
             self.x_grid = PlotGrid(

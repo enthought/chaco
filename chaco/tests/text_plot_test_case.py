@@ -3,7 +3,12 @@ import unittest
 from numpy import alltrue, arange, array
 
 # Chaco imports
-from chaco.api import ArrayDataSource, DataRange1D, LinearMapper, PlotGraphicsContext
+from chaco.api import (
+    ArrayDataSource,
+    DataRange1D,
+    LinearMapper,
+    PlotGraphicsContext,
+)
 from chaco.text_plot import TextPlot
 
 
@@ -38,8 +43,12 @@ class TextPlotTest(unittest.TestCase):
         self.assertEqual(self.text_plot.origin, "bottom left")
         self.assertEqual(self.text_plot.x_mapper, self.text_plot.index_mapper)
         self.assertEqual(self.text_plot.y_mapper, self.text_plot.value_mapper)
-        self.assertIs(self.text_plot.index_range, self.text_plot.index_mapper.range)
-        self.assertIs(self.text_plot.value_range, self.text_plot.value_mapper.range)
+        self.assertIs(
+            self.text_plot.index_range, self.text_plot.index_mapper.range
+        )
+        self.assertIs(
+            self.text_plot.value_range, self.text_plot.value_mapper.range
+        )
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.text_plot)

@@ -35,7 +35,9 @@ class PlotExample(HasTraits):
         plot_data.set_data("series_b", series_b)
         plot_data.set_data("series_c", series_c)
         self.plot = Plot(plot_data)
-        self.plot.plot(("index", "series_a"), type="bar", bar_width=0.8, color="auto")
+        self.plot.plot(
+            ("index", "series_a"), type="bar", bar_width=0.8, color="auto"
+        )
         self.plot.plot(
             ("index", "series_b"),
             type="bar",

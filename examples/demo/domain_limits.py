@@ -18,7 +18,13 @@ class ExamplePlotApp(HasTraits):
     plot = Instance(Plot)
 
     traits_view = View(
-        Item("plot", editor=ComponentEditor(), width=600, height=600, show_label=False),
+        Item(
+            "plot",
+            editor=ComponentEditor(),
+            width=600,
+            height=600,
+            show_label=False,
+        ),
         resizable=True,
     )
 

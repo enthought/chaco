@@ -46,7 +46,11 @@ def _create_plot_component():
     )
 
     plot.plot_1d(
-        "index", type="scatter_1d", orientation="h", marker="plus", alignment="bottom"
+        "index",
+        type="scatter_1d",
+        orientation="h",
+        marker="plus",
+        alignment="bottom",
     )
 
     plot.plot_1d(
@@ -58,7 +62,11 @@ def _create_plot_component():
     )
 
     plot.plot_1d(
-        "value", type="scatter_1d", orientation="v", marker="plus", alignment="left"
+        "value",
+        type="scatter_1d",
+        orientation="v",
+        marker="plus",
+        alignment="left",
     )
 
     plot.plot(

@@ -81,7 +81,8 @@ class TextPlot1D(Base1DPlot):
             for text in self.value.get_data()
         ]
         self._label_box_cache = [
-            array(label.get_bounding_box(gc), float) for label in self._label_cache
+            array(label.get_bounding_box(gc), float)
+            for label in self._label_cache
         ]
         self._label_cache_valid = True
 

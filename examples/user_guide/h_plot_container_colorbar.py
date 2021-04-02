@@ -32,7 +32,9 @@ class ColorbarExample(HasTraits):
         # Create the plot
         plot = Plot(data)
         plot.plot(
-            ("index", "value", "color"), type="cmap_scatter", color_mapper=viridis
+            ("index", "value", "color"),
+            type="cmap_scatter",
+            color_mapper=viridis,
         )
 
         # Create the colorbar, handing in the appropriate range and colormap

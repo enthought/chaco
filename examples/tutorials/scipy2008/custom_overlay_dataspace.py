@@ -5,14 +5,26 @@ from chaco.tools.api import PanTool
 from enable.component_editor import ComponentEditor
 from enable.api import ColorTrait
 from traits.api import Button, CArray, Bool, Float, Range, HasTraits, Instance
-from traitsui.api import Item, View, Group, RangeEditor, HGroup, Handler, spring
+from traitsui.api import (
+    Item,
+    View,
+    Group,
+    RangeEditor,
+    HGroup,
+    Handler,
+    spring,
+)
 
 
 class CustomOverlay(AbstractOverlay):
     x = Float(10, editor=RangeEditor(low=1.0, high=600, mode="slider"))
     y = Float(10, editor=RangeEditor(low=1.0, high=500, mode="slider"))
-    width = Range(10.0, 300, editor=RangeEditor(low=10.0, high=300, mode="slider"))
-    height = Range(10.0, 300, editor=RangeEditor(low=10.0, high=300, mode="slider"))
+    width = Range(
+        10.0, 300, editor=RangeEditor(low=10.0, high=300, mode="slider")
+    )
+    height = Range(
+        10.0, 300, editor=RangeEditor(low=10.0, high=300, mode="slider")
+    )
     color = ColorTrait("red")
     dataspace = Bool(False)
 

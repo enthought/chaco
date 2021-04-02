@@ -72,7 +72,8 @@ class PlotComponent(Component):
         """
         if new == False:
             raise RuntimeError(
-                "The old-style drawing mechanism is no longer " "supported in Chaco."
+                "The old-style drawing mechanism is no longer "
+                "supported in Chaco."
             )
 
     @observe("+requires_redraw")

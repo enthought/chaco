@@ -4,7 +4,15 @@
 from numpy import array, arange, ascontiguousarray, ones, transpose, uint8
 
 # Enthought library imports
-from traits.api import Any, Bool, Enum, Instance, Property, cached_property, observe
+from traits.api import (
+    Any,
+    Bool,
+    Enum,
+    Instance,
+    Property,
+    cached_property,
+    observe,
+)
 from traits.observation.api import parse
 from kiva.image import GraphicsContext
 
@@ -110,10 +118,14 @@ class ColorBar(AbstractPlotRenderer):
             axis_orientation = "left"
 
         self._grid = PlotGrid(
-            orientation=grid_orientation, mapper=self.index_mapper, component=self
+            orientation=grid_orientation,
+            mapper=self.index_mapper,
+            component=self,
         )
         self._axis = PlotAxis(
-            orientation=axis_orientation, mapper=self.index_mapper, component=self
+            orientation=axis_orientation,
+            mapper=self.index_mapper,
+            component=self,
         )
         self.overlays.append(self._grid)
         self.overlays.append(self._axis)
@@ -153,7 +165,10 @@ class ColorBar(AbstractPlotRenderer):
             colors = self.color_mapper.map_screen(data_points)
 
             img = self._make_color_image(
-                colors, self.bounds[perpendicular_dim], self.orientation, self.direction
+                colors,
+                self.bounds[perpendicular_dim],
+                self.orientation,
+                self.direction,
             )
             gc.draw_image(img, (self.x, self.y, self.width, self.height))
 
@@ -170,7 +185,9 @@ class ColorBar(AbstractPlotRenderer):
         )
 
         if orientation == "v":
-            bmparray = ascontiguousarray(transpose(bmparray, axes=(1, 0, 2))[::-1])
+            bmparray = ascontiguousarray(
+                transpose(bmparray, axes=(1, 0, 2))[::-1]
+            )
         bmparray = bmparray.astype(uint8)
         img = GraphicsContext(bmparray, "rgba32")
         return img

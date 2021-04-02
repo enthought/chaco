@@ -263,9 +263,13 @@ class RangeSelection2D(RangeSelection):
         pos = self._get_axis_coord(event)
         if pos >= high:
             if self.axis == "index":
-                selection_high = self._map_data([(high, 0)])[0][self.axis_index]
+                selection_high = self._map_data([(high, 0)])[0][
+                    self.axis_index
+                ]
             else:
-                selection_high = self._map_data([(0, high)])[0][self.axis_index]
+                selection_high = self._map_data([(0, high)])[0][
+                    self.axis_index
+                ]
         elif pos <= low:
             if self.axis == "index":
                 selection_low = self._map_data([(low, 0)])[0][self.axis_index]
@@ -296,11 +300,17 @@ class RangeSelection2D(RangeSelection):
         if selection is not None and len(selection) == 2:
             if self.axis == "index":
                 return [
-                    x for x, y in self._map_screen([(x, 0) for x in self.selection])
+                    x
+                    for x, y in self._map_screen(
+                        [(x, 0) for x in self.selection]
+                    )
                 ]
             else:
                 return [
-                    y for x, y in self._map_screen([(0, y) for y in self.selection])
+                    y
+                    for x, y in self._map_screen(
+                        [(0, y) for y in self.selection]
+                    )
                 ]
 
         else:

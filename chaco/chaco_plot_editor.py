@@ -233,7 +233,9 @@ class ChacoPlotEditor(Editor):
 
         if plotitem.title != "":
             container.overlays.append(
-                PlotLabel(plotitem.title, component=container, overlay_position="top")
+                PlotLabel(
+                    plotitem.title, component=container, overlay_position="top"
+                )
             )
 
         self._container = container
@@ -348,7 +350,9 @@ class ChacoPlotEditor(Editor):
                 orientation=plotitem.orientation,
             )
         else:
-            raise RuntimeError("Unknown plot type '%s' in ChacoPlotEditor." % plot_type)
+            raise RuntimeError(
+                "Unknown plot type '%s' in ChacoPlotEditor." % plot_type
+            )
 
         self._set_basic_properties(plot, plotitem)
 
@@ -439,12 +443,18 @@ class ChacoPlotEditor(Editor):
         # index and value axes.  So we have to search through the underlays for
         # PlotAxis instances whose ranges match the index and value ranges.
         for axis in plot.underlays + plot.overlays:
-            if isinstance(axis, PlotAxis) and axis.mapper.range is plot.index_range:
+            if (
+                isinstance(axis, PlotAxis)
+                and axis.mapper.range is plot.index_range
+            ):
                 axis.title_font = plotitem.x_label_font
                 axis.title_color = plotitem.x_label_color
 
         for axis in plot.underlays + plot.overlays:
-            if isinstance(axis, PlotAxis) and axis.mapper.range is plot.value_range:
+            if (
+                isinstance(axis, PlotAxis)
+                and axis.mapper.range is plot.value_range
+            ):
                 axis.title_font = plotitem.y_label_font
                 axis.title_color = plotitem.y_label_color
 

@@ -29,7 +29,12 @@ from chaco.api import (
     Plot,
 )
 from chaco.default_colormaps import accent
-from chaco.tools.api import PanTool, ZoomTool, RangeSelection, RangeSelectionOverlay
+from chaco.tools.api import (
+    PanTool,
+    ZoomTool,
+    RangeSelection,
+    RangeSelectionOverlay,
+)
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -112,7 +117,10 @@ def create_colorbar(colormap):
     colorbar.tools.append(RangeSelection(component=colorbar))
     colorbar.overlays.append(
         RangeSelectionOverlay(
-            component=colorbar, border_color="white", alpha=0.8, fill_color="lightgray"
+            component=colorbar,
+            border_color="white",
+            alpha=0.8,
+            fill_color="lightgray",
         )
     )
     return colorbar

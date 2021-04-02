@@ -71,10 +71,16 @@ class CandlePlot(BaseCandlePlot):
         x, y = screen_pt
         if self.orientation == "v":
             x, y = y, x
-        return array((self.index_mapper.map_data(x), self.value_mapper.map_data(y)))
+        return array(
+            (self.index_mapper.map_data(x), self.value_mapper.map_data(y))
+        )
 
     def map_index(
-        self, screen_pt, threshold=0.0, outside_returns_none=True, index_only=True
+        self,
+        screen_pt,
+        threshold=0.0,
+        outside_returns_none=True,
+        index_only=True,
     ):
         if not index_only:
             raise NotImplementedError(

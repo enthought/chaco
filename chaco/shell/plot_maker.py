@@ -112,14 +112,19 @@ def make_data_sources(session, index_sort="none", *args):
     if len(data[0].shape) == 1:
         if len(data) == 1:
             # Only a single array was provided
-            index_ds = ArrayDataSource(arange(len(data[0])), sort_order="ascending")
+            index_ds = ArrayDataSource(
+                arange(len(data[0])), sort_order="ascending"
+            )
             value_ds = ArrayDataSource(data[0], sort_order="none")
             return [(index_ds, value_ds)]
 
         else:
             # multiple arrays were provided
             index_ds = ArrayDataSource(data[0], sort_order=index_sort)
-            return [(index_ds, ArrayDataSource(v, sort_order="none")) for v in data[1:]]
+            return [
+                (index_ds, ArrayDataSource(v, sort_order="none"))
+                for v in data[1:]
+            ]
 
     # 2D arrays
     elif len(data[0].shape) == 2:
@@ -237,7 +242,9 @@ def _process_group(group, plot_data=None):
                 plotinfo = group[1]
                 y = group[0]
                 y_data = plot_data.get_data(y)
-                x = plot_data.set_data("", arange(len(y_data)), generate_name=True)
+                x = plot_data.set_data(
+                    "", arange(len(y_data)), generate_name=True
+                )
         else:
             x, y = group
     elif len(group) == 3:
@@ -305,7 +312,9 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
             format["color"] = markercolor
 
         x_sort_order = _check_sort_order(plotdata.get_data(x))
-        plots.extend(active_plot.plot((x, y), type=",".join(plot_type), **format))
+        plots.extend(
+            active_plot.plot((x, y), type=",".join(plot_type), **format)
+        )
 
         # Set the sort order
         x_ds = active_plot.datasources[x]
@@ -376,7 +385,9 @@ def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs):
         raise ValueError("do_pcolor takes one or three data sources")
 
     plot_list = [
-        active_plot.img_plot(z, xbounds=x, ybounds=y, colormap=colormap, **kwargs)
+        active_plot.img_plot(
+            z, xbounds=x, ybounds=y, colormap=colormap, **kwargs
+        )
     ]
     return plot_list
 

@@ -91,14 +91,22 @@ def _create_plot_component():
     colorbar.padding_bottom = plot.padding_bottom
 
     # Add pan and zoom tools to the colorbar
-    colorbar.tools.append(PanTool(colorbar, constrain_direction="y", constrain=True))
+    colorbar.tools.append(
+        PanTool(colorbar, constrain_direction="y", constrain=True)
+    )
     zoom_overlay = ZoomTool(
-        colorbar, axis="index", tool_mode="range", always_on=True, drag_button="right"
+        colorbar,
+        axis="index",
+        tool_mode="range",
+        always_on=True,
+        drag_button="right",
     )
     colorbar.overlays.append(zoom_overlay)
 
     # Create a container to position the plot and the colorbar side-by-side
-    container = HPlotContainer(plot, colorbar, use_backbuffer=True, bgcolor="lightgray")
+    container = HPlotContainer(
+        plot, colorbar, use_backbuffer=True, bgcolor="lightgray"
+    )
 
     return container
 

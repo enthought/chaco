@@ -53,7 +53,10 @@ class RegressionOverlay(LassoOverlay):
     _label = Instance(
         Label,
         kw=dict(
-            bgcolor="white", border_color="black", font="modern 14", border_width=1
+            bgcolor="white",
+            border_color="black",
+            font="modern 14",
+            border_width=1,
         ),
     )
 
@@ -94,7 +97,9 @@ class RegressionOverlay(LassoOverlay):
             left_y = f(left_x)
             right_y = f(right_x)
 
-            left_pt, right_pt = c.map_screen([[left_x, left_y], [right_x, right_y]])
+            left_pt, right_pt = c.map_screen(
+                [[left_x, left_y], [right_x, right_y]]
+            )
 
             with gc:
                 gc.set_line_dash(self.line_style_)

@@ -66,7 +66,9 @@ class ScatterInspector(SelectTool):
         """
         plot = self.component
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
-        insp_event = ScatterInspectorEvent(event_type=HOVER_EVENT, event_index=index)
+        insp_event = ScatterInspectorEvent(
+            event_type=HOVER_EVENT, event_index=index
+        )
         if index is not None:
             old = plot.index.metadata.get(self.hover_metadata_name, None)
             plot.index.metadata[self.hover_metadata_name] = [index]
@@ -107,7 +109,9 @@ class ScatterInspector(SelectTool):
         deselects all points.
         """
         plot = self.component
-        insp_event = ScatterInspectorEvent(event_type=DESELECT_EVENT, event_index=index)
+        insp_event = ScatterInspectorEvent(
+            event_type=DESELECT_EVENT, event_index=index
+        )
         for name in ("index", "value"):
             if not hasattr(plot, name):
                 continue
@@ -129,7 +133,9 @@ class ScatterInspector(SelectTool):
 
     def _select(self, index, append=True):
         plot = self.component
-        insp_event = ScatterInspectorEvent(event_type=SELECT_EVENT, event_index=index)
+        insp_event = ScatterInspectorEvent(
+            event_type=SELECT_EVENT, event_index=index
+        )
         for name in ("index", "value"):
             if not hasattr(plot, name):
                 continue

@@ -166,7 +166,9 @@ class LassoSelection(AbstractController):
                 self.selection_mode = "exclude"
             else:
                 self.selection_mode = "include"
-        self.trait_property_changed("disjoint_selections", [], self.disjoint_selections)
+        self.trait_property_changed(
+            "disjoint_selections", [], self.disjoint_selections
+        )
 
     def selecting_left_up(self, event):
         if self.drag_button == "left":
@@ -197,7 +199,9 @@ class LassoSelection(AbstractController):
         xform = self.component.get_event_transform(event)
         event.push_transform(xform, caller=self)
         new_point = self._map_data(array((event.x, event.y)))
-        self._active_selection = vstack((self._active_selection, array((new_point,))))
+        self._active_selection = vstack(
+            (self._active_selection, array((new_point,)))
+        )
         self.updated = True
         if self.incremental_select:
             self._update_selection()
@@ -265,7 +269,9 @@ class LassoSelection(AbstractController):
         if self.selection_datasource is None:
             return
 
-        selected_mask = zeros(self.selection_datasource._data.shape, dtype=numpy.bool)
+        selected_mask = zeros(
+            self.selection_datasource._data.shape, dtype=numpy.bool
+        )
         data = self._get_data()
 
         # Compose the selection mask from the cached selections first, then
@@ -292,9 +298,12 @@ class LassoSelection(AbstractController):
             selected_mask |= active_selection
 
         if sometrue(
-            selected_mask != self.selection_datasource.metadata[self.metadata_name]
+            selected_mask
+            != self.selection_datasource.metadata[self.metadata_name]
         ):
-            self.selection_datasource.metadata[self.metadata_name] = selected_mask
+            self.selection_datasource.metadata[
+                self.metadata_name
+            ] = selected_mask
             self.selection_changed = True
 
     def _map_screen(self, points):
@@ -317,11 +326,15 @@ class LassoSelection(AbstractController):
         elif isinstance(self.plot, BaseXYPlot):
             return self.plot.map_data(point, all_values=True)[:2]
         else:
-            raise RuntimeError("LassoSelection only supports BaseXY and Base2D plots")
+            raise RuntimeError(
+                "LassoSelection only supports BaseXY and Base2D plots"
+            )
 
     def _get_data(self):
         """Returns the datapoints in the plot, as an Nx2 array of (x,y)."""
-        return column_stack((self.plot.index.get_data(), self.plot.value.get_data()))
+        return column_stack(
+            (self.plot.index.get_data(), self.plot.value.get_data())
+        )
 
     # ------------------------------------------------------------------------
     # Property getter/setters

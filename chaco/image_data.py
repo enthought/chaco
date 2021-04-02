@@ -97,7 +97,9 @@ class ImageData(AbstractDataSource):
         elif fmt == "rgba32":
             imgdata.value_depth = 4
         else:
-            raise ValueError("Unknown image format in file %s: %s" % (filename, fmt))
+            raise ValueError(
+                "Unknown image format in file %s: %s" % (filename, fmt)
+            )
         return imgdata
 
     def get_width(self):

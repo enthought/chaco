@@ -41,7 +41,11 @@ def _create_plot_component():
     plot = Plot(pd)
     plot.plot(("index", "value1"), name="j_0(x)", color="red", width=2.0)
     plot.plot(
-        ("index", "value2"), type="scatter", marker_size=1, name="j_1(x)", color="green"
+        ("index", "value2"),
+        type="scatter",
+        marker_size=1,
+        name="j_1(x)",
+        color="green",
     )
 
     # Tweak some of the plot properties

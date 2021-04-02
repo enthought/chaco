@@ -48,7 +48,11 @@ def _create_plot_component():
     # Create a second scatter plot of one of the datasets, linking its
     # range to the first plot
     plot2 = Plot(
-        pd, range2d=plot1.range2d, title="Scatter plot", padding=60, border_visible=True
+        pd,
+        range2d=plot1.range2d,
+        title="Scatter plot",
+        padding=60,
+        border_visible=True,
     )
     plot2.plot(("index", "y3"), type="scatter", color="blue", marker="circle")
 

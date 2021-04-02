@@ -72,7 +72,9 @@ class ImageInspectorTool(BaseTool):
                     self.new_value = {
                         "indices": ndx,
                         "data_value": image_data.data[y_index, x_index],
-                        "color_value": plot._cached_mapped_image[y_index, x_index],
+                        "color_value": plot._cached_mapped_image[
+                            y_index, x_index
+                        ],
                     }
 
                 else:

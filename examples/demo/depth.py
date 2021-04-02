@@ -18,7 +18,10 @@ class MyPlot(HasTraits):
     plot = Instance(ToolbarPlot)
 
     traits_view = View(
-        UItem("plot", editor=ComponentEditor()), width=600, height=600, resizable=True
+        UItem("plot", editor=ComponentEditor()),
+        width=600,
+        height=600,
+        resizable=True,
     )
 
     def __init__(self, depth, data_series, **kw):

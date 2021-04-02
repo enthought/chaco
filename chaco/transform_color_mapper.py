@@ -29,7 +29,9 @@ class TransformColorMapper(ColorMapper):
 
     unit_func = Trait(None, None, Callable)
 
-    transformed_bounds = Tuple(Trait(None, None, Float), Trait(None, None, Float))
+    transformed_bounds = Tuple(
+        Trait(None, None, Float), Trait(None, None, Float)
+    )
 
     # -------------------------------------------------------------------
     # Trait handlers
@@ -60,7 +62,9 @@ class TransformColorMapper(ColorMapper):
     # -------------------------------------------------------------------
 
     @classmethod
-    def from_color_mapper(cls, color_mapper, data_func=None, unit_func=None, **traits):
+    def from_color_mapper(
+        cls, color_mapper, data_func=None, unit_func=None, **traits
+    ):
         """Create a TransformColorMapper from an existing ColorMapper instance."""
         segdata = color_mapper._segmentdata
         return cls.from_segment_map(
@@ -72,7 +76,9 @@ class TransformColorMapper(ColorMapper):
         )
 
     @classmethod
-    def from_color_map(cls, color_map, data_func=None, unit_func=None, **traits):
+    def from_color_map(
+        cls, color_map, data_func=None, unit_func=None, **traits
+    ):
         """Create a TransformColorMapper from a colormap generator function.
 
         The return value is an instance of TransformColorMapper, *not* a factory
@@ -109,7 +115,10 @@ class TransformColorMapper(ColorMapper):
 
         def factory(range, **traits):
             tcm = cls.from_color_mapper(
-                color_mapper, data_func=data_func, unit_func=unit_func, **traits
+                color_mapper,
+                data_func=data_func,
+                unit_func=unit_func,
+                **traits
             )
             return tcm
 

@@ -173,7 +173,9 @@ class DataRange2DTestCase(unittest.TestCase):
         assert_equal(
             r.clip_data(ary), array([[16.0, 12.0], [18.0, 16.0], [20.0, 20.0]])
         )
-        assert_equal(r.clip_data(ary[::-1]), array([[20, 20], [18, 16], [16, 12]]))
+        assert_equal(
+            r.clip_data(ary[::-1]), array([[20, 20], [18, 16], [16, 12]])
+        )
 
     def test_mask_data(self):
         r = DataRange2D(low=[2.0, 5.0], high=[10.0, 18.0])

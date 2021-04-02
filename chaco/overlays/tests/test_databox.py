@@ -3,7 +3,13 @@ import unittest
 
 from traits.testing.api import UnittestTools
 
-from chaco.api import CMapImagePlot, GridDataSource, GridMapper, DataRange2D, ImageData
+from chaco.api import (
+    CMapImagePlot,
+    GridDataSource,
+    GridMapper,
+    DataRange2D,
+    ImageData,
+)
 from chaco.overlays.databox import DataBox
 
 
@@ -50,5 +56,10 @@ class TestDataBox(unittest.TestCase, UnittestTools):
         # Without moving the DataBox, data_position trait defaults
         # to  the list [0.0, 0.0]
         starting_position = [0.0, 0.0]
-        expected = (self.databox, "data_position", starting_position, starting_position)
+        expected = (
+            self.databox,
+            "data_position",
+            starting_position,
+            starting_position,
+        )
         self.assertSequenceEqual([expected], result.events)

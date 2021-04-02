@@ -39,12 +39,21 @@ class GatherPointsBase(object):
         value_mask = zeros(11, dtype=bool)
         value_mask[4:8] = 1
 
-        points, selection = self.func(index, 0, 10, value, 0, 1, index_mask=index_mask)
+        points, selection = self.func(
+            index, 0, 10, value, 0, 1, index_mask=index_mask
+        )
         desired = array([[2, 3, 4, 5], [0.2, 0.3, 0.4, 0.5]]).T
         assert_close(desired, points)
 
         points, selection = self.func(
-            index, 0, 10, value, 0, 1, index_mask=index_mask, value_mask=value_mask
+            index,
+            0,
+            10,
+            value,
+            0,
+            1,
+            index_mask=index_mask,
+            value_mask=value_mask,
         )
         desired = array([[4, 0.4], [5, 0.5]])
         assert_close(desired, points)

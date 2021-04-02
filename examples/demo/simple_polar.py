@@ -28,7 +28,9 @@ def _create_plot_component():
     radius = cos(3 * theta)
 
     # Create a new polar plot with radius and theta data
-    plot = create_polar_plot((radius, theta), color=(0.0, 0.0, 1.0, 1), width=4.0)
+    plot = create_polar_plot(
+        (radius, theta), color=(0.0, 0.0, 1.0, 1), width=4.0
+    )
 
     return plot
 

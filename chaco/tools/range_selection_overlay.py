@@ -89,7 +89,12 @@ class RangeSelectionOverlay(AbstractOverlay):
                 gc.set_line_width(self.border_width)
                 gc.set_line_dash(self.border_style_)
                 gc.draw_rect(
-                    (lower_left[0], lower_left[1], upper_right[0], upper_right[1])
+                    (
+                        lower_left[0],
+                        lower_left[1],
+                        upper_right[0],
+                        upper_right[1],
+                    )
                 )
 
     # ------------------------------------------------------------------------
@@ -166,7 +171,9 @@ class RangeSelectionOverlay(AbstractOverlay):
                 self._metadata_change_handler, "metadata_changed", remove=True
             )
         if new:
-            datasource.observe(self._metadata_change_handler, "metadata_changed")
+            datasource.observe(
+                self._metadata_change_handler, "metadata_changed"
+            )
 
     def _metadata_change_handler(self, event):
         self.component.request_redraw()

@@ -106,7 +106,9 @@ class PlotFrame(DemoFrame):
                 plot.index_mapper.range = index_range
                 plot.value_mapper.range = value_range
             else:
-                animated_plot = AnimatedPlot(x, jn(i, x), color, orientation="v")
+                animated_plot = AnimatedPlot(
+                    x, jn(i, x), color, orientation="v"
+                )
                 plot = animated_plot.plot
 
             container.add(plot)

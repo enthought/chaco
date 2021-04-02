@@ -202,11 +202,15 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                 if drawn_aspect > self.aspect_ratio:
                     # Drawn box is wider, so use its height to compute the
                     # restricted width
-                    x2 = x1 + height * self.aspect_ratio * (1 if x2 > x1 else -1)
+                    x2 = x1 + height * self.aspect_ratio * (
+                        1 if x2 > x1 else -1
+                    )
                 else:
                     # Drawn box is taller, so use its width to compute the
                     # restricted height
-                    y2 = y1 + width / self.aspect_ratio * (1 if y2 > y1 else -1)
+                    y2 = y1 + width / self.aspect_ratio * (
+                        1 if y2 > y1 else -1
+                    )
             self._screen_end = (x2, y2)
         else:
             self._screen_end = (event.x, event.y)
@@ -320,7 +324,9 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             event.handled = True
             return
 
-        low, high = self._map_coordinate_box(self._screen_start, self._screen_end)
+        low, high = self._map_coordinate_box(
+            self._screen_start, self._screen_end
+        )
 
         x_range = self._get_x_mapper().range
         y_range = self._get_y_mapper().range
@@ -397,8 +403,12 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             color = self._get_fill_color()
             gc.set_fill_color(color)
             gc.set_stroke_color(self.border_color_)
-            gc.clip_to_rect(component.x, component.y, component.width, component.height)
-            gc.draw_rect((lower_left[0], lower_left[1], upper_right[0], upper_right[1]))
+            gc.clip_to_rect(
+                component.x, component.y, component.width, component.height
+            )
+            gc.draw_rect(
+                (lower_left[0], lower_left[1], upper_right[0], upper_right[1])
+            )
 
     def _get_fill_color(self):
         """Get the fill color based on the alpha and the color property"""

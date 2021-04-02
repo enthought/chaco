@@ -75,11 +75,18 @@ class MainFrame(DemoFrame):
         b = Box(bounds=[75, 75], position=[200, 50], fill_color=(0, 1, 0, 1))
         c = Box(bounds=[75, 75], position=[50, 200], fill_color=(0, 0, 1, 1))
         cont = Container(
-            a, b, c, bounds=[400, 400], border_visible=True, bgcolor="lightgray"
+            a,
+            b,
+            c,
+            bounds=[400, 400],
+            border_visible=True,
+            bgcolor="lightgray",
         )
         # cont.unified_draw = True
         # cont.draw_layer = "background"
-        cont2 = Container(bounds=[300, 300], border_visible=True, bgcolor="cyan")
+        cont2 = Container(
+            bounds=[300, 300], border_visible=True, bgcolor="cyan"
+        )
         cont.tools.append(MoveTool(cont, drag_button="left"))
         cont2.tools.append(MoveTool(cont2, drag_button="left"))
         outer = Container(cont, cont2, fit_window=True)

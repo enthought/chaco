@@ -21,7 +21,12 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot
-from chaco.tools.api import PanTool, ZoomTool, RegressionLasso, RegressionOverlay
+from chaco.tools.api import (
+    PanTool,
+    ZoomTool,
+    RegressionLasso,
+    RegressionOverlay,
+)
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -45,7 +50,9 @@ def _create_plot_component():
 
     # Add the regression tool and overlay.  These need to be added
     # directly to the scatterplot instance (and not the Plot instance).
-    regression = RegressionLasso(scatterplot, selection_datasource=scatterplot.index)
+    regression = RegressionLasso(
+        scatterplot, selection_datasource=scatterplot.index
+    )
     scatterplot.tools.append(regression)
     scatterplot.overlays.append(
         RegressionOverlay(scatterplot, lasso_selection=regression)

@@ -260,7 +260,9 @@ class Legend(AbstractOverlay):
         # feature.
 
         with gc:
-            gc.clip_to_rect(int(self.x), int(self.y), int(self.width), int(self.height))
+            gc.clip_to_rect(
+                int(self.x), int(self.y), int(self.width), int(self.height)
+            )
             edge_space = self.border_width + self.border_padding
             icon_width, icon_height = self.icon_bounds
 
@@ -357,7 +359,9 @@ class Legend(AbstractOverlay):
         if len(self.plots) == 0:
             return [0, 0]
 
-        plot_names, visible_plots = list(map(list, zip(*sorted(self.plots.items()))))
+        plot_names, visible_plots = list(
+            map(list, zip(*sorted(self.plots.items())))
+        )
         label_names = self.labels
         if len(label_names) == 0:
             if len(self.plots) > 0:
@@ -409,12 +413,15 @@ class Legend(AbstractOverlay):
 
         # We need a dummy GC in order to get font metrics
         dummy_gc = font_metrics_provider()
-        label_sizes = array([label.get_width_height(dummy_gc) for label in labels])
+        label_sizes = array(
+            [label.get_width_height(dummy_gc) for label in labels]
+        )
 
         if len(label_sizes) > 0:
             max_label_width = max(label_sizes[:, 0])
             total_label_height = (
-                sum(label_sizes[:, 1]) + (len(label_sizes) - 1) * self.line_spacing
+                sum(label_sizes[:, 1])
+                + (len(label_sizes) - 1) * self.line_spacing
             )
         else:
             max_label_width = 0
@@ -427,7 +434,9 @@ class Legend(AbstractOverlay):
             + self.hpadding
             + 2 * self.border_padding
         )
-        legend_height = total_label_height + self.vpadding + 2 * self.border_padding
+        legend_height = (
+            total_label_height + self.vpadding + 2 * self.border_padding
+        )
 
         self._cached_labels = labels
         self._cached_label_sizes = label_sizes

@@ -47,7 +47,13 @@ from mp_viewport_pan_tool import MPViewportPanTool
 
 # Multitouch imports
 if MULTITOUCH:
-    from mptools import MPPanTool, MPDragZoom, MPLegendTool, MPPanZoom, MPRangeSelection
+    from mptools import (
+        MPPanTool,
+        MPDragZoom,
+        MPLegendTool,
+        MPPanZoom,
+        MPRangeSelection,
+    )
 
     # AxisTool = MPAxisTool
     PlotCloneTool = MPPlotCloneTool
@@ -335,13 +341,20 @@ def make_toolbar(canvas):
         else:
             plot.tools.append(
                 PanTool(
-                    plot, drag_button="right", constrain=True, constrain_direction="x"
+                    plot,
+                    drag_button="right",
+                    constrain=True,
+                    constrain_direction="x",
                 )
             )
             plot.tools.append(
-                ZoomTool(plot, tool_mode="range", axis="index", always_on=False)
+                ZoomTool(
+                    plot, tool_mode="range", axis="index", always_on=False
+                )
             )
-        plot.overlays.append(PlotCloneTool(plot, dest=canvas, plot_cloner=clone_plot))
+        plot.overlays.append(
+            PlotCloneTool(plot, dest=canvas, plot_cloner=clone_plot)
+        )
         plot_overlay = TransientPlotOverlay(
             component=toolbar,
             overlay_component=plot,
@@ -381,7 +394,9 @@ class PlotFrame(DemoFrame):
         if MULTITOUCH:
             viewport.tools.append(MPViewportPanTool(viewport))
         else:
-            viewport.tools.append(ViewportPanTool(viewport, drag_button="right"))
+            viewport.tools.append(
+                ViewportPanTool(viewport, drag_button="right")
+            )
         return viewport
 
     def _create_window_mt(self):
@@ -397,7 +412,9 @@ class PlotFrame(DemoFrame):
         tconf = cfg.tconf
         tconf.from_arguments(args)
 
-        provider = NetworkBlobProvider(host=tconf.Server.host, port=tconf.Server.port)
+        provider = NetworkBlobProvider(
+            host=tconf.Server.host, port=tconf.Server.port
+        )
         provider.start()
         return BlobWindow(self, -1, component=viewport, blob_provider=provider)
 

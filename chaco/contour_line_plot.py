@@ -103,7 +103,9 @@ class ContourLinePlot(BaseContourPlot):
                     if self.orientation == "h":
                         strace = self.index_mapper.map_screen(trace)
                     else:
-                        strace = array(self.index_mapper.map_screen(trace))[:, ::-1]
+                        strace = array(self.index_mapper.map_screen(trace))[
+                            :, ::-1
+                        ]
                     gc.begin_path()
                     gc.lines(strace)
                     gc.stroke_path()

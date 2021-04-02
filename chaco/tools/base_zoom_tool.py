@@ -30,7 +30,9 @@ class BaseZoomTool(HasTraits):
     # bounds.  If None, then there is no limit.
     max_zoom_out_factor = Float(1e5, allow_none=True)
 
-    def _zoom_limit_reached(self, orig_low, orig_high, new_low, new_high, mapper=None):
+    def _zoom_limit_reached(
+        self, orig_low, orig_high, new_low, new_high, mapper=None
+    ):
         """Returns True if the new low and high exceed the maximum zoom
         limits
         """

@@ -17,7 +17,12 @@ from chaco.example_support import COLOR_PALETTE
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
-from chaco.api import PlotLabel, VPlotContainer, HPlotContainer, create_line_plot
+from chaco.api import (
+    PlotLabel,
+    VPlotContainer,
+    HPlotContainer,
+    create_line_plot,
+)
 
 # ======================================================================
 # Change one or both of these to experiment with different orientations

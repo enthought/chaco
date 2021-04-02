@@ -19,7 +19,9 @@ class SimpleSerializationTestCase(unittest.TestCase):
             o1 = getattr(a, name)
             o2 = getattr(b, name)
             if isinstance(o1, list) or isinstance(o1, tuple):
-                raise RuntimeError("Warning: Cowardly refusing to do deep compares")
+                raise RuntimeError(
+                    "Warning: Cowardly refusing to do deep compares"
+                )
             else:
                 self.assertTrue(o1 == o2)
 

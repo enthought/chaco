@@ -130,7 +130,9 @@ class PlotExample(HasTraits):
         )
 
         container.add(plot2, plot)
-        plot.tools.append(PanTool(plot, constrain_direction="x", constrain=True))
+        plot.tools.append(
+            PanTool(plot, constrain_direction="x", constrain=True)
+        )
         plot.tools.append(ZoomTool(plot, axis="index", tool_mode="range"))
 
         return container

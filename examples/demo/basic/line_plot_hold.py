@@ -41,7 +41,9 @@ def _create_plot_component():
         overlay_border=True,
     )
     plot1.legend.visible = True
-    lineplot = plot1.plot(("index", "y0"), name="j_0", color="red", render_style="hold")
+    lineplot = plot1.plot(
+        ("index", "y0"), name="j_0", color="red", render_style="hold"
+    )
 
     # Attach some tools to the plot
     attach_tools(plot1)

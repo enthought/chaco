@@ -87,7 +87,10 @@ class RangeKnobsOverlay(RangeSelectionOverlay):
                 gc.set_line_width(self.border_width)
 
                 gc.rect(
-                    start + self.radius, mid_y - 1, (end - start - 2 * self.radius), 2
+                    start + self.radius,
+                    mid_y - 1,
+                    (end - start - 2 * self.radius),
+                    2,
                 )
                 gc.draw_path()
 
@@ -114,7 +117,9 @@ class IntervalEditorImpl(Editor):
 
     def init(self, parent):
         factory = self.factory
-        container = OverlayPlotContainer(bgcolor="transparent", padding=0, spacing=0)
+        container = OverlayPlotContainer(
+            bgcolor="transparent", padding=0, spacing=0
+        )
 
         window = Window(parent, component=container)
 
@@ -178,7 +183,9 @@ if __name__ == "__main__":
     class IntervalTest(HasTraits):
         interval = Interval(low=0, high=1)
 
-        traits_view = View(Item("interval", editor=IntervalEditor()), resizable=True)
+        traits_view = View(
+            Item("interval", editor=IntervalEditor()), resizable=True
+        )
 
     it = IntervalTest()
     it.configure_traits()

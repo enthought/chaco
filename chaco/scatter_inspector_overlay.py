@@ -49,7 +49,10 @@ class ScatterInspectorOverlay(AbstractOverlay):
         if not plot or not plot.index or not getattr(plot, "value", True):
             return
 
-        for inspect_type in (self.hover_metadata_name, self.selection_metadata_name):
+        for inspect_type in (
+            self.hover_metadata_name,
+            self.selection_metadata_name,
+        ):
             if inspect_type in plot.index.metadata:
                 # if hasattr(plot,"value") and not inspect_type in plot.value.metadata:
                 #    continue
@@ -135,7 +138,10 @@ class ScatterInspectorOverlay(AbstractOverlay):
                 if getattr(new, dsname):
                     self._ds_changed(
                         TraitChangeEvent(
-                            object=new, name=dsname, old=None, new=getattr(new, dsname)
+                            object=new,
+                            name=dsname,
+                            old=None,
+                            new=getattr(new, dsname),
                         )
                     )
 

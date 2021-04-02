@@ -6,7 +6,12 @@ from numpy.testing import assert_almost_equal
 from traits.testing.unittest_tools import UnittestTools
 
 # Chaco imports
-from chaco.api import ArrayDataSource, DataRange1D, LinearMapper, PlotGraphicsContext
+from chaco.api import (
+    ArrayDataSource,
+    DataRange1D,
+    LinearMapper,
+    PlotGraphicsContext,
+)
 from chaco.line_scatterplot_1d import LineScatterPlot1D
 
 
@@ -31,7 +36,8 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
             self.linescatterplot.y_mapper, self.linescatterplot.index_mapper
         )
         self.assertIs(
-            self.linescatterplot.index_range, self.linescatterplot.index_mapper.range
+            self.linescatterplot.index_range,
+            self.linescatterplot.index_mapper.range,
         )
 
         gc = PlotGraphicsContext(self.size)
@@ -105,23 +111,31 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
 
     def test_linescatter_1d_map_data(self):
         points = array([[0, 124.5], [124.5, 0]])
-        assert_almost_equal(self.linescatterplot.map_data(points), array([4.5, 0]))
+        assert_almost_equal(
+            self.linescatterplot.map_data(points), array([4.5, 0])
+        )
 
     def test_linescatter_1d_map_data_horizontal(self):
         self.linescatterplot.orientation = "h"
         points = array([[0, 124.5], [124.5, 0]])
-        assert_almost_equal(self.linescatterplot.map_data(points), array([0, 4.5]))
+        assert_almost_equal(
+            self.linescatterplot.map_data(points), array([0, 4.5])
+        )
 
     def test_linescatter_1d_map_data_flipped(self):
         self.linescatterplot.direction = "flipped"
         points = array([[0, 124.5], [124.5, 0]])
-        assert_almost_equal(self.linescatterplot.map_data(points), array([4.5, 9.0]))
+        assert_almost_equal(
+            self.linescatterplot.map_data(points), array([4.5, 9.0])
+        )
 
     def test_linescatter_1d_map_data_horizontal_flipped(self):
         self.linescatterplot.direction = "flipped"
         self.linescatterplot.orientation = "h"
         points = array([[0, 124.5], [124.5, 0]])
-        assert_almost_equal(self.linescatterplot.map_data(points), array([9.0, 4.5]))
+        assert_almost_equal(
+            self.linescatterplot.map_data(points), array([9.0, 4.5])
+        )
 
     def test_linescatter_1d_selection(self):
         self.linescatterplot.index.metadata["selections"] = [
@@ -165,7 +179,9 @@ class LineScatterPlot1DTest(UnittestTools, unittest.TestCase):
     def test_linescatter_1d_set_index_mapper_notifies_index_range(self):
         new_range = DataRange1D(low=0.42, high=1.42)
 
-        with self.assertTraitChanges(self.linescatterplot, "index_range", count=1):
+        with self.assertTraitChanges(
+            self.linescatterplot, "index_range", count=1
+        ):
             self.linescatterplot.index_mapper = LinearMapper(range=new_range)
 
         self.assertIs(self.linescatterplot.index_range, new_range)

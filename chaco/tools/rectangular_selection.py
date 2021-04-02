@@ -22,7 +22,9 @@ class RectangularSelection(LassoSelection):
         new_point = self._map_data(np.array((event.x, event.y)))
         if self.first_corner is None:
             self.first_corner = new_point
-        self._active_selection = self._make_rectangle(self.first_corner, new_point)
+        self._active_selection = self._make_rectangle(
+            self.first_corner, new_point
+        )
         self.updated = True
         if self.incremental_select:
             self._update_selection()

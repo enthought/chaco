@@ -40,7 +40,10 @@ class Demo(HasTraits):
     def _plot_default(self):
         # Create a GridContainer to hold all of our plots: 2 rows, 4 columns:
         container = GridContainer(
-            fill_padding=True, bgcolor="lightgray", use_backbuffer=True, shape=(2, 4)
+            fill_padding=True,
+            bgcolor="lightgray",
+            use_backbuffer=True,
+            shape=(2, 4),
         )
 
         arrangements = [

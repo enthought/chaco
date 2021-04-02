@@ -90,7 +90,9 @@ def _create_plot_component():
 
     add_default_grids(vol_plot)
     vol_plot.underlays.append(PlotAxis(vol_plot, orientation="left"))
-    vol_plot.tools.append(PanTool(vol_plot, constrain=True, constrain_direction="x"))
+    vol_plot.tools.append(
+        PanTool(vol_plot, constrain=True, constrain_direction="x")
+    )
 
     container = VPlotContainer(
         bgcolor="lightblue", spacing=20, padding=50, fill_padding=False

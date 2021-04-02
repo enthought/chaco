@@ -120,9 +120,13 @@ class DiscreteColormapTestCase(unittest.TestCase):
                 "green": [(0.0, 0, 0), (1.0, 1.0, 1.0)],
                 "blue": [(0.0, 0, 0), (1.0, 1.0, 1.0)],
             }
-            return ColorMapper.from_segment_map(_gray_data, range=range, **traits)
+            return ColorMapper.from_segment_map(
+                _gray_data, range=range, **traits
+            )
 
-        self.colormap = DiscreteColorMapper.from_colormap(colormap_function, steps=5)
+        self.colormap = DiscreteColorMapper.from_colormap(
+            colormap_function, steps=5
+        )
 
         gray_data = empty(shape=(5, 4))
         gray_data[:] = array([0.0, 0.25, 0.5, 0.75, 1.0]).reshape(5, 1)

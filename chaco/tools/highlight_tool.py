@@ -71,7 +71,9 @@ class HighlightTool(BaseTool):
             event.pop()
 
         elif hasattr(self.component, "hittest"):
-            hit_point = self.component.hittest((event.x, event.y), self.threshold)
+            hit_point = self.component.hittest(
+                (event.x, event.y), self.threshold
+            )
             index = self.component.index
             if hit_point is not None:
                 index.metadata[self.metadata_name] = ones(

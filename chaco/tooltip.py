@@ -151,7 +151,9 @@ class ToolTip(AbstractOverlay):
             for line in self.lines
         ]
         dummy_gc = self._font_metrics_provider
-        line_sizes = array([label.get_width_height(dummy_gc) for label in labels])
+        line_sizes = array(
+            [label.get_width_height(dummy_gc) for label in labels]
+        )
         self._cached_labels = labels
         self._cached_line_sizes = line_sizes
         self._max_line_width = max(line_sizes[:, 0])

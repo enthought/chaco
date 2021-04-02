@@ -181,12 +181,16 @@ class BaseXYPlot(AbstractPlotRenderer):
         AbstractPlotRenderer.__init__(self, **kwtraits)
         if self.index is not None:
             self.index.observe(self._either_data_updated, "data_changed")
-            self.index.observe(self._either_metadata_updated, "metadata_changed")
+            self.index.observe(
+                self._either_metadata_updated, "metadata_changed"
+            )
         if self.index_mapper:
             self.index_mapper.observe(self._mapper_updated_handler, "updated")
         if self.value is not None:
             self.value.observe(self._either_data_updated, "data_changed")
-            self.value.observe(self._either_metadata_updated, "metadata_changed")
+            self.value.observe(
+                self._either_metadata_updated, "metadata_changed"
+            )
         if self.value_mapper:
             self.value_mapper.observe(self._mapper_updated_handler, "updated")
 
@@ -264,7 +268,11 @@ class BaseXYPlot(AbstractPlotRenderer):
         if ndx is not None:
             x = self.x_mapper.map_screen(self.index.get_data()[ndx])
             y = self.y_mapper.map_screen(self.value.get_data()[ndx])
-            return (x, y, sqrt((x - screen_pt[0]) ** 2 + (y - screen_pt[1]) ** 2))
+            return (
+                x,
+                y,
+                sqrt((x - screen_pt[0]) ** 2 + (y - screen_pt[1]) ** 2),
+            )
         else:
             return None
 
@@ -303,7 +311,11 @@ class BaseXYPlot(AbstractPlotRenderer):
         # even that we only have 1 point, just return that point.
         datalen = len(index_data)
         if datalen == 1:
-            dist = (x, y, sqrt((x - screen_pt[0]) ** 2 + (y - screen_pt[1]) ** 2))
+            dist = (
+                x,
+                y,
+                sqrt((x - screen_pt[0]) ** 2 + (y - screen_pt[1]) ** 2),
+            )
             if (threshold == 0.0) or (dist <= threshold):
                 return (x, y, x, y, dist)
             else:
@@ -356,12 +368,18 @@ class BaseXYPlot(AbstractPlotRenderer):
         if self.orientation == "v":
             x, y = y, x
         if all_values:
-            return array((self.index_mapper.map_data(x), self.value_mapper.map_data(y)))
+            return array(
+                (self.index_mapper.map_data(x), self.value_mapper.map_data(y))
+            )
         else:
             return self.index_mapper.map_data(x)
 
     def map_index(
-        self, screen_pt, threshold=2.0, outside_returns_none=True, index_only=False
+        self,
+        screen_pt,
+        threshold=2.0,
+        outside_returns_none=True,
+        index_only=False,
     ):
         """Maps a screen space point to an index into the plot's index array(s).
 
@@ -543,14 +561,20 @@ class BaseXYPlot(AbstractPlotRenderer):
 
     def _get_x_axis(self):
         for obj in self.underlays + self.overlays:
-            if isinstance(obj, PlotAxis) and obj.orientation in ("bottom", "top"):
+            if isinstance(obj, PlotAxis) and obj.orientation in (
+                "bottom",
+                "top",
+            ):
                 return obj
         else:
             return None
 
     def _get_y_axis(self):
         for obj in self.underlays + self.overlays:
-            if isinstance(obj, PlotAxis) and obj.orientation in ("left", "right"):
+            if isinstance(obj, PlotAxis) and obj.orientation in (
+                "left",
+                "right",
+            ):
                 return obj
         else:
             return None
@@ -612,7 +636,9 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _index_changed(self, old, new):
         if old is not None:
             old.observe(self._either_data_updated, "data_changed", remove=True)
-            old.observe(self._either_metadata_updated, "metadata_changed", remove=True)
+            old.observe(
+                self._either_metadata_updated, "metadata_changed", remove=True
+            )
         if new is not None:
             new.observe(self._either_data_updated, "data_changed")
             new.observe(self._either_metadata_updated, "metadata_changed")
@@ -631,7 +657,9 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _value_changed(self, old, new):
         if old is not None:
             old.observe(self._either_data_updated, "data_changed", remove=True)
-            old.observe(self._either_metadata_updated, "metadata_changed", remove=True)
+            old.observe(
+                self._either_metadata_updated, "metadata_changed", remove=True
+            )
         if new is not None:
             new.observe(self._either_data_updated, "data_changed")
             new.observe(self._either_metadata_updated, "metadata_changed")

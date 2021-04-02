@@ -24,7 +24,9 @@ class GridDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.assertEqual(data_source.sort_order, ("none", "none"))
         self.assertEqual(data_source.index_dimension, "image")
         self.assertEqual(data_source.value_dimension, "scalar")
-        self.assertEqual(data_source.metadata, {"selections": [], "annotations": []})
+        self.assertEqual(
+            data_source.metadata, {"selections": [], "annotations": []}
+        )
         xdata, ydata = data_source.get_data()
         assert_array_equal(xdata.get_data(), array([]))
         assert_array_equal(ydata.get_data(), array([]))
@@ -69,9 +71,13 @@ class GridDataSourceTestCase(UnittestTools, unittest.TestCase):
         )
 
     def test_metadata_changed(self):
-        with self.assertTraitChanges(self.data_source, "metadata_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
             self.data_source.metadata = {"new_metadata": True}
 
     def test_metadata_items_changed(self):
-        with self.assertTraitChanges(self.data_source, "metadata_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
             self.data_source.metadata["new_metadata"] = True

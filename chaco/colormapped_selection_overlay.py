@@ -77,7 +77,9 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             mask = (data_pts >= low) & (data_pts <= high)
 
         elif self.selection_type == "mask":
-            mask = functools.reduce(logical_and, datasource.metadata["selection_masks"])
+            mask = functools.reduce(
+                logical_and, datasource.metadata["selection_masks"]
+            )
             if sum(mask) < 2:
                 return
 
@@ -101,7 +103,9 @@ class ColormappedSelectionOverlay(AbstractOverlay):
 
     def _component_changed(self, old, new):
         if old:
-            old.observe(self.datasource_change_handler, "color_data", remove=True)
+            old.observe(
+                self.datasource_change_handler, "color_data", remove=True
+            )
         if new:
             new.observe(self.datasource_change_handler, "color_data")
             self._old_alpha = new.fill_alpha
@@ -118,12 +122,17 @@ class ColormappedSelectionOverlay(AbstractOverlay):
         obj, name, old, new = (event.object, event.name, event.old, event.new)
 
         if old:
-            old.observe(self.selection_change_handler, "metadata_changed", remove=True)
+            old.observe(
+                self.selection_change_handler, "metadata_changed", remove=True
+            )
         if new:
             new.observe(self.selection_change_handler, "metadata_changed")
             self.selection_change_handler(
                 TraitChangeEvent(
-                    object=new, name="metadata_changed", old=None, new=new.metadata
+                    object=new,
+                    name="metadata_changed",
+                    old=None,
+                    new=new.metadata,
                 )
             )
 

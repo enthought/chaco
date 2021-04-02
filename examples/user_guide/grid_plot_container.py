@@ -37,7 +37,9 @@ class GridContainerExample(HasTraits):
             pd.set_data(data_name, jn(i, x))
 
             plot = Plot(pd)
-            plot.plot(("index", data_name), color=COLOR_PALETTE[i], line_width=3.0)
+            plot.plot(
+                ("index", data_name), color=COLOR_PALETTE[i], line_width=3.0
+            )
 
             # Set each plot's aspect based on its position in the grid
             plot.height = ((i % 3) + 1) * 50.0

@@ -3,7 +3,16 @@ function.
 """
 
 
-from numpy import around, array, asarray, column_stack, float64, inf, zeros, zeros_like
+from numpy import (
+    around,
+    array,
+    asarray,
+    column_stack,
+    float64,
+    inf,
+    zeros,
+    zeros_like,
+)
 
 # Enthought library imports
 from enable.api import black_color_trait, LineStyle
@@ -65,7 +74,8 @@ GridView = View(
 
 def Alias(name):
     return Property(
-        lambda obj: getattr(obj, name), lambda obj, val: setattr(obj, name, val)
+        lambda obj: getattr(obj, name),
+        lambda obj, val: setattr(obj, name, val),
     )
 
 
@@ -273,11 +283,15 @@ class PlotGrid(AbstractOverlay):
 
         if self.orientation == "horizontal":
             self._tick_positions = around(
-                column_stack((zeros_like(tick_positions) + position[0], tick_positions))
+                column_stack(
+                    (zeros_like(tick_positions) + position[0], tick_positions)
+                )
             )
         elif self.orientation == "vertical":
             self._tick_positions = around(
-                column_stack((tick_positions, zeros_like(tick_positions) + position[1]))
+                column_stack(
+                    (tick_positions, zeros_like(tick_positions) + position[1])
+                )
             )
         else:
             raise self.NotImplementedError
@@ -295,7 +309,9 @@ class PlotGrid(AbstractOverlay):
             data_extents = self.transverse_bounds(ticks)
             tmapper = self.transverse_mapper
             if isinstance(data_extents, tuple):
-                self._tick_extents[:] = tmapper.map_screen(asarray(data_extents))
+                self._tick_extents[:] = tmapper.map_screen(
+                    asarray(data_extents)
+                )
             else:
                 extents = array(
                     [
@@ -355,7 +371,9 @@ class PlotGrid(AbstractOverlay):
             gc.set_antialias(False)
 
             if self.component is not None:
-                gc.clip_to_rect(*(self.component.position + self.component.bounds))
+                gc.clip_to_rect(
+                    *(self.component.position + self.component.bounds)
+                )
             else:
                 gc.clip_to_rect(*(self.position + self.bounds))
 
@@ -428,7 +446,12 @@ class PlotGrid(AbstractOverlay):
 
     def __getstate__(self):
         state = super(PlotGrid, self).__getstate__()
-        for key in ["_cache_valid", "_tick_list", "_tick_positions", "_tick_extents"]:
+        for key in [
+            "_cache_valid",
+            "_tick_list",
+            "_tick_positions",
+            "_tick_extents",
+        ]:
             if key in state:
                 del state[key]
 

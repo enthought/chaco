@@ -16,7 +16,8 @@ class PlotExample(HasTraits):
     plot = myplot
 
     traits_view = View(
-        Item("plot", editor=ComponentEditor(), show_label=False), title="Chaco Tutorial"
+        Item("plot", editor=ComponentEditor(), show_label=False),
+        title="Chaco Tutorial",
     )
 
 

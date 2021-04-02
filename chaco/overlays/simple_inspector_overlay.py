@@ -178,7 +178,10 @@ class SimpleInspectorOverlay(TextGridOverlay):
         d = new_value_event
         text = []
         self.text_grid.string_array = array(
-            [[formatter(**d) for formatter in row] for row in self.field_formatters]
+            [
+                [formatter(**d) for formatter in row]
+                for row in self.field_formatters
+            ]
         )
 
         self.text_grid.request_redraw()

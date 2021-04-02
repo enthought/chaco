@@ -101,7 +101,9 @@ class TraitsTool(BaseTool):
         # then that is the only candidate.  If our component is a container,
         # then we add its non-container components to the list of candidates;
         # any nested containers are lower priority than primary plot components.
-        candidates = get_nested_components(self.component, [Container] + self.classes)
+        candidates = get_nested_components(
+            self.component, [Container] + self.classes
+        )
 
         # Hittest against all the candidate and take the first one
         item = None

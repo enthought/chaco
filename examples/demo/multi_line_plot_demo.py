@@ -12,7 +12,13 @@ from traitsui.api import View, Item, HGroup, VGroup, Group
 
 from enable.api import ComponentEditor
 
-from chaco.api import LinearMapper, Plot, ArrayDataSource, DataRange1D, PlotAxis
+from chaco.api import (
+    LinearMapper,
+    Plot,
+    ArrayDataSource,
+    DataRange1D,
+    PlotAxis,
+)
 from chaco.multi_array_data_source import MultiArrayDataSource
 from chaco.multi_line_plot import MultiLinePlot
 
@@ -56,7 +62,9 @@ class MultiLinePlotDemo(HasTraits):
             ),
             HGroup(
                 Item("object.multi_line_plot_renderer.color", springy=True),
-                Item("object.multi_line_plot_renderer.line_style", springy=True),
+                Item(
+                    "object.multi_line_plot_renderer.line_style", springy=True
+                ),
                 springy=True,
             ),
         ),

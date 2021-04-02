@@ -28,7 +28,9 @@ from .zoom_overlay import ZoomOverlay
 
 sample_path = os.path.join("examples", "data", "sample.wav")
 alt_path = os.path.join("..", "data", "sample.wav")
-fname = find_resource("Chaco", sample_path, alt_path=alt_path, return_path=True)
+fname = find_resource(
+    "Chaco", sample_path, alt_path=alt_path, return_path=True
+)
 numpts = 3000
 
 

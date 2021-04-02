@@ -2,7 +2,15 @@
 """
 import logging
 
-from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
+from numpy import (
+    array,
+    compress,
+    column_stack,
+    invert,
+    isnan,
+    transpose,
+    zeros,
+)
 from traits.api import (
     Any,
     Bool,
@@ -184,7 +192,11 @@ class BarPlot(AbstractPlotRenderer):
         return self.index_mapper.map_data(screen_coord)
 
     def map_index(
-        self, screen_pt, threshold=2.0, outside_returns_none=True, index_only=False
+        self,
+        screen_pt,
+        threshold=2.0,
+        outside_returns_none=True,
+        index_only=False,
     ):
         """Maps a screen space point to an index into the plot's index array(s).
 
@@ -267,7 +279,12 @@ class BarPlot(AbstractPlotRenderer):
         if self.bar_width_type == "data":
             half_width = self.bar_width / 2.0
             points = column_stack(
-                (index - half_width, index + half_width, starting_values, value)
+                (
+                    index - half_width,
+                    index + half_width,
+                    starting_values,
+                    value,
+                )
             )
         else:
             points = column_stack((index, starting_values, value))

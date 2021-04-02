@@ -67,7 +67,9 @@ def _create_plot_component():  # Create a scalar field to colormap
 
     lasso_selection = LassoSelection(component=img_plot)
     lasso_selection.observe(lasso_updated, "disjoint_selections")
-    lasso_overlay = LassoOverlay(lasso_selection=lasso_selection, component=img_plot)
+    lasso_overlay = LassoOverlay(
+        lasso_selection=lasso_selection, component=img_plot
+    )
     img_plot.tools.append(lasso_selection)
     img_plot.overlays.append(lasso_overlay)
     return plot

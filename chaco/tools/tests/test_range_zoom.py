@@ -43,7 +43,9 @@ class BackgroundColorTestCase(EnableTestAssistant, TestCase):
 
         tool.overlay(self.plot, gc)
 
-        self.assertEqual(gc.set_fill_color.call_args, mock.call([1.0, 0.0, 0.0, 0.3]))
+        self.assertEqual(
+            gc.set_fill_color.call_args, mock.call([1.0, 0.0, 0.0, 0.3])
+        )
 
     def test_rgba_background_range(self):
         tool = self.tool
@@ -58,4 +60,6 @@ class BackgroundColorTestCase(EnableTestAssistant, TestCase):
 
         tool.overlay(self.plot, gc)
 
-        self.assertEqual(gc.set_fill_color.call_args, mock.call([1.0, 0.0, 0.0, 0.3]))
+        self.assertEqual(
+            gc.set_fill_color.call_args, mock.call([1.0, 0.0, 0.0, 0.3])
+        )

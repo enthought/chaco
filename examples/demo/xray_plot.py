@@ -152,7 +152,9 @@ class PlotExample(HasTraits):
 
     plot = Instance(Plot)
 
-    traits_view = View(Item("plot", editor=ComponentEditor()), width=600, height=600)
+    traits_view = View(
+        Item("plot", editor=ComponentEditor()), width=600, height=600
+    )
 
     def __init__(self, index, value, *args, **kw):
         super(PlotExample, self).__init__(*args, **kw)

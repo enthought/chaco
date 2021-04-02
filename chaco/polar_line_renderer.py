@@ -113,7 +113,9 @@ class PolarLineRenderer(AbstractPlotRenderer):
             x, y = screen_pt
         else:
             y, x = screen_pt
-        return array((self.index_mapper.map_data(x), self.value_mapper.map_data(y)))
+        return array(
+            (self.index_mapper.map_data(x), self.value_mapper.map_data(y))
+        )
 
     def _downsample(self):
         return self.map_screen(self._cached_data_pts)

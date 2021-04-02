@@ -15,7 +15,8 @@ class ContainerExample(HasTraits):
     plot = Instance(VPlotContainer)
 
     traits_view = View(
-        Item("plot", editor=ComponentEditor(), show_label=False), resizable=True
+        Item("plot", editor=ComponentEditor(), show_label=False),
+        resizable=True,
     )
 
     def __init__(self):

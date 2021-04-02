@@ -5,7 +5,8 @@
 import warnings
 
 warnings.warn(
-    "chaco.tools.DragTool has been removed." "Use enable.tools.DragTool instead.",
+    "chaco.tools.DragTool has been removed."
+    "Use enable.tools.DragTool instead.",
     DeprecationWarning,
 )
 

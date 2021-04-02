@@ -90,11 +90,13 @@ class StatusLayer(AbstractOverlay):
             # Set up the transforms to align the graphic to the desired position
             if self.align == "ur":
                 gc.translate_ctm(
-                    origin_x + (plot_width - scale_width), origin_y + plot_height
+                    origin_x + (plot_width - scale_width),
+                    origin_y + plot_height,
                 )
             elif self.align == "lr":
                 gc.translate_ctm(
-                    origin_x + (plot_width - scale_width), origin_y + scale_height
+                    origin_x + (plot_width - scale_width),
+                    origin_y + scale_height,
                 )
             elif self.align == "ul":
                 gc.translate_ctm(origin_x, origin_y + plot_height)
@@ -135,8 +137,12 @@ class StatusLayer(AbstractOverlay):
 
 
 class ErrorLayer(StatusLayer):
-    filename = os.path.join(os.path.dirname(__file__), "data", "Dialog-error.svg")
+    filename = os.path.join(
+        os.path.dirname(__file__), "data", "Dialog-error.svg"
+    )
 
 
 class WarningLayer(StatusLayer):
-    filename = os.path.join(os.path.dirname(__file__), "data", "Dialog-warning.svg")
+    filename = os.path.join(
+        os.path.dirname(__file__), "data", "Dialog-warning.svg"
+    )

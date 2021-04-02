@@ -7,7 +7,15 @@ from chaco.plot_graphics_context import PlotGraphicsContext
 from kiva.image import Image
 from pyface.image_resource import ImageResource
 from pyface.api import FileDialog, OK, error
-from traits.api import Instance, Str, Property, cached_property, List, Int, Enum
+from traits.api import (
+    Instance,
+    Str,
+    Property,
+    cached_property,
+    List,
+    Int,
+    Enum,
+)
 
 
 class ToolbarButton(Button):
@@ -178,7 +186,9 @@ class CopyToClipboardButton(ToolbarButton):
     def _perform_wx(self, width, height, gc):
         import wx
 
-        bitmap = wx.BitmapFromBufferRGBA(width + 1, height + 1, gc.bmp_array.flatten())
+        bitmap = wx.BitmapFromBufferRGBA(
+            width + 1, height + 1, gc.bmp_array.flatten()
+        )
         data = wx.BitmapDataObject()
         data.SetBitmap(bitmap)
         if wx.TheClipboard.Open():

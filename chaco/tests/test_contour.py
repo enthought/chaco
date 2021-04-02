@@ -12,7 +12,9 @@ class TestContour(unittest.TestCase):
         xs = np.array([0, 1, 2, 3])
         ys = np.array([10, 20, 30, 40])
         xg, yg = np.meshgrid(xs, ys)
-        data = np.array([[0, 0, 1, 2], [0, 1, 2, 3], [1, 2, 0, 3], [2, 3, 3, 3]])
+        data = np.array(
+            [[0, 0, 1, 2], [0, 1, 2, 3], [1, 2, 0, 3], [2, 3, 3, 3]]
+        )
         mask = np.ones(data.shape, dtype=bool)
 
         # When
@@ -21,9 +23,13 @@ class TestContour(unittest.TestCase):
         # Then
         levels = c.trace(0.0)
         self.assertEqual(len(levels), 2)
-        self._check_level(levels[0], [1.0, 1.0, 0.0, 0.0], [10.0, 10.0, 20.0, 20.0])
         self._check_level(
-            levels[1], [2.0, 2.0, 2.0, 2.0, 2.0], [30.0, 30.0, 30.0, 30.0, 30.0]
+            levels[0], [1.0, 1.0, 0.0, 0.0], [10.0, 10.0, 20.0, 20.0]
+        )
+        self._check_level(
+            levels[1],
+            [2.0, 2.0, 2.0, 2.0, 2.0],
+            [30.0, 30.0, 30.0, 30.0, 30.0],
         )
 
         levels = c.trace(1.0)

@@ -140,10 +140,18 @@ class MultiLinePlot(BaseXYPlot):
 
     amplitude_scale = Property(
         Float,
-        depends_on=["global_min", "global_max", "data", "use_global_bounds", "yindex"],
+        depends_on=[
+            "global_min",
+            "global_max",
+            "data",
+            "use_global_bounds",
+            "yindex",
+        ],
     )
 
-    amplitude = Property(Float, depends_on=["normalized_amplitude", "amplitude_scale"])
+    amplitude = Property(
+        Float, depends_on=["normalized_amplitude", "amplitude_scale"]
+    )
 
     # ------------------------------------------------------------------------
     # Private traits
@@ -214,7 +222,8 @@ class MultiLinePlot(BaseXYPlot):
     def get_screen_points(self):
         self._gather_points()
         scrn_pts_list = [
-            [self.map_screen(ary) for ary in line] for line in self._cached_data_pts
+            [self.map_screen(ary) for ary in line]
+            for line in self._cached_data_pts
         ]
         return scrn_pts_list
 
@@ -408,7 +417,10 @@ class MultiLinePlot(BaseXYPlot):
 
                     z = transpose(
                         array(
-                            (sorted_index[ndx : ndx + 2], sorted_value[ndx : ndx + 2])
+                            (
+                                sorted_index[ndx : ndx + 2],
+                                sorted_value[ndx : ndx + 2],
+                            )
                         )
                     )
                     points.append(z)
@@ -425,7 +437,12 @@ class MultiLinePlot(BaseXYPlot):
                             end += 1
 
                         run_data = transpose(
-                            array((block_index[start:end], block_value[start:end]))
+                            array(
+                                (
+                                    block_index[start:end],
+                                    block_value[start:end],
+                                )
+                            )
                         )
                         points.append(run_data)
             line_points.append(points)

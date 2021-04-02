@@ -71,7 +71,10 @@ class PlotApp(HasTraits):
                     Item("sym2", width=-225),
                 ),
                 Item(
-                    "corr_plot", editor=ComponentEditor(), show_label=False, width=-275
+                    "corr_plot",
+                    editor=ComponentEditor(),
+                    show_label=False,
+                    width=-275,
                 ),
             ),
         ),
@@ -106,14 +109,19 @@ class PlotApp(HasTraits):
             if name == "times":
                 continue
             renderer = plot.plot(
-                ("times", name), type="line", name=name, color=tuple(COLOR_PALETTE[i])
+                ("times", name),
+                type="line",
+                name=name,
+                color=tuple(COLOR_PALETTE[i]),
             )[0]
 
         # Tricky: need to set auto_handle_event on the RangeSelection
         # so that it passes left-clicks to the PanTool
         # FIXME: The range selection is still getting the initial left down
         renderer.tools.append(
-            RangeSelection(renderer, left_button_selects=False, auto_handle_event=False)
+            RangeSelection(
+                renderer, left_button_selects=False, auto_handle_event=False
+            )
         )
         plot.tools.append(
             PanTool(
@@ -126,7 +134,10 @@ class PlotApp(HasTraits):
         )
         plot.overlays.append(
             ZoomTool(
-                plot, tool_mode="range", max_zoom_out=1.0, x_min_zoom_factor=float(1e-3)
+                plot,
+                tool_mode="range",
+                max_zoom_out=1.0,
+                x_min_zoom_factor=float(1e-3),
             )
         )
         # Attach the range selection to the last renderer; any one will do
@@ -193,7 +204,9 @@ class PlotApp(HasTraits):
             (self.sym1, self.sym2), type="scatter", color="blue"
         )[0]
         self.corr_renderer.overlays.append(
-            ScatterInspectorOverlay(self.corr_renderer, selection_color="lightgreen")
+            ScatterInspectorOverlay(
+                self.corr_renderer, selection_color="lightgreen"
+            )
         )
         plot.request_redraw()
 

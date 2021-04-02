@@ -58,7 +58,9 @@ class PlotFrame(DemoFrame):
 
         self.plot = plot
         plot.tools.append(PanTool(component=plot))
-        plot.overlays.append(ZoomTool(component=plot, tool_mode="box", always_on=False))
+        plot.overlays.append(
+            ZoomTool(component=plot, tool_mode="box", always_on=False)
+        )
 
         self.timer = Timer(50.0, self.onTimer)
         return Window(self, -1, component=plot)

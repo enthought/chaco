@@ -61,7 +61,9 @@ class TabbedPlots(HasTraits):
     def create_plots(self):
         self.plot_sin = self.create_plot(("x", "ysin"), "sin plot", "red")
         self.plot_tan = self.create_plot(("x", "ytan"), "tan plot", "blue")
-        self.plot_mixed = self.create_plot(("x", "ymix"), "mixed plot", "green")
+        self.plot_mixed = self.create_plot(
+            ("x", "ymix"), "mixed plot", "green"
+        )
 
         # The mixed plot will share both x and y ranges with the sin plot.
         # This 2d range is a single object shared by both plots. For its
@@ -85,7 +87,9 @@ class TabbedPlots(HasTraits):
 # ===============================================================================
 x = linspace(-2 * pi, 2 * pi, 100)
 demo = TabbedPlots(
-    data=ArrayPlotData(x=x, ysin=sin(x), ytan=tan(x), ymix=sin(x) ** 2 + cos(x))
+    data=ArrayPlotData(
+        x=x, ysin=sin(x), ytan=tan(x), ymix=sin(x) ** 2 + cos(x)
+    )
 )
 
 if __name__ == "__main__":

@@ -108,7 +108,10 @@ class BaseCursorTool(LineInspector, DragTool):
 
             # This is the fastest method - use one of the kiva built-in markers
             if hasattr(gc, "draw_marker_at_points") and (
-                gc.draw_marker_at_points(points, marker_size, marker.kiva_marker) != 0
+                gc.draw_marker_at_points(
+                    points, marker_size, marker.kiva_marker
+                )
+                != 0
             ):
                 pass
 

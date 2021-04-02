@@ -295,7 +295,9 @@ def add_default_axes(
         v_mapper = plot.index_mapper
         h_mapper = plot.value_mapper
 
-    left = axis_class(orientation="left", title=vtitle, mapper=v_mapper, component=plot)
+    left = axis_class(
+        orientation="left", title=vtitle, mapper=v_mapper, component=plot
+    )
 
     bottom = axis_class(
         orientation="bottom", title=htitle, mapper=h_mapper, component=plot

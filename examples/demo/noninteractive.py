@@ -75,7 +75,9 @@ def draw_pdf(filename, size=(800, 600)):
     container = create_plot()
     container.outer_bounds = list(size)
     container.do_layout(force=True)
-    gc = PdfPlotGraphicsContext(filename=filename, dest_box=(0.5, 0.5, 5.0, 5.0))
+    gc = PdfPlotGraphicsContext(
+        filename=filename, dest_box=(0.5, 0.5, 5.0, 5.0)
+    )
 
     for i in range(2):
         # draw the plot

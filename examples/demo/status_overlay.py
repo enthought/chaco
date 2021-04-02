@@ -23,7 +23,11 @@ class MyPlot(HasTraits):
     no_problem_button = Button("No problem")
 
     traits_view = View(
-        HGroup(UItem("error_button"), UItem("warn_button"), UItem("no_problem_button")),
+        HGroup(
+            UItem("error_button"),
+            UItem("warn_button"),
+            UItem("no_problem_button"),
+        ),
         UItem("plot", editor=ComponentEditor()),
         width=700,
         height=600,

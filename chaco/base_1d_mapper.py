@@ -102,7 +102,9 @@ class Base1DMapper(AbstractMapper):
         self.updated = True
 
     def _adjust_range(self, old_bounds, new_bounds):
-        initialized = self._low_bound_initialized and self._high_bound_initialized
+        initialized = (
+            self._low_bound_initialized and self._high_bound_initialized
+        )
         if self.range is not None and initialized:
             rangelow = self.range.low
             rangehigh = self.range.high

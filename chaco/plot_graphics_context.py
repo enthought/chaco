@@ -23,9 +23,14 @@ class PlotGraphicsContextMixin(object):
     def __init__(self, size_or_ary, *args, **kw):
         scale = kw.pop("dpi", 72.0) / 72.0
         if type(size_or_ary) in (list, tuple) and len(size_or_ary) == 2:
-            size_or_ary = (size_or_ary[0] * scale + 1, size_or_ary[1] * scale + 1)
+            size_or_ary = (
+                size_or_ary[0] * scale + 1,
+                size_or_ary[1] * scale + 1,
+            )
 
-        super(PlotGraphicsContextMixin, self).__init__(size_or_ary, *args, **kw)
+        super(PlotGraphicsContextMixin, self).__init__(
+            size_or_ary, *args, **kw
+        )
         self.translate_ctm(0.5, 0.5)
         self.scale_ctm(scale, scale)
 
@@ -55,7 +60,9 @@ class PlotGraphicsContextMixin(object):
             y = -y
         with self:
             self.translate_ctm(x, y)
-            component.draw(self, view_bounds=(0, 0, self.width(), self.height()))
+            component.draw(
+                self, view_bounds=(0, 0, self.width(), self.height())
+            )
 
     def clip_to_rect(self, x, y, width, height):
         """Offsets the coordinate frame by (0.5, 0.5) and increases the actual

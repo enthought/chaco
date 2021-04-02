@@ -46,7 +46,9 @@ def _create_plot_component():
     plot1.overlays.append(zoom)
 
     # Add the scrollbar
-    hscrollbar = PlotScrollBar(component=plot1, axis="index", resizable="h", height=15)
+    hscrollbar = PlotScrollBar(
+        component=plot1, axis="index", resizable="h", height=15
+    )
     plot1.padding_top = 0
     hscrollbar.force_data_update()
 

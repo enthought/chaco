@@ -37,7 +37,9 @@ class ImageDataTestCase(UnittestTools, unittest.TestCase):
     def test_set_data(self):
         new_array = arange(0, 30, 2).reshape(5, 3, 1)
 
-        with self.assertTraitChanges(self.data_source, "data_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.set_data(new_array)
 
         assert_array_equal(new_array, self.data_source.data)
@@ -133,9 +135,13 @@ class ImageDataTestCase(UnittestTools, unittest.TestCase):
         )
 
     def test_metadata_changed(self):
-        with self.assertTraitChanges(self.data_source, "metadata_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
             self.data_source.metadata = {"new_metadata": True}
 
     def test_metadata_items_changed(self):
-        with self.assertTraitChanges(self.data_source, "metadata_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
             self.data_source.metadata["new_metadata"] = True

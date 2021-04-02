@@ -300,9 +300,13 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         """
 
         if xy_axis == "x":
-            return not (self.x_min_zoom_factor <= factor <= self.x_max_zoom_factor)
+            return not (
+                self.x_min_zoom_factor <= factor <= self.x_max_zoom_factor
+            )
         else:
-            return not (self.y_min_zoom_factor <= factor <= self.y_max_zoom_factor)
+            return not (
+                self.y_min_zoom_factor <= factor <= self.y_max_zoom_factor
+            )
 
     def _zoom_in_mapper(self, mapper, factor):
 
@@ -313,7 +317,9 @@ class BetterZoom(BaseTool, ToolHistoryMixin):
         center = (low + high) / 2.0
 
         new_range = range / factor
-        mapper.range.set_bounds(low=center - new_range / 2, high=center + new_range / 2)
+        mapper.range.set_bounds(
+            low=center - new_range / 2, high=center + new_range / 2
+        )
 
     def _get_x_mapper(self):
         if isinstance(self.component.index_mapper, GridMapper):

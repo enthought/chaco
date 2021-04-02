@@ -31,7 +31,12 @@ from chaco.api import (
     FilledLinePlot,
     add_default_grids,
 )
-from chaco.tools.api import PanTool, ZoomTool, RangeSelection, RangeSelectionOverlay
+from chaco.tools.api import (
+    PanTool,
+    ZoomTool,
+    RangeSelection,
+    RangeSelectionOverlay,
+)
 
 from chaco.scales.api import CalendarScaleSystem
 from chaco.scales_tick_generator import ScalesTickGenerator
@@ -114,7 +119,9 @@ class PlotFrame(DemoFrame):
         # of the main price_plot
         range_tool = RangeSelection(miniplot)
         miniplot.tools.append(range_tool)
-        range_overlay = RangeSelectionOverlay(miniplot, metadata_name="selections")
+        range_overlay = RangeSelectionOverlay(
+            miniplot, metadata_name="selections"
+        )
         miniplot.overlays.append(range_overlay)
         range_tool.observe(self._range_selection_handler, "selection")
 
@@ -194,7 +201,9 @@ class PlotFrame(DemoFrame):
         # Set the plot's bottom axis to use the Scales ticking system
         ticker = ScalesTickGenerator(scale=CalendarScaleSystem())
         for plot in price_plot, mini_plot, vol_plot:
-            bottom_axis = PlotAxis(plot, orientation="bottom", tick_generator=ticker)
+            bottom_axis = PlotAxis(
+                plot, orientation="bottom", tick_generator=ticker
+            )
             plot.overlays.append(bottom_axis)
             plot.overlays.append(PlotAxis(plot, orientation="left"))
             hgrid, vgrid = add_default_grids(plot)
@@ -211,4 +220,6 @@ class PlotFrame(DemoFrame):
 if __name__ == "__main__":
     # Save demo so that it doesn't get garbage collected when run within
     # existing event loop (i.e. from ipython).
-    demo = demo_main(PlotFrame, size=(800, 600), title="Stock price and volume")
+    demo = demo_main(
+        PlotFrame, size=(800, 600), title="Stock price and volume"
+    )

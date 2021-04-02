@@ -3,7 +3,14 @@ import unittest
 from numpy import array
 
 from ..formatters import BasicFormatter, OffsetFormatter
-from ..scales import Pow10Scale, FixedScale, LogScale, DefaultScale, ScaleSystem, frange
+from ..scales import (
+    Pow10Scale,
+    FixedScale,
+    LogScale,
+    DefaultScale,
+    ScaleSystem,
+    frange,
+)
 
 
 class TicksTestCase(unittest.TestCase):
@@ -39,12 +46,15 @@ class ScalesTestCase(TicksTestCase):
         scale = LogScale()
         ticks = scale.ticks(1.0, 2.0)
         self.check_ticks(
-            ticks, array((1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0))
+            ticks,
+            array((1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0)),
         )
         ticks = scale.ticks(0.9, 2.1)
         self.check_ticks(ticks, array((1.0, 1.25, 1.5, 1.75, 2.0)))
         ticks = scale.ticks(1.1, 9.9)
-        self.check_ticks(ticks, array((2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)))
+        self.check_ticks(
+            ticks, array((2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0))
+        )
 
     def test_log_scale_interval1(self):
         # Test the case where 1 < log_interval < desired_ticks, and interval=1
@@ -56,11 +66,15 @@ class ScalesTestCase(TicksTestCase):
         )
         ticks = scale.ticks(9.3, 99.9)
         self.check_ticks(
-            ticks, array((10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0))
+            ticks,
+            array((10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0)),
         )
         ticks = scale.ticks(9.9, 100.0)
         self.check_ticks(
-            ticks, array((10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0))
+            ticks,
+            array(
+                (10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0)
+            ),
         )
 
     def test_log_scale(self):
@@ -68,7 +82,8 @@ class ScalesTestCase(TicksTestCase):
 
         ticks = scale.ticks(0.1, 10.0)
         self.check_ticks(
-            ticks, array((0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 2.0, 4.0, 6.0, 8.0, 10.0))
+            ticks,
+            array((0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 2.0, 4.0, 6.0, 8.0, 10.0)),
         )
         ticks = scale.ticks(10.0, 1000.0)
         self.check_ticks(
@@ -133,7 +148,9 @@ class ScaleSystemTestCase(TicksTestCase):
         ticker = ScaleSystem(default_scale=None, *scales)
         self.check_ticks(ticker.ticks(5, 35, 3), (10.0, 20.0, 30.0))
         self.check_ticks(ticker.ticks(5, 35, 20), frange(5.0, 35.0, 1.0))
-        self.check_ticks(ticker.ticks(5, 614, 10), (100, 200, 300, 400, 500, 600))
+        self.check_ticks(
+            ticker.ticks(5, 614, 10), (100, 200, 300, 400, 500, 600)
+        )
 
     def test_revert_to_default(self):
         scales = [
@@ -207,7 +224,9 @@ class BasicFormatterTestCase(TicksTestCase):
             (3e8, 6e8, 8),
         )
         for start, end, numlabels in test_intervals:
-            estimate = fmt.estimate_width(start, end, numlabels, ticker=scale)[1]
+            estimate = fmt.estimate_width(start, end, numlabels, ticker=scale)[
+                1
+            ]
             ticks = scale.ticks(start, end, numlabels)
             labels = fmt.format(ticks, numlabels, None)
             actual = sum(map(len, labels))

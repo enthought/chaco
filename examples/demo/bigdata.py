@@ -58,7 +58,9 @@ def _create_plot_component(use_downsampling=True):
     index_mapper = None
     for i in range(10):
         y = jn(i, x)
-        plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[i]), width=2.0)
+        plot = create_line_plot(
+            (x, y), color=tuple(COLOR_PALETTE[i]), width=2.0
+        )
         plot.use_downsampling = use_downsampling
 
         if value_mapper is None:

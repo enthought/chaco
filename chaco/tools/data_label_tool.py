@@ -45,7 +45,12 @@ class DataLabelTool(DragTool):
         """
         if self.component:
             label = self.component
-            return x >= label.x and x <= label.x2 and y >= label.y and y <= label.y2
+            return (
+                x >= label.x
+                and x <= label.x2
+                and y >= label.y
+                and y <= label.y2
+            )
         else:
             return False
 

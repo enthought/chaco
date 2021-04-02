@@ -43,7 +43,11 @@ class AbstractPlotRenderer(PlotComponent):
         raise NotImplementedError
 
     def map_index(
-        self, screen_pt, threshold=0.0, outside_returns_none=True, index_only=False
+        self,
+        screen_pt,
+        threshold=0.0,
+        outside_returns_none=True,
+        index_only=False,
     ):
         """Maps a screen space point to an index into the plot's index array(s).
 

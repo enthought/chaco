@@ -5,7 +5,16 @@ Defines the DataRange2D class.
 from numpy import compress, inf, transpose
 
 # Enthought library imports
-from traits.api import Any, Bool, CFloat, Instance, Property, Trait, Tuple, observe
+from traits.api import (
+    Any,
+    Bool,
+    CFloat,
+    Instance,
+    Property,
+    Trait,
+    Tuple,
+    observe,
+)
 
 # Local relative imports
 from .base_data_range import BaseDataRange

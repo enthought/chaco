@@ -18,7 +18,14 @@ import os, sys
 from traits.util.resource import find_resource
 from traits.api import File, HasTraits, Instance
 from traitsui.api import Handler, Item, View
-from traitsui.menu import Action, CloseAction, Menu, MenuBar, OKCancelButtons, Separator
+from traitsui.menu import (
+    Action,
+    CloseAction,
+    Menu,
+    MenuBar,
+    OKCancelButtons,
+    Separator,
+)
 
 # Chaco imports
 from chaco.api import ArrayPlotData, ImageData, Plot, PlotGraphicsContext
@@ -109,7 +116,9 @@ class DemoView(HasTraits):
             ),
             menubar=MenuBar(
                 Menu(
-                    Action(name="Save Plot", action="save"),  # see Controller for
+                    Action(
+                        name="Save Plot", action="save"
+                    ),  # see Controller for
                     Action(name="Load Plot", action="load"),  # these callbacks
                     Separator(),
                     CloseAction,

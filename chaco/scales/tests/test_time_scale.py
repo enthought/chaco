@@ -6,7 +6,12 @@ import unittest
 import numpy as np
 import numpy.testing as nptest
 
-from chaco.scales.time_scale import tfrac, trange, TimeScale, CalendarScaleSystem
+from chaco.scales.time_scale import (
+    tfrac,
+    trange,
+    TimeScale,
+    CalendarScaleSystem,
+)
 from chaco.scales.api import TimeFormatter
 
 # Note on testing:
@@ -87,7 +92,9 @@ class TestTFrac(unittest.TestCase):
             self.assertEqual(
                 base, 3600 * -9.5
             )  # Alice Springs year start UTC timestamp
-            self.assertEqual(frac, 3600 * 10.5 + 1)  # 10:30:01 in the morning Jan 1
+            self.assertEqual(
+                frac, 3600 * 10.5 + 1
+            )  # 10:30:01 in the morning Jan 1
 
     def test_tfrac_years_01_Honolulu(self):
         # Pacific/Honolulu (UTC-10:00, never DST)
@@ -116,7 +123,9 @@ class TestTFrac(unittest.TestCase):
             self.assertEqual(
                 base, 3600 * -9.5
             )  # Alice Springs decade start UTC timestamp
-            self.assertEqual(frac, 3600 * 10.5 + 1)  # 10:30:01 in the morning Jan 1
+            self.assertEqual(
+                frac, 3600 * 10.5 + 1
+            )  # 10:30:01 in the morning Jan 1
 
     def test_tfrac_years_02_Honolulu(self):
         # Pacific/Honolulu (UTC-10:00, never DST)
@@ -140,7 +149,9 @@ class TestTFrac(unittest.TestCase):
         with set_timezone(ALICE_SPRINGS):
             t = 3601
             (base, frac) = tfrac(t, days=1)
-            self.assertEqual(base, 3600 * -9.5)  # Alice Springs day start UTC timestamp
+            self.assertEqual(
+                base, 3600 * -9.5
+            )  # Alice Springs day start UTC timestamp
             self.assertEqual(frac, 3600 * 10.5 + 1)  # 10:30:01 in the morning
 
     def test_tfrac_days_01_Honolulu(self):

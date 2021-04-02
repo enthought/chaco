@@ -20,7 +20,9 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         for origin in ("bottom left", "top left", "bottom right", "top right"):
             for orientation in ("h", "v"):
                 for axis in ("index", "value"):
-                    plot = Plot(plot_data, orientation=orientation, origin="top right")
+                    plot = Plot(
+                        plot_data, orientation=orientation, origin="top right"
+                    )
 
                     renderer = plot.plot(("x", "y"))[0]
                     renderer.bounds = [10, 20]

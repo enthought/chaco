@@ -38,7 +38,9 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
     def test_set_data(self):
         new_array = arange(0, 20, 2)
 
-        with self.assertTraitChanges(self.data_source, "data_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.set_data(new_array)
 
         assert_array_equal(new_array, self.data_source._data)
@@ -48,7 +50,9 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
     def test_set_data_ordered(self):
         new_array = arange(20, 0, -2)
 
-        with self.assertTraitChanges(self.data_source, "data_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.set_data(new_array, sort_order="descending")
 
         assert_array_equal(new_array, self.data_source._data)
@@ -56,7 +60,9 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.assertEqual(self.data_source.sort_order, "descending")
 
     def test_set_mask(self):
-        with self.assertTraitChanges(self.data_source, "data_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.set_mask(self.mymask)
 
         assert_array_equal(self.myarray, self.data_source._data)
@@ -68,7 +74,9 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.data_source.set_mask(self.mymask)
         self.assertTrue(self.data_source.is_masked())
 
-        with self.assertTraitChanges(self.data_source, "data_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.remove_mask()
 
         assert_array_equal(self.myarray, self.data_source._data)
@@ -207,11 +215,15 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         )
 
     def test_metadata_changed(self):
-        with self.assertTraitChanges(self.data_source, "metadata_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
             self.data_source.metadata = {"new_metadata": True}
 
     def test_metadata_items_changed(self):
-        with self.assertTraitChanges(self.data_source, "metadata_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
             self.data_source.metadata["new_metadata"] = True
 
     def test_serialization_state(self):

@@ -42,7 +42,9 @@ def adjust_hue(msh_sat, m_unsat):
         return h_sat
     else:
         spin = (
-            s_sat * np.sqrt(m_unsat * m_unsat - m_sat * m_sat) / (m_sat * np.sin(s_sat))
+            s_sat
+            * np.sqrt(m_unsat * m_unsat - m_sat * m_sat)
+            / (m_sat * np.sin(s_sat))
         )
         if h_sat > -np.pi / 3:
             return h_sat + spin
@@ -141,7 +143,9 @@ def generate_cubehelix_palette(
     x **= gamma
     amplitude = saturation * x * (1 - x) / 2.0
     red = x + amplitude * (-0.14861 * np.cos(theta) + 1.78277 * np.sin(theta))
-    green = x + amplitude * (-0.29227 * np.cos(theta) - 0.90649 * np.sin(theta))
+    green = x + amplitude * (
+        -0.29227 * np.cos(theta) - 0.90649 * np.sin(theta)
+    )
     blue = x + amplitude * (1.97294 * np.cos(theta))
     srgb_palette = np.column_stack([red, green, blue]).clip(0.0, 1.0)
     return srgb_palette

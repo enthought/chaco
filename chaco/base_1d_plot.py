@@ -5,7 +5,15 @@ Abstract base class for 1-D plots which only use one axis
 from numpy import argsort, asarray
 
 # Enthought library imports
-from traits.api import Any, Bool, Enum, Instance, Property, cached_property, observe
+from traits.api import (
+    Any,
+    Bool,
+    Enum,
+    Instance,
+    Property,
+    cached_property,
+    observe,
+)
 
 # local imports
 from .abstract_plot_renderer import AbstractPlotRenderer
@@ -130,7 +138,11 @@ class Base1DPlot(AbstractPlotRenderer):
             return asarray(self.index_mapper.map_data(x))
 
     def map_index(
-        self, screen_pt, threshold=2.0, outside_returns_none=True, index_only=True
+        self,
+        screen_pt,
+        threshold=2.0,
+        outside_returns_none=True,
+        index_only=True,
     ):
         """Maps a screen space point to an index into the plot's index array.
 
@@ -173,7 +185,9 @@ class Base1DPlot(AbstractPlotRenderer):
 
         if self._cached_data_pts_sorted is None:
             self._cached_data_argsort = argsort(self._cached_data)
-            self._cached_data_pts_sorted = self._cached_data[self._cached_data_argsort]
+            self._cached_data_pts_sorted = self._cached_data[
+                self._cached_data_argsort
+            ]
 
         # XXX better to just use argmin(abs(data - data_pt))?
 

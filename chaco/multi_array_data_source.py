@@ -179,7 +179,9 @@ class MultiArrayDataSource(AbstractDataSource):
             # value is None and index is None:
             with warnings.catch_warnings():
                 warnings.filterwarnings(
-                    "ignore", "All-NaN (slice|axis) encountered", RuntimeWarning
+                    "ignore",
+                    "All-NaN (slice|axis) encountered",
+                    RuntimeWarning,
                 )
                 maxi = nanmax(self._data)
                 mini = nanmin(self._data)
@@ -210,8 +212,9 @@ class MultiArrayDataSource(AbstractDataSource):
                 value = value[newaxis, :]
 
         if len(value.shape) != 2:
-            msg = "Input is %d dimensional, but it must be 1 or 2" "dimensional." % len(
-                value.shape
+            msg = (
+                "Input is %d dimensional, but it must be 1 or 2"
+                "dimensional." % len(value.shape)
             )
             raise ValueError(msg)
 

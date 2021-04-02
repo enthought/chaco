@@ -96,7 +96,9 @@ class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-        UItem("plot", editor=ComponentEditor(size=size)), resizable=True, title=title
+        UItem("plot", editor=ComponentEditor(size=size)),
+        resizable=True,
+        title=title,
     )
 
     def _plot_default(self):

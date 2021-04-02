@@ -20,7 +20,10 @@ from traitsui.api import Item, Group, View
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import PanTool, ZoomTool
-from chaco.tools.image_inspector_tool import ImageInspectorTool, ImageInspectorOverlay
+from chaco.tools.image_inspector_tool import (
+    ImageInspectorTool,
+    ImageInspectorOverlay,
+)
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -48,7 +51,9 @@ def _create_plot_component():
 
     # Attach some tools to the plot
     plot.tools.append(PanTool(plot, constrain_key="shift"))
-    plot.overlays.append(ZoomTool(component=plot, tool_mode="box", always_on=False))
+    plot.overlays.append(
+        ZoomTool(component=plot, tool_mode="box", always_on=False)
+    )
 
     imgtool = ImageInspectorTool(img_plot)
     img_plot.tools.append(imgtool)

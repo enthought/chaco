@@ -79,10 +79,12 @@ class Model(HasTraits):
                 Item("npts_y", label="Number Y Points"),
             ),
             HGroup(
-                Item("min_x", label="Min X value"), Item("max_x", label="Max X value")
+                Item("min_x", label="Min X value"),
+                Item("max_x", label="Max X value"),
             ),
             HGroup(
-                Item("min_y", label="Min Y value"), Item("max_y", label="Max Y value")
+                Item("min_y", label="Min Y value"),
+                Item("max_y", label="Max Y value"),
             ),
         ),
         buttons=["OK", "Cancel"],
@@ -153,7 +155,15 @@ class Model(HasTraits):
             self._function = self.function
 
     def _anytrait_changed(self, name, value):
-        if name in ["function", "npts_x", "npts_y", "min_x", "max_x", "min_y", "max_y"]:
+        if name in [
+            "function",
+            "npts_x",
+            "npts_y",
+            "min_x",
+            "max_x",
+            "min_y",
+            "max_y",
+        ]:
             self.compute_model()
 
 
@@ -254,7 +264,9 @@ class PlotUI(HasTraits):
         self.polyplot.overlays.append(bottom)
 
         # Add some tools to the plot
-        self.polyplot.tools.append(PanTool(self.polyplot, constrain_key="shift"))
+        self.polyplot.tools.append(
+            PanTool(self.polyplot, constrain_key="shift")
+        )
         self.polyplot.overlays.append(
             ZoomTool(component=self.polyplot, tool_mode="box", always_on=False)
         )
@@ -349,7 +361,10 @@ class PlotUI(HasTraits):
 
         # Create a container and add components
         self.container = HPlotContainer(
-            padding=40, fill_padding=True, bgcolor="white", use_backbuffer=False
+            padding=40,
+            fill_padding=True,
+            bgcolor="white",
+            use_backbuffer=False,
         )
         inner_cont = VPlotContainer(padding=0, use_backbuffer=True)
         inner_cont.add(self.cross_plot)
@@ -393,10 +408,18 @@ class PlotUI(HasTraits):
                     line_value2=self._image_value.data[:, x_ndx],
                     scatter_index=array([xdata[x_ndx]]),
                     scatter_index2=array([ydata[y_ndx]]),
-                    scatter_value=array([self._image_value.data[y_ndx, x_ndx]]),
-                    scatter_value2=array([self._image_value.data[y_ndx, x_ndx]]),
-                    scatter_color=array([self._image_value.data[y_ndx, x_ndx]]),
-                    scatter_color2=array([self._image_value.data[y_ndx, x_ndx]]),
+                    scatter_value=array(
+                        [self._image_value.data[y_ndx, x_ndx]]
+                    ),
+                    scatter_value2=array(
+                        [self._image_value.data[y_ndx, x_ndx]]
+                    ),
+                    scatter_color=array(
+                        [self._image_value.data[y_ndx, x_ndx]]
+                    ),
+                    scatter_color2=array(
+                        [self._image_value.data[y_ndx, x_ndx]]
+                    ),
                 )
         else:
             self.pd.update_data(
@@ -417,8 +440,12 @@ class PlotUI(HasTraits):
             self.cross_plot.color_mapper = self._cmap(value_range)
             # FIXME: change when we decide how best to update plots using
             # the shared colormap in plot object
-            self.cross_plot.plots["dot"][0].color_mapper = self._cmap(value_range)
-            self.cross_plot2.plots["dot"][0].color_mapper = self._cmap(value_range)
+            self.cross_plot.plots["dot"][0].color_mapper = self._cmap(
+                value_range
+            )
+            self.cross_plot2.plots["dot"][0].color_mapper = self._cmap(
+                value_range
+            )
             self.container.request_redraw()
 
     def _num_levels_changed(self):
@@ -507,18 +534,26 @@ class TimerController(HasTraits):
                 y += self.y_delta
                 if y < 0:
                     y = 0
-                    self.y_delta, self.x_delta = randomize(1, self.animate_bottom)
+                    self.y_delta, self.x_delta = randomize(
+                        1, self.animate_bottom
+                    )
                 elif y >= ylim:
                     y = ylim - 1
-                    self.y_delta, self.x_delta = randomize(-1, self.animate_top)
+                    self.y_delta, self.x_delta = randomize(
+                        -1, self.animate_top
+                    )
                 else:
                     x += self.x_delta
                     if x < 0:
                         x = 0
-                        self.x_delta, self.y_delta = randomize(1, self.animate_left)
+                        self.x_delta, self.y_delta = randomize(
+                            1, self.animate_left
+                        )
                     elif x >= xlim:
                         x = xlim - 1
-                        self.x_delta, self.y_delta = randomize(-1, self.animate_right)
+                        self.x_delta, self.y_delta = randomize(
+                            -1, self.animate_right
+                        )
 
             else:
                 x, y = 0, 0
@@ -551,7 +586,9 @@ class ModelView(HasTraits):
             UItem("edit_view"),
             Item("animated"),
             Item(
-                "animate_left", enabled_when="animated", label="Change colors at:  Left"
+                "animate_left",
+                enabled_when="animated",
+                label="Change colors at:  Left",
             ),
             Item("animate_right", enabled_when="animated", label="Right"),
             Item("animate_top", enabled_when="animated", label="Top"),
@@ -642,7 +679,9 @@ def main(argv=None):
         parser.error("Incorrect number of arguments")
 
     show_plot(
-        colormap=opts.colormap, num_levels=opts.num_levels, function=opts.function
+        colormap=opts.colormap,
+        num_levels=opts.num_levels,
+        function=opts.function,
     )
 
 

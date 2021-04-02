@@ -1,7 +1,17 @@
 """ Defines various plot container classes, including stacked, grid, and overlay.
 """
 # Major library imports
-from numpy import amax, any, arange, array, cumsum, hstack, sum, zeros, zeros_like
+from numpy import (
+    amax,
+    any,
+    arange,
+    array,
+    cumsum,
+    hstack,
+    sum,
+    zeros,
+    zeros_like,
+)
 
 # Enthought library imports
 from traits.api import (
@@ -58,7 +68,9 @@ if ConstraintsContainer is not None:
         """A Plot container that supports constraints-based layout"""
 
         # !! Bits copied from BasePlotContainer !!
-        container_under_layers = Tuple("background", "image", "underlay", "plot")
+        container_under_layers = Tuple(
+            "background", "image", "underlay", "plot"
+        )
         draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
         draw_layer = String("plot")
         # !! Bits copied from BasePlotContainer !!
@@ -236,7 +248,9 @@ class StackedPlotContainer(BasePlotContainer):
             position = list(component.outer_position)
             position[ndx] = cur_pos
 
-            bounds = new_bounds_dict.get(component, list(component.outer_bounds))
+            bounds = new_bounds_dict.get(
+                component, list(component.outer_bounds)
+            )
             cur_pos += bounds[ndx] + self.spacing
 
             if (bounds[other_ndx] > size[other_ndx]) or (
@@ -254,7 +268,9 @@ class StackedPlotContainer(BasePlotContainer):
                 elif align == "max":
                     position[other_ndx] = size[other_ndx] - bounds[other_ndx]
                 elif align == "center":
-                    position[other_ndx] = (size[other_ndx] - bounds[other_ndx]) / 2.0
+                    position[other_ndx] = (
+                        size[other_ndx] - bounds[other_ndx]
+                    ) / 2.0
 
             component.outer_position = position
             component.outer_bounds = bounds
@@ -506,7 +522,9 @@ class GridPlotContainer(BasePlotContainer):
             # Regardless of the relationship between available space and
             # resizable preferred sizes, columns/rows where the non-resizable
             # component is largest will always get that amount of space.
-            return_lengths[fixed_length_indices] = fixed_lengths[fixed_length_indices]
+            return_lengths[fixed_length_indices] = fixed_lengths[
+                fixed_length_indices
+            ]
 
             if size <= fixed_size:
                 # We don't use fixed_length_indices here because that mask is
@@ -518,7 +536,9 @@ class GridPlotContainer(BasePlotContainer):
                 return_lengths[indices] = fixed_lengths[indices]
                 return_lengths[~indices] = 0
 
-            elif size > fixed_size and (fixed_lengths > resizable_lengths).all():
+            elif (
+                size > fixed_size and (fixed_lengths > resizable_lengths).all()
+            ):
                 # If we only have to consider non-resizable lengths, and we have
                 # extra space available, then we need to give each column an
                 # amount of extra space corresponding to its size.
@@ -539,10 +559,13 @@ class GridPlotContainer(BasePlotContainer):
                 )
                 desired_space = sum(delta_lengths)
                 if desired_space > 0:
-                    avail_space = size - sum(fixed_lengths)  # [fixed_length_indices])
+                    avail_space = size - sum(
+                        fixed_lengths
+                    )  # [fixed_length_indices])
                     scale = avail_space / desired_space
                     return_lengths[resizable_indices] = (
-                        fixed_lengths[resizable_indices] + scale * delta_lengths
+                        fixed_lengths[resizable_indices]
+                        + scale * delta_lengths
                     ).astype(int)
 
             elif fully_resizable_indices.any():
@@ -551,7 +574,9 @@ class GridPlotContainer(BasePlotContainer):
                 # over for the fully resizable components.  Give the resizable
                 # components their desired amount of space, and then give the
                 # remaining space to the fully resizable components.
-                return_lengths[resizable_indices] = resizable_lengths[resizable_indices]
+                return_lengths[resizable_indices] = resizable_lengths[
+                    resizable_indices
+                ]
                 avail_space = size - preferred_size
                 count = sum(fully_resizable_indices)
                 space = avail_space / count
@@ -593,8 +618,12 @@ class GridPlotContainer(BasePlotContainer):
                     self._h_size_prefs.update_from_component(component, j)
                     self._v_size_prefs.update_from_component(component, i)
 
-        total_width = sum(self._h_size_prefs.get_preferred_size()) + self.hpadding
-        total_height = sum(self._v_size_prefs.get_preferred_size()) + self.vpadding
+        total_width = (
+            sum(self._h_size_prefs.get_preferred_size()) + self.hpadding
+        )
+        total_height = (
+            sum(self._v_size_prefs.get_preferred_size()) + self.vpadding
+        )
         total_size = array([total_width, total_height])
 
         # Account for spacing.  There are N+1 of spaces, where N is the size in
@@ -603,7 +632,9 @@ class GridPlotContainer(BasePlotContainer):
             spacing = zeros(2)
         else:
             spacing = array(self.spacing)
-        total_spacing = array(components.shape[::-1]) * spacing * 2 * (total_size > 0)
+        total_spacing = (
+            array(components.shape[::-1]) * spacing * 2 * (total_size > 0)
+        )
         total_size += total_spacing
 
         for orientation, ndx in (("h", 0), ("v", 1)):
@@ -648,8 +679,12 @@ class GridPlotContainer(BasePlotContainer):
 
         # Compute the total space used by non-resizable and resizable components
         # with non-zero preferred sizes.
-        widths = self._h_size_prefs.compute_size_array(size[0] - total_spacing[0])
-        heights = self._v_size_prefs.compute_size_array(size[1] - total_spacing[1])
+        widths = self._h_size_prefs.compute_size_array(
+            size[0] - total_spacing[0]
+        )
+        heights = self._v_size_prefs.compute_size_array(
+            size[1] - total_spacing[1]
+        )
 
         # Set the baseline h and v positions for each cell.  Resizable components
         # will get these as their position, but non-resizable components will have

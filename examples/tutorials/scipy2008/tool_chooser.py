@@ -10,7 +10,9 @@ from traitsui.api import Item, View, CheckListEditor
 class ToolChooserExample(HasTraits):
 
     plot = Instance(Plot)
-    tools = List(editor=CheckListEditor(values=["PanTool", "ZoomTool", "DragZoom"]))
+    tools = List(
+        editor=CheckListEditor(values=["PanTool", "ZoomTool", "DragZoom"])
+    )
     traits_view = View(
         Item("tools", label="Tools", style="custom"),
         Item("plot", editor=ComponentEditor(), show_label=False),

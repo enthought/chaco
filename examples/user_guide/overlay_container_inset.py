@@ -33,7 +33,9 @@ class OverlayContainerExample(HasTraits):
         )
 
         # Attach tools to the plot
-        zoom = ZoomTool(component=zoomable_plot, tool_mode="box", always_on=False)
+        zoom = ZoomTool(
+            component=zoomable_plot, tool_mode="box", always_on=False
+        )
         zoomable_plot.overlays.append(zoom)
         zoomable_plot.tools.append(PanTool(zoomable_plot))
 

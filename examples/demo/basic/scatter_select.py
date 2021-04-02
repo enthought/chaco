@@ -65,12 +65,16 @@ def _create_plot_component():
 
     # Attach some tools to the plot
     lasso_selection = LassoSelection(
-        component=my_plot, selection_datasource=my_plot.index, drag_button="left"
+        component=my_plot,
+        selection_datasource=my_plot.index,
+        drag_button="left",
     )
     # drag_button="right")
     my_plot.active_tool = lasso_selection
     my_plot.tools.append(ScatterInspector(my_plot))
-    lasso_overlay = LassoOverlay(lasso_selection=lasso_selection, component=my_plot)
+    lasso_overlay = LassoOverlay(
+        lasso_selection=lasso_selection, component=my_plot
+    )
     my_plot.overlays.append(lasso_overlay)
 
     # Uncomment this if you would like to see incremental updates:

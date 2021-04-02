@@ -27,7 +27,12 @@ from chaco.api import (
     LinearMapper,
     Plot,
 )
-from chaco.tools.api import PanTool, RangeSelection, RangeSelectionOverlay, ZoomTool
+from chaco.tools.api import (
+    PanTool,
+    RangeSelection,
+    RangeSelectionOverlay,
+    ZoomTool,
+)
 
 # ===============================================================================
 # # Create the Chaco plot.
@@ -87,7 +92,10 @@ def _create_plot_component():
     colorbar.tools.append(range_selection)
     colorbar.overlays.append(
         RangeSelectionOverlay(
-            component=colorbar, border_color="white", alpha=0.8, fill_color="lightgray"
+            component=colorbar,
+            border_color="white",
+            alpha=0.8,
+            fill_color="lightgray",
         )
     )
 

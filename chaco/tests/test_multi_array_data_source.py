@@ -35,7 +35,9 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
     def test_set_data(self):
         new_array = arange(0, 40, 2).reshape(10, 2)
 
-        with self.assertTraitChanges(self.data_source, "data_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.set_data(new_array)
 
         assert_array_equal(new_array, self.data_source._data)
@@ -51,7 +53,9 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
     def test_get_data_no_data(self):
         data_source = MultiArrayDataSource()
 
-        assert_array_equal(data_source.get_data(), empty(shape=(0, 1), dtype=float))
+        assert_array_equal(
+            data_source.get_data(), empty(shape=(0, 1), dtype=float)
+        )
 
     def test_get_data_mask(self):
         data, mask = self.data_source.get_data_mask()
@@ -130,10 +134,14 @@ class MultiArrayDataTestCase(UnittestTools, unittest.TestCase):
 
     @unittest.skip("change handler missing from class")
     def test_metadata_changed(self):
-        with self.assertTraitChanges(self.data_source, "metadata_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
             self.data_source.metadata = {"new_metadata": True}
 
     @unittest.skip("change handler missing from class")
     def test_metadata_items_changed(self):
-        with self.assertTraitChanges(self.data_source, "metadata_changed", count=1):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
             self.data_source.metadata["new_metadata"] = True

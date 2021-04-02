@@ -114,7 +114,8 @@ class LinePlot(BaseXYPlot):
             if return_distance:
                 scrn_pt = self.map_screen(data_pt)
                 dist = sqrt(
-                    (screen_pt[0] - scrn_pt[0]) ** 2 + (screen_pt[1] - scrn_pt[1]) ** 2
+                    (screen_pt[0] - scrn_pt[0]) ** 2
+                    + (screen_pt[1] - scrn_pt[1]) ** 2
                 )
                 return (data_pt[0], data_pt[1], dist)
             else:
@@ -158,7 +159,9 @@ class LinePlot(BaseXYPlot):
                     ndx2 - 1,
                 ),
             )
-            end_ndx = min(len(self.value.get_data()) - 1, max(ndx1 + 1, ndx2 + 1))
+            end_ndx = min(
+                len(self.value.get_data()) - 1, max(ndx1 + 1, ndx2 + 1)
+            )
 
             # Compute the distances to all points in the range of interest
             start = array(
@@ -212,7 +215,9 @@ class LinePlot(BaseXYPlot):
         """
 
         if self.index is None or self.value is None:
-            raise IndexError("cannot index when data source index or value is None")
+            raise IndexError(
+                "cannot index when data source index or value is None"
+            )
 
         index_data = self.index.get_data()
         value_data = self.value.get_data()
@@ -328,7 +333,9 @@ class LinePlot(BaseXYPlot):
                 downsampled = []
             else:
                 # TODO: implement other downsampling methods
-                from chaco.downsample.lttb import largest_triangle_three_buckets
+                from chaco.downsample.lttb import (
+                    largest_triangle_three_buckets,
+                )
 
                 downsampled = [
                     largest_triangle_three_buckets(p, delta_screen)
@@ -353,7 +360,9 @@ class LinePlot(BaseXYPlot):
                 "connectedhold": self._render_connected_hold,
                 "connectedpoints": self._render_normal,
             }
-            render = render_method_dict.get(self.render_style, self._render_normal)
+            render = render_method_dict.get(
+                self.render_style, self._render_normal
+            )
 
             if selected_points is not None:
                 gc.set_stroke_color(self.selected_color_)
@@ -471,7 +480,8 @@ def _closest_point(target, p1, p2):
     that range is a point outisde p1, p2 on the line
     Note: can divide by zero, so user should check for that"""
     t = (
-        (p1[0] - target[0]) * (p1[0] - p2[0]) + (p1[1] - target[1]) * (p1[1] - p2[1])
+        (p1[0] - target[0]) * (p1[0] - p2[0])
+        + (p1[1] - target[1]) * (p1[1] - p2[1])
     ) / ((p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]))
     return t
 

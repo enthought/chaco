@@ -57,7 +57,9 @@ class LegendHighlighter(LegendTool):
     _selected_renderers = List
 
     def normal_left_down(self, event):
-        if not self.component.visible or not self.component.is_in(event.x, event.y):
+        if not self.component.visible or not self.component.is_in(
+            event.x, event.y
+        ):
             return
 
         plots = get_hit_plots(self.component, event)
@@ -70,7 +72,9 @@ class LegendHighlighter(LegendTool):
                     self._selected_renderers.append(plot)
         elif plots:
             # User in single-select mode.
-            add_plot = any(plot not in self._selected_renderers for plot in plots)
+            add_plot = any(
+                plot not in self._selected_renderers for plot in plots
+            )
             self._selected_renderers = []
             if add_plot:
                 self._selected_renderers.extend(plots)

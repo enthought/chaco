@@ -12,10 +12,14 @@ class PlotExample3(PlotExample2):
 
         rplot, lplot = self.right_plot, self.left_plot
         lplot.overlays.append(
-            LineInspector(component=lplot, write_metadata=True, is_listener=True)
+            LineInspector(
+                component=lplot, write_metadata=True, is_listener=True
+            )
         )
         rplot.overlays.append(
-            LineInspector(component=rplot, write_metadata=True, is_listener=True)
+            LineInspector(
+                component=rplot, write_metadata=True, is_listener=True
+            )
         )
         rplot.index = lplot.index
 

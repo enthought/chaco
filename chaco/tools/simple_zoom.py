@@ -4,7 +4,9 @@
 
 import warnings
 
-warnings.warn("SimpleZoom has been deprecated, use ZoomTool", DeprecationWarning)
+warnings.warn(
+    "SimpleZoom has been deprecated, use ZoomTool", DeprecationWarning
+)
 
 from numpy import array
 
@@ -148,7 +150,10 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             x_range = self.component.x_mapper.range
             y_range = self.component.y_mapper.range
             self._orig_low_setting = (x_range.low_setting, y_range.low_setting)
-            self._orig_high_setting = (x_range.high_setting, y_range.high_setting)
+            self._orig_high_setting = (
+                x_range.high_setting,
+                y_range.high_setting,
+            )
         component.observe(self._reset_state_to_current, "index_data_changed")
 
     def enable(self, event=None):
@@ -246,8 +251,12 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             gc.set_alpha(self.alpha)
             gc.set_fill_color(self.color_)
             gc.set_stroke_color(self.border_color_)
-            gc.clip_to_rect(component.x, component.y, component.width, component.height)
-            gc.rect(lower_left[0], lower_left[1], upper_right[0], upper_right[1])
+            gc.clip_to_rect(
+                component.x, component.y, component.width, component.height
+            )
+            gc.rect(
+                lower_left[0], lower_left[1], upper_right[0], upper_right[1]
+            )
             gc.draw_path()
 
     def normal_left_down(self, event):
@@ -352,7 +361,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             if low > high:
                 low, high = high, low
         else:
-            low, high = self._map_coordinate_box(self._screen_start, self._screen_end)
+            low, high = self._map_coordinate_box(
+                self._screen_start, self._screen_end
+            )
 
         new_zoom_range = (low, high)
         self._append_state(new_zoom_range)
@@ -391,8 +402,14 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 # "box" mode; reset both axes.
                 x_range = self.component.x_mapper.range
                 y_range = self.component.y_mapper.range
-                x_range.low_setting, y_range.low_setting = self._orig_low_setting
-                x_range.high_setting, y_range.high_setting = self._orig_high_setting
+                (
+                    x_range.low_setting,
+                    y_range.low_setting,
+                ) = self._orig_low_setting
+                (
+                    x_range.high_setting,
+                    y_range.high_setting,
+                ) = self._orig_high_setting
 
                 # resetting the ranges will allow 'auto' to pick the values
                 x_range.reset()
@@ -403,7 +420,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             if self.tool_mode == "range":
                 # "range" mode; zoom the one axis.
                 mapper = self._get_mapper()
-                if self._zoom_limit_reached(orig_low, orig_high, low, high, mapper):
+                if self._zoom_limit_reached(
+                    orig_low, orig_high, low, high, mapper
+                ):
                     self._pop_state()
                     return
                 mapper.range.low = low
@@ -411,9 +430,16 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             else:
                 # "box" mode; zoom both axes.
                 for ndx in (0, 1):
-                    mapper = (self.component.x_mapper, self.component.y_mapper)[ndx]
+                    mapper = (
+                        self.component.x_mapper,
+                        self.component.y_mapper,
+                    )[ndx]
                     if self._zoom_limit_reached(
-                        orig_low[ndx], orig_high[ndx], low[ndx], high[ndx], mapper
+                        orig_low[ndx],
+                        orig_high[ndx],
+                        low[ndx],
+                        high[ndx],
+                        mapper,
                     ):
                         # pop _current_state off the stack and leave the actual
                         # bounds unmodified.
@@ -486,8 +512,12 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             for ndx, mapper in mapper_list:
                 screenrange = mapper.screen_bounds
                 mouse_val = mouse_pos[ndx]
-                newscreenlow = mouse_val + zoom * (screenlow_pt[ndx] - mouse_val)
-                newscreenhigh = mouse_val + zoom * (screenhigh_pt[ndx] - mouse_val)
+                newscreenlow = mouse_val + zoom * (
+                    screenlow_pt[ndx] - mouse_val
+                )
+                newscreenhigh = mouse_val + zoom * (
+                    screenhigh_pt[ndx] - mouse_val
+                )
 
                 newlow = mapper.map_data(newscreenlow)
                 newhigh = mapper.map_data(newscreenhigh)
@@ -509,7 +539,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 if newlow > newhigh:
                     # This happens when the orientation of the axis is reversed.
                     newlow, newhigh = newhigh, newlow
-                domain_min, domain_max = getattr(mapper, "domain_limits", (None, None))
+                domain_min, domain_max = getattr(
+                    mapper, "domain_limits", (None, None)
+                )
                 if domain_min is not None and newlow < domain_min:
                     newlow = domain_min
                 if domain_max is not None and newhigh > domain_max:

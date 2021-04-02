@@ -34,7 +34,11 @@ def sec_from_hms(start, *times):
 class TRangeTestCase(TicksTestCase):
     def test_null_ranges(self):
         ranges = (
-            ((2005, 3, 15, 10, 23, 15), (2005, 3, 15, 10, 23, 45), {"minutes": 1}),
+            (
+                (2005, 3, 15, 10, 23, 15),
+                (2005, 3, 15, 10, 23, 45),
+                {"minutes": 1},
+            ),
             ((2005, 3, 15, 10, 23), (2005, 3, 15, 10, 47), {"hours": 1}),
             ((2005, 3, 15, 5, 23), (2005, 3, 15, 18, 43), {"days": 1}),
             ((2005, 3, 15, 10, 30), (2005, 12, 25, 18, 30), {"years": 1}),
@@ -79,7 +83,9 @@ class TRangeTestCase(TicksTestCase):
 
     def test_hourly(self):
         # test between Feb 29,2004 10:15pm and Mar 1st 3:15am
-        ticks = trange(DTS(2004, 2, 29, 22, 15), DTS(2004, 3, 1, 3, 15), hours=1)
+        ticks = trange(
+            DTS(2004, 2, 29, 22, 15), DTS(2004, 3, 1, 3, 15), hours=1
+        )
         start = DTS(2004, 2, 29, 23)
         desired = [start + i * 3600 for i in range(5)]
         self.check_ticks(ticks, desired)
@@ -132,7 +138,9 @@ class TimeScaleTestCase(TicksTestCase):
         start = DTS(2005, 3, 12)
         end = DTS(2005, 4, 10)
         desired = list(
-            starmap(DTS, ((2005, 3, 15), (2005, 3, 22), (2005, 4, 1), (2005, 4, 8)))
+            starmap(
+                DTS, ((2005, 3, 15), (2005, 3, 22), (2005, 4, 1), (2005, 4, 8))
+            )
         )
         self.check_ticks(ts.ticks(start, end), desired)
 
@@ -143,7 +151,13 @@ class TimeScaleTestCase(TicksTestCase):
         desired = list(
             starmap(
                 DTS,
-                ((2005, 1, 1), (2005, 4, 1), (2005, 8, 1), (2006, 1, 1), (2006, 4, 1)),
+                (
+                    (2005, 1, 1),
+                    (2005, 4, 1),
+                    (2005, 8, 1),
+                    (2006, 1, 1),
+                    (2006, 4, 1),
+                ),
             )
         )
         self.check_ticks(ts.ticks(start, end), desired)
@@ -156,7 +170,9 @@ class TimeScaleTestCase(TicksTestCase):
         start = base + 2.8e-6
         end = base + 9.2e-6
         ticks = ts.ticks(start, end)
-        desired = [base + i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6, 9e-6)]
+        desired = [
+            base + i for i in (3e-6, 4e-6, 5e-6, 6e-6, 7e-6, 8e-6, 9e-6)
+        ]
         self.check_ticks(ticks, desired)
 
 
@@ -199,7 +215,9 @@ class TimeFormatterTestCase(TicksTestCase):
         test_intervals = ([(2005, 3, 15, 10, 30), (2005, 3, 15, 10, 50), 50],)
         expected = (4.0, 12.0)
         for start, end, width in test_intervals:
-            est_width = scale.label_width(DTS(*start), DTS(*end), char_width=width)
+            est_width = scale.label_width(
+                DTS(*start), DTS(*end), char_width=width
+            )
             self.assertEqual(est_width, expected)
 
     def test_labels(self):

@@ -254,7 +254,9 @@ class DataRangeTestCase(unittest.TestCase):
             assert_equal(margin, 1.0)
             return -999.0, 999.0
 
-        r = DataRange1D(tight_bounds=False, margin=1.0, bounds_func=custom_func)
+        r = DataRange1D(
+            tight_bounds=False, margin=1.0, bounds_func=custom_func
+        )
         ary = arange(10.0)
         ds = ArrayDataSource(ary)
         r.sources.append(ds)

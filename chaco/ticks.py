@@ -179,10 +179,18 @@ class MinorTickGenerator(DefaultTickGenerator):
     ):
         if interval == "auto":
             # for the default interval, generate a smaller tick interval
-            interval = auto_interval(0, auto_interval(data_low, data_high), max_ticks=5)
+            interval = auto_interval(
+                0, auto_interval(data_low, data_high), max_ticks=5
+            )
 
         return super(MinorTickGenerator, self).get_ticks(
-            data_low, data_high, bounds_low, bounds_high, interval, use_endpoints, scale
+            data_low,
+            data_high,
+            bounds_low,
+            bounds_high,
+            interval,
+            use_endpoints,
+            scale,
         )
 
 
@@ -192,7 +200,12 @@ class MinorTickGenerator(DefaultTickGenerator):
 
 
 def auto_ticks(
-    data_low, data_high, bound_low, bound_high, tick_interval, use_endpoints=True
+    data_low,
+    data_high,
+    bound_low,
+    bound_high,
+    tick_interval,
+    use_endpoints=True,
 ):
     """Finds locations for axis tick marks.
 
@@ -363,7 +376,9 @@ def auto_interval(data_low, data_high, max_ticks=9):
     # We'll choose from between 2 and 8 tick marks.
     # Preference is given to more ticks:
     #   Note reverse order and see kludge below...
-    divisions = arange(max_ticks - 1, 2.0, -1.0)  # for max_ticks=9, ( 7, 6, ..., 3 )
+    divisions = arange(
+        max_ticks - 1, 2.0, -1.0
+    )  # for max_ticks=9, ( 7, 6, ..., 3 )
 
     # Calculate the intervals for the divisions:
     candidate_intervals = range / divisions
@@ -454,14 +469,21 @@ def tick_intervals(data_low, data_high, intervals):
 
     while True:
         result = interval * factor
-        if (floor(data_low / result) * result) + (intervals * result) >= data_high:
+        if (floor(data_low / result) * result) + (
+            intervals * result
+        ) >= data_high:
             return result
         index = (index + 1) % 4
         interval *= (2.0, 1.25, 2.0, 2.0)[index]
 
 
 def log_auto_ticks(
-    data_low, data_high, bound_low, bound_high, tick_interval, use_endpoints=True
+    data_low,
+    data_high,
+    bound_low,
+    bound_high,
+    tick_interval,
+    use_endpoints=True,
 ):
     """Like auto_ticks(), but for log scales."""
     tick_goal = 15
@@ -559,7 +581,9 @@ def calc_bound(end_point, tick_interval, is_upper):
     end of the axis.
     """
     quotient, remainder = divmod(end_point, tick_interval)
-    if (remainder == 0.0) or (((tick_interval - remainder) / tick_interval) < 0.00001):
+    if (remainder == 0.0) or (
+        ((tick_interval - remainder) / tick_interval) < 0.00001
+    ):
         return end_point
 
     c1 = (quotient + 1.0) * tick_interval

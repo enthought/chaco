@@ -91,7 +91,9 @@ class CMapImagePlot(ImagePlot):
         """
         if not self._mapped_image_cache_valid:
             if "selection_masks" in self.value.metadata:
-                self._compute_cached_image(self.value.metadata["selection_masks"])
+                self._compute_cached_image(
+                    self.value.metadata["selection_masks"]
+                )
             else:
                 self._compute_cached_image()
         ImagePlot._render(self, gc)
@@ -132,7 +134,9 @@ class CMapImagePlot(ImagePlot):
         else:
             self._mapped_image_cache_valid = True
             ImagePlot._compute_cached_image(
-                self, self.value.data, mapper=lambda data: self._cmap_values(data)
+                self,
+                self.value.data,
+                mapper=lambda data: self._cmap_values(data),
             )
 
     def _update_value_mapper(self, event=None):

@@ -61,7 +61,9 @@ def add_default_axes(plot, orientation="normal", vtitle="", htitle=""):
         v_mapper = plot.index_mapper
         h_mapper = plot.value_mapper
 
-    left = PlotAxis(orientation="left", title=vtitle, mapper=v_mapper, component=plot)
+    left = PlotAxis(
+        orientation="left", title=vtitle, mapper=v_mapper, component=plot
+    )
 
     bottom = PlotAxis(
         orientation="bottom", title=htitle, mapper=h_mapper, component=plot
@@ -134,7 +136,9 @@ def _create_plot_component():
             )
             plot.index.sort_order = "ascending"
         else:
-            plot = create_scatter_plot((timex, y), color=tuple(COLOR_PALETTE[i]))
+            plot = create_scatter_plot(
+                (timex, y), color=tuple(COLOR_PALETTE[i])
+            )
         plot.bgcolor = "white"
         plot.border_visible = True
         if i == 0:
@@ -142,7 +146,9 @@ def _create_plot_component():
             index_mapper = plot.index_mapper
             left, bottom = add_default_axes(plot)
             left.tick_generator = ScalesTickGenerator()
-            bottom.tick_generator = ScalesTickGenerator(scale=CalendarScaleSystem())
+            bottom.tick_generator = ScalesTickGenerator(
+                scale=CalendarScaleSystem()
+            )
             add_default_grids(plot, tick_gen=bottom.tick_generator)
         else:
             plot.value_mapper = value_mapper

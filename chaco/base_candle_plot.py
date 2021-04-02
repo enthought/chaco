@@ -13,7 +13,8 @@ from .base_xy_plot import BaseXYPlot
 
 def Alias(name):
     return Property(
-        lambda obj: getattr(obj, name), lambda obj, val: setattr(obj, name, val)
+        lambda obj: getattr(obj, name),
+        lambda obj, val: setattr(obj, name, val),
     )
 
 
@@ -116,19 +117,22 @@ class BaseCandlePlot(BaseXYPlot):
 
                 if min is None:
                     gc.line_set(
-                        stack((bar_vert_center, bar_max)), stack((bar_vert_center, max))
+                        stack((bar_vert_center, bar_max)),
+                        stack((bar_vert_center, max)),
                     )
                     if self.end_cap:
                         gc.line_set(stack((left, max)), stack((right, max)))
                 elif max is None:
                     gc.line_set(
-                        stack((bar_vert_center, min)), stack((bar_vert_center, bar_min))
+                        stack((bar_vert_center, min)),
+                        stack((bar_vert_center, bar_min)),
                     )
                     if self.end_cap:
                         gc.line_set(stack((left, min)), stack((right, min)))
                 else:
                     gc.line_set(
-                        stack((bar_vert_center, min)), stack((bar_vert_center, max))
+                        stack((bar_vert_center, min)),
+                        stack((bar_vert_center, max)),
                     )
                     if self.end_cap:
                         gc.line_set(stack((left, max)), stack((right, max)))

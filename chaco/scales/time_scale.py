@@ -6,10 +6,25 @@ from math import floor
 
 from .scales import AbstractScale, ScaleSystem, frange, heckbert_interval
 from .formatters import TimeFormatter
-from .safetime import safe_fromtimestamp, datetime, timedelta, EPOCH, MINYEAR, MAXYEAR
+from .safetime import (
+    safe_fromtimestamp,
+    datetime,
+    timedelta,
+    EPOCH,
+    MINYEAR,
+    MAXYEAR,
+)
 
 # Labels for date and time units.
-datetime_scale = ["microsecond", "second", "minute", "hour", "day", "month", "year"]
+datetime_scale = [
+    "microsecond",
+    "second",
+    "minute",
+    "hour",
+    "day",
+    "month",
+    "year",
+]
 datetime_zeros = list(zip(datetime_scale, [0, 0, 0, 0, 1, 1, 1]))
 
 
@@ -115,7 +130,8 @@ def trange_months(start, end, months):
     dt_end = safe_fromtimestamp(end)
     dmonths = (12 * (dt_start.year - 2000) + dt_start.month - 1) % months
     dt = _advance_month(
-        dt_start.replace(day=1, hour=0, minute=0, second=0, microsecond=0), -dmonths
+        dt_start.replace(day=1, hour=0, minute=0, second=0, microsecond=0),
+        -dmonths,
     )
     while dt < dt_start:
         dt = _advance_month(dt, months)
@@ -178,7 +194,8 @@ def trange(start, end, **time_unit):
 
     if len(time_units) != 1:
         raise ValueError(
-            "trange() only takes one keyword argument, got %d" % len(time_units)
+            "trange() only takes one keyword argument, got %d"
+            % len(time_units)
         )
 
     # Months and years are non-uniform, so we special-case them.
@@ -268,7 +285,9 @@ class TimeScale(AbstractScale):
         # This is only approximate, but puts us in the ballpark
         if self.unit in ("milliseconds", "microseconds"):
             ticks = self.ticks(start, end, desired_ticks=8)
-            coarsest_scale_count = (end - start) / (500 * self.SECS_PER_UNIT[self.unit])
+            coarsest_scale_count = (end - start) / (
+                500 * self.SECS_PER_UNIT[self.unit]
+            )
             return max(len(ticks), coarsest_scale_count)
         else:
             return (end - start) / self.resolution
@@ -332,7 +351,11 @@ class TimeScale(AbstractScale):
 
         elif self.unit == "month_of_year":
             # get naive datetimes for start of each month in range of years
-            dates = [datetime(year, month, 1) for year in years for month in self.vals]
+            dates = [
+                datetime(year, month, 1)
+                for year in years
+                for month in self.vals
+            ]
         else:
             raise ValueError("Unknown calendar unit '%s'" % self.unit)
 
@@ -351,7 +374,9 @@ class TimeScale(AbstractScale):
         Overrides AbstractScale.
         """
         ticks = self.ticks(start, end, numlabels)
-        labels = self.formatter.format(ticks, numlabels, char_width, ticker=self)
+        labels = self.formatter.format(
+            ticks, numlabels, char_width, ticker=self
+        )
         return list(zip(ticks, labels))
 
     def label_width(self, start, end, numlabels=None, char_width=None):
@@ -410,7 +435,8 @@ class CalendarScaleSystem(ScaleSystem):
                 closest_scale = self.default_scale
             else:
                 raise ValueError(
-                    "CalendarScaleSystem has not be configured " "with any scales."
+                    "CalendarScaleSystem has not be configured "
+                    "with any scales."
                 )
         elif end - start < 1e-6 or end - start > 1e5 * 365 * 24 * 3600:
             closest_scale = self.default_scale

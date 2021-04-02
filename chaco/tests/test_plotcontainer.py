@@ -88,13 +88,17 @@ class OverlayPlotContainerTestCase(ContainerTestCase):
         self.assert_tuple(component.position, (0.0, 0.0))
         self.assert_tuple(component.bounds, (200.0, 300.0))
 
-        comp2 = PlotComponent(resizable="h", position=[10, 20], bounds=[100, 150])
+        comp2 = PlotComponent(
+            resizable="h", position=[10, 20], bounds=[100, 150]
+        )
         container.add(comp2)
         container.do_layout()
         self.assert_tuple(comp2.position, (0.0, 20.0))
         self.assert_tuple(comp2.bounds, (200.0, 150.0))
 
-        comp3 = PlotComponent(resizable="v", position=[30, 40], bounds=[100, 150])
+        comp3 = PlotComponent(
+            resizable="v", position=[30, 40], bounds=[100, 150]
+        )
         container.add(comp3)
         container.do_layout()
         self.assert_tuple(comp3.position, (30.0, 0.0))
@@ -207,7 +211,9 @@ class VPlotContainerTestCase(ContainerTestCase):
         self.assertEqual(comp1.position, [100, 0])
 
     def test_fit_components(self):
-        container = VPlotContainer(bounds=[200, 300], resizable="v", fit_components="v")
+        container = VPlotContainer(
+            bounds=[200, 300], resizable="v", fit_components="v"
+        )
         comp1 = StaticPlotComponent([50, 100], padding=5)
         comp2 = StaticPlotComponent([50, 120], padding=5)
         container.add(comp1)

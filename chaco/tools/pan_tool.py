@@ -189,7 +189,9 @@ class PanTool(BaseTool):
                 # linear mappers (which is used 99% of the time).
                 data = [
                     arr
-                    for arr in (source.get_data() for source in mapper.range.sources)
+                    for arr in (
+                        source.get_data() for source in mapper.range.sources
+                    )
                     if arr.size > 0
                 ]
                 if domain_min is None:

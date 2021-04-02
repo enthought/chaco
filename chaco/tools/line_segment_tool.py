@@ -159,7 +159,9 @@ class LineSegmentTool(AbstractOverlay):
             if event.control_down:
                 # Delete the point
                 self.points.pop(over)
-                self.line.points = list(self.component.map_screen(array(self.points)))
+                self.line.points = list(
+                    self.component.map_screen(array(self.points))
+                )
                 self.request_redraw()
             else:
                 self.event_state = "dragging"
@@ -283,7 +285,10 @@ class LineSegmentTool(AbstractOverlay):
         if draw_func:
             with gc:
                 gc.clip_to_rect(
-                    component.x, component.y, component.width - 1, component.height - 1
+                    component.x,
+                    component.y,
+                    component.width - 1,
+                    component.height - 1,
                 )
                 draw_func(gc)
 

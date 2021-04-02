@@ -34,7 +34,9 @@ class PlotExample(HasTraits):
     vectorlen = Int(15)
 
     traits_view = View(
-        Item("plot", editor=ComponentEditor(), show_label=False), width=600, height=600
+        Item("plot", editor=ComponentEditor(), show_label=False),
+        width=600,
+        height=600,
     )
 
     def _plot_default(self):
@@ -45,7 +47,9 @@ class PlotExample(HasTraits):
 
         # Create vectors.
         vectorlen = self.vectorlen
-        vectors = array((random(numpts) * vectorlen, random(numpts) * vectorlen)).T
+        vectors = array(
+            (random(numpts) * vectorlen, random(numpts) * vectorlen)
+        ).T
 
         data = ArrayPlotData()
         data.set_data("index", x)

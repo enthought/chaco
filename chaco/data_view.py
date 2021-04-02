@@ -45,7 +45,10 @@ OrientedMapperProperty = Property(get_mapper, set_mapper)
 
 def get_axis(self, attr_name):
     """Getter function used by AxisProperty."""
-    if (attr_name, self.orientation) in [("index_axis", "h"), ("value_axis", "v")]:
+    if (attr_name, self.orientation) in [
+        ("index_axis", "h"),
+        ("value_axis", "v"),
+    ]:
         return self.x_axis
     else:
         return self.y_axis
@@ -53,7 +56,10 @@ def get_axis(self, attr_name):
 
 def set_axis(self, attr_name, new):
     """Setter function used by AxisProperty."""
-    if (attr_name, self.orientation) in [("index_axis", "h"), ("value_axis", "v")]:
+    if (attr_name, self.orientation) in [
+        ("index_axis", "h"),
+        ("value_axis", "v"),
+    ]:
         self.x_axis = new
     else:
         self.y_axis = new
@@ -65,7 +71,10 @@ AxisProperty = Property(get_axis, set_axis)
 
 def get_grid(self, attr_name):
     """Getter function used by GridProperty."""
-    if (attr_name, self.orientation) in [("index_grid", "v"), ("value_grid", "h")]:
+    if (attr_name, self.orientation) in [
+        ("index_grid", "v"),
+        ("value_grid", "h"),
+    ]:
         return self.y_grid
     else:
         return self.x_grid
@@ -73,7 +82,10 @@ def get_grid(self, attr_name):
 
 def set_grid(self, attr_name, new):
     """Setter function used by GridProperty."""
-    if (attr_name, self.orientation) in [("index_grid", "v"), ("value_grid", "h")]:
+    if (attr_name, self.orientation) in [
+        ("index_grid", "v"),
+        ("value_grid", "h"),
+    ]:
         self.y_grid = new
     else:
         self.y_grid = new
@@ -94,7 +106,9 @@ class DataView(OverlayPlotContainer):
     orientation = Enum("h", "v")
 
     #: The default location of the origin  for new plots
-    default_origin = Enum("bottom left", "top left", "bottom right", "top right")
+    default_origin = Enum(
+        "bottom left", "top left", "bottom right", "top right"
+    )
 
     #: The origin reported to axes, etc
     origin = Property(depends_on="default_origin")
@@ -237,7 +251,9 @@ class DataView(OverlayPlotContainer):
         # At some point it would be good to change the DataView to use
         # the GridMapper, and then use its map_data() method.
         x, y = screen_pt
-        return array((self.index_mapper.map_data(x), self.value_mapper.map_data(y)))
+        return array(
+            (self.index_mapper.map_data(x), self.value_mapper.map_data(y))
+        )
 
     # ------------------------------------------------------------------------
     # Private methods

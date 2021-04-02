@@ -114,7 +114,9 @@ class LineInspector(BaseTool):
             if isinstance(plot, BaseXYPlot):
                 if self.write_metadata:
                     if self.inspect_mode == "space":
-                        index_coord, value_coord = self._map_to_data(event.x, event.y)
+                        index_coord, value_coord = self._map_to_data(
+                            event.x, event.y
+                        )
                         plot.index.metadata[self.metadata_name] = index_coord
                         plot.value.metadata[self.metadata_name] = value_coord
                     else:
@@ -127,15 +129,21 @@ class LineInspector(BaseTool):
             elif isinstance(plot, Base2DPlot):
                 if self.write_metadata:
                     try:
-                        old_x_data, old_y_data = plot.index.metadata[self.metadata_name]
+                        old_x_data, old_y_data = plot.index.metadata[
+                            self.metadata_name
+                        ]
                     except:
                         old_x_data, old_y_data = (None, None)
 
                     if self.inspect_mode == "space":
                         if plot.orientation == "h":
-                            x_coord, y_coord = plot.map_data([(event.x, event.y)])[0]
+                            x_coord, y_coord = plot.map_data(
+                                [(event.x, event.y)]
+                            )[0]
                         else:
-                            y_coord, x_coord = plot.map_data([(event.x, event.y)])[0]
+                            y_coord, x_coord = plot.map_data(
+                                [(event.x, event.y)]
+                            )[0]
                         if self.axis == "index_x":
                             metadata = x_coord, old_y_data
                         elif self.axis == "index_y":

@@ -257,19 +257,26 @@ class Label(HasTraits):
                 max_width = 0
                 for line in self.text.split("\n")[::-1]:
                     if line != "":
-                        (width, height, descent, leading) = gc.get_full_text_extent(
-                            line
-                        )
+                        (
+                            width,
+                            height,
+                            descent,
+                            leading,
+                        ) = gc.get_full_text_extent(line)
                         ascent = height - abs(descent)
                         if width > max_width:
                             max_width = width
-                        new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
+                        new_y_pos = (
+                            prev_y_pos + prev_y_height + self.line_spacing
+                        )
                     else:
                         # For blank lines, we use the height of the previous
                         # line, if there is one.  The width is 0.
                         leading = 0
                         if prev_y_height != -self.line_spacing:
-                            new_y_pos = prev_y_pos + prev_y_height + self.line_spacing
+                            new_y_pos = (
+                                prev_y_pos + prev_y_height + self.line_spacing
+                            )
                             ascent = prev_y_height
                         else:
                             new_y_pos = prev_y_pos

@@ -60,7 +60,10 @@ class PlotExample(HasTraits):
             labels=label_list,
         )
         vertical2_axis = LabelAxis(
-            plot, orientation="right", positions=list(range(1, 10)), labels=label_list
+            plot,
+            orientation="right",
+            positions=list(range(1, 10)),
+            labels=label_list,
         )
 
         plot.underlays.append(vertical_axis)
@@ -97,7 +100,11 @@ class PlotExample(HasTraits):
 
         # Create the value range
         value_range = DataRange1D(
-            vals, vals2, low_setting="auto", high_setting="auto", tight_bounds=False
+            vals,
+            vals2,
+            low_setting="auto",
+            high_setting="auto",
+            tight_bounds=False,
         )
         value_mapper = LinearMapper(range=value_range, tight_bounds=False)
 

@@ -45,7 +45,9 @@ class ZoomOverlay(AbstractOverlay):
         left_end = array([self.destination.x, y])
         right_end = array([self.destination.x2, y])
 
-        polygon = array((left_top, left_mid, left_end, right_end, right_mid, right_top))
+        polygon = array(
+            (left_top, left_mid, left_end, right_end, right_mid, right_top)
+        )
         left_line = array((left_top, left_mid, left_end))
         right_line = array((right_end, right_mid, right_top))
 

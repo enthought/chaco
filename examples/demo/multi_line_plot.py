@@ -20,7 +20,10 @@ class MyPlot(HasTraits):
     plot = Instance(Plot)
 
     traits_view = View(
-        UItem("plot", editor=ComponentEditor()), width=700, height=600, resizable=True
+        UItem("plot", editor=ComponentEditor()),
+        width=700,
+        height=600,
+        resizable=True,
     )
 
     def __init__(self, x_index, y_index, data, **kw):

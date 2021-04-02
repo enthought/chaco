@@ -18,7 +18,9 @@ class SvgRangeSelectionOverlay(StatusLayer):
         the other which defines the fill.
     """
 
-    filename = os.path.join(os.path.dirname(__file__), "data", "range_selection.svg")
+    filename = os.path.join(
+        os.path.dirname(__file__), "data", "range_selection.svg"
+    )
 
     alpha = 0.5
 
@@ -62,9 +64,13 @@ class SvgRangeSelectionOverlay(StatusLayer):
 
             if self.axis == "index":
                 if isinstance(self.mapper, GridMapper):
-                    scale_width = (coords[-1][0] - coords[0][0]) / self.doc_width
+                    scale_width = (
+                        coords[-1][0] - coords[0][0]
+                    ) / self.doc_width
                 else:
-                    scale_width = (coords[0][-1] - coords[0][0]) / self.doc_width
+                    scale_width = (
+                        coords[0][-1] - coords[0][0]
+                    ) / self.doc_width
                 scale_height = float(plot_height) / self.doc_height
                 gc.translate_ctm(coords[0][0], origin_y + plot_height)
             else:

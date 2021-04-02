@@ -154,7 +154,8 @@ class DataFramePlotData(AbstractPlotData):
         """Generate n new names"""
         max_index = max(self._generate_indices())
         names = [
-            "series{0:d}".format(i) for i in range(max_index + 1, max_index + n + 1)
+            "series{0:d}".format(i)
+            for i in range(max_index + 1, max_index + n + 1)
         ]
         return names
 

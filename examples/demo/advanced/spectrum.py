@@ -43,10 +43,14 @@ def _create_plot_component(obj):
     obj.spectrum_data.set_data("amplitude", empty_amplitude)
 
     obj.spectrum_plot = Plot(obj.spectrum_data)
-    obj.spectrum_plot.plot(("frequency", "amplitude"), name="Spectrum", color="red")
+    obj.spectrum_plot.plot(
+        ("frequency", "amplitude"), name="Spectrum", color="red"
+    )
     obj.spectrum_plot.padding = 50
     obj.spectrum_plot.title = "Spectrum"
-    spec_range = list(obj.spectrum_plot.plots.values())[0][0].value_mapper.range
+    spec_range = list(obj.spectrum_plot.plots.values())[0][
+        0
+    ].value_mapper.range
     spec_range.low = 0.0
     spec_range.high = 5.0
     obj.spectrum_plot.index_axis.title = "Frequency (Hz)"
@@ -131,7 +135,9 @@ class TimerController(HasTraits):
         self.spectrum_data.set_data("amplitude", spectrum)
         self.time_data.set_data("amplitude", time)
         spectrogram_data = self.spectrogram_plotdata.get_data("imagedata")
-        spectrogram_data = hstack((spectrogram_data[:, 1:], transpose([spectrum])))
+        spectrogram_data = hstack(
+            (spectrogram_data[:, 1:], transpose([spectrum]))
+        )
 
         self.spectrogram_plotdata.set_data("imagedata", spectrogram_data)
         self.spectrum_plot.request_redraw()

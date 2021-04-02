@@ -193,7 +193,9 @@ def show():
     is_event_loop_running = getattr(
         guisupport, "is_event_loop_running_" + ETSConfig.toolkit
     )
-    start_event_loop = getattr(guisupport, "start_event_loop_" + ETSConfig.toolkit)
+    start_event_loop = getattr(
+        guisupport, "start_event_loop_" + ETSConfig.toolkit
+    )
 
     if not is_event_loop_running():
         frame = session.active_window
@@ -292,7 +294,9 @@ def _do_plot_boilerplate(kwargs, image=False):
         cont.tools.append(PanTool(cont))
     if not ZoomTool in existing_tools:
         cont.overlays.append(
-            ZoomTool(cont, tool_mode="box", always_on=True, drag_button="right")
+            ZoomTool(
+                cont, tool_mode="box", always_on=True, drag_button="right"
+            )
         )
 
     if not session.hold:
@@ -428,7 +432,9 @@ def pcolor(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_pcolor(session.data, session.colormap, cont, *data, **kwargs)
+    plots = plot_maker.do_pcolor(
+        session.data, session.colormap, cont, *data, **kwargs
+    )
     cont.request_redraw()
 
 
@@ -780,7 +786,11 @@ def tool():
 
 
 def save(
-    filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, units="inch"
+    filename="chacoplot.png",
+    dpi=72,
+    pagesize="letter",
+    dest_box=None,
+    units="inch",
 ):
     """Saves the active plot to an file.  Currently supported file types
     are: bmp, png, jpg.

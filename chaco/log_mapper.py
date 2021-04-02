@@ -1,7 +1,18 @@
 """ Defines the LogMapper and InvalidDataRangeException classes.
 """
 # Major library imports
-from numpy import array, isnan, log, log10, exp, zeros, sometrue, floor, ceil, ndarray
+from numpy import (
+    array,
+    isnan,
+    log,
+    log10,
+    exp,
+    zeros,
+    sometrue,
+    floor,
+    ceil,
+    ndarray,
+)
 import numpy as np
 
 # Enthought library imports

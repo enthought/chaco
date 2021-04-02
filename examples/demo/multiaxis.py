@@ -63,7 +63,9 @@ def _create_plot_component():
     broadcaster = BroadcasterTool()
     for i in range(4):
         y = jn(i, x)
-        plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[i]), width=2.0)
+        plot = create_line_plot(
+            (x, y), color=tuple(COLOR_PALETTE[i]), width=2.0
+        )
         if i == 0:
             add_default_grids(plot)
             left_axis, _ = add_default_axes(plot)
@@ -138,7 +140,9 @@ class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-        VGroup(Item("plot", editor=ComponentEditor(size=size), show_label=False)),
+        VGroup(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False)
+        ),
         resizable=True,
         title=title,
         width=size[0],

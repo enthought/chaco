@@ -76,7 +76,10 @@ def rendered_image_result(image, filename=None, **plot_kwargs):
     data_source = ImageData(data=image)
     index, index_mapper = get_image_index_and_mapper(image)
     renderer = ImagePlot(
-        value=data_source, index=index, index_mapper=index_mapper, **plot_kwargs
+        value=data_source,
+        index=index,
+        index_mapper=index_mapper,
+        **plot_kwargs
     )
     orientation = plot_kwargs.get("orientation", "h")
     return image_from_renderer(renderer, orientation)
@@ -94,7 +97,9 @@ def calculate_rms(image_result, expected_image):
     abs_diff_image = abs(np.int_(expected_image) - np.int_(image_result))
 
     histogram = np.bincount(abs_diff_image.ravel(), minlength=256)
-    sum_of_squares = np.sum(np.int64(histogram) * np.arange(len(histogram)) ** 2)
+    sum_of_squares = np.sum(
+        np.int64(histogram) * np.arange(len(histogram)) ** 2
+    )
     rms = np.sqrt(float(sum_of_squares) / num_values)
     return rms
 
@@ -144,7 +149,9 @@ class TestResultImage(unittest.TestCase):
 
     def test_vertical_top_left(self):
         # Vertical orientation with top left origin renders transposed image.
-        self.verify_result_image(RGB, IMAGE.T, origin="top left", orientation="v")
+        self.verify_result_image(
+            RGB, IMAGE.T, origin="top left", orientation="v"
+        )
 
     def test_vertical_bottom_left(self):
         # Vertical orientation with bottom left origin renders transposed image

@@ -47,7 +47,9 @@ def _create_plot_component():
 
     # Create a contour polygon plot of the data
     plot = Plot(pd, default_origin="bottom left")
-    plot.contour_plot("imagedata", type="poly", poly_cmap=viridis, xbounds=x, ybounds=y)
+    plot.contour_plot(
+        "imagedata", type="poly", poly_cmap=viridis, xbounds=x, ybounds=y
+    )
 
     # Create a contour line plot for the data, too
     plot.contour_plot("imagedata", type="line", xbounds=x, ybounds=y)

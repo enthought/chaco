@@ -163,7 +163,9 @@ def apply_selection_fade(mapped_image, mask, fade_alpha, fade_background):
         mapped_image[imask, 0:3] = image_region
 
 
-def map_colors(data_array, steps, low, high, red_lut, green_lut, blue_lut, alpha_lut):
+def map_colors(
+    data_array, steps, low, high, red_lut, green_lut, blue_lut, alpha_lut
+):
     """Map colors from color lookup tables to a data array.
 
     This is used in ColorMapper.map_screen

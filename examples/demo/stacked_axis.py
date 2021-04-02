@@ -62,7 +62,9 @@ def _create_plot_component():
             # Use the last plot's X mapper to create an X axis and a
             # vertical grid
             x_axis = PlotAxis(
-                orientation="bottom", component=renderer, mapper=renderer.x_mapper
+                orientation="bottom",
+                component=renderer,
+                mapper=renderer.x_mapper,
             )
             renderer.overlays.append(x_axis)
             grid = PlotGrid(

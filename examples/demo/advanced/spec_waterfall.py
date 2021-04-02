@@ -59,12 +59,17 @@ class WaterfallRenderer(LinePlot):
                 self._cached_data_pts = []
                 self._cache_valid = True
 
-            self._cached_data_pts = [transpose(array((index, v))) for v in values]
+            self._cached_data_pts = [
+                transpose(array((index, v))) for v in values
+            ]
             self._cache_value = True
 
     def get_screen_points(self):
         self._gather_points()
-        return [self.map_screen(pts, i) for i, pts in enumerate(self._cached_data_pts)]
+        return [
+            self.map_screen(pts, i)
+            for i, pts in enumerate(self._cached_data_pts)
+        ]
 
     def map_screen(self, data_array, data_offset=None):
         """data_offset, if provided, is a float that will be mapped
@@ -106,7 +111,9 @@ def _create_plot_component(obj):
     )[0]
     obj.spectrum_plot.padding = 50
     obj.spectrum_plot.title = "Spectrum"
-    spec_range = list(obj.spectrum_plot.plots.values())[0][0].value_mapper.range
+    spec_range = list(obj.spectrum_plot.plots.values())[0][
+        0
+    ].value_mapper.range
     spec_range.low = 0.0
     spec_range.high = 5.0
     obj.spectrum_plot.index_axis.title = "Frequency (hz)"
@@ -134,7 +141,9 @@ def _create_plot_component(obj):
         index=spec_renderer.index,
         values=values,
         index_mapper=LinearMapper(range=obj.spectrum_plot.index_mapper.range),
-        value_mapper=LinearMapper(range=DataRange1D(low=0, high=SPECTROGRAM_LENGTH)),
+        value_mapper=LinearMapper(
+            range=DataRange1D(low=0, high=SPECTROGRAM_LENGTH)
+        ),
         y2_mapper=LinearMapper(
             low_pos=0, high_pos=8, range=DataRange1D(low=0, high=15)
         ),

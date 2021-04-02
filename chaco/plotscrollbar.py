@@ -79,7 +79,9 @@ class PlotScrollBar(NativeScrollBar):
         # Get the current datasource bounds
         range = self.mapper.range
         bounds_list = [
-            source.get_bounds() for source in range.sources if source.get_size() > 0
+            source.get_bounds()
+            for source in range.sources
+            if source.get_size() > 0
         ]
         mins, maxes = zip(*bounds_list)
         dmin = min(mins)
@@ -102,7 +104,9 @@ class PlotScrollBar(NativeScrollBar):
         print("scrollrange:", foo)
         self.trait_setq(
             range=foo,
-            scroll_position=max(min(self.scroll_position, totalmax - view), totalmin),
+            scroll_position=max(
+                min(self.scroll_position, totalmax - view), totalmin
+            ),
         )
         self._scroll_updated = True
         self.request_redraw()
@@ -149,8 +153,12 @@ class PlotScrollBar(NativeScrollBar):
             remove = False
         else:
             remove = True
-        plot.observe(self._component_bounds_handler, "bounds.items", remove=remove)
-        plot.observe(self._component_pos_handler, "position.items", remove=remove)
+        plot.observe(
+            self._component_bounds_handler, "bounds.items", remove=remove
+        )
+        plot.observe(
+            self._component_pos_handler, "position.items", remove=remove
+        )
 
     def _component_bounds_handler(self, event):
         self._handle_dataspace_update()

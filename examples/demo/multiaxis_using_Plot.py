@@ -48,7 +48,9 @@ def _create_plot_component():
 
     x = linspace(-5, 15.0, 100)
     y = jn(5, x)
-    foreign_plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[0]), width=2.0)
+    foreign_plot = create_line_plot(
+        (x, y), color=tuple(COLOR_PALETTE[0]), width=2.0
+    )
     left, bottom = add_default_axes(foreign_plot)
     left.orientation = "right"
     bottom.orientation = "top"

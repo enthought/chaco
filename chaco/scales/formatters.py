@@ -195,7 +195,13 @@ class BasicFormatter(object):
         return m_str
 
     def estimate_width(
-        self, start, end, numlabels=None, char_width=None, fill_ratio=0.3, ticker=None
+        self,
+        start,
+        end,
+        numlabels=None,
+        char_width=None,
+        fill_ratio=0.3,
+        ticker=None,
     ):
         """Returns an estimate of the total number of characters used by the
         the labels for the given set of inputs, as well as the number of labels.
@@ -350,7 +356,13 @@ class OffsetFormatter(BasicFormatter):
             return BasicFormatter.format(self, ticks, numlabels, char_width)
 
     def estimate_width(
-        self, start, end, numlabels=None, char_width=None, fill_ratio=0.3, ticker=None
+        self,
+        start,
+        end,
+        numlabels=None,
+        char_width=None,
+        fill_ratio=0.3,
+        ticker=None,
     ):
         if numlabels == 0 or char_width == 0:
             return (0, 0)
@@ -362,7 +374,9 @@ class OffsetFormatter(BasicFormatter):
                 avg_size = len("%g%g" % (start, end)) / 2.0
                 initial_estimate = round(fill_ratio * char_width / avg_size)
             else:
-                raise ValueError("num_labels and char_width should not both be None.")
+                raise ValueError(
+                    "num_labels and char_width should not both be None."
+                )
             est_ticks = int(ticker.num_ticks(start, end, initial_estimate))
 
         elif numlabels:
@@ -372,7 +386,9 @@ class OffsetFormatter(BasicFormatter):
         elif char_width:
             est_ticks = round(fill_ratio * char_width / avg_size)
 
-        start, mid, end = map(len, self.format([start, (start + end) / 2.0, end]))
+        start, mid, end = map(
+            len, self.format([start, (start + end) / 2.0, end])
+        )
         if est_ticks > 2:
             size = start + end + (est_ticks - 2) * mid
         else:
@@ -521,7 +537,12 @@ class TimeFormatter(object):
         return resol
 
     def format(
-        self, ticks, numlabels=None, char_width=None, fill_ratio=0.3, ticker=None
+        self,
+        ticks,
+        numlabels=None,
+        char_width=None,
+        fill_ratio=0.3,
+        ticker=None,
     ):
         """Formats a set of time values.
 
@@ -562,7 +583,9 @@ class TimeFormatter(object):
         if char_width:
             # If a width is provided, then we pick the most appropriate scale,
             # otherwise just use the widest format
-            good_formats = array(formats)[widths * len(ticks) < fill_ratio * char_width]
+            good_formats = array(formats)[
+                widths * len(ticks) < fill_ratio * char_width
+            ]
             if len(good_formats) > 0:
                 format = good_formats[-1]
 
@@ -607,17 +630,23 @@ class TimeFormatter(object):
             # time is by checking that we have 0 units of the resolution, i.e.
             # we are at zero minutes, so display hours, or we are at zero seconds,
             # so display minutes (and if that is zero as well, then display hours).
-            while tm[time_tuple_ndx_for_resol[self.format_order[next_ndx]]] == 0:
+            while (
+                tm[time_tuple_ndx_for_resol[self.format_order[next_ndx]]] == 0
+            ):
                 next_ndx += 1
                 if next_ndx == len(self.format_order):
                     break
                 if resol in ("minsec", "hourmin") and not hybrid_handled:
-                    if (resol == "minsec" and tm.tm_min == 0 and tm.tm_sec != 0) or (
-                        resol == "hourmin" and tm.tm_hour == 0 and tm.tm_min != 0
+                    if (
+                        resol == "minsec" and tm.tm_min == 0 and tm.tm_sec != 0
+                    ) or (
+                        resol == "hourmin"
+                        and tm.tm_hour == 0
+                        and tm.tm_min != 0
                     ):
-                        next_format = self.formats[self.format_order[resol_ndx - 1]][1][
-                            0
-                        ]
+                        next_format = self.formats[
+                            self.format_order[resol_ndx - 1]
+                        ][1][0]
                         s = strftimeEx(next_format, t, tm)
                         break
                     else:
@@ -638,7 +667,13 @@ class TimeFormatter(object):
         return labels
 
     def estimate_width(
-        self, start, end, numlabels=None, char_width=None, fill_ratio=0.2, ticker=None
+        self,
+        start,
+        end,
+        numlabels=None,
+        char_width=None,
+        fill_ratio=0.2,
+        ticker=None,
     ):
         """Returns an estimate of the total number of characters used by the
         the labels for the given set of inputs, as well as the number of labels.

@@ -154,5 +154,7 @@ class PlotSession(HasTraits):
                 p.invalidate_draw()
                 p.request_redraw()
             elif hasattr(p, "colors"):
-                if isinstance(p.colors, str) or isinstance(p.colors, AbstractColormap):
+                if isinstance(p.colors, str) or isinstance(
+                    p.colors, AbstractColormap
+                ):
                     p.colors = color_map_dict[self.colormap]

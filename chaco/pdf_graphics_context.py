@@ -92,7 +92,11 @@ if Canvas is not None:
             self._page_initialized = False
 
         def render_component(
-            self, component, container_coords=False, halign="center", valign="top"
+            self,
+            component,
+            container_coords=False,
+            halign="center",
+            valign="top",
         ):
             """Erases the current contents of the graphics context and renders
             the given component at the maximum possible scaling while

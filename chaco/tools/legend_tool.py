@@ -28,7 +28,12 @@ class LegendTool(DragTool):
         """
         if self.component:
             legend = self.component
-            return x >= legend.x and x <= legend.x2 and y >= legend.y and y <= legend.y2
+            return (
+                x >= legend.x
+                and x <= legend.x2
+                and y >= legend.y
+                and y <= legend.y2
+            )
         else:
             return False
 

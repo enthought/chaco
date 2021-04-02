@@ -134,16 +134,27 @@ def _create_plot_component(model):
         domain_limits=(renderer.value_range.low, renderer.value_range.high),
     )
     colorbar = ColorBar(
-        index_mapper=lm, plot=plot, orientation="v", resizable="v", width=30, padding=20
+        index_mapper=lm,
+        plot=plot,
+        orientation="v",
+        resizable="v",
+        width=30,
+        padding=20,
     )
 
     colorbar.padding_top = plot.padding_top
     colorbar.padding_bottom = plot.padding_bottom
 
     # Add pan and zoom tools to the colorbar.
-    colorbar.tools.append(PanTool(colorbar, constrain_direction="y", constrain=True))
+    colorbar.tools.append(
+        PanTool(colorbar, constrain_direction="y", constrain=True)
+    )
     zoom_overlay = ZoomTool(
-        colorbar, axis="index", tool_mode="range", always_on=True, drag_button="right"
+        colorbar,
+        axis="index",
+        tool_mode="range",
+        always_on=True,
+        drag_button="right",
     )
     colorbar.overlays.append(zoom_overlay)
 
@@ -218,25 +229,37 @@ class DataGridView(HasTraits):
             self.img_renderer.color_mapper.data_func = log10
             self.img_renderer.color_mapper.unit_func = None
         elif self.colormap_scale == "power [data_func]":
-            self.img_renderer.color_mapper.data_func = lambda x: x ** self.power
+            self.img_renderer.color_mapper.data_func = (
+                lambda x: x ** self.power
+            )
             self.img_renderer.color_mapper.unit_func = None
         elif self.colormap_scale == "power [unit_func]":
             self.img_renderer.color_mapper.data_func = None
-            self.img_renderer.color_mapper.unit_func = lambda x: x ** self.power
+            self.img_renderer.color_mapper.unit_func = (
+                lambda x: x ** self.power
+            )
         elif self.colormap_scale == "cos [unit_func]":
             self.img_renderer.color_mapper.data_func = None
-            self.img_renderer.color_mapper.unit_func = lambda x: cos(0.5 * pi * x)
+            self.img_renderer.color_mapper.unit_func = lambda x: cos(
+                0.5 * pi * x
+            )
         elif self.colormap_scale == "sin [unit_func]":
             self.img_renderer.color_mapper.data_func = None
-            self.img_renderer.color_mapper.unit_func = lambda x: sin(0.5 * pi * x)
+            self.img_renderer.color_mapper.unit_func = lambda x: sin(
+                0.5 * pi * x
+            )
         # FIXME: This call to request_redraw() should not be necessary.
         self.img_renderer.request_redraw()
 
     def _power_changed(self):
         if self.colormap_scale == "power [data_func]":
-            self.img_renderer.color_mapper.data_func = lambda x: x ** self.power
+            self.img_renderer.color_mapper.data_func = (
+                lambda x: x ** self.power
+            )
         elif self.colormap_scale == "power [unit_func]":
-            self.img_renderer.color_mapper.unit_func = lambda x: x ** self.power
+            self.img_renderer.color_mapper.unit_func = (
+                lambda x: x ** self.power
+            )
         self.img_renderer.request_redraw()
 
     def _colorbar_scale_changed(self):

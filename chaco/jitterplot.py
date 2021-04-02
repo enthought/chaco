@@ -43,7 +43,9 @@ class JitterPlot(ScatterPlot1D):
             new_x = [x for x in data_array if x not in sm]
             if new_x:
                 new_y = self._make_jitter_vals(len(new_x))
-                sm.update(dict((new_x[i], new_y[i]) for i in range(len(new_x))))
+                sm.update(
+                    dict((new_x[i], new_y[i]) for i in range(len(new_x)))
+                )
             xs = self.index_mapper.map_screen(data_array)
             ys = [sm[x] for x in xs]
 
@@ -64,7 +66,11 @@ class JitterPlot(ScatterPlot1D):
         return vals
 
     def map_index(
-        self, screen_pt, threshold=2.0, outside_returns_none=True, index_only=True
+        self,
+        screen_pt,
+        threshold=2.0,
+        outside_returns_none=True,
+        index_only=True,
     ):
         """Maps a screen space point to an index into the plot's index array(s)."""
         screen_points = self._cached_screen_pts
@@ -81,7 +87,9 @@ class JitterPlot(ScatterPlot1D):
 
         if self._cached_data_pts_sorted is None:
             self._cached_data_argsort = np.argsort(self._cached_data)
-            self._cached_data_pts_sorted = self._cached_data[self._cached_data_argsort]
+            self._cached_data_pts_sorted = self._cached_data[
+                self._cached_data_argsort
+            ]
 
         data = self._cached_data_pts_sorted
         try:
@@ -101,7 +109,10 @@ class JitterPlot(ScatterPlot1D):
             return orig_ndx
 
         sx, sy = screen_points[orig_ndx]
-        if sqrt((screen_pt[0] - sx) ** 2 + (screen_pt[1] - sy) ** 2) <= threshold:
+        if (
+            sqrt((screen_pt[0] - sx) ** 2 + (screen_pt[1] - sy) ** 2)
+            <= threshold
+        ):
             return orig_ndx
         else:
             return None

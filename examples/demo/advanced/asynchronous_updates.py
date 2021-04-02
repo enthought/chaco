@@ -13,7 +13,15 @@ from numpy import ogrid, pi, sin
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor
-from traits.api import Array, Bool, DelegatesTo, HasTraits, Instance, Range, observe
+from traits.api import (
+    Array,
+    Bool,
+    DelegatesTo,
+    HasTraits,
+    Instance,
+    Range,
+    observe,
+)
 from traits.trait_notifiers import ui_dispatch
 from traitsui.api import Item, Group, View
 
@@ -74,7 +82,9 @@ class BlurPlotController(HasTraits):
             # the asynchronizer's current job (if any) is complete. If another
             # job (presumably with a different blur_level) comes in before this
             # happens, this job will never be executed.
-            self._asynchronizer.submit(self._blur_and_notify_plot, image, blur_level)
+            self._asynchronizer.submit(
+                self._blur_and_notify_plot, image, blur_level
+            )
         else:
             # This happens on the calling thread, which is the GUI thread when
             # a change in 'blur_level' comes from the GUI (as in this demo).
@@ -93,7 +103,9 @@ class BlurPlotController(HasTraits):
         # thread. Since this call is being executed on one of the executor's
         # worker threads, we must re-dispatch the data update to the UI thread
         # or suffer undefined consequences (possibly crashes).
-        ui_dispatch(self.plot_data.set_data, "blurred_image", self.blurred_image)
+        ui_dispatch(
+            self.plot_data.set_data, "blurred_image", self.blurred_image
+        )
 
     # ==========================================================================
     # Visualization logic - useful, but not the point of the demo
@@ -196,8 +208,16 @@ class Demo(HasTraits):
 
     traits_view = View(
         Group(
-            Item("component", editor=ComponentEditor(size=size), show_label=False),
-            Group(Item("asynchronous"), Item("blur_level"), orientation="horizontal"),
+            Item(
+                "component",
+                editor=ComponentEditor(size=size),
+                show_label=False,
+            ),
+            Group(
+                Item("asynchronous"),
+                Item("blur_level"),
+                orientation="horizontal",
+            ),
             orientation="vertical",
         ),
         resizable=True,

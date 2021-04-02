@@ -73,7 +73,10 @@ class PanTool(DragTool):
             else:
                 self.constrain_direction = "y"
 
-        for direction, bound_name, ndx in [("x", "width", 0), ("y", "height", 1)]:
+        for direction, bound_name, ndx in [
+            ("x", "width", 0),
+            ("y", "height", 1),
+        ]:
             if not self.constrain or self.constrain_direction == direction:
                 mapper = getattr(plot, direction + "_mapper")
                 range = mapper.range
@@ -99,14 +102,20 @@ class PanTool(DragTool):
                 if domain_min is None:
                     if self.restrict_to_data:
                         domain_min = min(
-                            [source.get_data().min() for source in range.sources]
+                            [
+                                source.get_data().min()
+                                for source in range.sources
+                            ]
                         )
                     else:
                         domain_min = -inf
                 if domain_max is None:
                     if self.restrict_to_data:
                         domain_max = max(
-                            [source.get_data().max() for source in range.sources]
+                            [
+                                source.get_data().max()
+                                for source in range.sources
+                            ]
                         )
                     else:
                         domain_max = inf

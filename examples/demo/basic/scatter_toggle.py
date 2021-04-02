@@ -24,7 +24,12 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, VGroup, View, Label, HGroup, spring
 
 # Chaco imports
-from chaco.api import AbstractDataSource, ArrayPlotData, Plot, ScatterInspectorOverlay
+from chaco.api import (
+    AbstractDataSource,
+    ArrayPlotData,
+    Plot,
+    ScatterInspectorOverlay,
+)
 from chaco.tools.api import ScatterInspector, PanTool, ZoomTool
 
 # ===============================================================================
@@ -66,7 +71,9 @@ def _create_plot_component():
 
     # Attach some tools to the plot
     my_plot.tools.append(
-        ScatterInspector(my_plot, selection_mode="toggle", persistent_hover=False)
+        ScatterInspector(
+            my_plot, selection_mode="toggle", persistent_hover=False
+        )
     )
     my_plot.overlays.append(
         ScatterInspectorOverlay(
@@ -127,7 +134,9 @@ class Demo(HasTraits):
 
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        self.index_datasource.observe(self._metadata_handler, "metadata_changed")
+        self.index_datasource.observe(
+            self._metadata_handler, "metadata_changed"
+        )
 
         return plot
 

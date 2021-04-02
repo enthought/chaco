@@ -6,7 +6,12 @@ from numpy.testing import assert_almost_equal
 from traits.testing.unittest_tools import UnittestTools
 
 # Chaco imports
-from chaco.api import ArrayDataSource, DataRange1D, LinearMapper, PlotGraphicsContext
+from chaco.api import (
+    ArrayDataSource,
+    DataRange1D,
+    LinearMapper,
+    PlotGraphicsContext,
+)
 from chaco.text_plot_1d import TextPlot1D
 
 
@@ -43,7 +48,9 @@ class TextPlot1DTest(UnittestTools, unittest.TestCase):
         self.assertEqual(self.textplot.origin, "bottom left")
         self.assertIsNone(self.textplot.x_mapper)
         self.assertEqual(self.textplot.y_mapper, self.textplot.index_mapper)
-        self.assertIs(self.textplot.index_range, self.textplot.index_mapper.range)
+        self.assertIs(
+            self.textplot.index_range, self.textplot.index_mapper.range
+        )
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.textplot)

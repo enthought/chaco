@@ -67,8 +67,12 @@ class LabelAxis(PlotAxis):
         pos_max = None
         for i, position in enumerate(self.positions):
             if datalow <= position <= datahigh:
-                pos_max = max(position, pos_max) if pos_max is not None else position
-                pos_min = min(position, pos_min) if pos_min is not None else position
+                pos_max = (
+                    max(position, pos_max) if pos_max is not None else position
+                )
+                pos_min = (
+                    min(position, pos_min) if pos_min is not None else position
+                )
                 pos_index.append(i)
                 pos.append(position)
         if len(pos_index) == 0:
@@ -83,7 +87,9 @@ class LabelAxis(PlotAxis):
         tick_indices = unique(searchsorted(pos, tick_list))
         tick_indices = tick_indices[tick_indices < len(pos)]
         tick_positions = take(pos, tick_indices)
-        self._tick_label_list = take(self.labels, take(pos_index, tick_indices))
+        self._tick_label_list = take(
+            self.labels, take(pos_index, tick_indices)
+        )
 
         if datalow > datahigh:
             raise RuntimeError(
@@ -91,7 +97,10 @@ class LabelAxis(PlotAxis):
             )
 
         mapped_label_positions = [
-            ((self.mapper.map_screen(pos) - screenlow) / (screenhigh - screenlow))
+            (
+                (self.mapper.map_screen(pos) - screenlow)
+                / (screenhigh - screenlow)
+            )
             for pos in tick_positions
         ]
         self._tick_positions = [

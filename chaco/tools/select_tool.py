@@ -33,7 +33,9 @@ class SelectTool(BaseTool):
 
     #: The modifier key to use to multi-select points.  Only used in **toggle**
     #: and **multi** selection modes.
-    multiselect_modifier = Instance(KeySpec, args=(None, "control"), allow_none=True)
+    multiselect_modifier = Instance(
+        KeySpec, args=(None, "control"), allow_none=True
+    )
 
     def _get_selection_state(self, event):
         """Returns a tuple reflecting the current selection state

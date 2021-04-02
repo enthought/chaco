@@ -119,7 +119,9 @@ class CursorTest(HasTraits):
                 ),
                 springy=True,
             ),
-            HGroup(Item("cursor1pos", width=300), Item("cursor2pos", width=300)),
+            HGroup(
+                Item("cursor1pos", width=300), Item("cursor2pos", width=300)
+            ),
         ),
         title="Cursor Tool Demo",
         resizable=True,

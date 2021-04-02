@@ -55,7 +55,9 @@ def _create_plot_component():
         ybounds=y_extents,
         colormap=gmt_drywet,
     )
-    lplot.contour_plot("imagedata", type="line", xbounds=x_extents, ybounds=y_extents)
+    lplot.contour_plot(
+        "imagedata", type="line", xbounds=x_extents, ybounds=y_extents
+    )
 
     # Tweak some of the plot properties
     lplot.title = "Colormap and contours"

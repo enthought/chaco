@@ -20,11 +20,15 @@ class TrackingPanTool(PanTool):
             high = xrange.high
             low = xrange.low
             if xrange.default_state == "low_track":
-                hi_val = max([source.get_bounds()[1] for source in xrange.sources])
+                hi_val = max(
+                    [source.get_bounds()[1] for source in xrange.sources]
+                )
                 if hi_val >= low and hi_val <= high:
                     xrange.set_bounds("track", "auto")
             elif xrange.default_state == "high_track":
-                lo_val = min([source.get_bounds()[0] for source in xrange.sources])
+                lo_val = min(
+                    [source.get_bounds()[0] for source in xrange.sources]
+                )
                 if lo_val >= low and lo_val <= high:
                     xrange.set_bounds("auto", "track")
 
@@ -32,11 +36,15 @@ class TrackingPanTool(PanTool):
             high = yrange.high
             low = yrange.low
             if yrange.default_state == "low_track":
-                hi_val = max([source.get_bounds()[1] for source in yrange.sources])
+                hi_val = max(
+                    [source.get_bounds()[1] for source in yrange.sources]
+                )
                 if hi_val >= low and hi_val <= high:
                     yrange.set_bounds("track", "auto")
             elif yrange.default_state == "high_track":
-                lo_val = min([source.get_bounds()[0] for source in yrange.sources])
+                lo_val = min(
+                    [source.get_bounds()[0] for source in yrange.sources]
+                )
                 if lo_val >= low and lo_val <= high:
                     yrange.set_bounds("auto", "track")
 

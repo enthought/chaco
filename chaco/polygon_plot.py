@@ -123,7 +123,9 @@ class PolygonPlot(BaseXYPlot):
         point is inside the polygon, and False otherwise.
         """
         if self.hittest_type in ("line", "point"):
-            return BaseXYPlot.hittest(self, screen_pt, threshold, return_distance)
+            return BaseXYPlot.hittest(
+                self, screen_pt, threshold, return_distance
+            )
 
         data_pt = self.map_data(screen_pt, all_values=True)
         index = self.index.get_data()

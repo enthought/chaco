@@ -111,7 +111,10 @@ def create_colorbar(colormap):
     colorbar.tools.append(RangeSelection(component=colorbar))
     colorbar.overlays.append(
         RangeSelectionOverlay(
-            component=colorbar, border_color="white", alpha=0.8, fill_color="lightgray"
+            component=colorbar,
+            border_color="white",
+            alpha=0.8,
+            fill_color="lightgray",
         )
     )
     colorbar.tools.append(MoveTool(colorbar, drag_button="left"))

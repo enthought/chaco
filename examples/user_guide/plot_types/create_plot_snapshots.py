@@ -182,7 +182,9 @@ def get_cmap_scatter_plot():
     x_mapper, y_mapper = get_mappers(x, y)
 
     color_source = ArrayDataSource(nox)
-    color_mapper = dc.reverse(dc.RdYlGn)(DataRange1D(low=nox.min(), high=nox.max()))
+    color_mapper = dc.reverse(dc.RdYlGn)(
+        DataRange1D(low=nox.min(), high=nox.max())
+    )
 
     scatter_plot = ColormappedScatterPlot(
         index=x,
@@ -217,7 +219,9 @@ def get_4d_scatter_plot():
     x_mapper, y_mapper = get_mappers(x, y)
 
     color_source = ArrayDataSource(nox)
-    color_mapper = dc.reverse(dc.RdYlGn)(DataRange1D(low=nox.min(), high=nox.max()))
+    color_mapper = dc.reverse(dc.RdYlGn)(
+        DataRange1D(low=nox.min(), high=nox.max())
+    )
 
     # normalize between 0 and 10
     marker_size = tax / tax.max() * 10.0
@@ -232,7 +236,8 @@ def get_4d_scatter_plot():
         fill_alpha=0.8,
         marker="circle",
         marker_size=marker_size,
-        title="Size represents property-tax rate, " "color nitric oxides concentration",
+        title="Size represents property-tax rate, "
+        "color nitric oxides concentration",
         render_method="bruteforce",
         **PLOT_DEFAULTS
     )
@@ -414,7 +419,10 @@ def get_image_plot():
     image_source = ImageData(data=image, value_depth=4)
 
     image_plot = ImagePlot(
-        index=index, value=image_source, index_mapper=index_mapper, **PLOT_DEFAULTS
+        index=index,
+        value=image_source,
+        index_mapper=index_mapper,
+        **PLOT_DEFAULTS
     )
 
     add_axes(image_plot, x_label="x", y_label="y")
@@ -430,7 +438,9 @@ def get_image_from_file():
 
     w, h = image_source.get_width(), image_source.get_height()
     index = GridDataSource(np.arange(w), np.arange(h))
-    index_mapper = GridMapper(range=DataRange2D(low=(0, 0), high=(w - 1, h - 1)))
+    index_mapper = GridMapper(
+        range=DataRange2D(low=(0, 0), high=(w - 1, h - 1))
+    )
 
     image_plot = ImagePlot(
         index=index,

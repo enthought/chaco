@@ -36,7 +36,11 @@ from traits.api import (
 )
 
 # Local relative imports
-from .ticks import AbstractTickGenerator, DefaultTickGenerator, MinorTickGenerator
+from .ticks import (
+    AbstractTickGenerator,
+    DefaultTickGenerator,
+    MinorTickGenerator,
+)
 from .abstract_mapper import AbstractMapper
 from .abstract_overlay import AbstractOverlay
 from .label import Label
@@ -249,7 +253,9 @@ class PlotAxis(AbstractOverlay):
         """
         self._draw_component(gc, view_bounds, mode)
 
-    def _draw_component(self, gc, view_bounds=None, mode="normal", component=None):
+    def _draw_component(
+        self, gc, view_bounds=None, mode="normal", component=None
+    ):
         """Draws the component.
 
         This method is preserved for backwards compatibility. Overrides
@@ -273,7 +279,9 @@ class PlotAxis(AbstractOverlay):
             gc.set_font(self.tick_label_font)
 
             if self.axis_line_visible:
-                self._draw_axis_line(gc, self._origin_point, self._end_axis_point)
+                self._draw_axis_line(
+                    gc, self._origin_point, self._end_axis_point
+                )
             if self.title:
                 self._draw_title(gc)
 
@@ -345,7 +353,12 @@ class PlotAxis(AbstractOverlay):
                 axis_offset = 25
             else:
                 axis_offset = (
-                    max([l._bounding_box[axis_index] for l in self.ticklabel_cache])
+                    max(
+                        [
+                            l._bounding_box[axis_index]
+                            for l in self.ticklabel_cache
+                        ]
+                    )
                     * 1.3
                 )
 
@@ -491,7 +504,11 @@ class PlotAxis(AbstractOverlay):
                 tick_list, labels = tmp
             # compute the labels here
             self.ticklabel_cache = [
-                Label(text=lab, font=self.tick_label_font, color=self.tick_label_color)
+                Label(
+                    text=lab,
+                    font=self.tick_label_font,
+                    color=self.tick_label_color,
+                )
                 for lab in labels
             ]
             self._tick_label_bounding_boxes = [
@@ -551,7 +568,9 @@ class PlotAxis(AbstractOverlay):
                 margin=self.tick_label_margin,
             )
 
-        self.ticklabel_cache = [build_label(val) for val in self._tick_label_list]
+        self.ticklabel_cache = [
+            build_label(val) for val in self._tick_label_list
+        ]
         self._tick_label_bounding_boxes = [
             array(ticklabel.get_bounding_box(gc), float)
             for ticklabel in self.ticklabel_cache
@@ -571,7 +590,9 @@ class PlotAxis(AbstractOverlay):
                 self._origin_point = array(self.position)
                 self._inside_vector = array([0.0, -1.0])
             else:  # self.oriention == 'bottom'
-                self._origin_point = array(self.position) + array([0.0, self.bounds[1]])
+                self._origin_point = array(self.position) + array(
+                    [0.0, self.bounds[1]]
+                )
                 self._inside_vector = array([0.0, 1.0])
             if "right" in origin:
                 screenlow, screenhigh = screenhigh, screenlow
@@ -582,7 +603,9 @@ class PlotAxis(AbstractOverlay):
             self._major_axis = array([0.0, 1.0])
             self._title_orientation = array([-1.0, 0])
             if self.orientation == "left":
-                self._origin_point = array(self.position) + array([self.bounds[0], 0.0])
+                self._origin_point = array(self.position) + array(
+                    [self.bounds[0], 0.0]
+                )
                 self._inside_vector = array([1.0, 0.0])
             else:  # self.orientation == 'right'
                 self._origin_point = array(self.position)
@@ -616,10 +639,14 @@ class PlotAxis(AbstractOverlay):
             self._major_axis = array([1.0, 0.0])
             self._title_orientation = array([0.0, 1.0])
             if self.orientation == "top":
-                self._origin_point = array([overlay_component.x, overlay_component.y2])
+                self._origin_point = array(
+                    [overlay_component.x, overlay_component.y2]
+                )
                 self._inside_vector = array([0.0, -1.0])
             else:
-                self._origin_point = array([overlay_component.x, overlay_component.y])
+                self._origin_point = array(
+                    [overlay_component.x, overlay_component.y]
+                )
                 self._inside_vector = array([0.0, 1.0])
             if "right" in component_origin:
                 screenlow, screenhigh = screenhigh, screenlow
@@ -630,10 +657,14 @@ class PlotAxis(AbstractOverlay):
             self._major_axis = array([0.0, 1.0])
             self._title_orientation = array([-1.0, 0])
             if self.orientation == "left":
-                self._origin_point = array([overlay_component.x, overlay_component.y])
+                self._origin_point = array(
+                    [overlay_component.x, overlay_component.y]
+                )
                 self._inside_vector = array([1.0, 0.0])
             else:
-                self._origin_point = array([overlay_component.x2, overlay_component.y])
+                self._origin_point = array(
+                    [overlay_component.x2, overlay_component.y]
+                )
                 self._inside_vector = array([-1.0, 0.0])
             if "top" in component_origin:
                 screenlow, screenhigh = screenhigh, screenlow

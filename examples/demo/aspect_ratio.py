@@ -56,7 +56,11 @@ class MyPlot(HasTraits):
                 Item("fixed_x", label="Data X fixed"),
                 Item("fixed_y", label="Data Y fixed"),
             ),
-            Item("plot", editor=ComponentEditor(size=(100, 100)), show_label=False),
+            Item(
+                "plot",
+                editor=ComponentEditor(size=(100, 100)),
+                show_label=False,
+            ),
         ),
         width=600,
         height=600,
@@ -67,7 +71,9 @@ class MyPlot(HasTraits):
     def __init__(self, *args, **kw):
         HasTraits.__init__(self, *args, **kw)
         numpoints = 200
-        plotdata = ArrayPlotData(x=sort(random(numpoints)), y=random(numpoints))
+        plotdata = ArrayPlotData(
+            x=sort(random(numpoints)), y=random(numpoints)
+        )
         plot = Plot(plotdata)
         plot.plot(("x", "y"), type="scatter")
         plot.tools.append(PanTool(plot))

@@ -13,7 +13,11 @@ from traits.api import Bool, Float
 
 # Local, relative imports
 from .base_plot_frame import BasePlotFrame
-from .plot_containers import HPlotContainer, OverlayPlotContainer, VPlotContainer
+from .plot_containers import (
+    HPlotContainer,
+    OverlayPlotContainer,
+    VPlotContainer,
+)
 
 
 class CrossPlotFrame(BasePlotFrame):

@@ -8,7 +8,8 @@ from .polygon_plot import PolygonPlot
 
 def Alias(name):
     return Property(
-        lambda obj: getattr(obj, name), lambda obj, val: setattr(obj, name, val)
+        lambda obj: getattr(obj, name),
+        lambda obj, val: setattr(obj, name, val),
     )
 
 

@@ -60,10 +60,14 @@ class Turtle(AbstractOverlay):
     def render(self, gc, component):
         # Uses the component to map our path into screen space
         nan_mask = invert(isnan(self.path[:, 0])).astype(int)
-        blocks = [b for b in arg_find_runs(nan_mask, "flat") if nan_mask[b[0]] != 0]
+        blocks = [
+            b for b in arg_find_runs(nan_mask, "flat") if nan_mask[b[0]] != 0
+        ]
         screen_pts = component.map_screen(self.path)
         with gc:
-            gc.clip_to_rect(component.x, component.y, component.width, component.height)
+            gc.clip_to_rect(
+                component.x, component.y, component.width, component.height
+            )
             gc.set_stroke_color(self.line_color_)
             for start, end in blocks:
                 gc.begin_path()

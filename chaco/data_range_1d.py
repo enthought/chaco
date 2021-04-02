@@ -228,7 +228,9 @@ class DataRange1D(BaseDataRange):
             # value.
             if val == "auto":
                 if len(self.sources) > 0:
-                    val = min([source.get_bounds()[0] for source in self.sources])
+                    val = min(
+                        [source.get_bounds()[0] for source in self.sources]
+                    )
                 else:
                     val = -inf
             elif val == "track":
@@ -280,7 +282,9 @@ class DataRange1D(BaseDataRange):
             # value.
             if val == "auto":
                 if len(self.sources) > 0:
-                    val = max([source.get_bounds()[1] for source in self.sources])
+                    val = max(
+                        [source.get_bounds()[1] for source in self.sources]
+                    )
                 else:
                     val = inf
             elif val == "track":
@@ -311,7 +315,9 @@ class DataRange1D(BaseDataRange):
             null_bounds = True
         else:
             bounds_list = [
-                source.get_bounds() for source in self.sources if source.get_size() > 0
+                source.get_bounds()
+                for source in self.sources
+                if source.get_size() > 0
             ]
 
             if len(bounds_list) == 0:

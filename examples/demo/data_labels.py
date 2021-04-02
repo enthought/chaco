@@ -53,7 +53,10 @@ class PlotExample(HasTraits):
     def _plot_default(self):
 
         container = OverlayPlotContainer(
-            padding=50, fill_padding=True, bgcolor="lightgray", use_backbuffer=True
+            padding=50,
+            fill_padding=True,
+            bgcolor="lightgray",
+            use_backbuffer=True,
         )
 
         # Create the initial X-series of data
@@ -62,7 +65,9 @@ class PlotExample(HasTraits):
         high = self.high
         x = linspace(low, high, numpoints + 1)
         y = jn(0, x)
-        plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[0]), width=2.0)
+        plot = create_line_plot(
+            (x, y), color=tuple(COLOR_PALETTE[0]), width=2.0
+        )
         plot.index.sort_order = "ascending"
         plot.bgcolor = "white"
         plot.border_visible = True
@@ -131,7 +136,9 @@ class PlotExample(HasTraits):
             bgcolor=(1, 1, 0.75, 1),
         )
         plot.overlays.append(label4)
-        tool4 = DataLabelTool(label4, drag_button="right", auto_arrow_root=True)
+        tool4 = DataLabelTool(
+            label4, drag_button="right", auto_arrow_root=True
+        )
         label4.tools.append(tool4)
 
         # Another 'bubble' label.  This one sets arrow_min_length=20, so
@@ -152,7 +159,9 @@ class PlotExample(HasTraits):
             bgcolor=(0.75, 0.75, 0.75, 1),
         )
         plot.overlays.append(label5)
-        tool5 = DataLabelTool(label5, drag_button="right", auto_arrow_root=True)
+        tool5 = DataLabelTool(
+            label5, drag_button="right", auto_arrow_root=True
+        )
         label5.tools.append(tool5)
 
         container.add(plot)

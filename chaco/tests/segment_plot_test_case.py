@@ -4,7 +4,12 @@ from numpy import alltrue, arange, array
 from numpy.testing import assert_array_equal
 
 # Chaco imports
-from chaco.api import ArrayDataSource, DataRange1D, LinearMapper, PlotGraphicsContext
+from chaco.api import (
+    ArrayDataSource,
+    DataRange1D,
+    LinearMapper,
+    PlotGraphicsContext,
+)
 from chaco.base import rgba_dtype
 from chaco.segment_plot import SegmentPlot
 from chaco.default_colormaps import viridis
@@ -54,8 +59,12 @@ class SegmentPlotTest(unittest.TestCase):
 
     def test_segment(self):
         self.assertEqual(self.segment_plot.origin, "bottom left")
-        self.assertIs(self.segment_plot.x_mapper, self.segment_plot.index_mapper)
-        self.assertIs(self.segment_plot.y_mapper, self.segment_plot.value_mapper)
+        self.assertIs(
+            self.segment_plot.x_mapper, self.segment_plot.index_mapper
+        )
+        self.assertIs(
+            self.segment_plot.y_mapper, self.segment_plot.value_mapper
+        )
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
@@ -66,8 +75,12 @@ class SegmentPlotTest(unittest.TestCase):
         self.segment_plot.render_style = "orthogonal"
 
         self.assertEqual(self.segment_plot.origin, "bottom left")
-        self.assertIs(self.segment_plot.x_mapper, self.segment_plot.index_mapper)
-        self.assertIs(self.segment_plot.y_mapper, self.segment_plot.value_mapper)
+        self.assertIs(
+            self.segment_plot.x_mapper, self.segment_plot.index_mapper
+        )
+        self.assertIs(
+            self.segment_plot.y_mapper, self.segment_plot.value_mapper
+        )
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
@@ -78,8 +91,12 @@ class SegmentPlotTest(unittest.TestCase):
         self.segment_plot.render_style = "quad"
 
         self.assertEqual(self.segment_plot.origin, "bottom left")
-        self.assertIs(self.segment_plot.x_mapper, self.segment_plot.index_mapper)
-        self.assertIs(self.segment_plot.y_mapper, self.segment_plot.value_mapper)
+        self.assertIs(
+            self.segment_plot.x_mapper, self.segment_plot.index_mapper
+        )
+        self.assertIs(
+            self.segment_plot.y_mapper, self.segment_plot.value_mapper
+        )
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)
@@ -90,8 +107,12 @@ class SegmentPlotTest(unittest.TestCase):
         self.segment_plot.render_style = "cubic"
 
         self.assertEqual(self.segment_plot.origin, "bottom left")
-        self.assertIs(self.segment_plot.x_mapper, self.segment_plot.index_mapper)
-        self.assertIs(self.segment_plot.y_mapper, self.segment_plot.value_mapper)
+        self.assertIs(
+            self.segment_plot.x_mapper, self.segment_plot.index_mapper
+        )
+        self.assertIs(
+            self.segment_plot.y_mapper, self.segment_plot.value_mapper
+        )
 
         gc = PlotGraphicsContext(self.size)
         gc.render_component(self.segment_plot)

@@ -24,7 +24,9 @@ def wav_to_numeric(fname, max_frames=-1):
             2 ** 15 - 0.5
         )
     else:
-        data = numpy.fromstring(frames, numpy.uint8).astype(numpy.float64) - 127.5
+        data = (
+            numpy.fromstring(frames, numpy.uint8).astype(numpy.float64) - 127.5
+        )
 
     if channels == 2:
         left = data[0::2]
@@ -40,7 +42,9 @@ def wav_to_numeric(fname, max_frames=-1):
 def test():
     sample_path = os.path.join("examples", "data", "sample.wav")
     alt_path = os.path.join("..", "data", "sample.wav")
-    fname = find_resource("Chaco", sample_path, alt_path=alt_path, return_path=True)
+    fname = find_resource(
+        "Chaco", sample_path, alt_path=alt_path, return_path=True
+    )
     index, data = wav_to_numeric(fname)
     print(data[:100])
     return index, data

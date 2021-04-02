@@ -22,7 +22,13 @@ import os, sys, shutil
 from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
 
 # Enthought library imports
-from chaco.api import ArrayPlotData, Plot, GridPlotContainer, BaseTool, DataRange1D
+from chaco.api import (
+    ArrayPlotData,
+    Plot,
+    GridPlotContainer,
+    BaseTool,
+    DataRange1D,
+)
 from chaco.default_colormaps import *
 from chaco.tools.api import LineInspector, ZoomTool
 from enable.example_support import DemoFrame, demo_main
@@ -176,7 +182,9 @@ class ImageIndexTool(BaseTool):
 
     def _update_slices(self, event):
         plot = self.component
-        ndx = plot.map_index((event.x, event.y), threshold=5.0, index_only=True)
+        ndx = plot.map_index(
+            (event.x, event.y), threshold=5.0, index_only=True
+        )
         if ndx:
             self.callback(self, *ndx)
 
@@ -312,7 +320,10 @@ class PlotFrame(DemoFrame):
 
         imgplot.overlays.append(
             ZoomTool(
-                component=imgplot, tool_mode="box", enable_wheel=False, always_on=False
+                component=imgplot,
+                tool_mode="box",
+                enable_wheel=False,
+                always_on=False,
             )
         )
         imgplot.overlays.append(
@@ -345,9 +356,13 @@ class PlotFrame(DemoFrame):
         )
 
     def _update_model(self, cmap):
-        range = DataRange1D(low=amin(self.model.vals), high=amax(self.model.vals))
+        range = DataRange1D(
+            low=amin(self.model.vals), high=amax(self.model.vals)
+        )
         self.colormap = cmap(range)
-        self.colorcube = (self.colormap.map_screen(self.model.vals) * 255).astype(uint8)
+        self.colorcube = (
+            self.colormap.map_screen(self.model.vals) * 255
+        ).astype(uint8)
 
     def _update_images(self):
         """Updates the image data in self.plotdata to correspond to the
@@ -366,7 +381,9 @@ def download_data():
     global dl_path, run_cleanup
 
     print('Please enter the location of the "voldata" subdirectory containing')
-    print("the data files for this demo, or enter a path to download to (7.8MB).")
+    print(
+        "the data files for this demo, or enter a path to download to (7.8MB)."
+    )
     print("Press <ENTER> to download to the current directory.")
     dl_path = input("Path: ").strip().rstrip("/").rstrip("\\")
 
@@ -379,7 +396,9 @@ def download_data():
     data_good = True
     try:
         for i in range(1, 110):
-            if not os.path.isfile(os.path.join(voldata_path, "MRbrain.%d" % i)):
+            if not os.path.isfile(
+                os.path.join(voldata_path, "MRbrain.%d" % i)
+            ):
                 data_good = False
                 break
         else:

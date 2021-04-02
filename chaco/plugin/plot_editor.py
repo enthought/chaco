@@ -21,7 +21,9 @@ class PlotEditor(TraitsUIEditor):
     """A Workbench Editor showing a Chaco plot for the shell interface."""
 
     bgcolor = Str("white")
-    image_default_origin = Enum("bottom left", "top left", "bottom right", "top right")
+    image_default_origin = Enum(
+        "bottom left", "top left", "bottom right", "top right"
+    )
 
     # The plot.
     component = Property(Any)

@@ -54,7 +54,10 @@ from .cross_plot_frame import CrossPlotFrame
 from .data_view import DataView
 from .simple_plot_frame import SimplePlotFrame
 from .plot_component import PlotComponent
-from .plot_graphics_context import PlotGraphicsContext, PlotGraphicsContextMixin
+from .plot_graphics_context import (
+    PlotGraphicsContext,
+    PlotGraphicsContextMixin,
+)
 from .plot_containers import (
     OverlayPlotContainer,
     HPlotContainer,

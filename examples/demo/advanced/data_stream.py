@@ -15,7 +15,16 @@ by the user.
 import numpy as np
 
 # Enthought imports
-from traits.api import Array, Callable, Enum, Float, HasTraits, Instance, Int, Trait
+from traits.api import (
+    Array,
+    Callable,
+    Enum,
+    Float,
+    HasTraits,
+    Instance,
+    Int,
+    Trait,
+)
 from traitsui.api import Group, HGroup, Item, View, spring, Handler
 from pyface.timer.api import Timer
 
@@ -109,7 +118,9 @@ class Controller(HasTraits):
         # This isn't the most efficient thing in the world but it works.
         cur_data = self.viewer.data
         new_data = np.hstack((cur_data[-self.max_num_points + 1 :], [new_val]))
-        new_index = np.arange(self.num_ticks - len(new_data) + 1, self.num_ticks + 0.01)
+        new_index = np.arange(
+            self.num_ticks - len(new_data) + 1, self.num_ticks + 0.01
+        )
 
         self.viewer.index = new_index
         self.viewer.data = new_data

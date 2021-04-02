@@ -153,7 +153,9 @@ class GridMapper(AbstractMapper):
         y_width = self._ymapper.high_pos - self._ymapper.low_pos
         if y_width == 0:
             return
-        y_scale = (self._ymapper.range.high - self._ymapper.range.low) / y_width
+        y_scale = (
+            self._ymapper.range.high - self._ymapper.range.low
+        ) / y_width
         x_range_low = self._xmapper.range.low
         x_width = self._xmapper.high_pos - self._xmapper.low_pos
         sign = self._xmapper.sign * self._ymapper.sign
@@ -161,13 +163,17 @@ class GridMapper(AbstractMapper):
             return
         x_scale = sign * y_scale / self.aspect_ratio
         with self._update_aspect():
-            self._xmapper.range.set_bounds(x_range_low, x_range_low + x_scale * x_width)
+            self._xmapper.range.set_bounds(
+                x_range_low, x_range_low + x_scale * x_width
+            )
 
     def _update_aspect_y(self):
         x_width = self._xmapper.high_pos - self._xmapper.low_pos
         if x_width == 0:
             return
-        x_scale = (self._xmapper.range.high - self._xmapper.range.low) / x_width
+        x_scale = (
+            self._xmapper.range.high - self._xmapper.range.low
+        ) / x_width
         y_range_low = self._ymapper.range.low
         y_width = self._ymapper.high_pos - self._ymapper.low_pos
         sign = self._xmapper.sign * self._ymapper.sign
@@ -175,7 +181,9 @@ class GridMapper(AbstractMapper):
             return
         y_scale = sign * x_scale * self.aspect_ratio
         with self._update_aspect():
-            self._ymapper.range.set_bounds(y_range_low, y_range_low + y_scale * y_width)
+            self._ymapper.range.set_bounds(
+                y_range_low, y_range_low + y_scale * y_width
+            )
 
     # ------------------------------------------------------------------------
     # Property handlers
@@ -215,7 +223,12 @@ class GridMapper(AbstractMapper):
         self._update_bounds()
 
     def _get_screen_bounds(self):
-        return (self.x_low_pos, self.x_high_pos, self.y_low_pos, self.y_high_pos)
+        return (
+            self.x_low_pos,
+            self.x_high_pos,
+            self.y_low_pos,
+            self.y_high_pos,
+        )
 
     def _updated_fired_for__xmapper(self):
         if not self._updating_aspect:
