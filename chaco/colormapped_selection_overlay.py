@@ -118,23 +118,23 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             )
 
     def datasource_change_handler(self, event):
-        obj, name, old, new = (event.object, event.name, event.old, event.new)
+        obj, old, new = (event.object, event.old, event.new)
 
         if old:
-            old.observe(self.selection_change_handler, "metadata_changed", remove=True)
+            old.observe(self.selection_change_handler, "metadata.items", remove=True)
         if new:
-            new.observe(self.selection_change_handler, "metadata_changed")
+            new.observe(self.selection_change_handler, "metadata.items")
             self.selection_change_handler(
                 TraitChangeEvent(
                     object=new,
-                    name="metadata_changed",
+                    name="metadata",
                     old=None,
                     new=new.metadata
                 )
             )
 
     def selection_change_handler(self, event):
-        obj, name, old, new = (event.object, event.name, event.old, event.new)
+        obj, old, new = event.object, event.old, event.new
 
         if self.selection_type == 'range':
             selection_key = 'selections'

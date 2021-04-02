@@ -66,7 +66,7 @@ class CMapImagePlot(ImagePlot):
         if self.value_mapper:
             self.value_mapper.observe(self._update_value_mapper, "updated")
         if self.value:
-            self.value.observe(self._update_selections, "metadata_changed")
+            self.value.observe(self._update_selections, "metadata.items")
 
     def set_value_selection(self, val):
         """ Sets a range of values in the value data source as selected.
