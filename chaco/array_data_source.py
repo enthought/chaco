@@ -5,7 +5,7 @@ from numpy import array, isfinite, ones, ndarray
 import numpy as np
 
 # Enthought library imports
-from traits.api import Any, Constant, Int, Tuple
+from traits.api import Any, Constant, Int, observe, Tuple
 
 # Chaco imports
 from .base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
@@ -288,10 +288,14 @@ class ArrayDataSource(AbstractDataSource):
     # Event handlers
     #------------------------------------------------------------------------
 
-    def _metadata_changed(self, event):
-        self.metadata_changed = True
+    #def _metadata_changed(self, event):
+    #    self.metadata_changed = True
 
-    def _metadata_items_changed(self, event):
+    #def _metadata_items_changed(self, event):
+    #    self.metadata_changed = True
+
+    @observe("metadata.items")
+    def something(self, event):
         self.metadata_changed = True
 
     #------------------------------------------------------------------------
