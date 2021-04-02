@@ -1,7 +1,7 @@
 from numpy import clip, isinf, ones_like, empty
 
 from chaco.color_mapper import ColorMapper
-from traits.api import Trait, Callable, Tuple, Float, on_trait_change
+from traits.api import Trait, Callable, Tuple, Float, observe
 
 from .speedups import map_colors, map_colors_uint8
 
@@ -35,8 +35,8 @@ class TransformColorMapper(ColorMapper):
     # Trait handlers
     #-------------------------------------------------------------------       
 
-    @on_trait_change('data_func, range.updated')
-    def _update_transformed_bounds(self):
+    @observe('data_func, range.updated')
+    def _update_transformed_bounds(self, event):
 
         if self.range is None:
             # The ColorMapper doesn't have a range yet, so don't do anything.

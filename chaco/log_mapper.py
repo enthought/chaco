@@ -142,4 +142,3 @@ class LogMapper(Base1DMapper):
             self._screen_offset = self.low_pos
 
         self._cache_valid = True
-        return

@@ -90,7 +90,6 @@ class PlotFrame(DemoFrame):
     def onTimer(self, *args):
         for plot in self.animated_plots:
             plot.timer_tick()
-        return
 
 
 if __name__ == "__main__":

@@ -42,7 +42,6 @@ class PlotFrame(DemoFrame):
         self.y_values = y
         self.current_index = numpoints/2
         self.increment = 2
-        return
 
     def _create_window(self):
         self._create_data()
@@ -81,7 +80,6 @@ class PlotFrame(DemoFrame):
         self.plot.index.set_data(self.x_values[:self.current_index])
         self.plot.value.set_data(self.y_values[:self.current_index])
         self.plot.request_redraw()
-        return
 
 
 if __name__ == "__main__":

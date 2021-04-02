@@ -77,7 +77,6 @@ class IndexAxisLogButton(ToolbarButton):
         else:
             self.container.component.index_scale = 'linear'
         self.container.request_redraw()
-        return
 
 
 class ValueAxisLogButton(ToolbarButton):
@@ -91,7 +90,6 @@ class ValueAxisLogButton(ToolbarButton):
         else:
             self.container.component.value_scale = 'linear'
         self.container.request_redraw()
-        return
 
 
 class ZoomResetButton(ToolbarButton):

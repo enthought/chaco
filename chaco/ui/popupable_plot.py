@@ -31,6 +31,3 @@ class PopupablePlot(Plot):
         """Queue up the plot commands"""
         self.command_queue.append((data, kw))
         super(PopupablePlot, self).plot(data, **kw)
-        return
-
-

@@ -5,7 +5,7 @@ import numpy as np
 from numpy.testing import assert_array_equal
 
 from chaco.api import DataFramePlotData
-from traits.api import HasTraits, Instance, List, on_trait_change
+from traits.api import HasTraits, Instance, List, observe
 
 try:
     from pandas import DataFrame
@@ -20,9 +20,9 @@ class DataFramePlotDataEventsCollector(HasTraits):
 
     data_changed_events = List
 
-    @on_trait_change('plot_data:data_changed')
+    @observe('plot_data:data_changed')
     def _got_data_changed_event(self, event):
-        self.data_changed_events.append(event)
+        self.data_changed_events.append(event.new)
 
 
 @contextlib.contextmanager

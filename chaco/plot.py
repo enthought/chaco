@@ -195,8 +195,6 @@ class Plot(DataView):
         # ensure that we only get displayed once by new_window()
         self._plot_ui_info = None
 
-        return
-
     def add_xy_plot(self, index_name, value_name, renderer_factory, name=None,
         origin=None, **kwds):
         """ Add a BaseXYPlot renderer subclass to this Plot.
@@ -1152,22 +1150,18 @@ class Plot(DataView):
             else:
                 warnings.warn("Couldn't remove datasource from datarange.")
 
-        return
-
     def hideplot(self, *names):
         """ Convenience function to sets the named plots to be invisible.  Their
         renderers are not removed, and they are still in the list of plots.
         """
         for renderer in itertools.chain(*[self.plots[name] for name in names]):
             renderer.visible = False
-        return
 
     def showplot(self, *names):
         """ Convenience function to sets the named plots to be visible.
         """
         for renderer in itertools.chain(*[self.plots[name] for name in names]):
             renderer.visible = True
-        return
 
     def new_window(self, configure=False):
         """Convenience function that creates a window containing the Plot

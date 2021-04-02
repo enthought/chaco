@@ -3,7 +3,7 @@
 # Enthought library imports
 from enable.api import Component
 from enable.kiva_graphics_context import GraphicsContext
-from traits.api import Bool, Instance, Str
+from traits.api import Bool, Instance, observe, Str
 
 
 DEFAULT_DRAWING_ORDER = ["background", "image", "underlay",      "plot",
@@ -19,6 +19,11 @@ class PlotComponent(Component):
     Several of these top-level layout and draw methods have implementations
     that must not be overridden; instead, subclasses implement various
     protected stub methods.
+
+    Additionally, this class sets up the machinery for having changes to
+    specific traits trigger a call to the invalidate_and_redraw method (defined
+    on the Component base class).  To use this, simply set the metadata
+    requires_redraw=True in the definition of the trait.
     """
 
     #------------------------------------------------------------------------
@@ -61,4 +66,6 @@ class PlotComponent(Component):
             raise RuntimeError("The old-style drawing mechanism is no longer " \
                     "supported in Chaco.")
 
-
+    @observe('+requires_redraw')
+    def _plot_component_invalidated(self, event):
+        self.invalidate_and_redraw()

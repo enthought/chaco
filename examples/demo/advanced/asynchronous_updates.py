@@ -13,8 +13,9 @@ from numpy import ogrid, pi, sin
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor
-from traits.api import (Array, Bool, DelegatesTo, HasTraits, Instance, Range,
-                        on_trait_change)
+from traits.api import (
+    Array, Bool, DelegatesTo, HasTraits, Instance, Range, observe
+)
 from traits.trait_notifiers import ui_dispatch
 from traitsui.api import Item, Group, View
 
@@ -59,8 +60,8 @@ class BlurPlotController(HasTraits):
         # its own asynchronizer.
         return Asynchronizer(self._executor)
 
-    @on_trait_change('blur_level, image', post_init=True)
-    def _recalculate_blurred_image(self):
+    @observe('blur_level, image', post_init=True)
+    def _recalculate_blurred_image(self, event):
         """ Blur the image either synchronously or with the asynchronizer """
         image = self.image
         blur_level = self.blur_level

@@ -21,7 +21,6 @@ class LinearMapperTestCase(unittest.TestCase):
         self.assertTrue(mapper._high_bound_initialized)
         result = mapper.map_screen(ary)
         assert_equal(result , array([50, 60, 70, 80, 90, 100]))
-        return
 
     def test_reversed(self):
         ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
@@ -36,7 +35,6 @@ class LinearMapperTestCase(unittest.TestCase):
         self.assertTrue(mapper._high_bound_initialized)
         result = mapper.map_screen(ary)
         assert_equal(result , array([100, 80, 60, 40, 20, 0]))
-        return
 
     def test_set_screen_bounds(self):
         ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
@@ -50,7 +48,6 @@ class LinearMapperTestCase(unittest.TestCase):
         self.assertTrue(mapper._high_bound_initialized)
         result = mapper.map_screen(ary)
         assert_equal(result , array([50, 60, 70, 80, 90, 100]))
-        return
 
     def test_reversed_set_screen_bounds(self):
         ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
@@ -64,7 +61,6 @@ class LinearMapperTestCase(unittest.TestCase):
         self.assertTrue(mapper._high_bound_initialized)
         result = mapper.map_screen(ary)
         assert_equal(result , array([100, 80, 60, 40, 20, 0]))
-        return
 
     def test_update_screen_bounds_stretch_data(self):
         ary = array([5.0, 6.0, 7.0, 8.0, 9.0, 10.0])

@@ -38,7 +38,6 @@ class ColorMapTemplate(HasTraits):
         """
         if colormap:
             self.from_colormap(colormap)
-        return
 
     def from_colormap(self, colormap):
         """ Populates this template from a color map.
@@ -47,7 +46,6 @@ class ColorMapTemplate(HasTraits):
         self.steps = colormap.steps
         self.range_low_setting = colormap.range.low_setting
         self.range_high_setting = colormap.range.high_setting
-        return
 
     def to_colormap(self, range=None):
         """ Returns a ColorMapper instance from this template.
@@ -238,8 +236,6 @@ class ColorMapper(AbstractColormap):
         """
         self._segmentdata = segmentdata
         super(ColorMapper, self).__init__(**kwtraits)
-        return
-
 
     def map_screen(self, data_array):
         """ Maps an array of data values to an array of colors.
@@ -329,8 +325,6 @@ class ColorMapper(AbstractColormap):
         self._alpha_lut_uint8 = (self._alpha_lut * 255.0).astype('uint8')
         self.updated = True
         self._dirty = False
-
-        return
 
     #### matplotlib ####
     def _make_mapping_array(self, n, data):

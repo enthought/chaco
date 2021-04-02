@@ -10,8 +10,7 @@ import numpy as np
 from enable.api import LineStyle, black_color_trait, \
                                   transparent_color_trait
 from kiva.api import points_in_polygon
-from traits.api import Enum, Float, Tuple, Property, cached_property, \
-                        on_trait_change
+from traits.api import Enum, Float, Tuple, Property, cached_property, observe
 
 # Local imports.
 from .base_xy_plot import BaseXYPlot
@@ -38,16 +37,16 @@ class PolygonPlot(BaseXYPlot):
     """
 
     #: The color of the line on the edge of the polygon.
-    edge_color = black_color_trait
+    edge_color = black_color_trait(requires_redraw=True)
 
     #: The thickness of the edge of the polygon.
-    edge_width = Float(1.0)
+    edge_width = Float(1.0, requires_redraw=True)
 
     #: The line dash style for the edge of the polygon.
-    edge_style = LineStyle
+    edge_style = LineStyle(requires_redraw=True)
 
     #: The color of the face of the polygon.
-    face_color = transparent_color_trait
+    face_color = transparent_color_trait(requires_redraw=True)
 
     #: Override the hittest_type trait inherited from BaseXYPlot
     hittest_type = Enum("poly", "point", "line")
@@ -118,7 +117,6 @@ class PolygonPlot(BaseXYPlot):
             if hasattr(self, 'line_style_'):
                 gc.set_line_dash(self.line_style_)
             gc.draw_rect((x,y,width,height))
-        return
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
         """ Performs point-in-polygon testing or point/line proximity testing.
@@ -139,15 +137,6 @@ class PolygonPlot(BaseXYPlot):
             return True
         else:
             return False
-
-    #------------------------------------------------------------------------
-    # Event handlers
-    #------------------------------------------------------------------------
-
-    @on_trait_change('edge_color, edge_width, edge_style, face_color, alpha')
-    def _attributes_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
 
     #------------------------------------------------------------------------
     # Property getters

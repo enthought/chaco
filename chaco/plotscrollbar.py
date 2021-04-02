@@ -105,7 +105,6 @@ class PlotScrollBar(NativeScrollBar):
                         scroll_position = max(min(self.scroll_position, totalmax-view), totalmin))
         self._scroll_updated = True
         self.request_redraw()
-        return
 
     def _scroll_position_changed(self):
         super(PlotScrollBar, self)._scroll_position_changed()
@@ -115,7 +114,6 @@ class PlotScrollBar(NativeScrollBar):
         view_width = range.high - range.low
         new_scroll_pos = self.scroll_position
         range.set_bounds(new_scroll_pos, new_scroll_pos + view_width)
-        return
 
     #----------------------------------------------------------------------
     # Event listeners
@@ -131,7 +129,6 @@ class PlotScrollBar(NativeScrollBar):
         if new is not None:
             self._modify_plot_listeners(new, "attach")
             self._update_mapper_listeners()
-        return
 
     def __plot_changed(self, old, new):
         if old is not None:
@@ -145,7 +142,6 @@ class PlotScrollBar(NativeScrollBar):
         elif self.component is not None:
             self._modify_plot_listeners(self.component, "attach")
             self._update_mapper_listeners()
-        return
 
     def _modify_plot_listeners(self, plot, action="attach"):
         if action == "attach":
@@ -156,7 +152,6 @@ class PlotScrollBar(NativeScrollBar):
                      "bounds.items", remove=remove)
         plot.observe(self._component_pos_handler,
                      "position.items", remove=remove)
-        return
 
     def _component_bounds_handler(self, event):
         self._handle_dataspace_update()
@@ -185,7 +180,6 @@ class PlotScrollBar(NativeScrollBar):
 
     def _set_plot(self, val):
         self._plot = val
-        return
 
     def _get_mapper(self):
         if self._mapper is not None:
@@ -195,7 +189,6 @@ class PlotScrollBar(NativeScrollBar):
 
     def _set_mapper(self, new_mapper):
         self._mapper = new_mapper
-        return
 
     def _get_axis_index(self):
         if self._axis_index is None:
@@ -205,7 +198,6 @@ class PlotScrollBar(NativeScrollBar):
 
     def _set_axis_index(self, val):
         self._axis_index = val
-        return
 
     #------------------------------------------------------------------------
     # Private methods

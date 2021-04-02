@@ -36,7 +36,7 @@ def lasso_updated(lasso_tool, name, old, new_selections):
         # Now map each point into the grid index
         for x, y in screen_pts:
             print("\t", lasso_tool.plot.map_index((x, y)))
-    return
+
 
 def _create_plot_component():# Create a scalar field to colormap
     xbounds = (-2*pi, 2*pi, 600)

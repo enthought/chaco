@@ -51,7 +51,6 @@ class SaveTool(BaseTool):
             else:
                 self._save_raster()
             event.handled = True
-        return
 
     def _save_raster(self):
         """ Saves an image of the component.
@@ -60,7 +59,6 @@ class SaveTool(BaseTool):
         gc = PlotGraphicsContext((int(self.component.outer_width), int(self.component.outer_height)))
         self.component.draw(gc, mode="normal")
         gc.save(self.filename)
-        return
 
     def _save_pdf(self):
         from chaco.pdf_graphics_context import PdfPlotGraphicsContext

@@ -87,4 +87,3 @@ class PolarMapper(AbstractMapper):
             self._null_data_range = False
 
         self._cache_valid = True
-        return

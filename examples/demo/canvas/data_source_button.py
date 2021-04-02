@@ -51,7 +51,6 @@ class ButtonController(HasTraits):
             #if not control_down:
             if 1:
                 self.button_deselected(button)
-        return
 
     def button_selected(self, button):
         if DEBUG:
@@ -76,7 +75,6 @@ class ButtonController(HasTraits):
         else:
             return
         button.button_state = "down"
-        return
 
     def button_deselected(self, button):
         if DEBUG:
@@ -99,7 +97,6 @@ class ButtonController(HasTraits):
         else:
             return
         button.button_state = "up"
-        return
 
     def show_scatterplot(self, b1, b2):
         if len(self.plot.plots) > 0:
@@ -191,13 +188,11 @@ class DataSourceButton(PlotToolbarButton):
             self._do_layout()
             self.plot_overlay.visible = True
         self.request_redraw()
-        return
 
     def hide_overlay(self):
         if self.plot_overlay is not None:
             self.plot_overlay.visible = False
         self.request_redraw()
-        return
 
     def _do_layout(self):
         if self.canvas is not None:

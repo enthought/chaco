@@ -48,7 +48,6 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     def __init__(self, component=None, **kw):
         super(ColormappedSelectionOverlay, self).__init__(**kw)
         self.component = component
-        return
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """ Draws this component overlaid on another component.
@@ -99,7 +98,6 @@ class ColormappedSelectionOverlay(AbstractOverlay):
         plot.outline_color = fade_outline_color
         plot.line_width = self.unselected_outline_width
         datasource.remove_mask()
-        return
 
     def _component_changed(self, old, new):
         if old:
@@ -118,7 +116,6 @@ class ColormappedSelectionOverlay(AbstractOverlay):
                     new=new.color_data
                 )
             )
-        return
 
     def datasource_change_handler(self, event):
         obj, name, old, new = (event.object, event.name, event.old, event.new)
@@ -134,8 +131,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
                     old=None,
                     new=new.metadata
                 )
-        )
-        return
+            )
 
     def selection_change_handler(self, event):
         obj, name, old, new = (event.object, event.name, event.old, event.new)
@@ -178,7 +174,6 @@ class ColormappedSelectionOverlay(AbstractOverlay):
             self._visible = False
 
         self.plot.request_redraw()
-        return
 
     def _get_plot(self):
         if self._plot is not None:

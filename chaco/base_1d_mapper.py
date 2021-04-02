@@ -70,13 +70,11 @@ class Base1DMapper(AbstractMapper):
 
         self._cache_valid = False
         self.updated = new
-        return
 
     def _range_change_handler(self, event):
         "Handles the range changing; dynamically attached to our ranges"
         self._cache_valid = False
         self.updated = event.object
-        return
 
     def _get_screen_bounds(self):
         return (self.low_pos, self.high_pos)
@@ -102,7 +100,6 @@ class Base1DMapper(AbstractMapper):
         self._low_bound_initialized = True
         self._high_bound_initialized = True
         self.updated = True
-        return
 
     def _adjust_range(self, old_bounds, new_bounds):
         initialized = self._low_bound_initialized and \

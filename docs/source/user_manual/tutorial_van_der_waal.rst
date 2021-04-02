@@ -152,7 +152,6 @@ The following is the code for these two needs::
         self.pressure = ((self.r_constant*self.temperature)
 		         /(self.volume - self.totVolume)
                         -(self.attraction/(self.volume*self.volume)))
-        return
 
 The :func:`calc` function computes the :attr:`pressure` array using the current
 values of the independent variables.  Meanwhile, the

@@ -61,7 +61,6 @@ class RangeSelection2D(RangeSelection):
             self.deselect(event)
             self.normal_left_down(event)
         event.handled = True
-        return
 
     def selected_right_down(self, event):
         """ Handles the right mouse button being pressed when the tool is in
@@ -104,7 +103,6 @@ class RangeSelection2D(RangeSelection):
             self.deselect(event)
             self.normal_right_down(event)
         event.handled = True
-        return
 
     def selected_mouse_move(self, event):
         """ Handles the mouse moving when the tool is in the 'selected' state.
@@ -129,7 +127,6 @@ class RangeSelection2D(RangeSelection):
                     return
         event.window.set_pointer("arrow")
         event.handled = True
-        return
 
     #------------------------------------------------------------------------
     # Event handlers for the "moving" event state
@@ -162,7 +159,6 @@ class RangeSelection2D(RangeSelection):
         self.selection_completed = new_selection
         self.component.request_redraw()
         event.handled = True
-        return
 
     #------------------------------------------------------------------------
     # Event handlers for the "normal" event state
@@ -186,7 +182,6 @@ class RangeSelection2D(RangeSelection):
         self._set_sizing_cursor(event)
         self.event_state = "selecting"
         self.selecting_mouse_move(event)
-        return
 
     #------------------------------------------------------------------------
     # Event handlers for the "selecting" event state
@@ -240,7 +235,6 @@ class RangeSelection2D(RangeSelection):
 
                 self.component.request_redraw()
             event.handled = True
-        return
 
     def selecting_mouse_leave(self, event):
         """ Handles the mouse leaving the plot when the tool is in the
@@ -272,7 +266,6 @@ class RangeSelection2D(RangeSelection):
         self.selection = (selection_low, selection_high)
         event.window.set_pointer("arrow")
         self.component.request_redraw()
-        return
 
     #------------------------------------------------------------------------
     # Private methods

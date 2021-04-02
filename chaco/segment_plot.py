@@ -3,8 +3,7 @@ import numpy as np
 from enable.api import ColorTrait, LineStyle, black_color_trait
 from kiva.api import CAP_ROUND
 from traits.api import (
-    Array, Bool, Enum, Float, Instance, Property, Str, cached_property,
-    on_trait_change
+    Array, Bool, Enum, Float, Instance, Property, Str, cached_property, observe
 )
 
 from chaco.abstract_colormap import AbstractColormap
@@ -351,11 +350,11 @@ class SegmentPlot(BaseXYPlot):
             gc.move_to(x, y)
             gc.line_to(width, height)
 
-    @on_trait_change(
+    @observe(
         'alpha, color_data:data_changed, color_mapper:updated, '
         'width_data:data_changed, width_mapper.updated, +redraw'
     )
-    def _attributes_changed(self):
+    def _attributes_updated(self, event):
         self.invalidate_draw()
         self.request_redraw()
 

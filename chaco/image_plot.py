@@ -302,7 +302,7 @@ class ImagePlot(Base2DPlot):
         """
         ix, iy, image_width, image_height = image_rect
         if 0 in (image_width, image_height) or 0 in self.bounds:
-            return (None, None)
+            return ((0, 0, 0, 0), (0, 0, 0, 0))
 
         array_bounds = self._array_bounds_from_screen_rect(image_rect)
         col_min, col_max, row_min, row_max = array_bounds

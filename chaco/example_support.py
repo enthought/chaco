@@ -52,7 +52,6 @@ if ETSConfig.toolkit == 'wx':
             sizer.Add(self.plot_window.control, 1, wx.EXPAND)
             self.SetSizer(sizer)
             self.Show( True )
-            return
 
         def _create_window(self):
             "Subclasses should override this method and return an enable.wx.Window"
@@ -116,7 +115,6 @@ elif ETSConfig.toolkit == 'pyglet':
                 window = self._create_window()
                 self.enable_win = window
                 app.add_window(window.control)
-            return
 
         def _create_window(self):
             raise NotImplementedError

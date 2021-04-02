@@ -5,7 +5,7 @@ callable.
 from numpy import array
 
 # Enthought library imports
-from traits.api import Callable, Instance, on_trait_change
+from traits.api import Callable, Instance, observe
 
 # Local, relative imports
 from .abstract_data_source import AbstractDataSource
@@ -36,8 +36,8 @@ class FunctionDataSource(ArrayDataSource):
         AbstractDataSource.__init__(self, **kw)
         self.recalculate()
 
-    @on_trait_change('data_range.updated')
-    def recalculate(self):
+    @observe('data_range.updated')
+    def recalculate(self, event=None):
         if self.func is not None and self.data_range is not None:
             newarray = self.func(self.data_range.low, self.data_range.high)
             ArrayDataSource.set_data(self, newarray)

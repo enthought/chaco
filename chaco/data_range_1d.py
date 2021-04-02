@@ -349,7 +349,6 @@ class DataRange1D(BaseDataRange):
             self._low_value = low_start
             self._high_value = high_start
             self.updated = (self._low_value, self._high_value)
-        return
 
     def _do_track(self):
         changed = False

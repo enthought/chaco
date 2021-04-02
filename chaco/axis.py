@@ -186,7 +186,6 @@ class PlotAxis(AbstractOverlay):
         """
         self._reset_cache()
         self.invalidate_draw()
-        return
 
     def traits_view(self):
         """ Returns a View instance for use with Traits UI.  This method is
@@ -210,7 +209,6 @@ class PlotAxis(AbstractOverlay):
             self._layout_as_overlay(*args, **kw)
         else:
             super(PlotAxis, self)._do_layout(*args, **kw)
-        return
 
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
         """ Draws this component overlaid on another component.
@@ -220,7 +218,6 @@ class PlotAxis(AbstractOverlay):
         if not self.visible:
             return
         self._draw_component(gc, view_bounds, mode, component)
-        return
 
     def _draw_overlay(self, gc, view_bounds=None, mode='normal'):
         """ Draws the overlay layer of a component.
@@ -228,7 +225,6 @@ class PlotAxis(AbstractOverlay):
         Overrides PlotComponent.
         """
         self._draw_component(gc, view_bounds, mode)
-        return
 
     def _draw_component(self, gc, view_bounds=None, mode='normal', component=None):
         """ Draws the component.
@@ -262,8 +258,6 @@ class PlotAxis(AbstractOverlay):
             self._draw_labels(gc)
 
         self._cache_valid = True
-        return
-
 
     #------------------------------------------------------------------------
     # Private draw routines
@@ -291,7 +285,6 @@ class PlotAxis(AbstractOverlay):
                 elif self.orientation == "top":
                     self.height = self.component.padding_top
                     self.y = self.component.y2 + 1
-        return
 
     def _draw_axis_line(self, gc, startpoint, endpoint):
         """ Draws the line for the axis.
@@ -304,8 +297,6 @@ class PlotAxis(AbstractOverlay):
             gc.move_to(*around(startpoint))
             gc.line_to(*around(endpoint))
             gc.stroke_path()
-        return
-
 
     def _draw_title(self, gc, label=None, axis_offset=None):
         """ Draws the title for the axis.
@@ -341,8 +332,6 @@ class PlotAxis(AbstractOverlay):
         gc.translate_ctm(*offset)
         title_label.draw(gc)
         gc.translate_ctm(*(-offset))
-        return
-
 
     def _draw_ticks(self, gc):
         """ Draws the tick marks for the axis.
@@ -359,7 +348,6 @@ class PlotAxis(AbstractOverlay):
             gc.move_to(*(tick_pos + tick_in_vector))
             gc.line_to(*(tick_pos - tick_out_vector))
         gc.stroke_path()
-        return
 
     def _draw_labels(self, gc):
         """ Draws the tick labels for the axis.
@@ -409,8 +397,6 @@ class PlotAxis(AbstractOverlay):
             gc.translate_ctm(*tlpos)
             ticklabel.draw(gc)
             gc.translate_ctm(*(-tlpos))
-        return
-
 
     #------------------------------------------------------------------------
     # Private methods for computing positions and layout
@@ -422,7 +408,6 @@ class PlotAxis(AbstractOverlay):
         self._tick_positions = []
         self._tick_label_list = []
         self._tick_label_positions = []
-        return
 
     def _compute_tick_positions(self, gc, overlay_component=None):
         """ Calculates the positions for the tick marks.
@@ -498,8 +483,6 @@ class PlotAxis(AbstractOverlay):
                                 for tickpos in mapped_tick_positions]))
         self._tick_label_list = tick_list
         self._tick_label_positions = self._tick_positions
-        return
-
 
     def _compute_labels(self, gc):
         """Generates the labels for tick marks.
@@ -522,8 +505,6 @@ class PlotAxis(AbstractOverlay):
         self.ticklabel_cache = [build_label(val) for val in self._tick_label_list]
         self._tick_label_bounding_boxes = [array(ticklabel.get_bounding_box(gc), float)
                                                for ticklabel in self.ticklabel_cache]
-        return
-
 
     def _calculate_geometry(self):
         origin = self.origin
@@ -565,8 +546,6 @@ class PlotAxis(AbstractOverlay):
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.
         self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
-        return
-
 
     def _calculate_geometry_overlay(self, overlay_component=None):
         if overlay_component is None:
@@ -611,8 +590,6 @@ class PlotAxis(AbstractOverlay):
         self._axis_vector = self._end_axis_point - self._origin_point
         # This is the vector that represents one unit of data space in terms of screen space.
         self._axis_pixel_vector = self._axis_vector/sqrt(dot(self._axis_vector,self._axis_vector))
-        return
-
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -669,14 +646,12 @@ class PlotAxis(AbstractOverlay):
     def _updated_fired(self):
         """If the axis bounds changed, redraw."""
         self._cache_valid = False
-        return
 
     def _invalidate(self):
         self._cache_valid = False
         self.invalidate_draw()
         if self.component:
             self.component.invalidate_draw()
-        return
 
     def _component_changed(self):
         if self.mapper is not None:
@@ -699,8 +674,6 @@ class PlotAxis(AbstractOverlay):
 
         # Keep our origin in sync with the component
         self.origin = getattr(component, 'origin', 'bottom left')
-        return
-
 
     #------------------------------------------------------------------------
     # The following event handlers just invalidate our previously computed
@@ -712,7 +685,6 @@ class PlotAxis(AbstractOverlay):
         self.invalidate_draw()
         if self.component:
             self.component.invalidate_draw()
-        return
 
     def _anytrait_changed(self, name, old, new):
         """ For every trait that defines a visual attribute
@@ -800,7 +772,6 @@ class PlotAxis(AbstractOverlay):
         self._mapper_changed(None, self.mapper)
         self._reset_cache()
         self._cache_valid = False
-        return
 
 
 class MinorPlotAxis(PlotAxis):

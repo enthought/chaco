@@ -7,9 +7,21 @@ import unittest
 
 import numpy as np
 
+from enable.api import Component, ComponentEditor
+from traits.api import HasTraits, Instance
 from traits.etsconfig.api import ETSConfig
-from chaco.api import (PlotGraphicsContext, GridDataSource, GridMapper,
-                       DataRange2D, ImageData, ImagePlot)
+from traitsui.api import Group, UItem, View
+from traitsui.testing.api import UITester
+from chaco.api import (
+    ArrayPlotData,
+    PlotGraphicsContext,
+    GridDataSource,
+    GridMapper,
+    DataRange2D,
+    ImageData,
+    ImagePlot,
+    Plot
+)
 
 
 # The Quartz backend rescales pixel values, so use a higher threshold.
@@ -152,3 +164,32 @@ class TestResultImage(unittest.TestCase):
         # that is flipped vertically and horizontally.
         self.verify_result_image(RGB, (IMAGE.T)[::-1, ::-1],
                                  origin='bottom right', orientation='v')
+
+    # regression test for enthought/chaco#528
+    @unittest.skipIf(ETSConfig.toolkit=='null', "Skip on 'null' toolkit")
+    def test_resize_to_zero(self):
+        class TestResize(HasTraits):
+            plot = Instance(Component)
+
+            # at the exact size of (101, 101) for the component editor the
+            # image is 0x0 on the screen and the failure was triggered
+            traits_view = View(
+                Group(
+                    UItem('plot', editor=ComponentEditor(size=(101, 101))),
+                ),
+                resizable=True,
+            )
+
+            def _plot_default(self):
+                pd = ArrayPlotData(image=RGB)
+                plot = Plot(pd)
+                plot.img_plot('image')
+
+                return plot
+        
+        test_obj = TestResize()
+        tester = UITester()
+
+         # should not fail
+        with tester.create_ui(test_obj) as ui:
+            pass

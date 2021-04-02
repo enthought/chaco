@@ -4,7 +4,7 @@ import logging
 
 from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
 from traits.api import Any, Bool, Enum, Float, Instance, Property, \
-        Range, Tuple, cached_property, on_trait_change
+        Range, Tuple, cached_property
 from enable.api import black_color_trait
 from kiva.constants import FILL_STROKE
 
@@ -69,11 +69,11 @@ class BarPlot(AbstractPlotRenderer):
     antialias = Bool(True)
 
     #: Width of the border of the bars.
-    line_width = Float(1.0)
+    line_width = Float(1.0, requires_redraw=True)
     #: Color of the border of the bars.
-    line_color = black_color_trait
+    line_color = black_color_trait(requires_redraw=True)
     #: Color to fill the bars.
-    fill_color = black_color_trait
+    fill_color = black_color_trait(requires_redraw=True)
 
     #: The RGBA tuple for rendering lines. It is always a tuple of length 4.
     #: It has the same RGB values as :attr:`line_color`, and its alpha value
@@ -86,7 +86,7 @@ class BarPlot(AbstractPlotRenderer):
     effective_fill_color = Property(Tuple, depends_on=['fill_color', 'alpha'])
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
-    alpha = Range(0.0, 1.0, 1.0)
+    alpha = Range(0.0, 1.0, 1.0, requires_redraw=True)
 
 
     #use_draw_order = False
@@ -260,7 +260,6 @@ class BarPlot(AbstractPlotRenderer):
         self._cached_data_pts = compress(point_mask, points, axis=0)
 
         self._cache_valid = True
-        return
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """ Draws the 'plot' layer.
@@ -320,8 +319,6 @@ class BarPlot(AbstractPlotRenderer):
                     gc.line_to(int(end[0])+0.5, int(end[1])+0.5)
                     gc.stroke_path()
 
-        return
-
     def _render_icon(self, gc, x, y, width, height):
         with gc:
             gc.set_fill_color(self.effective_fill_color)
@@ -331,8 +328,6 @@ class BarPlot(AbstractPlotRenderer):
 
     def _post_load(self):
         super(BarPlot, self)._post_load()
-        return
-
 
     #------------------------------------------------------------------------
     # Properties
@@ -414,11 +409,6 @@ class BarPlot(AbstractPlotRenderer):
 
         self.invalidate_draw()
         self._cache_valid = False
-
-    @on_trait_change('line_color, line_width, fill_color, alpha')
-    def _attributes_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
 
     def _bounds_changed(self, old, new):
         super(BarPlot, self)._bounds_changed(old, new)

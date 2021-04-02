@@ -122,7 +122,6 @@ class MPPlotCloneTool(PlotCloneTool):
             self.event_state = "dragging"
             event.handled = True
         PlotCloneTool.drag_start(self, event)
-        return
 
     def drag_end(self, event):
         if hasattr(event, "bid"):

@@ -28,7 +28,6 @@ class DrawPointsTool(BaseTool):
         BaseTool.__init__(self, **kwtraits)
         self.xdata = self.component.value1
         self.ydata = self.component.value2
-        return
 
     def normal_left_down(self, event):
         """ Handles the left mouse button being clicked when the tool is in the
@@ -42,18 +41,14 @@ class DrawPointsTool(BaseTool):
         self._append_data(self.xdata, data_x)
         self._append_data(self.ydata, data_y)
         self.component.request_redraw()
-        return
 
     def _activate(self):
         self.activated = True
-        return
 
     def _deactivate(self):
         self.activated = False
-        return
 
     def _append_data(self, datasource, data):
         olddata = array(datasource.get_data(), float64)
         newdata = hstack((olddata, data))
         datasource.set_data(newdata)
-        return
