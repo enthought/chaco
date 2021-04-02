@@ -575,7 +575,6 @@ class RangeSelection(AbstractController):
 
             # Set the selection range on the datasource
             datasource.metadata[mdname] = val
-            datasource.metadata_changed = {mdname: val}
 
             # Set the selection mask on the datasource
             selection_masks = \
@@ -595,7 +594,6 @@ class RangeSelection(AbstractController):
                 new_mask = (data_pts >= low) & (data_pts <= high)
                 selection_masks.append(new_mask)
                 self._selection_mask = new_mask
-            datasource.metadata_changed = {self.mask_metadata_name: val}
 
         self.trait_property_changed("selection", oldval, val)
 
