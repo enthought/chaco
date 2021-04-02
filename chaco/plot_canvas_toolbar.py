@@ -65,7 +65,7 @@ class PlotCanvasToolbar(VPlotContainer):
         if self.component is not None:
             self.component.request_redraw()
         super(PlotCanvasToolbar, self)._request_redraw()
-        return
+
 
 class PlotToolbarButton(PlotComponent, ToolbarButton):
 

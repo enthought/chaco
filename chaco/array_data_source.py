@@ -108,7 +108,6 @@ class ArrayDataSource(AbstractDataSource):
     def __init__(self, data=array([]), sort_order="none", **kw):
         AbstractDataSource.__init__(self, **kw)
         self.set_data(data, sort_order)
-        return
 
     def set_data(self, newdata, sort_order=None):
         """ Sets the data, and optionally the sort order, for this data source.
@@ -125,21 +124,18 @@ class ArrayDataSource(AbstractDataSource):
             self.sort_order = sort_order
         self._compute_bounds()
         self.data_changed = True
-        return
 
     def set_mask(self, mask):
         """ Sets the mask for this data source.
         """
         self._cached_mask = mask
         self.data_changed = True
-        return
 
     def remove_mask(self):
         """ Removes the mask on this data source.
         """
         self._cached_mask = None
         self.data_changed = True
-        return
 
     #------------------------------------------------------------------------
     # AbstractDataSource interface
@@ -287,7 +283,6 @@ class ArrayDataSource(AbstractDataSource):
 
             self._cached_bounds = (data[self._min_index],
                                data[self._max_index])
-        return
 
     #------------------------------------------------------------------------
     # Event handlers
@@ -317,4 +312,3 @@ class ArrayDataSource(AbstractDataSource):
         super(ArrayDataSource, self)._post_load()
         self._cached_bounds = ()
         self._cached_mask = None
-        return

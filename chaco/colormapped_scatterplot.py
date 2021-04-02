@@ -27,7 +27,6 @@ class ColormappedScatterPlotView(ScatterPlotView):
         vgroup = self.content
         vgroup.content[0].content.append(Item("fill_alpha", label="Fill alpha",
                                    editor=RangeEditor(low=0.0, high=1.0)))
-        return
 
 
 class ColormappedScatterPlot(ScatterPlot):
@@ -115,7 +114,6 @@ class ColormappedScatterPlot(ScatterPlot):
             screen_pts = self.map_screen(self._cached_data_pts)
             pts = concatenate((screen_pts, colors[:, newaxis]), axis=1)
             self._render(gc, pts)
-        return
 
     def _gather_points(self):
         """
@@ -162,7 +160,6 @@ class ColormappedScatterPlot(ScatterPlot):
         self._cached_point_mask = point_mask
 
         self._cache_valid = True
-        return
 
     def _render(self, gc, points):
         """ Actually draws the plot.
@@ -189,8 +186,6 @@ class ColormappedScatterPlot(ScatterPlot):
                 self._render_bruteforce(gc, points)
             elif method == 'banded':
                 self._render_banded(gc, points)
-        return
-
 
     #------------------------------------------------------------------------
     # Private methods
@@ -246,7 +241,6 @@ class ColormappedScatterPlot(ScatterPlot):
 
         self._color_indices = color_indices
         self._cache_valid = True
-        return
 
     def _calc_render_method(self, numpoints):
         """ Returns a string indicating the render method.
@@ -270,7 +264,6 @@ class ColormappedScatterPlot(ScatterPlot):
             gc.set_fill_color( color )
         if outline_weight is not None:
             gc.set_line_width(outline_weight)
-        return
 
     def _render_banded(self, gc, points):
         """ Draws the points color-band by color-band.
@@ -329,7 +322,6 @@ class ColormappedScatterPlot(ScatterPlot):
                 gc.draw_path_at_points(xy, path, mode)
         else:
             raise RuntimeError("Batch drawing requested on non-batch-capable GC.")
-        return
 
     def _render_bruteforce(self, gc, points):
         """ Draws the points, setting the stroke color for each one.
@@ -398,7 +390,6 @@ class ColormappedScatterPlot(ScatterPlot):
         if new is not None:
             new.on_trait_change(self._either_data_changed, "data_changed")
         self._either_data_changed()
-        return
 
     def _color_mapper_changed(self, old, new):
         self._cache_valid = False
@@ -411,8 +402,6 @@ class ColormappedScatterPlot(ScatterPlot):
         self.invalidate_draw()
         self.request_redraw()
 
-        return
-
     @on_trait_change('color_mapper:updated')
     def _color_mapper_updated(self):
         self.invalidate_draw()
@@ -421,4 +410,3 @@ class ColormappedScatterPlot(ScatterPlot):
     def _fill_alpha_changed(self):
         self.invalidate_draw()
         self.request_redraw()
-        return

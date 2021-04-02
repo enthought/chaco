@@ -72,7 +72,6 @@ class ToolTip(AbstractOverlay):
         Overrides PlotComponent.
         """
         self.overlay(self, gc, view_bounds=view_bounds, mode='normal')
-        return
 
     def overlay(self, component, gc, view_bounds=None, mode='normal'):
         """ Draws the tooltip overlaid on another component.
@@ -81,7 +80,6 @@ class ToolTip(AbstractOverlay):
         """
         self.do_layout()
         PlotComponent._draw(self, gc, view_bounds, mode)
-        return
 
     def _draw_overlay(self, gc, view_bounds=None, mode='normal'):
         """ Draws the overlay layer of a component.
@@ -99,8 +97,6 @@ class ToolTip(AbstractOverlay):
                 label.draw(gc)
                 gc.translate_ctm(0,-y)
                 y -= self.line_spacing
-        return
-
 
     def _do_layout(self):
         """Computes the size of the tooltip, and creates the label objects
@@ -154,7 +150,6 @@ class ToolTip(AbstractOverlay):
         self._total_line_height = sum(line_sizes[:,1]) + \
                                   len(line_sizes-1)*self.line_spacing
         self._layout_needed = True
-        return
 
     def __font_metrics_provider_default(self):
         return font_metrics_provider()

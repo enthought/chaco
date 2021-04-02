@@ -66,10 +66,8 @@ class SelectableLegend(Legend, SelectTool):
             self.selections.append(index)
         else:
             self.selections = [index]
-        return
 
     def _deselect(self, index=None):
         if index in self.selections:
             self.selections.remove(index)
-        return
 

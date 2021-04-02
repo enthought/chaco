@@ -75,7 +75,6 @@ class PointDataSource(ArrayDataSource):
         if (len(shape) != 2) or (shape[1] != 2):
             raise RuntimeError("PointDataSource constructor requires Nx2 array, but got array of shape " + str(shape) + " instead.")
         super(PointDataSource, self).__init__(data, **kw)
-        return
 
     def get_data(self):
         """ Returns the data for this data source, or (0.0, 0.0) if it has no
@@ -157,7 +156,6 @@ class PointDataSource(ArrayDataSource):
             min_y = min(y)
             max_y = max(y)
             self._cached_bounds = ((min_x,min_y), (max_x,max_y))
-        return
 
     def _get__xdata(self):
         return ArrayDataSource(self._data[:,0])

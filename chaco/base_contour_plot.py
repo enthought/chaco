@@ -66,7 +66,6 @@ class BaseContourPlot(Base2DPlot):
         super(BaseContourPlot, self).__init__(*args, **kwargs)
         if self.color_mapper:
             self.color_mapper.on_trait_change(self._update_color_mapper, "updated")
-        return
 
     def _update_levels(self):
         """ Updates the levels cache.  """
@@ -129,8 +128,6 @@ class BaseContourPlot(Base2DPlot):
                     self._colors.append(self._color_map_trait_)
 
         self._colors_cache_valid = True
-        return
-
 
     #------------------------------------------------------------------------
     # Event handlers

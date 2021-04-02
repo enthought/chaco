@@ -54,8 +54,6 @@ class DataLabelTool(DragTool):
             self._original_offset = (label.x - pointx, label.y - pointy)
             event.window.set_mouse_owner(self, event.net_transform())
             event.handled = True
-        return
-
 
     def dragging(self, event):
         """ This method is called for every mouse_move event that the tool
@@ -87,8 +85,6 @@ class DataLabelTool(DragTool):
 
             event.handled = True
             label.request_redraw()
-        return
-
 
     def drag_end(self, event):
         """ Called when a mouse event causes the drag operation to end.
@@ -100,4 +96,3 @@ class DataLabelTool(DragTool):
                 event.window.set_mouse_owner(None)
             event.handled = True
             self.component.request_redraw()
-        return

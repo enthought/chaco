@@ -56,7 +56,6 @@ if ETSConfig.toolkit == "wx":
             self.SetSizer(sizer)
             self.SetAutoLayout(True)
             self.Show(True)
-            return
 
         def get_container(self):
             return self.plot_window.component

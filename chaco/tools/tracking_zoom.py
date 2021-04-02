@@ -75,4 +75,3 @@ class TrackingZoom(ZoomTool):
                 datarange.set_bounds(newlow, newhigh)
             event.handled = True
             self.component.request_redraw()
-        return

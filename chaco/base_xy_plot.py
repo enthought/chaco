@@ -197,7 +197,6 @@ class BaseXYPlot(AbstractPlotRenderer):
         # so we have to manually update our mappers
         if self.resizable == "":
             self._update_mappers()
-        return
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
         """ Performs proximity testing between a given screen point and the
@@ -461,7 +460,6 @@ class BaseXYPlot(AbstractPlotRenderer):
         """ Draws the 'plot' layer.
         """
         self._draw_component(gc, view_bounds, mode)
-        return
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
         # This method should be folded into self._draw_plot(), but is here for
@@ -469,7 +467,6 @@ class BaseXYPlot(AbstractPlotRenderer):
 
         pts = self.get_screen_points()
         self._render(gc, pts)
-        return
 
     def _draw_default_axes(self, gc):
         if not self.origin_axis_visible:
@@ -494,7 +491,6 @@ class BaseXYPlot(AbstractPlotRenderer):
                     gc.move_to(int(start[0]), int(start[1]))
                     gc.line_to(int(end[0]), int(end[1]))
                     gc.stroke_path()
-        return
 
     def _post_load(self):
         super(BaseXYPlot, self)._post_load()
@@ -502,11 +498,9 @@ class BaseXYPlot(AbstractPlotRenderer):
         self.invalidate_draw()
         self._cache_valid = False
         self._screen_cache_valid = False
-        return
 
     def _update_subdivision(self):
-
-        return
+        pass
 
     #------------------------------------------------------------------------
     # Properties
@@ -627,14 +621,12 @@ class BaseXYPlot(AbstractPlotRenderer):
             new.on_trait_change(self._either_data_changed, "data_changed")
             new.on_trait_change(self._either_metadata_changed, "metadata_changed")
         self._either_data_changed()
-        return
 
     def _either_data_changed(self):
         self.invalidate_draw()
         self._cache_valid = False
         self._screen_cache_valid = False
         self.request_redraw()
-        return
 
     def _either_metadata_changed(self):
         # By default, don't respond to metadata change events.
@@ -649,7 +641,6 @@ class BaseXYPlot(AbstractPlotRenderer):
             new.on_trait_change(self._either_data_changed, "data_changed")
             new.on_trait_change(self._either_metadata_changed, "metadata_changed")
         self._either_data_changed()
-        return
 
     def _origin_changed(self, old, new):
         # origin switch from left to right or vice versa?
@@ -663,7 +654,6 @@ class BaseXYPlot(AbstractPlotRenderer):
 
         self.invalidate_draw()
         self._screen_cache_valid = False
-        return
 
     def _index_mapper_changed(self, old, new):
         self._either_mapper_changed(self, "index_mapper", old, new)
@@ -671,7 +661,6 @@ class BaseXYPlot(AbstractPlotRenderer):
             self.trait_property_changed("x_mapper", old, new)
         else:
             self.trait_property_changed("y_mapper", old, new)
-        return
 
     def _value_mapper_changed(self, old, new):
         self._either_mapper_changed(self, "value_mapper", old, new)
@@ -679,7 +668,6 @@ class BaseXYPlot(AbstractPlotRenderer):
             self.trait_property_changed("y_mapper", old, new)
         else:
             self.trait_property_changed("x_mapper", old, new)
-        return
 
     def _either_mapper_changed(self, obj, name, old, new):
         if old is not None:
@@ -688,14 +676,12 @@ class BaseXYPlot(AbstractPlotRenderer):
             new.on_trait_change(self._mapper_updated_handler, "updated")
         self.invalidate_draw()
         self._screen_cache_valid = False
-        return
 
     def _mapper_updated_handler(self):
         self._cache_valid = False
         self._screen_cache_valid = False
         self.invalidate_draw()
         self.request_redraw()
-        return
 
     def _visible_changed(self, old, new):
         if new:
@@ -707,7 +693,6 @@ class BaseXYPlot(AbstractPlotRenderer):
     def _use_subdivision_changed(self, old, new):
         if new:
             self._set_up_subdivision()
-        return
 
     #------------------------------------------------------------------------
     # Persistence
@@ -733,4 +718,3 @@ class BaseXYPlot(AbstractPlotRenderer):
         self._cache_valid = False
         self._screen_cache_valid = False
         self._update_mappers()
-        return

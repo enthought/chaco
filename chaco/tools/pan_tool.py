@@ -102,7 +102,6 @@ class PanTool(BaseTool):
             event.x = dest[0]
             event.y = dest[1]
             self.panning_mouse_move(event)
-        return
 
     def normal_left_down(self, event):
         """ Handles the left mouse button being pressed when the tool is in
@@ -112,7 +111,6 @@ class PanTool(BaseTool):
         """
         if self.drag_button == "left":
             self._start_pan(event)
-        return
 
     def normal_right_down(self, event):
         """ Handles the right mouse button being pressed when the tool is in
@@ -122,7 +120,6 @@ class PanTool(BaseTool):
         """
         if self.drag_button == "right":
             self._start_pan(event)
-        return
 
     def normal_middle_down(self, event):
         """ Handles the middle mouse button being pressed when the tool is in
@@ -132,7 +129,6 @@ class PanTool(BaseTool):
         """
         if self.drag_button == "middle":
             self._start_pan(event)
-        return
 
     def panning_left_up(self, event):
         """ Handles the left mouse button coming up when the tool is in the
@@ -142,7 +138,6 @@ class PanTool(BaseTool):
         """
         if self.drag_button == "left":
             self._end_pan(event)
-        return
 
     def panning_right_up(self, event):
         """ Handles the right mouse button coming up when the tool is in the
@@ -152,7 +147,6 @@ class PanTool(BaseTool):
         """
         if self.drag_button == "right":
             self._end_pan(event)
-        return
 
     def panning_middle_up(self, event):
         """ Handles the middle mouse button coming up when the tool is in the
@@ -162,7 +156,6 @@ class PanTool(BaseTool):
         """
         if self.drag_button == "middle":
             self._end_pan(event)
-        return
 
     def panning_mouse_move(self, event):
         """ Handles the mouse being moved when the tool is in the 'panning'
@@ -236,7 +229,6 @@ class PanTool(BaseTool):
 
         self._original_xy = (event.x, event.y)
         plot.request_redraw()
-        return
 
     def panning_mouse_leave(self, event):
         """ Handles the mouse leaving the plot when the tool is in the 'panning'
@@ -258,7 +250,6 @@ class PanTool(BaseTool):
             event.window.set_pointer(self.drag_pointer)
             event.window.set_mouse_owner(self, event.net_transform())
         event.handled = True
-        return
 
     def _end_pan(self, event):
         if self._auto_constrain:
@@ -269,4 +260,3 @@ class PanTool(BaseTool):
         if event.window.mouse_owner == self:
             event.window.set_mouse_owner(None)
         event.handled = True
-        return

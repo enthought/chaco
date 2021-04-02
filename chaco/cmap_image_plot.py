@@ -184,12 +184,10 @@ class CMapImagePlot(ImagePlot):
     def _value_data_changed_fired(self):
         super(CMapImagePlot, self)._value_data_changed_fired()
         self._mapped_image_cache_valid = False
-        return
 
     def _index_data_changed_fired(self):
         super(CMapImagePlot, self)._index_data_changed_fired()
         self._mapped_image_cache_valid = False
-        return
     
     def _cache_full_map_changed(self):
         self._mapped_image_cache_valid = False

@@ -102,7 +102,6 @@ class PlotToolbar(Container, AbstractOverlay):
         self.add(button)
         button.toolbar_overlay = self
         self._layout_needed = True
-        return
 
     def normal_mouse_move(self, event):
         """ handler for normal mouse move
@@ -253,8 +252,6 @@ class PlotToolbar(Container, AbstractOverlay):
         else:
             if self.auto_hide:
                 self.hiding = True
-
-        return
 
     ############################################################
     # Trait handlers

@@ -472,7 +472,6 @@ class TimeFormatter(object):
                 size = len(strftimeEx(s, tmptime))
                 sizes.append(size)
             self.formats[fmt_name] = (array(sizes), fmt_strings)
-        return
 
     def _get_resolution(self, resolution, interval):
         r = resolution

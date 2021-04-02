@@ -498,7 +498,6 @@ class DataLabel(ToolTip):
             self.y = sy + self.label_position[1]
 
         self._cached_arrow = None
-        return
 
     def _data_point_changed(self, old, new):
         if new is not None:
@@ -531,13 +530,11 @@ class DataLabel(ToolTip):
                 if hasattr(comp, 'value_mapper'):
                     self._modify_mapper_listeners(comp.value_mapper,
                                                   attach=attach)
-        return
 
     def _modify_mapper_listeners(self, mapper, attach=True):
         if mapper is not None:
             mapper.on_trait_change(self._handle_mapper, 'updated',
                                    remove=not attach)
-        return
 
     def _handle_mapper(self):
         # This gets fired whenever a mapper on our plot fires its

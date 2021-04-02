@@ -46,7 +46,6 @@ class CompositeIconRenderer(AbstractCompositeIconRenderer):
         else:
             raise ValueError("Don't know how to render combination plot with " +\
                              "renderers " + str(types))
-        return
 
     def _render_scatterplots(self, plots, gc, x, y, width, height):
         # Don't support this for now
@@ -216,9 +215,6 @@ class Legend(AbstractOverlay):
         else:
             PlotComponent._draw(self, gc, view_bounds, mode)
 
-
-        return
-
     # The following two methods implement the functionality of the Legend
     # to act as a first-class component instead of merely as an overlay.
     # The make the Legend use the normal PlotComponent render methods when
@@ -232,14 +228,12 @@ class Legend(AbstractOverlay):
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         if self.component is None:
             self._draw_as_overlay(gc, view_bounds, mode)
-        return
 
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
         if self.component is not None:
             self._draw_as_overlay(gc, view_bounds, mode)
         else:
             PlotComponent._draw_overlay(self, gc, view_bounds, mode)
-        return
 
     def _draw_as_overlay(self, gc, view_bounds=None, mode="normal"):
         """ Draws the overlay layer of a component.
@@ -324,8 +318,6 @@ class Legend(AbstractOverlay):
                     y -= self.line_spacing
                 if old_alpha is not None:
                     gc.set_alpha(old_alpha)
-
-        return
 
     def _render_error(self, gc, icon_x, icon_y, icon_width, icon_height):
         """ Renders an error icon or performs some other action when a
@@ -446,7 +438,6 @@ class Legend(AbstractOverlay):
                 self._cached_label_sizes is None or len(self._cached_label_names) == 0:
             width, height = self.get_preferred_size()
             self.outer_bounds = [width, height]
-        return
 
     def _create_label(self, text):
         """ Returns a new Label instance for the given text.  Subclasses can
@@ -468,7 +459,6 @@ class Legend(AbstractOverlay):
             self._layout_needed = True
         if name == "color":
             self.get_preferred_size()
-        return
 
     def _plots_changed(self):
         """ Invalidate the caches.

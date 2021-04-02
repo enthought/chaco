@@ -146,8 +146,6 @@ class ChacoPlotItem(Item):
 
         self.editor.plotitem = self
 
-        return
-
     def _set_bg_color(self, val):
         self.bgcolor = val
 
@@ -250,7 +248,6 @@ class ChacoPlotEditor ( Editor ):
             object.on_trait_change(lambda s: self._update_axis_grids(), name)
         if plotitem.type_trait not in ("", None):
             object.on_trait_change(self.update_editor, plotitem.type_trait)
-        return
 
     #---------------------------------------------------------------------------
     #  Disposes of the contents of an editor:
@@ -281,7 +278,6 @@ class ChacoPlotEditor ( Editor ):
             self._plot = None
             plot.index = None
             plot.value = None
-        return
 
     #---------------------------------------------------------------------------
     #  Updates the editor when the object trait changes externally to the editor:
@@ -343,7 +339,6 @@ class ChacoPlotEditor ( Editor ):
         self._plot = plot
         self._container.add(plot)
         self._container.request_redraw()
-        return
 
     def _update_data(self):
         """ Updates the editor when the object trait changes externally to the
@@ -362,7 +357,6 @@ class ChacoPlotEditor ( Editor ):
         for attr in ("color", "bgcolor", "border_visible", "border_width",
                      "border_dash", "border_color"):
             setattr(plot, attr, getattr(plotitem, attr))
-        return
 
     def _create_line_plot(self, plotitem, values, **kwargs):
         plot = create_line_plot(values, **kwargs)
@@ -431,4 +425,3 @@ class ChacoPlotEditor ( Editor ):
                 axis.title_color = plotitem.y_label_color
 
         plot.request_redraw()
-        return

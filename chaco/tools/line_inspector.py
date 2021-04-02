@@ -96,7 +96,6 @@ class LineInspector(BaseTool):
                 self._draw_horizontal_line(gc, sy)
             elif sx is not None:
                 self._draw_vertical_line(gc, sx)
-        return
 
     def do_layout(self, *args, **kw):
         pass
@@ -105,7 +104,6 @@ class LineInspector(BaseTool):
         """ Draws this component overlaid on a graphics context.
         """
         self.draw(gc, view_bounds)
-        return
 
     def normal_mouse_move(self, event):
         """ Handles the mouse being moved.
@@ -163,7 +161,6 @@ class LineInspector(BaseTool):
                     plot.index.metadata[self.metadata_name] = metadata
 
             plot.request_redraw()
-        return
 
     def normal_mouse_leave(self, event):
         """ Handles the mouse leaving the plot.
@@ -180,7 +177,6 @@ class LineInspector(BaseTool):
                 elif isinstance(plot, Base2DPlot):
                     plot.index.metadata.pop(self.metadata_name, None)
             plot.request_redraw()
-        return
 
     #------------------------------------------------------------------------
     # Private methods
@@ -263,7 +259,6 @@ class LineInspector(BaseTool):
             gc.move_to(sx, self.component.y)
             gc.line_to(sx, self.component.y2)
             gc.stroke_path()
-        return
 
     def _draw_horizontal_line(self, gc, sy):
         """ Draws a horizontal line through screen point (sx,sy) having the
@@ -279,4 +274,3 @@ class LineInspector(BaseTool):
             gc.move_to(self.component.x, sy)
             gc.line_to(self.component.x2, sy)
             gc.stroke_path()
-        return

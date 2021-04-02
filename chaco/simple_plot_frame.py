@@ -55,7 +55,6 @@ class SimplePlotFrame(BasePlotFrame):
         BasePlotFrame.__init__(self, **kwtraits)
         self.set_slot("center", OverlayPlotContainer(resizable="hv"))
         self.bounds = bounds
-        return
 
     #------------------------------------------------------------------------
     # Protected methods
@@ -74,7 +73,6 @@ class SimplePlotFrame(BasePlotFrame):
             gc.translate_ctm(*self.position)
             with gc:
                 self.center.draw(gc, view_bounds, mode)
-        return
 
     def get_preferred_size(self):
         """ Returns the size (width,height) that is preferred for this component.
@@ -131,7 +129,6 @@ class SimplePlotFrame(BasePlotFrame):
 
         component.outer_position = [0,0]
         component.do_layout()
-        return
 
     ### Persistence ###########################################################
     #_pickles = ()

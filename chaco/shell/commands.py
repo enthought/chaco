@@ -176,7 +176,7 @@ def activate(ident=None):
     if win is not None:
         session.active_window = win
         win.raise_window()
-    return
+
 
 def show():
     """ Shows all the figure windows that have been created thus far, and
@@ -194,7 +194,6 @@ def show():
         frame = session.active_window
         frame.raise_window()
         start_event_loop()
-    return
 
 
 def close(ident=None):
@@ -216,7 +215,7 @@ def close(ident=None):
 
     for win in win_list:
         win.close()
-    return
+
 
 def colormap(map):
     """Sets the active colormap.
@@ -246,7 +245,7 @@ def hold(state=None):
         session.hold = not session.hold
     else:
         session.hold = state
-    return
+
 
 def curplot():
     if session.active_window:
@@ -311,7 +310,6 @@ def plot(*data, **kwargs):
                                *data, **kwargs)
 
     cont.request_redraw()
-    return
 
 
 def semilogx(*data, **kwargs):
@@ -403,7 +401,6 @@ def imshow(*data, **kwargs):
     plots = plot_maker.do_imshow(session.data, cont,
                                  *data, **kwargs)
     cont.request_redraw()
-    return
 
 
 def pcolor(*data, **kwargs):
@@ -427,8 +424,6 @@ def pcolor(*data, **kwargs):
     plots = plot_maker.do_pcolor(session.data, session.colormap, cont,
                                  *data, **kwargs)
     cont.request_redraw()
-    return
-
 
 
 def contour(*data, **kwargs):
@@ -452,8 +447,6 @@ def contour(*data, **kwargs):
     plots = plot_maker.do_contour(session.data, session.colormap, cont,
                                   "line", *data, **kwargs)
     cont.request_redraw()
-    return
-
 
 
 def contourf(*data, **kwargs):
@@ -477,8 +470,6 @@ def contourf(*data, **kwargs):
     plots = plot_maker.do_contour(session.data, session.colormap, cont,
                                   "poly", *data, **kwargs)
     cont.request_redraw()
-    return
-
 
 
 def plotv(*args, **kwargs):
@@ -543,7 +534,6 @@ def plotv(*args, **kwargs):
     plots = plot_maker.do_plotv(session, *args, **kwargs)
     cont.add(*plots)
     cont.request_redraw()
-    return
 
 
 #-----------------------------------------------------------------------------
@@ -809,4 +799,3 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
     else:
         print("Format not yet supported:", ext)
         print("Currently supported formats are: bmp, png, jpg.")
-    return

@@ -82,8 +82,6 @@ class ScatterInspector(SelectTool):
             if hasattr(plot, "value"):
                 plot.value.metadata.pop(self.hover_metadata_name, None)
 
-        return
-
     def _get_selection_state(self, event):
         plot = self.component
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
@@ -130,7 +128,6 @@ class ScatterInspector(SelectTool):
                 # Only issue 1 event:
                 if name == 'index':
                     self.inspector_event = insp_event
-        return
 
     def _select(self, index, append=True):
         plot = self.component
@@ -164,5 +161,3 @@ class ScatterInspector(SelectTool):
             # Test to only issue 1 event per selection, not 1 per axis:
             if name == 'index':
                 self.inspector_event = insp_event
-
-        return

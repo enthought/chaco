@@ -102,4 +102,3 @@ class LinearMapper(Base1DMapper):
             self._null_data_range = bool(self._scale == 0.0)
 
         self._cache_valid = True
-        return
