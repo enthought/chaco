@@ -3,7 +3,7 @@ import unittest
 from numpy import arange, array, zeros, inf
 from numpy.testing import assert_equal
 
-from traits.api import HasTraits, Instance, Bool, on_trait_change
+from traits.api import HasTraits, Instance, Bool, observe
 
 from chaco.api import DataRange1D, ArrayDataSource
 
@@ -17,8 +17,8 @@ class Foo(HasTraits):
 
     range_updated = Bool(False)
 
-    @on_trait_change('range.updated')
-    def range_changed(self):
+    @observe('range.updated')
+    def range_changed(self, event):
         self.range_updated = True
 
 

@@ -1,7 +1,7 @@
 from chaco.api import PlotComponent
 from chaco.data_view import DataView
 from enable.component_editor import ComponentEditor
-from traits.api import HasTraits, Instance, on_trait_change
+from traits.api import HasTraits, Instance, observe
 from traitsui.api import Item, View
 
 class PlotWindow(HasTraits):
@@ -9,8 +9,8 @@ class PlotWindow(HasTraits):
     plot = Instance(PlotComponent)
     container = Instance(DataView)
 
-    @on_trait_change('plot')
-    def _update_container(self):
+    @observe('plot')
+    def _update_container(self, event):
         self.container = DataView(
             padding=(80,20,20,60),  # make some space for axis labels
             border_visible=False

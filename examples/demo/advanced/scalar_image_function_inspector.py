@@ -30,7 +30,7 @@ from chaco import default_colormaps
 from enable.component_editor import ComponentEditor
 from chaco.tools.api import LineInspector, PanTool, ZoomTool
 from traits.api import Array, Callable, CFloat, CInt, Enum, Event, Float, \
-    HasTraits, Int, Instance, Str, Trait, on_trait_change, Button, Bool, \
+    HasTraits, Int, Instance, Str, Trait, observe, Button, Bool, \
     DelegatesTo
 from traitsui.api import Group, HGroup, Item, View, UItem, spring
 
@@ -500,8 +500,8 @@ class ModelView(HasTraits):
                        title = "Function Inspector",
                        resizable=True)
 
-    @on_trait_change('model, model.model_changed, view')
-    def update_view(self):
+    @observe('model, model.model_changed, view')
+    def update_view(self, event):
         if self.model is not None and self.view is not None:
             self.view.update(self.model)
             

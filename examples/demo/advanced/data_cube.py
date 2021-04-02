@@ -29,7 +29,8 @@ from chaco.tools.api import LineInspector, ZoomTool
 from enable.example_support import DemoFrame, demo_main
 from enable.api import Window
 from traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
-        Event, Float, HasTraits, Int, Trait, on_trait_change
+        Event, Float, HasTraits, Int, Trait, observe
+from traits.observation.api import match
 
 # Will hold the path that the user chooses to download to. Will be an empty
 # string if the user decides to download to the current directory.
@@ -66,8 +67,16 @@ class Model(HasTraits):
         super(Model, self).__init__(*args, **kwargs)
         self.compute_model()
 
-    @on_trait_change("npts_+, min_+, max_+")
-    def compute_model(self):
+    @observe(
+        match(
+            lambda name, trait: (
+                name.startswith("npts_") or
+                name.startswith("min_") or
+                name.startswith("max_")
+                )
+            )
+    )
+    def compute_model(self, event=None):
         def vfunc(x, y, z):
             return sin(x*z) * cos(y)*sin(z) + sin(0.5*z)
 
@@ -222,7 +231,7 @@ class PlotFrame(DemoFrame):
         self.bottom.invalidate_and_redraw()
         return
 
-    def _create_window(self):
+    def _create_component(self):
         # Create the model
         self.model = model = Model()
         cmap = viridis
@@ -272,7 +281,7 @@ class PlotFrame(DemoFrame):
         container.add(bottomplot)
 
         self.container = container
-        return Window(self, -1, component=container)
+        return container
 
     def _add_plot_tools(self, imgplot, token):
         """ Add LineInspectors, ImageIndexTool, and ZoomTool to the image plots. """
@@ -387,4 +396,3 @@ if __name__ == "__main__":
     demo = demo_main(PlotFrame, size=(800,700), title="Cube analyzer")
     if run_cleanup:
         cleanup_data()
-

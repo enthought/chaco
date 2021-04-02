@@ -5,8 +5,9 @@ Abstract base class for 1-D plots which only use one axis
 from numpy import argsort, asarray
 
 # Enthought library imports
-from traits.api import (Any, Bool, Enum, Instance, Property, cached_property,
-                        on_trait_change)
+from traits.api import (
+    Any, Bool, Enum, Instance, Property, cached_property, observe
+)
 
 # local imports
 from .abstract_plot_renderer import AbstractPlotRenderer
@@ -306,13 +307,13 @@ class Base1DPlot(AbstractPlotRenderer):
     # Event handlers
     #------------------------------------------------------------------------
 
-    @on_trait_change("index.data_changed")
-    def _invalidate(self):
+    @observe("index.data_changed")
+    def _invalidate(self, event):
         self._cache_valid = False
         self._screen_cache_valid = False
 
-    @on_trait_change("index_mapper.updated")
-    def _invalidate_screen(self):
+    @observe("index_mapper.updated")
+    def _invalidate_screen(self, event):
         self._screen_cache_valid = False
 
     def _bounds_changed(self, old, new):

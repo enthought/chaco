@@ -1,7 +1,7 @@
 
 from numpy import asarray, floor, ones
 
-from traits.api import Array, Str, on_trait_change
+from traits.api import Array, Str, observe
 from chaco.abstract_colormap import AbstractColormap
 from chaco.data_range_1d import DataRange1D
 
@@ -65,8 +65,8 @@ class DiscreteColorMapper(AbstractColormap):
         """ Reverses the palette of this colormap. """
         self.palette = self.palette[::-1]
 
-    @on_trait_change('palette, color_depth')
-    def _update_palettes(self):
+    @observe('palette, color_depth')
+    def _update_palettes(self, event):
         """ Generate palette adjusted for color depth and fire update event"""
         n_colors, n_components = self.palette.shape
         if self.color_depth == 'rgba':
