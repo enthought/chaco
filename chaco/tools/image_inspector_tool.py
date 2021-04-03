@@ -33,7 +33,7 @@ class ImageInspectorTool(BaseTool):
 
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
-    _old_visible = Enum(None, True, False) #Trait(None, Bool(True))
+    _old_visible = Enum(None, True, False)
 
     def normal_key_pressed(self, event):
         if self.inspector_key.match(event):
@@ -66,19 +66,14 @@ class ImageInspectorTool(BaseTool):
 
                 x_index, y_index = ndx
                 image_data = plot.value
+                new_value = {"indices": ndx,
+                             "data_value": image_data.data[y_index, x_index]}
                 if hasattr(plot, "_cached_mapped_image") and \
                        plot._cached_mapped_image is not None:
-                    self.new_value = \
-                        {"indices": ndx,
-                         "data_value": image_data.data[y_index, x_index],
-                         "color_value": plot._cached_mapped_image[y_index,
-                                                                  x_index]}
+                    new_value["color_value"] = \
+                        plot._cached_mapped_image[y_index, x_index]
 
-                else:
-                    self.new_value = \
-                        {"indices": ndx,
-                         "color_value": image_data.data[y_index, x_index]}
-
+                self.new_value = new_value
                 self.last_mouse_position = (event.x, event.y)
 
 
