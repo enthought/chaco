@@ -224,9 +224,7 @@ class BasicFormatterTestCase(TicksTestCase):
             (3e8, 6e8, 8),
         )
         for start, end, numlabels in test_intervals:
-            estimate = fmt.estimate_width(start, end, numlabels, ticker=scale)[
-                1
-            ]
+            estimate = fmt.estimate_width(start, end, numlabels, ticker=scale)[1]
             ticks = scale.ticks(start, end, numlabels)
             labels = fmt.format(ticks, numlabels, None)
             actual = sum(map(len, labels))
