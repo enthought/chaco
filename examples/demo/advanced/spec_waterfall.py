@@ -111,9 +111,8 @@ def _create_plot_component(obj):
     )[0]
     obj.spectrum_plot.padding = 50
     obj.spectrum_plot.title = "Spectrum"
-    spec_range = list(obj.spectrum_plot.plots.values())[0][
-        0
-    ].value_mapper.range
+    plot_rends = list(obj.spectrum_plot.plots.values())
+    spec_range = plot_rends[0][0].value_mapper.range
     spec_range.low = 0.0
     spec_range.high = 5.0
     obj.spectrum_plot.index_axis.title = "Frequency (hz)"

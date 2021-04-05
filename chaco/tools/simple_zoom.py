@@ -402,14 +402,8 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 # "box" mode; reset both axes.
                 x_range = self.component.x_mapper.range
                 y_range = self.component.y_mapper.range
-                (
-                    x_range.low_setting,
-                    y_range.low_setting,
-                ) = self._orig_low_setting
-                (
-                    x_range.high_setting,
-                    y_range.high_setting,
-                ) = self._orig_high_setting
+                x_range.low_setting, y_range.low_setting = self._orig_low_setting
+                x_range.high_setting, y_range.high_setting = self._orig_high_setting
 
                 # resetting the ranges will allow 'auto' to pick the values
                 x_range.reset()

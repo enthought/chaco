@@ -603,9 +603,8 @@ class RangeSelection(AbstractController):
                     break
 
             # Set the selection mode on the datasource
-            datasource.metadata[
-                self.selection_mode_metadata_name
-            ] = self.selection_mode
+            datasource.metadata[self.selection_mode_metadata_name] = \
+                self.selection_mode
 
             if val is not None:
                 low, high = val

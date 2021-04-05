@@ -197,12 +197,7 @@ if Canvas is not None:
 
         def _create_new_canvas(self):
             """Create the PDF canvas context."""
-            (
-                x,
-                y,
-                w,
-                h,
-            ) = self._get_bounding_box()
+            x, y, w, h = self._get_bounding_box()
             if w < 0 or h < 0:
                 self.gc = None
                 return
@@ -235,12 +230,7 @@ if Canvas is not None:
 
         def _initialize_page(self, gc):
             """Make sure the origin is set to something consistent."""
-            (
-                x,
-                y,
-                w,
-                h,
-            ) = self._get_bounding_box()
+            x, y, w, h = self._get_bounding_box()
 
             gc.translate(x, y)
 

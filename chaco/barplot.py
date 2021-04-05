@@ -262,10 +262,10 @@ class BarPlot(AbstractPlotRenderer):
         # TODO: Until we code up a better handling of value-based culling that
         # takes into account starting_value and dataspace bar widths, just use
         # the index culling for now.
-        #        value_range_mask = self.value_mapper.range.mask_data(value)
-        #        nan_mask = invert(isnan(index_mask)) & invert(isnan(value_mask))
-        #        point_mask = index_mask & value_mask & nan_mask & \
-        #                     index_range_mask & value_range_mask
+        # value_range_mask = self.value_mapper.range.mask_data(value)
+        # nan_mask = invert(isnan(index_mask)) & invert(isnan(value_mask))
+        # point_mask = index_mask & value_mask & nan_mask & \
+        #              index_range_mask & value_range_mask
 
         index_range_mask = self.index_mapper.range.mask_data(index)
         nan_mask = invert(isnan(index_mask))

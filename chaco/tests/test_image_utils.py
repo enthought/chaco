@@ -47,8 +47,8 @@ class TestImageUtils(unittest.TestCase):
         view_rectangles = (
             [49, 49, 2, 2],  # Centered pixel intersection
             [49, 49, 3, 3],  # Intersection at 1/3 of view
-            [49, 49, 2, 3],
-        )  # Intersection at 1/2, 1/3 of view
+            [49, 49, 2, 3],  # Intersection at 1/2, 1/3 of view
+        )
         for view_rect in view_rectangles:
             new_rect = trim_screen_rect(screen_rect, view_rect, FOUR_PIXELS)
             assert_midpoints_equal((new_rect, screen_rect))
@@ -58,8 +58,8 @@ class TestImageUtils(unittest.TestCase):
         screen_rect = [1, 1, 1, 1]
         view_rectangles = (
             [1 + offset, 1 + offset, 1, 1],  # Shifted down and right
-            [1 - offset, 1 - offset, 1, 1],
-        )  # Shifted up and left
+            [1 - offset, 1 - offset, 1, 1],  # Shifted up and left
+        )
         for view_rect in view_rectangles:
             new_rect = trim_screen_rect(screen_rect, view_rect, FOUR_PIXELS)
             assert_equal(new_rect, screen_rect)
