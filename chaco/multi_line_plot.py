@@ -317,8 +317,7 @@ class MultiLinePlot(BaseXYPlot):
             )
             slice_max = min(
                 varray.shape[0],
-                1
-                + floor(
+                1 + floor(
                     (varray.shape[0] - 1)
                     * (self.value_range.high - coord_min)
                     / (coord_max - coord_min)

@@ -26,10 +26,7 @@ class TicksTestCase(unittest.TestCase):
 
     def check_labels(self, labels1, labels2):
         self.assertEqual(len(labels1), len(labels2))
-        for (
-            t1,
-            t2,
-        ) in zip(labels1, labels2):
+        for t1, t2 in zip(labels1, labels2):
             self.assertEqual(t1, t2)
 
 

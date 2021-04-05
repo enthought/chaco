@@ -61,10 +61,7 @@ class Templatizable(HasTraits):
     Primarily defines the protocol used to query the class for its contents.
     """
 
-    def templatize(
-        self,
-        my_name,
-    ):
+    def templatize(self, my_name):
         """Returns a dict mapping the name of the child in the local name space
         to a Templatizable object reference.
         """
@@ -72,8 +69,6 @@ class Templatizable(HasTraits):
 
     def __gettemplate__(self):
         """Returns a templatized version of the object."""
-
-    #    def bind(self,
 
     def rebind(self, obj):
         """Replaces this object with the state in peer object *obj*.
@@ -195,10 +190,7 @@ class CodeTemplate(PlotTemplate):
         """
         pass
 
-    def create_import(
-        self,
-        import_line,
-    ):
+    def create_import(self, import_line):
         """Adds another import line, verbatim, to the top of the output code.
 
         No order of imports is guaranteed.

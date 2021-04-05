@@ -464,10 +464,7 @@ class TimeFormatter(object):
         "minutes": ("%Mm",),
         "hourmin": ("%H:%M",),  #'%Hh%M', '%Hh%Mm', '%H:%M:%S','%Hh %Mm %Ss'),
         "hours": ("%Hh", "%H:%M"),
-        "days": (
-            "%m/%d",
-            "%a%d",
-        ),
+        "days": ("%m/%d", "%a%d"),
         "months": ("%m/%Y", "%b%y"),
         "years": (_two_digit_year, _four_digit_year),
     }

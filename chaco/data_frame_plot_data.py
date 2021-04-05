@@ -87,8 +87,7 @@ class DataFramePlotData(AbstractPlotData):
 
     def set_data(self, name, new_data, generate_name=False):
         """Sets the specified index or column as the value for either the
-        specified
-        name or a generated name.
+        specified name or a generated name.
 
         If the instance's `writable` attribute is True, then this method sets
         the data associated with the given name to the new value, otherwise it

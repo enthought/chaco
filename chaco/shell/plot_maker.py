@@ -251,7 +251,7 @@ def _process_group(group, plot_data=None):
         x, y, plotinfo = group
     else:
         raise ChacoShellError(
-            "Found too many elements in group while" " constructing plot."
+            "Found too many elements in group while constructing plot."
         )
     return x, y, plotinfo
 

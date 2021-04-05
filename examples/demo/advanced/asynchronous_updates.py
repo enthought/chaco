@@ -172,14 +172,14 @@ def blur_image(image, blur_level):
     blurred_image = image.copy()
     for _ in range(blur_level ** 2):
         blurred_image[1:-1, 1:-1] += (
-            blurred_image[:-2, 1:-1]
-            + blurred_image[2:, 1:-1]  # top
-            + blurred_image[1:-1, :-2]  # bottom
-            + blurred_image[1:-1, 2:]  # left
-            + blurred_image[:-2, :-2]  # right
-            + blurred_image[:-2, 2:]  # top-left
-            + blurred_image[2:, :-2]  # top-right
-            + blurred_image[2:, 2:]  # bottom-left  # bottom-right
+            blurred_image[:-2, 1:-1]  # top
+            + blurred_image[2:, 1:-1]  # bottom
+            + blurred_image[1:-1, :-2]  # left
+            + blurred_image[1:-1, 2:]  # right
+            + blurred_image[:-2, :-2]  # top-left
+            + blurred_image[:-2, 2:]  # top-right
+            + blurred_image[2:, :-2]  # bottom-left
+            + blurred_image[2:, 2:]  # bottom-right
         )
         blurred_image /= 9
 

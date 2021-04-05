@@ -152,13 +152,7 @@ class LinePlot(BaseXYPlot):
                     self.index.get_data(), dmax, self.index.sort_order
                 )
 
-            start_ndx = max(
-                0,
-                min(
-                    ndx1 - 1,
-                    ndx2 - 1,
-                ),
-            )
+            start_ndx = max(0, min(ndx1-1, ndx2-1))
             end_ndx = min(
                 len(self.value.get_data()) - 1, max(ndx1 + 1, ndx2 + 1)
             )
