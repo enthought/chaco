@@ -14,15 +14,15 @@ from chaco.default_colormaps import viridis
 
 
 # Crate some scalar data
-xs = linspace(0,10,200)
-ys = linspace(0,20,400)
-x,y = meshgrid(xs,ys)
+xs = linspace(0, 10, 200)
+ys = linspace(0, 20, 400)
+x, y = meshgrid(xs, ys)
 z = sin(x) * y
 
 # Create a pseudo-color-map
-pcolor(x,y,z)
+pcolor(x, y, z)
 
-#change the color mapping
+# change the color mapping
 colormap(viridis)
 
 # Add some titles

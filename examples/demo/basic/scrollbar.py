@@ -20,21 +20,20 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, VPlotContainer, \
-    Plot
+from chaco.api import ArrayPlotData, VPlotContainer, Plot
 from chaco.plotscrollbar import PlotScrollBar
 from chaco.tools.api import PanTool, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some x-y data series to plot
     x = linspace(-2.0, 10.0, 100)
-    pd = ArrayPlotData(index = x)
+    pd = ArrayPlotData(index=x)
     for i in range(5):
-        pd.set_data("y" + str(i), jn(i,x))
+        pd.set_data("y" + str(i), jn(i, x))
 
     # Create some line plots of some of the data
     plot1 = Plot(pd, padding=50)
@@ -47,8 +46,9 @@ def _create_plot_component():
     plot1.overlays.append(zoom)
 
     # Add the scrollbar
-    hscrollbar = PlotScrollBar(component=plot1, axis="index", resizable="h",
-                               height=15)
+    hscrollbar = PlotScrollBar(
+        component=plot1, axis="index", resizable="h", height=15
+    )
     plot1.padding_top = 0
     hscrollbar.force_data_update()
 
@@ -59,27 +59,30 @@ def _create_plot_component():
 
     return container
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(900,500)
-title="Scrollbar example"
 
-#===============================================================================
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (900, 500)
+title = "Scrollbar example"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

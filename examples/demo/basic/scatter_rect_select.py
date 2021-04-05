@@ -21,9 +21,12 @@ from traitsui.api import Item, Group, View
 
 # Chaco imports
 from chaco.api import (
-    ArrayPlotData, Plot, LassoOverlay, ScatterInspectorOverlay)
+    ArrayPlotData,
+    Plot,
+    LassoOverlay,
+    ScatterInspectorOverlay,
+)
 from chaco.tools.api import RectangularSelection, ScatterInspector
-
 
 
 # ===============================================================================
@@ -42,14 +45,16 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    plot.plot(("index", "value"),
-              type="scatter",
-              name="my_plot",
-              marker="circle",
-              index_sort="ascending",
-              color="red",
-              marker_size=4,
-              bgcolor="white")
+    plot.plot(
+        ("index", "value"),
+        type="scatter",
+        name="my_plot",
+        marker="circle",
+        index_sort="ascending",
+        color="red",
+        marker_size=4,
+        bgcolor="white",
+    )
 
     # Tweak some of the plot properties
     plot.title = "Scatter Plot With Rectangular Selection"
@@ -65,21 +70,22 @@ def _create_plot_component():
         component=my_plot,
         selection_datasource=my_plot.index,
         drag_button="left",
-        metadata_name='selections',
+        metadata_name="selections",
     )
     my_plot.tools.append(rect_selection)
-    my_plot.tools.append(ScatterInspector(my_plot, selection_mode='toggle'))
+    my_plot.tools.append(ScatterInspector(my_plot, selection_mode="toggle"))
     my_plot.active_tool = rect_selection
 
-    lasso_overlay = LassoOverlay(lasso_selection=rect_selection,
-                                 component=my_plot)
+    lasso_overlay = LassoOverlay(
+        lasso_selection=rect_selection, component=my_plot
+    )
     my_plot.overlays.append(lasso_overlay)
 
     scatter_overlay = ScatterInspectorOverlay(
         component=my_plot,
-        selection_color='cornflowerblue',
-        selection_marker_size=int(my_plot.marker_size)+3,
-        selection_marker='circle'
+        selection_color="cornflowerblue",
+        selection_marker_size=int(my_plot.marker_size) + 3,
+        selection_marker="circle",
     )
     my_plot.overlays.append(scatter_overlay)
 
@@ -101,14 +107,15 @@ class Demo(HasTraits):
 
     traits_view = View(
         Group(
-            Item('plot', editor=ComponentEditor(size=size),
-                 show_label=False),
-            orientation="vertical"),
-        resizable=True, title=title
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
     )
 
     def _selection_changed(self, event):
-        mask = self.index_datasource.metadata['selections']
+        mask = self.index_datasource.metadata["selections"]
         print("New selection: ")
         print(compress(mask, arange(len(mask))))
         # Ensure that the points are printed immediately:
@@ -123,7 +130,7 @@ class Demo(HasTraits):
 
         # Set up the trait handler for the selection
         self.index_datasource = my_plot.index
-        rect_selection.observe(self._selection_changed, 'selection_changed')
+        rect_selection.observe(self._selection_changed, "selection_changed")
 
         return plot
 

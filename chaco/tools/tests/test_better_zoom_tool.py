@@ -40,7 +40,7 @@ class TestBetterZoomTool(EnableTestAssistant, unittest.TestCase):
         tool = self.tool
 
         # this doesn't throw an exception
-        self.send_key(tool, '+')
+        self.send_key(tool, "+")
 
         self.assertEqual(tool.position, (50, 50))
 

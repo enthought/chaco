@@ -4,8 +4,21 @@
 from numpy import array
 
 # Enthought library imports
-from traits.api import Any, Array, ArrayOrNone, Bool, Enum, Event, Float, \
-    Instance, Int, List, Property, Str, Trait
+from traits.api import (
+    Any,
+    Array,
+    ArrayOrNone,
+    Bool,
+    Enum,
+    Event,
+    Float,
+    Instance,
+    Int,
+    List,
+    Property,
+    Str,
+    Trait,
+)
 from enable.api import KeySpec
 
 # Chaco imports
@@ -13,7 +26,7 @@ from chaco.abstract_controller import AbstractController
 
 
 class RangeSelection(AbstractController):
-    """ Selects a range along the index or value axis.
+    """Selects a range along the index or value axis.
 
     The user right-click-drags to select a region, which stays selected until
     the user left-clicks to deselect.
@@ -62,7 +75,7 @@ class RangeSelection(AbstractController):
     #:   The user moving (not resizing) the selection range.
     event_state = Enum("normal", "selecting", "selected", "moving")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Traits for overriding default object relationships
     #
     # By default, the RangeSelection assumes that self.component is a plot
@@ -70,7 +83,7 @@ class RangeSelection(AbstractController):
     # case, then any (or all) three of these can be overriden by directly
     # assigning values to them.  To unset them and have them revert to default
     # behavior, assign "None" to them.
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The plot associated with this tool By default, this is just
     #: self.component.
@@ -87,9 +100,9 @@ class RangeSelection(AbstractController):
     #: List of listeners that listen to selection events.
     listeners = List
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Configuring interaction control
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: Can the user resize the selection once it has been drawn?
     enable_resize = Bool(True)
@@ -116,9 +129,9 @@ class RangeSelection(AbstractController):
     #: as opposed to overwriting it.
     append_key = Instance(KeySpec, args=(None, "control"))
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The value of the override plot to use, if any.  If None, then uses
     # self.component.
@@ -141,10 +154,10 @@ class RangeSelection(AbstractController):
     # The end of the selection that is being actively modified by the mouse.
     _drag_edge = Enum("high", "low")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # These record the mouse position when the user is moving (not resizing)
     # the selection
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The position of the initial user click for moving the selection.
     _down_point = Array  # (x,y)
@@ -155,12 +168,12 @@ class RangeSelection(AbstractController):
     # The original selection when the mouse went down to move the selection.
     _original_selection = Any
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def deselect(self, event=None):
-        """ Deselects the highlighted region.
+        """Deselects the highlighted region.
 
         This method essentially resets the tool. It takes the event causing the
         deselection as an optional argument.
@@ -173,12 +186,12 @@ class RangeSelection(AbstractController):
             event.window.set_pointer("arrow")
             event.handled = True
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers for the "selected" event state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def selected_left_down(self, event):
-        """ Handles the left mouse button being pressed when the tool is in
+        """Handles the left mouse button being pressed when the tool is in
         the 'selected' state.
 
         If the user is allowed to resize the selection, and the event occurred
@@ -204,15 +217,15 @@ class RangeSelection(AbstractController):
         mouse_coord = tmp[ndx]
 
         if self.enable_resize:
-            if (abs(mouse_coord - high) <= self.resize_margin) or \
-                            (abs(mouse_coord - low) <= self.resize_margin):
+            if (abs(mouse_coord - high) <= self.resize_margin) or (
+                abs(mouse_coord - low) <= self.resize_margin
+            ):
                 return self.selected_right_down(event)
 
         if low <= tmp[ndx] <= high:
             self.event_state = "moving"
             self._down_point = array([event.x, event.y])
-            self._down_data_coord = \
-                self.mapper.map_data(self._down_point)[ndx]
+            self._down_data_coord = self.mapper.map_data(self._down_point)[ndx]
             self._original_selection = array(self.selection)
         elif self.allow_deselection:
             self.deselect(event)
@@ -223,7 +236,7 @@ class RangeSelection(AbstractController):
         event.handled = True
 
     def selected_right_down(self, event):
-        """ Handles the right mouse button being pressed when the tool is in
+        """Handles the right mouse button being pressed when the tool is in
         the 'selected' state.
 
         If the user is allowed to resize the selection, and the event occurred
@@ -252,7 +265,7 @@ class RangeSelection(AbstractController):
                     self.event_state = "selecting"
                     self._drag_edge = "low"
                     self.selecting_mouse_move(event)
-                #elif self.allow_deselection:
+                # elif self.allow_deselection:
                 #    self.deselect(event)
                 else:
                     # Treat this as a combination deselect + right down
@@ -265,7 +278,7 @@ class RangeSelection(AbstractController):
         event.handled = True
 
     def selected_mouse_move(self, event):
-        """ Handles the mouse moving when the tool is in the 'selected' srate.
+        """Handles the mouse moving when the tool is in the 'selected' srate.
 
         If the user is allowed to resize the selection, and the event
         occurred within the resize margin of an endpoint, then the cursor
@@ -282,27 +295,29 @@ class RangeSelection(AbstractController):
                 tmp = (event.x, event.y)
                 ndx = self.axis_index
                 mouse_coord = tmp[ndx]
-                if abs(mouse_coord - end) <= self.resize_margin or \
-                        abs(mouse_coord - start) <= self.resize_margin:
+                if (
+                    abs(mouse_coord - end) <= self.resize_margin
+                    or abs(mouse_coord - start) <= self.resize_margin
+                ):
                     self._set_sizing_cursor(event)
                     return
         event.window.set_pointer("arrow")
         event.handled = True
 
     def selected_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot when the tool is in the
+        """Handles the mouse leaving the plot when the tool is in the
         'selected' state.
 
         Sets the cursor to an arrow.
         """
         event.window.set_pointer("arrow")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers for the "moving" event state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def moving_left_up(self, event):
-        """ Handles the left mouse button coming up when the tool is in the
+        """Handles the left mouse button coming up when the tool is in the
         'moving' state.
 
         Switches the tool to the 'selected' state.
@@ -316,7 +331,7 @@ class RangeSelection(AbstractController):
         event.handled = True
 
     def moving_mouse_move(self, event):
-        """ Handles the mouse moving when the tool is in the 'moving' state.
+        """Handles the mouse moving when the tool is in the 'moving' state.
 
         Moves the selection range by an amount corresponding to the amount
         that the mouse has moved since its button was pressed. If the new
@@ -326,8 +341,9 @@ class RangeSelection(AbstractController):
         cur_point = array([event.x, event.y])
         cur_data_point = self.mapper.map_data(cur_point)[self.axis_index]
         original_selection = self._original_selection
-        new_selection = original_selection + (cur_data_point -
-                                              self._down_data_coord)
+        new_selection = original_selection + (
+            cur_data_point - self._down_data_coord
+        )
         selection_data_width = original_selection[1] - original_selection[0]
 
         range = self.mapper.range
@@ -342,7 +358,7 @@ class RangeSelection(AbstractController):
         event.handled = True
 
     def moving_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot while the tool is in the
+        """Handles the mouse leaving the plot while the tool is in the
         'moving' state.
 
         If the mouse was within the selection region when it left, the method
@@ -369,12 +385,12 @@ class RangeSelection(AbstractController):
         if not event.left_down:
             return self.moving_left_up(event)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers for the "normal" event state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def normal_left_down(self, event):
-        """ Handles the left mouse button being pressed when the tool is in
+        """Handles the left mouse button being pressed when the tool is in
         the 'normal' state.
 
         If the tool allows the left mouse button to start a selection, then
@@ -384,7 +400,7 @@ class RangeSelection(AbstractController):
             return self.normal_right_down(event)
 
     def normal_right_down(self, event):
-        """ Handles the right mouse button being pressed when the tool is in
+        """Handles the right mouse button being pressed when the tool is in
         the 'normal' state.
 
         Puts the tool into 'selecting' mode, changes the cursor to show that it
@@ -403,12 +419,12 @@ class RangeSelection(AbstractController):
             self.selection_mode = "set"
         self.selecting_mouse_move(event)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers for the "selecting" event state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def selecting_mouse_move(self, event):
-        """ Handles the mouse being moved when the tool is in the 'selecting'
+        """Handles the mouse being moved when the tool is in the 'selecting'
         state.
 
         Expands the selection range at the appropriate end, based on the new
@@ -463,7 +479,7 @@ class RangeSelection(AbstractController):
             event.handled = True
 
     def selecting_right_up(self, event):
-        """ Handles the right mouse button coming up when the tool is in the
+        """Handles the right mouse button coming up when the tool is in the
         'selecting' state.
 
         Switches the tool to the 'selected' state and completes the selection.
@@ -471,7 +487,7 @@ class RangeSelection(AbstractController):
         self.selecting_button_up(event)
 
     def selecting_left_up(self, event):
-        """ Handles the left mouse button coming up when the tool is in the
+        """Handles the left mouse button coming up when the tool is in the
         'selecting' state.
 
         Switches the tool to the 'selected' state.
@@ -481,7 +497,7 @@ class RangeSelection(AbstractController):
         self.selecting_button_up(event)
 
     def selecting_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot when the tool is in the
+        """Handles the mouse leaving the plot when the tool is in the
         'selecting' state.
 
         Determines whether the event's position is outside the component's
@@ -513,7 +529,7 @@ class RangeSelection(AbstractController):
         self.component.request_redraw()
 
     def selecting_mouse_enter(self, event):
-        """ Handles the mouse entering the plot when the tool is in the
+        """Handles the mouse entering the plot when the tool is in the
         'selecting' state.
 
         If the mouse does not have the right mouse button down, this event
@@ -528,9 +544,9 @@ class RangeSelection(AbstractController):
         else:
             self._set_sizing_cursor(event)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property getter/setters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_plot(self):
         if self._plot is not None:
@@ -578,8 +594,9 @@ class RangeSelection(AbstractController):
             datasource.metadata_changed = {mdname: val}
 
             # Set the selection mask on the datasource
-            selection_masks = \
-                datasource.metadata.setdefault(self.mask_metadata_name, [])
+            selection_masks = datasource.metadata.setdefault(
+                self.mask_metadata_name, []
+            )
             for index in range(len(selection_masks)):
                 if id(selection_masks[index]) == id(self._selection_mask):
                     del selection_masks[index]
@@ -587,7 +604,7 @@ class RangeSelection(AbstractController):
 
             # Set the selection mode on the datasource
             datasource.metadata[self.selection_mode_metadata_name] = \
-                      self.selection_mode
+                self.selection_mode
 
             if val is not None:
                 low, high = val
@@ -603,13 +620,12 @@ class RangeSelection(AbstractController):
             if hasattr(l, "set_value_selection"):
                 l.set_value_selection(val)
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_selection_screencoords(self):
-        """ Returns a tuple of (x1, x2) screen space coordinates of the start
+        """Returns a tuple of (x1, x2) screen space coordinates of the start
         and end selection points.
 
         If there is no current selection, then it returns None.
@@ -621,7 +637,7 @@ class RangeSelection(AbstractController):
             return None
 
     def _set_sizing_cursor(self, event):
-        """ Sets the correct cursor shape on the window of the event, given the
+        """Sets the correct cursor shape on the window of the event, given the
         tool's orientation and axis.
         """
         if self.axis_index == 0:
@@ -632,7 +648,7 @@ class RangeSelection(AbstractController):
             event.window.set_pointer("size top")
 
     def _get_axis_coord(self, event, axis="index"):
-        """ Returns the coordinate of the event along the axis of interest
+        """Returns the coordinate of the event along the axis of interest
         to this tool (or along the orthogonal axis, if axis="value").
         """
         event_pos = (event.x, event.y)
@@ -642,7 +658,7 @@ class RangeSelection(AbstractController):
             return event_pos[1 - self.axis_index]
 
     def _determine_axis(self):
-        """ Determines whether the index of the coordinate along this tool's
+        """Determines whether the index of the coordinate along this tool's
         axis of interest is the first or second element of an (x,y) coordinate
         tuple.
 
@@ -654,7 +670,7 @@ class RangeSelection(AbstractController):
                 return 0
             else:
                 return 1
-        else:   # self.axis == "value"
+        else:  # self.axis == "value"
             if self.plot.orientation == "h":
                 return 1
             else:

@@ -1,5 +1,3 @@
-
-
 from random import choice
 from traits.api import Any, Enum, HasTraits, Instance, Int, List, Str
 from chaco.example_support import COLOR_PALETTE
@@ -8,8 +6,9 @@ from chaco.plot_canvas_toolbar import PlotToolbarButton
 
 DEBUG = False
 
+
 class ButtonController(HasTraits):
-    """ Tells buttons what to do
+    """Tells buttons what to do
 
     Buttons defer to this when they are activated.
     """
@@ -30,11 +29,11 @@ class ButtonController(HasTraits):
     _scatterplot_name = "ButtonControllerPlot"
 
     def notify(self, button, type, event):
-        """ Informs the controller that the particular **button** just
+        """Informs the controller that the particular **button** just
         got an event.  **Type** is either "up" or "down".  Event is the
         actual mouse event.
         """
-        #control_down = getattr(event, self.modifier + "_down", False)
+        # control_down = getattr(event, self.modifier + "_down", False)
         control_down = True
         if DEBUG:
             print("[notify]", button.plotname, type, "control:", control_down)
@@ -44,11 +43,14 @@ class ButtonController(HasTraits):
             else:
                 if not control_down:
                     # Deselect all current buttons and select the new one
-                    [self.button_deselected(b) for b in self.active_buttons \
-                            if b is not button]
+                    [
+                        self.button_deselected(b)
+                        for b in self.active_buttons
+                        if b is not button
+                    ]
                 self.button_selected(button)
         else:  # type == "up"
-            #if not control_down:
+            # if not control_down:
             if 1:
                 self.button_deselected(button)
 
@@ -102,15 +104,16 @@ class ButtonController(HasTraits):
         if len(self.plot.plots) > 0:
             self.plot.delplot(*list(self.plot.plots.keys()))
 
-        cur_plot = self.plot.plot((b1.plotname+"_y", b2.plotname+"_y"),
-                                  name=self._scatterplot_name,
-                                  type="scatter",
-                                  marker="square",
-                                  color=tuple(choice(COLOR_PALETTE)),
-                                  marker_size=8,
-                                  )
+        cur_plot = self.plot.plot(
+            (b1.plotname + "_y", b2.plotname + "_y"),
+            name=self._scatterplot_name,
+            type="scatter",
+            marker="square",
+            color=tuple(choice(COLOR_PALETTE)),
+            marker_size=8,
+        )
         self.plot.index_axis.title = b1.plotname
-        #self.plot.value_axis.title = b2.plotname
+        # self.plot.value_axis.title = b2.plotname
         self.plot.title = b1.plotname + " vs. " + b2.plotname
         self.plot_overlay.visible = True
         self.plot.request_redraw()
@@ -123,7 +126,6 @@ class ButtonController(HasTraits):
         self.plot_overlay.visible = False
 
 
-
 class DataSourceButton(PlotToolbarButton):
 
     # A TransientPlotOverlay containing the timeseries plot of this datasource
@@ -133,20 +135,20 @@ class DataSourceButton(PlotToolbarButton):
 
     canvas = Any
 
-    #overlay_bounds = List()
+    # overlay_bounds = List()
 
     # Can't call this "controller" because it conflicts with old tool dispatch
     button_controller = Instance(ButtonController)
 
     # Override inherited trait
-    label_color = (0,0,0,1)
+    label_color = (0, 0, 0, 1)
 
     resizable = ""
 
     cur_bid = Int(-1)
 
     # The overlay to display when the user holds the mouse down over us.
-    #_overlay = Instance(AbstractOverlay)
+    # _overlay = Instance(AbstractOverlay)
 
     def normal_left_down(self, event):
         self.button_state = "down"
@@ -165,8 +167,9 @@ class DataSourceButton(PlotToolbarButton):
             self.cur_bid = event.bid
             self.normal_left_down(event)
             if hasattr(event, "bid"):
-                event.window.capture_blob(self, event.bid,
-                                          event.net_transform())
+                event.window.capture_blob(
+                    self, event.bid, event.net_transform()
+                )
 
     def normal_blob_up(self, event):
         if event.bid == self.cur_bid:
@@ -197,6 +200,8 @@ class DataSourceButton(PlotToolbarButton):
     def _do_layout(self):
         if self.canvas is not None:
             boff = self.canvas.bounds_offset
-            self.plot_overlay.offset = (boff[0],
-                    boff[1] + self.y - self.container.y + self.height/2)
+            self.plot_overlay.offset = (
+                boff[0],
+                boff[1] + self.y - self.container.y + self.height / 2,
+            )
         self.plot_overlay.do_layout()

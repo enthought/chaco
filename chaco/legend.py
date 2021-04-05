@@ -3,14 +3,24 @@ CompositeIconRenderer classes.
 """
 
 
-
 from numpy import array, zeros_like
 
 from enable.api import black_color_trait, white_color_trait
 from enable.font_metrics_provider import font_metrics_provider
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import ArrayOrNone, Bool, CList, Dict, Enum, Float, \
-    HasTraits, Instance, Int, List, Str
+from traits.api import (
+    ArrayOrNone,
+    Bool,
+    CList,
+    Dict,
+    Enum,
+    Float,
+    HasTraits,
+    Instance,
+    Int,
+    List,
+    Str,
+)
 
 # Local relative imports
 from .abstract_overlay import AbstractOverlay
@@ -21,10 +31,10 @@ from .scatterplot import ScatterPlot
 
 
 class AbstractCompositeIconRenderer(HasTraits):
-    """ Abstract class for an icon renderer.
-    """
+    """Abstract class for an icon renderer."""
+
     def render_icon(self, plots, gc, x, y, width, height):
-        """ Renders an icon representing the given list of plots onto the
+        """Renders an icon representing the given list of plots onto the
         graphics context, using the given dimensions and at the specified
         position.
         """
@@ -32,8 +42,8 @@ class AbstractCompositeIconRenderer(HasTraits):
 
 
 class CompositeIconRenderer(AbstractCompositeIconRenderer):
-    """ Renderer for composite icons.
-    """
+    """Renderer for composite icons."""
+
     def render_icon(self, plots, *render_args):
         """ Renders an icon for a list of plots. """
         types = set(map(type, plots))
@@ -44,8 +54,11 @@ class CompositeIconRenderer(AbstractCompositeIconRenderer):
         elif types == set([ScatterPlot, LinePlot]):
             self._render_line_scatter(plots, *render_args)
         else:
-            raise ValueError("Don't know how to render combination plot with " +\
-                             "renderers " + str(types))
+            raise ValueError(
+                "Don't know how to render combination plot with "
+                + "renderers "
+                + str(types)
+            )
 
     def _render_scatterplots(self, plots, gc, x, y, width, height):
         # Don't support this for now
@@ -63,10 +76,9 @@ class CompositeIconRenderer(AbstractCompositeIconRenderer):
         scatter[0]._render_icon(gc, x, y, width, height)
 
 
-
 class Legend(AbstractOverlay):
-    """ A legend for a plot.
-    """
+    """A legend for a plot."""
+
     #: The font to use for the legend text.
     font = KivaFont("modern 12")
 
@@ -140,7 +152,7 @@ class Legend(AbstractOverlay):
     resizable = "hv"
 
     #: An optional title string to show on the legend.
-    title = Str('')
+    title = Str("")
 
     #: If True, title is at top, if False then at bottom.
     title_at_top = Bool(True)
@@ -152,9 +164,9 @@ class Legend(AbstractOverlay):
     #: PlotComponent).
     draw_layer = "overlay"
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private Traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # A cached list of Label instances
     _cached_labels = List
@@ -175,23 +187,21 @@ class Legend(AbstractOverlay):
     _cached_label_positions = ArrayOrNone()
 
     def is_in(self, x, y):
-        """ overloads from parent class because legend alignment
-            and padding does not cooperatate with the basic implementation
+        """overloads from parent class because legend alignment
+        and padding does not cooperatate with the basic implementation
 
-            This may just be caused byt a questionable implementation of the
-            legend tool, but it works by adjusting the padding. The Component
-            class implementation of is_in uses the outer positions which
-            includes the padding
+        This may just be caused byt a questionable implementation of the
+        legend tool, but it works by adjusting the padding. The Component
+        class implementation of is_in uses the outer positions which
+        includes the padding
         """
         in_x = (x >= self.x) and (x <= self.x + self.width)
         in_y = (y >= self.y) and (y <= self.y + self.height)
 
         return in_x and in_y
 
-
-
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draws this component overlaid on another component.
+        """Draws this component overlaid on another component.
 
         Implements AbstractOverlay.
         """
@@ -236,7 +246,7 @@ class Legend(AbstractOverlay):
             PlotComponent._draw_overlay(self, gc, view_bounds, mode)
 
     def _draw_as_overlay(self, gc, view_bounds=None, mode="normal"):
-        """ Draws the overlay layer of a component.
+        """Draws the overlay layer of a component.
 
         Overrides PlotComponent.
         """
@@ -250,8 +260,9 @@ class Legend(AbstractOverlay):
         # feature.
 
         with gc:
-            gc.clip_to_rect(int(self.x), int(self.y),
-                            int(self.width), int(self.height))
+            gc.clip_to_rect(
+                int(self.x), int(self.y), int(self.width), int(self.height)
+            )
             edge_space = self.border_width + self.border_padding
             icon_width, icon_height = self.icon_bounds
 
@@ -261,7 +272,7 @@ class Legend(AbstractOverlay):
 
             if self._cached_label_positions is not None:
                 if len(self._cached_label_positions) > 0:
-                    self._cached_label_positions[:,0] = icon_x
+                    self._cached_label_positions[:, 0] = icon_x
 
             for i, label_name in enumerate(self._cached_label_names):
                 # Compute the current label's position
@@ -281,7 +292,7 @@ class Legend(AbstractOverlay):
                         # and assume that applies to all of them
                         if not plots[0].visible:
                             # TODO: the get_alpha() method isn't supported on the Mac kiva backend
-                            #old_alpha = gc.get_alpha()
+                            # old_alpha = gc.get_alpha()
                             old_alpha = 1.0
                             gc.set_alpha(self.invisible_plot_alpha)
                         else:
@@ -289,11 +300,13 @@ class Legend(AbstractOverlay):
                         if len(plots) == 1:
                             plots[0]._render_icon(*render_args)
                         else:
-                            self.composite_icon_renderer.render_icon(plots, *render_args)
+                            self.composite_icon_renderer.render_icon(
+                                plots, *render_args
+                            )
                     elif plots is not None:
                         # Single plot
                         if not plots.visible:
-                            #old_alpha = gc.get_alpha()
+                            # old_alpha = gc.get_alpha()
                             old_alpha = 1.0
                             gc.set_alpha(self.invisible_plot_alpha)
                         else:
@@ -320,7 +333,7 @@ class Legend(AbstractOverlay):
                     gc.set_alpha(old_alpha)
 
     def _render_error(self, gc, icon_x, icon_y, icon_width, icon_height):
-        """ Renders an error icon or performs some other action when a
+        """Renders an error icon or performs some other action when a
         plot is unable to render its icon.
 
         Returns True if something was actually drawn (and hence the legend
@@ -346,7 +359,9 @@ class Legend(AbstractOverlay):
         if len(self.plots) == 0:
             return [0, 0]
 
-        plot_names, visible_plots = list(map(list, zip(*sorted(self.plots.items()))))
+        plot_names, visible_plots = list(
+            map(list, zip(*sorted(self.plots.items())))
+        )
         label_names = self.labels
         if len(label_names) == 0:
             if len(self.plots) > 0:
@@ -369,7 +384,7 @@ class Legend(AbstractOverlay):
                     val = self.plots[name]
                     # Rather than checking for a list/TraitListObject/etc., we just check
                     # for the attribute first
-                    if hasattr(val, 'visible'):
+                    if hasattr(val, "visible"):
                         if val.visible:
                             visible_labels.append(name)
                             visible_plots.append(val)
@@ -389,7 +404,7 @@ class Legend(AbstractOverlay):
         # For the legend title
         if self.title_at_top:
             labels.insert(0, self._create_label(self.title))
-            label_names.insert(0, 'Legend Label')
+            label_names.insert(0, "Legend Label")
             visible_plots.insert(0, None)
         else:
             labels.append(self._create_label(self.title))
@@ -398,18 +413,30 @@ class Legend(AbstractOverlay):
 
         # We need a dummy GC in order to get font metrics
         dummy_gc = font_metrics_provider()
-        label_sizes = array([label.get_width_height(dummy_gc) for label in labels])
+        label_sizes = array(
+            [label.get_width_height(dummy_gc) for label in labels]
+        )
 
         if len(label_sizes) > 0:
             max_label_width = max(label_sizes[:, 0])
-            total_label_height = sum(label_sizes[:, 1]) + (len(label_sizes)-1)*self.line_spacing
+            total_label_height = (
+                sum(label_sizes[:, 1])
+                + (len(label_sizes) - 1) * self.line_spacing
+            )
         else:
             max_label_width = 0
             total_label_height = 0
 
-        legend_width = max_label_width + self.icon_spacing + self.icon_bounds[0] \
-                        + self.hpadding + 2*self.border_padding
-        legend_height = total_label_height + self.vpadding + 2*self.border_padding
+        legend_width = (
+            max_label_width
+            + self.icon_spacing
+            + self.icon_bounds[0]
+            + self.hpadding
+            + 2 * self.border_padding
+        )
+        legend_height = (
+            total_label_height + self.vpadding + 2 * self.border_padding
+        )
 
         self._cached_labels = labels
         self._cached_label_sizes = label_sizes
@@ -434,35 +461,58 @@ class Legend(AbstractOverlay):
             return None
 
     def _do_layout(self):
-        if self.component is not None or len(self._cached_labels) == 0 or \
-                self._cached_label_sizes is None or len(self._cached_label_names) == 0:
+        if (
+            self.component is not None
+            or len(self._cached_labels) == 0
+            or self._cached_label_sizes is None
+            or len(self._cached_label_names) == 0
+        ):
             width, height = self.get_preferred_size()
             self.outer_bounds = [width, height]
 
     def _create_label(self, text):
-        """ Returns a new Label instance for the given text.  Subclasses can
+        """Returns a new Label instance for the given text.  Subclasses can
         override this method to customize the creation of labels.
         """
-        return Label(text=text, font=self.font, margin=0, color=self.color_,
-                     bgcolor="transparent", border_width=0)
+        return Label(
+            text=text,
+            font=self.font,
+            margin=0,
+            color=self.color_,
+            bgcolor="transparent",
+            border_width=0,
+        )
 
     def _composite_icon_renderer_default(self):
         return CompositeIconRenderer()
 
-    #-- trait handlers --------------------------------------------------------
+    # -- trait handlers --------------------------------------------------------
     def _anytrait_changed(self, name, old, new):
-        if name in ("font", "border_padding", "padding", "line_spacing",
-                    "icon_bounds", "icon_spacing", "labels", "plots",
-                    "plots_items", "labels_items", "border_width", "align",
-                    "position", "position_items", "bounds", "bounds_items",
-                    "label_at_top"):
+        if name in (
+            "font",
+            "border_padding",
+            "padding",
+            "line_spacing",
+            "icon_bounds",
+            "icon_spacing",
+            "labels",
+            "plots",
+            "plots_items",
+            "labels_items",
+            "border_width",
+            "align",
+            "position",
+            "position_items",
+            "bounds",
+            "bounds_items",
+            "label_at_top",
+        ):
             self._layout_needed = True
         if name == "color":
             self.get_preferred_size()
 
     def _plots_changed(self):
-        """ Invalidate the caches.
-        """
+        """Invalidate the caches."""
         self._cached_labels = []
         self._cached_label_sizes = None
         self._cached_label_names = []
@@ -483,12 +533,12 @@ class Legend(AbstractOverlay):
         # For the legend title
         if self.title_at_top:
             self._cached_labels.insert(0, self._create_label(self.title))
-            self._cached_label_names.insert(0, '__legend_label__')
+            self._cached_label_names.insert(0, "__legend_label__")
             self._cached_visible_plots.insert(0, None)
         else:
             self._cached_labels.append(self._create_label(self.title))
             self._cached_label_names.append(self.title)
             self._cached_visible_plots.append(None)
-#-- end Legend ----------------------------------------------------------------
 
 
+# -- end Legend ----------------------------------------------------------------

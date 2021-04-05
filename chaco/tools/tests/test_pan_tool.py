@@ -9,7 +9,6 @@ from enable.testing import EnableTestAssistant
 
 
 class PanToolTestCase(EnableTestAssistant, unittest.TestCase):
-
     def test_restrict_to_data_with_empty_source(self):
         # Regression test for #214.
         plot_data = ArrayPlotData()
@@ -18,8 +17,8 @@ class PanToolTestCase(EnableTestAssistant, unittest.TestCase):
         plot_data.set_data("x", arr)
         plot_data.set_data("y", arr)
         plot_data.set_data("z", np.array([], np.float64))
-        plot.plot(('x', 'y'))
-        plot.plot(('z', 'z'))
+        plot.plot(("x", "y"))
+        plot.plot(("z", "z"))
         tool = PanTool(plot, restrict_to_data=True)
         plot.tools.append(tool)
 

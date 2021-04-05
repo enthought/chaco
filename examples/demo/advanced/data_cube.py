@@ -22,19 +22,36 @@ import os, sys, shutil
 from numpy import arange, linspace, nanmin, nanmax, newaxis, pi, sin, cos
 
 # Enthought library imports
-from chaco.api import ArrayPlotData, Plot, GridPlotContainer, \
-                                 BaseTool, DataRange1D
+from chaco.api import (
+    ArrayPlotData,
+    Plot,
+    GridPlotContainer,
+    BaseTool,
+    DataRange1D,
+)
 from chaco.default_colormaps import *
 from chaco.tools.api import LineInspector, ZoomTool
 from enable.example_support import DemoFrame, demo_main
 from enable.api import Window
-from traits.api import Any, Array, Bool, Callable, CFloat, CInt, \
-        Event, Float, HasTraits, Int, Trait, observe
+from traits.api import (
+    Any,
+    Array,
+    Bool,
+    Callable,
+    CFloat,
+    CInt,
+    Event,
+    Float,
+    HasTraits,
+    Int,
+    Trait,
+    observe,
+)
 from traits.observation.api import match
 
 # Will hold the path that the user chooses to download to. Will be an empty
 # string if the user decides to download to the current directory.
-dl_path = ''
+dl_path = ""
 
 # Determines if the script should ask the user if they would like to remove the
 # downloaded data.  This defaults to False, because data deletion is
@@ -42,15 +59,16 @@ dl_path = ''
 # manually themselves.
 run_cleanup = False
 
+
 class Model(HasTraits):
     npts_x = CInt(256)
     npts_y = CInt(256)
     npts_z = CInt(109)
 
-    min_x = CFloat(-2*pi)
-    max_x = CFloat(2*pi)
-    min_y = CFloat(-2*pi)
-    max_y = CFloat(2*pi)
+    min_x = CFloat(-2 * pi)
+    max_x = CFloat(2 * pi)
+    min_y = CFloat(-2 * pi)
+    max_y = CFloat(2 * pi)
     min_z = CFloat(-pi)
     max_z = CFloat(pi)
 
@@ -70,15 +88,15 @@ class Model(HasTraits):
     @observe(
         match(
             lambda name, trait: (
-                name.startswith("npts_") or
-                name.startswith("min_") or
-                name.startswith("max_")
-                )
+                name.startswith("npts_")
+                or name.startswith("min_")
+                or name.startswith("max_")
             )
+        )
     )
     def compute_model(self, event=None):
         def vfunc(x, y, z):
-            return sin(x*z) * cos(y)*sin(z) + sin(0.5*z)
+            return sin(x * z) * cos(y) * sin(z) + sin(0.5 * z)
 
         # Create the axes
         self.xs = linspace(self.min_x, self.max_x, self.npts_x)
@@ -86,9 +104,11 @@ class Model(HasTraits):
         self.zs = linspace(self.min_z, self.max_z, self.npts_z)
 
         # Generate a cube of values by using newaxis to span new dimensions
-        self.vals = vfunc(self.xs[:, newaxis, newaxis],
-                          self.ys[newaxis, :, newaxis],
-                          self.zs[newaxis, newaxis, :])
+        self.vals = vfunc(
+            self.xs[:, newaxis, newaxis],
+            self.ys[newaxis, :, newaxis],
+            self.zs[newaxis, newaxis, :],
+        )
 
         self.minval = nanmin(self.vals)
         self.maxval = nanmax(self.vals)
@@ -102,15 +122,15 @@ class BrainModel(Model):
 
     def compute_model(self):
         global dl_path
-        mrbrain_path = os.path.join(dl_path, 'voldata', 'MRbrain.')
+        mrbrain_path = os.path.join(dl_path, "voldata", "MRbrain.")
         nx = 256
         ny = 256
         nz = 109
-        full_arr = zeros((nx, ny, nz), dtype='f')
+        full_arr = zeros((nx, ny, nz), dtype="f")
         for i in range(1, 110):
-            arr = fromfile(mrbrain_path + str(i), dtype='>u2')
-            arr.shape = (256,256)
-            full_arr[:,:,i-1] = arr
+            arr = fromfile(mrbrain_path + str(i), dtype=">u2")
+            arr.shape = (256, 256)
+            full_arr[:, :, i - 1] = arr
         self.vals = full_arr
 
         # Create the axes
@@ -125,7 +145,7 @@ class BrainModel(Model):
 
 
 class ImageIndexTool(BaseTool):
-    """ A tool to set the slice of a cube based on the user's mouse movements
+    """A tool to set the slice of a cube based on the user's mouse movements
     or clicks.
     """
 
@@ -142,7 +162,7 @@ class ImageIndexTool(BaseTool):
 
     # This token can be used by the callback to decide how to process
     # the event.
-    token  = Any()
+    token = Any()
 
     # Whether or not to update the slice info; we enter select mode when
     # the left mouse button is pressed and exit it when the mouse button
@@ -161,11 +181,12 @@ class ImageIndexTool(BaseTool):
             self._update_slices(event)
 
     def _update_slices(self, event):
-            plot = self.component
-            ndx = plot.map_index((event.x, event.y),
-                                 threshold=5.0, index_only=True)
-            if ndx:
-                self.callback(self, *ndx)
+        plot = self.component
+        ndx = plot.map_index(
+            (event.x, event.y), threshold=5.0, index_only=True
+        )
+        if ndx:
+            self.callback(self, *ndx)
 
     def normal_mouse_wheel(self, event):
         if self.wheel_cb is not None:
@@ -185,9 +206,9 @@ class PlotFrame(DemoFrame):
     colormap = Any
     colorcube = Any
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     # Private Traits
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     _cmap = Trait(viridis, Callable)
 
@@ -211,14 +232,16 @@ class PlotFrame(DemoFrame):
         self.bottom.invalidate_and_redraw()
 
     def _wheel_callback(self, tool, wheelamt):
-        plane_slice_dict = {"xy": ("slice_z", 2),
-                            "yz": ("slice_x", 0),
-                            "xz": ("slice_y", 1)}
+        plane_slice_dict = {
+            "xy": ("slice_z", 2),
+            "yz": ("slice_x", 0),
+            "xz": ("slice_y", 1),
+        }
         attr, shape_ndx = plane_slice_dict[tool.token]
         val = getattr(self, attr)
         max = self.model.vals.shape[shape_ndx]
         if val + wheelamt > max:
-            setattr(self, attr, max-1)
+            setattr(self, attr, max - 1)
         elif val + wheelamt < 0:
             setattr(self, attr, 0)
         else:
@@ -243,37 +266,48 @@ class PlotFrame(DemoFrame):
 
         # Center Plot
         centerplot = Plot(self.plotdata, padding=0)
-        imgplot = centerplot.img_plot("xy",
-                                xbounds=(model.xs[0], model.xs[-1]),
-                                ybounds=(model.ys[0], model.ys[-1]),
-                                colormap=cmap)[0]
+        imgplot = centerplot.img_plot(
+            "xy",
+            xbounds=(model.xs[0], model.xs[-1]),
+            ybounds=(model.ys[0], model.ys[-1]),
+            colormap=cmap,
+        )[0]
         self._add_plot_tools(imgplot, "xy")
         self.center = imgplot
 
         # Right Plot
         rightplot = Plot(self.plotdata, width=150, resizable="v", padding=0)
         rightplot.value_range = centerplot.value_range
-        imgplot = rightplot.img_plot("yz",
-                                xbounds=(model.zs[0], model.zs[-1]),
-                                ybounds=(model.ys[0], model.ys[-1]),
-                                colormap=cmap)[0]
+        imgplot = rightplot.img_plot(
+            "yz",
+            xbounds=(model.zs[0], model.zs[-1]),
+            ybounds=(model.ys[0], model.ys[-1]),
+            colormap=cmap,
+        )[0]
         self._add_plot_tools(imgplot, "yz")
         self.right = imgplot
 
         # Bottom Plot
         bottomplot = Plot(self.plotdata, height=150, resizable="h", padding=0)
         bottomplot.index_range = centerplot.index_range
-        imgplot = bottomplot.img_plot("xz",
-                                xbounds=(model.xs[0], model.xs[-1]),
-                                ybounds=(model.zs[0], model.zs[-1]),
-                                colormap=cmap)[0]
+        imgplot = bottomplot.img_plot(
+            "xz",
+            xbounds=(model.xs[0], model.xs[-1]),
+            ybounds=(model.zs[0], model.zs[-1]),
+            colormap=cmap,
+        )[0]
         self._add_plot_tools(imgplot, "xz")
         self.bottom = imgplot
 
         # Create Container and add all Plots
-        container = GridPlotContainer(padding=20, fill_padding=True,
-                                      bgcolor="white", use_backbuffer=True,
-                                      shape=(2,2), spacing=(12,12))
+        container = GridPlotContainer(
+            padding=20,
+            fill_padding=True,
+            bgcolor="white",
+            use_backbuffer=True,
+            shape=(2, 2),
+            spacing=(12, 12),
+        )
         container.add(centerplot)
         container.add(rightplot)
         container.add(bottomplot)
@@ -284,51 +318,87 @@ class PlotFrame(DemoFrame):
     def _add_plot_tools(self, imgplot, token):
         """ Add LineInspectors, ImageIndexTool, and ZoomTool to the image plots. """
 
-        imgplot.overlays.append(ZoomTool(component=imgplot, tool_mode="box",
-                                           enable_wheel=False, always_on=False))
-        imgplot.overlays.append(LineInspector(imgplot, axis="index_y", color="white",
-            inspect_mode="indexed", write_metadata=True, is_listener=True))
-        imgplot.overlays.append(LineInspector(imgplot, axis="index_x", color="white",
-            inspect_mode="indexed", write_metadata=True, is_listener=True))
-        imgplot.tools.append(ImageIndexTool(imgplot, token=token,
-            callback=self._index_callback, wheel_cb=self._wheel_callback))
+        imgplot.overlays.append(
+            ZoomTool(
+                component=imgplot,
+                tool_mode="box",
+                enable_wheel=False,
+                always_on=False,
+            )
+        )
+        imgplot.overlays.append(
+            LineInspector(
+                imgplot,
+                axis="index_y",
+                color="white",
+                inspect_mode="indexed",
+                write_metadata=True,
+                is_listener=True,
+            )
+        )
+        imgplot.overlays.append(
+            LineInspector(
+                imgplot,
+                axis="index_x",
+                color="white",
+                inspect_mode="indexed",
+                write_metadata=True,
+                is_listener=True,
+            )
+        )
+        imgplot.tools.append(
+            ImageIndexTool(
+                imgplot,
+                token=token,
+                callback=self._index_callback,
+                wheel_cb=self._wheel_callback,
+            )
+        )
 
     def _update_model(self, cmap):
-        range = DataRange1D(low=amin(self.model.vals),
-                            high=amax(self.model.vals))
+        range = DataRange1D(
+            low=amin(self.model.vals), high=amax(self.model.vals)
+        )
         self.colormap = cmap(range)
-        self.colorcube = (self.colormap.map_screen(self.model.vals) * 255).astype(uint8)
+        self.colorcube = (
+            self.colormap.map_screen(self.model.vals) * 255
+        ).astype(uint8)
 
     def _update_images(self):
-        """ Updates the image data in self.plotdata to correspond to the
+        """Updates the image data in self.plotdata to correspond to the
         slices given.
         """
         cube = self.colorcube
         pd = self.plotdata
         # These are transposed because img_plot() expects its data to be in
         # row-major order
-        pd.set_data("xy", transpose(cube[:, :, self.slice_z], (1,0,2)))
-        pd.set_data("xz", transpose(cube[:, self.slice_y, :], (1,0,2)))
+        pd.set_data("xy", transpose(cube[:, :, self.slice_z], (1, 0, 2)))
+        pd.set_data("xz", transpose(cube[:, self.slice_y, :], (1, 0, 2)))
         pd.set_data("yz", cube[self.slice_x, :, :])
+
 
 def download_data():
     global dl_path, run_cleanup
 
     print('Please enter the location of the "voldata" subdirectory containing')
-    print('the data files for this demo, or enter a path to download to (7.8MB).')
-    print('Press <ENTER> to download to the current directory.')
-    dl_path = input('Path: ').strip().rstrip("/").rstrip("\\")
+    print(
+        "the data files for this demo, or enter a path to download to (7.8MB)."
+    )
+    print("Press <ENTER> to download to the current directory.")
+    dl_path = input("Path: ").strip().rstrip("/").rstrip("\\")
 
     if not dl_path.endswith("voldata"):
-        voldata_path = os.path.join(dl_path, 'voldata')
+        voldata_path = os.path.join(dl_path, "voldata")
     else:
         voldata_path = dl_path
-    tar_path = os.path.join(dl_path, 'MRbrain.tar.gz')
+    tar_path = os.path.join(dl_path, "MRbrain.tar.gz")
 
     data_good = True
     try:
-        for i in range(1,110):
-            if not os.path.isfile(os.path.join(voldata_path, "MRbrain.%d" % i)):
+        for i in range(1, 110):
+            if not os.path.isfile(
+                os.path.join(voldata_path, "MRbrain.%d" % i)
+            ):
                 data_good = False
                 break
         else:
@@ -341,29 +411,33 @@ def download_data():
         import tarfile
 
         if len(dl_path) > 0 and not os.path.exists(dl_path):
-            print('The given path does not exist.')
+            print("The given path does not exist.")
             run_cleanup = False
             sys.exit()
 
         if not os.path.isabs(dl_path):
-            print('Downloading to: ' + os.path.join(os.getcwd(), dl_path))
+            print("Downloading to: " + os.path.join(os.getcwd(), dl_path))
         else:
-            print('Downloading to: ' + dl_path)
+            print("Downloading to: " + dl_path)
 
         try:
             # download and extract the file
             print("Downloading data, Please Wait (7.8MB)")
-            opener = urllib.request.urlopen('http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz')
+            opener = urllib.request.urlopen(
+                "http://www-graphics.stanford.edu/data/voldata/MRbrain.tar.gz"
+            )
         except:
-            print('Download error. Opening backup data.')
+            print("Download error. Opening backup data.")
             run_cleanup = False
             raise
 
         try:
-            open(tar_path, 'wb').write(opener.read())
+            open(tar_path, "wb").write(opener.read())
         except:
-            print('Cannot write to the destination directory specified. '
-                  'Opening backup data.')
+            print(
+                "Cannot write to the destination directory specified. "
+                "Opening backup data."
+            )
             run_cleanup = False
             raise
 
@@ -376,21 +450,23 @@ def download_data():
         tar_file.close()
         os.unlink(tar_path)
     else:
-        print('Previously downloaded data detected.')
+        print("Previously downloaded data detected.")
+
 
 def cleanup_data():
     global dl_path
 
-    answer = input('Remove downloaded files? [Y/N]: ')
-    if answer.lower() == 'y':
+    answer = input("Remove downloaded files? [Y/N]: ")
+    if answer.lower() == "y":
         try:
-            shutil.rmtree(os.path.join(dl_path, 'voldata'))
+            shutil.rmtree(os.path.join(dl_path, "voldata"))
         except:
             pass
+
 
 if __name__ == "__main__":
     # Save demo so that it doesn't get garbage collected when run within
     # existing event loop (i.e. from ipython).
-    demo = demo_main(PlotFrame, size=(800,700), title="Cube analyzer")
+    demo = demo_main(PlotFrame, size=(800, 700), title="Cube analyzer")
     if run_cleanup:
         cleanup_data()

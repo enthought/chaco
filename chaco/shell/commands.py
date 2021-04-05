@@ -2,7 +2,6 @@
 """
 
 
-
 try:
     from wx import GetApp
 except ImportError:
@@ -13,7 +12,7 @@ from chaco.tools.pan_tool import PanTool
 from chaco.tools.zoom_tool import ZoomTool
 
 # Note: these are imported to be exposed in the namespace.
-from chaco.scales.scales import (FixedScale, Pow10Scale, LogScale)
+from chaco.scales.scales import FixedScale, Pow10Scale, LogScale
 from chaco.scales.time_scale import CalendarScaleSystem
 from chaco.default_colormaps import *
 
@@ -23,9 +22,10 @@ from .session import PlotSession
 session = PlotSession()
 
 
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # General help commands
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+
 
 def chaco_commands():
     """
@@ -136,12 +136,14 @@ def chaco_commands():
     load_prefs -- loads a previously-saved set of preferences
     """
 
-#------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------
 # Window management commands
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+
 
 def figure(name=None, title=None):
-    """ Creates a new figure window and returns its index.
+    """Creates a new figure window and returns its index.
 
     Parameters
     ----------
@@ -160,7 +162,7 @@ def figure(name=None, title=None):
 
 
 def activate(ident=None):
-    """ Activates and raises a figure window.
+    """Activates and raises a figure window.
 
     Parameters
     ----------
@@ -179,7 +181,7 @@ def activate(ident=None):
 
 
 def show():
-    """ Shows all the figure windows that have been created thus far, and
+    """Shows all the figure windows that have been created thus far, and
     creates a GUI main loop. This function is useful in scripts to show plots
     and keep their windows open, and has no effect when used from the
     interpreter prompt.
@@ -187,8 +189,13 @@ def show():
 
     from traits.etsconfig.api import ETSConfig
     from pyface.util import guisupport
-    is_event_loop_running = getattr(guisupport, 'is_event_loop_running_' + ETSConfig.toolkit)
-    start_event_loop = getattr(guisupport, 'start_event_loop_' + ETSConfig.toolkit)
+
+    is_event_loop_running = getattr(
+        guisupport, "is_event_loop_running_" + ETSConfig.toolkit
+    )
+    start_event_loop = getattr(
+        guisupport, "start_event_loop_" + ETSConfig.toolkit
+    )
 
     if not is_event_loop_running():
         frame = session.active_window
@@ -197,7 +204,7 @@ def show():
 
 
 def close(ident=None):
-    """ Closes a figure window
+    """Closes a figure window
 
     Parameters
     ----------
@@ -208,7 +215,7 @@ def close(ident=None):
     win_list = []
     if ident is None:
         win_list.append(session.active_window)
-    elif ident == 'all':
+    elif ident == "all":
         win_list = session.windows
     else:
         win_list.append(session.get_window(ident))
@@ -233,7 +240,7 @@ def colormap(map):
 
 
 def hold(state=None):
-    """ Turns "hold" on or off, or toggles the current state if none
+    """Turns "hold" on or off, or toggles the current state if none
     is given.
 
     Parameters
@@ -253,12 +260,14 @@ def curplot():
     else:
         return None
 
-#------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------
 # Plotting functions
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+
 
 def _do_plot_boilerplate(kwargs, image=False):
-    """ Used by various plotting functions.  Checks/handles hold state,
+    """Used by various plotting functions.  Checks/handles hold state,
     returns a Plot object for the plotting function to use.
     """
 
@@ -284,7 +293,11 @@ def _do_plot_boilerplate(kwargs, image=False):
     if not PanTool in existing_tools:
         cont.tools.append(PanTool(cont))
     if not ZoomTool in existing_tools:
-        cont.overlays.append(ZoomTool(cont, tool_mode="box", always_on=True, drag_button="right"))
+        cont.overlays.append(
+            ZoomTool(
+                cont, tool_mode="box", always_on=True, drag_button="right"
+            )
+        )
 
     if not session.hold:
         cont.delplot(*list(cont.plots.keys()))
@@ -293,7 +306,7 @@ def _do_plot_boilerplate(kwargs, image=False):
 
 
 def plot(*data, **kwargs):
-    """ Plots data in a Matlab-compatible way.  Data is assumed to be
+    """Plots data in a Matlab-compatible way.  Data is assumed to be
     X vs Y.  Any additional *kwargs* passed in are broadcast to all plots.
 
     Example::
@@ -306,14 +319,13 @@ def plot(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_plot(session.data, cont,
-                               *data, **kwargs)
+    plots = plot_maker.do_plot(session.data, cont, *data, **kwargs)
 
     cont.request_redraw()
 
 
 def semilogx(*data, **kwargs):
-    """ Plots data on a semilog scale in a Matlab-compatible way.  Data is
+    """Plots data on a semilog scale in a Matlab-compatible way.  Data is
     assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast
     to all plots.
 
@@ -332,7 +344,7 @@ def semilogx(*data, **kwargs):
 
 
 def semilogy(*data, **kwargs):
-    """ Plots data on a semilog scale in a Matlab-compatible way.  Data is
+    """Plots data on a semilog scale in a Matlab-compatible way.  Data is
     assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast
     to all plots.
 
@@ -351,7 +363,7 @@ def semilogy(*data, **kwargs):
 
 
 def loglog(*data, **kwargs):
-    """ Plots data on a log-log scale in a Matlab-compatible way.  Data is
+    """Plots data on a log-log scale in a Matlab-compatible way.  Data is
     assumed to be X vs Y.  Any additional *kwargs* passed in are broadcast
     to all plots.
 
@@ -377,7 +389,7 @@ def imread(*data, **kwargs):
 
 
 def imshow(*data, **kwargs):
-    """ Creates an image plot from a file on disk.  Takes either
+    """Creates an image plot from a file on disk.  Takes either
     filename or image data.  Any additional *kwargs* passed in are broadcast
     to all plots.
 
@@ -398,13 +410,12 @@ def imshow(*data, **kwargs):
 
     if "colormap" not in kwargs:
         kwargs["colormap"] = session.colormap
-    plots = plot_maker.do_imshow(session.data, cont,
-                                 *data, **kwargs)
+    plots = plot_maker.do_imshow(session.data, cont, *data, **kwargs)
     cont.request_redraw()
 
 
 def pcolor(*data, **kwargs):
-    """ Colormaps scalar data in a roughly Matlab-compatible way. Data are
+    """Colormaps scalar data in a roughly Matlab-compatible way. Data are
     assumed to be a scalar image.  Any additional *kwargs* passed in are
     broadcast to all plots.
 
@@ -421,13 +432,14 @@ def pcolor(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_pcolor(session.data, session.colormap, cont,
-                                 *data, **kwargs)
+    plots = plot_maker.do_pcolor(
+        session.data, session.colormap, cont, *data, **kwargs
+    )
     cont.request_redraw()
 
 
 def contour(*data, **kwargs):
-    """ Contour line plots of scalar data in a roughly Matlab-compatible way.
+    """Contour line plots of scalar data in a roughly Matlab-compatible way.
     Data are assumed to be a scalar image.  Any additional *kwargs* passed in
     are broadcast to all plots.
 
@@ -444,13 +456,14 @@ def contour(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_contour(session.data, session.colormap, cont,
-                                  "line", *data, **kwargs)
+    plots = plot_maker.do_contour(
+        session.data, session.colormap, cont, "line", *data, **kwargs
+    )
     cont.request_redraw()
 
 
 def contourf(*data, **kwargs):
-    """ Contour polygon plots of scalar data in a roughly Matlab-compatible way.
+    """Contour polygon plots of scalar data in a roughly Matlab-compatible way.
     Data are assumed to be a scalar image.  Any additional *kwargs* passed in
     are broadcast to all plots.
 
@@ -467,13 +480,14 @@ def contourf(*data, **kwargs):
 
     cont = _do_plot_boilerplate(kwargs)
 
-    plots = plot_maker.do_contour(session.data, session.colormap, cont,
-                                  "poly", *data, **kwargs)
+    plots = plot_maker.do_contour(
+        session.data, session.colormap, cont, "poly", *data, **kwargs
+    )
     cont.request_redraw()
 
 
 def plotv(*args, **kwargs):
-    """ Creates a plot of a particular type, or using a "best guess"
+    """Creates a plot of a particular type, or using a "best guess"
     approach based on the data, using chaco semantics.
 
     The number and shape of data arrays determine how the data is
@@ -536,9 +550,10 @@ def plotv(*args, **kwargs):
     cont.request_redraw()
 
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Annotations
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 def xtitle(text):
     """ Sets the horizontal axis label to *text*. """
@@ -555,12 +570,14 @@ def ytitle(text):
         p.y_axis.title = text
         p.request_redraw()
 
+
 def title(text):
     """ Sets the plot title to *text*. """
     p = curplot()
     if p:
         p.title = text
         p.request_redraw()
+
 
 _axis_params = """Parameters
     ----------
@@ -601,6 +618,7 @@ _axis_params = """Parameters
     axis_line_style : LineStyle('solid')
         The dash style of the axis line"""
 
+
 def xaxis(**kwds):
     """ Configures the x-axis.
 
@@ -619,7 +637,9 @@ def xaxis(**kwds):
             p.x_axis.visible ^= True
         p.request_redraw()
 
-xaxis.__doc__ = """ Configures the x-axis.
+
+xaxis.__doc__ = (
+    """ Configures the x-axis.
 
     Usage
     -----
@@ -627,7 +647,10 @@ xaxis.__doc__ = """ Configures the x-axis.
     * ``xaxis(**kwds)``: set parameters of the horizontal axis.
 
     %s
-    """ % _axis_params
+    """
+    % _axis_params
+)
+
 
 def yaxis(**kwds):
     """ Configures the y-axis.
@@ -647,7 +670,9 @@ def yaxis(**kwds):
             p.y_axis.visible ^= True
         p.request_redraw()
 
-yaxis.__doc__ =     """ Configures the y-axis.
+
+yaxis.__doc__ = (
+    """ Configures the y-axis.
 
     Usage
     -----
@@ -655,7 +680,9 @@ yaxis.__doc__ =     """ Configures the y-axis.
     * ``yaxis(**kwds)``: set parameters of the vertical axis.
 
     %s
-    """ % _axis_params
+    """
+    % _axis_params
+)
 
 
 def xgrid():
@@ -665,6 +692,7 @@ def xgrid():
         p.x_grid.visible ^= True
         p.request_redraw()
 
+
 def ygrid():
     """ Toggles the grid perpendicular to the Y axis. """
     p = curplot()
@@ -672,28 +700,31 @@ def ygrid():
         p.y_grid.visible ^= True
         p.request_redraw()
 
+
 def _set_scale(axis, system):
     p = curplot()
     if p:
-        if axis == 'x':
-            log_linear_trait = 'index_scale'
+        if axis == "x":
+            log_linear_trait = "index_scale"
             ticks = p.x_ticks
         else:
-            log_linear_trait = 'value_scale'
+            log_linear_trait = "value_scale"
             ticks = p.y_ticks
-        if system == 'time':
+        if system == "time":
             system = CalendarScaleSystem()
         if isinstance(system, str):
             setattr(p, log_linear_trait, system)
         else:
             if system is None:
                 system = dict(linear=p.linear_scale, log=p.log_scale).get(
-                    p.get(log_linear_trait), p.linear_scale)
+                    p.get(log_linear_trait), p.linear_scale
+                )
             ticks.scale = system
         p.request_redraw()
 
+
 def xscale(system=None):
-    """ Change the scale system for the X-axis ticks.
+    """Change the scale system for the X-axis ticks.
 
     Usage
     -----
@@ -703,10 +734,11 @@ def xscale(system=None):
     * ``xscale('linear')``: use a generic linear-scale.
     * ``xscale(some_scale_system)``: use an arbitrary ScaleSystem object.
     """
-    _set_scale('x', system)
+    _set_scale("x", system)
+
 
 def yscale(system=None):
-    """ Change the scale system for the Y-axis ticks.
+    """Change the scale system for the Y-axis ticks.
 
     Usage
     -----
@@ -716,10 +748,11 @@ def yscale(system=None):
     * ``yscale('linear')``: use a generic linear-scale.
     * ``yscale(some_scale_system)``: use an arbitrary ScaleSystem object.
     """
-    _set_scale('y', system)
+    _set_scale("y", system)
+
 
 def legend(setting=None):
-    """ Sets or toggles the presence of the legend
+    """Sets or toggles the presence of the legend
 
     Usage
     -----
@@ -735,9 +768,10 @@ def legend(setting=None):
         p.request_redraw()
 
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Tools
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 def tool():
     """ Toggles tools on and off. """
@@ -746,13 +780,19 @@ def tool():
         pass
 
 
-
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Saving and IO
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
-def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, units="inch"):
-    """ Saves the active plot to an file.  Currently supported file types
+
+def save(
+    filename="chacoplot.png",
+    dpi=72,
+    pagesize="letter",
+    dest_box=None,
+    units="inch",
+):
+    """Saves the active plot to an file.  Currently supported file types
     are: bmp, png, jpg.
     """
     p = curplot()
@@ -761,17 +801,21 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
         return
 
     import os.path
+
     ext = os.path.splitext(filename)[-1]
     if ext == ".pdf":
         print("Warning: the PDF backend is still a little buggy.")
         from chaco.pdf_graphics_context import PdfPlotGraphicsContext
+
         # Set some default PDF options if none are provided
         if dest_box is None:
             dest_box = (0.5, 0.5, -0.5, -0.5)
-        gc = PdfPlotGraphicsContext(filename = filename,
-                                    pagesize = pagesize,
-                                    dest_box = dest_box,
-                                    dest_box_units = units)
+        gc = PdfPlotGraphicsContext(
+            filename=filename,
+            pagesize=pagesize,
+            dest_box=dest_box,
+            dest_box_units=units,
+        )
 
         # temporarily turn off the backbuffer for offscreen rendering
         use_backbuffer = p.use_backbuffer
@@ -785,6 +829,7 @@ def save(filename="chacoplot.png", dpi=72, pagesize="letter", dest_box=None, uni
 
     elif ext in [".bmp", ".png", ".jpg"]:
         from chaco.plot_graphics_context import PlotGraphicsContext
+
         gc = PlotGraphicsContext(tuple(p.outer_bounds), dpi=dpi)
 
         # temporarily turn off the backbuffer for offscreen rendering

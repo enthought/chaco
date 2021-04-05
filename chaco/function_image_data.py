@@ -9,8 +9,9 @@ from .image_data import ImageData
 # it would be awesome if there was a mechanism for returning
 # partial results as they become available.
 
+
 class FunctionImageData(ImageData):
-    """ A class that provides data for a 2-D image based upon the range
+    """A class that provides data for a 2-D image based upon the range
     supplied.  This class can be used as the data source for an image plot
     or contour plot.
 
@@ -31,14 +32,14 @@ class FunctionImageData(ImageData):
         # Explicitly construct the initial data set for ImageData
         self.recalculate()
 
-    @observe('data_range.updated')
+    @observe("data_range.updated")
     def recalculate(self, event=None):
         if self.func is not None and self.data_range is not None:
             newarray = self.func(
                 self.data_range.x_range.low,
                 self.data_range.x_range.high,
                 self.data_range.y_range.low,
-                self.data_range.y_range.high
+                self.data_range.y_range.high,
             )
             ImageData.set_data(self, newarray)
         else:

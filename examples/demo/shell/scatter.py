@@ -10,7 +10,7 @@ from chaco.shell import plot, hold, title, show
 
 
 # Create some data
-x = linspace(-2*pi, 2*pi, 100)
+x = linspace(-2 * pi, 2 * pi, 100)
 y1 = random.random(100)
 y2 = random.random(100)
 

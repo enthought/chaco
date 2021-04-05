@@ -16,11 +16,11 @@ from .image_data import ImageData
 
 
 class Base2DPlot(AbstractPlotRenderer):
-    """ Base class for 2-D plots.
-    """
-    #------------------------------------------------------------------------
+    """Base class for 2-D plots."""
+
+    # ------------------------------------------------------------------------
     # Data-related traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The data source to use for the index coordinate.
     index = Instance(GridDataSource)
@@ -75,9 +75,9 @@ class Base2DPlot(AbstractPlotRenderer):
     #: is done in this class).
     value_data_changed = Event
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __init__(self, **kwargs):
         # Handling the setting/initialization of these traits manually because
@@ -99,12 +99,12 @@ class Base2DPlot(AbstractPlotRenderer):
         if self.resizable == "":
             self._update_mappers()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractPlotRenderer interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def map_screen(self, data_pts):
-        """ Maps an array of data points into screen space and returns it as
+        """Maps an array of data points into screen space and returns it as
         an array.
 
         Implements the AbstractPlotRenderer interface.
@@ -115,29 +115,36 @@ class Base2DPlot(AbstractPlotRenderer):
         return asarray(self.index_mapper.map_screen(data_pts))
 
     def map_data(self, screen_pts):
-        """ Maps a screen space point into the "index" space of the plot.
+        """Maps a screen space point into the "index" space of the plot.
 
         Implements the AbstractPlotRenderer interface.
         """
         return self.index_mapper.map_data(screen_pts)
 
-    def map_index(self, screen_pt, threshold=2.0,
-                  outside_returns_none=True, index_only=False):
-        """ Maps a screen space point to an index into the plot's index arrays.
+    def map_index(
+        self,
+        screen_pt,
+        threshold=2.0,
+        outside_returns_none=True,
+        index_only=False,
+    ):
+        """Maps a screen space point to an index into the plot's index arrays.
 
         Implements the AbstractPlotRenderer interface.
         The *index_only* parameter is ignored because the index is
         intrinsically 2-D.
         """
-        if self.orientation == 'h':
-            x_pt,y_pt = self.map_data([screen_pt])[0]
+        if self.orientation == "h":
+            x_pt, y_pt = self.map_data([screen_pt])[0]
         else:
-            x_pt,y_pt = self.map_data([(screen_pt[1],screen_pt[0])])[0]
+            x_pt, y_pt = self.map_data([(screen_pt[1], screen_pt[0])])[0]
 
-        if ((x_pt < self.index_mapper.range.low[0]) or
-            (x_pt > self.index_mapper.range.high[0]) or
-            (y_pt < self.index_mapper.range.low[1]) or
-            (y_pt > self.index_mapper.range.high[1])) and outside_returns_none:
+        if (
+            (x_pt < self.index_mapper.range.low[0])
+            or (x_pt > self.index_mapper.range.high[0])
+            or (y_pt < self.index_mapper.range.low[1])
+            or (y_pt > self.index_mapper.range.high[1])
+        ) and outside_returns_none:
             return None, None
 
         x_index_data, y_index_data = self.index.get_data()
@@ -149,28 +156,30 @@ class Base2DPlot(AbstractPlotRenderer):
         x_data = x_index_data.get_data()
         y_data = y_index_data.get_data()
         try:
-            x_ndx = reverse_map_1d(x_data, x_pt, self.index.sort_order[0],
-                                   floor_only=True)
+            x_ndx = reverse_map_1d(
+                x_data, x_pt, self.index.sort_order[0], floor_only=True
+            )
         except IndexError as e:
             if outside_returns_none:
                 return None, None
 
             # x index
             if x_pt < x_data[0]:
-                x_ndx =  0
+                x_ndx = 0
             else:
                 x_ndx = len(x_data) - 1
 
         try:
-            y_ndx = reverse_map_1d(y_data, y_pt, self.index.sort_order[1],
-                                   floor_only=True)
+            y_ndx = reverse_map_1d(
+                y_data, y_pt, self.index.sort_order[1], floor_only=True
+            )
         except IndexError as e:
             if outside_returns_none:
                 return None, None
 
             # y index
             if y_pt < y_data[0]:
-                y_ndx =  0
+                y_ndx = 0
             else:
                 y_ndx = len(y_data) - 1
 
@@ -182,35 +191,36 @@ class Base2DPlot(AbstractPlotRenderer):
         if isnan(x) or isnan(y):
             return None, None
 
-        sx, sy =  self.map_screen([(x,y)])[0]
-        if ((screen_pt[0]-sx)**2 + (screen_pt[1]-sy)**2 < threshold**2):
+        sx, sy = self.map_screen([(x, y)])[0]
+        if (screen_pt[0] - sx) ** 2 + (
+            screen_pt[1] - sy
+        ) ** 2 < threshold ** 2:
             return x_ndx, y_ndx
         else:
             return None, None
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # PlotComponent interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _draw_image(self, gc, view_bounds=None, mode="normal"):
-        """ Handler for drawing the 'image' layer.
+        """Handler for drawing the 'image' layer.
 
         Used by the PlotComponent interface.
         """
         self._render(gc)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Abstract methods that subclasses must implement
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _render(self, gc, points):
-        """ Abstract method for drawing the plot.
-        """
+        """Abstract method for drawing the plot."""
         raise NotImplementedError
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Properties
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_index_range(self):
         return self.index_mapper.range
@@ -220,30 +230,29 @@ class Base2DPlot(AbstractPlotRenderer):
 
     def _get_labels(self):
         labels = []
-        for obj in self.underlays+self.overlays:
+        for obj in self.underlays + self.overlays:
             if isinstance(obj, PlotLabel):
                 labels.append(obj)
         return labels
 
     def _get_x_mapper(self):
-        if self.orientation == 'h':
+        if self.orientation == "h":
             return self.index_mapper._xmapper
         else:
             return self.index_mapper._ymapper
 
     def _get_y_mapper(self):
-        if self.orientation == 'h':
+        if self.orientation == "h":
             return self.index_mapper._ymapper
         else:
             return self.index_mapper._xmapper
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _update_index_mapper(self, event=None):
-        """ Updates the index mapper.
+        """Updates the index mapper.
 
         Called by various trait change handlers.
         """
@@ -268,15 +277,25 @@ class Base2DPlot(AbstractPlotRenderer):
             y_high = y
 
         if self.index_mapper is not None:
-            if self.orientation == 'h':
-                self.index_mapper.screen_bounds = (x_low, x_high, y_low, y_high)
+            if self.orientation == "h":
+                self.index_mapper.screen_bounds = (
+                    x_low,
+                    x_high,
+                    y_low,
+                    y_high,
+                )
             else:
-                self.index_mapper.screen_bounds = (y_low, y_high, x_low, x_high)
+                self.index_mapper.screen_bounds = (
+                    y_low,
+                    y_high,
+                    x_low,
+                    x_high,
+                )
             self.index_mapper_changed = True
             self.invalidate_draw()
 
     def _update_index_data(self, event=None):
-        """ Updates the index data.
+        """Updates the index data.
 
         Called by various trait change handlers.
         """
@@ -284,17 +303,16 @@ class Base2DPlot(AbstractPlotRenderer):
         self.invalidate_draw()
 
     def _update_value_data(self, event=None):
-        """ Updates the value data.
+        """Updates the value data.
 
         Called by various trait change handlers.
         """
         self.value_data_changed = True
         self.invalidate_draw()
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _bounds_changed(self, old, new):
         super(Base2DPlot, self)._bounds_changed(old, new)

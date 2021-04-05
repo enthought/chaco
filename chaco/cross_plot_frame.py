@@ -8,17 +8,20 @@
 #################################################################################
 
 
-
 # Enthought library imports
 from traits.api import Bool, Float
 
 # Local, relative imports
 from .base_plot_frame import BasePlotFrame
-from .plot_containers import HPlotContainer, OverlayPlotContainer, VPlotContainer
+from .plot_containers import (
+    HPlotContainer,
+    OverlayPlotContainer,
+    VPlotContainer,
+)
 
 
 class CrossPlotFrame(BasePlotFrame):
-    """ A simple, box-layout based plotframe.
+    """A simple, box-layout based plotframe.
 
     This class supports a central plot area with optional axes on the top, bottom,
     and sides.  The legend can be placed to the bottom, left, right, or
@@ -34,7 +37,7 @@ class CrossPlotFrame(BasePlotFrame):
     slot_names = ("center", "left", "right", "top", "bottom")
 
     #: Default width and height. Class attribute.
-    default_bounds = (500,500)
+    default_bounds = (500, 500)
 
     # The sizes of the various areas
 
@@ -49,7 +52,6 @@ class CrossPlotFrame(BasePlotFrame):
 
     # Does the component need to do a layout call?
     _layout_needed = Bool(True)
-
 
     def __init__(self, **kwtraits):
         bounds = kwtraits.pop("bounds", list(self.default_bounds))
@@ -76,12 +78,12 @@ class CrossPlotFrame(BasePlotFrame):
             else:
                 self.get_slot(slot).visible = False
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Protected methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        """ Draws the component.
+        """Draws the component.
 
         This method is preserved for backwards compatibility with _old_draw().
         Overrides PlotComponent.
@@ -153,11 +155,11 @@ class CrossPlotFrame(BasePlotFrame):
 
     ### Persistence ###########################################################
 
-    #_pickles = ("left_width", "right_width", "top_height", "bottom_height")
+    # _pickles = ("left_width", "right_width", "top_height", "bottom_height")
 
     def __getstate__(self):
-        state = super(CrossPlotFrame,self).__getstate__()
-        for key in ['_layout_needed']:
+        state = super(CrossPlotFrame, self).__getstate__()
+        for key in ["_layout_needed"]:
             if key in state:
                 del state[key]
 

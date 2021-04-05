@@ -7,14 +7,14 @@ from .abstract_data_range import AbstractDataRange
 
 
 class BaseDataRange(AbstractDataRange):
-    """ Ranges represent sub-regions of data space.
+    """Ranges represent sub-regions of data space.
 
     They support "autoscaling" by querying their associated data sources.
     """
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __init__(self, *datasources, **kwtraits):
         super(AbstractDataRange, self).__init__(**kwtraits)
@@ -32,6 +32,3 @@ class BaseDataRange(AbstractDataRange):
         for datasource in datasources:
             if datasource in self.sources:
                 self.sources.remove(datasource)
-
-
-

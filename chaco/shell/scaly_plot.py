@@ -28,7 +28,7 @@ def add_default_axes(plot, orientation="normal", vtitle="", htitle=""):
 
     yticks = ScalesTickGenerator()
     left = PlotAxis(
-        orientation='left',
+        orientation="left",
         title=vtitle,
         mapper=v_mapper,
         component=plot,
@@ -37,7 +37,7 @@ def add_default_axes(plot, orientation="normal", vtitle="", htitle=""):
 
     xticks = ScalesTickGenerator()
     bottom = PlotAxis(
-        orientation='bottom',
+        orientation="bottom",
         title=htitle,
         mapper=h_mapper,
         component=plot,
@@ -99,24 +99,46 @@ class ScalyPlot(Plot):
             self.value_mapper = vmap
 
         if self.x_ticks is None:
-            self.x_ticks = ScalesTickGenerator(scale=self._make_scale(self.index_scale))
+            self.x_ticks = ScalesTickGenerator(
+                scale=self._make_scale(self.index_scale)
+            )
         if self.y_ticks is None:
-            self.y_ticks = ScalesTickGenerator(scale=self._make_scale(self.value_scale))
+            self.y_ticks = ScalesTickGenerator(
+                scale=self._make_scale(self.value_scale)
+            )
 
         if self.x_grid is None:
-            self.x_grid = PlotGrid(mapper=self.x_mapper, orientation="vertical",
-                                  line_color="lightgray", line_style="dot",
-                                  component=self, tick_generator=self.x_ticks)
+            self.x_grid = PlotGrid(
+                mapper=self.x_mapper,
+                orientation="vertical",
+                line_color="lightgray",
+                line_style="dot",
+                component=self,
+                tick_generator=self.x_ticks,
+            )
         if self.y_grid is None:
-            self.y_grid = PlotGrid(mapper=self.y_mapper, orientation="horizontal",
-                                  line_color="lightgray", line_style="dot",
-                                  component=self, tick_generator=self.y_ticks)
+            self.y_grid = PlotGrid(
+                mapper=self.y_mapper,
+                orientation="horizontal",
+                line_color="lightgray",
+                line_style="dot",
+                component=self,
+                tick_generator=self.y_ticks,
+            )
         if self.x_axis is None:
-            self.x_axis = PlotAxis(mapper=self.x_mapper, orientation="bottom",
-                                  component=self, tick_generator=self.x_ticks)
+            self.x_axis = PlotAxis(
+                mapper=self.x_mapper,
+                orientation="bottom",
+                component=self,
+                tick_generator=self.x_ticks,
+            )
         if self.y_axis is None:
-            self.y_axis = PlotAxis(mapper=self.y_mapper, orientation="left",
-                                  component=self, tick_generator=self.y_ticks)
+            self.y_axis = PlotAxis(
+                mapper=self.y_mapper,
+                orientation="left",
+                component=self,
+                tick_generator=self.y_ticks,
+            )
 
     def _index_scale_changed(self, old, new):
         Plot._index_scale_changed(self, old, new)

@@ -14,6 +14,7 @@ from traits.api import Any, List, Callable, Enum, Bool
 
 from .text_grid_overlay import TextGridOverlay
 
+
 def basic_formatter(key, decimals):
     """Create a basic '<key>: <value>' formatting function
 
@@ -34,12 +35,15 @@ def basic_formatter(key, decimals):
     format
         A factory function that takes a dictionary and returns a string.
     """
-    format_string = '%s: %%(%s).%df' % (key, key, decimals)
+    format_string = "%s: %%(%s).%df" % (key, key, decimals)
+
     def format(**kwargs):
         return format_string % kwargs
+
     return format
 
-def datetime_formatter(key, time_format='%Y/%m/%d %H:%M:%S'):
+
+def datetime_formatter(key, time_format="%Y/%m/%d %H:%M:%S"):
     """Create a datetime formatting function
 
     This factory creates a function that formats a specified key and with a
@@ -61,10 +65,13 @@ def datetime_formatter(key, time_format='%Y/%m/%d %H:%M:%S'):
         A factory function that takes a dictionary and returns a string.
     """
     import datetime
+
     def format(**kwargs):
         dt = datetime.datetime.fromtimestamp(kwargs[key])
-        return key+': '+dt.strftime(time_format)
+        return key + ": " + dt.strftime(time_format)
+
     return format
+
 
 def time_formatter(key):
     """Create a time formatting function
@@ -85,7 +92,8 @@ def time_formatter(key):
     format
         A factory function that takes a dictionary and returns a string.
     """
-    return datetime_formatter(key, time_format='%H:%M:%S')
+    return datetime_formatter(key, time_format="%H:%M:%S")
+
 
 def date_formatter(key):
     """Create a date formatting function
@@ -106,11 +114,11 @@ def date_formatter(key):
     format
         A factory function that takes a dictionary and returns a string.
     """
-    return datetime_formatter(key, time_format='%Y/%m/%d')
+    return datetime_formatter(key, time_format="%Y/%m/%d")
 
 
 class SimpleInspectorOverlay(TextGridOverlay):
-    """ Simple inspector overlay for plots
+    """Simple inspector overlay for plots
 
     This is a simple overlay that listens for new_value events on a
     SimpleInspectorTool and displays formatted values in a grid.
@@ -125,6 +133,7 @@ class SimpleInspectorOverlay(TextGridOverlay):
     appropriate field_formatters this class can be used with any inspector
     tool that follows the same API.
     """
+
     # XXX We should probably refactor this into a BaseInspectorOverlay
     # which handles the visibility and basic event handling, and smaller
     # version of this class which handles inserting values into a text grid
@@ -152,7 +161,7 @@ class SimpleInspectorOverlay(TextGridOverlay):
     #########################################################################
 
     def _field_formatters_default(self):
-        return [[basic_formatter('x', 2)], [basic_formatter('y', 2)]]
+        return [[basic_formatter("x", 2)], [basic_formatter("y", 2)]]
 
     def _new_value_updated(self, event):
         new_value_event = event.new
@@ -168,8 +177,12 @@ class SimpleInspectorOverlay(TextGridOverlay):
 
         d = new_value_event
         text = []
-        self.text_grid.string_array = array([[formatter(**d) for formatter in row]
-            for row in self.field_formatters])
+        self.text_grid.string_array = array(
+            [
+                [formatter(**d) for formatter in row]
+                for row in self.field_formatters
+            ]
+        )
 
         self.text_grid.request_redraw()
 
@@ -179,10 +192,10 @@ class SimpleInspectorOverlay(TextGridOverlay):
 
     def _inspector_changed(self, old, new):
         if old:
-            old.observe(self._new_value_updated, 'new_value', remove=True)
+            old.observe(self._new_value_updated, "new_value", remove=True)
             old.observe(self._tool_visible_changed, "visible", remove=True)
         if new:
-            new.observe(self._new_value_updated, 'new_value')
+            new.observe(self._new_value_updated, "new_value")
             new.observe(self._tool_visible_changed, "visible")
             self._tool_visible_changed()
 
@@ -190,4 +203,3 @@ class SimpleInspectorOverlay(TextGridOverlay):
         self.visibility = self.inspector.visible
         if self.visibility != "auto":
             self.visible = self.visibility
-

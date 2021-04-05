@@ -63,9 +63,9 @@ class GridMapper(AbstractMapper):
     #: The aspect ratio that we wish to maintain
     aspect_ratio = Float(1.0)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private Traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     _updating_submappers = Bool(False)
     _updating_aspect = Bool(False)
@@ -73,9 +73,9 @@ class GridMapper(AbstractMapper):
     _xmapper = Instance(Base1DMapper)
     _ymapper = Instance(Base1DMapper)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __init__(self, x_type="linear", y_type="linear", range=None, **kwargs):
         # TODO: This is currently an implicit assumption, i.e. that the range
@@ -112,7 +112,7 @@ class GridMapper(AbstractMapper):
         super(GridMapper, self).__init__(**kwargs)
 
     def map_screen(self, data_pts):
-        """ map_screen(data_pts) -> screen_array
+        """map_screen(data_pts) -> screen_array
 
         Maps values from data space into screen space.
         """
@@ -123,7 +123,7 @@ class GridMapper(AbstractMapper):
         return screen_pts
 
     def map_data(self, screen_pts):
-        """ map_data(screen_pts) -> data_vals
+        """map_data(screen_pts) -> data_vals
 
         Maps values from screen space into data space.
         """
@@ -136,9 +136,9 @@ class GridMapper(AbstractMapper):
     def map_data_array(self, screen_pts):
         return self.map_data(screen_pts)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private Methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _update_bounds(self):
         with self._update_submappers():
@@ -153,35 +153,41 @@ class GridMapper(AbstractMapper):
         y_width = self._ymapper.high_pos - self._ymapper.low_pos
         if y_width == 0:
             return
-        y_scale = (self._ymapper.range.high - self._ymapper.range.low)/y_width
+        y_scale = (
+            self._ymapper.range.high - self._ymapper.range.low
+        ) / y_width
         x_range_low = self._xmapper.range.low
         x_width = self._xmapper.high_pos - self._xmapper.low_pos
         sign = self._xmapper.sign * self._ymapper.sign
         if x_width == 0 or sign == 0:
             return
-        x_scale = sign*y_scale/self.aspect_ratio
+        x_scale = sign * y_scale / self.aspect_ratio
         with self._update_aspect():
-            self._xmapper.range.set_bounds(x_range_low, x_range_low +
-                x_scale*x_width)
+            self._xmapper.range.set_bounds(
+                x_range_low, x_range_low + x_scale * x_width
+            )
 
     def _update_aspect_y(self):
         x_width = self._xmapper.high_pos - self._xmapper.low_pos
         if x_width == 0:
             return
-        x_scale = (self._xmapper.range.high - self._xmapper.range.low)/x_width
+        x_scale = (
+            self._xmapper.range.high - self._xmapper.range.low
+        ) / x_width
         y_range_low = self._ymapper.range.low
-        y_width = self._ymapper.high_pos-self._ymapper.low_pos
+        y_width = self._ymapper.high_pos - self._ymapper.low_pos
         sign = self._xmapper.sign * self._ymapper.sign
         if y_width == 0 or sign == 0:
             return
-        y_scale = sign*x_scale*self.aspect_ratio
+        y_scale = sign * x_scale * self.aspect_ratio
         with self._update_aspect():
-            self._ymapper.range.set_bounds(y_range_low, y_range_low +
-                y_scale*y_width)
+            self._ymapper.range.set_bounds(
+                y_range_low, y_range_low + y_scale * y_width
+            )
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _range_changed(self, old, new):
         if old is not None:
@@ -217,8 +223,12 @@ class GridMapper(AbstractMapper):
         self._update_bounds()
 
     def _get_screen_bounds(self):
-        return (self.x_low_pos, self.x_high_pos,
-                self.y_low_pos, self.y_high_pos)
+        return (
+            self.x_low_pos,
+            self.x_high_pos,
+            self.y_low_pos,
+            self.y_high_pos,
+        )
 
     def _updated_fired_for__xmapper(self):
         if not self._updating_aspect:

@@ -1,4 +1,3 @@
-
 # Enthought library imports
 from enable.api import Canvas
 from traits.api import Instance, Tuple
@@ -6,22 +5,23 @@ from traits.api import Instance, Tuple
 # Local, relative chaco imports
 from .plot_containers import DEFAULT_DRAWING_ORDER
 
+
 class PlotCanvas(Canvas):
-    """ The PlotCanvas is basically like Canvas, but we inherit some behaviors
+    """The PlotCanvas is basically like Canvas, but we inherit some behaviors
     from PlotComponent as well.  Some methods are redefined in here to
     explicitly make sure we get the right dispatch order.
     """
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Public traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # Default size to use for resizable components placed onto us.
     default_component_size = Tuple(200, 200)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Inherited traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # Explicitly use the Chaco drawing order instead of the Enable one
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
@@ -33,10 +33,9 @@ class PlotCanvas(Canvas):
     # Override the definition from Component
     use_backbuffer = False
 
-
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Inherited methods
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def draw(self, gc, view_bounds=None, mode="default"):
         if self.view_bounds is None:
@@ -49,7 +48,7 @@ class PlotCanvas(Canvas):
         Canvas._dispatch_draw(self, layer, gc, view_bounds, mode)
 
     def get_preferred_size(self, components=None):
-        """ Returns the size (width,height) that is preferred for this
+        """Returns the size (width,height) that is preferred for this
         components.
         """
         if self.view_bounds is not None:

@@ -8,8 +8,9 @@ from traits.api import Instance, Property
 from .abstract_data_source import AbstractDataSource
 from .base_candle_plot import BaseCandlePlot
 
+
 def broaden(mask):
-    """ Takes a 1D boolean mask array and returns a copy with all the non-zero
+    """Takes a 1D boolean mask array and returns a copy with all the non-zero
     runs widened by 1.
     """
     if len(mask) < 2:
@@ -23,7 +24,7 @@ def broaden(mask):
 
 
 class CandlePlot(BaseCandlePlot):
-    """ A plot consisting of a filled bar with an optional centerline and
+    """A plot consisting of a filled bar with an optional centerline and
     stems extending to extrema.  Usually used to represent some statistics
     on bins of data, with the centerline representing the mean, the bar
     extents representing +/- 1 standard dev or 10th/90th percentiles, and
@@ -34,9 +35,9 @@ class CandlePlot(BaseCandlePlot):
     determined by the minimum space between adjacent index values.
     """
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Data-related traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The minimum values at each index point.  If None, then no stem and no
     #: endcap line will be drawn below each bar.
@@ -62,21 +63,29 @@ class CandlePlot(BaseCandlePlot):
     value = Property
 
     def map_data(self, screen_pt, all_values=True):
-        """ Maps a screen space point into the "index" space of the plot.
+        """Maps a screen space point into the "index" space of the plot.
 
         Overrides the BaseXYPlot implementation, and always returns an
         array of (index, value) tuples.
         """
         x, y = screen_pt
-        if self.orientation == 'v':
+        if self.orientation == "v":
             x, y = y, x
-        return array((self.index_mapper.map_data(x),
-                      self.value_mapper.map_data(y)))
+        return array(
+            (self.index_mapper.map_data(x), self.value_mapper.map_data(y))
+        )
 
-    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
-                  index_only = True):
+    def map_index(
+        self,
+        screen_pt,
+        threshold=0.0,
+        outside_returns_none=True,
+        index_only=True,
+    ):
         if not index_only:
-            raise NotImplementedError("Candle Plots only support index_only map_index()")
+            raise NotImplementedError(
+                "Candle Plots only support index_only map_index()"
+            )
         if len(screen_pt) == 0:
             return None
 
@@ -93,9 +102,11 @@ class CandlePlot(BaseCandlePlot):
         # Bracket index and map those points to screen space, then
         # compute the distance
         if index > 0:
-            lower = index_data[index-1]
+            lower = index_data[index - 1]
             upper = index_data[index]
-            screen_low, screen_high = self.index_mapper.map_screen(array([lower, upper]))
+            screen_low, screen_high = self.index_mapper.map_screen(
+                array([lower, upper])
+            )
             # Find the closest index
             low_dist = abs(screen_pt[0] - screen_low)
             high_dist = abs(screen_pt[0] - screen_high)
@@ -127,7 +138,13 @@ class CandlePlot(BaseCandlePlot):
 
         data_pts = [compress(mask, index)]
 
-        for v in (self.min_values, self.bar_min, self.center_values, self.bar_max, self.max_values):
+        for v in (
+            self.min_values,
+            self.bar_min,
+            self.center_values,
+            self.bar_max,
+            self.max_values,
+        ):
             if v is None or len(v.get_data()) == 0:
                 data_pts.append(None)
             else:
@@ -172,5 +189,3 @@ class CandlePlot(BaseCandlePlot):
             return self.bar_min
         elif self.bar_max is not None:
             return self.bar_max
-
-

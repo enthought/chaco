@@ -16,17 +16,30 @@ from numpy import arange
 from scipy.special import jn
 
 from chaco.example_support import COLOR_PALETTE
+
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, VGroup, View
 
 # Chaco imports
-from chaco.api import create_line_plot, add_default_axes, \
-                                add_default_grids, OverlayPlotContainer, \
-                                PlotLabel, Legend, PlotAxis
-from chaco.tools.api import (PanTool, LegendTool, LegendHighlighter,
-                             TraitsTool, BroadcasterTool, ZoomTool)
+from chaco.api import (
+    create_line_plot,
+    add_default_axes,
+    add_default_grids,
+    OverlayPlotContainer,
+    PlotLabel,
+    Legend,
+    PlotAxis,
+)
+from chaco.tools.api import (
+    PanTool,
+    LegendTool,
+    LegendHighlighter,
+    TraitsTool,
+    BroadcasterTool,
+    ZoomTool,
+)
 
 # =============================================================================
 # Create the Chaco plot.
@@ -35,22 +48,24 @@ from chaco.tools.api import (PanTool, LegendTool, LegendHighlighter,
 
 def _create_plot_component():
 
-    container = OverlayPlotContainer(padding=60, fill_padding=True,
-                                     use_backbuffer=True, border_visible=True)
+    container = OverlayPlotContainer(
+        padding=60, fill_padding=True, use_backbuffer=True, border_visible=True
+    )
 
     # Create the initial X-series of data
     numpoints = 100
     low = -5
     high = 15.0
-    x = arange(low, high+0.001, (high-low)/numpoints)
+    x = arange(low, high + 0.001, (high - low) / numpoints)
 
     # Plot some bessel functions
     plots = {}
     broadcaster = BroadcasterTool()
     for i in range(4):
         y = jn(i, x)
-        plot = create_line_plot((x, y), color=tuple(COLOR_PALETTE[i]),
-                                width=2.0)
+        plot = create_line_plot(
+            (x, y), color=tuple(COLOR_PALETTE[i]), width=2.0
+        )
         if i == 0:
             add_default_grids(plot)
             left_axis, _ = add_default_axes(plot)
@@ -96,10 +111,14 @@ def _create_plot_component():
     legend.plots = plots
 
     # Add the title at the top
-    container.overlays.append(PlotLabel("Bessel functions",
-                              component=container,
-                              font="swiss 16",
-                              overlay_position="top"))
+    container.overlays.append(
+        PlotLabel(
+            "Bessel functions",
+            component=container,
+            font="swiss 16",
+            overlay_position="top",
+        )
+    )
 
     # Add the traits inspector tool to the container
     container.tools.append(TraitsTool(container))
@@ -121,11 +140,14 @@ class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    VGroup(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False)),
-                    resizable=True, title=title,
-                    width=size[0], height=size[1])
+        VGroup(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False)
+        ),
+        resizable=True,
+        title=title,
+        width=size[0],
+        height=size[1],
+    )
 
     def _plot_default(self):
         return _create_plot_component()

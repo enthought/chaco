@@ -19,13 +19,13 @@ from traitsui.api import Item, Group, View
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     x = linspace(-2.0, 10.0, 100)
-    pd = ArrayPlotData(x = x)
+    pd = ArrayPlotData(x=x)
 
     # Create some line plots of some of the data
     plot = Plot(pd, padding=50, border_visible=True, overlay_border=True)
@@ -39,23 +39,29 @@ def _create_plot_component():
     for i in range(3):
         y_name = "struve" + str(i)
         pd.set_data(y_name, struve(i, x))
-        renderer = plot.plot(("x", y_name), color="blue", name=y_name, line_width=2)[0]
+        renderer = plot.plot(
+            ("x", y_name), color="blue", name=y_name, line_width=2
+        )[0]
         renderer.draw_layer = "struve"
         renderer.unified_draw = True
 
     # Draw bessels
     for i in range(3):
         y_name = "bessel" + str(i)
-        pd.set_data(y_name, jn(i,x))
-        renderer = plot.plot(("x", y_name), color="green", name=y_name, line_width=2)[0]
+        pd.set_data(y_name, jn(i, x))
+        renderer = plot.plot(
+            ("x", y_name), color="green", name=y_name, line_width=2
+        )[0]
         renderer.draw_layer = "bessel"
         renderer.unified_draw = True
 
     # Draw sines
     for i in range(3):
         y_name = "sine" + str(i)
-        pd.set_data(y_name, sin(x * (i+1) / 1.5))
-        renderer = plot.plot(("x", y_name), color="red", name=y_name, line_width=2)[0]
+        pd.set_data(y_name, sin(x * (i + 1) / 1.5))
+        renderer = plot.plot(
+            ("x", y_name), color="red", name=y_name, line_width=2
+        )[0]
         renderer.draw_layer = "sine"
         renderer.unified_draw = True
 
@@ -66,27 +72,30 @@ def _create_plot_component():
 
     return plot
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(900,500)
-title="Draw order demonstration"
 
-#===============================================================================
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (900, 500)
+title = "Draw order demonstration"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

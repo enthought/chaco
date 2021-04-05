@@ -12,13 +12,13 @@ from chaco.default_colormaps import viridis
 
 
 # Crate some scalar data
-xs = linspace(-10,10,200)
-ys = linspace(-10,10,400)
-x, y = meshgrid(xs,ys)
+xs = linspace(-10, 10, 200)
+ys = linspace(-10, 10, 400)
+x, y = meshgrid(xs, ys)
 z = x * tanh(y)
 
 # Create a filled contour plot
-contourf(x,y,z)
+contourf(x, y, z)
 colormap(viridis)
 
 # Add some titles

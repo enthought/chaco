@@ -13,11 +13,10 @@ from chaco.api import ImageData
 from traits.testing.unittest_tools import UnittestTools
 
 
-data_dir = resource_filename('chaco.tests', 'data')
+data_dir = resource_filename("chaco.tests", "data")
 
 
 class ImageDataTestCase(UnittestTools, unittest.TestCase):
-
     def setUp(self):
         self.myarray = arange(15).reshape(5, 3, 1)
         self.data_source = ImageData(data=self.myarray)
@@ -27,18 +26,20 @@ class ImageDataTestCase(UnittestTools, unittest.TestCase):
         assert_array_equal(data_source.data, [])
 
         # this isn't right -
-        #self.assertEqual(data_source.value_dimension, "scalar")
-        #self.assertEqual(data_source.image_dimension, "image")
+        # self.assertEqual(data_source.value_dimension, "scalar")
+        # self.assertEqual(data_source.image_dimension, "image")
 
     def test_basic_setup(self):
         assert_array_equal(self.myarray, self.data_source.data)
-        #self.assertEqual(self.data_source.value_dimension, "scalar")
+        # self.assertEqual(self.data_source.value_dimension, "scalar")
         self.assertFalse(self.data_source.is_masked())
 
     def test_set_data(self):
         new_array = arange(0, 30, 2).reshape(5, 3, 1)
 
-        with self.assertTraitChanges(self.data_source, 'data_changed', count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.set_data(new_array)
 
         assert_array_equal(new_array, self.data_source.data)
@@ -74,7 +75,7 @@ class ImageDataTestCase(UnittestTools, unittest.TestCase):
         bounds = self.data_source.get_bounds()
         self.assertEqual(bounds, (0, 14))
 
-    @unittest.skip('test_bounds_empty() fails in this case')
+    @unittest.skip("test_bounds_empty() fails in this case")
     def test_bounds_empty(self):
         data_source = ImageData()
         bounds = data_source.get_bounds()
@@ -116,26 +117,31 @@ class ImageDataTestCase(UnittestTools, unittest.TestCase):
 
     def test_fromfile_png_rgb(self):
         # basic smoke test - assume that kiva.image does the right thing
-        path = os.path.join(data_dir, 'PngSuite', 'basn2c08.png')
+        path = os.path.join(data_dir, "PngSuite", "basn2c08.png")
         data_source = ImageData.fromfile(path)
 
         self.assertEqual(data_source.value_depth, 3)
 
     def test_fromfile_png_rgba(self):
         # basic smoke test - assume that kiva.image does the right thing
-        path = os.path.join(data_dir, 'PngSuite', 'basi6a08.png')
+        path = os.path.join(data_dir, "PngSuite", "basi6a08.png")
         data_source = ImageData.fromfile(path)
 
         self.assertEqual(data_source.value_depth, 4)
 
     def test_metadata(self):
-        self.assertEqual(self.data_source.metadata,
-                         {'annotations': [], 'selections': []})
+        self.assertEqual(
+            self.data_source.metadata, {"annotations": [], "selections": []}
+        )
 
     def test_metadata_changed(self):
-        with self.assertTraitChanges(self.data_source, 'metadata_changed', count=1):
-            self.data_source.metadata = {'new_metadata': True}
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
+            self.data_source.metadata = {"new_metadata": True}
 
     def test_metadata_items_changed(self):
-        with self.assertTraitChanges(self.data_source, 'metadata_changed', count=1):
-            self.data_source.metadata['new_metadata'] = True
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
+            self.data_source.metadata["new_metadata"] = True

@@ -7,14 +7,13 @@ from traits.api import ArrayOrNone
 
 
 class RectangularSelection(LassoSelection):
-    """ A lasso selection tool whose selection shape is rectangular
-    """
+    """A lasso selection tool whose selection shape is rectangular"""
 
     #: The first click. This represents a corner of the rectangle.
     first_corner = ArrayOrNone(shape=(2,))
 
     def selecting_mouse_move(self, event):
-        """ This function is the same as the super except that it injects
+        """This function is the same as the super except that it injects
         `_make_rectangle` as the `_active_selection` assignment.
         """
         # Translate the event's location to be relative to this container
@@ -24,7 +23,8 @@ class RectangularSelection(LassoSelection):
         if self.first_corner is None:
             self.first_corner = new_point
         self._active_selection = self._make_rectangle(
-            self.first_corner, new_point)
+            self.first_corner, new_point
+        )
         self.updated = True
         if self.incremental_select:
             self._update_selection()
@@ -37,15 +37,10 @@ class RectangularSelection(LassoSelection):
         self.first_corner = None
 
     def _make_rectangle(self, p1, p2):
-        """ Makes an array that represents that path that follows the
+        """Makes an array that represents that path that follows the
         corner points of the rectangle with two corners p1 and p2:
             *-----p2
             |     |
             p1----*
         """
-        return np.array([
-            p1,
-            [p1[0], p2[1]],
-            p2,
-            [p2[0], p1[1]]
-        ])
+        return np.array([p1, [p1[0], p2[1]], p2, [p2[0], p1[1]]])

@@ -5,8 +5,16 @@ Defines the DataRange2D class.
 from numpy import compress, inf, transpose
 
 # Enthought library imports
-from traits.api import Any, Bool, CFloat, Instance, Property, Trait, \
-    Tuple, observe
+from traits.api import (
+    Any,
+    Bool,
+    CFloat,
+    Instance,
+    Property,
+    Trait,
+    Tuple,
+    observe,
+)
 
 # Local relative imports
 from .base_data_range import BaseDataRange
@@ -14,7 +22,7 @@ from .data_range_1d import DataRange1D
 
 
 class DataRange2D(BaseDataRange):
-    """ A range on (2-D) image data.
+    """A range on (2-D) image data.
 
     In a mathematically general sense, a 2-D range is an arbitrary region in
     the plane.  Arbitrary regions are difficult to implement well, so this
@@ -51,28 +59,28 @@ class DataRange2D(BaseDataRange):
     #: dimension. That is, (high-low) >= epsilon * low.
     epsilon = Tuple(CFloat(1.0e-4), CFloat(1.0e-4))
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # DataRange1D for the x-dimension.
     _xrange = Instance(DataRange1D, args=())
     # DataRange1D for the y-dimension.
     _yrange = Instance(DataRange1D, args=())
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractRange interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def clip_data(self, data):
-        """ Returns a list of data values that are within the range.
+        """Returns a list of data values that are within the range.
 
         Implements AbstractDataRange.
         """
         return compress(self.mask_data(data), data, axis=0)
 
     def mask_data(self, data):
-        """ Returns a mask array, indicating whether values in the given array
+        """Returns a mask array, indicating whether values in the given array
         are inside the range.
 
         Implements AbstractDataRange.
@@ -83,13 +91,13 @@ class DataRange2D(BaseDataRange):
         return x_mask & y_mask
 
     def bound_data(self, data):
-        """ Not implemented for this class.
-        """
-        raise NotImplementedError("bound_data() has not been implemented "
-                                  "for 2d pointsets.")
+        """Not implemented for this class."""
+        raise NotImplementedError(
+            "bound_data() has not been implemented for 2d pointsets."
+        )
 
     def set_bounds(self, low, high):
-        """ Sets all the bounds of the range simultaneously.
+        """Sets all the bounds of the range simultaneously.
 
         Implements AbstractDataRange.
 
@@ -103,43 +111,41 @@ class DataRange2D(BaseDataRange):
         self._do_set_low_setting(low, fire_event=False)
         self._do_set_high_setting(high)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **kwargs):
         super(DataRange2D, self).__init__(*args, **kwargs)
 
     def reset(self):
-        """ Resets the bounds of this range.
-        """
-        self.high_setting = ('auto', 'auto')
-        self.low_setting = ('auto', 'auto')
+        """Resets the bounds of this range."""
+        self.high_setting = ("auto", "auto")
+        self.low_setting = ("auto", "auto")
         self.refresh()
 
     def refresh(self, event=None):
-        """ If any of the bounds is 'auto', this method refreshes the actual
+        """If any of the bounds is 'auto', this method refreshes the actual
         low and high values from the set of the view filters' data sources.
         """
-        if 'auto' not in self.low_setting and \
-           'auto' not in self.high_setting:
+        if "auto" not in self.low_setting and "auto" not in self.high_setting:
             # If the user has hard-coded bounds, then refresh() doesn't do
             # anything.
             return
         else:
             self._refresh_bounds()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _refresh_bounds(self):
         self._xrange.refresh()
         self._yrange.refresh()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property getters and setters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_low(self):
         return (self._xrange.low, self._yrange.low)
@@ -198,9 +204,9 @@ class DataRange2D(BaseDataRange):
                 if newrange:
                     newrange.add(source1d)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _sources_items_changed(self, event):
         for source in event.removed:

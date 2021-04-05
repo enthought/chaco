@@ -27,9 +27,9 @@ from traitsui.api import Item, Group, View
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some data
@@ -44,13 +44,15 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    plot.plot(("index", "value"),
-              type="scatter",
-              marker="circle",
-              index_sort="ascending",
-              color="orange",
-              marker_size=3,
-              bgcolor="white")
+    plot.plot(
+        ("index", "value"),
+        type="scatter",
+        marker="circle",
+        index_sort="ascending",
+        color="orange",
+        marker_size=3,
+        bgcolor="white",
+    )
 
     # Tweak some of the plot properties
     plot.title = "Scatter Plot"
@@ -64,29 +66,35 @@ def _create_plot_component():
 
     return plot
 
-#===============================================================================
+
+# ===============================================================================
 # Attributes to use for the plot view.
 size = (650, 650)
 title = "Basic scatter plot"
-bg_color="lightgray"
+bg_color = "lightgray"
 
-#===============================================================================
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size,
-                                                            bgcolor=bg_color),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item(
+                "plot",
+                editor=ComponentEditor(size=size, bgcolor=bg_color),
+                show_label=False,
+            ),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

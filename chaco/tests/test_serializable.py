@@ -7,8 +7,8 @@ import warnings
 # the classes to be pickled are in a different file
 from .serializable_base import Circle, Poly
 
-class SimpleSerializationTestCase(unittest.TestCase):
 
+class SimpleSerializationTestCase(unittest.TestCase):
     def compare_traits(self, a, b, trait_names=None):
         "Checks the traits of objects 'a' and 'b' and makes sure they all match."
         if trait_names is None:
@@ -16,8 +16,8 @@ class SimpleSerializationTestCase(unittest.TestCase):
         for name in trait_names:
             if name in ("trait_added", "trait_modified"):
                 continue
-            o1 = getattr(a,name)
-            o2 = getattr(b,name)
+            o1 = getattr(a, name)
+            o2 = getattr(b, name)
             if isinstance(o1, list) or isinstance(o1, tuple):
                 raise RuntimeError(
                     "Warning: Cowardly refusing to do deep compares"

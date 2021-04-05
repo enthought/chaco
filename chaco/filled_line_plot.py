@@ -1,6 +1,3 @@
-
-
-
 from numpy import empty
 from traits.api import Property, Enum
 
@@ -10,8 +7,10 @@ from .polygon_plot import PolygonPlot
 
 
 def Alias(name):
-    return Property(lambda obj: getattr(obj, name),
-                    lambda obj, val: setattr(obj, name, val))
+    return Property(
+        lambda obj: getattr(obj, name),
+        lambda obj, val: setattr(obj, name, val),
+    )
 
 
 class FilledLinePlot(PolygonPlot):
@@ -42,17 +41,20 @@ class FilledLinePlot(PolygonPlot):
             return
 
         render_method_dict = {
-                "hold": LinePlot._render_hold,
-                "connectedhold": LinePlot._render_connected_hold,
-                "connectedpoints": LinePlot._render_normal
-                }
-        render_lines = render_method_dict.get(self.render_style, LinePlot._render_normal)
+            "hold": LinePlot._render_hold,
+            "connectedhold": LinePlot._render_connected_hold,
+            "connectedpoints": LinePlot._render_normal,
+        }
+        render_lines = render_method_dict.get(
+            self.render_style, LinePlot._render_normal
+        )
 
-        if self.fill_direction == 'down':
-            ox, oy = self.map_screen([[0,0]])[0]
+        if self.fill_direction == "down":
+            ox, oy = self.map_screen([[0, 0]])[0]
         else:
-            ox, oy = self.map_screen([[self.x_mapper.range.high,
-                                      self.y_mapper.range.high]])[0]
+            ox, oy = self.map_screen(
+                [[self.x_mapper.range.high, self.y_mapper.range.high]]
+            )[0]
 
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
@@ -60,19 +62,19 @@ class FilledLinePlot(PolygonPlot):
             # If the fill color is not transparent, then draw the fill polygon first
             face_col = self.effective_face_color
             if not (len(face_col) == 4 and face_col[-1] == 0):
-                if self.render_style in ("hold","connectedhold"):
+                if self.render_style in ("hold", "connectedhold"):
                     # Modify the points array before passing it in to render_polys:
                     # Between every two points, create an intermediate point with
                     # the first point's Y and the second point's X.  (For vertical
                     # plots, use the first point's X and the second point's Y.)
-                    new_points = empty((points.shape[0]*2-1, 2))
+                    new_points = empty((points.shape[0] * 2 - 1, 2))
                     new_points[::2] = points
                     if self.orientation == "h":
-                        new_points[1::2,0] = points[1:,0]
-                        new_points[1::2,1] = points[:-1,1]
+                        new_points[1::2, 0] = points[1:, 0]
+                        new_points[1::2, 1] = points[:-1, 1]
                     else:
-                        new_points[1::2,0] = points[:-1,0]
-                        new_points[1::2,1] = points[1:,1]
+                        new_points[1::2, 0] = points[:-1, 0]
+                        new_points[1::2, 1] = points[1:, 1]
                     points = new_points
 
                 self._render_polys(gc, points, ox, oy)
@@ -80,14 +82,15 @@ class FilledLinePlot(PolygonPlot):
             # If the line color is not transparent, or tha same color
             # as the filled area:
             edge_col = self.effective_edge_color
-            if (not (len(edge_col) == 4 and edge_col[-1] == 0)) and edge_col != face_col:
+            if (
+                not (len(edge_col) == 4 and edge_col[-1] == 0)
+            ) and edge_col != face_col:
                 gc.set_stroke_color(edge_col)
                 gc.set_line_width(self.edge_width)
                 gc.set_line_dash(self.edge_style_)
                 # Create a list around points because the LinePlot supports
                 # Nans, and its rendering methods expect lists of disjoint arrays.
                 render_lines(gc, [points], self.orientation)
-
 
     def _render_polys(self, gc, points, ox, oy):
         face_col = self.effective_face_color

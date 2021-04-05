@@ -26,9 +26,9 @@ from traitsui.api import Item, Group, View
 from chaco.api import ArrayPlotData, Plot, LassoOverlay
 from chaco.tools.api import LassoSelection, ScatterInspector
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some data
@@ -43,14 +43,16 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    plot.plot(("index", "value"),
-              type="scatter",
-              name="my_plot",
-              marker="circle",
-              index_sort="ascending",
-              color="red",
-              marker_size=4,
-              bgcolor="white")
+    plot.plot(
+        ("index", "value"),
+        type="scatter",
+        name="my_plot",
+        marker="circle",
+        index_sort="ascending",
+        color="red",
+        marker_size=4,
+        bgcolor="white",
+    )
 
     # Tweak some of the plot properties
     plot.title = "Scatter Plot With Lasso Selection"
@@ -62,62 +64,66 @@ def _create_plot_component():
     my_plot = plot.plots["my_plot"][0]
 
     # Attach some tools to the plot
-    lasso_selection = LassoSelection(component=my_plot,
-                                     selection_datasource=my_plot.index,
-                                     drag_button="left")
-                                     #drag_button="right")
+    lasso_selection = LassoSelection(
+        component=my_plot,
+        selection_datasource=my_plot.index,
+        drag_button="left",
+    )
+    # drag_button="right")
     my_plot.active_tool = lasso_selection
     my_plot.tools.append(ScatterInspector(my_plot))
-    lasso_overlay = LassoOverlay(lasso_selection=lasso_selection,
-                                 component=my_plot)
+    lasso_overlay = LassoOverlay(
+        lasso_selection=lasso_selection, component=my_plot
+    )
     my_plot.overlays.append(lasso_overlay)
 
     # Uncomment this if you would like to see incremental updates:
-    #lasso_selection.incremental_select = True
+    # lasso_selection.incremental_select = True
 
     return plot
 
 
-#===============================================================================
+# ===============================================================================
 # Attributes to use for the plot view.
-size=(650,650)
-title="Scatter plot with selection"
-bg_color="lightgray"
+size = (650, 650)
+title = "Scatter plot with selection"
+bg_color = "lightgray"
 
-#===============================================================================
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _selection_changed(self, event):
-        mask = self.index_datasource.metadata['selection']
+        mask = self.index_datasource.metadata["selection"]
         print("New selection: ")
         print(compress(mask, arange(len(mask))))
         # Ensure that the points are printed immediately:
         sys.stdout.flush()
-        
 
     def _plot_default(self):
-         plot = _create_plot_component()
+        plot = _create_plot_component()
 
-         # Retrieve the plot hooked to the LassoSelection tool.
-         my_plot = plot.plots["my_plot"][0]
-         lasso_selection = my_plot.active_tool
+        # Retrieve the plot hooked to the LassoSelection tool.
+        my_plot = plot.plots["my_plot"][0]
+        lasso_selection = my_plot.active_tool
 
-         # Set up the trait handler for the selection
-         self.index_datasource = my_plot.index
-         lasso_selection.observe(self._selection_changed, 'selection_changed')
+        # Set up the trait handler for the selection
+        self.index_datasource = my_plot.index
+        lasso_selection.observe(self._selection_changed, "selection_changed")
 
-         return plot
+        return plot
+
 
 demo = Demo()
 

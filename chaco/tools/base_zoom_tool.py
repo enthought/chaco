@@ -1,7 +1,10 @@
 """ Defines the base class for various types of zoom tools.
 """
 import warnings
-warnings.warn("BaseZoomTool has been deprecated, use BetterZoomTool", DeprecationWarning)
+
+warnings.warn(
+    "BaseZoomTool has been deprecated, use BetterZoomTool", DeprecationWarning
+)
 
 
 from numpy import allclose, inf
@@ -9,8 +12,9 @@ from numpy import allclose, inf
 # Enthought library imports
 from traits.api import Enum, Float, HasTraits
 
+
 class BaseZoomTool(HasTraits):
-    """ Defines traits and methods to actually perform the logic of zooming
+    """Defines traits and methods to actually perform the logic of zooming
     onto a plot.
     """
 
@@ -26,8 +30,10 @@ class BaseZoomTool(HasTraits):
     # bounds.  If None, then there is no limit.
     max_zoom_out_factor = Float(1e5, allow_none=True)
 
-    def _zoom_limit_reached(self, orig_low, orig_high, new_low, new_high, mapper=None):
-        """ Returns True if the new low and high exceed the maximum zoom
+    def _zoom_limit_reached(
+        self, orig_low, orig_high, new_low, new_high, mapper=None
+    ):
+        """Returns True if the new low and high exceed the maximum zoom
         limits
         """
         orig_bounds = orig_high - orig_low
@@ -45,18 +51,19 @@ class BaseZoomTool(HasTraits):
                 return True
             if allclose(new_bounds, 0.0):
                 return True
-            if (new_bounds / orig_bounds) > self.max_zoom_out_factor or \
-               (orig_bounds / new_bounds) > self.max_zoom_in_factor:
+            if (new_bounds / orig_bounds) > self.max_zoom_out_factor or (
+                orig_bounds / new_bounds
+            ) > self.max_zoom_in_factor:
                 return True
 
         return False
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Utility methods for computing axes, coordinates, etc.
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_mapper(self):
-        """ Returns the mapper for the component associated with this tool.
+        """Returns the mapper for the component associated with this tool.
 
         The zoom tool really only cares about this, so subclasses can easily
         customize SimpleZoom to work with all sorts of components just by
@@ -67,19 +74,18 @@ class BaseZoomTool(HasTraits):
         else:
             return None
 
-
     def _get_axis_coord(self, event, axis="index"):
-        """ Returns the coordinate of the event along the axis of interest
+        """Returns the coordinate of the event along the axis of interest
         to the tool (or along the orthogonal axis, if axis="value").
         """
         event_pos = (event.x, event.y)
         if axis == "index":
-            return event_pos[ self._determine_axis() ]
+            return event_pos[self._determine_axis()]
         else:
-            return event_pos[ 1 - self._determine_axis() ]
+            return event_pos[1 - self._determine_axis()]
 
     def _determine_axis(self):
-        """ Determines whether the index of the coordinate along the axis of
+        """Determines whether the index of the coordinate along the axis of
         interest is the first or second element of an (x,y) coordinate tuple.
         """
         if self.axis == "index":
@@ -87,20 +93,22 @@ class BaseZoomTool(HasTraits):
                 return 0
             else:
                 return 1
-        else:   # self.axis == "value"
+        else:  # self.axis == "value"
             if self.component.orientation == "h":
                 return 1
             else:
                 return 0
 
     def _map_coordinate_box(self, start, end):
-        """ Given start and end points in screen space, returns corresponding
+        """Given start and end points in screen space, returns corresponding
         low and high points in data space.
         """
-        low = [0,0]
-        high = [0,0]
-        for axis_index, mapper in [(0, self.component.x_mapper), \
-                                   (1, self.component.y_mapper)]:
+        low = [0, 0]
+        high = [0, 0]
+        for axis_index, mapper in [
+            (0, self.component.x_mapper),
+            (1, self.component.y_mapper),
+        ]:
             low_val = mapper.map_data(start[axis_index])
             high_val = mapper.map_data(end[axis_index])
 
@@ -109,4 +117,3 @@ class BaseZoomTool(HasTraits):
             low[axis_index] = low_val
             high[axis_index] = high_val
         return low, high
-

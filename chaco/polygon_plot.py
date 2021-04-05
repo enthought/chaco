@@ -2,21 +2,20 @@
 """
 
 
-
 # Major library imports
 import numpy as np
 
 # Enthought library imports.
-from enable.api import LineStyle, black_color_trait, \
-                                  transparent_color_trait
+from enable.api import LineStyle, black_color_trait, transparent_color_trait
 from kiva.api import points_in_polygon
 from traits.api import Enum, Float, Tuple, Property, cached_property, observe
 
 # Local imports.
 from .base_xy_plot import BaseXYPlot
 
+
 class PolygonPlot(BaseXYPlot):
-    """ Plots a polygon in dataspace.
+    """Plots a polygon in dataspace.
 
     Assuming that the index and value mappers are linear mappers, and that
     "index" corresponds to X-coordinates and "value" corresponds to
@@ -54,19 +53,19 @@ class PolygonPlot(BaseXYPlot):
     #: The RGBA tuple for rendering edges. It is always a tuple of length 4.
     #: It has the same RGB values as :attr:`edge_color`, and its alpha value
     #: is the alpha value of self.edge_color multiplied by self.alpha.
-    effective_edge_color = Property(Tuple, depends_on=['edge_color', 'alpha'])
+    effective_edge_color = Property(Tuple, depends_on=["edge_color", "alpha"])
 
     #: The RGBA tuple for rendering the face. It is always a tuple of length
     #: 4. It has the same RGB values as :attr:`face_color`, and its alpha
     #: value is the alpha value of self.face_color multiplied by self.alpha.
-    effective_face_color = Property(Tuple, depends_on=['face_color', 'alpha'])
+    effective_face_color = Property(Tuple, depends_on=["face_color", "alpha"])
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Private 'BaseXYPlot' interface
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def _gather_points(self):
-        """ Collects the data points that are within the bounds of the plot and
+        """Collects the data points that are within the bounds of the plot and
         caches them.
         """
         if self._cache_valid:
@@ -83,15 +82,13 @@ class PolygonPlot(BaseXYPlot):
             self._cache_valid = True
             return
 
-        points = np.transpose(np.array((index,value)))
+        points = np.transpose(np.array((index, value)))
         self._cached_data_pts = points
 
         self._cache_valid = True
 
-
     def _render(self, gc, points):
-        """ Renders an Nx2 array of screen-space points as a polygon.
-        """
+        """Renders an Nx2 array of screen-space points as a polygon."""
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
             gc.set_stroke_color(self.effective_edge_color)
@@ -103,9 +100,8 @@ class PolygonPlot(BaseXYPlot):
             gc.close_path()
             gc.draw_path()
 
-
     def _render_icon(self, gc, x, y, width, height):
-        """ Renders a representation of this plot as an icon into the box
+        """Renders a representation of this plot as an icon into the box
         defined by the parameters.
 
         Used by the legend.
@@ -114,12 +110,12 @@ class PolygonPlot(BaseXYPlot):
             gc.set_stroke_color(self.effective_edge_color)
             gc.set_line_width(self.edge_width)
             gc.set_fill_color(self.effective_face_color)
-            if hasattr(self, 'line_style_'):
+            if hasattr(self, "line_style_"):
                 gc.set_line_dash(self.line_style_)
-            gc.draw_rect((x,y,width,height))
+            gc.draw_rect((x, y, width, height))
 
     def hittest(self, screen_pt, threshold=7.0, return_distance=False):
-        """ Performs point-in-polygon testing or point/line proximity testing.
+        """Performs point-in-polygon testing or point/line proximity testing.
         If self.hittest_type is "line" or "point", then behaves like the
         parent class BaseXYPlot.hittest().
 
@@ -127,7 +123,9 @@ class PolygonPlot(BaseXYPlot):
         point is inside the polygon, and False otherwise.
         """
         if self.hittest_type in ("line", "point"):
-            return BaseXYPlot.hittest(self, screen_pt, threshold, return_distance)
+            return BaseXYPlot.hittest(
+                self, screen_pt, threshold, return_distance
+            )
 
         data_pt = self.map_data(screen_pt, all_values=True)
         index = self.index.get_data()
@@ -138,9 +136,9 @@ class PolygonPlot(BaseXYPlot):
         else:
             return False
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property getters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get_effective_edge_color(self):

@@ -7,7 +7,11 @@ import numpy as np
 import numpy.testing as nptest
 
 from chaco.scales.time_scale import (
-    tfrac, trange, TimeScale, CalendarScaleSystem)
+    tfrac,
+    trange,
+    TimeScale,
+    CalendarScaleSystem,
+)
 from chaco.scales.api import TimeFormatter
 
 # Note on testing:
@@ -28,19 +32,19 @@ from chaco.scales.api import TimeFormatter
 # Note that we don't actually change the timezone for the process, but this is
 # good enough to test the logic for the tfrac and trange functions.
 
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 # Utilities
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 
 # Interesting timezone offsets
 UTC = 0.0
-ALICE_SPRINGS = 9.5*3600
-HONOLULU = -10.0*3600
+ALICE_SPRINGS = 9.5 * 3600
+HONOLULU = -10.0 * 3600
 
 
 @contextlib.contextmanager
 def set_timezone(tz):
-    """ Temporarily select the timezone to use.
+    """Temporarily select the timezone to use.
 
     This works by temporarily replacing the EPOCH module variable with a
     different value.
@@ -67,12 +71,12 @@ def set_timezone(tz):
         chaco.scales.time_scale.EPOCH = old_epoch
 
 
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 # tfrac tests
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
+
 
 class TestTFrac(unittest.TestCase):
-
     def test_tfrac_years_01(self):
         with set_timezone(UTC):
             t = 3601
@@ -85,16 +89,24 @@ class TestTFrac(unittest.TestCase):
         with set_timezone(ALICE_SPRINGS):
             t = 3601
             (base, frac) = tfrac(t, years=1)
-            self.assertEqual(base, 3600 * -9.5)  # Alice Springs year start UTC timestamp
-            self.assertEqual(frac, 3600 * 10.5 + 1)  # 10:30:01 in the morning Jan 1
+            self.assertEqual(
+                base, 3600 * -9.5
+            )  # Alice Springs year start UTC timestamp
+            self.assertEqual(
+                frac, 3600 * 10.5 + 1
+            )  # 10:30:01 in the morning Jan 1
 
     def test_tfrac_years_01_Honolulu(self):
         # Pacific/Honolulu (UTC-10:00, never DST)
         with set_timezone(HONOLULU):
             t = 3601
             (base, frac) = tfrac(t, years=1)
-            self.assertEqual(base, 3600 * (-365*24 + 10))  # previous Honolulu year start UTC timestamp
-            self.assertEqual(frac, 3600 * (364*24 + 15) + 1)  # 15:00:01 in the afternoon, Dec 31
+            self.assertEqual(
+                base, 3600 * (-365 * 24 + 10)
+            )  # previous Honolulu year start UTC timestamp
+            self.assertEqual(
+                frac, 3600 * (364 * 24 + 15) + 1
+            )  # 15:00:01 in the afternoon, Dec 31
 
     def test_tfrac_years_02(self):
         with set_timezone(UTC):
@@ -108,8 +120,12 @@ class TestTFrac(unittest.TestCase):
         with set_timezone(ALICE_SPRINGS):
             t = 3601
             (base, frac) = tfrac(t, years=10)
-            self.assertEqual(base, 3600 * -9.5)  # Alice Springs decade start UTC timestamp
-            self.assertEqual(frac, 3600 * 10.5 + 1)  # 10:30:01 in the morning Jan 1
+            self.assertEqual(
+                base, 3600 * -9.5
+            )  # Alice Springs decade start UTC timestamp
+            self.assertEqual(
+                frac, 3600 * 10.5 + 1
+            )  # 10:30:01 in the morning Jan 1
 
     def test_tfrac_years_02_Honolulu(self):
         # Pacific/Honolulu (UTC-10:00, never DST)
@@ -117,9 +133,9 @@ class TestTFrac(unittest.TestCase):
             t = 3601
             (base, frac) = tfrac(t, years=10)
             # previous Honolulu decade start UTC timestamp (including leap years)
-            self.assertEqual(base, 3600 * (-(365*10 + 3)*24 + 10))
+            self.assertEqual(base, 3600 * (-(365 * 10 + 3) * 24 + 10))
             # 15:00:01 in the afternoon, Dec 31, 9 years into decade
-            self.assertEqual(frac, 3600 * ((365*9+3 + 364)*24 + 15) + 1)
+            self.assertEqual(frac, 3600 * ((365 * 9 + 3 + 364) * 24 + 15) + 1)
 
     def test_tfrac_days_01(self):
         with set_timezone(UTC):
@@ -133,7 +149,9 @@ class TestTFrac(unittest.TestCase):
         with set_timezone(ALICE_SPRINGS):
             t = 3601
             (base, frac) = tfrac(t, days=1)
-            self.assertEqual(base, 3600 * -9.5)  # Alice Springs day start UTC timestamp
+            self.assertEqual(
+                base, 3600 * -9.5
+            )  # Alice Springs day start UTC timestamp
             self.assertEqual(frac, 3600 * 10.5 + 1)  # 10:30:01 in the morning
 
     def test_tfrac_days_01_Honolulu(self):
@@ -141,12 +159,14 @@ class TestTFrac(unittest.TestCase):
         with set_timezone(HONOLULU):
             t = 3601
             (base, frac) = tfrac(t, days=1)
-            self.assertEqual(base, 3600 * (-24 + 10))  # previous Honolulu day start UTC timestamp
+            self.assertEqual(
+                base, 3600 * (-24 + 10)
+            )  # previous Honolulu day start UTC timestamp
             self.assertEqual(frac, 3600 * 15 + 1)  # 15:00:01 in the afternoon
 
     def test_tfrac_days_02(self):
         with set_timezone(UTC):
-            t = 3*24.0*3600 + 1000.0
+            t = 3 * 24.0 * 3600 + 1000.0
             (base, frac) = tfrac(t, days=1)
             self.assertEqual(base, 3600 * 24 * 3)
             self.assertEqual(frac, 1000)
@@ -154,7 +174,7 @@ class TestTFrac(unittest.TestCase):
     def test_tfrac_days_02_Alice_Springs(self):
         # Australia/North (UTC+09:30, never DST)
         with set_timezone(ALICE_SPRINGS):
-            t = 3*24.0*3600 + 1000.0
+            t = 3 * 24.0 * 3600 + 1000.0
             (base, frac) = tfrac(t, days=1)
             self.assertEqual(base, 3600 * (24 * 3 - 9.5))
             self.assertEqual(frac, 3600 * 9.5 + 1000)
@@ -162,7 +182,7 @@ class TestTFrac(unittest.TestCase):
     def test_tfrac_days_02_Honolulu(self):
         # Pacific/Honolulu (UTC-10:00, never DST)
         with set_timezone(HONOLULU):
-            t = 3*24.0*3600 + 1000.0
+            t = 3 * 24.0 * 3600 + 1000.0
             (base, frac) = tfrac(t, days=1)
             self.assertEqual(base, 3600 * (24 * 2 + 10))
             self.assertEqual(frac, 3600 * (24 - 10) + 1000)
@@ -232,7 +252,7 @@ class TestTFrac(unittest.TestCase):
             t = 3600 * 15.5
             (base, frac) = tfrac(t, hours=6)
             self.assertEqual(base, 3600 * 12.0)
-            self.assertEqual(frac, 3600 *  3.5)
+            self.assertEqual(frac, 3600 * 3.5)
 
     def test_tfrac_hours_05_Alice_Springs(self):
         # Australia/North (UTC+09:30, never DST)
@@ -240,7 +260,7 @@ class TestTFrac(unittest.TestCase):
             t = 3600 * 15.5
             (base, frac) = tfrac(t, hours=6)
             self.assertEqual(base, 3600 * 14.5)
-            self.assertEqual(frac, 3600 *  1.0)
+            self.assertEqual(frac, 3600 * 1.0)
 
     def test_tfrac_minutes_01(self):
         t = 3601
@@ -276,13 +296,13 @@ class TestTFrac(unittest.TestCase):
         t = 10.0625
         (base, frac) = tfrac(t, milliseconds=1)
         self.assertEqual(base, 10.062)
-        self.assertEqual(frac,  0.0005)
+        self.assertEqual(frac, 0.0005)
 
     def test_tfrac_milliseconds_03(self):
         t = 10.0625
         (base, frac) = tfrac(t, milliseconds=10)
         self.assertEqual(base, 10.06)
-        self.assertEqual(frac,  0.0025)
+        self.assertEqual(frac, 0.0025)
 
     def test_tfrac_milliseconds_04(self):
         t = 1.0078121
@@ -299,12 +319,12 @@ class TestTFrac(unittest.TestCase):
         self.assertEqual(frac, 0.000806)
 
 
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 # trange tests
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
+
 
 class TestTRange(unittest.TestCase):
-
     def test_trange_hours_01(self):
         with set_timezone(UTC):
             r = trange(0, 1, hours=1)
@@ -419,22 +439,22 @@ class TestTRange(unittest.TestCase):
     def test_trange_milliseconds_02(self):
         r = trange(-0.002, 0.001, milliseconds=1)
         nptest.assert_allclose(
-            np.array(r), np.linspace(-0.002, 0.001, 4), rtol=1e-5, atol=1e-5)
+            np.array(r), np.linspace(-0.002, 0.001, 4), rtol=1e-5, atol=1e-5
+        )
 
 
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 # TimeScale tests
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 
 # Could use more tests here... --WW
 
-class TestTimeScale(unittest.TestCase):
 
+class TestTimeScale(unittest.TestCase):
     def test_time_scale_seconds_01(self):
         ts = TimeScale(seconds=1)
         ticks = ts.ticks(0, 10)
-        nptest.assert_array_equal(
-            np.array(ticks), np.linspace(0.0, 10.0, 11))
+        nptest.assert_array_equal(np.array(ticks), np.linspace(0.0, 10.0, 11))
 
     def test_time_scale_seconds_02(self):
         ts = TimeScale(seconds=2)
@@ -448,7 +468,7 @@ class TestTimeScale(unittest.TestCase):
         nptest.assert_array_equal(np.array(ticks), np.linspace(0.0, 0.1, 11))
 
     def test_time_scale_with_formatter(self):
-        """ Regression test for TimeScale() with formatter keyword.
+        """Regression test for TimeScale() with formatter keyword.
 
         Using the formatter keyword in the constructor of TimeScale
         could raise a KeyError.  This test passes if no exception is
@@ -458,17 +478,17 @@ class TestTimeScale(unittest.TestCase):
         ts = TimeScale(minutes=1, formatter=TimeFormatter())
 
 
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 # CalendarScaleSystem tests
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
+
 
 class TestCalendarScaleSystem(unittest.TestCase):
-
     def test_calendar_scale_system_01(self):
         css = CalendarScaleSystem()
-        ticks = css.ticks(0,10)
+        ticks = css.ticks(0, 10)
         self.assertEqual(len(ticks), 11)
-        nptest.assert_array_equal(np.array(ticks), np.linspace(0,10,11))
+        nptest.assert_array_equal(np.array(ticks), np.linspace(0, 10, 11))
 
 
 # TODO: Add more tests of the ticks() and labels() methods of

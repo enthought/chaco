@@ -7,17 +7,33 @@ from math import radians, sqrt
 
 # Major library imports
 from numpy import (
-    array, argsort, concatenate, cos, diff, dot, dtype, empty, float32,
-    isfinite, nonzero, pi, searchsorted, seterr, sin, int8
+    array,
+    argsort,
+    concatenate,
+    cos,
+    diff,
+    dot,
+    dtype,
+    empty,
+    float32,
+    isfinite,
+    nonzero,
+    pi,
+    searchsorted,
+    seterr,
+    sin,
+    int8,
 )
 
 # Enthought library imports
 from traits.api import Enum, ArrayOrNone
 
-delta = {'ascending': 1, 'descending': -1, 'flat': 0}
+delta = {"ascending": 1, "descending": -1, "flat": 0}
 
-rgba_dtype = dtype([('r', float32), ('g', float32), ('b', float32), ('a', float32)])
-point_dtype = dtype([('x', float), ('y', float)])
+rgba_dtype = dtype(
+    [("r", float32), ("g", float32), ("b", float32), ("a", float32)]
+)
+point_dtype = dtype([("x", float), ("y", float)])
 
 # Dimensions
 
@@ -42,32 +58,33 @@ DimensionTrait = Enum("scalar", "point", "image", "cube")
 SortOrderTrait = Enum("ascending", "descending", "none")
 
 
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Utility functions
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+
 
 def poly_point(center, r, degrees):
     x = r * cos(degrees) + center[0]
     y = r * sin(degrees) + center[1]
-    return x,y
+    return x, y
 
 
 def n_gon(center, r, nsides, rot_degrees=0):
-    """ Generates the points of a regular polygon with specified center,
+    """Generates the points of a regular polygon with specified center,
     radius, and number of sides.
 
     By default the rightmost point of the polygon is (*r*,0) but a
     rotation about the center may be specified with *rot_degrees*.
     """
     if nsides < 3:
-        raise ValueError('Must have at least 3 sides in a polygon')
+        raise ValueError("Must have at least 3 sides in a polygon")
     rotation = radians(rot_degrees)
     theta = (pi * 2) / nsides
-    return [poly_point(center, r, i*theta+rotation) for i in range(nsides)]
+    return [poly_point(center, r, i * theta + rotation) for i in range(nsides)]
 
 
 def bin_search(values, value, ascending):
-    """ Performs a binary search of a sorted array for a specified value.
+    """Performs a binary search of a sorted array for a specified value.
 
     Parameters
     ----------
@@ -93,12 +110,12 @@ def bin_search(values, value, ascending):
     if ascending > 0:
         if (value < values[0]) or (value > values[-1]):
             return -1
-        index = searchsorted(values, value, 'right') - 1
+        index = searchsorted(values, value, "right") - 1
     else:
         if (value < values[-1]) or (value > values[0]):
             return -1
         ascending_values = values[::-1]
-        index = len(values) - searchsorted(ascending_values, value, 'left') - 1
+        index = len(values) - searchsorted(ascending_values, value, "left") - 1
     return index
 
 
@@ -132,7 +149,6 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
     if ndx == -1:
         raise IndexError("value outside array data range")
 
-
     # Now round the index to the closest matching index.  Do this
     # by determining the width (in value space) of each cell and
     # figuring out which side of the midpoint pt falls into.  Since
@@ -143,9 +159,10 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
     if ndx < last:
         if floor_only:
             return ndx
-        delta = 0.5 * (data[ndx+1] - data[ndx])
-        if ((sort_order == "ascending") and (pt > data[ndx] + delta)) or \
-           ((sort_order == "descending") and (pt < data[ndx] + delta)):
+        delta = 0.5 * (data[ndx + 1] - data[ndx])
+        if ((sort_order == "ascending") and (pt > data[ndx] + delta)) or (
+            (sort_order == "descending") and (pt < data[ndx] + delta)
+        ):
             return ndx + 1
         else:
             return ndx
@@ -155,16 +172,18 @@ def reverse_map_1d(data, pt, sort_order, floor_only=False):
         # if we hit the last point exactly we still really want the index
         # of the previous point
         if floor_only:
-            return last-1
+            return last - 1
         # If pt happened to match the value of data[last] exactly,
         # we just return it here.
         return last
+
 
 # These are taken from Chaco 1.0's datamapper and subdivision_cells modules.
 # TODO: Write unit tests for these!
 def right_shift(ary, newval):
     "Returns a right-shifted version of *ary* with *newval* inserted on the left."
     return concatenate([[newval], ary[:-1]])
+
 
 def left_shift(ary, newval):
     "Returns a left-shifted version of *ary* with *newval* inserted on the right."
@@ -184,7 +203,7 @@ def sort_points(points, index=0):
     return points[argsort(points[:, index]), :]
 
 
-def find_runs(int_array, order='ascending'):
+def find_runs(int_array, order="ascending"):
     """
     find_runs(int_array, order=<'ascending'|'flat'|'descending'>) -> list_of_int_arrays
 
@@ -201,10 +220,10 @@ def find_runs(int_array, order='ascending'):
     return [ [0,0,0], [1,1,1,1], [0,0,0,0] ]
     """
     ranges = arg_find_runs(int_array, order)
-    return [int_array[i:j] for (i,j) in ranges]
+    return [int_array[i:j] for (i, j) in ranges]
 
 
-def arg_find_runs(int_array, order='ascending'):
+def arg_find_runs(int_array, order="ascending"):
     """
     Like find_runs(), but returns a list of tuples indicating the start and
     end indices of runs in the input *int_array*.
@@ -225,7 +244,7 @@ def arg_true_runs(bool_array):
     """ Find runs where array is True """
     if len(bool_array) == 0:
         return []
-    runs = arg_find_runs(bool_array.view(int8), 'flat')
+    runs = arg_find_runs(bool_array.view(int8), "flat")
     # runs have to alternate true and false
     if bool_array[0]:
         # even runs are true
@@ -238,20 +257,19 @@ def arg_true_runs(bool_array):
         return []
 
 
-
 def point_line_distance(pt, p1, p2):
-    """ Returns the perpendicular distance between *pt* and the line segment
+    """Returns the perpendicular distance between *pt* and the line segment
     between the points *p1* and *p2*.
     """
     v1 = array((pt[0] - p1[0], pt[1] - p1[1]))
     v2 = array((p2[0] - p1[0], p2[1] - p1[1]))
     diff = v1 - dot(v1, v2) / dot(v2, v2) * v2
 
-    return sqrt(dot(diff,diff))
+    return sqrt(dot(diff, diff))
 
 
 def intersect_range(x, low, high, mask=None):
-    """ Discard 1D intervals outside of range, with optional mask
+    """Discard 1D intervals outside of range, with optional mask
 
     This is an optimized routine for detecting which points are endpoints
     of visible segments in a 1D polyline.  An optional mask can be provided for
@@ -285,7 +303,7 @@ def intersect_range(x, low, high, mask=None):
         mask = isfinite(x)
 
     # find relationships to range bounds
-    old_err = seterr(invalid='ignore')
+    old_err = seterr(invalid="ignore")
     try:
         not_low_x = (x >= low) & mask
         not_high_x = (x <= high) & mask
@@ -293,12 +311,13 @@ def intersect_range(x, low, high, mask=None):
         seterr(**old_err)
 
     # a point is in if it is not low and not high
-    result = (not_low_x & not_high_x)
+    result = not_low_x & not_high_x
 
     if x.shape[0] >= 2:
         # interval intersects range if one end not low and other end not high
-        interval_mask = ((not_low_x[:-1] & not_high_x[1:]) |
-                         (not_high_x[:-1] & not_low_x[1:]))
+        interval_mask = (not_low_x[:-1] & not_high_x[1:]) | (
+            not_high_x[:-1] & not_low_x[1:]
+        )
 
         # point is also in if at least one of its interval is in
         result[1:-1] |= interval_mask[:-1] | interval_mask[1:]

@@ -13,7 +13,7 @@ from .abstract_data_source import AbstractDataSource
 
 
 def bounded_nanargmin(arr):
-    """ Find the index of the minimum value, ignoring NaNs.
+    """Find the index of the minimum value, ignoring NaNs.
 
     If all NaNs, return 0.
     """
@@ -33,8 +33,9 @@ def bounded_nanargmin(arr):
     else:
         return 0
 
+
 def bounded_nanargmax(arr):
-    """ Find the index of the maximum value, ignoring NaNs.
+    """Find the index of the maximum value, ignoring NaNs.
 
     If all NaNs, return -1.
     """
@@ -52,34 +53,34 @@ def bounded_nanargmax(arr):
     else:
         return -1
 
+
 class ArrayDataSource(AbstractDataSource):
-    """ A data source representing a single, continuous array of numerical data.
+    """A data source representing a single, continuous array of numerical data.
 
     This class does not listen to the array for value changes; if you need that
     behavior, create a subclass that hooks up the appropriate listeners.
     """
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractDataSource traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The dimensionality of the indices into this data source (overrides
     #: AbstractDataSource).
-    index_dimension = Constant('scalar')
+    index_dimension = Constant("scalar")
 
     #: The dimensionality of the value at each index point (overrides
     #: AbstractDataSource).
-    value_dimension = Constant('scalar')
+    value_dimension = Constant("scalar")
 
     #: The sort order of the data.
     #: This is a specialized optimization for 1-D arrays, but it's an important
     #: one that's used everywhere.
     sort_order = SortOrderTrait
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The data array itself.
     _data = NumericalSequenceTrait
@@ -100,17 +101,16 @@ class ArrayDataSource(AbstractDataSource):
     # typechecks numpy.int64 on 64-bit Windows systems.
     _max_index = Any
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __init__(self, data=array([]), sort_order="none", **kw):
         AbstractDataSource.__init__(self, **kw)
         self.set_data(data, sort_order)
 
     def set_data(self, newdata, sort_order=None):
-        """ Sets the data, and optionally the sort order, for this data source.
+        """Sets the data, and optionally the sort order, for this data source.
 
         Parameters
         ----------
@@ -126,23 +126,21 @@ class ArrayDataSource(AbstractDataSource):
         self.data_changed = True
 
     def set_mask(self, mask):
-        """ Sets the mask for this data source.
-        """
+        """Sets the mask for this data source."""
         self._cached_mask = mask
         self.data_changed = True
 
     def remove_mask(self):
-        """ Removes the mask on this data source.
-        """
+        """Removes the mask on this data source."""
         self._cached_mask = None
         self.data_changed = True
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractDataSource interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def get_data(self):
-        """ Returns the data for this data source, or 0.0 if it has no data.
+        """Returns the data for this data source, or 0.0 if it has no data.
 
         Implements AbstractDataSource.
         """
@@ -182,12 +180,15 @@ class ArrayDataSource(AbstractDataSource):
             return 0
 
     def get_bounds(self):
-        """ Returns the minimum and maximum values of the data source's data.
+        """Returns the minimum and maximum values of the data source's data.
 
         Implements AbstractDataSource.
         """
-        if self._cached_bounds is None or self._cached_bounds == () or \
-               self._cached_bounds == 0.0:
+        if (
+            self._cached_bounds is None
+            or self._cached_bounds == ()
+            or self._cached_bounds == 0.0
+        ):
             self._compute_bounds()
         return self._cached_bounds
 
@@ -210,12 +211,12 @@ class ArrayDataSource(AbstractDataSource):
 
         # index is ignored for dataseries with 1-dimensional indices
         minval, maxval = self._cached_bounds
-        if (pt < minval):
+        if pt < minval:
             if outside_returns_none:
                 return None
             else:
                 return self._min_index
-        elif (pt > maxval):
+        elif pt > maxval:
             if outside_returns_none:
                 return None
             else:
@@ -223,13 +224,12 @@ class ArrayDataSource(AbstractDataSource):
         else:
             return reverse_map_1d(self._data, pt, self.sort_order)
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _compute_bounds(self, data=None):
-        """ Computes the minimum and maximum values of self._data.
+        """Computes the minimum and maximum values of self._data.
 
         If a data array is passed in, then that is used instead of self._data.
         This behavior is useful for subclasses.
@@ -241,7 +241,7 @@ class ArrayDataSource(AbstractDataSource):
             # Several sources weren't setting the _data attribute, so we
             # go through the interface.  This seems like the correct thing
             # to do anyway... right?
-            #data = self._data
+            # data = self._data
             data = self.get_data()
 
         data_len = 0
@@ -281,12 +281,14 @@ class ArrayDataSource(AbstractDataSource):
                     # label-ish data sources.
                     self._cached_bounds = (0.0, 0.0)
 
-            self._cached_bounds = (data[self._min_index],
-                               data[self._max_index])
+            self._cached_bounds = (
+                data[self._min_index],
+                data[self._max_index],
+            )
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _metadata_changed(self, event):
         self.metadata_changed = True
@@ -294,9 +296,9 @@ class ArrayDataSource(AbstractDataSource):
     def _metadata_items_changed(self, event):
         self.metadata_changed = True
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Persistence-related methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __getstate__(self):
         state = self.__dict__.copy()

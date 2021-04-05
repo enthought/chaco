@@ -10,7 +10,7 @@ from .abstract_data_source import AbstractDataSource
 
 
 class AbstractDataRange(HasTraits):
-    """ Abstract class for ranges that represent sub-regions of data space.
+    """Abstract class for ranges that represent sub-regions of data space.
 
     They support "autoscaling" by querying their associated data sources.
     """
@@ -33,34 +33,35 @@ class AbstractDataRange(HasTraits):
     high = Float(1.0)
 
     #: Setting for the lower bound of this range.
-    low_setting = Trait('auto', 'auto', Float)
+    low_setting = Trait("auto", "auto", Float)
     #: Setting for the upper bound of this range.
-    high_setting = Trait('auto', 'auto', Float)
+    high_setting = Trait("auto", "auto", Float)
 
     #: Event that is fired when the actual bounds values change; the value
     #: of the event is a tuple (low_bound, high_bound)
     updated = Event
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Concrete methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __init__(self, *sources, **kwargs):
         if len(sources) > 0:
-            if 'sources' in kwargs:
-                raise RuntimeError("Datasources for data range provided as "
-                                   "both positional and keyword arguments.")
+            if "sources" in kwargs:
+                raise RuntimeError(
+                    "Datasources for data range provided as "
+                    "both positional and keyword arguments."
+                )
             else:
-                kwargs['sources'] = list(sources)
+                kwargs["sources"] = list(sources)
         super(AbstractDataRange, self).__init__(**kwargs)
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Abstract methods that subclasses must implement
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def clip_data(self, data):
-        """ Returns a list of data values that are within the range.
+        """Returns a list of data values that are within the range.
 
         Given an array of data values of the same dimensionality as the range,
         returns a list of data values that are inside the range.
@@ -68,7 +69,7 @@ class AbstractDataRange(HasTraits):
         raise NotImplementedError
 
     def mask_data(self, data):
-        """ Returns a mask array, indicating whether values in the given array
+        """Returns a mask array, indicating whether values in the given array
         are inside the range.
 
         Given an array of data values of the same dimensionality as the range,
@@ -79,7 +80,7 @@ class AbstractDataRange(HasTraits):
         raise NotImplementedError
 
     def bound_data(self, data):
-        """ Returns a tuple of indices for the start and end of the first run
+        """Returns a tuple of indices for the start and end of the first run
         of data that falls within the range.
 
         Given an array of data values of the same dimensionality as the range,
@@ -93,7 +94,7 @@ class AbstractDataRange(HasTraits):
         raise NotImplementedError
 
     def set_bounds(self, *new_bounds):
-        """ Sets all the bounds of the range simultaneously.
+        """Sets all the bounds of the range simultaneously.
 
         Because each bounds change probably fires an event, this method allows
         tools to set all range elements in a single, atomic step.
@@ -112,10 +113,9 @@ class AbstractDataRange(HasTraits):
         raise NotImplementedError
 
     def _refresh_bounds(self):
-        """ Resets the values of the bounds depending on the data sources
+        """Resets the values of the bounds depending on the data sources
         referenced by the range.
 
         This method is called only if one of the bounds settings is "auto".
         """
         raise NotImplementedError
-
