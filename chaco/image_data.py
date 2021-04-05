@@ -4,7 +4,7 @@
 from numpy import fmax, fmin, swapaxes
 
 # Enthought library imports
-from traits.api import Bool, Int, Property, ReadOnly, observe, Tuple
+from traits.api import Bool, Int, Property, ReadOnly, Tuple
 
 # Local relative imports
 from .base import DimensionTrait, ImageTrait

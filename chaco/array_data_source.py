@@ -5,7 +5,7 @@ from numpy import array, isfinite, ones, ndarray
 import numpy as np
 
 # Enthought library imports
-from traits.api import Any, Constant, Int, observe, Tuple
+from traits.api import Any, Constant, Int, Tuple
 
 # Chaco imports
 from .base import NumericalSequenceTrait, reverse_map_1d, SortOrderTrait
@@ -286,7 +286,7 @@ class ArrayDataSource(AbstractDataSource):
                 data[self._max_index],
             )
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Persistence-related methods
     # ------------------------------------------------------------------------
 
