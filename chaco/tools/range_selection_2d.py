@@ -8,20 +8,19 @@ from .range_selection import RangeSelection
 
 
 class RangeSelection2D(RangeSelection):
-    """ Selects a range along the index or value axis for plots on 2D data,
+    """Selects a range along the index or value axis for plots on 2D data,
         such as image plots
 
     The user right-click-drags to select a region, which stays selected until
     the user left-clicks to deselect.
     """
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers for the "selected" event state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def selected_left_down(self, event):
-        """ Handles the left mouse button being pressed when the tool is in
+        """Handles the left mouse button being pressed when the tool is in
         the 'selected' state.
 
         If the user is allowed to resize the selection, and the event occurred
@@ -44,14 +43,17 @@ class RangeSelection2D(RangeSelection):
         mouse_coord = tmp[ndx]
 
         if self.enable_resize:
-            if (abs(mouse_coord - high) <= self.resize_margin) or \
-                            (abs(mouse_coord - low) <= self.resize_margin):
+            if (abs(mouse_coord - high) <= self.resize_margin) or (
+                abs(mouse_coord - low) <= self.resize_margin
+            ):
                 return self.selected_right_down(event)
 
         if tmp[self.axis_index] >= low and tmp[self.axis_index] <= high:
             self.event_state = "moving"
             self._down_point = numpy.array([event.x, event.y])
-            self._down_data_coord = self._map_data([self._down_point])[0][self.axis_index]
+            self._down_data_coord = self._map_data([self._down_point])[0][
+                self.axis_index
+            ]
 
             self._original_selection = numpy.array(self.selection)
         elif self.allow_deselection:
@@ -63,7 +65,7 @@ class RangeSelection2D(RangeSelection):
         event.handled = True
 
     def selected_right_down(self, event):
-        """ Handles the right mouse button being pressed when the tool is in
+        """Handles the right mouse button being pressed when the tool is in
         the 'selected' state.
 
         If the user is allowed to resize the selection, and the event occurred
@@ -105,7 +107,7 @@ class RangeSelection2D(RangeSelection):
         event.handled = True
 
     def selected_mouse_move(self, event):
-        """ Handles the mouse moving when the tool is in the 'selected' state.
+        """Handles the mouse moving when the tool is in the 'selected' state.
 
         If the user is allowed to resize the selection, and the event
         occurred within the resize margin of an endpoint, then the cursor
@@ -121,19 +123,21 @@ class RangeSelection2D(RangeSelection):
                 tmp = (event.x, event.y)
                 ndx = self._determine_axis()
                 mouse_coord = tmp[ndx]
-                if abs(mouse_coord - end) <= self.resize_margin or \
-                                    abs(mouse_coord - start) <= self.resize_margin:
+                if (
+                    abs(mouse_coord - end) <= self.resize_margin
+                    or abs(mouse_coord - start) <= self.resize_margin
+                ):
                     self._set_sizing_cursor(event)
                     return
         event.window.set_pointer("arrow")
         event.handled = True
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers for the "moving" event state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def moving_mouse_move(self, event):
-        """ Handles the mouse moving when the tool is in the 'moving' state.
+        """Handles the mouse moving when the tool is in the 'moving' state.
 
         Moves the selection range by an amount corresponding to the amount
         that the mouse has moved since its button was pressed. If the new
@@ -143,8 +147,9 @@ class RangeSelection2D(RangeSelection):
         cur_point = numpy.array([event.x, event.y])
         cur_data_point = self._map_data([cur_point])[0]
         original_selection = self._original_selection
-        new_selection = original_selection + (cur_data_point[self.axis_index] \
-                                              - self._down_data_coord)
+        new_selection = original_selection + (
+            cur_data_point[self.axis_index] - self._down_data_coord
+        )
         selection_data_width = original_selection[1] - original_selection[0]
 
         range = self.mapper.range
@@ -160,12 +165,12 @@ class RangeSelection2D(RangeSelection):
         self.component.request_redraw()
         event.handled = True
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers for the "normal" event state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def normal_right_down(self, event):
-        """ Handles the right mouse button being pressed when the tool is in
+        """Handles the right mouse button being pressed when the tool is in
         the 'normal' state.
 
         Puts the tool into 'selecting' mode, changes the cursor to show that it
@@ -175,7 +180,7 @@ class RangeSelection2D(RangeSelection):
         x_pos = self._get_axis_coord(event, "index")
         y_pos = self._get_axis_coord(event, "value")
         self._down_point = numpy.array([x_pos, y_pos])
-        mapped_pos = self._map_data([(x_pos,y_pos)])[0][self.axis_index]
+        mapped_pos = self._map_data([(x_pos, y_pos)])[0][self.axis_index]
 
         self.selection = (mapped_pos, mapped_pos)
 
@@ -183,12 +188,12 @@ class RangeSelection2D(RangeSelection):
         self.event_state = "selecting"
         self.selecting_mouse_move(event)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers for the "selecting" event state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def selecting_mouse_move(self, event):
-        """ Handles the mouse being moved when the tool is in the 'selecting'
+        """Handles the mouse being moved when the tool is in the 'selecting'
         state.
 
         Expands the selection range at the appropriate end, based on the new
@@ -202,7 +207,7 @@ class RangeSelection2D(RangeSelection):
             if tmp >= low and tmp <= high:
                 x_pos = self._get_axis_coord(event, "index")
                 y_pos = self._get_axis_coord(event, "value")
-                new_edge = self._map_data([(x_pos,y_pos)])[0][self.axis_index]
+                new_edge = self._map_data([(x_pos, y_pos)])[0][self.axis_index]
 
                 if self._drag_edge == "high":
                     low_val = self.selection[0]
@@ -211,7 +216,9 @@ class RangeSelection2D(RangeSelection):
                     # if it appears that only 1 point is selected, move one
                     # edge over a pixel
                     if new_edge == low_val:
-                        new_edge = self._map_data([(x_pos+1,y_pos+1)])[0][self.axis_index]
+                        new_edge = self._map_data([(x_pos + 1, y_pos + 1)])[0][
+                            self.axis_index
+                        ]
 
                     if new_edge > low_val:
                         self.selection = (low_val, new_edge)
@@ -225,7 +232,9 @@ class RangeSelection2D(RangeSelection):
                     # if it appears that only 1 point is selected, move one
                     # edge over a pixel
                     if new_edge == high_val:
-                        new_edge = self._map_data([(x_pos-1,y_pos-1)])[0][self.axis_index]
+                        new_edge = self._map_data([(x_pos - 1, y_pos - 1)])[0][
+                            self.axis_index
+                        ]
 
                     if new_edge < high_val:
                         self.selection = (new_edge, high_val)
@@ -237,7 +246,7 @@ class RangeSelection2D(RangeSelection):
             event.handled = True
 
     def selecting_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot when the tool is in the
+        """Handles the mouse leaving the plot when the tool is in the
         'selecting' state.
 
         Determines whether the event's position is outside the component's
@@ -253,12 +262,16 @@ class RangeSelection2D(RangeSelection):
 
         pos = self._get_axis_coord(event)
         if pos >= high:
-            if self.axis == 'index':
-                selection_high = self._map_data([(high, 0)])[0][self.axis_index]
+            if self.axis == "index":
+                selection_high = self._map_data([(high, 0)])[0][
+                    self.axis_index
+                ]
             else:
-                selection_high = self._map_data([(0, high)])[0][self.axis_index]
+                selection_high = self._map_data([(0, high)])[0][
+                    self.axis_index
+                ]
         elif pos <= low:
-            if self.axis == 'index':
+            if self.axis == "index":
                 selection_low = self._map_data([(low, 0)])[0][self.axis_index]
             else:
                 selection_low = self._map_data([(0, low)])[0][self.axis_index]
@@ -267,9 +280,9 @@ class RangeSelection2D(RangeSelection):
         event.window.set_pointer("arrow")
         self.component.request_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _map_data(self, screen_pts):
         return self.mapper.map_data(screen_pts)
@@ -278,17 +291,27 @@ class RangeSelection2D(RangeSelection):
         return self.mapper.map_screen(data_pts)
 
     def _get_selection_screencoords(self):
-        """ Returns a tuple of (x1, x2) screen space coordinates of the start
+        """Returns a tuple of (x1, x2) screen space coordinates of the start
         and end selection points.
 
         If there is no current selection, then it returns None.
         """
         selection = self.selection
         if selection is not None and len(selection) == 2:
-            if self.axis == 'index':
-                return [x for x,y in self._map_screen([(x,0) for x in self.selection])]
+            if self.axis == "index":
+                return [
+                    x
+                    for x, y in self._map_screen(
+                        [(x, 0) for x in self.selection]
+                    )
+                ]
             else:
-                return [y for x,y in self._map_screen([(0,y) for y in self.selection])]
+                return [
+                    y
+                    for x, y in self._map_screen(
+                        [(0, y) for y in self.selection]
+                    )
+                ]
 
         else:
             return None

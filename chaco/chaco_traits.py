@@ -4,10 +4,10 @@
 # Enthought library imports
 from traits.api import Enum
 
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Box positioning traits: used to specify positions of boxes relative to
 # one another.  Generally used for layout.
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 box_edge_enum = Enum("left", "right", "top", "bottom")
 

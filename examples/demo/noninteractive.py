@@ -36,8 +36,11 @@ def create_plot():
     p = Plot(pd, bgcolor="oldlace", padding=50, border_visible=True)
     for i in range(10):
         pd.set_data("y" + str(i), jn(i, x))
-        p.plot(("index", "y" + str(i)), color=tuple(COLOR_PALETTE[i]),
-               width=2.0 * dpi_scale)
+        p.plot(
+            ("index", "y" + str(i)),
+            color=tuple(COLOR_PALETTE[i]),
+            width=2.0 * dpi_scale,
+        )
     p.x_grid.visible = True
     p.x_grid.line_width *= dpi_scale
     p.y_grid.visible = True
@@ -57,6 +60,7 @@ def draw_plot(filename, size=(800, 600)):
 
 def draw_svg(filename, size=(800, 600)):
     from chaco.svg_graphics_context import SVGGraphicsContext
+
     container = create_plot()
     container.bounds = list(size)
     container.do_layout(force=True)
@@ -67,47 +71,49 @@ def draw_svg(filename, size=(800, 600)):
 
 def draw_pdf(filename, size=(800, 600)):
     from chaco.pdf_graphics_context import PdfPlotGraphicsContext
+
     container = create_plot()
     container.outer_bounds = list(size)
     container.do_layout(force=True)
-    gc = PdfPlotGraphicsContext(filename=filename,
-                                dest_box=(0.5, 0.5, 5.0, 5.0))
+    gc = PdfPlotGraphicsContext(
+        filename=filename, dest_box=(0.5, 0.5, 5.0, 5.0)
+    )
 
     for i in range(2):
         # draw the plot
         gc.render_component(container)
 
-        #Start a new page for subsequent draw commands.
+        # Start a new page for subsequent draw commands.
         gc.add_page()
 
     gc.save()
 
 
 def get_directory(filename):
-    print('Please enter a path in which to place generated plots.')
-    print('Press <ENTER> to generate in the current directory.')
+    print("Please enter a path in which to place generated plots.")
+    print("Press <ENTER> to generate in the current directory.")
 
-    path = input('Path: ').strip()
+    path = input("Path: ").strip()
 
     if len(path) > 0 and not os.path.exists(path):
-        print('The given path does not exist.')
+        print("The given path does not exist.")
         sys.exit()
 
     if not os.path.isabs(path):
-        print('Creating image: ' + os.path.join(os.getcwd(), path, filename))
+        print("Creating image: " + os.path.join(os.getcwd(), path, filename))
 
     else:
-        print('Creating image: ' + os.path.join(path, filename))
+        print("Creating image: " + os.path.join(path, filename))
 
     return os.path.join(path, filename)
 
 
 if __name__ == "__main__":
-    if ETSConfig.kiva_backend == 'svg':
+    if ETSConfig.kiva_backend == "svg":
         # Render the plot as a SVG
-        draw_svg(get_directory('noninteractive.svg'), size=(800, 600))
-    elif ETSConfig.kiva_backend == 'pdf':
+        draw_svg(get_directory("noninteractive.svg"), size=(800, 600))
+    elif ETSConfig.kiva_backend == "pdf":
         # Render the plot as a PDF, requires on ReportLab
-        draw_pdf(get_directory('noninteractive.pdf'))
+        draw_pdf(get_directory("noninteractive.pdf"))
     else:
-        draw_plot(get_directory('noninteractive.png'), size=(800, 600))
+        draw_plot(get_directory("noninteractive.png"), size=(800, 600))

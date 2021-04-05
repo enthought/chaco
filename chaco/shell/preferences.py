@@ -6,8 +6,7 @@ from traits.api import Enum, HasTraits, Int, Str
 
 
 class Preferences(HasTraits):
-    """ Contains all the preferences that configure the Chaco shell session.
-    """
+    """Contains all the preferences that configure the Chaco shell session."""
 
     # Width of the plot window, in pixels.
     window_width = Int(600)
@@ -25,25 +24,21 @@ class Preferences(HasTraits):
     bgcolor = white_color_trait
 
     # The default location of the origin for new image plots
-    image_default_origin = Enum("top left", "bottom left",
-                                "bottom right", "top right")
+    image_default_origin = Enum(
+        "top left", "bottom left", "bottom right", "top right"
+    )
 
     @classmethod
     def from_file(cls, filename):
-        """ Creates a new preferences object from a file on disk.
-        """
+        """Creates a new preferences object from a file on disk."""
         prefs = cls()
         prefs.load(filename)
         return prefs
 
-
     def load(self, filename):
-        """ Loads a preferences file; existing settings are overwritten.
-        """
+        """Loads a preferences file; existing settings are overwritten."""
         pass
 
-
     def save(self, filename):
-        """ Saves the preferences to *filename*.
-        """
+        """Saves the preferences to *filename*."""
         pass

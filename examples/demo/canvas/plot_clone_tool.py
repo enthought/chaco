@@ -3,7 +3,6 @@ Makes a copy of the plot in the overlay and adds it to the canvas.
 """
 
 
-
 # Enthought library imports
 from traits.api import Bool, Callable, Enum, Float, Instance, Int, Trait, Tuple
 from enable.api import Container
@@ -14,7 +13,7 @@ from enable.tools.api import DragTool
 
 
 class PlotCloneTool(AbstractOverlay, DragTool):
-    """ On a drag operation, draws an overlay of self.component underneath
+    """On a drag operation, draws an overlay of self.component underneath
     the cursor.  On drag_end, a copy of the plot is dropped onto the
     self.dest container.
     """
@@ -50,8 +49,9 @@ class PlotCloneTool(AbstractOverlay, DragTool):
         if self._recursion_check:
             return
         else:
-            if self._offset is not None and (self._offset[0] > 10 or
-                    self._offset[1] > 10):
+            if self._offset is not None and (
+                self._offset[0] > 10 or self._offset[1] > 10
+            ):
                 with gc:
                     gc.clear_clip_path()
                     gc.translate_ctm(*self._offset)
@@ -61,20 +61,26 @@ class PlotCloneTool(AbstractOverlay, DragTool):
                     self._recursion_check = False
 
     def drag_start(self, event):
-        """ Called when the drag operation starts.
+        """Called when the drag operation starts.
 
         Implements DragTool.
         """
-        self._offset = (event.x - self.mouse_down_position[0],
-                        event.y - self.mouse_down_position[1])
-        self._offset_from_plot = (self.mouse_down_position[0] - self.component.x,
-                                  self.mouse_down_position[1] - self.component.y)
+        self._offset = (
+            event.x - self.mouse_down_position[0],
+            event.y - self.mouse_down_position[1],
+        )
+        self._offset_from_plot = (
+            self.mouse_down_position[0] - self.component.x,
+            self.mouse_down_position[1] - self.component.y,
+        )
         self.visible = True
         event.handled = True
 
     def dragging(self, event):
-        self._offset = (event.x - self.mouse_down_position[0],
-                        event.y - self.mouse_down_position[1])
+        self._offset = (
+            event.x - self.mouse_down_position[0],
+            event.y - self.mouse_down_position[1],
+        )
         self.component.request_redraw()
 
     def drag_end(self, event):
@@ -114,11 +120,12 @@ class MPPlotCloneTool(PlotCloneTool):
         if self.component:
             self.original_padding = self.component.padding
             if hasattr(event, "bid"):
-                event.window.capture_blob(self, event.bid,
-                                          event.net_transform())
+                event.window.capture_blob(
+                    self, event.bid, event.net_transform()
+                )
             else:
                 event.window.set_mouse_owner(self, event.net_transform())
-            self.mouse_down_position = (event.x,event.y)
+            self.mouse_down_position = (event.x, event.y)
             self.event_state = "dragging"
             event.handled = True
         PlotCloneTool.drag_start(self, event)
@@ -131,6 +138,11 @@ class MPPlotCloneTool(PlotCloneTool):
             offset = self._offset_from_plot
             drop_position = self._last_blob_pos
             if len(drop_position) == 2:
-                self.plot_cloner(self, (drop_position[0] - offset[0],
-                                        drop_position[1] - offset[1]))
+                self.plot_cloner(
+                    self,
+                    (
+                        drop_position[0] - offset[0],
+                        drop_position[1] - offset[1],
+                    ),
+                )
         self._offset = None

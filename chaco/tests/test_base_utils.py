@@ -6,8 +6,15 @@ from math import sqrt
 from numpy import arange, array, linspace, nan, ones
 from numpy.testing import assert_equal, assert_almost_equal, assert_array_equal
 
-from chaco.base import (arg_find_runs, arg_true_runs, bin_search, find_runs,
-                       intersect_range, reverse_map_1d, point_line_distance)
+from chaco.base import (
+    arg_find_runs,
+    arg_true_runs,
+    bin_search,
+    find_runs,
+    intersect_range,
+    reverse_map_1d,
+    point_line_distance,
+)
 
 
 class BinSearchTestCase(unittest.TestCase):
@@ -45,11 +52,11 @@ class BinSearchTestCase(unittest.TestCase):
         self.assertEqual(bin_search(ary, 5.1, -1), 4)
         self.assertEqual(bin_search(ary, 4.9, -1), 5)
 
-class ReverseMap1DTestCase(unittest.TestCase):
 
+class ReverseMap1DTestCase(unittest.TestCase):
     def test_ascending(self):
         ary = arange(10.0)
-        rmap = lambda x: reverse_map_1d(ary, x, 'ascending')
+        rmap = lambda x: reverse_map_1d(ary, x, "ascending")
 
         # inside bounds
         self.assertEqual(rmap(0.0), 0)
@@ -67,7 +74,7 @@ class ReverseMap1DTestCase(unittest.TestCase):
 
     def test_ascending_floor(self):
         ary = arange(10.0)
-        rmap = lambda x: reverse_map_1d(ary, x, 'ascending', floor_only=True)
+        rmap = lambda x: reverse_map_1d(ary, x, "ascending", floor_only=True)
 
         # test rounding
         self.assertEqual(rmap(3.4), 3)
@@ -76,7 +83,7 @@ class ReverseMap1DTestCase(unittest.TestCase):
 
     def test_descending(self):
         ary = arange(10.0, 0.0, -1.0)
-        rmap = lambda x: reverse_map_1d(ary, x, 'descending')
+        rmap = lambda x: reverse_map_1d(ary, x, "descending")
 
         # inside bounds
         self.assertEqual(rmap(10.0), 0)
@@ -94,7 +101,7 @@ class ReverseMap1DTestCase(unittest.TestCase):
 
     def test_descending_floor(self):
         ary = arange(10.0, 0.0, -1.0)
-        rmap = lambda x: reverse_map_1d(ary, x, 'descending', floor_only=True)
+        rmap = lambda x: reverse_map_1d(ary, x, "descending", floor_only=True)
 
         # test rounding
         self.assertEqual(rmap(8.6), 1)
@@ -113,7 +120,7 @@ class FindRunsTestCase(unittest.TestCase):
 
     def test_find_runs_end(self):
         x = array([18, 23, 24, 25])
-        assert_equal(find_runs(x) , [[18], [23, 24, 25]])
+        assert_equal(find_runs(x), [[18], [23, 24, 25]])
 
     def test_find_runs_offset(self):
         # because of the nature of the find_runs algorithm, there may be
@@ -131,80 +138,81 @@ class FindRunsTestCase(unittest.TestCase):
 
     def test_find_runs_descending(self):
         x = array([30, 41, 40, 39, 38, 37, 12])
-        assert_equal(find_runs(x, order='descending'), \
-                    [[30], [41, 40, 39, 38, 37], [12]])
+        assert_equal(
+            find_runs(x, order="descending"),
+            [[30], [41, 40, 39, 38, 37], [12]],
+        )
 
     def test_find_runs_flat(self):
         x = array([0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0])
-        assert_equal(find_runs(x, order='flat'), \
-                     [[0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]])
+        assert_equal(
+            find_runs(x, order="flat"), [[0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]]
+        )
 
 
 class ArgFindRunsTestCase(unittest.TestCase):
     def test_arg_find_runs_middle(self):
         x = array([0, 8, 7, 8, 9, 2, 3, 4, 10])
-        assert_equal(arg_find_runs(x),
-                     [[0, 1], [1, 2], [2, 5], [5, 8], [8, 9]])
+        assert_equal(
+            arg_find_runs(x), [[0, 1], [1, 2], [2, 5], [5, 8], [8, 9]]
+        )
 
     def test_arg_find_runs_start(self):
         x = array([3, 4, 5, 12, 9, 17])
-        assert_equal(arg_find_runs(x) , [[0, 3], [3, 4], [4, 5], [5, 6]])
+        assert_equal(arg_find_runs(x), [[0, 3], [3, 4], [4, 5], [5, 6]])
 
     def test_arg_find_runs_end(self):
         x = array([18, 23, 24, 25])
-        assert_equal(arg_find_runs(x) , [[0, 1], [1, 4]])
+        assert_equal(arg_find_runs(x), [[0, 1], [1, 4]])
 
     def test_arg_find_runs_offset(self):
         # because of the nature of the find_runs algorithm, there may be
         # fencepost errors with runs that start at x[1] or x[-2]
         x = array([10, 12, 13, 14, 28, 16])
-        assert_equal(arg_find_runs(x) , [[0, 1], [1, 4], [4, 5], [5, 6]])
+        assert_equal(arg_find_runs(x), [[0, 1], [1, 4], [4, 5], [5, 6]])
         x = array([10, 15, 16, 17, 34])
-        assert_equal(arg_find_runs(x) , [[0, 1], [1, 4], [4, 5]])
+        assert_equal(arg_find_runs(x), [[0, 1], [1, 4], [4, 5]])
 
     def test_arg_find_runs_none(self):
         x = array([])
-        assert_equal(arg_find_runs(x) , [])
+        assert_equal(arg_find_runs(x), [])
         x = array([12, 15, 27])
-        assert_equal(arg_find_runs(x) , [[0, 1], [1, 2], [2, 3]])
+        assert_equal(arg_find_runs(x), [[0, 1], [1, 2], [2, 3]])
 
     def test_arg_find_runs_descending(self):
         x = array([30, 41, 40, 39, 38, 37, 12])
-        assert_equal(arg_find_runs(x, order='descending'), \
-                     [[0, 1], [1, 6], [6, 7]])
+        assert_equal(
+            arg_find_runs(x, order="descending"), [[0, 1], [1, 6], [6, 7]]
+        )
 
     def test_arg_find_runs_flat(self):
         x = array([0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0])
-        assert_equal(arg_find_runs(x, order='flat'), \
-                     [[0, 3], [3, 7], [7, 11]])
+        assert_equal(arg_find_runs(x, order="flat"), [[0, 3], [3, 7], [7, 11]])
 
 
 class TestArgTrueRuns(unittest.TestCase):
-
-      def test_none(self):
+    def test_none(self):
         x = array([], dtype=bool)
         assert_equal(arg_true_runs(x), [])
 
-      def test_even(self):
+    def test_even(self):
         x = array([1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0], dtype=bool)
         assert_equal(arg_true_runs(x), [[0, 3], [7, 9]])
 
-      def test_odd(self):
+    def test_odd(self):
         x = array([0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1], dtype=bool)
         assert_equal(arg_true_runs(x), [[3, 7], [9, 11]])
 
-      def test_all_true(self):
+    def test_all_true(self):
         x = array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], dtype=bool)
         assert_equal(arg_true_runs(x), [[0, 11]])
 
-      def test_all_false(self):
+    def test_all_false(self):
         x = array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], dtype=bool)
         assert_equal(arg_true_runs(x), [])
 
 
-
 class PointLineDistanceTestCase(unittest.TestCase):
-
     def test_horizontal_line(self):
         p1 = (10.0, 10.0)
         p2 = (60.0, 10.0)
@@ -275,49 +283,49 @@ class IntersectRangeTestCase(unittest.TestCase):
     def test_low_low(self):
         x = array([-2.0, -1.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [False]*2)
+        assert_array_equal(result, [False] * 2)
 
     def test_low_in(self):
         x = array([-1.0, 0.5])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*2)
+        assert_array_equal(result, [True] * 2)
 
     def test_low_lower_bound(self):
         x = array([-1.0, 0.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*2)
+        assert_array_equal(result, [True] * 2)
 
     def test_low_high(self):
         x = array([-2.0, 2.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*2)
+        assert_array_equal(result, [True] * 2)
 
     def test_in_in(self):
         x = array([0.75, 0.5])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*2)
+        assert_array_equal(result, [True] * 2)
 
     def test_in_high(self):
         x = array([-0.5, 2.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*2)
+        assert_array_equal(result, [True] * 2)
 
     def test_high_low(self):
         x = array([2.0, -2.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*2)
+        assert_array_equal(result, [True] * 2)
 
     def test_high_high(self):
         x = array([3.0, 2.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [False]*2)
+        assert_array_equal(result, [False] * 2)
 
     # three point tests
 
     def test_low_low_low(self):
         x = array([-3.0, -2.0, -1.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [False]*3)
+        assert_array_equal(result, [False] * 3)
 
     def test_in_low_low(self):
         x = array([0.5, -2.0, -1.0])
@@ -332,27 +340,27 @@ class IntersectRangeTestCase(unittest.TestCase):
     def test_low_in_low(self):
         x = array([-3.0, 0.5, -1.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_in_in_low(self):
         x = array([0.75, 0.5, -1.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_high_in_low(self):
         x = array([2.0, 0.5, -1.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_low_high_low(self):
         x = array([-3.0, 2, -1.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_in_high_low(self):
         x = array([0.5, 2, -1.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_high_high_low(self):
         x = array([2.5, 2, -1.0])
@@ -377,27 +385,27 @@ class IntersectRangeTestCase(unittest.TestCase):
     def test_low_in_in(self):
         x = array([-3.0, 0.5, 0.75])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_in_in_in(self):
         x = array([0.75, 0.5, 0.25])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_high_in_in(self):
         x = array([2.0, 0.5, 0.75])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_low_high_in(self):
         x = array([-3.0, 2, 0.5])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_in_high_in(self):
         x = array([0.5, 2, -1.0])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_high_high_in(self):
         x = array([2.5, 2, 0.5])
@@ -422,17 +430,17 @@ class IntersectRangeTestCase(unittest.TestCase):
     def test_low_in_high(self):
         x = array([-3.0, 0.5, 2])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_in_in_high(self):
         x = array([0.75, 0.5, 2])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_high_in_high(self):
         x = array([2.0, 0.5, 2])
         result = intersect_range(x, 0.0, 1.0)
-        assert_array_equal(result, [True]*3)
+        assert_array_equal(result, [True] * 3)
 
     def test_low_high_high(self):
         x = array([-3.0, 2, 3])

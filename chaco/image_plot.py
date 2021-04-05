@@ -10,7 +10,6 @@
 """
 
 
-
 # Standard library imports
 from math import ceil, floor, pi
 from contextlib import contextmanager
@@ -18,8 +17,18 @@ from contextlib import contextmanager
 import numpy as np
 
 # Enthought library imports.
-from traits.api import (Bool, Either, Enum, Instance, List, Range, Trait,
-                        Tuple, Property, cached_property)
+from traits.api import (
+    Bool,
+    Either,
+    Enum,
+    Instance,
+    List,
+    Range,
+    Trait,
+    Tuple,
+    Property,
+    cached_property,
+)
 from kiva.agg import GraphicsContextArray
 
 # Local relative imports
@@ -32,20 +41,22 @@ try:
 except ImportError:
     pass
 else:
-    QUARTZ_INTERP_QUALITY = {"nearest": InterpolationQuality.none,
-                             "bilinear": InterpolationQuality.low,
-                             "bicubic": InterpolationQuality.high}
+    QUARTZ_INTERP_QUALITY = {
+        "nearest": InterpolationQuality.none,
+        "bilinear": InterpolationQuality.low,
+        "bicubic": InterpolationQuality.high,
+    }
 
 
 KIVA_DEPTH_MAP = {3: "rgb24", 4: "rgba32"}
 
 
 class ImagePlot(Base2DPlot):
-    """ A plot based on an image.
-    """
-    #------------------------------------------------------------------------
+    """A plot based on an image."""
+
+    # ------------------------------------------------------------------------
     # Data-related traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     #: for full intensity.
@@ -55,14 +66,14 @@ class ImagePlot(Base2DPlot):
     interpolation = Enum("nearest", "bilinear", "bicubic")
 
     #: Bool indicating whether x-axis is flipped.
-    x_axis_is_flipped = Property(depends_on=['orientation', 'origin'])
+    x_axis_is_flipped = Property(depends_on=["orientation", "origin"])
 
     #: Bool indicating whether y-axis is flipped.
-    y_axis_is_flipped = Property(depends_on=['orientation', 'origin'])
+    y_axis_is_flipped = Property(depends_on=["orientation", "origin"])
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Are the cache traits valid? If False, new ones need to be computed.
     _image_cache_valid = Bool(False)
@@ -76,25 +87,27 @@ class ImagePlot(Base2DPlot):
 
     # Bool indicating whether the origin is top-left or bottom-right.
     # The name "principal diagonal" is borrowed from linear algebra.
-    _origin_on_principal_diagonal = Property(depends_on='origin')
+    _origin_on_principal_diagonal = Property(depends_on="origin")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Properties
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get_x_axis_is_flipped(self):
-        return ((self.orientation == 'h' and 'right' in self.origin) or
-                (self.orientation == 'v' and 'top' in self.origin))
+        return (self.orientation == "h" and "right" in self.origin) or (
+            self.orientation == "v" and "top" in self.origin
+        )
 
     @cached_property
     def _get_y_axis_is_flipped(self):
-        return ((self.orientation == 'h' and 'top' in self.origin) or
-                (self.orientation == 'v' and 'right' in self.origin))
+        return (self.orientation == "h" and "top" in self.origin) or (
+            self.orientation == "v" and "right" in self.origin
+        )
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _index_data_changed_fired(self):
         self._image_cache_valid = False
@@ -108,12 +121,12 @@ class ImagePlot(Base2DPlot):
         self._image_cache_valid = False
         self.request_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Base2DPlot interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _render(self, gc):
-        """ Draw the plot to screen.
+        """Draw the plot to screen.
 
         Implements the Base2DPlot interface.
         """
@@ -151,9 +164,14 @@ class ImagePlot(Base2DPlot):
             with self._temporary_interp_setting(gc):
                 gc.draw_image(self._cached_image, self._cached_dest_rect)
 
-    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True,
-                  index_only=False):
-        """ Maps a screen space point to an index into the plot's index
+    def map_index(
+        self,
+        screen_pt,
+        threshold=0.0,
+        outside_returns_none=True,
+        index_only=False,
+    ):
+        """Maps a screen space point to an index into the plot's index
         array(s).
 
         Implements the AbstractPlotRenderer interface. Uses 0.0 for
@@ -161,17 +179,18 @@ class ImagePlot(Base2DPlot):
         """
         # For image plots, treat hittesting threshold as 0.0, because it's
         # the only thing that really makes sense.
-        return Base2DPlot.map_index(self, screen_pt, 0.0, outside_returns_none,
-                                    index_only)
+        return Base2DPlot.map_index(
+            self, screen_pt, 0.0, outside_returns_none, index_only
+        )
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get__origin_on_principal_diagonal(self):
-        bottom_right = 'bottom' in self.origin and 'right' in self.origin
-        top_left = 'top' in self.origin and 'left' in self.origin
+        bottom_right = "bottom" in self.origin and "right" in self.origin
+        top_left = "top" in self.origin and "left" in self.origin
         return bottom_right or top_left
 
     def _transpose_about_origin(self, gc):
@@ -179,7 +198,7 @@ class ImagePlot(Base2DPlot):
             gc.scale_ctm(-1, 1)
         else:
             gc.scale_ctm(1, -1)
-        gc.rotate_ctm(pi/2)
+        gc.rotate_ctm(pi / 2)
 
     @contextmanager
     def _temporary_interp_setting(self, gc):
@@ -203,7 +222,7 @@ class ImagePlot(Base2DPlot):
             yield
 
     def _calc_virtual_screen_bbox(self):
-        """ Return the rectangle describing the image in screen space
+        """Return the rectangle describing the image in screen space
         assuming that the entire image could fit on screen.
 
         Zoomed-in images will have "virtual" sizes larger than the image.
@@ -232,7 +251,7 @@ class ImagePlot(Base2DPlot):
         return [x_min, y_min, virtual_x_size, virtual_y_size]
 
     def _compute_cached_image(self, data=None, mapper=None):
-        """ Computes the correct screen coordinates and renders an image into
+        """Computes the correct screen coordinates and renders an image into
         `self._cached_image`.
 
         Parameters
@@ -279,7 +298,7 @@ class ImagePlot(Base2DPlot):
         return GraphicsContextArray(data, pix_format=kiva_depth)
 
     def _calc_zoom_coords(self, image_rect):
-        """ Calculates the coordinates of a zoomed sub-image.
+        """Calculates the coordinates of a zoomed sub-image.
 
         Because of floating point limitations, it is not advisable to request a
         extreme level of zoom, e.g., idx or idy > 10^10.
@@ -331,7 +350,7 @@ class ImagePlot(Base2DPlot):
         return index_bounds, screen_rect
 
     def _array_bounds_from_screen_rect(self, image_rect):
-        """ Transform virtual-image rectangle into array indices.
+        """Transform virtual-image rectangle into array indices.
 
         The virtual-image rectangle is in screen coordinates and can be outside
         the plot bounds. This method converts the rectangle into array indices

@@ -131,8 +131,9 @@ class TestScatterInspectorTool(EnableTestAssistant, TestCase, UnittestTools):
                 self.assertEqual(self.insp_event.event_type, "hover")
                 self.assertEqual(self.insp_event.event_index, 1)
         finally:
-            tool.observe(self.store_inspector_event, "inspector_event",
-                                 remove=True)
+            tool.observe(
+                self.store_inspector_event, "inspector_event", remove=True
+            )
 
     def test_select_triggers_event(self):
         tool = self.tool

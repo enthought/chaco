@@ -1,4 +1,3 @@
-
 from numpy import linspace, sin
 
 from chaco.api import ArrayPlotData, HPlotContainer, Plot
@@ -7,19 +6,24 @@ from enable.component_editor import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 
+
 class ConnectedRange(HasTraits):
 
     container = Instance(HPlotContainer)
 
-    traits_view = View(Item('container', editor=ComponentEditor(), show_label=False),
-                       width=1000, height=600, resizable=True,
-                       title="Connected Range")
+    traits_view = View(
+        Item("container", editor=ComponentEditor(), show_label=False),
+        width=1000,
+        height=600,
+        resizable=True,
+        title="Connected Range",
+    )
 
     def __init__(self):
         # Create the data and the PlotData object
         x = linspace(-14, 14, 100)
-        y = sin(x) * x**3
-        plotdata = ArrayPlotData(x = x, y = y)
+        y = sin(x) * x ** 3
+        plotdata = ArrayPlotData(x=x, y=y)
 
         # Create the scatter plot
         scatter = Plot(plotdata)
@@ -41,9 +45,10 @@ class ConnectedRange(HasTraits):
         # Set the two plots' ranges to be the same
         scatter.index_range = line.index_range
 
-#===============================================================================
+
+# ===============================================================================
 # demo object that is used by the demo.py application.
-#===============================================================================
-demo=ConnectedRange()
+# ===============================================================================
+demo = ConnectedRange()
 if __name__ == "__main__":
     demo.configure_traits()

@@ -19,20 +19,15 @@ class PowerFunctionExample(HasStrictTraits):
     power = Range(0, 5, value=2)
 
     #: The x-values to plot.
-    x = Array(shape=(None,), dtype='float')
+    x = Array(shape=(None,), dtype="float")
 
     # Trait defaults --------------------------------------------------------
 
     def _plot_default(self):
-        y = self.x**self.power
+        y = self.x ** self.power
         plot_data = ArrayPlotData(x=self.x, y=y)
         plot = Plot(plot_data)
-        plot.plot(
-            ('x', 'y'),
-            'line',
-            name="power function",
-            color='auto'
-        )
+        plot.plot(("x", "y"), "line", name="power function", color="auto")
 
         # configure the plot
         plot.padding_top = 25
@@ -40,9 +35,9 @@ class PowerFunctionExample(HasStrictTraits):
         plot.index_grid.visible = False
         plot.value_grid.visible = False
         plot.title = "Power Function n={}".format(self.power)
-        plot.title_position = 'right'
+        plot.title_position = "right"
         plot.title_angle = -90
-        plot.legend_alignment = 'ul'
+        plot.legend_alignment = "ul"
         plot.legend.border_visible = False
         plot.legend.bgcolor = (0.9, 0.9, 0.9, 0.5)
         plot.legend.visible = True
@@ -57,17 +52,17 @@ class PowerFunctionExample(HasStrictTraits):
 
     # Trait change handlers -------------------------------------------------
 
-    @on_trait_change('power')
+    @on_trait_change("power")
     def _update_y(self):
-        y = self.x**self.power
-        self.plot.data.set_data('y', y)
+        y = self.x ** self.power
+        self.plot.data.set_data("y", y)
 
-    @on_trait_change('x')
+    @on_trait_change("x")
     def _update_data(self):
-        y = self.x**self.power
+        y = self.x ** self.power
         self.plot.data.update_data(x=self.x, y=y)
 
-    @on_trait_change('power')
+    @on_trait_change("power")
     def _update_title(self):
         self.plot.title = "Power Function n={}".format(self.power)
 
@@ -75,17 +70,17 @@ class PowerFunctionExample(HasStrictTraits):
 
     view = View(
         VGroup(
-            Item('plot', editor=ComponentEditor()),
+            Item("plot", editor=ComponentEditor()),
             VGroup(
-                Item('power'),
+                Item("power"),
             ),
             show_labels=False,
         ),
         resizable=True,
-        title="Power Function Example"
+        title="Power Function Example",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     view = PowerFunctionExample()
     view.configure_traits()

@@ -4,48 +4,54 @@ traits.ui.wx.plot_editor.
 """
 # Enthought library imports
 from traits.etsconfig.api import ETSConfig
-from enable.api import black_color_trait, LineStyle, ColorTrait,\
-    white_color_trait, MarkerTrait, Window
+from enable.api import (
+    black_color_trait,
+    LineStyle,
+    ColorTrait,
+    white_color_trait,
+    MarkerTrait,
+    Window,
+)
 from enable.trait_defs.ui.api import RGBAColorEditor
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Enum, Str, Range, Tuple, \
-                                 Bool, Trait, Int, Any, Property
+from traits.api import Enum, Str, Range, Tuple, Bool, Trait, Int, Any, Property
 from traitsui.api import Item
 from traitsui.editor_factory import EditorFactory
 
 # Toolkit dependent imports
 from traitsui.toolkit import toolkit_object
-Editor = toolkit_object('editor:Editor')
+
+Editor = toolkit_object("editor:Editor")
 
 # Local relative imports
 from .axis import PlotAxis
 from .plot_containers import OverlayPlotContainer
-from .plot_factory import create_line_plot, create_scatter_plot, \
-                         add_default_grids, add_default_axes
+from .plot_factory import (
+    create_line_plot,
+    create_scatter_plot,
+    add_default_grids,
+    add_default_axes,
+)
 from .plot_label import PlotLabel
 
 # Somewhat unorthodox...
 from .tools.api import PanTool, ZoomTool
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 #  Trait definitions:
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 # Range of values for an axis.
-AxisRange =  Tuple( ( 0.0, 1.0, 0.01 ),
-                    labels = [ 'Low', 'High', 'Step' ],
-                    cols   = 3 )
+AxisRange = Tuple((0.0, 1.0, 0.01), labels=["Low", "High", "Step"], cols=3)
 
 # Range of axis bounds.
-AxisBounds = Tuple( ( 0.0, 1.0 ),
-                    labels = [ 'Min', 'Max' ],
-                    cols   = 2 )
+AxisBounds = Tuple((0.0, 1.0), labels=["Min", "Max"], cols=2)
 
 # Range for the height and width for the plot widget.
-PlotSize = Range( 50, 1000, 180 )
+PlotSize = Range(50, 1000, 180)
 
 # Range of plot line weights.
-LineWeight = Range( 1, 9, 3 )
+LineWeight = Range(1, 9, 3)
 
 # The color editor to use for various color traits.
 color_editor = RGBAColorEditor()
@@ -55,10 +61,11 @@ USE_DATA_UPDATE = 1
 
 
 class ChacoPlotItem(Item):
-    """ A Traits UI Item for a Chaco plot, for use in Traits UI Views.
+    """A Traits UI Item for a Chaco plot, for use in Traits UI Views.
 
     NOTE: ComponentEditor is preferred over this class, as it is more flexible.
     """
+
     # Name of the trait that references the index data source.
     index = Str
     # Name of the trait that references the value data source.
@@ -106,7 +113,7 @@ class ChacoPlotItem(Item):
     # Background color of the plot.
     bgcolor = white_color_trait
     # Background color of the plot (deprecated).
-    bg_color = Property   # backwards compatibility; deprecated
+    bg_color = Property  # backwards compatibility; deprecated
     # Color of the background padding.
     padding_bg_color = ColorTrait("sys_window")
 
@@ -153,84 +160,93 @@ class ChacoPlotItem(Item):
         return self.bgcolor
 
 
-class ChacoEditorFactory ( EditorFactory ):
-    """ Editor factory for plot editors.
-    """
-    #---------------------------------------------------------------------------
+class ChacoEditorFactory(EditorFactory):
+    """Editor factory for plot editors."""
+
+    # ---------------------------------------------------------------------------
     #  Trait definitions:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     # Width of the plot editor.
-    width    = PlotSize
+    width = PlotSize
     # Height of the plot editor.
-    height   = PlotSize
+    height = PlotSize
     # The ChacoPlotItem associated with this factory.
     plotitem = Any
 
-
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'Editor' factory methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
-    def simple_editor ( self, ui, object, name, description, parent ):
-        return ChacoPlotEditor( parent,
-                                 factory     = self,
-                                 ui          = ui,
-                                 object      = object,
-                                 name        = name,
-                                 description = description )
+    def simple_editor(self, ui, object, name, description, parent):
+        return ChacoPlotEditor(
+            parent,
+            factory=self,
+            ui=ui,
+            object=object,
+            name=name,
+            description=description,
+        )
 
-    def text_editor ( self, ui, object, name, description, parent ):
-        return ChacoPlotEditor( parent,
-                                 factory     = self,
-                                 ui          = ui,
-                                 object      = object,
-                                 name        = name,
-                                 description = description )
+    def text_editor(self, ui, object, name, description, parent):
+        return ChacoPlotEditor(
+            parent,
+            factory=self,
+            ui=ui,
+            object=object,
+            name=name,
+            description=description,
+        )
 
-    def readonly_editor ( self, ui, object, name, description, parent ):
-        return ChacoPlotEditor( parent,
-                                 factory     = self,
-                                 ui          = ui,
-                                 object      = object,
-                                 name        = name,
-                                 description = description )
+    def readonly_editor(self, ui, object, name, description, parent):
+        return ChacoPlotEditor(
+            parent,
+            factory=self,
+            ui=ui,
+            object=object,
+            name=name,
+            description=description,
+        )
 
 
-class ChacoPlotEditor ( Editor ):
-    """ Traits UI editor for displaying trait values in a Chaco plot.
-    """
+class ChacoPlotEditor(Editor):
+    """Traits UI editor for displaying trait values in a Chaco plot."""
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  Finishes initializing the editor by creating the underlying toolkit
     #  widget:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
-    def init ( self, parent ):
-        """ Finishes initializing the editor by creating the underlying toolkit
-            widget.
+    def init(self, parent):
+        """Finishes initializing the editor by creating the underlying toolkit
+        widget.
         """
         factory = self.factory
         plotitem = factory.plotitem
 
-        container = OverlayPlotContainer(padding = 50, fill_padding = True,
-                                         bgcolor = plotitem.padding_bg_color,
-                                         use_backbuffer=True)
+        container = OverlayPlotContainer(
+            padding=50,
+            fill_padding=True,
+            bgcolor=plotitem.padding_bg_color,
+            use_backbuffer=True,
+        )
 
-        if plotitem.title != '':
-            container.overlays.append(PlotLabel(plotitem.title,
-                                                component=container,
-                                                overlay_position="top"))
+        if plotitem.title != "":
+            container.overlays.append(
+                PlotLabel(
+                    plotitem.title, component=container, overlay_position="top"
+                )
+            )
 
         self._container = container
-        window = Window(parent, component = container)
+        window = Window(parent, component=container)
 
         # FIXME: Toolkit specifc code here. The AbstractWindow should have a
         # 'set size' method as part of its API.
         self.control = control = window.control
-        if ETSConfig.toolkit == 'wx':
+        if ETSConfig.toolkit == "wx":
             control.SetSize((factory.width, factory.height))
-        elif ETSConfig.toolkit == 'qt4':
+        elif ETSConfig.toolkit == "qt4":
             control.resize(factory.width, factory.height)
         else:
             raise NotImplementedError
@@ -243,27 +259,26 @@ class ChacoPlotEditor ( Editor ):
         object = self.object
         if USE_DATA_UPDATE == 1:
             for name in (plotitem.index, plotitem.value):
-                object.observe( self._update_data, name)
+                object.observe(self._update_data, name)
         for name in (plotitem.x_label_trait, plotitem.y_label_trait):
             object.observe(lambda s: self._update_axis_grids(), name)
         if plotitem.type_trait not in ("", None):
             object.observe(self.update_editor, plotitem.type_trait)
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  Disposes of the contents of an editor:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def dispose(self):
-        """ Disposes of the contents of the editor.
-        """
+        """Disposes of the contents of the editor."""
         object = self.object
         plotitem = self.factory.plotitem
 
         if USE_DATA_UPDATE == 1:
             for name in (plotitem.index, plotitem.value):
-                object.observe( self._update_data, name, remove = True )
+                object.observe(self._update_data, name, remove=True)
         for name in (plotitem.type_trait,):
-            object.observe( self.update_editor, name, remove = True )
+            object.observe(self.update_editor, name, remove=True)
         self._destroy_plot()
         super(ChacoPlotEditor, self).dispose()
 
@@ -279,16 +294,16 @@ class ChacoPlotEditor ( Editor ):
             plot.index = None
             plot.value = None
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  Updates the editor when the object trait changes externally to the editor:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def update_editor(self, event=None):
-        """ Updates the editor when the object trait changes externally to the
-            editor.
+        """Updates the editor when the object trait changes externally to the
+        editor.
         """
 
-        factory  = self.factory
+        factory = self.factory
         if factory is None:
             return
         plotitem = factory.plotitem
@@ -321,16 +336,23 @@ class ChacoPlotEditor ( Editor ):
 
         # Class-level attribute mapping different plot_type strings to methods for
         # creating different types of plots
-        plot_creator_map = { "line": self._create_line_plot,
-                             "scatter": self._create_scatter_plot }
+        plot_creator_map = {
+            "line": self._create_line_plot,
+            "scatter": self._create_scatter_plot,
+        }
 
         if plot_type in plot_creator_map:
-            plot = plot_creator_map[plot_type](plotitem, (x_values, y_values),
-                                                index_bounds = index_bounds,
-                                                value_bounds = value_bounds,
-                                                orientation = plotitem.orientation)
+            plot = plot_creator_map[plot_type](
+                plotitem,
+                (x_values, y_values),
+                index_bounds=index_bounds,
+                value_bounds=value_bounds,
+                orientation=plotitem.orientation,
+            )
         else:
-            raise RuntimeError("Unknown plot type '%s' in ChacoPlotEditor." % plot_type)
+            raise RuntimeError(
+                "Unknown plot type '%s' in ChacoPlotEditor." % plot_type
+            )
 
         self._set_basic_properties(plot, plotitem)
 
@@ -341,8 +363,8 @@ class ChacoPlotEditor ( Editor ):
         self._container.request_redraw()
 
     def _update_data(self, event):
-        """ Updates the editor when the object trait changes externally to the
-            editor.
+        """Updates the editor when the object trait changes externally to the
+        editor.
         """
         if self._plot is None:
             self.update_editor()
@@ -352,10 +374,15 @@ class ChacoPlotEditor ( Editor ):
             self._plot.index.set_data(x_values)
             self._plot.value.set_data(y_values)
 
-
     def _set_basic_properties(self, plot, plotitem):
-        for attr in ("color", "bgcolor", "border_visible", "border_width",
-                     "border_dash", "border_color"):
+        for attr in (
+            "color",
+            "bgcolor",
+            "border_visible",
+            "border_width",
+            "border_dash",
+            "border_color",
+        ):
             setattr(plot, attr, getattr(plotitem, attr))
 
     def _create_line_plot(self, plotitem, values, **kwargs):
@@ -369,8 +396,9 @@ class ChacoPlotEditor ( Editor ):
         return plot
 
     def _add_axis_grids(self, new_plot, plotitem):
-        value_axis, index_axis = add_default_axes(new_plot,
-                                    orientation=plotitem.orientation)
+        value_axis, index_axis = add_default_axes(
+            new_plot, orientation=plotitem.orientation
+        )
         add_default_grids(new_plot)
         new_plot.tools.append(PanTool(new_plot))
         zoom = ZoomTool(component=new_plot, tool_mode="box", always_on=False)
@@ -415,12 +443,18 @@ class ChacoPlotEditor ( Editor ):
         # index and value axes.  So we have to search through the underlays for
         # PlotAxis instances whose ranges match the index and value ranges.
         for axis in plot.underlays + plot.overlays:
-            if isinstance(axis, PlotAxis) and axis.mapper.range is plot.index_range:
+            if (
+                isinstance(axis, PlotAxis)
+                and axis.mapper.range is plot.index_range
+            ):
                 axis.title_font = plotitem.x_label_font
                 axis.title_color = plotitem.x_label_color
 
         for axis in plot.underlays + plot.overlays:
-            if isinstance(axis, PlotAxis) and axis.mapper.range is plot.value_range:
+            if (
+                isinstance(axis, PlotAxis)
+                and axis.mapper.range is plot.value_range
+            ):
                 axis.title_font = plotitem.y_label_font
                 axis.title_color = plotitem.y_label_color
 

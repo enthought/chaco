@@ -6,14 +6,13 @@ from enable.tools.drag_tool import DragTool
 
 
 class MoveTool(DragTool):
-    """ A tool for moving a plot component.
-    """
+    """A tool for moving a plot component."""
 
     # The (x,y) offset of the start of the drag relative to the component.
-    _offset = Tuple((0,0))
+    _offset = Tuple((0, 0))
 
     def drag_start(self, event):
-        """ Called when the drag operation starts.
+        """Called when the drag operation starts.
 
         Implements DragTool.
         """
@@ -21,7 +20,7 @@ class MoveTool(DragTool):
         event.handled = True
 
     def dragging(self, event):
-        """ This method is called for every mouse_move event that the tool
+        """This method is called for every mouse_move event that the tool
         receives while the user is dragging the mouse.
 
         Implements DragTool. Moves the component.
@@ -38,4 +37,3 @@ class MoveTool(DragTool):
             c.hgrid.invalidate()
         event.handled = True
         c.request_redraw()
-

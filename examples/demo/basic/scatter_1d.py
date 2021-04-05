@@ -19,9 +19,9 @@ from traitsui.api import Item, Group, View
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some data
@@ -38,46 +38,47 @@ def _create_plot_component():
     plot = Plot(pd, use_backbuffer=True, auto_grid=False)
 
     plot.plot_1d(
-        'index',
-        type='line_scatter_1d',
-        orientation='h',
-        color='lightgrey',
-        line_style='dot',
+        "index",
+        type="line_scatter_1d",
+        orientation="h",
+        color="lightgrey",
+        line_style="dot",
     )
 
     plot.plot_1d(
-        'index',
-        type='scatter_1d',
-        orientation='h',
-        marker='plus',
-        alignment='bottom'
+        "index",
+        type="scatter_1d",
+        orientation="h",
+        marker="plus",
+        alignment="bottom",
     )
 
     plot.plot_1d(
-        'value',
-        type='line_scatter_1d',
-        orientation='v',
-        color='lightgrey',
-        line_style='dot',
+        "value",
+        type="line_scatter_1d",
+        orientation="v",
+        color="lightgrey",
+        line_style="dot",
     )
 
     plot.plot_1d(
-        'value',
-        type='scatter_1d',
-        orientation='v',
-        marker='plus',
-        alignment='left'
+        "value",
+        type="scatter_1d",
+        orientation="v",
+        marker="plus",
+        alignment="left",
     )
 
-    plot.plot(("index", "value"),
-              type="scatter",
-              marker="square",
-              index_sort="ascending",
-              color="orange",
-              marker_size=3, #randint(1,5, numpts),
-              bgcolor="white",
-              use_backbuffer=True)
-
+    plot.plot(
+        ("index", "value"),
+        type="scatter",
+        marker="square",
+        index_sort="ascending",
+        color="orange",
+        marker_size=3,  # randint(1,5, numpts),
+        bgcolor="white",
+        use_backbuffer=True,
+    )
 
     # Tweak some of the plot properties
     plot.title = "1D Scatter Plots"
@@ -91,29 +92,35 @@ def _create_plot_component():
 
     return plot
 
-#===============================================================================
+
+# ===============================================================================
 # Attributes to use for the plot view.
 size = (650, 650)
 title = "1D scatter plots"
-bg_color="lightgray"
+bg_color = "lightgray"
 
-#===============================================================================
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size,
-                                                            bgcolor=bg_color),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item(
+                "plot",
+                editor=ComponentEditor(size=size, bgcolor=bg_color),
+                show_label=False,
+            ),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

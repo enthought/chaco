@@ -10,7 +10,7 @@ from enable.api import BaseTool
 
 
 class SaveTool(BaseTool):
-    """ This tool allows the user to press Ctrl+S to save a snapshot image of
+    """This tool allows the user to press Ctrl+S to save a snapshot image of
     the plot component.
     """
 
@@ -27,9 +27,9 @@ class SaveTool(BaseTool):
     dest_box = Tuple((0.5, 0.5, -0.5, -0.5))
     dest_box_units = Enum("inch", "cm", "mm", "pica")
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Override default trait values inherited from BaseTool
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     #: This tool does not have a visual representation (overrides BaseTool).
     draw_mode = "none"
@@ -38,7 +38,7 @@ class SaveTool(BaseTool):
     visible = False
 
     def normal_key_pressed(self, event):
-        """ Handles a key-press when the tool is in the 'normal' state.
+        """Handles a key-press when the tool is in the 'normal' state.
 
         Saves an image of the plot if the keys pressed are Control and S.
         """
@@ -53,18 +53,23 @@ class SaveTool(BaseTool):
             event.handled = True
 
     def _save_raster(self):
-        """ Saves an image of the component.
-        """
+        """Saves an image of the component."""
         from chaco.plot_graphics_context import PlotGraphicsContext
-        gc = PlotGraphicsContext((int(self.component.outer_width), int(self.component.outer_height)))
+
+        gc = PlotGraphicsContext(
+            (int(self.component.outer_width), int(self.component.outer_height))
+        )
         self.component.draw(gc, mode="normal")
         gc.save(self.filename)
 
     def _save_pdf(self):
         from chaco.pdf_graphics_context import PdfPlotGraphicsContext
-        gc = PdfPlotGraphicsContext(filename=self.filename,
-                pagesize = self.pagesize,
-                dest_box = self.dest_box,
-                dest_box_units = self.dest_box_units)
+
+        gc = PdfPlotGraphicsContext(
+            filename=self.filename,
+            pagesize=self.pagesize,
+            dest_box=self.dest_box,
+            dest_box_units=self.dest_box_units,
+        )
         gc.render_component(self.component)
         gc.save()

@@ -19,15 +19,25 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, VGroup, View, Label
 
 # Chaco imports
-from chaco.api import ArrayPlotData, ColorBar, \
-                                 ColormappedSelectionOverlay, HPlotContainer, \
-                                 viridis, LinearMapper, Plot
-from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
-                                       RangeSelectionOverlay
+from chaco.api import (
+    ArrayPlotData,
+    ColorBar,
+    ColormappedSelectionOverlay,
+    HPlotContainer,
+    viridis,
+    LinearMapper,
+    Plot,
+)
+from chaco.tools.api import (
+    PanTool,
+    ZoomTool,
+    RangeSelection,
+    RangeSelectionOverlay,
+)
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some data
@@ -36,7 +46,7 @@ def _create_plot_component():
     y1 = random(numpts)
     x2 = x1 + standard_normal(numpts) * 0.05
     y2 = y1 + standard_normal(numpts) * 0.05
-    color = exp(-(x1**2 + y2**2))
+    color = exp(-(x1 ** 2 + y2 ** 2))
     widths = random(numpts)
 
     # Create a plot data obect and give it this data
@@ -48,15 +58,17 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    plot.plot(("index", "value", "color", "widths"),
-              type="cmap_segment",
-              name="my_plot",
-              color_mapper=viridis,
-              border_visible=True,
-              render_style='cubic',
-              bgcolor="white",
-              size_min=0.5,
-              size_max=5.0)
+    plot.plot(
+        ("index", "value", "color", "widths"),
+        type="cmap_segment",
+        name="my_plot",
+        color_mapper=viridis,
+        border_visible=True,
+        render_style="cubic",
+        bgcolor="white",
+        size_min=0.5,
+        size_max=5.0,
+    )
 
     # Tweak some of the plot properties
     plot.title = "Colormapped Segment Plot with variable widths"
@@ -76,51 +88,58 @@ def _create_plot_component():
     plot.overlays.append(zoom)
 
     # Create the colorbar, handing in the appropriate range and colormap
-    colorbar = ColorBar(index_mapper=LinearMapper(range=plot.color_mapper.range),
-                        color_mapper=plot.color_mapper,
-                        orientation='v',
-                        resizable='v',
-                        width=30,
-                        padding=20)
+    colorbar = ColorBar(
+        index_mapper=LinearMapper(range=plot.color_mapper.range),
+        color_mapper=plot.color_mapper,
+        orientation="v",
+        resizable="v",
+        width=30,
+        padding=20,
+    )
     colorbar.plot = cmap_renderer
     colorbar.padding_top = plot.padding_top
     colorbar.padding_bottom = plot.padding_bottom
 
     # Create a container to position the plot and the colorbar side-by-side
-    container = HPlotContainer(use_backbuffer = True)
+    container = HPlotContainer(use_backbuffer=True)
     container.add(plot)
     container.add(colorbar)
     container.bgcolor = "lightgray"
     return container
 
+
 def create_colorbar(colormap):
-    colorbar = ColorBar(index_mapper=LinearMapper(range=colormap.range),
-                        color_mapper=colormap,
-                        orientation='v',
-                        resizable='v',
-                        width=30,
-                        padding=20)
+    colorbar = ColorBar(
+        index_mapper=LinearMapper(range=colormap.range),
+        color_mapper=colormap,
+        orientation="v",
+        resizable="v",
+        width=30,
+        padding=20,
+    )
     return colorbar
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(650,650)
-title="Colormapped segment plot"
 
-#===============================================================================
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (650, 650)
+title = "Colormapped segment plot"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Item('plot', editor=ComponentEditor(size=size),
-                            show_label=False),
-                    resizable=True,
-                    title=title
-                    )
+        Item("plot", editor=ComponentEditor(size=size), show_label=False),
+        resizable=True,
+        title=title,
+    )
+
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2014, Enthought, Inc.
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 import unittest
 
 import numpy as np
@@ -19,7 +19,6 @@ from chaco import default_colormaps
 
 
 class DefaultColormapsTestCase(unittest.TestCase):
-
     def test_default_colormaps_smoke(self):
         # Runs some data through each of the default colormaps and do basic
         # sanity checks.
@@ -42,8 +41,7 @@ class DefaultColormapsTestCase(unittest.TestCase):
             c_cmapper = default_colormaps.center(cmap_func)(datarange)
             self.assertEqual(c_cmapper.range.low, -1.5)
             self.assertEqual(c_cmapper.range.high, 1.5)
-            f_cmapper = default_colormaps.fix(cmap_func,
-                                              (0.0, 1.0))(datarange)
+            f_cmapper = default_colormaps.fix(cmap_func, (0.0, 1.0))(datarange)
             self.assertEqual(f_cmapper.range.low, 0.0)
             self.assertEqual(f_cmapper.range.high, 1.0)
 
@@ -63,7 +61,7 @@ class DefaultColormapsTestCase(unittest.TestCase):
             assert_array_equal(rgba[:, -1], np.ones(3))
 
             r_cmapper = default_colormaps.reverse(cmap_func)(datarange)
-            y = (len(cmapper.palette)-1-x[::-1])
+            y = len(cmapper.palette) - 1 - x[::-1]
             r_rgba = r_cmapper.map_screen(y)
             assert_array_almost_equal(r_rgba, rgba[::-1])
 

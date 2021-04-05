@@ -29,26 +29,25 @@ from chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotFrame(DemoFrame):
-
     def _create_data(self):
         numpoints = 100
         low = -5
         high = 15.0
-        x = arange(low, high, (high-low)/numpoints)
-        y = jn(0, x)   # use the j0 bessel function
+        x = arange(low, high, (high - low) / numpoints)
+        y = jn(0, x)  # use the j0 bessel function
 
         self.numpoints = numpoints
         self.x_values = x
         self.y_values = y
-        self.current_index = numpoints/2
+        self.current_index = numpoints / 2
         self.increment = 2
 
     def _create_window(self):
         self._create_data()
-        x = self.x_values[:self.current_index]
-        y = self.y_values[:self.current_index]
+        x = self.x_values[: self.current_index]
+        y = self.y_values[: self.current_index]
 
-        plot = create_line_plot((x,y), color="red", width=2.0)
+        plot = create_line_plot((x, y), color="red", width=2.0)
         plot.padding = 50
         plot.fill_padding = True
         plot.bgcolor = "white"
@@ -57,18 +56,18 @@ class PlotFrame(DemoFrame):
         bottom.tick_interval = 2.0
         vgrid.grid_interval = 2.0
 
-
         self.plot = plot
         plot.tools.append(PanTool(component=plot))
-        plot.overlays.append(ZoomTool(component=plot, tool_mode="box",
-                                        always_on=False))
+        plot.overlays.append(
+            ZoomTool(component=plot, tool_mode="box", always_on=False)
+        )
 
         self.timer = Timer(50.0, self.onTimer)
         return Window(self, -1, component=plot)
 
     def onTimer(self, *args):
         # adjust the index and increment
-        if self.current_index <= self.numpoints/8:
+        if self.current_index <= self.numpoints / 8:
             self.increment = 2
         elif self.current_index == self.numpoints:
             self.increment = -2
@@ -77,8 +76,8 @@ class PlotFrame(DemoFrame):
         if self.current_index > self.numpoints:
             self.current_index = self.numpoints
 
-        self.plot.index.set_data(self.x_values[:self.current_index])
-        self.plot.value.set_data(self.y_values[:self.current_index])
+        self.plot.index.set_data(self.x_values[: self.current_index])
+        self.plot.value.set_data(self.y_values[: self.current_index])
         self.plot.request_redraw()
 
 

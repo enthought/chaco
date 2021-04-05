@@ -1,6 +1,6 @@
-
 from traits.api import Int
 from enable.tools.api import MoveTool
+
 
 class MPMoveTool(MoveTool):
 
@@ -15,6 +15,3 @@ class MPMoveTool(MoveTool):
         if event.bid == self.cur_bid:
             self.cur_bid = -1
             self.normal_left_up(event)
-
-
-

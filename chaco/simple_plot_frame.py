@@ -9,13 +9,13 @@
 #################################################################################
 
 
-
 # Enthought library imports
 from traits.api import Bool
 
 # Local, relative imports
 from .base_plot_frame import BasePlotFrame
 from .plot_containers import OverlayPlotContainer
+
 
 class SimplePlotFrame(BasePlotFrame):
     """
@@ -28,7 +28,7 @@ class SimplePlotFrame(BasePlotFrame):
 
     #: This frame has only one position for plot components. Overrides
     #: PlotFrame.
-    slot_names = ("center")
+    slot_names = "center"
 
     #: Default width and height. Class attribute.
     default_bounds = (500, 500)
@@ -40,13 +40,12 @@ class SimplePlotFrame(BasePlotFrame):
     #: component. Overrides Enable Container.
     fit_window = True
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Does the component need to do a layout call?
     _layout_needed = Bool(True)
-
 
     def __init__(self, **kwtraits):
         # Delay setting the bounds until after base class initialization
@@ -56,12 +55,12 @@ class SimplePlotFrame(BasePlotFrame):
         self.set_slot("center", OverlayPlotContainer(resizable="hv"))
         self.bounds = bounds
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Protected methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _draw_component(self, gc, view_bounds=None, mode="normal"):
-        """ Draws the component.
+        """Draws the component.
 
         This method is preserved for backwards compatibility with _old_draw().
         Overrides PlotComponent.
@@ -75,11 +74,11 @@ class SimplePlotFrame(BasePlotFrame):
                 self.center.draw(gc, view_bounds, mode)
 
     def get_preferred_size(self):
-        """ Returns the size (width,height) that is preferred for this component.
+        """Returns the size (width,height) that is preferred for this component.
 
         Overrides PlotComponent.
         """
-        size = [0,0]
+        size = [0, 0]
         component_pref_size = None
         if "h" not in self.resizable:
             if "h" in self.fit_components:
@@ -127,15 +126,15 @@ class SimplePlotFrame(BasePlotFrame):
             # auto-size to our bounds, so do nothing.
             pass
 
-        component.outer_position = [0,0]
+        component.outer_position = [0, 0]
         component.do_layout()
 
     ### Persistence ###########################################################
-    #_pickles = ()
+    # _pickles = ()
 
     def __getstate__(self):
-        state = super(SimplePlotFrame,self).__getstate__()
-        for key in ['_layout_needed']:
+        state = super(SimplePlotFrame, self).__getstate__()
+        for key in ["_layout_needed"]:
             if key in state:
                 del state[key]
 

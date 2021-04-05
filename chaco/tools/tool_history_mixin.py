@@ -5,7 +5,7 @@ from enable.api import KeySpec
 
 
 class ToolHistoryMixin(HasTraits):
-    """ A mix-in class for tools to maintain a tool state history and to move
+    """A mix-in class for tools to maintain a tool state history and to move
     backwards and forwards through that history stack.
 
     This mix-in listens for keypressed events; to handle keypresses in a
@@ -28,12 +28,12 @@ class ToolHistoryMixin(HasTraits):
     # The current index into _history
     _history_index = Int
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Abstract methods that subclasses must implement to handle keypresses
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _next_state_pressed(self):
-        """ Called when the tool needs to advance to the next state in the
+        """Called when the tool needs to advance to the next state in the
         stack.
 
         The **_history_index** will have already been set to the index
@@ -42,7 +42,7 @@ class ToolHistoryMixin(HasTraits):
         pass
 
     def _prev_state_pressed(self):
-        """ Called when the tool needs to advance to the previous state in the
+        """Called when the tool needs to advance to the previous state in the
         stack.
 
         The **_history_index** will have already been set to the index
@@ -51,44 +51,42 @@ class ToolHistoryMixin(HasTraits):
         pass
 
     def _reset_state_pressed(self):
-        """ Called when the tool needs to reset its history.
+        """Called when the tool needs to reset its history.
 
         The history index will have already been set to 0.
         """
         pass
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Protected methods for subclasses to use
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _current_state(self):
-        """ Returns the current history state.
-        """
+        """Returns the current history state."""
         return self._history[self._history_index]
 
     def _reset_state(self, state):
-        """ Clears the history stack and sets the first or original state in
+        """Clears the history stack and sets the first or original state in
         the history to *state*.
         """
         self._history = [state]
         self._history_index = 0
 
     def _append_state(self, state, set_index=True):
-        """ Clears the history after the current **_history_index**, and
+        """Clears the history after the current **_history_index**, and
         appends the given state to the history.
 
         If *set_index* is True, the method sets the **_history_index** to
         match the new, truncated history. If it is False, the history index
         is unchanged.
         """
-        new_history = self._history[:self._history_index+1] + [state]
+        new_history = self._history[: self._history_index + 1] + [state]
         self._history = new_history
         if set_index:
             self._history_index = len(self._history) - 1
 
     def _pop_state(self):
-        """ Pops the most last state off the history stack.
+        """Pops the most last state off the history stack.
 
         If the history index points to the end of the stack, then it is
         adjusted; otherwise, the index is unaffected. If the stack is empty,
@@ -104,27 +102,33 @@ class ToolHistoryMixin(HasTraits):
 
         return self._history.pop()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods / event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def normal_key_pressed(self, event):
-        """ Handles a key being pressed, and takes appropriate action if it is
+        """Handles a key being pressed, and takes appropriate action if it is
         one of the history keys defined for this class.
         """
         self._history_handle_key(event)
 
     def _history_handle_key(self, event):
-        if self.reset_state_key is not None and self.reset_state_key.match(event):
+        if self.reset_state_key is not None and self.reset_state_key.match(
+            event
+        ):
             self._history_index = 0
             self._reset_state_pressed()
             event.handled = True
-        elif self.prev_state_key is not None and self.prev_state_key.match(event):
+        elif self.prev_state_key is not None and self.prev_state_key.match(
+            event
+        ):
             if self._history_index > 0:
                 self._history_index -= 1
                 self._prev_state_pressed()
             event.handled = True
-        elif self.next_state_key is not None and self.next_state_key.match(event):
+        elif self.next_state_key is not None and self.next_state_key.match(
+            event
+        ):
             if self._history_index <= len(self._history) - 2:
                 self._history_index += 1
                 self._next_state_pressed()

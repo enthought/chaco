@@ -11,7 +11,7 @@ from traits.api import Enum, Float
 
 
 class PointMarker(BaseTool):
-    """ This tool looks at an XY plot's index data source and draws a
+    """This tool looks at an XY plot's index data source and draws a
     line corresponding to the index indicated by the "selections" metadata.
     """
 
@@ -31,7 +31,7 @@ class PointMarker(BaseTool):
     line_width = Float(1.0)
 
     def draw(self, gc, view_bounds=None):
-        """ Draws this tool on a graphics context.
+        """Draws this tool on a graphics context.
 
         Implements BaseTool.
         """
@@ -54,28 +54,28 @@ class PointMarker(BaseTool):
                     self._draw_vertical_lines(gc, screen_pts)
                 else:
                     self._draw_horizontal_lines(gc, screen_pts)
-            else:   # self.axis == "value"
+            else:  # self.axis == "value"
                 if plot.orientation == "h":
                     self._draw_horizontal_lines(gc, screen_pts)
                 else:
                     self._draw_vertical_lines(gc, screen_pts)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _draw_vertical_lines(self, gc, points):
         with gc:
             gc.set_stroke_color(self.color_)
             for pt in points:
-                gc.move_to(int(pt[0])+0.5, self.component.y)
-                gc.line_to(int(pt[0])+0.5, self.component.y2)
+                gc.move_to(int(pt[0]) + 0.5, self.component.y)
+                gc.line_to(int(pt[0]) + 0.5, self.component.y2)
             gc.stroke_path()
 
     def _draw_horizontal_lines(self, gc, points):
         with gc:
             gc.set_stroke_color(self.color_)
             for pt in points:
-                gc.move_to(self.component.x, int(pt[1])+0.5)
-                gc.line_to(self.component.x2, int(pt[1])+0.5)
+                gc.move_to(self.component.x, int(pt[1]) + 0.5)
+                gc.line_to(self.component.x2, int(pt[1]) + 0.5)
             gc.stroke_path()

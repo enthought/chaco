@@ -6,8 +6,12 @@ import numpy as np
 from traits.api import Callable, Enum, HasTraits, Instance, observe, Str
 from traitsui.api import View, Item
 from enable.api import ComponentEditor
-from chaco.api import Plot, ArrayPlotData, ScatterInspectorOverlay, \
-    TextBoxOverlay
+from chaco.api import (
+    Plot,
+    ArrayPlotData,
+    ScatterInspectorOverlay,
+    TextBoxOverlay,
+)
 from chaco.api import DataFramePlotData
 from chaco.tools.api import ScatterInspector
 
@@ -18,17 +22,17 @@ class DataframeScatterInspector(ScatterInspector):
 
 
 class DataframeScatterOverlay(TextBoxOverlay):
-    """ Overlay for displaying hovered data point information.
-    """
+    """Overlay for displaying hovered data point information."""
+
     #: The inspector tool which has hover information
     inspector = Instance(ScatterInspector)
 
     #: Function which takes and index and returns an info string.
     message_for_data = Callable
 
-    @observe('inspector:inspector_event')
+    @observe("inspector:inspector_event")
     def scatter_point_found(self, event):
-        inspector_event = event.new 
+        inspector_event = event.new
         data_idx = inspector_event.event_index
         if data_idx is not None:
             self.text = self.message_for_data(data_idx)
@@ -57,31 +61,33 @@ if __name__ == "__main__":
         # scatter plot:
         x = np.random.uniform(0.0, 10.0, 50)
         y = np.random.uniform(0.0, 5.0, 50)
-        data = pd.DataFrame({"x": x, "y": y,
-                             "dataset": np.random.choice(list("abcdefg"), 50)})
+        data = pd.DataFrame(
+            {"x": x, "y": y, "dataset": np.random.choice(list("abcdefg"), 50)}
+        )
         plot_data = ArrayPlotData(x=x, y=y)
         plot = Plot(plot_data)
         scatter = plot.plot(("x", "y"), type="scatter")[0]
 
         # Attach the inspector and its overlays
-        inspector = DataframeScatterInspector(
-            component=scatter, data=data
-        )
+        inspector = DataframeScatterInspector(component=scatter, data=data)
         scatter.tools.append(inspector)
 
-        text_overlay = DataframeScatterOverlay(component=plot,
-                                               inspector=inspector,
-                                               bgcolor="black", alpha=0.6,
-                                               text_color="white",
-                                               border_color='none')
+        text_overlay = DataframeScatterOverlay(
+            component=plot,
+            inspector=inspector,
+            bgcolor="black",
+            alpha=0.6,
+            text_color="white",
+            border_color="none",
+        )
         plot.overlays.append(text_overlay)
 
         # Optional: add an overlay on the point to confirm what is hovered over
         # Note that this overlay magically knows about hovered points by
         # listening to renderer events rather than inspector events:
-        point_overlay = ScatterInspectorOverlay(component=scatter,
-                                                hover_color="red",
-                                                hover_marker_size=6)
+        point_overlay = ScatterInspectorOverlay(
+            component=scatter, hover_color="red", hover_marker_size=6
+        )
         scatter.overlays.append(point_overlay)
         return plot
 
@@ -98,8 +104,9 @@ class Demo(HasTraits):
     plot = Instance(Plot)
 
     traits_view = View(
-        Item('plot', editor=ComponentEditor(size=size), show_label=False),
-        resizable=True, title=title
+        Item("plot", editor=ComponentEditor(size=size), show_label=False),
+        resizable=True,
+        title=title,
     )
 
     def _plot_default(self):

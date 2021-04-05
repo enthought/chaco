@@ -2,8 +2,17 @@ from numpy import array, isscalar, issubsctype, linspace, number
 
 # Enthought library imports
 from enable.api import ColorTrait
-from traits.api import Bool, Instance, Int, List, Property, \
-        Range, Str, Trait, Tuple
+from traits.api import (
+    Bool,
+    Instance,
+    Int,
+    List,
+    Property,
+    Range,
+    Str,
+    Trait,
+    Tuple,
+)
 
 # Local relative imports
 from .base_2d_plot import Base2DPlot
@@ -11,13 +20,13 @@ from .color_mapper import ColorMapper
 
 
 class BaseContourPlot(Base2DPlot):
-    """ The base class for contour plots.  Mostly manages configuration and
+    """The base class for contour plots.  Mostly manages configuration and
     change events with colormap and contour parameters.
     """
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Data-related traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Defines the levels to contour.
     # ``levels`` can be either: a list of floating point numbers that define
@@ -40,9 +49,9 @@ class BaseContourPlot(Base2DPlot):
     # A global alpha value to apply to all the contours
     alpha = Trait(1.0, Range(0.0, 1.0))
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Is the cached level data valid?
     _level_cache_valid = Bool(False)
@@ -60,7 +69,6 @@ class BaseContourPlot(Base2DPlot):
     # ones. (Mapped traits in lists are not supported, must be converted one at
     # a time.)
     _color_map_trait = ColorTrait
-
 
     def __init__(self, *args, **kwargs):
         super(BaseContourPlot, self).__init__(*args, **kwargs)
@@ -81,7 +89,7 @@ class BaseContourPlot(Base2DPlot):
         self._colors_cache_valid = False
 
     def _update_colors(self, numcolors=None):
-        """ Update the colors cache using our color mapper and based
+        """Update the colors cache using our color mapper and based
         on our number of levels.  The **mode** parameter accounts for fenceposting:
           - If **mode** is "poly", then the number of colors to generate is 1
             less than the number of levels
@@ -104,7 +112,7 @@ class BaseContourPlot(Base2DPlot):
 
         # If we are given a colormap, use it to map all the levels to colors
         elif isinstance(colors, ColorMapper):
-            self._colors =  []
+            self._colors = []
             mapped_colors = self.color_mapper.map_screen(array(self._levels))
             for i in range(numcolors):
                 self._color_map_trait = tuple(mapped_colors[i])
@@ -115,8 +123,9 @@ class BaseContourPlot(Base2DPlot):
         # a color; otherwise, this is interpreted as a list of items to
         # be converted via self._color_map_trait.
         else:
-            if len(colors) in (3,4) and \
-                    (isscalar(colors[0]) and issubsctype(type(colors[0]), number)):
+            if len(colors) in (3, 4) and (
+                isscalar(colors[0]) and issubsctype(type(colors[0]), number)
+            ):
                 self._color_map_trait = colors
                 self._colors = [self._color_map_trait_] * numcolors
             else:
@@ -124,14 +133,14 @@ class BaseContourPlot(Base2DPlot):
                 # repeat colors from the beginning of the list as needed
                 self._colors = []
                 for i in range(len(self._levels)):
-                    self._color_map_trait = colors[i%len(colors)]
+                    self._color_map_trait = colors[i % len(colors)]
                     self._colors.append(self._color_map_trait_)
 
         self._colors_cache_valid = True
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _index_data_changed_fired(self):
         # If the index data has changed, the reset the levels cache (which
@@ -164,9 +173,9 @@ class BaseContourPlot(Base2DPlot):
             self._update_colors()
             self.invalidate_and_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait properties
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_color_mapper(self):
         if isinstance(self.colors, ColorMapper):
@@ -177,11 +186,16 @@ class BaseContourPlot(Base2DPlot):
     def _set_color_mapper(self, color_mapper):
         # Remove the dynamic event handler from the old color mapper
         if self.colors is not None and isinstance(self.colors, ColorMapper):
-            self.colors.observe(self._update_color_mapper, "updated", remove=True)
+            self.colors.observe(
+                self._update_color_mapper, "updated", remove=True
+            )
 
             # Check to see if we should copy over the range as well
             if color_mapper is not None:
-                if color_mapper.range is None and self.colors.range is not None:
+                if (
+                    color_mapper.range is None
+                    and self.colors.range is not None
+                ):
                     color_mapper.range = self.colors.range
 
         # Attach the dynamic event handler to the new color mapper

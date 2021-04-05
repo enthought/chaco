@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 #
 #  Copyright (c) 2009-2010, Enthought, Inc.
 #  All rights reserved.
@@ -13,7 +13,7 @@
 #  Author: Vibha Srinivasan
 #  Date: 02/03/2009
 #
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 """ Run the Chaco demo.
 """
@@ -22,8 +22,4 @@ from traitsui.extras.demo import demo
 
 # Uncomment the config_filename portion to see a tree editor based on the
 # examples.cfg file.
-demo(use_files=True,
-     config_filename='tutorials.cfg',
-     title = 'Chaco Tutorials'
-    )
-
+demo(use_files=True, config_filename="tutorials.cfg", title="Chaco Tutorials")

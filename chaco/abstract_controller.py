@@ -18,7 +18,7 @@ class AbstractController(Interactor):
         super(AbstractController, self).__init__(*args, **kw)
 
     def deactivate(self, component):
-        """ This method is called by the component when this controller is no
+        """This method is called by the component when this controller is no
         longer the active tool.
         """
         pass

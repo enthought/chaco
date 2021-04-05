@@ -4,7 +4,6 @@ The main app for the Cliptest application
 """
 
 
-
 # Enthought library imports
 from traits.api import Float
 from enable.api import Window, Container, Component, Pointer
@@ -16,6 +15,7 @@ class Box(Component):
     """
     The box moves wherever the user clicks and drags.
     """
+
     normal_pointer = Pointer("arrow")
     moving_pointer = Pointer("hand")
 
@@ -40,9 +40,9 @@ class Box(Component):
             gc.fill_path()
 
             ## draw line around outer box
-            #gc.set_stroke_color((0,0,0,1))
-            #gc.rect(self.outer_x, self.outer_y, self.outer_width, self.outer_height)
-            #gc.stroke_path()
+            # gc.set_stroke_color((0,0,0,1))
+            # gc.rect(self.outer_x, self.outer_y, self.outer_width, self.outer_height)
+            # gc.stroke_path()
 
     def normal_left_down(self, event):
         self.event_state = "moving"
@@ -53,7 +53,7 @@ class Box(Component):
         event.handled = True
 
     def moving_mouse_move(self, event):
-        self.position = [event.x-self.offset_x, event.y-self.offset_y]
+        self.position = [event.x - self.offset_x, event.y - self.offset_y]
         event.handled = True
         self.request_redraw()
 
@@ -71,13 +71,22 @@ class Box(Component):
 
 class MainFrame(DemoFrame):
     def _create_window(self):
-        a = Box(bounds=[75, 75], position=[50,50], fill_color=(1, 0, 0, 1))
-        b = Box(bounds=[75, 75], position=[200,50], fill_color=(0, 1, 0, 1))
-        c = Box(bounds=[75, 75], position=[50,200], fill_color=(0, 0, 1, 1))
-        cont = Container(a, b, c, bounds=[400,400], border_visible=True, bgcolor="lightgray")
-        #cont.unified_draw = True
-        #cont.draw_layer = "background"
-        cont2 = Container(bounds=[300,300], border_visible=True, bgcolor="cyan")
+        a = Box(bounds=[75, 75], position=[50, 50], fill_color=(1, 0, 0, 1))
+        b = Box(bounds=[75, 75], position=[200, 50], fill_color=(0, 1, 0, 1))
+        c = Box(bounds=[75, 75], position=[50, 200], fill_color=(0, 0, 1, 1))
+        cont = Container(
+            a,
+            b,
+            c,
+            bounds=[400, 400],
+            border_visible=True,
+            bgcolor="lightgray",
+        )
+        # cont.unified_draw = True
+        # cont.draw_layer = "background"
+        cont2 = Container(
+            bounds=[300, 300], border_visible=True, bgcolor="cyan"
+        )
         cont.tools.append(MoveTool(cont, drag_button="left"))
         cont2.tools.append(MoveTool(cont2, drag_button="left"))
         outer = Container(cont, cont2, fit_window=True)
@@ -87,5 +96,4 @@ class MainFrame(DemoFrame):
 if __name__ == "__main__":
     # Save demo so that it doesn't get garbage collected when run within
     # existing event loop (i.e. from ipython).
-    demo = demo_main(MainFrame, size=(800,800), title="ClipTest")
-
+    demo = demo_main(MainFrame, size=(800, 800), title="ClipTest")

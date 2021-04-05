@@ -12,7 +12,7 @@ from chaco.base_2d_plot import Base2DPlot
 
 
 class LineInspector(BaseTool):
-    """ A simple tool to draw a line parallel to the index or the value axis of
+    """A simple tool to draw a line parallel to the index or the value axis of
     an X-Y plot.
 
     This tool supports only plots with a 1-D index.
@@ -43,9 +43,9 @@ class LineInspector(BaseTool):
     #: The name of the metadata field to listen or write to.
     metadata_name = Str("selections")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Override default values of inherited traits in BaseTool
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: This tool is visible (overrides BaseTool).
     visible = True
@@ -65,7 +65,7 @@ class LineInspector(BaseTool):
     _last_position = Trait(None, Any)
 
     def draw(self, gc, view_bounds=None):
-        """ Draws this tool on a graphics context.
+        """Draws this tool on a graphics context.
 
         Overrides BaseTool.
         """
@@ -91,7 +91,7 @@ class LineInspector(BaseTool):
                 self._draw_vertical_line(gc, sx)
             elif sy is not None:
                 self._draw_horizontal_line(gc, sy)
-        else:   # self.axis == "value"
+        else:  # self.axis == "value"
             if plot.orientation == "h" and sy is not None:
                 self._draw_horizontal_line(gc, sy)
             elif sx is not None:
@@ -101,13 +101,11 @@ class LineInspector(BaseTool):
         pass
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draws this component overlaid on a graphics context.
-        """
+        """Draws this component overlaid on a graphics context."""
         self.draw(gc, view_bounds)
 
     def normal_mouse_move(self, event):
-        """ Handles the mouse being moved.
-        """
+        """Handles the mouse being moved."""
         if not self.is_interactive:
             return
         plot = self.component
@@ -116,31 +114,36 @@ class LineInspector(BaseTool):
             if isinstance(plot, BaseXYPlot):
                 if self.write_metadata:
                     if self.inspect_mode == "space":
-                        index_coord, value_coord = \
-                            self._map_to_data(event.x, event.y)
+                        index_coord, value_coord = self._map_to_data(
+                            event.x, event.y
+                        )
                         plot.index.metadata[self.metadata_name] = index_coord
                         plot.value.metadata[self.metadata_name] = value_coord
                     else:
-                        ndx = plot.map_index((event.x, event.y),
-                                             threshold=5.0, index_only=True)
+                        ndx = plot.map_index(
+                            (event.x, event.y), threshold=5.0, index_only=True
+                        )
                         if ndx:
                             plot.index.metadata[self.metadata_name] = ndx
                             plot.value.metadata[self.metadata_name] = ndx
             elif isinstance(plot, Base2DPlot):
                 if self.write_metadata:
                     try:
-                        old_x_data, old_y_data = \
-                            plot.index.metadata[self.metadata_name]
+                        old_x_data, old_y_data = plot.index.metadata[
+                            self.metadata_name
+                        ]
                     except:
                         old_x_data, old_y_data = (None, None)
 
                     if self.inspect_mode == "space":
                         if plot.orientation == "h":
-                            x_coord, y_coord = \
-                                plot.map_data([(event.x, event.y)])[0]
+                            x_coord, y_coord = plot.map_data(
+                                [(event.x, event.y)]
+                            )[0]
                         else:
-                            y_coord, x_coord = \
-                                plot.map_data([(event.x, event.y)])[0]
+                            y_coord, x_coord = plot.map_data(
+                                [(event.x, event.y)]
+                            )[0]
                         if self.axis == "index_x":
                             metadata = x_coord, old_y_data
                         elif self.axis == "index_y":
@@ -149,11 +152,13 @@ class LineInspector(BaseTool):
                             raise ValueError(self.axis)
                     else:
                         if plot.orientation == "h":
-                            x_ndx, y_ndx =  plot.map_index((event.x, event.y),
-                                                           threshold=5.0)
+                            x_ndx, y_ndx = plot.map_index(
+                                (event.x, event.y), threshold=5.0
+                            )
                         else:
-                            y_ndx, x_ndx = plot.map_index((event.x, event.y),
-                                                          threshold=5.0)
+                            y_ndx, x_ndx = plot.map_index(
+                                (event.x, event.y), threshold=5.0
+                            )
                         if self.axis == "index_x":
                             metadata = x_ndx, old_y_data
                         elif self.axis == "index_y":
@@ -163,8 +168,7 @@ class LineInspector(BaseTool):
             plot.request_redraw()
 
     def normal_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot.
-        """
+        """Handles the mouse leaving the plot."""
         if not self.is_interactive:
             return
         self._last_position = None
@@ -178,12 +182,12 @@ class LineInspector(BaseTool):
                     plot.index.metadata.pop(self.metadata_name, None)
             plot.request_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_screen_pts(self):
-        """ Returns the screen-space coordinates of the selected point on
+        """Returns the screen-space coordinates of the selected point on
         the plot component as a tuple (x, y).
 
         A dimension that doesn't have a selected point has the value None at
@@ -231,7 +235,7 @@ class LineInspector(BaseTool):
             return retval[1], retval[0]
 
     def _map_to_data(self, x, y):
-        """ Returns the data space coordinates of the given x and y.
+        """Returns the data space coordinates of the given x and y.
 
         Takes into account orientation of the plot and the axis setting.
         """
@@ -246,7 +250,7 @@ class LineInspector(BaseTool):
         return index, value
 
     def _draw_vertical_line(self, gc, sx):
-        """ Draws a vertical line through screen point (sx,sy) having the height
+        """Draws a vertical line through screen point (sx,sy) having the height
         of the tool's component.
         """
         if sx < self.component.x or sx > self.component.x2:
@@ -261,7 +265,7 @@ class LineInspector(BaseTool):
             gc.stroke_path()
 
     def _draw_horizontal_line(self, gc, sy):
-        """ Draws a horizontal line through screen point (sx,sy) having the
+        """Draws a horizontal line through screen point (sx,sy) having the
         width of the tool's component.
         """
         if sy < self.component.y or sy > self.component.y2:

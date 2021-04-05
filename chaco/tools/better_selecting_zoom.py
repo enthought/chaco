@@ -1,5 +1,3 @@
-
-
 import numpy
 
 from chaco.abstract_overlay import AbstractOverlay
@@ -10,9 +8,10 @@ from traits.util.deprecated import deprecated
 from .better_zoom import BetterZoom
 from .tool_states import SelectedZoomState
 
+
 class BetterSelectingZoom(AbstractOverlay, BetterZoom):
-    """ Zooming tool which allows the user to draw a box which defines the
-        desired region to zoom in to
+    """Zooming tool which allows the user to draw a box which defines the
+    desired region to zoom in to
     """
 
     #: The selection mode:
@@ -29,7 +28,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
 
     #: Defines a meta-key, that works with always_on to set the zoom mode. This
     #: is useful when the zoom tool is used in conjunction with the pan tool.
-    always_on_modifier = Enum('control', 'shift', 'alt')
+    always_on_modifier = Enum("control", "shift", "alt")
 
     #: The mouse button that initiates the drag.  If "None", then the tool
     #: will not respond to drag.  (It can still respond to mousewheel events.)
@@ -39,14 +38,13 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     #: the tool to actually take effect.
     minimum_screen_delta = Int(10)
 
-
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # deprecated interaction controls, used for API compatability with
     # SimpleZoom
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     #: Conversion ratio from wheel steps to zoom factors.
-    wheel_zoom_step = Property(Float, depends_on='zoom_factor')
+    wheel_zoom_step = Property(Float, depends_on="zoom_factor")
 
     #: The key press to enter zoom mode, if **always_on** is False.  Has no effect
     #: if **always_on** is True.
@@ -59,10 +57,9 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     #: Disable the tool after the zoom is completed?
     disable_on_complete = Property()
 
-
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Appearance properties (for Box mode)
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     #: The pointer to use when drawing a zoom box.
     pointer = "magnifier"
@@ -97,9 +94,9 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     # is currently enabled.
     _enabled = Bool(False)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # the original numerical screen ranges
     _orig_low_setting = Tuple
@@ -117,29 +114,28 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         self._orig_high_setting = (x_range.high_setting, y_range.high_setting)
 
     def reset(self, event=None):
-        """ Resets the tool to normal state, with no start or end position.
-        """
+        """Resets the tool to normal state, with no start or end position."""
         self.event_state = "normal"
         self._screen_start = None
         self._screen_end = None
 
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     #  BetterZoom interface
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     def normal_key_pressed(self, event):
-        """ Handles a key being pressed when the tool is in the 'normal'
+        """Handles a key being pressed when the tool is in the 'normal'
         state.
         """
         if not self.always_on:
             if self.enter_zoom_key.match(event) and not self._enabled:
-                self.event_state = 'pre_selecting'
+                self.event_state = "pre_selecting"
                 event.window.set_pointer(self.pointer)
                 event.window.set_mouse_owner(self, event.net_transform())
                 self._enabled = True
                 event.handled = True
             elif self.exit_zoom_key.match(event) and self._enabled:
-                self.state = 'normal'
+                self.state = "normal"
                 self._end_select(event)
                 event.handled = True
 
@@ -147,7 +143,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             super(BetterSelectingZoom, self).normal_key_pressed(event)
 
     def normal_left_down(self, event):
-        """ Handles the left mouse button being pressed while the tool is
+        """Handles the left mouse button being pressed while the tool is
         in the 'normal' state.
 
         If the tool is enabled or always on, it starts selecting.
@@ -157,7 +153,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             event.handled = True
 
     def normal_right_down(self, event):
-        """ Handles the right mouse button being pressed while the tool is
+        """Handles the right mouse button being pressed while the tool is
         in the 'normal' state.
 
         If the tool is enabled or always on, it starts selecting.
@@ -167,26 +163,24 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             event.handled = True
 
     def pre_selecting_left_down(self, event):
-        """ The user pressed the key to turn on the zoom mode,
-            now handle the click to start the select mode
+        """The user pressed the key to turn on the zoom mode,
+        now handle the click to start the select mode
         """
         self._start_select(event)
         event.handled = True
 
     def pre_selecting_key_pressed(self, event):
-        """ Handle key presses, specifically the exit zoom key
-        """
+        """Handle key presses, specifically the exit zoom key"""
         if self.exit_zoom_key.match(event) and self._enabled:
             self._end_selecting(event)
 
     def selecting_key_pressed(self, event):
-        """ Handle key presses, specifically the exit zoom key
-        """
+        """Handle key presses, specifically the exit zoom key"""
         if self.exit_zoom_key.match(event) and self._enabled:
             self._end_selecting(event)
 
     def selecting_mouse_move(self, event):
-        """ Handles the mouse moving when the tool is in the 'selecting' state.
+        """Handles the mouse moving when the tool is in the 'selecting' state.
 
         The selection is extended to the current mouse position.
         """
@@ -208,11 +202,15 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                 if drawn_aspect > self.aspect_ratio:
                     # Drawn box is wider, so use its height to compute the
                     # restricted width
-                    x2 = x1 + height * self.aspect_ratio * (1 if x2 > x1 else -1)
+                    x2 = x1 + height * self.aspect_ratio * (
+                        1 if x2 > x1 else -1
+                    )
                 else:
                     # Drawn box is taller, so use its width to compute the
                     # restricted height
-                    y2 = y1 + width / self.aspect_ratio * (1 if y2 > y1 else -1)
+                    y2 = y1 + width / self.aspect_ratio * (
+                        1 if y2 > y1 else -1
+                    )
             self._screen_end = (x2, y2)
         else:
             self._screen_end = (event.x, event.y)
@@ -220,7 +218,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         event.handled = True
 
     def selecting_left_up(self, event):
-        """ Handles the left mouse button being released when the tool is in
+        """Handles the left mouse button being released when the tool is in
         the 'selecting' state.
 
         Finishes selecting and does the zoom.
@@ -229,7 +227,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             self._end_select(event)
 
     def selecting_right_up(self, event):
-        """ Handles the right mouse button being released when the tool is in
+        """Handles the right mouse button being released when the tool is in
         the 'selecting' state.
 
         Finishes selecting and does the zoom.
@@ -238,19 +236,19 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             self._end_select(event)
 
     def selecting_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot when the tool is in the
+        """Handles the mouse leaving the plot when the tool is in the
         'selecting' state.
 
         Ends the selection operation without zooming.
         """
         self._end_selecting(event)
 
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     #  AbstractOverlay interface
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draws this component overlaid on another component.
+        """Draws this component overlaid on another component.
 
         Overrides AbstractOverlay.
         """
@@ -260,9 +258,9 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             else:
                 self._overlay_box(component, gc)
 
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     #  private interface
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     @deprecated
     def _get_disable_on_complete(self):
@@ -284,24 +282,23 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         if self.always_on:
             enabled = True
         else:
-            if self.always_on_modifier == 'shift':
+            if self.always_on_modifier == "shift":
                 enabled = event.shift_down
-            elif self.always_on_modifier == 'control':
+            elif self.always_on_modifier == "control":
                 enabled = event.control_down
-            elif self.always_on_modifier == 'alt':
+            elif self.always_on_modifier == "alt":
                 enabled = event.alt_down
 
         if enabled:
-            if event.right_down and self.drag_button == 'right':
+            if event.right_down and self.drag_button == "right":
                 return True
-            if event.left_down and self.drag_button == 'left':
+            if event.left_down and self.drag_button == "left":
                 return True
 
         return False
 
     def _start_select(self, event):
-        """ Starts selecting the zoom region
-        """
+        """Starts selecting the zoom region"""
         if self.component.active_tool in (None, self):
             self.component.active_tool = self
         else:
@@ -314,7 +311,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         self.selecting_mouse_move(event)
 
     def _end_select(self, event):
-        """ Ends selection of the zoom region, adds the new zoom range to
+        """Ends selection of the zoom region, adds the new zoom range to
         the zoom stack, and does the zoom.
         """
         self._screen_end = (event.x, event.y)
@@ -327,14 +324,16 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             event.handled = True
             return
 
-        low, high = self._map_coordinate_box(self._screen_start, self._screen_end)
+        low, high = self._map_coordinate_box(
+            self._screen_start, self._screen_end
+        )
 
         x_range = self._get_x_mapper().range
         y_range = self._get_y_mapper().range
 
         prev = (x_range.low, x_range.high, y_range.low, y_range.high)
 
-        if self.tool_mode == 'range':
+        if self.tool_mode == "range":
             axis = self._determine_axis()
             if axis == 1:
                 # vertical
@@ -354,8 +353,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         event.handled = True
 
     def _end_selecting(self, event=None):
-        """ Ends selection of zoom region, without zooming.
-        """
+        """Ends selection of zoom region, without zooming."""
         self.reset()
         self._enabled = False
         if self.component.active_tool == self:
@@ -368,17 +366,18 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
             event.window.set_mouse_owner(None)
 
     def _overlay_box(self, component, gc):
-        """ Draws the overlay as a box.
-        """
+        """Draws the overlay as a box."""
         if self._screen_start and self._screen_end:
             with gc:
                 gc.set_antialias(0)
                 gc.set_line_width(self.border_size)
                 gc.set_stroke_color(self.border_color_)
-                gc.clip_to_rect(component.x, component.y, component.width, component.height)
+                gc.clip_to_rect(
+                    component.x, component.y, component.width, component.height
+                )
                 x, y = self._screen_start
                 x2, y2 = self._screen_end
-                rect = (x, y, x2-x+1, y2-y+1)
+                rect = (x, y, x2 - x + 1, y2 - y + 1)
                 if self.color != "transparent":
                     color = self._get_fill_color()
                     gc.set_fill_color(color)
@@ -388,27 +387,31 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                     gc.stroke_path()
 
     def _overlay_range(self, component, gc):
-        """ Draws the overlay as a range.
-        """
+        """Draws the overlay as a range."""
         axis_ndx = self._determine_axis()
-        lower_left = [0,0]
-        upper_right = [0,0]
+        lower_left = [0, 0]
+        upper_right = [0, 0]
         lower_left[axis_ndx] = self._screen_start[axis_ndx]
-        lower_left[1-axis_ndx] = self.component.position[1-axis_ndx]
-        upper_right[axis_ndx] = self._screen_end[axis_ndx] - self._screen_start[axis_ndx]
-        upper_right[1-axis_ndx] = self.component.bounds[1-axis_ndx]
+        lower_left[1 - axis_ndx] = self.component.position[1 - axis_ndx]
+        upper_right[axis_ndx] = (
+            self._screen_end[axis_ndx] - self._screen_start[axis_ndx]
+        )
+        upper_right[1 - axis_ndx] = self.component.bounds[1 - axis_ndx]
 
         with gc:
             gc.set_antialias(0)
             color = self._get_fill_color()
             gc.set_fill_color(color)
             gc.set_stroke_color(self.border_color_)
-            gc.clip_to_rect(component.x, component.y, component.width, component.height)
-            gc.draw_rect((lower_left[0], lower_left[1], upper_right[0], upper_right[1]))
+            gc.clip_to_rect(
+                component.x, component.y, component.width, component.height
+            )
+            gc.draw_rect(
+                (lower_left[0], lower_left[1], upper_right[0], upper_right[1])
+            )
 
     def _get_fill_color(self):
-        """Get the fill color based on the alpha and the color property
-        """
+        """Get the fill color based on the alpha and the color property"""
         if self.alpha:
             color = list(self.color_)
             if len(color) == 4:
@@ -420,7 +423,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         return color
 
     def _determine_axis(self):
-        """ Determines whether the index of the coordinate along the axis of
+        """Determines whether the index of the coordinate along the axis of
         interest is the first or second element of an (x,y) coordinate tuple.
         """
         if self.axis == "index":
@@ -435,13 +438,15 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                 return 0
 
     def _map_coordinate_box(self, start, end):
-        """ Given start and end points in screen space, returns corresponding
+        """Given start and end points in screen space, returns corresponding
         low and high points in data space.
         """
-        low = [0,0]
-        high = [0,0]
-        for axis_index, mapper in [(0, self.component.x_mapper), \
-                                   (1, self.component.y_mapper)]:
+        low = [0, 0]
+        high = [0, 0]
+        for axis_index, mapper in [
+            (0, self.component.x_mapper),
+            (1, self.component.y_mapper),
+        ]:
             # Ignore missing axis mappers (ColorBar instances only have one).
             if not mapper:
                 continue
@@ -461,9 +466,9 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
         x_range.low_setting, y_range.low_setting = self._orig_low_setting
         x_range.high_setting, y_range.high_setting = self._orig_high_setting
 
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
     #  overloaded
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     def _prev_state_pressed(self):
         super(BetterSelectingZoom, self)._prev_state_pressed()

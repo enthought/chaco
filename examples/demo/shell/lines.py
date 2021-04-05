@@ -10,7 +10,7 @@ from numpy import linspace, pi, sin, cos
 from chaco.shell import plot, hold, title, show
 
 # Create some data
-x = linspace(-2*pi, 2*pi, 100)
+x = linspace(-2 * pi, 2 * pi, 100)
 y1 = sin(x)
 y2 = cos(x)
 

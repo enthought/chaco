@@ -12,12 +12,12 @@ from chaco.base_plot_container import BasePlotContainer
 
 
 class HighlightTool(BaseTool):
-    """ A tool that enables the user to select a plot to be highlighted on the
+    """A tool that enables the user to select a plot to be highlighted on the
     graph by clicking on it.
     """
 
     #: The name of the data source metadata which controls selections.
-    metadata_name = Str('selections')
+    metadata_name = Str("selections")
 
     #: The mouse button that initiates the selection.
     drag_button = Enum("left", "right")
@@ -25,9 +25,9 @@ class HighlightTool(BaseTool):
     #: Threshold distance for hit-testing.
     threshold = Float(20.0)
 
-    #---------------------------------------------------------------------
+    # ---------------------------------------------------------------------
     # Inherited BaseTool traits
-    #---------------------------------------------------------------------
+    # ---------------------------------------------------------------------
 
     #: This tool is not drawn. Overrides BaseTool.
     draw_mode = "none"
@@ -36,7 +36,7 @@ class HighlightTool(BaseTool):
     visible = False
 
     def normal_left_down(self, event):
-        """ Handles the left mouse button being pressed.
+        """Handles the left mouse button being pressed.
 
         If the left mouse button initiates the selection, this method does so.
         """
@@ -44,7 +44,7 @@ class HighlightTool(BaseTool):
             self._highlight(event)
 
     def normal_right_down(self, event):
-        """ Handles the right mouse button being pressed.
+        """Handles the right mouse button being pressed.
 
         If the right mouse button initiates the selection, this method does so.
         """
@@ -57,7 +57,9 @@ class HighlightTool(BaseTool):
             closest_plot = self._find_curve(self.component.components, event)
             if closest_plot:
                 index = closest_plot.index
-                index.metadata[self.metadata_name] = ones(len(index.get_data()), dtype=bool)
+                index.metadata[self.metadata_name] = ones(
+                    len(index.get_data()), dtype=bool
+                )
                 closest_plot.request_redraw()
             else:
                 # If we are attached to a plot container, then we can deselect
@@ -69,10 +71,14 @@ class HighlightTool(BaseTool):
             event.pop()
 
         elif hasattr(self.component, "hittest"):
-            hit_point = self.component.hittest((event.x, event.y), self.threshold)
+            hit_point = self.component.hittest(
+                (event.x, event.y), self.threshold
+            )
             index = self.component.index
             if hit_point is not None:
-                index.metadata[self.metadata_name] = ones(len(index.get_data()), dtype=bool)
+                index.metadata[self.metadata_name] = ones(
+                    len(index.get_data()), dtype=bool
+                )
                 self.component.request_redraw()
             elif self.metadata_name in index.metadata:
                 del index.metadata[self.metadata_name]
@@ -80,12 +86,11 @@ class HighlightTool(BaseTool):
 
         event.handled = True
 
-
     def _find_curve(self, plots, event):
         # need to change to use distance - not just return first plot within threshold
         for p in plots:
             if hasattr(p, "hittest"):
-                cpoint = p.hittest((event.x,event.y), self.threshold)
+                cpoint = p.hittest((event.x, event.y), self.threshold)
                 if cpoint is not None:
                     return p
         return None

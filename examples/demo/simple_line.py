@@ -26,8 +26,15 @@ from traits.api import Float, HasTraits, Int, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import create_line_plot, add_default_axes, add_default_grids, \
-        OverlayPlotContainer, PlotLabel, create_scatter_plot, Legend
+from chaco.api import (
+    create_line_plot,
+    add_default_axes,
+    add_default_grids,
+    OverlayPlotContainer,
+    PlotLabel,
+    create_scatter_plot,
+    Legend,
+)
 from chaco.tools.api import PanTool, ZoomTool, LegendTool, TraitsTool, DragZoom
 from chaco.example_support import COLOR_PALETTE
 
@@ -47,22 +54,27 @@ class OverlappingPlotContainer(OverlayPlotContainer):
     def _setup_plots(self):
         """Creates series of Bessel function plots"""
         plots = {}
-        x = arange(self.low, self.high + 0.001,
-                   (self.high - self.low) / self.numpoints)
+        x = arange(
+            self.low,
+            self.high + 0.001,
+            (self.high - self.low) / self.numpoints,
+        )
 
         for i in range(self.num_funs):
             y = jn(i, x)
             if i % 2 == 1:
-                plot = create_line_plot((x, y),
-                                        color=tuple(COLOR_PALETTE[i]),
-                                        width=2.0)
+                plot = create_line_plot(
+                    (x, y), color=tuple(COLOR_PALETTE[i]), width=2.0
+                )
             else:
-                plot = create_scatter_plot((x, y),
-                                            color=tuple(COLOR_PALETTE[i]))
+                plot = create_scatter_plot(
+                    (x, y), color=tuple(COLOR_PALETTE[i])
+                )
 
             if i == 0:
-                value_mapper, index_mapper, legend = \
-                    self._setup_plot_tools(plot)
+                value_mapper, index_mapper, legend = self._setup_plot_tools(
+                    plot
+                )
             else:
                 self._setup_mapper(plot, value_mapper, index_mapper)
 
@@ -73,10 +85,14 @@ class OverlappingPlotContainer(OverlayPlotContainer):
         legend.plots = plots
 
         # Add the title at the top
-        self.overlays.append(PlotLabel("Bessel functions",
-                                       component=self,
-                                       font="swiss 16",
-                                       overlay_position="top"))
+        self.overlays.append(
+            PlotLabel(
+                "Bessel functions",
+                component=self,
+                font="swiss 16",
+                overlay_position="top",
+            )
+        )
 
         # Add the traits inspector tool to the container
         self.tools.append(TraitsTool(self))
@@ -130,17 +146,23 @@ class PlotExample(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation="vertical"),
-                    resizable=True, title=title,
-                    width=size[0], height=size[1]
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+        width=size[0],
+        height=size[1],
+    )
 
     def _plot_default(self):
-        return OverlappingPlotContainer(padding=50, fill_padding=True,
-                                     bgcolor="lightgray", use_backbuffer=True)
+        return OverlappingPlotContainer(
+            padding=50,
+            fill_padding=True,
+            bgcolor="lightgray",
+            use_backbuffer=True,
+        )
 
 
 demo = PlotExample()

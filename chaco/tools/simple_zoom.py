@@ -3,22 +3,25 @@
 
 
 import warnings
-warnings.warn("SimpleZoom has been deprecated, use ZoomTool", DeprecationWarning)
+
+warnings.warn(
+    "SimpleZoom has been deprecated, use ZoomTool", DeprecationWarning
+)
 
 from numpy import array
 
 # Enthought library imports
 from enable.api import ColorTrait, KeySpec
-from traits.api \
-    import Bool, Enum, Float, Instance, Int, Str, Trait, Tuple
+from traits.api import Bool, Enum, Float, Instance, Int, Str, Trait, Tuple
 
 # Chaco imports
 from chaco.abstract_overlay import AbstractOverlay
 from .base_zoom_tool import BaseZoomTool
 from .tool_history_mixin import ToolHistoryMixin
 
+
 class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
-    """ Selects a range along the index or value axis.
+    """Selects a range along the index or value axis.
 
     The user left-click-drags to select a region to zoom in.
     Certain keyboard keys are mapped to performing zoom actions as well.
@@ -41,19 +44,19 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     # Defines a meta-key, that works with always_on to set the zoom mode. This
     # is useful when the zoom tool is used in conjunction with the pan tool.
-    always_on_modifier = Enum(None, 'shift', 'control', 'alt')
+    always_on_modifier = Enum(None, "shift", "control", "alt")
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Zoom control
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # The axis to which the selection made by this tool is perpendicular. This
     # only applies in 'range' mode.
     axis = Enum("index", "value")
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Interaction control
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # Enable the mousewheel for zooming?
     enable_wheel = Bool(True)
@@ -80,9 +83,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     # the tool to actually take effect.
     minimum_screen_delta = Int(10)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Appearance properties (for Box mode)
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # The pointer to use when drawing a zoom box.
     pointer = "magnifier"
@@ -107,16 +110,16 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     # The possible event states of this zoom tool.
     event_state = Enum("normal", "selecting")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Key mappings
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The key that cancels the zoom and resets the view to the original defaults.
     cancel_zoom_key = Instance(KeySpec, args=("Esc",))
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # If **always_on** is False, this attribute indicates whether the tool
     # is currently enabled.
@@ -147,13 +150,14 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             x_range = self.component.x_mapper.range
             y_range = self.component.y_mapper.range
             self._orig_low_setting = (x_range.low_setting, y_range.low_setting)
-            self._orig_high_setting = \
-                (x_range.high_setting, y_range.high_setting)
-        component.observe(self._reset_state_to_current,
-                                  "index_data_changed")
+            self._orig_high_setting = (
+                x_range.high_setting,
+                y_range.high_setting,
+            )
+        component.observe(self._reset_state_to_current, "index_data_changed")
 
     def enable(self, event=None):
-        """ Provides a programmatic way to enable this tool, if
+        """Provides a programmatic way to enable this tool, if
         **always_on** is False.
 
         Calling this method has the same effect as if the user pressed the
@@ -166,7 +170,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             event.window.set_pointer(self.pointer)
 
     def disable(self, event=None):
-        """ Provides a programmatic way to enable this tool, if **always_on**
+        """Provides a programmatic way to enable this tool, if **always_on**
         is False.
 
         Calling this method has the same effect as if the user pressed the
@@ -180,20 +184,18 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             event.window.set_pointer("arrow")
 
     def reset(self, event=None):
-        """ Resets the tool to normal state, with no start or end position.
-        """
+        """Resets the tool to normal state, with no start or end position."""
         self.event_state = "normal"
         self._screen_start = None
         self._screen_end = None
 
     def deactivate(self, component):
-        """ Called when this is no longer the active tool.
-        """
+        """Called when this is no longer the active tool."""
         # Required as part of the AbstractController interface.
         return self.disable()
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draws this component overlaid on another component.
+        """Draws this component overlaid on another component.
 
         Overrides AbstractOverlay.
         """
@@ -204,17 +206,18 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 self.overlay_box(component, gc)
 
     def overlay_box(self, component, gc):
-        """ Draws the overlay as a box.
-        """
+        """Draws the overlay as a box."""
         if self._screen_start and self._screen_end:
             with gc:
                 gc.set_antialias(0)
                 gc.set_line_width(self.border_size)
                 gc.set_stroke_color(self.border_color_)
-                gc.clip_to_rect(component.x, component.y, component.width, component.height)
+                gc.clip_to_rect(
+                    component.x, component.y, component.width, component.height
+                )
                 x, y = self._screen_start
                 x2, y2 = self._screen_end
-                rect = (x, y, x2-x+1, y2-y+1)
+                rect = (x, y, x2 - x + 1, y2 - y + 1)
                 if self.color != "transparent":
                     if self.alpha:
                         color = list(self.color_)
@@ -232,27 +235,32 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                     gc.stroke_path()
 
     def overlay_range(self, component, gc):
-        """ Draws the overlay as a range.
-        """
+        """Draws the overlay as a range."""
         axis_ndx = self._determine_axis()
-        lower_left = [0,0]
-        upper_right = [0,0]
+        lower_left = [0, 0]
+        upper_right = [0, 0]
         lower_left[axis_ndx] = self._screen_start[axis_ndx]
-        lower_left[1-axis_ndx] = self.component.position[1-axis_ndx]
-        upper_right[axis_ndx] = self._screen_end[axis_ndx] - self._screen_start[axis_ndx]
-        upper_right[1-axis_ndx] = self.component.bounds[1-axis_ndx]
+        lower_left[1 - axis_ndx] = self.component.position[1 - axis_ndx]
+        upper_right[axis_ndx] = (
+            self._screen_end[axis_ndx] - self._screen_start[axis_ndx]
+        )
+        upper_right[1 - axis_ndx] = self.component.bounds[1 - axis_ndx]
 
         with gc:
             gc.set_antialias(0)
             gc.set_alpha(self.alpha)
             gc.set_fill_color(self.color_)
             gc.set_stroke_color(self.border_color_)
-            gc.clip_to_rect(component.x, component.y, component.width, component.height)
-            gc.rect(lower_left[0], lower_left[1], upper_right[0], upper_right[1])
+            gc.clip_to_rect(
+                component.x, component.y, component.width, component.height
+            )
+            gc.rect(
+                lower_left[0], lower_left[1], upper_right[0], upper_right[1]
+            )
             gc.draw_path()
 
     def normal_left_down(self, event):
-        """ Handles the left mouse button being pressed while the tool is
+        """Handles the left mouse button being pressed while the tool is
         in the 'normal' state.
 
         If the tool is enabled or always on, it starts selecting.
@@ -262,7 +270,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             event.handled = True
 
     def normal_right_down(self, event):
-        """ Handles the right mouse button being pressed while the tool is
+        """Handles the right mouse button being pressed while the tool is
         in the 'normal' state.
 
         If the tool is enabled or always on, it starts selecting.
@@ -272,7 +280,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             event.handled = True
 
     def selecting_mouse_move(self, event):
-        """ Handles the mouse moving when the tool is in the 'selecting' state.
+        """Handles the mouse moving when the tool is in the 'selecting' state.
 
         The selection is extended to the current mouse position.
         """
@@ -281,7 +289,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         event.handled = True
 
     def selecting_left_up(self, event):
-        """ Handles the left mouse button being released when the tool is in
+        """Handles the left mouse button being released when the tool is in
         the 'selecting' state.
 
         Finishes selecting and does the zoom.
@@ -290,7 +298,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             self._end_select(event)
 
     def selecting_right_up(self, event):
-        """ Handles the right mouse button being released when the tool is in
+        """Handles the right mouse button being released when the tool is in
         the 'selecting' state.
 
         Finishes selecting and does the zoom.
@@ -299,7 +307,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             self._end_select(event)
 
     def selecting_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot when the tool is in the
+        """Handles the mouse leaving the plot when the tool is in the
         'selecting' state.
 
         Ends the selection operation without zooming.
@@ -307,7 +315,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         self._end_selecting(event)
 
     def selecting_key_pressed(self, event):
-        """ Handles a key being pressed when the tool is in the 'selecting'
+        """Handles a key being pressed when the tool is in the 'selecting'
         state.
 
         If the key pressed is the **cancel_zoom_key**, then selecting is
@@ -318,8 +326,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             event.handled = True
 
     def _start_select(self, event):
-        """ Starts selecting the zoom region
-        """
+        """Starts selecting the zoom region"""
         if self.component.active_tool in (None, self):
             self.component.active_tool = self
         else:
@@ -332,7 +339,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         self.selecting_mouse_move(event)
 
     def _end_select(self, event):
-        """ Ends selection of the zoom region, adds the new zoom range to
+        """Ends selection of the zoom region, adds the new zoom range to
         the zoom stack, and does the zoom.
         """
         self._screen_end = (event.x, event.y)
@@ -354,7 +361,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             if low > high:
                 low, high = high, low
         else:
-            low, high = self._map_coordinate_box(self._screen_start, self._screen_end)
+            low, high = self._map_coordinate_box(
+                self._screen_start, self._screen_end
+            )
 
         new_zoom_range = (low, high)
         self._append_state(new_zoom_range)
@@ -363,8 +372,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         event.handled = True
 
     def _end_selecting(self, event=None):
-        """ Ends selection of zoom region, without zooming.
-        """
+        """Ends selection of zoom region, without zooming."""
         if self.disable_on_complete:
             self.disable(event)
         else:
@@ -374,7 +382,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             event.window.set_mouse_owner(None)
 
     def _do_zoom(self):
-        """ Does the zoom operation.
+        """Does the zoom operation.
 
         This method does not handle zooms triggered by scrolling the mouse wheel.
         Those are handled by `normal_mouse_wheel()`.
@@ -394,10 +402,8 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 # "box" mode; reset both axes.
                 x_range = self.component.x_mapper.range
                 y_range = self.component.y_mapper.range
-                x_range.low_setting, y_range.low_setting = \
-                    self._orig_low_setting
-                x_range.high_setting, y_range.high_setting = \
-                    self._orig_high_setting
+                x_range.low_setting, y_range.low_setting = self._orig_low_setting
+                x_range.high_setting, y_range.high_setting = self._orig_high_setting
 
                 # resetting the ranges will allow 'auto' to pick the values
                 x_range.reset()
@@ -408,7 +414,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             if self.tool_mode == "range":
                 # "range" mode; zoom the one axis.
                 mapper = self._get_mapper()
-                if self._zoom_limit_reached(orig_low, orig_high, low, high, mapper):
+                if self._zoom_limit_reached(
+                    orig_low, orig_high, low, high, mapper
+                ):
                     self._pop_state()
                     return
                 mapper.range.low = low
@@ -416,9 +424,17 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             else:
                 # "box" mode; zoom both axes.
                 for ndx in (0, 1):
-                    mapper = (self.component.x_mapper, self.component.y_mapper)[ndx]
-                    if self._zoom_limit_reached(orig_low[ndx], orig_high[ndx],
-                                                low[ndx], high[ndx], mapper):
+                    mapper = (
+                        self.component.x_mapper,
+                        self.component.y_mapper,
+                    )[ndx]
+                    if self._zoom_limit_reached(
+                        orig_low[ndx],
+                        orig_high[ndx],
+                        low[ndx],
+                        high[ndx],
+                        mapper,
+                    ):
                         # pop _current_state off the stack and leave the actual
                         # bounds unmodified.
                         self._pop_state()
@@ -431,7 +447,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         self.component.request_redraw()
 
     def normal_key_pressed(self, event):
-        """ Handles a key being pressed when the tool is in 'normal' state.
+        """Handles a key being pressed when the tool is in 'normal' state.
 
         If the tool is not always on, this method handles turning it on and
         off when the appropriate keys are pressed. Also handles keys to
@@ -457,7 +473,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             self.component.request_redraw()
 
     def normal_mouse_wheel(self, event):
-        """ Handles the mouse wheel being used when the tool is in the 'normal'
+        """Handles the mouse wheel being used when the tool is in the 'normal'
         state.
 
         Scrolling the wheel "up" zooms in; scrolling it "down" zooms out.
@@ -490,13 +506,17 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
             for ndx, mapper in mapper_list:
                 screenrange = mapper.screen_bounds
                 mouse_val = mouse_pos[ndx]
-                newscreenlow = mouse_val + zoom * (screenlow_pt[ndx] - mouse_val)
-                newscreenhigh = mouse_val + zoom * (screenhigh_pt[ndx] - mouse_val)
+                newscreenlow = mouse_val + zoom * (
+                    screenlow_pt[ndx] - mouse_val
+                )
+                newscreenhigh = mouse_val + zoom * (
+                    screenhigh_pt[ndx] - mouse_val
+                )
 
                 newlow = mapper.map_data(newscreenlow)
                 newhigh = mapper.map_data(newscreenhigh)
 
-                if type(orig_high) in (tuple,list):
+                if type(orig_high) in (tuple, list):
                     ol, oh = orig_low[ndx], orig_high[ndx]
                 else:
                     ol, oh = orig_low, orig_high
@@ -505,7 +525,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                     # Ignore other axes, we're done.
                     event.handled = True
                     return
-                todo_list.append((mapper,newlow,newhigh))
+                todo_list.append((mapper, newlow, newhigh))
 
             # Check the domain limits on each dimension, and rescale the zoom
             # amount if necessary.
@@ -513,7 +533,9 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 if newlow > newhigh:
                     # This happens when the orientation of the axis is reversed.
                     newlow, newhigh = newhigh, newlow
-                domain_min, domain_max = getattr(mapper, "domain_limits", (None,None))
+                domain_min, domain_max = getattr(
+                    mapper, "domain_limits", (None, None)
+                )
                 if domain_min is not None and newlow < domain_min:
                     newlow = domain_min
                 if domain_max is not None and newhigh > domain_max:
@@ -531,17 +553,17 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     def _is_enabling_event(self, event):
         always_on = self.always_on
-        if self.always_on_modifier == 'shift':
+        if self.always_on_modifier == "shift":
             always_on = always_on and event.shift_down
-        elif self.always_on_modifier == 'control':
+        elif self.always_on_modifier == "control":
             always_on = always_on and event.control_down
-        elif self.always_on_modifier == 'alt':
+        elif self.always_on_modifier == "alt":
             always_on = always_on and event.alt_down
 
         if always_on or self._enabled:
-            if event.right_down and self.drag_button == 'right':
+            if event.right_down and self.drag_button == "right":
                 return True
-            if event.left_down and self.drag_button == 'left':
+            if event.left_down and self.drag_button == "left":
                 return True
 
         return False
@@ -558,28 +580,26 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         # different state types in the history
         self._reset_state_to_current()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Implementation of PlotComponent interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _activate(self):
-        """ Called by PlotComponent to set this as the active tool.
-        """
+        """Called by PlotComponent to set this as the active tool."""
         self.enable()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # implementations of abstract methods on ToolHistoryMixin
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _reset_state_to_current(self, event=None):
-        """ Clears the tool history, and sets the current state to be the
+        """Clears the tool history, and sets the current state to be the
         first state in the history.
         """
         if self.tool_mode == "range":
             mapper = self._get_mapper()
             if mapper is not None:
-                self._reset_state((mapper.range.low,
-                                   mapper.range.high))
+                self._reset_state((mapper.range.low, mapper.range.high))
         else:
             if self.component.x_mapper is not None:
                 x_range = self.component.x_mapper.range
@@ -597,11 +617,10 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
                 ylow = "auto"
                 yhigh = "auto"
 
-            self._reset_state(((xlow, ylow),
-                               (xhigh, yhigh)))
+            self._reset_state(((xlow, ylow), (xhigh, yhigh)))
 
     def _reset_state_pressed(self):
-        """ Called when the tool needs to reset its history.
+        """Called when the tool needs to reset its history.
 
         The history index will have already been set to 0. Implements
         ToolHistoryMixin.
@@ -613,7 +632,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         self._reset_state_to_current()
 
     def _prev_state_pressed(self):
-        """ Called when the tool needs to advance to the previous state in the
+        """Called when the tool needs to advance to the previous state in the
         stack.
 
         The history index will have already been set to the index corresponding
@@ -622,7 +641,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         self._do_zoom()
 
     def _next_state_pressed(self):
-        """ Called when the tool needs to advance to the next state in the stack.
+        """Called when the tool needs to advance to the next state in the stack.
 
         The history index will have already been set to the index corresponding
         to the next state. Implements ToolHistoryMixin.
@@ -633,23 +652,23 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     def __getstate__(self):
         dont_pickle = [
-            'always_on',
-            'always_on_modifier',
-            'enter_zoom_key',
-            'exit_zoom_key',
-            'minimum_screen_delta',
-            'event_state',
-            'reset_zoom_key',
-            'prev_zoom_key',
-            'next_zoom_key',
-            'pointer',
-            '_enabled',
-            '_screen_start',
-            '_screen_end']
-        state = super(SimpleZoom,self).__getstate__()
+            "always_on",
+            "always_on_modifier",
+            "enter_zoom_key",
+            "exit_zoom_key",
+            "minimum_screen_delta",
+            "event_state",
+            "reset_zoom_key",
+            "prev_zoom_key",
+            "next_zoom_key",
+            "pointer",
+            "_enabled",
+            "_screen_start",
+            "_screen_end",
+        ]
+        state = super(SimpleZoom, self).__getstate__()
         for key in dont_pickle:
             if key in state:
                 del state[key]
 
         return state
-

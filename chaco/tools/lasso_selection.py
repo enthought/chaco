@@ -5,8 +5,18 @@ import numpy
 from numpy import array, column_stack, empty, sometrue, vstack, zeros
 
 # Enthought library imports
-from traits.api import Any, Array, Enum, Event, Bool, Instance, \
-                                 Property, Str, Trait, List
+from traits.api import (
+    Any,
+    Array,
+    Enum,
+    Event,
+    Bool,
+    Instance,
+    Property,
+    Str,
+    Trait,
+    List,
+)
 from kiva.api import points_in_polygon
 
 # Chaco imports
@@ -17,12 +27,13 @@ from chaco.base_2d_plot import Base2DPlot
 
 
 class LassoSelection(AbstractController):
-    """ A controller that represents the interaction of "lassoing" a set of
+    """A controller that represents the interaction of "lassoing" a set of
     points.
 
     "Lassoing" means drawing an arbitrary selection region around the points
     by dragging the mouse along the outline of the region.
     """
+
     #: An Nx2 array of points in data space representing all selected points.
     dataspace_points = Property(Array)
 
@@ -75,11 +86,11 @@ class LassoSelection(AbstractController):
     #: selecting:
     #:     The user is dragging the mouse and is actively changing the
     #:     selection region.
-    event_state = Enum('normal', 'selecting')
+    event_state = Enum("normal", "selecting")
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Private Traits
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     # The PlotComponent associated with this tool.
     _plot = Trait(None, Any)
@@ -91,18 +102,18 @@ class LassoSelection(AbstractController):
     _active_selection = Array
     _previous_selections = List(Array)
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Properties
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def _get_dataspace_points(self):
-        """ Returns a complete list of all selected points.
+        """Returns a complete list of all selected points.
 
-            This property exists for backwards compatibility, as the
-            disjoint_selections property is almost always the preferred
-            method of accessingselected points
+        This property exists for backwards compatibility, as the
+        disjoint_selections property is almost always the preferred
+        method of accessingselected points
         """
-        composite = empty((0,2))
+        composite = empty((0, 2))
         for region in self.disjoint_selections:
             if len(region) > 0:
                 composite = vstack((composite, region))
@@ -110,17 +121,17 @@ class LassoSelection(AbstractController):
         return composite
 
     def _get_disjoint_selections(self):
-        """ Returns a list of all disjoint selections composed of
-            the previous selections and the active selection
+        """Returns a list of all disjoint selections composed of
+        the previous selections and the active selection
         """
         if len(self._active_selection) == 0:
             return self._previous_selections
         else:
             return self._previous_selections + [self._active_selection]
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Event Handlers
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def normal_left_down(self, event):
         if self.drag_button == "left":
@@ -131,19 +142,21 @@ class LassoSelection(AbstractController):
             return self.normal_mouse_down(event)
 
     def normal_mouse_down(self, event):
-        """ Handles the left mouse button being pressed while the tool is
+        """Handles the left mouse button being pressed while the tool is
         in the 'normal' state.
 
         Puts the tool into 'selecting' mode, and starts defining the selection.
         """
         # We may want to generalize this for the n-dimensional case...
 
-        self._active_selection = empty((0,2), dtype=numpy.bool)
+        self._active_selection = empty((0, 2), dtype=numpy.bool)
 
         if self.selection_datasource is not None:
-            self.selection_datasource.metadata[self.metadata_name] = zeros(len(self.selection_datasource.get_data()), dtype=numpy.bool)
+            self.selection_datasource.metadata[self.metadata_name] = zeros(
+                len(self.selection_datasource.get_data()), dtype=numpy.bool
+            )
         self.selection_mode = "include"
-        self.event_state = 'selecting'
+        self.event_state = "selecting"
         self.selecting_mouse_move(event)
 
         if (not event.shift_down) and (not event.control_down):
@@ -153,7 +166,9 @@ class LassoSelection(AbstractController):
                 self.selection_mode = "exclude"
             else:
                 self.selection_mode = "include"
-        self.trait_property_changed("disjoint_selections", [], self.disjoint_selections)
+        self.trait_property_changed(
+            "disjoint_selections", [], self.disjoint_selections
+        )
 
     def selecting_left_up(self, event):
         if self.drag_button == "left":
@@ -164,19 +179,19 @@ class LassoSelection(AbstractController):
             return self.selecting_mouse_up(event)
 
     def selecting_mouse_up(self, event):
-        """ Handles the mouse button coming up in the 'selecting' state.
+        """Handles the mouse button coming up in the 'selecting' state.
 
         Completes the selection and switches to the 'normal' state.
         """
-        self.event_state = 'normal'
+        self.event_state = "normal"
         self.selection_completed = True
         self._update_selection()
 
         self._previous_selections.append(self._active_selection)
-        self._active_selection = empty((0,2), dtype=numpy.bool)
+        self._active_selection = empty((0, 2), dtype=numpy.bool)
 
     def selecting_mouse_move(self, event):
-        """ Handles the mouse moving when the tool is in the 'selecting' state.
+        """Handles the mouse moving when the tool is in the 'selecting' state.
 
         The selection is extended to the current mouse position.
         """
@@ -184,7 +199,9 @@ class LassoSelection(AbstractController):
         xform = self.component.get_event_transform(event)
         event.push_transform(xform, caller=self)
         new_point = self._map_data(array((event.x, event.y)))
-        self._active_selection = vstack((self._active_selection, array((new_point,))))
+        self._active_selection = vstack(
+            (self._active_selection, array((new_point,)))
+        )
         self.updated = True
         if self.incremental_select:
             self._update_selection()
@@ -192,7 +209,7 @@ class LassoSelection(AbstractController):
         self.trait_property_changed("disjoint_selections", None)
 
     def selecting_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot when the tool is in the
+        """Handles the mouse leaving the plot when the tool is in the
         'selecting' state.
 
         Ends the selection operation.
@@ -201,59 +218,60 @@ class LassoSelection(AbstractController):
         return self.selecting_mouse_up(event)
 
     def normal_key_pressed(self, event):
-        """ Handles the user pressing a key in the 'normal' state.
+        """Handles the user pressing a key in the 'normal' state.
 
         If the user presses the Escape key, the tool is reset.
         """
         if event.character == "Esc":
             self._reset()
-        elif event.character == 'a' and event.control_down:
+        elif event.character == "a" and event.control_down:
             self._reset()
             self._select_all()
-        elif event.character == 'i' and event.control_down:
+        elif event.character == "i" and event.control_down:
             self.selecting_mouse_up(None)
-            self.selection_mode = 'invert'
+            self.selection_mode = "invert"
             self._select_all()
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Protected Methods
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def _dataspace_points_default(self):
-        return empty((0,2), dtype=numpy.bool)
+        return empty((0, 2), dtype=numpy.bool)
 
     def _reset(self):
-        """ Resets the selection
-        """
-        self.event_state='normal'
-        self._active_selection = empty((0,2), dtype=numpy.bool)
+        """Resets the selection"""
+        self.event_state = "normal"
+        self._active_selection = empty((0, 2), dtype=numpy.bool)
         self._previous_selections = []
         self._update_selection()
 
     def _select_all(self):
-        """ Selects all points in the plot. This is done by making a rectangle
-            using the corners of the plot, which is simple but effective. A
-            much cooler, but more time-intensive solution would be to make
-            a selection polygon representing the convex hull.
+        """Selects all points in the plot. This is done by making a rectangle
+        using the corners of the plot, which is simple but effective. A
+        much cooler, but more time-intensive solution would be to make
+        a selection polygon representing the convex hull.
         """
-        points = [self._map_data(array((self.plot.x, self.plot.y2))),
-                  self._map_data(array((self.plot.x2, self.plot.y2))),
-                  self._map_data(array((self.plot.x2, self.plot.y))),
-                  self._map_data(array((self.plot.x, self.plot.y)))]
+        points = [
+            self._map_data(array((self.plot.x, self.plot.y2))),
+            self._map_data(array((self.plot.x2, self.plot.y2))),
+            self._map_data(array((self.plot.x2, self.plot.y))),
+            self._map_data(array((self.plot.x, self.plot.y))),
+        ]
 
         self._active_selection = numpy.array(points)
         self._update_selection()
 
-
     def _update_selection(self):
-        """ Sets the selection datasource's metadata to a mask of all
+        """Sets the selection datasource's metadata to a mask of all
         the points selected
         """
         if self.selection_datasource is None:
             return
 
-        selected_mask = zeros(self.selection_datasource._data.shape,
-                              dtype=numpy.bool)
+        selected_mask = zeros(
+            self.selection_datasource._data.shape, dtype=numpy.bool
+        )
         data = self._get_data()
 
         # Compose the selection mask from the cached selections first, then
@@ -261,36 +279,43 @@ class LassoSelection(AbstractController):
         # for the active selection
 
         for selection in self._previous_selections:
-            selected_mask |= points_in_polygon(
-                data, selection, False).astype(bool, copy=False)
+            selected_mask |= points_in_polygon(data, selection, False).astype(
+                bool, copy=False
+            )
 
         active_selection = points_in_polygon(
-            data, self._active_selection, False).astype(bool, copy=False)
+            data, self._active_selection, False
+        ).astype(bool, copy=False)
 
-        if self.selection_mode == 'exclude':
+        if self.selection_mode == "exclude":
             # XXX I think this should be "set difference"? - CJW
             selected_mask |= active_selection
             selected_mask = ~selected_mask
 
-        elif self.selection_mode == 'invert':
+        elif self.selection_mode == "invert":
             selected_mask ^= active_selection
         else:
             selected_mask |= active_selection
 
-        if sometrue(selected_mask != self.selection_datasource.metadata[self.metadata_name]):
-            self.selection_datasource.metadata[self.metadata_name] = selected_mask
+        if sometrue(
+            selected_mask
+            != self.selection_datasource.metadata[self.metadata_name]
+        ):
+            self.selection_datasource.metadata[
+                self.metadata_name
+            ] = selected_mask
             self.selection_changed = True
 
     def _map_screen(self, points):
-        """ Maps a point in data space to a point in screen space on the plot.
+        """Maps a point in data space to a point in screen space on the plot.
 
         Normally this method is a pass-through, but it may do more in
         specialized plots.
         """
-        return self.plot.map_screen(points)[:,:2]
+        return self.plot.map_screen(points)[:, :2]
 
     def _map_data(self, point):
-        """ Maps a point in screen space to data space.
+        """Maps a point in screen space to data space.
 
         Normally this method is a pass-through, but for plots that have more
         data than just (x,y), proper transformations need to happen here.
@@ -301,17 +326,19 @@ class LassoSelection(AbstractController):
         elif isinstance(self.plot, BaseXYPlot):
             return self.plot.map_data(point, all_values=True)[:2]
         else:
-            raise RuntimeError("LassoSelection only supports BaseXY and Base2D plots")
+            raise RuntimeError(
+                "LassoSelection only supports BaseXY and Base2D plots"
+            )
 
     def _get_data(self):
-        """ Returns the datapoints in the plot, as an Nx2 array of (x,y).
-        """
-        return column_stack((self.plot.index.get_data(),
-                             self.plot.value.get_data()))
+        """Returns the datapoints in the plot, as an Nx2 array of (x,y)."""
+        return column_stack(
+            (self.plot.index.get_data(), self.plot.value.get_data())
+        )
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property getter/setters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_plot(self):
         if self._plot is not None:

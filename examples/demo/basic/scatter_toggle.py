@@ -24,13 +24,17 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, VGroup, View, Label, HGroup, spring
 
 # Chaco imports
-from chaco.api import AbstractDataSource, ArrayPlotData, Plot, \
-    ScatterInspectorOverlay
+from chaco.api import (
+    AbstractDataSource,
+    ArrayPlotData,
+    Plot,
+    ScatterInspectorOverlay,
+)
 from chaco.tools.api import ScatterInspector, PanTool, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some data
@@ -45,14 +49,16 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    plot.plot(("index", "value"),
-              type="scatter",
-              name="my_plot",
-              marker="circle",
-              index_sort="ascending",
-              color="slategray",
-              marker_size=6,
-              bgcolor="white")
+    plot.plot(
+        ("index", "value"),
+        type="scatter",
+        name="my_plot",
+        marker="circle",
+        index_sort="ascending",
+        color="slategray",
+        marker_size=6,
+        bgcolor="white",
+    )
 
     # Tweak some of the plot properties
     plot.title = "Scatter Plot With Selection"
@@ -64,51 +70,60 @@ def _create_plot_component():
     my_plot = plot.plots["my_plot"][0]
 
     # Attach some tools to the plot
-    my_plot.tools.append(ScatterInspector(my_plot, selection_mode="toggle",
-                                          persistent_hover=False))
+    my_plot.tools.append(
+        ScatterInspector(
+            my_plot, selection_mode="toggle", persistent_hover=False
+        )
+    )
     my_plot.overlays.append(
-            ScatterInspectorOverlay(my_plot,
-                hover_color = "transparent",
-                hover_marker_size = 10,
-                hover_outline_color = "purple",
-                hover_line_width = 2,
-                selection_marker_size = 8,
-                selection_color = "lawngreen")
-            )
+        ScatterInspectorOverlay(
+            my_plot,
+            hover_color="transparent",
+            hover_marker_size=10,
+            hover_outline_color="purple",
+            hover_line_width=2,
+            selection_marker_size=8,
+            selection_color="lawngreen",
+        )
+    )
 
     my_plot.tools.append(PanTool(my_plot))
     my_plot.overlays.append(ZoomTool(my_plot, drag_button="right"))
 
     return plot
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(650,650)
-title="Scatter plot with selection"
-bg_color="lightgray"
 
-#===============================================================================
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (650, 650)
+title = "Scatter plot with selection"
+bg_color = "lightgray"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    VGroup(
-                        HGroup(spring, Label('Click point to select/unselect'),
-                            spring),
-                        Item('plot', editor=ComponentEditor(size=size,
-                                                            bgcolor=bg_color),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        VGroup(
+            HGroup(spring, Label("Click point to select/unselect"), spring),
+            Item(
+                "plot",
+                editor=ComponentEditor(size=size, bgcolor=bg_color),
+                show_label=False,
+            ),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _metadata_handler(self, event):
-        sel_indices = self.index_datasource.metadata.get('selections', [])
+        sel_indices = self.index_datasource.metadata.get("selections", [])
         print("Selection indices:", sel_indices)
 
-        hover_indices = self.index_datasource.metadata.get('hover', [])
+        hover_indices = self.index_datasource.metadata.get("hover", [])
         print("Hover indices:", hover_indices)
 
     def _plot_default(self):
@@ -124,6 +139,7 @@ class Demo(HasTraits):
         )
 
         return plot
+
 
 demo = Demo()
 

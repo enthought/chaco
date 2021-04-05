@@ -10,7 +10,6 @@ from enable.testing import EnableTestAssistant
 
 
 class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
-
     def test_selecting_mouse_leave_clipping(self):
         # Regression test for #216.
         plot_data = ArrayPlotData()
@@ -18,17 +17,19 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         plot_data.set_data("x", arr)
         plot_data.set_data("y", arr)
 
-        for origin in ('bottom left', 'top left', 'bottom right', 'top right'):
-            for orientation in ('h', 'v'):
-                for axis in ('index', 'value'):
+        for origin in ("bottom left", "top left", "bottom right", "top right"):
+            for orientation in ("h", "v"):
+                for axis in ("index", "value"):
                     plot = Plot(
-                        plot_data, orientation=orientation, origin='top right'
+                        plot_data, orientation=orientation, origin="top right"
                     )
 
-                    renderer = plot.plot(('x', 'y'))[0]
+                    renderer = plot.plot(("x", "y"))[0]
                     renderer.bounds = [10, 20]
                     tool = RangeSelection(
-                        renderer, left_button_selects=True, axis=axis,
+                        renderer,
+                        left_button_selects=True,
+                        axis=axis,
                     )
                     renderer.tools.append(tool)
 
@@ -58,7 +59,7 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         plot_data.set_data("x", arr)
         plot_data.set_data("y", arr)
         plot = Plot(plot_data)
-        renderer = plot.plot(('x', 'y'))[0]
+        renderer = plot.plot(("x", "y"))[0]
         tool = RangeSelection(renderer)
         with warnings.catch_warnings(record=True) as w:
             # Ignore warnings coming from any package other than Chaco

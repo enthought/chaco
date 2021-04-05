@@ -11,12 +11,11 @@ import re
 from numpy import all, array, arange, asarray, reshape, shape, transpose
 
 # Chaco imports
-from chaco.plot_factory import (create_line_plot, create_scatter_plot)
+from chaco.plot_factory import create_line_plot, create_scatter_plot
 from chaco.array_data_source import ArrayDataSource
 from chaco.image_data import ImageData
 
 from chaco.tools.highlight_tool import HighlightTool
-
 
 
 # Local relative imports
@@ -26,42 +25,54 @@ from .chaco_shell_error import ChacoShellError
 # Normally I don't define an __all__, but this lets us distinguish
 # the top level plot-producing functions from the various helper
 # functions.
-__all__ = ["do_plot", "do_imshow", "do_pcolor", "do_contour", "do_plotv",
-           "SizeMismatch", ]
+__all__ = [
+    "do_plot",
+    "do_imshow",
+    "do_pcolor",
+    "do_contour",
+    "do_plotv",
+    "SizeMismatch",
+]
 
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Exceptions
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 class SizeMismatch(ChacoShellError):
     pass
 
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Utility functions
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
-def is1D (a):
+
+def is1D(a):
     s = shape(a)
-    return ((len(s) == 1) or (s[0] == 1) or (s[1] == 1))
-
-def is2D (a):
-    return (len(shape(a)) == 2)
-
-def row ( a ):
-        return reshape( asarray( a ), [1,-1] )
-
-def col ( a ):
-        return reshape( asarray( a ), [-1,1] )
+    return (len(s) == 1) or (s[0] == 1) or (s[1] == 1)
 
 
-#-----------------------------------------------------------------------------
+def is2D(a):
+    return len(shape(a)) == 2
+
+
+def row(a):
+    return reshape(asarray(a), [1, -1])
+
+
+def col(a):
+    return reshape(asarray(a), [-1, 1])
+
+
+# -----------------------------------------------------------------------------
 # Plot commands for chaco-style plotv()
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 def do_plotv(session, *args, **kw):
-    """ Creates a list of plots from the data in ``*args`` and options in
+    """Creates a list of plots from the data in ``*args`` and options in
     ``**kw``, according to the docstring on commands.plot().
     """
 
@@ -79,11 +90,11 @@ def do_plotv(session, *args, **kw):
     for plot in plots:
         plot.orientation = kw.get("orientation", "h")
 
-
     return plots
 
+
 def make_data_sources(session, index_sort="none", *args):
-    """ Given a list of arguments, returns a list of (index, value) datasources
+    """Given a list of arguments, returns a list of (index, value) datasources
     to create plots from.
     """
     # Make sure everything is a numpy array
@@ -101,14 +112,19 @@ def make_data_sources(session, index_sort="none", *args):
     if len(data[0].shape) == 1:
         if len(data) == 1:
             # Only a single array was provided
-            index_ds = ArrayDataSource(arange(len(data[0])), sort_order="ascending")
+            index_ds = ArrayDataSource(
+                arange(len(data[0])), sort_order="ascending"
+            )
             value_ds = ArrayDataSource(data[0], sort_order="none")
             return [(index_ds, value_ds)]
 
         else:
             # multiple arrays were provided
             index_ds = ArrayDataSource(data[0], sort_order=index_sort)
-            return [(index_ds, ArrayDataSource(v, sort_order="none")) for v in data[1:]]
+            return [
+                (index_ds, ArrayDataSource(v, sort_order="none"))
+                for v in data[1:]
+            ]
 
     # 2D arrays
     elif len(data[0].shape) == 2:
@@ -122,62 +138,65 @@ def make_data_sources(session, index_sort="none", *args):
                 index_ary = ary[0]
                 value_arrays = transpose(ary[1:])
             index_ds = ArrayDataSource(index_ary, sort_order=index_sort)
-            sources.extend([(index_ds, ArrayDataSource(v, sort_order="none")) for v in value_arrays])
+            sources.extend(
+                [
+                    (index_ds, ArrayDataSource(v, sort_order="none"))
+                    for v in value_arrays
+                ]
+            )
         return sources
 
     # Not a two-dimensional array, error.
     else:
         raise ChacoShellError(
-            "Unable to create plot data sources from array of shape " +
-            str(data[1].shape) + ".")
+            "Unable to create plot data sources from array of shape "
+            + str(data[1].shape)
+            + "."
+        )
 
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Plot commands for matlab-compatible plot() function
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 # Regular expressions for parsing the format string
 
-color_re = re.compile('[ymcrgbwk]')
+color_re = re.compile("[ymcrgbwk]")
 color_trans = {
-    'y': 'yellow',
-    'm': 'magenta',
-    'c': 'cyan',
-    'r': 'red',
-    'g': 'green',
-    'b': 'blue',
-    'w': 'white',
-    'k': 'black'
+    "y": "yellow",
+    "m": "magenta",
+    "c": "cyan",
+    "r": "red",
+    "g": "green",
+    "b": "blue",
+    "w": "white",
+    "k": "black",
 }
 
 # This one isn't quite right:
 
-marker_re = re.compile('[ox+s^v]|(?:[^-])[.]')
+marker_re = re.compile("[ox+s^v]|(?:[^-])[.]")
 marker_trans = {
-    '.': 'dot',
-    'o': 'circle',
-    'x': 'cross',
-    '+': 'plus',
-    's': 'square',
-    '^': 'triangle',
-    'v': 'inverted_triangle'
+    ".": "dot",
+    "o": "circle",
+    "x": "cross",
+    "+": "plus",
+    "s": "square",
+    "^": "triangle",
+    "v": "inverted_triangle",
 }
 
-line_re = re.compile('--|-\.|[-:]')
-line_trans = {
-    '-':  'solid',
-    ':':  'dot',
-    '-.': 'dot dash',
-    '--': 'dash'
-}
+line_re = re.compile("--|-\.|[-:]")
+line_trans = {"-": "solid", ":": "dot", "-.": "dot dash", "--": "dash"}
+
 
 def _process_format(format):
     """
     Converts a format string into a (color, line, marker, marker_color) tuple.
     """
-    if format == '':
-        return ('black', 'solid', None, None)
-    color, line, marker, marker_color = 'black', None, None, None
+    if format == "":
+        return ("black", "solid", None, None)
+    color, line, marker, marker_color = "black", None, None, None
     m = color_re.findall(format)
     if len(m) > 0:
         color = marker_color = color_trans[m[0]]
@@ -192,8 +211,9 @@ def _process_format(format):
         line = line_trans[m[0]]
     return (color, line, marker, marker_color)
 
+
 def _process_group(group, plot_data=None):
-    """ Returns a (x_1D, y_1D, format_str) tuple from an input tuple
+    """Returns a (x_1D, y_1D, format_str) tuple from an input tuple
     of 1 to 3 elements: (x,y,format_str).
 
     A PlotData object can be optionally provided to disambiguate the cases
@@ -204,7 +224,7 @@ def _process_group(group, plot_data=None):
     to be.
     """
     # Interpret and split the 'group' tuple into x, y, and plotinfo
-    plotinfo = ''
+    plotinfo = ""
     if len(group) == 1:
         y = group[0]
         y_data = plot_data.get_data(y)
@@ -222,14 +242,17 @@ def _process_group(group, plot_data=None):
                 plotinfo = group[1]
                 y = group[0]
                 y_data = plot_data.get_data(y)
-                x = plot_data.set_data("", arange(len(y_data)), generate_name=True)
+                x = plot_data.set_data(
+                    "", arange(len(y_data)), generate_name=True
+                )
         else:
             x, y = group
     elif len(group) == 3:
         x, y, plotinfo = group
     else:
-        raise ChacoShellError("Found too many elements in group while" \
-                              " constructing plot.")
+        raise ChacoShellError(
+            "Found too many elements in group while constructing plot."
+        )
     return x, y, plotinfo
 
 
@@ -244,7 +267,7 @@ def _check_sort_order(data):
 
 
 def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
-    """ Takes a list of data (arrays or names) and format string arguments
+    """Takes a list of data (arrays or names) and format string arguments
     and creates new plots on the active_plot.  Returns a list of plot names
     on the active plot.
     """
@@ -275,7 +298,7 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
     plots = []
 
     for group in groups:
-        x, y, format_str = _process_group(group, plot_data = plotdata)
+        x, y, format_str = _process_group(group, plot_data=plotdata)
         linecolor, line, marker, markercolor = _process_format(format_str)
         plot_type = []
         format = kwtraits.copy()
@@ -289,7 +312,9 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
             format["color"] = markercolor
 
         x_sort_order = _check_sort_order(plotdata.get_data(x))
-        plots.extend(active_plot.plot((x,y), type=",".join(plot_type), **format))
+        plots.extend(
+            active_plot.plot((x, y), type=",".join(plot_type), **format)
+        )
 
         # Set the sort order
         x_ds = active_plot.datasources[x]
@@ -306,6 +331,7 @@ def do_plot(plotdata, active_plot, *data_and_formats, **kwtraits):
 
     return plots
 
+
 def do_imread(*data, **kwargs):
     """ Returns image file as array. """
 
@@ -316,9 +342,8 @@ def do_imread(*data, **kwargs):
         raise ValueError("do_imread takes a string filename")
 
 
-
 def do_imshow(plotdata, active_plot, *data, **kwargs):
-    """ Creates an image plot on the active plot, given either
+    """Creates an image plot on the active plot, given either
     a filename or data.
     """
 
@@ -340,8 +365,8 @@ def do_imshow(plotdata, active_plot, *data, **kwargs):
     return plot_list
 
 
-def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
-    """ Creates a pseudocolor image plot on the active plot, given a 2-D
+def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs):
+    """Creates a pseudocolor image plot on the active plot, given a 2-D
     scalar data and a colormap.
     """
 
@@ -359,13 +384,16 @@ def do_pcolor(plotdata, colormap, active_plot, *data, **kwargs ):
     else:
         raise ValueError("do_pcolor takes one or three data sources")
 
-    plot_list = [active_plot.img_plot(z, xbounds=x, ybounds=y,
-                                colormap=colormap, **kwargs)]
+    plot_list = [
+        active_plot.img_plot(
+            z, xbounds=x, ybounds=y, colormap=colormap, **kwargs
+        )
+    ]
     return plot_list
 
 
-def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
-    """ Creates a contour plot on the active plot, given a 2-D
+def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs):
+    """Creates a contour plot on the active plot, given a 2-D
     scalar data and a colormap.
     """
 
@@ -386,28 +414,31 @@ def do_contour(plotdata, colormap, active_plot, type, *data, **kwargs ):
 
     # we have to do slightly different calls here because of the different
     # handling of colormaps
-    if type is 'poly':
-        plot_list = [active_plot.contour_plot(z, type, xbounds=x, ybounds=y,
-                                    poly_cmap=colormap,
-                                    **kwargs)]
+    if type is "poly":
+        plot_list = [
+            active_plot.contour_plot(
+                z, type, xbounds=x, ybounds=y, poly_cmap=colormap, **kwargs
+            )
+        ]
     else:
-        plot_list = [active_plot.contour_plot(z, type, xbounds=x, ybounds=y,
-                                    colors=colormap,
-                                    **kwargs)]
+        plot_list = [
+            active_plot.contour_plot(
+                z, type, xbounds=x, ybounds=y, colors=colormap, **kwargs
+            )
+        ]
 
     return plot_list
 
 
 def _get_or_create_plot_data(data, plotdata):
-    """Create a new name for `data` if necessary, or check it is a valid name.
-    """
+    """Create a new name for `data` if necessary, or check it is a valid name."""
     valid_names = plotdata.list_data()
 
     if not isinstance(data, str):
         name = plotdata.set_data("", data, generate_name=True)
     else:
         if data not in valid_names:
-            msg = '{} is not an existing name for plot data'
+            msg = "{} is not an existing name for plot data"
             raise ValueError(msg.format(data))
 
         name = data

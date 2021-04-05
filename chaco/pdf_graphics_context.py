@@ -1,9 +1,8 @@
-
 # Major library imports
 import warnings
 
 try:
-# PDF imports from reportlab
+    # PDF imports from reportlab
     from reportlab.pdfgen.canvas import Canvas
     from reportlab.lib.pagesizes import letter, A4, landscape
     from reportlab.lib.units import inch, cm, mm, pica
@@ -21,7 +20,7 @@ PAGE_SIZE_MAP = {
     "letter": letter,
     "A4": A4,
     "landscape_letter": landscape(letter),
-    "landscape_A4": landscape(A4)
+    "landscape_A4": landscape(A4),
 }
 
 UNITS_MAP = {
@@ -32,9 +31,9 @@ UNITS_MAP = {
 }
 
 if Canvas is not None:
+
     class PdfPlotGraphicsContext(GraphicsContext):
-        """ A convenience class for rendering PlotComponents onto PDF
-        """
+        """A convenience class for rendering PlotComponents onto PDF"""
 
         # The name of the file that this graphics context will use when
         # gc.save() is called without a filename being supplied.
@@ -54,10 +53,16 @@ if Canvas is not None:
         dest_box = (0.5, 0.5, -0.5, -0.5)
 
         # The units of the values in dest_box
-        dest_box_units = "inch"   # Enum("inch", "cm", "mm", "pica")
+        dest_box_units = "inch"  # Enum("inch", "cm", "mm", "pica")
 
-        def __init__(self, pdf_canvas=None, filename=None, pagesize=None,
-                     dest_box=None, dest_box_units=None):
+        def __init__(
+            self,
+            pdf_canvas=None,
+            filename=None,
+            pagesize=None,
+            dest_box=None,
+            dest_box_units=None,
+        ):
             if filename:
                 self.filename = filename
             if pagesize:
@@ -73,7 +78,7 @@ if Canvas is not None:
             GraphicsContext.__init__(self, pdf_canvas)
 
         def add_page(self):
-            """ Adds a new page to the PDF canvas and makes that the current
+            """Adds a new page to the PDF canvas and makes that the current
             drawing target.
             """
             if self.gc is None:
@@ -86,9 +91,14 @@ if Canvas is not None:
             # We'll need to call _initialize_page() before drawing
             self._page_initialized = False
 
-        def render_component(self, component, container_coords=False,
-                             halign="center", valign="top"):
-            """ Erases the current contents of the graphics context and renders
+        def render_component(
+            self,
+            component,
+            container_coords=False,
+            halign="center",
+            valign="top",
+        ):
+            """Erases the current contents of the graphics context and renders
             the given component at the maximum possible scaling while
             preserving aspect ratio.
 
@@ -186,9 +196,8 @@ if Canvas is not None:
             self.gc.save()
 
         def _create_new_canvas(self):
-            """ Create the PDF canvas context.
-            """
-            x, y, w, h, = self._get_bounding_box()
+            """Create the PDF canvas context."""
+            x, y, w, h = self._get_bounding_box()
             if w < 0 or h < 0:
                 self.gc = None
                 return
@@ -200,8 +209,7 @@ if Canvas is not None:
             return gc
 
         def _get_bounding_box(self):
-            """ Compute the bounding rect of a page.
-            """
+            """Compute the bounding rect of a page."""
             pagesize = PAGE_SIZE_MAP[self.pagesize]
             units = UNITS_MAP[self.dest_box_units]
 
@@ -221,9 +229,8 @@ if Canvas is not None:
             return x, y, w, h
 
         def _initialize_page(self, gc):
-            """ Make sure the origin is set to something consistent.
-            """
-            x, y, w, h, = self._get_bounding_box()
+            """Make sure the origin is set to something consistent."""
+            x, y, w, h = self._get_bounding_box()
 
             gc.translate(x, y)
 

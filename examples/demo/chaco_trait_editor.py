@@ -5,7 +5,8 @@ interval.
 
 
 from traits.etsconfig.api import ETSConfig
-if ETSConfig.toolkit == 'wx':
+
+if ETSConfig.toolkit == "wx":
     from traitsui.wx.editor import Editor
 else:
     from traitsui.qt4.editor import Editor
@@ -15,8 +16,7 @@ from traitsui.editor_factory import EditorFactory
 from enable.window import Window
 from enable.api import ColorTrait
 
-from chaco.api import OverlayPlotContainer, create_line_plot, \
-     LinePlot
+from chaco.api import OverlayPlotContainer, create_line_plot, LinePlot
 from chaco.tools.api import RangeSelection, RangeSelectionOverlay
 
 from traits.api import Int, TraitType, Instance, Float
@@ -25,9 +25,8 @@ from math import pi
 
 
 class Interval(TraitType):
-    """Trait that represents an interval.
+    """Trait that represents an interval."""
 
-    """
     info_text = "an interval (x,y) where x < y"
 
     def __init__(self, low=0, high=1, **metadata):
@@ -54,11 +53,17 @@ class IntervalEditorFactory(EditorFactory):
     def simple_editor(self, ui, object, name, description, parent):
         trait = object.trait(name).trait_type
         low, high = trait.value
-        return IntervalEditorImpl(parent, factory=self, ui=ui,
-                                  object=object, name=name,
-                                  description=description,
-                                  low=low,
-                                  high=high)
+        return IntervalEditorImpl(
+            parent,
+            factory=self,
+            ui=ui,
+            object=object,
+            name=name,
+            description=description,
+            low=low,
+            high=high,
+        )
+
 
 class RangeKnobsOverlay(RangeSelectionOverlay):
     radius = Float(3)
@@ -71,7 +76,7 @@ class RangeKnobsOverlay(RangeSelectionOverlay):
     border_color = ColorTrait("black")
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        mid_y = component.position[1] + component.bounds[1]/2
+        mid_y = component.position[1] + component.bounds[1] / 2
         # Draw each of a possibly disjoint set of selections
         coords = self._get_selection_screencoords()
         for coord in coords:
@@ -81,8 +86,12 @@ class RangeKnobsOverlay(RangeSelectionOverlay):
                 gc.set_stroke_color(self.border_color_)
                 gc.set_line_width(self.border_width)
 
-                gc.rect(start + self.radius, mid_y - 1,
-                        (end - start - 2*self.radius), 2)
+                gc.rect(
+                    start + self.radius,
+                    mid_y - 1,
+                    (end - start - 2 * self.radius),
+                    2,
+                )
                 gc.draw_path()
 
                 gc.set_fill_color(self.low_color_)
@@ -98,7 +107,7 @@ class RangeKnobsOverlay(RangeSelectionOverlay):
     def _circle(self, gc, x, y, radius):
         with gc:
             gc.translate_ctm(x, y)
-            gc.arc(0, 0, 2*radius, 0, 2*pi)
+            gc.arc(0, 0, 2 * radius, 0, 2 * pi)
 
 
 class IntervalEditorImpl(Editor):
@@ -108,16 +117,17 @@ class IntervalEditorImpl(Editor):
 
     def init(self, parent):
         factory = self.factory
-        container = OverlayPlotContainer(bgcolor='transparent',
-                                         padding=0, spacing=0)
+        container = OverlayPlotContainer(
+            bgcolor="transparent", padding=0, spacing=0
+        )
 
         window = Window(parent, component=container)
 
         interval = self.high - self.low
-        data = ([self.low, self.high], [0.5]*2)
-        plot = create_line_plot(data, color='black', bgcolor="sys_window")
-        plot.x_mapper.range.low = self.low - interval*0.1
-        plot.x_mapper.range.high = self.high + interval*0.1
+        data = ([self.low, self.high], [0.5] * 2)
+        plot = create_line_plot(data, color="black", bgcolor="sys_window")
+        plot.x_mapper.range.low = self.low - interval * 0.1
+        plot.x_mapper.range.high = self.high + interval * 0.1
         plot.y_mapper.range.high = 1.0
         plot.y_mapper.range.low = 0.0
 
@@ -125,7 +135,7 @@ class IntervalEditorImpl(Editor):
         # Do not allow the user to reset the range
         range_selection.event_state = "selected"
         range_selection.deselect = lambda x: None
-        range_selection.observe(self.update_interval, 'selection')
+        range_selection.observe(self.update_interval, "selection")
 
         plot.tools.append(range_selection)
         plot.overlays.append(RangeKnobsOverlay(plot))
@@ -138,7 +148,7 @@ class IntervalEditorImpl(Editor):
 
         # Tell the editor what to display
         self.control = window.control
-        if ETSConfig.toolkit == 'wx':
+        if ETSConfig.toolkit == "wx":
             self.control.SetSize((factory.width, factory.height))
         else:
             self.control.setMaximumSize(factory.width, factory.height)
@@ -150,11 +160,12 @@ class IntervalEditorImpl(Editor):
         low = max(low, 0)
         high = min(high, 1)
 
-        self.plot.index.metadata['selections'] = (low, high)
+        self.plot.index.metadata["selections"] = (low, high)
         self.value = (low, high)
 
     def update_editor(self):
         pass
+
 
 # The user normally uses the factory as if it were an editor, e.g.:
 #
@@ -163,19 +174,18 @@ class IntervalEditorImpl(Editor):
 IntervalEditor = IntervalEditorFactory
 
 
-
 # --- Demonstration ---
 
 if __name__ == "__main__":
     from traits.api import HasTraits
     from traitsui.api import View, Item
+
     class IntervalTest(HasTraits):
         interval = Interval(low=0, high=1)
 
-        traits_view = View(Item('interval',
-                                editor=IntervalEditor()
-                                ),
-                           resizable=True)
+        traits_view = View(
+            Item("interval", editor=IntervalEditor()), resizable=True
+        )
 
     it = IntervalTest()
     it.configure_traits()

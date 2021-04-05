@@ -17,13 +17,12 @@ class Foo(HasTraits):
 
     range_updated = Bool(False)
 
-    @observe('range.updated')
+    @observe("range.updated")
     def range_changed(self, event):
         self.range_updated = True
 
 
 class DataRangeTestCase(unittest.TestCase):
-
     def test_empty_range(self):
         r = DataRange1D()
         self.assertEqual(r.low, -inf)
@@ -86,13 +85,13 @@ class DataRangeTestCase(unittest.TestCase):
         """Set set_bounds() with high='track'."""
         foo = Foo(range=DataRange1D(tracking_amount=1.0))
         foo.range.low_setting = 0.0
-        foo.range.high_setting = 'track'
+        foo.range.high_setting = "track"
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
         self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
-        foo.range.set_bounds(100.0, 'track')
+        foo.range.set_bounds(100.0, "track")
         # Verify the values.
         self.assertEqual(foo.range.low, 100.0)
         self.assertEqual(foo.range.high, 101.0)
@@ -102,14 +101,14 @@ class DataRangeTestCase(unittest.TestCase):
     def test_set_bounds5(self):
         """Set set_bounds() with low='track'."""
         foo = Foo(range=DataRange1D(tracking_amount=1.0))
-        foo.range.low_setting = 'track'
+        foo.range.low_setting = "track"
         foo.range.high_setting = 1.0
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
         self.assertEqual(foo.range.high, 1.0)
         # Now reset foo's range_updated flag and set the bounds with set_bounds().
         foo.range_updated = False
-        foo.range.set_bounds('track', 100.0)
+        foo.range.set_bounds("track", 100.0)
         # Verify the values.
         self.assertEqual(foo.range.low, 99.0)
         self.assertEqual(foo.range.high, 100.0)
@@ -119,7 +118,7 @@ class DataRangeTestCase(unittest.TestCase):
     def test_set_tracking_amount(self):
         """Test setting the tracking amount using the set_tracking_amount() method."""
         foo = Foo(range=DataRange1D(tracking_amount=1.0))
-        foo.range.low_setting = 'track'
+        foo.range.low_setting = "track"
         foo.range.high_setting = 1.0
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
@@ -136,7 +135,7 @@ class DataRangeTestCase(unittest.TestCase):
     def test_scale_tracking_amount(self):
         """Test setting the tracking amount using the scale_tracking_amount() method."""
         foo = Foo(range=DataRange1D(tracking_amount=1.0))
-        foo.range.low_setting = 'track'
+        foo.range.low_setting = "track"
         foo.range.high_setting = 1.0
         # Paranoid check first (not the main point of this test):
         self.assertEqual(foo.range.low, 0.0)
@@ -213,39 +212,39 @@ class DataRangeTestCase(unittest.TestCase):
     def test_clip_data(self):
         r = DataRange1D(low=2.0, high=10.0)
         ary = array([1, 3, 4, 9.8, 10.2, 12])
-        assert_equal(r.clip_data(ary) , array([3.0,4.0,9.8]))
+        assert_equal(r.clip_data(ary), array([3.0, 4.0, 9.8]))
 
         r = DataRange1D(low=10, high=20)
         ary = array([5, 10, 15, 20, 25, 30])
-        assert_equal(r.clip_data(ary) , array([10, 15, 20]))
-        assert_equal(r.clip_data(ary[::-1]) , array([20, 15, 10]))
+        assert_equal(r.clip_data(ary), array([10, 15, 20]))
+        assert_equal(r.clip_data(ary[::-1]), array([20, 15, 10]))
 
         r = DataRange1D(low=2.0, high=2.5)
-        assert_equal(len(r.clip_data(ary)) , 0)
+        assert_equal(len(r.clip_data(ary)), 0)
 
     def test_mask_data(self):
         r = DataRange1D(low=2.0, high=10.0)
         ary = array([1, 3, 4, 9.8, 10.2, 12])
-        assert_equal(r.mask_data(ary) , array([0,1,1,1,0,0], 'b'))
+        assert_equal(r.mask_data(ary), array([0, 1, 1, 1, 0, 0], "b"))
 
         r = DataRange1D(low=10, high=20)
         ary = array([5, 10, 15, 20, 25, 30])
-        target_mask = array([0,1,1,1,0,0], 'b')
-        assert_equal(r.mask_data(ary) , target_mask)
-        assert_equal(r.mask_data(ary[::-1]) , target_mask[::-1])
+        target_mask = array([0, 1, 1, 1, 0, 0], "b")
+        assert_equal(r.mask_data(ary), target_mask)
+        assert_equal(r.mask_data(ary[::-1]), target_mask[::-1])
 
         r = DataRange1D(low=2.0, high=2.5)
-        assert_equal(r.mask_data(ary) , zeros(len(ary)))
+        assert_equal(r.mask_data(ary), zeros(len(ary)))
 
     def test_bound_data(self):
         r = DataRange1D(low=2.9, high=6.1)
         ary = arange(10)
-        assert_equal(r.bound_data(ary) , (3,6))
+        assert_equal(r.bound_data(ary), (3, 6))
 
         # test non-monotonic data
-        ary = array([-5,-4,-7,-8,-2,1,2,3,4,5,4,3,8,9,10,9,8])
+        ary = array([-5, -4, -7, -8, -2, 1, 2, 3, 4, 5, 4, 3, 8, 9, 10, 9, 8])
         bounds = r.bound_data(ary)
-        assert_equal(bounds , (7,11))
+        assert_equal(bounds, (7, 11))
 
     def test_custom_bounds_func(self):
         def custom_func(low, high, margin, tight_bounds):
@@ -253,14 +252,16 @@ class DataRangeTestCase(unittest.TestCase):
             assert_equal(high, 9.0)
             assert_equal(tight_bounds, False)
             assert_equal(margin, 1.0)
-            return -999., 999.
+            return -999.0, 999.0
 
-        r = DataRange1D(tight_bounds=False, margin=1.0, bounds_func=custom_func)
+        r = DataRange1D(
+            tight_bounds=False, margin=1.0, bounds_func=custom_func
+        )
         ary = arange(10.0)
         ds = ArrayDataSource(ary)
         r.sources.append(ds)
-        assert_equal(r.low, -999.)
-        assert_equal(r.high, 999.)
+        assert_equal(r.low, -999.0)
+        assert_equal(r.high, 999.0)
 
     def test_inf_in_source(self):
         r = DataRange1D()
@@ -270,7 +271,7 @@ class DataRangeTestCase(unittest.TestCase):
         self.assertEqual(r.low, 1.0)
         self.assertEqual(r.high, inf)
         data = array([-100.0, 0.0, 100.0])
-        assert_equal(r.clip_data(data) , array([100.0]))
+        assert_equal(r.clip_data(data), array([100.0]))
 
         r = DataRange1D()
         ary2 = array([-inf, 1.0])

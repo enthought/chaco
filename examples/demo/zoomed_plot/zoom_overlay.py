@@ -45,10 +45,11 @@ class ZoomOverlay(AbstractOverlay):
         left_end = array([self.destination.x, y])
         right_end = array([self.destination.x2, y])
 
-        polygon = array((left_top, left_mid, left_end,
-                         right_end,right_mid, right_top))
+        polygon = array(
+            (left_top, left_mid, left_end, right_end, right_mid, right_top)
+        )
         left_line = array((left_top, left_mid, left_end))
-        right_line = array((right_end,right_mid, right_top))
+        right_line = array((right_end, right_mid, right_top))
 
         return left_line, right_line, polygon
 
@@ -91,14 +92,15 @@ class ZoomOverlay(AbstractOverlay):
         else:
             return None
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _source_changed(self, old, new):
         if old is not None and old.controller is not None:
-            old.controller.observe(self._selection_update_handler, "selection",
-                                           remove=True)
+            old.controller.observe(
+                self._selection_update_handler, "selection", remove=True
+            )
         if new is not None and new.controller is not None:
             new.controller.observe(self._selection_update_handler, "selection")
 

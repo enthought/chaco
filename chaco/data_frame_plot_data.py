@@ -9,7 +9,7 @@ from .abstract_plot_data import AbstractPlotData
 
 
 class DataFramePlotData(AbstractPlotData):
-    """ A PlotData implementation class that handles a DataFrame.
+    """A PlotData implementation class that handles a DataFrame.
 
     By default, it doesn't allow its input data to be modified by downstream
     Chaco components or interactors. The index is available as data unless
@@ -19,76 +19,75 @@ class DataFramePlotData(AbstractPlotData):
 
     """
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Public traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # The DataFrame backing this object.
-    data_frame = Instance('pandas.core.frame.DataFrame')
+    data_frame = Instance("pandas.core.frame.DataFrame")
 
     # Consumers can write data to this object (overrides AbstractPlotData).
     writable = True
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     _has_index_column = Property(Bool)
 
     def _get__has_index_column(self):
-        return 'index' in self.data_frame.columns
+        return "index" in self.data_frame.columns
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractPlotData Interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def list_data(self):
-        """ Returns a list of the names of the columns of the DataFrame. The
+        """Returns a list of the names of the columns of the DataFrame. The
         name 'index' is added to this unless there is a column named 'index'.
         """
         names = self.data_frame.columns.tolist()
         if not self._has_index_column:
-            names = ['index'] + names
+            names = ["index"] + names
         return names
 
     def get_data(self, name):
-        """ Returns the array associated with *name*.
+        """Returns the array associated with *name*.
 
         Implements AbstractDataSource.
         """
-        if name == 'index' and not self._has_index_column:
+        if name == "index" and not self._has_index_column:
             return self.data_frame.index.values
         series = self.data_frame.get(name)
         return series if series is None else series.values
 
     def del_data(self, name):
-        """ Deletes the column specified by *name*, or raises a KeyError if
+        """Deletes the column specified by *name*, or raises a KeyError if
         the named column does not exist.
         """
         if not self.writable:
             return None
 
-        if name == 'index' and not self._has_index_column:
+        if name == "index" and not self._has_index_column:
             raise KeyError("Cannot delete the index.")
 
         if name in self.data_frame.columns:
             del self.data_frame[name]
-            if name == 'index':
+            if name == "index":
                 # It is impossible to remove the 'index' in the PlotData.
                 # Removing a column named 'index' in the DataFrame means that
                 # the DataFrame index is now the 'index' in the PlotData. Thus,
                 # this results in a 'changed' event instead of a 'removed'
                 # event.
-                self.data_changed = {'changed': [name]}
+                self.data_changed = {"changed": [name]}
             else:
-                self.data_changed = {'removed': [name]}
+                self.data_changed = {"removed": [name]}
         else:
             raise KeyError("Column '{}' does not exist.".format(name))
 
     def set_data(self, name, new_data, generate_name=False):
-        """ Sets the specified index or column as the value for either the
-        specified
-        name or a generated name.
+        """Sets the specified index or column as the value for either the
+        specified name or a generated name.
 
         If the instance's `writable` attribute is True, then this method sets
         the data associated with the given name to the new value, otherwise it
@@ -121,7 +120,7 @@ class DataFramePlotData(AbstractPlotData):
         return name
 
     def update_data(self, *args, **kwargs):
-        """ Sets the specified column or index as the value for either the
+        """Sets the specified column or index as the value for either the
         specified name or a generated name.
 
         Implements AbstractPlotData's update_data() method.  This method has
@@ -134,26 +133,24 @@ class DataFramePlotData(AbstractPlotData):
         data = dict(*args, **kwargs)
         event = {}
         for name in data:
-            if name == 'index' or name in self.data_frame.columns:
-                event.setdefault('changed', []).append(name)
+            if name == "index" or name in self.data_frame.columns:
+                event.setdefault("changed", []).append(name)
             else:
-                event.setdefault('added', []).append(name)
+                event.setdefault("added", []).append(name)
 
         self._update_data(data)
         self.data_changed = event
 
     def set_selection(self, name, selection):
-        """ Overrides AbstractPlotData to do nothing and not raise an error.
-        """
+        """Overrides AbstractPlotData to do nothing and not raise an error."""
         pass
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _generate_names(self, n):
-        """ Generate n new names
-        """
+        """Generate n new names"""
         max_index = max(self._generate_indices())
         names = [
             "series{0:d}".format(i)
@@ -162,11 +159,10 @@ class DataFramePlotData(AbstractPlotData):
         return names
 
     def _generate_indices(self):
-        """ Generator that yields all integers that match "series%d" in keys
-        """
+        """Generator that yields all integers that match "series%d" in keys"""
         yield 0  # default minimum
         for name in self.list_data():
-            if name.startswith('series'):
+            if name.startswith("series"):
                 try:
                     v = int(name[6:])
                 except ValueError:
@@ -175,7 +171,7 @@ class DataFramePlotData(AbstractPlotData):
 
     def _update_data(self, data):
         for name, value in data.items():
-            if name == 'index' and not self._has_index_column:
+            if name == "index" and not self._has_index_column:
                 self.data_frame.index = value
             else:
                 self.data_frame[name] = value

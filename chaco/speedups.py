@@ -1,4 +1,3 @@
-
 # This contains python implementations of all the speedups
 from ._speedups_fallback import *
 

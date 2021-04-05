@@ -23,7 +23,7 @@ from .color_spaces import msh2xyz, srgb2xyz, xyz2msh, xyz2srgb
 
 
 def adjust_hue(msh_sat, m_unsat):
-    """ Adjust the hue when interpolating to an unsaturated color.
+    """Adjust the hue when interpolating to an unsaturated color.
 
     Parameters
     ----------
@@ -41,7 +41,11 @@ def adjust_hue(msh_sat, m_unsat):
     if m_sat >= m_unsat:
         return h_sat
     else:
-        spin = s_sat * np.sqrt(m_unsat*m_unsat - m_sat*m_sat) / (m_sat * np.sin(s_sat))
+        spin = (
+            s_sat
+            * np.sqrt(m_unsat * m_unsat - m_sat * m_sat)
+            / (m_sat * np.sin(s_sat))
+        )
         if h_sat > -np.pi / 3:
             return h_sat + spin
         else:
@@ -49,7 +53,7 @@ def adjust_hue(msh_sat, m_unsat):
 
 
 def generate_diverging_palette(srgb1, srgb2, n_colors=256):
-    """ Generate a diverging color palette with two endpoint colors.
+    """Generate a diverging color palette with two endpoint colors.
 
     Parameters
     ----------
@@ -80,27 +84,38 @@ def generate_diverging_palette(srgb1, srgb2, n_colors=256):
     if s2 > 0.05:
         hmid2 = adjust_hue((m2, s2, h2), mmid)
 
-    m_palette = np.hstack([
-        half1 * mmid + (1 - half1) * m1,
-        half2 * m2 + (1 - half2) * mmid,
-    ])
-    s_palette = np.hstack([
-        (1 - half1) * s1,
-        half2 * s2,
-    ])
-    h_palette = np.hstack([
-        half1 * hmid1 + (1 - half1) * h1,
-        half2 * h2 + (1 - half2) * hmid2,
-    ])
+    m_palette = np.hstack(
+        [
+            half1 * mmid + (1 - half1) * m1,
+            half2 * m2 + (1 - half2) * mmid,
+        ]
+    )
+    s_palette = np.hstack(
+        [
+            (1 - half1) * s1,
+            half2 * s2,
+        ]
+    )
+    h_palette = np.hstack(
+        [
+            half1 * hmid1 + (1 - half1) * h1,
+            half2 * h2 + (1 - half2) * hmid2,
+        ]
+    )
     msh_palette = np.column_stack([m_palette, s_palette, h_palette])
     srgb_palette = xyz2srgb(msh2xyz(msh_palette)).clip(0.0, 1.0)
     return srgb_palette
 
 
-def generate_cubehelix_palette(start=0.5, rot=-1.5, saturation=1.2,
-                               lightness_range=(0.0, 1.0), gamma=1.0,
-                               n_colors=256):
-    """ Generate a sequential color palette from black to white spiraling
+def generate_cubehelix_palette(
+    start=0.5,
+    rot=-1.5,
+    saturation=1.2,
+    lightness_range=(0.0, 1.0),
+    gamma=1.0,
+    n_colors=256,
+):
+    """Generate a sequential color palette from black to white spiraling
     through intermediate colors.
 
     Parameters
@@ -124,11 +139,13 @@ def generate_cubehelix_palette(start=0.5, rot=-1.5, saturation=1.2,
         RGB color palette.
     """
     x = np.linspace(lightness_range[0], lightness_range[1], n_colors)
-    theta = 2.0 * np.pi * (start / 3.0 + rot * x + 1.)
+    theta = 2.0 * np.pi * (start / 3.0 + rot * x + 1.0)
     x **= gamma
     amplitude = saturation * x * (1 - x) / 2.0
-    red = x + amplitude * (-0.14861*np.cos(theta) + 1.78277*np.sin(theta))
-    green = x + amplitude * (-0.29227*np.cos(theta) - 0.90649*np.sin(theta))
-    blue = x + amplitude * (1.97294*np.cos(theta))
+    red = x + amplitude * (-0.14861 * np.cos(theta) + 1.78277 * np.sin(theta))
+    green = x + amplitude * (
+        -0.29227 * np.cos(theta) - 0.90649 * np.sin(theta)
+    )
+    blue = x + amplitude * (1.97294 * np.cos(theta))
     srgb_palette = np.column_stack([red, green, blue]).clip(0.0, 1.0)
     return srgb_palette

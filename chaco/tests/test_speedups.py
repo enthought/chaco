@@ -1,16 +1,16 @@
-
 import unittest
 
 from numpy import alltrue, array, ravel, zeros, isinf, linspace
 
 
-def assert_close(desired,actual):
+def assert_close(desired, actual):
     diff_allowed = 1e-5
     diff = abs(ravel(actual) - ravel(desired))
     for d in diff:
         if not isinf(d):
             assert alltrue(d <= diff_allowed)
             return
+
 
 class GatherPointsBase(object):
 
@@ -22,8 +22,12 @@ class GatherPointsBase(object):
         index = linspace(0.0, 20.0, 21)
         value = linspace(0.0, 1.0, 21)
         points, selection = self.func(index, 4.5, 14.5, value, -1.0, 2.4)
-        desired = array([[5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-            [0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.8]]).T
+        desired = array(
+            [
+                [5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+                [0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.8],
+            ]
+        ).T
         self.assertTrue(selection == None)
         assert_close(desired, points)
 
@@ -35,17 +39,24 @@ class GatherPointsBase(object):
         value_mask = zeros(11, dtype=bool)
         value_mask[4:8] = 1
 
-        points, selection = self.func(index, 0, 10, value, 0, 1,
-                                index_mask = index_mask)
+        points, selection = self.func(
+            index, 0, 10, value, 0, 1, index_mask=index_mask
+        )
         desired = array([[2, 3, 4, 5], [0.2, 0.3, 0.4, 0.5]]).T
         assert_close(desired, points)
 
-        points, selection = self.func(index, 0, 10, value, 0, 1,
-                                index_mask = index_mask,
-                                value_mask = value_mask)
+        points, selection = self.func(
+            index,
+            0,
+            10,
+            value,
+            0,
+            1,
+            index_mask=index_mask,
+            value_mask=value_mask,
+        )
         desired = array([[4, 0.4], [5, 0.5]])
         assert_close(desired, points)
-
 
     def test_selection(self):
         pass
@@ -55,6 +66,5 @@ class GatherPointsBase(object):
 
     def _get_func(self):
         return self.module.scatterplot_gather_points
+
     func = property(_get_func)
-
-

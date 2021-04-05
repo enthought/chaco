@@ -3,7 +3,6 @@ from traits.api import HasTraits
 
 
 class ToolState(HasTraits):
-
     def __init__(self, prev, next):
         self.prev = prev
         self.next = next
@@ -16,7 +15,6 @@ class ToolState(HasTraits):
 
 
 class GroupedToolState(ToolState):
-
     def __init__(self, states):
         self.states = states
 
@@ -30,7 +28,6 @@ class GroupedToolState(ToolState):
 
 
 class PanState(ToolState):
-
     def apply(self, tool):
         if isinstance(tool.component.index_mapper, GridMapper):
             index_mapper = tool.component.index_mapper._xmapper
@@ -41,18 +38,20 @@ class PanState(ToolState):
         if self.next[0] != self.prev[0]:
             high = index_mapper.range.high
             low = index_mapper.range.low
-            range = high-low
+            range = high - low
 
-            index_mapper.range.set_bounds(low=self.next[0] - range/2,
-                                          high=self.next[0] + range/2)
+            index_mapper.range.set_bounds(
+                low=self.next[0] - range / 2, high=self.next[0] + range / 2
+            )
 
         if self.next[1] != self.prev[1]:
             high = value_mapper.range.high
             low = value_mapper.range.low
-            range = high-low
+            range = high - low
 
-            value_mapper.range.set_bounds(low=self.next[1] - range/2,
-                                          high=self.next[1] + range/2)
+            value_mapper.range.set_bounds(
+                low=self.next[1] - range / 2, high=self.next[1] + range / 2
+            )
 
     def revert(self, tool):
         if isinstance(tool.component.index_mapper, GridMapper):
@@ -65,31 +64,33 @@ class PanState(ToolState):
         if self.next[0] != self.prev[0]:
             high = index_mapper.range.high
             low = index_mapper.range.low
-            range = high-low
+            range = high - low
 
-            index_mapper.range.set_bounds(low=self.prev[0] - range/2,
-                                          high=self.prev[0] + range/2)
+            index_mapper.range.set_bounds(
+                low=self.prev[0] - range / 2, high=self.prev[0] + range / 2
+            )
 
         if self.next[1] != self.prev[1]:
             high = value_mapper.range.high
             low = value_mapper.range.low
-            range = high-low
+            range = high - low
 
-            index_mapper.range.set_bounds(low=self.prev[1] - range/2,
-                                          high=self.prev[1] + range/2)
+            index_mapper.range.set_bounds(
+                low=self.prev[1] - range / 2, high=self.prev[1] + range / 2
+            )
 
 
 class ZoomState(ToolState):
-    """ A zoom state which can be applied and reverted.
+    """A zoom state which can be applied and reverted.
 
-        This class exists so that subclasses can introduce new types
-        of events which can be applied and reverted in the same manner.
-        This greatly eases the code for managing history
+    This class exists so that subclasses can introduce new types
+    of events which can be applied and reverted in the same manner.
+    This greatly eases the code for managing history
     """
 
     def apply(self, zoom_tool):
-        index_factor = self.next[0]/self.prev[0]
-        value_factor = self.next[1]/self.prev[1]
+        index_factor = self.next[0] / self.prev[0]
+        value_factor = self.next[1] / self.prev[1]
 
         if isinstance(zoom_tool.component.index_mapper, GridMapper):
             index_mapper = zoom_tool.component.index_mapper._xmapper
@@ -117,17 +118,14 @@ class ZoomState(ToolState):
             index_mapper = zoom_tool.component.index_mapper
             value_mapper = zoom_tool.component.value_mapper
 
-        zoom_tool._zoom_in_mapper(index_mapper,
-                                  self.prev[0]/self.next[0])
-        zoom_tool._zoom_in_mapper(value_mapper,
-                                  self.prev[1]/self.next[1])
+        zoom_tool._zoom_in_mapper(index_mapper, self.prev[0] / self.next[0])
+        zoom_tool._zoom_in_mapper(value_mapper, self.prev[1] / self.next[1])
 
         zoom_tool._index_factor = self.prev[0]
         zoom_tool._value_factor = self.prev[1]
 
 
 class SelectedZoomState(ZoomState):
-
     def apply(self, zoom_tool):
         x_mapper = zoom_tool._get_x_mapper()
         y_mapper = zoom_tool._get_y_mapper()

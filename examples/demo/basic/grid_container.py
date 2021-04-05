@@ -32,27 +32,35 @@ from chaco.api import ArrayPlotData, GridContainer, Plot, PlotLabel
 from chaco.tools.api import PanTool, ZoomTool
 
 
-
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
     # Create a GridContainer to hold all of our plots: 2 rows, 3 columns:
-    container = GridContainer(padding=40, fill_padding=True,
-                              bgcolor="lightgray", use_backbuffer=True,
-                              shape=(2,3), spacing=(20,20))
+    container = GridContainer(
+        padding=40,
+        fill_padding=True,
+        bgcolor="lightgray",
+        use_backbuffer=True,
+        shape=(2, 3),
+        spacing=(20, 20),
+    )
 
     # Create the initial series of data
     x = linspace(-5, 15.0, 100)
-    pd = ArrayPlotData(index = x)
+    pd = ArrayPlotData(index=x)
 
     # Plot some bessel functions and add the plots to our container
     for i in range(6):
-        pd.set_data("y" + str(i), jn(i,x))
+        pd.set_data("y" + str(i), jn(i, x))
         plot = Plot(pd)
-        plot.plot(("index", "y" + str(i)),
-                  color=tuple(COLOR_PALETTE[i]), line_width=2.0,
-                  bgcolor = "white", border_visible=True)
+        plot.plot(
+            ("index", "y" + str(i)),
+            color=tuple(COLOR_PALETTE[i]),
+            line_width=2.0,
+            bgcolor="white",
+            border_visible=True,
+        )
 
         # Tweak some of the plot properties
         plot.border_width = 1
@@ -72,49 +80,55 @@ def _create_plot_component():
     ul_plot = container.components[0]
     ul_plot.resizable = "v"
     ul_plot.width = 200
-    ul_plot.overlays.append(PlotLabel("Not horizontally resizable",
-                                      component=ul_plot))
+    ul_plot.overlays.append(
+        PlotLabel("Not horizontally resizable", component=ul_plot)
+    )
 
     # Set the bottom center plot to have a fixed width and height.
     # This also constrains the height of the bottom row and the width of
     # the middle column.
     cplot = container.components[4]
     cplot.resizable = ""
-    cplot.bounds = [400,400]
+    cplot.bounds = [400, 400]
     cplot.overlays.append(PlotLabel("Not resizable", component=cplot))
 
     container.padding_top = 50
     container.overlays.append(
-        PlotLabel('Resize the window - some plots resize, others cannot '
-                  '(see source code)',
-                  component=container,
-                  font = "swiss 16",
-                  overlay_position = "top"))
-        
+        PlotLabel(
+            "Resize the window - some plots resize, others cannot "
+            "(see source code)",
+            component=container,
+            font="swiss 16",
+            overlay_position="top",
+        )
+    )
+
     return container
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(1000,800)
-title="Resizable Grid Container"
 
-#===============================================================================
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (1000, 800)
+title = "Resizable Grid Container"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
-    traits_view = \
-        View(
-            Group(
-                Item('plot', editor=ComponentEditor(size=size),
-                        show_label=False),
-                orientation = "vertical"
-                ),
-            resizable=True, title=title )
+    traits_view = View(
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

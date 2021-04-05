@@ -6,13 +6,15 @@ from enable.text_grid import TextGrid
 
 from .aligned_container_overlay import AlignedContainerOverlay
 
+
 class TextGridOverlay(AlignedContainerOverlay):
-    """ Overlay for plots containing a TextGrid
+    """Overlay for plots containing a TextGrid
 
     This subclass of AlignedContainerOverlay has a TextGrid which it
     displays.  Subclasses or users are responsible for the content and
     formatting of the TextGrid.
     """
+
     # The text grid component we contain.
     text_grid = Instance(TextGrid)
 
@@ -25,6 +27,6 @@ class TextGridOverlay(AlignedContainerOverlay):
             self.add(new)
 
     def _text_grid_default(self):
-        text_grid = TextGrid(font='modern 12', cell_border_width=0)
+        text_grid = TextGrid(font="modern 12", cell_border_width=0)
         self.add(text_grid)
         return text_grid
