@@ -153,8 +153,9 @@ def install(runtime, toolkit, environment, source):
     parameters = get_parameters(runtime, toolkit, environment)
     parameters['packages'] = ' '.join(
         dependencies
-        | extra_dependencies.get(toolkit, set()))
+        | extra_dependencies.get(toolkit, set())
         | ci_dependencies
+    )
 
     if toolkit == "pyside2":
         additional_repositories = "--add-repository enthought/lgpl"
