@@ -356,6 +356,9 @@ def flake8(runtime, toolkit, environment):
     targets = [
         "examples",
         "chaco",
+        "setup.py",
+        "ci/edmtool.py",
+        "docs/source/conf.py"
     ]
     commands = [
         "edm run -e {environment} -- python -m flake8 " + " ".join(targets)
