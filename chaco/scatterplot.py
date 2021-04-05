@@ -212,25 +212,25 @@ class ScatterPlot(BaseXYPlot):
 
     # The type of marker to use.  This is a mapped trait using strings as the
     # keys.
-    marker = MarkerTrait
+    marker = MarkerTrait(requires_redraw=True)
 
     # The pixel size of the markers, not including the thickness of the outline.
     # Default value is 4.0.
     # TODO: for consistency, there should be a size data source and a mapper
-    marker_size = Either(Float, Array)
+    marker_size = Either(Float, Array, requires_redraw=True)
 
     # The function which actually renders the markers
     render_markers_func = Callable(render_markers)
 
     # The thickness, in pixels, of the outline to draw around the marker.  If
     # this is 0, no outline is drawn.
-    line_width = Float(1.0)
+    line_width = Float(1.0, requires_redraw=True)
 
     # The fill color of the marker.
-    color = black_color_trait
+    color = black_color_trait(requires_redraw=True)
 
     # The color of the outline to draw around the marker.
-    outline_color = black_color_trait
+    outline_color = black_color_trait(requires_redraw=True)
 
     # The RGBA tuple for rendering lines.  It is always a tuple of length 4.
     # It has the same RGB values as color_, and its alpha value is the alpha
@@ -568,30 +568,6 @@ class ScatterPlot(BaseXYPlot):
     # ------------------------------------------------------------------------
     # Event handlers
     # ------------------------------------------------------------------------
-
-    def _alpha_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _marker_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _marker_size_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _line_width_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _color_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _outline_color_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
 
     def _either_metadata_updated(self, event):
         if self.show_selection:
