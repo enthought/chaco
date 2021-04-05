@@ -93,7 +93,7 @@ class DataRange2D(BaseDataRange):
     def bound_data(self, data):
         """Not implemented for this class."""
         raise NotImplementedError(
-            "bound_data() has not been implemented " "for 2d pointsets."
+            "bound_data() has not been implemented for 2d pointsets."
         )
 
     def set_bounds(self, low, high):

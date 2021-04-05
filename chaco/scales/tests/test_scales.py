@@ -26,10 +26,7 @@ class TicksTestCase(unittest.TestCase):
 
     def check_labels(self, labels1, labels2):
         self.assertEqual(len(labels1), len(labels2))
-        for (
-            t1,
-            t2,
-        ) in zip(labels1, labels2):
+        for t1, t2 in zip(labels1, labels2):
             self.assertEqual(t1, t2)
 
 
@@ -224,9 +221,7 @@ class BasicFormatterTestCase(TicksTestCase):
             (3e8, 6e8, 8),
         )
         for start, end, numlabels in test_intervals:
-            estimate = fmt.estimate_width(start, end, numlabels, ticker=scale)[
-                1
-            ]
+            estimate = fmt.estimate_width(start, end, numlabels, ticker=scale)[1]
             ticks = scale.ticks(start, end, numlabels)
             labels = fmt.format(ticks, numlabels, None)
             actual = sum(map(len, labels))
