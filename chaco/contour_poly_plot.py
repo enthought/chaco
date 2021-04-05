@@ -60,9 +60,8 @@ class ContourPolyPlot(BaseContourPlot):
                     if self.orientation == "h":
                         spoly = self.index_mapper.map_screen(poly)
                     else:
-                        spoly = array(self.index_mapper.map_screen(poly))[
-                            :, ::-1
-                        ]
+                        rev_spoly = self.index_mapper.map_screen(poly)
+                        spoly = array(rev_spoly)[:, ::-1]
                     gc.lines(spoly)
                     gc.close_path()
                     gc.draw_path()

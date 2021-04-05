@@ -691,12 +691,10 @@ class GridPlotContainer(BasePlotContainer):
         # to be aligned in H and V.
         summed_widths = cumsum(hstack(([0], widths[:-1])))
         summed_heights = cumsum(hstack(([0], heights[-1:0:-1])))
-        h_positions = (2 * (arange(self._grid.shape[1]) + 1) - 1) * spacing[
-            0
-        ] + summed_widths
-        v_positions = (2 * (arange(self._grid.shape[0]) + 1) - 1) * spacing[
-            1
-        ] + summed_heights
+        h_positions = (2 * (arange(self._grid.shape[1]) + 1) - 1) \
+            * spacing[0] + summed_widths
+        v_positions = (2 * (arange(self._grid.shape[0]) + 1) - 1) \
+            * spacing[1] + summed_heights
         v_positions = v_positions[::-1]
 
         # Loop over all rows and columns, assigning position, setting bounds for
