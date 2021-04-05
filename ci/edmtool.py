@@ -124,6 +124,10 @@ environment_vars = {
     'null': {'ETS_TOOLKIT': 'null.image'},
 }
 
+ci_dependencies = {
+    "flake8",
+}
+
 
 def normalize(name):
     return name.replace("_", "-")
@@ -148,7 +152,10 @@ def install(runtime, toolkit, environment, source):
     """
     parameters = get_parameters(runtime, toolkit, environment)
     parameters['packages'] = ' '.join(
-        dependencies | extra_dependencies.get(toolkit, set()))
+        dependencies
+        | extra_dependencies.get(toolkit, set())
+        | ci_dependencies
+    )
 
     if toolkit == "pyside2":
         additional_repositories = "--add-repository enthought/lgpl"
@@ -337,6 +344,27 @@ def test_all():
             args = ['--toolkit={}'.format(toolkit),
                     '--runtime={}'.format(runtime)]
             test_clean(args, standalone_mode=True)
+
+
+@cli.command()
+@click.option("--runtime", default="3.6", help="Python version to use")
+@click.option("--toolkit", default="null", help="Toolkit and API to use")
+@click.option("--environment", default=None, help="EDM environment to use")
+def flake8(runtime, toolkit, environment):
+    """ Run a flake8 check in a given environment.
+    """
+    parameters = get_parameters(runtime, toolkit, environment)
+    targets = [
+        "examples",
+        "chaco",
+        "setup.py",
+        "ci/edmtool.py",
+        "docs/source/conf.py"
+    ]
+    commands = [
+        "edm run -e {environment} -- python -m flake8 " + " ".join(targets)
+    ]
+    execute(commands, parameters)
 
 
 # ----------------------------------------------------------------------------
