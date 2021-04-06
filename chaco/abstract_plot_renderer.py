@@ -6,8 +6,9 @@ from traits.api import Enum
 # Local relative imports
 from .plot_component import PlotComponent
 
+
 class AbstractPlotRenderer(PlotComponent):
-    """ This is the minimal interface that all plot renderers must support.
+    """This is the minimal interface that all plot renderers must support.
 
     Higher-dimensionality plot renderers can implement a richer subclass of
     this abstract class.
@@ -18,9 +19,9 @@ class AbstractPlotRenderer(PlotComponent):
 
     origin = Enum("bottom left", "top left", "bottom right", "top right")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Override default values of inherited traits PlotComponent
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: Overrides the default value inherited from PlotComponent.
     bgcolor = "transparent"
@@ -28,23 +29,27 @@ class AbstractPlotRenderer(PlotComponent):
     #: Overrides the default value inherited from PlotComponent.
     resizable = "hv"
 
-
     def map_screen(self, data_array):
-        """ Maps an array of data points to screen space and returns an array
+        """Maps an array of data points to screen space and returns an array
         of screen space points.
         """
         raise NotImplementedError
 
     def map_data(self, screen_pt):
-        """ Maps a screen space point (sx, sy) to the "index" space of the plot.
+        """Maps a screen space point (sx, sy) to the "index" space of the plot.
 
         Returns a floating point number, *not* an integer index.
         """
         raise NotImplementedError
 
-    def map_index(self, screen_pt, threshold=0.0, outside_returns_none=True, \
-                  index_only = False):
-        """ Maps a screen space point to an index into the plot's index array(s).
+    def map_index(
+        self,
+        screen_pt,
+        threshold=0.0,
+        outside_returns_none=True,
+        index_only=False,
+    ):
+        """Maps a screen space point to an index into the plot's index array(s).
 
         Parameters
         ----------
@@ -77,7 +82,7 @@ class AbstractPlotRenderer(PlotComponent):
         raise NotImplementedError
 
     def _render_icon(self, gc, x, y, width, height):
-        """ Renders an icon for this plot.
+        """Renders an icon for this plot.
 
         This method is used by the legend to draw representation of this plot
         as an icon into the box defined by the given coordinates.

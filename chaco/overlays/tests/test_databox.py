@@ -4,13 +4,18 @@ import unittest
 from traits.testing.api import UnittestTools
 
 from chaco.api import (
-    CMapImagePlot, GridDataSource, GridMapper, DataRange2D, ImageData
+    CMapImagePlot,
+    GridDataSource,
+    GridMapper,
+    DataRange2D,
+    ImageData,
 )
 from chaco.overlays.databox import DataBox
 
 
 class TestDataBox(unittest.TestCase, UnittestTools):
     """Test the DataBox"""
+
     def setUp(self):
 
         # Set up plot component containing
@@ -19,7 +24,8 @@ class TestDataBox(unittest.TestCase, UnittestTools):
 
         # Add some fake 2D data for the box's component
         index = GridDataSource(
-            xdata=xs, ydata=ys, sort_order=('ascending', 'ascending'))
+            xdata=xs, ydata=ys, sort_order=("ascending", "ascending")
+        )
         index_mapper = GridMapper(range=DataRange2D(index))
 
         color_source = ImageData(data=np.ones(shape=(5, 5)), depth=1)
@@ -44,7 +50,7 @@ class TestDataBox(unittest.TestCase, UnittestTools):
         """
 
         # Check that data position property is changed when position is changed
-        with self.assertTraitChanges(self.databox, 'data_position') as result:
+        with self.assertTraitChanges(self.databox, "data_position") as result:
             self.databox.position = [1, 1]
 
         # Without moving the DataBox, data_position trait defaults
@@ -52,8 +58,8 @@ class TestDataBox(unittest.TestCase, UnittestTools):
         starting_position = [0.0, 0.0]
         expected = (
             self.databox,
-            'data_position',
+            "data_position",
             starting_position,
-            starting_position
+            starting_position,
         )
         self.assertSequenceEqual([expected], result.events)

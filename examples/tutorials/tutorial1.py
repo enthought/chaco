@@ -9,8 +9,8 @@ from chaco import api as chaco
 # First, we create two arrays of data, x and y.  'x' will be a sequence of
 # 100 points spanning the range -2pi to 2pi, and 'y' will be sin(x).
 numpoints = 100
-step = 4*pi / numpoints
-x = arange(-2*pi, 2*pi+step/2, step)
+step = 4 * pi / numpoints
+x = arange(-2 * pi, 2 * pi + step / 2, step)
 y = sin(x)
 
 
@@ -19,13 +19,15 @@ y = sin(x)
 # plot types (line, scatter, etc.).  In later tutorials we'll see what the
 # factories are actually doing, and how to manually assemble plotting
 # primitives in more powerful ways.  For now, factories suit our needs.
-myplot = chaco.create_line_plot((x,y), bgcolor="white", add_grid=True, add_axis=True)
+myplot = chaco.create_line_plot(
+    (x, y), bgcolor="white", add_grid=True, add_axis=True
+)
 
 # We now need to set the plot's size, and add a little padding for the axes.
 # (Normally, when Chaco plots are placed inside WX windows, the bounds are
 # set automatically by the window.)
 myplot.padding = 50
-myplot.bounds = [400,400]
+myplot.bounds = [400, 400]
 
 
 def main():
@@ -37,25 +39,26 @@ def main():
     plot_gc.render_component(myplot)
 
     # Get the directory to save the image in
-    print('Please enter a path in which to place generated plots.')
-    print('Press <ENTER> to generate in the current directory.')
-    path = input('Path: ').strip()
+    print("Please enter a path in which to place generated plots.")
+    print("Press <ENTER> to generate in the current directory.")
+    path = input("Path: ").strip()
     path = os.path.expanduser(path)
 
     if len(path) > 0 and not os.path.exists(path):
-        print('The given path does not exist.')
+        print("The given path does not exist.")
         sys.exit()
 
     # The file name to save the plot as
     file_name = "tutorial1.png"
 
     if not os.path.isabs(path):
-        print('Creating image: ' + os.path.join(os.getcwd(), path, file_name))
+        print("Creating image: " + os.path.join(os.getcwd(), path, file_name))
     else:
-        print('Creating image: ' + os.path.join(path, file_name))
+        print("Creating image: " + os.path.join(path, file_name))
 
     # Finally, we tell the graphics context to save itself to disk as an image.
     plot_gc.save(os.path.join(path, file_name))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

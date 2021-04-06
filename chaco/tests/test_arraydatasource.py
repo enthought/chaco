@@ -15,7 +15,6 @@ from traits.testing.unittest_tools import UnittestTools
 
 
 class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
-
     def setUp(self):
         self.myarray = arange(10)
         self.mymask = array([i % 2 for i in self.myarray], dtype=bool)
@@ -39,8 +38,9 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
     def test_set_data(self):
         new_array = arange(0, 20, 2)
 
-        with self.assertTraitChanges(self.data_source, 'data_changed',
-                                     count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.set_data(new_array)
 
         assert_array_equal(new_array, self.data_source._data)
@@ -50,17 +50,19 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
     def test_set_data_ordered(self):
         new_array = arange(20, 0, -2)
 
-        with self.assertTraitChanges(self.data_source, 'data_changed',
-                                     count=1):
-            self.data_source.set_data(new_array, sort_order='descending')
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
+            self.data_source.set_data(new_array, sort_order="descending")
 
         assert_array_equal(new_array, self.data_source._data)
         self.assertEqual(self.data_source.get_bounds(), (2, 20))
         self.assertEqual(self.data_source.sort_order, "descending")
 
     def test_set_mask(self):
-        with self.assertTraitChanges(self.data_source, 'data_changed',
-                                     count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.set_mask(self.mymask)
 
         assert_array_equal(self.myarray, self.data_source._data)
@@ -72,8 +74,9 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.data_source.set_mask(self.mymask)
         self.assertTrue(self.data_source.is_masked())
 
-        with self.assertTraitChanges(self.data_source, 'data_changed',
-                                     count=1):
+        with self.assertTraitChanges(
+            self.data_source, "data_changed", count=1
+        ):
             self.data_source.remove_mask()
 
         assert_array_equal(self.myarray, self.data_source._data)
@@ -96,7 +99,7 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         assert_array_equal(data, self.myarray)
         assert_array_equal(mask, self.mymask)
 
-    @unittest.skip('get_data_mask() fails in this case')
+    @unittest.skip("get_data_mask() fails in this case")
     def test_get_data_mask_no_data(self):
         data_source = ArrayDataSource(None)
 
@@ -174,11 +177,10 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.assertEqual(bounds, (-np.inf, np.inf))
 
     def test_bounds_non_numeric(self):
-        myarray = np.array([u'abc', u'foo',
-                            u'bar', u'def'], dtype=str)
+        myarray = np.array([u"abc", u"foo", u"bar", u"def"], dtype=str)
         data_source = ArrayDataSource(myarray)
         bounds = data_source.get_bounds()
-        self.assertEqual(bounds, (u'abc', u'def'))
+        self.assertEqual(bounds, (u"abc", u"def"))
 
     def test_data_size(self):
         # We know that ArrayDataTestCase always returns the exact length of
@@ -190,53 +192,61 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
     def test_reverse_map(self):
         # sort_order ascending
         myarray = arange(10)
-        data_source = ArrayDataSource(myarray, sort_order='ascending')
+        data_source = ArrayDataSource(myarray, sort_order="ascending")
 
         self.assertEqual(data_source.reverse_map(4.0), 4)
 
         # sort_order descending
         myarray = arange(10)[::-1]
-        data_source = ArrayDataSource(myarray, sort_order='descending')
+        data_source = ArrayDataSource(myarray, sort_order="descending")
 
         self.assertEqual(data_source.reverse_map(4.0), 5)
 
         # sort_order none
         myarray = array([12, 3, 0, 9, 2, 18, 3])
-        data_source = ArrayDataSource(myarray, sort_order='none')
+        data_source = ArrayDataSource(myarray, sort_order="none")
 
         with self.assertRaises(NotImplementedError):
             data_source.reverse_map(3)
 
     def test_metadata(self):
-        self.assertEqual(self.data_source.metadata,
-                         {'annotations': [], 'selections': []})
+        self.assertEqual(
+            self.data_source.metadata, {"annotations": [], "selections": []}
+        )
 
     def test_metadata_changed(self):
-        with self.assertTraitChanges(self.data_source, 'metadata_changed',
-                                     count=1):
-            self.data_source.metadata = {'new_metadata': True}
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
+            self.data_source.metadata = {"new_metadata": True}
 
     def test_metadata_items_changed(self):
-        with self.assertTraitChanges(self.data_source, 'metadata_changed',
-                                     count=1):
-            self.data_source.metadata['new_metadata'] = True
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
+            self.data_source.metadata["new_metadata"] = True
 
     def test_serialization_state(self):
         state = self.data_source.__getstate__()
-        self.assertNotIn('value_dimension', state)
-        self.assertNotIn('index_dimension', state)
-        self.assertNotIn('persist_data', state)
+        self.assertNotIn("value_dimension", state)
+        self.assertNotIn("index_dimension", state)
+        self.assertNotIn("persist_data", state)
 
     @unittest.skip("persist_data probably shouldn't be persisted")
     def test_serialization_state_no_persist(self):
         self.data_source.persist_data = False
 
         state = self.data_source.__getstate__()
-        self.assertNotIn('value_dimension', state)
-        self.assertNotIn('index_dimension', state)
-        self.assertNotIn('persist_data', state)
-        for key in ["_data", "_cached_mask", "_cached_bounds", "_min_index",
-                    "_max_index"]:
+        self.assertNotIn("value_dimension", state)
+        self.assertNotIn("index_dimension", state)
+        self.assertNotIn("persist_data", state)
+        for key in [
+            "_data",
+            "_cached_mask",
+            "_cached_bounds",
+            "_min_index",
+            "_max_index",
+        ]:
             self.assertIn(key, state)
 
     @unittest.skip("I think this is just broken")
@@ -250,8 +260,9 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.assertEqual(unpickled_data_source._cached_bounds, ())
         self.assertEqual(unpickled_data_source._cached_mask, None)
 
-        assert_array_equal(self.data_source.get_data(),
-                           unpickled_data_source.get_data())
+        assert_array_equal(
+            self.data_source.get_data(), unpickled_data_source.get_data()
+        )
 
         mask = unpickled_data_source.get_data_mask()[1]
         assert_array_equal(mask, ones(10))

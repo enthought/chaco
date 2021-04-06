@@ -8,7 +8,7 @@ concat = chain.from_iterable
 
 
 def _ensure_list(obj):
-    """ NOTE: The Legend stores plots in a dictionary with either single
+    """NOTE: The Legend stores plots in a dictionary with either single
     renderers as values, or lists of renderers.
     This function helps us assume we're always working with lists
     """
@@ -40,7 +40,7 @@ def get_hit_plots(legend, event):
 
 
 class LegendHighlighter(LegendTool):
-    """ A tool for legends that allows clicking on the legend to show
+    """A tool for legends that allows clicking on the legend to show
     or hide certain plots.
     """
 
@@ -57,8 +57,9 @@ class LegendHighlighter(LegendTool):
     _selected_renderers = List
 
     def normal_left_down(self, event):
-        if (not self.component.visible or
-                not self.component.is_in(event.x, event.y)):
+        if not self.component.visible or not self.component.is_in(
+            event.x, event.y
+        ):
             return
 
         plots = get_hit_plots(self.component, event)
@@ -71,8 +72,9 @@ class LegendHighlighter(LegendTool):
                     self._selected_renderers.append(plot)
         elif plots:
             # User in single-select mode.
-            add_plot = any(plot not in self._selected_renderers
-                           for plot in plots)
+            add_plot = any(
+                plot not in self._selected_renderers for plot in plots
+            )
             self._selected_renderers = []
             if add_plot:
                 self._selected_renderers.extend(plots)
@@ -90,7 +92,7 @@ class LegendHighlighter(LegendTool):
     def _reset_selects(self, plots):
         """ Set all renderers to their default values. """
         for plot in concat(_ensure_list(p) for p in plots.values()):
-            if not hasattr(plot, '_orig_alpha'):
+            if not hasattr(plot, "_orig_alpha"):
                 plot._orig_alpha = plot.alpha
                 plot._orig_line_width = plot.line_width
             plot.alpha = plot._orig_alpha
@@ -99,7 +101,7 @@ class LegendHighlighter(LegendTool):
     def _set_states(self, plots):
         """ Decorates a plot to indicate it is selected """
         for plot in concat(_ensure_list(p) for p in plots.values()):
-            if not hasattr(plot, '_orig_alpha'):
+            if not hasattr(plot, "_orig_alpha"):
                 # FIXME: These attributes should be put into the class def.
                 plot._orig_alpha = plot.alpha
                 plot._orig_line_width = plot.line_width

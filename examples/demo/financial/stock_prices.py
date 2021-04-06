@@ -20,36 +20,49 @@ from enable.example_support import DemoFrame, demo_main
 from enable.api import Window
 
 # Chaco imports
-from chaco.api import ArrayDataSource, BarPlot, DataRange1D, \
-        LinePlot, LinearMapper, VPlotContainer, PlotAxis, \
-        FilledLinePlot, add_default_grids
-from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
-        RangeSelectionOverlay
+from chaco.api import (
+    ArrayDataSource,
+    BarPlot,
+    DataRange1D,
+    LinePlot,
+    LinearMapper,
+    VPlotContainer,
+    PlotAxis,
+    FilledLinePlot,
+    add_default_grids,
+)
+from chaco.tools.api import (
+    PanTool,
+    ZoomTool,
+    RangeSelection,
+    RangeSelectionOverlay,
+)
 
 from chaco.scales.api import CalendarScaleSystem
 from chaco.scales_tick_generator import ScalesTickGenerator
 
 
 def create_dates(numpoints, units="days"):
-    """ Returns **numpoints** number of dates that evenly bracket the current
+    """Returns **numpoints** number of dates that evenly bracket the current
     date and time.  **units** should be one of "weeks", "days", "hours"
     "minutes", or "seconds".
     """
-    units_map = { "weeks" : 7*24*3600,
-                  "days" : 24*3600,
-                  "hours" : 3600,
-                  "minutes" : 60,
-                  "seconds" : 1 }
+    units_map = {
+        "weeks": 7 * 24 * 3600,
+        "days": 24 * 3600,
+        "hours": 3600,
+        "minutes": 60,
+        "seconds": 1,
+    }
     now = time.time()
     dt = units_map[units]
-    dates = linspace(now, now+numpoints*dt, numpoints)
+    dates = linspace(now, now + numpoints * dt, numpoints)
     return dates
 
 
 class PlotFrame(DemoFrame):
-
     def _create_price_plots(self, times, prices, mini_height=75):
-        """ Creates the two plots of prices and returns them.  One of the
+        """Creates the two plots of prices and returns them.  One of the
         plots can be zoomed and panned, and the other plot (smaller) always
         shows the full data.
 
@@ -57,41 +70,58 @@ class PlotFrame(DemoFrame):
         """
 
         # Create the price plot
-        price_plot = FilledLinePlot(index = times, value = prices,
-                        index_mapper = LinearMapper(range=DataRange1D(times)),
-                        value_mapper = LinearMapper(range=DataRange1D(prices)),
-                        edge_color = "blue",
-                        face_color = "paleturquoise",
-                        bgcolor = "white",
-                        border_visible = True)
+        price_plot = FilledLinePlot(
+            index=times,
+            value=prices,
+            index_mapper=LinearMapper(range=DataRange1D(times)),
+            value_mapper=LinearMapper(range=DataRange1D(prices)),
+            edge_color="blue",
+            face_color="paleturquoise",
+            bgcolor="white",
+            border_visible=True,
+        )
 
         # Add pan and zoom
-        price_plot.tools.append(PanTool(price_plot, constrain=True,
-                                        constrain_direction="x",
-                                        restrict_to_data=True))
-        price_plot.overlays.append(ZoomTool(price_plot, drag_button="right",
-                                              always_on=True,
-                                              tool_mode="range",
-                                              axis="index",
-                                              max_zoom_out_factor=1.0,
-                                              x_min_zoom_factor=float(1e-3)
-                                             ))
+        price_plot.tools.append(
+            PanTool(
+                price_plot,
+                constrain=True,
+                constrain_direction="x",
+                restrict_to_data=True,
+            )
+        )
+        price_plot.overlays.append(
+            ZoomTool(
+                price_plot,
+                drag_button="right",
+                always_on=True,
+                tool_mode="range",
+                axis="index",
+                max_zoom_out_factor=1.0,
+                x_min_zoom_factor=float(1e-3),
+            )
+        )
 
         # Create the miniplot
-        miniplot = LinePlot(index = times, value = prices,
-                        index_mapper = LinearMapper(range=DataRange1D(times)),
-                        value_mapper = LinearMapper(range=DataRange1D(prices)),
-                        color = "black",
-                        border_visible = True,
-                        bgcolor = "white",
-                        height = mini_height,
-                        resizable = "h")
+        miniplot = LinePlot(
+            index=times,
+            value=prices,
+            index_mapper=LinearMapper(range=DataRange1D(times)),
+            value_mapper=LinearMapper(range=DataRange1D(prices)),
+            color="black",
+            border_visible=True,
+            bgcolor="white",
+            height=mini_height,
+            resizable="h",
+        )
 
         # Add a range overlay to the miniplot that is hooked up to the range
         # of the main price_plot
         range_tool = RangeSelection(miniplot)
         miniplot.tools.append(range_tool)
-        range_overlay = RangeSelectionOverlay(miniplot, metadata_name="selections")
+        range_overlay = RangeSelectionOverlay(
+            miniplot, metadata_name="selections"
+        )
         miniplot.overlays.append(range_overlay)
         range_tool.observe(self._range_selection_handler, "selection")
 
@@ -100,7 +130,6 @@ class PlotFrame(DemoFrame):
         price_plot.index_range.observe(self._plot_range_handler, "updated")
 
         return price_plot, miniplot
-
 
     def _range_selection_handler(self, event):
         range_selection_event = event.new
@@ -122,20 +151,24 @@ class PlotFrame(DemoFrame):
     def _create_vol_plot(self, times, volumes, height=100):
         "Creates and returns the volume plot"
         index_range = self.price_plot.index_range
-        vol_plot = BarPlot(index = times, value = volumes,
-                       index_mapper = LinearMapper(range=index_range),
-                       value_mapper = LinearMapper(range=DataRange1D(volumes)),
-                       line_color = "transparent",
-                       fill_color = "black",
-                       bar_width = 1.0,
-                       bar_width_type = "screen",
-                       antialias = False,
-                       height = 100,
-                       resizable = "h",
-                       bgcolor = "white",
-                       border_visible = True)
-        vol_plot.tools.append(PanTool(vol_plot, constrain=True,
-                                      constrain_direction="x"))
+        vol_plot = BarPlot(
+            index=times,
+            value=volumes,
+            index_mapper=LinearMapper(range=index_range),
+            value_mapper=LinearMapper(range=DataRange1D(volumes)),
+            line_color="transparent",
+            fill_color="black",
+            bar_width=1.0,
+            bar_width_type="screen",
+            antialias=False,
+            height=100,
+            resizable="h",
+            bgcolor="white",
+            border_visible=True,
+        )
+        vol_plot.tools.append(
+            PanTool(vol_plot, constrain=True, constrain_direction="x")
+        )
         return vol_plot
 
     def _create_component(self):
@@ -168,23 +201,25 @@ class PlotFrame(DemoFrame):
         # Set the plot's bottom axis to use the Scales ticking system
         ticker = ScalesTickGenerator(scale=CalendarScaleSystem())
         for plot in price_plot, mini_plot, vol_plot:
-            bottom_axis = PlotAxis(plot, orientation="bottom",
-                                   tick_generator = ticker)
+            bottom_axis = PlotAxis(
+                plot, orientation="bottom", tick_generator=ticker
+            )
             plot.overlays.append(bottom_axis)
             plot.overlays.append(PlotAxis(plot, orientation="left"))
             hgrid, vgrid = add_default_grids(plot)
             vgrid.tick_generator = bottom_axis.tick_generator
 
-        container = VPlotContainer(bgcolor = "lightgray",
-                                   spacing = 40,
-                                   padding = 50,
-                                   fill_padding=False)
+        container = VPlotContainer(
+            bgcolor="lightgray", spacing=40, padding=50, fill_padding=False
+        )
         container.add(mini_plot, vol_plot, price_plot)
 
         return container
 
+
 if __name__ == "__main__":
     # Save demo so that it doesn't get garbage collected when run within
     # existing event loop (i.e. from ipython).
-    demo = demo_main(PlotFrame, size=(800,600),
-                     title="Stock price and volume")
+    demo = demo_main(
+        PlotFrame, size=(800, 600), title="Stock price and volume"
+    )

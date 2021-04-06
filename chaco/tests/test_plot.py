@@ -22,8 +22,8 @@ class PlotTestCase(unittest.TestCase):
         arr = arange(10)
         data = ArrayPlotData(x=arr, y=arr)
         plot = Plot(data)
-        renderer_2d = plot.plot(('x', 'y'))[0]
-        renderer_1d = plot.plot_1d(('x'))[0]
+        renderer_2d = plot.plot(("x", "y"))[0]
+        renderer_1d = plot.plot_1d(("x"))[0]
         new_range = DataRange1D()
         old_range = plot.index_range
         self.assertIsNot(old_range, new_range)
@@ -39,7 +39,7 @@ class PlotTestCase(unittest.TestCase):
         y = arange(1, 11)
         data = ArrayPlotData(x=x, y=y)
         plot = Plot(data)
-        plot.plot(('x', 'y'), "segment")[0]
+        plot.plot(("x", "y"), "segment")[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))
@@ -53,7 +53,7 @@ class PlotTestCase(unittest.TestCase):
         c = arange(2, 7)
         data = ArrayPlotData(x=x, y=y, c=c)
         plot = Plot(data)
-        plot.plot(('x', 'y', 'c'), "cmap_segment", color_mapper=viridis)[0]
+        plot.plot(("x", "y", "c"), "cmap_segment", color_mapper=viridis)[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))
@@ -68,8 +68,7 @@ class PlotTestCase(unittest.TestCase):
         w = arange(3, 8)
         data = ArrayPlotData(x=x, y=y, c=c, w=w)
         plot = Plot(data)
-        plot.plot(('x', 'y', 'c', 'w'), "cmap_segment",
-                  color_mapper=viridis)[0]
+        plot.plot(("x", "y", "c", "w"), "cmap_segment", color_mapper=viridis)[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))
@@ -83,7 +82,7 @@ class PlotTestCase(unittest.TestCase):
         t = array(["one", "two", "three", "four", "five"])
         data = ArrayPlotData(x=x, y=y, t=t)
         plot = Plot(data)
-        plot.plot(('x', 'y', 't'), "text")[0]
+        plot.plot(("x", "y", "t"), "text")[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))

@@ -14,18 +14,26 @@ from numpy import ogrid, pi, sin
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import (
-    Array, Bool, DelegatesTo, HasTraits, Instance, Range, observe
+    Array,
+    Bool,
+    DelegatesTo,
+    HasTraits,
+    Instance,
+    Range,
+    observe,
 )
 from traits.trait_notifiers import ui_dispatch
 from traitsui.api import Item, Group, View
 
 try:
-    from encore.concurrent.futures.enhanced_thread_pool_executor import \
-        EnhancedThreadPoolExecutor
+    from encore.concurrent.futures.enhanced_thread_pool_executor import (
+        EnhancedThreadPoolExecutor,
+    )
     from encore.concurrent.futures.asynchronizer import Asynchronizer
 except ImportError:
     import sys
-    sys.exit('You need futures and encore installed to run this demo.')
+
+    sys.exit("You need futures and encore installed to run this demo.")
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, VPlotContainer, gray
@@ -34,9 +42,9 @@ from chaco.api import ArrayPlotData, Plot, VPlotContainer, gray
 class BlurPlotController(HasTraits):
     """ Plot controller class for an image plot and its blurred output """
 
-    #==========================================================================
+    # ==========================================================================
     # Synchronization logic
-    #==========================================================================
+    # ==========================================================================
 
     # Flag indicating whether updates are asynchronous.
     asynchronous = Bool(True)
@@ -60,7 +68,7 @@ class BlurPlotController(HasTraits):
         # its own asynchronizer.
         return Asynchronizer(self._executor)
 
-    @observe('blur_level, image', post_init=True)
+    @observe("blur_level, image", post_init=True)
     def _recalculate_blurred_image(self, event):
         """ Blur the image either synchronously or with the asynchronizer """
         image = self.image
@@ -74,8 +82,9 @@ class BlurPlotController(HasTraits):
             # the asynchronizer's current job (if any) is complete. If another
             # job (presumably with a different blur_level) comes in before this
             # happens, this job will never be executed.
-            self._asynchronizer.submit(self._blur_and_notify_plot, image,
-                                       blur_level)
+            self._asynchronizer.submit(
+                self._blur_and_notify_plot, image, blur_level
+            )
         else:
             # This happens on the calling thread, which is the GUI thread when
             # a change in 'blur_level' comes from the GUI (as in this demo).
@@ -94,12 +103,13 @@ class BlurPlotController(HasTraits):
         # thread. Since this call is being executed on one of the executor's
         # worker threads, we must re-dispatch the data update to the UI thread
         # or suffer undefined consequences (possibly crashes).
-        ui_dispatch(self.plot_data.set_data, "blurred_image",
-                    self.blurred_image)
+        ui_dispatch(
+            self.plot_data.set_data, "blurred_image", self.blurred_image
+        )
 
-    #==========================================================================
+    # ==========================================================================
     # Visualization logic - useful, but not the point of the demo
-    #==========================================================================
+    # ==========================================================================
 
     # An image array to display
     image = Array
@@ -117,8 +127,8 @@ class BlurPlotController(HasTraits):
     component = Instance(Component)
 
     def _image_default(self):
-        x, y = ogrid[-pi:pi:1024j, 0:2*pi:1024j]
-        z = (sin(11*x**2)**2 * sin(5*y**2))**2
+        x, y = ogrid[-pi:pi:1024j, 0 : 2 * pi : 1024j]
+        z = (sin(11 * x ** 2) ** 2 * sin(5 * y ** 2)) ** 2
         return z
 
     def _blurred_image_default(self):
@@ -133,18 +143,22 @@ class BlurPlotController(HasTraits):
     def _component_default(self):
         padding = (25, 5, 5, 25)
         image_plot = Plot(self.plot_data, padding=padding)
-        image_plot.img_plot("image",
-                            origin="top left",
-                            xbounds=(-pi, pi),
-                            ybounds=(-pi, pi),
-                            colormap=gray)
+        image_plot.img_plot(
+            "image",
+            origin="top left",
+            xbounds=(-pi, pi),
+            ybounds=(-pi, pi),
+            colormap=gray,
+        )
 
         blurred_image_plot = Plot(self.plot_data, padding=padding)
-        blurred_image_plot.img_plot("blurred_image",
-                                    origin="top left",
-                                    xbounds=(-pi, pi),
-                                    ybounds=(-pi, pi),
-                                    colormap=gray)
+        blurred_image_plot.img_plot(
+            "blurred_image",
+            origin="top left",
+            xbounds=(-pi, pi),
+            ybounds=(-pi, pi),
+            colormap=gray,
+        )
 
         container = VPlotContainer()
         container.add(blurred_image_plot)
@@ -156,58 +170,58 @@ def blur_image(image, blur_level):
     """ Blur the image using a potentially time-consuming algorithm """
 
     blurred_image = image.copy()
-    for _ in range(blur_level**2):
+    for _ in range(blur_level ** 2):
         blurred_image[1:-1, 1:-1] += (
-            blurred_image[:-2, 1:-1] +  # top
-            blurred_image[2:, 1:-1] +  # bottom
-            blurred_image[1:-1, :-2] +  # left
-            blurred_image[1:-1, 2:] +  # right
-            blurred_image[:-2, :-2] +  # top-left
-            blurred_image[:-2, 2:] +  # top-right
-            blurred_image[2:, :-2] +  # bottom-left
-            blurred_image[2:, 2:]  # bottom-right
+            blurred_image[:-2, 1:-1]  # top
+            + blurred_image[2:, 1:-1]  # bottom
+            + blurred_image[1:-1, :-2]  # left
+            + blurred_image[1:-1, 2:]  # right
+            + blurred_image[:-2, :-2]  # top-left
+            + blurred_image[:-2, 2:]  # top-right
+            + blurred_image[2:, :-2]  # bottom-left
+            + blurred_image[2:, 2:]  # bottom-right
         )
         blurred_image /= 9
 
     return blurred_image
 
 
-#==============================================================================
+# ==============================================================================
 # Attributes to use for the plot view.
-#==============================================================================
+# ==============================================================================
 size = (800, 600)
 title = "Image with asynchronous blurring"
 
 
-#==============================================================================
+# ==============================================================================
 # Demo class that is used by the demo.py application.
-#==============================================================================
+# ==============================================================================
 class Demo(HasTraits):
 
     plot_controller = Instance(BlurPlotController, ())
 
-    component = DelegatesTo('plot_controller')
+    component = DelegatesTo("plot_controller")
 
-    blur_level = DelegatesTo('plot_controller')
+    blur_level = DelegatesTo("plot_controller")
 
-    asynchronous = DelegatesTo('plot_controller')
+    asynchronous = DelegatesTo("plot_controller")
 
     traits_view = View(
         Group(
             Item(
-                'component',
+                "component",
                 editor=ComponentEditor(size=size),
-                show_label=False
+                show_label=False,
             ),
             Group(
-                Item('asynchronous'),
-                Item('blur_level'),
-                orientation="horizontal"
+                Item("asynchronous"),
+                Item("blur_level"),
+                orientation="horizontal",
             ),
-            orientation="vertical"
+            orientation="vertical",
         ),
         resizable=True,
-        title=title
+        title=title,
     )
 
 

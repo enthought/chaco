@@ -1,6 +1,3 @@
-
-
-
 # Major library imports
 from numpy import array, asarray
 
@@ -13,6 +10,7 @@ from traits.observation.events import TraitChangeEvent
 from .abstract_overlay import AbstractOverlay
 from .scatterplot import render_markers
 
+
 class ScatterInspectorOverlay(AbstractOverlay):
     """
     Highlights points on a scatterplot as the mouse moves over them.
@@ -23,7 +21,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
     """
 
     #: The style to use when a point is hovered over
-    hover_metadata_name = Str('hover')
+    hover_metadata_name = Str("hover")
     hover_marker = Trait(None, None, MarkerTrait)
     hover_marker_size = Trait(None, None, Int)
     hover_line_width = Trait(None, None, Float)
@@ -31,7 +29,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
     hover_outline_color = Trait(None, None, ColorTrait)
 
     #: The style to use when a point has been selected by a click
-    selection_metadata_name = Str('selections')
+    selection_metadata_name = Str("selections")
     selection_marker = Trait(None, None, MarkerTrait)
     selection_marker_size = Trait(None, None, Int)
     selection_line_width = Trait(None, None, Float)
@@ -41,7 +39,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
     # For now, implement the equivalent of this Traits 3 feature manually
     # using a series of trait change handlers (defined at the end of the
     # class)
-    #@on_trait_change('component.index.metadata_changed,component.value.metadata_changed')
+    # @on_trait_change('component.index.metadata_changed,component.value.metadata_changed')
     def metadata_updated(self, event):
         if self.component is not None:
             self.component.request_redraw()
@@ -51,9 +49,12 @@ class ScatterInspectorOverlay(AbstractOverlay):
         if not plot or not plot.index or not getattr(plot, "value", True):
             return
 
-        for inspect_type in (self.hover_metadata_name, self.selection_metadata_name):
+        for inspect_type in (
+            self.hover_metadata_name,
+            self.selection_metadata_name,
+        ):
             if inspect_type in plot.index.metadata:
-                #if hasattr(plot,"value") and not inspect_type in plot.value.metadata:
+                # if hasattr(plot,"value") and not inspect_type in plot.value.metadata:
                 #    continue
                 index = plot.index.metadata.get(inspect_type, None)
 
@@ -68,13 +69,14 @@ class ScatterInspectorOverlay(AbstractOverlay):
                     # selection model, we will only use the selection on the
                     # index.  The assumption that they are the same is
                     # implicit, though unchecked, already.
-                    #value = plot.value.metadata.get(inspect_type, None)
+                    # value = plot.value.metadata.get(inspect_type, None)
                     value = index
 
                     if hasattr(plot, "value"):
                         value_data = plot.value.get_data()
-                        screen_pts = plot.map_screen(array([index_data[index],
-                                                            value_data[value]]).T)
+                        screen_pts = plot.map_screen(
+                            array([index_data[index], value_data[value]]).T
+                        )
                     else:
                         screen_pts = plot.map_screen(index_data[index])
 
@@ -105,7 +107,7 @@ class ScatterInspectorOverlay(AbstractOverlay):
             else:
                 valname = attr
 
-            tmp = getattr(self, prefix+sep+valname)
+            tmp = getattr(self, prefix + sep + valname)
             if tmp is not None:
                 kwargs[attr] = tmp
             else:
@@ -120,15 +122,14 @@ class ScatterInspectorOverlay(AbstractOverlay):
             gc.clip_to_rect(plot.x, plot.y, plot.width, plot.height)
             render_markers(gc, screen_pts, **kwargs)
 
-
     def _draw_overlay(self, gc, view_bounds=None, mode="normal"):
         self.overlay(self.component, gc, view_bounds, mode)
 
     def _component_changed(self, old, new):
         if old:
-            old.observe(self._ds_changed, 'index', remove=True)
+            old.observe(self._ds_changed, "index", remove=True)
             if hasattr(old, "value"):
-                old.observe(self._ds_changed, 'value', remove=True)
+                old.observe(self._ds_changed, "value", remove=True)
         if new:
             for dsname in ("index", "value"):
                 if not hasattr(new, dsname):
@@ -140,13 +141,13 @@ class ScatterInspectorOverlay(AbstractOverlay):
                             object=new,
                             name=dsname,
                             old=None,
-                            new=getattr(new, dsname)
+                            new=getattr(new, dsname),
                         )
                     )
 
     def _ds_changed(self, event):
         old, new = event.old, event.new
         if old:
-            old.observe(self.metadata_updated, 'metadata_changed', remove=True)
+            old.observe(self.metadata_updated, "metadata_changed", remove=True)
         if new:
-            new.observe(self.metadata_updated, 'metadata_changed')
+            new.observe(self.metadata_updated, "metadata_changed")

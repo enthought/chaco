@@ -1,6 +1,16 @@
-
 from enable.api import BaseTool, ColorTrait
-from traits.api import Any, Bool, Dict, Enum, HasTraits, Int, List, Trait, Tuple
+from traits.api import (
+    Any,
+    Bool,
+    Dict,
+    Enum,
+    HasTraits,
+    Int,
+    List,
+    Trait,
+    Tuple,
+)
+
 
 class RangeController(HasTraits):
 
@@ -29,7 +39,9 @@ class RangeController(HasTraits):
         return True
 
     def link(self, src_range, dst_plot, dst_rangename):
-        self._ranges[(dst_plot, dst_rangename)] = getattr(dst_plot, dst_rangename)
+        self._ranges[(dst_plot, dst_rangename)] = getattr(
+            dst_plot, dst_rangename
+        )
         setattr(dst_plot, dst_rangename, src_range)
         dst_plot.request_redraw()
 
@@ -63,8 +75,14 @@ class AxisTool(BaseTool):
     _cached_border_visible = Bool(True)
     _cached_border_color = ColorTrait
 
-    attr_list = ("tick_color", "axis_line_color", "tick_label_color", "bgcolor",
-                 "border_visible", "border_color")
+    attr_list = (
+        "tick_color",
+        "axis_line_color",
+        "tick_label_color",
+        "bgcolor",
+        "border_visible",
+        "border_color",
+    )
 
     def normal_left_down(self, event):
         if self.component is None:
@@ -82,7 +100,9 @@ class AxisTool(BaseTool):
         # If we have a controller, we let it decide whether
         # or not we get to handle the event.
         if self.range_controller is not None:
-            should_handle = self.range_controller.notify(self, rangename, "down", event)
+            should_handle = self.range_controller.notify(
+                self, rangename, "down", event
+            )
             if not should_handle:
                 return
 
@@ -111,7 +131,9 @@ class AxisTool(BaseTool):
             return
 
         if self.range_controller is not None:
-            should_handle = self.range_controller.notify(self, rangename, "up", event)
+            should_handle = self.range_controller.notify(
+                self, rangename, "up", event
+            )
             if not should_handle:
                 return
 
@@ -132,8 +154,9 @@ class MPAxisTool(AxisTool):
         if self.cur_bid == -1:
             self.cur_bid = event.bid
             if hasattr(event, "bid"):
-                event.window.capture_blob(self, event.bid,
-                                          event.net_transform())
+                event.window.capture_blob(
+                    self, event.bid, event.net_transform()
+                )
             self.normal_left_down(event)
             self._last_blob_pos = (event.x, event.y)
 
@@ -145,4 +168,3 @@ class MPAxisTool(AxisTool):
             self.cur_bid = -1
             event.x, event.y = self._last_blob_pos
             self.normal_left_up(event)
-

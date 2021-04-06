@@ -13,8 +13,7 @@ from .label import Label
 
 
 class TextBoxOverlay(AbstractOverlay):
-    """ Draws a box with text in it.
-    """
+    """Draws a box with text in it."""
 
     #### Configuration traits #################################################
 
@@ -66,7 +65,7 @@ class TextBoxOverlay(AbstractOverlay):
     #### Public 'AbstractOverlay' interface ###################################
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draws the box overlaid on another component.
+        """Draws the box overlaid on another component.
 
         Overrides AbstractOverlay.
         """
@@ -77,9 +76,14 @@ class TextBoxOverlay(AbstractOverlay):
         # draw the label on a transparent box. This allows us to draw
         # different shapes and put the text inside it without the label
         # filling a rectangle on top of it
-        label = Label(text=self.text, font=self.font, bgcolor="transparent",
-                      color=self.text_color, max_width=self.max_text_width,
-                      margin=5)
+        label = Label(
+            text=self.text,
+            font=self.font,
+            bgcolor="transparent",
+            color=self.text_color,
+            max_width=self.max_text_width,
+            margin=5,
+        )
         width, height = label.get_width_height(gc)
 
         valign, halign = self.align
@@ -107,10 +111,12 @@ class TextBoxOverlay(AbstractOverlay):
                 x = component.x + self.padding
 
         # attempt to get the box entirely within the component
-        x_min, y_min, x_max, y_max = (component.x,
-                                      component.y,
-                                      component.x + component.width,
-                                      component.y + component.height)
+        x_min, y_min, x_max, y_max = (
+            component.x,
+            component.y,
+            component.x + component.width,
+            component.y + component.height,
+        )
         if x + width > x_max:
             x = max(x_min, x_max - width)
         if y + height > y_max:
@@ -141,19 +147,16 @@ class TextBoxOverlay(AbstractOverlay):
                 end_radius = 8.0
                 gc.begin_path()
                 gc.move_to(x + end_radius, y)
-                gc.arc_to(x + width, y,
-                          x + width,
-                          y + end_radius, end_radius)
-                gc.arc_to(x + width,
-                          y + height,
-                          x + width - end_radius,
-                          y + height, end_radius)
-                gc.arc_to(x, y + height,
-                          x, y,
-                          end_radius)
-                gc.arc_to(x, y,
-                          x + width + end_radius,
-                          y, end_radius)
+                gc.arc_to(x + width, y, x + width, y + end_radius, end_radius)
+                gc.arc_to(
+                    x + width,
+                    y + height,
+                    x + width - end_radius,
+                    y + height,
+                    end_radius,
+                )
+                gc.arc_to(x, y + height, x, y, end_radius)
+                gc.arc_to(x, y, x + width + end_radius, y, end_radius)
                 gc.draw_path()
 
             label.draw(gc)

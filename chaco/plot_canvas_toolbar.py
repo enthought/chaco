@@ -1,4 +1,3 @@
-
 from traits.api import Any, Enum, Int
 from enable.drawing.api import ToolbarButton
 
@@ -32,9 +31,8 @@ class PlotCanvasToolbar(VPlotContainer):
         self._do_layout()
         pref_size = self.get_preferred_size()
 
-
         # Special check for when we are overlaying an instance of enable.Canvas
-        if hasattr(component, 'view_bounds'):
+        if hasattr(component, "view_bounds"):
             cx, cy, cx2, cy2 = component.view_bounds
             cwidth = cx2 - cx + 1
             cheight = cy2 - cy + 1
@@ -47,14 +45,14 @@ class PlotCanvasToolbar(VPlotContainer):
         elif self.align in ("lr", "ll", "bottom"):
             y = cy
         else:
-            y = cy + (cheight - pref_size[1])/2
+            y = cy + (cheight - pref_size[1]) / 2
 
         if self.align in ("ur", "lr", "right"):
             x = cx + cwidth - self.outer_width
         elif self.align in ("ul", "ll", "left"):
             x = cx
         else:
-            x = cx + (cwidth - pref_size[0])/2
+            x = cx + (cwidth - pref_size[0]) / 2
 
         self.outer_position = [x, y]
         VPlotContainer._draw(self, gc, view_bounds, mode)

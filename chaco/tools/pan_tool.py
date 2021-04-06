@@ -9,7 +9,7 @@ from traits.api import Bool, Enum, Float, Tuple, Instance
 
 
 class PanTool(BaseTool):
-    """ A tool that enables the user to pan a plot by clicking a mouse
+    """A tool that enables the user to pan a plot by clicking a mouse
     button and dragging.
     """
 
@@ -62,10 +62,9 @@ class PanTool(BaseTool):
     # set programmatically.
     _auto_constrain = Bool(False)
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Inherited BaseTool traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The tool does not have a visual representation (overrides
     #: BaseTool).
@@ -78,25 +77,21 @@ class PanTool(BaseTool):
     event_state = Enum("normal", "panning")
 
     def normal_key_pressed(self, event):
-        """ Handles a key being pressed when the tool is in the 'normal'
+        """Handles a key being pressed when the tool is in the 'normal'
         state.
         """
         if self.pan_keys_step == 0.0:
             return
-        src = self.component.bounds[0]/2, self.component.bounds[1]/2
+        src = self.component.bounds[0] / 2, self.component.bounds[1] / 2
         dest = src
         if self.pan_left_key.match(event):
-            dest = (src[0] - self.pan_keys_step,
-                    src[1])
+            dest = (src[0] - self.pan_keys_step, src[1])
         elif self.pan_right_key.match(event):
-            dest = (src[0] + self.pan_keys_step,
-                    src[1])
+            dest = (src[0] + self.pan_keys_step, src[1])
         elif self.pan_down_key.match(event):
-            dest = (src[0],
-                    src[1] - self.pan_keys_step)
+            dest = (src[0], src[1] - self.pan_keys_step)
         elif self.pan_up_key.match(event):
-            dest = (src[0],
-                    src[1] + self.pan_keys_step)
+            dest = (src[0], src[1] + self.pan_keys_step)
         if src != dest:
             self._original_xy = src
             event.x = dest[0]
@@ -104,7 +99,7 @@ class PanTool(BaseTool):
             self.panning_mouse_move(event)
 
     def normal_left_down(self, event):
-        """ Handles the left mouse button being pressed when the tool is in
+        """Handles the left mouse button being pressed when the tool is in
         the 'normal' state.
 
         Starts panning if the left mouse button is the drag button.
@@ -113,7 +108,7 @@ class PanTool(BaseTool):
             self._start_pan(event)
 
     def normal_right_down(self, event):
-        """ Handles the right mouse button being pressed when the tool is in
+        """Handles the right mouse button being pressed when the tool is in
         the 'normal' state.
 
         Starts panning if the right mouse button is the drag button.
@@ -122,7 +117,7 @@ class PanTool(BaseTool):
             self._start_pan(event)
 
     def normal_middle_down(self, event):
-        """ Handles the middle mouse button being pressed when the tool is in
+        """Handles the middle mouse button being pressed when the tool is in
         the 'normal' state.
 
         Starts panning if the middle mouse button is the drag button.
@@ -131,7 +126,7 @@ class PanTool(BaseTool):
             self._start_pan(event)
 
     def panning_left_up(self, event):
-        """ Handles the left mouse button coming up when the tool is in the
+        """Handles the left mouse button coming up when the tool is in the
         'panning' state.
 
         Stops panning if the left mouse button is the drag button.
@@ -140,7 +135,7 @@ class PanTool(BaseTool):
             self._end_pan(event)
 
     def panning_right_up(self, event):
-        """ Handles the right mouse button coming up when the tool is in the
+        """Handles the right mouse button coming up when the tool is in the
         'panning' state.
 
         Stops panning if the right mouse button is the drag button.
@@ -149,7 +144,7 @@ class PanTool(BaseTool):
             self._end_pan(event)
 
     def panning_middle_up(self, event):
-        """ Handles the middle mouse button coming up when the tool is in the
+        """Handles the middle mouse button coming up when the tool is in the
         'panning' state.
 
         Stops panning if the middle mouse button is the drag button.
@@ -158,7 +153,7 @@ class PanTool(BaseTool):
             self._end_pan(event)
 
     def panning_mouse_move(self, event):
-        """ Handles the mouse being moved when the tool is in the 'panning'
+        """Handles the mouse being moved when the tool is in the 'panning'
         state.
         """
         plot = self.component
@@ -192,9 +187,13 @@ class PanTool(BaseTool):
                 # values.  As a first approximation, we're just going to
                 # use a linear approximation, which works perfectly for
                 # linear mappers (which is used 99% of the time).
-                data = [arr for arr in
-                        (source.get_data() for source in mapper.range.sources)
-                        if arr.size > 0]
+                data = [
+                    arr
+                    for arr in (
+                        source.get_data() for source in mapper.range.sources
+                    )
+                    if arr.size > 0
+                ]
                 if domain_min is None:
                     if self.restrict_to_data:
                         domain_min = min([arr.min() for arr in data])
@@ -231,7 +230,7 @@ class PanTool(BaseTool):
         plot.request_redraw()
 
     def panning_mouse_leave(self, event):
-        """ Handles the mouse leaving the plot when the tool is in the 'panning'
+        """Handles the mouse leaving the plot when the tool is in the 'panning'
         state.
 
         Ends panning.

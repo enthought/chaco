@@ -4,15 +4,12 @@ A plot that renders text values in two dimensions
 """
 
 
-
 from numpy import array, column_stack, empty, isfinite
 
 # Enthought library imports
 from enable.api import black_color_trait
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import (
-    Bool, Enum, Float, Int, Instance, List, Tuple, observe
-)
+from traits.api import Bool, Enum, Float, Int, Instance, List, Tuple, observe
 
 # local imports
 from .array_data_source import ArrayDataSource
@@ -27,7 +24,7 @@ class TextPlot(BaseXYPlot):
     text = Instance(ArrayDataSource)
 
     #: The font of the tick labels.
-    text_font = KivaFont('modern 10')
+    text_font = KivaFont("modern 10")
 
     #: The color of the tick labels.
     text_color = black_color_trait
@@ -47,9 +44,9 @@ class TextPlot(BaseXYPlot):
     #: offset of text relative to non-index direction in pixels
     text_offset = Tuple(Float, Float)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: flag for whether the cache of Label instances is valid
     _label_cache_valid = Bool(False)
@@ -60,9 +57,9 @@ class TextPlot(BaseXYPlot):
     #: cache of bounding boxes of labels
     _label_box_cache = List
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _compute_labels(self, gc):
         """Generate the Label instances for the plot. """
@@ -72,8 +69,9 @@ class TextPlot(BaseXYPlot):
                 font=self.text_font,
                 color=self.text_color,
                 rotate_angle=self.text_rotate_angle,
-                margin=self.text_margin
-            ) for text in self.text.get_data()
+                margin=self.text_margin,
+            )
+            for text in self.text.get_data()
         ]
         self._label_box_cache = [
             array(label.get_bounding_box(gc), float)
@@ -82,7 +80,7 @@ class TextPlot(BaseXYPlot):
         self._label_cache_valid = True
 
     def _gather_points(self):
-        """ Abstract method to collect data points that are within the range of
+        """Abstract method to collect data points that are within the range of
         the plot, and cache them.
         """
         if self._cache_valid:
@@ -103,9 +101,7 @@ class TextPlot(BaseXYPlot):
         index_range_mask = self.index_mapper.range.mask_data(index)
         value_range_mask = self.value_mapper.range.mask_data(value)
 
-        nan_mask = (
-            isfinite(index) & index_mask & isfinite(value) & value_mask
-        )
+        nan_mask = isfinite(index) & index_mask & isfinite(value) & value_mask
         point_mask = nan_mask & index_range_mask & value_range_mask
 
         if not self._cache_valid:
@@ -128,10 +124,12 @@ class TextPlot(BaseXYPlot):
         ]
         boxes = [
             label
-            for label, mask in
-            zip(self._label_box_cache, self._cached_point_mask) if mask
+            for label, mask in zip(
+                self._label_box_cache, self._cached_point_mask
+            )
+            if mask
         ]
-        offset = empty((2, ), float)
+        offset = empty((2,), float)
 
         with gc:
             gc.clip_to_rect(self.x, self.y, self.width, self.height)
@@ -155,9 +153,9 @@ class TextPlot(BaseXYPlot):
 
                     label.draw(gc)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait events
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     @observe("index.data_changed")
     def _invalidate(self, event):

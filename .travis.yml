@@ -59,6 +59,7 @@ install:
         fi;
     done
 script:
+  - if [[ ${TOOLKITS} == 'null' ]]; then edm run -- python ci/edmtool.py flake8 --runtime=${RUNTIME} --toolkit=null; fi
   - for toolkit in ${TOOLKITS}; do edm run -- python ci/edmtool.py test --runtime=${RUNTIME} --toolkit=${toolkit} || exit; done
 
 after_success:

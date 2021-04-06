@@ -14,7 +14,7 @@ from .array_data_source import ArrayDataSource
 
 
 class PointDataSource(ArrayDataSource):
-    """ A data source representing a (possibly unordered) set of (X,Y) points.
+    """A data source representing a (possibly unordered) set of (X,Y) points.
 
     This is internally always represented by an Nx2 array, so that data[i]
     refers to a single point (represented as a length-2 array).
@@ -25,14 +25,13 @@ class PointDataSource(ArrayDataSource):
 
     """
 
-
     #: The dimensionality of the indices into this data source (overrides
     #: ArrayDataSource).
-    index_dimension = ReadOnly('scalar')
+    index_dimension = ReadOnly("scalar")
 
     #: The dimensionality of the value at each index point (overrides
     #: ArrayDataSource).
-    value_dimension = ReadOnly('point')
+    value_dimension = ReadOnly("point")
 
     #: The sort order of the data. Although sort order is less common with point
     #: data, it can be useful in case where the value data is sorted along some
@@ -47,10 +46,9 @@ class PointDataSource(ArrayDataSource):
     #: whichever one has the best binary-search performance for hit-testing.
     sort_index = Enum(0, 1)
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The actual data (overrides ArrayDataSource).
     _data = PointTrait
@@ -66,18 +64,22 @@ class PointDataSource(ArrayDataSource):
     # List of Y positions.
     _ydata = Property
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractDataSource interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
-    def __init__(self, data = transpose(array([[],[]])), **kw):
+    def __init__(self, data=transpose(array([[], []])), **kw):
         shape = data.shape
         if (len(shape) != 2) or (shape[1] != 2):
-            raise RuntimeError("PointDataSource constructor requires Nx2 array, but got array of shape " + str(shape) + " instead.")
+            raise RuntimeError(
+                "PointDataSource constructor requires Nx2 array, but got array of shape "
+                + str(shape)
+                + " instead."
+            )
         super(PointDataSource, self).__init__(data, **kw)
 
     def get_data(self):
-        """ Returns the data for this data source, or (0.0, 0.0) if it has no
+        """Returns the data for this data source, or (0.0, 0.0) if it has no
         data.
 
         Overrides ArryDataSource.
@@ -116,49 +118,49 @@ class PointDataSource(ArrayDataSource):
             raise ValueError("Index must be 0 or 1.")
 
         # This basically reduces to a scalar data search along self.data[index].
-        lowerleft, upperright= self._cached_bounds
+        lowerleft, upperright = self._cached_bounds
         min_val = lowerleft[index]
         max_val = upperright[index]
         val = pt[index]
-        if (val < min_val):
+        if val < min_val:
             if outside_returns_none:
                 return None
             else:
                 return self._min_index
-        elif (val > max_val):
+        elif val > max_val:
             if outside_returns_none:
                 return None
             else:
                 return self._max_index
         else:
-            return reverse_map_1d(self._data[:,index], val, self.sort_order)
+            return reverse_map_1d(self._data[:, index], val, self.sort_order)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _compute_bounds(self):
-        """ Computes the minimum and maximum values of self._data.
+        """Computes the minimum and maximum values of self._data.
 
         Overrides ArrayDataSource.
         """
         if len(self._data) == 0:
-            self._cached_bounds = ((0.0,0.0), (0.0,0.0))
+            self._cached_bounds = ((0.0, 0.0), (0.0, 0.0))
         elif len(self._data) == 1:
-            x,y = self._data[0]
-            self._cached_bounds = ((x,y), (x,y))
+            x, y = self._data[0]
+            self._cached_bounds = ((x, y), (x, y))
         else:
             # calculate the X and Y values independently
-            x = self._data[:,0]
+            x = self._data[:, 0]
             min_x = min(x)
             max_x = max(x)
-            y = self._data[:,1]
+            y = self._data[:, 1]
             min_y = min(y)
             max_y = max(y)
-            self._cached_bounds = ((min_x,min_y), (max_x,max_y))
+            self._cached_bounds = ((min_x, min_y), (max_x, max_y))
 
     def _get__xdata(self):
-        return ArrayDataSource(self._data[:,0])
+        return ArrayDataSource(self._data[:, 0])
 
     def _get__ydata(self):
-        return ArrayDataSource(self._data[:,1])
+        return ArrayDataSource(self._data[:, 1])

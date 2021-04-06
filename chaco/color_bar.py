@@ -5,7 +5,13 @@ from numpy import array, arange, ascontiguousarray, ones, transpose, uint8
 
 # Enthought library imports
 from traits.api import (
-    Any, Bool, Enum, Instance, Property, cached_property, observe
+    Any,
+    Bool,
+    Enum,
+    Instance,
+    Property,
+    cached_property,
+    observe,
 )
 from traits.observation.api import parse
 from kiva.image import GraphicsContext
@@ -20,16 +26,16 @@ from .axis import PlotAxis
 
 
 class ColorBar(AbstractPlotRenderer):
-    """ A color bar for a color-mapped plot.
-    """
+    """A color bar for a color-mapped plot."""
+
     #: Screen mapper for index data.
     index_mapper = Instance(AbstractMapper)
 
     #: Screen mapper for color data
-    color_mapper = Property #Instance(ColorMapper)
+    color_mapper = Property  # Instance(ColorMapper)
 
     #: Screen mapper for value data (synonym for color_mapper)
-    value_mapper = Property(depends_on='color_mapper')
+    value_mapper = Property(depends_on="color_mapper")
 
     #: Optional index data source for generic tools to attach metadata to.
     index = Property
@@ -51,29 +57,29 @@ class ColorBar(AbstractPlotRenderer):
     #: the orientation of the plot.
     y_mapper = Property
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Override default values of inherited traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The border is visible (overrides enable.Component).
     border_visible = True
     #: The orientation of the index axis.
-    orientation = Enum('v', 'h')
+    orientation = Enum("v", "h")
     #: Should the bar go left-to-right or bottom-to-top (normal) or the reverse?
-    direction = Enum('normal', 'flipped')
+    direction = Enum("normal", "flipped")
     #: Overrides the default background color trait in PlotComponent.
-    bgcolor = 'transparent'
+    bgcolor = "transparent"
     #: Draw layers in "draw order"
     use_draw_order = True
     #: Default width is 40 pixels (overrides enable.CoordinateBox)
     width = 40
 
     #: Faux origin for the axis to look at
-    origin = Enum('bottom left', 'top left', 'bottom right', 'top right')
+    origin = Enum("bottom left", "top left", "bottom right", "top right")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private attributes
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The grid
     _grid = Instance(PlotGrid)
@@ -88,7 +94,7 @@ class ColorBar(AbstractPlotRenderer):
     _index = Instance(ArrayDataSource, args=())
 
     def __init__(self, *args, **kw):
-        """ In creating an instance, this method ensures that the grid and the
+        """In creating an instance, this method ensures that the grid and the
         axis are created before setting their visibility.
         """
         grid_visible = kw.pop("grid_visible", True)
@@ -96,27 +102,31 @@ class ColorBar(AbstractPlotRenderer):
 
         super(ColorBar, self).__init__(*args, **kw)
 
-        if self.orientation == 'h':
-            if self.direction == 'normal':
-                self.origin = 'bottom left'
+        if self.orientation == "h":
+            if self.direction == "normal":
+                self.origin = "bottom left"
             else:
-                self.origin = 'bottom right'
-            grid_orientation = 'vertical'
-            axis_orientation = 'bottom'
+                self.origin = "bottom right"
+            grid_orientation = "vertical"
+            axis_orientation = "bottom"
         else:
-            if self.direction == 'normal':
-                self.origin = 'bottom left'
+            if self.direction == "normal":
+                self.origin = "bottom left"
             else:
-                self.origin = 'top left'
-            grid_orientation = 'horizontal'
-            axis_orientation = 'left'
+                self.origin = "top left"
+            grid_orientation = "horizontal"
+            axis_orientation = "left"
 
-        self._grid = PlotGrid(orientation=grid_orientation,
-                              mapper=self.index_mapper,
-                              component=self)
-        self._axis = PlotAxis(orientation=axis_orientation,
-                              mapper=self.index_mapper,
-                              component=self)
+        self._grid = PlotGrid(
+            orientation=grid_orientation,
+            mapper=self.index_mapper,
+            component=self,
+        )
+        self._axis = PlotAxis(
+            orientation=axis_orientation,
+            mapper=self.index_mapper,
+            component=self,
+        )
         self.overlays.append(self._grid)
         self.overlays.append(self._axis)
 
@@ -124,12 +134,11 @@ class ColorBar(AbstractPlotRenderer):
         self.grid_visible = grid_visible
         self.axis_visible = axis_visible
 
-    def _draw_plot(self, gc, view_bounds=None, mode='normal'):
-        """ Draws the 'plot' layer.
-        """
+    def _draw_plot(self, gc, view_bounds=None, mode="normal"):
+        """Draws the 'plot' layer."""
         self._update_mappers()
         with gc:
-            if self.orientation == 'h':
+            if self.orientation == "h":
                 perpendicular_dim = 1
                 axis_dim = 0
             else:
@@ -140,7 +149,7 @@ class ColorBar(AbstractPlotRenderer):
 
             low = mapper.low_pos
             high = mapper.high_pos
-            if self.direction == 'flipped':
+            if self.direction == "flipped":
                 low, high = high, low
             scrn_points = arange(low, high + 1)
 
@@ -155,8 +164,12 @@ class ColorBar(AbstractPlotRenderer):
             # Get the colors associated with the data points.
             colors = self.color_mapper.map_screen(data_points)
 
-            img = self._make_color_image(colors, self.bounds[perpendicular_dim],
-                                                    self.orientation, self.direction)
+            img = self._make_color_image(
+                colors,
+                self.bounds[perpendicular_dim],
+                self.orientation,
+                self.direction,
+            )
             gc.draw_image(img, (self.x, self.y, self.width, self.height))
 
     def _make_color_image(self, color_values, width, orientation, direction):
@@ -165,33 +178,37 @@ class ColorBar(AbstractPlotRenderer):
         values (Nx3 or Nx4). The *width* parameter is the width of the
         colorbar, and *orientation* is the orientation of the plot.
         """
-        bmparray = ones((width, color_values.shape[0],
-                                    color_values.shape[1]))* color_values * 255
+        bmparray = (
+            ones((width, color_values.shape[0], color_values.shape[1]))
+            * color_values
+            * 255
+        )
 
         if orientation == "v":
-            bmparray = ascontiguousarray(transpose(bmparray, axes=(1,0,2))[::-1])
+            bmparray = ascontiguousarray(
+                transpose(bmparray, axes=(1, 0, 2))[::-1]
+            )
         bmparray = bmparray.astype(uint8)
         img = GraphicsContext(bmparray, "rgba32")
         return img
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait events
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _update_mappers(self):
         if not self.index_mapper or not self.color_mapper:
             return
-        if self.orientation == 'h' and 'left' in self.origin:
+        if self.orientation == "h" and "left" in self.origin:
             self.index_mapper.low_pos = self.x
             self.index_mapper.high_pos = self.x2
-        elif self.orientation == 'h' and 'right' in self.origin:
+        elif self.orientation == "h" and "right" in self.origin:
             self.index_mapper.low_pos = self.x2
             self.index_mapper.high_pos = self.x
-        elif self.orientation == 'v' and 'bottom' in self.origin:
+        elif self.orientation == "v" and "bottom" in self.origin:
             self.index_mapper.low_pos = self.y
             self.index_mapper.high_pos = self.y2
-        elif self.orientation == 'v' and 'top' in self.origin:
+        elif self.orientation == "v" and "top" in self.origin:
             self.index_mapper.low_pos = self.y2
             self.index_mapper.high_pos = self.y
         self.index_mapper.range = self.color_mapper.range
@@ -218,7 +235,7 @@ class ColorBar(AbstractPlotRenderer):
     def _updated_changed_for_color_mapper(self):
         self._update_mappers()
 
-    @observe(parse('[index_mapper,color_mapper]').match(lambda n, t: True))
+    @observe(parse("[index_mapper,color_mapper]").match(lambda n, t: True))
     def _either_mapper_updated(self, event=None):
         self.invalidate_draw()
         self.request_redraw()
@@ -248,9 +265,9 @@ class ColorBar(AbstractPlotRenderer):
         self._axis.visible = new
         self.request_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property setters and getters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_x_mapper(self):
         if self.orientation == "h":

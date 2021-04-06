@@ -14,7 +14,7 @@ from .abstract_data_source import AbstractDataSource
 
 
 class MultiArrayDataSource(AbstractDataSource):
-    """ A data source representing a single, continuous array of
+    """A data source representing a single, continuous array of
     multidimensional numerical data.
 
     It is useful, for example, to define 2D vector data at each point of
@@ -25,9 +25,9 @@ class MultiArrayDataSource(AbstractDataSource):
     such behavior, define a subclass that hooks up the appropriate listeners.
     """
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractDataSource traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The dimensionality of the indices into this data source (overrides
     #: AbstractDataSource).
@@ -42,10 +42,9 @@ class MultiArrayDataSource(AbstractDataSource):
     #: one that's used everywhere.
     sort_order = SortOrderTrait
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The data array itself.
     _data = NumericalSequenceTrait
@@ -68,7 +67,7 @@ class MultiArrayDataSource(AbstractDataSource):
         self.sort_order = sort_order
         self.data_changed = True
 
-    def get_data(self, axes = None, remove_nans=False):
+    def get_data(self, axes=None, remove_nans=False):
         """get_data() -> data_array
 
         If called with no arguments, this method returns a data array.
@@ -128,7 +127,7 @@ class MultiArrayDataSource(AbstractDataSource):
         return size
 
     def get_value_size(self):
-        """ get_value_size() -> size
+        """get_value_size() -> size
 
         Returns the size along the value dimension.
         """
@@ -138,8 +137,7 @@ class MultiArrayDataSource(AbstractDataSource):
 
         return size
 
-
-    def get_bounds(self, value = None, index = None):
+    def get_bounds(self, value=None, index=None):
         """get_bounds() -> tuple(min, max)
 
         Returns a tuple (min, max) of the bounding values for the data source.
@@ -181,19 +179,21 @@ class MultiArrayDataSource(AbstractDataSource):
             # value is None and index is None:
             with warnings.catch_warnings():
                 warnings.filterwarnings(
-                    'ignore', "All-NaN (slice|axis) encountered", RuntimeWarning)
+                    "ignore",
+                    "All-NaN (slice|axis) encountered",
+                    RuntimeWarning,
+                )
                 maxi = nanmax(self._data)
                 mini = nanmin(self._data)
 
         return (mini, maxi)
 
     def get_shape(self):
-        """ Returns the shape of the multi-dimensional data source.
-        """
+        """Returns the shape of the multi-dimensional data source."""
         return shape(self._data)
 
     def set_data(self, value):
-        """ Sets the data for this data source.
+        """Sets the data for this data source.
 
         Parameters
         ----------
@@ -204,17 +204,18 @@ class MultiArrayDataSource(AbstractDataSource):
         self.data_changed = True
 
     def _set_data(self, value):
-        """ Forces 1-D data to 2-D.
-        """
+        """Forces 1-D data to 2-D."""
         if len(value.shape) == 1:
             if self.index_dimension == 0:
-                value = value[:,newaxis]
+                value = value[:, newaxis]
             else:
-                value = value[newaxis,:]
+                value = value[newaxis, :]
 
         if len(value.shape) != 2:
-            msg = 'Input is %d dimensional, but it must be 1 or 2' \
-                  'dimensional.' % len(value.shape)
+            msg = (
+                "Input is %d dimensional, but it must be 1 or 2"
+                "dimensional." % len(value.shape)
+            )
             raise ValueError(msg)
 
         self._data = value

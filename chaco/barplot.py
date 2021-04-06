@@ -2,9 +2,26 @@
 """
 import logging
 
-from numpy import array, compress, column_stack, invert, isnan, transpose, zeros
-from traits.api import Any, Bool, Enum, Float, Instance, Property, \
-        Range, Tuple, cached_property
+from numpy import (
+    array,
+    compress,
+    column_stack,
+    invert,
+    isnan,
+    transpose,
+    zeros,
+)
+from traits.api import (
+    Any,
+    Bool,
+    Enum,
+    Float,
+    Instance,
+    Property,
+    Range,
+    Tuple,
+    cached_property,
+)
 from enable.api import black_color_trait
 from kiva.constants import FILL_STROKE
 
@@ -20,10 +37,12 @@ logger = logging.getLogger(__name__)
 
 # TODO: make child of BaseXYPlot
 
+
 class BarPlot(AbstractPlotRenderer):
     """
     A renderer for bar charts.
     """
+
     #: The data source to use for the index coordinate.
     index = Instance(ArrayDataSource)
 
@@ -78,18 +97,17 @@ class BarPlot(AbstractPlotRenderer):
     #: The RGBA tuple for rendering lines. It is always a tuple of length 4.
     #: It has the same RGB values as :attr:`line_color`, and its alpha value
     #: is the alpha value of self.line_color multiplied by self.alpha.
-    effective_line_color = Property(Tuple, depends_on=['line_color', 'alpha'])
+    effective_line_color = Property(Tuple, depends_on=["line_color", "alpha"])
 
     #: The RGBA tuple for rendering the fill. It is always a tuple of length
     #: 4. It has the same RGB values as :attr:`fill_color`, and its alpha
     #: value is the alpha value of self.fill_color multiplied by self.alpha.
-    effective_fill_color = Property(Tuple, depends_on=['fill_color', 'alpha'])
+    effective_fill_color = Property(Tuple, depends_on=["fill_color", "alpha"])
 
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     alpha = Range(0.0, 1.0, 1.0, requires_redraw=True)
 
-
-    #use_draw_order = False
+    # use_draw_order = False
 
     # Convenience properties that correspond to either index_mapper or
     # value_mapper, depending on the orientation of the plot.
@@ -113,10 +131,9 @@ class BarPlot(AbstractPlotRenderer):
     #: Convenience property for accessing the value data range.
     value_range = Property
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Indicates whether or not the data cache is valid
     _cache_valid = Bool(False)
@@ -127,15 +144,14 @@ class BarPlot(AbstractPlotRenderer):
     # this is an Nx3 array of (bar_center, start, end).
     _cached_data_pts = Any
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractPlotRenderer interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **kw):
         # These Traits depend on others, so we'll defer setting them until
         # after the HasTraits initialization has been completed.
-        later_list = ['index_direction', 'value_direction']
+        later_list = ["index_direction", "value_direction"]
         postponed = {}
         for name in later_list:
             if name in kw:
@@ -146,9 +162,8 @@ class BarPlot(AbstractPlotRenderer):
         # Set any keyword Traits that were postponed.
         self.trait_set(**postponed)
 
-
     def map_screen(self, data_array):
-        """ Maps an array of data points into screen space and returns it as
+        """Maps an array of data points into screen space and returns it as
         an array.
 
         Implements the AbstractPlotRenderer interface.
@@ -161,12 +176,12 @@ class BarPlot(AbstractPlotRenderer):
         sy = self.value_mapper.map_screen(y_ary)
 
         if self.orientation == "h":
-            return transpose(array((sx,sy)))
+            return transpose(array((sx, sy)))
         else:
-            return transpose(array((sy,sx)))
+            return transpose(array((sy, sx)))
 
     def map_data(self, screen_pt):
-        """ Maps a screen space point into the "index" space of the plot.
+        """Maps a screen space point into the "index" space of the plot.
 
         Implements the AbstractPlotRenderer interface.
         """
@@ -176,15 +191,22 @@ class BarPlot(AbstractPlotRenderer):
             screen_coord = screen_pt[1]
         return self.index_mapper.map_data(screen_coord)
 
-    def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True,
-                  index_only=False):
-        """ Maps a screen space point to an index into the plot's index array(s).
+    def map_index(
+        self,
+        screen_pt,
+        threshold=2.0,
+        outside_returns_none=True,
+        index_only=False,
+    ):
+        """Maps a screen space point to an index into the plot's index array(s).
 
         Implements the AbstractPlotRenderer interface.
         """
         data_pt = self.map_data(screen_pt)
-        if ((data_pt < self.index_mapper.range.low) or \
-            (data_pt > self.index_mapper.range.high)) and outside_returns_none:
+        if (
+            (data_pt < self.index_mapper.range.low)
+            or (data_pt > self.index_mapper.range.high)
+        ) and outside_returns_none:
             return None
         index_data = self.index.get_data()
         value_data = self.value.get_data()
@@ -200,24 +222,26 @@ class BarPlot(AbstractPlotRenderer):
         x = index_data[ndx]
         y = value_data[ndx]
 
-        result = self.map_screen(array([[x,y]]))
+        result = self.map_screen(array([[x, y]]))
         if result is None:
             return None
 
         sx, sy = result[0]
-        if index_only and ((screen_pt[0]-sx) < threshold):
+        if index_only and ((screen_pt[0] - sx) < threshold):
             return ndx
-        elif ((screen_pt[0]-sx)**2 + (screen_pt[1]-sy)**2 < threshold*threshold):
+        elif (screen_pt[0] - sx) ** 2 + (
+            screen_pt[1] - sy
+        ) ** 2 < threshold * threshold:
             return ndx
         else:
             return None
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # PlotComponent interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _gather_points(self):
-        """ Collects data points that are within the range of the plot, and
+        """Collects data points that are within the range of the plot, and
         caches them in **_cached_data_pts**.
         """
         index, index_mask = self.index.get_data_mask()
@@ -229,7 +253,8 @@ class BarPlot(AbstractPlotRenderer):
         if len(index) == 0 or len(value) == 0 or len(index) != len(value):
             logger.warning(
                 "Chaco: using empty dataset; index_len=%d, value_len=%d."
-                % (len(index), len(value)))
+                % (len(index), len(value))
+            )
             self._cached_data_pts = array([])
             self._cache_valid = True
             return
@@ -237,10 +262,10 @@ class BarPlot(AbstractPlotRenderer):
         # TODO: Until we code up a better handling of value-based culling that
         # takes into account starting_value and dataspace bar widths, just use
         # the index culling for now.
-#        value_range_mask = self.value_mapper.range.mask_data(value)
-#        nan_mask = invert(isnan(index_mask)) & invert(isnan(value_mask))
-#        point_mask = index_mask & value_mask & nan_mask & \
-#                     index_range_mask & value_range_mask
+        # value_range_mask = self.value_mapper.range.mask_data(value)
+        # nan_mask = invert(isnan(index_mask)) & invert(isnan(value_mask))
+        # point_mask = index_mask & value_mask & nan_mask & \
+        #              index_range_mask & value_range_mask
 
         index_range_mask = self.index_mapper.range.mask_data(index)
         nan_mask = invert(isnan(index_mask))
@@ -253,8 +278,14 @@ class BarPlot(AbstractPlotRenderer):
 
         if self.bar_width_type == "data":
             half_width = self.bar_width / 2.0
-            points = column_stack((index-half_width, index+half_width,
-                                   starting_values, value))
+            points = column_stack(
+                (
+                    index - half_width,
+                    index + half_width,
+                    starting_values,
+                    value,
+                )
+            )
         else:
             points = column_stack((index, starting_values, value))
         self._cached_data_pts = compress(point_mask, points, axis=0)
@@ -262,8 +293,7 @@ class BarPlot(AbstractPlotRenderer):
         self._cache_valid = True
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
-        """ Draws the 'plot' layer.
-        """
+        """Draws the 'plot' layer."""
         if not self._cache_valid:
             self._gather_points()
 
@@ -281,21 +311,20 @@ class BarPlot(AbstractPlotRenderer):
 
             if self.bar_width_type == "data":
                 # map the bar start and stop locations into screen space
-                lower_left_pts = self.map_screen(data[:,(0,2)])
-                upper_right_pts = self.map_screen(data[:,(1,3)])
+                lower_left_pts = self.map_screen(data[:, (0, 2)])
+                upper_right_pts = self.map_screen(data[:, (1, 3)])
             else:
                 half_width = self.bar_width / 2.0
                 # map the bar centers into screen space and then compute the bar
                 # start and end positions
-                lower_left_pts = self.map_screen(data[:,(0,1)])
-                upper_right_pts = self.map_screen(data[:,(0,2)])
-                lower_left_pts[:,0] -= half_width
-                upper_right_pts[:,0] += half_width
+                lower_left_pts = self.map_screen(data[:, (0, 1)])
+                upper_right_pts = self.map_screen(data[:, (0, 2)])
+                lower_left_pts[:, 0] -= half_width
+                upper_right_pts[:, 0] += half_width
 
             bounds = upper_right_pts - lower_left_pts
             gc.rects(column_stack((lower_left_pts, bounds)))
             gc.draw_path()
-
 
     def _draw_default_axes(self, gc):
         if not self.origin_axis_visible:
@@ -310,28 +339,28 @@ class BarPlot(AbstractPlotRenderer):
                 if (range.low < 0) and (range.high > 0):
                     if range == self.index_mapper.range:
                         dual = self.value_mapper.range
-                        data_pts = array([[0.0,dual.low], [0.0, dual.high]])
+                        data_pts = array([[0.0, dual.low], [0.0, dual.high]])
                     else:
                         dual = self.index_mapper.range
-                        data_pts = array([[dual.low,0.0], [dual.high,0.0]])
-                    start,end = self.map_screen(data_pts)
-                    gc.move_to(int(start[0])+0.5, int(start[1])+0.5)
-                    gc.line_to(int(end[0])+0.5, int(end[1])+0.5)
+                        data_pts = array([[dual.low, 0.0], [dual.high, 0.0]])
+                    start, end = self.map_screen(data_pts)
+                    gc.move_to(int(start[0]) + 0.5, int(start[1]) + 0.5)
+                    gc.line_to(int(end[0]) + 0.5, int(end[1]) + 0.5)
                     gc.stroke_path()
 
     def _render_icon(self, gc, x, y, width, height):
         with gc:
             gc.set_fill_color(self.effective_fill_color)
             gc.set_stroke_color(self.effective_line_color)
-            gc.rect(x+width/4, y+height/4, width/2, height/2)
+            gc.rect(x + width / 4, y + height / 4, width / 2, height / 2)
             gc.draw_path(FILL_STROKE)
 
     def _post_load(self):
         super(BarPlot, self)._post_load()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Properties
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_index_range(self):
         return self.index_mapper.range
@@ -369,12 +398,12 @@ class BarPlot(AbstractPlotRenderer):
         else:
             return self.index_direction
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers - these are mostly copied from BaseXYPlot
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _update_mappers(self):
-        """ Updates the index and value mappers. Called by trait change handlers
+        """Updates the index and value mappers. Called by trait change handlers
         for various traits.
         """
         x_mapper = self.index_mapper
@@ -392,7 +421,7 @@ class BarPlot(AbstractPlotRenderer):
         y2 = self.y2
 
         if x_mapper is not None:
-            if x_dir =="normal":
+            if x_dir == "normal":
                 x_mapper.low_pos = x
                 x_mapper.high_pos = x2
             else:
@@ -478,9 +507,9 @@ class BarPlot(AbstractPlotRenderer):
         self.invalidate_draw()
         self.request_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property getters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get_effective_line_color(self):

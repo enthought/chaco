@@ -23,7 +23,7 @@ class ScatterInspectorEvent(HasStrictTraits):
 
 
 class ScatterInspector(SelectTool):
-    """ A tool for inspecting scatter plots.
+    """A tool for inspecting scatter plots.
 
     It writes the index of the point under the cursor to the metadata of the
     index and value data sources, and allows clicking to select the point.
@@ -39,8 +39,8 @@ class ScatterInspector(SelectTool):
     persistent_hover = Bool(False)
 
     #: The names of the data source metadata for hover and selection events.
-    hover_metadata_name = Str('hover')
-    selection_metadata_name = Str('selections')
+    hover_metadata_name = Str("hover")
+    selection_metadata_name = Str("selections")
 
     #: This tool emits events when hover or selection changes
     inspector_event = Event(ScatterInspectorEvent)
@@ -56,7 +56,7 @@ class ScatterInspector(SelectTool):
     draw_mode = "none"
 
     def normal_mouse_move(self, event):
-        """ Handles the mouse moving when the tool is in the 'normal' state.
+        """Handles the mouse moving when the tool is in the 'normal' state.
 
         If the cursor is within **threshold** of a data point, the method
         writes the index to the plot's data sources' "hover" metadata.
@@ -66,8 +66,9 @@ class ScatterInspector(SelectTool):
         """
         plot = self.component
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
-        insp_event = ScatterInspectorEvent(event_type=HOVER_EVENT,
-                                           event_index=index)
+        insp_event = ScatterInspectorEvent(
+            event_type=HOVER_EVENT, event_index=index
+        )
         if index is not None:
             old = plot.index.metadata.get(self.hover_metadata_name, None)
             plot.index.metadata[self.hover_metadata_name] = [index]
@@ -87,7 +88,7 @@ class ScatterInspector(SelectTool):
         index = plot.map_index((event.x, event.y), threshold=self.threshold)
 
         already_selected = False
-        for name in ('index', 'value'):
+        for name in ("index", "value"):
             if not hasattr(plot, name):
                 continue
             md = getattr(plot, name).metadata
@@ -104,13 +105,14 @@ class ScatterInspector(SelectTool):
         return index
 
     def _deselect(self, index=None):
-        """ Deselects a particular index.  If no index is given, then
+        """Deselects a particular index.  If no index is given, then
         deselects all points.
         """
         plot = self.component
-        insp_event = ScatterInspectorEvent(event_type=DESELECT_EVENT,
-                                           event_index=index)
-        for name in ('index', 'value'):
+        insp_event = ScatterInspectorEvent(
+            event_type=DESELECT_EVENT, event_index=index
+        )
+        for name in ("index", "value"):
             if not hasattr(plot, name):
                 continue
             md = getattr(plot, name).metadata
@@ -121,19 +123,20 @@ class ScatterInspector(SelectTool):
                 new_list.remove(index)
                 md[self.selection_metadata_name] = new_list
                 # Only issue 1 event:
-                if name == 'index':
+                if name == "index":
                     self.inspector_event = insp_event
             elif index is None:
                 md[self.selection_metadata_name] = []
                 # Only issue 1 event:
-                if name == 'index':
+                if name == "index":
                     self.inspector_event = insp_event
 
     def _select(self, index, append=True):
         plot = self.component
-        insp_event = ScatterInspectorEvent(event_type=SELECT_EVENT,
-                                           event_index=index)
-        for name in ('index', 'value'):
+        insp_event = ScatterInspectorEvent(
+            event_type=SELECT_EVENT, event_index=index
+        )
+        for name in ("index", "value"):
             if not hasattr(plot, name):
                 continue
             md = getattr(plot, name).metadata
@@ -159,5 +162,5 @@ class ScatterInspector(SelectTool):
                     md[self.selection_metadata_name] = [index]
 
             # Test to only issue 1 event per selection, not 1 per axis:
-            if name == 'index':
+            if name == "index":
                 self.inspector_event = insp_event

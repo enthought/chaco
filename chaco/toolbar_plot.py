@@ -2,9 +2,10 @@ from chaco.plot import Plot
 from chaco.tools.toolbars.plot_toolbar import PlotToolbar
 from traits.api import Type, DelegatesTo, Instance, Enum, observe
 
+
 class ToolbarPlot(Plot):
     #: Should we turn on the auto-hide feature on the toolbar?
-    auto_hide = DelegatesTo('toolbar')
+    auto_hide = DelegatesTo("toolbar")
 
     toolbar = Instance(PlotToolbar)
 
@@ -15,7 +16,7 @@ class ToolbarPlot(Plot):
     #: is not specified with the :attr:`toolbar` attribute.  Changing this
     #: attribute after the ToolbarPlot instance is created has no effect;
     #: use obj.toolbar.location to dynamically change toolbar's location.
-    toolbar_location = Enum('top', 'right', 'bottom', 'left')
+    toolbar_location = Enum("top", "right", "bottom", "left")
 
     def __init__(self, *args, **kw):
 
@@ -50,7 +51,7 @@ class ToolbarPlot(Plot):
         self.toolbar.do_layout(force=True)
         super(ToolbarPlot, self)._bounds_changed(old, new)
 
-    @observe('toolbar')
+    @observe("toolbar")
     def _update_toolbar(self, event):
         new, old = event.new, event.old
 

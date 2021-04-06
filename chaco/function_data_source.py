@@ -14,7 +14,7 @@ from .data_range_1d import DataRange1D
 
 
 class FunctionDataSource(ArrayDataSource):
-    """ A data source that lazily generates its data array from a callable.
+    """A data source that lazily generates its data array from a callable.
 
     The signature of the :attr:`func` attribute is `func(low, high)` where
     `low` and `high` are attributes of the :attr:`data_range` attribute
@@ -23,6 +23,7 @@ class FunctionDataSource(ArrayDataSource):
     This class does not listen to the array for value changes; if you need that
     behavior, create a subclass that hooks up the appropriate listeners.
     """
+
     # The function to call with the low and high values of the range.
     # It should return an array of values.
     func = Callable
@@ -36,7 +37,7 @@ class FunctionDataSource(ArrayDataSource):
         AbstractDataSource.__init__(self, **kw)
         self.recalculate()
 
-    @observe('data_range.updated')
+    @observe("data_range.updated")
     def recalculate(self, event=None):
         if self.func is not None and self.data_range is not None:
             newarray = self.func(self.data_range.low, self.data_range.high)
@@ -45,8 +46,9 @@ class FunctionDataSource(ArrayDataSource):
             self._data = array([], dtype=float)
 
     def set_data(self, *args, **kw):
-        raise RuntimeError("Cannot set numerical data on a {0}".format(
-                           self.__class__))
+        raise RuntimeError(
+            "Cannot set numerical data on a {0}".format(self.__class__)
+        )
 
     def set_mask(self, mask):
         # This would be REALLY FREAKING SLICK, but it's current unimplemented

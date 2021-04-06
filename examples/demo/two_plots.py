@@ -14,9 +14,10 @@ from chaco.api import HPlotContainer, ArrayPlotData, Plot
 from chaco.tools.api import LineInspector, ZoomTool, PanTool
 
 
-#==============================================================================
+# ==============================================================================
 # # Create the Chaco plot.
-#==============================================================================
+# ==============================================================================
+
 
 def _create_plot_component():
 
@@ -31,14 +32,19 @@ def _create_plot_component():
     left_plot = Plot(plotdata)
     left_plot.x_axis.title = "X"
     left_plot.y_axis.title = "j0(x)"
-    renderer = left_plot.plot(("x", "y1"), type="line", color="blue",
-                              width=2.0)[0]
-    renderer.overlays.append(LineInspector(renderer, axis='value',
-                                            write_metadata=True,
-                                            is_listener=True))
-    renderer.overlays.append(LineInspector(renderer, axis="index",
-                                            write_metadata=True,
-                                            is_listener=True))
+    renderer = left_plot.plot(
+        ("x", "y1"), type="line", color="blue", width=2.0
+    )[0]
+    renderer.overlays.append(
+        LineInspector(
+            renderer, axis="value", write_metadata=True, is_listener=True
+        )
+    )
+    renderer.overlays.append(
+        LineInspector(
+            renderer, axis="index", write_metadata=True, is_listener=True
+        )
+    )
     left_plot.overlays.append(ZoomTool(left_plot, tool_mode="range"))
     left_plot.tools.append(PanTool(left_plot))
 
@@ -48,13 +54,16 @@ def _create_plot_component():
     right_plot.orientation = "v"
     right_plot.x_axis.title = "j1(x)"
     right_plot.y_axis.title = "X"
-    renderer2 = right_plot.plot(("x", "y2"), type="line", color="red",
-                                width=2.0)[0]
+    renderer2 = right_plot.plot(
+        ("x", "y2"), type="line", color="red", width=2.0
+    )[0]
     renderer2.index = renderer.index
-    renderer2.overlays.append(LineInspector(renderer2, write_metadata=True,
-                              is_listener=True))
-    renderer2.overlays.append(LineInspector(renderer2, axis="value",
-                              is_listener=True))
+    renderer2.overlays.append(
+        LineInspector(renderer2, write_metadata=True, is_listener=True)
+    )
+    renderer2.overlays.append(
+        LineInspector(renderer2, axis="value", is_listener=True)
+    )
     right_plot.overlays.append(ZoomTool(right_plot, tool_mode="range"))
     right_plot.tools.append(PanTool(right_plot))
 
@@ -65,30 +74,33 @@ def _create_plot_component():
     return container
 
 
-#==============================================================================
+# ==============================================================================
 # Attributes to use for the plot view.
 size = (750, 500)
 title = "Two Plots"
 
 
-#==============================================================================
+# ==============================================================================
 # # Demo class that is used by the demo.py application.
-#==============================================================================
+# ==============================================================================
+
 
 class Demo(HasTraits):
 
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation="vertical"),
-                    resizable=True, title=title,
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
         return _create_plot_component()
+
 
 demo = Demo()
 

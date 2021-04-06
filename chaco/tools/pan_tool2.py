@@ -1,4 +1,3 @@
-
 from numpy import inf
 
 from enable.api import Pointer
@@ -7,7 +6,7 @@ from traits.api import Bool, Enum, Float, Tuple
 
 
 class PanTool(DragTool):
-    """ An implementation of a pan tool based on the DragTool instead of
+    """An implementation of a pan tool based on the DragTool instead of
     a bare BaseTool
     """
 
@@ -47,9 +46,9 @@ class PanTool(DragTool):
     # set programmatically.
     _auto_constrain = Bool(False)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Inherited BaseTool traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The tool does not have a visual representation (overrides
     # BaseTool).
@@ -57,7 +56,6 @@ class PanTool(DragTool):
 
     # The tool is not visible (overrides BaseTool).
     visible = False
-
 
     def drag_start(self, event):
         """ Called when the drag operation starts """
@@ -68,12 +66,17 @@ class PanTool(DragTool):
 
         if self._auto_constrain and self.constrain_direction is None:
             # Determine the constraint direction
-            if abs(event.x - self._original_xy[0]) > abs(event.y - self._original_xy[1]):
+            if abs(event.x - self._original_xy[0]) > abs(
+                event.y - self._original_xy[1]
+            ):
                 self.constrain_direction = "x"
             else:
                 self.constrain_direction = "y"
 
-        for direction, bound_name, ndx in [("x","width",0), ("y","height",1)]:
+        for direction, bound_name, ndx in [
+            ("x", "width", 0),
+            ("y", "height", 1),
+        ]:
             if not self.constrain or self.constrain_direction == direction:
                 mapper = getattr(plot, direction + "_mapper")
                 range = mapper.range
@@ -83,7 +86,7 @@ class PanTool(DragTool):
 
                 screenlow, screenhigh = mapper.screen_bounds
                 screendelta = self.speed * (eventpos - origpos)
-                #if getattr(plot, direction + "_direction", None) == "flipped":
+                # if getattr(plot, direction + "_direction", None) == "flipped":
                 #    screendelta = -screendelta
 
                 newlow = mapper.map_data(screenlow - screendelta)
@@ -98,12 +101,22 @@ class PanTool(DragTool):
                 # linear mappers (which is used 99% of the time).
                 if domain_min is None:
                     if self.restrict_to_data:
-                        domain_min = min([source.get_data().min() for source in range.sources])
+                        domain_min = min(
+                            [
+                                source.get_data().min()
+                                for source in range.sources
+                            ]
+                        )
                     else:
                         domain_min = -inf
                 if domain_max is None:
                     if self.restrict_to_data:
-                        domain_max = max([source.get_data().max() for source in range.sources])
+                        domain_max = max(
+                            [
+                                source.get_data().max()
+                                for source in range.sources
+                            ]
+                        )
                     else:
                         domain_max = inf
                 if (newlow <= domain_min) and (newhigh >= domain_max):

@@ -8,40 +8,47 @@ import numpy
 # Enthought library imports
 from traits.util.resource import find_resource
 
-def wav_to_numeric( fname, max_frames=-1 ):
-  f = wave.open( fname, 'rb' )
-  sampleRate = f.getframerate()
-  channels = f.getnchannels()
 
-  if max_frames < 0:
-      max_frames = f.getnframes()
+def wav_to_numeric(fname, max_frames=-1):
+    f = wave.open(fname, "rb")
+    sampleRate = f.getframerate()
+    channels = f.getnchannels()
 
-  frames = f.readframes(max_frames)
+    if max_frames < 0:
+        max_frames = f.getnframes()
 
-  if f.getsampwidth() == 2:
-      data = numpy.fromstring(frames, numpy.uint16).astype(numpy.float64) - (2**15 - 0.5)
-  else:
-      data = numpy.fromstring(frames, numpy.uint8).astype(numpy.float64) - 127.5
+    frames = f.readframes(max_frames)
 
-  if channels == 2:
-      left = data[0::2]
-      right = data[1::2]
+    if f.getsampwidth() == 2:
+        data = numpy.fromstring(frames, numpy.uint16).astype(numpy.float64) - (
+            2 ** 15 - 0.5
+        )
+    else:
+        data = (
+            numpy.fromstring(frames, numpy.uint8).astype(numpy.float64) - 127.5
+        )
 
-      data = left
+    if channels == 2:
+        left = data[0::2]
+        right = data[1::2]
 
-  index = numpy.arange(len(data)) * 1.0/sampleRate
+        data = left
 
-  return index, data
+    index = numpy.arange(len(data)) * 1.0 / sampleRate
+
+    return index, data
+
 
 def test():
-    sample_path = os.path.join('examples','data','sample.wav')
-    alt_path = os.path.join('..','data','sample.wav')
-    fname = find_resource('Chaco', sample_path, alt_path=alt_path,
-        return_path=True)
+    sample_path = os.path.join("examples", "data", "sample.wav")
+    alt_path = os.path.join("..", "data", "sample.wav")
+    fname = find_resource(
+        "Chaco", sample_path, alt_path=alt_path, return_path=True
+    )
     index, data = wav_to_numeric(fname)
     print(data[:100])
     return index, data
 
-if __name__== '__main__':
-    test()
 
+if __name__ == "__main__":
+    test()

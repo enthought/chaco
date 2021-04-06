@@ -19,7 +19,6 @@ Also defines the convenience function::
 from traits.api import Bool, Dict, HasTraits, Instance, Str
 
 
-
 def bind_template(template, vars, type_check=False):
     """
     A convenience method for binding a plot template to set of variables.
@@ -39,14 +38,13 @@ def bind_template(template, vars, type_check=False):
 
 
 class PlotTemplateException(Exception):
-    """ Raised for errors in plot templates.
-    """
+    """Raised for errors in plot templates."""
+
     pass
 
 
 class TemplateDescriptor(HasTraits):
-    """ Describes the names and types of template variables for a template.
-    """
+    """Describes the names and types of template variables for a template."""
 
     # A dict with the template variable names as keys.  If the template is
     # unbound, the values are string representations of the types of objects
@@ -56,29 +54,24 @@ class TemplateDescriptor(HasTraits):
     vars = Dict
 
 
-
-
 class Templatizable(HasTraits):
-    """ Mix-in class that makes objects capable of being incorporated
+    """Mix-in class that makes objects capable of being incorporated
     into a Chaco template.
 
     Primarily defines the protocol used to query the class for its contents.
     """
 
-    def templatize(self, my_name, ):
-        """ Returns a dict mapping the name of the child in the local name space
+    def templatize(self, my_name):
+        """Returns a dict mapping the name of the child in the local name space
         to a Templatizable object reference.
         """
         raise NotImplementedError
 
     def __gettemplate__(self):
-        """ Returns a templatized version of the object.
-        """
-
-#    def bind(self,
+        """Returns a templatized version of the object."""
 
     def rebind(self, obj):
-        """ Replaces this object with the state in peer object *obj*.
+        """Replaces this object with the state in peer object *obj*.
 
         This method allows PlotTemplates to be used as live, application-level
         templates and not merely as a means to generating a plot script.
@@ -92,27 +85,25 @@ class Templatizable(HasTraits):
 
 
 class PlotTemplate(HasTraits):
-    """ Abstract base class for plot templates.
-    """
+    """Abstract base class for plot templates."""
+
     pass
 
 
-
-
 class AbstractTemplatizer(HasTraits):
-    """ A Templatizer accepts any subclass of Templatizable and returns a
+    """A Templatizer accepts any subclass of Templatizable and returns a
     PlotTemplate.
     """
 
 
-
 class CodeMetadata(HasTraits):
-    """ Represents all the metadata about a plot template, to be stored into
+    """Represents all the metadata about a plot template, to be stored into
     the generated code.
 
     The generated code for a plot template must create one of these objects,
     which is then used to drive the loading of the rest of the template.
     """
+
     # Not used for now, but could be handled later.
     version = "1.0"
 
@@ -130,33 +121,33 @@ class CodeMetadata(HasTraits):
     # this for aesthetic or readability reasons.
     root_name = Str
 
+
 class CodeTemplate(PlotTemplate):
-    """ A Chaco plot template.
+    """A Chaco plot template.
 
     Because Chaco plot templates are just executable code that produces Chaco
     plots, the PlotTemplate class is used to manage, interact with, and inspect
     the code for the template.
     """
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Configuration and general state of the template
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # Is the template completely bound?
     is_bound = Bool(False)
 
-
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Object graph traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # The top-level Templatizable component in the plot.
     root = Instance(Templatizable)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Code-related traits
     # These are used during the actual code generation process.
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # Global variables used during the code generation process.
     code_globals = Dict
@@ -164,22 +155,21 @@ class CodeTemplate(PlotTemplate):
     code_imports = Dict
 
     def create_strings(self):
-        """ Returns a list of strings which can be passed to bind_template().
-        """
+        """Returns a list of strings which can be passed to bind_template()."""
         # TODO:  do we need this?? can we do live generation?!!!
         pass
 
     def load_from_strings(self, stringlist):
-        """ Fills this plot template with the template in *stringlist*.
+        """Fills this plot template with the template in *stringlist*.
 
         NOTE: Don't use this to bind a template to data!  There is a much easier
         way to do that: use the bind_template() function.
         """
         pass
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private methods
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def _write_metadata(self):
         """
@@ -188,27 +178,27 @@ class CodeTemplate(PlotTemplate):
         """
         pass
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Methods used by Templatizable objects to query the generator about the
     # state of code generation.
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def create_global(self, name_hint):
-        """ Requests that a new global symbol be allocated with the given name.
+        """Requests that a new global symbol be allocated with the given name.
 
         Returns the actual name that was created.
         """
         pass
 
-    def create_import(self, import_line, ):
-        """ Adds another import line, verbatim, to the top of the output code.
+    def create_import(self, import_line):
+        """Adds another import line, verbatim, to the top of the output code.
 
         No order of imports is guaranteed.
         """
         pass
 
     def create_template_var(self, name_hint):
-        """ Creates a new variable for parameterizing the template.
+        """Creates a new variable for parameterizing the template.
 
         Returns a string that represents the special token to be used in the
         output code to signal where the template value can be bound.
@@ -216,7 +206,7 @@ class CodeTemplate(PlotTemplate):
         pass
 
     def create_function(self, name_hint):
-        """ Requests that a new function be allocated with the given name.
+        """Requests that a new function be allocated with the given name.
 
         Returns the actual name that was created.
         """

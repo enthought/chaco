@@ -18,8 +18,13 @@ from traits.api import HasTraits, Instance, Int
 from traitsui.api import Item, View
 
 # Chaco imports
-from chaco.api import add_default_grids, add_default_axes, ArrayPlotData, \
-    Plot, OverlayPlotContainer
+from chaco.api import (
+    add_default_grids,
+    add_default_axes,
+    ArrayPlotData,
+    Plot,
+    OverlayPlotContainer,
+)
 from chaco.tools.api import PanTool, ZoomTool
 
 
@@ -28,8 +33,11 @@ class PlotExample(HasTraits):
     numpts = Int(400)
     vectorlen = Int(15)
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
-                       width=600, height=600)
+    traits_view = View(
+        Item("plot", editor=ComponentEditor(), show_label=False),
+        width=600,
+        height=600,
+    )
 
     def _plot_default(self):
         # Create starting points for the vectors.
@@ -39,14 +47,16 @@ class PlotExample(HasTraits):
 
         # Create vectors.
         vectorlen = self.vectorlen
-        vectors = array((random(numpts)*vectorlen, random(numpts)*vectorlen)).T
+        vectors = array(
+            (random(numpts) * vectorlen, random(numpts) * vectorlen)
+        ).T
 
         data = ArrayPlotData()
-        data.set_data('index', x)
-        data.set_data('value', y)
-        data.set_data('vectors', vectors)
+        data.set_data("index", x)
+        data.set_data("value", y)
+        data.set_data("vectors", vectors)
         quiverplot = Plot(data)
-        quiverplot.quiverplot(('index', 'value', 'vectors'))
+        quiverplot.quiverplot(("index", "value", "vectors"))
 
         # Attach some tools to the plot
         quiverplot.tools.append(PanTool(quiverplot, constrain_key="shift"))

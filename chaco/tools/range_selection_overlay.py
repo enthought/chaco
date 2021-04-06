@@ -7,8 +7,7 @@ from numpy import arange, array
 
 # Enthought library imports
 from enable.api import ColorTrait, LineStyle
-from traits.api import Enum, Float, Property, Str, Instance, \
-        cached_property
+from traits.api import Enum, Float, Property, Str, Instance, cached_property
 from chaco.abstract_overlay import AbstractOverlay
 from chaco.base import arg_find_runs
 from chaco.grid_mapper import GridMapper
@@ -16,7 +15,7 @@ from chaco.abstract_mapper import AbstractMapper
 
 
 class RangeSelectionOverlay(AbstractOverlay):
-    """ Highlights the selection region on a component.
+    """Highlights the selection region on a component.
 
     Looks at a given metadata field of self.component for regions to draw as
     selected.
@@ -27,7 +26,7 @@ class RangeSelectionOverlay(AbstractOverlay):
 
     #: Mapping from screen space to data space. By default, it is just
     #: self.component.
-    plot = Property(depends_on='component')
+    plot = Property(depends_on="component")
 
     #: The mapper (and associated range) that drive this RangeSelectionOverlay.
     #: By default, this is the mapper on self.plot that corresponds to self.axis.
@@ -43,9 +42,9 @@ class RangeSelectionOverlay(AbstractOverlay):
     #: a boolean array mask of seleted dataspace points with any other name
     metadata_name = Str("selections")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Appearance traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The color of the selection border line.
     border_color = ColorTrait("dodgerblue")
@@ -58,44 +57,52 @@ class RangeSelectionOverlay(AbstractOverlay):
     #: The transparency of the fill color.
     alpha = Float(0.3)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractOverlay interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
-        """ Draws this component overlaid on another component.
+        """Draws this component overlaid on another component.
 
         Overrides AbstractOverlay.
         """
         axis_ndx = self.axis_index
-        lower_left = [0,0]
-        upper_right = [0,0]
+        lower_left = [0, 0]
+        upper_right = [0, 0]
 
         # Draw the selection
         coords = self._get_selection_screencoords()
         for coord in coords:
             start, end = coord
             lower_left[axis_ndx] = start
-            lower_left[1-axis_ndx] = component.position[1-axis_ndx]
+            lower_left[1 - axis_ndx] = component.position[1 - axis_ndx]
             upper_right[axis_ndx] = end - start
-            upper_right[1-axis_ndx] = component.bounds[1-axis_ndx]
+            upper_right[1 - axis_ndx] = component.bounds[1 - axis_ndx]
 
             with gc:
-                gc.clip_to_rect(component.x, component.y, component.width, component.height)
+                gc.clip_to_rect(
+                    component.x, component.y, component.width, component.height
+                )
                 gc.set_alpha(self.alpha)
                 gc.set_fill_color(self.fill_color_)
                 gc.set_stroke_color(self.border_color_)
                 gc.set_line_width(self.border_width)
                 gc.set_line_dash(self.border_style_)
-                gc.draw_rect((lower_left[0], lower_left[1],
-                             upper_right[0], upper_right[1]))
+                gc.draw_rect(
+                    (
+                        lower_left[0],
+                        lower_left[1],
+                        upper_right[0],
+                        upper_right[1],
+                    )
+                )
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_selection_screencoords(self):
-        """ Returns a tuple of (x1, x2) screen space coordinates of the start
+        """Returns a tuple of (x1, x2) screen space coordinates of the start
         and end selection points.
 
         If there is no current selection, then returns an empty list.
@@ -106,25 +113,26 @@ class RangeSelectionOverlay(AbstractOverlay):
             return []
 
         # "selections" metadata must be a tuple
-        if self.metadata_name == "selections" or \
-                (selection is not None and isinstance(selection, tuple)):
+        if self.metadata_name == "selections" or (
+            selection is not None and isinstance(selection, tuple)
+        ):
             if selection is not None and len(selection) == 2:
                 return [self.mapper.map_screen(array(selection))]
             else:
                 return []
         # All other metadata is interpreted as a mask on dataspace
         else:
-            ar = arange(0,len(selection), 1)
+            ar = arange(0, len(selection), 1)
             runs = arg_find_runs(ar[selection])
             coords = []
             for inds in runs:
                 start = ds._data[ar[selection][inds[0]]]
-                end = ds._data[ar[selection][inds[1]-1]]
+                end = ds._data[ar[selection][inds[1] - 1]]
                 coords.append(self.mapper.map_screen(array((start, end))))
             return coords
 
     def _determine_axis(self):
-        """ Determines which element of an (x,y) coordinate tuple corresponds
+        """Determines which element of an (x,y) coordinate tuple corresponds
         to the tool's axis of interest.
 
         This method is only called if self._axis_index hasn't been set (or is
@@ -135,15 +143,15 @@ class RangeSelectionOverlay(AbstractOverlay):
                 return 0
             else:
                 return 1
-        else:   # self.axis == "value"
+        else:  # self.axis == "value"
             if self.plot.orientation == "h":
                 return 1
             else:
                 return 0
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _component_changed(self, old, new):
         self._attach_metadata_handler(old, new)
@@ -163,14 +171,16 @@ class RangeSelectionOverlay(AbstractOverlay):
                 self._metadata_change_handler, "metadata_changed", remove=True
             )
         if new:
-            datasource.observe(self._metadata_change_handler, "metadata_changed")
+            datasource.observe(
+                self._metadata_change_handler, "metadata_changed"
+            )
 
     def _metadata_change_handler(self, event):
         self.component.request_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Default initializers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _mapper_default(self):
         # If the plot's mapper is a GridMapper, return either its
@@ -179,16 +189,16 @@ class RangeSelectionOverlay(AbstractOverlay):
         mapper = getattr(self.plot, self.axis + "_mapper")
 
         if isinstance(mapper, GridMapper):
-            if self.axis == 'index':
+            if self.axis == "index":
                 return mapper._xmapper
             else:
                 return mapper._ymapper
         else:
             return mapper
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property getter/setters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get_plot(self):

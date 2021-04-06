@@ -9,8 +9,7 @@ from math import ceil, floor, log
 from numpy import compress, inf, isinf, isnan, ndarray
 
 # Enthought library imports
-from traits.api import Bool, CFloat, Enum, Float, Property, Trait, \
-                                 Callable
+from traits.api import Bool, CFloat, Enum, Float, Property, Trait, Callable
 
 # Local relative imports
 from .base import arg_find_runs
@@ -19,8 +18,7 @@ from .ticks import heckbert_interval
 
 
 class DataRange1D(BaseDataRange):
-    """ Represents a 1-D data range.
-    """
+    """Represents a 1-D data range."""
 
     #: The actual value of the lower bound of this range (overrides
     #: AbstractDataRange). To set it, use **low_setting**.
@@ -35,14 +33,14 @@ class DataRange1D(BaseDataRange):
     #:   of the data.
     #: * 'track': The lower bound tracks the upper bound by **tracking_amount**.
     #: * CFloat: An explicit value for the lower bound
-    low_setting = Property(Trait('auto', 'auto', 'track', CFloat))
+    low_setting = Property(Trait("auto", "auto", "track", CFloat))
     #: Property for the upper bound of this range (overrides AbstractDataRange).
     #:
     #: * 'auto': The upper bound is automatically set at or above the maximum
     #:   of the data.
     #: * 'track': The upper bound tracks the lower bound by **tracking_amount**.
     #: * CFloat: An explicit value for the upper bound
-    high_setting = Property(Trait('auto', 'auto', 'track', CFloat))
+    high_setting = Property(Trait("auto", "auto", "track", CFloat))
 
     #: Do "auto" bounds imply an exact fit to the data? If False,
     #: they pad a little bit of margin on either side.
@@ -75,51 +73,52 @@ class DataRange1D(BaseDataRange):
     #:   resets to 'auto'.
     #: * 'low_track': The low bound resets to 'track', and the high bound
     #:   resets to 'auto'.
-    default_state = Enum('auto', 'high_track', 'low_track')
+    default_state = Enum("auto", "high_track", "low_track")
 
     #: FIXME: this attribute is not used anywhere, is it safe to remove it?
     #: Is this range dependent upon another range?
     fit_to_subset = Bool(False)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The "_setting" attributes correspond to what the user has "set"; the
     # "_value" attributes are the actual numerical values for the given
     # setting.
 
     # The user-specified low setting.
-    _low_setting = Trait('auto', 'auto', 'track', CFloat)
+    _low_setting = Trait("auto", "auto", "track", CFloat)
     # The actual numerical value for the low setting.
     _low_value = CFloat(-inf)
     # The user-specified high setting.
-    _high_setting = Trait('auto', 'auto', 'track', CFloat)
+    _high_setting = Trait("auto", "auto", "track", CFloat)
     # The actual numerical value for the high setting.
     _high_value = CFloat(inf)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractRange interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def clip_data(self, data):
-        """ Returns a list of data values that are within the range.
+        """Returns a list of data values that are within the range.
 
         Implements AbstractDataRange.
         """
         return compress(self.mask_data(data), data)
 
     def mask_data(self, data):
-        """ Returns a mask array, indicating whether values in the given array
+        """Returns a mask array, indicating whether values in the given array
         are inside the range.
 
         Implements AbstractDataRange.
         """
-        return ((data.view(ndarray) >= self._low_value) &
-                (data.view(ndarray) <= self._high_value))
+        return (data.view(ndarray) >= self._low_value) & (
+            data.view(ndarray) <= self._high_value
+        )
 
     def bound_data(self, data):
-        """ Returns a tuple of indices for the start and end of the first run
+        """Returns a tuple of indices for the start and end of the first run
         of *data* that falls within the range.
 
         Implements AbstractDataRange.
@@ -135,11 +134,11 @@ class DataRange1D(BaseDataRange):
         return (0, 0)
 
     def set_bounds(self, low, high):
-        """ Sets all the bounds of the range simultaneously.
+        """Sets all the bounds of the range simultaneously.
 
         Implements AbstractDataRange.
         """
-        if low == 'track':
+        if low == "track":
             # Set the high setting first
             result_high = self._do_set_high_setting(high, fire_event=False)
             result_low = self._do_set_low_setting(low, fire_event=False)
@@ -153,57 +152,54 @@ class DataRange1D(BaseDataRange):
             self.updated = result
 
     def scale_tracking_amount(self, multiplier):
-        """ Sets the **tracking_amount** to a new value, scaled by *multiplier*.
-        """
+        """Sets the **tracking_amount** to a new value, scaled by *multiplier*."""
         self.tracking_amount = self.tracking_amount * multiplier
         self._do_track()
 
     def set_tracking_amount(self, amount):
-        """ Sets the **tracking_amount** to a new value, *amount*.
-        """
+        """Sets the **tracking_amount** to a new value, *amount*."""
         self.tracking_amount = amount
         self._do_track()
 
     def set_default_tracking_amount(self, amount):
-        """ Sets the **default_tracking_amount** to a new value, *amount*.
-        """
+        """Sets the **default_tracking_amount** to a new value, *amount*."""
         self.default_tracking_amount = amount
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def reset(self):
-        """ Resets the bounds of this range, based on **default_state**.
-        """
+        """Resets the bounds of this range, based on **default_state**."""
         # need to maintain 'track' setting
-        if self.default_state == 'auto':
-            self._high_setting = 'auto'
-            self._low_setting = 'auto'
-        elif self.default_state == 'low_track':
-            self._high_setting = 'auto'
-            self._low_setting = 'track'
-        elif self.default_state == 'high_track':
-            self._high_setting = 'track'
-            self._low_setting = 'auto'
+        if self.default_state == "auto":
+            self._high_setting = "auto"
+            self._low_setting = "auto"
+        elif self.default_state == "low_track":
+            self._high_setting = "auto"
+            self._low_setting = "track"
+        elif self.default_state == "high_track":
+            self._high_setting = "track"
+            self._low_setting = "auto"
         self._refresh_bounds()
         self.tracking_amount = self.default_tracking_amount
 
     def refresh(self, event=None):
-        """ If any of the bounds is 'auto', this method refreshes the actual
+        """If any of the bounds is 'auto', this method refreshes the actual
         low and high values from the set of the view filters' data sources.
         """
-        if ('auto' in (self._low_setting, self._high_setting)) or \
-            ('track' in (self._low_setting, self._high_setting)):
+        if ("auto" in (self._low_setting, self._high_setting)) or (
+            "track" in (self._low_setting, self._high_setting)
+        ):
             # If the user has hard-coded bounds, then refresh() doesn't do
             # anything.
             self._refresh_bounds()
         else:
             return
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods (getters and setters)
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_low(self):
         return float(self._low_value)
@@ -230,14 +226,15 @@ class DataRange1D(BaseDataRange):
 
             # If val is 'auto' or 'track', get the corresponding numerical
             # value.
-            if val == 'auto':
+            if val == "auto":
                 if len(self.sources) > 0:
-                    val = min([source.get_bounds()[0]
-                               for source in self.sources])
+                    val = min(
+                        [source.get_bounds()[0] for source in self.sources]
+                    )
                 else:
                     val = -inf
-            elif val == 'track':
-                if len(self.sources) > 0 or self._high_setting != 'auto':
+            elif val == "track":
+                if len(self.sources) > 0 or self._high_setting != "auto":
                     val = self._high_value - self.tracking_amount
                 else:
                     val = -inf
@@ -246,7 +243,7 @@ class DataRange1D(BaseDataRange):
             # value, there is nothing to do.
             if self._low_value != val:
                 self._low_value = val
-                if self._high_setting == 'track':
+                if self._high_setting == "track":
                     self._high_value = val + self.tracking_amount
                 if fire_event:
                     self.updated = (self._low_value, self._high_value)
@@ -283,14 +280,15 @@ class DataRange1D(BaseDataRange):
 
             # If val is 'auto' or 'track', get the corresponding numerical
             # value.
-            if val == 'auto':
+            if val == "auto":
                 if len(self.sources) > 0:
-                    val = max([source.get_bounds()[1]
-                               for source in self.sources])
+                    val = max(
+                        [source.get_bounds()[1] for source in self.sources]
+                    )
                 else:
                     val = inf
-            elif val == 'track':
-                if len(self.sources) > 0 or self._low_setting != 'auto':
+            elif val == "track":
+                if len(self.sources) > 0 or self._low_setting != "auto":
                     val = self._low_value + self.tracking_amount
                 else:
                     val = inf
@@ -299,7 +297,7 @@ class DataRange1D(BaseDataRange):
             # value, there is nothing to do.
             if self._high_value != val:
                 self._high_value = val
-                if self._low_setting == 'track':
+                if self._low_setting == "track":
                     self._low_value = val - self.tracking_amount
                 if fire_event:
                     self.updated = (self._low_value, self._high_value)
@@ -316,8 +314,11 @@ class DataRange1D(BaseDataRange):
         if len(self.sources) == 0:
             null_bounds = True
         else:
-            bounds_list = [source.get_bounds() for source in self.sources \
-                              if source.get_size() > 0]
+            bounds_list = [
+                source.get_bounds()
+                for source in self.sources
+                if source.get_size() > 0
+            ]
 
             if len(bounds_list) == 0:
                 null_bounds = True
@@ -326,11 +327,11 @@ class DataRange1D(BaseDataRange):
             # If we have no sources and our settings are "auto", then reset our
             # bounds to infinity; otherwise, set the _value to the corresponding
             # setting.
-            if (self._low_setting in ("auto", "track")):
+            if self._low_setting in ("auto", "track"):
                 self._low_value = -inf
             else:
                 self._low_value = self._low_setting
-            if (self._high_setting in ("auto", "track")):
+            if self._high_setting in ("auto", "track"):
                 self._high_value = inf
             else:
                 self._high_value = self._high_setting
@@ -338,12 +339,17 @@ class DataRange1D(BaseDataRange):
         else:
             mins, maxes = zip(*bounds_list)
 
-            low_start, high_start = \
-                     calc_bounds(self._low_setting, self._high_setting,
-                                 mins, maxes, self.epsilon,
-                                 self.tight_bounds, margin=self.margin,
-                                 track_amount=self.tracking_amount,
-                                 bounds_func=self.bounds_func)
+            low_start, high_start = calc_bounds(
+                self._low_setting,
+                self._high_setting,
+                mins,
+                maxes,
+                self.epsilon,
+                self.tight_bounds,
+                margin=self.margin,
+                track_amount=self.tracking_amount,
+                bounds_func=self.bounds_func,
+            )
 
         if (self._low_value != low_start) or (self._high_value != high_start):
             self._low_value = low_start
@@ -352,12 +358,12 @@ class DataRange1D(BaseDataRange):
 
     def _do_track(self):
         changed = False
-        if self._low_setting == 'track':
+        if self._low_setting == "track":
             new_value = self._high_value - self.tracking_amount
             if self._low_value != new_value:
                 self._low_value = new_value
                 changed = True
-        elif self._high_setting == 'track':
+        elif self._high_setting == "track":
             new_value = self._low_value + self.tracking_amount
             if self._high_value != new_value:
                 self._high_value = new_value
@@ -365,9 +371,9 @@ class DataRange1D(BaseDataRange):
         if changed:
             self.updated = (self._low_value, self._high_value)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _sources_items_changed(self, event):
         self.refresh()
@@ -383,18 +389,27 @@ class DataRange1D(BaseDataRange):
         for source in new:
             source.observe(self.refresh, "data_changed")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Serialization interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _post_load(self):
         self._sources_changed(None, self.sources)
 
 
 ###### method to calculate bounds for a given 1-dimensional set of data
-def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
-                margin=0.08, track_amount=0, bounds_func=None):
-    """ Calculates bounds for a given 1-D set of data.
+def calc_bounds(
+    low_set,
+    high_set,
+    mins,
+    maxes,
+    epsilon,
+    tight_bounds,
+    margin=0.08,
+    track_amount=0,
+    bounds_func=None,
+):
+    """Calculates bounds for a given 1-D set of data.
 
     Parameters
     ----------
@@ -430,35 +445,38 @@ def calc_bounds(low_set, high_set, mins, maxes, epsilon, tight_bounds,
     the method copes by setting *high_set* to 'auto', and proceeding.
     """
 
-    if (low_set == 'track') and (high_set == 'track'):
-        high_set = 'auto'
+    if (low_set == "track") and (high_set == "track"):
+        high_set = "auto"
 
-    if low_set == 'auto':
+    if low_set == "auto":
         real_min = min(mins)
-    elif low_set == 'track':
+    elif low_set == "track":
         # real_max hasn't been set yet
         pass
     else:
         real_min = low_set
 
-    if high_set == 'auto':
+    if high_set == "auto":
         real_max = max(maxes)
-    elif high_set == 'track':
+    elif high_set == "track":
         # real_min has been set now
         real_max = real_min + track_amount
     else:
         real_max = high_set
 
     # Go back and set real_min if we need to
-    if low_set == 'track':
+    if low_set == "track":
         real_min = real_max - track_amount
 
     # If we're all NaNs, just return a 0,1 range
     if isnan(real_max) or isnan(real_min):
         return 0, 0
 
-    if not isinf(real_min) and not isinf(real_max) and \
-            (abs(real_max - real_min) <= abs(epsilon * real_min)):
+    if (
+        not isinf(real_min)
+        and not isinf(real_max)
+        and (abs(real_max - real_min) <= abs(epsilon * real_min))
+    ):
         # If we get here, then real_min and real_max are (for all
         # intents and purposes) identical, and so we just base
         # everything off of real_min.

@@ -7,9 +7,9 @@ from traits.util.resource import find_resource
 from chaco.shell import imread, imshow, title, show
 
 # Get the image file using the find_resource module
-image_path = os.path.join('examples','basic','capitol.jpg')
-alt_path = os.path.join('..','basic','capitol.jpg')
-image_file = find_resource('Chaco', image_path, alt_path=alt_path)
+image_path = os.path.join("examples", "basic", "capitol.jpg")
+alt_path = os.path.join("..", "basic", "capitol.jpg")
+image_file = find_resource("Chaco", image_path, alt_path=alt_path)
 
 # Check to see if the image was found
 if image_file is None:
@@ -23,7 +23,7 @@ image = imread(image_file)
 imshow(image, origin="top left")
 
 # Alternatively, you can call imshow using the path to the image file
-#imshow(alt_path)
+# imshow(alt_path)
 
 # Add a title
 title("Simple Image Plot")

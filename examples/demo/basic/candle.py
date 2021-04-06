@@ -21,9 +21,10 @@ from traitsui.api import UItem, View
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
+
 
 def _create_data(numpoints):
     index = arange(numpoints)
@@ -39,27 +40,32 @@ def _create_data(numpoints):
     sorted_vals.sort(0)
     return index, sorted_vals
 
+
 def _create_plot_component():
 
     # Create some data
     index, sorted_vals = _create_data(200)
 
     # Create a plot data obect and give it this data
-    pd = ArrayPlotData(index = index,
-                       min = sorted_vals[0],
-                       bar_min = sorted_vals[1],
-                       average = sorted_vals[2],
-                       bar_max = sorted_vals[3],
-                       max = sorted_vals[4])
+    pd = ArrayPlotData(
+        index=index,
+        min=sorted_vals[0],
+        bar_min=sorted_vals[1],
+        average=sorted_vals[2],
+        bar_max=sorted_vals[3],
+        max=sorted_vals[4],
+    )
 
     # Create the plot
     plot = Plot(pd)
-    plot.candle_plot(("index", "min", "bar_min", "average", "bar_max", "max"),
-                     color = "lightgray",
-                     bar_line_color = "black",
-                     stem_color = "blue",
-                     center_color = "red",
-                     center_width = 2)
+    plot.candle_plot(
+        ("index", "min", "bar_min", "average", "bar_max", "max"),
+        color="lightgray",
+        bar_line_color="black",
+        stem_color="blue",
+        center_color="red",
+        center_width=2,
+    )
 
     # Tweak some of the plot properties
     plot.title = "Candlestick Plot"
@@ -73,24 +79,29 @@ def _create_plot_component():
 
     return plot
 
-#===============================================================================
+
+# ===============================================================================
 # Attributes to use for the plot view.
 size = (650, 650)
 title = "Candlestick plot"
 
-#===============================================================================
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
-    traits_view = View(UItem('plot', editor=ComponentEditor()),
-                       width=size[0], height=size[1], resizable=True,
-                       title=title
-                       )
+    traits_view = View(
+        UItem("plot", editor=ComponentEditor()),
+        width=size[0],
+        height=size[1],
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

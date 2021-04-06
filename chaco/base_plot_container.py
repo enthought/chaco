@@ -38,9 +38,9 @@ class BasePlotContainer(Container):
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     draw_layer = Str("plot")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Deprecated traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: Deprecated flag to indicate that a component needed to do old-style
     #: drawing.  Unused by any recent Chaco component.
@@ -50,19 +50,27 @@ class BasePlotContainer(Container):
     plot_components = Property
 
     def _get_plot_components(self):
-        warnings.warn("Use of plot_components attribute deprecated." \
-                      "Use components attribute instead.", DeprecationWarning)
+        warnings.warn(
+            "Use of plot_components attribute deprecated."
+            "Use components attribute instead.",
+            DeprecationWarning,
+        )
         return self._components
 
     def _set_plot_components(self, new):
-        warnings.warn("Use of plot_components attribute deprecated." \
-                      "Use components attribute instead.", DeprecationWarning)
+        warnings.warn(
+            "Use of plot_components attribute deprecated."
+            "Use components attribute instead.",
+            DeprecationWarning,
+        )
         self._components = new
 
     def _use_draw_order_changed(self, old, new):
-        """ Handler to catch the case when someone is trying to use the
+        """Handler to catch the case when someone is trying to use the
         old-style drawing mechanism, which is now unsupported.
         """
         if new == False:
-            raise RuntimeError("The old-style drawing mechanism is no longer " \
-                    "supported in Chaco.")
+            raise RuntimeError(
+                "The old-style drawing mechanism is no longer "
+                "supported in Chaco."
+            )

@@ -15,41 +15,52 @@ from scipy.special import jn
 from numpy import arange
 
 from chaco.example_support import COLOR_PALETTE
+
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import Bool, HasTraits, Instance
 from traitsui.api import Group, Item, UItem, View
 
 # Chaco imports
-from chaco.api import OverlayPlotContainer, create_line_plot, add_default_axes, \
-                                 add_default_grids
+from chaco.api import (
+    OverlayPlotContainer,
+    create_line_plot,
+    add_default_axes,
+    add_default_grids,
+)
 from chaco.tools.api import RangeSelection, RangeSelectionOverlay, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 
 # Do the plots use downsampling?
 use_downsampling = True
 
+
 def _create_plot_component(use_downsampling=True):
 
-    container = OverlayPlotContainer(padding=40, bgcolor="lightgray",
-                                     use_backbuffer = True,
-                                     border_visible = True,
-                                     fill_padding = True)
+    container = OverlayPlotContainer(
+        padding=40,
+        bgcolor="lightgray",
+        use_backbuffer=True,
+        border_visible=True,
+        fill_padding=True,
+    )
 
     numpoints = 100000
     low = -5
     high = 15.0
-    x = arange(low, high+0.001, (high-low)/numpoints)
+    x = arange(low, high + 0.001, (high - low) / numpoints)
 
     # Plot some bessel functionsless ../en
     value_mapper = None
     index_mapper = None
     for i in range(10):
         y = jn(i, x)
-        plot = create_line_plot((x,y), color=tuple(COLOR_PALETTE[i]), width=2.0)
+        plot = create_line_plot(
+            (x, y), color=tuple(COLOR_PALETTE[i]), width=2.0
+        )
         plot.use_downsampling = use_downsampling
 
         if value_mapper is None:
@@ -62,12 +73,12 @@ def _create_plot_component(use_downsampling=True):
             value_mapper.range.add(plot.value)
             plot.index_mapper = index_mapper
             index_mapper.range.add(plot.index)
-        if i%2 == 1:
+        if i % 2 == 1:
             plot.line_style = "dash"
         plot.bgcolor = "white"
         container.add(plot)
 
-    selection_overlay = RangeSelectionOverlay(component = plot)
+    selection_overlay = RangeSelectionOverlay(component=plot)
     plot.tools.append(RangeSelection(plot))
     zoom = ZoomTool(plot, tool_mode="box", always_on=False)
     plot.overlays.append(selection_overlay)
@@ -75,26 +86,27 @@ def _create_plot_component(use_downsampling=True):
 
     return container
 
-#===============================================================================
+
+# ===============================================================================
 # Attributes to use for the plot view.
 size = (600, 500)
 title = "Million Point Plot"
 
-#===============================================================================
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     use_downsampling = Bool(True)
 
     traits_view = View(
-        UItem('plot', editor=ComponentEditor()),
-        Group(Item('use_downsampling')),
+        UItem("plot", editor=ComponentEditor()),
+        Group(Item("use_downsampling")),
         width=size[0],
         height=size[1],
         resizable=True,
-        title=title
+        title=title,
     )
 
     def _plot_default(self):
@@ -102,6 +114,7 @@ class Demo(HasTraits):
 
     def _use_downsampling_changed(self):
         self.plot = _create_plot_component(self.use_downsampling)
+
 
 demo = Demo()
 

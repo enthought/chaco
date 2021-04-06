@@ -12,7 +12,13 @@ from traitsui.api import View, Item, HGroup, VGroup, Group
 
 from enable.api import ComponentEditor
 
-from chaco.api import LinearMapper, Plot, ArrayDataSource, DataRange1D, PlotAxis
+from chaco.api import (
+    LinearMapper,
+    Plot,
+    ArrayDataSource,
+    DataRange1D,
+    PlotAxis,
+)
 from chaco.multi_array_data_source import MultiArrayDataSource
 from chaco.multi_line_plot import MultiLinePlot
 
@@ -44,56 +50,56 @@ class MultiLinePlotDemo(HasTraits):
     # Drives multi_line_plot_renderer.offset
     offset = Range(-1.0, 1.0, value=0)
 
-    traits_view = \
-        View(
-            VGroup(
-                Group(
-                    Item('plot', editor=ComponentEditor(), show_label=False),
-                ),
-                HGroup(
-                    Item('amplitude', springy=True),
-                    Item('offset', springy=True),
-                    springy=True,
-                ),
-                HGroup(
-                    Item('object.multi_line_plot_renderer.color', springy=True),
-                    Item('object.multi_line_plot_renderer.line_style', springy=True),
-                    springy=True,
-                ),
+    traits_view = View(
+        VGroup(
+            Group(
+                Item("plot", editor=ComponentEditor(), show_label=False),
             ),
-            width=800,
-            height=500,
-            resizable=True,
-        )
+            HGroup(
+                Item("amplitude", springy=True),
+                Item("offset", springy=True),
+                springy=True,
+            ),
+            HGroup(
+                Item("object.multi_line_plot_renderer.color", springy=True),
+                Item(
+                    "object.multi_line_plot_renderer.line_style", springy=True
+                ),
+                springy=True,
+            ),
+        ),
+        width=800,
+        height=500,
+        resizable=True,
+    )
 
-
-    #-----------------------------------------------------------------------
+    # -----------------------------------------------------------------------
     # Trait defaults
-    #-----------------------------------------------------------------------
+    # -----------------------------------------------------------------------
 
     def _multi_line_plot_renderer_default(self):
         """Create the default MultiLinePlot instance."""
 
-        xs = ArrayDataSource(self.model.x_index, sort_order='ascending')
+        xs = ArrayDataSource(self.model.x_index, sort_order="ascending")
         xrange = DataRange1D()
         xrange.add(xs)
 
-        ys = ArrayDataSource(self.model.y_index, sort_order='ascending')
+        ys = ArrayDataSource(self.model.y_index, sort_order="ascending")
         yrange = DataRange1D()
         yrange.add(ys)
 
         # The data source for the MultiLinePlot.
         ds = MultiArrayDataSource(data=self.model.data)
 
-        multi_line_plot_renderer = \
-            MultiLinePlot(
-                index = xs,
-                yindex = ys,
-                index_mapper = LinearMapper(range=xrange),
-                value_mapper = LinearMapper(range=yrange),
-                value=ds,
-                global_max = self.model.data.max(),
-                global_min = self.model.data.min())
+        multi_line_plot_renderer = MultiLinePlot(
+            index=xs,
+            yindex=ys,
+            index_mapper=LinearMapper(range=xrange),
+            value_mapper=LinearMapper(range=yrange),
+            value=ds,
+            global_max=self.model.data.max(),
+            global_min=self.model.data.min(),
+        )
 
         return multi_line_plot_renderer
 
@@ -103,20 +109,24 @@ class MultiLinePlotDemo(HasTraits):
         plot = Plot(title="MultiLinePlot Demo")
         plot.add(self.multi_line_plot_renderer)
 
-        x_axis = PlotAxis(component=plot,
-                            mapper=self.multi_line_plot_renderer.index_mapper,
-                            orientation='bottom',
-                            title='t (seconds)')
-        y_axis = PlotAxis(component=plot,
-                            mapper=self.multi_line_plot_renderer.value_mapper,
-                            orientation='left',
-                            title='channel')
+        x_axis = PlotAxis(
+            component=plot,
+            mapper=self.multi_line_plot_renderer.index_mapper,
+            orientation="bottom",
+            title="t (seconds)",
+        )
+        y_axis = PlotAxis(
+            component=plot,
+            mapper=self.multi_line_plot_renderer.value_mapper,
+            orientation="left",
+            title="channel",
+        )
         plot.overlays.extend([x_axis, y_axis])
         return plot
 
-    #-----------------------------------------------------------------------
+    # -----------------------------------------------------------------------
     # Trait change handlers
-    #-----------------------------------------------------------------------
+    # -----------------------------------------------------------------------
 
     def _amplitude_changed(self, amp):
         self.multi_line_plot_renderer.normalized_amplitude = amp
@@ -138,7 +148,7 @@ if __name__ == "__main__":
 
     channels = np.arange(12)
     # Frequencies of the sine functions in each channel.
-    freqs = 3*(channels[:,None] + 1)
+    freqs = 3 * (channels[:, None] + 1)
     y = np.sin(freqs * t)
 
     # Create an instance of DataModel.  This is the data to

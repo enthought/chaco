@@ -1,6 +1,3 @@
-
-
-
 from enable.api import Component
 from traits.api import Enum, Float, Instance, Trait, Tuple
 
@@ -8,8 +5,7 @@ from chaco.api import AbstractOverlay, BasePlotContainer
 
 
 class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
-    """ Allows an arbitrary plot component to be overlaid on top of another one.
-    """
+    """Allows an arbitrary plot component to be overlaid on top of another one."""
 
     # The PlotComponent to draw as an overlay
     overlay_component = Instance(Component)
@@ -34,9 +30,9 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
 
     def _clear_bounds(self, gc, view_bounds):
         if view_bounds is None:
-            view_bounds = (0,0, self.width, self.height)
+            view_bounds = (0, 0, self.width, self.height)
         gc.clip_to_rect(*view_bounds)
-        gc.set_fill_color((1.0,1.0,1.0,1.0))
+        gc.set_fill_color((1.0, 1.0, 1.0, 1.0))
         gc.begin_path()
         gc.rect(*view_bounds)
         gc.fill_path()
@@ -48,7 +44,7 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
             self.overlay_component._draw(gc, view_bounds, mode)
 
     # TODO: Implement this more intelligently than the one in BasePlotContainer
-    #def get_preferred_size(self):
+    # def get_preferred_size(self):
     #    pass
 
     def _do_layout(self):
@@ -56,14 +52,14 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
         bounds = self.outer_bounds
 
         if self.align in ("right", "left"):
-            y = component.outer_y -(bounds[1] - component.outer_height) / 2
+            y = component.outer_y - (bounds[1] - component.outer_height) / 2
             if self.align == "right":
                 x = component.outer_x2 + self.margin
             else:
                 x = component.outer_x - bounds[0] - self.margin
 
-        else:   # "top", "bottom"
-            x = component.outer_x -(bounds[0] - component.outer_width) / 2
+        else:  # "top", "bottom"
+            x = component.outer_x - (bounds[0] - component.outer_width) / 2
             if self.align == "top":
                 y = component.outer_y2 + self.margin
             else:
@@ -82,5 +78,3 @@ class TransientPlotOverlay(BasePlotContainer, AbstractOverlay):
     def dispatch(self, event, suffix):
         if self.visible and self.overlay_component.is_in(event.x, event.y):
             return self.overlay_component.dispatch(event, suffix)
-
-

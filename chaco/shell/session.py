@@ -2,12 +2,21 @@
 """
 
 
-
 # Enthoght library imports
 from chaco.array_plot_data import ArrayPlotData
 from chaco.default_colormaps import *
-from traits.api import Any, Bool, Dict, HasTraits, Instance, Int, \
-                                 List, Property, Trait, Str
+from traits.api import (
+    Any,
+    Bool,
+    Dict,
+    HasTraits,
+    Instance,
+    Int,
+    List,
+    Property,
+    Trait,
+    Str,
+)
 
 
 # Local, relative imports
@@ -37,10 +46,9 @@ class PlotSession(HasTraits):
     # arrays that are provided to various plotting commands.
     data = Instance(ArrayPlotData, args=())
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # "active" pointers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The index of the active window.
     active_window_index = Trait(None, None, Int)
@@ -50,7 +58,6 @@ class PlotSession(HasTraits):
 
     # The active colormap.
     colormap = Trait(jet, Any)
-
 
     def new_window(self, name=None, title=None, is_image=False):
         """Creates a new window and returns the index into the **windows** list
@@ -76,7 +83,7 @@ class PlotSession(HasTraits):
         self.windows.append(new_win)
         if name != None:
             self.window_map[name] = new_win
-        return len(self.windows)-1
+        return len(self.windows) - 1
 
     def get_window(self, ident):
         """ Retrieves a window either by index or by name """
@@ -88,7 +95,7 @@ class PlotSession(HasTraits):
             return None
 
     def del_window(self, ident):
-        """ Deletes the specified window.
+        """Deletes the specified window.
 
         Parameters
         ----------
@@ -147,6 +154,7 @@ class PlotSession(HasTraits):
                 p.invalidate_draw()
                 p.request_redraw()
             elif hasattr(p, "colors"):
-                if isinstance(p.colors, str) or \
-                   isinstance(p.colors, AbstractColormap):
+                if isinstance(p.colors, str) or isinstance(
+                    p.colors, AbstractColormap
+                ):
                     p.colors = color_map_dict[self.colormap]

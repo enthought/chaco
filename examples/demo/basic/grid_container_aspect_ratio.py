@@ -21,26 +21,35 @@ from chaco.api import ArrayPlotData, GridContainer, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
     # Create a GridContainer to hold all of our plots
-    container = GridContainer(padding=20, fill_padding=True,
-                              bgcolor="lightgray", use_backbuffer=True,
-                              shape=(3,3), spacing=(12,12))
+    container = GridContainer(
+        padding=20,
+        fill_padding=True,
+        bgcolor="lightgray",
+        use_backbuffer=True,
+        shape=(3, 3),
+        spacing=(12, 12),
+    )
 
     # Create the initial series of data
     x = linspace(-5, 15.0, 100)
-    pd = ArrayPlotData(index = x)
+    pd = ArrayPlotData(index=x)
 
     # Plot some bessel functions and add the plots to our container
     for i in range(9):
-        pd.set_data("y" + str(i), jn(i,x))
+        pd.set_data("y" + str(i), jn(i, x))
         plot = Plot(pd)
-        plot.plot(("index", "y" + str(i)),
-                  color=tuple(COLOR_PALETTE[i]), line_width=2.0,
-                  bgcolor = "white", border_visible=True)
+        plot.plot(
+            ("index", "y" + str(i)),
+            color=tuple(COLOR_PALETTE[i]),
+            line_width=2.0,
+            bgcolor="white",
+            border_visible=True,
+        )
 
         # Tweak some of the plot properties
         plot.border_width = 1
@@ -48,8 +57,8 @@ def _create_plot_component():
 
         # Set each plot's aspect ratio based on its position in the
         # 3x3 grid of plots.
-        n,m = divmod(i, 3)
-        plot.aspect_ratio = float(n+1) / (m+1)
+        n, m = divmod(i, 3)
+        plot.aspect_ratio = float(n + 1) / (m + 1)
 
         # Attach some tools to the plot
         plot.tools.append(PanTool(plot))
@@ -60,26 +69,30 @@ def _create_plot_component():
         container.add(plot)
     return container
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(1000,800)
-title="Grid Container with Fixed Aspect ratios"
 
-#===============================================================================
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (1000, 800)
+title = "Grid Container with Fixed Aspect ratios"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
+
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

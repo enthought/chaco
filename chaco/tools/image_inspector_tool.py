@@ -12,8 +12,7 @@ from chaco.text_box_overlay import TextBoxOverlay
 
 
 class ImageInspectorTool(BaseTool):
-    """ A tool that captures the color and underlying values of an image plot.
-    """
+    """A tool that captures the color and underlying values of an image plot."""
 
     #: This event fires whenever the mouse moves over a new image point.
     #: Its value is a dict with a key "color_value", and possibly a key
@@ -29,11 +28,11 @@ class ImageInspectorTool(BaseTool):
 
     #: This key will show and hide any ImageInspectorOverlays associated
     #: with this tool.
-    inspector_key = KeySpec('p')
+    inspector_key = KeySpec("p")
 
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
-    _old_visible = Enum(None, True, False) #Trait(None, Bool(True))
+    _old_visible = Enum(None, True, False)  # Trait(None, Bool(True))
 
     def normal_key_pressed(self, event):
         if self.inspector_key.match(event):
@@ -51,7 +50,7 @@ class ImageInspectorTool(BaseTool):
             self._old_visible = None
 
     def normal_mouse_move(self, event):
-        """ Handles the mouse being moved.
+        """Handles the mouse being moved.
 
         Fires the **new_value** event with the data (if any) from the event's
         position.
@@ -66,26 +65,32 @@ class ImageInspectorTool(BaseTool):
 
                 x_index, y_index = ndx
                 image_data = plot.value
-                if hasattr(plot, "_cached_mapped_image") and \
-                       plot._cached_mapped_image is not None:
-                    self.new_value = \
-                        {"indices": ndx,
-                         "data_value": image_data.data[y_index, x_index],
-                         "color_value": plot._cached_mapped_image[y_index,
-                                                                  x_index]}
+                if (
+                    hasattr(plot, "_cached_mapped_image")
+                    and plot._cached_mapped_image is not None
+                ):
+                    self.new_value = {
+                        "indices": ndx,
+                        "data_value": image_data.data[y_index, x_index],
+                        "color_value": plot._cached_mapped_image[
+                            y_index, x_index
+                        ],
+                    }
 
                 else:
-                    self.new_value = \
-                        {"indices": ndx,
-                         "color_value": image_data.data[y_index, x_index]}
+                    self.new_value = {
+                        "indices": ndx,
+                        "color_value": image_data.data[y_index, x_index],
+                    }
 
                 self.last_mouse_position = (event.x, event.y)
 
 
 class ImageInspectorOverlay(TextBoxOverlay):
-    """ An overlay that displays a box containing values from an
+    """An overlay that displays a box containing values from an
     ImageInspectorTool instance.
     """
+
     #: An instance of ImageInspectorTool; this overlay listens to the tool
     #: for changes, and updates its displayed text accordingly.
     image_inspector = Any
@@ -104,21 +109,21 @@ class ImageInspectorOverlay(TextBoxOverlay):
     # Private interface -------------------------------------------------------
 
     def _build_text_from_event(self, event):
-        """ Create a formatted string to display from the mouse event data.
-        """
+        """Create a formatted string to display from the mouse event data."""
         newstring = ""
-        if 'indices' in event:
-            newstring += '(%d, %d)' % event['indices']
-        if 'color_value' in event:
+        if "indices" in event:
+            newstring += "(%d, %d)" % event["indices"]
+        if "color_value" in event:
             try:
                 newstring += "\n(%d, %d, %d)" % tuple(
-                    map(int, event['color_value'][:3]))
+                    map(int, event["color_value"][:3])
+                )
             except IndexError:
                 # color value is an integer, for example if gray scale image
-                newstring += "\n%d" % event['color_value']
+                newstring += "\n%d" % event["color_value"]
 
-        if 'data_value' in event:
-            newstring += "\n{}".format(event['data_value'])
+        if "data_value" in event:
+            newstring += "\n{}".format(event["data_value"])
 
         return newstring
 
@@ -126,12 +131,10 @@ class ImageInspectorOverlay(TextBoxOverlay):
 
     def _image_inspector_changed(self, old, new):
         if old:
-            old.observe(self._new_value_updated, 'new_value',
-                               remove=True)
-            old.observe(self._tool_visible_updated, "visible",
-                                remove=True)
+            old.observe(self._new_value_updated, "new_value", remove=True)
+            old.observe(self._tool_visible_updated, "visible", remove=True)
         if new:
-            new.observe(self._new_value_updated, 'new_value')
+            new.observe(self._new_value_updated, "new_value")
             new.observe(self._tool_visible_updated, "visible")
             self._tool_visible_updated()
 
