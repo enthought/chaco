@@ -130,7 +130,7 @@ if not is_released:
 
 if __name__ == "__main__":
     write_version_py()
-    from chaco import __requires__, __version__
+    from chaco import __extras_require__, __requires__, __version__
 
     numpy_include_dir = get_include()
 
@@ -182,16 +182,24 @@ if __name__ == "__main__":
             Topic :: Software Development
             Topic :: Software Development :: Libraries
             """.splitlines() if len(c.strip()) > 0],
+        entry_points={
+              "etsdemo_data": [
+                  "chaco_examples = chaco.examples._etsdemo_info:info",
+              ]
+          },
         package_data={
             'chaco': ['tools/toolbars/images/*.png',
                       'layers/data/*.svg',
-                      'tests/data/PngSuite/*.png']
+                      'tests/data/PngSuite/*.png'],
+            'chaco.examples': ['demo/*',
+                                'demo/*/*'],
         },
         description = 'interactive 2-dimensional plotting',
         long_description = open('README.rst').read(),
         ext_modules = extensions,
         include_package_data = True,
         install_requires = __requires__,
+        extras_require=__extras_require__,
         license = 'BSD',
         packages = find_packages(),
         platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],

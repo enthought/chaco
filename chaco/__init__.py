@@ -6,3 +6,10 @@
 from ._version import full_version as __version__  # noqa
 
 __requires__ = ["traits", "traitsui", "pyface", "numpy", "enable"]
+
+__extras_require__ = {
+    'examples': [
+        'scipy',
+        'mayavi'
+    ]
+}
