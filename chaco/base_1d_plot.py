@@ -37,15 +37,15 @@ class Base1DPlot(AbstractPlotRenderer):
     index_mapper = Instance(AbstractMapper)
 
     #: Convenience property for accessing the data range of the mapper.
-    index_range = Property(depends_on="index_mapper.range")
+    index_range = Property(observe="index_mapper.range")
 
     #: Corresponds to either **index_mapper** or None, depending on
     #: the orientation of the plot.
-    x_mapper = Property(depends_on=["orientation", "index_mapper"])
+    x_mapper = Property(observe=["orientation", "index_mapper"])
 
     #: Corresponds to either **index_mapper** or None, depending on
     #: the orientation of the plot.
-    y_mapper = Property(depends_on=["orientation", "index_mapper"])
+    y_mapper = Property(observe=["orientation", "index_mapper"])
 
     #: The orientation of the index axis.
     orientation = Enum("v", "h")
@@ -56,7 +56,7 @@ class Base1DPlot(AbstractPlotRenderer):
     #: Faux origin for the axes and other objects to look at
     origin = Property(
         Enum("bottom left", "top left", "bottom right", "top right"),
-        depends_on=["orientation", "direction"],
+        observe=["orientation", "direction"],
     )
 
     # ------------------------------------------------------------------------
