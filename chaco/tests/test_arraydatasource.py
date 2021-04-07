@@ -240,8 +240,6 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         ]:
             self.assertIn(key, state)
 
-
-    #@unittest.skip("persist_data probably shouldn't be persisted")
     def test_serialization_state_no_persist(self):
         self.data_source.persist_data = False
 
