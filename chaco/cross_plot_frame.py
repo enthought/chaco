@@ -51,7 +51,7 @@ class CrossPlotFrame(BasePlotFrame):
     bottom_height = Float(50.0)
 
     # Does the component need to do a layout call?
-    _layout_needed = Bool(True)
+    _layout_needed = Bool(True, transient=True)
 
     def __init__(self, **kwtraits):
         bounds = kwtraits.pop("bounds", list(self.default_bounds))
@@ -152,15 +152,3 @@ class CrossPlotFrame(BasePlotFrame):
                 if "v" not in slot.resizable:
                     slot.outer_height = preferred_size[1]
                 slot.do_layout()
-
-    ### Persistence ###########################################################
-
-    # _pickles = ("left_width", "right_width", "top_height", "bottom_height")
-
-    def __getstate__(self):
-        state = super(CrossPlotFrame, self).__getstate__()
-        for key in ["_layout_needed"]:
-            if key in state:
-                del state[key]
-
-        return state
