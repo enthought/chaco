@@ -5,7 +5,7 @@
 from numpy import array
 
 # Enthougth library imports
-from traits.api import Constant, Instance, Tuple
+from traits.api import Constant, Instance, observe, Tuple
 
 # Chaco imports
 from .abstract_data_source import AbstractDataSource
@@ -139,3 +139,11 @@ class GridDataSource(AbstractDataSource):
         ybds = ydata.get_bounds()
 
         self._cached_bounds = ((xbds[0], ybds[0]), (xbds[1], ybds[1]))
+
+    # ------------------------------------------------------------------------
+    # Event handlers
+    # ------------------------------------------------------------------------
+
+    @observe("metadata.items")
+    def _metadata_updated(self, event):
+        self.metadata_changed = True

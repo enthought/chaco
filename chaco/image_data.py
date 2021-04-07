@@ -4,7 +4,7 @@
 from numpy import fmax, fmin, swapaxes
 
 # Enthought library imports
-from traits.api import Bool, Int, Property, ReadOnly, Tuple
+from traits.api import Bool, Int, observe, Property, ReadOnly, Tuple
 
 # Local relative imports
 from .base import DimensionTrait, ImageTrait
@@ -198,3 +198,11 @@ class ImageData(AbstractDataSource):
 
     def _get_raw_value(self):
         return self._data
+
+    # ------------------------------------------------------------------------
+    # Event handlers
+    # ------------------------------------------------------------------------
+
+    @observe("metadata.items")
+    def _metadata_updated(self, event):
+        self.metadata_changed = True
