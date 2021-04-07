@@ -164,13 +164,13 @@ class PlotGrid(AbstractOverlay):
     # Private traits; mostly cached information
     # ------------------------------------------------------------------------
 
-    _cache_valid = Bool(False)
-    _tick_list = Any
-    _tick_positions = Any
+    _cache_valid = Bool(False, transient=True)
+    _tick_list = Any(transient=True)
+    _tick_positions = Any(transient=True)
 
     # An array (N,2) of start,end positions in the transverse direction
     # i.e. the direction corresponding to self.orientation
-    _tick_extents = Any
+    _tick_extents = Any(transient=True)
 
     # _length = Float(0.0)
 
@@ -443,19 +443,6 @@ class PlotGrid(AbstractOverlay):
         self.visual_attr_changed()
 
     ### Persistence ###########################################################
-
-    def __getstate__(self):
-        state = super(PlotGrid, self).__getstate__()
-        for key in [
-            "_cache_valid",
-            "_tick_list",
-            "_tick_positions",
-            "_tick_extents",
-        ]:
-            if key in state:
-                del state[key]
-
-        return state
 
     def _post_load(self):
         super(PlotGrid, self)._post_load()
