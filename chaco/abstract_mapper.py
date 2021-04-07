@@ -49,13 +49,6 @@ class AbstractMapper(HasTraits):
     # ------------------------------------------------------------------------
     # Persistence-related methods
     # ------------------------------------------------------------------------
-    def __getstate__(self):
-        state = super(AbstractMapper, self).__getstate__()
-        for key in ["_cache_valid"]:
-            if key in state:
-                del state[key]
-
-        return state
 
     def _post_load(self):
         self._cache_valid = False
