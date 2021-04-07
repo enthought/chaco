@@ -113,10 +113,10 @@ class StackedPlotContainer(BasePlotContainer):
 
     # The dimension along which to stack components that are added to
     # this container.
-    stack_dimension = Enum("h", "v")
+    stack_dimension = Enum("h", "v", transient=True)
 
     # The "other" dimension, i.e., the dual of the stack dimension.
-    other_dimension = Enum("v", "h")
+    other_dimension = Enum("v", "h", transient=True)
 
     # The index into obj.position and obj.bounds that corresponds to
     # **stack_dimension**.  This is a class-level and not an instance-level
@@ -281,9 +281,8 @@ class StackedPlotContainer(BasePlotContainer):
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
     def __getstate__(self):
         state = super(StackedPlotContainer, self).__getstate__()
-        for key in ["stack_dimension", "other_dimension", "stack_index"]:
-            if key in state:
-                del state[key]
+        if "stack_index" in state:
+            del state["stack_index"]
         return state
 
 
@@ -306,7 +305,7 @@ class HPlotContainer(StackedPlotContainer):
     #: The vertical alignment of objects that don't span the full height.
     valign = Enum("bottom", "top", "center")
 
-    _cached_preferred_size = Tuple
+    _cached_preferred_size = Tuple(transient=True)
 
     def _do_layout(self):
         """Actually performs a layout (called by do_layout())."""
@@ -323,15 +322,6 @@ class HPlotContainer(StackedPlotContainer):
             align = "max"
 
         return self._do_stack_layout(components, align)
-
-    ### Persistence ###########################################################
-
-    def __getstate__(self):
-        state = super(HPlotContainer, self).__getstate__()
-        for key in ["_cached_preferred_size"]:
-            if key in state:
-                del state[key]
-        return state
 
 
 class VPlotContainer(StackedPlotContainer):
