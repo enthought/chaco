@@ -214,6 +214,18 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
             self.data_source.metadata, {"annotations": [], "selections": []}
         )
 
+    def test_metadata_changed(self):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
+            self.data_source.metadata = {"new_metadata": True}
+
+    def test_metadata_items_changed(self):
+        with self.assertTraitChanges(
+            self.data_source, "metadata_changed", count=1
+        ):
+            self.data_source.metadata["new_metadata"] = True
+
     def test_serialization_state(self):
         state = self.data_source.__getstate__()
         self.assertNotIn("value_dimension", state)
