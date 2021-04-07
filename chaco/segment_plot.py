@@ -101,7 +101,7 @@ class SegmentPlot(BaseXYPlot):
             "color_mapper.updated",
             "color_data.data_changed",
             "alpha",
-            "selection_mask",
+            "selected_mask",
             "selection_color",
             "selection_alpha",
         ],
