@@ -2,7 +2,7 @@ from chaco.shell.scaly_plot import ScalyPlot
 from enable.component_editor import ComponentEditor
 from pyface.workbench.api import TraitsUIEditor
 from traits.api import Any, Enum, HasTraits, Property, Str
-from traitsui import api as tui
+from traitsui.api import Item, View
 
 
 class PlotUI(HasTraits):
@@ -11,8 +11,8 @@ class PlotUI(HasTraits):
     # The plot.
     component = Any()
 
-    traits_view = tui.View(
-        tui.Item("component", editor=ComponentEditor(), show_label=False),
+    traits_view = View(
+        Item("component", editor=ComponentEditor(), show_label=False),
         resizable=True,
     )
 
