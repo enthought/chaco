@@ -6,19 +6,11 @@
 API Reference
 =============
 
-This guide provides in-depth API documentation for the main classes and
-objects in the Chaco package.
+This document contains the auto-generated API reference documentation for
+Chaco.  For user documentation, please read the
+:doc:`Chaco User Manual <../user_manual/index>`
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
-    visual_components.rst
-    containers.rst
-    data_sources.rst
-    mappers.rst
-    data_ranges.rst
-    renderers.rst
-    plot_factories.rst
-    tools.rst
-    axis.rst
-
+    chaco
