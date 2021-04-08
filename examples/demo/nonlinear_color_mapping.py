@@ -59,16 +59,16 @@ class DataGrid(HasTraits):
     # ------------------------------------------------------
 
     # 1D array of x coordinates.
-    x_array = Property(Array, depends_on=["domain_bounds, grid_size"])
+    x_array = Property(Array, observe=["domain_bounds, grid_size"])
 
     # 1D array of y coordinates.
-    y_array = Property(Array, depends_on=["domain_bounds, grid_size"])
+    y_array = Property(Array, observe=["domain_bounds, grid_size"])
 
     # 2D array of function values, z = f(x,y)
-    data = Property(Array, depends_on=["func, x_array, y_array"])
+    data = Property(Array, observe=["func, x_array, y_array"])
 
-    data_min = Property(Float, depends_on=["data"])
-    data_max = Property(Float, depends_on=["data"])
+    data_min = Property(Float, observe=["data"])
+    data_max = Property(Float, observe=["data"])
 
     # ------------------------------------------------------
     # Trait handlers
@@ -186,9 +186,9 @@ class DataGridView(HasTraits):
 
     plot = Instance(Component)
 
-    img_renderer = Property(Instance(CMapImagePlot), depends_on=["plot"])
+    img_renderer = Property(Instance(CMapImagePlot), observe=["plot"])
 
-    colorbar = Property(Instance(ColorBar), depends_on=["plot"])
+    colorbar = Property(Instance(ColorBar), observe=["plot"])
 
     traits_view = View(
         HGroup(

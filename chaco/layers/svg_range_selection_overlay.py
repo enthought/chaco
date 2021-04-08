@@ -27,15 +27,15 @@ class SvgRangeSelectionOverlay(StatusLayer):
     # The axis to which this tool is perpendicular.
     axis = Enum("index", "value")
 
-    axis_index = Property(depends_on="axis")
+    axis_index = Property(observe="axis")
 
     # Mapping from screen space to data space. By default, it is just
     # self.component.
-    plot = Property(depends_on="component")
+    plot = Property(observe="component")
 
     # The mapper (and associated range) that drive this RangeSelectionOverlay.
     # By default, this is the mapper on self.plot that corresponds to self.axis.
-    mapper = Property(depends_on="plot")
+    mapper = Property(observe="plot")
 
     # The name of the metadata to look at for dataspace bounds. The metadata
     # can be either a tuple (dataspace_start, dataspace_end) in "selections" or

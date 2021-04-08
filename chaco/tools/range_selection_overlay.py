@@ -26,7 +26,7 @@ class RangeSelectionOverlay(AbstractOverlay):
 
     #: Mapping from screen space to data space. By default, it is just
     #: self.component.
-    plot = Property(depends_on="component")
+    plot = Property(observe="component")
 
     #: The mapper (and associated range) that drive this RangeSelectionOverlay.
     #: By default, this is the mapper on self.plot that corresponds to self.axis.

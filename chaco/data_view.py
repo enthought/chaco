@@ -111,7 +111,7 @@ class DataView(OverlayPlotContainer):
     )
 
     #: The origin reported to axes, etc
-    origin = Property(depends_on="default_origin")
+    origin = Property(observe="default_origin")
 
     # Whether our map_screen and map_data should treat screen-space
     # coords as being in our coordinate space or in our contained

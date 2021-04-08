@@ -140,7 +140,7 @@ class MultiLinePlot(BaseXYPlot):
 
     amplitude_scale = Property(
         Float,
-        depends_on=[
+        observe=[
             "global_min",
             "global_max",
             "data",
@@ -150,7 +150,7 @@ class MultiLinePlot(BaseXYPlot):
     )
 
     amplitude = Property(
-        Float, depends_on=["normalized_amplitude", "amplitude_scale"]
+        Float, observe=["normalized_amplitude", "amplitude_scale"]
     )
 
     # ------------------------------------------------------------------------
@@ -160,7 +160,7 @@ class MultiLinePlot(BaseXYPlot):
     # The projected 2D numpy array.
     _trace_data = Property(
         Array,
-        depends_on=[
+        observe=[
             "index",
             "index.data_changed",
             "value",

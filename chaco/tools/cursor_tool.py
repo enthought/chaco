@@ -74,7 +74,7 @@ class BaseCursorTool(LineInspector, DragTool):
     current_index = Disallow
 
     # The current position of the cursor in data units
-    current_position = Property(depends_on=["current_index"])
+    current_position = Property(observe=["current_index"])
 
     # Stuff from line_inspector which is not required
     axis = Disallow
