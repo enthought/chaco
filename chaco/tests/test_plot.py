@@ -5,6 +5,7 @@ from numpy import alltrue, arange, array
 from enable.api import ComponentEditor
 from enable.testing import EnableTestAssistant
 from traits.api import HasTraits, Instance
+from traits.etsconfig.api import ETSConfig
 from traitsui.api import Item, View
 
 # Chaco imports
@@ -115,6 +116,7 @@ class EmptyLinePlot(HasTraits):
         return plot
 
 # regression test for enthought/chaco#636
+@unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
 class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
 
     def test_dont_crash_on_click(self):
