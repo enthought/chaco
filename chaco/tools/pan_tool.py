@@ -170,6 +170,11 @@ class PanTool(BaseTool):
         for direction, bound_name, index in direction_info:
             if not self.constrain or self.constrain_direction == direction:
                 mapper = getattr(plot, direction + "_mapper")
+
+                # there is nowhere one could pan!
+                if mapper._null_screen_range or mapper._null_data_range:
+                    continue
+
                 domain_min, domain_max = mapper.domain_limits
                 eventpos = getattr(event, direction)
                 origpos = self._original_xy[index]
