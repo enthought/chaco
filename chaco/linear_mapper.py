@@ -60,7 +60,7 @@ class LinearMapper(Base1DMapper):
         if self._null_screen_range:
             return array([self.range.low])
         elif self._null_data_range:
-            return arrray([self.range.low])
+            return array([self.range.low])
         else:
             return (screen_val - self.low_pos) / self._scale + self.range.low
 
