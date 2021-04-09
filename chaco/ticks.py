@@ -243,6 +243,8 @@ def auto_ticks(
     An array of tick mark locations. The first and last tick entries are the
     axis end points.
     """
+    # if a NaN makes it here, we cant determine tick mark locations. Return
+    # empty list to prevent crash. Motivated by enthought/chaco#636
     if isnan([data_low, data_high, bound_low, bound_high]).any():
         return []
 
