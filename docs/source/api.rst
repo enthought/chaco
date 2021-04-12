@@ -8,9 +8,9 @@ API Reference
 
 This document contains the auto-generated API reference documentation for
 Chaco.  For user documentation, please read the
-:doc:`Chaco User Manual <../user_manual/index>`
+:doc:`Chaco User Manual <user_manual/index>`
 
 .. toctree::
     :maxdepth: 3
 
-    chaco
+    api/chaco

@@ -8,6 +8,7 @@
 
 # Docs files to ignore
 /docs/source/api/*.rst
+!/docs/source/api/chaco.api.rst
 docs/build/
 
 # ignore the build directories
