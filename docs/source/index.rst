@@ -6,7 +6,7 @@ visualizations.  Chaco facilitates writing plotting applications at all levels
 of complexity, from simple scripts with hard-coded data to large plotting
 programs with complex data interrelationships and a multitude of interactive
 tools.  While Chaco generates attractive static plots for publication and
-presentation, Chaco differs from tools like MatPlotLib in that it also works
+presentation, Chaco differs from tools like Matplotlib in that it also works
 well for dynamic interactive data visualization and exploration.  Chaco is part
 of the Enthought Tool Suite.
 

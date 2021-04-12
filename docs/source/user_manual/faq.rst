@@ -11,7 +11,7 @@ Where does the name "Chaco" come from?
 It is named after `Chaco Canyon <http://www.nps.gov/chcu/>`_, which had
 astronomical markings that served as an observatory for Native Americans. The
 original version of Chaco was built as part of a project for the `Space
-Telescope Science Institute <http://www.stsci.edu/resources/>`_. This is also
+Telescope Science Institute <http://www.stsci.edu/>`_. This is also
 the origin of the name "Kiva" for our vector graphics layer that Chaco uses for
 rendering.
 
