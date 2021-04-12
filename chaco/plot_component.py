@@ -46,12 +46,12 @@ class PlotComponent(Component):
     #:
     #: 1. 'background': Background image, shading
     #: 2. 'image': A special layer for plots that render as images.  This is in
-    #:     a separate layer since these plots must all render before non-image
-    #:     plots.
+    #:    a separate layer since these plots must all render before non-image
+    #:    plots.
     #: 3. 'underlay': Axes and grids
     #: 4. 'plot': The main plot area itself
     #: 5. 'selection': Selected content are rendered above normal plot elements
-    #:                 to make them stand out
+    #:    to make them stand out
     #: 6. 'border': Plot borders
     #: 7. 'annotation': Lines and text that are conceptually part of the "plot"
     #:    but need to be rendered on top of everything else in the plot
