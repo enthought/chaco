@@ -278,6 +278,5 @@ if __name__ == "__main__":
         domain_bounds=(0.0, 0.0, 2.0, 2.0),
         grid_size=(200, 200),
     )
-    # print "data bounds: ", grid.data_min, grid.data_max
     demo = DataGridView(model=grid)
     demo.configure_traits()
