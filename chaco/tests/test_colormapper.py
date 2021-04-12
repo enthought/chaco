@@ -5,7 +5,7 @@ from numpy import allclose, array, ravel
 from chaco.api import ArrayDataSource, ColorMapper, DataRange1D
 
 
-class LinearSegmentedColormapTestCase(unittest.TestCase):
+class ColormapperTestCase(unittest.TestCase):
     def setUp(self):
         """ Set up called before each test case. """
 
