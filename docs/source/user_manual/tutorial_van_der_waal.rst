@@ -28,7 +28,7 @@ resources for learning about the packages.
 You must have Chaco and its dependencies installed:
 
 * Traits
-* TraitsGUI
+* TraitsUI
 * Enable
 
 i.e. `edm install chaco` should install the above dependencies.
@@ -71,9 +71,9 @@ list, since it is defined as an Enum.
 
         pressure = Array
 
-        attraction = Range(low=-50.0,high=50.0,value=0.0)
+        attraction = Range(low=-50.0, high=50.0, value=0.0)
 
-        tot_volume = Range(low=.01,high=100.0,value=0.01)
+        tot_volume = Range(low=.01, high=100.0, value=0.01)
 
         temperature = Range(low=-50.0,high=50.0,value=50.0)
 

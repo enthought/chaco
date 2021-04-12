@@ -30,7 +30,7 @@ Development Setup
 To run this demo you must have Chaco and its dependencies installed:
 
 * Traits
-* TraitsGUI
+* TraitsUI
 * Enable
 
 

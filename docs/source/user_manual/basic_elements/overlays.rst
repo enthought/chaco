@@ -50,11 +50,11 @@ given an X-Y plot renderer, ``plot``, we can define a new x-axis as: ::
     }
 
     x_axis = PlotAxis(
-      orientation='bottom',
-      title='My x axis',
-      mapper=plot.x_mapper,
-      component=plot,
-      **AXIS_DEFAULTS,
+        orientation='bottom',
+        title='My x axis',
+        mapper=plot.x_mapper,
+        component=plot,
+        **AXIS_DEFAULTS,
     )
 
 The newly created axis can then be attached to the plot renderer by
@@ -74,17 +74,17 @@ A :class:`~chaco.axis.MinorPlotAxis` should be added along with a
 added with: ::
 
     x_major_axis = PlotAxis(
-      orientation='bottom',
-      title='My x axis',
-      mapper=plot.x_mapper,
-      component=plot,
+        orientation='bottom',
+        title='My x axis',
+        mapper=plot.x_mapper,
+        component=plot,
     )
     plot.underlays.append(x_major_axis)
 
     x_minor_axis = MinorPlotAxis(
-      orientation='bottom',
-      mapper=plot.x_mapper,
-      component=plot,
+        orientation='bottom',
+        mapper=plot.x_mapper,
+        component=plot,
     )
     plot.underlays.append(x_minor_axis)
 

@@ -755,7 +755,7 @@ By default, an ``Enum`` trait will be displayed as a drop-down. In the
 constructor, we create a dictionary that maps the data names to actual
 numpy arrays::
 
-            # jn is the Bessel function or order n
+            # jn is the Bessel function of order n
             self.data = {
                 "jn0": jn(0, x),
                 "jn1": jn(1, x),

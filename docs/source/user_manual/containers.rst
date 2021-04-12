@@ -55,7 +55,7 @@ E.g., this code::
         h_container1 = HPlotContainer()
         h_container2 = HPlotContainer()
         outer_container = VPlotContainer(
-          h_container1, h_container2, stack_order="top_to_bottom"
+            h_container1, h_container2, stack_order="top_to_bottom"
         )
 
         # Add the three plots to the first container
@@ -122,18 +122,18 @@ horizontal container::
         # Create the plot
         plot = Plot(data)
         plot.plot(
-          ("index", "value", "color"), type="cmap_scatter", color_mapper=jet
+            ("index", "value", "color"), type="cmap_scatter", color_mapper=jet
         )
 
         # Create the colorbar, handing in the appropriate range and colormap
         colormap = plot.color_mapper
         colorbar = ColorBar(
-          index_mapper=LinearMapper(range=colormap.range),
-          color_mapper=colormap,
-          orientation='v',
-          resizable='v',
-          width=30,
-          padding=20,
+            index_mapper=LinearMapper(range=colormap.range),
+            color_mapper=colormap,
+            orientation='v',
+            resizable='v',
+            width=30,
+            padding=20,
         )
 
         colorbar.padding_top = plot.padding_top
@@ -238,10 +238,10 @@ The complete code looks like this:
         def _plot_default(self):
             # Create a GridContainer to hold all of our plots: 2 rows, 3 columns
             container = GridPlotContainer(
-              shape=(2,3),
-              spacing=(10,5),
-              valign='top',
-              bgcolor='lightgray',
+                shape=(2,3),
+                spacing=(10,5),
+                valign='top',
+                bgcolor='lightgray',
             )
 
             # Create x data
@@ -255,9 +255,9 @@ The complete code looks like this:
 
                 plot = Plot(pd)
                 plot.plot(
-                  ('index', data_name),
-                  color=COLOR_PALETTE[i],
-                  line_width=3.0,
+                    ('index', data_name),
+                    color=COLOR_PALETTE[i],
+                    line_width=3.0,
                 )
 
                 # Set each plot's aspect based on its position in the grid
@@ -332,17 +332,17 @@ full data: ::
 
             zoomable_plot = Plot(pd)
             zoomable_plot.plot(
-              ('index', 'value'),
-              name='external',
-              color='red',
-              line_width=3,
+                ('index', 'value'),
+                name='external',
+                color='red',
+                line_width=3,
             )
 
             # Attach tools to the plot
             zoom = ZoomTool(
-              component=zoomable_plot,
-              tool_mode="box",
-              always_on=False,
+                component=zoomable_plot,
+                tool_mode="box",
+                always_on=False,
             )
             zoomable_plot.overlays.append(zoom)
             zoomable_plot.tools.append(PanTool(zoomable_plot))
@@ -351,10 +351,10 @@ full data: ::
             inset_plot = Plot(pd)
             inset_plot.plot(('index', 'value'), color='blue')
             inset_plot.set(
-              resizable='',
-              bounds=[250, 150],
-              position=[450, 350],
-              border_visible=True,
+                resizable='',
+                bounds=[250, 150],
+                position=[450, 350],
+                border_visible=True,
             )
 
             # Create a container and add our plots
