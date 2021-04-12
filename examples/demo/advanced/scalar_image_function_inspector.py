@@ -12,11 +12,10 @@ Animation must be disabled (unchecked) before the model can be edited.
 
 
 # Standard library imports
-from optparse import OptionParser
-import sys
 import random
 
 # Major library imports
+import click
 from numpy import array, linspace, meshgrid, nanmin, nanmax, pi, errstate
 
 # Enthought library imports
@@ -450,8 +449,10 @@ class PlotUI(HasTraits):
 
     def _num_levels_changed(self):
         if self.num_levels > 3:
-            self.polyplot.levels = self.num_levels
-            self.lineplot.levels = self.num_levels
+            if self.polyplot is not None:
+                self.polyplot.levels = self.num_levels
+            if self.lineplot is not None:
+                self.lineplot.levels = self.num_levels
 
 
 # HasTraits class that supplies the callable for the timer event.
@@ -634,56 +635,26 @@ def show_plot(**kwargs):
     modelview.configure_traits()
 
 
-def main(argv=None):
-
-    if argv is None:
-        argv = sys.argv
-
-    usage = "usage: %prog [options]"
-    parser = OptionParser(usage=usage, version="%prog 1.0")
-
-    parser.add_option(
-        "-c",
-        "--colormap",
-        action="store",
-        type="string",
-        dest="colormap",
-        default="viridis",
-        metavar="CMAP",
-        help="choose a default colormapper",
-    )
-
-    parser.add_option(
-        "-n",
-        "--nlevels",
-        action="store",
-        type="int",
-        dest="num_levels",
-        default=15,
-        help="number countour levels to plot [default: %default]",
-    )
-
-    parser.add_option(
-        "-f",
-        "--function",
-        action="store",
-        type="string",
-        dest="function",
-        default="tanh(x**2+y)*cos(y)*jn(0,x+y*2)",
-        help="function of x and y [default: %default]",
-    )
-
-    opts, args = parser.parse_args(argv[1:])
-
-    if len(args) > 0:
-        parser.error("Incorrect number of arguments")
-
+@click.command()
+@click.option(
+    "-c", "--colormap", default="viridis", help="choose a default colormapper"
+)
+@click.option(
+    "-n", "--nlevels", default=15, help="number countour levels to plot"
+)
+@click.option(
+    "-f",
+    "--function",
+    default="tanh(x**2+y)*cos(y)*jn(0,x+y*2)",
+    help="function of x and y"
+)
+def main(colormap, nlevels, function):
     show_plot(
-        colormap=opts.colormap,
-        num_levels=opts.num_levels,
-        function=opts.function,
+        colormap=colormap,
+        num_levels=nlevels,
+        function=function,
     )
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
