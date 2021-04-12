@@ -168,19 +168,16 @@ of the names of the layers. The definition of the layers is as follows:
 
 4. **plot**: The main plot area itself
 
-5. **annotation**: Lines and text that are conceptually part of the "plot" but
-   need to be rendered on top of everything else in the plot.
-
-6. **selection**: Selected content are rendered above normal plot elements to
+5. **selection**: Selected content are rendered above normal plot elements to
    make them stand out. This can be disabled by setting :attr:`use_selection`
    to False (default).
 
-7. **border**: Plot borders
+6. **border**: Plot borders
 
-8. **annotation**: Lines and text that are conceptually part of the "plot" but
+7. **annotation**: Lines and text that are conceptually part of the "plot" but
    need to be rendered on top of everything else in the plot
 
-9. **overlay**: Legends, selection regions, and other tool-drawn visual
+8. **overlay**: Legends, selection regions, and other tool-drawn visual
    elements
 
 Concrete plot renderers set their default draw layer in
