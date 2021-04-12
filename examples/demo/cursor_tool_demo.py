@@ -23,7 +23,7 @@ from chaco.api import (
 )
 from chaco.tools.api import PanTool, ZoomTool
 from chaco.tools.cursor_tool import CursorTool, BaseCursorTool
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance, DelegatesTo
 from traitsui.api import View, Item, HGroup, VGroup
 

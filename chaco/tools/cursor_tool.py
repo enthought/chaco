@@ -19,7 +19,7 @@ TODO:
 import numpy
 
 # Enthought library imports
-from enable.tools.drag_tool import DragTool
+from enable.tools.api import DragTool
 from traits.api import (
     Int,
     Property,

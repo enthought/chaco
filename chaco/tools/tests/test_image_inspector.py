@@ -8,7 +8,7 @@ from numpy.testing import assert_array_equal
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import ImageInspectorTool, ImageInspectorOverlay
 from enable.testing import EnableTestAssistant
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 
 def create_image_plot(img_values, **kwargs):

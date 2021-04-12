@@ -4,7 +4,7 @@ from chaco.api import Plot, ArrayPlotData
 
 from traits.api import HasTraits, Instance
 from traits.etsconfig.api import ETSConfig
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from traitsui.api import Item, View
 
 import numpy as np

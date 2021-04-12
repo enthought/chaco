@@ -33,7 +33,7 @@ from chaco.api import (
     PlotAxis,
 )
 from chaco.default_colormaps import *
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from chaco.tools.api import (
     LineInspector,
     PanTool,
@@ -58,14 +58,18 @@ from traits.api import (
     Trait,
     observe,
 )
-from traitsui.api import Group, Handler, HGroup, Item, View
-from traitsui.menu import (
+from traitsui.api import (
     Action,
     CloseAction,
+    Group,
+    Handler,
+    HGroup,
+    Item,
     Menu,
     MenuBar,
     NoButtons,
     Separator,
+    View,
 )
 
 

@@ -15,8 +15,7 @@ from enable.api import (
 from enable.trait_defs.ui.api import RGBAColorEditor
 from kiva.trait_defs.kiva_font_trait import KivaFont
 from traits.api import Enum, Str, Range, Trait, Tuple, Bool, Int, Any, Property
-from traitsui.api import Item
-from traitsui.editor_factory import EditorFactory
+from traitsui.api import EditorFactory, Item
 
 # Toolkit dependent imports
 from traitsui.toolkit import toolkit_object
