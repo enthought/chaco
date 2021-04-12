@@ -11,8 +11,8 @@ from traits.api import Enum
 
 box_edge_enum = Enum("left", "right", "top", "bottom")
 
-# Values correspond to: top, bottom, left, right, top left, top right, bottom
-# left, bottom right
+#: Values correspond to: top, bottom, left, right, top left, top right, bottom
+#: left, bottom right
 box_position_enum = Enum("T", "B", "L", "R", "TL", "TR", "BL", "BR")
 
 # For backwards compatibility, import LineStyle & LineStyleEditor from enable.

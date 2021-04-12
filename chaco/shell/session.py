@@ -30,33 +30,33 @@ class PlotSession(HasTraits):
     windows, etc.
     """
 
-    # The preferences object in effect for this session.
+    #: The preferences object in effect for this session.
     prefs = Instance(Preferences, args=())
 
-    # The list of currently active windows.
+    #: The list of currently active windows.
     windows = List(PlotWindow)
 
-    # A dict mapping names to windows.
+    #: A dict mapping names to windows.
     window_map = Dict(Str, PlotWindow)
 
-    # The current hold state.
+    #: The current hold state.
     hold = Bool(False)
 
-    # The session holds a single ArrayPlotData instance to which it adds unnamed
-    # arrays that are provided to various plotting commands.
+    #: The session holds a single ArrayPlotData instance to which it adds unnamed
+    #: arrays that are provided to various plotting commands.
     data = Instance(ArrayPlotData, args=())
 
     # ------------------------------------------------------------------------
     # "active" pointers
     # ------------------------------------------------------------------------
 
-    # The index of the active window.
+    #: The index of the active window.
     active_window_index = Trait(None, None, Int)
 
-    # The active window.
+    #: The active window.
     active_window = Property
 
-    # The active colormap.
+    #: The active colormap.
     colormap = Trait(jet, Any)
 
     def new_window(self, name=None, title=None, is_image=False):

@@ -32,40 +32,40 @@ class BaseCandlePlot(BaseXYPlot):
     # Appearance traits
     # ------------------------------------------------------------------------
 
-    # The fill color of the marker.
+    #: The fill color of the marker.
     color = ColorTrait("black")
 
-    # The fill color of the bar
+    #: The fill color of the bar
     bar_color = Alias("color")
 
-    # The color of the rectangular box forming the bar.
+    #: The color of the rectangular box forming the bar.
     bar_line_color = Alias("outline_color")
 
-    # The color of the stems reaching from the bar ends to the min and max
-    # values.  Also the color of the endcap line segments at min and max.  If
-    # None, this defaults to **bar_line_color**.
+    #: The color of the stems reaching from the bar ends to the min and max
+    #: values.  Also the color of the endcap line segments at min and max.  If
+    #: None, this defaults to **bar_line_color**.
     stem_color = Trait(None, None, ColorTrait("black"))
 
-    # The color of the line drawn across the bar at the center values.
-    # If None, this defaults to **bar_line_color**.
+    #: The color of the line drawn across the bar at the center values.
+    #: If None, this defaults to **bar_line_color**.
     center_color = Trait(None, None, ColorTrait("black"))
 
-    # The color of the outline to draw around the bar.
+    #: The color of the outline to draw around the bar.
     outline_color = ColorTrait("black")
 
-    # The thickness, in pixels, of the outline to draw around the bar.  If
-    # this is 0, no outline is drawn.
+    #: The thickness, in pixels, of the outline to draw around the bar.  If
+    #: this is 0, no outline is drawn.
     line_width = Float(1.0)
 
-    # The thickness, in pixels, of the stem lines.  If None, this defaults
-    # to **line_width**.
+    #: The thickness, in pixels, of the stem lines.  If None, this defaults
+    #: to **line_width**.
     stem_width = Trait(None, None, Int(1))
 
-    # The thickeness, in pixels, of the line drawn across the bar at the
-    # center values.  If None, this defaults to **line_width**.
+    #: The thickeness, in pixels, of the line drawn across the bar at the
+    #: center values.  If None, this defaults to **line_width**.
     center_width = Trait(None, None, Int(1))
 
-    # Whether or not to draw bars at the min and max extents of the error bar
+    #: Whether or not to draw bars at the min and max extents of the error bar
     end_cap = Bool(True)
 
     # ------------------------------------------------------------------------
