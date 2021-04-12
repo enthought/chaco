@@ -11,8 +11,8 @@
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys
 import os
+import runpy
 
 # The docset build will use slightly different formatting rules
 
@@ -50,11 +50,16 @@ copyright = '2008-2019, Enthought, Inc.'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
-d = {}
-chaco_version_file = os.path.join('..', '..', 'chaco', '_version.py')
-exec(compile(open(chaco_version_file).read(), chaco_version_file, 'exec'), d)
-release = d['version']
-version = '.'.join(release.split('.',2)[:2])
+base_path = os.path.abspath(os.path.dirname(__file__))
+version_file = os.path.join(base_path, '..', '..', 'chaco', '_version.py')
+if os.path.isfile(version_file):
+    version = release = runpy.run_path(version_file)['full_version']
+else:
+    try:
+        from chaco._version import full_version as version
+        release = version
+    except ImportError:
+        raise RuntimeError("Chaco must be installed before building docs!")
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
