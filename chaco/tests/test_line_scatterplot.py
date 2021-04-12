@@ -3,7 +3,7 @@ import unittest
 from numpy import alltrue, arange, array
 from numpy.testing import assert_almost_equal
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 # Chaco imports
 from chaco.api import (

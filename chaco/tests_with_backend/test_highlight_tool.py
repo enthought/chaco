@@ -3,7 +3,7 @@ import unittest
 from traits.api import HasTraits, Instance
 from traits.etsconfig.api import ETSConfig
 from traitsui.api import Item, View
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 
 from chaco.api import Plot, ArrayPlotData
 from chaco.tools.highlight_tool import HighlightTool

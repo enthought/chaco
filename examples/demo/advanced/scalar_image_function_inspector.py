@@ -38,7 +38,7 @@ from chaco.api import (
     PlotAxis,
 )
 from chaco import default_colormaps
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from chaco.tools.api import LineInspector, PanTool, ZoomTool
 from traits.api import (
     Array,

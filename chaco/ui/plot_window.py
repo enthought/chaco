@@ -2,7 +2,7 @@
 from traits.api import Instance, HasTraits
 from traitsui.api import View, Item
 from enable.api import Container
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 
 
 class PlotWindow(HasTraits):

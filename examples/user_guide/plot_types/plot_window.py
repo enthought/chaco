@@ -1,6 +1,5 @@
-from chaco.api import PlotComponent
-from chaco.data_view import DataView
-from enable.component_editor import ComponentEditor
+from chaco.api import DataView, PlotComponent
+from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance, observe
 from traitsui.api import Item, View
 

@@ -5,7 +5,7 @@ one and adds it to the other.
 from numpy import linspace, sin
 
 from chaco.api import ArrayPlotData, HPlotContainer, VPlotContainer, Plot
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 
