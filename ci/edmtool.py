@@ -115,6 +115,7 @@ doc_dependencies = {
 
 doc_ignore = {
     "*/tests",
+    "chaco/tests_with_backend/*"
 }
 
 environment_vars = {
