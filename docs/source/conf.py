@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # Chaco documentation build configuration file, created by
 # sphinx-quickstart on Mon Jul 21 21:01:40 2008.
 #

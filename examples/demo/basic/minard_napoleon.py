@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Minard's Map of Napoleon's Russian Campaign
 ===========================================
