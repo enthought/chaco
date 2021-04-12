@@ -2,8 +2,7 @@ from numpy import linspace, sin
 
 from chaco.api import ArrayPlotData, Plot, AbstractOverlay
 from chaco.tools.api import PanTool
-from enable.component_editor import ComponentEditor
-from enable.api import ColorTrait
+from enable.api import ColorTrait, ComponentEditor
 from traits.api import Button, Float, Range, HasTraits, Instance
 from traitsui.api import (
     Item,

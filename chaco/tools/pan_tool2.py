@@ -1,7 +1,7 @@
 from numpy import inf
 
 from enable.api import Pointer
-from enable.tools.drag_tool import DragTool
+from enable.tools.api import DragTool
 from traits.api import Bool, Enum, Float, Tuple
 
 

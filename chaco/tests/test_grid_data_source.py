@@ -8,7 +8,7 @@ from numpy import array
 from numpy.testing import assert_array_equal
 
 from chaco.api import GridDataSource
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 
 class GridDataSourceTestCase(UnittestTools, unittest.TestCase):
