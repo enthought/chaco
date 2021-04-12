@@ -14,7 +14,7 @@ from enable.api import (
 )
 from enable.trait_defs.ui.api import RGBAColorEditor
 from kiva.trait_defs.kiva_font_trait import KivaFont
-from traits.api import Enum, Str, Range, Tuple, Bool, Trait, Int, Any, Property
+from traits.api import Enum, Str, Range, Trait, Tuple, Bool, Int, Any, Property
 from traitsui.api import Item
 from traitsui.editor_factory import EditorFactory
 
@@ -261,7 +261,8 @@ class ChacoPlotEditor(Editor):
             for name in (plotitem.index, plotitem.value):
                 object.observe(self._update_data, name)
         for name in (plotitem.x_label_trait, plotitem.y_label_trait):
-            object.observe(lambda s: self._update_axis_grids(), name)
+            if name and getattr(object, name, None):
+                object.observe(lambda s: self._update_axis_grids(), name)
         if plotitem.type_trait not in ("", None):
             object.observe(self.update_editor, plotitem.type_trait)
 
