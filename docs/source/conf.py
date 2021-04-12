@@ -58,10 +58,10 @@ if os.path.isfile(version_file):
     version = release = runpy.run_path(version_file)['full_version']
 else:
     try:
-        from enable._version import full_version as version
+        from chaco._version import full_version as version
         release = version
     except ImportError:
-        raise RuntimeError("Enable must be installed before building docs!")
+        raise RuntimeError("Chaco must be installed before building docs!")
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
