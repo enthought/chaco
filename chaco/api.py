@@ -13,11 +13,11 @@ Defines the publicly accessible items of the Chaco API.
 Base
 ----
 
-- :class:`~.NumericalSequenceTrait`
-- :class:`~.PointTrait`
-- :class:`~.ImageTrait`
-- :class:`~.DimensionTrait`
-- :class:`~.SortOrderTrait`
+- :attr:`~.NumericalSequenceTrait`
+- :attr:`~.PointTrait`
+- :attr:`~.ImageTrait`
+- :attr:`~.DimensionTrait`
+- :attr:`~.SortOrderTrait`
 - :func:`~.bin_search`
 - :func:`~.reverse_map_1d`
 - :func:`~.right_shift`
@@ -134,7 +134,7 @@ Plot Factories
 - :class:`~.ArrayPlotData`
 - :class:`~.DataFramePlotData`
 - :class:`~.Plot`
-- :func:`~.ToolbarPlot`
+- :class:`~.ToolbarPlot`
 
 Axis
 ----
