@@ -188,7 +188,6 @@ The rendering of the text can be customized with the following attributes:
 * :attr:`alpha` to control the transparency of the text box,
 * :attr:`text_color` and :attr:`font` to control how the text looks like,
 * :attr:`align` to control what corner of the plot the text box should appear,
-* ...
 
 .. note:: The overlay can also be used directly by any custom tool that needs
           to display information upon an event. It should be done by
