@@ -131,5 +131,5 @@ class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
         with tester.create_ui(empty_plot):
             self.press_move_release(
                 empty_plot.plot,
-                [(1, 1), (25, 25), (50, 50), (100, 100)],
+                [(1, 1), (2, 2), (3, 3), (4, 4)],
             )
