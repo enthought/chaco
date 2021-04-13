@@ -1,7 +1,7 @@
 """ Defines the ArrayDataSource class."""
 
 # Major library imports
-from numpy import array, isfinite, ones, ndarray
+from numpy import array, empty, isfinite, ones, ndarray
 import numpy as np
 
 # Enthought library imports
@@ -147,7 +147,7 @@ class ArrayDataSource(AbstractDataSource):
         if self._data is not None:
             return self._data
         else:
-            return 0.0
+            return empty(shape=(0,))
 
     def get_data_mask(self):
         """get_data_mask() -> (data_array, mask_array)
@@ -238,17 +238,10 @@ class ArrayDataSource(AbstractDataSource):
         #       version of the dataset?
 
         if data is None:
-            # Several sources weren't setting the _data attribute, so we
-            # go through the interface.  This seems like the correct thing
-            # to do anyway... right?
-            # data = self._data
             data = self.get_data()
 
-        data_len = 0
-        try:
-            data_len = len(data)
-        except Exception:
-            pass
+        data_len = len(data)
+
         if data_len == 0:
             self._min_index = 0
             self._max_index = 0

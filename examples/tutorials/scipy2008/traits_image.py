@@ -1,7 +1,7 @@
 from numpy import linspace, meshgrid, exp
 
 from chaco.api import ArrayPlotData, Plot, viridis
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import Enum, HasTraits, Instance
 from traitsui.api import Group, Item, View
 

@@ -2,7 +2,7 @@ from numpy import linspace, random, zeros, arange, cumprod
 import time
 
 # ETS imports (non-chaco)
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import (
     HasTraits,
     Instance,

@@ -64,7 +64,6 @@ class GatherPointsBase(object):
     def test_selection_range(self):
         pass
 
-    def _get_func(self):
+    @property
+    def func(self):
         return self.module.scatterplot_gather_points
-
-    func = property(_get_func)

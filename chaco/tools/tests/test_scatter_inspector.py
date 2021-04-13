@@ -7,7 +7,7 @@ import numpy
 from chaco.api import create_scatter_plot
 from chaco.tools.api import ScatterInspector
 from enable.testing import EnableTestAssistant
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 
 class TestScatterInspectorTool(EnableTestAssistant, TestCase, UnittestTools):

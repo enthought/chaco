@@ -539,6 +539,3 @@ class Legend(AbstractOverlay):
             self._cached_labels.append(self._create_label(self.title))
             self._cached_label_names.append(self.title)
             self._cached_visible_plots.append(None)
-
-
-# -- end Legend ----------------------------------------------------------------

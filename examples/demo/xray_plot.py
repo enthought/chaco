@@ -9,8 +9,8 @@ from traits.api import HasTraits, Instance, Enum
 from traitsui.api import View, Item
 from enable.api import ComponentEditor
 from chaco.api import Plot, ArrayPlotData, AbstractOverlay
-from enable.api import BaseTool
-from enable.markers import DOT_MARKER, DotMarker
+from enable.api import BaseTool, DotMarker
+from kiva.api import DOT_MARKER
 
 
 class BoxSelectTool(BaseTool):

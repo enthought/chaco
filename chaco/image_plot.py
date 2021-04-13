@@ -66,10 +66,10 @@ class ImagePlot(Base2DPlot):
     interpolation = Enum("nearest", "bilinear", "bicubic")
 
     #: Bool indicating whether x-axis is flipped.
-    x_axis_is_flipped = Property(depends_on=["orientation", "origin"])
+    x_axis_is_flipped = Property(observe=["orientation", "origin"])
 
     #: Bool indicating whether y-axis is flipped.
-    y_axis_is_flipped = Property(depends_on=["orientation", "origin"])
+    y_axis_is_flipped = Property(observe=["orientation", "origin"])
 
     # ------------------------------------------------------------------------
     # Private traits
@@ -87,7 +87,7 @@ class ImagePlot(Base2DPlot):
 
     # Bool indicating whether the origin is top-left or bottom-right.
     # The name "principal diagonal" is borrowed from linear algebra.
-    _origin_on_principal_diagonal = Property(depends_on="origin")
+    _origin_on_principal_diagonal = Property(observe="origin")
 
     # ------------------------------------------------------------------------
     # Properties

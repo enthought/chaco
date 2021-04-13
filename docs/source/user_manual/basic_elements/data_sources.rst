@@ -263,7 +263,7 @@ This is a list of all concrete implementations of data sources in Chaco:
   :attr:`~chaco.function_data_source.FunctionDataSource.data_range`).
 
 
-:class:`~chaco.function_data_source.FunctionImageData`
+:class:`~chaco.function_image_data.FunctionImageData`
   A subclass of :class:`~chaco.array_data_source.ImageData` that
   sets the values of the underlying data array based on a 2D function
   (defined in the callable attribute

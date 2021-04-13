@@ -45,30 +45,30 @@ class PlotToolbar(Container, AbstractOverlay):
 
     buttons = List(Type(ToolbarButton))
 
-    # Should the toolbar be hidden
+    #: Should the toolbar be hidden
     hiding = Bool(True)
 
-    # should the toolbar go automatically go back into hiding when the mouse
-    # is not hovering over it
+    #: should the toolbar go automatically go back into hiding when the mouse
+    #: is not hovering over it
     auto_hide = Bool(True)
 
-    # the radius used to determine how round to make the toolbar's edges
+    #: the radius used to determine how round to make the toolbar's edges
     end_radius = Float(4.0)
 
-    # button spacing is defined as the number of pixels on either side of
-    # a button. The gap between 2 buttons will be 2 x the button spacing
+    #: button spacing is defined as the number of pixels on either side of
+    #: a button. The gap between 2 buttons will be 2 x the button spacing
     button_spacing = Float(5.0)
 
-    # how many pixels to put before and after the set of buttons
+    #: how many pixels to put before and after the set of buttons
     horizontal_padding = Float(5.0)
 
-    # how many pixels to put on top and bottom the set of buttons
+    #: how many pixels to put on top and bottom the set of buttons
     vertical_padding = Float(5.0)
 
-    # The edge against which the toolbar is placed.
+    #: The edge against which the toolbar is placed.
     location = Enum("top", "right", "bottom", "left")
 
-    # Should tooltips be shown?
+    #: Should tooltips be shown?
     show_tooltips = Bool(False)
 
     ############################################################

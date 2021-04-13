@@ -25,7 +25,7 @@ from traitsui.api import UItem, Tabbed, View, VGroup
 
 from chaco.api import Plot, AbstractPlotData, ArrayPlotData
 from chaco.tools.api import PanTool, ZoomTool
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 
 
 class TabbedPlots(HasTraits):

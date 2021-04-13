@@ -54,8 +54,9 @@ E.g., this code::
         # Create a vertical container containing two horizontal containers
         h_container1 = HPlotContainer()
         h_container2 = HPlotContainer()
-        outer_container = VPlotContainer(h_container1, h_container2,
-                                            stack_order="top_to_bottom")
+        outer_container = VPlotContainer(
+            h_container1, h_container2, stack_order="top_to_bottom"
+        )
 
         # Add the three plots to the first container
         h_container1.add(scatter_plot, line_plot1, line_plot2)
@@ -120,17 +121,20 @@ horizontal container::
 
         # Create the plot
         plot = Plot(data)
-        plot.plot(("index", "value", "color"), type="cmap_scatter",
-                  color_mapper=jet)
+        plot.plot(
+            ("index", "value", "color"), type="cmap_scatter", color_mapper=jet
+        )
 
         # Create the colorbar, handing in the appropriate range and colormap
         colormap = plot.color_mapper
-        colorbar = ColorBar(index_mapper=LinearMapper(range=colormap.range),
-                            color_mapper=colormap,
-                            orientation='v',
-                            resizable='v',
-                            width=30,
-                            padding=20)
+        colorbar = ColorBar(
+            index_mapper=LinearMapper(range=colormap.range),
+            color_mapper=colormap,
+            orientation='v',
+            resizable='v',
+            width=30,
+            padding=20,
+        )
 
         colorbar.padding_top = plot.padding_top
         colorbar.padding_bottom = plot.padding_bottom
@@ -226,15 +230,19 @@ The complete code looks like this:
 
         traits_view = View(
             Item('plot', editor=ComponentEditor(), show_label=False),
-            width=1000, height=600, resizable=True
+            width=1000,
+            height=600,
+            resizable=True,
         )
 
         def _plot_default(self):
             # Create a GridContainer to hold all of our plots: 2 rows, 3 columns
-            container = GridPlotContainer(shape=(2,3),
-                                          spacing=(10,5),
-                                          valign='top',
-                                          bgcolor='lightgray')
+            container = GridPlotContainer(
+                shape=(2,3),
+                spacing=(10,5),
+                valign='top',
+                bgcolor='lightgray',
+            )
 
             # Create x data
             x = linspace(-5, 15.0, 100)
@@ -246,13 +254,14 @@ The complete code looks like this:
                 pd.set_data(data_name, jn(i,x))
 
                 plot = Plot(pd)
-                plot.plot(('index', data_name),
-                          color=COLOR_PALETTE[i],
-                          line_width=3.0)
+                plot.plot(
+                    ('index', data_name),
+                    color=COLOR_PALETTE[i],
+                    line_width=3.0,
+                )
 
                 # Set each plot's aspect based on its position in the grid
-                plot.set(height=((i % 3) + 1)*50,
-                         resizable='h')
+                plot.set(height=((i % 3) + 1)*50, resizable='h')
 
                 # Add to the grid container
                 container.add(plot)
@@ -310,7 +319,9 @@ full data: ::
 
         traits_view = View(
             Item('plot', editor=ComponentEditor(), show_label=False),
-            width=800, height=600, resizable=True
+            width=800,
+            height=600,
+            resizable=True,
         )
 
         def _plot_default(self):
@@ -320,23 +331,31 @@ full data: ::
             pd = ArrayPlotData(index=x, value=y)
 
             zoomable_plot = Plot(pd)
-            zoomable_plot.plot(('index', 'value'),
-                               name='external', color='red', line_width=3)
+            zoomable_plot.plot(
+                ('index', 'value'),
+                name='external',
+                color='red',
+                line_width=3,
+            )
 
             # Attach tools to the plot
-            zoom = ZoomTool(component=zoomable_plot,
-                            tool_mode="box", always_on=False)
+            zoom = ZoomTool(
+                component=zoomable_plot,
+                tool_mode="box",
+                always_on=False,
+            )
             zoomable_plot.overlays.append(zoom)
             zoomable_plot.tools.append(PanTool(zoomable_plot))
 
             # Create a second inset plot, not resizable, not zoom-able
             inset_plot = Plot(pd)
             inset_plot.plot(('index', 'value'), color='blue')
-            inset_plot.set(resizable = '',
-                           bounds = [250, 150],
-                           position = [450, 350],
-                           border_visible = True
-                           )
+            inset_plot.set(
+                resizable='',
+                bounds=[250, 150],
+                position=[450, 350],
+                border_visible=True,
+            )
 
             # Create a container and add our plots
             container = OverlayPlotContainer()
@@ -434,16 +453,26 @@ Rendering order
 
 Every plot component has several layers:
 
-1. :attr:`background`: Background image, shading, and borders
-2. :attr:`underlay`: Axes and grids
-3. :attr:`image`: A special layer for plots that render as images.  This is in
-    a separate layer since these plots must all render before non-image
-    plots.
-4. :attr:`plot`: The main plot area
-5. :attr:`annotation`: Lines and text that are conceptually part of the "plot" but
-   need to be rendered on top of everything else in the plot.
-6. :attr:`overlay`: Legends, selection regions, and other tool-drawn visual
-    elements
+1. **background**: Background image, shading, and borders
+
+2. **image**: A special layer for plots that render as images. This is in a
+   separate layer since these plots must all render before non-image plots
+
+3. **underlay**: Axes and grids
+
+4. **plot**: The main plot area itself
+
+5. **selection**: Selected content are rendered above normal plot elements to
+   make them stand out. This can be disabled by setting :attr:`use_selection`
+   to False (default).
+
+6. **border**: Plot borders
+
+7. **annotation**: Lines and text that are conceptually part of the "plot" but
+   need to be rendered on top of everything else in the plot
+
+8. **overlay**: Legends, selection regions, and other tool-drawn visual
+   elements
 
 These are defined by :attr:`~chaco.plot_component.DEFAULT_DRAWING_ORDER`,
 and stored in the :attr:`drawing_order` trait.

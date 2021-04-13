@@ -95,13 +95,13 @@ class SegmentPlot(BaseXYPlot):
     #: with the global 'alpha' mixed in.
     effective_colors = Property(
         Array,
-        depends_on=[
+        observe=[
             "color_by_data",
             "alpha",
             "color_mapper.updated",
             "color_data.data_changed",
             "alpha",
-            "selection_mask",
+            "selected_mask",
             "selection_color",
             "selection_alpha",
         ],
@@ -110,11 +110,11 @@ class SegmentPlot(BaseXYPlot):
     #: The widths of the individual lines in screen units, if mapped to data.
     #: The values are computed with the width mapper.
     screen_widths = Property(
-        Array, depends_on=["width_mapper.updated", "width_data.data_changed"]
+        Array, observe=["width_mapper.updated", "width_data.data_changed"]
     )
 
     selected_mask = Property(
-        depends_on=["selection_metadata_name", "index.metadata_changed"]
+        observe=["selection_metadata_name", "index.metadata_changed"]
     )
 
     # These BaseXYPlot methods either don't make sense or aren't currently

@@ -8,14 +8,7 @@
 
 # Docs files to ignore
 /docs/source/api/*.rst
-!docs/source/api/axis.rst
-!docs/source/api/containers.rst
-!docs/source/api/data_ranges.rst
-!docs/source/api/data_sources.rst
-!docs/source/api/mappers.rst
-!docs/source/api/plot_factories.rst
-!docs/source/api/renderers.rst
-!docs/source/api/visual_components
+!/docs/source/api/chaco.api.rst
 docs/build/
 
 # ignore the build directories

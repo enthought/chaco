@@ -11,10 +11,9 @@ if ETSConfig.toolkit == "wx":
 else:
     from traitsui.qt4.editor import Editor
 
-from traitsui.editor_factory import EditorFactory
+from traitsui.api import EditorFactory
 
-from enable.window import Window
-from enable.api import ColorTrait
+from enable.api import ColorTrait, Window
 
 from chaco.api import OverlayPlotContainer, create_line_plot, LinePlot
 from chaco.tools.api import RangeSelection, RangeSelectionOverlay
