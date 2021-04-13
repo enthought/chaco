@@ -77,6 +77,7 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         tool.selection = [1.0, 2.0]
         tool.selection = None
 
+    # regression test for enthought/chaco#597
     @unittest.mock.patch('chaco.tools.range_selection.RangeSelection.deselect')
     def test_notifiers_connected(self, mocked_deselect):
         plot_data = ArrayPlotData()
