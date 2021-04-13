@@ -93,7 +93,7 @@ class RangeSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         renderer.tools.append(tool)
 
         # attempt to trigger change handler for the index_mapper trait on the
-        # RangeSelection tool's plot 
+        # RangeSelection tool's plot
         # assign a new mapper with same attrs
         renderer.index_mapper = LinearMapper(
             range=renderer.index_mapper.range,
