@@ -678,6 +678,6 @@ class RangeSelection(AbstractController):
                 return 0
 
     @observe("component.index_mapper,component.value_mapper")
-    def __mapper_changed(self, event):
+    def _axis_mapper_updated(self, event):
         if event.name == self.axis + "_mapper":
             self.deselect()
