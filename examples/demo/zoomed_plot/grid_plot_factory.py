@@ -62,7 +62,6 @@ def create_gridded_line_plot(
         orientation="vertical",
         line_color="gray",
         line_style="dot",
-        use_draw_order=True,
     )
 
     horizontal_grid = PlotGrid(
@@ -71,18 +70,14 @@ def create_gridded_line_plot(
         orientation="horizontal",
         line_color="gray",
         line_style="dot",
-        use_draw_order=True,
     )
 
-    vertical_axis = PlotAxis(
-        orientation="left", mapper=plot.value_mapper, use_draw_order=True
-    )
+    vertical_axis = PlotAxis(orientation="left", mapper=plot.value_mapper)
 
     horizontal_axis = PlotAxis(
         orientation="bottom",
         title="Time (s)",
         mapper=plot.index_mapper,
-        use_draw_order=True,
     )
 
     plot.underlays.append(vertical_grid)
@@ -150,7 +145,6 @@ def create_gridded_scatter_plot(
         orientation="vertical",
         line_color="gray",
         line_style="dot",
-        use_draw_order=True,
     )
 
     horizontal_grid = PlotGrid(
@@ -159,18 +153,14 @@ def create_gridded_scatter_plot(
         orientation="horizontal",
         line_color="gray",
         line_style="dot",
-        use_draw_order=True,
     )
 
-    vertical_axis = PlotAxis(
-        orientation="left", mapper=plot.value_mapper, use_draw_order=True
-    )
+    vertical_axis = PlotAxis(orientation="left", mapper=plot.value_mapper)
 
     horizontal_axis = PlotAxis(
         orientation="bottom",
         title="Time (s)",
         mapper=plot.index_mapper,
-        use_draw_order=True,
     )
 
     plot.underlays.append(vertical_grid)
