@@ -110,12 +110,14 @@ class EmptyLinePlot(HasTraits):
         height=500,
         resizable=True
     )
+
     def _plot_default(self):
         plot = Plot(ArrayPlotData(x=self.x, y=self.y))
         plot.plot(("x", "y"), type="line", color="blue")
         plot.tools.append(PanTool(plot))
         plot.overlays.append(ZoomTool(plot, zoom_factor=1.1))
         return plot
+
 
 # regression test for enthought/chaco#529
 @unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
@@ -126,7 +128,7 @@ class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
         tester = UITester()
         empty_plot = EmptyLinePlot()
 
-        with tester.create_ui(empty_plot) as ui:
+        with tester.create_ui(empty_plot):
             self.press_move_release(
                 empty_plot.plot,
                 [(1, 1), (25, 25), (50, 50), (100, 100)],
