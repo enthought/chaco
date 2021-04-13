@@ -3,12 +3,12 @@ import unittest
 from chaco.scales.formatters import strftimeEx, TimeFormatter
 
 
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
 # strftimeEx tests
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
+
 
 class TestStrftimeEx(unittest.TestCase):
-
     def test_strftimeEx_01(self):
         t = 0.123
         fmt = "%(ms)"
@@ -71,12 +71,13 @@ class TestStrftimeEx(unittest.TestCase):
         expected = "07 999"
         self.assertEqual(result, expected)
 
-#----------------------------------------------------------------
+
+# ----------------------------------------------------------------
 # TimeFormatter tests
-#----------------------------------------------------------------
+# ----------------------------------------------------------------
+
 
 class TestTimeFormatter(unittest.TestCase):
-
     def test_time_formatter_01(self):
         tf = TimeFormatter()
         ticks = [10.005, 10.0053, 10.0056]

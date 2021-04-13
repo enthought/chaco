@@ -11,16 +11,16 @@ from .abstract_data_source import AbstractDataSource
 
 
 class ArrayPlotData(AbstractPlotData):
-    """ A PlotData implementation class that handles a list of Numpy arrays
+    """A PlotData implementation class that handles a list of Numpy arrays
     (or a 2-D Numpy array).
 
     By default, it doesn't allow its input data to be modified by downstream
     Chaco components or interactors.
     """
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Public traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     #: Map of names to arrays.  Although there is no restriction on the array
     #: dimensions, each array must correspond to a single plot item; that
@@ -33,7 +33,7 @@ class ArrayPlotData(AbstractPlotData):
     writable = True
 
     def __init__(self, *data, **kw):
-        """ ArrayPlotData can be constructed by passing in arrays.
+        """ArrayPlotData can be constructed by passing in arrays.
 
         Keyword arguments can be used to give certain arrays specific names;
         unnamed arrays are given a generic name of the format 'seriesN', where
@@ -64,27 +64,23 @@ class ArrayPlotData(AbstractPlotData):
         data = dict(zip(self._generate_names(len(data)), data))
         self._update_data(data)
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractPlotData Interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def list_data(self):
-        """ Returns a list of the names of the arrays managed by this instance.
-        """
+        """Returns a list of the names of the arrays managed by this instance."""
         return list(self.arrays.keys())
 
-
     def get_data(self, name):
-        """ Returns the array associated with *name*.
+        """Returns the array associated with *name*.
 
         Implements AbstractDataSource.
         """
         return self.arrays.get(name, None)
 
-
     def del_data(self, name):
-        """ Deletes the array specified by *name*, or raises a KeyError if
+        """Deletes the array specified by *name*, or raises a KeyError if
         the named array does not exist.
         """
         if not self.writable:
@@ -92,13 +88,12 @@ class ArrayPlotData(AbstractPlotData):
 
         if name in self.arrays:
             del self.arrays[name]
-            self.data_changed = {'removed': [name]}
+            self.data_changed = {"removed": [name]}
         else:
             raise KeyError("Data series '%s' does not exist." % name)
 
-
     def set_data(self, name, new_data, generate_name=False):
-        """ Sets the specified array as the value for either the specified
+        """Sets the specified array as the value for either the specified
         name or a generated name.
 
         If the instance's `writable` attribute is True, then this method sets
@@ -132,13 +127,12 @@ class ArrayPlotData(AbstractPlotData):
         if generate_name:
             names = self._generate_names(1)
             name = names[0]
-            
+
         self.update_data({name: new_data})
         return name
 
-
     def update_data(self, *args, **kwargs):
-        """ Updates any number of arrays before triggering a `data_changed`
+        """Updates any number of arrays before triggering a `data_changed`
         event.
 
         Useful to set multiple ArrayPlotData entries at once, for example
@@ -154,41 +148,40 @@ class ArrayPlotData(AbstractPlotData):
         """
         if not self.writable:
             return None
-        
+
         data = dict(*args, **kwargs)
         event = {}
         for name in data:
             if name in self.arrays:
-                event.setdefault('changed', []).append(name)
+                event.setdefault("changed", []).append(name)
             else:
-                event.setdefault('added', []).append(name)
+                event.setdefault("added", []).append(name)
 
         self._update_data(data)
         self.data_changed = event
 
-
     def set_selection(self, name, selection):
-        """ Overrides AbstractPlotData to do nothing and not raise an error.
-        """
+        """Overrides AbstractPlotData to do nothing and not raise an error."""
         pass
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------    
+    # ------------------------------------------------------------------------
 
     def _generate_names(self, n):
-        """ Generate n new names
-        """
+        """Generate n new names"""
         max_index = max(self._generate_indices())
-        names = ["series{0:d}".format(n) for n in range(max_index+1, max_index+n+1)]
+        names = [
+            "series{0:d}".format(n)
+            for n in range(max_index + 1, max_index + n + 1)
+        ]
         return names
 
     def _generate_indices(self):
-        """ Generator that yields all integers that match "series%d" in keys
-        """
-        yield 0 # default minimum
+        """Generator that yields all integers that match "series%d" in keys"""
+        yield 0  # default minimum
         for name in self.list_data():
-            if name.startswith('series'):
+            if name.startswith("series"):
                 try:
                     v = int(name[6:])
                 except ValueError:
@@ -196,8 +189,7 @@ class ArrayPlotData(AbstractPlotData):
                 yield v
 
     def _update_data(self, data):
-        """ Update the array, ensuring that data is an array
-        """
+        """Update the array, ensuring that data is an array"""
         # note that this call modifies data, but that's OK since the callers
         # all create the dictionary that they pass in
         for name, value in list(data.items()):
@@ -207,4 +199,3 @@ class ArrayPlotData(AbstractPlotData):
                 data[name] = value
 
         self.arrays.update(data)
-

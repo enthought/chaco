@@ -10,12 +10,16 @@ from .base_xy_plot import BaseXYPlot
 
 # TODO: allow to set the width of the bar
 
+
 def Alias(name):
-    return Property(lambda obj: getattr(obj, name),
-                    lambda obj, val: setattr(obj, name, val))
+    return Property(
+        lambda obj: getattr(obj, name),
+        lambda obj, val: setattr(obj, name, val),
+    )
+
 
 class BaseCandlePlot(BaseXYPlot):
-    """ Represents the base class for candle- and bar-type plots that are
+    """Represents the base class for candle- and bar-type plots that are
     multi-valued at each index point, and optionally have an extent in the
     index dimension.
 
@@ -24,9 +28,9 @@ class BaseCandlePlot(BaseXYPlot):
     clipping of data is up to individual subclasses.
     """
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Appearance traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The fill color of the marker.
     color = ColorTrait("black")
@@ -64,27 +68,27 @@ class BaseCandlePlot(BaseXYPlot):
     # Whether or not to draw bars at the min and max extents of the error bar
     end_cap = Bool(True)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Override the base class definition of this because we store a list of
     # arrays and not a single array.
     _cached_data_pts = List()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # BaseXYPlot interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def get_screen_points(self):
         # Override the BaseXYPlot implementation so that this is just
         # a pass-through, in case anyone calls it.
         pass
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Protected methods (subclasses should be able to use these directly
     # or wrap them)
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _render(self, gc, right, left, min, bar_min, center, bar_max, max):
         stack = column_stack
@@ -112,15 +116,24 @@ class BaseCandlePlot(BaseXYPlot):
                 gc.set_line_width(stem_width)
 
                 if min is None:
-                    gc.line_set(stack((bar_vert_center, bar_max)), stack((bar_vert_center, max)))
+                    gc.line_set(
+                        stack((bar_vert_center, bar_max)),
+                        stack((bar_vert_center, max)),
+                    )
                     if self.end_cap:
                         gc.line_set(stack((left, max)), stack((right, max)))
                 elif max is None:
-                    gc.line_set(stack((bar_vert_center, min)), stack((bar_vert_center, bar_min)))
+                    gc.line_set(
+                        stack((bar_vert_center, min)),
+                        stack((bar_vert_center, bar_min)),
+                    )
                     if self.end_cap:
                         gc.line_set(stack((left, min)), stack((right, min)))
                 else:
-                    gc.line_set(stack((bar_vert_center, min)), stack((bar_vert_center, max)))
+                    gc.line_set(
+                        stack((bar_vert_center, min)),
+                        stack((bar_vert_center, max)),
+                    )
                     if self.end_cap:
                         gc.line_set(stack((left, max)), stack((right, max)))
                         gc.line_set(stack((left, min)), stack((right, min)))
@@ -157,8 +170,13 @@ class BaseCandlePlot(BaseXYPlot):
         bar_min = array([y + height / 3])
         bar_max = array([y + height - (height / 3)])
         center = array([y + (height / 2)])
-        self._render(gc, array([x+width/4]), array([x+3*width/4]), min, bar_min, center, bar_max, max)
-
-
-
-
+        self._render(
+            gc,
+            array([x + width / 4]),
+            array([x + 3 * width / 4]),
+            min,
+            bar_min,
+            center,
+            bar_max,
+            max,
+        )

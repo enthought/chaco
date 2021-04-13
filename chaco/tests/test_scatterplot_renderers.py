@@ -48,7 +48,7 @@ class DrawScatterplotCase(unittest.TestCase):
         size = (50, 50)
         scatterplot = create_scatter_plot(
             data=[list(range(10)), list(range(10))],
-            marker='custom',
+            marker="custom",
             border_visible=False,
         )
         scatterplot.custom_symbol = path
@@ -72,7 +72,3 @@ class DrawScatterplotCase(unittest.TestCase):
         gc.render_component(scatterplot)
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -9,18 +9,25 @@ from traits.etsconfig.api import ETSConfig
 if ETSConfig.toolkit == "wx":
 
     import wx
+
     class PlotWindow(wx.Frame):
-        """ A window for holding top-level plot containers.
+        """A window for holding top-level plot containers.
 
         Contains many utility methods for controlling the appearance of the
         window, which mostly pass through to underlying WX calls.
         """
 
-        def __init__(self, is_image=False, bgcolor="white",
-                     image_default_origin="top left", *args, **kw):
+        def __init__(
+            self,
+            is_image=False,
+            bgcolor="white",
+            image_default_origin="top left",
+            *args,
+            **kw
+        ):
 
-            kw.setdefault("size", (600,600))
-            wx.Frame.__init__(self, None, *args, **kw )
+            kw.setdefault("size", (600, 600))
+            wx.Frame.__init__(self, None, *args, **kw)
 
             # Some defaults which should be overridden by preferences.
             self.bgcolor = bgcolor
@@ -35,7 +42,6 @@ if ETSConfig.toolkit == "wx":
             # The PlotSession of which we are a part.  We need to know this in order
             # to notify it of our being closed, etc.
             self.session = None
-
 
             # Create the Enable Window object, and store a reference to it.
             # (This will be handy later.)  The Window requires a WX parent object
@@ -56,22 +62,22 @@ if ETSConfig.toolkit == "wx":
             self.SetSizer(sizer)
             self.SetAutoLayout(True)
             self.Show(True)
-            return
 
-        def get_container(self):
+        # This is a Python property because this is not a HasTraits subclass.
+        @property
+        def container(self):
             return self.plot_window.component
 
-        def set_container(self, container):
+        @container.setter
+        def container(self, container):
             self.plot_window.component = container
 
         def iconize(self, iconize):
-            """Iconizes the window if *iconize* is True.
-            """
+            """Iconizes the window if *iconize* is True."""
             self.Iconize(iconize)
 
         def maximize(self, maximize):
-            """ If *maximize* is True, maximizes the window size; restores if False.
-            """
+            """If *maximize* is True, maximizes the window size; restores if False."""
             self.Maximize(maximize)
 
         def set_size(self, width, height):
@@ -81,19 +87,15 @@ if ETSConfig.toolkit == "wx":
             self.SetTitle(title)
 
         def raise_window(self):
-            """Raises this window to the top of the window hierarchy.
-            """
+            """Raises this window to the top of the window hierarchy."""
             self.Raise()
 
         def close(self):
             self.Close()
 
-        # This is a Python property because this is not a HasTraits subclass.
-        container = property(get_container, set_container)
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Private methods
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
 
         def _create_top_container(self):
             plot = ScalyPlot(
@@ -114,7 +116,6 @@ if ETSConfig.toolkit == "wx":
             )
             return plot
 
-
         def _on_window_close(self, event):
             if self.session:
                 try:
@@ -123,25 +124,32 @@ if ETSConfig.toolkit == "wx":
                 except ValueError:
                     pass
 
+
 elif ETSConfig.toolkit == "qt4":
 
     from pyface.qt import QtCore, QtGui
 
     class PlotWindow(QtGui.QFrame):
-        """ A window for holding top-level plot containers.
+        """A window for holding top-level plot containers.
 
         Contains many utility methods for controlling the appearance of the
         window, which mostly pass through to underlying Qt calls.
         """
 
-        def __init__(self, is_image=False, bgcolor="white",
-                     image_default_origin="top left", *args, **kw):
+        def __init__(
+            self,
+            is_image=False,
+            bgcolor="white",
+            image_default_origin="top left",
+            *args,
+            **kw
+        ):
 
             size = kw.pop("size", None)
             if isinstance(size, tuple):
                 size = QtCore.QSize(*size)
-            
-            super(PlotWindow, self).__init__(None, *args, **kw )
+
+            super(PlotWindow, self).__init__(None, *args, **kw)
 
             if size is not None:
                 self.resize(size)
@@ -170,28 +178,29 @@ elif ETSConfig.toolkit == "qt4":
             layout.addWidget(self.plot_window.control)
             self.setLayout(layout)
 
-            size = kw.get("size", QtCore.QSize(600,600))
+            size = kw.get("size", QtCore.QSize(600, 600))
             self.set_size(size.width(), size.height())
 
             self.show()
 
-        def get_container(self):
+        # This is a Python property because this is not a HasTraits subclass.
+        @property
+        def container(self):
             return self.plot_window.component
 
-        def set_container(self, container):
+        @container.setter
+        def container(self, container):
             self.plot_window.component = container
 
         def iconize(self, iconize):
-            """Iconizes the window if *iconize* is True.
-            """
+            """Iconizes the window if *iconize* is True."""
             if iconize:
                 self.showMinimized()
             else:
                 self.showNormal()
 
         def maximize(self, maximize):
-            """ If *maximize* is True, maximizes the window size; restores if False.
-            """
+            """If *maximize* is True, maximizes the window size; restores if False."""
             if maximize:
                 self.showMaximized()
             else:
@@ -204,16 +213,12 @@ elif ETSConfig.toolkit == "qt4":
             self.setWindowTitle(title)
 
         def raise_window(self):
-            """Raises this window to the top of the window hierarchy.
-            """
+            """Raises this window to the top of the window hierarchy."""
             self.raise_()
 
-        # This is a Python property because this is not a HasTraits subclass.
-        container = property(get_container, set_container)
-
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
         # Private methods
-        #------------------------------------------------------------------------
+        # ------------------------------------------------------------------------
 
         def _create_top_container(self):
             plot = ScalyPlot(
@@ -242,12 +247,11 @@ elif ETSConfig.toolkit == "qt4":
                 except ValueError:
                     pass
 
+
 else:
 
     class PlotWindow(object):
-
         def __init__(self, *args, **kwargs):
             raise NotImplementedError(
-                'PlotWindow not implemented for `null` toolkit')
-
-# EOF
+                "PlotWindow not implemented for `null` toolkit"
+            )

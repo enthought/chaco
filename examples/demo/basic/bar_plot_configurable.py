@@ -15,35 +15,32 @@ class BarPlotDemo(HasTraits):
     # The bar plot renderer.
     bar_plot = Instance(BarPlot)
 
-    # Assorted styles that will be set on `bar_plot`.    
+    # Assorted styles that will be set on `bar_plot`.
     bar_width = Range(0.0, 1.0, 0.8)
     line_width = Range(0.0, 10.0, 5.0)
     alpha = Range(0.0, 1.0, 1.0)
     line_color_alpha = Range(0.0, 1.0, 1.0)
     fill_color_alpha = Range(0.0, 1.0, 1.0)
 
-    traits_view = \
-        View(
-            VGroup(
-                Group(
-                    UItem('bar_plot', 
-                          editor=ComponentEditor(), 
-                          style='custom'),
-                ),
-                VGroup(
-                    Item('bar_width'),
-                    Item('line_width'),
-                    Item('line_color_alpha'),
-                    Item('fill_color_alpha'),
-                    Item('alpha'),
-                ),
+    traits_view = View(
+        VGroup(
+            Group(
+                UItem("bar_plot", editor=ComponentEditor(), style="custom"),
             ),
-            resizable=True,
-        )
+            VGroup(
+                Item("bar_width"),
+                Item("line_width"),
+                Item("line_color_alpha"),
+                Item("fill_color_alpha"),
+                Item("alpha"),
+            ),
+        ),
+        resizable=True,
+    )
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Default values
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def _bar_plot_default(self):
 
@@ -61,21 +58,22 @@ class BarPlotDemo(HasTraits):
         value_mapper = LinearMapper(range=value_range)
 
         # The bar plot
-        plot = BarPlot(index=index, value=value,
-                       value_mapper=value_mapper,
-                       index_mapper=index_mapper,
-                       line_color="black",
-                       fill_color="cornflowerblue",
-                       bgcolor="white",
-                       bar_width=self.bar_width,
-                       line_width=self.line_width,
-                       )
+        plot = BarPlot(
+            index=index,
+            value=value,
+            value_mapper=value_mapper,
+            index_mapper=index_mapper,
+            line_color="black",
+            fill_color="cornflowerblue",
+            bgcolor="white",
+            bar_width=self.bar_width,
+            line_width=self.line_width,
+        )
         return plot
 
-
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Trait change handlers
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def _line_color_alpha_changed(self):
         alpha = self.line_color_alpha
@@ -95,6 +93,7 @@ class BarPlotDemo(HasTraits):
 
     def _line_width_changed(self):
         self.bar_plot.line_width = self.line_width
+
 
 demo = BarPlotDemo()
 

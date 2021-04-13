@@ -16,16 +16,16 @@ from traitsui.api import UItem, View
 from chaco.api import ArrayPlotData, HPlotContainer, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some x-y data series to plot
     x = linspace(-2.0, 10.0, 100)
-    pd = ArrayPlotData(index = x)
+    pd = ArrayPlotData(index=x)
     for i in range(5):
-        pd.set_data("y" + str(i), jn(i,x))
+        pd.set_data("y" + str(i), jn(i, x))
 
     # Create some line plots of some of the data
     plot = Plot(pd, title="Line Plot", padding=50, border_visible=True)
@@ -55,7 +55,7 @@ def _create_plot_component():
     # A second plot whose vertical grid lines are clipped to the jn(3) function
     def my_bounds_func(ticks):
         """ Returns y_low and y_high for each grid tick in the array **ticks** """
-        tmp = array([zeros(len(ticks)),jn(3, ticks)]).T
+        tmp = array([zeros(len(ticks)), jn(3, ticks)]).T
         return tmp
 
     func_plot = Plot(pd, padding=50, border_visible=True)
@@ -71,27 +71,31 @@ def _create_plot_component():
 
     return container
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(900,500)
-title="Grids with bounded extents"
 
-#===============================================================================
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (900, 500)
+title = "Grids with bounded extents"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
-    traits_view = View(UItem('plot', editor=ComponentEditor()),
-                       width=size[0], height=size[1], resizable=True,
-                       title=title
-                       )
+    traits_view = View(
+        UItem("plot", editor=ComponentEditor()),
+        width=size[0],
+        height=size[1],
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-

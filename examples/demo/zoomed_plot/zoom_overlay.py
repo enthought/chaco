@@ -45,10 +45,11 @@ class ZoomOverlay(AbstractOverlay):
         left_end = array([self.destination.x, y])
         right_end = array([self.destination.x2, y])
 
-        polygon = array((left_top, left_mid, left_end,
-                         right_end,right_mid, right_top))
+        polygon = array(
+            (left_top, left_mid, left_end, right_end, right_mid, right_top)
+        )
         left_line = array((left_top, left_mid, left_end))
-        right_line = array((right_end,right_mid, right_top))
+        right_line = array((right_end, right_mid, right_top))
 
         return left_line, right_line, polygon
 
@@ -78,8 +79,6 @@ class ZoomOverlay(AbstractOverlay):
             gc.lines(right_line)
             gc.stroke_path()
 
-        return
-
     def _get_selection_screencoords(self):
         """
         Returns a tuple of (x1, x2) screen space coordinates of the start
@@ -93,19 +92,20 @@ class ZoomOverlay(AbstractOverlay):
         else:
             return None
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _source_changed(self, old, new):
         if old is not None and old.controller is not None:
-            old.controller.on_trait_change(self._selection_update_handler, "selection",
-                                           remove=True)
+            old.controller.observe(
+                self._selection_update_handler, "selection", remove=True
+            )
         if new is not None and new.controller is not None:
-            new.controller.on_trait_change(self._selection_update_handler, "selection")
-        return
+            new.controller.observe(self._selection_update_handler, "selection")
 
-    def _selection_update_handler(self, value):
+    def _selection_update_handler(self, event):
+        value = event.new
         if value is not None and self.destination is not None:
             r = self.destination.index_mapper.range
             start, end = amin(value), amax(value)
@@ -114,4 +114,3 @@ class ZoomOverlay(AbstractOverlay):
 
         self.source.request_redraw()
         self.destination.request_redraw()
-        return

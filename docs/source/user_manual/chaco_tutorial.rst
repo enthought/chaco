@@ -1,3 +1,4 @@
+:orphan:
 
 .. highlight:: python
    :linenothreshold: 10
@@ -161,8 +162,12 @@ things, as you will see later on::
         plot = Instance(Plot)
 
         traits_view = View(
-            Item('plot',editor=ComponentEditor(), show_label=False),
-            width=500, height=500, resizable=True, title="Chaco Plot")
+            Item('plot', editor=ComponentEditor(), show_label=False),
+            width=500,
+            height=500,
+            resizable=True,
+            title="Chaco Plot",
+        )
 
         def _plot_default(self):
             x = linspace(-14, 14, 100)
@@ -203,10 +208,14 @@ from :class:`HasTraits`.
 Next, we declare a Traits UI View for this class::
 
     traits_view = View(
-            Item('plot',editor=ComponentEditor(), show_label=False),
-            width=500, height=500, resizable=True, title="Chaco Plot")
+        Item('plot',editor=ComponentEditor(), show_label=False),
+        width=500,
+        height=500,
+        resizable=True,
+        title="Chaco Plot",
+    )
 
-Inside this view, we are placing a reference to the :attr:`plot` trait and
+Inside this view, we are placing a reference to the ``plot`` trait and
 telling Traits UI to use the :class:`ComponentEditor` (imported from
 :mod:`enable.api`) to display it. If the
 trait were an Int or Str or Float, Traits could automatically pick an
@@ -434,7 +443,7 @@ Horizontal containers (:class:`HPlotContainer`) place components horizontally:
 .. image:: images/hplotcontainer.png
     :height: 350pt
 
-Vertical containers (:class:`VPlotContainer`) array component vertically:
+Vertical containers (:class:`VPlotContainer`) place components vertically:
 
 .. image:: images/vplotcontainer.png
     :height: 350pt
@@ -477,8 +486,13 @@ plot, and adds them both to the HPlotContainer object::
 
         plot = Instance(HPlotContainer)
 
-        traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
-                           width=1000, height=600, resizable=True, title="Chaco Plot")
+        traits_view = View(
+            Item('plot', editor=ComponentEditor(), show_label=False),
+            width=1000,
+            height=600,
+            resizable=True,
+            title="Chaco Plot",
+        )
 
         def _plot_default(self):
             x = linspace(-14, 14, 100)
@@ -505,9 +519,9 @@ This produces the following plot:
 
 
 There are many parameters you can configure on a container, like background
-color, border thickness, spacing, and padding.  We insert some more
-lines between lines 25 and 26 of the previous example to make the two plots
-touch in the middle:
+color, border thickness, spacing, and padding.  We add additional code between
+creating the ``HPlotContainer`` instance and returning the container to make
+the two plots touch in the middle:
 
 .. code-block:: python
 
@@ -560,12 +574,18 @@ of these capabilities.  Here is the full listing of the modified code::
         marker_size = Int(4)
 
         traits_view = View(
-            Group(Item('color', label="Color", style="custom"),
-                  Item('marker', label="Marker"),
-                  Item('marker_size', label="Size"),
-                  Item('plot', editor=ComponentEditor(), show_label=False),
-                       orientation = "vertical"),
-                  width=800, height=600, resizable=True, title="Chaco Plot")
+            Group(
+                Item('color', label="Color", style="custom"),
+                Item('marker', label="Marker"),
+                Item('marker_size', label="Size"),
+                Item('plot', editor=ComponentEditor(), show_label=False),
+                orientation = "vertical",
+            ),
+            width=800,
+            height=600,
+            resizable=True,
+            title="Chaco Plot",
+        )
 
         def _plot_default(self):
             x = linspace(-14, 14, 100)
@@ -605,15 +625,19 @@ new traits.  We put them in a Traits UI :class:`Group` so that we can control
 the layout in the dialog a little better --- here, we're setting the layout
 orientation of the elements in the dialog to "vertical". ::
 
-    traits_view = View(
-        Group(
-            Item('color', label="Color", style="custom"),
-            Item('marker', label="Marker"),
-            Item('marker_size', label="Size"),
-            Item('plot', editor=ComponentEditor(), show_label=False),
-                 orientation = "vertical" ),
-            width=500, height=500, resizable=True,
-            title="Chaco Plot")
+        traits_view = View(
+            Group(
+                Item('color', label="Color", style="custom"),
+                Item('marker', label="Marker"),
+                Item('marker_size', label="Size"),
+                Item('plot', editor=ComponentEditor(), show_label=False),
+                orientation = "vertical",
+            ),
+            width=800,
+            height=600,
+            resizable=True,
+            title="Chaco Plot",
+        )
 
 Now we have to do something with those traits.  We modify the
 constructor so that we grab a handle to the renderer that is created by
@@ -691,18 +715,23 @@ the modifications: ::
         traits_view = View(
             Item('data_name', label="Y data"),
             Item('plot', editor=ComponentEditor(), show_label=False),
-            width=800, height=600, resizable=True,
-            title="Data Chooser")
+            width=800,
+            height=600,
+            resizable=True,
+            title="Data Chooser",
+        )
 
         def _plot_default(self):
             x = linspace(-5, 10, 100)
 
             # jn is the Bessel function or order n
-            self.data = {"jn0": jn(0, x),
-                         "jn1": jn(1, x),
-                         "jn2": jn(2, x)}
+            self.data = {
+                "jn0": jn(0, x),
+                "jn1": jn(1, x),
+                "jn2": jn(2, x),
+            }
 
-            self.plotdata = ArrayPlotData(x = x, y = self.data["jn0"])
+            self.plotdata = ArrayPlotData(x=x, y=self.data["jn0"])
 
             plot = Plot(self.plotdata)
             plot.plot(("x", "y"), type="line", color="blue")
@@ -726,10 +755,12 @@ By default, an ``Enum`` trait will be displayed as a drop-down. In the
 constructor, we create a dictionary that maps the data names to actual
 numpy arrays::
 
-    # jn is the Bessel function
-    self.data = {"jn0": jn(0, x),
-                 "jn1": jn(1, x),
-                 "jn2": jn(2, x)}
+            # jn is the Bessel function of order n
+            self.data = {
+                "jn0": jn(0, x),
+                "jn1": jn(1, x),
+                "jn2": jn(2, x),
+            }
 
 When we initialize the ArrayPlotData, we’ll set ``y`` to the ``jn0`` array::
 
@@ -779,10 +810,13 @@ space region. This is the full code::
 
         container = Instance(HPlotContainer)
 
-        traits_view = View(Item('container', editor=ComponentEditor(),
-                                show_label=False),
-                           width=1000, height=600, resizable=True,
-                           title="Connected Range")
+        traits_view = View(
+            Item('container', editor=ComponentEditor(), show_label=False),
+            width=1000,
+            height=600,
+            resizable=True,
+            title="Connected Range",
+        )
 
         def _container_default(self):
             x = linspace(-14, 14, 100)
@@ -814,11 +848,13 @@ to side::
 
         container = Instance(HPlotContainer)
 
-        traits_view = View(Item('container', editor=ComponentEditor(),
-                                show_label=False),
-                           width=1000, height=600, resizable=True,
-                           title="Connected Range")
-
+        traits_view = View(
+            Item('container', editor=ComponentEditor(), show_label=False),
+            width=1000,
+            height=600,
+            resizable=True,
+            title="Connected Range",
+        )
 
 In the constructor, we define some data and create two plots of it,
 a line plot and a scatter plot, insert them in the container, and add
@@ -915,11 +951,14 @@ This is the full code that we will analyze step by step below ::
 
         orientation = Enum("horizontal", "vertical")
 
-        traits_view = View(Item('orientation', label="Orientation"),
-                           Item('plot', editor=ComponentEditor(),
-                                show_label=False),
-                           width=500, height=500, resizable=True,
-                           title="Chaco Plot")
+        traits_view = View(
+            Item('orientation', label="Orientation"),
+            Item('plot', editor=ComponentEditor(), show_label=False),
+            width=500,
+            height=500,
+            resizable=True,
+            title="Chaco Plot",
+        )
 
         def _plot_default(self):
             x = linspace(-14, 14, 100)
@@ -940,7 +979,7 @@ This is the full code that we will analyze step by step below ::
                 self.plot.orientation = "h"
 
 
-The plot defines two traits, one for the plot type (scatter of line plot) ::
+The plot defines two traits, one for the plot type (scatter or line plot) ::
 
         plot_type = Enum("scatter", "line")
 
@@ -1010,7 +1049,7 @@ Plot tools: adding interactions
 An important feature of Chaco is that it is possible to write re-usable
 tools to interact directly with the plots.
 
-Chaco takes a modular approach to interactivity. Instead of begin hard-coded
+Chaco takes a modular approach to interactivity. Instead of being hard-coded
 into specific plot types or plot renderers,
 the interaction logic is factored out into classes we call *tools*.
 An advantage of this approach is that we can add new plot types
@@ -1034,9 +1073,11 @@ the :ref:`LinePlot example <line_plot_example>` so that we can pan and zoom. ::
 
         traits_view = View(
             Item('plot',editor=ComponentEditor(), show_label=False),
-            width=500, height=500,
+            width=500,
+            height=500,
             resizable=True,
-            title="Chaco Plot")
+            title="Chaco Plot",
+        )
 
         def _plot_default(self):
             x = linspace(-14, 14, 100)
@@ -1098,8 +1139,11 @@ strings, and not the tool classes themselves.
 
         plot = Instance(Plot)
 
-        tools = List(editor=CheckListEditor(values = ["PanTool",
-                                     "SimpleZoom", "DragZoom"]))
+        tools = List(
+            editor=CheckListEditor(
+                values = ["PanTool", "SimpleZoom", "DragZoom"],
+            )
+        )
 
 
 In the constructor, we do not add the interactive tools:
@@ -1137,12 +1181,12 @@ The first line, ::
             classes = [eval(class_name) for class_name in self.tools]
 
 converts the value of the ``tools`` trait (a string) to a Tool class. In the
-of the method, we remove all the existing tools from the plot ::
+next part of the method, we remove all the existing tools from the plot ::
 
             # Remove all tools from the plot
             plot_tools = self.plot.tools
             for tool in plot_tools:
-                plot_tools.remove(tool)
+                self.plot.tools.remove(tool)
 
 and create new ones for the selected items: ::
 
@@ -1247,8 +1291,13 @@ they are constructed: almost all tools need to use some capabilities
 Final words
 ===========
 
-This concludes this tutorial. For further information, please refer
-to the :ref:`Resources` page, or visit the :ref:`user_guide`.
+This concludes this tutorial. You can download :download:`a PDF version of the slides <../resources/scipy08_tutorial.pdf>`
+For further information, visit the :ref:`user_guide`. You can find the examples
+for this tutorial in the :file:`examples/tutorials/scipy2008/` directory of the
+Chaco source code. You can browse it online in the `GitHub repository <https://github.com/enthought/chaco/tree/master/examples/tutorials>`_
+if you don't have a local copy. They are numbered and introduce concepts one at
+a time, going from a simple line plot to building a custom overlay with its own
+trait editor and reusing an existing tool from the built-in set of tools.
 
 
 *This tutorial is based on the "Interactive plotting with Chaco" tutorial

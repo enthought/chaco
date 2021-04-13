@@ -11,13 +11,20 @@ class PlotExample3(PlotExample2):
         container = super(PlotExample3, self)._container_default()
 
         rplot, lplot = self.right_plot, self.left_plot
-        lplot.overlays.append(LineInspector(component=lplot,
-                write_metadata=True, is_listener=True))
-        rplot.overlays.append(LineInspector(component=rplot,
-                write_metadata=True, is_listener=True))
+        lplot.overlays.append(
+            LineInspector(
+                component=lplot, write_metadata=True, is_listener=True
+            )
+        )
+        rplot.overlays.append(
+            LineInspector(
+                component=rplot, write_metadata=True, is_listener=True
+            )
+        )
         rplot.index = lplot.index
 
         return container
+
 
 demo = PlotExample3()
 

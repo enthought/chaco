@@ -5,8 +5,15 @@ Abstract base class for 1-D plots which only use one axis
 from numpy import argsort, asarray
 
 # Enthought library imports
-from traits.api import (Any, Bool, Enum, Instance, Property, cached_property,
-                        on_trait_change)
+from traits.api import (
+    Any,
+    Bool,
+    Enum,
+    Instance,
+    Property,
+    cached_property,
+    observe,
+)
 
 # local imports
 from .abstract_plot_renderer import AbstractPlotRenderer
@@ -16,7 +23,7 @@ from .base import reverse_map_1d
 
 
 class Base1DPlot(AbstractPlotRenderer):
-    """ Base class for one-dimensional plots
+    """Base class for one-dimensional plots
 
     This class provides a base for plots such as jitter plots, color bars,
     single-axis scatter plots, and geophysical horizon and tops plots.
@@ -34,27 +41,27 @@ class Base1DPlot(AbstractPlotRenderer):
 
     #: Corresponds to either **index_mapper** or None, depending on
     #: the orientation of the plot.
-    x_mapper = Property(depends_on=['orientation', 'index_mapper'])
+    x_mapper = Property(observe=["orientation", "index_mapper"])
 
     #: Corresponds to either **index_mapper** or None, depending on
     #: the orientation of the plot.
-    y_mapper = Property(depends_on=['orientation', 'index_mapper'])
+    y_mapper = Property(observe=["orientation", "index_mapper"])
 
     #: The orientation of the index axis.
-    orientation = Enum('v', 'h')
+    orientation = Enum("v", "h")
 
     #: Should the plot go left-to-right or bottom-to-top (normal) or the reverse?
-    direction = Enum('normal', 'flipped')
+    direction = Enum("normal", "flipped")
 
     #: Faux origin for the axes and other objects to look at
     origin = Property(
-        Enum('bottom left', 'top left', 'bottom right', 'top right'),
-        depends_on=['orientation', 'direction']
+        Enum("bottom left", "top left", "bottom right", "top right"),
+        observe=["orientation", "direction"],
     )
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: flag whether the data cache is valid
     _cache_valid = Bool(False)
@@ -74,12 +81,12 @@ class Base1DPlot(AbstractPlotRenderer):
     #: cache holding the screen coordinates of the index values
     _cached_screen_pts = Any()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractPlotRenderer interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def map_screen(self, data_array):
-        """ Maps a 1D array of data points into screen space and returns it as
+        """Maps a 1D array of data points into screen space and returns it as
         a 1D array.
 
         Parameters
@@ -108,7 +115,7 @@ class Base1DPlot(AbstractPlotRenderer):
         return asarray(self.index_mapper.map_screen(data_array))
 
     def map_data(self, screen_pts):
-        """ Maps 2D screen space points into the 1D index space of the plot.
+        """Maps 2D screen space points into the 1D index space of the plot.
 
         Parameters
         ----------
@@ -130,9 +137,14 @@ class Base1DPlot(AbstractPlotRenderer):
         else:
             return asarray(self.index_mapper.map_data(x))
 
-    def map_index(self, screen_pt, threshold=2.0, outside_returns_none=True,
-                  index_only=True):
-        """ Maps a screen space point to an index into the plot's index array.
+    def map_index(
+        self,
+        screen_pt,
+        threshold=2.0,
+        outside_returns_none=True,
+        index_only=True,
+    ):
+        """Maps a screen space point to an index into the plot's index array.
 
         Parameters
         ----------
@@ -165,14 +177,17 @@ class Base1DPlot(AbstractPlotRenderer):
         """
         data_pt = self.map_data(screen_pt)
 
-        if ((data_pt < self.index_mapper.range.low) or \
-                (data_pt > self.index_mapper.range.high)) and \
-                outside_returns_none:
+        if (
+            (data_pt < self.index_mapper.range.low)
+            or (data_pt > self.index_mapper.range.high)
+        ) and outside_returns_none:
             return None
 
         if self._cached_data_pts_sorted is None:
             self._cached_data_argsort = argsort(self._cached_data)
-            self._cached_data_pts_sorted = self._cached_data[self._cached_data_argsort]
+            self._cached_data_pts_sorted = self._cached_data[
+                self._cached_data_argsort
+            ]
 
         # XXX better to just use argmin(abs(data - data_pt))?
 
@@ -195,7 +210,7 @@ class Base1DPlot(AbstractPlotRenderer):
 
         screen_points = self._cached_screen_pts
         x = screen_points[orig_ndx]
-        if self.orientation == 'v':
+        if self.orientation == "v":
             x0 = screen_pt[1]
         else:
             x0 = screen_pt[0]
@@ -205,9 +220,9 @@ class Base1DPlot(AbstractPlotRenderer):
         else:
             return None
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _compute_screen_coord(self):
         """ Compute the screen coordinates of the index values """
@@ -239,8 +254,7 @@ class Base1DPlot(AbstractPlotRenderer):
         self._screen_cached_valid = False
 
     def _update_mappers(self):
-        """ Update the mapper when the bounds, orientation or direction change
-        """
+        """Update the mapper when the bounds, orientation or direction change"""
         mapper = self.index_mapper
         if mapper is None:
             return
@@ -250,24 +264,24 @@ class Base1DPlot(AbstractPlotRenderer):
         y = self.y
         y2 = self.y2
 
-        if self.orientation == 'h':
-            if self.direction == 'normal':
+        if self.orientation == "h":
+            if self.direction == "normal":
                 mapper.screen_bounds = (x, x2)
-            elif self.direction == 'flipped':
+            elif self.direction == "flipped":
                 mapper.screen_bounds = (x2, x)
-        elif self.orientation == 'v':
-            if self.direction == 'normal':
+        elif self.orientation == "v":
+            if self.direction == "normal":
                 mapper.screen_bounds = (y, y2)
-            elif self.direction == 'flipped':
+            elif self.direction == "flipped":
                 mapper.screen_bounds = (y2, y)
 
         self.invalidate_draw()
         self._cache_valid = False
         self._screen_cache_valid = False
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property setters and getters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_index_range(self):
         return self.index_mapper.range
@@ -291,28 +305,28 @@ class Base1DPlot(AbstractPlotRenderer):
 
     @cached_property
     def _get_origin(self):
-        if self.orientation == 'h':
-            if self.direction == 'normal':
-                return 'bottom left'
+        if self.orientation == "h":
+            if self.direction == "normal":
+                return "bottom left"
             else:
-                return 'bottom right'
+                return "bottom right"
         else:
-            if self.direction == 'normal':
-                return 'bottom left'
+            if self.direction == "normal":
+                return "bottom left"
             else:
-                return 'top left'
+                return "top left"
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
-    @on_trait_change("index.data_changed")
-    def _invalidate(self):
+    @observe("index.data_changed")
+    def _invalidate(self, event):
         self._cache_valid = False
         self._screen_cache_valid = False
 
-    @on_trait_change("index_mapper.updated")
-    def _invalidate_screen(self):
+    @observe("index_mapper.updated")
+    def _invalidate_screen(self, event):
         self._screen_cache_valid = False
 
     def _bounds_changed(self, old, new):

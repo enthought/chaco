@@ -1,8 +1,7 @@
-
-
 from traits.api import Any, Enum, Int, Property, Trait
 
 from enable.api import NativeScrollBar
+
 
 class PlotScrollBar(NativeScrollBar):
     """
@@ -21,9 +20,9 @@ class PlotScrollBar(NativeScrollBar):
     # mapper on **plot** that corresponds to **axis**.
     mapper = Property
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # The value of the override plot to use, if any.  If None, then uses
     # self.component.
@@ -36,13 +35,12 @@ class PlotScrollBar(NativeScrollBar):
     # Stores the index (0 or 1) corresponding to self.axis
     _axis_index = Trait(None, None, Int)
 
-
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Public methods
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def force_data_update(self):
-        """ This forces the scrollbar to recompute its range bounds.  This
+        """This forces the scrollbar to recompute its range bounds.  This
         should be used if datasources are changed out on the range, or if
         the data ranges on existing datasources of the range are changed.
         """
@@ -70,9 +68,9 @@ class PlotScrollBar(NativeScrollBar):
         else:
             return self.component.get_absolute_coords(x, y)
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Scrollbar
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def _handle_dataspace_update(self):
         # This method reponds to changes from the dataspace side, e.g.
@@ -80,8 +78,11 @@ class PlotScrollBar(NativeScrollBar):
 
         # Get the current datasource bounds
         range = self.mapper.range
-        bounds_list = [source.get_bounds() for source in range.sources \
-                       if source.get_size() > 0]
+        bounds_list = [
+            source.get_bounds()
+            for source in range.sources
+            if source.get_size() > 0
+        ]
         mins, maxes = zip(*bounds_list)
         dmin = min(mins)
         dmax = max(maxes)
@@ -95,17 +96,20 @@ class PlotScrollBar(NativeScrollBar):
 
         # Compute the size available for the scrollbar to scroll in
         scrollrange = (totalmax - totalmin) - view
-        if round(scrollrange/20.0) > 0.0:
-            ticksize = scrollrange / round(scrollrange/20.0)
+        if round(scrollrange / 20.0) > 0.0:
+            ticksize = scrollrange / round(scrollrange / 20.0)
         else:
             ticksize = 1
         foo = (totalmin, totalmax, view, ticksize)
-        print("scrollrange:", foo)
-        self.trait_setq(range = foo,
-                        scroll_position = max(min(self.scroll_position, totalmax-view), totalmin))
+
+        self.trait_setq(
+            range=foo,
+            scroll_position=max(
+                min(self.scroll_position, totalmax - view), totalmin
+            ),
+        )
         self._scroll_updated = True
         self.request_redraw()
-        return
 
     def _scroll_position_changed(self):
         super(PlotScrollBar, self)._scroll_position_changed()
@@ -115,11 +119,10 @@ class PlotScrollBar(NativeScrollBar):
         view_width = range.high - range.low
         new_scroll_pos = self.scroll_position
         range.set_bounds(new_scroll_pos, new_scroll_pos + view_width)
-        return
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Event listeners
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def _component_changed(self, old, new):
         # Check to see if we're currently overriding the value of self.component
@@ -131,7 +134,6 @@ class PlotScrollBar(NativeScrollBar):
         if new is not None:
             self._modify_plot_listeners(new, "attach")
             self._update_mapper_listeners()
-        return
 
     def __plot_changed(self, old, new):
         if old is not None:
@@ -145,41 +147,37 @@ class PlotScrollBar(NativeScrollBar):
         elif self.component is not None:
             self._modify_plot_listeners(self.component, "attach")
             self._update_mapper_listeners()
-        return
 
     def _modify_plot_listeners(self, plot, action="attach"):
         if action == "attach":
-            remove=False
+            remove = False
         else:
-            remove=True
-        plot.on_trait_change(self._component_bounds_handler,
-                             "bounds", remove=remove)
-        plot.on_trait_change(self._component_bounds_handler,
-                             "bounds_items", remove=remove)
-        plot.on_trait_change(self._component_pos_handler,
-                             "position", remove=remove)
-        plot.on_trait_change(self._component_pos_handler,
-                             "position_items", remove=remove)
-        return
+            remove = True
+        plot.observe(
+            self._component_bounds_handler, "bounds.items", remove=remove
+        )
+        plot.observe(
+            self._component_pos_handler, "position.items", remove=remove
+        )
 
-    def _component_bounds_handler(self):
+    def _component_bounds_handler(self, event):
         self._handle_dataspace_update()
         self._widget_moved = True
 
-    def _component_pos_handler(self):
+    def _component_pos_handler(self, event):
         self._handle_dataspace_update()
         self._widget_moved = True
 
     def _update_mapper_listeners(self):
-        #if self._mapper
+        # if self._mapper
         pass
 
     def _handle_mapper_updated(self):
         self._handle_dataspace_update()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Property getter/setters
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_plot(self):
         if self._plot is not None:
@@ -189,7 +187,6 @@ class PlotScrollBar(NativeScrollBar):
 
     def _set_plot(self, val):
         self._plot = val
-        return
 
     def _get_mapper(self):
         if self._mapper is not None:
@@ -199,7 +196,6 @@ class PlotScrollBar(NativeScrollBar):
 
     def _set_mapper(self, new_mapper):
         self._mapper = new_mapper
-        return
 
     def _get_axis_index(self):
         if self._axis_index is None:
@@ -209,24 +205,23 @@ class PlotScrollBar(NativeScrollBar):
 
     def _set_axis_index(self, val):
         self._axis_index = val
-        return
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _get_axis_coord(self, event, axis="index"):
-        """ Returns the coordinate of the event along the axis of interest
+        """Returns the coordinate of the event along the axis of interest
         to this tool (or along the orthogonal axis, if axis="value").
         """
         event_pos = (event.x, event.y)
         if axis == "index":
-            return event_pos[ self.axis_index ]
+            return event_pos[self.axis_index]
         else:
-            return event_pos[ 1 - self.axis_index ]
+            return event_pos[1 - self.axis_index]
 
     def _determine_axis(self):
-        """ Determines whether the index of the coordinate along this tool's
+        """Determines whether the index of the coordinate along this tool's
         axis of interest is the first or second element of an (x,y) coordinate
         tuple.
 
@@ -238,7 +233,7 @@ class PlotScrollBar(NativeScrollBar):
                 return 0
             else:
                 return 1
-        else:   # self.axis == "value"
+        else:  # self.axis == "value"
             if self.plot.orientation == "h":
                 return 1
             else:

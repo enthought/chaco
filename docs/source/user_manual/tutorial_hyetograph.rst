@@ -27,11 +27,11 @@ the soil) a plot shows the intensity vs. time hyetograph plots.
 Development Setup
 =================
 
-To run this demo you must have Chaco and its dependencies installed,
+To run this demo you must have Chaco and its dependencies installed:
 
- * Traits
- * TraitsGUI
- * Enable
+* Traits
+* TraitsUI
+* Enable
 
 
 Why use Traits for this application?
@@ -60,8 +60,14 @@ In calling your function you want to specify where the function is and
 then import it.  The following code snippet imports all the names that
 will be used for our application. ::
 
-    from traits.api \
-        import HasTraits, Int, Range, Array, Enum, on_trait_change
+    from traits.api import (
+        HasTraits,
+        Int,
+        Range,
+        Array,
+        Enum,
+        on_trait_change,
+    )
     from traitsui.api import View, Item
     from chaco.chaco_plot_editor import ChacoPlotItem
 
@@ -71,45 +77,52 @@ Trait Definitions
 
 This application only requires one class that will contain the Traits
 and mathematical calculations together.  Classes that contain Traits
-must inherit from the HasTraits function.  Python's multiple
+must inherit from the HasTraits class.  Python's multiple
 inheritance allows for mixing HasTraits objects with other class
 hierarchies if needed.
 
-Within this class we define all the class variables using Traits types
+Within this class we define all the variables using Traits types
 which will later be used in the UI.  These traits are set to equal
 their type similar to many typed languages. ::
 
     class Hyetograph(HasTraits):
         """ Creates a simple hyetograph demo. """
+
         timeline = Array
+
         intensity = Array
+
         nrcs = Array
+
         duration = Int(12, desc='In Hours')
+
         year_storm = Enum(2, 10, 25, 100)
+
         county = Enum('Brazos', 'Dallas', 'El Paso', 'Harris')
+
         curve_number = Range(70, 100)
+
         plot_type = Enum('line', 'scatter')
     
-
 The above code snippet shows a number of Traits features,
 
-    1. The naming convention with traits is that types are capitalized.
+1. The naming convention with traits is that types are capitalized.
 
-    2. An Array is an array, an Int is an integer, an Enum is a single
-       value from a list of options, and a Range is a value between
-       two numbers.
-    
-    3. All traits get a default value, such as whats done in the
-       Arrays, or they can be assigned an initial value as is done in
-       the duration trait.
-    
-    4. Descriptions can be added to traits, such as is done in
-       duration.  This description is not visible except when viewing
-       the trait in a TraitsUI view, and then the description is seen
-       when the mouse hovers over the variable.
-    
-    5. Traits are always contained within the class definition, and
-       each instance of the class will have a unique copy of the traits.
+2. An Array is an array, an Int is an integer, an Enum is a single
+   value from a list of options, and a Range is a value between
+   two numbers.
+
+3. All traits get a default value, such as whats done in the
+   Arrays, or they can be assigned an initial value as is done in
+   the duration trait.
+
+4. Descriptions can be added to traits, such as is done in
+   duration.  This description is not visible except when viewing
+   the trait in a TraitsUI view, and then the description is seen
+   when the mouse hovers over the variable.
+
+5. Traits are always contained within the class definition, and
+   each instance of the class will have a unique copy of the traits.
 
 The Traits API Reference contains more information about the standard
 Trait types; see the :mod:`trait_types` module in the `Traits API Reference 
@@ -131,37 +144,45 @@ Continuing with our application, here is the View definition. ::
 
     class Hyetograph(HasTraits):
 
-        <... snip ...>
+        ...
 
-        view1 = View(Item('plot_type'),
-                     ChacoPlotItem('timeline', 'intensity',
-                                   type_trait='plot_type',
-                                   resizable=True,
-                                   x_label='Time (hr)',
-                                   y_label='Intensity (in/hr)',
-                                   color='blue',
-                                   bgcolor='white',
-                                   border_visible=True,
-                                   border_width=1,
-                                   padding_bg_color='lightgray'),
-                     Item(name='duration'),
-                     Item(name='year_storm'),
-                     Item(name='county'),
-    
-                     # After infiltration using the nrcs curve number method.
-                     ChacoPlotItem('timeline', 'nrcs',
-                                    type_trait='plot_type',
-                                    resizable=True,
-                                    x_label='Time',
-                                    y_label='Intensity',
-                                    color='blue',
-                                    bgcolor='white',
-                                    border_visible=True,
-                                    border_width=1,
-                                    padding_bg_color='lightgray'),
-                    Item('curve_number'),
-                    resizable = True,
-                    width=800, height=800)
+        view = View(
+            Item('plot_type'),
+            ChacoPlotItem(
+                'timeline',
+                'intensity',
+                type_trait='plot_type',
+                resizable=True,
+                x_label='Time (hr)',
+                y_label='Intensity (in/hr)',
+                color='blue',
+                bgcolor='white',
+                border_visible=True,
+                border_width=1,
+                padding_bg_color='lightgray'
+            ),
+            Item(name='duration'),
+            Item(name='year_storm'),
+            Item(name='county'),
+            # After infiltration using the nrcs curve number method.
+            ChacoPlotItem(
+                'timeline',
+                'nrcs',
+                type_trait='plot_type',
+                resizable=True,
+                x_label='Time',
+                y_label='Intensity',
+                color='blue',
+                bgcolor='white',
+                border_visible=True,
+                border_width=1,
+                padding_bg_color='lightgray'
+            ),
+            Item('curve_number'),
+            resizable = True,
+            width=800,
+            height=800,
+        )
     
     
 Views generally contain Item objects and named parameters.  Views can
@@ -213,14 +234,14 @@ Array traits. ::
         
         self.timeline=range(2, self.duration + 1, 2)
         intensity=a / (self.timeline * 60 + b)**c
-        cumdepth=intensity * self.timeline
+        cumulative_depth=intensity * self.timeline
 
-        temp=cumdepth[0]
+        temp=cumulative_depth[0]
         result=[]
-        for i in cumdepth[1:]:
+        for i in cumulative_depth[1:]:
             result.append(i-temp)
             temp=i
-        result.insert(0,cumdepth[0])
+        result.insert(0,cumulative_depth[0])
 
         # Alternating block method implementation. 
         result.reverse()
@@ -275,13 +296,13 @@ any of the values within the list of traits change. ::
         self.calculate_runoff()
 
 So now when the application is run, when the ``duration`` trait is
-   changed or any of the four listed traits change, the calculation
-   functions are automatically called and the data changes.  And these
-   traits will automatically change when the user adjusts the widgets
-   in the UI.  So when the user changes the ``duration`` in the UI
-   from 12 hours to 24 hours this will automatically effect both of
-   the plots since the listeners force a recalculation of both of the
-   functions. 
+changed or any of the four listed traits change, the calculation
+functions are automatically called and the data changes.  And these
+traits will automatically change when the user adjusts the widgets
+in the UI.  So when the user changes the ``duration`` in the UI
+from 12 hours to 24 hours this will automatically effect both of
+the plots since the listeners force a recalculation of both of the
+functions.
 
 
 Showing the Display
@@ -297,8 +318,9 @@ to initialize the data arrays.  Here's the last piece of the program. ::
             self.configure_traits()
             
     
-    f=Hyetograph()
-    f.start()
+    if __name__ == "__main__":
+        hyetograph=Hyetograph()
+        hyetograph.start()
 
 start() performs the calculations needed for the Arrays used to plot,
 and then triggers the UI.  The application is complete, and if you now
@@ -315,79 +337,100 @@ Source Code
 
 The final version of the program, `hyetograph.py`. ::
 
-    from traits.api \
-        import HasTraits, Int, Range, Array, Enum, on_trait_change
+    from traits.api import (
+        HasTraits,
+        Int,
+        Range,
+        Array,
+        Enum,
+        on_trait_change,
+    )
     from traitsui.api import View, Item
     from chaco.chaco_plot_editor import ChacoPlotItem
-    
-    
+
+    COUNTIES = {'Brazos': 0, 'Dallas': 3, 'El Paso': 6, 'Harris': 9}
+    YEARS = {
+        2 : [65, 8, .806, 54, 8.3, .791, 24, 9.5, .797, 68, 7.9, .800],
+        10: [80, 8.5, .763, 78, 8.7, .777, 42, 12., .795,81, 7.7, .753],
+        25: [89, 8.5, .754, 90, 8.7, .774, 60, 12.,.843, 81, 7.7, .724],
+        100: [96, 8., .730, 106, 8.3, .762, 65, 9.5, .825, 91, 7.9, .706]
+    }
+
     class Hyetograph(HasTraits):
         """ Creates a simple hyetograph demo. """
+
         timeline = Array
+
         intensity = Array
+
         nrcs = Array
+
         duration = Int(12, desc='In Hours')
+
         year_storm = Enum(2, 10, 25, 100)
+
         county = Enum('Brazos', 'Dallas', 'El Paso', 'Harris')
+
         curve_number = Range(70, 100)
+
         plot_type = Enum('line', 'scatter')
-        
-        view1 = View(Item('plot_type'),
-                     ChacoPlotItem('timeline', 'intensity',
-                                   type_trait='plot_type',
-                                   resizable=True,
-                                   x_label='Time (hr)',
-                                   y_label='Intensity (in/hr)',
-                                   color='blue',
-                                   bgcolor='white',
-                                   border_visible=True,
-                                   border_width=1,
-                                   padding_bg_color='lightgray'),
-                     Item(name='duration'),
-                     Item(name='year_storm'),
-                     Item(name='county'),
-    
-                     # After infiltration using the nrcs curve number method.
-                     ChacoPlotItem('timeline', 'nrcs',
-                                    type_trait='plot_type',
-                                    resizable=True,
-                                    x_label='Time',
-                                    y_label='Intensity',
-                                    color='blue',
-                                    bgcolor='white',
-                                    border_visible=True,
-                                    border_width=1,
-                                    padding_bg_color='lightgray'),
-                    Item('curve_number'),
-                    resizable = True,
-                    width=800, height=800)
-    
-    
+
+        view1 = View(
+            Item('plot_type'),
+            ChacoPlotItem(
+                'timeline',
+                'intensity',
+                type_trait='plot_type',
+                resizable=True,
+                x_label='Time (hr)',
+                y_label='Intensity (in/hr)',
+                color='blue',
+                bgcolor='white',
+                border_visible=True,
+                border_width=1,
+                padding_bg_color='lightgray',
+            ),
+            Item(name='duration'),
+            Item(name='year_storm'),
+            Item(name='county'),
+            # After infiltration using the nrcs curve number method.
+            ChacoPlotItem(
+                'timeline',
+                'nrcs',
+                type_trait='plot_type',
+                resizable=True,
+                x_label='Time',
+                y_label='Intensity',
+                color='blue',
+                bgcolor='white',
+                border_visible=True,
+                border_width=1,
+                padding_bg_color='lightgray',
+            ),
+            Item('curve_number'),
+            resizable=True,
+            width=800,
+            height=800,
+        )
+
         def calculate_intensity(self):
             """ The Hyetograph calculations. """
             # Assigning A, B, and C values based on year, storm, and county
-            counties = {'Brazos': 0, 'Dallas': 3, 'El Paso': 6, 'Harris': 9}
-            years = {
-                2 : [65, 8, .806, 54, 8.3, .791, 24, 9.5, .797, 68, 7.9, .800],
-                10: [80, 8.5, .763, 78, 8.7, .777, 42, 12., .795,81, 7.7, .753],
-                25: [89, 8.5, .754, 90, 8.7, .774, 60, 12.,.843, 81, 7.7, .724],
-                100: [96, 8., .730, 106, 8.3, .762, 65, 9.5, .825, 91, 7.9, .706]
-            }
-            year = years[self.year_storm]
-            value = counties[self.county]
+            year = YEARS[self.year_storm]
+            value = COUNTIES[self.county]
             a, b, c = year[value], year[value+1], year[value+2]
-            
+
             self.timeline=range(2, self.duration + 1, 2)
             intensity=a / (self.timeline * 60 + b)**c
-            cumdepth=intensity * self.timeline
-    
-            temp=cumdepth[0]
+            cumulative_depth=intensity * self.timeline
+
+            temp=cumulative_depth[0]
             result=[]
-            for i in cumdepth[1:]:
+            for i in cumulative_depth[1:]:
                 result.append(i-temp)
                 temp=i
-            result.insert(0,cumdepth[0])
-    
+            result.insert(0,cumulative_depth[0])
+
             # Alternating block method implementation. 
             result.reverse()
             switch = True
@@ -401,8 +444,7 @@ The final version of the program, `hyetograph.py`. ::
             e.reverse()
             result = o + e
             self.intensity = result
-            
-    
+
         def calculate_runoff(self):
             """ NRCS method to get run-off based on permeability of ground. """ 
             s = (1000 / self.curve_number) - 10
@@ -413,18 +455,17 @@ The final version of the program, `hyetograph.py`. ::
                 if a[i] <= 0:
                     vr[i] = 0   
             self.nrcs = vr
-    
-    
+
         @on_trait_change('duration, year_storm, county, curve_number')
         def _perform_calculations(self):
             self.calculate_intensity()
             self.calculate_runoff()
-    
-    
+
         def start(self):
             self._perform_calculations()
             self.configure_traits()
-            
-    
-    f=Hyetograph()
-    f.start()
+
+
+    if __name__ == "__main__":
+        hyetograph=Hyetograph()
+        hyetograph.start()

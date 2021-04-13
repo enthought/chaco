@@ -24,20 +24,22 @@ from tutorial2 import demo
 demo.configure_traits()
 plot = demo.plot
 
+
 def xtitle(text):
     plot.x_axis.title = text
     plot.request_redraw()
+
 
 def ytitle(text):
     plot.y_axis.title = text
     plot.request_redraw()
 
+
 def xrange(low, high):
     plot.x_mapper.range.low = low
     plot.x_mapper.range.high = high
 
+
 def yrange(low, high):
     plot.y_mapper.range.low = low
     plot.y_mapper.range.high = high
-
-

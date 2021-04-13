@@ -11,11 +11,15 @@ from traitsui.api import Item, View
 
 from tutorial1 import myplot
 
+
 class PlotExample(HasTraits):
     plot = myplot
 
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
-                       title="Chaco Tutorial")
+    traits_view = View(
+        Item("plot", editor=ComponentEditor(), show_label=False),
+        title="Chaco Tutorial",
+    )
+
 
 demo = PlotExample()
 

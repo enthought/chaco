@@ -1,6 +1,6 @@
-==================================
+##########################
 Overlays: Axis, Grid, etc.
-==================================
+##########################
 
 Overlays are elements that decorate plots, like for example
 axes, legends, grids, etc.
@@ -11,16 +11,19 @@ of their interface with :ref:`plot renderers <plot_renderers>`
 
 In addition, they have a lightweight interface defined in
 :class:`chaco.abstract_overlay.AbstractOverlay`: the additional
-features are that 1) they keep a reference to the plot they are decorating in
-:attr:`~chaco.abstract_overlay.AbstractOverlay.component`;
-2) the background color
-:attr:`~chaco.abstract_overlay.AbstractOverlay.bgcolor`
-is 'transparent' by default;
-3) they plot :ref:`on the 'overlay' layer <plot_layers>` by default.
+features are that
 
+1. they keep a reference to the plot they are decorating in
+   :attr:`~chaco.abstract_overlay.AbstractOverlay.component`;
+2. the background color :attr:`~chaco.abstract_overlay.AbstractOverlay.bgcolor`
+   is 'transparent' by default;
+3. they plot :ref:`on the 'overlay' layer <plot_layers>` by default.
 
-TODO: explain how to attach an overlay to an existing plot renderer
+.. TODO: explain how to attach an overlay to an existing plot renderer
 
+=============
+Core Overlays
+=============
 
 There are three important classes of overlays defined in Chaco:
 :ref:`axes <axis>`, :ref:`legends <legend>`, and :ref:`grids <grid>`.
@@ -46,11 +49,13 @@ given an X-Y plot renderer, ``plot``, we can define a new x-axis as: ::
         'title_font': 'modern 20',
     }
 
-    x_axis = PlotAxis(orientation='bottom',
-                      title='My x axis',
-                      mapper=plot.x_mapper,
-                      component=plot,
-                      **AXIS_DEFAULTS)
+    x_axis = PlotAxis(
+        orientation='bottom',
+        title='My x axis',
+        mapper=plot.x_mapper,
+        component=plot,
+        **AXIS_DEFAULTS,
+    )
 
 The newly created axis can then be attached to the plot renderer by
 appending it to its underlays layer: ::
@@ -68,15 +73,19 @@ A :class:`~chaco.axis.MinorPlotAxis` should be added along with a
 :class:`~chaco.axis.PlotAxis`. For example, minor axis tick marks can be
 added with: ::
 
-    x_major_axis = PlotAxis(orientation='bottom',
-                      title='My x axis',
-                      mapper=plot.x_mapper,
-                      component=plot)
+    x_major_axis = PlotAxis(
+        orientation='bottom',
+        title='My x axis',
+        mapper=plot.x_mapper,
+        component=plot,
+    )
     plot.underlays.append(x_major_axis)
 
-    x_minor_axis = MinorPlotAxis(orientation='bottom',
-                      mapper=plot.x_mapper,
-                      component=plot)
+    x_minor_axis = MinorPlotAxis(
+        orientation='bottom',
+        mapper=plot.x_mapper,
+        component=plot,
+    )
     plot.underlays.append(x_minor_axis)
 
 Attributes
@@ -154,3 +163,43 @@ Legend
 
 Grid
 ====
+
+===================
+Annotation Overlays
+===================
+
+PointMarker
+===========
+
+DataBox
+=======
+
+.. _tools/text_box_overlay:
+
+TextBoxOverlay
+==============
+The :class:`chaco.overlays.api.TextBoxOverlay` is the base class of
+the overlay component of several inspector type tools (see above). It is
+designed to draw a text box over the plots to display custom information.
+
+The rendering of the text can be customized with the following attributes:
+
+* :attr:`bgcolor` and :attr:`border_visible` to control the styling of the box,
+* :attr:`alpha` to control the transparency of the text box,
+* :attr:`text_color` and :attr:`font` to control how the text looks like,
+* :attr:`align` to control what corner of the plot the text box should appear,
+
+.. note:: The overlay can also be used directly by any custom tool that needs
+          to display information upon an event. It should be done by
+          subclassing the overlay and defining a listener on the inspector's
+          state which will modify the overlay's :attr:`text` (and optionally
+          visibility) attribute(s). After a `text` update, the component's
+          :meth:`request_redraw` should be called. Good examples include
+          :class:`chaco.overlays.api.ImageInspectorOverlay`.
+
+
+ToolTip
+=======
+
+PlotLabel
+=========

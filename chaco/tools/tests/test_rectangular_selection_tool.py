@@ -9,7 +9,6 @@ from enable.testing import EnableTestAssistant
 
 
 class RectangularSelectionTestCase(EnableTestAssistant, unittest.TestCase):
-
     def test_selection_mask(self):
 
         plot_data = ArrayPlotData()
@@ -17,11 +16,11 @@ class RectangularSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         arr = np.array([-2, -1, 1, 2])
         plot_data.set_data("x", arr)
         plot_data.set_data("y", arr)
-        splot = plot.plot(('x', 'y'), type='scatter')[0]
+        splot = plot.plot(("x", "y"), type="scatter")[0]
         tool = RectangularSelection(
             component=splot,
             selection_datasource=splot.index,
-            metadata_name='selections',
+            metadata_name="selections",
         )
         splot.tools.append(tool)
 
@@ -30,24 +29,12 @@ class RectangularSelectionTestCase(EnableTestAssistant, unittest.TestCase):
         cursor_start = splot.map_screen([-1.5, -1.5])[0]
         cursor_stop = splot.map_screen([1.5, 1.5])[0]
 
-        self.mouse_down(
-            interactor=tool,
-            x=cursor_start[0],
-            y=cursor_start[1]
-        )
+        self.mouse_down(interactor=tool, x=cursor_start[0], y=cursor_start[1])
 
-        self.mouse_move(
-            interactor=tool,
-            x=cursor_stop[0],
-            y=cursor_stop[1]
-        )
+        self.mouse_move(interactor=tool, x=cursor_stop[0], y=cursor_stop[1])
 
-        self.mouse_up(
-            interactor=tool,
-            x=cursor_stop[0],
-            y=cursor_stop[1]
-        )
+        self.mouse_up(interactor=tool, x=cursor_stop[0], y=cursor_stop[1])
 
         expected_mask = [False, True, True, False]
-        selection_mask = list(splot.index.metadata['selections'])
+        selection_mask = list(splot.index.metadata["selections"])
         self.assertEqual(expected_mask, selection_mask)
