@@ -15,6 +15,7 @@ from traits.api import (
     Instance,
     Int,
     List,
+    observe,
     Property,
     Str,
     Trait,
@@ -676,21 +677,7 @@ class RangeSelection(AbstractController):
             else:
                 return 0
 
+    @observe("component.index_mapper,component.value_mapper")
     def __mapper_changed(self, event):
-        self.deselect()
-
-    def _component_changed(self, old, new):
-        if old is not None:
-            self.plot.observe(
-                self.__mapper_changed, self.axis + "_mapper", remove=True
-            )
-        if new is not None:
-            self.plot.observe(self.__mapper_changed, self.axis + "_mapper")
-
-    def _axis_changed(self, old, new):
-        if old is not None:
-            self.plot.observe(
-                self.__mapper_changed, old + "_mapper", remove=True
-            )
-        if new is not None:
-            self.plot.observe(self.__mapper_changed, new + "_mapper")
+        if event.name == self.axis + "_mapper":
+            self.deselect()
