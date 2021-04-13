@@ -5,7 +5,7 @@ from numpy import allclose, array, ravel
 from chaco.api import ArrayDataSource, ColorMapper, DataRange1D
 
 
-class LinearSegmentedColormapTestCase(unittest.TestCase):
+class ColormapperTestCase(unittest.TestCase):
     def setUp(self):
         """ Set up called before each test case. """
 
@@ -130,36 +130,3 @@ class LinearSegmentedColormapTestCase(unittest.TestCase):
             "red": [(0.0, 0.0, 0.0), (1.0, 1.0, 1.0)],
         }
         assert self.colormap._segmentdata == sd
-
-
-##     def test_no_interpolation(self):
-##         grayscale_colors = array([[0.0,0.0,0.0,1.0], [1.0, 1.0, 1.0, 1.0]])
-##         grayscale_bins = array([0.0, 1.0])
-##         grayscale_steps = array([1])
-
-##         colormap = LinearSegmentedColormap(
-##             grayscale_colors, grayscale_bins, grayscale_steps
-##         )
-
-##         a = array([0.0, 0.25, 0.75, 1.0])
-##         b = colormap.map_array(a)
-##         result = ravel(b[:,:1])
-##         expected = array([0.0, 0.0, 1.0, 1.0])
-
-##         close = allclose(result, expected, atol=0.02)
-##         self.assert_(close,
-##             "Map with no interpolation broken.  Expected %s.  Got %s" % (expected, result))
-
-##     def test_value_bands(self):
-
-##         grayscale_colors = array([[0.0,0.0,0.0,1.0], [1.0, 1.0, 1.0, 1.0]])
-##         grayscale_bins = array([0.0, 1.0])
-##         grayscale_steps = array([1])
-
-##         colormap = LinearSegmentedColormap(
-##             grayscale_colors, grayscale_bins, grayscale_steps
-##         )
-
-##         colormap._recalculate()
-
-##         print '**************', colormap._color_bands, colormap._value_bands

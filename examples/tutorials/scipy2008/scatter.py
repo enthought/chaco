@@ -1,6 +1,6 @@
 from numpy import linspace, sin
 from chaco.api import ArrayPlotData, Plot
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 

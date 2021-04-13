@@ -35,7 +35,7 @@ class ColorBar(AbstractPlotRenderer):
     color_mapper = Property  # Instance(ColorMapper)
 
     #: Screen mapper for value data (synonym for color_mapper)
-    value_mapper = Property(depends_on="color_mapper")
+    value_mapper = Property(observe="color_mapper")
 
     #: Optional index data source for generic tools to attach metadata to.
     index = Property

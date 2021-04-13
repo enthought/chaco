@@ -180,7 +180,7 @@ Chaco has been written for.
 First, some imports to bring in necessary components::
 
     from chaco.api import ArrayPlotData, Plot
-    from enable.component_editor import ComponentEditor
+    from enable.api import ComponentEditor
 
     from traits.api import HasTraits, Instance
     from traitsui.api import View, Item

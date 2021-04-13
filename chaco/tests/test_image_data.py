@@ -10,7 +10,7 @@ from numpy.testing import assert_array_equal
 from pkg_resources import resource_filename
 
 from chaco.api import ImageData
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 
 data_dir = resource_filename("chaco.tests", "data")

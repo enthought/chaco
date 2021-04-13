@@ -5,7 +5,7 @@ from numpy import array, asarray, argmin, sqrt
 
 # Enthought library imports
 from traits.api import Any, Bool, Enum
-from enable.tools.drag_tool import DragTool
+from enable.tools.api import DragTool
 
 
 class DataLabelTool(DragTool):

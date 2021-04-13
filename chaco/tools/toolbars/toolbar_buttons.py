@@ -24,11 +24,11 @@ class ToolbarButton(Button):
 
     color = "black"
 
-    width = Property(Int, depends_on="label, image")
-    height = Property(Int, depends_on="label, image")
+    width = Property(Int, observe="label, image")
+    height = Property(Int, observe="label, image")
 
     # bounds are used for hit testing
-    bounds = Property(List, depends_on="label, image")
+    bounds = Property(List, observe="label, image")
 
     def __init__(self, *args, **kw):
         super(ToolbarButton, self).__init__(*args, **kw)

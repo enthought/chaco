@@ -68,7 +68,9 @@ class PlotTestCase(unittest.TestCase):
         w = arange(3, 8)
         data = ArrayPlotData(x=x, y=y, c=c, w=w)
         plot = Plot(data)
-        plot.plot(("x", "y", "c", "w"), "cmap_segment", color_mapper=viridis)[0]
+        plot.plot(
+            ("x", "y", "c", "w"), "cmap_segment", color_mapper=viridis
+        )[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))

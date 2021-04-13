@@ -5,7 +5,7 @@ the upper left
 import numpy
 from chaco.api import ToolbarPlot, ArrayPlotData
 from chaco.tools.api import LineInspector
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import UItem, View
 

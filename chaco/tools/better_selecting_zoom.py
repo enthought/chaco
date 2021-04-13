@@ -44,7 +44,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     # -------------------------------------------------------------------------
 
     #: Conversion ratio from wheel steps to zoom factors.
-    wheel_zoom_step = Property(Float, depends_on="zoom_factor")
+    wheel_zoom_step = Property(Float, observe="zoom_factor")
 
     #: The key press to enter zoom mode, if **always_on** is False.  Has no effect
     #: if **always_on** is True.

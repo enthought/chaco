@@ -4,7 +4,7 @@ functions.
 from numpy import array, transpose
 
 from traits.api import Bool, Enum, Instance, Property
-from enable.colors import color_table
+from enable.api import color_table
 
 from .abstract_overlay import AbstractOverlay
 from .axis import PlotAxis
@@ -111,7 +111,7 @@ class DataView(OverlayPlotContainer):
     )
 
     #: The origin reported to axes, etc
-    origin = Property(depends_on="default_origin")
+    origin = Property(observe="default_origin")
 
     # Whether our map_screen and map_data should treat screen-space
     # coords as being in our coordinate space or in our contained

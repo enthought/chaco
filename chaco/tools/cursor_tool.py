@@ -19,7 +19,7 @@ TODO:
 import numpy
 
 # Enthought library imports
-from enable.tools.drag_tool import DragTool
+from enable.tools.api import DragTool
 from traits.api import (
     Int,
     Property,
@@ -74,7 +74,7 @@ class BaseCursorTool(LineInspector, DragTool):
     current_index = Disallow
 
     # The current position of the cursor in data units
-    current_position = Property(depends_on=["current_index"])
+    current_position = Property(observe=["current_index"])
 
     # Stuff from line_inspector which is not required
     axis = Disallow
