@@ -70,7 +70,7 @@ class PlotSession(HasTraits):
             image_default_origin=self.prefs.image_default_origin,
         )
         new_win.data = self.data
-        new_win.get_container().data = self.data
+        new_win.container.data = self.data
         new_win.session = self
 
         if title is not None:
@@ -145,7 +145,7 @@ class PlotSession(HasTraits):
     def _colormap_changed(self):
         plots = []
         for w in self.windows:
-            container = w.get_container()
+            container = w.container
             for vals in container.plots.values():
                 plots.extend(vals)
         for p in plots:

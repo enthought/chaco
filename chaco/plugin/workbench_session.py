@@ -37,7 +37,7 @@ class WorkbenchSession(PlotSession):
             window=workbench.active_window,
         )
         new_win.data = self.data
-        new_win.get_container().data = self.data
+        new_win.container.data = self.data
         new_win.session = self
 
         if title is not None:
