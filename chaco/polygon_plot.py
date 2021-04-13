@@ -53,12 +53,12 @@ class PolygonPlot(BaseXYPlot):
     #: The RGBA tuple for rendering edges. It is always a tuple of length 4.
     #: It has the same RGB values as :attr:`edge_color`, and its alpha value
     #: is the alpha value of self.edge_color multiplied by self.alpha.
-    effective_edge_color = Property(Tuple, depends_on=["edge_color", "alpha"])
+    effective_edge_color = Property(Tuple, observe=["edge_color", "alpha"])
 
     #: The RGBA tuple for rendering the face. It is always a tuple of length
     #: 4. It has the same RGB values as :attr:`face_color`, and its alpha
     #: value is the alpha value of self.face_color multiplied by self.alpha.
-    effective_face_color = Property(Tuple, depends_on=["face_color", "alpha"])
+    effective_face_color = Property(Tuple, observe=["face_color", "alpha"])
 
     # ----------------------------------------------------------------------
     # Private 'BaseXYPlot' interface

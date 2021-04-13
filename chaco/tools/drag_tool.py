@@ -10,4 +10,4 @@ warnings.warn(
     DeprecationWarning,
 )
 
-from enable.tools.drag_tool import DragTool
+from enable.tools.api import DragTool

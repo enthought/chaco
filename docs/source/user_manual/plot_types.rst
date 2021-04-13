@@ -381,8 +381,12 @@ The preferred way to do this is using the factory method
 
     w, h = image_source.get_width(), image_source.get_height()
     index = GridDataSource(np.arange(w), np.arange(h))
-    index_mapper = GridMapper(range=DataRange2D(low=(0, 0),
-                                                high=(w-1, h-1)))
+    index_mapper = GridMapper(
+        range=DataRange2D(
+            low=(0, 0),
+            high=(w-1, h-1),
+        )
+    )
 
     image_plot = ImagePlot(
         index=index,

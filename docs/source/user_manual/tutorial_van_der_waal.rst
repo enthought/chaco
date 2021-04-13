@@ -10,7 +10,7 @@ Overview
 ========
 
 This tutorial walks through the creation of an example program that plots a
-scientific equation.  In particular, we will model `Van Der Waal's Equation
+scientific equation.  In particular, we will model `Van der Waal's Equation
 <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_, which is a
 modification to the ideal gas law that takes into account the nonzero size of
 molecules and the attraction to each other that they experience.
@@ -28,41 +28,57 @@ resources for learning about the packages.
 You must have Chaco and its dependencies installed:
 
 * Traits
-* TraitsGUI
+* TraitsUI
 * Enable
+
+i.e. `edm install chaco` should install the above dependencies.
 
 
 Writing the Program
 ===================
 
 First, define a Traits class and the elements necessary need to model
-the task.  The following Traits class is made for the Van Der Waal
+the task.  The following Traits class is made for the Van der Waal
 equation, whose variables can be viewed on
 `this wiki page <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_.  The
 :attr:`volume` and :attr:`pressure` attributes hold lists of our X- and
 Y-coordinates, respectively, and are defined as arrays. The attributes
-:attr:`attraction` and :attr:`totVolume` are  input parameters specified by the
+:attr:`attraction` and :attr:`tot_volume` are  input parameters specified by the
 user.  The type of the variables dictates their appearance in the GUI.  For
-example, :attr:`attraction` and :attr:`totVolume` are defined as Ranges, so they
+example, :attr:`attraction` and :attr:`tot_volume` are defined as Ranges, so they
 show up as slider bars.  Likewise, :attr:`plot_type` is shown as a drop-down
 list, since it is defined as an Enum.
 
 ::
 
     # We'll also import a few things to be used later.
-    from traits.api \
-        import HasTraits, Array, Range, Float, Enum, on_trait_change, Property
+    from traits.api import (
+        HasTraits,
+        Array,
+        Range,
+        Float,
+        Enum,
+        on_trait_change,
+        Property,
+    )
     from traitsui.api import View, Item
     from chaco.chaco_plot_editor import ChacoPlotItem
     from numpy import arange
 
     class Data(HasTraits):
+
         volume = Array
+
         pressure = Array
-        attraction = Range(low=-50.0,high=50.0,value=0.0)
-        totVolume = Range(low=.01,high=100.0,value=0.01)
+
+        attraction = Range(low=-50.0, high=50.0, value=0.0)
+
+        tot_volume = Range(low=.01, high=100.0, value=0.01)
+
         temperature = Range(low=-50.0,high=50.0,value=50.0)
+
         r_constant= Float(8.314472)
+
         plot_type = Enum("line", "scatter")
 
     ....
@@ -83,36 +99,42 @@ embed a Chaco plot into a Traits View, you need to import the
 like the Item objects. The first two arguments to ChacoPlotItem are the
 lists of X- and Y-coordinates for the graph.  The attributes :attr:`volume` and
 :attr:`pressure` hold the lists of X- and Y-coordinates, and therefore are the
-first two arguments to Chaco2PlotItem.  Other parameters have been
+first two arguments to ChacoPlotItem.  Other parameters have been
 provided to the plot for additional customization::
 
     class Data(HasTraits):
         ....
 
-        traits_view = View(ChacoPlotItem("volume", "pressure",
-                                   type_trait="plot_type",
-                                   resizable=True,
-                                   x_label="Volume",
-                                   y_label="Pressure",
-                                   x_bounds=(-10,120),
-                                   x_auto=False,
-                                   y_bounds=(-2000,4000),
-                                   y_auto=False,
-                                   color="blue",
-                                   bgcolor="white",
-                                   border_visible=True,
-                                   border_width=1,
-                                   title='Pressure vs. Volume',
-                                   padding_bg_color="lightgray"),
-                           Item(name='attraction'),
-                           Item(name='totVolume'),
-                           Item(name='temperature'),
-                           Item(name='r_constant', style='readonly'),
-                           Item(name='plot_type'),
-                           resizable = True,
-                           buttons = ["OK"],
-                           title='Van der Waal Equation',
-                           width=900, height=800)
+        traits_view = View(
+            ChacoPlotItem(
+                "volume",
+                "pressure",
+                type_trait="plot_type",
+                resizable=True,
+                x_label="Volume",
+                y_label="Pressure",
+                x_bounds=(-10,120),
+                x_auto=False,
+                y_bounds=(-2000,4000),
+                y_auto=False,
+                color="blue",
+                bgcolor="white",
+                border_visible=True,
+                border_width=1,
+                title='Pressure vs. Volume',
+                padding_bg_color="lightgray"
+            ),
+            Item(name='attraction'),
+            Item(name='tot_volume'),
+            Item(name='temperature'),
+            Item(name='r_constant', style='readonly'),
+            Item(name='plot_type'),
+            resizable=True,
+            buttons=["OK"],
+            title='Van der Waal Equation',
+            width=900,
+            height=800,
+        )
     ....
 
 
@@ -128,9 +150,9 @@ The :attr:`volume` attribute is the independent variable and :attr:`pressure` is
 the dependent variable. The relationship between pressure and volume, as derived
 from the equation found on the wiki page, is::
 
-               r_constant * Temperature       attraction
-   Pressure =  ------------------------   -   ----------
-                  Volume - totVolume          Volume**2
+               r_constant * temperature       attraction
+   pressure =  ------------------------   -   ----------
+                  volume - tot_volume          volume**2
 
 
 Next, there are two programing tasks to complete:
@@ -144,20 +166,21 @@ Next, there are two programing tasks to complete:
 
 The following is the code for these two needs::
 
-    # Re-calculate when attraction, totVolume, or temperature are changed.
-    @on_trait_change('attraction, totVolume, temperature')
+    # Re-calculate when attraction, tot_volume, or temperature are changed.
+    @on_trait_change('attraction, tot_volume, temperature')
     def calc(self):
         """ Update the data based on the numbers specified by the user. """
         self.volume = arange(.1, 100)
-        self.pressure = ((self.r_constant*self.temperature)
-		         /(self.volume - self.totVolume)
-                        -(self.attraction/(self.volume*self.volume)))
+        self.pressure = (
+            (self.r_constant*self.temperature)/(self.volume - self.tot_volume)
+            - self.attraction/(self.volume*self.volume)
+        )
 
 The :func:`calc` function computes the :attr:`pressure` array using the current
 values of the independent variables.  Meanwhile, the
 :func:`@on_trait_change` decorator (provided by Traits) tells Python to call
 :func:`calc` whenever any of the attributes :attr:`attraction`,
-:attr:`totVolume`, or :attr:`temperature` changes.
+:attr:`tot_volume`, or :attr:`temperature` changes.
 
 
 Testing your Program
@@ -236,9 +259,9 @@ The new pieces of code to add to the Data class are::
 
     class Data(HasTraits):
         ...
-        pressure = Property(Array, depends_on=['temperature',
-		   		               'attraction',
- 					       'totVolume'])
+        pressure = Property(
+            Array, depends_on=['temperature', 'attraction', 'tot_volume']
+        )
         ...
 
         def _volume_default(self):
@@ -247,9 +270,10 @@ The new pieces of code to add to the Data class are::
         # Pressure is recalculated whenever one of the elements the property
         # depends on changes.  No need to use @on_trait_change.
         def _get_pressure(self):
-          return ((self.r_constant*self.temperature)
-                  /(self.volume - self.totVolume)
-                 -(self.attraction/(self.volume*self.volume)))
+            return (
+                (self.r_constant*self.temperature)/(self.volume - self.tot_volume)
+                -self.attraction/(self.volume*self.volume)
+            )
 
 You now no longer have to call an inconvenient calculation function
 before the first call to :meth:`configure_traits`!
@@ -260,47 +284,67 @@ Source Code
 
 The final version on the program, `vanderwaals.py` ::
 
-    from traits.api \
-        import HasTraits, Array, Range, Float, Enum, on_trait_change, Property
+    from traits.api import (
+        HasTraits,
+        Array,
+        Range,
+        Float,
+        Enum,
+        on_trait_change,
+        Property,
+    )
     from traitsui.api import View, Item
     from chaco.chaco_plot_editor import ChacoPlotItem
     from numpy import arange
 
     class Data(HasTraits):
+
         volume = Array
-        pressure = Property(Array, depends_on=['temperature', 'attraction',
-     				           'totVolume'])
+
+        pressure = Property(
+            Array, depends_on=['temperature', 'attraction', 'tot_volume']
+        )
+
         attraction = Range(low=-50.0,high=50.0,value=0.0)
-        totVolume = Range(low=.01,high=100.0,value=0.01)
+
+        tot_volume = Range(low=.01,high=100.0,value=0.01)
+
         temperature = Range(low=-50.0,high=50.0,value=50.0)
+
         r_constant= Float(8.314472)
+
         plot_type = Enum("line", "scatter")
 
-        traits_view = View(ChacoPlotItem("volume", "pressure",
-                                   type_trait="plot_type",
-                                   resizable=True,
-                                   x_label="Volume",
-                                   y_label="Pressure",
-                                   x_bounds=(-10,120),
-                                   x_auto=False,
-                                   y_bounds=(-2000,4000),
-                                   y_auto=False,
-                                   color="blue",
-                                   bgcolor="white",
-                                   border_visible=True,
-                                   border_width=1,
-                                   title='Pressure vs. Volume',
-                                   padding_bg_color="lightgray"),
-                           Item(name='attraction'),
-                           Item(name='totVolume'),
-                           Item(name='temperature'),
-                           Item(name='r_constant', style='readonly'),
-                           Item(name='plot_type'),
-                           resizable = True,
-                           buttons = ["OK"],
-                           title='Van der Waal Equation',
-                           width=900, height=800)
-
+        traits_view = View(
+            ChacoPlotItem(
+                "volume",
+                "pressure",
+                type_trait="plot_type",
+                resizable=True,
+                x_label="Volume",
+                y_label="Pressure",
+                x_bounds=(-10,120),
+                x_auto=False,
+                y_bounds=(-2000,4000),
+                y_auto=False,
+                color="blue",
+                bgcolor="white",
+                border_visible=True,
+                border_width=1,
+                title='Pressure vs. Volume',
+                padding_bg_color="lightgray",
+            ),
+            Item(name='attraction'),
+            Item(name='tot_volume'),
+            Item(name='temperature'),
+            Item(name='r_constant', style='readonly'),
+            Item(name='plot_type'),
+            resizable=True,
+            buttons=["OK"],
+            title='Van der Waal Equation',
+            width=900,
+            height=800,
+        )
 
         def _volume_default(self):
             """ Default handler for volume Trait Array. """
@@ -308,9 +352,11 @@ The final version on the program, `vanderwaals.py` ::
 
         def _get_pressure(self):
             """Recalculate when one a trait the property depends on changes."""
-            return ((self.r_constant*self.temperature)
-                  /(self.volume - self.totVolume)
-                 -(self.attraction/(self.volume*self.volume)))
+            return (
+                (self.r_constant*self.temperature)/(self.volume - self.tot_volume)
+                -self.attraction/(self.volume*self.volume)
+            )
+
 
     if __name__ == '__main__':
         viewer = Data()

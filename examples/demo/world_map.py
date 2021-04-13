@@ -20,7 +20,7 @@ import numpy
 # ETS imports
 from chaco.api import Plot, ArrayPlotData, ImageData
 from chaco.tools.api import ZoomTool
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance, Str
 from traitsui.api import Item, View
 

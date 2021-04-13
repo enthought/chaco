@@ -75,9 +75,9 @@ and the overlay catches these events and displays the data as an overlay.
 
 To use it, as for other tools, you need to:
 
-    1. create a tool object and append it to the **renderer**'s list of tools,
-    2. create an overlay object and append it to the **renderer**'s list of
-       overlays.
+1. create a tool object and append it to the **renderer**'s list of tools,
+2. create an overlay object and append it to the **renderer**'s list of
+   overlays.
 
 For example, a method to build a :class:`chaco.api.Plot` object with that tool
 could look like::
@@ -95,9 +95,12 @@ will need it. The tool code to be inserted would look something like this::
 
     imgtool = ImageInspectorTool(component=img_plot)
     img_plot.tools.append(imgtool)
-    overlay = ImageInspectorOverlay(component=img_plot, image_inspector=imgtool,
-                                    bgcolor="white", border_visible=True)
-
+    overlay = ImageInspectorOverlay(
+        component=img_plot,
+        image_inspector=imgtool,
+        bgcolor="white",
+        border_visible=True
+    )
     img_plot.overlays.append(overlay)
 
 Note the two important connections that are made for the tool/overlay to work

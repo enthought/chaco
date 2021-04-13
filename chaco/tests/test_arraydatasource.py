@@ -11,7 +11,7 @@ from numpy.testing import assert_array_equal
 import numpy as np
 
 from chaco.api import ArrayDataSource, PointDataSource
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 
 class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):

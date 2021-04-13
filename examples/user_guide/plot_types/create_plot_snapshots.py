@@ -7,40 +7,43 @@ Relies on sklearn for the datasets.
 import argparse
 from functools import partial
 
-from chaco.array_data_source import ArrayDataSource
-from chaco.axis import PlotAxis
-from chaco.cmap_image_plot import CMapImagePlot
-from chaco.contour_line_plot import ContourLinePlot
-from chaco.contour_poly_plot import ContourPolyPlot
-from chaco.data_range_1d import DataRange1D
-from chaco.data_range_2d import DataRange2D
-from chaco.grid import PlotGrid
-from chaco.jitterplot import JitterPlot
-from chaco.lineplot import LinePlot
-from chaco.multi_array_data_source import MultiArrayDataSource
-from chaco.plot_graphics_context import PlotGraphicsContext
+from chaco.api import (
+    ArrayDataSource,
+    BarPlot,
+    CandlePlot,
+    CMapImagePlot,
+    ColormappedScatterPlot,
+    ContourLinePlot,
+    ContourPolyPlot,
+    DataRange1D,
+    DataRange2D,
+    ErrorBarPlot,
+    FilledLinePlot,
+    GridDataSource,
+    GridMapper,
+    ImageData,
+    ImagePlot,
+    JitterPlot,
+    LinePlot,
+    LinearMapper,
+    MultiArrayDataSource,
+    MultiLinePlot,
+    PlotAxis,
+    PlotGraphicsContext,
+    PlotGrid,
+    PolygonPlot,
+    QuiverPlot,
+    ScatterPlot,
+)
 from chaco.polar_line_renderer import PolarLineRenderer
 from chaco.polar_mapper import PolarMapper
-from chaco.polygon_plot import PolygonPlot
-from chaco.quiverplot import QuiverPlot
-from chaco.scatterplot import ScatterPlot
-from chaco.linear_mapper import LinearMapper
-from chaco.candle_plot import CandlePlot
-from chaco.colormapped_scatterplot import ColormappedScatterPlot
 import chaco.default_colormaps as dc
-from enable.colors import color_table
+from enable.api import color_table
 
 import scipy.stats
 import numpy as np
 import sklearn.datasets as datasets
-from chaco.errorbar_plot import ErrorBarPlot
-from chaco.filled_line_plot import FilledLinePlot
-from chaco.image_plot import ImagePlot
-from chaco.grid_data_source import GridDataSource
-from chaco.grid_mapper import GridMapper
-from chaco.image_data import ImageData
-from chaco.barplot import BarPlot
-from chaco.multi_line_plot import MultiLinePlot
+
 from plot_window import PlotWindow
 
 

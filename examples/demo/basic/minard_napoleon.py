@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Minard's Map of Napoleon's Russian Campaign
 ===========================================
@@ -120,8 +119,12 @@ army = np.array(
 
 
 def _create_plot_component():
-    army_lat = np.column_stack([army["start_lat"], army["end_lat"]]).reshape(-1)
-    army_lon = np.column_stack([army["start_lon"], army["end_lon"]]).reshape(-1)
+    army_lat = np.column_stack(
+        [army["start_lat"], army["end_lat"]]
+    ).reshape(-1)
+    army_lon = np.column_stack(
+        [army["start_lon"], army["end_lon"]]
+    ).reshape(-1)
 
     plot_data = ArrayPlotData(
         army_lon=army_lon,

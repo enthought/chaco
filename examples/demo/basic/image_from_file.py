@@ -17,19 +17,21 @@ import os, sys
 # Enthought library imports
 from traits.util.resource import find_resource
 from traits.api import File, HasTraits, Instance
-from traitsui.api import Handler, Item, View
-from traitsui.menu import (
+from traitsui.api import (
     Action,
     CloseAction,
+    Handler,
+    Item,
     Menu,
     MenuBar,
     OKCancelButtons,
     Separator,
+    View,
 )
 
 # Chaco imports
 from chaco.api import ArrayPlotData, ImageData, Plot, PlotGraphicsContext
-from enable.component_editor import ComponentEditor
+from enable.api import ComponentEditor
 from chaco.tools.api import PanTool, ZoomTool
 
 

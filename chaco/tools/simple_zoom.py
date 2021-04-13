@@ -30,91 +30,91 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     through previous zoom regions.
     """
 
-    # The selection mode:
-    #
-    # range:
-    #   Select a range across a single index or value axis.
-    # box:
-    #   Perform a "box" selection on two axes.
+    #: The selection mode:
+    #:
+    #: range:
+    #:   Select a range across a single index or value axis.
+    #: box:
+    #:   Perform a "box" selection on two axes.
     tool_mode = Enum("box", "range")
 
-    # Is the tool always "on"? If True, left-clicking always initiates
-    # a zoom operation; if False, the user must press a key to enter zoom mode.
+    #: Is the tool always "on"? If True, left-clicking always initiates
+    #: a zoom operation; if False, the user must press a key to enter zoom mode.
     always_on = Bool(False)
 
-    # Defines a meta-key, that works with always_on to set the zoom mode. This
-    # is useful when the zoom tool is used in conjunction with the pan tool.
+    #: Defines a meta-key, that works with always_on to set the zoom mode. This
+    #: is useful when the zoom tool is used in conjunction with the pan tool.
     always_on_modifier = Enum(None, "shift", "control", "alt")
 
     # -------------------------------------------------------------------------
     # Zoom control
     # -------------------------------------------------------------------------
 
-    # The axis to which the selection made by this tool is perpendicular. This
-    # only applies in 'range' mode.
+    #: The axis to which the selection made by this tool is perpendicular. This
+    #: only applies in 'range' mode.
     axis = Enum("index", "value")
 
     # -------------------------------------------------------------------------
     # Interaction control
     # -------------------------------------------------------------------------
 
-    # Enable the mousewheel for zooming?
+    #: Enable the mousewheel for zooming?
     enable_wheel = Bool(True)
 
-    # The mouse button that initiates the drag.  If "None", then the tool
-    # will not respond to drag.  (It can still respond to mousewheel events.)
+    #: The mouse button that initiates the drag.  If "None", then the tool
+    #: will not respond to drag.  (It can still respond to mousewheel events.)
     drag_button = Enum("left", "right", None)
 
-    # Conversion ratio from wheel steps to zoom factors.
+    #: Conversion ratio from wheel steps to zoom factors.
     wheel_zoom_step = Float(1.0)
 
-    # The key press to enter zoom mode, if **always_on** is False.  Has no effect
-    # if **always_on** is True.
+    #: The key press to enter zoom mode, if **always_on** is False.  Has no effect
+    #: if **always_on** is True.
     enter_zoom_key = Instance(KeySpec, args=("z",))
 
-    # The key press to leave zoom mode, if **always_on** is False.  Has no effect
-    # if **always_on** is True.
+    #: The key press to leave zoom mode, if **always_on** is False.  Has no effect
+    #: if **always_on** is True.
     exit_zoom_key = Instance(KeySpec, args=("z",))
 
-    # Disable the tool after the zoom is completed?
+    #: Disable the tool after the zoom is completed?
     disable_on_complete = Bool(True)
 
-    # The minimum amount of screen space the user must select in order for
-    # the tool to actually take effect.
+    #: The minimum amount of screen space the user must select in order for
+    #: the tool to actually take effect.
     minimum_screen_delta = Int(10)
 
     # -------------------------------------------------------------------------
     # Appearance properties (for Box mode)
     # -------------------------------------------------------------------------
 
-    # The pointer to use when drawing a zoom box.
+    #: The pointer to use when drawing a zoom box.
     pointer = "magnifier"
 
-    # The color of the selection box.
+    #: The color of the selection box.
     color = ColorTrait("lightskyblue")
 
-    # The alpha value to apply to **color** when filling in the selection
-    # region.  Because it is almost certainly useless to have an opaque zoom
-    # rectangle, but it's also extremely useful to be able to use the normal
-    # named colors from Enable, this attribute allows the specification of a
-    # separate alpha value that replaces the alpha value of **color** at draw
-    # time.
+    #: The alpha value to apply to **color** when filling in the selection
+    #: region.  Because it is almost certainly useless to have an opaque zoom
+    #: rectangle, but it's also extremely useful to be able to use the normal
+    #: named colors from Enable, this attribute allows the specification of a
+    #: separate alpha value that replaces the alpha value of **color** at draw
+    #: time.
     alpha = Trait(0.4, None, Float)
 
-    # The color of the outside selection rectangle.
+    #: The color of the outside selection rectangle.
     border_color = ColorTrait("dodgerblue")
 
-    # The thickness of selection rectangle border.
+    #: The thickness of selection rectangle border.
     border_size = Int(1)
 
-    # The possible event states of this zoom tool.
+    #: The possible event states of this zoom tool.
     event_state = Enum("normal", "selecting")
 
     # ------------------------------------------------------------------------
     # Key mappings
     # ------------------------------------------------------------------------
 
-    # The key that cancels the zoom and resets the view to the original defaults.
+    #: The key that cancels the zoom and resets the view to the original defaults.
     cancel_zoom_key = Instance(KeySpec, args=("Esc",))
 
     # ------------------------------------------------------------------------
