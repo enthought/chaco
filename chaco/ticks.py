@@ -244,7 +244,7 @@ def auto_ticks(
     axis end points.
     """
     # if a NaN makes it here, we cant determine tick mark locations. Return
-    # empty list to prevent crash. Motivated by enthought/chaco#636
+    # empty list to prevent crash. Motivated by enthought/chaco#529
     if isnan([data_low, data_high, bound_low, bound_high]).any():
         return []
 

@@ -115,7 +115,7 @@ class EmptyLinePlot(HasTraits):
         plot.overlays.append(ZoomTool(plot, zoom_factor=1.1))
         return plot
 
-# regression test for enthought/chaco#636
+# regression test for enthought/chaco#529
 @unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
 class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
 
