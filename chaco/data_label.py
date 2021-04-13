@@ -185,10 +185,10 @@ class DataLabel(ToolTip):
     clip_to_plot = Bool(True)
 
     #: The center x position (average of x and x2)
-    xmid = Property(Float, depends_on=['x', 'x2'])
+    xmid = Property(Float, observe=['x', 'x2'])
 
     #: The center y position (average of y and y2)
-    ymid = Property(Float, depends_on=['y', 'y2'])
+    ymid = Property(Float, observe=['y', 'y2'])
 
     #: 'box' is a simple rectangular box, with an arrow that is a single line
     #: with an arrowhead at the data point.

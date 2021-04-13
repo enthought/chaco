@@ -19,22 +19,32 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, ColorBar, HPlotContainer, viridis, \
-                                 LinearMapper, Plot
-from chaco.tools.api import PanTool, RangeSelection, \
-                                       RangeSelectionOverlay, ZoomTool
+from chaco.api import (
+    ArrayPlotData,
+    ColorBar,
+    HPlotContainer,
+    viridis,
+    LinearMapper,
+    Plot,
+)
+from chaco.tools.api import (
+    PanTool,
+    RangeSelection,
+    RangeSelectionOverlay,
+    ZoomTool,
+)
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
     # Create a scalar field to colormap# Create a scalar field to colormap
-    xbounds = (-2*pi, 2*pi, 600)
-    ybounds = (-1.5*pi, 1.5*pi, 300)
+    xbounds = (-2 * pi, 2 * pi, 600)
+    ybounds = (-1.5 * pi, 1.5 * pi, 300)
     xs = linspace(*xbounds)
     ys = linspace(*ybounds)
-    x, y = meshgrid(xs,ys)
-    z = jn(2, x)*y*x
+    x, y = meshgrid(xs, ys)
+    z = jn(2, x) * y * x
 
     # Create a plot data obect and give it this data
     pd = ArrayPlotData()
@@ -42,11 +52,13 @@ def _create_plot_component():
 
     # Create the plot
     plot = Plot(pd)
-    plot.img_plot("imagedata",
-                  name="my_plot",
-                  xbounds=xbounds[:2],
-                  ybounds=ybounds[:2],
-                  colormap=viridis)
+    plot.img_plot(
+        "imagedata",
+        name="my_plot",
+        xbounds=xbounds[:2],
+        ybounds=ybounds[:2],
+        colormap=viridis,
+    )
 
     # Tweak some of the plot properties
     plot.title = "Selectable Image Plot"
@@ -63,60 +75,70 @@ def _create_plot_component():
 
     # Create the colorbar, handing in the appropriate range and colormap
     colormap = my_plot.color_mapper
-    colorbar = ColorBar(index_mapper=LinearMapper(range=colormap.range),
-                        color_mapper=colormap,
-                        plot=my_plot,
-                        orientation='v',
-                        resizable='v',
-                        width=30,
-                        padding=20)
+    colorbar = ColorBar(
+        index_mapper=LinearMapper(range=colormap.range),
+        color_mapper=colormap,
+        plot=my_plot,
+        orientation="v",
+        resizable="v",
+        width=30,
+        padding=20,
+    )
     colorbar.padding_top = plot.padding_top
     colorbar.padding_bottom = plot.padding_bottom
 
     # create a range selection for the colorbar
     range_selection = RangeSelection(component=colorbar)
     colorbar.tools.append(range_selection)
-    colorbar.overlays.append(RangeSelectionOverlay(component=colorbar,
-                                                   border_color="white",
-                                                   alpha=0.8,
-                                                   fill_color="lightgray"))
+    colorbar.overlays.append(
+        RangeSelectionOverlay(
+            component=colorbar,
+            border_color="white",
+            alpha=0.8,
+            fill_color="lightgray",
+        )
+    )
 
     # we also want to the range selection to inform the cmap plot of
     # the selection, so set that up as well
     range_selection.listeners.append(my_plot)
 
     # Create a container to position the plot and the colorbar side-by-side
-    container = HPlotContainer(use_backbuffer = True)
+    container = HPlotContainer(use_backbuffer=True)
     container.add(plot)
     container.add(colorbar)
     container.bgcolor = "lightgray"
 
-    #my_plot.set_value_selection((-1.3, 6.9))
+    # my_plot.set_value_selection((-1.3, 6.9))
 
     return container
-#===============================================================================
-# Attributes to use for the plot view.
-size=(800,600)
-title="Colormapped Image Plot"
 
-#===============================================================================
+
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (800, 600)
+title = "Colormapped Image Plot"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
+
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 
 if __name__ == "__main__":
     demo.configure_traits()
-

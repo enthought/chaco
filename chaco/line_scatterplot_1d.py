@@ -4,7 +4,6 @@ A 1D scatterplot that draws lines across the renderer at the index values
 """
 
 
-
 from numpy import empty
 
 # Enthought library imports
@@ -27,13 +26,13 @@ class LineScatterPlot1D(Base1DPlot):
     #: The line dash style.
     line_style = LineStyle
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Selection and selection rendering
     # A selection on the lot is indicated by setting the index or value
     # datasource's 'selections' metadata item to a list of indices, or the
     # 'selection_mask' metadata to a boolean array of the same length as the
     # datasource.
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: whether or not to display a selection
     show_selection = Bool(True)
@@ -53,16 +52,16 @@ class LineScatterPlot1D(Base1DPlot):
     #: The fade amount for unselected regions
     unselected_alpha = Float(0.3)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """ Draw the plot """
         coord = self._compute_screen_coord()
         lines = empty(shape=(len(coord), 4))
 
-        if self.orientation == 'v':
+        if self.orientation == "v":
             lines[:, 0] = self.x
             lines[:, 1] = coord
             lines[:, 2] = self.x2
@@ -91,14 +90,25 @@ class LineScatterPlot1D(Base1DPlot):
                 color = list(self.color_)
                 color[3] *= self.unselected_alpha
                 if unselected_lines.size > 0:
-                    self._render_lines(gc, unselected_lines, self.color_,
-                                       self.line_width, self.line_style_)
+                    self._render_lines(
+                        gc,
+                        unselected_lines,
+                        self.color_,
+                        self.line_width,
+                        self.line_style_,
+                    )
                 if selected_lines.size > 0:
-                    self._render_lines(gc, selected_lines, self.selected_color_,
-                                       self.selected_line_width, self.selected_line_style_)
+                    self._render_lines(
+                        gc,
+                        selected_lines,
+                        self.selected_color_,
+                        self.selected_line_width,
+                        self.selected_line_style_,
+                    )
             else:
-                self._render_lines(gc, lines, self.color_,
-                                    self.line_width, self.line_style_)
+                self._render_lines(
+                    gc, lines, self.color_, self.line_width, self.line_style_
+                )
 
     def _render_lines(self, gc, lines, color, width, dash):
         """ Render a collection of lines with a given style """

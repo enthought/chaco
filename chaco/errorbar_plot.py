@@ -1,6 +1,3 @@
-
-
-
 # Major library imports
 from numpy import column_stack, compress, invert, isnan, transpose
 import logging
@@ -16,10 +13,8 @@ from .abstract_data_source import AbstractDataSource
 logger = logging.getLogger(__name__)
 
 
-
 class ErrorBarPlot(LinePlot):
-    """ Renders errorbars at various points.
-    """
+    """Renders errorbars at various points."""
 
     #: The datasource containing the low values
     value_low = Instance(AbstractDataSource)
@@ -37,7 +32,7 @@ class ErrorBarPlot(LinePlot):
     _cached_data_pts = Any
 
     def map_screen(self, data_array):
-        """ data_array can be Nx2 or Nx3.  In the former case, each row is
+        """data_array can be Nx2 or Nx3.  In the former case, each row is
         treated as (index, value), and this method returns screen X and Y
         coordinates.  In the latter case, each row is treated as (index,
         value_low, value_high), and the method returns either (x, ylow, yhigh)
@@ -75,8 +70,8 @@ class ErrorBarPlot(LinePlot):
         if 0 in (l1, l2, l3) or not (l1 == l2 == l3):
             logger.warning(
                 "Chaco: using empty dataset; index_len=%d, "
-                "value_low_len=%d, value_high_len=%d."
-                % (l1,l2,l3))
+                "value_low_len=%d, value_high_len=%d." % (l1, l2, l3)
+            )
             self._cached_data_pts = []
             self._cache_valid = True
             return
@@ -87,7 +82,13 @@ class ErrorBarPlot(LinePlot):
         value_range_mask = value_low_mask | value_high_mask
 
         nan_mask = invert(isnan(index_mask) | isnan(value_mask))
-        point_mask = index_mask & value_mask & nan_mask & index_range_mask & value_range_mask
+        point_mask = (
+            index_mask
+            & value_mask
+            & nan_mask
+            & index_range_mask
+            & value_range_mask
+        )
 
         points = column_stack((index, value_low, value_high))
 
@@ -132,7 +133,7 @@ class ErrorBarPlot(LinePlot):
             self._draw_default_axes(gc)
 
     def _render_bar_endcap(self, gc, start, end, low, high, axis):
-        """ Renders the endcaps for endcap_style == "bar".  start and end are
+        """Renders the endcaps for endcap_style == "bar".  start and end are
         the two endpoints of the bare errorbar.  axis is the column index
         corresponding to the index direction, so for orientation of 'h', axis
         is 0.
@@ -140,15 +141,15 @@ class ErrorBarPlot(LinePlot):
         This method modifies start and end.
         """
         delta = self.endcap_size / 2.0
-        start[:,axis] -= delta
-        end[:,axis] += delta
+        start[:, axis] -= delta
+        end[:, axis] += delta
 
-        start[:,1-axis] = low
-        end[:,1-axis] = low
+        start[:, 1 - axis] = low
+        end[:, 1 - axis] = low
         gc.line_set(start, end)
 
-        start[:,1-axis] = high
-        end[:,1-axis] = high
+        start[:, 1 - axis] = high
+        end[:, 1 - axis] = high
         gc.line_set(start, end)
         gc.stroke_path()
 

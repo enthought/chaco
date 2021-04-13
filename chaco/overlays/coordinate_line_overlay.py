@@ -5,7 +5,6 @@ for Plot (and similar) objects.
 """
 
 
-
 from traits.api import Instance, Float, Array
 from enable.api import black_color_trait, LineStyle, Component
 from chaco.abstract_overlay import AbstractOverlay
@@ -44,9 +43,9 @@ class CoordinateLineOverlay(AbstractOverlay):
     # Typically this will be a Plot instance.
     component = Instance(Component)
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Override AbstractOverlay methods
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def overlay(self, component, gc, view_bounds, mode="normal"):
 
@@ -70,9 +69,9 @@ class CoordinateLineOverlay(AbstractOverlay):
             for screen_y in y_pts:
                 self._draw_horizontal_line(gc, screen_y)
 
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
     # Private methods
-    #----------------------------------------------------------------------
+    # ----------------------------------------------------------------------
 
     def _draw_vertical_line(self, gc, screen_x):
         if screen_x < self.component.x or screen_x > self.component.x2:
@@ -84,6 +83,9 @@ class CoordinateLineOverlay(AbstractOverlay):
     def _draw_horizontal_line(self, gc, screen_y):
         if screen_y < self.component.y or screen_y > self.component.y2:
             return
-        gc.move_to(self.component.x, screen_y,)
+        gc.move_to(
+            self.component.x,
+            screen_y,
+        )
         gc.line_to(self.component.x2, screen_y)
         gc.stroke_path()

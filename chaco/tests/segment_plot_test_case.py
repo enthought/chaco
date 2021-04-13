@@ -5,7 +5,10 @@ from numpy.testing import assert_array_equal
 
 # Chaco imports
 from chaco.api import (
-    ArrayDataSource, DataRange1D, LinearMapper, PlotGraphicsContext
+    ArrayDataSource,
+    DataRange1D,
+    LinearMapper,
+    PlotGraphicsContext,
 )
 from chaco.base import rgba_dtype
 from chaco.segment_plot import SegmentPlot
@@ -55,7 +58,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.segment_plot.width_mapper = width_mapper
 
     def test_segment(self):
-        self.assertEqual(self.segment_plot.origin, 'bottom left')
+        self.assertEqual(self.segment_plot.origin, "bottom left")
         self.assertIs(
             self.segment_plot.x_mapper, self.segment_plot.index_mapper
         )
@@ -69,9 +72,9 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_orthogonal(self):
-        self.segment_plot.render_style = 'orthogonal'
+        self.segment_plot.render_style = "orthogonal"
 
-        self.assertEqual(self.segment_plot.origin, 'bottom left')
+        self.assertEqual(self.segment_plot.origin, "bottom left")
         self.assertIs(
             self.segment_plot.x_mapper, self.segment_plot.index_mapper
         )
@@ -85,9 +88,9 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_quad(self):
-        self.segment_plot.render_style = 'quad'
+        self.segment_plot.render_style = "quad"
 
-        self.assertEqual(self.segment_plot.origin, 'bottom left')
+        self.assertEqual(self.segment_plot.origin, "bottom left")
         self.assertIs(
             self.segment_plot.x_mapper, self.segment_plot.index_mapper
         )
@@ -101,9 +104,9 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_cubic(self):
-        self.segment_plot.render_style = 'cubic'
+        self.segment_plot.render_style = "cubic"
 
-        self.assertEqual(self.segment_plot.origin, 'bottom left')
+        self.assertEqual(self.segment_plot.origin, "bottom left")
         self.assertIs(
             self.segment_plot.x_mapper, self.segment_plot.index_mapper
         )
@@ -125,7 +128,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_color_orthogonal(self):
-        self.segment_plot.render_style = 'orthogonal'
+        self.segment_plot.render_style = "orthogonal"
         self.set_color_data()
 
         gc = PlotGraphicsContext(self.size)
@@ -134,7 +137,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_color_quad(self):
-        self.segment_plot.render_style = 'quad'
+        self.segment_plot.render_style = "quad"
         self.set_color_data()
 
         gc = PlotGraphicsContext(self.size)
@@ -143,7 +146,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_color_cubic(self):
-        self.segment_plot.render_style = 'cubic'
+        self.segment_plot.render_style = "cubic"
         self.set_color_data()
 
         gc = PlotGraphicsContext(self.size)
@@ -160,7 +163,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_width_orthogonal(self):
-        self.segment_plot.render_style = 'orthogonal'
+        self.segment_plot.render_style = "orthogonal"
         self.set_width_data()
 
         gc = PlotGraphicsContext(self.size)
@@ -169,7 +172,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_width_quad(self):
-        self.segment_plot.render_style = 'quad'
+        self.segment_plot.render_style = "quad"
         self.set_width_data()
 
         gc = PlotGraphicsContext(self.size)
@@ -178,7 +181,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_width_cubic(self):
-        self.segment_plot.render_style = 'cubic'
+        self.segment_plot.render_style = "cubic"
         self.set_width_data()
 
         gc = PlotGraphicsContext(self.size)
@@ -196,7 +199,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_width_orthogonal_color(self):
-        self.segment_plot.render_style = 'orthogonal'
+        self.segment_plot.render_style = "orthogonal"
         self.set_width_data()
         self.set_color_data()
 
@@ -206,7 +209,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_width_quad_color(self):
-        self.segment_plot.render_style = 'quad'
+        self.segment_plot.render_style = "quad"
         self.set_width_data()
         self.set_color_data()
 
@@ -216,7 +219,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_width_cubic_color(self):
-        self.segment_plot.render_style = 'cubic'
+        self.segment_plot.render_style = "cubic"
         self.set_width_data()
         self.set_color_data()
 
@@ -234,7 +237,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_orthogonal_alpha(self):
-        self.segment_plot.render_style = 'orthogonal'
+        self.segment_plot.render_style = "orthogonal"
         self.segment_plot.alpha = 0.5
 
         gc = PlotGraphicsContext(self.size)
@@ -243,7 +246,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_quad_alpha(self):
-        self.segment_plot.render_style = 'quad'
+        self.segment_plot.render_style = "quad"
         self.segment_plot.alpha = 0.5
 
         gc = PlotGraphicsContext(self.size)
@@ -252,7 +255,7 @@ class SegmentPlotTest(unittest.TestCase):
         self.assertFalse(alltrue(actual == 255))
 
     def test_segment_cubic_alpha(self):
-        self.segment_plot.render_style = 'cubic'
+        self.segment_plot.render_style = "cubic"
         self.segment_plot.alpha = 0.5
 
         gc = PlotGraphicsContext(self.size)
@@ -262,14 +265,14 @@ class SegmentPlotTest(unittest.TestCase):
 
     def test_segment_selection(self):
         mask = array([True, True, False, False, True])
-        self.segment_plot.index.metadata['selections'] = [mask]
+        self.segment_plot.index.metadata["selections"] = [mask]
 
         black = self.segment_plot.color_
         yellow = self.segment_plot.selection_color_
         expected_colors = array([yellow, yellow, black, black, yellow])
-        expected_colors = expected_colors.astype('float32').view(rgba_dtype)
-        expected_colors.shape = (5, )
-        expected_colors['a'][~mask] *= 0.3
+        expected_colors = expected_colors.astype("float32").view(rgba_dtype)
+        expected_colors.shape = (5,)
+        expected_colors["a"][~mask] *= 0.3
 
         assert_array_equal(mask, self.segment_plot.selected_mask)
         assert_array_equal(expected_colors, self.segment_plot.effective_colors)
@@ -281,14 +284,14 @@ class SegmentPlotTest(unittest.TestCase):
 
     def test_segment_selection_color(self):
         mask = array([True, True, False, False, True])
-        self.segment_plot.index.metadata['selections'] = [mask]
+        self.segment_plot.index.metadata["selections"] = [mask]
         self.set_color_data()
 
         color_data = self.segment_plot.color_data.get_data()
         colors = self.segment_plot.color_mapper.map_screen(color_data)
-        expected_colors = colors.astype('float32').view(rgba_dtype)
-        expected_colors.shape = (5, )
-        expected_colors['a'][~mask] *= 0.3
+        expected_colors = colors.astype("float32").view(rgba_dtype)
+        expected_colors.shape = (5,)
+        expected_colors["a"][~mask] *= 0.3
 
         assert_array_equal(mask, self.segment_plot.selected_mask)
         assert_array_equal(expected_colors, self.segment_plot.effective_colors)

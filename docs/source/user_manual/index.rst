@@ -27,5 +27,3 @@ User Guide
     common_patterns.rst
     how_do_i.rst
     faq.rst
-    annotated_examples.rst
-

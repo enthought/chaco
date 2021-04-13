@@ -9,8 +9,9 @@ from chaco.image_plot import ImagePlot
 from enable.api import BaseTool, KeySpec
 from traits.api import Bool, Event, Tuple, Enum, Callable
 
+
 class SimpleInspectorTool(BaseTool):
-    """ Simple inspector tool for plots
+    """Simple inspector tool for plots
 
     This is a simple tool that reports the data-space coordinates of the
     current mouse cursor position in a plot.
@@ -41,7 +42,7 @@ class SimpleInspectorTool(BaseTool):
     last_mouse_position = Tuple
 
     #: This key will show and hide any overlays listening to this tool.
-    inspector_key = KeySpec('p')
+    inspector_key = KeySpec("p")
 
     #: A callable that computes other values for the new_value event
     #: this takes a dictionary as an argument, and returns a dictionary
@@ -51,14 +52,14 @@ class SimpleInspectorTool(BaseTool):
 
     # Stores the value of self.visible when the mouse leaves the tool,
     # so that it can be restored when the mouse enters again.
-    _old_visible = Enum(None, True, False) #Trait(None, Bool(True))
+    _old_visible = Enum(None, True, False)  # Trait(None, Bool(True))
 
     #########################################################################
     # SimpleInspectorTool API
     #########################################################################
 
     def gather_values(self, event):
-        """ Generate the values for the new_value dictionary.
+        """Generate the values for the new_value dictionary.
 
         By default this returns a dictionary with keys "x", "y", "index" and
         "value".  If there is a value_generator callable, this will be called
@@ -76,11 +77,12 @@ class SimpleInspectorTool(BaseTool):
         A dictionary.
         """
         x, y, index, value = self.map_to_data(event.x, event.y)
-        d = {'index': index, 'value': value, 'x': x, 'y': y}
+        d = {"index": index, "value": value, "x": x, "y": y}
 
         if isinstance(self.component, ImagePlot):
-            x_ndx, y_ndx = self.component.map_index((event.x, event.y),
-                                                    outside_returns_none=False)
+            x_ndx, y_ndx = self.component.map_index(
+                (event.x, event.y), outside_returns_none=False
+            )
 
             # FIXME: off-by-one error. The size of the index is +1 to the size of
             # the image array
@@ -89,16 +91,16 @@ class SimpleInspectorTool(BaseTool):
             if x_ndx == self.component.value.data.shape[1]:
                 x_ndx += 1
 
-            z =  self.component.value.data[y_ndx, x_ndx]
-            d['z'] = z
-            d['color'] = z
+            z = self.component.value.data[y_ndx, x_ndx]
+            d["z"] = z
+            d["color"] = z
 
         if self.value_generator is not None:
             d = self.value_generator(d)
         return d
 
     def map_to_data(self, x, y):
-        """ Returns the data space coordinates of the given x and y.
+        """Returns the data space coordinates of the given x and y.
 
         Takes into account orientation of the plot and the axis setting.
         """

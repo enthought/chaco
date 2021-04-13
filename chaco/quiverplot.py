@@ -1,6 +1,3 @@
-
-
-
 from numpy import array, compress, matrix, newaxis, sqrt, zeros
 
 # Enthought library imports
@@ -11,12 +8,13 @@ from traits.api import Array, Enum, Float, Instance, Int
 from .abstract_data_source import AbstractDataSource
 from .scatterplot import ScatterPlot
 
+
 class QuiverPlot(ScatterPlot):
 
     #: Determines how to interpret the data in the **vectors** data source.
     #:   "vector": each tuple is a (dx, dy)
     #:   "radial": each tuple is an (r, theta)
-    data_type = Enum("vector", "radial") # TODO: implement "radial"
+    data_type = Enum("vector", "radial")  # TODO: implement "radial"
 
     #: A datasource that returns an Nx2 array array indicating directions
     #: of the vectors.  The interpretation of this array is dependent on
@@ -25,9 +23,9 @@ class QuiverPlot(ScatterPlot):
     #: Usually this will be a MultiArrayDataSource.
     vectors = Instance(AbstractDataSource)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Visual attributes of the vector
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The color of the lines
     line_color = ColorTrait("black")
@@ -38,9 +36,9 @@ class QuiverPlot(ScatterPlot):
     #: The length, in pixels, of the arrowhead
     arrow_size = Int(5)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     _cached_vector_data = Array
     _selected_vector_data = Array
@@ -58,7 +56,9 @@ class QuiverPlot(ScatterPlot):
             return
 
         vectors = self.vectors.get_data()
-        self._cached_vector_data = compress(self._cached_point_mask, vectors, axis=0)
+        self._cached_vector_data = compress(
+            self._cached_point_mask, vectors, axis=0
+        )
 
         if self._cached_selected_pts is not None:
             indices = self._cached_selection_point_mask
@@ -85,17 +85,27 @@ class QuiverPlot(ScatterPlot):
 
             if self.arrow_size > 0:
                 vec = self._cached_vector_data
-                unit_vec = vec / sqrt(vec[:,0] ** 2 + vec[:,1] ** 2)[:, newaxis]
-                a = 0.707106781   # sqrt(2)/2
+                unit_vec = (
+                    vec / sqrt(vec[:, 0] ** 2 + vec[:, 1] ** 2)[:, newaxis]
+                )
+                a = 0.707106781  # sqrt(2)/2
 
                 # Draw the left arrowhead (for an arrow pointing straight up)
-                arrow_ends = ends - array(unit_vec * matrix([[a, a], [-a, a]])) * self.arrow_size
+                arrow_ends = (
+                    ends
+                    - array(unit_vec * matrix([[a, a], [-a, a]]))
+                    * self.arrow_size
+                )
                 gc.begin_path()
                 gc.line_set(ends, arrow_ends)
                 gc.stroke_path()
 
                 # Draw the left arrowhead (for an arrow pointing straight up)
-                arrow_ends = ends - array(unit_vec * matrix([[a, -a], [a, a]])) * self.arrow_size
+                arrow_ends = (
+                    ends
+                    - array(unit_vec * matrix([[a, -a], [a, a]]))
+                    * self.arrow_size
+                )
                 gc.begin_path()
                 gc.line_set(ends, arrow_ends)
                 gc.stroke_path()

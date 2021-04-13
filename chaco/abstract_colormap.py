@@ -4,19 +4,20 @@ from traits.api import Enum, Event, HasTraits, Instance
 
 from .data_range_1d import DataRange1D
 
+
 class AbstractColormap(HasTraits):
     """
     Abstract class for color maps, which map from scalar values to color values.
     """
 
-    # The data-space bounds of the mapper.
+    #: The data-space bounds of the mapper.
     range = Instance(DataRange1D)
 
-    # The color depth of the colors to use.
-    color_depth = Enum('rgba', 'rgb')
+    #: The color depth of the colors to use.
+    color_depth = Enum("rgba", "rgb")
 
-    # A generic "update" event that generally means that anything that relies
-    # on this mapper for visual output should do a redraw or repaint.
+    #: A generic "update" event that generally means that anything that relies
+    #: on this mapper for visual output should do a redraw or repaint.
     updated = Event
 
     def map_screen(self, val):
@@ -65,4 +66,4 @@ class AbstractColormap(HasTraits):
         **color_depth** setting.
         """
         # default implementation (not efficient)
-        return (self.map_screen(val)*255.0).astype('uint8')
+        return (self.map_screen(val) * 255.0).astype("uint8")

@@ -1,6 +1,6 @@
-
 from traits.api import Int, Tuple
 from enable.tools.api import ViewportPanTool
+
 
 class MPViewportPanTool(ViewportPanTool):
 
@@ -27,12 +27,13 @@ class MPViewportPanTool(ViewportPanTool):
         if self.component:
             self.original_padding = self.component.padding
             if hasattr(event, "bid"):
-                event.window.capture_blob(self, event.bid,
-                                          event.net_transform())
+                event.window.capture_blob(
+                    self, event.bid, event.net_transform()
+                )
             else:
                 event.window.set_mouse_owner(self, event.net_transform())
             self._last_blob_pos = (event.x, event.y)
-            self.mouse_down_position = (event.x,event.y)
+            self.mouse_down_position = (event.x, event.y)
             self.event_state = "dragging"
             event.handled = True
             ViewportPanTool.drag_start(self, event)
@@ -43,4 +44,3 @@ class MPViewportPanTool(ViewportPanTool):
             event.window.release_blob(event.bid)
         self.event_state = "normal"
         ViewportPanTool.drag_end(self, event)
-

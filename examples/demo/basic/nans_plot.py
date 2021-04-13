@@ -23,9 +23,9 @@ from traitsui.api import Item, Group, View
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
-#===============================================================================
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some x-y data series (with NaNs) to plot
@@ -33,15 +33,20 @@ def _create_plot_component():
     x[75:125] = nan
     x[200:250] = nan
     x[300:330] = nan
-    pd = ArrayPlotData(index = x)
+    pd = ArrayPlotData(index=x)
     pd.set_data("value1", jn(0, x))
     pd.set_data("value2", jn(1, x))
 
     # Create some line and scatter plots of the data
     plot = Plot(pd)
     plot.plot(("index", "value1"), name="j_0(x)", color="red", width=2.0)
-    plot.plot(("index", "value2"), type="scatter", marker_size=1,
-              name="j_1(x)", color="green")
+    plot.plot(
+        ("index", "value2"),
+        type="scatter",
+        marker_size=1,
+        name="j_1(x)",
+        color="green",
+    )
 
     # Tweak some of the plot properties
     plot.title = "Plots with NaNs"
@@ -55,27 +60,30 @@ def _create_plot_component():
 
     return plot
 
-#===============================================================================
+
+# ===============================================================================
 # Attributes to use for the plot view.
 size = (800, 700)
 title = "Nan Test"
 
-#===============================================================================
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 

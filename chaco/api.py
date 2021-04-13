@@ -3,10 +3,21 @@
 # This just imports the key datamodel classes into the top-level package
 # namespace for convenience.
 
-from .base import NumericalSequenceTrait, PointTrait, ImageTrait, DimensionTrait, \
-                 SortOrderTrait, bin_search, reverse_map_1d, right_shift, \
-                 left_shift, sort_points, find_runs, arg_find_runs, \
-                 point_line_distance
+from .base import (
+    NumericalSequenceTrait,
+    PointTrait,
+    ImageTrait,
+    DimensionTrait,
+    SortOrderTrait,
+    bin_search,
+    reverse_map_1d,
+    right_shift,
+    left_shift,
+    sort_points,
+    find_runs,
+    arg_find_runs,
+    point_line_distance,
+)
 
 # Data model
 from .abstract_data_source import AbstractDataSource
@@ -43,9 +54,17 @@ from .cross_plot_frame import CrossPlotFrame
 from .data_view import DataView
 from .simple_plot_frame import SimplePlotFrame
 from .plot_component import PlotComponent
-from .plot_graphics_context import PlotGraphicsContext, PlotGraphicsContextMixin
-from .plot_containers import OverlayPlotContainer, HPlotContainer, VPlotContainer, \
-                            GridPlotContainer
+from .plot_graphics_context import (
+    PlotGraphicsContext,
+    PlotGraphicsContextMixin,
+)
+from .plot_containers import (
+    OverlayPlotContainer,
+    HPlotContainer,
+    VPlotContainer,
+    GridPlotContainer,
+)
+
 GridContainer = GridPlotContainer
 
 try:
@@ -92,8 +111,14 @@ from .segment_plot import SegmentPlot
 from .text_plot import TextPlot
 
 # Plot factories
-from .plot_factory import create_bar_plot, create_line_plot, create_scatter_plot, \
-                         create_polar_plot, add_default_axes, add_default_grids
+from .plot_factory import (
+    create_bar_plot,
+    create_line_plot,
+    create_scatter_plot,
+    create_polar_plot,
+    add_default_axes,
+    add_default_grids,
+)
 
 from .abstract_plot_data import AbstractPlotData
 from .array_plot_data import ArrayPlotData
@@ -104,8 +129,16 @@ from .toolbar_plot import ToolbarPlot
 # Axis
 from .axis import PlotAxis, MinorPlotAxis
 from .label_axis import LabelAxis
-from .ticks import AbstractTickGenerator, DefaultTickGenerator, auto_ticks, auto_interval, \
-                  tick_intervals, log_auto_ticks, auto_bounds, calc_bound
+from .ticks import (
+    AbstractTickGenerator,
+    DefaultTickGenerator,
+    auto_ticks,
+    auto_interval,
+    tick_intervals,
+    log_auto_ticks,
+    auto_bounds,
+    calc_bound,
+)
 
 # Grid
 from .grid import PlotGrid

@@ -16,6 +16,7 @@ class BackgroundColorTestCase(EnableTestAssistant, TestCase):
     appear completely opaque. This issue was reported (and fixed) in GH #309.
 
     """
+
     def setUp(self):
         values = numpy.arange(10)
         self.plot = create_line_plot((values, values))
@@ -31,36 +32,34 @@ class BackgroundColorTestCase(EnableTestAssistant, TestCase):
 
     def test_rgba_background_box(self):
         tool = self.tool
-        tool.tool_mode = 'box'
+        tool.tool_mode = "box"
         tool.alpha = 0.3
-        tool.color = 'red'
-        gc = self.create_mock_gc(100, 100, methods=('set_fill_color',))
+        tool.color = "red"
+        gc = self.create_mock_gc(100, 100, methods=("set_fill_color",))
 
-        kwargs = {
-            'window': self.plot._window, 'control_down': True
-        }
+        kwargs = {"window": self.plot._window, "control_down": True}
         self.mouse_down(self.tool, 0.0, 0.0, **kwargs)
         self.mouse_move(self.tool, 10.0, 10.0, **kwargs)
 
         tool.overlay(self.plot, gc)
 
-        self.assertEqual(gc.set_fill_color.call_args,
-                         mock.call([1.0, 0.0, 0.0, 0.3]))
+        self.assertEqual(
+            gc.set_fill_color.call_args, mock.call([1.0, 0.0, 0.0, 0.3])
+        )
 
     def test_rgba_background_range(self):
         tool = self.tool
-        tool.tool_mode = 'range'
+        tool.tool_mode = "range"
         tool.alpha = 0.3
-        tool.color = 'red'
-        gc = self.create_mock_gc(100, 100, methods=('set_fill_color',))
+        tool.color = "red"
+        gc = self.create_mock_gc(100, 100, methods=("set_fill_color",))
 
-        kwargs = {
-            'window': self.plot._window, 'control_down': True
-        }
+        kwargs = {"window": self.plot._window, "control_down": True}
         self.mouse_down(self.tool, 0.0, 0.0, **kwargs)
         self.mouse_move(self.tool, 10.0, 10.0, **kwargs)
 
         tool.overlay(self.plot, gc)
 
-        self.assertEqual(gc.set_fill_color.call_args,
-                         mock.call([1.0, 0.0, 0.0, 0.3]))
+        self.assertEqual(
+            gc.set_fill_color.call_args, mock.call([1.0, 0.0, 0.0, 0.3])
+        )

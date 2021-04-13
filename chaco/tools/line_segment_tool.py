@@ -13,9 +13,8 @@ from traits.api import Any, Bool, Enum, Instance, Int, List, Trait, Tuple
 from chaco.abstract_overlay import AbstractOverlay
 
 
-
 class LineSegmentTool(AbstractOverlay):
-    """ The base class for tools that allow the user to draw a
+    """The base class for tools that allow the user to draw a
     series of points connected by lines.
     """
 
@@ -72,17 +71,16 @@ class LineSegmentTool(AbstractOverlay):
     #: Cursor shape for moving points.
     move_cursor = Pointer("sizing")
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Traits inherited from Component
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The tool is initially invisible, because there is nothing to draw.
     visible = Bool(False)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def __init__(self, component=None, **kwtraits):
         if "component" in kwtraits:
@@ -92,12 +90,12 @@ class LineSegmentTool(AbstractOverlay):
         self.reset()
         self.line.line_dash = (4.0, 2.0)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Drawing tool methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def reset(self):
-        """ Resets the tool, throwing away any points, and making the tool
+        """Resets the tool, throwing away any points, and making the tool
         invisible.
         """
         self.points = []
@@ -117,38 +115,36 @@ class LineSegmentTool(AbstractOverlay):
         """
         self.reset()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # PointLine methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def add_point(self, point):
-        """ Given a screen-space *point* (x,y), adds the corresponding data
+        """Given a screen-space *point* (x,y), adds the corresponding data
         space point to the list for this tool.
         """
         self.points.append(self._map_data(point))
 
     def get_point(self, index):
-        """ Retrieves the indexed point and returns its screen space value.
-        """
+        """Retrieves the indexed point and returns its screen space value."""
         return self._map_screen(self.points[index])
 
     def set_point(self, index, point):
-        """ Sets the data-space *index* for a screen-space *point*.
-        """
+        """Sets the data-space *index* for a screen-space *point*."""
         self.points[index] = self._map_data(point)
 
     def remove_point(self, index):
-        """ Removes the point for a given *index* from this tool's list of
+        """Removes the point for a given *index* from this tool's list of
         points.
         """
         del self.points[index]
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # "normal" state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def normal_left_down(self, event):
-        """ Handles the left mouse button being pressed while the tool is
+        """Handles the left mouse button being pressed while the tool is
         in the 'normal' state.
 
         For an existing point, if the user is pressing the Control key, the
@@ -163,7 +159,9 @@ class LineSegmentTool(AbstractOverlay):
             if event.control_down:
                 # Delete the point
                 self.points.pop(over)
-                self.line.points = list(self.component.map_screen(array(self.points)))
+                self.line.points = list(
+                    self.component.map_screen(array(self.points))
+                )
                 self.request_redraw()
             else:
                 self.event_state = "dragging"
@@ -179,7 +177,7 @@ class LineSegmentTool(AbstractOverlay):
             self.dragging_mouse_move(event)
 
     def normal_mouse_move(self, event):
-        """ Handles the user moving the mouse in the 'normal' state.
+        """Handles the user moving the mouse in the 'normal' state.
 
         When the user moves the cursor over an existing point, if the Control
         key is pressed, the cursor changes to the **delete_cursor**, indicating
@@ -203,13 +201,12 @@ class LineSegmentTool(AbstractOverlay):
         self.request_redraw()
 
     def normal_draw(self, gc):
-        """ Draws the line.
-        """
+        """Draws the line."""
         self.line.points = list(self.component.map_screen(array(self.points)))
         self.line._draw(gc)
 
     def normal_key_pressed(self, event):
-        """ Handles the user pressing a key in the 'normal' state.
+        """Handles the user pressing a key in the 'normal' state.
 
         If the user presses the Enter key, the tool is reset.
         """
@@ -218,15 +215,14 @@ class LineSegmentTool(AbstractOverlay):
             self.reset()
 
     def normal_mouse_leave(self, event):
-        """ Handles the user moving the cursor away from the tool area.
-        """
+        """Handles the user moving the cursor away from the tool area."""
         event.window.set_pointer("arrow")
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # "dragging" state
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     def dragging_mouse_move(self, event):
-        """ Handles the user moving the mouse while in the 'dragging' state.
+        """Handles the user moving the mouse while in the 'dragging' state.
 
         The screen is updated to show the new mouse position as the end of the
         line segment being drawn.
@@ -237,12 +233,11 @@ class LineSegmentTool(AbstractOverlay):
         self.request_redraw()
 
     def dragging_draw(self, gc):
-        """ Draws the polygon in the 'dragging' state.
-        """
+        """Draws the polygon in the 'dragging' state."""
         self.line._draw(gc)
 
     def dragging_left_up(self, event):
-        """ Handles the left mouse coming up in the 'dragging' state.
+        """Handles the left mouse coming up in the 'dragging' state.
 
         Switches to 'normal' state.
         """
@@ -251,7 +246,7 @@ class LineSegmentTool(AbstractOverlay):
         self.updated = self
 
     def dragging_key_pressed(self, event):
-        """ Handles a key being pressed in the 'dragging' state.
+        """Handles a key being pressed in the 'dragging' state.
 
         If the key is "Esc", the drag operation is canceled.
         """
@@ -259,7 +254,7 @@ class LineSegmentTool(AbstractOverlay):
             self._cancel_drag()
 
     def dragging_mouse_leave(self, event):
-        """ Handles the mouse leaving the tool area in the 'dragging' state.
+        """Handles the mouse leaving the tool area in the 'dragging' state.
 
         The drag is canceled and the cursor changes to an arrow.
         """
@@ -267,8 +262,7 @@ class LineSegmentTool(AbstractOverlay):
         event.window.set_pointer("arrow")
 
     def _cancel_drag(self):
-        """ Cancels a drag operation.
-        """
+        """Cancels a drag operation."""
         if self._dragged != None:
             if self._drag_new_point:
                 # Only remove the point if it was a newly-placed point
@@ -278,39 +272,43 @@ class LineSegmentTool(AbstractOverlay):
         self.event_state = "normal"
         self.request_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # override AbstractOverlay methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def overlay(self, component, gc, view_bounds, mode="normal"):
-        """ Draws this component overlaid on another component.
+        """Draws this component overlaid on another component.
 
         Implements AbstractOverlay.
         """
         draw_func = getattr(self, self.event_state + "_draw", None)
         if draw_func:
             with gc:
-                gc.clip_to_rect(component.x, component.y, component.width-1, component.height-1)
+                gc.clip_to_rect(
+                    component.x,
+                    component.y,
+                    component.width - 1,
+                    component.height - 1,
+                )
                 draw_func(gc)
 
     def request_redraw(self):
-        """ Requests that the component redraw itself.
+        """Requests that the component redraw itself.
 
         Overrides Enable Component.
         """
         self.component.invalidate_draw()
         self.component.request_redraw()
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _map_data(self, point):
-        """ Maps values from screen space into data space.
-        """
+        """Maps values from screen space into data space."""
         x_mapper = self.component.x_mapper
         y_mapper = self.component.y_mapper
-        if self.component.orientation == 'h':
+        if self.component.orientation == "h":
             ndx = x_mapper.map_data(point[0])
             val = y_mapper.map_data(point[1])
         else:
@@ -319,11 +317,10 @@ class LineSegmentTool(AbstractOverlay):
         return (ndx, val)
 
     def _map_screen(self, point):
-        """ Maps values from data space into screen space.
-        """
+        """Maps values from data space into screen space."""
         x_mapper = self.component.x_mapper
         y_mapper = self.component.y_mapper
-        if self.component.orientation == 'h':
+        if self.component.orientation == "h":
             x = x_mapper.map_screen(point[0])
             y = y_mapper.map_screen(point[1])
         else:
@@ -331,17 +328,16 @@ class LineSegmentTool(AbstractOverlay):
             y = y_mapper.map_screen(point[0])
         return (x, y)
 
-
     def _is_near_point(self, point, event):
-        """ Determines if the pointer is near a specified point.
-        """
+        """Determines if the pointer is near a specified point."""
         event_point = (event.x, event.y)
 
-        return ((abs( point[0] - event_point[0] ) + \
-                 abs( point[1] - event_point[1] )) <= self.proximity_distance)
+        return (
+            abs(point[0] - event_point[0]) + abs(point[1] - event_point[1])
+        ) <= self.proximity_distance
 
     def _over_point(self, event, points):
-        """ Return the index of a point in *points* that *event* is 'over'.
+        """Return the index of a point in *points* that *event* is 'over'.
 
         Returns None if there is no such point.
         """
@@ -359,9 +355,9 @@ class LineSegmentTool(AbstractOverlay):
         """
         pass
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Trait event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _component_changed(self, old, new):
         if new:

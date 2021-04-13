@@ -48,7 +48,7 @@ class DrawScatterplotCase(unittest.TestCase):
         size = (50, 50)
         scatterplot = create_scatter_plot(
             data=[list(range(10)), list(range(10))],
-            marker='custom',
+            marker="custom",
             border_visible=False,
         )
         scatterplot.custom_symbol = path

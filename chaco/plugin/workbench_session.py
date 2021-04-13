@@ -9,7 +9,7 @@ from .plot_editor import PlotEditor
 
 
 class WorkbenchSession(PlotSession):
-    """ A Chaco Shell PlotSession which raises Workbench Editors instead of
+    """A Chaco Shell PlotSession which raises Workbench Editors instead of
     free-standing windows.
     """
 
@@ -27,7 +27,8 @@ class WorkbenchSession(PlotSession):
         for the new window.
         """
         workbench = self.application.get_service(
-            'envisage.ui.workbench.workbench.Workbench')
+            "envisage.ui.workbench.workbench.Workbench"
+        )
         new_win = PlotEditor(
             is_image=is_image,
             size=(self.prefs.window_width, self.prefs.window_height),
@@ -36,7 +37,7 @@ class WorkbenchSession(PlotSession):
             window=workbench.active_window,
         )
         new_win.data = self.data
-        new_win.get_container().data = self.data
+        new_win.container.data = self.data
         new_win.session = self
 
         if title is not None:
@@ -52,6 +53,4 @@ class WorkbenchSession(PlotSession):
 
         workbench.edit(new_win.obj, kind=lambda *args, **kwds: new_win)
 
-        return len(self.windows)-1
-
-
+        return len(self.windows) - 1

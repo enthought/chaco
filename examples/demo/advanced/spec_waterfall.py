@@ -15,12 +15,21 @@ from traitsui.api import Item, Group, View, Handler
 from pyface.timer.api import Timer
 
 # Chaco imports
-from chaco.api import (Plot, ArrayPlotData, HPlotContainer, VPlotContainer,
-    AbstractMapper, LinePlot, LinearMapper, DataRange1D)
+from chaco.api import (
+    Plot,
+    ArrayPlotData,
+    HPlotContainer,
+    VPlotContainer,
+    AbstractMapper,
+    LinePlot,
+    LinearMapper,
+    DataRange1D,
+)
 
 NUM_SAMPLES = 1024
 SAMPLING_RATE = 11025
 SPECTROGRAM_LENGTH = 50
+
 
 class WaterfallRenderer(LinePlot):
 
@@ -42,19 +51,28 @@ class WaterfallRenderer(LinePlot):
             values = self.values
 
             numindex = len(index)
-            if numindex == 0 or all(len(v)==0 for v in values) or all(numindex != len(v) for v in values):
+            if (
+                numindex == 0
+                or all(len(v) == 0 for v in values)
+                or all(numindex != len(v) for v in values)
+            ):
                 self._cached_data_pts = []
                 self._cache_valid = True
 
-            self._cached_data_pts = [transpose(array((index, v))) for v in values]
+            self._cached_data_pts = [
+                transpose(array((index, v))) for v in values
+            ]
             self._cache_value = True
 
     def get_screen_points(self):
         self._gather_points()
-        return [self.map_screen(pts, i) for i, pts in enumerate(self._cached_data_pts)]
+        return [
+            self.map_screen(pts, i)
+            for i, pts in enumerate(self._cached_data_pts)
+        ]
 
     def map_screen(self, data_array, data_offset=None):
-        """ data_offset, if provided, is a float that will be mapped
+        """data_offset, if provided, is a float that will be mapped
         into screen space using self.value_mapper and then added to
         mapping data_array with y2_mapper.  If data_offset is not
         provided, then y2_mapper is used.
@@ -74,52 +92,61 @@ class WaterfallRenderer(LinePlot):
         else:
             return transpose(array((sy, sx)))
 
-#============================================================================
+
+# ============================================================================
 # Create the Chaco plot.
-#============================================================================
+# ============================================================================
+
 
 def _create_plot_component(obj):
     # Setup the spectrum plot
-    frequencies = linspace(0.0, float(SAMPLING_RATE)/2, num=NUM_SAMPLES/2)
+    frequencies = linspace(0.0, float(SAMPLING_RATE) / 2, num=NUM_SAMPLES / 2)
     obj.spectrum_data = ArrayPlotData(frequency=frequencies)
-    empty_amplitude = zeros(NUM_SAMPLES/2)
-    obj.spectrum_data.set_data('amplitude', empty_amplitude)
+    empty_amplitude = zeros(NUM_SAMPLES / 2)
+    obj.spectrum_data.set_data("amplitude", empty_amplitude)
 
     obj.spectrum_plot = Plot(obj.spectrum_data)
-    spec_renderer = obj.spectrum_plot.plot(("frequency", "amplitude"), name="Spectrum",
-                           color="red")[0]
+    spec_renderer = obj.spectrum_plot.plot(
+        ("frequency", "amplitude"), name="Spectrum", color="red"
+    )[0]
     obj.spectrum_plot.padding = 50
     obj.spectrum_plot.title = "Spectrum"
-    spec_range = list(obj.spectrum_plot.plots.values())[0][0].value_mapper.range
+    plot_rends = list(obj.spectrum_plot.plots.values())
+    spec_range = plot_rends[0][0].value_mapper.range
     spec_range.low = 0.0
     spec_range.high = 5.0
-    obj.spectrum_plot.index_axis.title = 'Frequency (hz)'
-    obj.spectrum_plot.value_axis.title = 'Amplitude'
+    obj.spectrum_plot.index_axis.title = "Frequency (hz)"
+    obj.spectrum_plot.value_axis.title = "Amplitude"
 
     # Time Series plot
-    times = linspace(0.0, float(NUM_SAMPLES)/SAMPLING_RATE, num=NUM_SAMPLES)
+    times = linspace(0.0, float(NUM_SAMPLES) / SAMPLING_RATE, num=NUM_SAMPLES)
     obj.time_data = ArrayPlotData(time=times)
     empty_amplitude = zeros(NUM_SAMPLES)
-    obj.time_data.set_data('amplitude', empty_amplitude)
+    obj.time_data.set_data("amplitude", empty_amplitude)
 
     obj.time_plot = Plot(obj.time_data)
     obj.time_plot.plot(("time", "amplitude"), name="Time", color="blue")
     obj.time_plot.padding = 50
     obj.time_plot.title = "Time"
-    obj.time_plot.index_axis.title = 'Time (seconds)'
-    obj.time_plot.value_axis.title = 'Amplitude'
+    obj.time_plot.index_axis.title = "Time (seconds)"
+    obj.time_plot.value_axis.title = "Amplitude"
     time_range = list(obj.time_plot.plots.values())[0][0].value_mapper.range
     time_range.low = -0.2
     time_range.high = 0.2
 
     # Spectrogram plot
-    values = [zeros(NUM_SAMPLES/2) for i in range(SPECTROGRAM_LENGTH)]
-    p = WaterfallRenderer(index = spec_renderer.index, values = values,
-            index_mapper = LinearMapper(range = obj.spectrum_plot.index_mapper.range),
-            value_mapper = LinearMapper(range = DataRange1D(low=0, high=SPECTROGRAM_LENGTH)),
-            y2_mapper = LinearMapper(low_pos=0, high_pos=8,
-                            range=DataRange1D(low=0, high=15)),
-            )
+    values = [zeros(NUM_SAMPLES / 2) for i in range(SPECTROGRAM_LENGTH)]
+    p = WaterfallRenderer(
+        index=spec_renderer.index,
+        values=values,
+        index_mapper=LinearMapper(range=obj.spectrum_plot.index_mapper.range),
+        value_mapper=LinearMapper(
+            range=DataRange1D(low=0, high=SPECTROGRAM_LENGTH)
+        ),
+        y2_mapper=LinearMapper(
+            low_pos=0, high_pos=8, range=DataRange1D(low=0, high=15)
+        ),
+    )
     spectrogram_plot = p
     obj.spectrogram_plot = p
     dummy = Plot()
@@ -141,39 +168,43 @@ def _create_plot_component(obj):
 
 def get_audio_data():
     pa = pyaudio.PyAudio()
-    stream = pa.open(format=pyaudio.paInt16, channels=1, rate=SAMPLING_RATE,
-                     input=True, frames_per_buffer=NUM_SAMPLES)
-    audio_data  = fromstring(stream.read(NUM_SAMPLES), dtype=short)
+    stream = pa.open(
+        format=pyaudio.paInt16,
+        channels=1,
+        rate=SAMPLING_RATE,
+        input=True,
+        frames_per_buffer=NUM_SAMPLES,
+    )
+    audio_data = fromstring(stream.read(NUM_SAMPLES), dtype=short)
     stream.close()
     normalized_data = audio_data / 32768.0
-    return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
+    return (abs(fft(normalized_data))[: NUM_SAMPLES / 2], normalized_data)
 
 
 # HasTraits class that supplies the callable for the timer event.
 class TimerController(HasTraits):
-
     def onTimer(self, *args):
         spectrum, time = get_audio_data()
-        self.spectrum_data.set_data('amplitude', spectrum)
-        self.time_data.set_data('amplitude', time)
+        self.spectrum_data.set_data("amplitude", spectrum)
+        self.time_data.set_data("amplitude", time)
         spec_data = self.spectrogram_plot.values[1:] + [spectrum]
         self.spectrogram_plot.values = spec_data
         self.spectrum_plot.request_redraw()
 
 
-#============================================================================
+# ============================================================================
 # Attributes to use for the plot view.
-size = (900,850)
+size = (900, 850)
 title = "Audio Spectrum Waterfall"
 
-#============================================================================
+# ============================================================================
 # Demo class that is used by the demo.py application.
-#============================================================================
+# ============================================================================
+
 
 class DemoHandler(Handler):
-
     def closed(self, info, is_ok):
-        """ Handles a dialog-based user interface being closed by the user.
+        """Handles a dialog-based user interface being closed by the user.
         Overridden here to stop the timer once the window is destroyed.
         """
 
@@ -189,14 +220,16 @@ class Demo(HasTraits):
     timer = Instance(Timer)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title,
-                    width=size[0], height=size[1]+25,
-                    handler=DemoHandler
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+        width=size[0],
+        height=size[1] + 25,
+        handler=DemoHandler,
+    )
 
     def __init__(self, **traits):
         super(Demo, self).__init__(**traits)

@@ -14,30 +14,30 @@ from .base import SortOrderTrait
 
 
 class GridDataSource(AbstractDataSource):
-    """ Implements a structured gridded 2-D data source (suitable as an index
+    """Implements a structured gridded 2-D data source (suitable as an index
     for an image, for example).
     """
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractDataSource traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     #: The dimensionality of the indices into this data source (overrides
     #: AbstractDataSource).
-    index_dimension = Constant('image')
+    index_dimension = Constant("image")
 
     #: The dimensionality of the value at each index point (overrides
     #: AbstractDataSource).
-    value_dimension = Constant('scalar')
+    value_dimension = Constant("scalar")
 
     #: The sort order of the data (overrides AbstractDataSource). There is no
     #: overall sort order on 2-D data, but for gridded 2-D data, each axis can
     #: have a sort order.
-    sort_order =Tuple(SortOrderTrait, SortOrderTrait)
+    sort_order = Tuple(SortOrderTrait, SortOrderTrait)
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private traits
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     # Data grid ticks along the x (horizontal) axis.
     _xdata = Instance(ArrayDataSource, args=())
@@ -49,18 +49,22 @@ class GridDataSource(AbstractDataSource):
     # (overrides ArrayDataSource). ((min_x, max_x), (min_y, max_y))
     _cached_bounds = Tuple
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Public methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
-    def __init__(self, xdata=array([]), ydata=array([]),
-                       sort_order=("none","none"), **kwargs):
+    def __init__(
+        self,
+        xdata=array([]),
+        ydata=array([]),
+        sort_order=("none", "none"),
+        **kwargs
+    ):
         super(GridDataSource, self).__init__(**kwargs)
         self.set_data(xdata, ydata, sort_order)
 
     def set_data(self, xdata, ydata, sort_order=None):
-        """ Sets the data, and optionally the sort order, for this data source.
+        """Sets the data, and optionally the sort order, for this data source.
 
         Parameters
         ----------
@@ -79,10 +83,9 @@ class GridDataSource(AbstractDataSource):
         self._compute_bounds()
         self.data_changed = True
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # AbstractDataSource interface
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def get_data(self):
         """get_data() -> (xdata, ydata)
@@ -118,13 +121,12 @@ class GridDataSource(AbstractDataSource):
             self._compute_bounds()
         return self._cached_bounds
 
-
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Private methods
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _compute_bounds(self, data=None):
-        """ Computes the minimum and maximum points (LLx, LLy) and (URx, URy) of
+        """Computes the minimum and maximum points (LLx, LLy) and (URx, URy) of
         the data.
         """
 
@@ -138,17 +140,12 @@ class GridDataSource(AbstractDataSource):
 
         self._cached_bounds = ((xbds[0], ybds[0]), (xbds[1], ybds[1]))
 
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Event handlers
-    #------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _metadata_changed(self, event):
         self.metadata_changed = True
 
     def _metadata_items_changed(self, event):
         self.metadata_changed = True
-
-
-
-
-

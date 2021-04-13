@@ -2,9 +2,16 @@ import unittest
 
 from numpy import alltrue, arange, array
 
+from enable.api import ComponentEditor
+from enable.testing import EnableTestAssistant
+from traits.api import HasTraits, Instance
+from traits.etsconfig.api import ETSConfig
+from traitsui.api import Item, View
+
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, DataRange1D, PlotGraphicsContext
 from chaco.default_colormaps import viridis
+from chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotTestCase(unittest.TestCase):
@@ -22,8 +29,8 @@ class PlotTestCase(unittest.TestCase):
         arr = arange(10)
         data = ArrayPlotData(x=arr, y=arr)
         plot = Plot(data)
-        renderer_2d = plot.plot(('x', 'y'))[0]
-        renderer_1d = plot.plot_1d(('x'))[0]
+        renderer_2d = plot.plot(("x", "y"))[0]
+        renderer_1d = plot.plot_1d(("x"))[0]
         new_range = DataRange1D()
         old_range = plot.index_range
         self.assertIsNot(old_range, new_range)
@@ -39,7 +46,7 @@ class PlotTestCase(unittest.TestCase):
         y = arange(1, 11)
         data = ArrayPlotData(x=x, y=y)
         plot = Plot(data)
-        plot.plot(('x', 'y'), "segment")[0]
+        plot.plot(("x", "y"), "segment")[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))
@@ -53,7 +60,7 @@ class PlotTestCase(unittest.TestCase):
         c = arange(2, 7)
         data = ArrayPlotData(x=x, y=y, c=c)
         plot = Plot(data)
-        plot.plot(('x', 'y', 'c'), "cmap_segment", color_mapper=viridis)[0]
+        plot.plot(("x", "y", "c"), "cmap_segment", color_mapper=viridis)[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))
@@ -68,8 +75,9 @@ class PlotTestCase(unittest.TestCase):
         w = arange(3, 8)
         data = ArrayPlotData(x=x, y=y, c=c, w=w)
         plot = Plot(data)
-        plot.plot(('x', 'y', 'c', 'w'), "cmap_segment",
-                  color_mapper=viridis)[0]
+        plot.plot(
+            ("x", "y", "c", "w"), "cmap_segment", color_mapper=viridis
+        )[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))
@@ -83,10 +91,45 @@ class PlotTestCase(unittest.TestCase):
         t = array(["one", "two", "three", "four", "five"])
         data = ArrayPlotData(x=x, y=y, t=t)
         plot = Plot(data)
-        plot.plot(('x', 'y', 't'), "text")[0]
+        plot.plot(("x", "y", "t"), "text")[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))
         gc.render_component(plot)
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
+
+
+class EmptyLinePlot(HasTraits):
+    plot = Instance(Plot)
+    x = []
+    y = []
+    traits_view = View(
+        Item('plot', editor=ComponentEditor(), show_label=False),
+        width=500,
+        height=500,
+        resizable=True
+    )
+
+    def _plot_default(self):
+        plot = Plot(ArrayPlotData(x=self.x, y=self.y))
+        plot.plot(("x", "y"), type="line", color="blue")
+        plot.tools.append(PanTool(plot))
+        plot.overlays.append(ZoomTool(plot, zoom_factor=1.1))
+        return plot
+
+
+# regression test for enthought/chaco#529
+@unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
+class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
+
+    def test_dont_crash_on_click(self):
+        from traitsui.testing.api import UITester
+        tester = UITester()
+        empty_plot = EmptyLinePlot()
+
+        with tester.create_ui(empty_plot):
+            self.press_move_release(
+                empty_plot.plot,
+                [(1, 1), (25, 25), (50, 50), (100, 100)],
+            )

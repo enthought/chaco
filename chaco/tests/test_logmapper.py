@@ -1,12 +1,11 @@
-
 import unittest
 from numpy import array, nan
 from numpy.testing import assert_array_almost_equal, assert_equal
 
 from chaco.api import ArrayDataSource, DataRange1D, LogMapper
 
-class LogMapperTestCase(unittest.TestCase):
 
+class LogMapperTestCase(unittest.TestCase):
     def test_basic(self):
         ary = array([1.0, 10.0, 100.0, 1000.0, 10000.0])
         ds = ArrayDataSource(ary)

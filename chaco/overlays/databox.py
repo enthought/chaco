@@ -22,9 +22,9 @@ class DataBox(AbstractOverlay):
     # need to be improved that they change both dimensions at once.
     affinity = Enum("image", "screen")
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Appearance properties (for Box mode)
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     # The color of the selection box.
     color = ColorTrait("lightskyblue")
@@ -43,12 +43,12 @@ class DataBox(AbstractOverlay):
     # The thickness of selection rectangle border.
     border_size = Int(1)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private Traits
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
-    _data_position = CList([0,0])
-    _data_bounds = CList([0,0])
+    _data_position = CList([0, 0])
+    _data_bounds = CList([0, 0])
     _position_valid = False
     _bounds_valid = False
 
@@ -58,13 +58,25 @@ class DataBox(AbstractOverlay):
     def __init__(self, *args, **kw):
         super(DataBox, self).__init__(*args, **kw)
         if hasattr(self.component, "range2d"):
-            self.component.range2d._xrange.observe(self.my_component_moved, "updated")
-            self.component.range2d._yrange.observe(self.my_component_moved, "updated")
-        elif hasattr(self.component, "x_mapper") and hasattr(self.component, "y_mapper"):
-            self.component.x_mapper.range.observe(self.my_component_moved, "updated")
-            self.component.y_mapper.range.observe(self.my_component_moved, "updated")
+            self.component.range2d._xrange.observe(
+                self.my_component_moved, "updated"
+            )
+            self.component.range2d._yrange.observe(
+                self.my_component_moved, "updated"
+            )
+        elif hasattr(self.component, "x_mapper") and hasattr(
+            self.component, "y_mapper"
+        ):
+            self.component.x_mapper.range.observe(
+                self.my_component_moved, "updated"
+            )
+            self.component.y_mapper.range.observe(
+                self.my_component_moved, "updated"
+            )
         else:
-            raise RuntimeError("DataBox cannot find a suitable mapper on its component.")
+            raise RuntimeError(
+                "DataBox cannot find a suitable mapper on its component."
+            )
         self.component.observe(self.my_component_resized, "bounds.items")
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
@@ -94,7 +106,9 @@ class DataBox(AbstractOverlay):
             gc.set_antialias(0)
             gc.set_line_width(self.border_size)
             gc.set_stroke_color(self.border_color_)
-            gc.clip_to_rect(component.x, component.y, component.width, component.height)
+            gc.clip_to_rect(
+                component.x, component.y, component.width, component.height
+            )
             rect = self.position + self.bounds
 
             if self.color != "transparent":
@@ -113,9 +127,9 @@ class DataBox(AbstractOverlay):
                 gc.rect(*rect)
                 gc.stroke_path()
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Property setters/getters, event handlers
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def _get_data_position(self):
         return self._data_position
@@ -133,7 +147,7 @@ class DataBox(AbstractOverlay):
         self._bounds_valid = False
         self.trait_property_changed("data_bounds", self._data_bounds)
 
-    @observe('position.items')
+    @observe("position.items")
     def _update_position(self, event=None):
         if self._updating:
             return
@@ -143,7 +157,7 @@ class DataBox(AbstractOverlay):
         self._data_position = tmp
         self.trait_property_changed("data_position", self._data_position)
 
-    @observe('bounds.items')
+    @observe("bounds.items")
     def _update_bounds(self, event=None):
         if self._updating:
             return
@@ -164,5 +178,3 @@ class DataBox(AbstractOverlay):
     def my_component_resized(self, event=None):
         self._bounds_valid = False
         self._position_valid = False
-
-

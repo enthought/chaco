@@ -16,34 +16,49 @@ from traitsui.api import Item, Group, View
 from chaco.api import ArrayPlotData, HPlotContainer, Plot
 from chaco.tools.api import PanTool, ZoomTool
 
+
 def attach_tools(plot):
     plot.tools.append(PanTool(plot))
     zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
     plot.overlays.append(zoom)
 
-#===============================================================================
+
+# ===============================================================================
 # # Create the Chaco plot.
-#===============================================================================
+# ===============================================================================
 def _create_plot_component():
 
     # Create some x-y data series to plot
     x = linspace(-2.0, 10.0, 40)
-    pd = ArrayPlotData(index = x, y0=jn(0,x))
+    pd = ArrayPlotData(index=x, y0=jn(0, x))
 
     # Create some line plots of some of the data
-    plot1 = Plot(pd, title="render_style = hold", padding=50, border_visible=True,
-                 overlay_border = True)
+    plot1 = Plot(
+        pd,
+        title="render_style = hold",
+        padding=50,
+        border_visible=True,
+        overlay_border=True,
+    )
     plot1.legend.visible = True
-    lineplot = plot1.plot(("index", "y0"), name="j_0", color="red", render_style="hold")
+    lineplot = plot1.plot(
+        ("index", "y0"), name="j_0", color="red", render_style="hold"
+    )
 
     # Attach some tools to the plot
     attach_tools(plot1)
 
     # Create a second scatter plot of one of the datasets, linking its
     # range to the first plot
-    plot2 = Plot(pd, range2d=plot1.range2d, title="render_style = connectedhold",
-                 padding=50, border_visible=True, overlay_border=True)
-    plot2.plot(('index', 'y0'), color="blue", render_style="connectedhold")
+    plot2 = Plot(
+        pd,
+        range2d=plot1.range2d,
+        title="render_style = connectedhold",
+        padding=50,
+        border_visible=True,
+        overlay_border=True,
+    )
+    plot2.plot(("index", "y0"), color="blue", render_style="connectedhold")
     attach_tools(plot2)
 
     # Create a container and add our plots
@@ -52,27 +67,30 @@ def _create_plot_component():
     container.add(plot2)
     return container
 
-#===============================================================================
-# Attributes to use for the plot view.
-size=(900,500)
-title="Line plots with hold"
 
-#===============================================================================
+# ===============================================================================
+# Attributes to use for the plot view.
+size = (900, 500)
+title = "Line plots with hold"
+
+# ===============================================================================
 # # Demo class that is used by the demo.py application.
-#===============================================================================
+# ===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
 
     traits_view = View(
-                    Group(
-                        Item('plot', editor=ComponentEditor(size=size),
-                             show_label=False),
-                        orientation = "vertical"),
-                    resizable=True, title=title
-                    )
+        Group(
+            Item("plot", editor=ComponentEditor(size=size), show_label=False),
+            orientation="vertical",
+        ),
+        resizable=True,
+        title=title,
+    )
 
     def _plot_default(self):
-         return _create_plot_component()
+        return _create_plot_component()
+
 
 demo = Demo()
 
