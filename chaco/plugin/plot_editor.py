@@ -6,7 +6,7 @@ from traitsui.api import Item, View
 
 
 class PlotUI(HasTraits):
-    """Simple Traits UI proxy for a Chaco plot."""
+    """Simple TraitsUI proxy for a Chaco plot."""
 
     # The plot.
     component = Any()

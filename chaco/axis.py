@@ -215,7 +215,7 @@ class PlotAxis(AbstractOverlay):
         self.invalidate_draw()
 
     def traits_view(self):
-        """Returns a View instance for use with Traits UI.  This method is
+        """Returns a View instance for use with TraitsUI.  This method is
         called automatically be the Traits framework when .edit_traits() is
         invoked.
         """

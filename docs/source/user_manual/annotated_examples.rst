@@ -453,7 +453,7 @@ source: `tabbed_plots.py <https://github.com/enthought/chaco/tree/master/example
 ``traits_editor.py``
 --------------------
 This example creates a simple 1-D function examiner, illustrating the use of
-ChacoPlotEditors for displaying simple plot relations, as well as Traits UI
+ChacoPlotEditors for displaying simple plot relations, as well as TraitsUI
 integration. Any 1-D numpy/scipy.special function works in the function
 text box.
 

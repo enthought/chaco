@@ -1,4 +1,4 @@
-""" Defines the Traits UI view for a PlotAxis """
+""" Defines the TraitsUI view for a PlotAxis """
 from traits.api import TraitError
 from traitsui.api import View, HGroup, Group, VGroup, Item, TextEditor
 
@@ -7,7 +7,7 @@ def float_or_auto(val):
     """
     Validator function that returns *val* if *val* is either a number or
     the word 'auto'.  This is used as a validator for the text editor
-    in the Traits UI for the **tick_interval** trait.
+    in the TraitsUI for the **tick_interval** trait.
     """
     try:
         return float(val)
@@ -17,7 +17,7 @@ def float_or_auto(val):
     raise TraitError("Tick interval must be a number or 'auto'.")
 
 
-# Traits UI for a PlotAxis.
+# TraitsUI for a PlotAxis.
 AxisView = View(
     VGroup(
         Group(

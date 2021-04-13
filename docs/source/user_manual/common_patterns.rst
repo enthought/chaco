@@ -20,7 +20,7 @@ Non-interactive/Offscreen Rendering
 ===================================
 
 
-Integrating with Traits UI Controls
+Integrating with TraitsUI Controls
 ===================================
 
 

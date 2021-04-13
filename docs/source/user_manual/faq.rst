@@ -74,7 +74,7 @@ Peter Wang's response (excerpt)::
     Chaco is a plotting toolkit targeted towards developers for building
     interactive visualizations.  You hook up pieces to build a plot that
     is then easy to inspect, interact with, add configuration UIs for
-    (using Traits UI), etc.  The layout of plot areas, the multiplicity
+    (using TraitsUI), etc.  The layout of plot areas, the multiplicity
     and types of renderers within those windows, the appearance and
     locations of axes, etc. are all completely configurable since these
     are all first-class objects participating in a visual canvas.  They

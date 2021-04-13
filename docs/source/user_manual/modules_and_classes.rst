@@ -243,7 +243,8 @@ first in Chaco, and then moved into Enable.
 
 DragTool is a base class for tools that do dragging.
 
-Other tools do things like panning, moving, highlighting, line segments, range selection, drag zoom, move data labels, scatter inspection, Traits UI.
+Other tools do things like panning, moving, highlighting, line segments, range
+selection, drag zoom, move data labels, scatter inspection, TraitsUI.
 
 Overlays
 -----------------------------------------------------------------------------

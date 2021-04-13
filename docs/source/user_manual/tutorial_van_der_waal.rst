@@ -22,7 +22,7 @@ Development Setup
 In review, Traits is a manifest typing and reactive programming package
 for Python. It also provides UI features that will be used to create a
 simple GUI. The `Traits <http://docs.enthought.com/traits/>`_ and
-`Traits UI <http://docs.enthought.com/traitsui/>`_ user manuals are good
+`TraitsUI <http://docs.enthought.com/traitsui/>`_ user manuals are good
 resources for learning about the packages.
 
 You must have Chaco and its dependencies installed:
@@ -92,7 +92,7 @@ This View contains all of the GUI elements, including the plot.  To
 link a variable with a widget element on the GUI, we create a Traits
 :class:`Item` instance with the same name as the variable and pass it as an
 argument of the Traits View instance declaration.  The
-`Traits UI User Guide <https://svn.enthought.com/svn/enthought/Traits/tags/traits_2.0.1b1/docs/Traits%20UI%20User%20Guide.pdf>`_
+`TraitsUI User Guide <https://docs.enthought.com/traitsui>`_
 discusses the View and Item objects in depth. In order to
 embed a Chaco plot into a Traits View, you need to import the
 :class:`ChacoPlotItem` class, which can be passed as a parameter to View just

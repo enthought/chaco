@@ -1,4 +1,4 @@
-""" Defines the ScatterPlot class, and associated Traits UI view and helper
+""" Defines the ScatterPlot class, and associated TraitsUI view and helper
 function.
 """
 
@@ -51,12 +51,12 @@ from .speedups import scatterplot_gather_points
 from .base import reverse_map_1d
 
 # ------------------------------------------------------------------------------
-# Traits UI View for customizing a scatter plot.
+# TraitsUI View for customizing a scatter plot.
 # ------------------------------------------------------------------------------
 
 
 class ScatterPlotView(View):
-    """Traits UI View for customizing a scatter plot."""
+    """TraitsUI View for customizing a scatter plot."""
 
     def __init__(self):
         vgroup = VGroup(
@@ -244,7 +244,7 @@ class ScatterPlot(BaseXYPlot):
         Tuple, observe=["outline_color", "alpha"]
     )
 
-    # Traits UI View for customizing the plot.
+    # TraitsUI View for customizing the plot.
     traits_view = ScatterPlotView()
 
     # ------------------------------------------------------------------------

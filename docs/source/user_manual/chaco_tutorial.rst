@@ -24,12 +24,12 @@ for the last portion of the tutorial, but it is not required.
 This tutorial demonstrates using Chaco with Traits(UI), so knowledge of the
 `Traits User Manual <http://docs.enthought.com/traits/>`_ framework is also
 helpful. We don't use very many sophisticated aspects
-of Traits or Traits UI, and it is entirely possible to pick it up as you go
+of Traits or TraitsUI, and it is entirely possible to pick it up as you go
 through the tutorial.
 
-It's also worth pointing out that you don't *have* to use Traits UI in order to
+It's also worth pointing out that you don't *have* to use TraitsUI in order to
 use Chaco -- you can integrate Chaco components directly with Qt or wxPython -- but for
-this tutorial, we use Traits UI to make things easier.
+this tutorial, we use TraitsUI to make things easier.
 
 
 Goals
@@ -41,7 +41,7 @@ By the end of this tutorial, you will have learned how to:
 
 - arrange plots in various layouts
 
-- configure and dynamically modify your plots using Traits UI
+- configure and dynamically modify your plots using TraitsUI
 
 - interact with plots using tools
 
@@ -205,7 +205,7 @@ plot, called :class:`LinePlot`::
 This class uses the Enthought Traits package, and all of our objects subclass
 from :class:`HasTraits`.
 
-Next, we declare a Traits UI View for this class::
+Next, we declare a TraitsUI View for this class::
 
     traits_view = View(
         Item('plot',editor=ComponentEditor(), show_label=False),
@@ -216,15 +216,15 @@ Next, we declare a Traits UI View for this class::
     )
 
 Inside this view, we are placing a reference to the ``plot`` trait and
-telling Traits UI to use the :class:`ComponentEditor` (imported from
+telling TraitsUI to use the :class:`ComponentEditor` (imported from
 :mod:`enable.api`) to display it. If the
 trait were an Int or Str or Float, Traits could automatically pick an
-appropriate GUI element to display it. Since Traits UI doesn't natively know
+appropriate GUI element to display it. Since TraitsUI doesn't natively know
 how to display Chaco components, we explicitly tell it what kind of editor to
 use.
 
 The other parameters in the :class:`View` constructor are pretty
-self-explanatory, and the `Traits UI User Manual <http://docs.enthought.com/traitsui/>`_
+self-explanatory, and the `TraitsUI User Manual <http://docs.enthought.com/traitsui/>`_
 documents all the various properties
 you can set here. For our purposes, this Traits :class:`View` is sort of boilerplate. It
 gets us a nice little window that we can resize. We'll be using something like
@@ -620,8 +620,8 @@ First, we add traits for color, marker type, and marker size::
         marker = marker_trait
         marker_size = Int(4)
 
-We also change our Traits UI View to include references to these
-new traits.  We put them in a Traits UI :class:`Group` so that we can control
+We also change our TraitsUI View to include references to these
+new traits.  We put them in a TraitsUI :class:`Group` so that we can control
 the layout in the dialog a little better --- here, we're setting the layout
 orientation of the elements in the dialog to "vertical". ::
 
@@ -747,7 +747,7 @@ First, we add an Enumeration trait to select a particular data name ::
 
     data_name = Enum("jn0", "jn1", "jn2")
 
-and a corresponding ``Item`` in the Traits UI View ::
+and a corresponding ``Item`` in the TraitsUI View ::
 
     Item('data_name', label="Y data")
 
@@ -933,7 +933,7 @@ We will again modify the :ref:`LinePlot example <line_plot_example>`. This
 time, we will create a scatter plot and a line plot with connected ranges
 in different windows.
 
-First of all, we define a Traits UI view of a customizable plot.
+First of all, we define a TraitsUI view of a customizable plot.
 This is the full code that we will analyze step by step below ::
 
     from numpy import linspace, sin
@@ -988,7 +988,7 @@ and one for the orientation of the plot ::
         orientation = Enum("horizontal", "vertical")
 
 The ``plot_type`` trait will not be exposed in the UI, but we add a
-Traits UI item for the orientation: ::
+TraitsUI item for the orientation: ::
 
         traits_view = View(Item('orientation', label="Orientation"), ...)
 
@@ -1028,7 +1028,7 @@ this way: ::
         line.edit_traits()
         scatter.configure_traits()
 
-In the last two lines, we open Traits UI editors on both objects.
+In the last two lines, we open TraitsUI editors on both objects.
 Note that we call :meth:`edit_traits()` on the first object,
 and :meth:`configure_traits()` on the second object.
 The technical reason for this is that :meth:`configure_traits()`

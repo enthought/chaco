@@ -187,7 +187,7 @@ class MultiLinePlot(BaseXYPlot):
 
     def trait_view(self, obj):
         """Create a minimalist View, with just the amplitude and color attributes."""
-        # Minimalist Traits UI View for customizing the plot: only the trace amplitude
+        # Minimalist TraitsUI View for customizing the plot: only the trace amplitude
         # and line color are exposed.
         view = View(
             HGroup(
