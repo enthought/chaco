@@ -325,6 +325,3 @@ Overlays: Axis, Grid, etc.
 * :class:`~.DataBox`
 * :class:`~.ImageInspectorColorbarOverlay`
 * :class:`~.RangeSelectionOverlay`
-
-Miscellaneous
------------------------------------------------------------------------------
