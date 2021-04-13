@@ -46,11 +46,25 @@ changed. There are two primary reasons for a data source class:
 
 *Interface:* :class:`~chaco.abstract_data_source.AbstractDataSource`
 
-*Subclasses:* :class:`~chaco.array_data_source.ArrayDataSource`,
-:class:`~chaco.multi_array_data_source.MultiArrayDataSource`,
-:class:`~chaco.point_data_source.PointDataSource`,
-:class:`~chaco.grid_data_source.GridDataSource`,
-:class:`~chaco.image_data.ImageData`
+*Subclasses*:
+
+* :class:`~chaco.array_data_source.ArrayDataSource`
+
+  * :class:`~chaco.point_data_source.PointDataSource`
+
+* :class:`~chaco.multi_array_data_source.MultiArrayDataSource`
+* :class:`~chaco.grid_data_source.GridDataSource`
+* :class:`~chaco.image_data.ImageData`
+
+The :attr:`~chaco.abstract_data_source.AbstractDataSource.metadata` trait
+attribute is a dictionary where you can stick stuff for other tools to find,
+without inserting it in the actual data.
+
+Events that are fired on data sources are:
+
+* :attr:`~chaco.abstract_data_source.AbstractDataSource.data_changed`
+* :attr:`~chaco.abstract_data_source.AbstractDataSource.bounds_changed`
+* :attr:`~chaco.abstract_data_source.AbstractDataSource.metadata_changed`
 
 .. rubric:: Data Range
 
@@ -63,32 +77,12 @@ and each data range can be associated with multiple data sources.)
 
 *Interface*: :class:`~chaco.abstract_data_range.AbstractDataRange`
 
-*Subclasses*: :class:`~chaco.base_data_range.BaseDataRange`, 
-:class:`~chaco.data_range_1d.DataRange1D`, 
-:class:`~chaco.data_range_2d.DataRange2D`
+*Subclasses*:
 
-.. rubric:: Data Source
+* :class:`~chaco.base_data_range.BaseDataRange`
 
-A data source is an object that supplies data to Chaco. For the most part, a
-data source looks like an array of values, with an optional mask and metadata.
-
-*Interface*: :class:`~chaco.abstract_data_source.AbstractDataSource`
-
-*Subclasses*: :class:`~chaco.array_data_source.ArrayDataSource`,
-:class:`~chaco.grid_data_source.GridDataSource`,
-:class:`~chaco.image_data.ImageData`,
-:class:`~chaco.multi_array_data_source.MultiArrayDataSource`,
-:class:`~chaco.point_data_source.PointDataSource`
-
-The :attr:`metadata` trait attribute is a dictionary where you can stick
-stuff for other tools to find, without inserting it in the actual data.
-
-Events that are fired on data sources are:
-
-* :attr:`data_changed`
-* :attr:`bounds_changed`
-* :attr:`metadata_changed`
-
+  * :class:`~chaco.data_range_1d.DataRange1D`
+  * :class:`~chaco.data_range_2d.DataRange2D`
 
 .. rubric:: Mapper
 
@@ -97,10 +91,20 @@ vice versa. Bounds on mappers are set by data range objects.
 
 *Interface*: :class:`~chaco.abstract_mapper.AbstractMapper`
 
-*Subclasses*: :class:`~chaco.base_1d_mapper.Base1DMapper`,
-:class:`~chaco.linear_mapper.LinearMapper`,
-:class:`~chaco.log_mapper.LogMapper`, :class:`~chaco.grid_mapper.GridMapper`,
-:class:`~chaco.polar_mapper.PolarMapper`
+*Subclasses*:
+
+* :class:`~chaco.base_1d_mapper.Base1DMapper`
+
+  * :class:`~chaco.linear_mapper.LinearMapper`
+  * :class:`~chaco.log_mapper.LogMapper`
+
+* :class:`~chaco.color_mapper.ColorMapper`
+
+  * :class:`~chaco.transform_color_mapper.TransformColorMapper`
+  * see also :class:`~chaco.color_mapper.ColorMapTemplate`
+
+* :class:`~chaco.grid_mapper.GridMapper`
+* :class:`~chaco.polar_mapper.PolarMapper`
 
 
 Containers
@@ -120,16 +124,18 @@ A container gets the preferred size from its components, and tries to allocate
 space for them. Non-resizeable components get their required size; whatever is
 left over is divided among the resizeable components.
 
-Chaco currently has three types of containers,
-described in the following sections.
+Chaco currently has the following Containers.
 
 *Interface*: :class:`~.BasePlotContainer`
 
-*Subclasses*: :class:`~.OverlayPlotContainer`, :class:`~.HPlotContainer`,
-:class:`~.VPlotContainer`, :class:`~.GridPlotContainer`
+*Subclasses*:
 
-The listed subclasses are defined in the module
-:mod:`chaco.plot_containers`.
+* :class:`~.OverlayPlotContainer`
+* :class:`~.HPlotContainer`
+* :class:`~.VPlotContainer`
+* :class:`~.GridPlotContainer`
+
+The listed subclasses are defined in the module :mod:`chaco.plot_containers`.
 
 
 Renderers
@@ -142,13 +148,27 @@ Plot renderers are the classes that actually draw a type of plot.
 *Subclasses*:
 
 * :class:`~.BarPlot`
+
+* :class:`~.Base1DPlot`
+
+  * :class:`~.LineScatterPlot1D`
+  * :class:`~.ScatterPlot1D`
+
+    * :class:`~.JitterPlot`
+
+  * :class:`~.TextPlot1D`
+
 * :class:`~.Base2DPlot`
 
-  * :class:`~.ContourLinePlot`
-  * :class:`~.ContourPolyPlot`
+  * :class:`~.BaseContourPlot`
+  
+    * :class:`~.ContourLinePlot`
+    * :class:`~.ContourPolyPlot`
+
   * :class:`~.ImagePlot`: displays an image file, or color-maps scalar
     data to make an image
-  * :class:`~.CMapImagePlot`
+
+    * :class:`~.CMapImagePlot`
 
 * :class:`~.BaseXYPlot`: This class is often emulated by writers of other
   plot renderers, but renderers don't *need* to be structured this way.
@@ -156,25 +176,46 @@ Plot renderers are the classes that actually draw a type of plot.
   to implement :meth:`map_screen`, :meth:`map_data`, and :meth:`map_index`
   from :class:`~.AbstractPlotRenderer`.
 
+  * :class:`~.BaseCandlePlot`
+
+    * :class:`~.CandlePlot`
+
+  * :class:`~.HorizonPlot`
   * :class:`~.LinePlot`
 
     * :class:`~.ErrorBarPlot`
-
+  
+  * :class:`~.MultiLinePlot`
   * :class:`~.PolygonPlot`
-
+  
     * :class:`~.FilledLinePlot`
-
+  
   * :class:`~.ScatterPlot`
 
     * :class:`~.ColormappedScatterPlot`
+    * :class:`~.QuiverPlot`
+    * :class:`~.VariableSizeScatterPlot`
 
-  * :class:`~.ColorBar`
-  * :class:`~.PolarLineRenderer`: NOTE: doesn't play well with others
+  * :class:`~.SegmentPlot`
+
+    * :class:`~.ColormappedSegmentPlot`
+  
+  * :class:`~.TextPlot`
+
+* :class:`~.ColorBar`
+* :class:`~.PolarLineRenderer`: NOTE: doesn't play well with others
 
 You can use these classes to compose more interesting plots.
 
 The module :mod:`chaco.plot_factory` contains various convenience
-functions for creating plots, which simplify the set-up.
+functions for creating plots, which simplify the set-up.  These include:
+
+* :func:`~chaco.plot_factory.add_default_axes`
+* :func:`~.add_default_grids`
+* :func:`~.create_bar_plot`
+* :func:`~.create_line_plot`
+* :func:`~.create_polar_plot`
+* :func:`~.create_scatter_plot`
 
 The :class:`~chaco.plot.Plot` class (called "capital P Plot" when
 speaking) represents what the user usually thinks of as a "plot": a set of data,
@@ -197,6 +238,13 @@ first in Chaco, and then moved into Enable.
 
 *Subclasses*:
 
+* :class:`~.BetterZoom`
+
+  * :class:`~.BetterSelectingZoom`
+  
+    * :class:`~.RectZoomTool`
+    * :class:`~.TrackingZoom`
+
 * :class:`~.BroadcasterTool`: Keeps a list of other tools, and broadcasts
   events it receives to all those tools.
 * :class:`~.DataPrinter`: Prints the data-space position of the point
@@ -204,29 +252,27 @@ first in Chaco, and then moved into Enable.
 * :class:`enable.tools.drag_tool.DragTool`: Enable base class
   for tools that do dragging.
 
+  * :class:`~.DataLabelTool`
+  * :class:`~.DragZoom`
+  * :class:`~.LegendTool`
+
+    * :class:`~.LegendHighlighter`
+
   * :class:`~chaco.tools.move_tool.MoveTool`
+  * :class:`chaco.tools.pan_tool2.PanTool`
   * :class:`enable.tools.resize_tool.ResizeTool`
   * :class:`enable.tools.viewport_pan_tool.ViewportPanTool`
-
-* :class:`~.chaco.tools.drag_tool.DragTool`: Chaco base class
-  for tools that do dragging.
-
   * :class:`~chaco.tools.cursor_tool.BaseCursorTool`
 
     * :class:`~chaco.tools.cursor_tool.CursorTool1D`
     * :class:`~chaco.tools.cursor_tool.CursorTool2D`
-
-  * :class:`~.DataLabelTool`
-  * :class:`~.DragZoom`
-  * :class:`~.LegendTool`
-  * :class:`~.MoveTool`
 
 * :class:`~.DrawPointsTool`
 * :class:`~.HighlightTool`
 * :class:`enable.tools.hover_tool.HoverTool`
 * :class:`~.ImageInspectorTool`
 * :class:`~.LineInspector`
-* :class:`~.PanTool`
+* :class:`chaco.tools.pan_tool.PanTool`
 
   * :class:`~.TrackingPanTool`
 
@@ -237,19 +283,45 @@ first in Chaco, and then moved into Enable.
   * :class:`~.ScatterInspector`
   * :class:`~.SelectableLegend`
 
+* :class:`~.SimpleInspectorTool`
 * :class:`enable.tools.traits_tool.TraitsTool`
+* :class:`~chaco.tools.traits_tool.TraitsTool`
 
-  * :class:`~chaco.tools.traits_tool.TraitsTool`
+* :class:`~.LineSegmentTool` Technically speaking this is an overlay as it
+  sublcasses :class:`~.AbstractOverlay` and not
+  :py:class:`~enable.base_tool.BaseTool`. However, it is intended to be used as
+  a base class for tools that allow the user to draw a series of points
+  connected by lines.
 
-DragTool is a base class for tools that do dragging.
+Tool states:
 
-Other tools do things like panning, moving, highlighting, line segments, range selection, drag zoom, move data labels, scatter inspection, Traits UI.
+* :class:`~.GroupedToolState`
+* :class:`~.PanState`
+* :class:`~.SelectedZoomState`
+* :class:`~.ZoomState`
 
-Overlays
+Overlays: Axis, Grid, etc.
 -----------------------------------------------------------------------------
 
+*Interface*: :class:`~.AbstractOverlay`
 
-Miscellaneous
------------------------------------------------------------------------------
+*Subclasses*:
 
+* :class:`~.PlotAxis`
 
+  * :class:`~.LabelAxis`
+  * :class:`~.MinorPlotAxis`
+
+* :class:`~.ColormappedSelectionOverlay`
+* :class:`~.PlotGrid`
+* :class:`~.LassoOverlay`
+* :class:`~.Legend`
+* :class:`~.PlotLabel`
+* :class:`~.ScatterInspectorOverlay`
+* :class:`~.TextBoxOverlay`
+* :class:`~.ToolTip`
+* :class:`~.StatusLayer`
+* :class:`~.CoordinateLineOverlay`
+* :class:`~.DataBox`
+* :class:`~.ImageInspectorColorbarOverlay`
+* :class:`~.RangeSelectionOverlay`

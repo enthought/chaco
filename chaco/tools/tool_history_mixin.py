@@ -13,13 +13,13 @@ class ToolHistoryMixin(HasTraits):
     process the event.
     """
 
-    # Key to go to the original or start state in the history.
+    #: Key to go to the original or start state in the history.
     reset_state_key = Instance(KeySpec, args=("Esc",))
 
-    # Key to go to the previous state in the history.
+    #: Key to go to the previous state in the history.
     prev_state_key = Instance(KeySpec, args=("Left", "control"))
 
-    # Key to go to the next state in the history.
+    #: Key to go to the next state in the history.
     next_state_key = Instance(KeySpec, args=("Right", "control"))
 
     # The state stack.

@@ -18,13 +18,13 @@ class FunctionImageData(ImageData):
     Computation should be fairly swift for acceptable interactive performance.
     """
 
-    # The function to call with the low and high values of the range
-    # in the x and y dimensions.  It should return either a 2-D array
-    # of numerical values, or an array of RGB or RGBA values (shape should
-    # be (n, m), (n, m, 3) or (n, m, 4)).
+    #: The function to call with the low and high values of the range
+    #: in the x and y dimensions.  It should return either a 2-D array
+    #: of numerical values, or an array of RGB or RGBA values (shape should
+    #: be (n, m), (n, m, 3) or (n, m, 4)).
     func = Callable
 
-    # the 2D data_range required for the data shown
+    #: the 2D data_range required for the data shown
     data_range = Instance(DataRange2D)
 
     def __init__(self, **kw):

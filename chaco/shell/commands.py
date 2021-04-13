@@ -256,7 +256,7 @@ def hold(state=None):
 
 def curplot():
     if session.active_window:
-        return session.active_window.get_container()
+        return session.active_window.container
     else:
         return None
 
@@ -283,11 +283,11 @@ def _do_plot_boilerplate(kwargs, image=False):
         else:
             figure()
 
-    cont = session.active_window.get_container()
+    cont = session.active_window.container
 
     if not cont:
         cont = Plot(session.data)
-        session.active_window.set_container(cont)
+        session.active_window.container = cont
 
     existing_tools = [type(t) for t in (cont.tools + cont.overlays)]
     if not PanTool in existing_tools:
