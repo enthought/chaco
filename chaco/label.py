@@ -72,7 +72,7 @@ class Label(HasTraits):
     # ------------------------------------------------------------------------
 
     _bounding_box = List()
-    _position_cache_valid = Bool(False)
+    _position_cache_valid = Bool(False, transient=True)
     _text_needs_fitting = Bool(False)
     _line_xpos = Any()
     _line_ypos = Any()

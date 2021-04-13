@@ -56,13 +56,13 @@ class TextPlot1D(Base1DPlot):
     _text_position = Float
 
     #: flag for whether the cache of Label instances is valid
-    _label_cache_valid = Bool(False)
+    _label_cache_valid = Bool(False, transient=True)
 
     #: cache of Label instances for faster rendering
-    _label_cache = List
+    _label_cache = List(transient=True)
 
     #: cache of bounding boxes of labels
-    _label_box_cache = List
+    _label_box_cache = List(transient=True)
 
     # ------------------------------------------------------------------------
     # Private methods

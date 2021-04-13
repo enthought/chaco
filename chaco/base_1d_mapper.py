@@ -37,7 +37,7 @@ class Base1DMapper(AbstractMapper):
 
     # If the subclass uses a cache, _cache_valid is maintained to
     # monitor its status
-    _cache_valid = Bool(False)
+    _cache_valid = Bool(False, transient=True)
 
     # Indicates whether or not the bounds have been set at all, or if they
     # are at their initial default values.

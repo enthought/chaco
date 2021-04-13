@@ -54,10 +54,10 @@ class BaseContourPlot(Base2DPlot):
     # ------------------------------------------------------------------------
 
     # Is the cached level data valid?
-    _level_cache_valid = Bool(False)
+    _level_cache_valid = Bool(False, transient=True)
 
     # Is the cached color data valid?
-    _colors_cache_valid = Bool(False)
+    _colors_cache_valid = Bool(False, transient=True)
 
     # List of levels and their associated line properties.
     _levels = List
