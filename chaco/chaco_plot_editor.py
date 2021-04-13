@@ -40,19 +40,19 @@ from .tools.api import PanTool, ZoomTool
 #  Trait definitions:
 # -------------------------------------------------------------------------------
 
-# Range of values for an axis.
+#: Range of values for an axis.
 AxisRange = Tuple((0.0, 1.0, 0.01), labels=["Low", "High", "Step"], cols=3)
 
-# Range of axis bounds.
+#: Range of axis bounds.
 AxisBounds = Tuple((0.0, 1.0), labels=["Min", "Max"], cols=2)
 
-# Range for the height and width for the plot widget.
+#: Range for the height and width for the plot widget.
 PlotSize = Range(50, 1000, 180)
 
-# Range of plot line weights.
+#: Range of plot line weights.
 LineWeight = Range(1, 9, 3)
 
-# The color editor to use for various color traits.
+#: The color editor to use for various color traits.
 color_editor = RGBAColorEditor()
 
 
@@ -65,80 +65,80 @@ class ChacoPlotItem(Item):
     NOTE: ComponentEditor is preferred over this class, as it is more flexible.
     """
 
-    # Name of the trait that references the index data source.
+    #: Name of the trait that references the index data source.
     index = Str
-    # Name of the trait that references the value data source.
+    #: Name of the trait that references the value data source.
     value = Str
-    # Title of the plot (overlaid on the plot container).
+    #: Title of the plot (overlaid on the plot container).
     title = Str("Plot Editor")
 
-    # Bounds of the x-axis, used if **x_auto** is False.
+    #: Bounds of the x-axis, used if **x_auto** is False.
     x_bounds = AxisBounds
-    # Set the x-axis bounds automatically?
+    #: Set the x-axis bounds automatically?
     x_auto = Bool(True)
-    # Bounds of the y-axis, used if **y_auto** is False.
+    #: Bounds of the y-axis, used if **y_auto** is False.
     y_bounds = AxisBounds
-    # Set the y-axis bounds automatically?
+    #: Set the y-axis bounds automatically?
     y_auto = Bool(True)
 
-    # The orientation of the index axis.
+    #: The orientation of the index axis.
     orientation = Enum("h", "v")
 
     # If these are None, then the index/value trait names are used
 
-    # Label of the x-axis; if None, the **index** name is used.
+    #: Label of the x-axis; if None, the **index** name is used.
     x_label = Trait(None, None, Str)
-    # Name of the trait on the object containing the label of the x-axis.
-    # This takes precedence over **x_label**.
+    #: Name of the trait on the object containing the label of the x-axis.
+    #: This takes precedence over **x_label**.
     x_label_trait = Trait(None, None, Str)
-    # Font for the label of the x-axis.
+    #: Font for the label of the x-axis.
     x_label_font = KivaFont("modern 10")
-    # Color of the label of the x-axis.
+    #: Color of the label of the x-axis.
     x_label_color = black_color_trait
-    # Label of the y-axis; if None, the **value** name is used.
+    #: Label of the y-axis; if None, the **value** name is used.
     y_label = Trait(None, None, Str)
-    # Name of the trait on the object containing the label of the y-axis.
-    # This takes precedence over **y_label**.
+    #: Name of the trait on the object containing the label of the y-axis.
+    #: This takes precedence over **y_label**.
     y_label_trait = Trait(None, None, Str)
-    # Font for the label of the y-axis.
+    #: Font for the label of the y-axis.
     y_label_font = KivaFont("modern 10")
-    # Color of the label of the y-axis.
+    #: Color of the label of the y-axis.
     y_label_color = black_color_trait
 
     # General plot properties
 
-    # Foreground olor of the plot.
+    #: Foreground olor of the plot.
     color = ColorTrait("blue")
-    # Background color of the plot.
+    #: Background color of the plot.
     bgcolor = white_color_trait
-    # Background color of the plot (deprecated).
+    #: Background color of the plot (deprecated).
     bg_color = Property  # backwards compatibility; deprecated
-    # Color of the background padding.
+    #: Color of the background padding.
     padding_bg_color = ColorTrait("sys_window")
 
     # Border properties
 
-    # Width of the plot border
+    #: Width of the plot border
     border_width = Int(1)
-    # Is the border visible?
+    #: Is the border visible?
     border_visible = Bool(False)
-    # Line style of the border.
+    #: Line style of the border.
     border_dash = LineStyle
-    # Color of the border.
+    #: Color of the border.
     border_color = black_color_trait
 
-    # The type of the plot.
+    #: The type of the plot.
     type = Enum("line", "scatter")
-    # The type of the plot as a string.
+    #: The type of the plot as a string.
     type_trait = Str
 
     # plot-specific properties.  These might not apply to all plot types.
 
-    # Type of marker (for plots that use markers).
+    #: Type of marker (for plots that use markers).
     marker = MarkerTrait
-    # Size of marker (for plots that use markers).
+    #: Size of marker (for plots that use markers).
     marker_size = Int(4)
-    # Marker outline color (for plots that user markers).
+    #: Marker outline color (for plots that user markers).
     outline_color = black_color_trait
 
     def __init__(self, index, value, type="line", **traits):

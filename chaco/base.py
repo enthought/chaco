@@ -37,24 +37,24 @@ point_dtype = dtype([("x", float), ("y", float)])
 
 # Dimensions
 
-# A single array of numbers.
+#: A single array of numbers.
 NumericalSequenceTrait = ArrayOrNone()
 
-# A sequence of pairs of numbers, i.e., an Nx2 array.
+#: A sequence of pairs of numbers, i.e., an Nx2 array.
 PointTrait = ArrayOrNone(shape=(None, 2))
 
-# An NxM array of numbers or NxMxRGB(A) array of colors.
+#: An NxM array of numbers or NxMxRGB(A) array of colors.
 ImageTrait = ArrayOrNone()
 
-# An 3D array of numbers of shape (Nx, Ny, Nz)
+#: An 3D array of numbers of shape (Nx, Ny, Nz)
 CubeTrait = ArrayOrNone(shape=(None, None, None))
 
 
-# This enumeration lists the fundamental mathematical coordinate types that
-# Chaco supports.
+#: This enumeration lists the fundamental mathematical coordinate types that
+#: Chaco supports.
 DimensionTrait = Enum("scalar", "point", "image", "cube")
 
-# Linear sort order.
+#: Linear sort order.
 SortOrderTrait = Enum("ascending", "descending", "none")
 
 

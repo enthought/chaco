@@ -24,11 +24,11 @@ class FunctionDataSource(ArrayDataSource):
     behavior, create a subclass that hooks up the appropriate listeners.
     """
 
-    # The function to call with the low and high values of the range.
-    # It should return an array of values.
+    #: The function to call with the low and high values of the range.
+    #: It should return an array of values.
     func = Callable
 
-    # A reference to a datarange
+    #: A reference to a datarange
     data_range = Instance(DataRange1D)
 
     def __init__(self, **kw):
