@@ -63,10 +63,13 @@ if ETSConfig.toolkit == "wx":
             self.SetAutoLayout(True)
             self.Show(True)
 
-        def get_container(self):
+        # This is a Python property because this is not a HasTraits subclass.
+        @property
+        def container(self):
             return self.plot_window.component
 
-        def set_container(self, container):
+        @container.setter
+        def container(self, container):
             self.plot_window.component = container
 
         def iconize(self, iconize):
@@ -89,9 +92,6 @@ if ETSConfig.toolkit == "wx":
 
         def close(self):
             self.Close()
-
-        # This is a Python property because this is not a HasTraits subclass.
-        container = property(get_container, set_container)
 
         # ------------------------------------------------------------------------
         # Private methods
@@ -183,10 +183,13 @@ elif ETSConfig.toolkit == "qt4":
 
             self.show()
 
-        def get_container(self):
+        # This is a Python property because this is not a HasTraits subclass.
+        @property
+        def container(self):
             return self.plot_window.component
 
-        def set_container(self, container):
+        @container.setter
+        def container(self, container):
             self.plot_window.component = container
 
         def iconize(self, iconize):
@@ -212,9 +215,6 @@ elif ETSConfig.toolkit == "qt4":
         def raise_window(self):
             """Raises this window to the top of the window hierarchy."""
             self.raise_()
-
-        # This is a Python property because this is not a HasTraits subclass.
-        container = property(get_container, set_container)
 
         # ------------------------------------------------------------------------
         # Private methods

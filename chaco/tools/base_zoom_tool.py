@@ -18,16 +18,16 @@ class BaseZoomTool(HasTraits):
     onto a plot.
     """
 
-    # If the tool only applies to a particular axis, this attribute is used to
-    # determine which mapper and range to use.
+    #: If the tool only applies to a particular axis, this attribute is used to
+    #: determine which mapper and range to use.
     axis = Enum("index", "value")
 
-    # The maximum ratio between the original data space bounds and the zoomed-in
-    # data space bounds.  If None, then there is no limit (not advisable!).
+    #: The maximum ratio between the original data space bounds and the zoomed-in
+    #: data space bounds.  If None, then there is no limit (not advisable!).
     max_zoom_in_factor = Float(1e5, allow_none=True)
 
-    # The maximum ratio between the zoomed-out data space bounds and the original
-    # bounds.  If None, then there is no limit.
+    #: The maximum ratio between the zoomed-out data space bounds and the original
+    #: bounds.  If None, then there is no limit.
     max_zoom_out_factor = Float(1e5, allow_none=True)
 
     def _zoom_limit_reached(

@@ -105,7 +105,7 @@ class MultiLinePlot(BaseXYPlot):
     fast_clip = Bool(False)
 
     #: The color of the lines.
-    color = black_color_trait
+    color = black_color_trait(requires_redraw=True)
 
     #: A function that returns the color of lines.  Overrides `color` if not None.
     color_func = Trait(None, None, Callable)
@@ -120,10 +120,10 @@ class MultiLinePlot(BaseXYPlot):
     metadata_name = Str("selections")
 
     #: The thickness of the line.
-    line_width = Float(1.0)
+    line_width = Float(1.0, requires_redraw=True)
 
     #: The line dash style.
-    line_style = LineStyle
+    line_style = LineStyle(requires_redraw=True)
 
     use_global_bounds = Bool(True)
 
@@ -507,22 +507,6 @@ class MultiLinePlot(BaseXYPlot):
             gc.move_to(x, y + height / 2)
             gc.line_to(x + width, y + height / 2)
             gc.stroke_path()
-
-    def _alpha_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _color_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _line_style_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _line_width_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
 
     def _amplitude_changed(self):
         self.value.data_changed = True

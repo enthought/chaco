@@ -14,8 +14,8 @@ class JitterPlot(ScatterPlot1D):
     dense collections of points.
     """
 
-    # The size, in pixels, of the area over which to spread the data points
-    # along the dimension orthogonal to the index direction.
+    #: The size, in pixels, of the area over which to spread the data points
+    #: along the dimension orthogonal to the index direction.
     jitter_width = Int(50)
 
     # ------------------------------------------------------------------------
