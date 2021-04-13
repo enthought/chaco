@@ -238,10 +238,6 @@ class ArrayDataSource(AbstractDataSource):
         #       version of the dataset?
 
         if data is None:
-            # Several sources weren't setting the _data attribute, so we
-            # go through the interface.  This seems like the correct thing
-            # to do anyway... right?
-            # data = self._data
             data = self.get_data()
 
         data_len = len(data)
