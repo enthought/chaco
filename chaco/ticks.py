@@ -24,6 +24,7 @@ from numpy import (
     finfo,
     float64,
     floor,
+    isnan,
     linspace,
     log10,
     minimum,
@@ -242,6 +243,10 @@ def auto_ticks(
     An array of tick mark locations. The first and last tick entries are the
     axis end points.
     """
+    # if a NaN makes it here, we cant determine tick mark locations. Return
+    # empty list to prevent crash. Motivated by enthought/chaco#529
+    if isnan([data_low, data_high, bound_low, bound_high]).any():
+        return []
 
     is_auto_low = bound_low == "auto"
     is_auto_high = bound_high == "auto"
