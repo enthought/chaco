@@ -317,8 +317,13 @@ class ColormappedScatterPlot(ScatterPlot):
 
         if hasattr(gc, "draw_marker_at_points") and self.marker not in (
             "custom",
-            "circle",
-            "diamond",
+            "left_triangle",
+            "right_triangle",
+            "pentagon",
+            "hexagon",
+            "hexagon2",
+            "star",
+            "cross_plus"
         ):
             # This is the fastest method: we use one of the built-in markers.
             color_bands = cmap.color_bands
