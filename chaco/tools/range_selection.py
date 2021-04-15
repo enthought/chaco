@@ -20,7 +20,6 @@ from traits.api import (
     Str,
     Trait,
 )
-from traits.observation.api import trait
 from enable.api import KeySpec
 
 # Chaco imports
@@ -679,11 +678,10 @@ class RangeSelection(AbstractController):
                 return 0
 
     @observe([
-        trait("component").then(trait("index_mapper") | trait("value_mapper")),
-        trait("_plot").then(
-            trait("index_mapper", optional=True) \
-            | trait("value_mapper", optional=True)
-        ),
+        "component.index_mapper",
+        "component.value_mapper",
+        "_plot.index_mapper",
+        "_plot.value_mapper"
     ])
     def _axis_mapper_updated(self, event):
         if event.name == self.axis + "_mapper":
