@@ -17,7 +17,7 @@ from numpy import (
 )
 
 # Enthought library imports
-from kiva.constants import STROKE
+from kiva.api import NO_MARKER, STROKE
 from traits.api import Dict, Enum, Float, Instance, observe
 from traitsui.api import Item, RangeEditor
 
@@ -315,16 +315,8 @@ class ColormappedScatterPlot(ScatterPlot):
 
         cmap = self.color_mapper
 
-        if hasattr(gc, "draw_marker_at_points") and self.marker not in (
-            "custom",
-            "left_triangle",
-            "right_triangle",
-            "pentagon",
-            "hexagon",
-            "hexagon2",
-            "star",
-            "cross_plus"
-        ):
+        if hasattr(gc, "draw_marker_at_points") and \
+                (marker.kiva_marker != NO_MARKER):
             # This is the fastest method: we use one of the built-in markers.
             color_bands = cmap.color_bands
             # Initial setup of drawing parameters
@@ -401,16 +393,7 @@ class ColormappedScatterPlot(ScatterPlot):
             if marker_cls != "custom":
                 if hasattr(
                     gc, "draw_marker_at_points"
-                ) and self.marker not in (
-                    "custom",
-                    "left_triangle",
-                    "right_triangle",
-                    "pentagon",
-                    "hexagon",
-                    "hexagon2",
-                    "star",
-                    "cross_plus"
-                ):
+                ) and marker_cls.kiva_marker != NO_MARKER:
                     draw_func = lambda x, y, size: gc.draw_marker_at_points(
                         [[x, y]], size, marker_cls.kiva_marker
                     )
