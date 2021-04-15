@@ -194,6 +194,7 @@ Plot renderers are the classes that actually draw a type of plot.
 
     * :class:`~.ColormappedScatterPlot`
     * :class:`~.QuiverPlot`
+    * :class:`~.VariableSizeScatterPlot`
 
   * :class:`~.SegmentPlot`
 
