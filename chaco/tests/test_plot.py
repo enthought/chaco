@@ -2,9 +2,16 @@ import unittest
 
 from numpy import alltrue, arange, array
 
+from enable.api import ComponentEditor
+from enable.testing import EnableTestAssistant
+from traits.api import HasTraits, Instance
+from traits.etsconfig.api import ETSConfig
+from traitsui.api import Item, View
+
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, DataRange1D, PlotGraphicsContext
 from chaco.default_colormaps import viridis
+from chaco.tools.api import PanTool, ZoomTool
 
 
 class PlotTestCase(unittest.TestCase):
@@ -68,7 +75,9 @@ class PlotTestCase(unittest.TestCase):
         w = arange(3, 8)
         data = ArrayPlotData(x=x, y=y, c=c, w=w)
         plot = Plot(data)
-        plot.plot(("x", "y", "c", "w"), "cmap_segment", color_mapper=viridis)[0]
+        plot.plot(
+            ("x", "y", "c", "w"), "cmap_segment", color_mapper=viridis
+        )[0]
 
         plot.do_layout((250, 250))
         gc = PlotGraphicsContext((250, 250))
@@ -89,3 +98,38 @@ class PlotTestCase(unittest.TestCase):
         gc.render_component(plot)
         actual = gc.bmp_array[:, :, :]
         self.assertFalse(alltrue(actual == 255))
+
+
+class EmptyLinePlot(HasTraits):
+    plot = Instance(Plot)
+    x = []
+    y = []
+    traits_view = View(
+        Item('plot', editor=ComponentEditor(), show_label=False),
+        width=500,
+        height=500,
+        resizable=True
+    )
+
+    def _plot_default(self):
+        plot = Plot(ArrayPlotData(x=self.x, y=self.y))
+        plot.plot(("x", "y"), type="line", color="blue")
+        plot.tools.append(PanTool(plot))
+        plot.overlays.append(ZoomTool(plot, zoom_factor=1.1))
+        return plot
+
+
+# regression test for enthought/chaco#529
+@unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
+class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
+
+    def test_dont_crash_on_click(self):
+        from traitsui.testing.api import UITester
+        tester = UITester()
+        empty_plot = EmptyLinePlot()
+
+        with tester.create_ui(empty_plot):
+            self.press_move_release(
+                empty_plot.plot,
+                [(1, 1), (2, 2), (3, 3), (4, 4)],
+            )

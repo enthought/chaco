@@ -38,8 +38,10 @@ class ScatterInspector(SelectTool):
     #: a point does no de-hover until another point get hover focus.
     persistent_hover = Bool(False)
 
-    #: The names of the data source metadata for hover and selection events.
+    #: The names of the data source metadata for hover events.
     hover_metadata_name = Str("hover")
+
+    #: The names of the data source metadata for selection events.
     selection_metadata_name = Str("selections")
 
     #: This tool emits events when hover or selection changes
