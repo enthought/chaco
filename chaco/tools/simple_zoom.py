@@ -38,12 +38,12 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     #:   Perform a "box" selection on two axes.
     tool_mode = Enum("box", "range")
 
-    # Is the tool always "on"? If True, left-clicking always initiates
-    # a zoom operation; if False, the user must press a key to enter zoom mode.
+    #: Is the tool always "on"? If True, left-clicking always initiates
+    #: a zoom operation; if False, the user must press a key to enter zoom mode.
     always_on = Bool(False, transient=True)
 
-    # Defines a meta-key, that works with always_on to set the zoom mode. This
-    # is useful when the zoom tool is used in conjunction with the pan tool.
+    #: Defines a meta-key, that works with always_on to set the zoom mode. This
+    #: is useful when the zoom tool is used in conjunction with the pan tool.
     always_on_modifier = Enum(None, "shift", "control", "alt", transient=True)
 
     # -------------------------------------------------------------------------
@@ -68,26 +68,26 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     #: Conversion ratio from wheel steps to zoom factors.
     wheel_zoom_step = Float(1.0)
 
-    # The key press to enter zoom mode, if **always_on** is False.  Has no effect
-    # if **always_on** is True.
+    #: The key press to enter zoom mode, if **always_on** is False.  Has no effect
+    #: if **always_on** is True.
     enter_zoom_key = Instance(KeySpec, args=("z",), transient=True)
 
-    # The key press to leave zoom mode, if **always_on** is False.  Has no effect
-    # if **always_on** is True.
+    #: The key press to leave zoom mode, if **always_on** is False.  Has no effect
+    #: if **always_on** is True.
     exit_zoom_key = Instance(KeySpec, args=("z",), transient=True)
 
     #: Disable the tool after the zoom is completed?
     disable_on_complete = Bool(True)
 
-    # The minimum amount of screen space the user must select in order for
-    # the tool to actually take effect.
+    #: The minimum amount of screen space the user must select in order for
+    #: the tool to actually take effect.
     minimum_screen_delta = Int(10, transient=True)
 
     # -------------------------------------------------------------------------
     # Appearance properties (for Box mode)
     # -------------------------------------------------------------------------
 
-    # The pointer to use when drawing a zoom box.
+    #: The pointer to use when drawing a zoom box.
     pointer = Str("magnifier", transient=True)
 
     #: The color of the selection box.
@@ -107,7 +107,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     #: The thickness of selection rectangle border.
     border_size = Int(1)
 
-    # The possible event states of this zoom tool.
+    #: The possible event states of this zoom tool.
     event_state = Enum("normal", "selecting", transient=True)
 
     # ------------------------------------------------------------------------
