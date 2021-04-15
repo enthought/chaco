@@ -41,7 +41,6 @@ Data Model
 - :class:`~.DataRange1D`
 - :class:`~.DataRange2D`
 
-
 Mappers
 -------
 
@@ -54,12 +53,6 @@ Mappers
 - :class:`~.ColorMapTemplate`
 - :class:`~.DiscreteColorMapper`
 - :class:`~.TransformColorMapper`
-
-Colormaps and Color Palettes
-----------------------------
-
-- 
-
 
 Visual Components
 -----------------
@@ -161,6 +154,20 @@ Tools
 
 - :class:`~.AbstractController`
 
+Colormaps and Color Palettes
+----------------------------
+
+- :func:`~.center`
+- :attr:`~.color_map_dict`
+- :attr:`~.color_map_functions`
+- :attr:`~.color_map_name_dict`
+- :func:`~.reverse`
+- :attr:`~.color_map_name_dict`
+- :attr:`~.color_map_name_dict`
+- :attr:`~.color_map_name_dict`
+- :attr:`~.PALETTEES`
+
+
 """
 
 from .base import (
@@ -200,10 +207,6 @@ from .linear_mapper import LinearMapper
 from .color_mapper import ColorMapper, ColorMapTemplate
 from .discrete_color_mapper import DiscreteColorMapper
 from .transform_color_mapper import TransformColorMapper
-
-# Colormaps and color palettes
-from .default_colormaps import *
-from .default_colors import *
 
 # Visual components
 from .abstract_plot_renderer import AbstractPlotRenderer
@@ -305,6 +308,12 @@ from .grid import PlotGrid
 
 # Tools
 from .abstract_controller import AbstractController
+
+# Colormaps and color palettes
+from .default_colormaps import (
+    center, color_map_dict, color_map_functions, color_map_name_dict, reverse
+)
+from .default_colors import cbrewer, palette11, palette14, PALETTES
 
 # Importing various symbols into the Chaco namespace for backwards
 # compatibility.  New code should directly import from Enable.
