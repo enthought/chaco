@@ -512,11 +512,3 @@ class MultiLinePlot(BaseXYPlot):
         self.value.data_changed = True
         self.invalidate_draw()
         self.request_redraw()
-
-    def __getstate__(self):
-        state = super(MultiLinePlot, self).__getstate__()
-        for key in ["traits_view"]:
-            if key in state:
-                del state[key]
-
-        return state

@@ -433,14 +433,6 @@ class LinePlot(BaseXYPlot):
         d = z[:, 0] + z[:, 1]
         # ... TODO ...
 
-    def __getstate__(self):
-        state = super(LinePlot, self).__getstate__()
-        for key in ["traits_view"]:
-            if key in state:
-                del state[key]
-
-        return state
-
     @cached_property
     def _get_effective_color(self):
         alpha = self.color_[-1] if len(self.color_) == 4 else 1

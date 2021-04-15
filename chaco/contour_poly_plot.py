@@ -24,10 +24,10 @@ class ContourPolyPlot(BaseContourPlot):
     # ------------------------------------------------------------------------
 
     # Are the cached contours valid? If False, new ones need to be computed.
-    _poly_cache_valid = Bool(False)
+    _poly_cache_valid = Bool(False, transient=True)
 
     # Cached collection of traces.
-    _cached_polys = Dict
+    _cached_polys = Dict(transient=True)
 
     # ------------------------------------------------------------------------
     # Private methods

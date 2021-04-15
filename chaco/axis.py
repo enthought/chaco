@@ -177,24 +177,24 @@ class PlotAxis(AbstractOverlay):
 
     # Cached position calculations
 
-    _tick_list = List  # These are caches of their respective positions
-    _tick_positions = ArrayOrNone()
-    _tick_label_list = ArrayOrNone()
-    _tick_label_positions = ArrayOrNone()
-    _tick_label_bounding_boxes = List
-    _major_axis_size = Float
-    _minor_axis_size = Float
-    _major_axis = Array
-    _title_orientation = Array
-    _title_angle = Float
-    _origin_point = Array
-    _inside_vector = Array
-    _axis_vector = Array
-    _axis_pixel_vector = Array
-    _end_axis_point = Array
+    _tick_list = List(transient=True)  # These are caches of their respective positions
+    _tick_positions = ArrayOrNone(transient=True)
+    _tick_label_list = ArrayOrNone(transient=True)
+    _tick_label_positions = ArrayOrNone(transient=True)
+    _tick_label_bounding_boxes = List(transient=True)
+    _major_axis_size = Float(transient=True)
+    _minor_axis_size = Float(transient=True)
+    _major_axis = Array(transient=True)
+    _title_orientation = Array(transient=True)
+    _title_angle = Float(transient=True)
+    _origin_point = Array(transient=True)
+    _inside_vector = Array(transient=True)
+    _axis_vector = Array(transient=True)
+    _axis_pixel_vector = Array(transient=True)
+    _end_axis_point = Array(transient=True)
 
-    ticklabel_cache = List
-    _cache_valid = Bool(False)
+    ticklabel_cache = List(transient=True)
+    _cache_valid = Bool(False, transient=True)
 
     # ------------------------------------------------------------------------
     # Public methods
@@ -830,34 +830,6 @@ class PlotAxis(AbstractOverlay):
     # ------------------------------------------------------------------------
     # Persistence-related methods
     # ------------------------------------------------------------------------
-
-    def __getstate__(self):
-        dont_pickle = [
-            "_tick_list",
-            "_tick_positions",
-            "_tick_label_list",
-            "_tick_label_positions",
-            "_tick_label_bounding_boxes",
-            "_major_axis_size",
-            "_minor_axis_size",
-            "_major_axis",
-            "_title_orientation",
-            "_title_angle",
-            "_origin_point",
-            "_inside_vector",
-            "_axis_vector",
-            "_axis_pixel_vector",
-            "_end_axis_point",
-            "_ticklabel_cache",
-            "_cache_valid",
-        ]
-
-        state = super(PlotAxis, self).__getstate__()
-        for key in dont_pickle:
-            if key in state:
-                del state[key]
-
-        return state
 
     def __setstate__(self, state):
         super(PlotAxis, self).__setstate__(state)

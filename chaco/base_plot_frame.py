@@ -154,7 +154,6 @@ class BasePlotFrame(Container, PlotComponent):
             super(BasePlotFrame, self).__setattr__(name, value)
 
     ### Persistence ###########################################################
-    #    _pickles = ("_frame_slots", "_components", "fit_components", "fit_window")
 
     def post_load(self, path=None):
         super(BasePlotFrame, self).post_load(path)

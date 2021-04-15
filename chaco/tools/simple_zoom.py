@@ -40,11 +40,11 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     #: Is the tool always "on"? If True, left-clicking always initiates
     #: a zoom operation; if False, the user must press a key to enter zoom mode.
-    always_on = Bool(False)
+    always_on = Bool(False, transient=True)
 
     #: Defines a meta-key, that works with always_on to set the zoom mode. This
     #: is useful when the zoom tool is used in conjunction with the pan tool.
-    always_on_modifier = Enum(None, "shift", "control", "alt")
+    always_on_modifier = Enum(None, "shift", "control", "alt", transient=True)
 
     # -------------------------------------------------------------------------
     # Zoom control
@@ -70,25 +70,25 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     #: The key press to enter zoom mode, if **always_on** is False.  Has no effect
     #: if **always_on** is True.
-    enter_zoom_key = Instance(KeySpec, args=("z",))
+    enter_zoom_key = Instance(KeySpec, args=("z",), transient=True)
 
     #: The key press to leave zoom mode, if **always_on** is False.  Has no effect
     #: if **always_on** is True.
-    exit_zoom_key = Instance(KeySpec, args=("z",))
+    exit_zoom_key = Instance(KeySpec, args=("z",), transient=True)
 
     #: Disable the tool after the zoom is completed?
     disable_on_complete = Bool(True)
 
     #: The minimum amount of screen space the user must select in order for
     #: the tool to actually take effect.
-    minimum_screen_delta = Int(10)
+    minimum_screen_delta = Int(10, transient=True)
 
     # -------------------------------------------------------------------------
     # Appearance properties (for Box mode)
     # -------------------------------------------------------------------------
 
     #: The pointer to use when drawing a zoom box.
-    pointer = "magnifier"
+    pointer = Str("magnifier", transient=True)
 
     #: The color of the selection box.
     color = ColorTrait("lightskyblue")
@@ -108,7 +108,7 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
     border_size = Int(1)
 
     #: The possible event states of this zoom tool.
-    event_state = Enum("normal", "selecting")
+    event_state = Enum("normal", "selecting", transient=True)
 
     # ------------------------------------------------------------------------
     # Key mappings
@@ -123,17 +123,17 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
 
     # If **always_on** is False, this attribute indicates whether the tool
     # is currently enabled.
-    _enabled = Bool(False)
+    _enabled = Bool(False, transient=True)
 
     # the original numerical screen ranges
     _orig_low_setting = Trait(None, Tuple, Float, Str)
     _orig_high_setting = Trait(None, Tuple, Float, Str)
 
     # The (x,y) screen point where the mouse went down.
-    _screen_start = Trait(None, None, Tuple)
+    _screen_start = Trait(None, None, Tuple, transient=True)
 
     # The (x,,y) screen point of the last seen mouse move event.
-    _screen_end = Trait(None, None, Tuple)
+    _screen_end = Trait(None, None, Tuple, transient=True)
 
     def __init__(self, component=None, *args, **kw):
         # Support AbstractController-style constructors so that this can be
@@ -647,28 +647,3 @@ class SimpleZoom(AbstractOverlay, ToolHistoryMixin, BaseZoomTool):
         to the next state. Implements ToolHistoryMixin.
         """
         self._do_zoom()
-
-    ### Persistence ###########################################################
-
-    def __getstate__(self):
-        dont_pickle = [
-            "always_on",
-            "always_on_modifier",
-            "enter_zoom_key",
-            "exit_zoom_key",
-            "minimum_screen_delta",
-            "event_state",
-            "reset_zoom_key",
-            "prev_zoom_key",
-            "next_zoom_key",
-            "pointer",
-            "_enabled",
-            "_screen_start",
-            "_screen_end",
-        ]
-        state = super(SimpleZoom, self).__getstate__()
-        for key in dont_pickle:
-            if key in state:
-                del state[key]
-
-        return state

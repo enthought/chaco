@@ -231,8 +231,15 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         self.assertNotIn("value_dimension", state)
         self.assertNotIn("index_dimension", state)
         self.assertNotIn("persist_data", state)
+        for key in [
+            "_data",
+            "_cached_mask",
+            "_cached_bounds",
+            "_min_index",
+            "_max_index",
+        ]:
+            self.assertIn(key, state)
 
-    @unittest.skip("persist_data probably shouldn't be persisted")
     def test_serialization_state_no_persist(self):
         self.data_source.persist_data = False
 
@@ -247,7 +254,7 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
             "_min_index",
             "_max_index",
         ]:
-            self.assertIn(key, state)
+            self.assertNotIn(key, state)
 
     @unittest.skip("I think this is just broken")
     def test_serialization_post_load(self):

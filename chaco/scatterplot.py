@@ -271,11 +271,11 @@ class ScatterPlot(BaseXYPlot):
     # Private traits
     # ------------------------------------------------------------------------
 
-    _cached_selected_pts = ArrayOrNone
-    _cached_selected_screen_pts = Array
-    _cached_point_mask = Array
-    _cached_selection_point_mask = Array
-    _selection_cache_valid = Bool(False)
+    _cached_selected_pts = ArrayOrNone(transient=True)
+    _cached_selected_screen_pts = Array(transient=True)
+    _cached_point_mask = Array(transient=True)
+    _cached_selection_point_mask = Array(transient=True)
+    _selection_cache_valid = Bool(False, transient=True)
 
     # ------------------------------------------------------------------------
     # Overridden PlotRenderer methods

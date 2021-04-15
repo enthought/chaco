@@ -294,7 +294,7 @@ class ArrayDataSource(AbstractDataSource):
     # ------------------------------------------------------------------------
 
     def __getstate__(self):
-        state = self.__dict__.copy()
+        state = super(ArrayDataSource, self).__getstate__()
         if not self.persist_data:
             state.pop("_data", None)
             state.pop("_cached_mask", None)

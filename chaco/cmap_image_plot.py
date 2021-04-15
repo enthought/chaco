@@ -52,10 +52,10 @@ class CMapImagePlot(ImagePlot):
     # ------------------------------------------------------------------------
 
     # Is the mapped image valid?
-    _mapped_image_cache_valid = Bool(False)
+    _mapped_image_cache_valid = Bool(False, transient=True)
 
     # Cache of the fully mapped RGB(A) image.
-    _cached_mapped_image = Any
+    _cached_mapped_image = Any(transient=True)
 
     # ------------------------------------------------------------------------
     # Public methods

@@ -121,18 +121,18 @@ class BaseXYPlot(AbstractPlotRenderer):
     # ------------------------------------------------------------------------
 
     # Are the cache traits valid? If False, new ones need to be compute.
-    _cache_valid = Bool(False)
+    _cache_valid = Bool(False, transient=True)
 
     # Cached array of (x,y) data-space points; regardless of self.orientation,
     # these points are always stored as (index_pt, value_pt).
-    _cached_data_pts = Array
+    _cached_data_pts = Array(transient=True)
 
     # Cached array of (x,y) screen-space points.
-    _cached_screen_pts = Array
+    _cached_screen_pts = Array(transient=True)
 
     # Does **_cached_screen_pts** contain the screen-space coordinates
     # of the points currently in **_cached_data_pts**?
-    _screen_cache_valid = Bool(False)
+    _screen_cache_valid = Bool(False, transient=True)
 
     # Reference to a spatial subdivision acceleration structure.
     _subdivision = Any
@@ -720,19 +720,6 @@ class BaseXYPlot(AbstractPlotRenderer):
     # ------------------------------------------------------------------------
     # Persistence
     # ------------------------------------------------------------------------
-
-    def __getstate__(self):
-        state = super(BaseXYPlot, self).__getstate__()
-        for key in [
-            "_cache_valid",
-            "_cached_data_pts",
-            "_screen_cache_valid",
-            "_cached_screen_pts",
-        ]:
-            if key in state:
-                del state[key]
-
-        return state
 
     def __setstate__(self, state):
         super(BaseXYPlot, self).__setstate__(state)
