@@ -43,7 +43,6 @@ give a good overview of the capabilities of Chaco:
 
 * :ref:`Sample Plot Gallery <examples>`
 * :ref:`Tutorial: Interactive plotting with Chaco <tutorial>`
-* :ref:`Tutorial: Using Chaco from IPython <tutorial_ipython>`
 * Examples:
 
   - :ref:`Modeling Van del Waal's Equations <tutorial_van_der_waal>`
