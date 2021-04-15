@@ -69,8 +69,6 @@ class ColorBar(AbstractPlotRenderer):
     direction = Enum("normal", "flipped")
     #: Overrides the default background color trait in PlotComponent.
     bgcolor = "transparent"
-    #: Draw layers in "draw order"
-    use_draw_order = True
     #: Default width is 40 pixels (overrides enable.CoordinateBox)
     width = 40
 
