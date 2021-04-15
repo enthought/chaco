@@ -1,3 +1,4 @@
+import platform
 import unittest
 
 from numpy import alltrue, arange, array
@@ -12,6 +13,18 @@ from traitsui.api import Item, View
 from chaco.api import ArrayPlotData, Plot, DataRange1D, PlotGraphicsContext
 from chaco.default_colormaps import viridis
 from chaco.tools.api import PanTool, ZoomTool
+
+is_windows = platform.system() == "Windows"
+
+
+def is_qt4():
+    if not ETSConfig.toolkit.startswith('qt'):
+        return False
+
+    # Only AFTER confirming Qt's availability...
+    # We lean on Pyface here since the check is complicated.
+    import pyface.qt
+    return pyface.qt.is_qt4
 
 
 class PlotTestCase(unittest.TestCase):
@@ -123,6 +136,7 @@ class EmptyLinePlot(HasTraits):
 @unittest.skipIf(ETSConfig.toolkit == "null", "Skip on 'null' toolkit")
 class TestEmptyPlot(unittest.TestCase, EnableTestAssistant):
 
+    @unittest.skipIf(is_windows and is_qt4(), "Test breaks on windows/pyqt")
     def test_dont_crash_on_click(self):
         from traitsui.testing.api import UITester
         tester = UITester()
