@@ -1,4 +1,4 @@
-""" Defines the PlotGrid class, and associated Traits UI View and validator
+""" Defines the PlotGrid class, and associated TraitsUI View and validator
 function.
 """
 
@@ -157,7 +157,7 @@ class PlotGrid(AbstractOverlay):
     line_width = CInt(1)
     line_weight = Alias("line_width")
 
-    #: Default Traits UI View for modifying grid attributes.
+    #: Default TraitsUI View for modifying grid attributes.
     traits_view = GridView
 
     # ------------------------------------------------------------------------

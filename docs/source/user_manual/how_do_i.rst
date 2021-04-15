@@ -75,7 +75,7 @@ be set to 'wx'.
 
 * integrate a Chaco plot into my QT app?
 
-Integrate a Chaco plot into my Traits UI?
+Integrate a Chaco plot into my TraitsUI?
 -----------------------------------------
 
 ::

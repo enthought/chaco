@@ -1,4 +1,4 @@
-""" An example of how to use Chaco to render a visual Traits UI editor.
+""" An example of how to use Chaco to render a visual TraitsUI editor.
 This particular editor allows the user to set two endpoints of an
 interval.
 """

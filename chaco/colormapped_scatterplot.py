@@ -29,7 +29,7 @@ from .scatterplot import ScatterPlot, ScatterPlotView
 
 
 class ColormappedScatterPlotView(ScatterPlotView):
-    """Traits UI View for customizing a color-mapped scatter plot."""
+    """TraitsUI View for customizing a color-mapped scatter plot."""
 
     def __init__(self):
         super(ColormappedScatterPlotView, self).__init__()
@@ -87,7 +87,7 @@ class ColormappedScatterPlot(ScatterPlot):
     # This mapping is only valid if **_cache_valid** is True.
     _index_bands = Dict()
 
-    #: Traits UI View for customizing the plot. Overrides the ScatterPlot value.
+    #: TraitsUI View for customizing the plot. Overrides the ScatterPlot value.
     traits_view = ColormappedScatterPlotView()
 
     # ------------------------------------------------------------------------
