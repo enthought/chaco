@@ -1,7 +1,167 @@
-""" Defines the publicly accessible items of the Chaco API.
+# (C) Copyright 2006-2021 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """
-# This just imports the key datamodel classes into the top-level package
-# namespace for convenience.
+Defines the publicly accessible items of the Chaco API.
+
+Base
+----
+
+- :attr:`~.NumericalSequenceTrait`
+- :attr:`~.PointTrait`
+- :attr:`~.ImageTrait`
+- :attr:`~.DimensionTrait`
+- :attr:`~.SortOrderTrait`
+- :func:`~.bin_search`
+- :func:`~.reverse_map_1d`
+- :func:`~.right_shift`
+- :func:`~.left_shift`
+- :func:`~.sort_points`
+- :func:`~.find_runs`
+- :func:`~.arg_find_runs`
+- :func:`~.point_line_distance`
+
+Data Model
+----------
+
+- :class:`~.AbstractDataSource`
+- :class:`~.ArrayDataSource`
+- :class:`~.GridDataSource`
+- :class:`~.ImageData`
+- :class:`~.MultiArrayDataSource`
+- :class:`~.PointDataSource`
+- :class:`~.AbstractDataRange`
+- :class:`~.BaseDataRange`
+- :class:`~.DataRange1D`
+- :class:`~.DataRange2D`
+
+
+Mappers
+-------
+
+- :class:`~.AbstractMapper`
+- :class:`~.Base1DMapper`
+- :class:`~.GridMapper`
+- :class:`~.LogMapper`
+- :class:`~.LinearMapper`
+- :class:`~.ColorMapper`
+- :class:`~.ColorMapTemplate`
+- :class:`~.DiscreteColorMapper`
+- :class:`~.TransformColorMapper`
+
+Colormaps and Color Palettes
+----------------------------
+
+- 
+
+
+Visual Components
+-----------------
+
+- :class:`~.AbstractPlotRenderer`
+- :class:`~.AbstractOverlay`
+- :class:`~.BasePlotContainer`
+- :class:`~.BasePlotFrame`
+- :class:`~.CrossPlotFrame`
+- :class:`~.DataView`
+- :class:`~.SimplePlotFrame`
+- :class:`~.PlotComponent`
+- :class:`~.PlotGraphicsContext`
+- :class:`~.PlotGraphicsContextMixin`
+- :class:`~.OverlayPlotContainer`
+- :class:`~.HPlotContainer`
+- :class:`~.VPlotContainer`
+- :class:`~.GridPlotContainer`
+- :class:`~.Label`
+- :class:`~.PlotLabel`
+- :class:`~.Legend`
+- :class:`~.ToolTip`
+- :class:`~.DataLabel`
+- :class:`~.LassoOverlay`
+- :class:`~.ColorBar`
+- :class:`~.TextBoxOverlay`
+- :class:`~.ScatterInspectorOverlay`
+
+Renderers
+---------
+
+- :class:`~.BarPlot`
+- :class:`~.Base1DPlot`
+- :class:`~.Base2DPlot`
+- :class:`~.BaseXYPlot`
+- :class:`~.ScatterPlot`
+- :func:`~.render_markers`
+- :class:`~.ImagePlot`
+- :class:`~.CMapImagePlot`
+- :class:`~.ContourLinePlot`
+- :class:`~.ContourPolyPlot`
+- :class:`~.LinePlot`
+- :class:`~.ColormappedScatterPlot`
+- :class:`~.ColormappedSelectionOverlay`
+- :class:`~.PolygonPlot`
+- :class:`~.ErrorBarPlot`
+- :class:`~.FilledLinePlot`
+- :class:`~.QuiverPlot`
+- :class:`~.CandlePlot`
+- :class:`~.MultiLinePlot`
+- :class:`~.JitterPlot`
+- :class:`~.VariableSizeScatterPlot`
+- :class:`~.BandedMapper`
+- :class:`~.HorizonPlot`
+- :class:`~.ScatterPlot1D`
+- :class:`~.LineScatterPlot1D`
+- :class:`~.TextPlot1D`
+- :class:`~.SegmentPlot`
+- :class:`~.TextPlot`
+
+Plot Factories
+--------------
+
+- :func:`~.create_bar_plot`
+- :func:`~.create_line_plot`
+- :func:`~.create_scatter_plot`
+- :func:`~.create_polar_plot`
+- :func:`~.add_default_axes`
+- :func:`~.add_default_grids`
+
+- :class:`~.AbstractPlotData`
+- :class:`~.ArrayPlotData`
+- :class:`~.DataFramePlotData`
+- :class:`~.Plot`
+- :class:`~.ToolbarPlot`
+
+Axis
+----
+
+- :class:`~.PlotAxis`
+- :class:`~.MinorPlotAxis`
+- :class:`~.LabelAxis`
+- :class:`~.AbstractTickGenerator`
+- :class:`~.DefaultTickGenerator`
+- :func:`~.auto_ticks`
+- :func:`~.auto_interval`
+- :func:`~.tick_intervals`
+- :func:`~.log_auto_ticks`
+- :func:`~.auto_bounds`
+- :func:`~.calc_bound`
+
+Grid
+----
+
+- :class:`~.PlotGrid`
+
+Tools
+-----
+
+- :class:`~.AbstractController`
+
+"""
 
 from .base import (
     NumericalSequenceTrait,
