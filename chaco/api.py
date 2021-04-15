@@ -157,11 +157,18 @@ Tools
 Colormaps and Color Palettes
 ----------------------------
 
+Utilities / Convenience Objects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 - :func:`~.center`
 - :attr:`~.color_map_dict`
 - :attr:`~.color_map_functions`
 - :attr:`~.color_map_name_dict`
 - :func:`~.reverse`
+
+Colormaps
+^^^^^^^^^
+
 - :func:`~.autumn`
 - :func:`~.binary`
 - :func:`~.bone`
@@ -238,6 +245,10 @@ Colormaps and Color Palettes
 - :func:`~.Set1`
 - :func:`~.Set2`
 - :func:`~.Set3`
+
+Color Palettes
+^^^^^^^^^^^^^^
+
 - :attr:`~.cbrewer`
 - :attr:`~.palette11`
 - :attr:`~.palette14`
