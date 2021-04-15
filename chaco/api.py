@@ -41,7 +41,6 @@ Data Model
 - :class:`~.DataRange1D`
 - :class:`~.DataRange2D`
 
-
 Mappers
 -------
 
@@ -54,12 +53,7 @@ Mappers
 - :class:`~.ColorMapTemplate`
 - :class:`~.DiscreteColorMapper`
 - :class:`~.TransformColorMapper`
-
-Colormaps and Color Palettes
-----------------------------
-
-- 
-
+- :class:`~.BandedMapper`
 
 Visual Components
 -----------------
@@ -87,6 +81,7 @@ Visual Components
 - :class:`~.ColorBar`
 - :class:`~.TextBoxOverlay`
 - :class:`~.ScatterInspectorOverlay`
+- :class:`~.ColormappedSelectionOverlay`
 
 Renderers
 ---------
@@ -103,7 +98,6 @@ Renderers
 - :class:`~.ContourPolyPlot`
 - :class:`~.LinePlot`
 - :class:`~.ColormappedScatterPlot`
-- :class:`~.ColormappedSelectionOverlay`
 - :class:`~.PolygonPlot`
 - :class:`~.ErrorBarPlot`
 - :class:`~.FilledLinePlot`
@@ -112,7 +106,6 @@ Renderers
 - :class:`~.MultiLinePlot`
 - :class:`~.JitterPlot`
 - :class:`~.VariableSizeScatterPlot`
-- :class:`~.BandedMapper`
 - :class:`~.HorizonPlot`
 - :class:`~.ScatterPlot1D`
 - :class:`~.LineScatterPlot1D`
@@ -161,6 +154,106 @@ Tools
 
 - :class:`~.AbstractController`
 
+Colormaps and Color Palettes
+----------------------------
+
+Utilities / Convenience Objects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- :func:`~.center`
+- :attr:`~.color_map_dict`
+- :attr:`~.color_map_functions`
+- :attr:`~.color_map_name_dict`
+- :func:`~.reverse`
+
+Colormaps
+^^^^^^^^^
+
+- :func:`~.autumn`
+- :func:`~.binary`
+- :func:`~.bone`
+- :func:`~.cool`
+- :func:`~.copper`
+- :func:`~.flag`
+- :func:`~.seismic`
+- :func:`~.terrain`
+- :func:`~.gray`
+- :func:`~.yarg`
+- :func:`~.hot`
+- :func:`~.hsv`
+- :func:`~.jet`
+- :func:`~.pink`
+- :func:`~.prism`
+- :func:`~.spring`
+- :func:`~.summer`
+- :func:`~.winter`
+- :func:`~.cw1_004`
+- :func:`~.cw1_005`
+- :func:`~.cw1_006`
+- :func:`~.cw1_028`
+- :func:`~.gmt_drywet`
+- :func:`~.Blues`
+- :func:`~.BrBG`
+- :func:`~.BuGn`
+- :func:`~.BuPu`
+- :func:`~.GnBu`
+- :func:`~.Greens`
+- :func:`~.Greys`
+- :func:`~.OrRd`
+- :func:`~.Oranges`
+- :func:`~.PRGn`
+- :func:`~.PiYG`
+- :func:`~.PuBu`
+- :func:`~.PuBuGn`
+- :func:`~.PuOr`
+- :func:`~.PuRd`
+- :func:`~.Purples`
+- :func:`~.RdBu`
+- :func:`~.RdGy`
+- :func:`~.RdPu`
+- :func:`~.RdYlBu`
+- :func:`~.RdYlGn`
+- :func:`~.Reds`
+- :func:`~.Spectral`
+- :func:`~.YlGn`
+- :func:`~.YlGnBu`
+- :func:`~.YlOrBr`
+- :func:`~.YlOrRd`
+- :func:`~.gist_earth`
+- :func:`~.gist_gray`
+- :func:`~.gist_heat`
+- :func:`~.gist_ncar`
+- :func:`~.gist_rainbow`
+- :func:`~.gist_stern`
+- :func:`~.gist_yarg`
+- :func:`~.CubicYF`
+- :func:`~.CubicL`
+- :func:`~.LinearL`
+- :func:`~.LinearLHot`
+- :func:`~.CoolWarm`
+- :func:`~.CubeHelix`
+- :func:`~.wistia`
+- :func:`~.magma`
+- :func:`~.inferno`
+- :func:`~.plasma`
+- :func:`~.viridis`
+- :func:`~.accent`
+- :func:`~.Dark2`
+- :func:`~.Paired`
+- :func:`~.Pastel1`
+- :func:`~.Pastel2`
+- :func:`~.Set1`
+- :func:`~.Set2`
+- :func:`~.Set3`
+
+Color Palettes
+^^^^^^^^^^^^^^
+
+- :attr:`~.cbrewer`
+- :attr:`~.palette11`
+- :attr:`~.palette14`
+- :attr:`~.PALETTEES`
+
 """
 
 from .base import (
@@ -200,10 +293,7 @@ from .linear_mapper import LinearMapper
 from .color_mapper import ColorMapper, ColorMapTemplate
 from .discrete_color_mapper import DiscreteColorMapper
 from .transform_color_mapper import TransformColorMapper
-
-# Colormaps and color palettes
-from .default_colormaps import *
-from .default_colors import *
+from .horizon_plot import BandedMapper
 
 # Visual components
 from .abstract_plot_renderer import AbstractPlotRenderer
@@ -241,6 +331,7 @@ from .lasso_overlay import LassoOverlay
 from .color_bar import ColorBar
 from .text_box_overlay import TextBoxOverlay
 from .scatter_inspector_overlay import ScatterInspectorOverlay
+from .colormapped_selection_overlay import ColormappedSelectionOverlay
 
 # Renderers
 from .barplot import BarPlot
@@ -254,7 +345,6 @@ from .contour_line_plot import ContourLinePlot
 from .contour_poly_plot import ContourPolyPlot
 from .lineplot import LinePlot
 from .colormapped_scatterplot import ColormappedScatterPlot
-from .colormapped_selection_overlay import ColormappedSelectionOverlay
 from .polygon_plot import PolygonPlot
 from .errorbar_plot import ErrorBarPlot
 from .filled_line_plot import FilledLinePlot
@@ -263,7 +353,7 @@ from .candle_plot import CandlePlot
 from .multi_line_plot import MultiLinePlot
 from .jitterplot import JitterPlot
 from .variable_size_scatterplot import VariableSizeScatterPlot
-from .horizon_plot import BandedMapper, HorizonPlot
+from .horizon_plot import HorizonPlot
 from .scatterplot_1d import ScatterPlot1D
 from .line_scatterplot_1d import LineScatterPlot1D
 from .text_plot_1d import TextPlot1D
@@ -305,6 +395,92 @@ from .grid import PlotGrid
 
 # Tools
 from .abstract_controller import AbstractController
+
+# Colormaps and color palettes
+from .default_colormaps import (
+    center,
+    color_map_dict,
+    color_map_functions,
+    color_map_name_dict,
+    reverse,
+    autumn,
+    binary,
+    bone,
+    cool,
+    copper,
+    flag,
+    seismic,
+    terrain,
+    gray,
+    yarg,
+    hot,
+    hsv,
+    jet,
+    pink,
+    prism,
+    spring,
+    summer,
+    winter,
+    cw1_004,
+    cw1_005,
+    cw1_006,
+    cw1_028,
+    gmt_drywet,
+    Blues,
+    BrBG,
+    BuGn,
+    BuPu,
+    GnBu,
+    Greens,
+    Greys,
+    OrRd,
+    Oranges,
+    PRGn,
+    PiYG,
+    PuBu,
+    PuBuGn,
+    PuOr,
+    PuRd,
+    Purples,
+    RdBu,
+    RdGy,
+    RdPu,
+    RdYlBu,
+    RdYlGn,
+    Reds,
+    Spectral,
+    YlGn,
+    YlGnBu,
+    YlOrBr,
+    YlOrRd,  
+    gist_earth,
+    gist_gray,
+    gist_heat,
+    gist_ncar,
+    gist_rainbow,
+    gist_stern,
+    gist_yarg,
+    CubicYF,
+    CubicL,
+    LinearL,
+    LinearLHot,
+    CoolWarm,
+    CubeHelix,
+    wistia,
+    magma,
+    inferno,
+    plasma,
+    viridis,
+    accent,
+    Dark2,
+    Paired,
+    Pastel1,
+    Pastel2,
+    Set1,
+    Set2,
+    Set3,
+)
+from .default_colors import cbrewer, palette11, palette14, PALETTES
 
 # Importing various symbols into the Chaco namespace for backwards
 # compatibility.  New code should directly import from Enable.
