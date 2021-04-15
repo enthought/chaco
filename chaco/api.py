@@ -162,8 +162,8 @@ Colormaps and Color Palettes
 - :attr:`~.color_map_functions`
 - :attr:`~.color_map_name_dict`
 - :func:`~.reverse`
-- :func:`~.jet`
 - :func:`~.autumn`
+- :func:`~.binary`
 - :func:`~.bone`
 - :func:`~.cool`
 - :func:`~.copper`
@@ -174,6 +174,7 @@ Colormaps and Color Palettes
 - :func:`~.yarg`
 - :func:`~.hot`
 - :func:`~.hsv`
+- :func:`~.jet`
 - :func:`~.pink`
 - :func:`~.prism`
 - :func:`~.spring`
@@ -184,33 +185,33 @@ Colormaps and Color Palettes
 - :func:`~.cw1_006`
 - :func:`~.cw1_028`
 - :func:`~.gmt_drywet`
-- :func:`~.Spectral`
-- :func:`~.RdBu`
-- :func:`~.RdPu`
-- :func:`~.YlGnBu`
-- :func:`~.RdYlBu`
-- :func:`~.GnBu`
-- :func:`~.RdYlGn`
-- :func:`~.PuBu`
+- :func:`~.Blues`
+- :func:`~.BrBG`
 - :func:`~.BuGn`
-- :func:`~.Greens`
-- :func:`~.PRGn`
 - :func:`~.BuPu`
+- :func:`~.GnBu`
+- :func:`~.Greens`
+- :func:`~.Greys`
 - :func:`~.OrRd`
 - :func:`~.Oranges`
+- :func:`~.PRGn`
 - :func:`~.PiYG`
-- :func:`~.YlGn`
-- :func:`~.BrBG`
-- :func:`~.Reds`
-- :func:`~.RdGy`
-- :func:`~.PuRd`
-- :func:`~.Blues`
-- :func:`~.Greys`
-- :func:`~.YlOrRd`
-- :func:`~.YlOrBr`
-- :func:`~.Purples`
-- :func:`~.PuOr`
+- :func:`~.PuBu`
 - :func:`~.PuBuGn`
+- :func:`~.PuOr`
+- :func:`~.PuRd`
+- :func:`~.Purples`
+- :func:`~.RdBu`
+- :func:`~.RdGy`
+- :func:`~.RdPu`
+- :func:`~.RdYlBu`
+- :func:`~.RdYlGn`
+- :func:`~.Reds`
+- :func:`~.Spectral`
+- :func:`~.YlGn`
+- :func:`~.YlGnBu`
+- :func:`~.YlOrBr`
+- :func:`~.YlOrRd`
 - :func:`~.gist_earth`
 - :func:`~.gist_gray`
 - :func:`~.gist_heat`
@@ -391,8 +392,8 @@ from .default_colormaps import (
     color_map_functions,
     color_map_name_dict,
     reverse,
-    jet,
     autumn,
+    binary,
     bone,
     cool,
     copper,
@@ -403,6 +404,7 @@ from .default_colormaps import (
     yarg,
     hot,
     hsv,
+    jet,
     pink,
     prism,
     spring,
@@ -413,33 +415,33 @@ from .default_colormaps import (
     cw1_006,
     cw1_028,
     gmt_drywet,
-    Spectral,
-    RdBu,
-    RdPu,
-    YlGnBu,
-    RdYlBu,
-    GnBu,
-    RdYlGn,
-    PuBu,
+    Blues,
+    BrBG,
     BuGn,
-    Greens,
-    PRGn,
     BuPu,
+    GnBu,
+    Greens,
+    Greys,
     OrRd,
     Oranges,
+    PRGn,
     PiYG,
-    YlGn,
-    BrBG,
-    Reds,
-    RdGy,
-    PuRd,
-    Blues,
-    Greys,
-    YlOrRd,
-    YlOrBr,
-    Purples,
-    PuOr,
+    PuBu,
     PuBuGn,
+    PuOr,
+    PuRd,
+    Purples,
+    RdBu,
+    RdGy,
+    RdPu,
+    RdYlBu,
+    RdYlGn,
+    Reds,
+    Spectral,
+    YlGn,
+    YlGnBu,
+    YlOrBr,
+    YlOrRd,  
     gist_earth,
     gist_gray,
     gist_heat,
