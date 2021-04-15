@@ -16,6 +16,7 @@ from chaco.tools.api import PanTool, ZoomTool
 
 is_windows = platform.system() == "Windows"
 
+
 def is_qt4():
     if not ETSConfig.toolkit.startswith('qt'):
         return False
