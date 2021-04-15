@@ -1,7 +1,3 @@
-"""
-Traits UI editor for WX, based on the Chaco1 PlotEditor in
-traits.ui.wx.plot_editor.
-"""
 # Enthought library imports
 from traits.etsconfig.api import ETSConfig
 from enable.api import (
@@ -60,7 +56,7 @@ USE_DATA_UPDATE = 1
 
 
 class ChacoPlotItem(Item):
-    """A Traits UI Item for a Chaco plot, for use in Traits UI Views.
+    """A TraitsUI Item for a Chaco plot, for use in TraitsUI Views.
 
     NOTE: ComponentEditor is preferred over this class, as it is more flexible.
     """
@@ -209,7 +205,7 @@ class ChacoEditorFactory(EditorFactory):
 
 
 class ChacoPlotEditor(Editor):
-    """Traits UI editor for displaying trait values in a Chaco plot."""
+    """TraitsUI editor for displaying trait values in a Chaco plot."""
 
     # ---------------------------------------------------------------------------
     #  Finishes initializing the editor by creating the underlying toolkit

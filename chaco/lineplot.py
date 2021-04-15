@@ -79,7 +79,7 @@ class LinePlot(BaseXYPlot):
     #:     point.  Also called a "right angle plot".
     render_style = Enum("connectedpoints", "hold", "connectedhold")
 
-    #: Traits UI View for customizing the plot.
+    #: TraitsUI View for customizing the plot.
     traits_view = View(
         Item("color", style="custom"),
         "line_width",
