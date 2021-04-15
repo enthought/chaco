@@ -398,8 +398,13 @@ class ColormappedScatterPlot(ScatterPlot):
                     gc, "draw_marker_at_points"
                 ) and self.marker not in (
                     "custom",
-                    "circle",
-                    "diamond",
+                    "left_triangle",
+                    "right_triangle",
+                    "pentagon",
+                    "hexagon",
+                    "hexagon2",
+                    "star",
+                    "cross_plus"
                 ):
                     draw_func = lambda x, y, size: gc.draw_marker_at_points(
                         [[x, y]], size, marker_cls.kiva_marker
