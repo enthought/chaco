@@ -53,6 +53,7 @@ Mappers
 - :class:`~.ColorMapTemplate`
 - :class:`~.DiscreteColorMapper`
 - :class:`~.TransformColorMapper`
+- :class:`~.BandedMapper`
 
 Visual Components
 -----------------
@@ -80,6 +81,7 @@ Visual Components
 - :class:`~.ColorBar`
 - :class:`~.TextBoxOverlay`
 - :class:`~.ScatterInspectorOverlay`
+- :class:`~.ColormappedSelectionOverlay`
 
 Renderers
 ---------
@@ -96,7 +98,6 @@ Renderers
 - :class:`~.ContourPolyPlot`
 - :class:`~.LinePlot`
 - :class:`~.ColormappedScatterPlot`
-- :class:`~.ColormappedSelectionOverlay`
 - :class:`~.PolygonPlot`
 - :class:`~.ErrorBarPlot`
 - :class:`~.FilledLinePlot`
@@ -105,7 +106,6 @@ Renderers
 - :class:`~.MultiLinePlot`
 - :class:`~.JitterPlot`
 - :class:`~.VariableSizeScatterPlot`
-- :class:`~.BandedMapper`
 - :class:`~.HorizonPlot`
 - :class:`~.ScatterPlot1D`
 - :class:`~.LineScatterPlot1D`
@@ -162,11 +162,10 @@ Colormaps and Color Palettes
 - :attr:`~.color_map_functions`
 - :attr:`~.color_map_name_dict`
 - :func:`~.reverse`
-- :attr:`~.color_map_name_dict`
-- :attr:`~.color_map_name_dict`
-- :attr:`~.color_map_name_dict`
+- :attr:`~.cbrewer`
+- :attr:`~.palette11`
+- :attr:`~.palette14`
 - :attr:`~.PALETTEES`
-
 
 """
 
@@ -207,6 +206,7 @@ from .linear_mapper import LinearMapper
 from .color_mapper import ColorMapper, ColorMapTemplate
 from .discrete_color_mapper import DiscreteColorMapper
 from .transform_color_mapper import TransformColorMapper
+from .horizon_plot import BandedMapper
 
 # Visual components
 from .abstract_plot_renderer import AbstractPlotRenderer
@@ -244,6 +244,7 @@ from .lasso_overlay import LassoOverlay
 from .color_bar import ColorBar
 from .text_box_overlay import TextBoxOverlay
 from .scatter_inspector_overlay import ScatterInspectorOverlay
+from .colormapped_selection_overlay import ColormappedSelectionOverlay
 
 # Renderers
 from .barplot import BarPlot
@@ -257,7 +258,6 @@ from .contour_line_plot import ContourLinePlot
 from .contour_poly_plot import ContourPolyPlot
 from .lineplot import LinePlot
 from .colormapped_scatterplot import ColormappedScatterPlot
-from .colormapped_selection_overlay import ColormappedSelectionOverlay
 from .polygon_plot import PolygonPlot
 from .errorbar_plot import ErrorBarPlot
 from .filled_line_plot import FilledLinePlot
@@ -266,7 +266,7 @@ from .candle_plot import CandlePlot
 from .multi_line_plot import MultiLinePlot
 from .jitterplot import JitterPlot
 from .variable_size_scatterplot import VariableSizeScatterPlot
-from .horizon_plot import BandedMapper, HorizonPlot
+from .horizon_plot import HorizonPlot
 from .scatterplot_1d import ScatterPlot1D
 from .line_scatterplot_1d import LineScatterPlot1D
 from .text_plot_1d import TextPlot1D
