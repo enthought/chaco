@@ -12,7 +12,6 @@ User Guide
 
     introduction.rst
     installation.rst
-    quickstart.rst
     modules_and_classes
     plots.rst
     containers.rst
