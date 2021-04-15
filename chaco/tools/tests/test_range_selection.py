@@ -3,7 +3,7 @@ import warnings
 
 import numpy as np
 
-from chaco.api import LinearMapper, PlotComponent
+from chaco.api import LinearMapper
 from chaco.array_plot_data import ArrayPlotData
 from chaco.plot import Plot
 from chaco.tools.range_selection import RangeSelection
