@@ -32,11 +32,11 @@ from chaco.api import (
     add_default_grids,
     OverlayPlotContainer,
     PlotLabel,
+    cbrewer as COLOR_PALETTE,
     create_scatter_plot,
     Legend,
 )
 from chaco.tools.api import PanTool, ZoomTool, LegendTool, TraitsTool, DragZoom
-from chaco.example_support import COLOR_PALETTE
 
 
 class OverlappingPlotContainer(OverlayPlotContainer):

@@ -18,11 +18,9 @@ through the "zoom history".
 from numpy import linspace
 from scipy.special import jn
 
-from chaco.example_support import COLOR_PALETTE
-
 # Enthought library imports
-from enable.tools.api import DragTool
 from enable.api import Component, ComponentEditor
+from enable.tools.api import DragTool
 from traits.api import HasTraits, Instance, Int, Tuple
 from traitsui.api import UItem, View
 
@@ -30,10 +28,11 @@ from traitsui.api import UItem, View
 from chaco.api import (
     add_default_axes,
     add_default_grids,
+    cbrewer as COLOR_PALETTE,
+    create_line_plot,
     OverlayPlotContainer,
     PlotLabel,
     ScatterPlot,
-    create_line_plot,
 )
 from chaco.tools.api import PanTool, ZoomTool
 

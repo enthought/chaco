@@ -10,17 +10,21 @@ Interactions are the same as in multiaxis.py
 from numpy import linspace
 from scipy.special import jn
 
-from chaco.example_support import COLOR_PALETTE
-
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import HPlotContainer, OverlayPlotContainer, PlotAxis, PlotGrid
+from chaco.api import (
+    HPlotContainer,
+    OverlayPlotContainer,
+    PlotAxis,
+    PlotGrid,
+    cbrewer as COLOR_PALETTE,
+    create_line_plot,
+)
 from chaco.tools.api import BroadcasterTool, PanTool
-from chaco.api import create_line_plot
 
 # ===============================================================================
 # # Create the Chaco plot.

@@ -34,8 +34,13 @@ from numpy import arange, searchsorted, where, array, vstack, linspace
 from scipy.special import jn
 
 # Chaco imports
-from chaco.api import ArrayPlotData, Plot, PlotGraphicsContext, LinePlot
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import (
+    ArrayPlotData,
+    Plot,
+    PlotGraphicsContext,
+    LinePlot,
+    cbrewer as COLOR_PALETTE,
+)
 
 
 # -- Constants -----------------------------------------------------------------

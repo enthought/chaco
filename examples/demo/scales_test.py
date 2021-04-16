@@ -21,8 +21,6 @@ from numpy import linspace
 from scipy.special import jn
 from time import time
 
-from chaco.example_support import COLOR_PALETTE
-
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
@@ -33,6 +31,7 @@ from chaco.api import (
     create_line_plot,
     OverlayPlotContainer,
     PlotLabel,
+    cbrewer as COLOR_PALETTE,
     create_scatter_plot,
     Legend,
     PlotGrid,
