@@ -14,8 +14,6 @@ is also available, but panning is not.
 from scipy.special import jn
 from numpy import arange
 
-from chaco.example_support import COLOR_PALETTE
-
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import Bool, HasTraits, Instance
@@ -24,6 +22,7 @@ from traitsui.api import Group, Item, UItem, View
 # Chaco imports
 from chaco.api import (
     OverlayPlotContainer,
+    cbrewer as COLOR_PALETTE,
     create_line_plot,
     add_default_axes,
     add_default_grids,

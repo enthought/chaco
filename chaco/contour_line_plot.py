@@ -46,16 +46,16 @@ class ContourLinePlot(BaseContourPlot):
     # ------------------------------------------------------------------------
 
     # Are the cached contours valid? If False, new ones need to be computed.
-    _contour_cache_valid = Bool(False)
+    _contour_cache_valid = Bool(False, transient=True)
 
     # Cached collection of traces.
-    _cached_contours = Dict
+    _cached_contours = Dict(transient=True)
 
     # Is the cached width data valid?
-    _widths_cache_valid = Bool(False)
+    _widths_cache_valid = Bool(False, transient=True)
 
     # Is the cached style data valid?
-    _styles_cache_valid = Bool(False)
+    _styles_cache_valid = Bool(False, transient=True)
 
     # Cached list of line widths
     _widths = List

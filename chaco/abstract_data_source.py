@@ -26,12 +26,12 @@ class AbstractDataSource(HasTraits):
     #: The dimensionality of the value at each index point.
     #: Subclasses re-declare this trait as a read-only trait with
     #: the right default value.
-    value_dimension = DimensionTrait
+    value_dimension = DimensionTrait(transient=True)
 
     #: The dimensionality of the indices into this data source.
     #: Subclasses re-declare this trait as a read-only trait with
     #: the right default value.
-    index_dimension = DimensionTrait
+    index_dimension = DimensionTrait(transient=True)
 
     #: A dictionary keyed on strings.  In general, it maps to indices (or tuples
     #: of indices, depending on **value_dimension**), as in the case of
@@ -51,7 +51,7 @@ class AbstractDataSource(HasTraits):
 
     #: Should the data that this datasource refers to be serialized when
     #: the datasource is serialized?
-    persist_data = Bool(True)
+    persist_data = Bool(True, transient=True)
 
     # ------------------------------------------------------------------------
     # Abstract methods
@@ -118,13 +118,3 @@ class AbstractDataSource(HasTraits):
 
     def _metadata_default(self):
         return {"selections": [], "annotations": []}
-
-    def __getstate__(self):
-        state = super(AbstractDataSource, self).__getstate__()
-
-        # everything but 'metadata'
-        for key in ["value_dimension", "index_dimension", "persist_data"]:
-            if key in state:
-                del state[key]
-
-        return state

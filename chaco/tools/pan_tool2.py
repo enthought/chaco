@@ -10,29 +10,29 @@ class PanTool(DragTool):
     a bare BaseTool
     """
 
-    # The cursor to use when panning.
+    #: The cursor to use when panning.
     drag_pointer = Pointer("hand")
 
-    # Scaling factor on the panning "speed".
+    #: Scaling factor on the panning "speed".
     speed = Float(1.0)
 
-    # The modifier key that, if depressed when the drag is initiated, constrains
-    # the panning to happen in the only direction of largest initial motion.
-    # It is possible to permanently restrict this tool to always drag along one
-    # direction.  To do so, set constrain=True, constrain_key=None, and
-    # constrain_direction to the desired direction.
+    #: The modifier key that, if depressed when the drag is initiated, constrains
+    #: the panning to happen in the only direction of largest initial motion.
+    #: It is possible to permanently restrict this tool to always drag along one
+    #: direction.  To do so, set constrain=True, constrain_key=None, and
+    #: constrain_direction to the desired direction.
     constrain_key = Enum(None, "shift", "control", "alt")
 
-    # Constrain the panning to one direction?
+    #: Constrain the panning to one direction?
     constrain = Bool(False)
 
-    # The direction of constrained draw. A value of None means that the user
-    # has initiated the drag and pressed the constrain_key, but hasn't moved
-    # the mouse yet; the magnitude of the components of the next mouse_move
-    # event will determine the constrain_direction.
+    #: The direction of constrained draw. A value of None means that the user
+    #: has initiated the drag and pressed the constrain_key, but hasn't moved
+    #: the mouse yet; the magnitude of the components of the next mouse_move
+    #: event will determine the constrain_direction.
     constrain_direction = Enum(None, "x", "y")
 
-    # Restrict to the bounds of the plot data
+    #: Restrict to the bounds of the plot data
     restrict_to_data = Bool(False)
 
     # (x,y) of the point where the mouse button was pressed.
@@ -50,11 +50,11 @@ class PanTool(DragTool):
     # Inherited BaseTool traits
     # ------------------------------------------------------------------------
 
-    # The tool does not have a visual representation (overrides
-    # BaseTool).
+    #: The tool does not have a visual representation (overrides
+    #: BaseTool).
     draw_mode = "none"
 
-    # The tool is not visible (overrides BaseTool).
+    #: The tool is not visible (overrides BaseTool).
     visible = False
 
     def drag_start(self, event):

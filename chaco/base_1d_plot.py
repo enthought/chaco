@@ -64,22 +64,22 @@ class Base1DPlot(AbstractPlotRenderer):
     # ------------------------------------------------------------------------
 
     #: flag whether the data cache is valid
-    _cache_valid = Bool(False)
+    _cache_valid = Bool(False, transient=True)
 
     #: cache of the index values in data space
-    _cached_data = Any()
+    _cached_data = Any(transient=True)
 
     #: cache of the sorted index values in data space
-    _cached_data_pts_sorted = Any()
+    _cached_data_pts_sorted = Any(transient=True)
 
     #: cache of the sorted indices of the index values
-    _cached_data_argsort = Any()
+    _cached_data_argsort = Any(transient=True)
 
     #: flag whether the screen coordinates are valid
-    _screen_cache_valid = Bool(False)
+    _screen_cache_valid = Bool(False, transient=True)
 
     #: cache holding the screen coordinates of the index values
-    _cached_screen_pts = Any()
+    _cached_screen_pts = Any(transient=True)
 
     # ------------------------------------------------------------------------
     # AbstractPlotRenderer interface

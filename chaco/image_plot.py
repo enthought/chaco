@@ -76,14 +76,14 @@ class ImagePlot(Base2DPlot):
     # ------------------------------------------------------------------------
 
     # Are the cache traits valid? If False, new ones need to be computed.
-    _image_cache_valid = Bool(False)
+    _image_cache_valid = Bool(False, transient=True)
 
     # Cached image of the bmp data (not the bmp data in self.data.value).
-    _cached_image = Instance(GraphicsContextArray)
+    _cached_image = Instance(GraphicsContextArray, transient=True)
 
     # Tuple-defined rectangle (x, y, dx, dy) in screen space in which the
     # **_cached_image** is to be drawn.
-    _cached_dest_rect = Either(Tuple, List)
+    _cached_dest_rect = Either(Tuple, List, transient=True)
 
     # Bool indicating whether the origin is top-left or bottom-right.
     # The name "principal diagonal" is borrowed from linear algebra.

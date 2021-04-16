@@ -71,10 +71,10 @@ class ImageData(AbstractDataSource):
     _data = ImageTrait
 
     # Is the bounds cache valid? If False, it needs to be computed.
-    _bounds_cache_valid = Bool(False)
+    _bounds_cache_valid = Bool(False, transient=True)
 
     # Cached value of min and max as long as **data** doesn't change.
-    _bounds_cache = Tuple
+    _bounds_cache = Tuple(transient=True)
 
     # ------------------------------------------------------------------------
     # Public methods

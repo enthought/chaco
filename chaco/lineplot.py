@@ -42,7 +42,7 @@ class LinePlot(BaseXYPlot):
     """
 
     #: The color of the line.
-    color = black_color_trait
+    color = black_color_trait(requires_redraw=True)
 
     #: The RGBA tuple for rendering lines. It is always a tuple of length 4.
     #: It has the same RGB values as :attr:`color`, and its alpha value is the
@@ -59,10 +59,10 @@ class LinePlot(BaseXYPlot):
     metadata_name = Str("selections")
 
     #: The thickness of the line.
-    line_width = Float(1.0)
+    line_width = Float(1.0, requires_redraw=True)
 
     #: The line dash style.
-    line_style = LineStyle
+    line_style = LineStyle(requires_redraw=True)
 
     #: The rendering style of the line plot.
     #:
@@ -79,7 +79,7 @@ class LinePlot(BaseXYPlot):
     #:     point.  Also called a "right angle plot".
     render_style = Enum("connectedpoints", "hold", "connectedhold")
 
-    #: Traits UI View for customizing the plot.
+    #: TraitsUI View for customizing the plot.
     traits_view = View(
         Item("color", style="custom"),
         "line_width",
@@ -432,30 +432,6 @@ class LinePlot(BaseXYPlot):
         z = abs(pts - pts2)
         d = z[:, 0] + z[:, 1]
         # ... TODO ...
-
-    def _alpha_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _color_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _line_style_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def _line_width_changed(self):
-        self.invalidate_draw()
-        self.request_redraw()
-
-    def __getstate__(self):
-        state = super(LinePlot, self).__getstate__()
-        for key in ["traits_view"]:
-            if key in state:
-                del state[key]
-
-        return state
 
     @cached_property
     def _get_effective_color(self):

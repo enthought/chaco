@@ -23,10 +23,10 @@ class DataFramePlotData(AbstractPlotData):
     # Public traits
     # -------------------------------------------------------------------------
 
-    # The DataFrame backing this object.
+    #: The DataFrame backing this object.
     data_frame = Instance("pandas.core.frame.DataFrame")
 
-    # Consumers can write data to this object (overrides AbstractPlotData).
+    #: Consumers can write data to this object (overrides AbstractPlotData).
     writable = True
 
     # -------------------------------------------------------------------------

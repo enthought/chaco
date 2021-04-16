@@ -107,8 +107,6 @@ class BarPlot(AbstractPlotRenderer):
     #: Overall alpha value of the image. Ranges from 0.0 for transparent to 1.0
     alpha = Range(0.0, 1.0, 1.0, requires_redraw=True)
 
-    # use_draw_order = False
-
     # Convenience properties that correspond to either index_mapper or
     # value_mapper, depending on the orientation of the plot.
 

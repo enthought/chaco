@@ -12,7 +12,6 @@ User Guide
 
     introduction.rst
     installation.rst
-    quickstart.rst
     modules_and_classes
     plots.rst
     containers.rst
@@ -27,5 +26,3 @@ User Guide
     common_patterns.rst
     how_do_i.rst
     faq.rst
-    annotated_examples.rst
-

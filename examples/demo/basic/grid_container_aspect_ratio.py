@@ -9,15 +9,15 @@ change no matter how the window is resized.
 from numpy import linspace
 from scipy.special import jn
 
-from chaco.example_support import COLOR_PALETTE
-
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, Group, View
 
 # Chaco imports
-from chaco.api import ArrayPlotData, GridContainer, Plot
+from chaco.api import (
+    ArrayPlotData, GridContainer, Plot, cbrewer as COLOR_PALETTE,
+)
 from chaco.tools.api import PanTool, ZoomTool
 
 

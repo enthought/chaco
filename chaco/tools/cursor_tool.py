@@ -19,6 +19,7 @@ TODO:
 import numpy
 
 # Enthought library imports
+from enable.api import CircleMarker
 from enable.tools.api import DragTool
 from traits.api import (
     Int,
@@ -32,7 +33,6 @@ from traits.api import (
 )
 
 # Chaco imports
-from chaco.scatter_markers import CircleMarker
 from chaco.base_xy_plot import BaseXYPlot
 from chaco.base_2d_plot import Base2DPlot
 from .line_inspector import LineInspector
@@ -58,22 +58,22 @@ class BaseCursorTool(LineInspector, DragTool):
     Abstract base class for CursorTool objects
     """
 
-    # if true, draw a small circle at the cursor/line intersection
+    #: if true, draw a small circle at the cursor/line intersection
     show_marker = Bool(True)
 
-    # the radius of the marker in pixels
+    #: the radius of the marker in pixels
     marker_size = Float(3.0)
 
-    # the marker object. this should probably be private
+    #: the marker object. this should probably be private
     marker = Instance(CircleMarker, ())
 
-    # pick threshold, in screen units (pixels)
+    #: pick threshold, in screen units (pixels)
     threshold = Float(5.0)
 
-    # The current index-value of the cursor. Over-ridden in subclasses
+    #: The current index-value of the cursor. Over-ridden in subclasses
     current_index = Disallow
 
-    # The current position of the cursor in data units
+    #: The current position of the cursor in data units
     current_position = Property(observe=["current_index"])
 
     # Stuff from line_inspector which is not required

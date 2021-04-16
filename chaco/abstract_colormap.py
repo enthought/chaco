@@ -10,14 +10,14 @@ class AbstractColormap(HasTraits):
     Abstract class for color maps, which map from scalar values to color values.
     """
 
-    # The data-space bounds of the mapper.
+    #: The data-space bounds of the mapper.
     range = Instance(DataRange1D)
 
-    # The color depth of the colors to use.
+    #: The color depth of the colors to use.
     color_depth = Enum("rgba", "rgb")
 
-    # A generic "update" event that generally means that anything that relies
-    # on this mapper for visual output should do a redraw or repaint.
+    #: A generic "update" event that generally means that anything that relies
+    #: on this mapper for visual output should do a redraw or repaint.
     updated = Event
 
     def map_screen(self, val):

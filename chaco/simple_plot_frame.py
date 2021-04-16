@@ -45,7 +45,7 @@ class SimplePlotFrame(BasePlotFrame):
     # ------------------------------------------------------------------------
 
     # Does the component need to do a layout call?
-    _layout_needed = Bool(True)
+    _layout_needed = Bool(True, transient=True)
 
     def __init__(self, **kwtraits):
         # Delay setting the bounds until after base class initialization
@@ -128,14 +128,3 @@ class SimplePlotFrame(BasePlotFrame):
 
         component.outer_position = [0, 0]
         component.do_layout()
-
-    ### Persistence ###########################################################
-    # _pickles = ()
-
-    def __getstate__(self):
-        state = super(SimplePlotFrame, self).__getstate__()
-        for key in ["_layout_needed"]:
-            if key in state:
-                del state[key]
-
-        return state
