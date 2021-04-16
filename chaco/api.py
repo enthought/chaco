@@ -481,8 +481,3 @@ from .default_colormaps import (
     Set3,
 )
 from .default_colors import cbrewer, palette11, palette14, PALETTES
-
-# Importing various symbols into the Chaco namespace for backwards
-# compatibility.  New code should directly import from Enable.
-from enable.base_tool import BaseTool, KeySpec
-from enable.markers import marker_trait
