@@ -29,6 +29,7 @@ from traits.api import (
     Tuple,
     Int,
 )
+from enable.api import Container
 from enable.simple_layout import (
     simple_container_get_preferred_size,
     simple_container_do_layout,
@@ -40,7 +41,6 @@ except ImportError:
     ConstraintsContainer = None
 
 # Local relative imports
-from .base_plot_container import BasePlotContainer
 from .plot_component import DEFAULT_DRAWING_ORDER
 
 
@@ -69,7 +69,7 @@ if ConstraintsContainer is not None:
     __all__.append("ConstraintsPlotContainer")
 
 
-class OverlayPlotContainer(BasePlotContainer):
+class OverlayPlotContainer(Container):
     """
     A plot container that stretches all its components to fit within its
     space.  All of its components must therefore be resizable.
@@ -103,7 +103,7 @@ class OverlayPlotContainer(BasePlotContainer):
         simple_container_do_layout(self)
 
 
-class StackedPlotContainer(BasePlotContainer):
+class StackedPlotContainer(Container):
     """
     Base class for 1-D stacked plot containers, both horizontal and vertical.
     """
@@ -372,7 +372,7 @@ class VPlotContainer(StackedPlotContainer):
         return self._do_stack_layout(components, align)
 
 
-class GridPlotContainer(BasePlotContainer):
+class GridPlotContainer(Container):
     """A GridPlotContainer consists of rows and columns in a tabular format.
 
     Each cell's width is the same as all other cells in its column, and each
