@@ -40,6 +40,7 @@ except ImportError:
 
 # Local relative imports
 from .base_plot_container import BasePlotContainer
+from .plot_component import DEFAULT_DRAWING_ORDER
 
 
 __all__ = [
@@ -47,17 +48,6 @@ __all__ = [
     "HPlotContainer",
     "VPlotContainer",
     "GridPlotContainer",
-]
-
-DEFAULT_DRAWING_ORDER = [
-    "background",
-    "image",
-    "underlay",
-    "plot",
-    "selection",
-    "border",
-    "annotation",
-    "overlay",
 ]
 
 
