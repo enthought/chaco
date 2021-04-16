@@ -199,8 +199,8 @@ Turn off borders?
 
 .. todo::
 
-    Writing Components
-    ==================
+..    Writing Components
+..    ==================
 
     *How do I...*
 
@@ -211,8 +211,8 @@ Turn off borders?
     * write a new container?
 
 
-    Advanced
-    ========
+..    Advanced
+..    ========
 
     *How do I...*
 

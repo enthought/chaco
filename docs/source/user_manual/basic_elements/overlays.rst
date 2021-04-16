@@ -154,27 +154,27 @@ Events
 :attr:`~chaco.axis.PlotAxis.updated`
   Fired when the axis's range bounds change.
 
-.. todo::
+.. todo:: Fill in the below sections
 
-    .. _legend:
+..    .. _legend:
 
-    Legend
-    ======
+..    Legend
+..    ======
 
-    .. _grid:
+..    .. _grid:
 
-    Grid
-    ====
+..    Grid
+..    ====
 
-    ===================
-    Annotation Overlays
-    ===================
+..    ===================
+..    Annotation Overlays
+..    ===================
 
-    PointMarker
-    ===========
+..    PointMarker
+..    ===========
 
-    DataBox
-    =======
+..    DataBox
+..    =======
 
 .. _tools/text_box_overlay:
 
@@ -199,10 +199,10 @@ The rendering of the text can be customized with the following attributes:
           :meth:`request_redraw` should be called. Good examples include
           :class:`chaco.overlays.api.ImageInspectorOverlay`.
 
-.. todo::
+.. todo:: Fill in the below sections
 
-    ToolTip
-    =======
+..    ToolTip
+..    =======
 
-    PlotLabel
-    =========
+..    PlotLabel
+..    =========

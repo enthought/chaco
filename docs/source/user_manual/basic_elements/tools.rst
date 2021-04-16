@@ -2,71 +2,71 @@
 Tools
 *****
 
-.. todo::
+.. todo:: Fill in the below sections
 
-    ================================================================
-    Overview
-    ================================================================
-
-
-    Chaco, Enable, and Event Dispatch
-    =================================
+..    ================================================================
+..    Overview
+..    ================================================================
 
 
-    A Basic Tool
-    ============
+..    Chaco, Enable, and Event Dispatch
+..    =================================
 
 
-    A Basic Overlay
-    ===============
+..    A Basic Tool
+..    ============
 
 
-    ================================================================
-    Interaction Tools
-    ================================================================
+..    A Basic Overlay
+..    ===============
 
-    PanTool
-    =======
 
-    ZoomTool
-    ========
+..    ================================================================
+..    Interaction Tools
+..    ================================================================
 
-    RectZoom
-    ========
+..    PanTool
+..    =======
 
-    DragZoom
-    ========
+..    ZoomTool
+..    ========
 
-    LegendTool
-    ==========
+..    RectZoom
+..    ========
 
-    DataLabelTool
-    =============
+..    DragZoom
+..    ========
 
-    MoveTool
-    ========
+..    LegendTool
+..    ==========
+
+..    DataLabelTool
+..    =============
+
+..    MoveTool
+..    ========
 
 
 ================================================================
 Inspector-type Tools
 ================================================================
 
-.. todo::
+.. todo:: Fill in the below sections
 
-    DataPrinter
-    ===========
+..    DataPrinter
+..    ===========
 
-    LineInspector
-    =============
+..    LineInspector
+..    =============
 
-    ScatterInspector
-    ================
+..    ScatterInspector
+..    ================
 
-    CursorTool
-    ==========
+..    CursorTool
+..    ==========
 
-    HighlightTool
-    =============
+..    HighlightTool
+..    =============
 
 ImageInspectorTool
 ==================
@@ -129,34 +129,34 @@ is, and `data_value` with the scalar value being displayed in that tile.
 For a complete example, see :download:`examples/demo/basic/image_inspector.py
 <../../../examples/demo/basic/image_inspector.py>`.
 
-.. todo::
+.. todo:: Fill in the below sections
 
-    TraitsTool
-    ==========
-
-
-
-    ================================================================
-    Selection Tools
-    ================================================================
-
-    RangeSelection
-    ==============
-
-    LassoSelection
-    ==============
-
-    SelectTool
-    ==========
+..    TraitsTool
+..    ==========
 
 
 
-    ================================================================
-    Drawing Tools
-    ================================================================
+..    ================================================================
+..    Selection Tools
+..    ================================================================
 
-    DrawPointsTool
-    ==============
+..    RangeSelection
+..    ==============
 
-    LineSegmentTool
-    ===============
+..    LassoSelection
+..    ==============
+
+..    SelectTool
+..    ==========
+
+
+
+..    ================================================================
+..    Drawing Tools
+..    ================================================================
+
+..    DrawPointsTool
+..    ==============
+
+..    LineSegmentTool
+..    ===============
