@@ -9,41 +9,22 @@ Modeling Van der Waal's Equation With Chaco and Traits
 Overview
 ========
 
-This tutorial walks through the creation of an example program that plots a
+Here, we will walk through the creation of an example program that plots a
 scientific equation.  In particular, we will model `Van der Waal's Equation
 <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_, which is a
 modification to the ideal gas law that takes into account the nonzero size of
 molecules and the attraction to each other that they experience.
 
-
-Development Setup
-=================
-
-In review, Traits is a manifest typing and reactive programming package
-for Python. It also provides UI features that will be used to create a
-simple GUI. The `Traits <http://docs.enthought.com/traits/>`_ and
-`TraitsUI <http://docs.enthought.com/traitsui/>`_ user manuals are good
-resources for learning about the packages.
-
-You must have Chaco and its dependencies installed:
-
-* Traits
-* TraitsUI
-* Enable
-
-i.e. `edm install chaco` should install the above dependencies.
-
-
 Writing the Program
 ===================
 
-First, define a Traits class and the elements necessary need to model
-the task.  The following Traits class is made for the Van der Waal
-equation, whose variables can be viewed on
+First, we define a Traits class and the elements necessary to model the task.
+The following Traits class is made for the Van der Waalfequation, whose
+variables can be viewed on
 `this wiki page <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_.  The
 :attr:`volume` and :attr:`pressure` attributes hold lists of our X- and
 Y-coordinates, respectively, and are defined as arrays. The attributes
-:attr:`attraction` and :attr:`tot_volume` are  input parameters specified by the
+:attr:`attraction` and :attr:`tot_volume` are input parameters specified by the
 user.  The type of the variables dictates their appearance in the GUI.  For
 example, :attr:`attraction` and :attr:`tot_volume` are defined as Ranges, so they
 show up as slider bars.  Likewise, :attr:`plot_type` is shown as a drop-down
