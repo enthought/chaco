@@ -23,6 +23,7 @@ from traits.api import (
     Instance,
     List,
     Property,
+    Str,
     String,
     Trait,
     Tuple,
@@ -74,6 +75,14 @@ class OverlayPlotContainer(BasePlotContainer):
     space.  All of its components must therefore be resizable.
     """
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    #: Redefine the draw layer to "plot" instead of "mainlayer"
+    draw_layer = Str("plot")
+
+    #: Redefine the draw order
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
     #: Do not use an off-screen backbuffer.
@@ -99,6 +108,14 @@ class StackedPlotContainer(BasePlotContainer):
     Base class for 1-D stacked plot containers, both horizontal and vertical.
     """
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    #: Redefine the draw layer to "plot" instead of "mainlayer"
+    draw_layer = Str("plot")
+
+    #: Redefine the draw order
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
     # The dimension along which to stack components that are added to
@@ -366,6 +383,14 @@ class GridPlotContainer(BasePlotContainer):
     **shape** trait.
     """
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    #: Redefine the draw layer to "plot" instead of "mainlayer"
+    draw_layer = Str("plot")
+
+    #: Redefine the draw order
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
     #: The amount of space to put on either side of each component, expressed
