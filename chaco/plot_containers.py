@@ -106,15 +106,6 @@ class StackedPlotContainer(Container):
     # attribute. It must be 0 or 1.
     stack_index = 0
 
-    ### Persistence ###########################################################
-
-    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
-    def __getstate__(self):
-        state = super(StackedPlotContainer, self).__getstate__()
-        if "stack_index" in state:
-            del state["stack_index"]
-        return state
-
 
 class HPlotContainer(StackedPlotContainer):
     """
@@ -175,6 +166,15 @@ class HPlotContainer(StackedPlotContainer):
             align = "max"
 
         return stack_layout(self, components=components, align=align)
+
+    ### Persistence ###########################################################
+
+    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
+    def __getstate__(self):
+        state = super(StackedPlotContainer, self).__getstate__()
+        if "stack_index" in state:
+            del state["stack_index"]
+        return state
 
 
 class VPlotContainer(StackedPlotContainer):
@@ -239,6 +239,15 @@ class VPlotContainer(StackedPlotContainer):
             align = "max"
 
         return stack_layout(self, components=components, align=align)
+
+    ### Persistence ###########################################################
+
+    # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
+    def __getstate__(self):
+        state = super(StackedPlotContainer, self).__getstate__()
+        if "stack_index" in state:
+            del state["stack_index"]
+        return state
 
 
 class GridPlotContainer(Container):
