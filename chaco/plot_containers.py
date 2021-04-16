@@ -30,7 +30,7 @@ from traits.api import (
     Int,
 )
 from enable.api import Container, OverlayContainer
-from enable.stacked_container import StackedContainer
+from enable.stacked_container import HStackedContainer, StackedContainer
 from enable.stacked_layout import stack_layout, stacked_preferred_size
 
 try:
@@ -90,7 +90,7 @@ class OverlayPlotContainer(OverlayContainer):
     _cached_preferred_size = Tuple
 
 
-class HPlotContainer(StackedContainer):
+class HPlotContainer(HStackedContainer):
     """
     A plot container that stacks all of its components horizontally. Resizable
     components share the free space evenly. All components are stacked from
@@ -107,12 +107,6 @@ class HPlotContainer(StackedContainer):
 
     #: Redefine the draw order
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-
-    #: The order in which components in the plot container are laid out.
-    stack_order = Enum("left_to_right", "right_to_left")
-
-    #: The amount of space to put between components.
-    spacing = Float(0.0)
 
     #: The vertical alignment of objects that don't span the full height.
     valign = Enum("bottom", "top", "center")
@@ -154,7 +148,7 @@ class HPlotContainer(StackedContainer):
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
     def __getstate__(self):
-        state = super(StackedContainer, self).__getstate__()
+        state = super(HStackedContainer, self).__getstate__()
         if "stack_index" in state:
             del state["stack_index"]
         return state
