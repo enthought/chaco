@@ -38,10 +38,6 @@ class BasePlotContainer(Container):
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     draw_layer = Str("plot")
 
-    # ------------------------------------------------------------------------
-    # Deprecated traits
-    # ------------------------------------------------------------------------
-
     #: Deprecated flag to indicate that a component needed to do old-style
     #: drawing.  Unused by any recent Chaco component.
     use_draw_order = Bool(True)
