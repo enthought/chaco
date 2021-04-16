@@ -30,7 +30,7 @@ from traits.api import (
     Int,
 )
 from enable.api import Container, OverlayContainer
-from enable.stacked_container import HStackedContainer, StackedContainer
+from enable.stacked_container import HStackedContainer, VStackedContainer
 from enable.stacked_layout import stack_layout, stacked_preferred_size
 
 try:
@@ -154,7 +154,7 @@ class HPlotContainer(HStackedContainer):
         return state
 
 
-class VPlotContainer(StackedContainer):
+class VPlotContainer(VStackedContainer):
     """
     A plot container that stacks plot components vertically.
     """
@@ -168,24 +168,6 @@ class VPlotContainer(StackedContainer):
 
     #: Redefine the draw order
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-
-    #: Overrides StackedPlotContainer.
-    stack_dimension = "v"
-    #: Overrides StackedPlotContainer.
-    other_dimension = "h"
-    #: Overrides StackedPlotContainer.
-    stack_index = 1
-
-    # VPlotContainer attributes
-
-    #: The horizontal alignment of objects that don't span the full width.
-    halign = Enum("left", "right", "center")
-
-    #: The order in which components in the plot container are laid out.
-    stack_order = Enum("bottom_to_top", "top_to_bottom")
-
-    #: The amount of space to put between components.
-    spacing = Float(0.0)
 
     def get_preferred_size(self, components=None):
         """Returns the size (width,height) that is preferred for this component.
@@ -202,26 +184,11 @@ class VPlotContainer(StackedContainer):
 
         return stacked_preferred_size(self, components=components)
 
-    def _do_layout(self):
-        """Actually performs a layout (called by do_layout())."""
-        if self.stack_order == "bottom_to_top":
-            components = self.components
-        else:
-            components = self.components[::-1]
-        if self.halign == "left":
-            align = "min"
-        elif self.halign == "center":
-            align = "center"
-        else:
-            align = "max"
-
-        return stack_layout(self, components=components, align=align)
-
     ### Persistence ###########################################################
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
     def __getstate__(self):
-        state = super(StackedContainer, self).__getstate__()
+        state = super(VStackedContainer, self).__getstate__()
         if "stack_index" in state:
             del state["stack_index"]
         return state
