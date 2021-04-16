@@ -94,16 +94,6 @@ class StackedPlotContainer(Container):
     Base class for 1-D stacked plot containers, both horizontal and vertical.
     """
 
-    #: Redefine the container layers to name the main layer as "plot" instead
-    #: of the Enable default of "mainlayer"
-    container_under_layers = Tuple("background", "image", "underlay", "plot")
-
-    #: Redefine the draw layer to "plot" instead of "mainlayer"
-    draw_layer = Str("plot")
-
-    #: Redefine the draw order
-    draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-
     # The dimension along which to stack components that are added to
     # this container.
     stack_dimension = Enum("h", "v", transient=True)
@@ -134,6 +124,14 @@ class HPlotContainer(StackedPlotContainer):
     **components** list.
     """
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    #: Redefine the draw layer to "plot" instead of "mainlayer"
+    draw_layer = Str("plot")
+
+    #: Redefine the draw order
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
     #: The order in which components in the plot container are laid out.
@@ -184,6 +182,14 @@ class VPlotContainer(StackedPlotContainer):
     A plot container that stacks plot components vertically.
     """
 
+    #: Redefine the container layers to name the main layer as "plot" instead
+    #: of the Enable default of "mainlayer"
+    container_under_layers = Tuple("background", "image", "underlay", "plot")
+
+    #: Redefine the draw layer to "plot" instead of "mainlayer"
+    draw_layer = Str("plot")
+
+    #: Redefine the draw order
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
 
     #: Overrides StackedPlotContainer.
