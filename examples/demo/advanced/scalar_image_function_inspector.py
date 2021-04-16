@@ -90,15 +90,15 @@ class Model(HasTraits):
         buttons=["OK", "Cancel"],
     )
 
-    function = Str("tanh(x**2+y)*cos(y)*jn(0,x+y*2)")
+    function = Str("tanh(x**2+y)*cos(y)*jn(0,x+y*2)", needs_compute=True)
 
-    npts_x = CInt(400)
-    npts_y = CInt(200)
+    npts_x = CInt(400, needs_compute=True)
+    npts_y = CInt(200, needs_compute=True)
 
-    min_x = CFloat(-2 * pi)
-    max_x = CFloat(2 * pi)
-    min_y = CFloat(-1.5 * pi)
-    max_y = CFloat(1.5 * pi)
+    min_x = CFloat(-2 * pi, needs_compute=True)
+    max_x = CFloat(2 * pi, needs_compute=True)
+    min_y = CFloat(-1.5 * pi, needs_compute=True)
+    max_y = CFloat(1.5 * pi, needs_compute=True)
 
     xs = Array
     ys = Array
@@ -154,17 +154,9 @@ class Model(HasTraits):
             self.model_changed = True
             self._function = self.function
 
-    def _anytrait_changed(self, name, value):
-        if name in [
-            "function",
-            "npts_x",
-            "npts_y",
-            "min_x",
-            "max_x",
-            "min_y",
-            "max_y",
-        ]:
-            self.compute_model()
+    @observe("+needs_compute")
+    def _compute_model_on_trait_update(self, event):
+        self.compute_model()
 
 
 class PlotUI(HasTraits):
