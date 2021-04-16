@@ -30,6 +30,7 @@ from traits.api import (
     Int,
 )
 from enable.api import Container, OverlayContainer
+from enable.stacked_container import StackedContainer
 from enable.stacked_layout import stack_layout, stacked_preferred_size
 
 try:
@@ -89,25 +90,7 @@ class OverlayPlotContainer(OverlayContainer):
     _cached_preferred_size = Tuple
 
 
-class StackedPlotContainer(Container):
-    """
-    Base class for 1-D stacked plot containers, both horizontal and vertical.
-    """
-
-    # The dimension along which to stack components that are added to
-    # this container.
-    stack_dimension = Enum("h", "v", transient=True)
-
-    # The "other" dimension, i.e., the dual of the stack dimension.
-    other_dimension = Enum("v", "h", transient=True)
-
-    # The index into obj.position and obj.bounds that corresponds to
-    # **stack_dimension**.  This is a class-level and not an instance-level
-    # attribute. It must be 0 or 1.
-    stack_index = 0
-
-
-class HPlotContainer(StackedPlotContainer):
+class HPlotContainer(StackedContainer):
     """
     A plot container that stacks all of its components horizontally. Resizable
     components share the free space evenly. All components are stacked from
@@ -171,13 +154,13 @@ class HPlotContainer(StackedPlotContainer):
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
     def __getstate__(self):
-        state = super(StackedPlotContainer, self).__getstate__()
+        state = super(StackedContainer, self).__getstate__()
         if "stack_index" in state:
             del state["stack_index"]
         return state
 
 
-class VPlotContainer(StackedPlotContainer):
+class VPlotContainer(StackedContainer):
     """
     A plot container that stacks plot components vertically.
     """
@@ -244,7 +227,7 @@ class VPlotContainer(StackedPlotContainer):
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
     def __getstate__(self):
-        state = super(StackedPlotContainer, self).__getstate__()
+        state = super(StackedContainer, self).__getstate__()
         if "stack_index" in state:
             del state["stack_index"]
         return state
