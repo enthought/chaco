@@ -100,6 +100,44 @@ drop-down menus (not show here), the user can change plot attributes like the
 colormap and the number of contour levels used in the center plot, as well as
 the actual function being plotted.
 
+Script-oriented plotting
+========================
+
+We distinguish between "static" plots and "interactive visualizations"
+because these different applications of a library affect the structure
+of how the library is written, as well as the code you write to use the
+library.
+
+Here is a simple example of the "script-oriented" approach for creating
+a static plot for which we use Matplotlib.  This is approach will also probably
+look familiar to anyone who has used Gnuplot or MATLAB::
+
+    from numpy import linspace, pi, sin
+    import matplotlib.pyplot as plt
+
+    x = linspace(-2*pi, 2*pi, 100)
+    y = sin(x)
+
+    plt.plot(x, y, "r-")
+    plt.title("First plot")
+    plt.ylabel("sin(x)")
+    plt.show()
+
+This creates this plot:
+
+.. image:: images/script_oriented.png
+    :height: 300pt
+
+The basic structure of this example is that we generate some data, then we call
+functions to plot the data and configure the plot. There is a global concept of
+"the active plot", and the functions do high-level manipulations on it. The
+generated plot is then usually saved to disk for inclusion in a journal article
+or presentation slides.
+
+Now, as it so happens, the plot that opens does have some basic interactivity.
+You can pan, zoom, mess with layout, etc. But ultimately it's a pretty static
+view into the data.
+
 .. _line_plot_example:
 
 Application-oriented plotting
