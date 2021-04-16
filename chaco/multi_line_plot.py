@@ -143,7 +143,7 @@ class MultiLinePlot(BaseXYPlot):
         observe=[
             "global_min",
             "global_max",
-            "data",
+            "value._data",
             "use_global_bounds",
             "yindex",
         ],
