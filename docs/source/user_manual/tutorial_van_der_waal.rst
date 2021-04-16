@@ -1,3 +1,5 @@
+:orphan:
+
 .. _tutorial_van_der_waal:
 
 ######################################################
@@ -16,8 +18,8 @@ molecules and the attraction to each other that they experience.
 Writing the Program
 ===================
 
-First, we define a Traits class and the elements necessary to model the task.
-The following Traits class is made for the Van der Waal equation, whose
+First, we define a HasTraits class and the elements necessary to model the task.
+The following class is made for the Van der Waal equation, whose
 variables can be viewed on
 `this wiki page <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_.  The
 :attr:`volume` and :attr:`pressure` attributes hold lists of our X- and
@@ -64,9 +66,7 @@ list, since it is defined as an Enum.
 
         plot = Instance(Plot)
 
-
-    ....
-
+    ...
 
 Creating the View
 =================
@@ -75,16 +75,16 @@ The main GUI window is created by defining a Traits :class:`View` instance.
 This View contains all of the GUI elements, including the plot. To
 link a variable with a widget element on the GUI, we create a Traits
 :class:`Item` instance with the same name as the variable and pass it as an
-argument of the Traits View instance declaration.  The
+argument of the Traits :class:`View` instance declaration. The
 `TraitsUI User Guide <https://docs.enthought.com/traitsui>`_
-discusses the View and Item objects in depth. 
+discusses the :class:`View` and :class:`Item` objects in depth. 
 
 In order to embed a Chaco plot into a Traits View, we can do exactly the same,
 only we must explicitly specify the editor of that :class:`Item` to be a
-:class:`enable.api.ComponentEditor`::
+:class:`~enable.component_editor.ComponentEditor`::
 
     class Data(HasTraits):
-        ....
+        ...
 
         traits_view = View(
             UItem(
@@ -103,26 +103,28 @@ only we must explicitly specify the editor of that :class:`Item` to be a
             width=900,
             height=800,
         )
-    ....
+
+    ...
 
 Initializing the plot
 =====================
 
-Now, we need to give the details of the plot that we want the view to display.
-To do so, we define a method to construct the default for ``plot``. We wrap the
-data we wish to plot in an :class:`ArrayPlotData` object, and then create a
-:class:`Plot` object using that data.  We then configure some properties of the
-plot before finally calling the :meth:`plot` method to create the plot. When
-doing so we specify the type of the plot to create based of the value of the
-``plot_type`` trait, and we also use this trait as the name of our plot.  This
-name will show up again later.
+Now, we need to give the initial details of the plot that we want the view to
+display. To do so, we define a method to construct the default value for
+:attr:`plot`. We wrap the data we wish to plot in an :class:`ArrayPlotData`
+object, and then create a :class:`Plot` instance using that data. We then
+configure some properties of the plot before finally calling the :meth:`plot`
+method to create a plot renderer for the plot. When doing so we specify the
+type of the plot to create based of the value of the :attr:`plot_type` trait,
+and we also use this trait as the name of our plot.  This name will show up
+again later.
 
 ::
+
     class Data(HasTraits):
-        ....
+        ...
 
         def _plot_default(self):
-
             self.plotdata = ArrayPlotData(x=self.volume, y=self.pressure)
             plot = Plot(self.plotdata)
             plot.title = 'Pressure vs. Volume'
@@ -135,7 +137,8 @@ name will show up again later.
             )
 
             return plot
-    ....
+
+    ...
 
 Updating the Plot
 =================

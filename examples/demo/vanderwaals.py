@@ -38,7 +38,6 @@ class Data(HasTraits):
     plot = Instance(Plot)
 
     def _plot_default(self):
-
         self.plotdata = ArrayPlotData(x=self.volume, y=self.pressure)
         plot = Plot(self.plotdata)
         plot.title = 'Pressure vs. Volume'
