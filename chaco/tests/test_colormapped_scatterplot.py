@@ -86,3 +86,11 @@ class TestColormappedScatterplot(unittest.TestCase):
         """ If colormapper updated then we need to redraw """
         self.color_mapper.updated = True
         self.assertFalse(self.scatterplot.draw_valid)
+
+    # regression test for enthought/chaco#425
+    def test_non_kiva_marker(self):
+        self.scatterplot.marker = "star"
+
+        self.gc.render_component(self.scatterplot)
+        actual = self.gc.bmp_array[:, :, :]
+        self.assertFalse(alltrue(actual == 255))
