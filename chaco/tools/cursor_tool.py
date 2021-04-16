@@ -19,6 +19,7 @@ TODO:
 import numpy
 
 # Enthought library imports
+from enable.api import CircleMarker
 from enable.tools.api import DragTool
 from traits.api import (
     Int,
@@ -32,7 +33,6 @@ from traits.api import (
 )
 
 # Chaco imports
-from chaco.scatter_markers import CircleMarker
 from chaco.base_xy_plot import BaseXYPlot
 from chaco.base_2d_plot import Base2DPlot
 from .line_inspector import LineInspector
