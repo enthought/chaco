@@ -24,52 +24,23 @@ specifying the Curve Number (determined based on the permeability of
 the soil) a plot shows the intensity vs. time hyetograph plots.
 
 
-Development Setup
-=================
-
-To run this demo you must have Chaco and its dependencies installed:
-
-* Traits
-* TraitsUI
-* Enable
-
-
-Why use Traits for this application?
-====================================
-
-1. **Event notification** Every time that a trait is changed it sends
-   out notification to all listening functions.  This means when a
-   trait is changed in places such as the UI the program will then
-   notify other traits or functions automatically.
-
-2. **Typing** Within traits you are allowed to define trats as certain
-   types.  Say you have a trait named Name, you can then define it to
-   be a string.  Then when you visualize it using the UI, it will
-   interprit the data as a string.
-
-3. **UI-Generation** After setting up your traits and performing all
-   the calculations, the Trait's will automatically generate a GUI
-   view without needing any additional programming.
-
-
 Importing the necessary functions
 =================================
 
-In This tutorial we will be using numpy, traits, traitsui, and chaco.
-In calling your function you want to specify where the function is and
-then import it.  The following code snippet imports all the names that
-will be used for our application. ::
+In This example we will be using numpy, traits, traitsui, and chaco.
+The following code snippet imports all the names that will be used for our
+application. ::
 
+    from enable.api import ComponentEditor
     from traits.api import (
         HasTraits,
         Int,
         Range,
         Array,
         Enum,
-        on_trait_change,
+        observe,
     )
-    from traitsui.api import View, Item
-    from chaco.chaco_plot_editor import ChacoPlotItem
+    from traitsui.api import Item, UItem, View
 
 
 Trait Definitions
@@ -88,7 +59,7 @@ their type similar to many typed languages. ::
     class Hyetograph(HasTraits):
         """ Creates a simple hyetograph demo. """
 
-        timeline = Array
+        timeline = Array()
 
         intensity = Array
 
@@ -214,7 +185,7 @@ Performing the Hyetograph Calculations
 The UI for the application is complete, however there is no data.
 Changing the traits within the GUI by moving the sliders and typing in
 numbers does nothing because they're hooked up to nothing and there
-are no listeners on the trait event notifications.  So , next we'll
+are no listeners on the trait event notifications.  So, next we'll
 add some hyetograph calculations that modify the intensity and nrcs
 Array traits. ::
 
@@ -290,7 +261,7 @@ functions.  The interesting line is the decorator,
 ``@on_trait_change`` that tells Traits to call the function whenever
 any of the values within the list of traits change. ::
 
-    @on_trait_change('duration, year_storm, county, curve_number')
+    @observe('duration, year_storm, county, curve_number')
     def _perform_calculations(self):
         self.calculate_intensity()
         self.calculate_runoff()
