@@ -37,17 +37,3 @@ class BasePlotContainer(Container):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     draw_layer = Str("plot")
-
-    #: Deprecated flag to indicate that a component needed to do old-style
-    #: drawing.  Unused by any recent Chaco component.
-    use_draw_order = Bool(True)
-
-    def _use_draw_order_changed(self, old, new):
-        """Handler to catch the case when someone is trying to use the
-        old-style drawing mechanism, which is now unsupported.
-        """
-        if new == False:
-            raise RuntimeError(
-                "The old-style drawing mechanism is no longer "
-                "supported in Chaco."
-            )

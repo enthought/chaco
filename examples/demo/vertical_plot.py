@@ -11,8 +11,6 @@ by modifying lines 26 and 27.
 from numpy import arange
 from scipy.special import jn
 
-from chaco.example_support import COLOR_PALETTE
-
 # Enthought library imports
 from enable.api import Component, ComponentEditor
 from traits.api import HasTraits, Instance
@@ -21,6 +19,7 @@ from chaco.api import (
     PlotLabel,
     VPlotContainer,
     HPlotContainer,
+    cbrewer as COLOR_PALETTE,
     create_line_plot,
 )
 

@@ -198,7 +198,7 @@ class PlotGrid(AbstractOverlay):
 
         Overrides PlotComponent.
         """
-        if self.use_draw_order and self.component is not None:
+        if self.component is not None:
             self._layout_as_overlay(*args, **kw)
         else:
             super(PlotGrid, self).do_layout(*args, **kw)

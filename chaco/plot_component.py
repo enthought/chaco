@@ -62,20 +62,6 @@ class PlotComponent(Component):
     #: The default draw layer for Chaco plot components is the "plot" layer
     draw_layer = Str("plot")
 
-    #: Draw layers in **draw_order**? If False, use _do_draw() (for backwards
-    #: compatibility).
-    use_draw_order = Bool(True)
-
-    def _use_draw_order_changed(self, old, new):
-        """Handler to catch the case when someone is trying to use the
-        old-style drawing mechanism, which is now unsupported.
-        """
-        if new == False:
-            raise RuntimeError(
-                "The old-style drawing mechanism is no longer "
-                "supported in Chaco."
-            )
-
     @observe("+requires_redraw")
     def _plot_component_invalidated(self, event):
         self.invalidate_and_redraw()

@@ -232,7 +232,7 @@ class PlotAxis(AbstractOverlay):
 
         Overrides Component.
         """
-        if self.use_draw_order and self.component is not None:
+        if self.component is not None:
             self._layout_as_overlay(*args, **kw)
         else:
             super(PlotAxis, self)._do_layout(*args, **kw)

@@ -26,13 +26,13 @@ from traitsui.api import Item, View
 
 # Chaco imports
 from chaco.api import (
+    cbrewer as COLOR_PALETTE,
     create_line_plot,
     add_default_axes,
     add_default_grids,
     OverlayPlotContainer,
     DataLabel,
 )
-from chaco.example_support import COLOR_PALETTE
 from chaco.tools.api import PanTool, ZoomTool, DataLabelTool
 
 
