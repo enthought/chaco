@@ -18,7 +18,7 @@ from traits.etsconfig.api import ETSConfig
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, PlotGraphicsContext
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 
 DPI = 72.0
 

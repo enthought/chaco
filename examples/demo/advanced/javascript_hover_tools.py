@@ -35,7 +35,7 @@ from scipy.special import jn
 
 # Chaco imports
 from chaco.api import ArrayPlotData, Plot, PlotGraphicsContext, LinePlot
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 
 
 # -- Constants -----------------------------------------------------------------

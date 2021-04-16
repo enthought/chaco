@@ -18,7 +18,7 @@ from chaco.api import (
     OverlayPlotContainer,
     PlotAxis,
 )
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 
 
 class PlotExample(HasTraits):

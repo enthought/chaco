@@ -36,7 +36,7 @@ from chaco.api import (
     Legend,
 )
 from chaco.tools.api import PanTool, ZoomTool, LegendTool, TraitsTool, DragZoom
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 
 
 class OverlappingPlotContainer(OverlayPlotContainer):

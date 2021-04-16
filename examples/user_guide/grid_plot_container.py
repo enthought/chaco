@@ -2,7 +2,7 @@ from numpy import linspace
 from scipy.special import jn
 
 from chaco.api import ArrayPlotData, Plot, GridPlotContainer
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 from enable.api import ComponentEditor
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View

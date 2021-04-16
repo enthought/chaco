@@ -9,7 +9,7 @@ change no matter how the window is resized.
 from numpy import linspace
 from scipy.special import jn
 
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor

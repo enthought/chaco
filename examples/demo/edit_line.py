@@ -18,7 +18,7 @@ through the "zoom history".
 from numpy import linspace
 from scipy.special import jn
 
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 
 # Enthought library imports
 from enable.tools.api import DragTool

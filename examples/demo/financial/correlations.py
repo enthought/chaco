@@ -20,7 +20,7 @@ from traitsui.api import Item, View, HSplit, VGroup, EnumEditor
 from chaco.api import ArrayPlotData, Plot, PlotAxis, ScatterInspectorOverlay
 from chaco.scales.api import CalendarScaleSystem
 from chaco.scales_tick_generator import ScalesTickGenerator
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 from chaco.tools.api import (
     PanTool,
     ZoomTool,

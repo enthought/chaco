@@ -32,7 +32,7 @@ from chaco.api import (
     OverlayPlotContainer,
     DataLabel,
 )
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 from chaco.tools.api import PanTool, ZoomTool, DataLabelTool
 
 

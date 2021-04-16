@@ -11,7 +11,7 @@ by modifying lines 26 and 27.
 from numpy import arange
 from scipy.special import jn
 
-from chaco.example_support import COLOR_PALETTE
+from chaco.api import cbrewer as COLOR_PALETTE
 
 # Enthought library imports
 from enable.api import Component, ComponentEditor
