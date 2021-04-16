@@ -42,10 +42,6 @@ class BasePlotContainer(Container):
     # Deprecated traits
     # ------------------------------------------------------------------------
 
-    #: Deprecated flag to indicate that a component needed to do old-style
-    #: drawing.  Unused by any recent Chaco component.
-    use_draw_order = Bool(True)
-
     #: Deprecated property for accessing the components in the container.
     plot_components = Property
 
@@ -64,13 +60,3 @@ class BasePlotContainer(Container):
             DeprecationWarning,
         )
         self._components = new
-
-    def _use_draw_order_changed(self, old, new):
-        """Handler to catch the case when someone is trying to use the
-        old-style drawing mechanism, which is now unsupported.
-        """
-        if new == False:
-            raise RuntimeError(
-                "The old-style drawing mechanism is no longer "
-                "supported in Chaco."
-            )
