@@ -116,21 +116,6 @@ class StackedPlotContainer(Container):
     # attribute. It must be 0 or 1.
     stack_index = 0
 
-    def get_preferred_size(self, components=None):
-        """Returns the size (width,height) that is preferred for this component.
-
-        Overrides PlotComponent.
-        """
-        if self.fixed_preferred_size is not None:
-            self._cached_preferred_size = self.fixed_preferred_size
-            return self.fixed_preferred_size
-
-        if self.resizable == "":
-            self._cached_preferred_size = self.outer_bounds[:]
-            return self.outer_bounds
-
-        return stacked_preferred_size(self, components=components)
-
     ### Persistence ###########################################################
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
@@ -161,6 +146,21 @@ class HPlotContainer(StackedPlotContainer):
     valign = Enum("bottom", "top", "center")
 
     _cached_preferred_size = Tuple(transient=True)
+
+    def get_preferred_size(self, components=None):
+        """Returns the size (width,height) that is preferred for this component.
+
+        Overrides PlotComponent.
+        """
+        if self.fixed_preferred_size is not None:
+            self._cached_preferred_size = self.fixed_preferred_size
+            return self.fixed_preferred_size
+
+        if self.resizable == "":
+            self._cached_preferred_size = self.outer_bounds[:]
+            return self.outer_bounds
+
+        return stacked_preferred_size(self, components=components)
 
     def _do_layout(self):
         """Actually performs a layout (called by do_layout())."""
@@ -203,6 +203,21 @@ class VPlotContainer(StackedPlotContainer):
 
     #: The amount of space to put between components.
     spacing = Float(0.0)
+
+    def get_preferred_size(self, components=None):
+        """Returns the size (width,height) that is preferred for this component.
+
+        Overrides PlotComponent.
+        """
+        if self.fixed_preferred_size is not None:
+            self._cached_preferred_size = self.fixed_preferred_size
+            return self.fixed_preferred_size
+
+        if self.resizable == "":
+            self._cached_preferred_size = self.outer_bounds[:]
+            return self.outer_bounds
+
+        return stacked_preferred_size(self, components=components)
 
     def _do_layout(self):
         """Actually performs a layout (called by do_layout())."""
