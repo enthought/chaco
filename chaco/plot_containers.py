@@ -19,12 +19,10 @@ from traits.api import (
     Array,
     Either,
     Enum,
-    Float,
     Instance,
     List,
     Property,
     Str,
-    String,
     Trait,
     Tuple,
     Int,
@@ -61,7 +59,7 @@ if ConstraintsContainer is not None:
             "background", "image", "underlay", "plot"
         )
         draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
-        draw_layer = String("plot")
+        draw_layer = Str("plot")
         # !! Bits copied from BasePlotContainer !!
 
     __all__.append("ConstraintsPlotContainer")
