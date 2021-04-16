@@ -105,7 +105,7 @@ the actual function being plotted.
 Application-oriented plotting
 =============================
 
-The main chaco approach to plotting can be thought of as
+The chaco approach to plotting can be thought of as
 "application-oriented", for lack of a better term. The code may appear a bit
 verbose given the simple plot it generates, but it sets us up to do more
 interesting things, as you will see later on::
