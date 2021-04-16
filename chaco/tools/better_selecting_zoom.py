@@ -3,7 +3,6 @@ import numpy
 from chaco.abstract_overlay import AbstractOverlay
 from enable.api import ColorTrait, KeySpec
 from traits.api import Bool, Enum, Trait, Int, Float, Tuple, Instance, Property
-from traits.util.deprecated import deprecated
 
 from .better_zoom import BetterZoom
 from .tool_states import SelectedZoomState
@@ -38,14 +37,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     #: the tool to actually take effect.
     minimum_screen_delta = Int(10)
 
-    # -------------------------------------------------------------------------
-    # deprecated interaction controls, used for API compatability with
-    # SimpleZoom
-    # -------------------------------------------------------------------------
-
-    #: Conversion ratio from wheel steps to zoom factors.
-    wheel_zoom_step = Property(Float, observe="zoom_factor")
-
     #: The key press to enter zoom mode, if **always_on** is False.  Has no effect
     #: if **always_on** is True.
     enter_zoom_key = Instance(KeySpec, args=("z",))
@@ -53,9 +44,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     #: The key press to leave zoom mode, if **always_on** is False.  Has no effect
     #: if **always_on** is True.
     exit_zoom_key = Instance(KeySpec, args=("z",))
-
-    #: Disable the tool after the zoom is completed?
-    disable_on_complete = Property()
 
     # -------------------------------------------------------------------------
     # Appearance properties (for Box mode)
@@ -261,22 +249,6 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     # --------------------------------------------------------------------------
     #  private interface
     # --------------------------------------------------------------------------
-
-    @deprecated
-    def _get_disable_on_complete(self):
-        return True
-
-    @deprecated
-    def _set_disable_on_complete(self, value):
-        return
-
-    @deprecated
-    def _get_wheel_zoom_step(self):
-        return self.zoom_factor - 1.0
-
-    @deprecated
-    def _set_wheel_zoom_step(self, value):
-        self.zoom_factor = value + 1.0
 
     def _is_enabling_event(self, event):
         if self.always_on:

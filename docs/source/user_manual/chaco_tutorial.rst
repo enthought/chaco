@@ -1141,7 +1141,7 @@ strings, and not the tool classes themselves.
 
         tools = List(
             editor=CheckListEditor(
-                values = ["PanTool", "SimpleZoom", "DragZoom"],
+                values = ["PanTool", "ZoomTool", "DragZoom"],
             )
         )
 

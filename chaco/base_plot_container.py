@@ -37,26 +37,3 @@ class BasePlotContainer(Container):
 
     draw_order = Instance(list, args=(DEFAULT_DRAWING_ORDER,))
     draw_layer = Str("plot")
-
-    # ------------------------------------------------------------------------
-    # Deprecated traits
-    # ------------------------------------------------------------------------
-
-    #: Deprecated property for accessing the components in the container.
-    plot_components = Property
-
-    def _get_plot_components(self):
-        warnings.warn(
-            "Use of plot_components attribute deprecated."
-            "Use components attribute instead.",
-            DeprecationWarning,
-        )
-        return self._components
-
-    def _set_plot_components(self, new):
-        warnings.warn(
-            "Use of plot_components attribute deprecated."
-            "Use components attribute instead.",
-            DeprecationWarning,
-        )
-        self._components = new

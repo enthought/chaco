@@ -24,10 +24,10 @@ class TrackingZoom(ZoomTool):
         if self.enable_wheel and event.mouse_wheel != 0:
             if event.mouse_wheel > 0:
                 # zoom in
-                zoom = 1.0 / (1.0 + 0.5 * self.wheel_zoom_step)
+                zoom = 2 / (1 + self.zoom_factor)
             elif event.mouse_wheel < 0:
                 # zoom out
-                zoom = 1.0 + 0.5 * self.wheel_zoom_step
+                zoom = (1 + self.zoom_factor) / 2
 
             # We'll determine the current position of the cursor in dataspace,
             # then zoom in while trying to maintain the mouse screen coordinates
