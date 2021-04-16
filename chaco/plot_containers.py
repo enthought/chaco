@@ -131,11 +131,6 @@ class StackedPlotContainer(Container):
 
         return stacked_preferred_size(self, components=components)
 
-    def _do_stack_layout(self, components, align):
-        """Helper method that does the actual work of layout."""
-
-        stack_layout(self, components=components, align=align)
-
     ### Persistence ###########################################################
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
@@ -181,7 +176,7 @@ class HPlotContainer(StackedPlotContainer):
         else:
             align = "max"
 
-        return self._do_stack_layout(components, align)
+        return stack_layout(self, components=components, align=align)
 
 
 class VPlotContainer(StackedPlotContainer):
@@ -222,7 +217,7 @@ class VPlotContainer(StackedPlotContainer):
         else:
             align = "max"
 
-        return self._do_stack_layout(components, align)
+        return stack_layout(self, components=components, align=align)
 
 
 class GridPlotContainer(Container):
