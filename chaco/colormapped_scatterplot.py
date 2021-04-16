@@ -390,7 +390,7 @@ class ColormappedScatterPlot(ScatterPlot):
                 marker_size = marker_size[self._cached_point_mask]
             mode = marker_cls.draw_mode
 
-            if marker_cls != "custom":
+            if self.marker != "custom":
                 if hasattr(
                     gc, "draw_marker_at_points"
                 ) and marker_cls.kiva_marker != NO_MARKER:
@@ -427,7 +427,7 @@ class ColormappedScatterPlot(ScatterPlot):
                     draw_func(x[i], y[i], size)
 
             else:
-                path = marker_cls.custom_symbol
+                path = self.custom_symbol
                 for i in range(len(x)):
                     gc.set_fill_color(colors[i])
                     gc.draw_path_at_points([[x[i], y[i]]], path, STROKE)
