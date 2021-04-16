@@ -109,7 +109,7 @@ of how the library is written, as well as the code you write to use the
 library.
 
 Here is a simple example of the "script-oriented" approach for creating
-a static plot for which we use Matplotlib.  This is approach will also probably
+a static plot for which we use Matplotlib.  This approach will also probably
 look familiar to anyone who has used Gnuplot or MATLAB::
 
     from numpy import linspace, pi, sin
