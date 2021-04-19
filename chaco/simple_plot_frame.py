@@ -7,7 +7,12 @@
 # This class will be removed sometime in the near future.
 #
 #################################################################################
+import warnings
 
+warnings.warn(
+    "PlotFrames are deprecated.  There is no need to use them any more. ",
+    DeprecationWarning
+)
 
 # Enthought library imports
 from traits.api import Bool
