@@ -450,17 +450,6 @@ source: `tabbed_plots.py <https://github.com/enthought/chaco/tree/master/example
 .. image:: example_images/tabbed_plots1.png
 .. image:: example_images/tabbed_plots2.png
 
-``traits_editor.py``
---------------------
-This example creates a simple 1-D function examiner, illustrating the use of
-ChacoPlotEditors for displaying simple plot relations, as well as TraitsUI
-integration. Any 1-D numpy/scipy.special function works in the function
-text box.
-
-source: `traits_editor.py <https://github.com/enthought/chaco/tree/master/examples/demo/basic/traits_editor.py>`_
-
-.. image:: example_images/traits_editor.png
-
 ``zoomable_colorbar.py``
 ------------------------
 Draws a colormapped scatterplot of some random data.
