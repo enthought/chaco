@@ -48,7 +48,7 @@ Trait Definitions
 
 This application only requires one class that will contain the Traits
 and mathematical calculations together.  Classes that contain Traits
-must inherit from the HasTraits class.  Python's multiple
+must inherit from the :class:`HasTraits` class.  Python's multiple
 inheritance allows for mixing HasTraits objects with other class
 hierarchies if needed.
 
@@ -103,6 +103,7 @@ The `Traits API Reference
 contains more information about the standard Trait types; specifically, see the
 :mod:`trait_types` module.
 
+
 Setting up the User Interface (UI)
 ==================================
 
@@ -132,8 +133,7 @@ Continuing with our application, here is the View definition. ::
             width=800,
             height=800,
         )
-    
-    
+
 Views generally contain Item objects and named parameters.  Views can
 also contain Groups of Items as well as many other types of layout
 features not covered here.  By default, Item objects take a string of
@@ -152,10 +152,9 @@ change the size of the window.  And third, the traits are split up so
 3 of them are displayed below the first plot and only 1 is displayed
 below the second.  Here is a snapshot of what our application will
 display.  The plots are empty because we have yet to populate the data
-traits
+traits or intialize the plot traits.
 
 .. image:: images/tutorial_hyetograph_nodata.png
-
 
 
 Performing the Hyetograph Calculations
@@ -164,25 +163,46 @@ Performing the Hyetograph Calculations
 The UI for the application is complete, however there is no data.
 Changing the traits within the GUI by moving the sliders and typing in
 numbers does nothing because they're hooked up to nothing and there
-are no listeners on the trait event notifications.  So, next we'll
-add some hyetograph calculations that modify the intensity and nrcs
-Array traits. ::
+are no listeners on the trait event notifications.  First, we need to actually
+set up the plots by defining methods to provide their defaults.
+
+::
+
+    def _intensity_plot_default(self):
+        intensity_plot = Plot(ArrayPlotData(x=self.timeline, y=self.intensity))
+        intensity_plot.x_axis.title = "Time (hr)"
+        intensity_plot.y_axis.title = "Intensity (in/hr)"
+        intensity_plot.plot(
+            ("x", "y"), type=self.plot_type, name=self.plot_type, color="blue"
+        )
+        return intensity_plot
+
+    def _nrcs_plot_default(self):
+        nrcs_plot = Plot(ArrayPlotData(x=self.timeline, y=self.nrcs))
+        nrcs_plot.x_axis.title = "Time"
+        nrcs_plot.y_axis.title = "Intensity"
+        nrcs_plot.plot(
+            ("x", "y"), type=self.plot_type, name=self.plot_type, color="blue"
+        )
+        return nrcs_plot
+
+Here we have created an :class:`ArrayPlotData` instance to hold the data to be
+plotted and use that to create a :class:`Plot` instance. We configure some
+properties of the plot, and finally call the :meth:`plot` method to create the
+appropriate renderer for the plot. However, at this point we still have not
+actually specified any valuees for the data. So, we'll add some hyetograph
+calculations that modify the :attr:`intensity` and :attr:`nrcs` Array traits.
+
+::
 
     def calculate_intensity(self):
         """ The Hyetograph calculations. """
         # Assigning A, B, and C values based on year, storm, and county
-        counties = {'Brazos': 0, 'Dallas': 3, 'El Paso': 6, 'Harris': 9}
-        years = {
-            2 : [65, 8, .806, 54, 8.3, .791, 24, 9.5, .797, 68, 7.9, .800],
-            10: [80, 8.5, .763, 78, 8.7, .777, 42, 12., .795,81, 7.7, .753],
-            25: [89, 8.5, .754, 90, 8.7, .774, 60, 12.,.843, 81, 7.7, .724],
-            100: [96, 8., .730, 106, 8.3, .762, 65, 9.5, .825, 91, 7.9, .706]
-        }
-        year = years[self.year_storm]
-        value = counties[self.county]
+        year = YEARS[self.year_storm]
+        value = COUNTIES[self.county]
         a, b, c = year[value], year[value+1], year[value+2]
-        
-        self.timeline=range(2, self.duration + 1, 2)
+
+        self.timeline=[i for i in range(2, self.duration + 1, 2)]
         intensity=a / (self.timeline * 60 + b)**c
         cumulative_depth=intensity * self.timeline
 
@@ -206,7 +226,6 @@ Array traits. ::
         e.reverse()
         result = o + e
         self.intensity = result
-        
 
     def calculate_runoff(self):
         """ NRCS method to get run-off based on permeability of ground. """ 
@@ -221,9 +240,9 @@ Array traits. ::
 
 
 In the calculation functions, the traits are treated just like normal
-class attributes.  Behind the scenes, Traits will automatically cast
+attributes.  Behind the scenes, Traits will automatically cast
 compatible types such as ints to Floats, but will raise an exception
-if the user tries to pass a string to an Dict trait.
+if, for example, the user tries to pass a string to a Dict trait.
 
 
 Recalculating when event notification occurs
@@ -237,22 +256,51 @@ specific convention.  Alternatively, a dynamic handler is set up by
 calling a function at runtime, providing for on-the-fly event
 processing.  Below is a function that calls the two calculation
 functions.  The interesting line is the decorator,
-``@on_trait_change`` that tells Traits to call the function whenever
+``@observe`` that tells Traits to call the function whenever
 any of the values within the list of traits change. ::
 
     @observe('duration, year_storm, county, curve_number')
-    def _perform_calculations(self):
+    def _perform_calculations(self, event=None):
         self.calculate_intensity()
         self.calculate_runoff()
+        self.intensity_plot.data.set_data("y", self.intensity)
+        self.nrcs_plot.data.set_data("y", self.nrcs)
 
-So now when the application is run, when the ``duration`` trait is
-changed or any of the four listed traits change, the calculation
-functions are automatically called and the data changes.  And these
-traits will automatically change when the user adjusts the widgets
-in the UI.  So when the user changes the ``duration`` in the UI
-from 12 hours to 24 hours this will automatically effect both of
-the plots since the listeners force a recalculation of both of the
-functions.
+So now when the application is run, when any of the four listed traits change,
+the calculation functions are automatically called and the data changes. Then
+the 2 plots will be updated to use this newe data. These traits will
+automatically change when the user adjusts the widgets in the UI.  So when the
+user changes the :attr:`duration` in the UI from 12 hours to 24 hours this will
+automatically effect both of the plots since the listeners force a
+recalculation of both of the functions.
+
+Furthermore, we also want the user to be able to select a :attr:`plot_type`
+and have the plots update accordingly.  To do so, we need to define a seperate
+method to make this adjustment that listens to the :attr:`plot_type` trait.
+The code for this is as follows:
+
+::
+
+    @observe("plot_type")
+    def _update_polt_type(self, event):
+        old_plot_type, new_plot_type = event.old, event.new
+
+        self.intensity_plot.delplot(old_plot_type)
+        self.nrcs_plot.delplot(old_plot_type)
+        self.intensity_plot.plot(
+            ("x", "y"), type=new_plot_type, name=new_plot_type, color="blue"
+        )
+        self.nrcs_plot.plot(
+            ("x", "y"), type=new_plot_type, name=new_plot_type, color="blue"
+        )
+        self.intensity_plot.invalidate_and_redraw()
+        self.nrcs_plot.invalidate_and_redraw()
+
+Previously when creating plot renderers for our plots, we assigned their names
+to simply match the :attr:`plot_type` trait.  This way, here we can easily
+delete the old plot and then simply create a new on of the correct type.
+Finally, we call :meth:`invalidaate_and_redraw` on the plots to ensur the UI
+gets refreshed. 
 
 
 Showing the Display
@@ -285,137 +333,8 @@ Congratulations!
 Source Code
 ===========
 
-The final version of the program, `hyetograph.py`. ::
+The final version of the program,
+`hyetograph.py <https://github.com/enthought/chaco/blob/master/examples/demo/hyetograph.py>`_. 
 
-    from traits.api import (
-        HasTraits,
-        Int,
-        Range,
-        Array,
-        Enum,
-        on_trait_change,
-    )
-    from traitsui.api import View, Item
-    from chaco.chaco_plot_editor import ChacoPlotItem
-
-    COUNTIES = {'Brazos': 0, 'Dallas': 3, 'El Paso': 6, 'Harris': 9}
-    YEARS = {
-        2 : [65, 8, .806, 54, 8.3, .791, 24, 9.5, .797, 68, 7.9, .800],
-        10: [80, 8.5, .763, 78, 8.7, .777, 42, 12., .795,81, 7.7, .753],
-        25: [89, 8.5, .754, 90, 8.7, .774, 60, 12.,.843, 81, 7.7, .724],
-        100: [96, 8., .730, 106, 8.3, .762, 65, 9.5, .825, 91, 7.9, .706]
-    }
-
-    class Hyetograph(HasTraits):
-        """ Creates a simple hyetograph demo. """
-
-        timeline = Array
-
-        intensity = Array
-
-        nrcs = Array
-
-        duration = Int(12, desc='In Hours')
-
-        year_storm = Enum(2, 10, 25, 100)
-
-        county = Enum('Brazos', 'Dallas', 'El Paso', 'Harris')
-
-        curve_number = Range(70, 100)
-
-        plot_type = Enum('line', 'scatter')
-
-        view1 = View(
-            Item('plot_type'),
-            ChacoPlotItem(
-                'timeline',
-                'intensity',
-                type_trait='plot_type',
-                resizable=True,
-                x_label='Time (hr)',
-                y_label='Intensity (in/hr)',
-                color='blue',
-                bgcolor='white',
-                border_visible=True,
-                border_width=1,
-                padding_bg_color='lightgray',
-            ),
-            Item(name='duration'),
-            Item(name='year_storm'),
-            Item(name='county'),
-            # After infiltration using the nrcs curve number method.
-            ChacoPlotItem(
-                'timeline',
-                'nrcs',
-                type_trait='plot_type',
-                resizable=True,
-                x_label='Time',
-                y_label='Intensity',
-                color='blue',
-                bgcolor='white',
-                border_visible=True,
-                border_width=1,
-                padding_bg_color='lightgray',
-            ),
-            Item('curve_number'),
-            resizable=True,
-            width=800,
-            height=800,
-        )
-
-        def calculate_intensity(self):
-            """ The Hyetograph calculations. """
-            # Assigning A, B, and C values based on year, storm, and county
-            year = YEARS[self.year_storm]
-            value = COUNTIES[self.county]
-            a, b, c = year[value], year[value+1], year[value+2]
-
-            self.timeline=range(2, self.duration + 1, 2)
-            intensity=a / (self.timeline * 60 + b)**c
-            cumulative_depth=intensity * self.timeline
-
-            temp=cumulative_depth[0]
-            result=[]
-            for i in cumulative_depth[1:]:
-                result.append(i-temp)
-                temp=i
-            result.insert(0,cumulative_depth[0])
-
-            # Alternating block method implementation. 
-            result.reverse()
-            switch = True
-            o, e = [], []
-            for i in result:
-                if switch:
-                    o.append(i)
-                else:
-                    e.append(i)
-                switch = not switch
-            e.reverse()
-            result = o + e
-            self.intensity = result
-
-        def calculate_runoff(self):
-            """ NRCS method to get run-off based on permeability of ground. """ 
-            s = (1000 / self.curve_number) - 10
-            a = self.intensity - (.2 * s)
-            vr = a**2 / (self.intensity + (.8 * s))
-            # There's no such thing as negative run-off.
-            for i in range(0, len(a)):
-                if a[i] <= 0:
-                    vr[i] = 0   
-            self.nrcs = vr
-
-        @on_trait_change('duration, year_storm, county, curve_number')
-        def _perform_calculations(self):
-            self.calculate_intensity()
-            self.calculate_runoff()
-
-        def start(self):
-            self._perform_calculations()
-            self.configure_traits()
-
-
-    if __name__ == "__main__":
-        hyetograph=Hyetograph()
-        hyetograph.start()
+.. literalinclude:: /../../examples/demo/hyetograph.py
+   :language: python

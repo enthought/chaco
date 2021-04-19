@@ -122,6 +122,8 @@ class Hyetograph(HasTraits):
         self.nrcs_plot.plot(
             ("x", "y"), type=new_plot_type, name=new_plot_type, color="blue"
         )
+        self.intensity_plot.invalidate_and_redraw()
+        self.nrcs_plot.invalidate_and_redraw()
 
     
 
