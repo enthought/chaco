@@ -9,11 +9,6 @@
 #################################################################################
 import warnings
 
-warnings.warn(
-    "PlotFrames are deprecated.  There is no need to use them any more. ",
-    DeprecationWarning
-)
-
 # Enthought library imports
 from traits.api import Bool
 
@@ -53,6 +48,10 @@ class SimplePlotFrame(BasePlotFrame):
     _layout_needed = Bool(True, transient=True)
 
     def __init__(self, **kwtraits):
+        warnings.warn(
+            "PlotFrames are deprecated.  There is no need to use them any more. ",
+            DeprecationWarning
+        )
         # Delay setting the bounds until after base class initialization
         bounds = kwtraits.pop("bounds", list(self.default_bounds))
 

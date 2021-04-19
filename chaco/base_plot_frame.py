@@ -9,11 +9,6 @@
 #################################################################################
 import warnings
 
-warnings.warn(
-    "PlotFrames are deprecated.  There is no need to use them any more. ",
-    DeprecationWarning
-)
-
 # Enthought library imports
 from enable.api import Container
 from traits.api import Enum
@@ -50,6 +45,10 @@ class BasePlotFrame(Container, PlotComponent):
     draw_order = DEFAULT_DRAWING_ORDER
 
     def __init__(self, **kw):
+        warnings.warn(
+            "PlotFrames are deprecated.  There is no need to use them any more. ",
+            DeprecationWarning
+        )
         self._frame_slots = {}
         super(BasePlotFrame, self).__init__(**kw)
 
