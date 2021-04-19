@@ -56,7 +56,8 @@ class CrossPlotFrame(BasePlotFrame):
     def __init__(self, **kwtraits):
         warnings.warn(
             "PlotFrames are deprecated.  There is no need to use them any more. ",
-            DeprecationWarning
+            DeprecationWarning,
+            stacklevel=2
         )
 
         bounds = kwtraits.pop("bounds", list(self.default_bounds))

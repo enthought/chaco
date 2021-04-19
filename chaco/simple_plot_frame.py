@@ -50,7 +50,8 @@ class SimplePlotFrame(BasePlotFrame):
     def __init__(self, **kwtraits):
         warnings.warn(
             "PlotFrames are deprecated.  There is no need to use them any more. ",
-            DeprecationWarning
+            DeprecationWarning,
+            stacklevel=2
         )
         # Delay setting the bounds until after base class initialization
         bounds = kwtraits.pop("bounds", list(self.default_bounds))

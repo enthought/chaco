@@ -47,7 +47,8 @@ class BasePlotFrame(Container, PlotComponent):
     def __init__(self, **kw):
         warnings.warn(
             "PlotFrames are deprecated.  There is no need to use them any more. ",
-            DeprecationWarning
+            DeprecationWarning,
+            stacklevel=2
         )
         self._frame_slots = {}
         super(BasePlotFrame, self).__init__(**kw)
