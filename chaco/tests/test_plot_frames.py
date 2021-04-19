@@ -1,6 +1,5 @@
 """ Test for the deprecation of PlotFrames """
 import unittest
-import warnings
 
 from chaco.api import BasePlotFrame, CrossPlotFrame, SimplePlotFrame
 
