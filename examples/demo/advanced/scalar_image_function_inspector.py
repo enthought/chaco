@@ -15,7 +15,6 @@ Animation must be disabled (unchecked) before the model can be edited.
 import random
 
 # Major library imports
-import click
 from numpy import array, linspace, meshgrid, nanmin, nanmax, pi, errstate
 
 # Enthought library imports
@@ -635,26 +634,5 @@ def show_plot(**kwargs):
     modelview.configure_traits()
 
 
-@click.command()
-@click.option(
-    "-c", "--colormap", default="viridis", help="choose a default colormapper"
-)
-@click.option(
-    "-n", "--nlevels", default=15, help="number countour levels to plot"
-)
-@click.option(
-    "-f",
-    "--function",
-    default="tanh(x**2+y)*cos(y)*jn(0,x+y*2)",
-    help="function of x and y"
-)
-def main(colormap, nlevels, function):
-    show_plot(
-        colormap=colormap,
-        num_levels=nlevels,
-        function=function,
-    )
-
-
 if __name__ == "__main__":
-    main()
+    show_plot()
