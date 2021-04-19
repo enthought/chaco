@@ -27,7 +27,7 @@ the soil) a plot shows the intensity vs. time hyetograph plots.
 Importing the necessary functions
 =================================
 
-In This example we will be using numpy, traits, traitsui, and chaco.
+In this example we will be using numpy, traits, traitsui, and chaco.
 The following code snippet imports all the names that will be used for our
 application. ::
 
@@ -53,17 +53,18 @@ inheritance allows for mixing HasTraits objects with other class
 hierarchies if needed.
 
 Within this class we define all the variables using Traits types
-which will later be used in the UI.  These traits are set to equal
-their type similar to many typed languages. ::
+which will later be used in the UI.
+
+::
 
     class Hyetograph(HasTraits):
         """ Creates a simple hyetograph demo. """
 
         timeline = Array()
 
-        intensity = Array
+        intensity = Array()
 
-        nrcs = Array
+        nrcs = Array()
 
         duration = Int(12, desc='In Hours')
 
@@ -77,33 +78,35 @@ their type similar to many typed languages. ::
     
 The above code snippet shows a number of Traits features,
 
-1. The naming convention with traits is that types are capitalized.
+1. Traits are explicitly typed.
 
-2. An Array is an array, an Int is an integer, an Enum is a single
+2. The naming convention with traits is that types are capitalized.
+
+3. An Array is an array, an Int is an integer, an Enum is a single
    value from a list of options, and a Range is a value between
    two numbers.
 
-3. All traits get a default value, such as whats done in the
+4. All traits get a default value, such as whats done in the
    Arrays, or they can be assigned an initial value as is done in
    the duration trait.
 
-4. Descriptions can be added to traits, such as is done in
+5. Descriptions can be added to traits, such as is done in
    duration.  This description is not visible except when viewing
    the trait in a TraitsUI view, and then the description is seen
    when the mouse hovers over the variable.
 
-5. Traits are always contained within the class definition, and
+6. Traits are always contained within the class definition, and
    each instance of the class will have a unique copy of the traits.
 
-The Traits API Reference contains more information about the standard
-Trait types; see the :mod:`trait_types` module in the `Traits API Reference 
-<http://docs.enthought.com/traits/traits_api_reference/trait_types.html>`_.
-
+The `Traits API Reference 
+<http://docs.enthought.com/traits/traits_api_reference/trait_types.html>`_
+contains more information about the standard Trait types; specifically, see the
+:mod:`trait_types` module.
 
 Setting up the User Interface (UI)
 ==================================
 
-HasTraits classes will automatically generate a view that contains an
+:class:`HasTraits` classes will automatically generate a view that contains an
 editable entry for each trait within the class.  But a user-defined
 view usually looks better, so we'll use View and Items to change the
 default class view.  Changing the default UI is done by creating a
@@ -117,40 +120,15 @@ Continuing with our application, here is the View definition. ::
 
         ...
 
-        view = View(
+        traits_view = View(
             Item('plot_type'),
-            ChacoPlotItem(
-                'timeline',
-                'intensity',
-                type_trait='plot_type',
-                resizable=True,
-                x_label='Time (hr)',
-                y_label='Intensity (in/hr)',
-                color='blue',
-                bgcolor='white',
-                border_visible=True,
-                border_width=1,
-                padding_bg_color='lightgray'
-            ),
+            Item("intensity_plot", editor=ComponentEditor()),
             Item(name='duration'),
             Item(name='year_storm'),
             Item(name='county'),
-            # After infiltration using the nrcs curve number method.
-            ChacoPlotItem(
-                'timeline',
-                'nrcs',
-                type_trait='plot_type',
-                resizable=True,
-                x_label='Time',
-                y_label='Intensity',
-                color='blue',
-                bgcolor='white',
-                border_visible=True,
-                border_width=1,
-                padding_bg_color='lightgray'
-            ),
+            Item("nrcs_plot", editor=ComponentEditor()),
             Item('curve_number'),
-            resizable = True,
+            resizable=True,
             width=800,
             height=800,
         )
@@ -165,9 +143,10 @@ the user can select from.
 
 
 There are three important observations to be seen in the above view
-definition.  First, there are two Chaco plot items embedded in the
-view.  The top plot is the intensity versus time and the bottom is
-nrcs versus time.  Second, default window will be sized at 800 by 800
+definition.  First, there are two Chaco plots embedded in the
+view.  This is done by explicitly specifying the Item's editor to be a
+:class:`ComponentEditor`. The top plot is the intensity versus time and the
+bottom is nrcs versus time. Second, default window will be sized at 800 by 800
 pixels, but the option ``resizable = True`` will allow the user to
 change the size of the window.  And third, the traits are split up so
 3 of them are displayed below the first plot and only 1 is displayed
