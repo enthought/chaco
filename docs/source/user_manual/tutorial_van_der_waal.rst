@@ -9,7 +9,7 @@ Modeling Van der Waal's Equation With Chaco and Traits
 Overview
 ========
 
-Here, we will walk through the creation of an example program that plots a
+In this example we will walk through the creation of a program that plots a
 scientific equation.  In particular, we will model `Van der Waal's Equation
 <http://en.wikipedia.org/wiki/Van_der_Waals_equation>`_, which is a
 modification to the ideal gas law that takes into account the nonzero size of
@@ -76,12 +76,14 @@ This View contains all of the GUI elements, including the plot. To
 link a variable with a widget element on the GUI, we create a Traits
 :class:`Item` instance with the same name as the variable and pass it as an
 argument of the Traits :class:`View` instance declaration. The
-`TraitsUI User Guide <https://docs.enthought.com/traitsui>`_
+`TraitsUI User Manual <https://docs.enthought.com/traitsui/traitsui_user_manual/index.html>`_
 discusses the :class:`View` and :class:`Item` objects in depth. 
 
 In order to embed a Chaco plot into a Traits View, we can do exactly the same,
 only we must explicitly specify the editor of that :class:`Item` to be a
-:class:`~enable.component_editor.ComponentEditor`::
+:class:`~enable.component_editor.ComponentEditor`.
+
+::
 
     class Data(HasTraits):
         ...
@@ -115,7 +117,7 @@ display. To do so, we define a method to construct the default value for
 object, and then create a :class:`Plot` instance using that data. We then
 configure some properties of the plot before finally calling the :meth:`plot`
 method to create a plot renderer for the plot. When doing so we specify the
-type of the plot to create based of the value of the :attr:`plot_type` trait,
+type of plot to create based of the value of the :attr:`plot_type` trait,
 and we also use this trait as the name of our plot.  This name will show up
 again later.
 
@@ -131,6 +133,7 @@ again later.
             plot.x_axis.title = "Volume"
             plot.y_axis.title = "Pressure"
             plot.range2d.set_bounds((-10, -2000), (120, 4000))
+            plot.padding_left = 80
 
             plot.plot(
                 ("x", "y"), type=self.plot_type, name=self.plot_type, color="blue"
@@ -144,8 +147,8 @@ Updating the Plot
 =================
 
 The power of Traits and Chaco enables the plot to update itself
-whenever the X- or Y-arrays are changed. Currently our plot is stuck as the
-default defined above and will not react to changes yet. So, we need a function
+whenever the X- or Y-arrays are changed. Currently, our plot is stuck as the
+default defined above and will not react to changes. So, we need a function
 to re-calculate the X- and Y-coordinate lists whenever the input
 parameters are changed by the user moving the sliders in the GUI.
 
@@ -160,7 +163,7 @@ from the equation found on the wiki page, is::
 
 Next, there are two programing tasks to complete:
 
-1. Define trait listener methods for your input parameters. These
+1. Define trait listener method(s) for your input parameters. These
    methods are automatically called whenever the parameters are
    changed, since it will be time to recalculate the :attr:`pressure` array.
 
@@ -183,14 +186,14 @@ The following is the code for these two needs::
         self.plot.data.set_data("y", self.pressure)
 
 The :func:`calc` function computes the :attr:`pressure` array using the current
-values of the independent variables. It then updates the ``data`` of our
-``plot`` to use the newly computed values.  Meanwhile, the
+values of the independent variables. It then updates the :attr:`data` of our
+:attr:`plot` to use the newly computed values.  Meanwhile, the
 :func:`@observe` decorator (provided by Traits) tells Python to call
 :func:`calc` whenever any of the attributes :attr:`attraction`,
 :attr:`tot_volume`, or :attr:`temperature` changes.
 
 In addition to reacting to changes in the input parameters, we also want our
-plot to change based on the user selected ``plot_type``.  To do this, we can
+plot to change based on the user selected :attr:`plot_type`.  To do this, we can
 define a separate listener as follows::
 
     @observe("plot_type")
@@ -202,10 +205,10 @@ define a separate listener as follows::
             ("x", "y"), type=new_plot_type, name=new_plot_type, color="blue"
         )
 
-Here we are listening for changes in the ``plot_type`` trait.  When it changes,
-we delete the old plot and create a new plot using the new ``plot_type``. The
-``name`` of the plot is how we specify a plot to delete, hence our previous
-reuse of the ``plot_type`` as the name.
+Here we are listening for changes in the :attr:`plot_type` trait.  When it changes,
+we delete the old plot and create a new plot using the new :attr:`plot_type`. The
+:attr:`name` of the plot is how we specify a plot to delete, hence our previous
+reuse of the :attr:`plot_type` as the name.
 
 
 Testing your Program
@@ -248,11 +251,11 @@ single array that needs to be updated when the independent variables
 change. So, instead of defining :attr:`pressure` as an :class:`Array`, we define
 it as a :class:`Property`. Property is a Traits type that allows you to define
 a variable whose value is recalculated whenever it is requested. In
-addition, when the *observe* argument of a Property constructor is
+addition, when the **observe** argument of a Property constructor is
 set to list of traits in your :class:`HasTraits` class, the property's trait
 events fire whenever any of the dependent trait's change events
 fire. This means that the :attr:`pressure` attribute fires a trait change
-whenever our *observe* traits are changed. Meanwhile, we can set up the Chaco
+whenever our **observe** traits are changed. Meanwhile, we can set up the Chaco
 plot to automatically listen to the :attr:`pressure` attribute, so the plot
 display gets the new value of :attr:`pressure` whenever someone changes
 the input parameters!
@@ -277,7 +280,7 @@ For the new implementation, these are the necessary changes:
 3. Define the :samp:`\_{trait}_default` method to set the initial value of
    the X-coordinate array, so :meth:`\_get_pressure` does not have to keep
    recalculating it.
-4. Set up a listener to update the plot whenever the ``pressure`` trait
+4. Set up a listener to update the plot whenever the :attr:`pressure` trait
    changes.
 5. Remove the previous :func:`@observe` decorator and calculation
    method.
@@ -358,6 +361,7 @@ The final version on the program, `vanderwaals.py` ::
             plot.x_axis.title = "Volume"
             plot.y_axis.title = "Pressure"
             plot.range2d.set_bounds((-10, -2000), (120, 4000))
+            plot.padding_left = 80
 
             plot.plot(
                 ("x", "y"), type=self.plot_type, name=self.plot_type, color="blue"

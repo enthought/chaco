@@ -44,6 +44,7 @@ class Data(HasTraits):
         plot.x_axis.title = "Volume"
         plot.y_axis.title = "Pressure"
         plot.range2d.set_bounds((-10, -2000), (120, 4000))
+        plot.padding_left = 80
 
         plot.plot(
             ("x", "y"), type=self.plot_type, name=self.plot_type, color="blue"
