@@ -29,11 +29,15 @@ Importing the necessary functions
 
 In this example we will be using numpy, traits, traitsui, and chaco.
 The following code snippet imports all the names that will be used for our
-application. ::
+application, and defines our tiny database of coefficients.
 
+::
+
+    from chaco.api import ArrayPlotData, Plot
     from enable.api import ComponentEditor
     from traits.api import (
         HasTraits,
+        Instance,
         Int,
         Range,
         Array,
@@ -41,6 +45,14 @@ application. ::
         observe,
     )
     from traitsui.api import Item, UItem, View
+
+    COUNTIES = {'Brazos': 0, 'Dallas': 3, 'El Paso': 6, 'Harris': 9}
+    YEARS = {
+        2 : [65, 8, .806, 54, 8.3, .791, 24, 9.5, .797, 68, 7.9, .800],
+        10: [80, 8.5, .763, 78, 8.7, .777, 42, 12., .795,81, 7.7, .753],
+        25: [89, 8.5, .754, 90, 8.7, .774, 60, 12.,.843, 81, 7.7, .724],
+        100: [96, 8., .730, 106, 8.3, .762, 65, 9.5, .825, 91, 7.9, .706]
+    }
 
 
 Trait Definitions
@@ -75,6 +87,12 @@ which will later be used in the UI.
         curve_number = Range(70, 100)
 
         plot_type = Enum('line', 'scatter')
+
+        intensity_plot = Instance(Plot)
+
+        nrcs_plot = Instance(Plot)
+
+        ...
     
 The above code snippet shows a number of Traits features,
 
@@ -143,7 +161,7 @@ the user can select from.
 
 
 There are three important observations to be seen in the above view
-definition.  First, there are two Chaco plots embedded in the
+definition. First, there are two Chaco plots embedded in the
 view.  This is done by explicitly specifying the Item's editor to be a
 :class:`ComponentEditor`. The top plot is the intensity versus time and the
 bottom is nrcs versus time. Second, default window will be sized at 800 by 800
@@ -187,10 +205,10 @@ set up the plots by defining methods to provide their defaults.
         return nrcs_plot
 
 Here we have created an :class:`ArrayPlotData` instance to hold the data to be
-plotted and use that to create a :class:`Plot` instance. We configure some
+plotted and we use that to create a :class:`Plot` instance. We configure some
 properties of the plot, and finally call the :meth:`plot` method to create the
 appropriate renderer for the plot. However, at this point we still have not
-actually specified any valuees for the data. So, we'll add some hyetograph
+actually specified any values for the data. So, we'll add some hyetograph
 calculations that modify the :attr:`intensity` and :attr:`nrcs` Array traits.
 
 ::
@@ -268,7 +286,7 @@ any of the values within the list of traits change. ::
 
 So now when the application is run, when any of the four listed traits change,
 the calculation functions are automatically called and the data changes. Then
-the 2 plots will be updated to use this newe data. These traits will
+the 2 plots will be updated to use this new data. These traits will
 automatically change when the user adjusts the widgets in the UI.  So when the
 user changes the :attr:`duration` in the UI from 12 hours to 24 hours this will
 automatically effect both of the plots since the listeners force a
@@ -297,17 +315,16 @@ The code for this is as follows:
         self.nrcs_plot.invalidate_and_redraw()
 
 Previously when creating plot renderers for our plots, we assigned their names
-to simply match the :attr:`plot_type` trait.  This way, here we can easily
-delete the old plot and then simply create a new on of the correct type.
-Finally, we call :meth:`invalidaate_and_redraw` on the plots to ensur the UI
-gets refreshed. 
+to simply match the :attr:`plot_type` trait.  This way we can easily
+delete the old plot and then create a new on of the correct type. Finally, we
+call :meth:`invalidate_and_redraw` on the plots to ensur the UI gets refreshed. 
 
 
 Showing the Display
 ===================
 
 In order to start the GUI application an instance of the class must be
-instantiated, and then a configure_traits() call is done.  However we
+instantiated, and then a :meth:`configure_traits` call is done.  However we
 must first call the data calculation functions from within the class
 to initialize the data arrays.  Here's the last piece of the program. ::
 
@@ -320,7 +337,7 @@ to initialize the data arrays.  Here's the last piece of the program. ::
         hyetograph=Hyetograph()
         hyetograph.start()
 
-start() performs the calculations needed for the Arrays used to plot,
+:meth:`start` performs the calculations needed for the Arrays used to plot,
 and then triggers the UI.  The application is complete, and if you now
 run the program, you should get a running application that resembles
 the following image,
