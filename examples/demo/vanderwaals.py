@@ -1,7 +1,10 @@
 """
 Example application for exploring Van der Waal's Equation
 """
+import numpy as np
 
+from chaco.api import ArrayPlotData, Plot
+from enable.api import ComponentEditor
 from traits.api import (
     Array,
     Enum,
@@ -13,9 +16,6 @@ from traits.api import (
     Range,
 )
 from traitsui.api import Item, UItem, View
-from chaco.api import ArrayPlotData, Plot
-from enable.api import ComponentEditor
-from numpy import arange
 
 
 class Data(HasTraits):
@@ -55,7 +55,7 @@ class Data(HasTraits):
 
     def _volume_default(self):
         """ Default handler for volume Trait Array. """
-        return arange(.1, 100)
+        return np.arange(.1, 100)
 
     def _get_pressure(self):
         """Recalculate when a trait the property observes changes."""
@@ -76,6 +76,7 @@ class Data(HasTraits):
         self.plot.plot(
             ("x", "y"), type=new_plot_type, name=new_plot_type, color="blue"
         )
+        self.plot.invalidate_and_redraw()
 
     traits_view = View(
         UItem(
