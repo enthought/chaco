@@ -13,6 +13,7 @@ class VariableSizeScatterPlot(ScatterPlot):
         warnings.warn(
             "VariableSizeScatterPlot has been deprecated. Use the base "
             "ScatterPlot class which now accepts variable sized markers",
-            DeprecationWarning
+            DeprecationWarning,
+            stacklevel=2
         )
         super(VariableSizeScatterPlot, self).__init__(*args, **kwargs)
