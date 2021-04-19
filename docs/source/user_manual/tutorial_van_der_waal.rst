@@ -41,12 +41,13 @@ list, since it is defined as an Enum.
         Instance,
         observe,
         Property,
-        Range,   
+        Range,
     )
     from traitsui.api import Item, UItem, View
     from chaco.api import ArrayPlotData, Plot
     from enable.api import ComponentEditor
     from numpy import arange
+
 
     class Data(HasTraits):
 
@@ -60,7 +61,7 @@ list, since it is defined as an Enum.
 
         temperature = Range(low=-50.0, high=50.0, value=50.0)
 
-        r_constant= Float(8.314472)
+        r_constant = Float(8.314472)
 
         plot_type = Enum("line", "scatter")
 
@@ -302,7 +303,7 @@ The new pieces of code to add to the Data class are::
             """Recalculate when a trait the property observes changes."""
             return (
                 (self.r_constant*self.temperature)/(self.volume - self.tot_volume)
-                -self.attraction/(self.volume*self.volume)
+                - self.attraction/(self.volume*self.volume)
             )
 
         @observe("pressure")
@@ -410,7 +411,7 @@ The final version on the program, `vanderwaals.py` ::
             """Recalculate when one a trait the property depends on changes."""
             return (
                 (self.r_constant*self.temperature)/(self.volume - self.tot_volume)
-                -self.attraction/(self.volume*self.volume)
+                - self.attraction/(self.volume*self.volume)
             )
 
 

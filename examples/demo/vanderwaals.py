@@ -10,12 +10,13 @@ from traits.api import (
     Instance,
     observe,
     Property,
-    Range,   
+    Range,
 )
 from traitsui.api import Item, UItem, View
 from chaco.api import ArrayPlotData, Plot
 from enable.api import ComponentEditor
 from numpy import arange
+
 
 class Data(HasTraits):
 
@@ -31,7 +32,7 @@ class Data(HasTraits):
 
     temperature = Range(low=-50.0, high=50.0, value=50.0)
 
-    r_constant= Float(8.314472)
+    r_constant = Float(8.314472)
 
     plot_type = Enum("line", "scatter")
 
@@ -60,7 +61,7 @@ class Data(HasTraits):
         """Recalculate when a trait the property observes changes."""
         return (
             (self.r_constant*self.temperature)/(self.volume - self.tot_volume)
-            -self.attraction/(self.volume*self.volume)
+            - self.attraction/(self.volume*self.volume)
         )
 
     @observe("pressure")
