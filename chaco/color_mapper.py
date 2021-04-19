@@ -422,44 +422,6 @@ class ColorMapper(AbstractColormap):
         lut = lut.clip(0, 1)
         return lut
 
-    #### matplotlib ####
-    def _map(self, X):
-        """Maps from a scalar or an array to an RGBA value or array.
-
-        The *X* parameter is either a scalar or an array (of any dimension).
-        If it is scalar, the function returns a tuple of RGBA values; otherwise
-        it returns an array with the new shape = oldshape+(4,).  Any values
-        that are outside the 0,1 interval are clipped to that interval before
-        generating RGB values.
-
-        This is no longer used in this class. It has been deprecated and
-        retained for API compatibility.
-
-        """
-
-        if type(X) in [int, float]:
-            vtype = "scalar"
-            xa = array([X])
-        else:
-            vtype = "array"
-            xa = asarray(X)
-
-        # assume the data is properly normalized
-        # xa = where(xa>1.,1.,xa)
-        # xa = where(xa<0.,0.,xa)
-
-        nanmask = isnan(xa)
-        xa = where(nanmask, 0, (xa * (self.steps - 1)).astype(int))
-        rgba = zeros(xa.shape + (4,), float)
-        rgba[..., 0] = where(nanmask, 0, take(self._red_lut, xa))
-        rgba[..., 1] = where(nanmask, 0, take(self._green_lut, xa))
-        rgba[..., 2] = where(nanmask, 0, take(self._blue_lut, xa))
-        rgba[..., 3] = where(nanmask, 0, take(self._alpha_lut, xa))
-        if vtype == "scalar":
-            rgba = tuple(rgba[0, :])
-
-        return rgba
-
     def _range_changed(self, old, new):
         if old is not None:
             old.observe(self._range_change_handler, "updated", remove=True)
