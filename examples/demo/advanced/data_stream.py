@@ -27,7 +27,7 @@ from traits.api import (
     observe,
     Trait,
 )
-from traitsui.api import Group, HGroup,  Item, UItem, View, spring, Handler
+from traitsui.api import Group, HGroup, Item, UItem, View, spring, Handler
 from pyface.timer.api import Timer
 
 # Chaco imports
