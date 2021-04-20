@@ -18,8 +18,8 @@ be used primarily by scientific programmers, and this tutorial requires only
 basic familiarity with Python.
 
 Knowledge of NumPy can be helpful for certain parts of the tutorial. Knowledge
-of GUI programming concepts such as widgets, windows, and events are helpful
-for the last portion of the tutorial, but it is not required.
+of GUI programming concepts such as widgets, windows, and events is helpful,
+but it is not required.
 
 This tutorial demonstrates using Chaco with Traits(UI), so knowledge of the
 `Traits User Manual <http://docs.enthought.com/traits/>`_ framework is also
@@ -100,7 +100,6 @@ drop-down menus (not show here), the user can change plot attributes like the
 colormap and the number of contour levels used in the center plot, as well as
 the actual function being plotted.
 
-
 Script-oriented plotting
 ========================
 
@@ -110,19 +109,19 @@ of how the library is written, as well as the code you write to use the
 library.
 
 Here is a simple example of the "script-oriented" approach for creating
-a static plot.  This is probably familiar to anyone who has used Gnuplot,
-MATLAB, or Matplotlib::
+a static plot for which we use Matplotlib.  This approach will also probably
+look familiar to anyone who has used Gnuplot or MATLAB::
 
     from numpy import linspace, pi, sin
-    from chaco.shell import *
+    import matplotlib.pyplot as plt
 
     x = linspace(-2*pi, 2*pi, 100)
     y = sin(x)
 
-    plot(x, y, "r-")
-    title("First plot")
-    ytitle("sin(x)")
-    show()
+    plt.plot(x, y, "r-")
+    plt.title("First plot")
+    plt.ylabel("sin(x)")
+    plt.show()
 
 This creates this plot:
 
@@ -135,22 +134,19 @@ functions to plot the data and configure the plot. There is a global concept of
 generated plot is then usually saved to disk for inclusion in a journal article
 or presentation slides.
 
-Now, as it so happens, this particular example uses the `chaco.shell`
-script plotting package, so when you run this script, the plot that Chaco opens
-does have some basic interactivity. You can pan and zoom, and even move forwards
-and backwards through your zoom history. But ultimately it's a pretty static
+Now, as it so happens, the plot that opens does have some basic interactivity.
+You can pan, zoom, mess with layout, etc. But ultimately it's a pretty static
 view into the data.
-
 
 .. _line_plot_example:
 
 Application-oriented plotting
 =============================
 
-The second approach to plotting can be thought of as "application-oriented", for
-lack of a better term. There is definitely a bit more code, and the plot
-initially doesn't look much different, but it sets us up to do more interesting
-things, as you will see later on::
+The chaco approach to plotting can be thought of as
+"application-oriented", for lack of a better term. The code may appear a bit
+verbose given the simple plot it generates, but it sets us up to do more
+interesting things, as you will see later on::
 
     from numpy import linspace, sin
     from traits.api import HasTraits, Instance
@@ -183,7 +179,7 @@ things, as you will see later on::
         LinePlot().configure_traits()
 
 
-This produces a plot similar to the previous script-oriented code snippet:
+This produces the following plot:
 
 .. image:: images/first_plot.png
     :height: 300pt
@@ -1301,4 +1297,4 @@ trait editor and reusing an existing tool from the built-in set of tools.
 
 
 *This tutorial is based on the "Interactive plotting with Chaco" tutorial
-that was presented by Peter Wang at Scipy 2008*
+that was presented by Peter Wang at Scipy*

@@ -35,14 +35,12 @@ of several of graphical back ends <embedding>`. Working at this level allows the
 maximum flexibility, but requires understanding
 :ref:`Chaco's basic elements <basic_elements>`.
 
-Chaco defines two abstraction layers that allow a more high-level (albeit
-less flexible) plotting experience. First, Chaco contains a
+Chaco defines an abstraction layer that allows a more high-level (albeit
+less flexible) plotting experience. Namely, Chaco contains a
 :class:`~chaco.plot.Plot` class that defines several methods that create a
 complete plot given one or more data sets. In other words,
 :class:`~chaco.plot.Plot` knows how to package data for the most common kinds
-of plots. Second, Chaco has a :mod:`shell` module that defines high-level
-plotting functions. This module allows using Chaco as an interactive plotting
-tool that will be familiar to users of matplotlib.
+of plots.
 
 .. _basic_elements:
 
