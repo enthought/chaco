@@ -102,7 +102,6 @@ Renderers
 - :class:`~.CandlePlot`
 - :class:`~.MultiLinePlot`
 - :class:`~.JitterPlot`
-- :class:`~.VariableSizeScatterPlot`
 - :class:`~.HorizonPlot`
 - :class:`~.ScatterPlot1D`
 - :class:`~.LineScatterPlot1D`
@@ -346,7 +345,6 @@ from .quiverplot import QuiverPlot
 from .candle_plot import CandlePlot
 from .multi_line_plot import MultiLinePlot
 from .jitterplot import JitterPlot
-from .variable_size_scatterplot import VariableSizeScatterPlot
 from .horizon_plot import HorizonPlot
 from .scatterplot_1d import ScatterPlot1D
 from .line_scatterplot_1d import LineScatterPlot1D

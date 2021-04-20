@@ -1,6 +1,5 @@
 """
 Draws a scatterplot of a set of random points of variable size and color.
- - This uses the non-standard renderer, VariableSizeScatterPlot
  - Left-drag pans the plot.
  - Mousewheel up and down zooms the plot in and out.
  - Pressing "z" brings up the Zoom Box, and you can click-drag a rectangular
