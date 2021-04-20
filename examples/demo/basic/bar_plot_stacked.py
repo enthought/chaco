@@ -16,7 +16,7 @@ from chaco.api import LabelAxis, Plot, ArrayPlotData, ArrayDataSource
 
 class PlotExample(HasTraits):
 
-    plot = Instance(Plot)     
+    plot = Instance(Plot)
 
     def _plot_default(self):
         index = numpy.array([1, 2, 3, 4, 5])
@@ -72,7 +72,7 @@ class PlotExample(HasTraits):
         width=400,
         height=400,
         resizable=True,
-    ) 
+    )
 
 
 demo = PlotExample()

@@ -19,8 +19,8 @@ class ExamplePlotApp(HasTraits):
 
     def _plot_default(self):
         index = numpy.arange(1.0, 10.0, 0.01)
-        series1 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index ** 4)
-        series2 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index ** 3)
+        series1 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index**4)
+        series2 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index**3)
 
         plot_data = ArrayPlotData(index=index)
         plot_data.set_data("series1", series1)

@@ -21,7 +21,7 @@ class MyPlot(HasTraits):
     error_button = Button("Error")
     warn_button = Button("Warning")
     no_problem_button = Button("No problem")
-        
+
     def _plot_default(self):
         index = numpy.array([1, 2, 3, 4, 5])
         data_series = index ** 2
@@ -68,7 +68,7 @@ class MyPlot(HasTraits):
         if self.status_overlay in self.plot.overlays:
             # fade_out will remove the overlay when its done
             self.status_overlay.fade_out()
-    
+
     traits_view = View(
         HGroup(
             UItem("error_button"),

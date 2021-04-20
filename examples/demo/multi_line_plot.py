@@ -60,5 +60,6 @@ class MyPlot(HasTraits):
         resizable=True,
     )
 
+
 my_plot = MyPlot()
 my_plot.configure_traits()
