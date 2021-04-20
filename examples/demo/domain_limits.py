@@ -9,7 +9,7 @@ from chaco.plot import Plot, ArrayPlotData
 from chaco.api import ToolbarPlot
 from chaco.tools.api import PanTool, ZoomTool
 from enable.api import ComponentEditor
-from traits.api import Array, Instance, HasTraits
+from traits.api import Instance, HasTraits
 from traitsui.api import View, Item
 
 
