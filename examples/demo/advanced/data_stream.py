@@ -15,6 +15,7 @@ by the user.
 import numpy as np
 
 # Enthought imports
+from enable.api import ComponentEditor
 from traits.api import (
     Array,
     Callable,
@@ -23,13 +24,14 @@ from traits.api import (
     HasTraits,
     Instance,
     Int,
+    observe,
     Trait,
 )
-from traitsui.api import Group, HGroup, Item, View, spring, Handler
+from traitsui.api import Group, HGroup, Item, UItem, View, spring, Handler
 from pyface.timer.api import Timer
 
 # Chaco imports
-from chaco.chaco_plot_editor import ChacoPlotItem
+from chaco.api import ArrayPlotData, Plot
 
 
 class Viewer(HasTraits):
@@ -38,30 +40,44 @@ class Viewer(HasTraits):
     Chaco plot.
     """
 
-    index = Array
+    index = Array()
 
-    data = Array
+    data = Array()
 
     plot_type = Enum("line", "scatter")
 
-    view = View(
-        ChacoPlotItem(
-            "index",
-            "data",
-            type_trait="plot_type",
-            resizable=True,
-            x_label="Time",
-            y_label="Signal",
-            color="blue",
-            bgcolor="white",
-            border_visible=True,
-            border_width=1,
-            padding_bg_color="lightgray",
-            width=800,
-            height=380,
-            marker_size=2,
-            show_label=False,
-        ),
+    plot = Instance(Plot)
+
+    def _plot_default(self):
+        plot = Plot(ArrayPlotData(x=self.index, y=self.data))
+        plot.x_axis.title = "Time"
+        plot.y_axis.title = "Signal"
+
+        plot.plot(
+            ("x", "y"), type=self.plot_type, name=self.plot_type, color="blue"
+        )
+
+        return plot
+
+    @observe("index,data")
+    def _update_plot_data(self, event):
+        if event.name == "index":
+            self.plot.data.set_data("x", self.index)
+        else:
+            self.plot.data.set_data("y", self.data)
+
+    @observe("plot_type")
+    def _update_plot_type(self, event):
+        old_plot_type, new_plot_type = event.old, event.new
+
+        self.plot.delplot(old_plot_type)
+        self.plot.plot(
+            ("x", "y"), type=new_plot_type, name=new_plot_type, color="blue"
+        )
+        self.plot.invalidate_and_redraw()
+
+    traits_view = View(
+        UItem("plot", editor=ComponentEditor()),
         HGroup(spring, Item("plot_type", style="custom"), spring),
         resizable=True,
         buttons=["OK"],
@@ -117,7 +133,7 @@ class Controller(HasTraits):
         # grab the existing data, truncate it, and append the new point.
         # This isn't the most efficient thing in the world but it works.
         cur_data = self.viewer.data
-        new_data = np.hstack((cur_data[-self.max_num_points + 1 :], [new_val]))
+        new_data = np.hstack((cur_data[-self.max_num_points + 1:], [new_val]))
         new_index = np.arange(
             self.num_ticks - len(new_data) + 1, self.num_ticks + 0.01
         )
