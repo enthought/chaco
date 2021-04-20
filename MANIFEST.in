@@ -12,4 +12,5 @@ include README.rst
 include CHANGES.txt
 include LICENSE.txt
 include image_LICENSE.txt
+include image_LICENSE_PngSuite.txt
 include dev_requirements.txt
