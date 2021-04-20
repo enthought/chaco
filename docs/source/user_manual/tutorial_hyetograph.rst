@@ -60,9 +60,9 @@ Trait Definitions
 
 This application only requires one class that will contain the Traits
 and mathematical calculations together.  Classes that contain Traits
-must inherit from the :class:`HasTraits` class.  Python's multiple
-inheritance allows for mixing HasTraits objects with other class
-hierarchies if needed.
+must inherit from the :class:`HasTraits` class or one of its subclasses.
+Python's multiple inheritance allows for mixing HasTraits objects with other
+class hierarchies if needed.
 
 Within this class we define all the variables using Traits types
 which will later be used in the UI.
