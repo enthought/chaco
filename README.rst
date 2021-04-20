@@ -37,18 +37,18 @@ Features
 
 Prerequisites
 -------------
-Chaco is only supported on Python 2.7.x and Python >= 3.5.
+Chaco is only supported on Python >= 3.6.
 You must have the following libraries installed before building or installing
 Chaco:
 
-* `Numpy <http://pypi.python.org/pypi/numpy>`_
-* `setuptools <http://pypi.python.org/pypi/setuptools>`_
+* `Numpy <https://pypi.python.org/pypi/numpy>`_
+* `setuptools <https://pypi.python.org/pypi/setuptools>`_
 * `Cython <https://cython.org/>`_
 * `enable <https://github.com/enthought/enable>`_
 
 Mailing list
 ------------
 To monitor discussions about Chaco, as well as the rest of the
-`Enthought Tool Suite <http://code.enthought.com/>`_ (Traits, TraitsUI, Chaco,
-Mayavi, ...), please refer to the `ets-users`
+`Enthought Tool Suite <https://docs.enthought.com/ets>`_ (Traits, TraitsUI,
+Chaco, Mayavi, ...), please refer to the `ets-users`
 `google group <https://groups.google.com/forum/#!forum/ets-users>`_ .
