@@ -17,18 +17,6 @@ class ExamplePlotApp(HasTraits):
 
     plot = Instance(Plot)
 
-    traits_view = View(
-        Item(
-            "plot",
-            editor=ComponentEditor(),
-            width=600,
-            height=600,
-            show_label=False,
-        ),
-        resizable=True,
-    )
-
-
     def _plot_default(self):
         index = numpy.arange(1.0, 10.0, 0.01)
         series1 = (100.0 + index) / (100.0 - 20 * index ** 2 + 5.0 * index ** 4)
@@ -50,6 +38,16 @@ class ExamplePlotApp(HasTraits):
 
         return plot
 
+    traits_view = View(
+        Item(
+            "plot",
+            editor=ComponentEditor(),
+            width=600,
+            height=600,
+            show_label=False,
+        ),
+        resizable=True,
+    )
 
 
 demo = ExamplePlotApp()

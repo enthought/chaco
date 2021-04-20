@@ -19,13 +19,6 @@ class MyPlot(HasTraits):
 
     plot = Instance(Plot)
 
-    traits_view = View(
-        UItem("plot", editor=ComponentEditor()),
-        width=700,
-        height=600,
-        resizable=True,
-    )
-
     def _plot_default(self):
         x_index = np.arange(0, 100, 1)
         y_index = np.arange(0, 1000, 10)
@@ -59,6 +52,13 @@ class MyPlot(HasTraits):
         plot.add(mlp)
 
         return plot
+
+    traits_view = View(
+        UItem("plot", editor=ComponentEditor()),
+        width=700,
+        height=600,
+        resizable=True,
+    )
 
 my_plot = MyPlot()
 my_plot.configure_traits()
