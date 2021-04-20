@@ -12,8 +12,8 @@ from .plot_component import DEFAULT_DRAWING_ORDER, PlotComponent
 
 class BasePlotContainer(Container):
     """
-    A container for PlotComponents that conforms to being laid out by
-    PlotFrames.  Serves as the base class for other PlotContainers.
+    A container for PlotComponents.  Serves as the base class for other
+    PlotContainers.
 
     PlotContainers define a layout, i.e., a spatial relationship between
     their contained components.  (BasePlotContainer doesn't define one,

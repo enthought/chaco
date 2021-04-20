@@ -3,25 +3,8 @@ Notes on layout
 
 The process of layout involves setting the size and position of components.
 All plot components must define two methods: layout() and get_preferred_size().
-Frames and Containers are used to actually specify and construct the layout.
-
-Frames are the top-most Enable component that contain all other Chaco components.
-They cannot (or at least *should* not) be nested within on another.  They define
-specific layout formats with hard-coded names (called "slots"), and different
-subclasses of Frames have different fixed layouts.  For instance, the SimplePlotFrame
-consists of a single slot, named "center", that takes up the entire size of the
-frame.  The CrossPlotFrame has a "center" slot as well as "top", "bottom", "left",
-and "right", which define a plus-shaped arrangement.
-
-Containers can be placed within these slots, and other containers can be nested
-within those, so that within each slot, a very flexible layout can be achieved.
-For example, geophysical "log plots" generally consist of a SimplePlotFrame with
-a horizontal plot container (HPlotContainer) in the "center" slot.  Tracks in
-the horizontal container are VPlotContainers, with GeoAxis components stacked
-above a single plot area, which is an OverlayPlotContainer.  (The GeoTrack class
-is actually a subclass of VPlotContainer that automatically create GeoAxis objects
-as GeoPlots are added to the plot area.)
-
+Containers are used to actually specify and construct the layout. Containers
+can be arbitrarily nested, allowing for a very flexible layout.
 
 Layout implementation
 --------------------------------------------------------------------------
