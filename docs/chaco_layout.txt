@@ -3,15 +3,7 @@ Notes on layout
 
 The process of layout involves setting the size and position of components.
 All plot components must define two methods: layout() and get_preferred_size().
-Frames and Containers are used to actually specify and construct the layout.
-
-Frames are the top-most Enable component that contain all other Chaco components.
-They cannot (or at least *should* not) be nested within on another.  They define
-specific layout formats with hard-coded names (called "slots"), and different
-subclasses of Frames have different fixed layouts.  For instance, the SimplePlotFrame
-consists of a single slot, named "center", that takes up the entire size of the
-frame.  The CrossPlotFrame has a "center" slot as well as "top", "bottom", "left",
-and "right", which define a plus-shaped arrangement.
+Containers are used to actually specify and construct the layout.
 
 Containers can be placed within these slots, and other containers can be nested
 within those, so that within each slot, a very flexible layout can be achieved.
@@ -69,8 +61,3 @@ layout():
     value of container.fit_components, either the container shrinks down to
     tightly wrap the area described by the preferred sizes of all the components,
     or the resizable components are stretched to fill the size of the container.
-
-
-
-
-
