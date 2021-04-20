@@ -294,7 +294,7 @@ class ArrayDataSource(AbstractDataSource):
     # ------------------------------------------------------------------------
 
     def __getstate__(self):
-        state = super(ArrayDataSource, self).__getstate__()
+        state = super().__getstate__()
         if not self.persist_data:
             state.pop("_data", None)
             state.pop("_cached_mask", None)
@@ -304,6 +304,6 @@ class ArrayDataSource(AbstractDataSource):
         return state
 
     def _post_load(self):
-        super(ArrayDataSource, self)._post_load()
+        super()._post_load()
         self._cached_bounds = ()
         self._cached_mask = None

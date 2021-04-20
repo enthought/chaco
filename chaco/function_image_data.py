@@ -28,7 +28,7 @@ class FunctionImageData(ImageData):
     data_range = Instance(DataRange2D)
 
     def __init__(self, **kw):
-        super(FunctionImageData, self).__init__(**kw)
+        super().__init__(**kw)
         # Explicitly construct the initial data set for ImageData
         self.recalculate()
 

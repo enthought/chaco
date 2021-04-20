@@ -76,7 +76,7 @@ class PlotLabel(AbstractOverlay):
     _label = Instance(Label, args=())
 
     def __init__(self, text="", *args, **kw):
-        super(PlotLabel, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
         self.text = text
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):

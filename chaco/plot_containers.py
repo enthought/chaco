@@ -280,7 +280,7 @@ class StackedPlotContainer(BasePlotContainer):
 
     # PICKLE FIXME: blocked with _pickles, but not sure that was correct.
     def __getstate__(self):
-        state = super(StackedPlotContainer, self).__getstate__()
+        state = super().__getstate__()
         if "stack_index" in state:
             del state["stack_index"]
         return state

@@ -220,7 +220,7 @@ class DataView(OverlayPlotContainer):
     # ------------------------------------------------------------------------
 
     def __init__(self, **kwtraits):
-        super(DataView, self).__init__(**kwtraits)
+        super().__init__(**kwtraits)
         self._init_components()
 
         # If we are not resizable, we will not get a bounds update upon layout,
@@ -344,19 +344,19 @@ class DataView(OverlayPlotContainer):
         self.invalidate_draw()
 
     def _bounds_changed(self, old, new):
-        super(DataView, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._update_mappers()
 
     def _bounds_items_changed(self, event):
-        super(DataView, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._update_mappers()
 
     def _position_changed(self, old, new):
-        super(DataView, self)._position_changed(old, new)
+        super()._position_changed(old, new)
         self._update_mappers()
 
     def _position_items_changed(self, event):
-        super(DataView, self)._position_items_changed(event)
+        super()._position_items_changed(event)
         self._update_mappers()
 
     def _origin_changed(self):

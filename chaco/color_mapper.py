@@ -263,7 +263,7 @@ class ColorMapper(AbstractColormap):
         the transitions.
         """
         self._segmentdata = segmentdata
-        super(ColorMapper, self).__init__(**kwtraits)
+        super().__init__(**kwtraits)
 
     def map_screen(self, data_array):
         """Maps an array of data values to an array of colors."""

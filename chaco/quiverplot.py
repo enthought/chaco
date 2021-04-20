@@ -46,7 +46,7 @@ class QuiverPlot(ScatterPlot):
     def _gather_points_old(self):
         # In addition to the standard scatterplot _gather_points, we need
         # to also grab the vectors that fall inside the view range
-        super(QuiverPlot, self)._gather_points_old()
+        super()._gather_points_old()
 
         if not self.index or not self.value:
             return

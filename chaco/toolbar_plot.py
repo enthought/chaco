@@ -27,7 +27,7 @@ class ToolbarPlot(Plot):
         if "toolbar_class" in kw:
             self.toolbar_class = kw.pop("toolbar_class")
 
-        super(ToolbarPlot, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         self.toolbar.component = self
         self.add_toolbar()
@@ -49,7 +49,7 @@ class ToolbarPlot(Plot):
 
     def _bounds_changed(self, old, new):
         self.toolbar.do_layout(force=True)
-        super(ToolbarPlot, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
 
     @observe("toolbar")
     def _update_toolbar(self, event):

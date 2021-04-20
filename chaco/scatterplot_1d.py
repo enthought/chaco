@@ -171,15 +171,15 @@ class ScatterPlot1D(Base1DPlot):
         return position
 
     def _bounds_changed(self, old, new):
-        super(ScatterPlot1D, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._marker_position = self._get_marker_position()
 
     def _bounds_items_changed(self, event):
-        super(ScatterPlot1D, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._marker_position = self._get_marker_position()
 
     def _orientation_changed(self):
-        super(ScatterPlot1D, self)._orientation_changed()
+        super()._orientation_changed()
         self._marker_position = self._get_marker_position()
 
     def _alignment_changed(self):

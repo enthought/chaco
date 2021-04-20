@@ -95,7 +95,7 @@ class ContourPolyPlot(BaseContourPlot):
 
     def _update_levels(self):
         """ Extends the parent method to also invalidate some other things """
-        super(ContourPolyPlot, self)._update_levels()
+        super()._update_levels()
         self._poly_cache_valid = False
 
     def _update_colors(self):

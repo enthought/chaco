@@ -184,7 +184,7 @@ class MinorTickGenerator(DefaultTickGenerator):
                 0, auto_interval(data_low, data_high), max_ticks=5
             )
 
-        return super(MinorTickGenerator, self).get_ticks(
+        return super().get_ticks(
             data_low,
             data_high,
             bounds_low,

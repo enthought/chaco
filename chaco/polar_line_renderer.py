@@ -131,11 +131,11 @@ class PolarLineRenderer(AbstractPlotRenderer):
         self._render(gc, self._cached_data_pts)
 
     def _bounds_changed(self, old, new):
-        super(PolarLineRenderer, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._update_mappers()
 
     def _bounds_items_changed(self, event):
-        super(PolarLineRenderer, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._update_mappers()
 
     def _draw_default_axes(self, gc):

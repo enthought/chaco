@@ -27,7 +27,7 @@ class SVGGraphicsContext(GraphicsContext):
                 size_or_ary[1] * scale + 1,
             )
 
-        super(SVGGraphicsContext, self).__init__(size_or_ary, *args, **kw)
+        super().__init__(size_or_ary, *args, **kw)
         self.translate_ctm(0.5, 0.5)
         self.scale_ctm(scale, scale)
 

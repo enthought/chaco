@@ -116,7 +116,7 @@ class DataRange2D(BaseDataRange):
     # ------------------------------------------------------------------------
 
     def __init__(self, *args, **kwargs):
-        super(DataRange2D, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def reset(self):
         """Resets the bounds of this range."""

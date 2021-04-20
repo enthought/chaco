@@ -31,7 +31,7 @@ class ToolbarButton(Button):
     bounds = Property(List, observe="label, image")
 
     def __init__(self, *args, **kw):
-        super(ToolbarButton, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         image_resource = ImageResource(self.image)
         self._image = Image(image_resource.absolute_path)

@@ -205,7 +205,7 @@ class PlotAxis(AbstractOverlay):
         self.tick_generator = DefaultTickGenerator()
         # Override init so that our component gets set last.  We want the
         # _component_changed() event handler to get run last.
-        super(PlotAxis, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         if component is not None:
             self.component = component
 
@@ -235,7 +235,7 @@ class PlotAxis(AbstractOverlay):
         if self.component is not None:
             self._layout_as_overlay(*args, **kw)
         else:
-            super(PlotAxis, self)._do_layout(*args, **kw)
+            super()._do_layout(*args, **kw)
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         """Draws this component overlaid on another component.
@@ -686,12 +686,12 @@ class PlotAxis(AbstractOverlay):
     # ------------------------------------------------------------------------
 
     def _bounds_changed(self, old, new):
-        super(PlotAxis, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._layout_needed = True
         self._invalidate()
 
     def _bounds_items_changed(self, event):
-        super(PlotAxis, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._layout_needed = True
         self._invalidate()
 
@@ -709,11 +709,11 @@ class PlotAxis(AbstractOverlay):
         self._invalidate()
 
     def _position_changed(self, old, new):
-        super(PlotAxis, self)._position_changed(old, new)
+        super()._position_changed(old, new)
         self._cache_valid = False
 
     def _position_items_changed(self, event):
-        super(PlotAxis, self)._position_items_changed(event)
+        super()._position_items_changed(event)
         self._cache_valid = False
 
     def _position_changed_for_component(self):
@@ -832,7 +832,7 @@ class PlotAxis(AbstractOverlay):
     # ------------------------------------------------------------------------
 
     def __setstate__(self, state):
-        super(PlotAxis, self).__setstate__(state)
+        super().__setstate__(state)
         self._mapper_changed(None, self.mapper)
         self._reset_cache()
         self._cache_valid = False
@@ -845,7 +845,7 @@ class MinorPlotAxis(PlotAxis):
     """
 
     def __init__(self, *args, **kwargs):
-        super(MinorPlotAxis, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         if "tick_generator" not in kwargs:
             self.tick_generator = MinorTickGenerator()

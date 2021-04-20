@@ -85,7 +85,7 @@ class LineSegmentTool(AbstractOverlay):
     def __init__(self, component=None, **kwtraits):
         if "component" in kwtraits:
             component = kwtraits["component"]
-        super(LineSegmentTool, self).__init__(**kwtraits)
+        super().__init__(**kwtraits)
         self.component = component
         self.reset()
         self.line.line_dash = (4.0, 2.0)

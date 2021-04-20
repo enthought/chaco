@@ -62,7 +62,7 @@ class MultiArrayDataSource(AbstractDataSource):
     _max_index = Int
 
     def __init__(self, data=array([]), sort_order="ascending", **traits):
-        super(MultiArrayDataSource, self).__init__(**traits)
+        super().__init__(**traits)
         self._set_data(data)
         self.sort_order = sort_order
         self.data_changed = True
