@@ -1,6 +1,6 @@
 """
-Contains convenience functions to create ready-made PlotRenderer
-and PlotFrame instances of various types.
+Contains convenience functions to create ready-made PlotRenderer instances of
+various types.
 """
 
 from numpy import array, ndarray, transpose, cos, sin

@@ -61,10 +61,7 @@ Visual Components
 - :class:`~.AbstractPlotRenderer`
 - :class:`~.AbstractOverlay`
 - :class:`~.BasePlotContainer`
-- :class:`~.BasePlotFrame`
-- :class:`~.CrossPlotFrame`
 - :class:`~.DataView`
-- :class:`~.SimplePlotFrame`
 - :class:`~.PlotComponent`
 - :class:`~.PlotGraphicsContext`
 - :class:`~.PlotGraphicsContextMixin`
@@ -299,10 +296,7 @@ from .horizon_plot import BandedMapper
 from .abstract_plot_renderer import AbstractPlotRenderer
 from .abstract_overlay import AbstractOverlay
 from .base_plot_container import BasePlotContainer
-from .base_plot_frame import BasePlotFrame
-from .cross_plot_frame import CrossPlotFrame
 from .data_view import DataView
-from .simple_plot_frame import SimplePlotFrame
 from .plot_component import PlotComponent
 from .plot_graphics_context import (
     PlotGraphicsContext,
