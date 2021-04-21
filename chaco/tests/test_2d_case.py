@@ -9,7 +9,7 @@ from traitsui.api import Item, View
 
 import numpy as np
 
-from chaco.tests._tools import store_exceptions_on_all_threads, assert_raises
+from chaco.tests._tools import store_exceptions_on_all_threads
 
 
 class PlotViewer(HasTraits):
@@ -72,7 +72,7 @@ class Test2DCase(unittest.TestCase):
         self.assertEqual(ys.shape[0], height + 1)
         self.assertEqual(ys[0], bounds[0])
         self.assertEqual(ys[-1], bounds[-1])
-        with assert_raises(ValueError):
+        with self.assertRaises(ValueError):
             bounds = np.zeros((width // 2,))
             plot._process_2d_bounds(bounds, array_data, 0, cell_plot=True)
 
@@ -88,7 +88,7 @@ class Test2DCase(unittest.TestCase):
         self.assertEqual(xs.shape[0], width + 1)
         self.assertEqual(xs[0], xbounds[0, 0])
         self.assertEqual(xs[-1], xbounds[0, -1])
-        with assert_raises(ValueError):
+        with self.assertRaises(ValueError):
             plot._process_2d_bounds(
                 xbounds[:, :5], array_data, 1, cell_plot=True
             )
@@ -97,7 +97,7 @@ class Test2DCase(unittest.TestCase):
         self.assertEqual(ys.shape[0], height + 1)
         self.assertEqual(ys[0], ybounds[0, 0])
         self.assertEqual(ys[-1], ybounds[-1, 0])
-        with assert_raises(ValueError):
+        with self.assertRaises(ValueError):
             plot._process_2d_bounds(
                 ybounds[:5, :], array_data, 0, cell_plot=True
             )
@@ -135,7 +135,7 @@ class Test2DCase(unittest.TestCase):
         self.assertEqual(ys.shape[0], height)
         self.assertEqual(ys[0], bounds[0])
         self.assertEqual(ys[-1], bounds[-1])
-        with assert_raises(ValueError):
+        with self.assertRaises(ValueError):
             bounds = np.zeros((width // 2,))
             plot._process_2d_bounds(bounds, array_data, 0, cell_plot=False)
 
@@ -149,7 +149,7 @@ class Test2DCase(unittest.TestCase):
         self.assertEqual(xs.shape[0], width)
         self.assertEqual(xs[0], xbounds[0, 0])
         self.assertEqual(xs[-1], xbounds[0, -1])
-        with assert_raises(ValueError):
+        with self.assertRaises(ValueError):
             plot._process_2d_bounds(
                 xbounds[:, :5], array_data, 1, cell_plot=False
             )
@@ -158,7 +158,7 @@ class Test2DCase(unittest.TestCase):
         self.assertEqual(ys.shape[0], height)
         self.assertEqual(ys[0], ybounds[0, 0])
         self.assertEqual(ys[-1], ybounds[-1, 0])
-        with assert_raises(ValueError):
+        with self.assertRaises(ValueError):
             plot._process_2d_bounds(
                 ybounds[:5, :], array_data, 0, cell_plot=False
             )
