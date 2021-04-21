@@ -1,27 +1,27 @@
+.. todo:: Fill in the below sections
 
-=============
-Common Usages
-=============
-
-
-Linking Plots
-=============
+..    =============
+..    Common Usages
+..    =============
 
 
-Updating/Streaming Data
-=======================
+..    Linking Plots
+..    =============
 
 
-Saving Screenshots
-==================
+..    Updating/Streaming Data
+..    =======================
 
 
-Non-interactive/Offscreen Rendering
-===================================
+..    Saving Screenshots
+..    ==================
 
 
-Integrating with TraitsUI Controls
-===================================
+..    Non-interactive/Offscreen Rendering
+..    ===================================
 
+
+..    Integrating with Traits UI Controls
+..    ===================================
 
 

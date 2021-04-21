@@ -73,7 +73,9 @@ Integrate a Chaco plot into my WX app?
 Note that this will require for the ETS_TOOLKIT environment variable to
 be set to 'wx'.
 
-* integrate a Chaco plot into my QT app?
+.. todo::
+
+    * integrate a Chaco plot into my QT app?
 
 Integrate a Chaco plot into my TraitsUI?
 -----------------------------------------
@@ -163,7 +165,9 @@ Layout and Rendering
 
 *How do I...*
 
-* put multiple plots in a single window?
+.. todo::
+
+    * put multiple plots in a single window?
 
 Change the background color?
 ----------------------------
@@ -193,26 +197,26 @@ Turn off borders?
     def change_to_borderless_plot(plot):
         plot.border_visible = False
 
+.. todo::
 
-Writing Components
-==================
+..    Writing Components
+..    ==================
 
-*How do I...*
+    *How do I...*
 
-* compose multiple renderers?
-* write a custom renderer?
-* write a custom overlay/underlay?
-* write a custom tool?
-* write a new container?
+    * compose multiple renderers?
+    * write a custom renderer?
+    * write a custom overlay/underlay?
+    * write a custom tool?
+    * write a new container?
 
 
-Advanced
-========
+..    Advanced
+..    ========
 
-*How do I...*
+    *How do I...*
 
-* properly change/override draw dispatch?
-* modify event dispatch?
-* customize backbuffering?
-* embed custom/native WX widgets on the plot?
-
+    * properly change/override draw dispatch?
+    * modify event dispatch?
+    * customize backbuffering?
+    * embed custom/native WX widgets on the plot?
