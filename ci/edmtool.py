@@ -75,6 +75,7 @@ supported_combinations = {
 }
 
 dependencies = {
+    "coverage",
     "mock",
     "numpy",
     "pandas",
@@ -158,14 +159,14 @@ def install(runtime, toolkit, environment, source):
     )
 
     if toolkit == "pyside2":
-        additional_repositories = "--add-repository enthought/lgpl"
+        addn_repositories = "--add-repository enthought/lgpl"
     else:
-        additional_repositories = ""
+        addn_repositories = ""
 
     # edm commands to setup the development environment
     commands = [
         "edm environments create {environment} --force --version={runtime}",
-        "edm install -y -e {environment} {packages} " + additional_repositories,
+        "edm install -y -e {environment} {packages} " + addn_repositories,
         ("edm run -e {environment} -- pip install -r ci/requirements.txt"
          " --no-dependencies"),
     ]
@@ -221,8 +222,6 @@ def test(runtime, toolkit, environment):
         "edm run -e {environment} -- python -W default -m "
         "coverage run -m unittest discover -v chaco"
     ]
-
-    cwd = os.getcwd()
 
     # We run in a tempdir to avoid accidentally picking up wrong traitsui
     # code from a local dir.  We need to ensure a good .coveragerc is in
@@ -320,7 +319,8 @@ def docs(runtime, toolkit, environment):
         "Regenerating API docs in  '{environment}'".format(**parameters)
     )
     commands = [
-        "edm run -e {environment} -- python -m sphinx.ext.apidoc -e --no-toc -o "
+        "edm run -e {environment} -- "
+        + "python -m sphinx.ext.apidoc -e --no-toc -o "
         + api_path
         + " -t {templates_dir}"
         + " chaco "
