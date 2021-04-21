@@ -17,7 +17,7 @@ class BaseDataRange(AbstractDataRange):
     # ------------------------------------------------------------------------
 
     def __init__(self, *datasources, **kwtraits):
-        super(AbstractDataRange, self).__init__(**kwtraits)
+        super().__init__(**kwtraits)
         if len(datasources) > 0:
             self.sources.extend(datasources)
 
