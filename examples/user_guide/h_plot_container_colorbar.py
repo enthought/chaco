@@ -20,7 +20,7 @@ class ColorbarExample(HasTraits):
         resizable=True,
     )
 
-    def __init__(self):
+    def _plot_default(self):
         # Create some data
         x = np.random.random(N_POINTS)
         y = np.random.random(N_POINTS)
@@ -53,7 +53,7 @@ class ColorbarExample(HasTraits):
 
         # Create a container to position the plot and the colorbar side-by-side
         container = HPlotContainer(plot, colorbar)
-        self.plot = container
+        return container
 
 
 if __name__ == "__main__":
