@@ -152,25 +152,25 @@ class PlotExample(HasTraits):
 
     plot = Instance(Plot)
 
-    traits_view = View(
-        Item("plot", editor=ComponentEditor()), width=600, height=600
-    )
-
-    def __init__(self, index, value, *args, **kw):
-        super(PlotExample, self).__init__(*args, **kw)
+    def _plot_default(self):
+        index = numpy.arange(0, 25, 0.25)
+        value = numpy.sin(index) + numpy.arange(0, 10, 0.1)
 
         plot_data = ArrayPlotData(index=index)
         plot_data.set_data("value", value)
 
-        self.plot = Plot(plot_data)
-        line = self.plot.plot(("index", "value"))[0]
+        plot = Plot(plot_data)
+        line = plot.plot(("index", "value"))[0]
 
         line.overlays.append(XRayOverlay(line))
         line.tools.append(BoxSelectTool(line))
 
+        return plot
 
-index = numpy.arange(0, 25, 0.25)
-value = numpy.sin(index) + numpy.arange(0, 10, 0.1)
+    traits_view = View(
+        Item("plot", editor=ComponentEditor()), width=600, height=600
+    )
 
-example = PlotExample(index, value)
+
+example = PlotExample()
 example.configure_traits()

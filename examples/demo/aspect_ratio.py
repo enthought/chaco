@@ -68,8 +68,7 @@ class MyPlot(HasTraits):
         title="Aspect Ratio Example",
     )
 
-    def __init__(self, *args, **kw):
-        HasTraits.__init__(self, *args, **kw)
+    def _plot_default(self):
         numpoints = 200
         plotdata = ArrayPlotData(
             x=sort(random(numpoints)), y=random(numpoints)
@@ -78,7 +77,7 @@ class MyPlot(HasTraits):
         plot.plot(("x", "y"), type="scatter")
         plot.tools.append(PanTool(plot))
         plot.overlays.append(ZoomTool(plot))
-        self.plot = plot
+        return plot
 
     def _screen_enabled_changed(self):
         if self.screen_enabled:
