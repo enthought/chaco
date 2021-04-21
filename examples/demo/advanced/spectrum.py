@@ -181,9 +181,8 @@ class Demo(HasTraits):
         handler=DemoHandler,
     )
 
-    def __init__(self, **traits):
-        super(Demo, self).__init__(**traits)
-        self.plot = _create_plot_component(self.controller)
+    def _plot_default(self):
+        return _create_plot_component(self.controller)
 
     def edit_traits(self, *args, **kws):
         # Start up the timer! We should do this only when the demo actually
