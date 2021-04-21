@@ -185,7 +185,7 @@ class Plot(DataView):
             title = kwtraits.pop("title")
         else:
             title = None
-        super(Plot, self).__init__(**kwtraits)
+        super().__init__(**kwtraits)
         if data is not None:
             if isinstance(data, AbstractPlotData):
                 self.data = data

@@ -71,7 +71,7 @@ class DragZoom(DragTool, BetterZoom):
     _prev_y = Float()
 
     def __init__(self, component=None, *args, **kw):
-        super(DragZoom, self).__init__(component, *args, **kw)
+        super().__init__(component, *args, **kw)
         c = component
         if c is not None:
             self._orig_screen_bounds = ((c.x, c.y), (c.x2, c.y2))

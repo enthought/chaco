@@ -137,7 +137,7 @@ class ContourLinePlot(BaseContourPlot):
 
     def _update_levels(self):
         """ Extends the parent method to also invalidate some other things """
-        super(ContourLinePlot, self)._update_levels()
+        super()._update_levels()
         self._contour_cache_valid = False
         self._widths_cache_valid = False
         self._styles_cache_valid = False

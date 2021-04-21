@@ -62,7 +62,7 @@ class PlotCanvasToolbar(VPlotContainer):
         # redraw event up to our overlaid component
         if self.component is not None:
             self.component.request_redraw()
-        super(PlotCanvasToolbar, self)._request_redraw()
+        super()._request_redraw()
 
 
 class PlotToolbarButton(PlotComponent, ToolbarButton):

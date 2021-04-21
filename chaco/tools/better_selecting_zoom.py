@@ -128,7 +128,7 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
                 event.handled = True
 
         if not event.handled:
-            super(BetterSelectingZoom, self).normal_key_pressed(event)
+            super().normal_key_pressed(event)
 
     def normal_left_down(self, event):
         """Handles the left mouse button being pressed while the tool is
@@ -443,12 +443,12 @@ class BetterSelectingZoom(AbstractOverlay, BetterZoom):
     # --------------------------------------------------------------------------
 
     def _prev_state_pressed(self):
-        super(BetterSelectingZoom, self)._prev_state_pressed()
+        super()._prev_state_pressed()
         # Reset the range settings
         if self._history_index == 0:
             self._reset_range_settings()
 
     def _reset_state_pressed(self):
-        super(BetterSelectingZoom, self)._reset_state_pressed()
+        super()._reset_state_pressed()
         # Reset the range settings
         self._reset_range_settings()

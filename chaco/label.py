@@ -79,7 +79,7 @@ class Label(HasTraits):
     _rot_matrix = Any()
 
     def __init__(self, **traits):
-        super(Label, self).__init__(**traits)
+        super().__init__(**traits)
         self._bounding_box = [0, 0]
 
     def get_width_height(self, gc):

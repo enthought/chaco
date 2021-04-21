@@ -87,7 +87,7 @@ class Base2DPlot(AbstractPlotRenderer):
             if trait_name in kwargs:
                 kwargs_tmp[trait_name] = kwargs.pop(trait_name)
         self.trait_set(**kwargs_tmp)
-        super(Base2DPlot, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         if self.index is not None:
             self.index.observe(self._update_index_data, "data_changed")
         if self.index_mapper:
@@ -315,11 +315,11 @@ class Base2DPlot(AbstractPlotRenderer):
     # ------------------------------------------------------------------------
 
     def _bounds_changed(self, old, new):
-        super(Base2DPlot, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._update_index_mapper()
 
     def _bounds_items_changed(self, event):
-        super(Base2DPlot, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._update_index_mapper()
 
     def _orientation_changed(self):

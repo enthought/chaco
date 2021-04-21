@@ -32,7 +32,7 @@ class ColormappedScatterPlotView(ScatterPlotView):
     """TraitsUI View for customizing a color-mapped scatter plot."""
 
     def __init__(self):
-        super(ColormappedScatterPlotView, self).__init__()
+        super().__init__()
         vgroup = self.content
         vgroup.content[0].content.append(
             Item(
@@ -106,7 +106,7 @@ class ColormappedScatterPlot(ScatterPlot):
         if len(data_array) > 0:
             if data_array.shape[1] == 3:
                 data_array = data_array[:, :2]
-        return super(ColormappedScatterPlot, self).map_screen(data_array)
+        return super().map_screen(data_array)
 
     def _draw_plot(self, gc, view_bounds=None, mode="normal"):
         """Draws the 'plot' layer.
@@ -121,9 +121,7 @@ class ColormappedScatterPlot(ScatterPlot):
             # Take into account fill_alpha even if we are rendering with only two values
             old_color = self.color
             self.color = tuple(self.fill_alpha * array(self.color_))
-            super(ColormappedScatterPlot, self)._draw_component(
-                gc, view_bounds, mode
-            )
+            super()._draw_component(gc, view_bounds, mode)
             self.color = old_color
         else:
             colors = self._cached_data_pts[:, 2]
@@ -188,7 +186,7 @@ class ColormappedScatterPlot(ScatterPlot):
         """
         # If we don't have a color data set, then use the base class to render
         if (self.color_mapper is None) or (self.color_data is None):
-            return super(ColormappedScatterPlot, self)._render(gc, points)
+            return super()._render(gc, points)
 
         # If the GC doesn't have draw_*_at_points, then use bruteforce
         if hasattr(gc, "draw_marker_at_points") or hasattr(

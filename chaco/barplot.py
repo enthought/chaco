@@ -155,7 +155,7 @@ class BarPlot(AbstractPlotRenderer):
             if name in kw:
                 postponed[name] = kw.pop(name)
 
-        super(BarPlot, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
 
         # Set any keyword Traits that were postponed.
         self.trait_set(**postponed)
@@ -354,7 +354,7 @@ class BarPlot(AbstractPlotRenderer):
             gc.draw_path(FILL_STROKE)
 
     def _post_load(self):
-        super(BarPlot, self)._post_load()
+        super()._post_load()
 
     # ------------------------------------------------------------------------
     # Properties
@@ -438,11 +438,11 @@ class BarPlot(AbstractPlotRenderer):
         self._cache_valid = False
 
     def _bounds_changed(self, old, new):
-        super(BarPlot, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._update_mappers()
 
     def _bounds_items_changed(self, event):
-        super(BarPlot, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._update_mappers()
 
     def _orientation_changed(self):

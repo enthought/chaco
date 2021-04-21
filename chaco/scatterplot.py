@@ -64,7 +64,7 @@ class ScatterPlotView(View):
             Item("marker_size", label="Size"),
             Item("color", label="Color", style="custom"),
         )
-        super(ScatterPlotView, self).__init__(vgroup)
+        super().__init__(vgroup)
         self.buttons = ["OK", "Cancel"]
 
 

@@ -23,7 +23,7 @@ class PlotToolbarHover(HoverTool):
 
     def normal_mouse_move(self, event):
         self._last_xy = (event.x, event.y)
-        super(PlotToolbarHover, self).normal_mouse_move(event)
+        super().normal_mouse_move(event)
 
     def on_hover(self):
         """This gets called when all the conditions of the hover action have
@@ -76,7 +76,7 @@ class PlotToolbar(Container, AbstractOverlay):
     ############################################################
 
     def __init__(self, component=None, *args, **kw):
-        super(PlotToolbar, self).__init__(*args, **kw)
+        super().__init__(*args, **kw)
         self.component = component
 
         if component is not None and hasattr(component, "toolbar_location"):

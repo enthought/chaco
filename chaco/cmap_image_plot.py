@@ -62,7 +62,7 @@ class CMapImagePlot(ImagePlot):
     # ------------------------------------------------------------------------
 
     def __init__(self, **kwargs):
-        super(CMapImagePlot, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         if self.value_mapper:
             self.value_mapper.observe(self._update_value_mapper, "updated")
         if self.value:
@@ -181,11 +181,11 @@ class CMapImagePlot(ImagePlot):
         self._update_value_mapper()
 
     def _value_data_changed_fired(self):
-        super(CMapImagePlot, self)._value_data_changed_fired()
+        super()._value_data_changed_fired()
         self._mapped_image_cache_valid = False
 
     def _index_data_changed_fired(self):
-        super(CMapImagePlot, self)._index_data_changed_fired()
+        super()._index_data_changed_fired()
         self._mapped_image_cache_valid = False
 
     def _cache_full_map_changed(self):

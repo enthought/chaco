@@ -54,7 +54,7 @@ class AbstractDataRange(HasTraits):
                 )
             else:
                 kwargs["sources"] = list(sources)
-        super(AbstractDataRange, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     # ------------------------------------------------------------------------
     # Abstract methods that subclasses must implement

@@ -46,7 +46,7 @@ class StatusLayer(AbstractOverlay):
     fade_out_steps = Int(10)
 
     def __init__(self, component, *args, **kw):
-        super(StatusLayer, self).__init__(component, *args, **kw)
+        super().__init__(component, *args, **kw)
 
         if self.document is None:
             if self.filename == "":

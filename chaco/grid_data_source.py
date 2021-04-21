@@ -60,7 +60,7 @@ class GridDataSource(AbstractDataSource):
         sort_order=("none", "none"),
         **kwargs
     ):
-        super(GridDataSource, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.set_data(xdata, ydata, sort_order)
 
     def set_data(self, xdata, ydata, sort_order=None):

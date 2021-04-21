@@ -508,7 +508,7 @@ class BaseXYPlot(AbstractPlotRenderer):
                     gc.stroke_path()
 
     def _post_load(self):
-        super(BaseXYPlot, self)._post_load()
+        super()._post_load()
         self._update_mappers()
         self.invalidate_draw()
         self._cache_valid = False
@@ -617,11 +617,11 @@ class BaseXYPlot(AbstractPlotRenderer):
         self._screen_cache_valid = False
 
     def _bounds_changed(self, old, new):
-        super(BaseXYPlot, self)._bounds_changed(old, new)
+        super()._bounds_changed(old, new)
         self._update_mappers()
 
     def _bounds_items_changed(self, event):
-        super(BaseXYPlot, self)._bounds_items_changed(event)
+        super()._bounds_items_changed(event)
         self._update_mappers()
 
     def _position_changed(self):
@@ -722,7 +722,7 @@ class BaseXYPlot(AbstractPlotRenderer):
     # ------------------------------------------------------------------------
 
     def __setstate__(self, state):
-        super(BaseXYPlot, self).__setstate__(state)
+        super().__setstate__(state)
         if self.index is not None:
             self.index.observe(self._either_data_updated, "data_changed")
         if self.value is not None:

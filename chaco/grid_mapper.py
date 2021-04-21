@@ -109,7 +109,7 @@ class GridMapper(AbstractMapper):
         # Now that the mappers are created, we can go to the normal HasTraits
         # constructor, which might set values that depend on us having a valid
         # range and mappers.
-        super(GridMapper, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     def map_screen(self, data_pts):
         """map_screen(data_pts) -> screen_array

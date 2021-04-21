@@ -47,7 +47,7 @@ class ColormappedSelectionOverlay(AbstractOverlay):
     _old_line_width = Float(0.0)
 
     def __init__(self, component=None, **kw):
-        super(ColormappedSelectionOverlay, self).__init__(**kw)
+        super().__init__(**kw)
         self.component = component
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):

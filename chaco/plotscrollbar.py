@@ -112,7 +112,7 @@ class PlotScrollBar(NativeScrollBar):
         self.request_redraw()
 
     def _scroll_position_changed(self):
-        super(PlotScrollBar, self)._scroll_position_changed()
+        super()._scroll_position_changed()
 
         # Notify our range that we've changed
         range = self.mapper.range

@@ -181,7 +181,7 @@ class PlotGrid(AbstractOverlay):
     def __init__(self, **traits):
         # TODO: change this back to a factory in the instance trait some day
         self.tick_generator = DefaultTickGenerator()
-        super(PlotGrid, self).__init__(**traits)
+        super().__init__(**traits)
         self.bgcolor = "none"  # make sure we're transparent
 
     @observe("bounds.items,position.items")
@@ -201,7 +201,7 @@ class PlotGrid(AbstractOverlay):
         if self.component is not None:
             self._layout_as_overlay(*args, **kw)
         else:
-            super(PlotGrid, self).do_layout(*args, **kw)
+            super().do_layout(*args, **kw)
 
     # ------------------------------------------------------------------------
     # Private methods
@@ -445,7 +445,7 @@ class PlotGrid(AbstractOverlay):
     ### Persistence ###########################################################
 
     def _post_load(self):
-        super(PlotGrid, self)._post_load()
+        super()._post_load()
         self._mapper_changed(None, self.mapper)
         self._reset_cache()
         self._cache_valid = False
