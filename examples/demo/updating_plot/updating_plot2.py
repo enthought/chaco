@@ -37,12 +37,10 @@ PLOT_SIZE = 250
 
 class AnimatedPlot(HasTraits):
     x_values = Array()
-    x_values = Array()
+    y_values = Array()
     color = Str()
 
     plot = Instance(Component)
-
-        
 
     def _plot_default(self):
         self.numpoints = len(self.x_values)
