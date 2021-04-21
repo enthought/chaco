@@ -87,24 +87,6 @@ class DemoView(HasTraits):
     # Public 'DemoView' interface
     # ---------------------------------------------------------------------------
 
-    def __init__(self, *args, **kwargs):
-        super(DemoView, self).__init__(*args, **kwargs)
-
-        # Create the plot object, set some options, and add some tools
-        plot = self.plot = Plot(self.pd, default_origin="top left")
-        plot.x_axis.orientation = "top"
-        plot.padding = 50
-        plot.padding_top = 75
-        plot.tools.append(PanTool(plot))
-        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
-        plot.overlays.append(zoom)
-
-        # Load the default image
-        self._load()
-
-        # Plot the image plot with this image
-        self.plot.img_plot("imagedata")
-
     def default_traits_view(self):
         """Returns the default view to use for this class."""
         # NOTE: I moved the view to this method so we can declare a handler
@@ -138,6 +120,24 @@ class DemoView(HasTraits):
     # Private 'DemoView' interface
     # ---------------------------------------------------------------------------
 
+    def _plot_default(self):
+        # Create the plot object, set some options, and add some tools
+        plot = Plot(self.pd, default_origin="top left")
+        plot.x_axis.orientation = "top"
+        plot.padding = 50
+        plot.padding_top = 75
+        plot.tools.append(PanTool(plot))
+        zoom = ZoomTool(component=plot, tool_mode="box", always_on=False)
+        plot.overlays.append(zoom)
+
+        # Load the default image
+        self._load(plot)
+
+        # Plot the image plot with this image
+        plot.img_plot("imagedata")
+
+        return plot
+
     def _save(self):
         # Create a graphics context of the right size
         win_size = self.plot.outer_bounds
@@ -149,7 +149,9 @@ class DemoView(HasTraits):
         # Save out to the user supplied filename
         plot_gc.save(self._save_file)
 
-    def _load(self):
+    def _load(self, plot=None):
+        if plot is None:
+            plot = self.plot
         # Load the image with the user supplied filename
         image = ImageData.fromfile(self._load_file)
 
@@ -158,8 +160,8 @@ class DemoView(HasTraits):
         self.pd.set_data("imagedata", image._data)
 
         # Set the title and redraw
-        self.plot.title = os.path.basename(self._load_file)
-        self.plot.request_redraw()
+        plot.title = os.path.basename(self._load_file)
+        plot.request_redraw()
 
 
 # -------------------------------------------------------------------------------
