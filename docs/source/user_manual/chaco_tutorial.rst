@@ -62,7 +62,7 @@ This plot shows a static "tornado plot" with a categorical Y axis and continuous
 X axis.  The plot is resizable, but the user cannot interact or explore the data
 in any way.
 
-.. image:: images/simple_line.png
+.. image:: ../images/simple_line.png
     :height: 300pt
 
 This is an overlaid composition of line and scatter plots with a legend. Unlike
@@ -452,7 +452,7 @@ Grid container (:class:`GridPlotContainer`) lays plots out in a grid:
 Overlay containers (:class:`OverlayPlotContainer`) just overlay plots on top of
 each other:
 
-.. image:: images/simple_line.png
+.. image:: ../images/simple_line.png
     :height: 350pt
 
 You've actually already seen OverlayPlotContainer --- the Plot

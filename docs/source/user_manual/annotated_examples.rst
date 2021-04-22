@@ -156,7 +156,7 @@ Double-clicking on line or scatter plots opens a Traits editor for the plot.
 
 source: `simple_line.py <https://github.com/enthought/chaco/tree/master/examples/demo/simple_line.py>`_
 
-.. image:: example_images/simple_line.png
+.. image:: ../images/simple_line.png
 
 .. [COMMENT]::
 
