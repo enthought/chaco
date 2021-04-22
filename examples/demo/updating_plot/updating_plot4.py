@@ -72,7 +72,7 @@ class AnimatedPlot(HasTraits):
         plot.overlays.append(ZoomTool(plot, tool_mode="box", always_on=False))
 
         self.numpoints = len(self.x_values)
-        self.current_index = int(self.numpoints / 2)
+        self.current_index = self.numpoints // 2
         self.increment = 2
 
         return plot

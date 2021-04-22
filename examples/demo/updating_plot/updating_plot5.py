@@ -45,7 +45,7 @@ class AnimatedPlot(HasTraits):
             plot = create_line_plot(
                 (self.x_values, self.y_values),
                 color=self.color,
-                bgcolor="none",
+                bgcolor="white",
                 add_grid=True,
                 add_axis=True,
                 orientation=self.orientation,
@@ -54,7 +54,7 @@ class AnimatedPlot(HasTraits):
             plot = create_line_plot(
                 (self.x_values, self.y_values),
                 color=self.color,
-                bgcolor="none",
+                bgcolor="white",
                 add_grid=True,
                 add_axis=True,
                 orientation=self.orientation,
@@ -69,7 +69,7 @@ class AnimatedPlot(HasTraits):
         plot.overlays.append(ZoomTool(plot, tool_mode="box", always_on=False))
 
         self.numpoints = len(self.x_values)
-        self.current_index = int(self.numpoints / 2)
+        self.current_index = self.numpoints // 2
         self.increment = 2
 
         return plot

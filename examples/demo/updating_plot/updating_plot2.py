@@ -61,7 +61,7 @@ class AnimatedPlot(HasTraits):
 
         plot.unified_draw = True
 
-        self.current_index = int(self.numpoints / 2)
+        self.current_index = self.numpoints // 2
         self.increment = 2
 
         return plot
@@ -74,8 +74,8 @@ class AnimatedPlot(HasTraits):
         self.current_index += self.increment
         if self.current_index > self.numpoints:
             self.current_index = self.numpoints
-        self.plot.index.set_data(self.x_values[: int(self.current_index)])
-        self.plot.value.set_data(self.y_values[: int(self.current_index)])
+        self.plot.index.set_data(self.x_values[: self.current_index])
+        self.plot.value.set_data(self.y_values[: self.current_index])
         self.plot.request_redraw()
 
 
