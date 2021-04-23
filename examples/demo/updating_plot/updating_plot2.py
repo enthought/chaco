@@ -13,9 +13,9 @@ from numpy import arange
 from scipy.special import jn
 
 # Enthought library imports
-from enable.api import Window
+from enable.api import Component
 from enable.example_support import DemoFrame, demo_main
-from traits.api import HasTraits
+from traits.api import Array, HasTraits, Instance, Str
 from pyface.timer.api import Timer
 
 # Chaco imports
@@ -36,15 +36,19 @@ PLOT_SIZE = 250
 
 
 class AnimatedPlot(HasTraits):
-    def __init__(self, x, y, color="blue", bgcolor="white"):
-        self.x_values = x[:]
-        self.y_values = y[:]
+    x_values = Array()
+    y_values = Array()
+    color = Str()
+
+    plot = Instance(Component)
+
+    def _plot_default(self):
         self.numpoints = len(self.x_values)
 
         plot = create_line_plot(
             (self.x_values, self.y_values),
-            color=color,
-            bgcolor=bgcolor,
+            color=self.color,
+            bgcolor="white",
             add_grid=True,
             add_axis=True,
         )
@@ -56,10 +60,11 @@ class AnimatedPlot(HasTraits):
         plot.overlays.append(ZoomTool(plot, tool_mode="box", always_on=False))
 
         plot.unified_draw = True
-        self.plot = plot
 
-        self.current_index = self.numpoints / 2
+        self.current_index = self.numpoints // 2
         self.increment = 2
+
+        return plot
 
     def timer_tick(self):
         if self.current_index <= self.numpoints / 3:
@@ -75,7 +80,7 @@ class AnimatedPlot(HasTraits):
 
 
 class PlotFrame(DemoFrame):
-    def _create_window(self):
+    def _create_component(self):
         numpoints = 50
         low = -5
         high = 15.0
@@ -84,7 +89,9 @@ class PlotFrame(DemoFrame):
 
         self.animated_plots = []
         for i, color in enumerate(COLOR_PALETTE):
-            animated_plot = AnimatedPlot(x, jn(i, x), color)
+            animated_plot = AnimatedPlot(
+                x_values=x, y_values=jn(i, x), color=color
+            )
             container.add(animated_plot.plot)
             self.animated_plots.append(animated_plot)
 
@@ -96,7 +103,7 @@ class PlotFrame(DemoFrame):
 
         self.timer = Timer(100.0, self.onTimer)
         self.container = container
-        return Window(self, -1, component=container)
+        return container
 
     def onTimer(self, *args):
         for plot in self.animated_plots:

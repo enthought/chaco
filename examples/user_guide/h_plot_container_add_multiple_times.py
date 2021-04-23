@@ -19,7 +19,7 @@ class ContainerExample(HasTraits):
         resizable=True,
     )
 
-    def __init__(self):
+    def _plot_default(self):
         # Create the data and the PlotData object
         x = linspace(-14, 14, 100)
         y = sin(x) * x ** 3
@@ -49,7 +49,7 @@ class ContainerExample(HasTraits):
         # from the first, as each plot can only have one container
         h_container2.add(line_plot1)
 
-        self.plot = outer_container
+        return outer_container
 
 
 if __name__ == "__main__":

@@ -9,9 +9,9 @@ from numpy import arange
 from scipy.special import jn
 
 # Enthought library imports
-from enable.api import Window
+from enable.api import Component
 from enable.example_support import DemoFrame, demo_main
-from traits.api import HasTraits
+from traits.api import Any, Array, Enum, HasTraits, Instance, Str
 from pyface.timer.api import Timer
 
 # Chaco imports
@@ -32,27 +32,32 @@ PLOT_SIZE = 250
 
 
 class AnimatedPlot(HasTraits):
-    def __init__(self, x, y, color="blue", bgcolor="none", orientation="h"):
-        self.y_values = y[:]
-        if type(x) == ArrayDataSource:
-            self.x_values = x.get_data()[:]
-            plot = create_line_plot(
-                (x, self.y_values),
-                color=color,
-                bgcolor=bgcolor,
-                add_grid=True,
-                add_axis=True,
-                orientation=orientation,
-            )
-        else:
-            self.x_values = x[:]
+    x_values = Any()  # Array or ArraryDataSource
+    y_values = Array()
+    color = Str()
+    orientation = Enum("h", "v")
+
+    plot = Instance(Component)
+
+    def _plot_default(self):
+        if type(self.x_values) == ArrayDataSource:
+            self.x_values = self.x_values.get_data()[:]
             plot = create_line_plot(
                 (self.x_values, self.y_values),
-                color=color,
-                bgcolor=bgcolor,
+                color=self.color,
+                bgcolor="white",
                 add_grid=True,
                 add_axis=True,
-                orientation=orientation,
+                orientation=self.orientation,
+            )
+        else:
+            plot = create_line_plot(
+                (self.x_values, self.y_values),
+                color=self.color,
+                bgcolor="white",
+                add_grid=True,
+                add_axis=True,
+                orientation=self.orientation,
             )
 
         plot.resizable = ""
@@ -63,10 +68,11 @@ class AnimatedPlot(HasTraits):
         plot.tools.append(MoveTool(plot))
         plot.overlays.append(ZoomTool(plot, tool_mode="box", always_on=False))
 
-        self.plot = plot
         self.numpoints = len(self.x_values)
-        self.current_index = self.numpoints / 2
+        self.current_index = self.numpoints // 2
         self.increment = 2
+
+        return plot
 
     def timer_tick(self):
         if self.current_index <= self.numpoints / 3:
@@ -82,7 +88,7 @@ class AnimatedPlot(HasTraits):
 
 
 class PlotFrame(DemoFrame):
-    def _create_window(self):
+    def _create_component(self):
         numpoints = 50
         low = -5
         high = 15.0
@@ -95,19 +101,23 @@ class PlotFrame(DemoFrame):
         self.animated_plots = []
         for i, color in enumerate(COLOR_PALETTE):
             if i == 0:
-                animated_plot = AnimatedPlot(x, jn(i, x), color)
+                animated_plot = AnimatedPlot(
+                    x_values=x, y_values=jn(i, x), color=color
+                )
                 plot = animated_plot.plot
                 common_index = plot.index
                 index_range = plot.index_mapper.range
                 value_range = plot.value_mapper.range
             elif i % 2 == 0:
-                animated_plot = AnimatedPlot(common_index, jn(i, x), color)
+                animated_plot = AnimatedPlot(
+                    x_values=common_index, y_values=jn(i, x), color=color
+                )
                 plot = animated_plot.plot
                 plot.index_mapper.range = index_range
                 plot.value_mapper.range = value_range
             else:
                 animated_plot = AnimatedPlot(
-                    x, jn(i, x), color, orientation="v"
+                    x_values=x, y_values=jn(i, x), color=color, orientation="v"
                 )
                 plot = animated_plot.plot
 
@@ -122,7 +132,7 @@ class PlotFrame(DemoFrame):
 
         self.timer = Timer(100.0, self.onTimer)
         self.container = container
-        return Window(self, -1, component=container)
+        return container
 
     def onTimer(self, *args):
         for plot in self.animated_plots:

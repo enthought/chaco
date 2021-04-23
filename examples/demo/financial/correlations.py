@@ -89,15 +89,7 @@ class PlotApp(HasTraits):
         title="Correlations of returns",
     )
 
-    def __init__(self, *symbols, **kwtraits):
-        super(PlotApp, self).__init__(symbols=list(symbols), **kwtraits)
-        self._create_data(*symbols)
-        self._create_returns_plot()
-        self._create_corr_plot()
-        if len(self.symbols) > 1:
-            self.sym2 = self.symbols[1]
-
-    def _create_returns_plot(self):
+    def _returns_plot_default(self):
         plot = Plot(self.plotdata)
         plot.legend.visible = True
         # FIXME: The legend move tool doesn't seem to quite work right now
@@ -154,24 +146,30 @@ class PlotApp(HasTraits):
         # selections metadata
         self.times_ds = renderer.index
         self.times_ds.observe(self._selections_updated, "metadata_changed")
-        self.returns_plot = plot
+        return plot
 
-    def _create_corr_plot(self):
+    def _corr_plot_default(self):
         plot = Plot(self.plotdata, padding=0)
         plot.padding_left = 25
         plot.padding_bottom = 25
         plot.tools.append(PanTool(plot))
         plot.overlays.append(ZoomTool(plot))
-        self.corr_plot = plot
+        return plot
 
-    def _create_data(self, *names):
+    def _plotdata_default(self):
         numpoints = self.numpoints
         plotdata = ArrayPlotData(times=create_dates(numpoints))
-        for name in names:
+        for name in self.symbols:
             plotdata.set_data(
                 name, cumprod(random.lognormal(0.0, 0.04, size=numpoints))
             )
-        self.plotdata = plotdata
+        return plotdata
+    
+    def _sym2_default(self):
+        if len(self.symbols) > 1:
+            return self.symbols[1]
+        else:
+            return self.symbols[0]
 
     def _selections_updated(self, event):
         metadata_changed_event = event.new
@@ -197,7 +195,7 @@ class PlotApp(HasTraits):
             )
             self.corr_plot.request_redraw()
 
-    @observe("sym1,sym2")
+    @observe("symbols,sym1,sym2")
     def _update_corr_symbols(self, event):
         plot = self.corr_plot
         if self.corr_renderer is not None:
@@ -216,6 +214,6 @@ class PlotApp(HasTraits):
         plot.request_redraw()
 
 
-demo = PlotApp("AAPL", "GOOG", "MSFT")
+demo = PlotApp(symbols=["AAPL", "GOOG", "MSFT"])
 if __name__ == "__main__":
     demo.configure_traits()

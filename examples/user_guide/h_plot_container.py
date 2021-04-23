@@ -17,7 +17,7 @@ class ContainerExample(HasTraits):
         resizable=True,
     )
 
-    def __init__(self):
+    def _plot_default(self):
         # Create the data and the PlotData object
         x = linspace(-14, 14, 100)
         y = sin(x) * x ** 3
@@ -33,7 +33,7 @@ class ContainerExample(HasTraits):
 
         # Create a horizontal container and put the two plots inside it
         container = HPlotContainer(line_plot, scatter_plot, spacing=100)
-        self.plot = container
+        return container
 
 
 if __name__ == "__main__":
