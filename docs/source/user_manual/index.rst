@@ -26,3 +26,4 @@ User Guide
     common_patterns.rst
     how_do_i.rst
     faq.rst
+    matplotlib_to_chaco.rst
