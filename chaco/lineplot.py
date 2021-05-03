@@ -105,21 +105,22 @@ class LinePlot(BaseXYPlot):
         any data points on the line.  If so, then it returns the (x,y) value of
         a data point near the screen point.  If not, then it returns None.
         """
-
         # First, check screen_pt is directly on a point in the lineplot
         ndx = self.map_index(screen_pt, threshold)
         if ndx is not None:
             # screen_pt is one of the points in the lineplot
-            data_pt = (self.index.get_data()[ndx], self.value.get_data()[ndx])
+            data_pt = array(
+                [[self.index.get_data()[ndx], self.value.get_data()[ndx]]]
+            )
             if return_distance:
                 scrn_pt = self.map_screen(data_pt)
                 dist = sqrt(
-                    (screen_pt[0] - scrn_pt[0]) ** 2
-                    + (screen_pt[1] - scrn_pt[1]) ** 2
+                    (screen_pt[0] - scrn_pt[0, 0]) ** 2
+                    + (screen_pt[1] - scrn_pt[0, 1]) ** 2
                 )
-                return (data_pt[0], data_pt[1], dist)
+                return (data_pt[0, 0], data_pt[0, 1], dist)
             else:
-                return data_pt
+                return (data_pt[0, 0], data_pt[0, 1])
         else:
             # We now must check the lines themselves
 

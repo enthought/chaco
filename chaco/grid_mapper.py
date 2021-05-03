@@ -115,6 +115,14 @@ class GridMapper(AbstractMapper):
         """map_screen(data_pts) -> screen_array
 
         Maps values from data space into screen space.
+
+        Parameters
+        ----------
+        data_pts: array of shape (N, 2)
+
+        Returns
+        -------
+        array of shape (N, 2)
         """
         xs, ys = transpose(data_pts)
         screen_xs = self._xmapper.map_screen(xs)
@@ -126,6 +134,14 @@ class GridMapper(AbstractMapper):
         """map_data(screen_pts) -> data_vals
 
         Maps values from screen space into data space.
+
+        Parameters
+        ----------
+        screen_pts: array of shape (N, 2)
+
+        Returns
+        -------
+        array of shape (N, 2)
         """
         screen_xs, screen_ys = transpose(screen_pts)
         xs = self._xmapper.map_data(screen_xs)
@@ -134,6 +150,9 @@ class GridMapper(AbstractMapper):
         return data_pts
 
     def map_data_array(self, screen_pts):
+        """ Since map_data is already vectorized, this is equivalent to
+        map_data.
+        """
         return self.map_data(screen_pts)
 
     # ------------------------------------------------------------------------

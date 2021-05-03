@@ -49,6 +49,8 @@ class LinearMapper(Base1DMapper):
             else:
                 return array([self.low_pos])
         else:
+            if not isinstance(data_array, ndarray):
+                data_array = array(data_array, ndmin=1)
             return (data_array - self.range.low) * self._scale + self.low_pos
 
     def map_data(self, screen_val):
@@ -57,9 +59,7 @@ class LinearMapper(Base1DMapper):
         Overrides AbstractMapper. Maps values from screen space into data space.
         """
         self._compute_scale()
-        if self._null_screen_range:
-            return array([self.range.low])
-        elif self._null_data_range:
+        if self._null_screen_range or self._null_data_range:
             return array([self.range.low])
         else:
             return (screen_val - self.low_pos) / self._scale + self.range.low

@@ -342,9 +342,17 @@ class BaseXYPlot(AbstractPlotRenderer):
         an array.
 
         Implements the AbstractPlotRenderer interface.
+
+        Parameters
+        ----------
+        data_array: array of shape (N, 2)
+
+        Returns
+        -------
+        array of shape (N, 2)
         """
         # data_array is Nx2 array
-        if len(data_array) == 0:
+        if data_array.size == 0:
             return []
 
         x_ary, y_ary = transpose(data_array)
