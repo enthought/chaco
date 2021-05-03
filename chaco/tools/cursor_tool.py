@@ -16,7 +16,7 @@ TODO:
 
 
 # Major library imports
-import numpy
+import numpy as np
 
 # Enthought library imports
 from enable.api import CircleMarker
@@ -190,7 +190,7 @@ class CursorTool1D(BaseCursorTool):
         if plot is None:
             return
 
-        sx, sy = plot.map_screen(self.current_position)
+        sx, sy = plot.map_screen(np.array([self.current_position]))[0]
         orientation = plot.orientation
 
         if orientation == "h" and sx is not None:
@@ -211,10 +211,10 @@ class CursorTool1D(BaseCursorTool):
         plot = self.component
         if plot is not None:
             orientation = plot.orientation
-            sx, sy = plot.map_screen(self.current_position)
-            if orientation == "h" and numpy.abs(sx - x) <= self.threshold:
+            sx, sy = plot.map_screen(np.array([self.current_position]))[0]
+            if orientation == "h" and np.abs(sx - x) <= self.threshold:
                 return True
-            elif orientation == "v" and numpy.abs(sy - y) <= self.threshold:
+            elif orientation == "v" and np.abs(sy - y) <= self.threshold:
                 return True
         return False
 
@@ -258,17 +258,17 @@ class CursorTool2D(BaseCursorTool):
         plot = self.component
         if plot is not None:
             orientation = plot.orientation
-            sx, sy = plot.map_screen([self.current_position])[0]
+            sx, sy = plot.map_screen(np.array([self.current_position]))[0]
             self._dragV = self._dragH = False
             if orientation == "h":
-                if numpy.abs(sx - x) <= self.threshold:
+                if np.abs(sx - x) <= self.threshold:
                     self._dragH = True
-                if numpy.abs(sy - y) <= self.threshold:
+                if np.abs(sy - y) <= self.threshold:
                     self._dragV = True
             else:
-                if numpy.abs(sx - x) <= self.threshold:
+                if np.abs(sx - x) <= self.threshold:
                     self._dragV = True
-                if numpy.abs(sy - y) <= self.threshold:
+                if np.abs(sy - y) <= self.threshold:
                     self._dragH = True
             return self._dragV or self._dragH
         return False
@@ -284,7 +284,7 @@ class CursorTool2D(BaseCursorTool):
         plot = self.component
         if plot is None:
             return
-        sx, sy = plot.map_screen([self.current_position])[0]
+        sx, sy = plot.map_screen(np.array([self.current_position]))[0]
         orientation = plot.orientation
 
         if orientation == "h":
