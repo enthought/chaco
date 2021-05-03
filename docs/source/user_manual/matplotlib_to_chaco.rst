@@ -10,7 +10,7 @@ users of chaco who have worked with matplotlib in the past may find it useful
 to think about mapping "equivalent" code between the two.
 
 The following table lists various plotting related operations one might want to
-perform along with code for  doing that using either Chaco or Matplotlib. For
+perform along with code for doing that using either Chaco or Matplotlib. For
 the Matplotlib code ``ax`` repesents the Axes that what would result from
 running  ``fig, ax = plt.subplots()`` after importing
 ``import matplotlib.pyplot as plt``. For more details see the
