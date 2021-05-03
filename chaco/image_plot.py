@@ -234,8 +234,8 @@ class ImagePlot(Base2DPlot):
         (lower_left, upper_right) = self.index.get_bounds()
         # ... but if the origin is not 'bottom left', the data-to-screen
         # mapping will flip min and max values.
-        x_min, y_min = self.map_screen([lower_left])[0]
-        x_max, y_max = self.map_screen([upper_right])[0]
+        x_min, y_min = self.map_screen(np.array([lower_left]))[0]
+        x_max, y_max = self.map_screen(np.array([upper_right]))[0]
         if x_min > x_max:
             x_min, x_max = x_max, x_min
         if y_min > y_max:

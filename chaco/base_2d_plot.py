@@ -110,8 +110,8 @@ class Base2DPlot(AbstractPlotRenderer):
         Implements the AbstractPlotRenderer interface.
         """
         # data_pts is Nx2 array
-        if len(data_pts) == 0:
-            return []
+        if data_pts.shape == 0:
+            return np.empty(shape=(0,))
         return asarray(self.index_mapper.map_screen(data_pts))
 
     def map_data(self, screen_pts):
