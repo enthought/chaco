@@ -20,6 +20,8 @@ class BandedMapper(LinearMapper):
                 return array([self.low_pos])
         else:
             # Scale the data by the number of bands
+            if not isinstance(data_array, ndarray):
+                data_array = array(data_array, ndmin=1)
             return (
                 data_array * self.bands - self.range.low
             ) * self._scale + self.low_pos
@@ -74,7 +76,7 @@ class HorizonPlot(BaseXYPlot):
         if len(points) == 0:
             return
 
-        ox, oy = self.map_screen([[0, 0]])[0]
+        ox, oy = self.map_screen(np.array([[0, 0]]))[0]
         ylow, yhigh = self.value_mapper.screen_bounds
 
         y_plus_height = yhigh - oy

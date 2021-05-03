@@ -14,6 +14,10 @@ import numpy
 
 # Enthought library imports
 from chaco.api import (
+    ArrayDataSource,
+    LinePlot,
+    LogMapper,
+    DataRange1D,
     create_line_plot,
     OverlayPlotContainer,
     HPlotContainer,
@@ -52,12 +56,24 @@ class CursorTest(HasTraits):
         value = numpy.sin(index)
 
         # create a LinePlot instance and add it to the subcontainer
-        line = create_line_plot(
-            [index, value],
-            add_grid=True,
-            add_axis=True,
-            index_sort="ascending",
-            orientation="h",
+        #line = create_line_plot(
+        ##    [index, value],
+         #   add_grid=True,
+         #   add_axis=True,
+         #   index_sort="ascending",
+         #   orientation="h",
+        #)
+        line = LinePlot(
+            index=ArrayDataSource(index, sort_order='ascending'),
+            value=ArrayDataSource(value),
+            index_mapper=LogMapper(range=DataRange1D()),
+            value_mapper=LogMapper(range=DataRange1D()),
+            orientation='h',
+            color='red',
+            bgcolor='transparent',
+            line_width=1.0,
+            line_style='solid',
+            border_visible=False,
         )
         subcontainer.add(line)
 
