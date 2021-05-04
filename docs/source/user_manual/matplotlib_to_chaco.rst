@@ -31,44 +31,61 @@ data to be plotted. In chaco, this data needs to be wrapped in some
     pd.set_data("y", y)
     p = Plot(pd)
 
-Note that in the matplotlib column, ``x`` aand ``y`` represent the data, but
-``'x'`` and ``'y'``, such as in "X grid" and "Y Grid" rows are simply options
-for the ``axis`` argument. In chaco ``'x'`` and ``'y'`` are the names the
-``PlotData`` object associates with numpy arrays ``x`` and ``y``.
+Note that in the matplotlib column, ``x`` and ``y`` represent the data, but
+``'x'`` and ``'y'``, such as in the "X grid" and "Y Grid" rows are simply
+options for the ``axis`` argument. In chaco ``'x'`` and ``'y'`` are the names
+the ``PlotData`` object associates with numpy arrays ``x`` and ``y``.
 
-+------------------------+------------------------------------------+------------------------------------------------------+
-|          What          |                matplotlib                |                        Chaco                         |
-+========================+==========================================+======================================================+
-|       Plot lines       |             `ax.plot(x, y)`              |                 `p.plot(('x', 'y'))`                 |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|        x label         |         `ax.set_xlabel('Time')`          |               `p.x_axis.title = 'Time'`              |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|        y label         |         `ax.set_ylabel('Value')`         |              `p.y_axis.title = 'Value'`              |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|         Title          |          `ax.set_title(title)`           |                  `p.title = title`                   |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|        X limits        |        `ax.set_xlim((low, high))`        |          `p.index_range.low_setting = LOW`           |
-|                        |                                          |          `p.index_range.high_setting = HIGH`         |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|        Y limits        |        `ax.set_ylim((low, high))`        |          `p.value_range.low_setting = LOW`           |
-|                        |                                          |          `p.value_range.high_setting = HIGH`         |
-+------------------------+------------------------------------------+------------------------------------------------------+
-| Label lines for legend |       `ax.plot(…, label=label)`          |               `p.plot(…, name=name)`                 |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|       Add legend       |              `ax.legend()`               |              `p.legend.visible = True`               |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|    Legend position     |      `ax.legend(loc='lower left')`                     `p.legend_alignment = 'll'`              |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|    Background color    |        ax.set_facecolor('white')         |                 `p.bgcolor = 'white'`                |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|      Show spines       |      ax.spines.set_color('black')        |              `p.border_visible = True`               |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|       Line width       |         `ax.plot(linewidth=lw)`          |  `p.line_width = 1.1` or `p.plot(…, linewidth=lw)`   |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|         X grid         |           `ax.grid(axis='x')`            |              `p.x_axis.visible = True`               |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|         Y grid         |           `ax.grid(axis='y')`            |              `p.y_axis.visible = True`               |
-+------------------------+------------------------------------------+------------------------------------------------------+
-|     Second y ticks     |  `ax.yaxis.set_label_position('right')`  |          `p.y_axis.orientation = "right"`            |
-|                        |         `ax.yaxis.tick_right()`          |                                                      |
-+------------------------+------------------------------------------+------------------------------------------------------+
+.. list-table:: Matplotlib To Chaco Cheatsheet
+    :widths: 25 40 50
+    :header-rows: 1
+
+    * - What
+      - Matplotlib
+      - Chaco
+    * - Plot lines
+      - `ax.plot(x, y)`
+      - `p.plot(('x', 'y'))`
+    * - x label
+      - `ax.set_xlabel('Time')`
+      - `p.x_axis.title = 'Time'`
+    * - y label
+      - `ax.set_ylabel('Value')`
+      - `p.y_axis.title = 'Value'`
+    * - Title
+      - `ax.set_title(title)`
+      - `p.title = title`
+    * - X limits
+      - `ax.set_xlim((low, high))`
+      - `p.index_range.low_setting = LOW` `p.index_range.high_setting = HIGH`
+    * - Y limits
+      - `ax.set_ylim((low, high))`
+      - `p.value_range.low_setting = LOW` `p.value_range.high_setting = HIGH`
+    * - Label lines for legend
+      - `ax.plot(…, label=label)`
+      - `p.plot(…, name=name)`
+    * - Add legend
+      - `ax.legend()`
+      - `p.legend.visible = True`
+    * - Legend position
+      - `ax.legend(loc='lower left')`
+      - `p.legend_alignment = 'll'`
+    * - Background color
+      - `ax.set_facecolor('white')`
+      - `p.bgcolor = 'white'`
+    * - Show spines
+      - `ax.spines.set_color('black')`
+      - `p.border_visible = True`
+    * - Line width
+      - `ax.plot(linewidth=lw)`
+      - `p.line_width = 1.1` or `p.plot(…, linewidth=lw)`
+    * - X grid
+      - `ax.grid(axis='x')`
+      - `p.x_axis.visible = True`
+    * - Y grid
+      - `ax.grid(axis='y')`
+      - `p.y_axis.visible = True`
+    * - Second y ticks
+      - `ax.yaxis.set_label_position('right')` `ax.yaxis.tick_right()`
+      - `p.y_axis.orientation = "right"`
+    
