@@ -337,7 +337,7 @@ class BarPlot(AbstractPlotRenderer):
                     else:
                         dual = self.index_mapper.range
                         data_pts = np.array([[dual.low, 0.0], [dual.high, 0.0]])
-                    start, end = self.map_screen(data_pts)
+                    start, end = self.map_screen(data_pts)[0]
                     gc.move_to(int(start[0]) + 0.5, int(start[1]) + 0.5)
                     gc.line_to(int(end[0]) + 0.5, int(end[1]) + 0.5)
                     gc.stroke_path()
