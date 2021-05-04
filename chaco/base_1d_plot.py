@@ -111,7 +111,7 @@ class Base1DPlot(AbstractPlotRenderer):
         """
         # data_array is 1D array of length N
         if len(data_array) == 0:
-            return []
+            return empty(shape=(0,))
         return asarray(self.index_mapper.map_screen(data_array))
 
     def map_data(self, screen_pts):

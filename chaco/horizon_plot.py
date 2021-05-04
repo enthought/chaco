@@ -20,6 +20,8 @@ class BandedMapper(LinearMapper):
                 return array([self.low_pos])
         else:
             # Scale the data by the number of bands
+            if not isinstance(data_array, ndarray):
+                data_array = array(data_array, ndmin=1)
             return (
                 data_array * self.bands - self.range.low
             ) * self._scale + self.low_pos

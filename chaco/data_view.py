@@ -1,6 +1,7 @@
 """ Defines the DataView class, and associated property traits and property
 functions.
 """
+import numpy as np
 from numpy import array, transpose
 
 from traits.api import Bool, Enum, Instance, Property
@@ -232,9 +233,13 @@ class DataView(OverlayPlotContainer):
         """Maps an array of data points to screen space and returns an array
         of screen space points.
         """
-        # data_array is Nx2 array
+
+        # ensure data_array is an Nx2 ndarray
+        data_array = np.asarray(data_array)
+        data_array = data_array.reshape(-1,2)
+
         if len(data_array) == 0:
-            return []
+            return np.empty(shape=(0,2))
         x_ary, y_ary = transpose(data_array)
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)

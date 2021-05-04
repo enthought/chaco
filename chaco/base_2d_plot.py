@@ -111,7 +111,7 @@ class Base2DPlot(AbstractPlotRenderer):
         """
         # data_pts is Nx2 array
         if len(data_pts) == 0:
-            return []
+            return np.empty(shape=(0,2))
         return asarray(self.index_mapper.map_screen(data_pts))
 
     def map_data(self, screen_pts):

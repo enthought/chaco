@@ -7,6 +7,7 @@ into a structured (gridded) 1-D output space.
 from contextlib import contextmanager
 
 # Major library imports
+import numpy as np
 from numpy import column_stack, transpose
 
 # Enthought library imports
@@ -116,6 +117,10 @@ class GridMapper(AbstractMapper):
 
         Maps values from data space into screen space.
         """
+        # ensure data_array is an Nx2 ndarray
+        data_pts = np.asarray(data_pts)
+        data_pts = data_pts.reshape(-1,2)
+    
         xs, ys = transpose(data_pts)
         screen_xs = self._xmapper.map_screen(xs)
         screen_ys = self._ymapper.map_screen(ys)

@@ -114,8 +114,8 @@ class LinePlot(BaseXYPlot):
             if return_distance:
                 scrn_pt = self.map_screen(data_pt)
                 dist = sqrt(
-                    (screen_pt[0] - scrn_pt[0]) ** 2
-                    + (screen_pt[1] - scrn_pt[1]) ** 2
+                    (screen_pt[0] - scrn_pt[0, 0]) ** 2
+                    + (screen_pt[1] - scrn_pt[0, 1]) ** 2
                 )
                 return (data_pt[0], data_pt[1], dist)
             else:
