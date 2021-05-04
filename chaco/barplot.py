@@ -3,15 +3,7 @@
 import logging
 
 import numpy as np
-from numpy import (
-    array,
-    compress,
-    column_stack,
-    invert,
-    isnan,
-    transpose,
-    zeros,
-)
+
 from traits.api import (
     Any,
     Bool,
@@ -173,14 +165,14 @@ class BarPlot(AbstractPlotRenderer):
         # data_array is Nx2 array
         if len(data_array) == 0:
             return np.empty(shape=(0,2))
-        x_ary, y_ary = transpose(data_array)
+        x_ary, y_ary = np.transpose(data_array)
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
 
         if self.orientation == "h":
-            return transpose(array((sx, sy)))
+            return np.transpose(np.array((sx, sy)))
         else:
-            return transpose(array((sy, sx)))
+            return np.transpose(np.array((sy, sx)))
 
     def map_data(self, screen_pt):
         """Maps a screen space point into the "index" space of the plot.
@@ -224,7 +216,7 @@ class BarPlot(AbstractPlotRenderer):
         x = index_data[ndx]
         y = value_data[ndx]
 
-        result = self.map_screen(array([[x, y]]))
+        result = self.map_screen(np.array([[x, y]]))
         if result is None:
             return None
 
@@ -257,7 +249,7 @@ class BarPlot(AbstractPlotRenderer):
                 "Chaco: using empty dataset; index_len=%d, value_len=%d."
                 % (len(index), len(value))
             )
-            self._cached_data_pts = array([])
+            self._cached_data_pts = np.array([])
             self._cache_valid = True
             return
 
@@ -270,17 +262,17 @@ class BarPlot(AbstractPlotRenderer):
         #              index_range_mask & value_range_mask
 
         index_range_mask = self.index_mapper.range.mask_data(index)
-        nan_mask = invert(isnan(index_mask))
+        nan_mask = np.invert(np.isnan(index_mask))
         point_mask = index_mask & nan_mask & index_range_mask
 
         if self.starting_value is None:
-            starting_values = zeros(len(index))
+            starting_values = np.zeros(len(index))
         else:
             starting_values = self.starting_value.get_data()
 
         if self.bar_width_type == "data":
             half_width = self.bar_width / 2.0
-            points = column_stack(
+            points = np.column_stack(
                 (
                     index - half_width,
                     index + half_width,
@@ -289,8 +281,8 @@ class BarPlot(AbstractPlotRenderer):
                 )
             )
         else:
-            points = column_stack((index, starting_values, value))
-        self._cached_data_pts = compress(point_mask, points, axis=0)
+            points = np.column_stack((index, starting_values, value))
+        self._cached_data_pts = np.compress(point_mask, points, axis=0)
 
         self._cache_valid = True
 
@@ -325,7 +317,7 @@ class BarPlot(AbstractPlotRenderer):
                 upper_right_pts[:, 0] += half_width
 
             bounds = upper_right_pts - lower_left_pts
-            gc.rects(column_stack((lower_left_pts, bounds)))
+            gc.rects(np.column_stack((lower_left_pts, bounds)))
             gc.draw_path()
 
     def _draw_default_axes(self, gc):
@@ -341,10 +333,10 @@ class BarPlot(AbstractPlotRenderer):
                 if (range.low < 0) and (range.high > 0):
                     if range == self.index_mapper.range:
                         dual = self.value_mapper.range
-                        data_pts = array([[0.0, dual.low], [0.0, dual.high]])
+                        data_pts = np.array([[0.0, dual.low], [0.0, dual.high]])
                     else:
                         dual = self.index_mapper.range
-                        data_pts = array([[dual.low, 0.0], [dual.high, 0.0]])
+                        data_pts = np.array([[dual.low, 0.0], [dual.high, 0.0]])
                     start, end = self.map_screen(data_pts)
                     gc.move_to(int(start[0]) + 0.5, int(start[1]) + 0.5)
                     gc.line_to(int(end[0]) + 0.5, int(end[1]) + 0.5)

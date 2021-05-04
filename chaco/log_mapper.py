@@ -1,18 +1,6 @@
 """ Defines the LogMapper and InvalidDataRangeException classes.
 """
 # Major library imports
-from numpy import (
-    array,
-    isnan,
-    log,
-    log10,
-    exp,
-    zeros,
-    sometrue,
-    floor,
-    ceil,
-    ndarray,
-)
 import numpy as np
 
 # Enthought library imports
@@ -58,8 +46,8 @@ class LogMapper(Base1DMapper):
         Overrides AbstractMapper. Maps values from data space to screen space.
         """
         # Ensure that data_array is actually an array.
-        if not isinstance(data_array, ndarray):
-            data_array = array(data_array, ndmin=1)
+        if not isinstance(data_array, np.ndarray):
+            data_array = np.array(data_array, ndmin=1)
         # First convert to a [0,1] space, then to the screen space.
         if not self._cache_valid:
             self._compute_scale()
@@ -68,15 +56,15 @@ class LogMapper(Base1DMapper):
         else:
             try:
                 with np.errstate(invalid="ignore"):
-                    mask = (data_array <= LOG_MINIMUM) | isnan(data_array)
-                if sometrue(mask):
-                    data_array = array(data_array, copy=True, ndmin=1)
+                    mask = (data_array <= LOG_MINIMUM) | np.isnan(data_array)
+                if np.sometrue(mask):
+                    data_array = np.array(data_array, copy=True, ndmin=1)
                     data_array[mask] = self.fill_value
                 intermediate = (
-                    log(data_array) - self._inter_offset
+                    np.log(data_array) - self._inter_offset
                 ) / self._inter_scale
             except ValueError:
-                intermediate = zeros(len(data_array))
+                intermediate = np.zeros(len(data_array))
 
         result = intermediate * self._screen_scale + self._screen_offset
         return result
@@ -89,10 +77,10 @@ class LogMapper(Base1DMapper):
         if not self._cache_valid:
             self._compute_scale()
         if self._null_screen_range or self._null_data_range:
-            return array([self.range.low])
+            return np.array([self.range.low])
         # First convert to a [0,1] space, then to the data space
         intermediate = (screen_val - self._screen_offset) / self._screen_scale
-        return exp(self._inter_scale * intermediate + self._inter_offset)
+        return np.exp(self._inter_scale * intermediate + self._inter_offset)
 
     def map_data_array(self, screen_vals):
         return self.map_data(screen_vals)
@@ -119,12 +107,12 @@ class LogMapper(Base1DMapper):
                 low = 1.0
                 high = 10.0
             else:
-                log_val = log10(low)
-                low = pow(10, floor(log_val))
-                if ceil(log_val) != floor(log_val):
-                    high = pow(10, ceil(log_val))
+                log_val = np.log10(low)
+                low = pow(10, np.floor(log_val))
+                if np.ceil(log_val) != np.floor(log_val):
+                    high = pow(10, np.ceil(log_val))
                 else:
-                    high = pow(10, ceil(log_val) + 1)
+                    high = pow(10, np.ceil(log_val) + 1)
 
         return (low, high)
 
@@ -147,11 +135,11 @@ class LogMapper(Base1DMapper):
             self._null_data_range = True
         else:
             if low == LOG_MINIMUM:
-                self._inter_scale = log(high)
+                self._inter_scale = np.log(high)
                 self._inter_offset = 0.0
             else:
-                self._inter_scale = log(high) - log(low)
-                self._inter_offset = log(low)
+                self._inter_scale = np.log(high) - np.log(low)
+                self._inter_offset = np.log(low)
             self._screen_scale = screen_range
             self._screen_offset = self.low_pos
 
