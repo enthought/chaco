@@ -345,11 +345,11 @@ class BaseXYPlot(AbstractPlotRenderer):
         """
         # ensure data_array is an Nx2 ndarray
         data_array = np.asarray(data_array)
-        data_array = data_array.reshape(-1,2)
+        data_array = data_array.reshape(-1, 2)
 
         # data_array is Nx2 array
         if len(data_array) == 0:
-            return np.empty(shape=(0,2))
+            return np.empty(shape=(0, 2))
 
         x_ary, y_ary = np.transpose(data_array)
 
@@ -500,10 +500,14 @@ class BaseXYPlot(AbstractPlotRenderer):
                 if (range.low < 0) and (range.high > 0):
                     if range == self.index_mapper.range:
                         dual = self.value_mapper.range
-                        data_pts = np.array([[0.0, dual.low], [0.0, dual.high]])
+                        data_pts = np.array(
+                            [[0.0, dual.low], [0.0, dual.high]]
+                        )
                     else:
                         dual = self.index_mapper.range
-                        data_pts = np.array([[dual.low, 0.0], [dual.high, 0.0]])
+                        data_pts = np.array(
+                            [[dual.low, 0.0], [dual.high, 0.0]]
+                        )
                     start, end = self.map_screen(data_pts)
                     start = np.around(start)
                     end = np.around(end)

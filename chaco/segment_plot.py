@@ -140,7 +140,7 @@ class SegmentPlot(BaseXYPlot):
         """
         # ensure data_array is an Nx2x2 ndarray
         data_array = np.asarray(data_array)
-        data_array = data_array.reshape(-1,2, 2)
+        data_array = data_array.reshape(-1, 2, 2)
 
         if len(data_array) == 0:
             return np.empty(shape=(0, 2, 2))
