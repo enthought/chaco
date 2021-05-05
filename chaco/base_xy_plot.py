@@ -1,8 +1,7 @@
 """ Defines the base class for XY plots.
 """
 from math import sqrt
-import numpy as np
-from numpy import around, array, isnan, transpose
+from numpy import around, array, empty, isnan, transpose
 
 # Enthought library imports
 from enable.api import black_color_trait
@@ -345,12 +344,12 @@ class BaseXYPlot(AbstractPlotRenderer):
         Implements the AbstractPlotRenderer interface.
         """
         # ensure data_array is an Nx2 ndarray
-        data_array = np.asarray(data_array)
+        data_array = array(data_array)
         data_array = data_array.reshape(-1, 2)
 
         # data_array is Nx2 array
         if len(data_array) == 0:
-            return np.empty(shape=(0, 2))
+            return empty(shape=(0, 2))
 
         x_ary, y_ary = transpose(data_array)
 
