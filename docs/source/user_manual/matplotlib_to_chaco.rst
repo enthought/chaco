@@ -44,47 +44,47 @@ the ``PlotData`` object associates with numpy arrays ``x`` and ``y``.
       - Matplotlib
       - Chaco
     * - Plot lines
-      - `ax.plot(x, y)`
-      - `p.plot(('x', 'y'))`
+      - ``ax.plot(x, y)``
+      - ``p.plot(('x', 'y'))``
     * - x label
-      - `ax.set_xlabel('Time')`
-      - `p.x_axis.title = 'Time'`
+      - ``ax.set_xlabel('Time')``
+      - ``p.x_axis.title = 'Time'``
     * - y label
-      - `ax.set_ylabel('Value')`
-      - `p.y_axis.title = 'Value'`
+      - ``ax.set_ylabel('Value')``
+      - ``p.y_axis.title = 'Value'``
     * - Title
-      - `ax.set_title(title)`
-      - `p.title = title`
+      - ``ax.set_title(title)``
+      - ``p.title = title``
     * - X limits
-      - `ax.set_xlim((low, high))`
-      - `p.index_range.low_setting = LOW` `p.index_range.high_setting = HIGH`
+      - ``ax.set_xlim((low, high))``
+      - ``p.index_range.low_setting = low`` ``p.index_range.high_setting = high``
     * - Y limits
-      - `ax.set_ylim((low, high))`
-      - `p.value_range.low_setting = LOW` `p.value_range.high_setting = HIGH`
+      - ``ax.set_ylim((low, high))``
+      - ``p.value_range.low_setting = low`` ``p.value_range.high_setting = high``
     * - Label lines for legend
-      - `ax.plot(…, label=label)`
-      - `p.plot(…, name=name)`
+      - ``ax.plot(…, label=label)``
+      - ``p.plot(…, name=name)``
     * - Add legend
-      - `ax.legend()`
-      - `p.legend.visible = True`
+      - ``ax.legend()``
+      - ``p.legend.visible = True``
     * - Legend position
-      - `ax.legend(loc='lower left')`
-      - `p.legend_alignment = 'll'`
+      - ``ax.legend(loc='lower left')``
+      - ``p.legend_alignment = 'll'``
     * - Background color
-      - `ax.set_facecolor('white')`
-      - `p.bgcolor = 'white'`
+      - ``ax.set_facecolor('white')``
+      - ``p.bgcolor = 'white'``
     * - Show spines
-      - `ax.spines.set_color('black')`
-      - `p.border_visible = True`
+      - ``ax.spines.set_color('black')``
+      - ``p.border_visible = True``
     * - Line width
-      - `ax.plot(linewidth=lw)`
-      - `p.line_width = 1.1` or `p.plot(…, linewidth=lw)`
+      - ``ax.plot(linewidth=lw)``
+      - ``p.line_width = 1.1`` or ``p.plot(…, linewidth=lw)``
     * - X grid
-      - `ax.grid(axis='x')`
-      - `p.x_axis.visible = True`
+      - ``ax.grid(axis='x')``
+      - ``p.x_axis.visible = True``
     * - Y grid
-      - `ax.grid(axis='y')`
-      - `p.y_axis.visible = True`
+      - ``ax.grid(axis='y')``
+      - ``p.y_axis.visible = True``
     * - Second y ticks
-      - `ax.yaxis.set_label_position('right')` `ax.yaxis.tick_right()`
-      - `p.y_axis.orientation = "right"`
+      - ``ax.yaxis.set_label_position('right')`` ``ax.yaxis.tick_right()``
+      - ``p.y_axis.orientation = "right"``
