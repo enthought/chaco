@@ -22,7 +22,7 @@ data to be plotted. In Chaco, this data needs to be wrapped in a
 ::
 
     import numpy as np
-    x = np.linspace(-2*pi, 2*pi, 100)
+    x = np.linspace(-2*np.pi, 2*np.pi, 100)
     y = sin(x)
 
     # Chaco only
