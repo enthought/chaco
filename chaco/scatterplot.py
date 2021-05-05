@@ -11,6 +11,7 @@ from numpy import (
     array,
     asarray,
     column_stack,
+    empty,
     isfinite,
     isnan,
     nanargmin,
@@ -289,7 +290,7 @@ class ScatterPlot(BaseXYPlot):
         """
         # data_array is Nx2 array
         if len(data_array) == 0:
-            return []
+            return empty(shape=(0,2))
 
         data_array = asarray(data_array)
         if len(data_array.shape) == 1:
