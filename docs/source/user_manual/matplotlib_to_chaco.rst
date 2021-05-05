@@ -16,7 +16,7 @@ i.e. ``fig, ax = plt.subplots()`` after importing
 ``import matplotlib.pyplot as plt``. For more details see the
 `matplotlib User's Guide <https://matplotlib.org/stable/users/index.html>`_.
 For Chaco code, ``p`` is the :class:`~.Plot` instance.  ``x`` and ``y`` are the
-data to be plotted. In chaco, this data needs to be wrapped in some
+data to be plotted. In chaco, this data needs to be wrapped in a
 ``PlotData`` object. For example,
 
 ::
