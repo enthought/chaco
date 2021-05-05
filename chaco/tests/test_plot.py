@@ -124,8 +124,8 @@ class PlotTestCase(unittest.TestCase):
         self.assertEqual(screen_point.shape, (1,2))
 
     # serves as a regression test for enthought/chaco#272
-    def test_map_screen(self):
-        renderers = ["line", "scatter"]
+    def test_xy_plot_map_screen(self):
+        renderers = ["line", "scatter", "bar", "polygon"]
         for renderer in renderers:
             self.check_map_screen(renderer)
 
