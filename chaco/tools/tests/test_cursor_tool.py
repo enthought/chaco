@@ -47,6 +47,7 @@ class TestCursorTool(unittest.TestCase, EnableTestAssistant):
         tester = UITester()
         test_cursor = TestCursor()
         with tester.create_ui(test_cursor):
+            # should not fail
             self.mouse_move(
                 test_cursor.plot, 10, 10
             )
