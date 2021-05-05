@@ -144,7 +144,7 @@ class PlotFrame(DemoFrame):
     def _plot_range_handler(self, event):
         plot_range_event = event.new
         if plot_range_event is not None:
-            low, high = event
+            low, high = plot_range_event
             if "auto" not in (low, high):
                 self.range_tool.selection = (low, high)
 
