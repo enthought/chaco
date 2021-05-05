@@ -2,6 +2,7 @@
 """
 from math import sqrt
 import numpy as np
+from numpy import around, array, isnan, transpose
 
 # Enthought library imports
 from enable.api import black_color_trait
@@ -351,14 +352,14 @@ class BaseXYPlot(AbstractPlotRenderer):
         if len(data_array) == 0:
             return np.empty(shape=(0, 2))
 
-        x_ary, y_ary = np.transpose(data_array)
+        x_ary, y_ary = transpose(data_array)
 
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
         if self.orientation == "h":
-            return np.transpose(np.array((sx, sy)))
+            return transpose(array((sx, sy)))
         else:
-            return np.transpose(np.array((sy, sx)))
+            return transpose(array((sy, sx)))
 
     def map_data(self, screen_pt, all_values=False):
         """Maps a screen space point into the "index" space of the plot.
@@ -372,7 +373,7 @@ class BaseXYPlot(AbstractPlotRenderer):
         if self.orientation == "v":
             x, y = y, x
         if all_values:
-            return np.array(
+            return array(
                 (self.index_mapper.map_data(x), self.value_mapper.map_data(y))
             )
         else:
@@ -441,14 +442,14 @@ class BaseXYPlot(AbstractPlotRenderer):
 
         x = index_data[ndx]
         y = value_data[ndx]
-        if np.isnan(x) or np.isnan(y):
+        if isnan(x) or isnan(y):
             return None
 
         # transform x,y in a 1x2 array, which is the preferred format of
         # map_screen. this makes it robust against differences in
         # the map_screen methods of logmapper and linearmapper
         # when passed a scalar
-        xy = np.array([[x, y]])
+        xy = array([[x, y]])
         sx, sy = self.map_screen(xy).T
         if index_only and (threshold == 0.0 or screen_pt[0] - sx < threshold):
             return ndx
@@ -500,17 +501,13 @@ class BaseXYPlot(AbstractPlotRenderer):
                 if (range.low < 0) and (range.high > 0):
                     if range == self.index_mapper.range:
                         dual = self.value_mapper.range
-                        data_pts = np.array(
-                            [[0.0, dual.low], [0.0, dual.high]]
-                        )
+                        data_pts = array([[0.0, dual.low], [0.0, dual.high]])
                     else:
                         dual = self.index_mapper.range
-                        data_pts = np.array(
-                            [[dual.low, 0.0], [dual.high, 0.0]]
-                        )
+                        data_pts = array([[dual.low, 0.0], [dual.high, 0.0]])
                     start, end = self.map_screen(data_pts)
-                    start = np.around(start)
-                    end = np.around(end)
+                    start = around(start)
+                    end = around(end)
                     gc.move_to(int(start[0]), int(start[1]))
                     gc.line_to(int(end[0]), int(end[1]))
                     gc.stroke_path()

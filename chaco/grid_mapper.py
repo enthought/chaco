@@ -8,6 +8,7 @@ from contextlib import contextmanager
 
 # Major library imports
 import numpy as np
+from numpy import column_stack, transpose
 
 # Enthought library imports
 from traits.api import Bool, DelegatesTo, Instance, Float, Property
@@ -118,12 +119,12 @@ class GridMapper(AbstractMapper):
         """
         # ensure data_array is an Nx2 ndarray
         data_pts = np.asarray(data_pts)
-        data_pts = data_pts.reshape(-1, 2)
-
-        xs, ys = np.transpose(data_pts)
+        data_pts = data_pts.reshape(-1,2)
+    
+        xs, ys = transpose(data_pts)
         screen_xs = self._xmapper.map_screen(xs)
         screen_ys = self._ymapper.map_screen(ys)
-        screen_pts = np.column_stack([screen_xs, screen_ys])
+        screen_pts = column_stack([screen_xs, screen_ys])
         return screen_pts
 
     def map_data(self, screen_pts):
@@ -131,10 +132,10 @@ class GridMapper(AbstractMapper):
 
         Maps values from screen space into data space.
         """
-        screen_xs, screen_ys = np.transpose(screen_pts)
+        screen_xs, screen_ys = transpose(screen_pts)
         xs = self._xmapper.map_data(screen_xs)
         ys = self._ymapper.map_data(screen_ys)
-        data_pts = np.column_stack([xs, ys])
+        data_pts = column_stack([xs, ys])
         return data_pts
 
     def map_data_array(self, screen_pts):

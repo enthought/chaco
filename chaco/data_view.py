@@ -2,6 +2,7 @@
 functions.
 """
 import numpy as np
+from numpy import array, transpose
 
 from traits.api import Bool, Enum, Instance, Property
 from enable.api import color_table
@@ -239,13 +240,13 @@ class DataView(OverlayPlotContainer):
 
         if len(data_array) == 0:
             return np.empty(shape=(0,2))
-        x_ary, y_ary = np.transpose(data_array)
+        x_ary, y_ary = transpose(data_array)
         sx = self.index_mapper.map_screen(x_ary)
         sy = self.value_mapper.map_screen(y_ary)
         if self.orientation == "h":
-            return np.transpose(np.array((sx, sy)))
+            return transpose(array((sx, sy)))
         else:
-            return np.transpose(np.array((sy, sx)))
+            return transpose(array((sy, sx)))
 
     def map_data(self, screen_pt):
         """Maps a screen space point into the 2D data space of this plot.
@@ -255,7 +256,7 @@ class DataView(OverlayPlotContainer):
         # At some point it would be good to change the DataView to use
         # the GridMapper, and then use its map_data() method.
         x, y = screen_pt
-        return np.array(
+        return array(
             (self.index_mapper.map_data(x), self.value_mapper.map_data(y))
         )
 
