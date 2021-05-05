@@ -5,7 +5,7 @@ Matplotlib To Chaco Cheatsheet
 ##############################
 As mentioned in the :ref:`Chaco Tutorial <tutorial>`,
 `matplotlib <https://matplotlib.org/>`_ and Chaco have different
-approaches to plotting (script-oriented vs. application oriented). However, new
+approaches to plotting (script-oriented vs. application-oriented). However, new
 users of chaco who have worked with matplotlib in the past may find it useful
 to think about mapping "equivalent" code between the two.
 
@@ -88,4 +88,3 @@ the ``PlotData`` object associates with numpy arrays ``x`` and ``y``.
     * - Second y ticks
       - `ax.yaxis.set_label_position('right')` `ax.yaxis.tick_right()`
       - `p.y_axis.orientation = "right"`
-    
