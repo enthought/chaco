@@ -43,7 +43,7 @@ class CustomOverlay(AbstractOverlay):
 
     def overlay(self, component, gc, view_bounds=None, mode="normal"):
         if self.dataspace:
-            self.x, self.y = component.map_screen(self._anchor)
+            self.x, self.y = component.map_screen(self._anchor)[0]
         gc.set_fill_color(self.color_)
         x = self.x + component.x
         y = self.y + component.y
