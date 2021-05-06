@@ -99,13 +99,12 @@ class ArrayDataSourceTestCase(UnittestTools, unittest.TestCase):
         assert_array_equal(data, self.myarray)
         assert_array_equal(mask, self.mymask)
 
-    @unittest.skip("get_data_mask() fails in this case")
     def test_get_data_mask_no_data(self):
         data_source = ArrayDataSource(None)
 
         data, mask = data_source.get_data_mask()
-        assert_array_equal(data, 0.0)
-        assert_array_equal(mask, True)
+        self.assertEqual(data, None)
+        assert_array_equal(mask, ones(shape=0, dtype=bool))
 
     def test_get_data_mask_no_mask(self):
         data, mask = self.data_source.get_data_mask()

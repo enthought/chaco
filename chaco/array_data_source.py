@@ -155,7 +155,10 @@ class ArrayDataSource(AbstractDataSource):
         Implements AbstractDataSource.
         """
         if self._cached_mask is None:
-            return self._data, ones(len(self._data), dtype=bool)
+            if self._data is None:
+                return self._data, ones(0, dtype=bool)
+            else:
+                return self._data, ones(len(self._data), dtype=bool)
         else:
             return self._data, self._cached_mask
 
