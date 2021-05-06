@@ -12,6 +12,7 @@ from traitsui.testing.api import UITester
 from chaco.api import ArrayPlotData, Plot
 from chaco.tools.cursor_tool import CursorTool
 
+
 class TestCursorTool(unittest.TestCase, EnableTestAssistant):
 
     # regression test for enthought/chaco#289
@@ -40,9 +41,8 @@ class TestCursorTool(unittest.TestCase, EnableTestAssistant):
                 cursor = CursorTool(renderer)
 
                 renderer.overlays.append(cursor)
-            
-                return plot
 
+                return plot
 
         tester = UITester()
         test_cursor = TestCursor()

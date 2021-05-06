@@ -118,8 +118,8 @@ class GridMapper(AbstractMapper):
         """
         # ensure data_array is an Nx2 ndarray
         data_pts = array(data_pts)
-        data_pts = data_pts.reshape(-1,2)
-    
+        data_pts = data_pts.reshape(-1, 2)
+
         xs, ys = transpose(data_pts)
         screen_xs = self._xmapper.map_screen(xs)
         screen_ys = self._ymapper.map_screen(ys)

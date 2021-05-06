@@ -120,8 +120,7 @@ class PlotTestCase(unittest.TestCase):
         screen_point = plot_renderer.map_screen([(0, 1), (1, 2)])
 
         self.assertEqual(type(screen_point), np.ndarray)
-        self.assertEqual(screen_point.shape, (1,2,2))
-
+        self.assertEqual(screen_point.shape, (1, 2, 2))
 
     def check_map_screen(self, renderer):
         arr = arange(10)
@@ -130,16 +129,16 @@ class PlotTestCase(unittest.TestCase):
         plot_renderer = plot.add_xy_plot(
             'x', 'y', plot.renderer_map[renderer]
         )[0]
-        
+
         screen_point = plot_renderer.map_screen((-1, 1))
 
         self.assertEqual(type(screen_point), np.ndarray)
-        self.assertEqual(screen_point.shape, (1,2))
+        self.assertEqual(screen_point.shape, (1, 2))
 
         screen_point = plot_renderer.map_screen([])
 
         self.assertEqual(type(screen_point), np.ndarray)
-        self.assertEqual(screen_point.shape, (0,2))
+        self.assertEqual(screen_point.shape, (0, 2))
 
     # serves as a regression test for enthought/chaco#272
     def test_xy_plot_map_screen(self):

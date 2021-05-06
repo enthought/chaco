@@ -5,7 +5,6 @@ import numpy as np
 from enable.api import ComponentEditor
 from enable.testing import EnableTestAssistant
 from traits.api import HasTraits, Instance
-from traits.etsconfig.api import ETSConfig
 from traitsui.api import Item, View
 
 from chaco.api import ArrayPlotData, DataLabel, Plot
@@ -13,6 +12,7 @@ from chaco.tools.api import DataLabelTool
 
 IMAGE = np.random.random_integers(0, 255, size=(100, 200)).astype(np.uint8)
 RGB = np.dstack([IMAGE] * 3)
+
 
 class TestDataLabelTool(unittest.TestCase, EnableTestAssistant):
 
@@ -35,7 +35,7 @@ class TestDataLabelTool(unittest.TestCase, EnableTestAssistant):
 
                 label = DataLabel(
                     component=self.renderer,
-                    data_point=(25,12)
+                    data_point=(25, 12)
                 )
                 plot.overlays.append(label)
                 tool = DataLabelTool(label)
