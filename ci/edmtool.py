@@ -38,7 +38,7 @@ environment.  You can update with a command like::
     edm run --environment ... -- python setup.py install
 
 If you need to make frequent changes to the source, it is often convenient
-to install the source in editable mode::
+to instead specifically install the source in editable mode::
 
     python edmtool.py install --editable --runtime=... --toolkit=...
 
