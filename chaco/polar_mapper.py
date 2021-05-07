@@ -12,11 +12,11 @@ from traits.api import Bool, Float
 # Local relative imports
 from .abstract_mapper import AbstractMapper
 
-###############################################################
-# same as linear mapper at the moment... to be modified later #
-###############################################################
+
 class PolarMapper(AbstractMapper):
     """
+    Same as linear mapper at the moment... to be modified later
+
     Maps a 1-D data space to and from screen space by specifying a range in
     data space and a corresponding fixed line in screen space.
 
