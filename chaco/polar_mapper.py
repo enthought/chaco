@@ -4,7 +4,7 @@ into a 1-D output space.
 """
 
 # Major library imports
-from numpy import array
+from numpy import array, float64, full_like, ndarray
 
 # Enthought library imports
 from traits.api import Bool, Float
@@ -12,11 +12,11 @@ from traits.api import Bool, Float
 # Local relative imports
 from .abstract_mapper import AbstractMapper
 
-###############################################################
-# same as linear mapper at the moment... to be modified later #
-###############################################################
+
 class PolarMapper(AbstractMapper):
     """
+    Same as linear mapper at the moment... to be modified later
+
     Maps a 1-D data space to and from screen space by specifying a range in
     data space and a corresponding fixed line in screen space.
 
@@ -29,8 +29,11 @@ class PolarMapper(AbstractMapper):
     # Private traits
     # ------------------------------------------------------------------------
 
-    _scale = Float(1.0)  # number of screen space units per data space unit
+    # Number of screen space units per data space unit.
+    _scale = Float(1.0)
+    # Is the range of the screen space empty?
     _null_screen_range = Bool(False)
+    # Is the range of the data space empty?
     _null_data_range = Bool(False)
 
     # ------------------------------------------------------------------------
@@ -40,26 +43,37 @@ class PolarMapper(AbstractMapper):
     def map_screen(self, data_array):
         """map_screen(data_array) -> screen_array
 
-        Converts radius and theta values from *data_array*
-        to x and y values and then maps
-        values from data space into screen space.
+        Overrides AbstractMapper. Maps values from data space into screen space.
         """
         self._compute_scale()
         if self._null_data_range:
-            return array([self.low_pos] * len(data_array))
+            if isinstance(data_array, (tuple, list, ndarray)):
+                return full_like(data_array, self.low_pos, dtype=float64)
+            else:
+                return array([self.low_pos])
         else:
             return (data_array - self.range.low) * self._scale + self.low_pos
 
     def map_data(self, screen_val):
         """map_data(screen_val) -> data_val
 
-        Maps values from screen space into data space.
+        Overrides AbstractMapper. Maps values from screen space into data space.
         """
         self._compute_scale()
         if self._null_screen_range:
             return array([self.range.low])
+        elif self._null_data_range:
+            return array([self.range.low])
         else:
             return (screen_val - self.low_pos) / self._scale + self.range.low
+
+    def map_data_array(self, screen_vals):
+        """map_data_array(screen_vals) -> data_vals
+
+        Overrides AbstractMapper. Maps an array of values from screen space
+        into data space.
+        """
+        return self.map_data(screen_vals)
 
     # ------------------------------------------------------------------------
     # Private methods
@@ -73,9 +87,9 @@ class PolarMapper(AbstractMapper):
             self._cache_valid = False
             return
 
-        d = self.range
+        r = self.range
         screen_range = self.high_pos - self.low_pos
-        data_range = self._pol_to_rect(d.high) - self._pol_to_rect(d.low)
+        data_range = r.high - r.low
         if screen_range == 0.0:
             self._null_screen_range = True
         else:
@@ -84,6 +98,10 @@ class PolarMapper(AbstractMapper):
             self._null_data_range = True
         else:
             self._scale = screen_range / data_range
-            self._null_data_range = False
+            # The screen_range might be small enough that dividing by the
+            # data_range causes it to go to 0. Explicitly call bool because
+            # _scale might also be a numpy scalar and yield another numpy scalar
+            # that the Bool trait rejects.
+            self._null_data_range = bool(self._scale == 0.0)
 
         self._cache_valid = True

@@ -54,6 +54,7 @@ Mappers
 - :class:`~.DiscreteColorMapper`
 - :class:`~.TransformColorMapper`
 - :class:`~.BandedMapper`
+- :class:`~.PolarMapper`
 
 Visual Components
 -----------------
@@ -108,6 +109,7 @@ Renderers
 - :class:`~.TextPlot1D`
 - :class:`~.SegmentPlot`
 - :class:`~.TextPlot`
+- :class:`~.PolarLineRenderer`
 
 Plot Factories
 --------------
@@ -290,6 +292,7 @@ from .color_mapper import ColorMapper, ColorMapTemplate
 from .discrete_color_mapper import DiscreteColorMapper
 from .transform_color_mapper import TransformColorMapper
 from .horizon_plot import BandedMapper
+from .polar_mapper import PolarMapper
 
 # Visual components
 from .abstract_plot_renderer import AbstractPlotRenderer
@@ -351,6 +354,7 @@ from .line_scatterplot_1d import LineScatterPlot1D
 from .text_plot_1d import TextPlot1D
 from .segment_plot import SegmentPlot
 from .text_plot import TextPlot
+from .polar_line_renderer import PolarLineRenderer
 
 # Plot factories
 from .plot_factory import (
