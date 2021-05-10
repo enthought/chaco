@@ -48,7 +48,7 @@ def _create_data_sources(data, index_sort="none"):
 
 
 def create_scatter_plot(
-    data=[],
+    data=None,
     index_bounds=None,
     value_bounds=None,
     orientation="h",
@@ -69,6 +69,8 @@ def create_scatter_plot(
 
     Pre-existing "index" and "value" datasources can be passed in.
     """
+    if data is None:
+        data = []
 
     index, value = _create_data_sources(data)
 
@@ -109,7 +111,7 @@ def create_scatter_plot(
 
 
 def create_line_plot(
-    data=[],
+    data=None,
     index_bounds=None,
     value_bounds=None,
     orientation="h",
@@ -130,6 +132,9 @@ def create_line_plot(
 
     Pre-existing "index" and "value" datasources can be passed in.
     """
+    if data is None:
+        data = []
+
     index, value = _create_data_sources(data, index_sort)
 
     if index_bounds is not None:
@@ -168,7 +173,7 @@ def create_line_plot(
 
 
 def create_bar_plot(
-    data=[],
+    data=None,
     index_bounds=None,
     value_bounds=None,
     orientation="h",
@@ -191,6 +196,9 @@ def create_bar_plot(
 
     Pre-existing "index" and "value" datasources can be passed in.
     """
+    if data is None:
+        data = []
+
     index, value = _create_data_sources(data)
 
     if index_bounds is not None:

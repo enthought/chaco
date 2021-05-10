@@ -36,6 +36,12 @@ the install performs a ``python setup.py install`` rather than a ``develop``,
 so changes in your code will not be automatically mirrored in the test
 environment.  You can update with a command like::
     edm run --environment ... -- python setup.py install
+
+If you need to make frequent changes to the source, it is often convenient
+to instead specifically install the source in editable mode::
+
+    python edmtool.py install --editable --runtime=... --toolkit=...
+
 You can run all three tasks at once with::
     python edmtool.py test_clean --runtime=... --toolkit=...
 which will create, install, run tests, and then clean-up the environment.  And
@@ -144,11 +150,16 @@ def cli():
 @click.option('--toolkit', default='null')
 @click.option('--environment', default=None)
 @click.option(
+    "--editable/--not-editable",
+    default=False,
+    help="Install main package in 'editable' mode?  [default: --not-editable]",
+)
+@click.option(
     "--source/--no-source",
     default=False,
     help="Install ETS packages from source",
 )
-def install(runtime, toolkit, environment, source):
+def install(runtime, toolkit, environment, editable, source):
     """ Install project and dependencies into a clean EDM environment.
     """
     parameters = get_parameters(runtime, toolkit, environment)
@@ -200,8 +211,11 @@ def install(runtime, toolkit, environment, source):
     # to mitigate risk of testing against a distributed release.
     install_local = (
         "edm run -e {environment} -- "
-        "pip install --force-reinstall --no-dependencies ."
+        "pip install --force-reinstall --no-dependencies "
     )
+    if editable:
+        install_local += "--editable "
+    install_local += "."
     execute([install_local], parameters)
 
     click.echo('Done install')
