@@ -66,102 +66,96 @@ class PlotAxis(AbstractOverlay):
     mapper = Instance(AbstractMapper)
 
     #: Keep an origin for plots that aren't attached to a component
-    origin = Enum(
-        "bottom left",
-        "top left",
-        "bottom right",
-        "top right",
-        is_visual=True
-    )
+    origin = Enum("bottom left", "top left", "bottom right", "top right")
 
     #: The text of the axis title.
     title = Trait("", Str, Unicode)  # May want to add PlotLabel option
 
     #: The font of the title.
-    title_font = KivaFont("modern 12", is_visual=True)
+    title_font = KivaFont("modern 12")
 
     #: The spacing between the axis line and the title
-    title_spacing = Trait("auto", "auto", Float, is_visual=True)
+    title_spacing = Trait("auto", "auto", Float)
 
     #: The color of the title.
-    title_color = ColorTrait("black", is_visual=True)
+    title_color = ColorTrait("black")
 
     #: The angle of the title, in degrees, from horizontal line
-    title_angle = Float(0.0, is_visual=True)
+    title_angle = Float(0.0)
 
     #: The thickness (in pixels) of each tick.
-    tick_weight = Float(1.0, is_visual=True)
+    tick_weight = Float(1.0)
 
     #: The color of the ticks.
-    tick_color = ColorTrait("black", is_visual=True)
+    tick_color = ColorTrait("black")
 
     #: The font of the tick labels.
-    tick_label_font = KivaFont("modern 10", is_visual=True)
+    tick_label_font = KivaFont("modern 10")
 
     #: The color of the tick labels.
-    tick_label_color = ColorTrait("black", is_visual=True)
+    tick_label_color = ColorTrait("black")
 
     #: The rotation of the tick labels.
-    tick_label_rotate_angle = Float(0, is_visual=True)
+    tick_label_rotate_angle = Float(0)
 
     #: Whether to align to corners or edges (corner is better for 45 degree rotation)
-    tick_label_alignment = Enum("edge", "corner", is_visual=True)
+    tick_label_alignment = Enum("edge", "corner")
 
     #: The margin around the tick labels.
-    tick_label_margin = Int(2, is_visual=True)
+    tick_label_margin = Int(2)
 
     #: The distance of the tick label from the axis.
-    tick_label_offset = Float(8.0, is_visual=True)
+    tick_label_offset = Float(8.0)
 
     #: Whether the tick labels appear to the inside or the outside of the plot area
-    tick_label_position = Enum("outside", "inside", is_visual=True)
+    tick_label_position = Enum("outside", "inside")
 
     #: A callable that is passed the numerical value of each tick label and
     #: that returns a string.
-    tick_label_formatter = Callable(DEFAULT_TICK_FORMATTER, is_visual=True)
+    tick_label_formatter = Callable(DEFAULT_TICK_FORMATTER)
 
     #: The number of pixels by which the ticks extend into the plot area.
-    tick_in = Int(5, is_visual=True)
+    tick_in = Int(5)
 
     #: The number of pixels by which the ticks extend into the label area.
-    tick_out = Int(5, is_visual=True)
+    tick_out = Int(5)
 
     #: Are ticks visible at all?
-    tick_visible = Bool(True, is_visual=True)
+    tick_visible = Bool(True)
 
     #: The dataspace interval between ticks.
-    tick_interval = Trait("auto", "auto", Float, is_visual=True)
+    tick_interval = Trait("auto", "auto", Float)
 
     #: A callable that implements the AbstractTickGenerator interface.
-    tick_generator = Instance(AbstractTickGenerator, is_visual=True)
+    tick_generator = Instance(AbstractTickGenerator)
 
     #: The location of the axis relative to the plot.  This determines where
     #: the axis title is located relative to the axis line.
-    orientation = Enum("top", "bottom", "left", "right", is_visual=True)
+    orientation = Enum("top", "bottom", "left", "right")
 
     #: Is the axis line visible?
-    axis_line_visible = Bool(True, is_visual=True)
+    axis_line_visible = Bool(True)
 
     #: The color of the axis line.
-    axis_line_color = ColorTrait("black", is_visual=True)
+    axis_line_color = ColorTrait("black")
 
     #: The line thickness (in pixels) of the axis line.
-    axis_line_weight = Float(1.0, is_visual=True)
+    axis_line_weight = Float(1.0)
 
     #: The dash style of the axis line.
-    axis_line_style = LineStyle("solid", is_visual=True)
+    axis_line_style = LineStyle("solid")
 
     #: A special version of the axis line that is more useful for geophysical
     #: plots.
-    small_haxis_style = Bool(False, is_visual=True)
+    small_haxis_style = Bool(False)
 
     #: Does the axis ensure that its end labels fall within its bounding area?
-    ensure_labels_bounded = Bool(False, is_visual=True)
+    ensure_labels_bounded = Bool(False)
 
     #: Does the axis prevent the ticks from being rendered outside its bounds?
     #: This flag is off by default because the standard axis *does* render ticks
     #: that encroach on the plot area.
-    ensure_ticks_bounded = Bool(False, is_visual=True)
+    ensure_ticks_bounded = Bool(False)
 
     #: Fired when the axis's range bounds change.
     updated = Event
@@ -785,7 +779,36 @@ class PlotAxis(AbstractOverlay):
         if self.component:
             self.component.invalidate_draw()
 
-    @observe("+is_visual")
+    @observe([
+        "title_font",
+        "title_spacing",
+        "title_color",
+        "title_angle",
+        "tick_weight",
+        "tick_color",
+        "tick_label_font",
+        "tick_label_color",
+        "tick_label_rotate_angle",
+        "tick_label_alignment",
+        "tick_label_margin",
+        "tick_label_offset",
+        "tick_label_position",
+        "tick_label_formatter",
+        "tick_in",
+        "tick_out",
+        "tick_visible",
+        "tick_interval",
+        "tick_generator",
+        "orientation",
+        "origin",
+        "axis_line_visible",
+        "axis_line_color",
+        "axis_line_weight",
+        "axis_line_style",
+        "small_haxis_style",
+        "ensure_labels_bounded",
+        "ensure_ticks_bounded",
+    ])
     def _invalidate_on_changed_visual_attr(self, event):
         self._invalidate()
 
